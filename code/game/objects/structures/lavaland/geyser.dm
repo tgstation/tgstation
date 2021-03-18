@@ -59,6 +59,7 @@
 	desc = "It's a plunger for plunging."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
+	worn_icon_state = "plunger"
 
 	slot_flags = ITEM_SLOT_MASK
 	flags_inv = HIDESNOUT
@@ -75,10 +76,9 @@
 	var/target_layer = DUCT_LAYER_DEFAULT
 
 	///Assoc list for possible layers
-	var/list/layers = list("First Layer" = FIRST_DUCT_LAYER, "Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT,
-		"Fourth Layer" = FOURTH_DUCT_LAYER, "Fifth Layer" = FIFTH_DUCT_LAYER)
+	var/list/layers = list("Alternate Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT)
 
-/obj/item/plunger/attack_obj(obj/O, mob/living/user)
+/obj/item/plunger/attack_obj(obj/O, mob/living/user, params)
 	if(layer_mode)
 		SEND_SIGNAL(O, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, O, target_layer)
 		return ..()
@@ -122,6 +122,7 @@
 	name = "reinforced plunger"
 	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
+	worn_icon_state = "reinforced_plunger"
 	reinforced = TRUE
 	plunge_mod = 0.8
 	layer_mode_sprite = "reinforced_plunger_layer"

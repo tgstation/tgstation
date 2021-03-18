@@ -15,7 +15,7 @@
 	/// Items available from this market, populated by SSblackmarket on initialization.
 	var/list/available_items = list()
 	/// Item categories available from this market, only items which are in these categories can be gotten from this market.
-	var/list/categories	= list()
+	var/list/categories = list()
 
 /datum/blackmarket_market/New()
 	. = ..()
@@ -69,8 +69,8 @@
 
 /datum/blackmarket_market/blackmarket
 	name = "Black Market"
-	shipping = list(SHIPPING_METHOD_LTSRBT	=50,
-					SHIPPING_METHOD_LAUNCH	=10,
+	shipping = list(SHIPPING_METHOD_LTSRBT =50,
+					SHIPPING_METHOD_LAUNCH =10,
 					SHIPPING_METHOD_TELEPORT=75)
 
 /datum/blackmarket_market/cybernetics

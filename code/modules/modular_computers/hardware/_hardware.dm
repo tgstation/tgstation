@@ -4,21 +4,21 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 
-	w_class = WEIGHT_CLASS_TINY	// w_class limits which devices can contain this component.
+	w_class = WEIGHT_CLASS_TINY // w_class limits which devices can contain this component.
 	// 1: PDAs/Tablets, 2: Laptops, 3-4: Consoles only
 	var/obj/item/modular_computer/holder = null
 	// Computer that holds this hardware, if any.
 
-	var/power_usage = 0 			// If the hardware uses extra power, change this.
-	var/enabled = TRUE				// If the hardware is turned off set this to 0.
-	var/critical = FALSE			// Prevent disabling for important component, like the CPU.
-	var/can_install = TRUE			// Prevents direct installation of removable media.
-	var/expansion_hw = FALSE		// Hardware that fits into expansion bays.
-	var/removable = TRUE			// Whether the hardware is removable or not.
-	var/damage = 0					// Current damage level
-	var/max_damage = 100			// Maximal damage level.
-	var/damage_malfunction = 20		// "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
-	var/damage_failure = 50			// "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
+	var/power_usage = 0 // If the hardware uses extra power, change this.
+	var/enabled = TRUE // If the hardware is turned off set this to 0.
+	var/critical = FALSE // Prevent disabling for important component, like the CPU.
+	var/can_install = TRUE // Prevents direct installation of removable media.
+	var/expansion_hw = FALSE // Hardware that fits into expansion bays.
+	var/removable = TRUE // Whether the hardware is removable or not.
+	var/damage = 0 // Current damage level
+	var/max_damage = 100 // Maximal damage level.
+	var/damage_malfunction = 20 // "Malfunction" threshold. When damage exceeds this value the hardware piece will semi-randomly fail and do !!FUN!! things
+	var/damage_failure = 50 // "Failure" threshold. When damage exceeds this value the hardware piece will not work at all.
 	var/malfunction_probability = 10// Chance of malfunction when the component is damaged
 	var/device_type
 

@@ -48,7 +48,7 @@
 		panel_open = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
-	update_icon()
+	update_appearance()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
 
@@ -57,32 +57,26 @@
 	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/firealarm/Destroy()
+	myarea.firereset(src)
 	LAZYREMOVE(myarea.firealarms, src)
-	if(triggered)
-		triggered = FALSE
-		myarea.triggered_firealarms -= 1
 	return ..()
 
 /obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
 		icon_state = "fire_b[buildstage]"
-		return
-
+		return ..()
 	if(machine_stat & BROKEN)
 		icon_state = "firex"
-		return
-
+		return ..()
 	icon_state = "fire0"
+	return ..()
 
 /obj/machinery/firealarm/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-
 	if(machine_stat & NOPOWER)
 		return
 
 	. += "fire_overlay"
-
 	if(is_station_level(z))
 		. += "fire_[GLOB.security_level]"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", layer, plane, dir)
@@ -125,7 +119,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	update_icon()
+	update_appearance()
 	if(user)
 		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
@@ -140,7 +134,7 @@
 	if(!triggered)
 		triggered = TRUE
 		myarea.triggered_firealarms += 1
-		update_icon()
+		update_appearance()
 	alarm()
 
 /obj/machinery/firealarm/atmos_end(datum/gas_mixture/air, exposed_temperature)
@@ -149,7 +143,7 @@
 	if(triggered)
 		triggered = FALSE
 		myarea.triggered_firealarms -= 1
-		update_icon()
+		update_appearance()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
 	if(!is_operational || !COOLDOWN_FINISHED(src, last_alarm))
@@ -165,11 +159,11 @@
 	if(!is_operational)
 		return
 	var/area/A = get_area(src)
-	A.firereset(src)
+	A.firereset()
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 
-/obj/machinery/firealarm/attack_hand(mob/user)
+/obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != 2)
 		return ..()
 	add_fingerprint(user)
@@ -192,7 +186,7 @@
 		W.play_tool_sound(src)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
-		update_icon()
+		update_appearance()
 		return
 
 	if(panel_open)
@@ -225,7 +219,7 @@
 					W.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
 					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
-					update_icon()
+					update_appearance()
 					return
 
 				else if(W.force) //hit and turn it on
@@ -244,7 +238,7 @@
 						coil.use(5)
 						buildstage = 2
 						to_chat(user, "<span class='notice'>You wire \the [src].</span>")
-						update_icon()
+						update_appearance()
 					return
 
 				else if(W.tool_behaviour == TOOL_CROWBAR)
@@ -259,14 +253,14 @@
 								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
 								new /obj/item/electronics/firealarm(user.loc)
 							buildstage = 0
-							update_icon()
+							update_appearance()
 					return
 			if(0)
 				if(istype(W, /obj/item/electronics/firealarm))
 					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
 					qdel(W)
 					buildstage = 1
-					update_icon()
+					update_appearance()
 					return
 
 				else if(istype(W, /obj/item/electroadaptive_pseudocircuit))
@@ -276,7 +270,7 @@
 					user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 					"<span class='notice'>You adapt a fire alarm circuit and slot it into the assembly.</span>")
 					buildstage = 1
-					update_icon()
+					update_appearance()
 					return
 
 				else if(W.tool_behaviour == TOOL_WRENCH)
@@ -301,7 +295,7 @@
 			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 			"<span class='notice'>You adapt a fire alarm circuit and slot it into the assembly.</span>")
 			buildstage = 1
-			update_icon()
+			update_appearance()
 			return TRUE
 	return FALSE
 
@@ -341,6 +335,21 @@
 		set_light(l_power = 0.8)
 	else
 		set_light(l_power = 0)
+
+/obj/machinery/firealarm/directional/north
+	pixel_y = 26
+
+/obj/machinery/firealarm/directional/south
+	dir = NORTH
+	pixel_y = -26
+
+/obj/machinery/firealarm/directional/east
+	dir = WEST
+	pixel_x = 26
+
+/obj/machinery/firealarm/directional/west
+	dir = EAST
+	pixel_x = -26
 
 /*
  * Return of Party button

@@ -16,14 +16,15 @@
 	health = 15
 	see_in_dark = 10
 	harm_intent_damage = 6
-	melee_damage_lower = 6
-	melee_damage_upper = 5
+	melee_damage_lower = 5
+	melee_damage_upper = 6
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	butcher_results = list(/obj/item/food/meat/slab = 1)
 	pass_flags = PASSTABLE
 	faction = list("hostile")
 	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mob_size = MOB_SIZE_TINY
@@ -48,12 +49,12 @@
 	emote_hear = list("chitters")
 	faction = list("spiders")
 	harm_intent_damage = 3
-	health = 200
 	icon_dead = "guard_dead"
 	icon_gib = "guard_dead"
 	icon_living = "guard"
 	icon_state = "guard"
 	maxHealth = 250
+	health = 250
 	max_co2 = 5
 	max_tox = 2
 	melee_damage_lower = 15

@@ -24,7 +24,8 @@
 	colour = "black"
 
 /obj/item/lipstick/black/death
-	name = "Kiss of Death"
+	name = "\improper Kiss of Death"
+	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
 	lipstick_trait = TRAIT_KISS_OF_DEATH
 
 /obj/item/lipstick/random
@@ -61,7 +62,7 @@
 	if(target.is_mouth_covered())
 		to_chat(user, "<span class='warning'>Remove [ target == user ? "your" : "[target.p_their()]" ] mask!</span>")
 		return
-	if(target.lip_style)	//if they already have lipstick on
+	if(target.lip_style) //if they already have lipstick on
 		to_chat(user, "<span class='warning'>You need to wipe off the old lipstick first!</span>")
 		return
 

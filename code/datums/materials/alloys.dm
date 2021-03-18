@@ -65,7 +65,7 @@
 	color = "#3a313a"
 	init_flags = MATERIAL_INIT_MAPLOAD
 	value_per_unit = 0.225
-	strength_modifier = 0.9	// It's a lightweight alloy.
+	strength_modifier = 0.9 // It's a lightweight alloy.
 	integrity_modifier = 1.3
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.4, ENERGY = 1.4, BOMB = 1.1, BIO = 1.2, RAD = 1.1, FIRE = 1.5, ACID = 1)
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium

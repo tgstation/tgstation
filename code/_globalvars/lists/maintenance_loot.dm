@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/clothing/mask/breath = 1,
 		/obj/item/shard = 1,
 
-		/obj/item/reagent_containers/pill/maintenance = 1,
+		/obj/item/reagent_containers/pill/maintenance/achievement = 1,
 		/obj/item/toy/eightball = 1,
 		) = 8,
 
@@ -132,6 +132,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/reagent_containers/glass/beaker = 1,
 		/obj/item/reagent_containers/glass/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
+		/obj/item/reagent_containers/glass/bottle/random_buffer = 2,
 		) = 1,
 
 	list(//food
@@ -238,7 +239,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		) = 8,
 
 	list(//fakeout items, keep this list at low relative weight
-		/obj/item/dice/d20 = 1,	//To balance out the stealth die of fates in oddities
+		/obj/item/dice/d20 = 1, //To balance out the stealth die of fates in oddities
 		/obj/item/clothing/shoes/jackboots = 1,
 		) = 1,
 ))
@@ -308,8 +309,8 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/spear/grey_tide = 1,
 		/obj/item/shadowcloak = 1,
 		/obj/item/clothing/head/helmet/abductor = 1,
-		/obj/item/dice/d20/fate/stealth/one_use = 1,	//Looks like a d20, keep the d20 in the uncommon pool.
-		/obj/item/dice/d20/fate/stealth/cursed = 1, 	//Only rolls 1
+		/obj/item/dice/d20/fate/stealth/one_use = 1, //Looks like a d20, keep the d20 in the uncommon pool.
+		/obj/item/dice/d20/fate/stealth/cursed = 1, //Only rolls 1
 		/obj/item/clothing/shoes/jackboots/fast = 1,
 		/obj/item/clothing/suit/armor/reactive/table = 1,
 		/obj/item/storage/box/donkpockets/donkpocketgondola = 1

@@ -15,14 +15,17 @@
 	//Stages
 	var/stage = 1
 	var/max_stages = 0
-	var/stage_prob = 4
+	/// The probability of this infection advancing a stage every second the cure is not present.
+	var/stage_prob = 2
 
 	//Other
 	var/list/viable_mobtypes = list() //typepaths of viable mobs
 	var/mob/living/carbon/affected_mob = null
 	var/list/cures = list() //list of cures if the disease has the CURABLE flag, these are reagent ids
-	var/infectivity = 65
-	var/cure_chance = 8
+	/// The probability of spreading through the air every second
+	var/infectivity = 41
+	/// The probability of this infection being cured every second the cure is present
+	var/cure_chance = 4
 	var/carrier = FALSE //If our host is only a carrier
 	var/bypasses_immunity = FALSE //Does it skip species virus immunity check? Some things may diseases and not viruses
 	var/permeability_mod = 1
@@ -64,16 +67,16 @@
 
 
 ///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
-/datum/disease/proc/stage_act()
+/datum/disease/proc/stage_act(delta_time, times_fired)
 	if(has_cure())
-		if(prob(cure_chance))
+		if(DT_PROB(cure_chance, delta_time))
 			update_stage(max(stage - 1, 1))
 
-		if(disease_flags & CURABLE && prob(cure_chance))
+		if(disease_flags & CURABLE && DT_PROB(cure_chance, delta_time))
 			cure()
 			return FALSE
 
-	else if(prob(stage_prob))
+	else if(DT_PROB(stage_prob, delta_time))
 		update_stage(min(stage + 1, max_stages))
 
 	return !carrier
@@ -164,7 +167,7 @@
 	return "[type]"
 
 /datum/disease/proc/remove_disease()
-	LAZYREMOVE(affected_mob.diseases, src)	//remove the datum from the list
+	LAZYREMOVE(affected_mob.diseases, src) //remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
 

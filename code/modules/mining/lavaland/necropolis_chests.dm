@@ -118,7 +118,7 @@
 
 /datum/design/unique_modkit
 	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
@@ -237,9 +237,9 @@
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(do_after(user, 40, target = user))
 		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
-		ADD_TRAIT(user, TRAIT_NODEATH, "memento_mori")
-		ADD_TRAIT(user, TRAIT_NOHARDCRIT, "memento_mori")
-		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -608,10 +608,8 @@
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
 /obj/item/reagent_containers/glass/bottle/potion/update_icon_state()
-	if(reagents.total_volume)
-		icon_state = "potionflask"
-	else
-		icon_state = "potionflask_empty"
+	icon_state = "potionflask[reagents.total_volume ? null : "_empty"]"
+	return ..()
 
 /datum/reagent/flightpotion
 	name = "Flight Potion"
@@ -968,14 +966,14 @@
 	cures = list(/datum/reagent/medicine/adminordrazine)
 	agent = "dragon's blood"
 	desc = "What do dragons have to do with Space Station 13?"
-	stage_prob = 20
+	stage_prob = 10
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
-	stage1	= list("Your bones ache.")
-	stage2	= list("Your skin feels scaly.")
-	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
-	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
+	stage1 = list("Your bones ache.")
+	stage2 = list("Your skin feels scaly.")
+	stage3 = list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
+	stage4 = list("<span class='danger'>Your blood burns.</span>")
+	stage5 = list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
 	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
 
@@ -1127,13 +1125,13 @@
 		var/obj/item/hierophant_club/club = src.target
 		if(istype(club))
 			club.blink_charged = FALSE
-			club.update_icon()
+			club.update_appearance()
 
 /datum/action/innate/dash/hierophant/charge()
 	var/obj/item/hierophant_club/club = target
 	if(istype(club))
 		club.blink_charged = TRUE
-		club.update_icon()
+		club.update_appearance()
 
 	current_charges = clamp(current_charges + 1, 0, max_charges)
 	holder.update_action_buttons_icon()
@@ -1212,6 +1210,7 @@
 
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
+	return ..()
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
 	if(!user.is_holding(src)) //you need to hold the staff to teleport
@@ -1298,8 +1297,7 @@
 
 /obj/item/hierophant_club/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
-	var/area/destination_area = turf_to_teleport_to.loc
-	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE) || destination_area.area_flags & NOTELEPORT)
+	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE))
 		return
 	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)
@@ -1309,7 +1307,7 @@
 	sleep(2)
 	if(!M)
 		return
-	M.forceMove(turf_to_teleport_to)
+	var/success = do_teleport(M, turf_to_teleport_to, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 	sleep(1)
 	if(!M)
 		return
@@ -1318,7 +1316,7 @@
 	if(!M)
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
-	if(user != M)
+	if(user != M && success)
 		log_combat(user, M, "teleported", null, "from [AREACOORD(source)]")
 
 /obj/item/hierophant_club/pickup(mob/living/user)

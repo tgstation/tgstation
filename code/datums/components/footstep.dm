@@ -40,6 +40,10 @@
 			footstep_sounds = 'sound/effects/bang.ogg'
 			RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/play_simplestep_machine) //Note that this doesn't get called for humans.
 			return
+		if(FOOTSTEP_OBJ_ROBOT)
+			footstep_sounds = 'sound/effects/tank_treads.ogg'
+			RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/play_simplestep_machine) //Note that this doesn't get called for humans.
+			return
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/play_simplestep) //Note that this doesn't get called for humans.
 
 ///Prepares a footstep. Determines if it should get played. Returns the turf it should get played on. Note that it is always a /turf/open

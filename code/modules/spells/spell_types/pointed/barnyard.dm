@@ -3,7 +3,7 @@
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	school = "transmutation"
 	charge_type = "recharge"
-	charge_max	= 150
+	charge_max = 150
 	charge_counter = 0
 	clothes_req = FALSE
 	stat_allowed = FALSE

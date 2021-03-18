@@ -272,6 +272,8 @@ What a mess.*/
 		active1 = null
 	if(!( GLOB.data_core.security.Find(active2) ))
 		active2 = null
+	if(!authenticated && href_list["choice"] != "Log In") // logging in is the only action you can do if not logged in
+		return
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || isAdminGhostAI(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
@@ -410,7 +412,7 @@ What a mess.*/
 						P.info += "<B>Security Record Lost!</B><BR>"
 						P.name = text("SR-[] '[]'", GLOB.data_core.securityPrintCount, "Record Lost")
 					P.info += "</TT>"
-					P.update_icon()
+					P.update_appearance()
 					printing = null
 			if("Print Poster")
 				if(!( printing ))
@@ -538,19 +540,19 @@ What a mess.*/
 
 				//Medical Record
 				var/datum/data/record/M = new /datum/data/record()
-				M.fields["id"]			= active1.fields["id"]
-				M.fields["name"]		= active1.fields["name"]
-				M.fields["blood_type"]	= "?"
-				M.fields["b_dna"]		= "?????"
-				M.fields["mi_dis"]		= "None"
-				M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
-				M.fields["ma_dis"]		= "None"
-				M.fields["ma_dis_d"]	= "No major disabilities have been diagnosed."
-				M.fields["alg"]			= "None"
-				M.fields["alg_d"]		= "No allergies have been detected in this patient."
-				M.fields["cdi"]			= "None"
-				M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-				M.fields["notes"]		= "No notes."
+				M.fields["id"] = active1.fields["id"]
+				M.fields["name"] = active1.fields["name"]
+				M.fields["blood_type"] = "?"
+				M.fields["b_dna"] = "?????"
+				M.fields["mi_dis"] = "None"
+				M.fields["mi_dis_d"] = "No minor disabilities have been declared."
+				M.fields["ma_dis"] = "None"
+				M.fields["ma_dis_d"] = "No major disabilities have been diagnosed."
+				M.fields["alg"] = "None"
+				M.fields["alg_d"] = "No allergies have been detected in this patient."
+				M.fields["cdi"] = "None"
+				M.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
+				M.fields["notes"] = "No notes."
 				GLOB.data_core.medical += M
 
 
@@ -737,7 +739,7 @@ What a mess.*/
 						if((istype(active1, /datum/data/record) && L.Find(rank)))
 							temp = "<h5>Rank:</h5>"
 							temp += "<ul>"
-							for(var/rank in get_all_jobs())
+							for(var/rank in SSjob.station_jobs)
 								temp += "<li><a href='?src=[REF(src)];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
 							temp += "</ul>"
 						else
@@ -749,7 +751,7 @@ What a mess.*/
 					if("Change Rank")
 						if(active1)
 							active1.fields["rank"] = strip_html(href_list["rank"])
-							if(href_list["rank"] in get_all_jobs())
+							if(href_list["rank"] in SSjob.station_jobs)
 								active1.fields["real_rank"] = href_list["real_rank"]
 
 					if("Change Criminal Status")

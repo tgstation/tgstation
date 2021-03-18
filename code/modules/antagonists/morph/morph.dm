@@ -28,6 +28,7 @@
 	attack_verb_continuous = "glomps"
 	attack_verb_simple = "glomp"
 	attack_sound = 'sound/effects/blobattack.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE //nom nom nom
 	butcher_results = list(/obj/item/food/meat/slab = 2)
 
 	var/morphed = FALSE
@@ -100,7 +101,7 @@
 					"<span class='notice'>You twist your body and assume the form of [target].</span>")
 	appearance = target.appearance
 	copy_overlays(target)
-	alpha = max(alpha, 150)	//fucking chameleons
+	alpha = max(alpha, 150) //fucking chameleons
 	transform = initial(transform)
 	pixel_y = base_pixel_y
 	pixel_x = base_pixel_x

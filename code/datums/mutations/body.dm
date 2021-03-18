@@ -9,8 +9,8 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/epilepsy/on_life()
-	if(prob(1 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS)
+/datum/mutation/human/epilepsy/on_life(delta_time, times_fired)
+	if(DT_PROB(0.5 * GET_MUTATION_SYNCHRONIZER(src), delta_time) && owner.stat == CONSCIOUS)
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Unconscious(200 * GET_MUTATION_POWER(src))
 		owner.Jitter(1000 * GET_MUTATION_POWER(src))
@@ -57,8 +57,8 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/cough/on_life()
-	if(prob(5 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS)
+/datum/mutation/human/cough/on_life(delta_time, times_fired)
+	if(DT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), delta_time) && owner.stat == CONSCIOUS)
 		owner.drop_all_held_items()
 		owner.emote("cough")
 		if(GET_MUTATION_POWER(src) > 1)
@@ -73,8 +73,8 @@
 	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
 	text_lose_indication = "<span class='notice'>The screaming in your mind fades.</span>"
 
-/datum/mutation/human/paranoia/on_life()
-	if(prob(5) && owner.stat == CONSCIOUS)
+/datum/mutation/human/paranoia/on_life(delta_time, times_fired)
+	if(DT_PROB(2.5, delta_time) && owner.stat == CONSCIOUS)
 		owner.emote("scream")
 		if(prob(25))
 			owner.hallucination += 20
@@ -135,8 +135,8 @@
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 	synchronizer_coeff = 1
 
-/datum/mutation/human/tourettes/on_life()
-	if(prob(10 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS && !owner.IsStun())
+/datum/mutation/human/tourettes/on_life(delta_time, times_fired)
+	if(DT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), delta_time) && owner.stat == CONSCIOUS && !owner.IsStun())
 		owner.Stun(200)
 		switch(rand(1, 3))
 			if(1)
@@ -267,12 +267,12 @@
 /datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "genetics")
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "genetics")
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/human/fire
 	name = "Fiery Sweat"
@@ -284,8 +284,8 @@
 	synchronizer_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/fire/on_life()
-	if(prob((1+(100-dna.stability)/10)) * GET_MUTATION_SYNCHRONIZER(src))
+/datum/mutation/human/fire/on_life(delta_time, times_fired)
+	if(DT_PROB((0.05+(100-dna.stability)/19.5) * GET_MUTATION_SYNCHRONIZER(src), delta_time))
 		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.IgniteMob()
 
@@ -312,8 +312,8 @@
 	power_coeff = 1
 	var/warpchance = 0
 
-/datum/mutation/human/badblink/on_life()
-	if(prob(warpchance))
+/datum/mutation/human/badblink/on_life(delta_time, times_fired)
+	if(DT_PROB(warpchance, delta_time))
 		var/warpmessage = pick(
 		"<span class='warning'>With a sickening 720-degree twist of [owner.p_their()] back, [owner] vanishes into thin air.</span>",
 		"<span class='warning'>[owner] does some sort of strange backflip into another dimension. It looks pretty painful.</span>",
@@ -321,13 +321,13 @@
 		"<span class='warning'>[owner]'s torso starts folding inside out until it vanishes from reality, taking [owner] with it.</span>",
 		"<span class='warning'>One moment, you see [owner]. The next, [owner] is gone.</span>")
 		owner.visible_message(warpmessage, "<span class='userdanger'>You feel a wave of nausea as you fall through reality!</span>")
-		var/warpdistance = rand(10,15) * GET_MUTATION_POWER(src)
+		var/warpdistance = rand(10, 15) * GET_MUTATION_POWER(src)
 		do_teleport(owner, get_turf(owner), warpdistance, channel = TELEPORT_CHANNEL_FREE)
 		owner.adjust_disgust(GET_MUTATION_SYNCHRONIZER(src) * (warpchance * warpdistance))
 		warpchance = 0
 		owner.visible_message("<span class='danger'>[owner] appears out of nowhere!</span>")
 	else
-		warpchance += 0.25 * GET_MUTATION_ENERGY(src)
+		warpchance += 0.0625 * GET_MUTATION_ENERGY(src) * delta_time
 
 /datum/mutation/human/acidflesh
 	name = "Acidic Flesh"
@@ -336,15 +336,16 @@
 	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
 	text_lose_indication = "<span class='notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and use on others
-	var/msgcooldown = 0
+	/// The cooldown for the warning message
+	COOLDOWN_DECLARE(msgcooldown)
 
-/datum/mutation/human/acidflesh/on_life()
-	if(prob(25))
-		if(world.time > msgcooldown)
+/datum/mutation/human/acidflesh/on_life(delta_time, times_fired)
+	if(DT_PROB(13, delta_time))
+		if(COOLDOWN_FINISHED(src, msgcooldown))
 			to_chat(owner, "<span class='danger'>Your acid flesh bubbles...</span>")
-			msgcooldown = world.time + 200
+			COOLDOWN_START(src, msgcooldown, 20 SECONDS)
 		if(prob(15))
-			owner.acid_act(rand(30,50), 10)
+			owner.acid_act(rand(30, 50), 10)
 			owner.visible_message("<span class='warning'>[owner]'s skin bubbles and pops.</span>", "<span class='userdanger'>Your bubbling flesh pops! It burns!</span>")
 			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
 

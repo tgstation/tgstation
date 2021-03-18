@@ -25,6 +25,7 @@
 
 			their_card.registered_name = user.real_name
 			their_card.update_label()
+			their_card.update_icon()
 
 	// NOT EVEN DEATH WILL TAKE AWAY THE STAIN
 	user.mind.name += " (suicide)"
@@ -39,7 +40,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(!mode)	//if it's off, give up.
+	if(!mode) //if it's off, give up.
 		return
 
 	if(!labels_left)
@@ -85,7 +86,7 @@
 	if(istype(I, /obj/item/hand_labeler_refill))
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		qdel(I)
-		labels_left = initial(labels_left)	//Yes, it's capped at its initial value
+		labels_left = initial(labels_left) //Yes, it's capped at its initial value
 
 /obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"

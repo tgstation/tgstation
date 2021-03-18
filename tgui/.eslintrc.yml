@@ -1,6 +1,7 @@
-parser: '@babel/eslint-parser'
+root: true
+parser: '@typescript-eslint/parser'
 parserOptions:
-  ecmaVersion: 2019
+  ecmaVersion: 2020
   sourceType: module
   ecmaFeatures:
     jsx: true
@@ -279,7 +280,8 @@ rules:
   no-shadow-restricted-names: error
   ## Disallow the use of undeclared variables unless mentioned
   ## in /*global*/ comments
-  no-undef: error
+  ## NOTE: Pointless when TypeScript can check for this
+  # no-undef: error
   ## Disallow initializing variables to undefined
   no-undef-init: error
   ## Disallow the use of undefined as an identifier

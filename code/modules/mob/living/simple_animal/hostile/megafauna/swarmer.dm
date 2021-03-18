@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		step(R, ddir) //Step the swarmers, instead of spawning them there, incase the turf is solid
 
 
-/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Life()
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		var/createtype = GetUncappedAISwarmerType()
@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	if(is_type_in_typecache(the_target, sharedWanted)) //always eat
 		return TRUE
 
-	return ..()	//else, have a nibble, see if it's food
+	return ..() //else, have a nibble, see if it's food
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource/OpenFire(atom/A)

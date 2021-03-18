@@ -180,13 +180,13 @@
 #define SDQL2_VALID_OPTION_TYPES list("proccall", "select", "priority", "autogc" , "sequential")
 #define SDQL2_VALID_OPTION_VALUES list("async", "blocking", "force_nulls", "skip_nulls", "high", "normal", "keep_alive" , "true")
 
-#define SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS			(1<<0)
-#define SDQL2_OPTION_BLOCKING_CALLS						(1<<1)
-#define SDQL2_OPTION_HIGH_PRIORITY						(1<<2)		//High priority SDQL query, allow using almost all of the tick.
-#define SDQL2_OPTION_DO_NOT_AUTOGC						(1<<3)
-#define SDQL2_OPTION_SEQUENTIAL							(1<<4)
+#define SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS (1<<0)
+#define SDQL2_OPTION_BLOCKING_CALLS (1<<1)
+#define SDQL2_OPTION_HIGH_PRIORITY (1<<2) //High priority SDQL query, allow using almost all of the tick.
+#define SDQL2_OPTION_DO_NOT_AUTOGC (1<<3)
+#define SDQL2_OPTION_SEQUENTIAL (1<<4)
 
-#define SDQL2_OPTIONS_DEFAULT		(SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS)
+#define SDQL2_OPTIONS_DEFAULT (SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS)
 
 #define SDQL2_IS_RUNNING (state == SDQL2_STATE_EXECUTING || state == SDQL2_STATE_SEARCHING || state == SDQL2_STATE_SWITCHING || state == SDQL2_STATE_PRESEARCH)
 #define SDQL2_HALT_CHECK if(!SDQL2_IS_RUNNING) {state = SDQL2_STATE_HALTING; return FALSE;};
@@ -315,8 +315,8 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	var/list/query_tree
 	var/state = SDQL2_STATE_IDLE
 	var/options = SDQL2_OPTIONS_DEFAULT
-	var/superuser = FALSE		//Run things like proccalls without using admin protections
-	var/allow_admin_interact = TRUE		//Allow admins to do things to this excluding varedit these two vars
+	var/superuser = FALSE //Run things like proccalls without using admin protections
+	var/allow_admin_interact = TRUE //Allow admins to do things to this excluding varedit these two vars
 	var/static/id_assign = 1
 	var/id = 0
 
@@ -431,11 +431,11 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	if(!action_click)
 		action_click = new(null, "INITIALIZNG", src)
 	var/list/L = list()
-	L[++L.len] = list("[id]		", "[delete_click.update("DELETE QUERY | STATE : [text_state()] | ALL/ELIG/FIN \
+	L[++L.len] = list("[id] ", "[delete_click.update("DELETE QUERY | STATE : [text_state()] | ALL/ELIG/FIN \
 	[islist(obj_count_all)? length(obj_count_all) : (isnull(obj_count_all)? "0" : obj_count_all)]/\
 	[islist(obj_count_eligible)? length(obj_count_eligible) : (isnull(obj_count_eligible)? "0" : obj_count_eligible)]/\
 	[islist(obj_count_finished)? length(obj_count_finished) : (isnull(obj_count_finished)? "0" : obj_count_finished)] - [get_query_text()]")]", REF(delete_click))
-	L[++L.len] = list("			", "[action_click.update("[SDQL2_IS_RUNNING? "HALT" : "RUN"]")]", REF(action_click))
+	L[++L.len] = list(" ", "[action_click.update("[SDQL2_IS_RUNNING? "HALT" : "RUN"]")]", REF(action_click))
 	return L
 
 /datum/sdql2_query/proc/delete_click()
@@ -735,7 +735,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 				text_list += " <font color='gray'>at</font> [T] [ADMIN_COORDJMP(T)]"
 				a = T.loc
 			else
-				var/turf/final = get_turf(T)		//Recursive, hopefully?
+				var/turf/final = get_turf(T) //Recursive, hopefully?
 				if(istype(final))
 					text_list += " <font color='gray'>at</font> [final] [ADMIN_COORDJMP(final)]"
 					a = final.loc

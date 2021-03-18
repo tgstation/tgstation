@@ -26,6 +26,7 @@
 	attack_verb_continuous = "pecks"
 	attack_verb_simple = "peck"
 	attack_sound = "goose"
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("honks")
 	faction = list("neutral")
 	attack_same = TRUE
@@ -156,11 +157,11 @@
 	else
 		addtimer(CALLBACK(src, .proc/suffocate), 300)
 
-/mob/living/simple_animal/hostile/retaliate/goose/Life()
+/mob/living/simple_animal/hostile/retaliate/goose/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(choking && !stat)
 		do_jitter_animation(50)
-		if(prob(20))
+		if(DT_PROB(10, delta_time))
 			emote("gasp")
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/suffocate()

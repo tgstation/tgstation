@@ -483,12 +483,12 @@
 /area/command/bridge)
 "bJ" = (
 /obj/structure/table,
-/obj/item/card/id/ert{
+/obj/item/card/id/advanced/centcom/ert{
 	pixel_x = 6;
 	pixel_y = -6
 	},
-/obj/item/card/id/syndicate/nuke_leader,
-/obj/item/card/id/captains_spare{
+/obj/item/card/id/advanced/chameleon,
+/obj/item/card/id/advanced/gold/captains_spare{
 	pixel_x = -6;
 	pixel_y = 6
 	},
@@ -535,12 +535,12 @@
 /area/medical/chemistry)
 "bR" = (
 /obj/machinery/camera/autoname,
-/obj/machinery/chem_heater,
 /obj/machinery/power/apc{
 	dir = 1;
 	pixel_y = 23
 	},
 /obj/structure/cable,
+/obj/machinery/chem_heater/debug,
 /turf/open/floor/iron/dark,
 /area/medical/chemistry)
 "bS" = (
@@ -2048,7 +2048,7 @@
 /area/construction)
 "gz" = (
 /obj/structure/table,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/advanced/gold/captains_spare,
 /obj/machinery/keycard_auth{
 	pixel_y = 28
 	},
@@ -2472,10 +2472,10 @@
 /turf/open/floor/iron,
 /area/medical/chemistry)
 "Df" = (
-/mob/living/carbon/human,
 /obj/machinery/light{
 	dir = 4
 	},
+/mob/living/carbon/human,
 /turf/open/floor/iron/dark,
 /area/science/nanite)
 "DW" = (
@@ -2615,6 +2615,10 @@
 /obj/machinery/nanite_chamber,
 /turf/open/floor/iron/dark,
 /area/science/nanite)
+"Nc" = (
+/obj/machinery/chem_recipe_debug,
+/turf/open/floor/iron,
+/area/medical/chemistry)
 "Ns" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/cable,
@@ -2798,6 +2802,10 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/atmos)
+"XZ" = (
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "Ym" = (
 /obj/structure/table,
 /obj/item/storage/box/disks_nanite,
@@ -7445,7 +7453,7 @@ aj
 hD
 cj
 ct
-Ce
+Nc
 cF
 bE
 bE
@@ -7917,7 +7925,7 @@ dD
 dJ
 dI
 dJ
-dJ
+XZ
 dJ
 dJ
 dJ

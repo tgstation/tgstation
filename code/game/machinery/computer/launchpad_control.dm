@@ -13,7 +13,7 @@
 	launchpads = list()
 	. = ..()
 
-/obj/machinery/computer/launchpad/attack_paw(mob/user)
+/obj/machinery/computer/launchpad/attack_paw(mob/user, list/modifiers)
 	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")
 	return
 

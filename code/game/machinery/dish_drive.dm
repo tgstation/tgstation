@@ -37,7 +37,7 @@
 	if(user.Adjacent(src))
 		. += "<span class='notice'>Alt-click it to beam its contents to any nearby disposal bins.</span>"
 
-/obj/machinery/dish_drive/attack_hand(mob/living/user)
+/obj/machinery/dish_drive/attack_hand(mob/living/user, list/modifiers)
 	if(!LAZYLEN(dish_drive_contents))
 		to_chat(user, "<span class='warning'>There's nothing in [src]!</span>")
 		return
@@ -132,7 +132,7 @@
 		playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 		playsound(bin, 'sound/items/pshoom.ogg', 50, TRUE)
 		Beam(bin, icon_state = "rped_upgrade", time = 5)
-		bin.update_icon()
+		bin.update_appearance()
 		flick("synthesizer_beam", src)
 	else
 		visible_message("<span class='notice'>There are no disposable items in [src]!</span>")

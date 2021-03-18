@@ -19,8 +19,7 @@ export const BlackMarketUplink = (props, context) => {
     <Window
       width={600}
       height={480}
-      theme="hackerman"
-      resizable>
+      theme="hackerman">
       <ShipmentSelector />
       <Window.Content scrollable>
         <Section

@@ -33,15 +33,9 @@
 /// Minumum plant health required for gene shears.
 #define GENE_SHEAR_MIN_HEALTH 15
 
-/// -- Plant analyzer scanning modes. --
-/// Stats mode - displays a plant's growth statistics (potency, yield, traits, etc.).
-#define PLANT_SCANMODE_STATS		0
-/// Chemical mode - displays a plant's reagents (either reagent genes or chemical contents).
-#define PLANT_SCANMODE_CHEMICALS 	1
-
 /// -- Flags for seeds. --
 /// Allows a plant to wild mutate (mutate on haravest) at a certain instability.
-#define MUTATE_EARLY	(1<<0)
+#define MUTATE_EARLY (1<<0)
 
 /// -- Flags for traits. --
 /// Caps the plant's yield at 5 instead of 10.

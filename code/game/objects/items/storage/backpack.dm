@@ -1,8 +1,8 @@
 /* Backpacks
  * Contains:
- *		Backpack
- *		Backpack Types
- *		Satchel Types
+ * Backpack
+ * Backpack Types
+ * Satchel Types
  */
 
 /*
@@ -17,7 +17,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK	//ERROOOOO
+	slot_flags = ITEM_SLOT_BACK //ERROOOOO
 	resistance_flags = NONE
 	max_integrity = 300
 
@@ -388,10 +388,8 @@
 	. = ..()
 
 /obj/item/storage/backpack/duffelbag/cursed/process()
-	///don't process if it's somehow on the floor
-	if(!iscarbon(src.loc))
-		return
-	var/mob/living/carbon/user = src.loc
+
+	var/mob/living/carbon/user = loc
 	///check hp
 	if(obj_integrity == 0)
 		user.dropItemToGround(src, TRUE)
@@ -400,16 +398,16 @@
 	if((hunger > 50) && prob(20))
 		for(var/obj/item/I in contents)
 			if(IS_EDIBLE(I))
-				var/obj/item/food/F = I
-				F.forceMove(user.loc)
+				var/obj/item/food/hunger_breaks = I //If you fed them poundland microwave meals, it probably would kill them
+				hunger_breaks.forceMove(user.loc)
 				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 				///poisoned food damages it
-				if(istype(F, /obj/item/food/badrecipe))
+				if(istype(hunger_breaks, /obj/item/food/badrecipe))
 					to_chat(user, "<span class='warning'>The [name] grumbles!</span>")
 					obj_integrity -= 50
 				else
-					to_chat(user, "<span class='notice'>The [name] eats your [F]!</span>")
-				qdel(F)
+					to_chat(user, "<span class='notice'>The [name] eats your [hunger_breaks]!</span>")
+				QDEL_NULL(hunger_breaks)
 				hunger = 0
 				return
 		///no food found: it bites you and loses some hp

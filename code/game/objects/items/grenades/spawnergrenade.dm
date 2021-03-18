@@ -7,7 +7,7 @@
 	var/spawner_type = null // must be an object path
 	var/deliveryamt = 1 // amount of type to deliver
 
-/obj/item/grenade/spawnergrenade/detonate(mob/living/lanced_by)			// Prime now just handles the two loops that query for people in lockers and people who can see it.
+/obj/item/grenade/spawnergrenade/detonate(mob/living/lanced_by) // Prime now just handles the two loops that query for people in lockers and people who can see it.
 	. = ..()
 	update_mob()
 	if(spawner_type && deliveryamt)

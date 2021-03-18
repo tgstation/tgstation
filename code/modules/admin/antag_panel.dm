@@ -169,13 +169,13 @@ GLOBAL_VAR(antag_prototypes)
 			antag_header_parts += pref_source.enabled_in_preferences(src) ? "Enabled in Prefs" : "Disabled in Prefs"
 
 		//Traitor : None | Traitor | IAA
-		//	Command1 | Command2 | Command3
-		//	Secret Word : Banana
-		//	Objectives:
-		//		1.Do the thing [a][b]
-		//		[a][b]
-		//	Memory:
-		//		Uplink Code: 777 Alpha
+		// Command1 | Command2 | Command3
+		// Secret Word : Banana
+		// Objectives:
+		// 1.Do the thing [a][b]
+		// [a][b]
+		// Memory:
+		// Uplink Code: 777 Alpha
 		var/cat_section = antag_header_parts.Join(" | ") + "<br>"
 		if(current_antag)
 			cat_section += current_antag.antag_panel()

@@ -188,7 +188,7 @@
 	)
 
 /datum/asset/simple/namespaced/common
-	assets = list("padlock.png"	= 'html/padlock.png')
+	assets = list("padlock.png" = 'html/padlock.png')
 	parents = list("common.css" = 'html/browser/common.css')
 
 /datum/asset/simple/permissions
@@ -452,7 +452,7 @@
 
 /datum/asset/simple/orbit
 	assets = list(
-		"ghost.png"	= 'html/ghost.png'
+		"ghost.png" = 'html/ghost.png'
 	)
 
 /datum/asset/simple/vv
@@ -488,7 +488,8 @@
 		var/list/portrait = p
 		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
 		if(fexists(png))
-			assets[portrait["title"]] = png
+			var/asset_name = "[tab]_[portrait["md5"]]"
+			assets[asset_name] = png
 	..() //this is where it registers all these assets we added to the list
 
 /datum/asset/simple/portraits/library
@@ -543,3 +544,36 @@
 	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
 	return replacetext(name, regex, "")
 
+/datum/asset/simple/tutorial_advisors
+	assets = list(
+		"chem_help_advisor.gif" = 'icons/UI_Icons/Advisors/chem_help_advisor.gif',
+	)
+
+/datum/asset/spritesheet/moods
+	name = "moods"
+	var/iconinserted = 1
+
+/datum/asset/spritesheet/moods/register()
+	for(var/i in 1 to 9)
+		var/target_to_insert = "mood"+"[iconinserted]"
+		Insert(target_to_insert, 'icons/hud/screen_gen.dmi', target_to_insert)
+		iconinserted++
+	..()
+
+/datum/asset/spritesheet/moods/ModifyInserted(icon/pre_asset)
+	var/blended_color
+	switch(iconinserted)
+		if(1)
+			blended_color = "#f15d36"
+		if(2 to 3)
+			blended_color = "#f38943"
+		if(4)
+			blended_color = "#dfa65b"
+		if(5)
+			blended_color = "#4b96c4"
+		if(6)
+			blended_color = "#86d656"
+		else
+			blended_color = "#2eeb9a"
+	pre_asset.Blend(blended_color, ICON_MULTIPLY)
+	return pre_asset

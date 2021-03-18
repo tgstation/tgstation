@@ -43,9 +43,9 @@
 ///Bounties that require you to perform documentation and inspection of your department to send to centcom.
 /datum/bounty/item/security/paperwork
 	name = "Routine Security Inspection"
-	description = "Perform a routine security inspection using an in-spect scanner on the following general area on station:"
+	description = "Perform a routine security inspection using an N-spect scanner on the following station area:"
 	required_count = 1
-	wanted_types = list(/obj/item/report)
+	wanted_types = list(/obj/item/paper/report)
 	reward = CARGO_CRATE_VALUE * 5
 	var/area/demanded_area
 
@@ -66,9 +66,9 @@
 
 /datum/bounty/item/security/paperwork/applies_to(obj/O)
 	. = ..()
-	if(!istype(O, /obj/item/report))
+	if(!istype(O, /obj/item/paper/report))
 		return FALSE
-	var/obj/item/report/slip = O
+	var/obj/item/paper/report/slip = O
 	if(istype(slip.scanned_area, demanded_area))
 		return TRUE
 	return FALSE

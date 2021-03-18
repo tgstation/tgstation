@@ -31,11 +31,11 @@ SUBSYSTEM_DEF(networks)
 
 	// Why not list?  Because its a Copy() every time we add a packet, and thats stupid.
 	var/datum/netdata/first = null // start of the queue.  Pulled off in fire.
-	var/datum/netdata/last = null	// end of the queue.  pushed on by transmit
+	var/datum/netdata/last = null // end of the queue.  pushed on by transmit
 	var/packet_count = 0
 	// packet stats
 	var/count_broadcasts_packets = 0 // count of broadcast packets sent
-	var/count_failed_packets = 0 	// count of message fails
+	var/count_failed_packets = 0 // count of message fails
 	var/count_good_packets = 0
 	// Logs moved here
 	// Amount of logs the system tries to keep in memory. Keep below 999 to prevent byond from acting weirdly.
@@ -152,10 +152,10 @@ SUBSYSTEM_DEF(networks)
 				_process_packet(current.receiver_id, current) // single target
 				POP_PACKET(current)
 			else // ok so lets find the network to send it too
-				var/datum/ntnet/net = networks[current.network_id]		// get the sending network
-				net = net?.networks[current.receiver_id]				// find the target network to broadcast
-				if(net)		// we found it
-					current.receiver_id = net.collect_interfaces()		// make a list of all the sending targets
+				var/datum/ntnet/net = networks[current.network_id] // get the sending network
+				net = net?.networks[current.receiver_id] // find the target network to broadcast
+				if(net) // we found it
+					current.receiver_id = net.collect_interfaces() // make a list of all the sending targets
 				else
 					// We got an error, the network is bad so send a NAK
 					target_interface = interfaces_by_hardware_id[current.sender_id]
@@ -188,7 +188,7 @@ SUBSYSTEM_DEF(networks)
 	return NETWORK_ERROR_OK
 
 
-/datum/controller/subsystem/networks/proc/check_relay_operation(zlevel=0)	//can be expanded later but right now it's true/false.
+/datum/controller/subsystem/networks/proc/check_relay_operation(zlevel=0) //can be expanded later but right now it's true/false.
 	for(var/i in relays)
 		var/obj/machinery/ntnet_relay/n = i
 		if(zlevel && n.z != zlevel)
@@ -284,8 +284,8 @@ SUBSYSTEM_DEF(networks)
  * be put in the object.area
  *
  * An example on what the area.network_root_id does/
- * Before Init: 	obj.network_id = "ATMOS.SCRUBBER"  area.network_root_id="SS13_STATION" area.network_area_id = "BRIDGE"
- * After Init:		obj.network_id = "SS13_STATION.ATMOS.SCRUBBER" also obj.network_id = "SS13_STATION.AREA.BRIDGE"
+ * Before Init: obj.network_id = "ATMOS.SCRUBBER"  area.network_root_id="SS13_STATION" area.network_area_id = "BRIDGE"
+ * After Init: obj.network_id = "SS13_STATION.ATMOS.SCRUBBER" also obj.network_id = "SS13_STATION.AREA.BRIDGE"
  *
  * Arguments:
  * * area - Area to modify the root id.
@@ -299,12 +299,12 @@ SUBSYSTEM_DEF(networks)
 	/// If we are a ruin or a shuttle, we get our own network
 	if(M)
 		/// if we have a template, try to get the network id from the template
-		if(M.station_id && M.station_id != LIMBO_NETWORK_ROOT)		// check if the template specifies it
+		if(M.station_id && M.station_id != LIMBO_NETWORK_ROOT) // check if the template specifies it
 			A.network_root_id = simple_network_name_fix(M.station_id)
-		else if(istype(M, /datum/map_template/shuttle))					 // if not, then check if its a shuttle type
-			var/datum/map_template/shuttle/T = M	// we are a shuttle so use shuttle id
+		else if(istype(M, /datum/map_template/shuttle))  // if not, then check if its a shuttle type
+			var/datum/map_template/shuttle/T = M // we are a shuttle so use shuttle id
 			A.network_root_id = simple_network_name_fix(T.shuttle_id)
-		else if(istype(M,/datum/map_template/ruin))						// if not again, check if its a ruin type
+		else if(istype(M,/datum/map_template/ruin)) // if not again, check if its a ruin type
 			var/datum/map_template/ruin/R = M
 			A.network_root_id = simple_network_name_fix(R.id)
 
@@ -312,7 +312,7 @@ SUBSYSTEM_DEF(networks)
 		// Anything in Centcom is completely isolated
 		// Special case for holodecks.
 		if(istype(A,/area/holodeck))
-			A.network_root_id =  "HOLODECK"		// isolated from the station network
+			A.network_root_id =  "HOLODECK" // isolated from the station network
 		else if(SSmapping.level_trait(A.z, ZTRAIT_CENTCOM))
 			A.network_root_id =  CENTCOM_NETWORK_ROOT
 		// Otherwise the default is the station
@@ -327,9 +327,9 @@ SUBSYSTEM_DEF(networks)
 		// finally  set the network area id, bit copy paste from area Initialize
 		// This is done in case we have more than one area type, each area instance has its own network name
 	if(!A.network_area_id)
-		A.network_area_id = A.network_root_id + ".AREA." + simple_network_name_fix(A.name) 		// Make the string
+		A.network_area_id = A.network_root_id + ".AREA." + simple_network_name_fix(A.name) // Make the string
 		if(!(A.area_flags & UNIQUE_AREA)) // if we aren't a unique area, make sure our name is different
-			A.network_area_id = SSnetworks.assign_random_name(5, A.network_area_id + "_")		// tack on some garbage incase there are two area types
+			A.network_area_id = SSnetworks.assign_random_name(5, A.network_area_id + "_") // tack on some garbage incase there are two area types
 
 /datum/controller/subsystem/networks/proc/assign_areas_root_ids(list/areas, datum/map_template/M=null)
 	for(var/area/A in areas)
@@ -489,8 +489,8 @@ SUBSYSTEM_DEF(networks)
 		var/string = md5("[num2text(rand(HID_RESTRICTED_END, 999999999), 12)]")
 		if(!string)
 			log_runtime("Could not generagea m5 hash from address, problem with md5?")
-			return		//errored
-		. = "[copytext_char(string, 1, 9)]"		//16 ^ 8 possibilities I think.
+			return //errored
+		. = "[copytext_char(string, 1, 9)]" //16 ^ 8 possibilities I think.
 	while(interfaces_by_hardware_id[.])
 
 /**

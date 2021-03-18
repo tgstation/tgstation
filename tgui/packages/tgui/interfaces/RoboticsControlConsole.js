@@ -13,8 +13,7 @@ export const RoboticsControlConsole = (props, context) => {
   return (
     <Window
       width={500}
-      height={460}
-      resizable>
+      height={460}>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab

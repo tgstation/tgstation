@@ -22,13 +22,13 @@
 		_victim.force_moving = src
 		START_PROCESSING(SSfastprocess, src)
 	else
-		qdel(src)	//if you want to overwrite the current forced movement, call qdel(victim.force_moving) before creating this
+		qdel(src) //if you want to overwrite the current forced movement, call qdel(victim.force_moving) before creating this
 
 /datum/forced_movement/Destroy()
 	if(victim.force_moving == src)
 		victim.force_moving = null
 		if(moved_at_all)
-			victim.forceMove(victim.loc)	//get the side effects of moving here that require us to currently not be force_moving aka reslipping on ice
+			victim.forceMove(victim.loc) //get the side effects of moving here that require us to currently not be force_moving aka reslipping on ice
 		STOP_PROCESSING(SSfastprocess, src)
 	victim = null
 	target = null
@@ -54,7 +54,7 @@
 	if(QDELETED(src)) //Our previous step caused deletion of this datum
 		return
 
-	var/atom/movable/vic = victim	//sanic
+	var/atom/movable/vic = victim //sanic
 	var/atom/tar = target
 
 	if(!recursive)
