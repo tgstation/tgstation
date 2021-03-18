@@ -8,10 +8,10 @@
 	gas_transfer_coefficient = 0.9
 	equip_delay_other = 20
 
-/obj/item/clothing/mask/muzzle/attack_paw(mob/user)
+/obj/item/clothing/mask/muzzle/attack_paw(mob/user, list/modifiers)
 	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.wear_mask)
+		var/mob/living/carbon/carbon_user = user
+		if(src == carbon_user.wear_mask)
 			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
 			return
 	..()
@@ -38,6 +38,7 @@
 	name = "fake moustache"
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
+	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEFACE
 	species_exception = list(/datum/species/golem)
 
@@ -103,6 +104,7 @@
 			nk.name = "[name] neckerchief"
 			nk.desc = "[desc] It's tied up like a neckerchief."
 			nk.icon_state = icon_state
+			nk.item_flags = item_flags
 			nk.worn_icon = 'icons/misc/hidden.dmi' //hide underlying neckerchief object while it applies its own mutable appearance
 			nk.sourceBandanaType = src.type
 			var/currentHandIndex = user.get_held_index_of_item(src)

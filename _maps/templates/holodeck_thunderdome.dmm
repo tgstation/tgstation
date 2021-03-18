@@ -1,0 +1,148 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table,
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+"c" = (
+/obj/structure/window{
+	dir = 1
+	},
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+"h" = (
+/obj/structure/table,
+/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/clothing/suit/armor/tdome/green,
+/obj/item/clothing/under/color/green,
+/obj/item/holo/esword/green,
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+"q" = (
+/obj/structure/table,
+/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/clothing/suit/armor/tdome/red,
+/obj/item/clothing/under/color/red,
+/obj/item/holo/esword/red,
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+"x" = (
+/obj/structure/window,
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+"B" = (
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+"Q" = (
+/obj/structure/table,
+/obj/machinery/readybutton,
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+
+(1,1,1) = {"
+Q
+B
+B
+B
+x
+c
+B
+B
+B
+a
+"}
+(2,1,1) = {"
+q
+B
+B
+B
+x
+c
+B
+B
+B
+h
+"}
+(3,1,1) = {"
+q
+B
+B
+B
+x
+c
+B
+B
+B
+h
+"}
+(4,1,1) = {"
+q
+B
+B
+B
+x
+c
+B
+B
+B
+h
+"}
+(5,1,1) = {"
+q
+B
+B
+B
+x
+c
+B
+B
+B
+h
+"}
+(6,1,1) = {"
+q
+B
+B
+B
+x
+c
+B
+B
+B
+h
+"}
+(7,1,1) = {"
+q
+B
+B
+B
+x
+c
+B
+B
+B
+h
+"}
+(8,1,1) = {"
+q
+B
+B
+B
+x
+c
+B
+B
+B
+h
+"}
+(9,1,1) = {"
+a
+B
+B
+B
+x
+c
+B
+B
+B
+Q
+"}

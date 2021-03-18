@@ -11,9 +11,9 @@ Crate cost is 500cr for a regular plasteel crate and 100cr for a large wooden on
 This is to avoid easy cargo points dupes.
 
 Credit dupes that require a lot of manual work shouldn't be removed, unless they yield too much profit for too little work.
-For example, if some player buys metal and glass sheets and uses them to make and sell reinforced glass:
+For example, if some player buys iron and glass sheets and uses them to make and sell reinforced glass:
 
-100 glass + 50 metal -> 100 reinforced glass
+100 glass + 50 iron-> 100 reinforced glass
 1500cr -> 1600cr)
 
 Then the player gets the profit from selling his own wasted time.
@@ -21,10 +21,10 @@ Then the player gets the profit from selling his own wasted time.
 
 // Simple holder datum to pass export results around
 /datum/export_report
-	var/list/exported_atoms = list()	//names of atoms sold/deleted by export
-	var/list/total_amount = list()		//export instance => total count of sold objects of its type, only exists if any were sold
-	var/list/total_value = list()		//export instance => total value of sold objects
-	var/list/exported_atoms_ref = list()	//if they're not deleted they go in here for use.
+	var/list/exported_atoms = list() //names of atoms sold/deleted by export
+	var/list/total_amount = list() //export instance => total count of sold objects of its type, only exists if any were sold
+	var/list/total_value = list() //export instance => total value of sold objects
+	var/list/exported_atoms_ref = list() //if they're not deleted they go in here for use.
 
 // external_report works as "transaction" object, pass same one in if you're doing more than one export in single go
 /proc/export_item_and_contents(atom/movable/AM, apply_elastic = TRUE, delete_unsold = TRUE, dry_run=FALSE, datum/export_report/external_report)
@@ -64,15 +64,23 @@ Then the player gets the profit from selling his own wasted time.
 	return report
 
 /datum/export
-	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
+	/// Unit name. Only used in "Received [total_amount] [name]s [message]." message
+	var/unit_name = ""
 	var/message = ""
-	var/cost = 1					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
-	var/k_elasticity = 1/30			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
-	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
-	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
-	var/list/exclude_types = list()	// Types excluded from export
+	/// Cost of item, in cargo credits. Must not allow for infinite price dupes, see above.
+	var/cost = 1
+	/// coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
+	var/k_elasticity = 1/30
+	/// The multiplier of the amount sold shown on the report. Useful for exports, such as material, which costs are not strictly per single units sold.
+	var/amount_report_multiplier = 1
+	/// Type of the exported object. If none, the export datum is considered base type.
+	var/list/export_types = list()
+	/// Set to FALSE to make the datum apply only to a strict type.
+	var/include_subtypes = TRUE
+	/// Types excluded from export
+	var/list/exclude_types = list()
 
-	//cost includes elasticity, this does not.
+	/// cost includes elasticity, this does not.
 	var/init_cost
 
 
@@ -99,9 +107,9 @@ Then the player gets the profit from selling his own wasted time.
 	var/amount = get_amount(O)
 	if(apply_elastic)
 		if(k_elasticity!=0)
-			return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
+			return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount))) //anti-derivative of the marginal cost function
 		else
-			return round(cost * amount)	//alternative form derived from L'Hopital to avoid division by 0
+			return round(cost * amount) //alternative form derived from L'Hopital to avoid division by 0
 	else
 		return round(init_cost * amount)
 
@@ -149,14 +157,11 @@ Then the player gets the profit from selling his own wasted time.
 		the_cost = the_cost * ((100 - profit_ratio) * 0.01)
 	report.total_value[src] += the_cost
 
-	if(istype(O, /datum/export/material))
-		report.total_amount[src] += amount*MINERAL_MATERIAL_AMOUNT
-	else
-		report.total_amount[src] += amount
+	report.total_amount[src] += amount*amount_report_multiplier
 
 	if(!dry_run)
 		if(apply_elastic)
-			cost *= NUM_E**(-1*k_elasticity*amount)		//marginal cost modifier
+			cost *= NUM_E**(-1*k_elasticity*amount) //marginal cost modifier
 		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[O.type]", "[the_cost]"))
 	return TRUE
 

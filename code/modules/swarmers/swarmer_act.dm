@@ -5,13 +5,13 @@
  * Arguments:
  * * S - A reference to the swarmer doing the interaction
  */
-#define DANGEROUS_DELTA_P 250	//Value in kPa where swarmers arent allowed to break a wall or window with this difference in pressure.
+#define DANGEROUS_DELTA_P 250 //Value in kPa where swarmers arent allowed to break a wall or window with this difference in pressure.
 
 ///Finds the greatest difference in pressure across a turf, only considers open turfs.
 /turf/proc/return_turf_delta_p()
 	var/pressure_greatest = 0
-	var/pressure_smallest = INFINITY 					//Freaking terrified to use INFINITY, man
-	for(var/t in RANGE_TURFS(1, src))			//Begin processing the delta pressure across the wall.
+	var/pressure_smallest = INFINITY //Freaking terrified to use INFINITY, man
+	for(var/t in RANGE_TURFS(1, src)) //Begin processing the delta pressure across the wall.
 		var/turf/open/turf_adjacent = t
 		if(!istype(turf_adjacent))
 			continue
@@ -109,7 +109,7 @@
 
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(get_area(src), /area/shuttle)
-	for(var/turf/turf_in_range in range(1, src))
+	for(var/turf/turf_in_range as anything in RANGE_TURFS(1, src))
 		var/area/turf_area = get_area(turf_in_range)
 		//Check for dangerous pressure differences
 		if (turf_in_range.return_turf_delta_p() > DANGEROUS_DELTA_P)
@@ -122,7 +122,7 @@
 			actor.target = null
 			return FALSE
 		//Check if this door is important in supermatter containment
-		else if(istype(turf_area, /area/engine/supermatter))
+		else if(istype(turf_area, /area/engineering/supermatter))
 			to_chat(actor, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			actor.target = null
 			return FALSE
@@ -193,7 +193,7 @@
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(loc, /area/shuttle)
-	for(var/turf/turf_in_range in range(1, src))
+	for(var/turf/turf_in_range as anything in RANGE_TURFS(1, src))
 		var/area/turf_area = get_area(turf_in_range)
 		if (turf_in_range.return_turf_delta_p() > DANGEROUS_DELTA_P)
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")
@@ -203,7 +203,7 @@
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return TRUE
-		else if(istype(turf_area, /area/engine/supermatter))
+		else if(istype(turf_area, /area/engineering/supermatter))
 			to_chat(actor, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			actor.target = null
 			return TRUE
@@ -222,7 +222,7 @@
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 			actor.target = null
 			return TRUE
-		else if(istype(turf_area, /area/engine/supermatter))
+		else if(istype(turf_area, /area/engineering/supermatter))
 			to_chat(actor, "<span class='warning'>Disrupting the containment of a supermatter crystal would not be to our benefit. Aborting.</span>")
 			actor.target = null
 			return TRUE

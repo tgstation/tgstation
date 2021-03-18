@@ -6,7 +6,7 @@
 /obj/machinery/shower{
 	pixel_y = 12
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/snow_biodome)
 "ac" = (
 /obj/item/stack/medical/ointment,
@@ -45,10 +45,10 @@
 /obj/structure/sink{
 	pixel_y = 26
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/snow_biodome)
 "aj" = (
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/snow_biodome)
 "ak" = (
 /turf/open/floor/plating/asteroid/snow,
@@ -63,7 +63,7 @@
 /area/ruin/powered/snow_biodome)
 "an" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/snow_biodome)
 "ao" = (
 /turf/open/floor/plating/ice,
@@ -163,7 +163,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/snow_biodome)
 "aL" = (
 /obj/structure/displaycase/captain,

@@ -48,7 +48,7 @@
 ///Draws a rune on a selected turf
 /obj/item/forbidden_book/proc/draw_rune(atom/target,mob/user)
 
-	for(var/turf/T in range(1,target))
+	for(var/turf/T as anything in RANGE_TURFS(1,target))
 		if(is_type_in_typecache(T, blacklisted_turfs))
 			to_chat(user, "<span class='warning'>The terrain doesn't support runes!</span>")
 			return
@@ -131,10 +131,11 @@
 				if(initial(EK.name) != ekname)
 					continue
 				if(cultie.gain_knowledge(EK))
-					charge -= text2num(params["cost"])
+					log_codex_ciatrix("[key_name(last_user)] gained knowledge of [EK]")
+					charge -= initial(EK.cost)
 					return TRUE
 
-	update_icon() // Not applicable to all objects.
+	update_appearance() // Not applicable to all objects.
 
 /obj/item/forbidden_book/ui_close(mob/user)
 	flick("book_closing",src)

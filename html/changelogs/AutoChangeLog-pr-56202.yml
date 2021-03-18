@@ -1,4 +1,0 @@
-author: "park66665, Ghilker, Rohesie"
-delete-after: True
-changes: 
-  - bugfix: "fixed atmos component Destroy() a little bit."

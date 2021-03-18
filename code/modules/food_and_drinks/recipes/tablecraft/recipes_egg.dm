@@ -17,7 +17,7 @@
 	name = "Omelette"
 	reqs = list(
 		/obj/item/food/egg = 2,
-		/obj/item/food/cheesewedge = 2
+		/obj/item/food/cheese = 2
 	)
 	result = /obj/item/food/omelette
 	subcategory = CAT_EGG
@@ -51,3 +51,15 @@
 	)
 	result = /obj/item/food/salad/eggbowl
 	subcategory = CAT_EGG
+
+/datum/crafting_recipe/food/chawanmushi
+	name = "Chawanmushi"
+	reqs = list(
+		/datum/reagent/water = 5,
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/food/boiledegg = 2,
+		/obj/item/food/grown/mushroom/chanterelle = 1
+	)
+	result = /obj/item/food/chawanmushi
+	subcategory = CAT_EGG
+	

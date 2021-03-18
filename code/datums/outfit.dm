@@ -17,23 +17,46 @@
 	///Name of the outfit (shows up in the equip admin verb)
 	var/name = "Naked"
 
+	/// Type path of item to go in the idcard slot
+	var/id = null
+
+	/// Type path of ID card trim associated with this outfit.
+	var/id_trim = null
+
 	/// Type path of item to go in uniform slot
 	var/uniform = null
 
 	/// Type path of item to go in suit slot
 	var/suit = null
 
+	/**
+	  * Type path of item to go in suit storage slot
+	  *
+	  * (make sure it's valid for that suit)
+	  */
+	var/suit_store = null
+
 	/// Type path of item to go in back slot
 	var/back = null
+
+	/**
+	  * list of items that should go in the backpack of the user
+	  *
+	  * Format of this list should be: list(path=count,otherpath=count)
+	  */
+	var/list/backpack_contents = null
 
 	/// Type path of item to go in belt slot
 	var/belt = null
 
+	/// Type path of item to go in ears slot
+	var/ears = null
+
+	/// Type path of item to go in the glasses slot
+	var/glasses = null
+
 	/// Type path of item to go in gloves slot
 	var/gloves = null
-
-	/// Type path of item to go in shoes slot
-	var/shoes = null
 
 	/// Type path of item to go in head slot
 	var/head = null
@@ -44,14 +67,8 @@
 	/// Type path of item to go in neck slot
 	var/neck = null
 
-	/// Type path of item to go in ears slot
-	var/ears = null
-
-	/// Type path of item to go in the glasses slot
-	var/glasses = null
-
-	/// Type path of item to go in the idcard slot
-	var/id = null
+	/// Type path of item to go in shoes slot
+	var/shoes = null
 
 	/// Type path of item for left pocket slot
 	var/l_pocket = null
@@ -59,57 +76,17 @@
 	/// Type path of item for right pocket slot
 	var/r_pocket = null
 
-	/**
-	  * Type path of item to go in suit storage slot
-	  *
-	  * (make sure it's valid for that suit)
-	  */
-	var/suit_store = null
-
 	///Type path of item to go in the right hand
-	var/r_hand = null
-
-	//Type path of item to go in left hand
 	var/l_hand = null
 
-	/// Should the toggle helmet proc be called on the helmet during equip
-	var/toggle_helmet = TRUE
-
-	///ID of the slot containing a gas tank
-	var/internals_slot = null
-
-	/**
-	  * list of items that should go in the backpack of the user
-	  *
-	  * Format of this list should be: list(path=count,otherpath=count)
-	  */
-	var/list/backpack_contents = null
-
-	/// Internals box. Will be inserted at the start of backpack_contents
-	var/box
-
-	/**
-	  * Any implants the mob should start implanted with
-	  *
-	  * Format of this list is (typepath, typepath, typepath)
-	  */
-	var/list/implants = null
-
-	/**
-	  * Any skillchips the mob should have in their brain.
-	  *
-	  * Format of this list is (typepath, typepath, typepath)
-	  */
-	var/list/skillchips = null
-
-	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
-	var/datum/sprite_accessory/undershirt = null
+	//Type path of item to go in left hand
+	var/r_hand = null
 
 	/// Any clothing accessory item
 	var/accessory = null
 
-	/// Set to FALSE if your outfit requires runtime parameters
-	var/can_be_admin_equipped = TRUE
+	/// Internals box. Will be inserted at the start of backpack_contents
+	var/box
 
 	/**
 	  * extra types for chameleon outfit changes, mostly guns
@@ -119,6 +96,29 @@
 	  * These are all added and returns in the list for get_chamelon_diguise_info proc
 	  */
 	var/list/chameleon_extras
+
+	/**
+	  * Any implants the mob should start implanted with
+	  *
+	  * Format of this list is (typepath, typepath, typepath)
+	  */
+	var/list/implants = null
+
+	///ID of the slot containing a gas tank
+	var/internals_slot = null
+
+	/**
+	  * Any skillchips the mob should have in their brain.
+	  *
+	  * Format of this list is (typepath, typepath, typepath)
+	  */
+	var/list/skillchips = null
+
+	/// Should the toggle helmet proc be called on the helmet during equip
+	var/toggle_helmet = TRUE
+
+	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
+	var/datum/sprite_accessory/undershirt = null
 
 /**
  * Called at the start of the equip proc
@@ -186,6 +186,10 @@
 		H.equip_to_slot_or_del(new glasses(H),ITEM_SLOT_EYES, TRUE)
 	if(id)
 		H.equip_to_slot_or_del(new id(H),ITEM_SLOT_ID, TRUE)
+	if(!visualsOnly && id_trim && H.wear_id)
+		var/obj/item/card/id/id_card = H.wear_id
+		if(istype(id_card) && !SSid_access.apply_trim_to_card(id_card, id_trim))
+			WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),ITEM_SLOT_SUITSTORE, TRUE)
 
@@ -269,7 +273,7 @@
 	if(!istype(H))
 		return
 	if(H.back)
-		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
+		H.back.add_fingerprint(H,1) //The 1 sets a flag to ignore gloves
 		for(var/obj/item/I in H.back.contents)
 			I.add_fingerprint(H,1)
 	if(H.wear_id)

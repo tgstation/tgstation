@@ -5,6 +5,7 @@
 	desc = "A small bottle."
 	icon_state = "bottle"
 	inhand_icon_state = "atoxinbottle"
+	worn_icon_state = "bottle"
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30
 	fill_icon_thresholds = list(0, 10, 30, 50, 70)
@@ -13,7 +14,7 @@
 	. = ..()
 	if(!icon_state)
 		icon_state = "bottle"
-	update_icon()
+	update_appearance()
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
 	name = "epinephrine bottle"

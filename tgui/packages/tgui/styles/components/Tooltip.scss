@@ -31,7 +31,7 @@ $border-radius: base.$border-radius !default;
     opacity: 0;
     text-align: left;
     content: attr(data-tooltip);
-    transition: all 150ms;
+    transition: all 150ms ease-out;
     background-color: $background-color;
     color: $color;
     box-shadow: 0.1em 0.1em 1.25em -0.1em rgba(0, 0, 0, 0.5);

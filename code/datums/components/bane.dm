@@ -41,8 +41,8 @@
 		return
 	activate(source, target, user)
 
-/datum/component/bane/proc/activate(obj/item/source, mob/living/target, mob/attacker)
-	if(attacker.a_intent != INTENT_HARM)
+/datum/component/bane/proc/activate(obj/item/source, mob/living/target, mob/living/attacker)
+	if(!attacker.combat_mode)
 		return
 
 	var/extra_damage = max(0, source.force * damage_multiplier)

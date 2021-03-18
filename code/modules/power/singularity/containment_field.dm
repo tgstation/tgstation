@@ -30,7 +30,7 @@
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/field/containment/attack_hand(mob/user)
+/obj/machinery/field/containment/attack_hand(mob/user, list/modifiers)
 	if(get_dist(src, user) > 1)
 		return FALSE
 	else
@@ -54,14 +54,14 @@
 /obj/machinery/field/containment/ex_act(severity, target)
 	return FALSE
 
-/obj/machinery/field/containment/attack_animal(mob/living/simple_animal/M)
+/obj/machinery/field/containment/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(!FG1 || !FG2)
 		qdel(src)
 		return
-	if(ismegafauna(M))
-		M.visible_message("<span class='warning'>[M] glows fiercely as the containment field flickers out!</span>")
+	if(ismegafauna(user))
+		user.visible_message("<span class='warning'>[user] glows fiercely as the containment field flickers out!</span>")
 		FG1.calc_power(INFINITY) //rip that 'containment' field
-		M.adjustHealth(-M.obj_damage)
+		user.adjustHealth(-user.obj_damage)
 	else
 		return ..()
 

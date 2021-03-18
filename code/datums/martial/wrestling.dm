@@ -5,7 +5,7 @@ The original authors are: cogwerks, pistoleer, spyguy, angriestibm, marquesas, a
 If you make a derivative work from this code, you must include this notification header alongside it.
 */
 
-/mob/living/carbon/human/proc/wrestling_help()
+/mob/living/proc/wrestling_help()
 	set name = "Recall Teachings"
 	set desc = "Remember how to wrestle."
 	set category = "Wrestling"
@@ -24,7 +24,7 @@ If you make a derivative work from this code, you must include this notification
 	var/datum/action/strike/strike = new/datum/action/strike()
 	var/datum/action/drop/drop = new/datum/action/drop()
 
-/datum/martial_art/wrestling/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/check_streak(mob/living/A, mob/living/D)
 	switch(streak)
 		if("drop")
 			streak = ""
@@ -57,8 +57,7 @@ If you make a derivative work from this code, you must include this notification
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to BODY SLAM!</span>", "<b><i>Your next attack will be a BODY SLAM.</i></b>")
-	var/mob/living/carbon/human/H = owner
-	H.mind.martial_art.streak = "slam"
+	owner.mind.martial_art.streak = "slam"
 
 /datum/action/throw_wrassle
 	name = "Throw (Cinch) - Spin a cinched opponent around and throw them."
@@ -69,8 +68,7 @@ If you make a derivative work from this code, you must include this notification
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to THROW!</span>", "<b><i>Your next attack will be a THROW.</i></b>")
-	var/mob/living/carbon/human/H = owner
-	H.mind.martial_art.streak = "throw"
+	owner.mind.martial_art.streak = "throw"
 
 /datum/action/kick
 	name = "Kick - A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
@@ -81,8 +79,7 @@ If you make a derivative work from this code, you must include this notification
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to KICK!</span>", "<b><i>Your next attack will be a KICK.</i></b>")
-	var/mob/living/carbon/human/H = owner
-	H.mind.martial_art.streak = "kick"
+	owner.mind.martial_art.streak = "kick"
 
 /datum/action/strike
 	name = "Strike - Hit a neaby opponent with a quick attack."
@@ -93,8 +90,7 @@ If you make a derivative work from this code, you must include this notification
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to STRIKE!</span>", "<b><i>Your next attack will be a STRIKE.</i></b>")
-	var/mob/living/carbon/human/H = owner
-	H.mind.martial_art.streak = "strike"
+	owner.mind.martial_art.streak = "strike"
 
 /datum/action/drop
 	name = "Drop - Smash down onto an opponent."
@@ -105,34 +101,33 @@ If you make a derivative work from this code, you must include this notification
 		to_chat(owner, "<span class='warning'>You can't WRESTLE while you're OUT FOR THE COUNT.</span>")
 		return
 	owner.visible_message("<span class='danger'>[owner] prepares to LEG DROP!</span>", "<b><i>Your next attack will be a LEG DROP.</i></b>")
-	var/mob/living/carbon/human/H = owner
-	H.mind.martial_art.streak = "drop"
+	owner.mind.martial_art.streak = "drop"
 
-/datum/martial_art/wrestling/teach(mob/living/carbon/human/H,make_temporary=0)
+/datum/martial_art/wrestling/teach(mob/living/owner, make_temporary=FALSE)
 	if(..())
-		to_chat(H, "<span class='userdanger'>SNAP INTO A THIN TIM!</span>")
-		to_chat(H, "<span class='danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
-		drop.Grant(H)
-		kick.Grant(H)
-		slam.Grant(H)
-		throw_wrassle.Grant(H)
-		strike.Grant(H)
+		to_chat(owner, "<span class='userdanger'>SNAP INTO A THIN TIM!</span>")
+		to_chat(owner, "<span class='danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
+		drop.Grant(owner)
+		kick.Grant(owner)
+		slam.Grant(owner)
+		throw_wrassle.Grant(owner)
+		strike.Grant(owner)
 
-/datum/martial_art/wrestling/on_remove(mob/living/carbon/human/H)
-	to_chat(H, "<span class='userdanger'>You no longer feel that the tower of power is too sweet to be sour...</span>")
-	drop.Remove(H)
-	kick.Remove(H)
-	slam.Remove(H)
-	throw_wrassle.Remove(H)
-	strike.Remove(H)
+/datum/martial_art/wrestling/on_remove(mob/living/owner)
+	to_chat(owner, "<span class='userdanger'>You no longer feel that the tower of power is too sweet to be sour...</span>")
+	drop.Remove(owner)
+	kick.Remove(owner)
+	slam.Remove(owner)
+	throw_wrassle.Remove(owner)
+	strike.Remove(owner)
 
-/datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/wrestling/harm_act(mob/living/A, mob/living/D)
 	if(check_streak(A,D))
 		return 1
 	log_combat(A, D, "punched with wrestling")
 	..()
 
-/datum/martial_art/wrestling/proc/throw_wrassle(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/throw_wrassle(mob/living/A, mob/living/D)
 	if(!D)
 		return
 	if(!A.pulling || A.pulling != D)
@@ -203,11 +198,11 @@ If you make a derivative work from this code, you must include this notification
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/Paralyze, 20))
+			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living.proc/Paralyze, 20))
 	log_combat(A, D, "has thrown with wrestling")
 	return
 
-/datum/martial_art/wrestling/proc/FlipAnimation(mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/FlipAnimation(mob/living/D)
 	set waitfor = FALSE
 	if (D)
 		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
@@ -215,7 +210,7 @@ If you make a derivative work from this code, you must include this notification
 	if (D)
 		animate(D, transform = null, time = 1, loop = 0)
 
-/datum/martial_art/wrestling/proc/slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/slam(mob/living/A, mob/living/D)
 	if(!D)
 		return
 	if(!A.pulling || A.pulling != D)
@@ -327,11 +322,11 @@ If you make a derivative work from this code, you must include this notification
 	log_combat(A, D, "body-slammed")
 	return
 
-/datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/carbon/human/A, turf/T)
+/datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/A, turf/T)
 	if (A && (T && isturf(T) && get_dist(A, T) <= 1))
 		A.forceMove(T)
 
-/datum/martial_art/wrestling/proc/strike(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/strike(mob/living/A, mob/living/D)
 	if(!D)
 		return
 	var/turf/T = get_turf(A)
@@ -350,7 +345,7 @@ If you make a derivative work from this code, you must include this notification
 		D.Unconscious(20)
 	log_combat(A, D, "headbutted")
 
-/datum/martial_art/wrestling/proc/kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/kick(mob/living/A, mob/living/D)
 	if(!D)
 		return
 	A.emote("scream")
@@ -369,7 +364,7 @@ If you make a derivative work from this code, you must include this notification
 		D.throw_at(T, 3, 2)
 	log_combat(A, D, "roundhouse-kicked")
 
-/datum/martial_art/wrestling/proc/drop(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/drop(mob/living/A, mob/living/D)
 	if(!D)
 		return
 	var/obj/surface = null
@@ -447,13 +442,13 @@ If you make a derivative work from this code, you must include this notification
 	log_combat(A, D, "leg-dropped")
 	return
 
-/datum/martial_art/wrestling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/wrestling/disarm_act(mob/living/A, mob/living/D)
 	if(check_streak(A,D))
 		return 1
 	log_combat(A, D, "wrestling-disarmed")
 	..()
 
-/datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/wrestling/grab_act(mob/living/A, mob/living/D)
 	if(check_streak(A,D))
 		return 1
 	if(A.pulling == D)
@@ -472,18 +467,12 @@ If you make a derivative work from this code, you must include this notification
 
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	. = ..()
-	if(!ishuman(user))
-		return
 	if(slot == ITEM_SLOT_BELT)
-		var/mob/living/carbon/human/H = user
-		style.teach(H,1)
+		style.teach(user, TRUE)
 	return
 
 /obj/item/storage/belt/champion/wrestling/dropped(mob/user)
 	. = ..()
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(ITEM_SLOT_BELT) == src)
-		style.remove(H)
+	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
+		style.remove(user)
 	return

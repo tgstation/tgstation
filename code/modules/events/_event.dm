@@ -1,30 +1,35 @@
-//this datum is used by the events controller to dictate how it selects events
-/datum/round_event_control
-	var/name						//The human-readable name of the event
-	var/typepath					//The typepath of the event datum /datum/round_event
+#define RANDOM_EVENT_ADMIN_INTERVENTION_TIME 10
 
-	var/weight = 10					//The weight this event has in the random-selection process.
+//this singleton datum is used by the events controller to dictate how it selects events
+/datum/round_event_control
+	var/name //The human-readable name of the event
+	var/typepath //The typepath of the event datum /datum/round_event
+
+	var/weight = 10 //The weight this event has in the random-selection process.
 									//Higher weights are more likely to be picked.
 									//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
 									//0 here does NOT disable the event, it just makes it extremely unlikely
 
-	var/earliest_start = 20 MINUTES	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
-	var/min_players = 0				//The minimum amount of alive, non-AFK human players on server required to start the event.
+	var/earliest_start = 20 MINUTES //The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
+	var/min_players = 0 //The minimum amount of alive, non-AFK human players on server required to start the event.
 
-	var/occurrences = 0				//How many times this event has occured
-	var/max_occurrences = 20		//The maximum number of times this event can occur (naturally), it can still be forced.
+	var/occurrences = 0 //How many times this event has occured
+	var/max_occurrences = 20 //The maximum number of times this event can occur (naturally), it can still be forced.
 									//By setting this to 0 you can effectively disable an event.
 
-	var/holidayID = ""				//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
+	var/holidayID = "" //string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
 									//anything with a (non-null) holidayID which does not match holiday, cannot run.
 	var/wizardevent = FALSE
-	var/alert_observers = TRUE		//should we let the ghosts and admins know this event is firing
+	var/alert_observers = TRUE //should we let the ghosts and admins know this event is firing
 									//should be disabled on events that fire a lot
 
 	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
 	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
 
-	var/triggering	//admin cancellation
+	var/triggering //admin cancellation
+
+	/// Whether or not dynamic should hijack this event
+	var/dynamic_should_hijack = FALSE
 
 /datum/round_event_control/New()
 	if(config && !wizardevent) // Magic is unaffected by configs
@@ -55,16 +60,24 @@
 		return FALSE
 	if(ispath(typepath, /datum/round_event/ghost_role) && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
 		return FALSE
+
+	var/datum/game_mode/dynamic/dynamic = SSticker.mode
+	if (istype(dynamic) && dynamic_should_hijack && dynamic.random_event_hijacked != HIJACKED_NOTHING)
+		return FALSE
+
 	return TRUE
 
 /datum/round_event_control/proc/preRunEvent()
 	if(!ispath(typepath, /datum/round_event))
 		return EVENT_CANT_RUN
 
+	if (SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PRE_RANDOM_EVENT, src) & CANCEL_PRE_RANDOM_EVENT)
+		return EVENT_INTERRUPTED
+
 	triggering = TRUE
 	if (alert_observers)
-		message_admins("Random Event triggering in 10 seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
-		sleep(100)
+		message_admins("Random Event triggering in [RANDOM_EVENT_ADMIN_INTERVENTION_TIME] seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME SECONDS)
 		var/gamemode = SSticker.mode.config_tag
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 		if(!canSpawnEvent(players_amt, gamemode))
@@ -72,7 +85,7 @@
 			return EVENT_INTERRUPTED
 
 	if(!triggering)
-		return EVENT_CANCELLED	//admin cancelled
+		return EVENT_CANCELLED //admin cancelled
 	triggering = FALSE
 	return EVENT_READY
 
@@ -105,18 +118,18 @@
 /datum/round_event_control/proc/admin_setup()
 	return
 
-/datum/round_event	//NOTE: Times are measured in master controller ticks!
+/datum/round_event //NOTE: Times are measured in master controller ticks!
 	var/processing = TRUE
 	var/datum/round_event_control/control
 
-	var/startWhen		= 0	//When in the lifetime to call start().
-	var/announceWhen	= 0	//When in the lifetime to call announce(). If you don't want it to announce use announceChance, below.
-	var/announceChance	= 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Used in ion storms currently.
-	var/endWhen			= 0	//When in the lifetime the event should end.
+	var/startWhen = 0 //When in the lifetime to call start().
+	var/announceWhen = 0 //When in the lifetime to call announce(). If you don't want it to announce use announceChance, below.
+	var/announceChance = 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Used in ion storms currently.
+	var/endWhen = 0 //When in the lifetime the event should end.
 
-	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
-	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
-	var/fakeable = TRUE		//Can be faked by fake news event.
+	var/activeFor = 0 //How long the event has existed. You don't need to change this.
+	var/current_players = 0 //Amount of of alive, non-AFK human players on server at the time of event start
+	var/fakeable = TRUE //Can be faked by fake news event.
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -215,3 +228,5 @@
 	processing = my_processing
 	SSevents.running += src
 	return ..()
+
+#undef RANDOM_EVENT_ADMIN_INTERVENTION_TIME

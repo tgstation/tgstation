@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Civilian Bounties now show the fulfillment value, instead of the value of the cube total. The UI is not lying anymore!"

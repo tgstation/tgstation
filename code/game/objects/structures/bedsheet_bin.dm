@@ -30,7 +30,7 @@ LINEN BINS
 	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
 
 /obj/item/bedsheet/attack_self(mob/user)
-	if(!user.CanReach(src))		//No telekenetic grabbing.
+	if(!user.CanReach(src)) //No telekenetic grabbing.
 		return
 	if(!user.dropItemToGround(src))
 		return
@@ -325,11 +325,12 @@ LINEN BINS
 			icon_state = "linenbin-half"
 		else
 			icon_state = "linenbin-full"
+	return ..()
 
 /obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
 	if(amount)
 		amount = 0
-		update_icon()
+		update_appearance()
 	..()
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
@@ -339,7 +340,7 @@ LINEN BINS
 		sheets.Add(I)
 		amount++
 		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-		update_icon()
+		update_appearance()
 
 	else if(default_unfasten_wrench(user, I, 5))
 		return
@@ -355,7 +356,7 @@ LINEN BINS
 			new /obj/item/stack/rods(loc, 2)
 			qdel(src)
 
-	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>")
 			return
@@ -363,10 +364,10 @@ LINEN BINS
 		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 
 
-/obj/structure/bedsheetbin/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/bedsheetbin/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/bedsheetbin/attack_hand(mob/user)
+/obj/structure/bedsheetbin/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -388,7 +389,7 @@ LINEN BINS
 		B.forceMove(drop_location())
 		user.put_in_hands(B)
 		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
-		update_icon()
+		update_appearance()
 
 		if(hidden)
 			hidden.forceMove(drop_location())
@@ -412,7 +413,7 @@ LINEN BINS
 
 		B.forceMove(drop_location())
 		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
-		update_icon()
+		update_appearance()
 
 		if(hidden)
 			hidden.forceMove(drop_location())

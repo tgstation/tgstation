@@ -229,14 +229,14 @@
 
 /obj/item/food/popsicle/update_overlays()
 	. = ..()
-	if(bitecount)
-		. += "[initial(overlay_state)]_[min(bitecount, 3)]"
-	else
+	if(!bitecount)
 		. += initial(overlay_state)
+		return
+	. += "[initial(overlay_state)]_[min(bitecount, 3)]"
 
 /obj/item/food/popsicle/proc/after_bite(mob/living/eater, mob/living/feeder, bitecount)
 	src.bitecount = bitecount
-	update_icon()
+	update_appearance()
 
 /obj/item/popsicle_stick
 	name = "popsicle stick"

@@ -8,6 +8,7 @@ import { Window } from '../layouts';
 export const ChemDispenser = (props, context) => {
   const { act, data } = useBackend(context);
   const recording = !!data.recordingRecipe;
+  const { recipeReagents = [] } = data;
   const [hasCol, setHasCol] = useLocalState(
     context, 'has_col', false);
   // TODO: Change how this piece of shit is built on server side
@@ -30,27 +31,32 @@ export const ChemDispenser = (props, context) => {
   return (
     <Window
       width={565}
-      height={620}
-      resizable>
+      height={620}>
       <Window.Content scrollable>
         <Section
           title="Status"
           buttons={(
-            <Fragment>          
+            <>
               {recording && (
                 <Box inline mx={1} color="red">
                   <Icon name="circle" mr={1} />
                   Recording
                 </Box>
               )}
-              <Button      
-                key="colorButton"
+              <Button
+                icon="book"
+                disabled={!data.isBeakerLoaded}
+                content={"Reaction search"}
+                tooltip={data.isBeakerLoaded ? "Look up recipes and reagents!" : "Please insert a beaker!"}
+                tooltipPosition="bottom-left"
+                onClick={() => act('reaction_lookup')} />
+              <Button
                 icon="cog"
                 tooltip="Color code the reagents by pH"
                 tooltipPosition="bottom-left"
                 selected={hasCol}
                 onClick={() => setHasCol(!hasCol)} />
-            </Fragment>
+            </>
           )}>
           <LabeledList>
             <LabeledList.Item label="Energy">
@@ -138,7 +144,9 @@ export const ChemDispenser = (props, context) => {
                 lineHeight={1.75}
                 content={chemical.title}
                 tooltip={"pH: " + chemical.pH}
-                backgroundColor={hasCol ? chemical.pHCol : "primary"}
+                backgroundColor={recipeReagents.includes(chemical.id)
+                  ? hasCol ? "black" : "green"
+                  : hasCol ? chemical.pHCol : "default"}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
                 })} />

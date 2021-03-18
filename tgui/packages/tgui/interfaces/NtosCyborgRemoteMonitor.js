@@ -6,8 +6,7 @@ export const NtosCyborgRemoteMonitor = (props, context) => {
   return (
     <NtosWindow
       width={600}
-      height={800}
-      resizable>
+      height={800}>
       <NtosWindow.Content scrollable>
         <NtosCyborgRemoteMonitorContent />
       </NtosWindow.Content>
@@ -79,7 +78,7 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                     : "Not Found"}
                 </Box>
               </LabeledList.Item>
-              <LabeledList.Item label="Module">
+              <LabeledList.Item label="Model">
                 {cyborg.module}
               </LabeledList.Item>
               <LabeledList.Item label="Upgrades">

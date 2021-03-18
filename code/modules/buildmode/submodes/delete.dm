@@ -8,19 +8,17 @@
 		***********************************************************</span>")
 
 /datum/buildmode_mode/delete/handle_click(client/c, params, object)
-	var/list/pa = params2list(params)
-	var/left_click = pa.Find("left")
-	var/right_click = pa.Find("right")
+	var/list/modifiers = params2list(params)
 
-	if(left_click)
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		if(isturf(object))
 			var/turf/T = object
 			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		else if(isatom(object))
 			qdel(object)
 
-	if(right_click)
-		if(check_rights(R_DEBUG|R_SERVER))	//Prevents buildmoded non-admins from breaking everything.
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(check_rights(R_DEBUG|R_SERVER)) //Prevents buildmoded non-admins from breaking everything.
 			if(isturf(object))
 				return
 			var/atom/deleting = object

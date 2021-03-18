@@ -22,13 +22,8 @@ export const CentcomPodLauncher = (props, context) => {
   const [compact] = useCompact(context);
   return (
     <Window
-      resizable
-      key={'CPL_' + compact}
-      title={compact
-        ? "Use against Helen Weinstein"
-        : "Supply Pod Menu (Use against Helen Weinstein)"}
-      overflow="hidden"
-      width={compact ? 435 : 730}
+      title="Supply Pod Menu (Use against Helen Weinstein)"
+      width={compact ? 460 : 730}
       height={compact ? 360 : 440}>
       <CentcomPodLauncherContent />
     </Window>
@@ -424,7 +419,7 @@ const ViewTabHolder = (props, context) => {
   const { mapRef } = data;
   const TabPageComponent = TABPAGES[tabPageIndex].component();
   return (
-    <Section title="View" fill buttons={(
+    <Section fill title="View" buttons={(
       <>
         {(!!data.customDropoff && data.effectReverse===1) && (
           <Button
@@ -489,15 +484,13 @@ const ViewTabHolder = (props, context) => {
           <TabPageComponent />
         </Stack.Item>
         <Stack.Item grow>
-          <Section fill>
-            <ByondUi
-              fillPositionedParent
-              params={{
-                zoom: 0,
-                id: mapRef,
-                type: 'map',
-              }} />
-          </Section>
+          <ByondUi
+            height="100%"
+            params={{
+              zoom: 0,
+              id: mapRef,
+              type: 'map',
+            }} />
         </Stack.Item>
       </Stack>
     </Section>

@@ -91,6 +91,7 @@
 
 /obj/machinery/air_sensor/update_icon_state()
 	icon_state = "gsensor[on]"
+	return ..()
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)
@@ -199,11 +200,11 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if(!info)
 			continue
 		data["sensors"] += list(list(
-			"id_tag"		= id_tag,
-			"long_name" 	= sanitize(long_name),
-			"pressure"		= info["pressure"],
-			"temperature"	= info["temperature"],
-			"gases"			= info["gases"]
+			"id_tag" = id_tag,
+			"long_name" = sanitize(long_name),
+			"pressure" = info["pressure"],
+			"temperature" = info["temperature"],
+			"gases" = info["gases"]
 		))
 	return data
 

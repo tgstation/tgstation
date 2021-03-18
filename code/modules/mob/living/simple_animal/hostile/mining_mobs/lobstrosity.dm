@@ -1,5 +1,5 @@
 /**
- *	Lobstrosities, the poster boy of charging AI mobs. Drops crab meat and bones.
+ * Lobstrosities, the poster boy of charging AI mobs. Drops crab meat and bones.
  * Outside of charging, it's intended behavior is that it is generally slow moving, but makes up for that with a knockdown attack to score additional hits.
  */
 /mob/living/simple_animal/hostile/asteroid/lobstrosity
@@ -24,6 +24,7 @@
 	attack_verb_continuous = "snips"
 	attack_verb_simple = "snip"
 	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE //the closest we have to a crustacean pinching attack effect rn.
 	weather_immunities = list("snow")
 	vision_range = 5
 	aggro_vision_range = 7

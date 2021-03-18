@@ -34,7 +34,7 @@
 	. = ..()
 	if(books_to_load && isnum(books_to_load))
 		books_to_load += pick(-1,-1,0,1,1)
-	update_icon()
+	update_appearance()
 
 /proc/create_random_books(amount, location, fail_loud = FALSE, category = null, obj/item/book/existing_book)
 	. = list()
@@ -59,12 +59,12 @@
 		while(query_get_random_books.NextRow())
 			var/obj/item/book/B
 			B = existing_book ? existing_book : new(location)
-			B.author	=	query_get_random_books.item[1]
-			B.title		=	query_get_random_books.item[2]
-			B.dat		=	query_get_random_books.item[3]
-			B.name		=	"Book: [B.title]"
+			B.author = query_get_random_books.item[1]
+			B.title = query_get_random_books.item[2]
+			B.dat = query_get_random_books.item[3]
+			B.name = "Book: [B.title]"
 			if(!existing_book)
-				B.icon_state=	"book[rand(1,8)]"
+				B.icon_state= "book[rand(1,8)]"
 	qdel(query_get_random_books)
 
 /obj/structure/bookcase/random/fiction

@@ -17,12 +17,13 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attack_verb_continuous = "staves"
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	speak_emote = list("chants")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	aggro_vision_range = 9
 	turns_per_move = 5
-	gold_core_spawnable = HOSTILE_SPAWN
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
 	faction = list(ROLE_WIZARD)
 	footstep_type = FOOTSTEP_MOB_SHOE
 	weather_immunities = list("lava","ash")

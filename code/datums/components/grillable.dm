@@ -1,5 +1,5 @@
 /datum/component/grillable
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS 		// So you can change grill results with various cookstuffs
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // So you can change grill results with various cookstuffs
 	///Result atom type of grilling this object
 	var/atom/cook_result
 	///Amount of time required to cook the food
@@ -62,7 +62,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/AddGrilledItemOverlay)
 
 	var/atom/A = parent
-	A.update_icon()
+	A.update_appearance()
 
 ///Ran when an object finished grilling
 /datum/component/grillable/proc/FinishGrilling(atom/grill_source)
@@ -98,7 +98,7 @@
 	currently_grilling = FALSE
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
-	A.update_icon()
+	A.update_appearance()
 
 /datum/component/grillable/proc/AddGrilledItemOverlay(datum/source, list/overlays)
 	SIGNAL_HANDLER

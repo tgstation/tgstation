@@ -21,6 +21,7 @@
 	. = ..()
 	if(.)
 		equilibrium.speed_mod = creation_purity*modifier //So a purity 1 = the modifier, and a purity 0 = the inverse modifier. For this we don't want a negative speed_mod (I have no idea what happens if we do)
+		equilibrium.time_deficit += (creation_purity)*(0.05 * modifier) //give the reaction a little boost too (40% faster)
 
 /datum/reagent/catalyst_agent/ph
 	name ="pH catalyst agent"
@@ -41,6 +42,7 @@
 ///These affect medicines
 /datum/reagent/catalyst_agent/speed/medicine
 	name = "Palladium synthate catalyst"
+	description = "This catalyst reagent will speed up all medicine reactions that it shares a beaker with by a dramatic amount."
 	target_reagent_type = /datum/reagent/medicine
 	modifier = 2
 	ph = 2 //drift towards acidity

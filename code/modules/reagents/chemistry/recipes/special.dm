@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
 	for(var/A in subtypesof(/datum/reagent/medicine))
 		var/datum/reagent/R = A
-		if(initial(R.can_synth))
+		if(initial(R.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
 			. += R
 
 #define RNGCHEM_INPUT "input"
@@ -314,4 +314,4 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	dat += "</ul>"
 	dat += "."
 	info = dat.Join("")
-	update_icon()
+	update_appearance()

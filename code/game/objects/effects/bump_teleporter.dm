@@ -2,9 +2,9 @@
 	name = "bump-teleporter"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
-	var/id = null			//id of this bump_teleporter.
-	var/id_target = null	//id of bump_teleporter which this moves you to.
-	invisibility = INVISIBILITY_ABSTRACT 		//nope, can't see this
+	var/id = null //id of this bump_teleporter.
+	var/id_target = null //id of bump_teleporter which this moves you to.
+	invisibility = INVISIBILITY_ABSTRACT //nope, can't see this
 	anchored = TRUE
 	density = TRUE
 	opacity = FALSE

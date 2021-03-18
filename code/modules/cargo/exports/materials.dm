@@ -1,6 +1,7 @@
 /datum/export/material
 	cost = 5 // Cost per MINERAL_MATERIAL_AMOUNT, which is 2000cm3 as of April 2016.
 	message = "cm3 of developer's tears. Please, report this on github"
+	amount_report_multiplier = MINERAL_MATERIAL_AMOUNT
 	var/material_id = null
 	export_types = list(
 		/obj/item/stack/sheet/mineral, /obj/item/stack/tile/mineral,
@@ -89,12 +90,12 @@
 	message = "cm3 of runite"
 	material_id = /datum/material/runite
 
-/datum/export/material/metal
+/datum/export/material/iron
 	cost = CARGO_CRATE_VALUE * 0.01
-	message = "cm3 of metal"
+	message = "cm3 of iron"
 	material_id = /datum/material/iron
 	export_types = list(
-		/obj/item/stack/sheet/metal, /obj/item/stack/tile/plasteel,
+		/obj/item/stack/sheet/iron, /obj/item/stack/tile/iron,
 		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)
 
 /datum/export/material/glass
