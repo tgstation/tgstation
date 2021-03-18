@@ -37,6 +37,7 @@
 #define SS_BACKGROUND 4
 
 /// subsystem does not tick check, and should not run unless there is enough time (or its running behind (unless background))
+/// DEPRECIATED
 #define SS_NO_TICK_CHECK 8
 
 /** Treat wait as a tick count, not DS, run every wait ticks. */
