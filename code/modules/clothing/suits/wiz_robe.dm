@@ -190,8 +190,7 @@
 	recharge_rate = 0
 	current_charges = 15
 	recharge_cooldown = INFINITY
-	shield_state = "shield-red"
-	shield_on = "shield-red"
+	shield_icon = "shield-red"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard

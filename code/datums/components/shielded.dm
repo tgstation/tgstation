@@ -23,8 +23,10 @@
 	COOLDOWN_DECLARE(recently_hit_cd)
 	/// The cooldown tracking when we last replenished a charge
 	COOLDOWN_DECLARE(charge_add_cd)
+	/// A callback for the sparks/message that play when a charge is used, see [/datum/component/shielded/proc/default_run_hit_callback]
+	var/datum/callback/on_hit_effects
 
-/datum/component/shielded/Initialize(max_charges = 3, last_hit_recharge_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE)
+/datum/component/shielded/Initialize(max_charges = 3, last_hit_recharge_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
 	if(!isitem(parent) || max_charges <= 0)
 		return COMPONENT_INCOMPATIBLE
 
@@ -34,6 +36,7 @@
 	src.shield_icon_file = shield_icon_file
 	src.shield_icon = shield_icon
 	src.shield_inhand = shield_inhand
+	src.on_hit_effects = run_hit_callback || CALLBACK(src, .proc/default_run_hit_callback)
 
 	current_charges = max_charges
 	if(last_hit_recharge_delay)
@@ -112,7 +115,10 @@
 
 	overlays += mutable_appearance('icons/effects/effects.dmi', (current_charges > 0 ? shield_icon : "broken"), MOB_LAYER + 0.01)
 
-/// The initial check to see if we have a charge to block the hit
+/**
+ * This proc fires when we're hit, and is responsible for checking if we're charged, then deducting one + returning that we're blocking if so.
+ * It then runs the callback in [/datum/component/shielded/var/on_hit_effects] which handles the messages/sparks (so the visuals)
+ */
 /datum/component/shielded/proc/on_hit_react(datum/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
 	SIGNAL_HANDLER
 
@@ -122,16 +128,26 @@
 		return
 	. = COMPONENT_HIT_REACTION_BLOCK
 	current_charges = max(current_charges - 1, 0)
-	if(last_hit_recharge_delay) // if this is 0, it doesn't recharge
-		START_PROCESSING(SSdcs, src)
-	INVOKE_ASYNC(src, .proc/on_hit_effects, owner, attack_text)
 
-/// The messages and visuals for the flying sparks // TODO: make this a callback because cult is stupid and has their own effects/descriptions/whatever
-/datum/component/shielded/proc/on_hit_effects(mob/living/owner, attack_text)
+	INVOKE_ASYNC(src, .proc/actually_run_hit_callback, owner, attack_text, current_charges)
+
+	if(!current_charges && !last_hit_recharge_delay) // if last_hit_recharge_delay is 0 we don't recharge, so this component is done basically
+		qdel(src) // obviously if someone ever adds a manual way to replenish charges, change this
+		return
+
+	if(!current_charges)
+		wearer.update_appearance(UPDATE_ICON)
+	START_PROCESSING(SSdcs, src) // if we DO recharge, start processing so we can do that
+
+/// The wrapper to invoke the on_hit callback, so we don't have to worry about blocking in the signal handler
+/datum/component/shielded/proc/actually_run_hit_callback(mob/living/owner, attack_text, current_charges)
+	on_hit_effects.Invoke(owner, attack_text)
+
+/// Default on_hit proc, since cult robes are stupid and have different descriptions/sparks
+/datum/component/shielded/proc/default_run_hit_callback(mob/living/owner, attack_text, current_charges)
 	var/datum/effect_system/spark_spread/s = new
 	s.set_up(2, 1, owner)
 	s.start()
 	owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!<span>")
 	if(current_charges <= 0)
 		owner.visible_message("<span class='warning'>[owner]'s shield overloads!</span>")
-		wearer.update_appearance(UPDATE_ICON)
