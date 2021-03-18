@@ -68,28 +68,11 @@ SUBSYSTEM_DEF(vote)
 			else if(mode == "map")
 				for (var/non_voter_ckey in non_voters)
 					var/client/C = non_voters[non_voter_ckey]
-					if(C.prefs.preferred_map)
-						var/preferred_map = C.prefs.preferred_map
-						if(!preferred_map)
-						    preferred_map = global.config.defaultmap.map_name
-						choices[preferred_map] += 1
-						greatest_votes = max(greatest_votes, choices[preferred_map])
-			// Do you want to implement transfer? This calls the shuttle on crew vote. Great for long rounds.
-			// else if(mode == "transfer")
-			// 	var/factor = 1 // factor defines how non-voters are weighted towards calling the shuttle
-			// 	switch(world.time / (1 MINUTES))
-			// 		if(0 to 60)
-			// 			factor = 0.5
-			// 		if(61 to 120)
-			// 			factor = 0.8
-			// 		if(121 to 240)
-			// 			factor = 1
-			// 		if(241 to 300)
-			// 			factor = 1.2
-			// 		else
-			// 			factor = 1.4
-			// 	choices["Initiate Crew Transfer"] += round(non_voters.len * factor)
-	//get all options with that many votes and return them in a list
+					var/preferred_map = C.prefs.preferred_map
+					if(!preferred_map)
+						preferred_map = global.config.defaultmap.map_name
+					choices[preferred_map] += 1
+					greatest_votes = max(greatest_votes, choices[preferred_map])
 	. = list()
 	if(greatest_votes)
 		for(var/option in choices)
@@ -141,20 +124,14 @@ SUBSYSTEM_DEF(vote)
 			if("map")
 				SSmapping.changemap(global.config.maplist[.])
 				SSmapping.map_voted = TRUE
-			// if("transfer")
-			// 	if(. == "Initiate Crew Transfer")
-			// 		SSshuttle.requestEvac(null, "Crew Transfer Requested.")
-			// 		var/obj/machinery/computer/communications/C = locate() in GLOB.machines
-			// 		if(C)
-			// 			C.post_status("shuttle")
 	if(restart)
 		var/active_admins = FALSE
-		for(var/client/C in GLOB.admins+GLOB.deadmins)
+		for(var/client/C in GLOB.admins + GLOB.deadmins)
 			if(!C.is_afk() && check_rights_for(C, R_SERVER))
 				active_admins = TRUE
 				break
 		if(!active_admins)
-			SSticker.Reboot("Restart vote successful.", "restart vote")
+			SSticker.Reboot("Restart vote successful.", "restart vote", 1) //no delay in case the restart is due to lag
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
@@ -179,22 +156,23 @@ SUBSYSTEM_DEF(vote)
 	return vote
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, forced=FALSE, popup=FALSE)
+	if(!Master.current_runlevel) //Server is still intializing.
+		to_chat(usr, "<span class='warning'>Cannot start vote, server is not done initializing.</span>")
+		return FALSE
+	var/lower_admin = FALSE
+	var/ckey = ckey(initiator_key)
+	if(GLOB.admin_datums[ckey] || forced)
+		lower_admin = TRUE
+
 	if(!mode)
 		if(started_time)
 			var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
 			if(mode)
 				to_chat(usr, "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>")
-				return 0
-
-			var/lower_admin = FALSE
-			var/ckey = ckey(initiator_key)
-			if(GLOB.admin_datums[ckey] || forced)
-				lower_admin = TRUE
-
+				return FALSE
 			if(next_allowed_time > world.time && !lower_admin)
 				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!</span>")
-				return 0
-
+				return FALSE
 		reset()
 		switch(vote_type)
 			if("restart")
@@ -202,6 +180,9 @@ SUBSYSTEM_DEF(vote)
 			if("gamemode")
 				choices.Add(config.votable_modes)
 			if("map")
+				if(!lower_admin && SSmapping.map_voted)
+					to_chat(usr, "<span class='warning'>The next map has already been selected.</span>")
+					return FALSE
 				// Randomizes the list so it isn't always METASTATION
 				var/list/maps = list()
 				for(var/map in global.config.maplist)
@@ -212,19 +193,17 @@ SUBSYSTEM_DEF(vote)
 					shuffle_inplace(maps)
 				for(var/valid_map in maps)
 					choices.Add(valid_map)
-			if("transfer")
-				choices.Add("Initiate Crew Transfer", "Continue Playing")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
-					return 0
+					return FALSE
 				for(var/i=1,i<=10,i++)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)
 						break
 					choices.Add(option)
 			else
-				return 0
+				return FALSE
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
@@ -245,8 +224,8 @@ SUBSYSTEM_DEF(vote)
 			generated_actions += V
 			if(popup)
 				C?.mob?.vote() // automatically popup the vote
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/controller/subsystem/vote/proc/remove_action_buttons()
 	for(var/v in generated_actions)
@@ -353,7 +332,7 @@ SUBSYSTEM_DEF(vote)
 		Remove(owner)
 
 /datum/action/vote/IsAvailable()
-	return 1
+	return TRUE
 
 /datum/action/vote/proc/remove_from_client()
 	if(!owner)
