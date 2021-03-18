@@ -788,7 +788,7 @@
 	. = ..()
 	if(!allowed)
 		allowed = GLOB.advanced_hardsuit_allowed
-	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_delay, charge_increment_cooldown = recharge_rate, shield_icon = shield_icon)
+	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_delay, charge_increment_delay = recharge_rate, shield_icon = shield_icon)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
 	resistance_flags = FIRE_PROOF | ACID_PROOF

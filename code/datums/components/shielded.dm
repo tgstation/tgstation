@@ -161,6 +161,7 @@
 
 	if(!istype(recharge_rune))
 		return
+	. = COMPONENT_NO_AFTERATTACK
 	if(!istype(parent, /obj/item/clothing/suit/space/hardsuit/shielded/wizard))
 		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
 		return
