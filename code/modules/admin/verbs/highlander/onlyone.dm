@@ -1,8 +1,12 @@
-GLOBAL_VAR_INIT(highlander, FALSE)
+GLOBAL_VAR(highlander_datum)
+
 /client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
 	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_highlander)
+
 	GLOB.highlander = TRUE
 
 	sound_to_playing_players('sound/misc/highlander.ogg')
@@ -49,3 +53,9 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 
 /mob/living/silicon/robot/proc/make_scottish()
 	mind.add_antag_datum(/datum/antagonist/highlander/robot)
+
+/proc/new_highlander(mob/living/carbon/human/new_crewmember, rank)
+	SIGNAL_HANDLER
+
+	to_chat(new_crewmember, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
+	new_crewmember.make_scottish()

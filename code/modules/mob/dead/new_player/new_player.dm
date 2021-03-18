@@ -353,9 +353,6 @@
 		else
 			AnnounceArrival(humanc, rank)
 		AddEmploymentContract(humanc)
-		if(GLOB.highlander)
-			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
-			humanc.make_scottish()
 
 		humanc.increment_scar_slot()
 		humanc.load_persistent_scars()

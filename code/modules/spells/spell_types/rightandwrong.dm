@@ -159,19 +159,31 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 	if(summon_type == SUMMON_MAGIC)
 		GLOB.summon_magic_triggered = survivor_probability
+		RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/magic_up_new_crew) //new players need magic
 	else if(summon_type == SUMMON_GUNS)
 		GLOB.summon_guns_triggered = survivor_probability
+		RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/arm_up_new_crew) //new players need guns
 	else
 		CRASH("Bad summon_type given: [summon_type]")
 
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		var/turf/T = get_turf(H)
+	for(var/mob/living/carbon/human/unarmed_human in GLOB.player_list)
+		var/turf/T = get_turf(unarmed_human)
 		if(T && is_away_level(T.z))
 			continue
 		if(summon_type == SUMMON_MAGIC)
-			give_magic(H)
+			give_magic(unarmed_human)
 		else
-			give_guns(H)
+			give_guns(unarmed_human)
+
+///signal proc to give magic to new crewmembers
+/proc/magic_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+	SIGNAL_HANDLER
+	give_magic(new_crewmember)
+
+///signal proc to give guns to new crewmembers
+/proc/arm_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+	SIGNAL_HANDLER
+	give_guns(new_crewmember)
 
 /proc/summonevents()
 	if(!SSevents.wizardmode)
