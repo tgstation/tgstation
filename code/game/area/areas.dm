@@ -373,7 +373,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ
  */
 /area/proc/firereset(obj/source)
-	if (fire)
+	var/should_reset_alarms = fire
+	if(source)
+		if(istype(source, /obj/machinery/firealarm))
+			var/obj/machinery/firealarm/alarm = source
+			if(alarm.triggered)
+				alarm.triggered = FALSE
+				triggered_firealarms -= 1
+		if(triggered_firealarms > 0)
+			should_reset_alarms = FALSE
+		should_reset_alarms = should_reset_alarms & power_environ //No resetting if there's no power
+
+	if (should_reset_alarms) // if there's a source, make sure there's no fire alarms left
 		unset_fire_alarm_effects()
 		ModifyFiredoors(TRUE)
 		for(var/item in firealarms)
@@ -393,6 +404,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			var/datum/computer_file/program/alarm_monitor/p = item
 			p.cancelAlarm("Fire", src, source)
 	STOP_PROCESSING(SSobj, src)
+
+///Get rid of any dangling camera refs
+/area/proc/clear_camera(obj/machinery/camera/cam)
+	LAZYREMOVE(cameras, cam)
+	for (var/mob/living/silicon/aiPlayer as anything in GLOB.silicon_mobs)
+		aiPlayer.freeCamera(src, cam)
+	for (var/obj/machinery/computer/station_alert/comp as anything in GLOB.alert_consoles)
+		comp.freeCamera(src, cam)
+	for (var/mob/living/simple_animal/drone/drone_on as anything in GLOB.drones_list)
+		drone_on.freeCamera(src, cam)
+	for(var/datum/computer_file/program/alarm_monitor/monitor as anything in GLOB.alarmdisplay)
+		monitor.freeCamera(src, cam)
 
 /**
  * If 100 ticks has elapsed, toggle all the firedoors closed again

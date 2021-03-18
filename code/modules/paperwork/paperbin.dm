@@ -25,6 +25,7 @@
 /obj/item/paper_bin/Initialize(mapload)
 	. = ..()
 	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+	AddElement(/datum/element/drag_pickup)
 	if(mapload)
 		var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
 		if(P && !bin_pen)

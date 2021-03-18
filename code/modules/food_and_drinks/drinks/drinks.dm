@@ -435,6 +435,9 @@
 	foodtype = GRAIN | ALCOHOL
 	custom_price = PAYCHECK_EASY
 
+/obj/item/reagent_containers/food/drinks/beer/almost_empty
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 1)
+
 /obj/item/reagent_containers/food/drinks/beer/light
 	name = "Carp Lite"
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."

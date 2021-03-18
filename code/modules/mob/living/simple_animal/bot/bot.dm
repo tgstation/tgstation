@@ -190,9 +190,9 @@
 	GLOB.bots_list -= src
 	if(paicard)
 		ejectpai()
-	qdel(Radio)
-	qdel(access_card)
-	qdel(bot_core)
+	QDEL_NULL(Radio)
+	QDEL_NULL(access_card)
+	QDEL_NULL(bot_core)
 	return ..()
 
 /mob/living/simple_animal/bot/bee_friendly()
