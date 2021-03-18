@@ -183,7 +183,7 @@
 	display_name = "Advanced Power Manipulation"
 	description = "How to get more zap."
 	prereq_ids = list("engineering")
-	design_ids = list("smes", "super_cell", "hyper_cell", "super_capacitor", "superpacman", "power_turbine", "power_turbine_console", "power_compressor")
+	design_ids = list("smes", "super_cell", "hyper_cell", "super_capacitor", "superpacman")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /////////////////////////Bluespace tech/////////////////////////

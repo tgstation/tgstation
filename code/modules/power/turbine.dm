@@ -1,4 +1,4 @@
-// TURBINE v2 AKA rev4407 Engine reborn!
+/* // TURBINE v2 AKA rev4407 Engine reborn!
 
 // How to use it? - Mappers
 //
@@ -344,3 +344,4 @@
 #undef COMPFRICTION
 #undef TURBGENQ
 #undef TURBGENG
+ */

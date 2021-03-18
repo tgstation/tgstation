@@ -279,9 +279,9 @@
 
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
 	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/tritium)
-	air_contents.gases[/datum/gas/hydrogen][MOLES] = 300
-	air_contents.gases[/datum/gas/tritium][MOLES] = 300
-	air_contents.temperature = 10000
+	air_contents.gases[/datum/gas/hydrogen][MOLES] = 1000
+	air_contents.gases[/datum/gas/tritium][MOLES] = 1000
+	air_contents.temperature = 100000000
 
 /**
  * Getter for the amount of time left in the timer of prototype canisters

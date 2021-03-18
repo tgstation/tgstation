@@ -198,13 +198,13 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/power/port_gen/pacman/super
 
-/obj/item/circuitboard/machine/power_compressor
+/* /obj/item/circuitboard/machine/power_compressor
 	name = "Power Compressor (Machine Board)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/power/compressor
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/manipulator = 6)
+		/obj/item/stock_parts/manipulator = 6) */
 
 /obj/item/circuitboard/machine/power_turbine
 	name = "Power Turbine (Machine Board)"

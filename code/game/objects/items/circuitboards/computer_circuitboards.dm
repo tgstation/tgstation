@@ -205,7 +205,7 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/station_alert
 
-/obj/item/circuitboard/computer/turbine_computer
+/* /obj/item/circuitboard/computer/turbine_computer
 	name = "Turbine Computer (Computer Board)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/turbine_computer
@@ -213,7 +213,7 @@
 /obj/item/circuitboard/computer/turbine_control
 	name = "Turbine control (Computer Board)"
 	icon_state = "engineering"
-	build_path = /obj/machinery/computer/turbine_computer
+	build_path = /obj/machinery/computer/turbine_computer */
 
 //Generic
 
