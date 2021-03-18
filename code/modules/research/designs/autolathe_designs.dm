@@ -352,7 +352,6 @@
 	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-
 /datum/design/plastic_knife
 	name = "Plastic Knife"
 	id = "plastic_knife"
@@ -362,7 +361,6 @@
 	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-
 /datum/design/fork
 	name = "Fork"
 	id = "fork"
@@ -371,7 +369,6 @@
 	build_path = /obj/item/kitchen/fork
 	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 
 /datum/design/plastic_fork
 	name = "Plastic Fork"
@@ -408,7 +405,6 @@
 	build_path = /obj/item/storage/bag/tray
 	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 
 /datum/design/cafeteria_tray
 	name = "Cafeteria Tray"
@@ -453,7 +449,6 @@
 	build_path = /obj/item/reagent_containers/food/drinks/shaker
 	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 
 /datum/design/cultivator
 	name = "Cultivator"
