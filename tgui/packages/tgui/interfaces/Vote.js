@@ -18,8 +18,8 @@ export const Vote = (props, context) => {
   // Adds the voting type to title if there is an ongoing vote
   let windowTitle = "Vote";
   if (mode) {
-    windowTitle +=
-      ": " + (question || mode).replace(/^\w/, (c) => c.toUpperCase());
+    windowTitle
+      += ": " + (question || mode).replace(/^\w/, c => c.toUpperCase());
   }
 
   return (
@@ -126,7 +126,7 @@ const VotersList = (props, context) => {
     <Stack.Item>
       <Collapsible title={`View Voters: ${voting.length}`}>
         <Box mt={2} width="100%" height={6} overflowY="scroll">
-          {voting.map((voter) => {
+          {voting.map(voter => {
             return <Box key={voter}>{voter}</Box>;
           })}
         </Box>
@@ -148,7 +148,7 @@ const ChoicesPanel = (props, context) => {
             {choices.map((choice, i) => (
               <Box key={choice.id}>
                 <LabeledList.Item
-                  label={choice.name.replace(/^\w/, (c) => c.toUpperCase())}
+                  label={choice.name.replace(/^\w/, c => c.toUpperCase())}
                   textAlign="right"
                   buttons={
                     <Button
