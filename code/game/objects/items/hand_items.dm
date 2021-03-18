@@ -309,10 +309,11 @@
 	qdel(src)
 	return FALSE
 
-/** To get around shielded hardsuits & such being set off by kisses when they shouldn't, we take a page from hallucination projectiles
-  * and simply fake our on hit effects. This lets kisses remain incorporeal without having to make some new trait for this one niche situation.
-  * This fake hit only happens if we can deal damage and if we hit a living thing. Otherwise, we just do normal on hit effects.
-  */
+/**
+ * To get around shielded hardsuits & such being set off by kisses when they shouldn't, we take a page from hallucination projectiles
+ * and simply fake our on hit effects. This lets kisses remain incorporeal without having to make some new trait for this one niche situation.
+ * This fake hit only happens if we can deal damage and if we hit a living thing. Otherwise, we just do normal on hit effects.
+ */
 /obj/projectile/kiss/proc/harmless_on_hit(mob/living/living_target)
 	playsound(get_turf(living_target), hitsound, 100, TRUE)
 	living_target.visible_message("<span class='danger'>[living_target] is hit by \a [src].</span>", "<span class='userdanger'>You're hit by \a [src]!</span>", vision_distance=COMBAT_MESSAGE_RANGE)
