@@ -634,6 +634,7 @@
 /datum/reagent/medicine/oculine/on_mob_add(mob/living/owner)
 	delta_light = creation_purity*20
 	owner.lighting_alpha -= delta_light
+	owner.see_in_dark += 3
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
