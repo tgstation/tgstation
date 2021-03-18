@@ -1,4 +1,4 @@
-//Wintercoat
+// Wintercoat
 /obj/item/clothing/suit/hooded/wintercoat
 	name = "winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs."
@@ -27,8 +27,7 @@
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 
-
-//CentCom
+// CentCom
 /obj/item/clothing/suit/hooded/wintercoat/centcom
 	name = "centcom winter coat"
 	desc = "A luxurious winter coat woven in the bright green and gold colours of Central Command. It has a small pin in the shape of the Nanotrasen logo for a zipper."
@@ -45,7 +44,7 @@
 	icon_state = "winterhood_centcom"
 	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, RAD = 10, FIRE = 10, ACID = 60)
 
-//Captain
+// Captain
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"
 	desc = "A luxurious winter coat, stuffed with the down of the endangered Uka bird and trimmed with genuine sable. The fabric is an indulgently soft micro-fiber,\
@@ -64,7 +63,7 @@
 	icon_state = "winterhood_captain"
 	armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 
-//HoP
+// Head of Personnel
 /obj/item/clothing/suit/hooded/wintercoat/hop
 	name = "head of personnel's winter coat"
 	desc = "A cozy winter coat, covered in thick fur. The breast features a proud yellow chevron, reminding everyone that you're the second banana."
@@ -76,7 +75,7 @@
 /obj/item/clothing/head/hooded/winterhood/hop
 	icon_state = "winterhood_hop"
 
-//Hydro
+// Botanist
 /obj/item/clothing/suit/hooded/wintercoat/hydro
 	name = "hydroponics winter coat"
 	desc = "A green and blue winter coat. The zipper tab looks like the flower from a member of Rosa Hesperrhodos, a pretty pink-and-white rose. The colours absolutely clash."
@@ -103,7 +102,7 @@
 	desc = "A green winter coat hood."
 	icon_state = "winterhood_hydro"
 
-//Janitor
+// Janitor
 /obj/item/clothing/suit/hooded/wintercoat/janitor
 	name = "janitors winter coat"
 	desc = "A purple-and-beige winter coat that smells of space cleaner."
@@ -135,7 +134,7 @@
 	desc = "A purple hood that smells of space cleaner."
 	icon_state = "winterhood_janitor"
 
-// SECURITY
+// Security Officer
 /obj/item/clothing/suit/hooded/wintercoat/security
 	name = "security winter coat"
 	desc = "A red, armour-padded winter coat. It glitters with a mild ablative coating and a robust air of authority.  The zipper tab is a pair of jingly little handcuffs that get annoying after the first ten seconds."
@@ -153,7 +152,7 @@
 	icon_state = "winterhood_security"
 	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
 
-//HoS
+// Head of Security
 /obj/item/clothing/suit/hooded/wintercoat/security/hos
 	name = "head of security's winter coat"
 	desc = "A red, armour-padded winter coat, lovingly woven with a Kevlar interleave and reinforced with semi-ablative polymers and a silver azide fill material. The zipper tab looks like a tiny replica of Beepsky."
@@ -166,7 +165,7 @@
 	desc = "A red, armour-padded winter hood, lovingly woven with a Kevlar interleave. Definitely not bulletproof, especially not the part where your face goes."
 	icon_state = "winterhood_hos"
 
-// MEDICAL
+// Medical Doctor
 /obj/item/clothing/suit/hooded/wintercoat/medical
 	name = "medical winter coat"
 	desc = "An arctic white winter coat with a small blue caduceus instead of a plastic zipper tab. Snazzy."
@@ -202,7 +201,7 @@
 	icon_state = "winterhood_medical"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 40, RAD = 0, FIRE = 10, ACID = 20)
 
-//CMO
+// Chief Medical Officer
 /obj/item/clothing/suit/hooded/wintercoat/medical/cmo
 	name = "chief medical officer's winter coat"
 	desc = "A winter coat in a vibrant shade of blue with a small silver caduceus instead of a plastic zipper tab. The normal liner is replaced with an exceptionally thick, soft layer of fur."
@@ -216,7 +215,7 @@
 	icon_state = "winterhood_cmo"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 20, ACID = 30)
 
-//Chemistry
+// Chemist
 /obj/item/clothing/suit/hooded/wintercoat/medical/chemistry
 	name = "chemistry winter coat"
 	desc = "A lab-grade winter coat made with acid resistant polymers. For the enterprising chemist who was exiled to a frozen wasteland on the go."
@@ -228,7 +227,7 @@
 	desc = "A white winter coat hood."
 	icon_state = "winterhood_chemistry"
 
-//Virology
+// Virologist
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro
 	name = "virology winter coat"
 	desc = "A white winter coat with green markings. Warm, but wont fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
@@ -240,7 +239,7 @@
 	desc = "A white winter coat hood with green markings."
 	icon_state = "winterhood_viro"
 
-//Paramedic
+// Paramedic
 /obj/item/clothing/suit/hooded/wintercoat/medical/paramedic
 	name = "paramedic winter coat"
 	desc = "A winter coat with blue markings. Warm, but probably won't protect from biological agents. For the cozy doctor on the go."
@@ -252,7 +251,7 @@
 	desc = "A white winter coat hood with blue markings."
 	icon_state = "winterhood_paramed"
 
-//Science
+// Scientist
 /obj/item/clothing/suit/hooded/wintercoat/science
 	name = "science winter coat"
 	desc = "A white winter coat with an outdated atomic model instead of a plastic zipper tab."
@@ -288,7 +287,7 @@
 	icon_state = "winterhood_science"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 0)
 
-//RD
+// Research Director
 /obj/item/clothing/suit/hooded/wintercoat/science/rd
 	name = "research director's winter coat"
 	desc = "A thick arctic winter coat with an outdated atomic model instead of a plastic zipper tab. Most in the know are heavily aware that Bohr's model of the atom was outdated by the time of the 1930s when the Heisenbergian and Schrodinger models were generally accepted for true. Nevertheless, we still see its use in anachronism, roleplaying, and, in this case, as a zipper tab. At least it should keep you warm on your ivory pillar."
@@ -302,7 +301,7 @@
 	icon_state = "winterhood_rd"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 20, BIO = 0, RAD = 0, FIRE = 30, ACID = 0)
 
-//Roboticist
+// Roboticist
 /obj/item/clothing/suit/hooded/wintercoat/science/robotics
 	name = "robotics winter coat"
 	desc = "A black winter coat with a badass flaming robotic skull for the zipper tab. This one has bright red designs and a few useless buttons."
@@ -314,7 +313,7 @@
 	desc = "A black winter coat hood. You can pull it down over your eyes and pretend that you're an outdated, late 1980s interpretation of a futuristic mechanized police force. They'll fix you. They fix everything."
 	icon_state = "winterhood_robotics"
 
-//Geneticist
+// Geneticist
 /obj/item/clothing/suit/hooded/wintercoat/science/genetics
 	name = "genetics winter coat"
 	desc = "A white winter coat with a DNA helix for the zipper tab."
@@ -326,7 +325,7 @@
 	desc = "A white winter coat hood. It's warm."
 	icon_state = "winterhood_genetics"
 
-//Engineer
+// Station Engineer
 /obj/item/clothing/suit/hooded/wintercoat/engineering
 	name = "engineering winter coat"
 	desc = "A surprisingly heavy yellow winter coat with reflective orange stripes. It has a small wrench for its zipper tab, and the inside layer is covered with a radiation-resistant silver-nylon blend. Because you're worth it."
@@ -353,7 +352,7 @@
 	icon_state = "winterhood_engineer"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 20, ACID = 0)
 
-//CE
+// Chief Engineer
 /obj/item/clothing/suit/hooded/wintercoat/engineering/ce
 	name = "chief engineer's winter coat"
 	desc = "A white winter coat with reflective green and yellow stripes. Stuffed with asbestos, treated with fire retardant PBDE, lined with a micro thin sheet of lead foil and snugly fitted to your body's measurements. This baby's ready to save you from anything except the thyroid cancer and systemic fibrosis you'll get from wearing it. The zipper tab is a tiny golden wrench."
@@ -367,7 +366,7 @@
 	icon_state = "winterhood_ce"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 20, FIRE = 30, ACID = 10)
 
-//Atmos
+// Atmospherics Technician
 /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
 	name = "atmospherics winter coat"
 	desc = "A yellow and blue winter coat. The zipper pull-tab is made to look like a miniature breath mask."
@@ -379,7 +378,7 @@
 	desc = "A yellow and blue winter coat hood."
 	icon_state = "winterhood_atmos"
 
-//Cargo
+// Cargo Technician
 /obj/item/clothing/suit/hooded/wintercoat/cargo
 	name = "cargo winter coat"
 	desc = "A tan-and-grey winter coat. The zipper tab is a small pin resembling a MULE. It fills you with the warmth of a fierce independence."
@@ -391,7 +390,7 @@
 	desc = "A grey hood for a winter coat."
 	icon_state = "winterhood_cargo"
 
-//QM
+// Quartermaster
 /obj/item/clothing/suit/hooded/wintercoat/qm
 	name = "quartermaster's winter coat"
 	desc = "A dark brown winter coat that has a golden crate pin for its zipper pully."
@@ -403,7 +402,7 @@
 	desc = "A dark brown winter hood"
 	icon_state = "winterhood_qm"
 
-//Miner
+// Shaft Miner
 /obj/item/clothing/suit/hooded/wintercoat/miner
 	name = "mining winter coat"
 	desc = "A dusty button up winter coat. The zipper tab looks like a tiny pickaxe."
