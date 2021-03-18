@@ -9,9 +9,9 @@
 	var/autofire_stat = AUTOFIRE_STAT_IDLE
 	var/mouse_parameters
 	var/autofire_shot_delay = 0.3 SECONDS //Time between individual shots.
-	var/auto_delay_timer
 	var/mouse_status = AUTOFIRE_MOUSEUP //This seems hacky but there can be two MouseDown() without a MouseUp() in between if the user holds click and uses alt+tab, printscreen or similar.
 
+	COOLDOWN_DECLARE(next_shot_cd)
 
 /datum/component/automatic_fire/Initialize(_autofire_shot_delay)
 	. = ..()
@@ -30,6 +30,15 @@
 	autofire_off()
 	return ..()
 
+/datum/component/automatic_fire/process(delta_time)
+	if(!(autofire_stat & AUTOFIRE_STAT_FIRING))
+		STOP_PROCESSING(SSprojectiles, src)
+		return
+
+	if(!COOLDOWN_FINISHED(src, next_shot_cd))
+		return
+
+	process_shot()
 
 /datum/component/automatic_fire/proc/wake_up(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
@@ -107,7 +116,7 @@
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
 		return
-	if(source.mob.in_throw_mode)
+	if(source.mob.throw_mode)
 		return
 	if(!isturf(source.mob.loc)) //No firing inside lockers and stuff.
 		return
@@ -143,12 +152,6 @@
 		return //Already pew-pewing.
 	autofire_stat = AUTOFIRE_STAT_FIRING
 
-	if(auto_delay_timer) //This shouldn't be happening, so let's stack_trace it and remove it if nothing is caught.
-		stack_trace("start_autofiring called with a non-null auto_delay_timer")
-		if(!deltimer(auto_delay_timer))
-			addtimer(CALLBACK(src, .proc/keep_trying_to_delete_timer, auto_delay_timer), 1)
-		auto_delay_timer = null
-
 	clicker.mouse_override_icon = 'icons/effects/mouse_pointers/weapon_pointer.dmi'
 	clicker.mouse_pointer_icon = clicker.mouse_override_icon
 
@@ -168,8 +171,8 @@
 
 	if(!process_shot()) //First shot is processed instantly.
 		return //If it fails, such as when the gun is empty, then there's no need to schedule a second shot.
-	auto_delay_timer = addtimer(CALLBACK(src, .proc/process_shot), autofire_shot_delay, TIMER_STOPPABLE|TIMER_LOOP)
 
+	START_PROCESSING(SSprojectiles, src)
 	RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDRAG, .proc/on_mouse_drag)
 
 
@@ -187,11 +190,8 @@
 	switch(autofire_stat)
 		if(AUTOFIRE_STAT_IDLE, AUTOFIRE_STAT_ALERT)
 			return
+	STOP_PROCESSING(SSprojectiles, src)
 	autofire_stat = AUTOFIRE_STAT_ALERT
-	if(auto_delay_timer) //Keep this at the top of the proc. If anything else runtimes or fails it would cause a potentially-infinite loop.
-		if(!deltimer(auto_delay_timer))
-			addtimer(CALLBACK(src, .proc/keep_trying_to_delete_timer, auto_delay_timer), 1)
-		auto_delay_timer = null
 	if(clicker)
 		clicker.mouse_override_icon = null
 		clicker.mouse_pointer_icon = clicker.mouse_override_icon
@@ -201,16 +201,6 @@
 	target = null
 	target_loc = null
 	mouse_parameters = null
-
-
-/datum/component/automatic_fire/proc/keep_trying_to_delete_timer(timer_id) //This is an ugly hack until a fix for timers being unable to be deleted from inside the call stack is done.
-	set waitfor = FALSE
-	while(!(deltimer(timer_id)))
-		var/datum/timedevent/timer = SStimer.timer_id_dict[timer_id] //This is not a kosher thing to do outside of the SS. But this is a temporary hack.
-		if(!timer)
-			return //Has already been deleted.
-		stoplag(1) //Let's try again next tick.
-
 
 /datum/component/automatic_fire/proc/on_mouse_drag(client/source, atom/src_object, atom/over_object, turf/src_location, turf/over_location, src_control, over_control, params)
 	SIGNAL_HANDLER
@@ -245,6 +235,7 @@
 		stop_autofiring() //Elvis has left the building.
 		return FALSE
 	shooter.face_atom(target)
+	COOLDOWN_START(src, next_shot_cd, autofire_shot_delay)
 	if(SEND_SIGNAL(parent, COMSIG_AUTOFIRE_SHOT, target, shooter, mouse_parameters) & COMPONENT_AUTOFIRE_SHOT_SUCCESS)
 		return TRUE
 	stop_autofiring()
