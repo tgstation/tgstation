@@ -349,7 +349,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 12000)
 	build_path = /obj/item/kitchen/knife
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 
@@ -359,7 +359,7 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 100)
 	build_path = /obj/item/kitchen/knife/plastic
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 
@@ -369,7 +369,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 80)
 	build_path = /obj/item/kitchen/fork
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 
@@ -379,7 +379,7 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 80)
 	build_path = /obj/item/kitchen/fork/plastic
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/spoon
@@ -388,7 +388,7 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 120)
 	build_path = /obj/item/kitchen/spoon
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/plastic_spoon
@@ -397,7 +397,7 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 120)
 	build_path = /obj/item/kitchen/spoon/plastic
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/tray
@@ -406,7 +406,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/storage/bag/tray
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 
@@ -416,7 +416,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/storage/bag/tray/cafeteria
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/bowl
@@ -425,7 +425,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/glass = 500)
 	build_path = /obj/item/reagent_containers/glass/bowl
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/drinking_glass
@@ -434,7 +434,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/glass = 500)
 	build_path = /obj/item/reagent_containers/food/drinks/drinkingglass
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/shot_glass
@@ -443,7 +443,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/glass = 100)
 	build_path = /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 
 /datum/design/shaker
 	name = "Shaker"
@@ -451,7 +451,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 1500)
 	build_path = /obj/item/reagent_containers/food/drinks/shaker
-	category = list("initial", "Tool Designs", "Dinnerware")
+	category = list("initial","Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 
