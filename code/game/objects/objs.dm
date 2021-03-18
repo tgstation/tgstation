@@ -190,9 +190,11 @@
 	ui_interact(user)
 
 /mob/proc/unset_machine()
-	if(machine)
-		machine.on_unset_machine(src)
-		machine = null
+	if(!machine)
+		return
+	UnregisterSignal(O, COMSIG_PARENT_QDELETING)
+	machine.on_unset_machine(src)
+	machine = null
 
 //called when the user unsets the machine.
 /atom/movable/proc/on_unset_machine(mob/user)
@@ -202,6 +204,7 @@
 	if(src.machine)
 		unset_machine()
 	src.machine = O
+	RegisterSignal(O, COMSIG_PARENT_QDELETING, .proc/unset_machine)
 	if(istype(O))
 		O.obj_flags |= IN_USE
 
