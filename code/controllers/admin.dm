@@ -5,10 +5,20 @@
 
 INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
-/obj/effect/statclick/Initialize(mapload, text, target) //Don't port this to Initialize it's too critical
+/obj/effect/statclick/Initialize(mapload, text, target)
 	. = ..()
 	name = text
 	src.target = target
+	if(istype(target, /datum)) //Harddel man bad
+		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/cleanup)
+
+/obj/effect/statclick/Destroy()
+	target = null
+	return ..()
+
+/obj/effect/statclick/proc/cleanup()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /obj/effect/statclick/proc/update(text)
 	name = text
