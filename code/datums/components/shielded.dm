@@ -55,9 +55,10 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_dropped)
 	RegisterSignal(parent, COMSIG_ITEM_HIT_REACT, .proc/on_hit_react)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/check_recharge_rune)
 
 /datum/component/shielded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_HIT_REACT))
+	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_HIT_REACT, COMSIG_PARENT_ATTACKBY))
 
 // Handle recharging, if we want to
 /datum/component/shielded/process(delta_time)
@@ -154,3 +155,15 @@
 	owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!<span>")
 	if(current_charges <= 0)
 		owner.visible_message("<span class='warning'>[owner]'s shield overloads!</span>")
+
+/datum/component/shielded/proc/check_recharge_rune(datum/source, obj/item/wizard_armour_charge/recharge_rune, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(!istype(recharge_rune))
+		return
+	if(!istype(parent, /obj/item/clothing/suit/space/hardsuit/shielded/wizard))
+		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
+		return
+
+	current_charges += recharge_rune.restored_charges
+	to_chat(user, "<span class='notice'>You charge \the [parent]. It can now absorb [current_charges] hits.</span>")
