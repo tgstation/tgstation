@@ -10,7 +10,7 @@
 	/// How many charges we currently have
 	var/current_charges
 	/// How long we have to avoid being hit to replenish charges. If set to 0, we never recharge lost charges
-	var/last_hit_recharge_delay = 20 SECONDS
+	var/recharge_start_delay = 20 SECONDS
 	/// Once we go unhit long enough to recharge, we replenish charges this often. The floor is effectively 1 second, AKA how often SSdcs processes
 	var/charge_increment_delay = 1 SECONDS
 	/// What .dmi we're pulling the shield icon from
@@ -26,12 +26,12 @@
 	/// A callback for the sparks/message that play when a charge is used, see [/datum/component/shielded/proc/default_run_hit_callback]
 	var/datum/callback/on_hit_effects
 
-/datum/component/shielded/Initialize(max_charges = 3, last_hit_recharge_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
+/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
 	if(!isitem(parent) || max_charges <= 0)
 		return COMPONENT_INCOMPATIBLE
 
 	src.max_charges = max_charges
-	src.last_hit_recharge_delay = last_hit_recharge_delay
+	src.recharge_start_delay = recharge_start_delay
 	src.charge_increment_delay = charge_increment_delay
 	src.shield_icon_file = shield_icon_file
 	src.shield_icon = shield_icon
@@ -39,7 +39,7 @@
 	src.on_hit_effects = run_hit_callback || CALLBACK(src, .proc/default_run_hit_callback)
 
 	current_charges = max_charges
-	if(last_hit_recharge_delay)
+	if(recharge_start_delay)
 		START_PROCESSING(SSdcs, src)
 
 /datum/component/shielded/Destroy(force, silent)
@@ -124,7 +124,7 @@
 /datum/component/shielded/proc/on_hit_react(datum/source, mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
 	SIGNAL_HANDLER
 
-	COOLDOWN_START(src, recently_hit_cd, last_hit_recharge_delay)
+	COOLDOWN_START(src, recently_hit_cd, recharge_start_delay)
 
 	if(current_charges <= 0)
 		return
@@ -133,7 +133,7 @@
 
 	INVOKE_ASYNC(src, .proc/actually_run_hit_callback, owner, attack_text, current_charges)
 
-	if(!last_hit_recharge_delay) // if last_hit_recharge_delay is 0, we don't recharge
+	if(!recharge_start_delay) // if recharge_start_delay is 0, we don't recharge
 		if(!current_charges) // obviously if someone ever adds a manual way to replenish charges, change this
 			qdel(src)
 		return
