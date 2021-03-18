@@ -44,9 +44,11 @@
 
 /datum/component/shielded/Destroy(force, silent)
 	if(wearer)
+		shield_icon = "broken"
 		UnregisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS)
 		wearer.update_appearance(UPDATE_ICON)
 		wearer = null
+	QDEL_NULL(on_hit_effects)
 	return ..()
 
 /datum/component/shielded/RegisterWithParent()
@@ -113,7 +115,7 @@
 /datum/component/shielded/proc/on_update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	overlays += mutable_appearance('icons/effects/effects.dmi', (current_charges > 0 ? shield_icon : "broken"), MOB_LAYER + 0.01)
+	overlays += mutable_appearance(shield_icon_file, (current_charges > 0 ? shield_icon : "broken"), MOB_LAYER + 0.01)
 
 /**
  * This proc fires when we're hit, and is responsible for checking if we're charged, then deducting one + returning that we're blocking if so.
@@ -131,8 +133,9 @@
 
 	INVOKE_ASYNC(src, .proc/actually_run_hit_callback, owner, attack_text, current_charges)
 
-	if(!current_charges && !last_hit_recharge_delay) // if last_hit_recharge_delay is 0 we don't recharge, so this component is done basically
-		qdel(src) // obviously if someone ever adds a manual way to replenish charges, change this
+	if(!last_hit_recharge_delay) // if last_hit_recharge_delay is 0, we don't recharge
+		if(!current_charges) // obviously if someone ever adds a manual way to replenish charges, change this
+			qdel(src)
 		return
 
 	if(!current_charges)
@@ -141,7 +144,7 @@
 
 /// The wrapper to invoke the on_hit callback, so we don't have to worry about blocking in the signal handler
 /datum/component/shielded/proc/actually_run_hit_callback(mob/living/owner, attack_text, current_charges)
-	on_hit_effects.Invoke(owner, attack_text)
+	on_hit_effects.Invoke(owner, attack_text, current_charges)
 
 /// Default on_hit proc, since cult robes are stupid and have different descriptions/sparks
 /datum/component/shielded/proc/default_run_hit_callback(mob/living/owner, attack_text, current_charges)
