@@ -1,6 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - rscadd: "Adds the chemistry tab in the crafting menu for ghetto chemists, this allows users to create tabletop burners, thermometers, pH booklets, droppers, improvised chem heaters and improvised cooling sprays"
-  - rscadd: "Adds 2 new reactions - ice and universal indicator"
-  - refactor: "Refactors part of crafting code to allow use of machinery and optimises part of the code"

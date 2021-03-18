@@ -112,6 +112,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/screentip_pref = TRUE
 	///Color of screentips at top of screen
 	var/screentip_color = "#ffd391"
+	///Do we show item hover outlines?
+	var/itemoutline_pref = TRUE
 
 	var/ambientocclusion = TRUE
 	///Should we automatically fit the viewport?
@@ -144,6 +146,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/persistent_scars = TRUE
 	///If we want to broadcast deadchat connect/disconnect messages
 	var/broadcast_login_logout = TRUE
+	///What outfit typepaths we've favorited in the SelectEquipment menu
+	var/list/favorite_outfits = list()
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -642,6 +646,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Set screentip mode:</b> <a href='?_src_=prefs;preference=screentipmode'>[screentip_pref ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Screentip color:</b><span style='border: 1px solid #161616; background-color: [screentip_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=screentipcolor'>Change</a><BR>"
+			dat += "<b>Item Hover Outlines:</b> <a href='?_src_=prefs;preference=itemoutline_pref'>[itemoutline_pref ? "Enabled" : "Disabled"]</a><br>"
 
 
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
@@ -1527,9 +1532,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("briefoutfit")
 					var/list/valid_paths = list()
-					for(var/datum/outfit/iter_outfit in subtypesof(/datum/outfit))
-						if(initial(iter_outfit.can_be_admin_equipped))
-							valid_paths[initial(iter_outfit.name)] = path
+					for(var/datum/outfit/outfit_path as anything in subtypesof(/datum/outfit))
+						valid_paths[initial(outfit_path.name)] = outfit_path
 					var/new_outfit = input(user, "Choose your briefing officer outfit:", "Game Preference") as null|anything in valid_paths
 					new_outfit = valid_paths[new_outfit]
 					if(new_outfit)
@@ -1842,6 +1846,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_screentipcolor = input(user, "Choose your screentip color:", "Character Preference", screentip_color) as color|null
 					if(new_screentipcolor)
 						screentip_color = sanitize_ooccolor(new_screentipcolor)
+
+				if("itemoutline_pref")
+					itemoutline_pref = !itemoutline_pref
 
 				if("ambientocclusion")
 					ambientocclusion = !ambientocclusion

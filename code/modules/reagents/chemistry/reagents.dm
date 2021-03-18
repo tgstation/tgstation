@@ -34,6 +34,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/glass_icon_state = null
 	/// used for shot glasses, mostly for alcohol
 	var/shot_glass_icon_state = null
+	/// fallback icon if  the reagent has no glass or shot glass icon state. Used for restaurants.
+	var/fallback_icon_state = null
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
 	/// LIQUID, SOLID, GAS
@@ -82,7 +84,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	/// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem_val = 0.25
 	/// What chem is metabolised when purity is below inverse_chem_val
-	var/inverse_chem = /datum/reagent/impurity/toxic
+	var/inverse_chem = /datum/reagent/inverse
 	///what chem is made at the end of a reaction IF the purity is below the recipies purity_min at the END of a reaction only
 	var/failed_chem = /datum/reagent/consumable/failed_reaction
 	///Thermodynamic vars
@@ -92,6 +94,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/burning_volume = 0.5
 	///Assoc list with key type of addiction this reagent feeds, and value amount of addiction points added per unit of reagent metabolzied (which means * REAGENTS_METABOLISM every life())
 	var/list/addiction_types = null
+	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
+	var/glass_price
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -99,6 +103,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 	if(material)
 		material = GET_MATERIAL_REF(material)
+	if(glass_price)
+		AddElement(/datum/element/venue_price, glass_price)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -158,6 +164,7 @@ Primarily used in reagents/reaction_agents
 
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L, amount)
+	overdose_threshold /= max(normalise_creation_purity(), 1) //Maybe??? Seems like it would help pure chems be even better but, if I normalised this to 1, then everything would take a 25% reduction
 	return
 
 /// Called when this reagent is removed while inside a mob
@@ -225,6 +232,20 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/get_taste_description(mob/living/taster)
 	return list("[taste_description]" = 1)
 
+/**
+ * Used when you want the default reagents purity to be equal to the normal effects
+ * (i.e. if default purity is 0.75, and your reacted purity is 1, then it will return 1.33)
+ *
+ * Arguments
+ * * normalise_num_to - what number/purity value you're normalising to. If blank it will default to the compile value of purity for this chem
+ * * creation_purity - creation_purity override, if desired. This is the purity of the reagent that you're normalising from.
+ */
+/datum/reagent/proc/normalise_creation_purity(normalise_num_to, creation_purity)
+	if(!normalise_num_to)
+		normalise_num_to = initial(purity)
+	if(!creation_purity)
+		creation_purity = src.creation_purity
+	return creation_purity / normalise_num_to
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc
@@ -233,3 +254,5 @@ Primarily used in reagents/reaction_agents
 		rs += "[R.name], [R.volume]"
 
 	return rs.Join(" | ")
+
+

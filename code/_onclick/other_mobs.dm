@@ -22,7 +22,7 @@
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
-	if(proximity_flag && istype(G) && G.Touch(A,1))
+	if(proximity_flag && istype(G) && G.Touch(A,1,modifiers))
 		return
 	//This signal is needed to prevent gloves of the north star + hulk.
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
@@ -93,17 +93,18 @@
 	else
 		add_fingerprint(user)
 	if(interaction_flags_atom & INTERACT_ATOM_UI_INTERACT)
+		SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
 		return ui_interact(user)
 	return FALSE
 
 
-/mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
+/mob/living/carbon/human/RangedAttack(atom/A, modifiers)
 	. = ..()
 	if(.)
 		return
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
-		if(istype(G) && G.Touch(A,0)) // for magic gloves
+		if(istype(G) && G.Touch(A,0,modifiers)) // for magic gloves
 			return TRUE
 
 	if(isturf(A) && get_dist(src,A) <= 1)
@@ -202,11 +203,11 @@
 /mob/living/simple_animal/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	if(!dextrous)
-		return ..()
-	if(!ismob(A))
+	if(dextrous && (isitem(A) || !combat_mode))
 		A.attack_hand(src, modifiers)
 		update_inv_hands()
+	else
+		return ..()
 
 
 /*
@@ -217,7 +218,7 @@
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	target = A
-	if(dextrous && !ismob(A))
+	if(dextrous && (isitem(A) || !combat_mode))
 		..()
 	else
 		AttackingTarget(A)

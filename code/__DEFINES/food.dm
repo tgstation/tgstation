@@ -56,3 +56,21 @@
 #define FOOD_LIKED 1
 #define FOOD_DISLIKED 2
 #define FOOD_TOXIC 3
+
+///Venue reagent requirement
+#define VENUE_BAR_MINIMUM_REAGENTS 10
+
+
+
+///Food price classes
+#define FOOD_PRICE_TRASH 25  //cheap and quick.
+#define FOOD_PRICE_CHEAP 70 //In line with prices of cheap snacks and foods you find in vending machine, practically disposable.
+#define FOOD_PRICE_NORMAL 150 //Half a crate of profit, selling 4 of these lets you buy a kitchen crate from cargo.
+#define FOOD_PRICE_EXOTIC 450 //Making one of these should be worth the time investment, solid chunk of profit.
+#define FOOD_PRICE_LEGENDARY 1300 //Large windfall for making something from this list.
+
+
+#define DRINK_PRICE_STOCK 20
+#define DRINK_PRICE_EASY 35
+#define DRINK_PRICE_MEDIUM 80
+#define DRINK_PRICE_HIGH 200

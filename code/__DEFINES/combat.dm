@@ -297,3 +297,12 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	#define COMPONENT_AUTOFIRE_ONMOUSEDOWN_BYPASS (1<<0)
 #define COMSIG_AUTOFIRE_SHOT "autofire_shot"
 	#define COMPONENT_AUTOFIRE_SHOT_SUCCESS (1<<0)
+
+/// Martial arts attack requested but is not available, allow a check for a regular attack.
+#define MARTIAL_ATTACK_INVALID -1
+
+/// Martial arts attack happened but failed, do not allow a check for a regular attack.
+#define MARTIAL_ATTACK_FAIL FALSE
+
+/// Martial arts attack happened and succeeded, do not allow a check for a regular attack.
+#define MARTIAL_ATTACK_SUCCESS TRUE

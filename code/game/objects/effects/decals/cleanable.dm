@@ -28,7 +28,7 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-	AddComponent(/datum/component/beauty, beauty)
+	AddElement(/datum/element/beauty, beauty)
 
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
@@ -85,7 +85,7 @@
 //This is on /cleanable because fuck this ancient mess
 /obj/effect/decal/cleanable/Crossed(atom/movable/AM)
 	..()
-	if(iscarbon(AM) && blood_state && bloodiness > 0)
+	if(iscarbon(AM) && blood_state && bloodiness >= 40)
 		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
 		update_appearance()
 

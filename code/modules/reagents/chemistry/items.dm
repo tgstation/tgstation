@@ -124,11 +124,20 @@
 	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"
 	out_message += "Chemicals found in the beaker:</b>\n"
 	if(cont.reagents.is_reacting)
-		out_message += "<span class='warning'>A reaction appears to be occuring currently.<span class='notice'>\n"
-	for(var/datum/reagent/R in cont.reagents.reagent_list)
-		out_message += "<b>[round(R.volume, 0.01)]u of [R.name]</b>, <b>Purity:</b> [round(R.purity, 0.01)], [(scanmode?"[(R.overdose_threshold?"<b>Overdose:</b> [R.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(R.ph)], <b>Current pH:</b> [R.ph].":"<b>Current pH:</b> [R.ph].")]\n"
+		out_message += "<span class='warning'>A reaction appears to be occuring currently.</span><span class='notice'>\n"
+	for(var/datum/reagent/reagent in cont.reagents.reagent_list)
+		if(reagent.purity < 1) //If the reagent is impure
+			if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //Below level and has an inverse
+				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+				out_message += "<span class='warning'>Inverted reagent detected: </span><span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.01)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
+			else if(reagent.impure_chem) //Otherwise has an impure
+				var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
+				out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
+				out_message += "<span class='warning'>Impurities detected: </span><span class='notice'><b>[round(reagent.volume - (reagent.volume * reagent.purity), 0.01)]u of [impure_reagent.name]</b>, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]":"")]\n"
+		else
+			out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		if(scanmode)
-			out_message += "<b>Analysis:</b> [R.description]\n"
+			out_message += "<b>Analysis:</b> [reagent.description]\n"
 	to_chat(user, "[out_message.Join()]</span>")
 	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."
 

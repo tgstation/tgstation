@@ -151,12 +151,12 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
 		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
-		if(E.drain_time > world.time)
+		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		if((E.drain_time > world.time) || !stomach)
 			return
 		if(charge < CELL_POWER_DRAIN)
 			to_chat(H, "<span class='warning'>[src] doesn't have enough power!</span>")
 			return
-		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 		if(stomach.crystal_charge > charge_limit)
 			to_chat(H, "<span class='warning'>Your charge is full!</span>")
 			return
@@ -384,6 +384,20 @@
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
 		charge = 0 //For naturally depowered areas, we start with no power
+
+/obj/item/stock_parts/cell/crystal_cell
+	name = "crystal power cell"
+	desc = "A very high power cell made from crystallized plasma"
+	icon_state = "crystal_cell"
+	maxcharge = 50000
+	chargerate = 0
+	custom_materials = null
+	grind_results = null
+	rating = 5
+
+/obj/item/stock_parts/cell/crystal_cell/Initialize()
+	. = ..()
+	charge = 50000
 
 /obj/item/stock_parts/cell/inducer_supply
 	maxcharge = 5000

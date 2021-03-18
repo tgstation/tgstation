@@ -76,9 +76,7 @@
 	var/list/L
 	for(var/i in 1 to held_items.len)
 		if(!held_items[i])
-			if(!L)
-				L = list()
-			L += i
+			LAZYADD(L, i)
 	return L
 
 /mob/proc/get_held_index_of_item(obj/item/I)
@@ -283,7 +281,7 @@
 */
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
 	. = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
-	if(. && I) //ensure the item exists and that it was dropped properly.
+	if(. && I && !(I.item_flags & NO_PIXEL_RANDOM_DROP)) //ensure the item exists and that it was dropped properly.
 		I.pixel_x = I.base_pixel_x + rand(-6, 6)
 		I.pixel_y = I.base_pixel_y + rand(-6, 6)
 

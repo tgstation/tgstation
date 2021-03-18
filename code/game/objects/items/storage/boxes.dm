@@ -538,7 +538,7 @@
 
 /obj/item/storage/box/ids/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/card/id(src)
+		new /obj/item/card/id/advanced(src)
 
 //Some spare PDAs in a box
 /obj/item/storage/box/pdas
@@ -565,7 +565,7 @@
 
 /obj/item/storage/box/silver_ids/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/card/id/silver(src)
+		new /obj/item/card/id/advanced/silver(src)
 
 /obj/item/storage/box/prisoner
 	name = "box of prisoner IDs"
@@ -575,13 +575,13 @@
 
 /obj/item/storage/box/prisoner/PopulateContents()
 	..()
-	new /obj/item/card/id/prisoner/one(src)
-	new /obj/item/card/id/prisoner/two(src)
-	new /obj/item/card/id/prisoner/three(src)
-	new /obj/item/card/id/prisoner/four(src)
-	new /obj/item/card/id/prisoner/five(src)
-	new /obj/item/card/id/prisoner/six(src)
-	new /obj/item/card/id/prisoner/seven(src)
+	new /obj/item/card/id/advanced/prisoner/one(src)
+	new /obj/item/card/id/advanced/prisoner/two(src)
+	new /obj/item/card/id/advanced/prisoner/three(src)
+	new /obj/item/card/id/advanced/prisoner/four(src)
+	new /obj/item/card/id/advanced/prisoner/five(src)
+	new /obj/item/card/id/advanced/prisoner/six(src)
+	new /obj/item/card/id/advanced/prisoner/seven(src)
 
 /obj/item/storage/box/seccarts
 	name = "box of PDA security cartridges"
@@ -848,6 +848,27 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
+
+/obj/item/storage/box/hug/plushes
+	name = "tactical cuddle kit"
+	desc = "A lovely little box filled with soft, cute plushies, perfect for calming down people who have just suffered a traumatic event. Legend has it there's a special part of hell\
+	for Medical Officers who just take the box for themselves."
+
+	/// the plushies that aren't of things trying to kill you
+	var/list/static/approved_by_corporate = list(/obj/item/toy/plush/carpplushie, // well, maybe they can be something that tries to kill you a little bit
+		/obj/item/toy/plush/slimeplushie,
+		/obj/item/toy/plush/lizardplushie,
+		/obj/item/toy/plush/snakeplushie,
+		/obj/item/toy/plush/plasmamanplushie,
+		/obj/item/toy/plush/beeplushie,
+		/obj/item/toy/plush/moth,
+		/obj/item/toy/plush/pkplush)
+
+/obj/item/storage/box/hug/plushes/PopulateContents()
+	for(var/i in 1 to 7)
+		var/plush_path = pick(approved_by_corporate)
+		new plush_path(src)
+
 /obj/item/storage/box/rubbershot
 	name = "box of rubber shots"
 	desc = "A box full of rubber shots, designed for riot shotguns."
@@ -995,9 +1016,9 @@
 	illustration = "scicircuit"
 
 /obj/item/storage/box/rndboards/PopulateContents()
-	new /obj/item/circuitboard/machine/protolathe(src)
+	new /obj/item/circuitboard/machine/protolathe/offstation(src)
 	new /obj/item/circuitboard/machine/destructive_analyzer(src)
-	new /obj/item/circuitboard/machine/circuit_imprinter(src)
+	new /obj/item/circuitboard/machine/circuit_imprinter/offstation(src)
 	new /obj/item/circuitboard/computer/rdconsole(src)
 
 /obj/item/storage/box/silver_sulf

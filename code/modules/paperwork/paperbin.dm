@@ -19,6 +19,7 @@
 /obj/item/paper_bin/Initialize(mapload)
 	. = ..()
 	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+	AddElement(/datum/element/drag_pickup)
 	if(!mapload)
 		return
 	var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
@@ -26,6 +27,7 @@
 		P.forceMove(src)
 		bin_pen = P
 		update_appearance()
+	
 
 /obj/item/paper_bin/Destroy()
 	if(papers)
@@ -39,21 +41,6 @@
 		total_paper = 0
 		update_appearance()
 	..()
-
-/obj/item/paper_bin/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/living/M = usr
-	if(!istype(M) || M.incapacitated() || !Adjacent(M))
-		return
-
-	if(over_object == M)
-		M.put_in_hands(src)
-
-	else if(istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
-	add_fingerprint(M)
 
 /obj/item/paper_bin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

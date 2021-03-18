@@ -3,6 +3,7 @@
 /obj/effect/particle_effect/water
 	name = "water"
 	icon_state = "extinguish"
+	pass_flags = PASSTABLE | PASSMACHINE | PASSSTRUCTURE | PASSGRILLE
 	var/life = 15
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
@@ -14,8 +15,6 @@
 /obj/effect/particle_effect/water/Move(turf/newloc)
 	if (--src.life < 1)
 		qdel(src)
-		return FALSE
-	if(newloc.density)
 		return FALSE
 	return ..()
 

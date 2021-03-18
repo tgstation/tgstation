@@ -19,7 +19,7 @@
 
 /datum/component/rot/process(delta_time)
 	var/atom/A = parent
-	
+
 	//SSprocessing goes off per 1 second
 	time_remaining -= delta_time * 1 SECONDS
 	if(time_remaining <= 0)
@@ -47,25 +47,29 @@
 	. = ..()
 
 /datum/component/rot/corpse/process()
-	var/mob/living/carbon/C = parent
-	if(C.stat != DEAD)
+	var/mob/living/carbon/carbon_mob = parent
+	if(carbon_mob.stat != DEAD)
 		qdel(src)
 		return
 
 	// Wait a bit before decaying
-	if(world.time - C.timeofdeath < 2 MINUTES)
+	if(world.time - carbon_mob.timeofdeath < 2 MINUTES)
 		return
 
 	// Properly stored corpses shouldn't create miasma
-	if(istype(C.loc, /obj/structure/closet/crate/coffin)|| istype(C.loc, /obj/structure/closet/body_bag) || istype(C.loc, /obj/structure/bodycontainer))
+	if(istype(carbon_mob.loc, /obj/structure/closet/crate/coffin)|| istype(carbon_mob.loc, /obj/structure/closet/body_bag) || istype(carbon_mob.loc, /obj/structure/bodycontainer))
 		return
 
 	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(C.reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(C, TRAIT_HUSK))
+	if(carbon_mob.reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || HAS_TRAIT(carbon_mob, TRAIT_HUSK))
+		return
+
+	// Similar to formaldehyde except it slows down surgery too
+	if(carbon_mob.reagents.has_reagent(/datum/reagent/cryostylane))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
-	if(C.bodytemperature <= T0C-10 || !(C.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+	if(carbon_mob.bodytemperature <= T0C-10 || !(carbon_mob.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 		return
 
 	..()

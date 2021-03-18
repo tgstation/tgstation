@@ -43,6 +43,9 @@
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
 	. = ..()
+	
+	AddComponent(/datum/component/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, vary = TRUE)
+	
 	stored_gun = new(src)
 	var/datum/action/innate/minedrone/toggle_light/toggle_light_action = new()
 	toggle_light_action.Grant(src)
@@ -55,12 +58,10 @@
 	var/obj/item/implant/radio/mining/imp = new(src)
 	imp.implant(src)
 
-	access_card = new /obj/item/card/id(src)
-	var/datum/job/mining/M = new
-	access_card.access = M.get_access()
+	access_card = new /obj/item/card/id/advanced/gold(src)
+	SSid_access.apply_trim_to_card(access_card, /datum/id_trim/job/shaft_miner)
 
 	SetCollectBehavior()
-
 
 /mob/living/simple_animal/hostile/mining_drone/Destroy()
 	for (var/datum/action/innate/minedrone/action in actions)

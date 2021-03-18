@@ -746,6 +746,7 @@
 	slurring = 0
 	jitteriness = 0
 	stop_sound_channel(CHANNEL_HEARTBEAT)
+	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, admin_revive)
 
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -1387,20 +1388,21 @@
 	name = "[name] ([numba])"
 	real_name = name
 
-/mob/living/proc/mob_try_pickup(mob/living/user)
+/mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user))
 		return
-	if(user.get_active_held_item())
+	if(!user.get_empty_held_indexes())
 		to_chat(user, "<span class='warning'>Your hands are full!</span>")
 		return FALSE
 	if(buckled)
 		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
 		return FALSE
-	user.visible_message("<span class='warning'>[user] starts trying to scoop up [src]!</span>", \
-					"<span class='danger'>You start trying to scoop up [src]...</span>", null, null, src)
-	to_chat(src, "<span class='userdanger'>[user] starts trying to scoop you up!</span>")
-	if(!do_after(user, 20, target = src))
-		return FALSE
+	if(!instant)
+		user.visible_message("<span class='warning'>[user] starts trying to scoop up [src]!</span>", \
+						"<span class='danger'>You start trying to scoop up [src]...</span>", null, null, src)
+		to_chat(src, "<span class='userdanger'>[user] starts trying to scoop you up!</span>")
+		if(!do_after(user, 2 SECONDS, target = src))
+			return FALSE
 	mob_pickup(user)
 	return TRUE
 
@@ -1921,24 +1923,19 @@
  * It is also used to process martial art attacks by nonhumans, even against humans
  * Human vs human attacks are handled in species code right now.
  */
-/mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab)
+/mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab = FALSE)
 	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
-		return FALSE
-	if(ishuman(target) && ishuman(src)) //Human vs human are handled in species code
-		return FALSE
+		return MARTIAL_ATTACK_INVALID
 	var/datum/martial_art/style = mind?.martial_art
-	var/attack_result = FALSE
-	if (style)
-		if (is_grab)
-			attack_result = style.grab_act(src, target)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			attack_result = style.disarm_act(src, target)
-		if(combat_mode)
-			if (HAS_TRAIT(src, TRAIT_PACIFISM))
-				return FALSE
-			attack_result = style.harm_act(src, target)
-		else
-			attack_result = style.help_act(src, target)
-
-
-	return attack_result
+	if (!style)
+		return MARTIAL_ATTACK_INVALID
+	// will return boolean below since it's not invalid
+	if (is_grab)
+		return style.grab_act(src, target)
+	if (LAZYACCESS(modifiers, RIGHT_CLICK))
+		return style.disarm_act(src, target)
+	if(combat_mode)
+		if (HAS_TRAIT(src, TRAIT_PACIFISM))
+			return FALSE
+		return style.harm_act(src, target)
+	return style.help_act(src, target)

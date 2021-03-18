@@ -99,13 +99,14 @@
 	..()
 	update_parents()
 
-/obj/machinery/atmospherics/components/build_network()
+/obj/machinery/atmospherics/components/get_rebuild_targets()
+	var/list/to_return = list()
 	for(var/i in 1 to device_type)
 		if(parents[i])
 			continue
 		parents[i] = new /datum/pipeline()
-		var/datum/pipeline/P = parents[i]
-		P.build_pipeline(src)
+		to_return += parents[i]
+	return to_return
 
 /**
  * Called by nullifyNode(), used to remove the pipeline the component is attached to
@@ -115,9 +116,14 @@
 /obj/machinery/atmospherics/components/proc/nullifyPipenet(datum/pipeline/reference)
 	if(!reference)
 		CRASH("nullifyPipenet(null) called by [type] on [COORD(src)]")
-	var/i = parents.Find(reference)
-	reference.other_airs -= airs[i]
+
+	for (var/i in 1 to parents.len)
+		if (parents[i] == reference)
+			reference.other_airs -= airs[i] // Disconnects from the pipeline side
+			parents[i] = null // Disconnects from the machinery side.
+
 	reference.other_atmosmch -= src
+
 	/**
 	 *  We explicitly qdel pipeline when this particular pipeline
 	 *  is projected to have no member and cause GC problems.
@@ -125,15 +131,19 @@
 	 *  while pipes must and will happily wreck and rebuild everything
 	 * again every time they are qdeleted.
 	 */
+
 	if(!length(reference.other_atmosmch) && !length(reference.members))
 		if(QDESTROYING(reference))
-			parents[i] = null
-			CRASH("nullifyPipenet() called on qdeleting [reference] indexed on parents\[[i]\]")
+			CRASH("nullifyPipenet() called on qdeleting [reference]")
 		qdel(reference)
-	parents[i] = null
 
-/obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
-	return airs[parents.Find(reference)]
+/obj/machinery/atmospherics/components/returnPipenetAirs(datum/pipeline/reference)
+	var/list/returned_air = list()
+
+	for (var/i in 1 to parents.len)
+		if (parents[i] == reference)
+			returned_air += airs[i]
+	return returned_air
 
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
 	if(reference)

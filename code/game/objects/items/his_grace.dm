@@ -7,16 +7,18 @@
 /obj/item/his_grace
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
-	icon_state = "his_grace"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	icon = 'icons/obj/items_and_weapons.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	force = 12
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
 	hitsound = 'sound/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound =  'sound/items/handling/toolbox_pickup.ogg'
 	var/awakened = FALSE
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
@@ -30,12 +32,27 @@
 	START_PROCESSING(SSprocessing, src)
 	AddElement(/datum/element/point_of_interest)
 	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, .proc/move_gracefully)
+	update_appearance()
 
 /obj/item/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	for(var/mob/living/L in src)
 		L.forceMove(get_turf(src))
 	return ..()
+
+/obj/item/his_grace/update_icon_state()
+	icon_state = ascended ? "gold" : "green"
+	inhand_icon_state = ascended ? "toolbox_gold" : "artistic_toolbox"
+	return ..()
+
+/obj/item/his_grace/update_overlays()
+	. = ..()
+	if(ascended)
+		. += "triple_latch"
+	else if(awakened)
+		. += "single_latch_open"
+	else
+		. += "single_latch"
 
 /obj/item/his_grace/attack_self(mob/living/user)
 	if(!awakened)
@@ -132,7 +149,7 @@
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)
-	icon_state = "his_grace_awakened"
+	update_appearance()
 	move_gracefully()
 
 /obj/item/his_grace/proc/move_gracefully()
@@ -165,13 +182,13 @@
 	playsound(loc, 'sound/weapons/batonextend.ogg', 100, TRUE)
 	name = initial(name)
 	desc = initial(desc)
-	icon_state = initial(icon_state)
 	animate(src, transform=matrix())
 	gender = initial(gender)
 	force = initial(force)
 	force_bonus = initial(force_bonus)
 	awakened = FALSE
 	bloodthirst = 0
+	update_appearance()
 
 /obj/item/his_grace/proc/consume(mob/living/meal) //Here's your dinner, Mr. Grace.
 	if(!meal)
@@ -247,11 +264,11 @@
 	var/mob/living/carbon/human/master = loc
 	force_bonus += ascend_bonus
 	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
-	icon_state = "his_grace_ascended"
-	inhand_icon_state = "toolbox_gold"
 	ascended = TRUE
+	update_appearance()
 	playsound(src, 'sound/effects/his_grace_ascend.ogg', 100)
 	if(istype(master))
+		master.update_inv_hands()
 		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>")
 		name = "[master]'s mythical toolbox of three powers"
 		master.client?.give_award(/datum/award/achievement/misc/ascension, master)
