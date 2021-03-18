@@ -30,7 +30,7 @@
  * safety measure against bad tram movement.
  */
 /obj/machinery/computer/tram_controls/proc/find_tram()
-	var/obj/structure/industrial_lift/tram/central/tram_loc = locate(/obj/structure/industrial_lift/tram/central) in GLOB.lifts
+	var/obj/structure/industrial_lift/tram/central/tram_loc = locate() in GLOB.lifts
 	tram_part = tram_loc //possibly setting to something null, that's fine, but
 	tram_part.find_our_location()
 	for(var/obj/structure/industrial_lift/tram/tram_finder in GLOB.lifts)
