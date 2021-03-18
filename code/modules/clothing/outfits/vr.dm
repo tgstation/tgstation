@@ -18,8 +18,8 @@
 	uniform = /obj/item/clothing/under/syndicate
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
-		/obj/item/storage/box/survival/syndie=1,
-		/obj/item/kitchen/knife/combat/survival,
+		/obj/item/storage/box/survival/syndie = 1,
+		/obj/item/kitchen/knife/combat/survival = 1,
 )
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
