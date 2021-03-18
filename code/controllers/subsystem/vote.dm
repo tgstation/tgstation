@@ -70,12 +70,10 @@ SUBSYSTEM_DEF(vote)
 					var/client/C = non_voters[non_voter_ckey]
 					if(C.prefs.preferred_map)
 						var/preferred_map = C.prefs.preferred_map
+						if(!preferred_map)
+						    preferred_map = global.config.defaultmap.map_name
 						choices[preferred_map] += 1
 						greatest_votes = max(greatest_votes, choices[preferred_map])
-					else if(global.config.defaultmap)
-						var/default_map = global.config.defaultmap.map_name
-						choices[default_map] += 1
-						greatest_votes = max(greatest_votes, choices[default_map])
 			// Do you want to implement transfer? This calls the shuttle on crew vote. Great for long rounds.
 			// else if(mode == "transfer")
 			// 	var/factor = 1 // factor defines how non-voters are weighted towards calling the shuttle
