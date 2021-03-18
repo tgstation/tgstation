@@ -8,9 +8,9 @@
 	var/list/items = list()
 	for(var/i in 1 to length(mod_parts))
 		var/obj/item/piece = mod_parts[i]
-		display_names["[piece.name] ([i])"] = REF(piece)
+		display_names[piece.name] = REF(piece)
 		var/image/piece_image = image(icon = piece.icon, icon_state = piece.icon_state)
-		items += list("[piece.name] ([i])" = piece_image)
+		items += list(piece.name = piece_image)
 	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE)
 	if(!pick)
 		return
@@ -68,7 +68,7 @@
 			to_chat(user, "<span class='warning'>ERROR: Not all parts deployed.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
-	if(locked && !active && !allowed(wearer))
+	if(locked && !active && !allowed(user))
 		to_chat(user, "<span class='warning'>ERROR: Access level insufficient.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return

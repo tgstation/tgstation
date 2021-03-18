@@ -117,7 +117,7 @@
 			piece.gas_transfer_coefficient = theme.gas_transfer_coefficient
 			piece.permeability_coefficient = theme.permeability_coefficient
 			piece.siemens_coefficient = theme.siemens_coefficient
-			piece.icon_state = "[skin]-[piece.icon_state]"
+			piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 	if(theme.initial_modules.len)
 		for(var/obj/item/mod/module/module in theme.initial_modules)
 			module = new module(src)
@@ -197,7 +197,7 @@
 
 /obj/item/mod/control/attack_hand(mob/user)
 	if(seconds_electrified && cell.charge)
-		if(shock(user, 100))
+		if(shock(user))
 			return
 	if(open && cell && loc == user)
 		to_chat(user, "<span class='notice'>You start removing [cell].</span>")
@@ -263,13 +263,32 @@
 			return FALSE
 	else if(is_wire_tool(I) && open)
 		wires.interact(user)
-	else if(istype(I, /obj/item/mod/paint))
-		paint()
+	else if(istype(I, /obj/item/mod/paint) && paint(user, I))
+		to_chat(user, "<span class='notice'>You paint [src] with [I].</span>")
 		qdel(I)
 	..()
 
-/obj/item/mod/control/proc/paint()
+/obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
+	if(theme.skins.len <= 1)
+		return FALSE
+	var/list/display_names = list()
+	var/list/skins = list()
+	for(var/i in 1 to length(theme.skins))
+		var/mod_skin = theme.skins[i]
+		display_names[mod_skin] = REF(mod_skin)
+		var/image/skin_image = image(icon = icon, icon_state = "[mod_skin]-control")
+		skins += list(mod_skin = skin_image)
+	var/pick = show_radial_menu(user, src, skins, custom_check = FALSE, require_near = TRUE)
+	if(!pick || !user.is_holding(paint))
+		return FALSE
+	var/skin_reference = display_names[pick]
+	var/new_skin = locate(skin_reference) in theme.skins
+	skin = new_skin
+	var/list/skin_updating = mod_parts.Copy() + src
+	for(var/obj/item/piece in skin_updating)
+		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 	wearer.update_icons()
+	return TRUE
 
 /obj/item/mod/control/proc/shock(mob/living/user)
 	if(!istype(user) || cell.charge < 1)
@@ -319,11 +338,12 @@
 	thingy.mod = null
 
 /obj/item/mod/control/proc/update_access()
-	if(!allowed(wearer))
+	var/obj/item/card/id/access_id = wearer.wear_id?.GetID()
+	if(!access_id || !allowed(wearer))
 		to_chat(wearer, "<span class='warning'>ERROR: Access denied.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
-	req_access = wearer.wear_id?.GetID()
+	req_access = access_id.access.Copy()
 	to_chat(wearer, "<span class='notice'>Access levels updated.</span>")
 
 /obj/item/clothing/head/helmet/space/mod
@@ -387,13 +407,14 @@
 	var/obj/item/clothing/overslot
 
 /obj/item/clothing/gloves/mod/Destroy()
-	overslot.forceMove(drop_location())
-	..()
+	if(overslot && isliving(loc))
+		var/mob/guy = loc
+		guy.transferItemToLoc(src, mod, TRUE)
+		show_overslot(guy)
 	if(mod)
 		mod.gauntlets = null
 		QDEL_NULL(mod)
-	if(isliving(loc))
-		show_overslot(loc)
+	..()
 
 /obj/item/clothing/gloves/mod/proc/show_overslot(mob/user)
 	if(!overslot)
@@ -413,13 +434,14 @@
 	var/obj/item/clothing/overslot
 
 /obj/item/clothing/shoes/mod/Destroy()
-	overslot.forceMove(drop_location())
-	..()
+	if(overslot && isliving(loc))
+		var/mob/guy = loc
+		guy.transferItemToLoc(src, mod, TRUE)
+		show_overslot(guy)
 	if(mod)
 		mod.boots = null
 		QDEL_NULL(mod)
-	if(isliving(loc))
-		show_overslot(loc)
+	..()
 
 /obj/item/clothing/shoes/mod/proc/show_overslot(mob/user)
 	if(!overslot)

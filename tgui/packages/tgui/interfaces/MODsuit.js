@@ -29,16 +29,16 @@ export const MODsuit = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item
               label="Lock"
-              buttons={<
-                Button
+              buttons={(<Button
                   icon={data.locked ? "lock-open" : "lock"}
                   content={data.locked ? 'Unlock' : 'Lock'}
-                  onClick={() => act('lock')}
-                Button
+                  onClick={() => act('lock')} />
+                )}>
+                {(<Button
                   icon="id-card"
                   content="Update Access"
-                  onClick={() => act('update_access')}
-                />} >
+                  onClick={() => act('update_access')}/>
+                )}
               {data.locked ? 'Locked' : 'Unlocked'}
             </LabeledList.Item>
             <LabeledList.Item label="Cover">
