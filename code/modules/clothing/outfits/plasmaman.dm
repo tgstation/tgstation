@@ -12,7 +12,7 @@
 
 	uniform = /obj/item/clothing/under/plasmaman/security
 	gloves = /obj/item/clothing/gloves/color/plasmaman/black
-	head = /obj/item/clothing/head/helmet/space/plasmaman/Security
+	head = /obj/item/clothing/head/helmet/space/plasmaman/security
 
 /datum/outfit/plasmaman/detective
 	name = "Detective Plasmaman"
