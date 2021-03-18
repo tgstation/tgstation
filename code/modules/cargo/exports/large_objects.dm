@@ -33,7 +33,7 @@
 
 /datum/export/large/reagent_dispenser
 	cost = CARGO_CRATE_VALUE * 0.5 // +0-400 depending on amount of reagents left
-	var/contents_cost = 400
+	var/contents_cost = CARGO_CRATE_VALUE * 0.8
 
 /datum/export/large/reagent_dispenser/get_cost(obj/O)
 	var/obj/structure/reagent_dispensers/D = O
@@ -44,7 +44,7 @@
 /datum/export/large/reagent_dispenser/water
 	unit_name = "watertank"
 	export_types = list(/obj/structure/reagent_dispensers/watertank)
-	contents_cost = 200
+	contents_cost = CARGO_CRATE_VALUE * 0.4
 
 /datum/export/large/reagent_dispenser/fuel
 	unit_name = "fueltank"
