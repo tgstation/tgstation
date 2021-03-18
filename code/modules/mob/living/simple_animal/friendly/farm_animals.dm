@@ -400,7 +400,7 @@
 	name = "udder"
 
 /obj/item/udder/Initialize()
-	create_reagents(50)
+	create_reagents(50, REAGENT_HOLDER_ALIVE)
 	reagents.add_reagent(/datum/reagent/consumable/milk, 20)
 	. = ..()
 

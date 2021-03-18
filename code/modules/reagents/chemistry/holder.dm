@@ -175,7 +175,7 @@
 
 	//Split up the reagent if it's in a mob
 	var/has_split = FALSE
-	if(is_type_in_list(my_atom, list(/mob/living/carbon, /obj/item/organ/stomach)) && !ignore_splitting) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
+	if(!ignore_splitting && (flags & REAGENT_HOLDER_ALIVE)) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
 		var/adjusted_vol = process_mob_reagent_purity(glob_reagent, amount, added_purity)
 		if(!adjusted_vol) //If we're inverse or FALSE cancel addition
 			return FALSE
