@@ -26,7 +26,7 @@
 		var/list/module_data = list(
 			name = thingy.name,
 			description = thingy.desc,
-			selectable = thingy.selectable,
+			module_type = thingy.module_type,
 			active = thingy.active,
 			idle_power = thingy.idle_power_use,
 			active_power = thingy.active_power_use,
@@ -53,8 +53,5 @@
 			toggle_activate(usr)
 		if("select")
 			var/obj/item/mod/module/thingy = locate(params["ref"]) in modules
-			thingy.active = !thingy.active
-			if(thingy.selectable == MOD_USABLE && thingy.active)
-				selected_module.active = FALSE
-				selected_module = thingy
+			thingy.on_select()
 	return TRUE

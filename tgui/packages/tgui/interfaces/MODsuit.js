@@ -6,7 +6,17 @@ export const MODsuit = (props, context) => {
   const { act, data } = useBackend(context);
   let inventory = [
     ...data.modules,
-  ];
+  ]
+  const displayText = param => {
+    switch(param){
+      case 1:
+          return "Use"
+      case 2:
+          return "Toggle"
+      case 3:
+          return "Select"
+  }
+  };
   return (
     <Window
       width={400}
@@ -94,9 +104,9 @@ export const MODsuit = (props, context) => {
               <Collapsible
                 title={module.name}
                 key={module.name}
-                buttons={!!module.selectable && (
+                buttons={!!module.module_type && (
                   <Button
-                    content={module.selectable === 1 ? 'Activate' : 'Select'}
+                    content={displayText(module.module_type)}
                     selected={module.active}
                     onClick={() => act('select', {
                       'ref': module.ref,

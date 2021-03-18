@@ -13,7 +13,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 2
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
 	actions_types = list(/datum/action/item_action/mod/deploy, /datum/action/item_action/mod/activate, /datum/action/item_action/mod/panel)
 	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
@@ -21,57 +21,59 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
-	/// The MOD's theme, decides on some stuff like armor and statistics
+	/// The MOD's theme, decides on some stuff like armor and statistics.
 	var/datum/mod_theme/theme = /datum/mod_theme
-	/// Looks of the MOD
+	/// Looks of the MOD.
 	var/skin = "standard"
-	/// If the suit is deployed and turned on
+	/// If the suit is deployed and turned on.
 	var/active = FALSE
-	/// If the suit wire/module hatch is open
+	/// If the suit wire/module hatch is open.
 	var/open = FALSE
-	/// If the suit is ID locked
-	var/locked = TRUE
-	/// If the suit is malfunctioning
+	/// If the suit is ID locked.
+	var/locked = FALSE
+	/// If the suit is malfunctioning.
 	var/malfunctioning = FALSE
-	/// If the suit has EMP protection
+	/// If the suit has EMP protection.
 	var/emp_protection = FALSE
-	/// If the suit is currently activating/deactivating
+	/// If the suit is currently activating/deactivating.
 	var/activating = FALSE
-	/// How long the MOD is electrified for
+	/// How long the MOD is electrified for.
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
-	/// If the suit interface is broken
+	/// If the suit interface is broken.
 	var/interface_break = FALSE
-	/// How much modules can this MOD carry without malfunctioning
+	/// How much modules can this MOD carry without malfunctioning.
 	var/complexity_max = DEFAULT_MAX_COMPLEXITY
-	/// How much modules this MOD is carrying
+	/// How much modules this MOD is carrying.
 	var/complexity = 0
 	/// Power usage of the MOD.
 	var/cell_drain = 0
-	/// Slowdown when active
+	/// Slowdown when active.
 	var/slowdown_active = 1
-	/// MOD cell
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
-	/// MOD helmet
-	var/obj/item/clothing/head/helmet/space/mod/helmet = /obj/item/clothing/head/helmet/space/mod
-	/// MOD chestplate
-	var/obj/item/clothing/suit/armor/mod/chestplate = /obj/item/clothing/suit/armor/mod
-	/// MOD gauntlets
-	var/obj/item/clothing/gloves/mod/gauntlets = /obj/item/clothing/gloves/mod
-	/// MOD boots
-	var/obj/item/clothing/shoes/mod/boots = /obj/item/clothing/shoes/mod
-	/// List of parts
+	/// MOD cell.
+	var/obj/item/stock_parts/cell/cell
+	/// MOD helmet.
+	var/obj/item/clothing/head/helmet/space/mod/helmet
+	/// MOD chestplate.
+	var/obj/item/clothing/suit/armor/mod/chestplate
+	/// MOD gauntlets.
+	var/obj/item/clothing/gloves/mod/gauntlets
+	/// MOD boots.
+	var/obj/item/clothing/shoes/mod/boots
+	/// List of parts.
 	var/list/mod_parts
-	/// Modules the MOD currently possesses
+	/// Modules the MOD should spawn with.
+	var/list/initial_modules = list()
+	/// Modules the MOD currently possesses.
 	var/list/modules
-	/// Currently used module
+	/// Currently used module.
 	var/obj/item/mod/module/selected_module
-	/// AI mob inhabiting the MOD
+	/// AI mob inhabiting the MOD.
 	var/mob/living/silicon/ai/AI
-	/// Delay between moves as AI
+	/// Delay between moves as AI.
 	var/movedelay = 0
-	/// Cooldown for AI moves
+	/// Cooldown for AI moves.
 	COOLDOWN_DECLARE(cooldown_mod_move)
-	/// Person wearing the MODsuit
+	/// Person wearing the MODsuit.
 	var/mob/living/carbon/human/wearer
 
 /obj/item/mod/control/Initialize()
@@ -82,52 +84,55 @@
 	slowdown = theme.slowdown_unactive
 	complexity_max = theme.complexity_max
 	skin = theme.default_skin
-	req_access = theme.req_access.Copy()
 	cell_drain = theme.cell_usage
 	wires = new /datum/wires/mod(src)
-	if(!req_access.len)
-		locked = FALSE
+	if(req_access?.len)
+		locked = TRUE
 	if(ispath(cell))
 		cell = new cell(src)
-	if(ispath(helmet))
-		helmet = new helmet(src)
+	if(ispath(theme.helmet_path))
+		helmet = new theme.helmet_path(src)
 		helmet.mod = src
 		LAZYADD(mod_parts, helmet)
-	if(ispath(chestplate))
-		chestplate = new chestplate(src)
+	else
+		CRASH("A MODsuit spawned without a helmet.")
+	if(ispath(theme.chestplate_path))
+		chestplate = new theme.chestplate_path(src)
 		chestplate.mod = src
 		LAZYADD(mod_parts, chestplate)
-	if(ispath(gauntlets))
-		gauntlets = new gauntlets(src)
+	else
+		CRASH("A MODsuit spawned without a chestplate.")
+	if(ispath(theme.gauntlets_path))
+		gauntlets = new theme.gauntlets_path(src)
 		gauntlets.mod = src
 		LAZYADD(mod_parts, gauntlets)
-	if(ispath(boots))
-		boots = new boots(src)
+	else
+		CRASH("A MODsuit spawned without gauntlets.")
+	if(ispath(theme.boots_path))
+		boots = new theme.boots_path(src)
 		boots.mod = src
 		LAZYADD(mod_parts, boots)
-	if(LAZYLEN(mod_parts))
-		var/all_parts = mod_parts.Copy() + src
-		for(var/obj/item/piece in all_parts)
-			piece.name = "[theme.name] [piece.name]"
-			piece.desc = "[piece.desc] [theme.desc]"
-			piece.armor = theme.armor
-			piece.resistance_flags = theme.resistance_flags
-			piece.max_heat_protection_temperature = theme.max_heat_protection_temperature
-			piece.min_cold_protection_temperature = theme.min_cold_protection_temperature
-			piece.gas_transfer_coefficient = theme.gas_transfer_coefficient
-			piece.permeability_coefficient = theme.permeability_coefficient
-			piece.siemens_coefficient = theme.siemens_coefficient
-			piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-	if(theme.initial_modules.len)
-		for(var/obj/item/mod/module/module in theme.initial_modules)
+	else
+		CRASH("A MODsuit spawned without boots.")
+	var/list/all_parts = mod_parts.Copy() + src
+	for(var/obj/item/piece in all_parts)
+		piece.name = "[theme.name] [piece.name]"
+		piece.desc = "[piece.desc] [theme.desc]"
+		piece.armor = theme.armor
+		piece.resistance_flags = theme.resistance_flags
+		piece.max_heat_protection_temperature = theme.max_heat_protection_temperature
+		piece.min_cold_protection_temperature = theme.min_cold_protection_temperature
+		piece.gas_transfer_coefficient = theme.gas_transfer_coefficient
+		piece.permeability_coefficient = theme.permeability_coefficient
+		piece.siemens_coefficient = theme.siemens_coefficient
+		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
+	if(initial_modules.len)
+		for(var/obj/item/mod/module/module in initial_modules)
 			module = new module(src)
 			install(module, TRUE)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
-	START_PROCESSING(SSobj,src)
-
 
 /obj/item/mod/control/Destroy()
-	..()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(wires)
 	if(cell)
@@ -144,17 +149,18 @@
 	if(boots)
 		boots.mod = null
 		QDEL_NULL(boots)
-	for(var/obj/item/mod/module/thingy in modules)
-		thingy.mod = null
-		QDEL_NULL(thingy)
+	for(var/obj/item/mod/module/module in modules)
+		module.mod = null
+		QDEL_NULL(module)
+	..()
 
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
-	if(!(cell && cell.charge > 0 && active && cell_drain))
-		return
-	if((cell.charge -= cell_drain) < 0)
-		cell.charge = 0
+	if(!cell?.charge && active && !activating)
+		power_off()
+		return PROCESS_KILL
+	cell.charge = max(0, cell.charge -= cell_drain)
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()
@@ -172,15 +178,15 @@
 		return TRUE
 
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/guy = user
-		if(src == guy.back)
-			for(var/obj/item/part in mod_parts)
-				if(part.loc != src)
-					to_chat(guy, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
-					playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
-					return FALSE
-	return ..()
+	if(!iscarbon(user))
+		return ..()
+	var/mob/living/carbon/guy = user
+	if(src == guy.back)
+		for(var/obj/item/part in mod_parts)
+			if(part.loc != src)
+				to_chat(guy, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
+				playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
+				return FALSE
 
 /obj/item/mod/control/MouseDrop(atom/over_object)
 	if(src == wearer?.back && istype(over_object, /atom/movable/screen/inventory/hand))
@@ -206,7 +212,7 @@
 			user.put_in_hands(cell)
 			cell = null
 		return
-	..()
+	return ..()
 
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -232,9 +238,9 @@
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return FALSE
 	if(modules.len)
-		for(var/obj/item/mod/module/thingy in modules)
-			if(thingy.removable)
-				uninstall(thingy)
+		for(var/obj/item/mod/module/module in modules)
+			if(module.removable)
+				uninstall(module)
 		I.play_tool_sound(src, 100)
 		return TRUE
 	to_chat(user, "<span class='warning'>ERROR: There's no modules on [src]!</span>")
@@ -301,41 +307,53 @@
 		return FALSE
 
 /obj/item/mod/control/proc/install(module, starting_module = FALSE)
-	var/obj/item/mod/module/thingy = module
-	if(theme.module_blacklist.Find(thingy))
+	var/obj/item/mod/module/new_module = module
+	for(var/obj/item/mod/module/old_module in modules)
+		if(is_type_in_list(new_module, old_module.incompatible_modules) || is_type_in_list(old_module, new_module.incompatible_modules))
+			if(!starting_module)
+				audible_message("<span class='warning'>[src] indicates that [new_module] is incompatible with [old_module].</span>")
+				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+				return
+			else
+				CRASH("MODsuit starting modules are incompatible with each other.")
+	if(is_type_in_list(module, theme.module_blacklist))
 		if(!starting_module)
-			audible_message("<span class='warning'>[src] indicates that it rejects the module.</span>")
+			audible_message("<span class='warning'>[src] indicates that it rejects [new_module].</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-		return
-	var/complexity_with_thingy = complexity
-	complexity_with_thingy += thingy.complexity
-	if(complexity_with_thingy > complexity_max)
+			return
+		else
+			CRASH("MODsuit starting modules are in the theme's blacklist.")
+	var/complexity_with_module = complexity
+	complexity_with_module += new_module.complexity
+	if(complexity_with_module > complexity_max)
 		if(!starting_module)
-			audible_message("<span class='warning'>[src] indicates that the module would make it too complex.</span>")
+			audible_message("<span class='warning'>[src] indicates that [new_module] would make it overheat.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-		return
-	thingy.forceMove(src)
-	LAZYADD(modules, thingy)
-	complexity += thingy.complexity
-	cell_drain += thingy.idle_power_use
-	thingy.mod = src
-	thingy.on_install()
+			return
+		else
+			CRASH("MODsuit starting modules reach above max complexity.")
+	new_module.forceMove(src)
+	LAZYADD(modules, new_module)
+	complexity += new_module.complexity
+	cell_drain += new_module.idle_power_use
+	new_module.mod = src
+	new_module.on_install()
 	if(!starting_module)
-		audible_message("<span class='notice'>[src] indicates that the module has been installed successfully.</span>")
+		audible_message("<span class='notice'>[src] indicates that [new_module] has been installed successfully.</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/mod/control/proc/uninstall(module)
-	var/obj/item/mod/module/thingy = module
-	if(!thingy.removable)
-		audible_message("<span class='warning'>[src] indicates that the module cannot be removed.</span>")
+	var/obj/item/mod/module/old_module = module
+	if(!old_module.removable)
+		audible_message("<span class='warning'>[src] indicates that [old_module] cannot be removed.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
-	thingy.forceMove(get_turf(src))
-	LAZYREMOVE(modules, thingy)
-	complexity -= thingy.complexity
-	cell_drain -= thingy.idle_power_use
-	thingy.on_uninstall()
-	thingy.mod = null
+	old_module.forceMove(get_turf(src))
+	LAZYREMOVE(modules, old_module)
+	complexity -= old_module.complexity
+	cell_drain -= old_module.idle_power_use
+	old_module.on_uninstall()
+	old_module.mod = null
 
 /obj/item/mod/control/proc/update_access()
 	var/obj/item/card/id/access_id = wearer.wear_id?.GetID()
@@ -346,19 +364,23 @@
 	req_access = access_id.access.Copy()
 	to_chat(wearer, "<span class='notice'>Access levels updated.</span>")
 
+/obj/item/mod/control/proc/power_off()
+	to_chat(wearer, "<span class='warning'>ERROR: Insufficient power.</span>")
+	toggle_activate(wearer, force_deactivate = TRUE)
+
 /obj/item/clothing/head/helmet/space/mod
 	name = "MOD helmet"
 	desc = "A helmet for a MODsuit."
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "helmet"
 	worn_icon = 'icons/mob/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
 	flash_protect = FLASH_PROTECTION_NONE
 	resistance_flags = NONE
-	clothing_flags = THICKMATERIAL | SNUG_FIT
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEFACIALHAIR
 	flags_cover = HEADCOVERSMOUTH
-	visor_flags = STOPSPRESSUREDAMAGE
+	visor_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	visor_flags_cover = HEADCOVERSEYES|PEPPERPROOF
 	alternate_worn_layer = NECK_LAYER
@@ -376,7 +398,7 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "chestplate"
 	worn_icon = 'icons/mob/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
@@ -401,7 +423,7 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "gauntlets"
 	worn_icon = 'icons/mob/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
@@ -428,7 +450,7 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "boots"
 	worn_icon = 'icons/mob/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
@@ -449,5 +471,14 @@
 	if(user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1))
 		overslot = null
 
-/obj/item/mod/control/engineering
+/obj/item/mod/control/pre_equipped
+	cell = /obj/item/stock_parts/cell/high
+
+/obj/item/mod/control/pre_equipped/engineering
 	theme = /datum/mod_theme/engineering
+
+/obj/item/mod/control/pre_equipped/syndicate
+	theme = /datum/mod_theme/syndicate
+	req_access = list(ACCESS_SYNDICATE)
+	cell = /obj/item/stock_parts/cell/hyper
+	initial_modules = list(/obj/item/mod/module/storage/antag)

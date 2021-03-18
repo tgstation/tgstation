@@ -61,18 +61,18 @@
 					"<span class='hear'>You hear a mechanical hiss.</span>")
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/mod/control/proc/toggle_activate(mob/user)
+/obj/item/mod/control/proc/toggle_activate(mob/user, force_deactivate = FALSE)
 	for(var/h in mod_parts)
 		var/obj/item/part = h
 		if(part.loc == src)
 			to_chat(user, "<span class='warning'>ERROR: Not all parts deployed.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
-	if(locked && !active && !allowed(user))
+	if(locked && !active && !allowed(user) && !force_deactivate)
 		to_chat(user, "<span class='warning'>ERROR: Access level insufficient.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
-	if(open)
+	if(open && !force_deactivate)
 		to_chat(user, "<span class='warning'>ERROR: Suit panel open. Close before continuing</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
@@ -84,20 +84,20 @@
 	to_chat(wearer, "<span class='notice'>MODsuit [active ? "shutting down" : "starting up"].</span>")
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>The [boots.name] [active ? "relax their grip on your legs" : "seal around your feet"].</span>")
-		boots.icon_state = "[theme]-boots[active ? "" : "-sealed"]"
-		boots.worn_icon_state = "[theme]-boots[active ? "" : "-sealed"]"
+		boots.icon_state = "[skin]-boots[active ? "" : "-sealed"]"
+		boots.worn_icon_state = "[skin]-boots[active ? "" : "-sealed"]"
 		wearer.update_inv_shoes()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>The [gauntlets.name] [active ? "become loose around your fingers" : "tighten around your fingers and wrists"].</span>")
-		gauntlets.icon_state = "[theme]-gauntlets[active ? "" : "-sealed"]"
-		gauntlets.worn_icon_state = "[theme]-gauntlets[active ? "" : "-sealed"]"
+		gauntlets.icon_state = "[skin]-gauntlets[active ? "" : "-sealed"]"
+		gauntlets.worn_icon_state = "[skin]-gauntlets[active ? "" : "-sealed"]"
 		wearer.update_inv_gloves()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>The [chestplate.name] [active ? "releases your chest" : "cinches tight again your chest"].</span>")
-		chestplate.icon_state = "[theme]-chestplate[active ? "" : "-sealed"]"
-		chestplate.worn_icon_state = "[theme]-chestplate[active ? "" : "-sealed"]"
+		chestplate.icon_state = "[skin]-chestplate[active ? "" : "-sealed"]"
+		chestplate.worn_icon_state = "[skin]-chestplate[active ? "" : "-sealed"]"
 		if(active)
 			chestplate.clothing_flags &= ~chestplate.visor_flags
 			chestplate.flags_inv &= ~chestplate.visor_flags_inv
@@ -108,8 +108,8 @@
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>The [helmet.name] hisses [active ? "open" : "closed"].</span>")
-		helmet.icon_state = "[theme]-helmet[active ? "" : "-sealed"]"
-		helmet.worn_icon_state = "[theme]-helmet[active ? "" : "-sealed"]"
+		helmet.icon_state = "[skin]-helmet[active ? "" : "-sealed"]"
+		helmet.worn_icon_state = "[skin]-helmet[active ? "" : "-sealed"]"
 		if(active)
 			helmet.flags_cover &= ~helmet.visor_flags_cover
 			helmet.flags_inv &= ~helmet.visor_flags_inv
@@ -126,16 +126,20 @@
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer.real_name].</span>")
-		icon_state = "[theme]-control[active ? "" : "-sealed"]"
-		worn_icon_state = "[theme]-control[active ? "" : "-sealed"]"
+		icon_state = "[skin]-control[active ? "" : "-sealed"]"
+		worn_icon_state = "[skin]-control[active ? "" : "-sealed"]"
 		wearer.update_inv_back()
 		active = !active
 		if(active)
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = 6000)
 			slowdown = theme.slowdown_active
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
+			START_PROCESSING(SSobj,src)
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = 6000)
 			slowdown = theme.slowdown_unactive
+			for(var/obj/item/mod/module/thingy in modules)
+				thingy.on_deactivation()
+			STOP_PROCESSING(SSobj, src)
 		wearer.update_equipment_speed_mods()
 	activating = FALSE

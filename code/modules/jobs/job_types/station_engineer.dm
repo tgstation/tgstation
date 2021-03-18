@@ -54,7 +54,7 @@
 	mask = /obj/item/clothing/mask/breath
 	suit = /obj/item/clothing/suit/space/hardsuit/engine
 	suit_store = /obj/item/tank/internals/oxygen
-	r_hand = /obj/item/mod/control/engineering
+	r_hand = /obj/item/mod/control/pre_equipped/engineering
 	head = null
 	internals_slot = ITEM_SLOT_SUITSTORE
 
