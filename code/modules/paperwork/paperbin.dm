@@ -77,19 +77,12 @@
 	if(overlays.len >= MAX_ATOM_OVERLAYS)
 		visible_message("<span class='warning'>The stack of paper collapses!</span>")
 		dump_contents()
+		add_fingerprint(M)
 		return
 
-	if(over_object == M)
-		M.put_in_hands(src)
-
 	if(isturf(over_object))
-		to_chat(M,"<span class='notice'><b>Use it in-hand</b> to dump it out.</span>")
-
-	else if(istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
-	add_fingerprint(M)
+		to_chat(M,"<span class='notice'>Use it in-hand to dump it out.</span>")
+		return
 
 /obj/item/paper_bin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -159,7 +152,7 @@
 	. = ..()
 	if(LAZYLEN(papers))
 		. += "<span class='notice'>It contains [LAZYLEN(papers) > 1 ? "[LAZYLEN(papers)] sheets" : "one sheet"]."
-	. += "<span class='notice'><b>Click and drag to your sprite</b> to pick it up.</span>[LAZYLEN(papers) ? " <span class='notice'><b>Use it in-hand</b> to dump it out.</span>" : ""]"
+	. += "<span class='notice'>Click and drag to your sprite to pick up.</span>[LAZYLEN(papers) ? " <span class='notice'>Use in-hand to dump out.</span>" : ""]"
 /obj/item/paper_bin/update_overlays()
 	. = ..()
 
@@ -270,11 +263,6 @@
 			binding_cable = found_cable
 
 	update_appearance()
-
-/obj/item/paper_bin/bundlenatural/jumbo
-	name = "jumbo paper bundle"
-	desc = "A bundle of paper created using administrative methods."
-	starting_sheets = 1000
 
 /obj/item/paper_bin/carbon
 	name = "carbon paper bin"
