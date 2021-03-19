@@ -1,4 +1,9 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
+//and coresponding datum controller for them
+
+// If true, it's the probability of triggering "survivor" antag.
+GLOBAL_VAR(summon_guns)
+GLOBAL_VAR(summon_magic)
 
 // 1 in 50 chance of getting something really special.
 #define SPECIALIST_MAGIC_PROB 2
@@ -97,18 +102,14 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/voodoo,
 	/obj/item/warpwhistle))
 
-// If true, it's the probability of triggering "survivor" antag.
-GLOBAL_VAR_INIT(summon_guns_triggered, FALSE)
-GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
-
 /proc/give_guns(mob/living/carbon/human/H)
 	if(H.stat == DEAD || !(H.client))
 		return
 	if(H.mind)
 		if(iswizard(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
 			return
-
-	if(prob(GLOB.summon_guns_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
+	var/datum/summon_guns_controller/controller = GLOB.summon_guns
+	if(prob(controller.survivor_probability) && !(H.mind.has_antag_datum(/datum/antagonist)))
 		SSticker.mode.traitors += H.mind
 
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
@@ -130,8 +131,10 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	if(H.mind)
 		if(iswizard(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
 			return
-
-	if(prob(GLOB.summon_magic_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
+	if(!GLOB.summon_magic)
+		return
+	var/datum/summon_magic_controller/controller = GLOB.summon_magic
+	if(prob(controller.survivor_probability) && !(H.mind.has_antag_datum(/datum/antagonist)))
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/magic)
 		H.log_message("was made into a survivalist, and trusts no one!</font>", LOG_ATTACK, color="red")
 
@@ -158,32 +161,11 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		log_game("[key_name(user)] summoned [summon_type]!")
 
 	if(summon_type == SUMMON_MAGIC)
-		GLOB.summon_magic_triggered = survivor_probability
-		RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/magic_up_new_crew) //new players need magic
+		GLOB.summon_magic = new /datum/summon_magic_controller(survivor_probability)
 	else if(summon_type == SUMMON_GUNS)
-		GLOB.summon_guns_triggered = survivor_probability
-		RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/arm_up_new_crew) //new players need guns
+		GLOB.summon_guns = new /datum/summon_guns_controller(survivor_probability)
 	else
 		CRASH("Bad summon_type given: [summon_type]")
-
-	for(var/mob/living/carbon/human/unarmed_human in GLOB.player_list)
-		var/turf/T = get_turf(unarmed_human)
-		if(T && is_away_level(T.z))
-			continue
-		if(summon_type == SUMMON_MAGIC)
-			give_magic(unarmed_human)
-		else
-			give_guns(unarmed_human)
-
-///signal proc to give magic to new crewmembers
-/proc/magic_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
-	SIGNAL_HANDLER
-	give_magic(new_crewmember)
-
-///signal proc to give guns to new crewmembers
-/proc/arm_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
-	SIGNAL_HANDLER
-	give_guns(new_crewmember)
 
 /proc/summonevents()
 	if(!SSevents.wizardmode)
@@ -202,3 +184,50 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		log_game("Summon Events was increased!")
 
 #undef SPECIALIST_MAGIC_PROB
+
+/datum/summon_magic_controller
+	var/survivor_probability = 0
+
+/datum/summon_magic_controller/New(survivor_probability)
+	. = ..()
+	src.survivor_probability = survivor_probability
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/magic_up_new_crew)
+
+	for(var/mob/living/carbon/human/unarmed_human in GLOB.player_list)
+		var/turf/T = get_turf(unarmed_human)
+		if(T && is_away_level(T.z))
+			continue
+		give_magic(unarmed_human)
+
+/datum/summon_magic_controller/Destroy(force, ...)
+	. = ..()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+
+///signal proc to give magic to new crewmembers
+/proc/magic_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+	SIGNAL_HANDLER
+	give_magic(new_crewmember)
+
+/datum/summon_guns_controller
+	var/survivor_probability = 0
+
+/datum/summon_guns_controller/New(survivor_probability)
+	. = ..()
+	src.survivor_probability = survivor_probability
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/arm_up_new_crew)
+
+	for(var/mob/living/carbon/human/unarmed_human in GLOB.player_list)
+		var/turf/T = get_turf(unarmed_human)
+		if(T && is_away_level(T.z))
+			continue
+		give_guns(unarmed_human)
+
+/datum/summon_guns_controller/Destroy(force, ...)
+	. = ..()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+
+///signal proc to give guns to new crewmembers
+/datum/summon_guns_controller/proc/arm_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+	SIGNAL_HANDLER
+	give_guns(new_crewmember)
+

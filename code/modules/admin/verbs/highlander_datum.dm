@@ -58,7 +58,7 @@ GLOBAL_VAR(highlander_datum)
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
 		log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
 
-	GLOB.highlander = new /datum/highlander_controller
+	GLOB.highlander_datum = new /datum/highlander_controller
 
 /client/proc/only_one_delayed()
 	send_to_playing_players("<span class='userdanger'>Bagpipes begin to blare. You feel Scottish pride coming over you.</span>")
