@@ -69,7 +69,6 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/door,
 	/obj/item/scrying,
-	/obj/item/voodoo,
 	/obj/item/warpwhistle,
 	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
 	/obj/item/immortality_talisman,
@@ -94,7 +93,6 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/scrying,
 	/obj/item/spellbook,
 	/obj/item/storage/belt/wands/full,
-	/obj/item/voodoo,
 	/obj/item/warpwhistle))
 
 // If true, it's the probability of triggering "survivor" antag.

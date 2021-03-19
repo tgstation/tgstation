@@ -1,5 +1,0 @@
-author: "sergeirocks100"
-delete-after: True
-changes: 
-  - rscadd: "Malt liquor is now available in the booze dispenser."
-  - balance: "Reduces the price of malt liquor in the Booze-O-Mat to give some reason to buy it over other equally priced drinks that are stronger."
