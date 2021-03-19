@@ -275,12 +275,12 @@
 /datum/outfit/centcom/ert/chaplain/inquisitor
 	name = "Inquisition Chaplain"
 
-	belt = /obj/item/storage/belt/soulstone/full/chappy
 	backpack_contents = list(
 		/obj/item/grenade/chem_grenade/holy = 1,
 		/obj/item/nullrod = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 )
+	belt = /obj/item/storage/belt/soulstone/full/chappy
 
 /datum/outfit/centcom/ert/janitor
 	name = "ERT Janitor"
