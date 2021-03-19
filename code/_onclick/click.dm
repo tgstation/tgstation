@@ -159,7 +159,10 @@
 			else
 				W.afterattack(A,src,0,params)
 		else
-			RangedAttack(A,modifiers)
+			if(LAZYACCESS(modifiers, RIGHT_CLICK))
+				RangedRightClickOn(A, modifiers)
+			else
+				RangedAttack(A,modifiers)
 
 /// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()
@@ -285,6 +288,16 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 
+/**
+ * Ranged right click
+ *
+ * If the same conditions are met to trigger RangedAttack but it is
+ * instead initialized via a right click, this will trigger instead.
+ * Useful for mobs that have their abilities mapped to right click.
+ */
+/mob/proc/RangedRightClickOn(atom/A, modifiers)
+	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
 
 /**
  * Middle click
