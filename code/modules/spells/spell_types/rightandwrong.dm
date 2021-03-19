@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 ///signal proc to give magic to new crewmembers
 /proc/magic_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 	give_magic(new_crewmember)
 
 /datum/summon_guns_controller
@@ -228,6 +228,6 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 ///signal proc to give guns to new crewmembers
 /datum/summon_guns_controller/proc/arm_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
-	SIGNAL_HANDLER
+	SIGNAL_HANDLER_DOES_SLEEP
 	give_guns(new_crewmember)
 
