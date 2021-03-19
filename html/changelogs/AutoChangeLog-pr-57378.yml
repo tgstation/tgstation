@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Mulebots no longer murder people just because that person dared to bump into them."
