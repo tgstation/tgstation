@@ -2,9 +2,9 @@
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
-	wait = 10
+	wait = 1 SECONDS
 	init_order = INIT_ORDER_SHUTTLE
-	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
+	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/list/mobile = list()
