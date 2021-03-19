@@ -460,7 +460,7 @@
 	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || zero_amount())
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	var/max = get_amount()
-	var/stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack? (Maximum [max])", "Stack Splitting") as null|num)
+	var/stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack? (Maximum [max])", "Stack Split") as null|num)
 	max = get_amount()
 	stackmaterial = min(max, stackmaterial)
 	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
