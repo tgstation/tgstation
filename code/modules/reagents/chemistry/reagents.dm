@@ -52,6 +52,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/purity = 1
 	///the purity of the reagent on creation (i.e. when it's added to a mob and it's purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
 	var/creation_purity = 1
+	///The molar mass of the reagent - if you're adding a reagent that doesn't have a recipe, just add a random number between 10 - 800. Higher numbers are "harder" but it's mostly arbitary.
+	var/mass
 	/// color it looks in containers etc
 	var/color = "#000000" // rgb: 0, 0, 0
 	///how fast the reagent is metabolized by the mob
@@ -96,6 +98,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/list/addiction_types = null
 	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
 	var/glass_price
+
+/datum/reagent/Initialise()
+	. = ..()
+	mass = rand(10, 800) //This is terrible and should be removed!
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
