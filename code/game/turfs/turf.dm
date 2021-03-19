@@ -155,6 +155,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
 	..()
+	
+	vis_contents.Cut()
 
 /turf/attack_hand(mob/user, list/modifiers)
 	. = ..()

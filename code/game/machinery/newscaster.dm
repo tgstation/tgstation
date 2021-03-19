@@ -221,9 +221,33 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
 
+/obj/machinery/newscaster/directional/north
+	pixel_y = 32
+
+/obj/machinery/newscaster/directional/south
+	pixel_y = -28
+
+/obj/machinery/newscaster/directional/east
+	pixel_x = 28
+
+/obj/machinery/newscaster/directional/west
+	pixel_x = -28
+
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
 	securityCaster = 1
+
+/obj/machinery/newscaster/security_unit/directional/north
+	pixel_y = 32
+
+/obj/machinery/newscaster/security_unit/directional/south
+	pixel_y = -28
+
+/obj/machinery/newscaster/security_unit/directional/east
+	pixel_x = 28
+
+/obj/machinery/newscaster/security_unit/directional/west
+	pixel_x = -28
 
 /obj/machinery/newscaster/Initialize(mapload, ndir, building)
 	. = ..()

@@ -8,7 +8,7 @@ import { selectBackend } from './backend';
 import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
 
-const requireInterface = require.context('./interfaces', false, /\.js$/);
+const requireInterface = require.context('./interfaces', false);
 
 const routingError = (type, name) => () => {
   return (
@@ -49,13 +49,20 @@ export const getRoutedComponent = store => {
   const name = config?.interface;
   let esModule;
   try {
-    esModule = requireInterface(`./${name}.js`);
+    esModule = requireInterface(`./${name}.tsx`);
   }
   catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {
-      return routingError('notFound', name);
+      try {
+        esModule = requireInterface(`./${name}.js`);
+      }
+      catch (err) {
+        if (err.code === 'MODULE_NOT_FOUND') {
+          return routingError('notFound', name);
+        }
+        throw err;
+      }
     }
-    throw err;
   }
   const Component = esModule[name];
   if (!Component) {

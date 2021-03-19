@@ -613,7 +613,7 @@
 	desc = "A staff ID used to access the hotel's doors."
 	trim = /datum/id_trim/away/hotel
 
-/obj/item/card/id/away/hotel/securty
+/obj/item/card/id/away/hotel/security
 	name = "Officer ID"
 	trim = /datum/id_trim/away/hotel/security
 
@@ -695,6 +695,8 @@
 	var/trim_icon_override
 	/// If this is set, will manually override the icon state for the trim. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_state_override
+	/// If this is set, will manually override the trim's assignmment for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
+	var/trim_assignment_override
 
 /obj/item/card/id/advanced/get_icon_source()
 	return get_cached_flat_icon()
@@ -932,6 +934,7 @@
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card to choose which accesses to copy."
+	trim = /datum/id_trim/chameleon
 	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
 
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
@@ -1114,7 +1117,7 @@
 			if(forged)
 				registered_name = initial(registered_name)
 				assignment = initial(assignment)
-				SSid_access.remove_trim_from_card(src)
+				SSid_access.remove_trim_from_chameleon_card(src)
 				log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
 				update_label()
 				update_icon()

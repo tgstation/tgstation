@@ -229,7 +229,7 @@
 //Sentience types, to prevent things like sentience potions from giving bosses sentience
 #define SENTIENCE_ORGANIC 1
 #define SENTIENCE_ARTIFICIAL 2
-// #define SENTIENCE_OTHER 3 unused
+#define SENTIENCE_HUMANOID 3
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
 
@@ -442,3 +442,9 @@
 #define AI_EMOTION_DORFY "Dorfy"
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
+
+/// Throw modes, defines whether or not to turn off throw mode after
+#define THROW_MODE_DISABLED 0
+#define THROW_MODE_TOGGLE 1
+#define THROW_MODE_HOLD 2
+
