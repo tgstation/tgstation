@@ -16,6 +16,7 @@
 		if(path in GLOB.fake_reagent_blacklist)
 			continue
 		var/datum/reagent/D = new path()
+		D.mass = rand(10, 800) //This is terrible and should be removed ASAP!
 		GLOB.chemical_reagents_list[path] = D
 
 /proc/build_chemical_reactions_lists()

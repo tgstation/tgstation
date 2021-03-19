@@ -99,9 +99,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
 	var/glass_price
 
-/datum/reagent/Initialise()
-	. = ..()
-	mass = rand(10, 800) //This is terrible and should be removed!
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)

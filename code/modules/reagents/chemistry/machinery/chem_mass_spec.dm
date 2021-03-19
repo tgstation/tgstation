@@ -1,10 +1,10 @@
 
 /obj/machinery/chem_mass_spec
 	name = "High-performance liquid chromatography machine"
-	desc = "This machine can separate reagents based on charge, meaning it can clean reagents of some of their impurities, unlike the Chem Master 3000.
+	desc = {"This machine can separate reagents based on charge, meaning it can clean reagents of some of their impurities, unlike the Chem Master 3000.
 By selecting a range in the mass spectrograph certain reagents will be transferred from one beaker to another, which will clean it of any impurities up to a certain amount.
 This will not clean any inverted reagents. Inverted reagents will still be correctly detected and displayed on the scanner, however.
-\nLeft click with a beaker to add it to the input slot, Right click with a beaker to add it to the output slot. Alt + left/right click can let you quickly remove the corrisponding beaker too."
+\nLeft click with a beaker to add it to the input slot, Right click with a beaker to add it to the output slot. Alt + left/right click can let you quickly remove the corrisponding beaker too."}
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
@@ -22,7 +22,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	///Lower mass range - for mass selection of what will be processed
 	var/lower_mass_range = 0
 	///Upper_mass_range - for mass selection of what will be processed
-	var/Upper_mass_range = INFINITY
+	var/upper_mass_range = INFINITY
 	///The log output to clarify how the thing works
 	var/log
 	///Input reagents container
@@ -53,33 +53,33 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 
 ///Adds beaker 1
 /obj/machinery/chem_mass_spec/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && I.is_open_container())
+	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		var/obj/item/reagent_containers/beaker = item
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(beaker, src))
 			return
 		replace_beaker(user, beaker1, beaker)
-		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		to_chat(user, "<span class='notice'>You add [beaker] to [src].</span>")
 		updateUsrDialog()
 
 ///Adds beaker 2
 /obj/machinery/chem_mass_spec/attackby_secondary(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && I.is_open_container())
+	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		var/obj/item/reagent_containers/beaker = item
 		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(beaker, src))
 			return
 		replace_beaker(user, beaker2, beaker)
-		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		to_chat(user, "<span class='notice'>You add [beaker] to [src].</span>")
 		updateUsrDialog()
 
-/obj/machinery/chem_dispenser/AltClick(mob/living/user)
+/obj/machinery/chem_mass_spec/AltClick(mob/living/user)
 	. = ..()
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user, beaker1)
 
-/obj/machinery/chem_dispenser/AltClick_secondary(mob/living/user)
+/obj/machinery/chem_mass_spec/AltClick_secondary(mob/living/user)
 	. = ..()
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
@@ -147,14 +147,14 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
 				if(inverse_reagent.mass < lower_mass_range || inverse_reagent.mass > upper_mass_range)
 					in_range = FALSE
-				beakerContents.Add(list(list("name" = inverse_reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = inverse_reagent.mass, "purity" = 1-reagent.purity, "inversePurity" = reagent.inverse_chem_val, "selected" = in_range, "color" = RED)))
+				beakerContents.Add(list(list("name" = inverse_reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = inverse_reagent.mass, "purity" = 1-reagent.purity, "inversePurity" = reagent.inverse_chem_val, "selected" = in_range, "color" = COLOR_RED)))
 				continue
 			if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 				in_range = FALSE
 			if(1 > reagent.purity && reagent.impure_chem)
 				var/datum/reagent/impure_reagent. = GLOB.chemical_reagents_list[reagent.impure_chem]
-				beakerContents.Add(list(list("name" = impure_reagent.name, "volume" = round(reagent.volume * (1-reagent.purity), 0.01), "mass" = reagent.mass, "purity" = 1-reagent.purity, "inversePurity" = reagent.inverse_chem_val, "selected" = in_range, "color" = YELLOW)))
-			beakerContents.Add(list(list("name" = reagent.name, "volume" = round(reagent.volume * reagent.purity, 0.01), "mass" = reagent.mass, "purity" = reagent.purity, "inversePurity" = reagent.inverse_chem_val, "selected" = in_range, "color" = GREEN)))
+				beakerContents.Add(list(list("name" = impure_reagent.name, "volume" = round(reagent.volume * (1-reagent.purity), 0.01), "mass" = reagent.mass, "purity" = 1-reagent.purity, "inversePurity" = reagent.inverse_chem_val, "selected" = in_range, "color" = COLOR_YELLOW)))
+			beakerContents.Add(list(list("name" = reagent.name, "volume" = round(reagent.volume * reagent.purity, 0.01), "mass" = reagent.mass, "purity" = reagent.purity, "inversePurity" = reagent.inverse_chem_val, "selected" = in_range, "color" = COLOR_GREEN)))
 	data["beaker1Contents"] = beakerContents
 
 	beakerContents = list()
@@ -234,16 +234,16 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 			continue
 
-		var/delta_purity = inital(reagent.purity) - reagent.purity
+		var/delta_purity = initial(reagent.purity) - reagent.purity
 		if(delta_purity < 0)//As pure as we can be - so lets not add more than we need
 			log += "Could not purify [reagent.name] past it's standard purity of [initial(reagent.purity)*100]%"
-			beaker2.add_reagent(reagent.type, reagent.volume, reagtemp = beaker1.reagents.temp, added_purity = reagent.purity, added_ph = reagent.ph)
-			beaker1.remove_reagent(reagent.type, reagent.volume)
+			beaker2.reagents.add_reagent(reagent.type, reagent.volume, reagtemp = beaker1.reagents.chem_temp, added_purity = reagent.purity, added_ph = reagent.ph)
+			beaker1.reagents.remove_reagent(reagent.type, reagent.volume)
 			continue
 
-		var/product_vol = reagent.vol * (1-delta_purity)
-		beaker2.add_reagent(reagent.type, product_vol, reagtemp = beaker1.reagents.temp, added_purity = initial(reagent.purity), added_ph = reagent.ph)
-		beaker1.remove_reagent(reagent.type, reagent.volume)
+		var/product_vol = reagent.volume * (1-delta_purity)
+		beaker2.reagents.add_reagent(reagent.type, product_vol, reagtemp = beaker1.reagents.chem_temp, added_purity = initial(reagent.purity), added_ph = reagent.ph)
+		beaker1.reagents.remove_reagent(reagent.type, reagent.volume)
 		log += "Purified [reagent.name] to [initial(reagent.purity)*100]%"
 
 /*				Mass spec graph calcs		 	 */
@@ -252,15 +252,15 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 /obj/machinery/chem_mass_spec/proc/calculate_largest_mass()
 	var/max_mass
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
-		max_mass = max(max_mass, (reagent.mass + reagent.mass_range))
-	return celing(max_mass, 50)
+		max_mass = max(max_mass, reagent.mass)
+	return CEILING(max_mass, 50)
 
 ///Returns the smallest mass to the nearest 50 (rounded down)
 /obj/machinery/chem_mass_spec/proc/calculate_smallest_mass()
 	var/min_mass
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
 		min_mass = min(min_mass, reagent.mass)
-	return floor(min_mass, 50)
+	return FLOOR(min_mass, 50)
 
 ///Estimates how long something will take to process
 /obj/machinery/chem_mass_spec/proc/estimate_time()
@@ -268,6 +268,6 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
 		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 			continue
-		time += (((reagent.mass * volume) / ((1-reagent.purity) * 0.1)) * 0.1) + 100 ///Roughly 10 - 30s?
+		time += (((reagent.mass * reagent.volume) / ((1-reagent.purity) * 0.1)) * 0.1) + 100 ///Roughly 10 - 30s?
 	delay_time = time
 	return delay_time
