@@ -6,8 +6,6 @@
 	icon_screen = "tram"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/tram_controls
-	///extra safety check for tram movement
-	var/travelling = FALSE
 
 	var/obj/structure/industrial_lift/tram/tram_part
 	light_color = LIGHT_COLOR_GREEN
@@ -17,30 +15,21 @@
 	//find the tram, late so the tram is all... set up so when this is called? i'm seriously stupid and 90% of what i do consists of barely educated guessing :)
 	find_tram()
 
-/obj/machinery/computer/tram_controls/Destroy()
-	for(var/obj/structure/industrial_lift/tram/tram_finder in GLOB.lifts)
-		tram_finder.console = null
-	return ..()
-
 /**
- * Finds the tram to set the console to
+ * Finds the tram from the console
  *
- * Locates tram parts in the lift global list and links the console var
- * on the tram parts to the console itself. Essentially just another
- * safety measure against bad tram movement.
+ * Locates tram parts in the lift global list after everything is done.
  */
 /obj/machinery/computer/tram_controls/proc/find_tram()
 	var/obj/structure/industrial_lift/tram/central/tram_loc = locate() in GLOB.lifts
 	tram_part = tram_loc //possibly setting to something null, that's fine, but
 	tram_part.find_our_location()
-	for(var/obj/structure/industrial_lift/tram/tram_finder in GLOB.lifts)
-		tram_finder.console = src
 
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
 
 /obj/machinery/computer/tram_controls/ui_status(mob/user,/datum/tgui/ui)
-	if(travelling)
+	if(tram_part.travelling)
 		return UI_CLOSE
 	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
@@ -82,11 +71,8 @@
 
 /obj/machinery/computer/tram_controls/ui_act(action, params)
 	. = ..()
-	if(travelling)
-		return
 	if(. || tram_part.travelling)
 		return
-	travelling = TRUE //no multi-inputs please go away!!!
 	var/destination_name = params["destination"]
 	var/obj/effect/landmark/tram/to_where
 	for(var/obj/effect/landmark/tram/destination in GLOB.landmarks_list)
