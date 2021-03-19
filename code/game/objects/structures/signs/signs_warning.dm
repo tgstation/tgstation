@@ -187,3 +187,16 @@
 	icon_state = "radshelter"
 	is_editable = TRUE
 
+/obj/structure/sign/warning/ticket
+	name = "\improper TICKET REQUIRED sign" //warns you that the hop is serious about his job
+	sign_change_name = "Notice - Ticket Required"
+	desc = "A warning sign which reads 'TICKET REQUIRED'."
+	icon_state = "ticket"
+	is_editable = TRUE
+
+/obj/structure/sign/warning/form
+	name = "\improper FORM REQUIRED sign" //warns you that the hop is maybe, a little too serious
+	sign_change_name = "Notice - Form Required"
+	desc = "A warning sign which reads 'FORM REQUIRED'."
+	icon_state = "form"
+	is_editable = TRUE
