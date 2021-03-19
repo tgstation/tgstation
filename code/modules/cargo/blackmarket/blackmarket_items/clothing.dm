@@ -68,3 +68,13 @@
 	price_max = 7000
 	stock_max = 1
 	availability_prob = 10
+	
+/datum/blackmarket_item/clothing/rocket_boots
+	name = "Rocket Boots"
+	desc = "We found a pair of jump boots and overclocked the hell out of them. No liability for grevious harm to or with a body."
+	item = /obj/item/clothing/shoes/bhop/rocket
+
+	price_min = 1000
+	price_max = 3000
+	stock_max = 1
+	availability_prob = 40

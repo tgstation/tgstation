@@ -24,6 +24,7 @@
 		connected_console = null
 	for(var/obj/machinery/computer/mechpad/console in consoles)
 		console.mechpads -= src
+	GLOB.mechpad_list -= src
 	return ..()
 
 /obj/machinery/mechpad/screwdriver_act(mob/user, obj/item/tool)
