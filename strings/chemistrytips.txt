@@ -10,9 +10,7 @@ Inverse Neurine will not delete an imaginary friend. Once a friend, always a fri
 Overdosing on Mannitol will give you pro tips from your newfound enlightenment. Perhaps you know that already, though!
 Eigenstasium's wild ride can be halted by taking more eigenstasium, bluespace dust, or stabilising agent.
 The longer synthtissue has been growing, the more stuff it can do!
-Upgrading the MRS to tier 3 parts will give you the actual health values of the organ. At least it's something.
+Exact organ health values can be determined by using a health analyser while Technetium 99 is in their system.
 100% pure inacusiate will let you hear whispers from a distance while it's in your system.
 Turning sugar into caramel before attempting to make Eigenstasium makes it much easier to create.
-Oculine will help you see in the dark slightly.
-Thermometers (which can be crafted in the chemistry section of the crafting menu) also work on people!
-Thermometers (which can be crafted in the chemistry section of the crafting menu) will let you detect the temperature of anything that has a reagent temperature!
+Thermometers crafted in the chemistry section will let you detect the temperature of anything that has a reagent temperature. This includes people too!

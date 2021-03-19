@@ -695,6 +695,7 @@
 	description = "Promotes alcoholic substances within the patients body, making their effects more potent."
 	taste_description = "alcohol" //mostly for sneaky slips
 	chemical_flags = REAGENT_INVISIBLE
+	metabolization_rate = 0.05 * REM//This is fast
 	addiction_types = list(/datum/addiction/medicine = 4.5)
 	color = "#4C8000"
 	tox_damage = 0
@@ -727,7 +728,7 @@
 		headache = TRUE
 	..()
 
-/datum/reagent/inverse/oculine/on_mob_delete(mob/living/owner)
+/datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/owner)
 	owner.cure_blind("oculine_impure")
 	if(headache)
 		to_chat(owner, "<span class='notice'>Your headache clears up!</spans>")
@@ -746,13 +747,13 @@
 	///The random span we start hearing in
 	var/randomSpan
 
-/datum/reagent/impurity/inacusiate/on_mob_add(mob/living/owner, delta_time, times_fired)
+/datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/owner, delta_time, times_fired)
 	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	to_chat(owner, "<span class='notice'>Your hearing seems to be a bit off...!</spans>")
 	..()
 
-/datum/reagent/impurity/inacusiate/on_mob_delete(mob/living/owner)
+/datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/owner)
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	to_chat(owner, "<span class='notice'>You start hearing things normally again.</spans>")
 	..()

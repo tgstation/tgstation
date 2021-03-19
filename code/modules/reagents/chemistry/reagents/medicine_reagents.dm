@@ -534,7 +534,7 @@
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(DT_PROB(10 - (4 * normalise_creation_purity()), delta_time) && iscarbon(M))
+	if(DT_PROB(10 * (1-creation_purity)), delta_time) && iscarbon(M))
 		var/obj/item/I = M.get_active_held_item()
 		if(I && M.dropItemToGround(I))
 			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
@@ -857,13 +857,13 @@
 /datum/reagent/medicine/mannitol/overdose_start(mob/living/owner)
 	to_chat(owner, "<span class='notice'>You suddenly feel </span><span class='purple'>E N L I G H T E N E D!</span>")
 
-/datum/reagent/medicine/mannitol/overdose_process(mob/living/owner)
-	if(prob(65))
+/datum/reagent/medicine/mannitol/overdose_process(mob/living/owner, delta_time, times_fired)
+	if(DT_PROB(65, delta_time))
 		return
 	var/list/tips
-	if(prob(50))
+	if(DT_PROB(50, delta_time))
 		tips = world.file2list("strings/tips.txt")
-	else if(prob(50))
+	if(DT_PROB(50, delta_time))
 		tips = world.file2list("strings/sillytips.txt")
 	else
 		tips = world.file2list("strings/chemistrytips.txt")

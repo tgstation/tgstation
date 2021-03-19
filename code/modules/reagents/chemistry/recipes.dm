@@ -377,7 +377,7 @@
 		sum_volume += reagent.volume
 		holder.remove_reagent(reagent.type, reagent.volume)
 	if(!force_range)
-		force_range = (sum_volume/5) + 3
+		force_range = (sum_volume/6) + 3
 	if(invert_reagents.reagent_list)
 		smoke.set_up(invert_reagents, force_range, holder.my_atom)
 		smoke.start()
@@ -398,9 +398,9 @@
 			reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
 	if(!force_range)
-		force_range = (sum_volume/5) + 3
+		force_range = (sum_volume/6) + 3
 	if(reagents.reagent_list)
-		smoke.set_up(reagents, , holder.my_atom)
+		smoke.set_up(reagents, force_range, holder.my_atom)
 		smoke.start()
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
