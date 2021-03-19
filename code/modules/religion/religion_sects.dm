@@ -224,6 +224,7 @@
 /datum/religion_sect/greed
 	name = "Greedy God"
 	desc = "A very mercantile sect."
+	altar_icon_state = "convertaltar-yellow"
 	alignment = ALIGNMENT_EVIL //greed is not good wtf
 	rites_list = list(/datum/religion_rites/greed/vendatray, /datum/religion_rites/greed/custom_vending)
 	convert_opener = "\"Greed is good.\"<br>\
@@ -233,6 +234,7 @@
 /datum/religion_sect/honorbound
 	name = "Honorbound God"
 	desc = "A sect that does not engage in harm."
+	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
 	convert_opener = "\"A good, honourable crusade against evil is required.\"<br>\
 	Your diety requires fair fights from you. You may not attack the unready, the just, or the innocent.<br>\
@@ -294,6 +296,7 @@
 /datum/religion_sect/maintenance
 	name = "Maintenance God"
 	desc = "A sect based around the maintenance shafts of the station."
+	altar_icon_state = "convertaltar-maint"
 	alignment = ALIGNMENT_EVIL //while maint is more neutral in my eyes, the flavor of it kinda pertains to rotting and becoming corrupted by the maints
 	convert_opener = "\"Your kingdom in the darkness.\"<br>\
 	Sacrifice the organic slurry created from rats dipped in welding fuel to gain favor. Exchange favor to adapt to the maintenance shafts."
