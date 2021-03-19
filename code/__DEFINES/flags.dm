@@ -88,8 +88,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_LAVA_GEN (1<<3)
 /// Blocks ruins spawning on the turf.
 #define NO_RUINS (1<<4)
-/// Should this tile be cleaned up and reinserted into an excited group?
-#define EXCITED_CLEANUP (1<<5)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -231,9 +229,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define SKILLCHIP_ALLOWS_MULTIPLE (1<<0)
 // This skillchip is incompatible with other skillchips from the incompatible_category list.
 #define SKILLCHIP_RESTRICTED_CATEGORIES (1<<1)
-// This skillchip is incompatible with the Chameleon skillchip and cannot be copied.
-// If you want to blacklist an abstract path such a /obj/item/skillchip/job then look at the blacklist in /datum/action/item_action/chameleon/change/skillchip
-#define SKILLCHIP_CHAMELEON_INCOMPATIBLE (1<<2)
 
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise

@@ -300,6 +300,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+#define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"
 
 //debug printing macros
 #define debug_world(msg) if (GLOB.Debug2) to_chat(world, \
@@ -549,4 +550,3 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SKILLCHIP_CATEGORY_GENERAL "general"
 #define SKILLCHIP_CATEGORY_JOB "job"
 #define SKILLCHIP_CATEGORY_FIREMAN_CARRYING "fireman carrying"
-#define SKILLCHIP_CATEGORY_SYNDICATE "syndicate"

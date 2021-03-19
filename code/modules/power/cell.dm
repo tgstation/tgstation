@@ -151,12 +151,12 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
 		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
-		if(E.drain_time > world.time)
+		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		if((E.drain_time > world.time) || !stomach)
 			return
 		if(charge < CELL_POWER_DRAIN)
 			to_chat(H, "<span class='warning'>[src] doesn't have enough power!</span>")
 			return
-		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 		if(stomach.crystal_charge > charge_limit)
 			to_chat(H, "<span class='warning'>Your charge is full!</span>")
 			return

@@ -33,7 +33,7 @@
 			new /obj/effect/hotspot(holder.my_atom.loc)
 			holder.remove_reagent(/datum/reagent/medicine/c2/helbital, 2)
 			holder.chem_temp += 5
-			holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The impurity of the reacting helbital is too great causing the [src] to let out a hearty burst of flame, evaporating part of the product!</span>")
+			holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))]The impurity of the reacting helbital is too great causing the helbital to let out a hearty burst of flame, evaporating part of the product!</span>")
 
 /datum/chemical_reaction/medicine/helbital/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()//drains product
@@ -157,7 +157,7 @@
 	playsound(holder.my_atom, 'sound/magic/ethereal_exit.ogg', 50, 1)
 	holder.my_atom.visible_message("The reaction frosts over, releasing it's chilly contents!")
 	var/radius = max((equilibrium.step_target_vol/50), 1)
-	freeze_radius(holder, equilibrium, 200, radius, 50) //drying agent exists
+	freeze_radius(holder, equilibrium, 200, radius, 60 SECONDS) //drying agent exists
 	explode_shockwave(holder, equilibrium, sound_and_text = FALSE)
 
 /*****OXY*****/
