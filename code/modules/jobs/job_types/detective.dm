@@ -12,6 +12,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/detective
+	plasmaman_outfit = /datum/outfit/plasmaman/detective
 	departments = DEPARTMENT_SECURITY
 
 	paycheck = PAYCHECK_MEDIUM
