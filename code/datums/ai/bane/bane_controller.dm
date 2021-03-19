@@ -9,7 +9,6 @@ And the only victory you achieved was a lie. Now you understand Gotham is beyond
 /datum/ai_controller/bane/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
-	var/mob/living/living_pawn = new_pawn
 	return ..() //Run parent at end
 
 /datum/ai_controller/bane/able_to_run()
@@ -20,7 +19,6 @@ And the only victory you achieved was a lie. Now you understand Gotham is beyond
 
 /datum/ai_controller/bane/SelectBehaviors(delta_time)
 	current_behaviors = list()
-	var/mob/living/living_pawn = pawn
 	var/mob/living/batman = blackboard[BB_BANE_BATMAN]
 	if(!batman)
 		for(var/mob/living/possibly_the_dark_knight in oview(7, pawn))
