@@ -128,7 +128,9 @@
 /datum/religion_sect/technophile
 	name = "Technophile"
 	desc = "A sect oriented around technology."
-	convert_opener = "May you find peace in a metal shell, acolyte.<br>Bibles now recharge cyborgs and heal robotic limbs if targeted, but they do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
+	convert_opener = "\"May you find peace in a metal shell, acolyte.\"<br>\
+	Bibles now recharge cyborgs and heal robotic limbs if targeted, but they do not heal organic limbs. \
+	You can now sacrifice cells, with favor depending on their charge."
 	alignment = ALIGNMENT_NEUT
 	desired_items = list(/obj/item/stock_parts/cell)
 	rites_list = list(/datum/religion_rites/synthconversion)
@@ -196,7 +198,8 @@
 /datum/religion_sect/candle_sect
 	name = "Ever-Burning Candle"
 	desc = "A sect dedicated to candles."
-	convert_opener = "May you be the wax to keep the Ever-Burning Candle burning, acolyte.<br>Sacrificing burning corpses with a lot of burn damage and candles grants you favor"
+	convert_opener = "\"May you be the wax to keep the Ever-Burning Candle burning, acolyte.\"<br>\
+	Sacrificing burning corpses with a lot of burn damage and candles grants you favor."
 	alignment = ALIGNMENT_NEUT
 	max_favor = 10000
 	desired_items = list(/obj/item/candle)
@@ -213,7 +216,186 @@
 	if(!offering.lit)
 		to_chat(user, "<span class='notice'>The candle needs to be lit to be offered!</span>")
 		return
-	to_chat(user, "<span class='notice'>Another candle for [GLOB.deity]'s collection</span>")
+	to_chat(user, "<span class='notice'>Another candle for [GLOB.deity]'s collection.</span>")
 	adjust_favor(20, user) //it's not a lot but hey there's a pacifist favor option at least
 	qdel(offering)
 	return TRUE
+
+/datum/religion_sect/greed
+	name = "Greedy God"
+	desc = "A very mercantile sect."
+	alignment = ALIGNMENT_EVIL //greed is not good wtf
+	rites_list = list(/datum/religion_rites/greed/vendatray, /datum/religion_rites/greed/custom_vending)
+	convert_opener = "\"Greed is good.\"<br>\
+	In the eyes of your mercantile diety, your wealth is your favor. Earn enough wealth to purchase some more business opportunities."
+	altar_icon_state = "convertaltar-red"
+
+/datum/religion_sect/honorbound
+	name = "Honorbound God"
+	desc = "A sect that does not engage in harm."
+	alignment = ALIGNMENT_GOOD
+	convert_opener = "A good, honourable crusade against evil is required.<br>\
+	Your diety requires fair fights from you. You may not attack the unready, the just, or the noncombatants.<br>\
+	You earn favor by getting others to join the crusade, and you may spend favor to announce a battle, bypassing some conditions to attack."
+
+/datum/religion_sect/honorbound/on_conversion(mob/living/L)
+
+#define FIRST_TRUTH_REWARD 3
+#define SECOND_TRUTH_REWARD 6
+
+/datum/religion_sect/burden
+	name = "Punished God"
+	desc = "A sect that desires to feel the pain of their god."
+	alignment = ALIGNMENT_NEUT
+	convert_opener = "\"To feel freedom, you must first understand captivity.\"<br>\
+	Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, even addictions. You will learn the secrets of the universe \
+	from your defeated shell."
+	//a list for keeping track of how burdened each member is
+	var/list/burdened_pool = list()
+
+/datum/religion_sect/burden/on_conversion(mob/living/burdened_living)
+
+	if(!iscarbon(burdened_living))
+		to_chat(burdened_living, "<span class='warning'>Despite your willingness, you feel like your lesser form cannot properly incapacitate itself to impress [GLOB.deity]...")
+		return
+	var/mob/living/carbon/burdened_follower = L
+	burdened_pool[burdened_follower] = 0
+	RegisterSignal(burdened_follower, COMSIG_CARBON_GAIN_ORGAN, .proc/eyes_added_burden)
+	RegisterSignal(burdened_follower, COMSIG_CARBON_LOSE_ORGAN, .proc/eyes_removed_burden)
+
+	RegisterSignal(burdened_follower, COMSIG_CARBON_ATTACH_LIMB, .proc/limbs_added_burden)
+	RegisterSignal(burdened_follower, COMSIG_CARBON_REMOVE_LIMB, .proc/limbs_removed_burden)
+
+	RegisterSignal(burdened_follower, COMSIG_CARBON_GAIN_ADDICTION, .proc/addict_added_burden)
+	RegisterSignal(burdened_follower, COMSIG_CARBON_LOSE_ADDICTION, .proc/addict_removed_burden)
+
+/datum/religion_sect/burden/proc/update_burden(mob/living/carbon/burdened_follower, increase)
+	var/current_burden = burdened_pool[burdened_follower]
+	if(burdened_follower.dna)
+		var/datum/dna/woke_dna = burdened_follower.dna
+		if(current_burden >= FIRST_TRUTH_REWARD)
+			woke_dna.add_mutation(TELEPATHY)
+			woke_dna.add_mutation(MUT_MUTE)
+		else
+			woke_dna.remove_mutation(TELEPATHY)
+			woke_dna.remove_mutation(MUT_MUTE)
+		if(current_burden == SECOND_TRUTH_REWARD)
+			woke_dna.add_mutation(TK)
+			woke_dna.add_mutation(GLOWY)
+		else
+			woke_dna.remove_mutation(TK)
+			woke_dna.remove_mutation(GLOWY)
+	switch(current_burden)
+		if(0)
+			to_chat(burdened_living, "<span class='warning'>You feel no weight on your shoulders. You are not feeling [GLOB.deity]'s suffering.</span>")
+		if(1)
+			if(increase)
+				to_chat(burdened_living, "<span class='notice'>You begin to feel the scars on [GLOB.deity]. You must continue to burden yourself.</span>")
+			else
+				to_chat(burdened_living, "<span class='warning'>The weight on your shoulders feels lighter. You are barely feeling [GLOB.deity]'s suffering.</span>")
+		if(2)
+			if(increase)
+				to_chat(burdened_living, "<span class='notice'>You have done well to understand [GLOB.deity]. You are almost at a breakthrough.</span>")
+			else
+				to_chat(burdened_living, "<span class='warning'>The weight on your shoulders feels lighter. You have lost some universal truths.</span>")
+		if(FIRST_TRUTH_REWARD)
+			if(increase)
+				to_chat(burdened_living, "<span class='notice'>Your suffering is only a fraction of [GLOB.deity]'s, and yet the universal truths are coming to you.</span>")
+			else
+				to_chat(burdened_living, "<span class='warning'>The weight on your shoulders feels lighter. You feel like you're about to forget.</span>")
+		if(4)
+			if(increase)
+				to_chat(burdened_living, "<span class='notice'>The weight on your shoulders is immense. [GLOB.deity] is shattered across the cosmos.</span>")
+			else
+				to_chat(burdened_living, "<span class='warning'>The weight on your shoulders feels lighter. You're growing further from your goal.</span>")
+		if(5)
+			if(increase)
+				to_chat(burdened_living, "<span class='notice'>You're on the cusp of another breakthrough. [GLOB.deity] lost everything.</span>")
+			else
+				to_chat(burdened_living, "<span class='warning'>The weight on your shoulders feels lighter. You have lost some universal truths.</span>")
+		if(SECOND_TRUTH_REWARD)
+			to_chat(burdened_living, "<span class='notice'>You have finally broken yourself enough to understand [GLOB.deity]. It's all so clear to you.</span>")
+
+/datum/religion_sect/burden/proc/eyes_added_burden(mob/burdened, obj/item/organ/eyes/new_eyes)
+	SIGNAL_HANDLER
+
+	if(!istype(new_eyes))
+		return
+	if(new_eyes.tint < TINT_BLIND) //unless you added unworking eyes (flashlight eyes), this is removing burden
+		burdened_pool[burdened] -= 1
+		update_burden(burdened)
+
+/datum/religion_sect/burden/proc/eyes_removed_burden(mob/burdened, obj/item/organ/eyes/old_eyes)
+	SIGNAL_HANDLER
+
+	if(!istype(old_eyes))
+		return
+	if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
+		burdened_pool[burdened] += 1
+		update_burden(burdened)
+
+/datum/religion_sect/burden/proc/limbs_added_burden(obj/item/bodypart/limb_added, special, dismembered)
+	SIGNAL_HANDLER
+
+	if(special) //something we don't wanna consider, like instaswapping limbs
+		return
+	var/mob/living/carbon/burdened_follower = limb_added.owner
+	var/list/bodyparts = burdened_follower.bodyparts.Copy()
+	if(bodyparts.len == 5) //adding a limb got you to chest, head, 3 limbs
+		burdened_pool[burdened] -= 1 //which counts as removing burden
+		update_burden(burdened)
+
+/datum/religion_sect/burden/proc/limbs_removed_burden(obj/item/bodypart/limb_lost, special, dismembered)
+	SIGNAL_HANDLER
+
+	if(special) //something we don't wanna consider, like instaswapping limbs
+		return
+	var/mob/living/carbon/burdened_follower = limb_lost.owner
+	var/list/bodyparts = burdened_follower.bodyparts.Copy()
+	if(bodyparts.len == 4) //adding a limb got you to chest, head, 2 limbs
+		burdened_pool[burdened] += 1 //which counts as adding burden
+		update_burden(burdened)
+
+/datum/religion_sect/burden/proc/addict_added_burden(datum/addiction/new_addiction, datum/mind/addict_mind)
+	SIGNAL_HANDLER
+
+	if(addict_mind.active_addictions.len)
+		return //already did this
+	burdened_pool[burdened] += 1 //you're addicted to something
+	update_burden(burdened)
+
+/datum/religion_sect/burden/proc/addict_removed_burden(datum/addiction/old_addiction, datum/mind/nonaddict_mind)
+	SIGNAL_HANDLER
+
+	if(!nonaddict_mind.active_addictions.len)
+		burdened_pool[burdened] -= 1 //no longer addicted to anything
+		update_burden(burdened)
+
+#define MINIMUM_YUCK_REQUIRED 5
+
+/datum/religion_sect/maintenance
+	name = "Maintenance God"
+	desc = "A sect based around the maintenance shafts of the station."
+	alignment = ALIGNMENT_EVIL //while maint is more neutral in my eyes, the flavor of it kinda pertains to rotting and becoming corrupted by the maints
+	convert_opener = "\"Your kingdom in the darkness.\"<br>\
+	Sacrifice the organic slurry created from rats dipped in welding fuel to gain favor. Exchange favor to adapt to the maintenance shafts."
+	rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/adapted_food)
+	desired_items = list(/obj/item/reagent_containers)
+
+/datum/religion_sect/maintenance/on_sacrifice(obj/item/reagent_containers/offering, mob/living/user)
+	if(!istype(offering))
+		return
+	var/datum/reagent/yuck/wanted_yuck = offering.reagents.has_reagent(/datum/reagent/yuck, MINIMUM_YUCK_REQUIRED)
+	var/favor_earned = offering.reagents.get_reagent_amount(reagent)
+	if(!wanted_yuck)
+		to_chat(user, "<span class='warning'>[offering] does not have enough Organic Slurry for [GLOB.diety] to enjoy.</span>")
+		return
+	to_chat(user, "<span class='notice'>[GLOB.deity] loves Organic Slurry.</span>")
+	adjust_favor(favor_earned, user)
+	playsound(get_turf(offering), 'sound/items/drink.ogg', 50, TRUE)
+	offering.reagents.clear_reagents()
+	return TRUE
+
+#undef MINIMUM_YUCK_REQUIRED
+
+

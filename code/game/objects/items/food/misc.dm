@@ -177,6 +177,15 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILLED, .proc/OnGrill)
 
+/obj/item/food/badrecipe/moldy
+	name = "moldy mess"
+	desc = "A rancid, living culture of mold. Somewhere, under there, at SOME POINT... there was food."
+	food_reagents = list(/datum/reagent/consumable/mold = 30)
+
+/obj/item/food/badrecipe/moldy/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
+
 ///Prevents grilling burnt shit from well, burning.
 /obj/item/food/badrecipe/proc/OnGrill()
 	return COMPONENT_HANDLED_GRILLING

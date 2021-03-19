@@ -218,3 +218,91 @@
 		new /obj/item/candle/infinite(altar_turf)
 	playsound(altar_turf, 'sound/magic/fireball.ogg', 50, TRUE)
 	return TRUE
+
+///all greed rites cost money instead
+/datum/religion_rites/greed
+	ritual_length = 2 SECONDS //because no refunds it's just dickish to make this a 10 second interruptable
+	invoke_msg = "Sorry I was late I was just making a shitload of money."
+	var/money_cost = 0
+
+/datum/religion_rites/greed/perform_rite(mob/living/user, atom/religious_tool)
+	var/datum/bank_account/account = user.get_bank_account()
+	if(!account)
+		to_chat(user, "<span class='warning'>You need a way to pay for the rite!</span>")
+		return FALSE
+	if(account.account_balance < money_cost)
+		to_chat(user, "<span class='warning'>This rite requires more money!</span>")
+		return FALSE
+	to_chat(user, "<span class='notice'>This rite has been paid for. <b>Getting interrupted now will NOT give refunds!</b></span>")
+	account.adjust_money(-money_cost)
+	. = ..()
+
+/datum/religion_rites/greed/vendatray
+	invoke_msg = "I need a vend-a-tray to make some more money!"
+	money_cost = 300
+
+/datum/religion_rites/greed/vendatray/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	var/altar_turf = get_turf(religious_tool)
+	new /obj/structure/displaycase/forsale(altar_turf)
+	playsound(get_turf(container), 'sound/effects/cashregister.ogg', 60, TRUE)
+	return TRUE
+
+/datum/religion_rites/greed/custom_vending
+	invoke_msg = "If I get a custom vending machine for my products, I'll be RICH!"
+	money_cost = 600 //quite a step up from vendatray
+
+/datum/religion_rites/greed/custom_vending/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	var/altar_turf = get_turf(religious_tool)
+	new /obj/machinery/vending/custom(altar_turf)
+	playsound(get_turf(container), 'sound/effects/cashregister.ogg', 60, TRUE)
+	return TRUE
+
+/datum/religion_rites/maint_adaptation
+	name = "Maintenance Adaptation"
+	desc = "Begin your metamorphasis into a being more fit for maintenance."
+	ritual_length = 10 SECONDS
+	ritual_invocations = list("I abandon the world ...",
+	"... to become one with the deep.",
+	"My form will become twirled ...")
+	invoke_msg = "... but my smile I will keep!"
+	favor_cost = 50 //50u of organic slurry
+
+/datum/religion_rites/maint_adaptation/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	to_chat(user, "<span class='warning'>You feel your genes rattled and reshaped. <b>You're becoming something new.</b></span>")
+	user.emote("laughs")
+	if(iscarbon(user))
+		var/mob/living/carbon/vomitorium = user
+		vomitorium.vomit()
+		vomitorium.mutation
+		var/datum/dna/dna = vomitorium.has_dna()
+		dna?.add_mutation(/datum/mutation/human/stimmed) //some fluff mutations
+		dna?.add_mutation(/datum/mutation/human/strong)
+	var/datum/addiction/maintenance_drugs/maint_adaptation = SSaddiction.all_addictions[/datum/addiction/maintenance_drugs]
+	maint_adaptation.become_addicted(user.mind)
+
+/datum/religion_rites/adapted_food
+	name = "Maintenance Adapted Food"
+	desc = "Once adapted to the Maintenance, you will not be able to eat regular food. This should help."
+	ritual_length = 5 SECONDS
+	invoke_msg = "Moldify!"
+	favor_cost = 5 //5u of organic slurry
+	///the food that will be molded, only one per rite
+	var/obj/item/food/mold_target
+
+/datum/religion_rites/adapted_food/perform_rite(mob/living/user, atom/religious_tool)
+	for(var/obj/item/food/could_mold in get_turf(religious_tool))
+		mold_target = could_mold //moldify this o great one
+		return ..()
+	return FALSE
+
+/datum/religion_rites/adapted_food/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	var/obj/item/food/moldify = mold_target
+	mold_target = null
+	if(QDELETED(moldify) || !(get_turf(religious_tool) == moldify.loc)) //check if the same food is still there
+		to_chat(user, "<span class='warning'>Your target left the altar!</span>")
+		return FALSE
+	to_chat(user, "<span class='warning'>[moldify] becomes rancid!</span>")
+	user.emote("laughs")
+	new /obj/item/food/badrecipe/moldy(get_turf(religious_tool))
+	qdel(moldify)
+	return TRUE

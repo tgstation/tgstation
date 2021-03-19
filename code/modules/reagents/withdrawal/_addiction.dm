@@ -26,6 +26,7 @@
 ///Called when you become addicted
 /datum/addiction/proc/become_addicted(datum/mind/victim_mind)
 	LAZYSET(victim_mind.active_addictions, type, 1) //Start at first cycle.
+	SEND_SIGNAL(victim_mind.current, COMSIG_CARBON_GAIN_ADDICTION, victim_mind)
 	log_game("[key_name(victim_mind.current)] has become addicted to [name].")
 
 
@@ -41,6 +42,7 @@
 
 /datum/addiction/proc/lose_addiction(datum/mind/victim_mind)
 	SEND_SIGNAL(victim_mind.current, COMSIG_CLEAR_MOOD_EVENT, "[type]_addiction")
+	SEND_SIGNAL(victim_mind.current, COMSIG_CARBON_LOSE_ADDICTION, victim_mind)
 	to_chat(victim_mind.current, "<span class='notice'>You feel like you've gotten over your need for drugs.</span>")
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
