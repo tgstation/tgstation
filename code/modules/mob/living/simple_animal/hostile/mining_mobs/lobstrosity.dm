@@ -24,6 +24,7 @@
 	attack_verb_continuous = "snips"
 	attack_verb_simple = "snip"
 	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE //the closest we have to a crustacean pinching attack effect rn.
 	weather_immunities = list("snow")
 	vision_range = 5
 	aggro_vision_range = 7

@@ -55,12 +55,12 @@
 	return NONE
 
 /obj/machinery/plumbing/reaction_chamber/process(delta_time)
-	if(!reagents.is_reacting && reagents.ph < alkaline_limit)
+	if(reagents.is_reacting && reagents.ph < alkaline_limit)
 		alkaline_beaker.reagents.trans_to(reagents, 1 * delta_time)
-	if(!reagents.is_reacting && reagents.ph > acidic_limit)
+	if(reagents.is_reacting && reagents.ph > acidic_limit)
 		acidic_beaker.reagents.trans_to(reagents, 1 * delta_time)
 
-	if(!emptying) //suspend heating/cooling during emptying phase
+	if(!emptying || reagents.is_reacting) //suspend heating/cooling during emptying phase
 		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 		reagents.handle_reactions()
 

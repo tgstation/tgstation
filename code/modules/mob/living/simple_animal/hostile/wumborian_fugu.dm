@@ -28,6 +28,7 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	throw_message = "is avoided by the"
 	aggro_vision_range = 9
 	mob_size = MOB_SIZE_SMALL

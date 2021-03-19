@@ -28,6 +28,7 @@
 	attack_verb_simple = "bite into"
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	aggro_vision_range = 9
 	turns_per_move = 5
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -109,6 +110,7 @@
 	combat_mode = TRUE
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = null // doesn't bite unlike the parent type.
 	stat_attack = HARD_CRIT
 	is_flying_animal = TRUE
 	robust_searching = 1

@@ -23,6 +23,7 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	ranged_message = "breathes fire at"
 	vision_range = 9
 	aggro_vision_range = 9

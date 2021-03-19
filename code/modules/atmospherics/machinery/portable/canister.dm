@@ -474,7 +474,7 @@
 		else if(valve_open && holding)
 			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
-/obj/machinery/portable_atmospherics/canister/process_atmos(delta_time)
+/obj/machinery/portable_atmospherics/canister/process_atmos()
 	. = ..()
 	if(machine_stat & BROKEN)
 		return PROCESS_KILL
@@ -495,7 +495,7 @@
 
 	///function used to check the limit of the canisters and also set the amount of damage that the canister can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(our_temperature > heat_limit || our_pressure > pressure_limit)
-		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit) * delta_time * 2, 5, 50), BURN, 0)
+		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
 	update_appearance()
 
 /obj/machinery/portable_atmospherics/canister/ui_state(mob/user)

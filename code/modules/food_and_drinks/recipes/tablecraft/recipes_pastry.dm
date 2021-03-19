@@ -394,7 +394,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/datum/reagent/tranquility = 5
+		/datum/reagent/gondola_mutation_toxin = 5
 	)
 	result = /obj/item/food/donkpocket/gondola
 	subcategory = CAT_PASTRY

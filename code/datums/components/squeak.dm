@@ -108,8 +108,8 @@
 /datum/component/squeak/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(holder, COMSIG_MOVABLE_CROSSED)
-	UnregisterSignal(holder, COMSIG_MOVABLE_DISPOSING)
+	UnregisterSignal(user, COMSIG_MOVABLE_CROSSED)
+	UnregisterSignal(user, COMSIG_MOVABLE_DISPOSING)
 	holder = null
 
 ///just gets rid of the reference to holder in the case that theyre qdeleted

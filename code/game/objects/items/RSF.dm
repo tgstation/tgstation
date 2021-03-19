@@ -10,6 +10,7 @@ RSF
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rsf"
+	base_icon_state = "rsf"
 	///The icon state to revert to when the tool is empty
 	var/spent_icon_state = "rsf_empty"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -62,11 +63,15 @@ RSF
 		if(tempMatter > max_matter)
 			to_chat(user, "<span class='warning'>\The [src] can't hold any more [discriptor]!</span>")
 			return
-		qdel(W)
+		if(isstack(W))
+			var/obj/item/stack/stack = W
+			stack.use(1)
+		else
+			qdel(W)
 		matter = tempMatter //We add its value
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		to_chat(user, "<span class='notice'>\The [src] now holds [matter]/[max_matter] [discriptor].</span>")
-		icon_state = initial(icon_state)//and set the icon state to the initial value it had
+		icon_state = base_icon_state//and set the icon state to the base state
 	else
 		return ..()
 
@@ -147,6 +152,7 @@ RSF
 	name = "Cookie Synthesizer"
 	desc = "A self-recharging device used to rapidly deploy cookies."
 	icon_state = "rcd"
+	base_icon_state = "rcd"
 	spent_icon_state = "rcd"
 	max_matter = 10
 	cost_by_item = list(/obj/item/food/cookie = 100)

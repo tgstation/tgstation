@@ -42,6 +42,7 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
@@ -142,7 +143,8 @@
 	if(!target)
 		return
 	target.visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
-	for(var/turf/turf in range(9,get_turf(target)))
+	var/turf/targetturf = get_turf(target)
+	for(var/turf/turf as anything in RANGE_TURFS(9,targetturf))
 		if(prob(11))
 			new /obj/effect/temp_visual/target(turf)
 

@@ -99,6 +99,16 @@
 	category_index = CATEGORY_FRUITS_VEGGIES
 	item_instance = /obj/item/food/grown/cherries
 
+/datum/orderable_item/chanterelle
+	name = "Chanterelle"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/mushroom/chanterelle
+
+/datum/orderable_item/cocoa
+	name = "Cocoa"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/cocoapod
+
 //Milk and Eggs
 
 /datum/orderable_item/milk
