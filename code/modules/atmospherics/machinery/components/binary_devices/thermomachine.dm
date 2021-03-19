@@ -129,24 +129,39 @@
 	var/datum/gas_mixture/main_port = airs[1]
 	var/datum/gas_mixture/thermal_exchange_port = airs[2]
 	var/turf/local_turf = get_turf(src)
-	var/main_heat_capaticy = main_port.heat_capacity()
+	var/main_heat_capacity = main_port.heat_capacity()
 	var/thermal_heat_capacity = thermal_exchange_port.heat_capacity()
 	var/temperature_delta = main_port.temperature - target_temperature
 
-	var/heat_amount = temperature_delta * (main_heat_capaticy * heat_capacity / (main_heat_capaticy + heat_capacity))
+	var/motor_heat = 2500
+	if(abs(temperature_delta) < 1.5) //allow the machine to work more finely
+		motor_heat = 0
+
+	var/heat_amount = temperature_delta * (main_heat_capacity * heat_capacity / (main_heat_capacity + heat_capacity))
+	var/efficiency = 1
 	if(main_port.total_moles() && thermal_exchange_port.total_moles())
-		main_port.temperature = max(main_port.temperature - heat_amount / main_heat_capaticy, TCMB)
-		thermal_exchange_port.temperature = max(thermal_exchange_port.temperature + heat_amount / thermal_heat_capacity, TCMB)
+		if(cooling)
+			thermal_exchange_port.temperature = max(thermal_exchange_port.temperature + heat_amount / thermal_heat_capacity + motor_heat / thermal_heat_capacity, TCMB)
+		var/temperature_difference = thermal_exchange_port.temperature - main_port.temperature
+		temperature_difference = cooling ? temperature_difference : 0
+		if(temperature_difference > 0)
+			efficiency = max(1 - log(10, temperature_difference) * 0.1, 1)
+		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency)/ main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 	else if(main_port.total_moles() && (thermal_exchange_port.total_moles() || !nodes[2]))
-		main_port.temperature = max(main_port.temperature - heat_amount / main_heat_capaticy, TCMB)
 		var/datum/gas_mixture/enviroment = local_turf.return_air()
-		var/enviroment_heat_capacity = enviroment.heat_capacity()
-		enviroment.temperature = max(enviroment.temperature + heat_amount / enviroment_heat_capacity, TCMB)
-		air_update_turf(FALSE, FALSE)
+		if(cooling)
+			var/enviroment_heat_capacity = enviroment.heat_capacity()
+			enviroment.temperature = max(enviroment.temperature + heat_amount / enviroment_heat_capacity, TCMB)
+			air_update_turf(FALSE, FALSE)
+		var/temperature_difference = enviroment.temperature - main_port.temperature
+		temperature_difference = cooling ? temperature_difference : 0
+		if(temperature_difference > 0)
+			efficiency = max(1 - log(10, temperature_difference) * 0.1, 1)
+		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency) / main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 
 	temperature_delta = abs(temperature_delta)
 	if(temperature_delta > 1)
-		active_power_usage = (heat_capacity * temperature_delta) + idle_power_usage
+		active_power_usage = ((heat_capacity * temperature_delta) + idle_power_usage) ** (1 + (1 - efficiency))
 	else
 		active_power_usage = idle_power_usage
 	update_parents()
