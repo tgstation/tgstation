@@ -108,6 +108,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		material = GET_MATERIAL_REF(material)
 	if(glass_price)
 		AddElement(/datum/element/venue_price, glass_price)
+	if(!mass)
+		mass = rand(10, 800)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
