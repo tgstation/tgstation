@@ -1,5 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "Fixes impurities on foam, smoke and cigs."
-  - code_imp: "Improved how impurities are handled"
