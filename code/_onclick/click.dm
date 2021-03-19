@@ -331,7 +331,7 @@
 		return ..()
 
 	if(world.time < user.next_move)
-		return ..()
+		return FALSE
 
 	var/mob/living/user_living = user
 	if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
@@ -347,7 +347,7 @@
 		return ..()
 
 	if(world.time < user.next_move)
-		return ..()
+		return FALSE
 
 	var/mob/living/carbon/human/H = user
 	if(H.dna.species.grab(H, src, H.mind.martial_art))
