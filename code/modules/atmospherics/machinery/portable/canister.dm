@@ -85,10 +85,15 @@
 
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
+
 	if(existing_mixture)
 		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
+
+	var/random_quality = rand(0, 100) / 100
+	pressure_limit = initial(pressure_limit) * (1 + 0.1 * random_quality)
+
 	update_appearance()
 
 /obj/machinery/portable_atmospherics/canister/ComponentInitialize()
@@ -105,7 +110,7 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "<span class='notice'>This canister is Tier [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit_pressure(pressure_limit, 0)]</b>.</span>"
+		. += "<span class='notice'>This canister is Tier [mode]. A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]</b>.</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
@@ -451,9 +456,15 @@
 /obj/machinery/portable_atmospherics/canister/proc/canister_break()
 	disconnect()
 	var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
+	var/expelled_pressure = expelled_gas?.return_pressure()
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
 	air_update_turf(FALSE, FALSE)
+
+	if(expelled_pressure > pressure_limit)
+		var/pressure_dif = expelled_pressure - pressure_limit
+		var/explosion_range = CEILING(min(pressure_dif, 20000) / 1000, 1)
+		explosion(T, 0, 0, explosion_range, 0, smoke = FALSE)
 
 	obj_break()
 	density = FALSE
@@ -482,12 +493,30 @@
 		valve_open = !valve_open
 		timing = FALSE
 
-	// Handle gas transfer.
-	if(valve_open)
-		var/turf/T = get_turf(src)
-		var/datum/gas_mixture/target_air = holding ? holding.air_contents : T.return_air()
+	var/turf/location = get_turf(src)
 
-		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
+	var/mix_air = FALSE
+	var/pressure = release_pressure
+	var/gas_mix = holding?.air_contents
+	var/air_update = FALSE
+
+	if(valve_open)
+		mix_air = TRUE
+
+	// When at least 10% of integrity is lost it starts checking for leaking
+	if(obj_integrity < max_integrity * 0.9)
+		var/leak_chance = 1 - obj_integrity / max_integrity
+		if(prob(leak_chance))
+			mix_air = TRUE
+			pressure = air_contents.return_pressure()
+			gas_mix = location.return_air()
+			air_update = TRUE
+
+	// Handle gas transfer.
+	if(mix_air)
+		var/datum/gas_mixture/target_air = gas_mix ? gas_mix : location.return_air()
+
+		if(air_contents.release_gas_to(target_air, pressure) && (!holding || air_update))
 			air_update_turf(FALSE, FALSE)
 
 	var/our_pressure = air_contents.return_pressure()
