@@ -136,6 +136,9 @@
 	if(!istype(our_guy))
 		return
 
+	if (!(user.mobility_flags & MOBILITY_USE))
+		return
+
 	if(!in_range(user, our_guy))
 		to_chat(user, "<span class='warning'>You aren't close enough to interact with [src]'s laces!</span>")
 		return
