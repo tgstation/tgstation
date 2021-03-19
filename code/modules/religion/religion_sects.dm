@@ -234,142 +234,60 @@
 	name = "Honorbound God"
 	desc = "A sect that does not engage in harm."
 	alignment = ALIGNMENT_GOOD
-	convert_opener = "A good, honourable crusade against evil is required.<br>\
-	Your diety requires fair fights from you. You may not attack the unready, the just, or the noncombatants.<br>\
+	convert_opener = "\"A good, honourable crusade against evil is required.\"<br>\
+	Your diety requires fair fights from you. You may not attack the unready, the just, or the innocent.<br>\
 	You earn favor by getting others to join the crusade, and you may spend favor to announce a battle, bypassing some conditions to attack."
+	var/list/guilty = list() //list of guilty people
 
-/datum/religion_sect/honorbound/on_conversion(mob/living/L)
+/datum/religion_sect/honorbound/on_conversion(mob/living/new_convert)
+	RegisterSignal(new_convert, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/unarmed_honor_check)
+	RegisterSignal(new_convert, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_honor_check)
+	RegisterSignal(new_convert, COMSIG_MOB_ITEM_ATTACK, .proc/itemattack_honor_check)
 
-#define FIRST_TRUTH_REWARD 3
-#define SECOND_TRUTH_REWARD 6
-
-/datum/religion_sect/burden
-	name = "Punished God"
-	desc = "A sect that desires to feel the pain of their god."
-	alignment = ALIGNMENT_NEUT
-	convert_opener = "\"To feel freedom, you must first understand captivity.\"<br>\
-	Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, even addictions. You will learn the secrets of the universe \
-	from your defeated shell."
-	//a list for keeping track of how burdened each member is
-	var/list/burdened_pool = list()
-
-/datum/religion_sect/burden/on_conversion(mob/living/burdened_living)
-
-	if(!iscarbon(burdened_living))
-		to_chat(burdened_living, "<span class='warning'>Despite your willingness, you feel like your lesser form cannot properly incapacitate itself to impress [GLOB.deity]...")
+/datum/religion_sect/honorbound/proc/unarmed_honor_check(mob/living/carbon/human/honorbound_human, atom/target, proximity)
+	SIGNAL_HANDLER
+	if(!isliving(target))
 		return
-	var/mob/living/carbon/burdened_follower = L
-	burdened_pool[burdened_follower] = 0
-	RegisterSignal(burdened_follower, COMSIG_CARBON_GAIN_ORGAN, .proc/eyes_added_burden)
-	RegisterSignal(burdened_follower, COMSIG_CARBON_LOSE_ORGAN, .proc/eyes_removed_burden)
+	var/mob/living/target_creature = target
+	if(!is_honorable(honorbound_human, target_creature))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	RegisterSignal(burdened_follower, COMSIG_CARBON_ATTACH_LIMB, .proc/limbs_added_burden)
-	RegisterSignal(burdened_follower, COMSIG_CARBON_REMOVE_LIMB, .proc/limbs_removed_burden)
-
-	RegisterSignal(burdened_follower, COMSIG_CARBON_GAIN_ADDICTION, .proc/addict_added_burden)
-	RegisterSignal(burdened_follower, COMSIG_CARBON_LOSE_ADDICTION, .proc/addict_removed_burden)
-
-/datum/religion_sect/burden/proc/update_burden(mob/living/carbon/burdened_follower, increase)
-	var/current_burden = burdened_pool[burdened_follower]
-	if(burdened_follower.dna)
-		var/datum/dna/woke_dna = burdened_follower.dna
-		if(current_burden >= FIRST_TRUTH_REWARD)
-			woke_dna.add_mutation(TELEPATHY)
-			woke_dna.add_mutation(MUT_MUTE)
-		else
-			woke_dna.remove_mutation(TELEPATHY)
-			woke_dna.remove_mutation(MUT_MUTE)
-		if(current_burden == SECOND_TRUTH_REWARD)
-			woke_dna.add_mutation(TK)
-			woke_dna.add_mutation(GLOWY)
-		else
-			woke_dna.remove_mutation(TK)
-			woke_dna.remove_mutation(GLOWY)
-	switch(current_burden)
-		if(0)
-			to_chat(burdened_living, "<span class='warning'>You feel no weight on your shoulders. You are not feeling [GLOB.deity]'s suffering.</span>")
-		if(1)
-			if(increase)
-				to_chat(burdened_living, "<span class='notice'>You begin to feel the scars on [GLOB.deity]. You must continue to burden yourself.</span>")
-			else
-				to_chat(burdened_living, "<span class='warning'>The weight on your shoulders feels lighter. You are barely feeling [GLOB.deity]'s suffering.</span>")
-		if(2)
-			if(increase)
-				to_chat(burdened_living, "<span class='notice'>You have done well to understand [GLOB.deity]. You are almost at a breakthrough.</span>")
-			else
-				to_chat(burdened_living, "<span class='warning'>The weight on your shoulders feels lighter. You have lost some universal truths.</span>")
-		if(FIRST_TRUTH_REWARD)
-			if(increase)
-				to_chat(burdened_living, "<span class='notice'>Your suffering is only a fraction of [GLOB.deity]'s, and yet the universal truths are coming to you.</span>")
-			else
-				to_chat(burdened_living, "<span class='warning'>The weight on your shoulders feels lighter. You feel like you're about to forget.</span>")
-		if(4)
-			if(increase)
-				to_chat(burdened_living, "<span class='notice'>The weight on your shoulders is immense. [GLOB.deity] is shattered across the cosmos.</span>")
-			else
-				to_chat(burdened_living, "<span class='warning'>The weight on your shoulders feels lighter. You're growing further from your goal.</span>")
-		if(5)
-			if(increase)
-				to_chat(burdened_living, "<span class='notice'>You're on the cusp of another breakthrough. [GLOB.deity] lost everything.</span>")
-			else
-				to_chat(burdened_living, "<span class='warning'>The weight on your shoulders feels lighter. You have lost some universal truths.</span>")
-		if(SECOND_TRUTH_REWARD)
-			to_chat(burdened_living, "<span class='notice'>You have finally broken yourself enough to understand [GLOB.deity]. It's all so clear to you.</span>")
-
-/datum/religion_sect/burden/proc/eyes_added_burden(mob/burdened, obj/item/organ/eyes/new_eyes)
+/datum/religion_sect/honorbound/proc/hulk_honor_check(atom/target, mob/living/carbon/human/honorbound_human)
 	SIGNAL_HANDLER
-
-	if(!istype(new_eyes))
+	if(!isliving(target))
 		return
-	if(new_eyes.tint < TINT_BLIND) //unless you added unworking eyes (flashlight eyes), this is removing burden
-		burdened_pool[burdened] -= 1
-		update_burden(burdened)
+	var/mob/living/target_creature = target
+	if(!is_honorable(honorbound_human, target_creature))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/religion_sect/burden/proc/eyes_removed_burden(mob/burdened, obj/item/organ/eyes/old_eyes)
+/datum/religion_sect/honorbound/proc/itemattack_honor_check(atom/item, atom/target, mob/living/carbon/human/honorbound_human)
 	SIGNAL_HANDLER
-
-	if(!istype(old_eyes))
+	if(!isliving(target))
 		return
-	if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
-		burdened_pool[burdened] += 1
-		update_burden(burdened)
+	var/mob/living/target_creature = target
+	if(!is_honorable(honorbound_human, target_creature))
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/religion_sect/burden/proc/limbs_added_burden(obj/item/bodypart/limb_added, special, dismembered)
-	SIGNAL_HANDLER
-
-	if(special) //something we don't wanna consider, like instaswapping limbs
-		return
-	var/mob/living/carbon/burdened_follower = limb_added.owner
-	var/list/bodyparts = burdened_follower.bodyparts.Copy()
-	if(bodyparts.len == 5) //adding a limb got you to chest, head, 3 limbs
-		burdened_pool[burdened] -= 1 //which counts as removing burden
-		update_burden(burdened)
-
-/datum/religion_sect/burden/proc/limbs_removed_burden(obj/item/bodypart/limb_lost, special, dismembered)
-	SIGNAL_HANDLER
-
-	if(special) //something we don't wanna consider, like instaswapping limbs
-		return
-	var/mob/living/carbon/burdened_follower = limb_lost.owner
-	var/list/bodyparts = burdened_follower.bodyparts.Copy()
-	if(bodyparts.len == 4) //adding a limb got you to chest, head, 2 limbs
-		burdened_pool[burdened] += 1 //which counts as adding burden
-		update_burden(burdened)
-
-/datum/religion_sect/burden/proc/addict_added_burden(datum/addiction/new_addiction, datum/mind/addict_mind)
-	SIGNAL_HANDLER
-
-	if(addict_mind.active_addictions.len)
-		return //already did this
-	burdened_pool[burdened] += 1 //you're addicted to something
-	update_burden(burdened)
-
-/datum/religion_sect/burden/proc/addict_removed_burden(datum/addiction/old_addiction, datum/mind/nonaddict_mind)
-	SIGNAL_HANDLER
-
-	if(!nonaddict_mind.active_addictions.len)
-		burdened_pool[burdened] -= 1 //no longer addicted to anything
-		update_burden(burdened)
+/datum/religion_sect/honorbound/proc/is_honorable(mob/living/carbon/human/honorbound_human, mob/living/target_creature)
+	var/is_guilty = (target_creature in guilty)
+	//THE UNREADY (Applies over ANYTHING else!)
+	if(target_creature.IsSleeping() || HAS_TRAIT(target_creature, TRAIT_RESTRAINED))
+		to_chat(honorbound_human, "<span class='warning'>There is no honor in attacking the <b>unready</b>.</span>")
+		return FALSE
+	//THE JUST (Applies over guilt except for med, so you best be careful!)
+	if(ishuman(target_creature))
+		var/mob/living/carbon/human/target_human
+		var/job = target_human.mind?.assigned_role
+		if(job in GLOB.security_positions || job == "Chaplain")
+			to_chat(honorbound_human, "<span class='warning'>There is nothing rightous in attacking the <b>just</b>.</span>")
+			return FALSE
+		if(job in GLOB.medical_positions)
+			to_chat(honorbound_human, "<span class='warning'>If you truly think this healer is not <b>innocent</b>, declare them guilty.</span>")
+			return FALSE
+	//THE INNOCENT
+	if(!is_guilty)
+		to_chat(honorbound_human, "<span class='warning'>There is nothing rightous in attacking the <b>innocent</b>.</span>")
+		return FALSE
 
 #define MINIMUM_YUCK_REQUIRED 5
 
@@ -386,9 +304,9 @@
 	if(!istype(offering))
 		return
 	var/datum/reagent/yuck/wanted_yuck = offering.reagents.has_reagent(/datum/reagent/yuck, MINIMUM_YUCK_REQUIRED)
-	var/favor_earned = offering.reagents.get_reagent_amount(reagent)
+	var/favor_earned = offering.reagents.get_reagent_amount(/datum/reagent/yuck)
 	if(!wanted_yuck)
-		to_chat(user, "<span class='warning'>[offering] does not have enough Organic Slurry for [GLOB.diety] to enjoy.</span>")
+		to_chat(user, "<span class='warning'>[offering] does not have enough Organic Slurry for [GLOB.deity] to enjoy.</span>")
 		return
 	to_chat(user, "<span class='notice'>[GLOB.deity] loves Organic Slurry.</span>")
 	adjust_favor(favor_earned, user)

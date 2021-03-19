@@ -244,7 +244,7 @@
 /datum/religion_rites/greed/vendatray/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	var/altar_turf = get_turf(religious_tool)
 	new /obj/structure/displaycase/forsale(altar_turf)
-	playsound(get_turf(container), 'sound/effects/cashregister.ogg', 60, TRUE)
+	playsound(get_turf(religious_tool), 'sound/effects/cashregister.ogg', 60, TRUE)
 	return TRUE
 
 /datum/religion_rites/greed/custom_vending
@@ -254,7 +254,7 @@
 /datum/religion_rites/greed/custom_vending/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	var/altar_turf = get_turf(religious_tool)
 	new /obj/machinery/vending/custom(altar_turf)
-	playsound(get_turf(container), 'sound/effects/cashregister.ogg', 60, TRUE)
+	playsound(get_turf(religious_tool), 'sound/effects/cashregister.ogg', 60, TRUE)
 	return TRUE
 
 /datum/religion_rites/maint_adaptation
@@ -273,7 +273,6 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/vomitorium = user
 		vomitorium.vomit()
-		vomitorium.mutation
 		var/datum/dna/dna = vomitorium.has_dna()
 		dna?.add_mutation(/datum/mutation/human/stimmed) //some fluff mutations
 		dna?.add_mutation(/datum/mutation/human/strong)
