@@ -2,11 +2,14 @@
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Small Fonts"
-#define MAX_TIMER 9000
+#define MAX_TIMER 15 MINUTES
 
-#define PRESET_SHORT 1200
-#define PRESET_MEDIUM 1800
-#define PRESET_LONG 3000
+#define PRESET_SHORT 2 MINUTES
+#define PRESET_MEDIUM 3 MINUTES
+#define PRESET_LONG 5 MINUTES
+
+#define TIMER_ON TRUE
+#define TIMER_OFF FALSE
 
 
 
@@ -30,7 +33,7 @@
 	var/activation_time = 0
 	var/timer_duration = 0
 
-	var/timing = FALSE // boolean, true/1 timer is on, false/0 means it's not timing
+	var/timing = TIMER_OFF		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/list/obj/machinery/targets = list()
 	var/obj/item/radio/Radio //needed to send messages to sec radio
 
@@ -83,7 +86,7 @@
 		return 0
 
 	activation_time = world.time
-	timing = TRUE
+	timing = TIMER_ON
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(door.density)
@@ -109,7 +112,7 @@
 		Radio.set_frequency(FREQ_SECURITY)
 		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", FREQ_SECURITY)
 
-	timing = FALSE
+	timing = TIMER_OFF
 	activation_time = null
 	set_timer(0)
 	update_appearance()
@@ -197,7 +200,7 @@
 	data["timing"] = timing
 	data["flash_charging"] = FALSE
 	for(var/obj/machinery/flasher/F in targets)
-		if(F.last_flash && (F.last_flash + 150) > world.time)
+		if(F.last_flash && (F.last_flash + 15 SECONDS) > world.time)
 			data["flash_charging"] = TRUE
 			break
 	return data
@@ -219,11 +222,15 @@
 			var/value = text2num(params["adjust"])
 			if(value)
 				. = set_timer(time_left()+value)
+				investigate_log("[key_name(usr)] modified the timer by [value/10] seconds for cell [id], currently [time_left(seconds = TRUE)]", INVESTIGATE_RECORDS)
 		if("start")
 			timer_start()
+			investigate_log("[key_name(usr)] has started [id]'s timer of [time_left(seconds = TRUE)]", INVESTIGATE_RECORDS)
 		if("stop")
+			investigate_log("[key_name(usr)] has stopped [id]'s timer of [time_left(seconds = TRUE)]", INVESTIGATE_RECORDS)
 			timer_end(forced = TRUE)
 		if("flash")
+			investigate_log("[key_name(usr)] has flashed cell [id]", INVESTIGATE_RECORDS)
 			for(var/obj/machinery/flasher/F in targets)
 				F.flash()
 		if("preset")
@@ -237,11 +244,14 @@
 				if("long")
 					preset_time = PRESET_LONG
 			. = set_timer(preset_time)
+			investigate_log("[key_name(usr)] set cell [id]'s timer to [preset_time/10] seconds", INVESTIGATE_RECORDS)
 			if(timing)
 				activation_time = world.time
 		else
 			. = FALSE
 
+#undef TIMER_ON
+#undef TIMER_OFF
 
 #undef PRESET_SHORT
 #undef PRESET_MEDIUM
