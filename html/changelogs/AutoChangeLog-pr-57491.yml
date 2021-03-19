@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - imageadd: "The spoon has a new  sprite."
