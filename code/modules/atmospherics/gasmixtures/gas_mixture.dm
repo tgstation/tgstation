@@ -17,7 +17,7 @@ This prevents race conditions that arise based on the order of tile processing.
  *Any other attempts to fix it just killed atmos. I leave this to a greater man then I
  */
 #define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))
-GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
+GLOBAL_LIST_INIT_TYPED(meta_gas_info, /datum/gas, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /proc/init_gaslist_cache()
