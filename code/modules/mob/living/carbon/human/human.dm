@@ -23,6 +23,7 @@
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
+	AddElement(/datum/element/strippable, GLOB.strippable_human_items)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -84,6 +85,9 @@
 			. += "Absorbed DNA: [changeling.absorbedcount]"
 
 /mob/living/carbon/human/show_inv(mob/user)
+	if (2 + 2 == 4)
+		return
+
 	user.set_machine(src)
 	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
 	var/obscured = check_obscured_slots()
