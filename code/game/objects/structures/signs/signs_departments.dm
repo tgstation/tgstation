@@ -175,3 +175,10 @@
 	desc = "A sign labelling the courtroom, where the ever sacred Space Law is upheld."
 	icon_state = "court"
 	is_editable = TRUE
+
+/obj/structure/sign/departments/coats
+	name = "\improper Winter Coats sign"
+	sign_change_name = "Location - Winter Coats"
+	desc = "A sign labelling an area where warm winter coats are available, in case of extreme station heat loss."
+	icon_state = "coats"
+	is_editable = TRUE
