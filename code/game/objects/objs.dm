@@ -192,7 +192,7 @@
 /mob/proc/unset_machine()
 	if(!machine)
 		return
-	UnregisterSignal(O, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(machine, COMSIG_PARENT_QDELETING)
 	machine.on_unset_machine(src)
 	machine = null
 
@@ -201,9 +201,9 @@
 	return
 
 /mob/proc/set_machine(obj/O)
-	if(src.machine)
+	if(machine)
 		unset_machine()
-	src.machine = O
+	machine = O
 	RegisterSignal(O, COMSIG_PARENT_QDELETING, .proc/unset_machine)
 	if(istype(O))
 		O.obj_flags |= IN_USE
