@@ -26,6 +26,7 @@ And the only victory you achieved was a lie. Now you understand Gotham is beyond
 				continue
 			blackboard[BB_BANE_BATMAN] = possibly_the_dark_knight
 			batman = possibly_the_dark_knight
+			break
 	if(batman)
 		current_movement_target = batman
 		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/break_spine/bane)
