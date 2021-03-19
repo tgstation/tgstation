@@ -520,7 +520,7 @@
 	purity = REAGENT_STANDARD_PUIRTY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 4) //1.6 per 2 seconds
-	inverse_chem = /datum/reagent/inverse/corazone
+	inverse_chem = /datum/reagent/inverse/corazargh
 	inverse_chem_val = 0.4
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)

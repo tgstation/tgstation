@@ -562,8 +562,17 @@
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon = owner
-	speech_option = pick(list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE))
-	carbon.dna?.activate_mutation(speech_option)
+	if(!carbon.dna)
+		return
+	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE))
+	while(speed_options || speech_option == null)
+		var/potential_option = pick(speech_options)
+		if(carbon.dna.get_mutation(pick))
+			speech_options -= potential_option
+			continue
+		if(carbon.dna.activate_mutation(speech_option))
+			return
+
 
 /datum/reagent/impurity/mannitol/on_mob_delete(mob/living/owner)
 	. = ..()
@@ -591,10 +600,13 @@
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
 	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
-	var/datum/brain_trauma/trauma = pick(traumalist)
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
-	if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
-		temp_trauma = trauma
+	while(traumalist || !temp_trauma)
+		var/datum/brain_trauma/trauma = pick(traumalist)
+		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
+			temp_trauma = trauma
+		else
+			traumalist -= trauma
 
 /datum/reagent/inverse/neurine/on_mob_delete(mob/living/carbon/owner)
 	.=..()
@@ -604,7 +616,7 @@
 		return
 	owner.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
 
-/datum/reagent/inverse/corazone
+/datum/reagent/inverse/corazargh
 	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free. Also an omage to an older chem
 	description = "Interferes with the body's natural pacemaker, forcing the patient to manually beat their heart."
 	color = "#5F5F5F"
@@ -620,7 +632,7 @@
 	var/obj/item/organ/heart/cursed/manual_heart
 
 ///Creates a new cursed heart and puts the old inside of it, then replaces the position of the old
-/datum/reagent/inverse/corazone/on_mob_add(mob/living/owner)
+/datum/reagent/inverse/corazargh/on_mob_metabolize(mob/living/owner)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_mob = owner
@@ -635,11 +647,11 @@
 	//these last so instert doesn't call them
 	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
-	to_chat(owner, "<span class='warning'>You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!</spans>")
+	to_chat(owner, "<span class='userdanger'>You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!</spans>")
 	..()
 
 ///Intercepts the new heart and creates a new cursed heart - putting the old inside of it
-/datum/reagent/inverse/corazone/proc/on_gained_organ(mob/owner, obj/item/organ/organ)
+/datum/reagent/inverse/corazargh/proc/on_gained_organ(mob/owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/heart))
 		return
@@ -653,7 +665,7 @@
 	manual_heart.Insert(carbon_mob, special = TRUE)
 
 ///If we're ejecting out the organ - replace it with the original
-/datum/reagent/inverse/corazone/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+/datum/reagent/inverse/corazargh/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
 	if(!organ == manual_heart)
 		return
@@ -663,7 +675,7 @@
 	qdel(organ)
 
 ///We're done - remove the curse and restore the old one
-/datum/reagent/inverse/corazone/on_mob_delete(mob/living/owner)
+/datum/reagent/inverse/corazargh/on_mob_end_metabolize(mob/living/owner)
 	//Do these first so Insert doesn't call them
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
@@ -675,7 +687,7 @@
 		original_heart.Insert(carbon_mob, special = TRUE)
 	manual_heart.forceMove(null) //so we can be sure this is removed
 	qdel(manual_heart)
-	to_chat(owner, "<span class='warning'>You feel your heart start beating normally again!</spans>")
+	to_chat(owner, "<span class='userdanger'>You feel your heart start beating normally again!</spans>")
 	..()
 
 /datum/reagent/inverse/antihol
