@@ -162,7 +162,7 @@
 	heat_amount = abs(heat_amount)
 	var/power_usage
 	if(temperature_delta  > 1)
-		power_usage = (heat_amount * 1e-3 + idle_power_usage) ** (1 + (1 - efficiency))
+		power_usage = (heat_amount * 0.3 + idle_power_usage) ** (1.3 - (1e7 * 0.5) / (max(1e7, heat_amount)))
 	else
 		power_usage = idle_power_usage
 	use_power(power_usage)
