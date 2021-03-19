@@ -48,10 +48,10 @@ export const getRoutedComponent = store => {
   }
   const name = config?.interface;
   const interfacePathBuilders = [
-    name => `./${name}/index.tsx`,
-    name => `./${name}/index.js`,
     name => `./${name}.tsx`,
     name => `./${name}.js`,
+    name => `./${name}/index.tsx`,
+    name => `./${name}/index.js`,
   ];
   let esModule;
   while (!esModule && interfacePathBuilders.length > 0) {
