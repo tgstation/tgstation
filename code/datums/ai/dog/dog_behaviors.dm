@@ -201,8 +201,13 @@
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
-	living_pawn.do_attack_animation(living_target, ATTACK_EFFECT_BITE)
-	living_target.visible_message("<span class='danger'>[living_pawn] bites at [living_target]!</span>", "<span class='userdanger'>[living_pawn] bites at you!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
-	if(istype(living_target))
-		living_target.take_bodypart_damage(rand(5, 10))
-		log_combat(living_pawn, living_target, "bit (AI)")
+	// make sure the pawn gets some temporary strength boost to actually attack the target instead of pathetically nuzzling them.
+	var/old_melee_lower = living_pawn.melee_damage_lower
+	var/old_melee_upper = living_pawn.melee_damage_upper
+	living_pawn.melee_damage_lower = max(5, old_melee_lower)
+	living_pawn.melee_damage_upper = max(10, old_melee_upper)
+
+	living_pawn.UnarmedAttack(living_target, FALSE)
+
+	living_pawn.melee_damage_lower = old_melee_lower
+	living_pawn.melee_damage_upper = old_melee_upper
