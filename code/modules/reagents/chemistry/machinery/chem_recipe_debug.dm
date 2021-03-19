@@ -267,7 +267,20 @@
 	if(edit_recipe)
 		data["editRecipeName"] = edit_recipe.type
 		data["editRecipeCold"] = edit_recipe.is_cold_recipe
-		data["editRecipe"] = list(list("name" = "required_temp" , "var" = edit_recipe.required_temp), list("name" = "optimal_temp" , "var" = edit_recipe.optimal_temp), list("name" = "overheat_temp" , "var" = edit_recipe.overheat_temp), list("name" = "optimal_ph_min" , "var" = edit_recipe.optimal_ph_min), list("name" = "optimal_ph_max" , "var" = edit_recipe.optimal_ph_max), list("name" = "determin_ph_range" , "var" = edit_recipe.determin_ph_range), list("name" = "temp_exponent_factor" , "var" = edit_recipe.temp_exponent_factor), list("name" = "ph_exponent_factor" , "var" = edit_recipe.ph_exponent_factor), list("name" = "thermic_constant" , "var" = edit_recipe.thermic_constant), list("name" = "H_ion_release" , "var" = edit_recipe.H_ion_release), list("name" = "rate_up_lim" , "var" = edit_recipe.rate_up_lim), list("name" = "purity_min" , "var" = edit_recipe.purity_min))
+		data["editRecipe"] = list(
+			list("name" = "required_temp" , "var" = edit_recipe.required_temp),
+			list("name" = "optimal_temp" , "var" = edit_recipe.optimal_temp),
+			list("name" = "overheat_temp" , "var" = edit_recipe.overheat_temp),
+			list("name" = "optimal_ph_min" , "var" = edit_recipe.optimal_ph_min),
+			list("name" = "optimal_ph_max" , "var" = edit_recipe.optimal_ph_max),
+			list("name" = "determin_ph_range" , "var" = edit_recipe.determin_ph_range),
+			list("name" = "temp_exponent_factor" , "var" = edit_recipe.temp_exponent_factor),
+			list("name" = "ph_exponent_factor" , "var" = edit_recipe.ph_exponent_factor),
+			list("name" = "thermic_constant" , "var" = edit_recipe.thermic_constant),
+			list("name" = "H_ion_release" , "var" = edit_recipe.H_ion_release),
+			list("name" = "rate_up_lim" , "var" = edit_recipe.rate_up_lim),
+			list("name" = "purity_min" , "var" = edit_recipe.purity_min),
+			)
 
 	return data
 

@@ -564,10 +564,10 @@
 	var/mob/living/carbon/carbon = owner
 	if(!carbon.dna)
 		return
-	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE))
-	while(speed_options || speech_option == null)
+	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE)
+	while(speech_options || !speech_option)
 		var/potential_option = pick(speech_options)
-		if(carbon.dna.get_mutation(pick))
+		if(carbon.dna.get_mutation(potential_option))
 			speech_options -= potential_option
 			continue
 		if(carbon.dna.activate_mutation(speech_option))
@@ -605,6 +605,7 @@
 		var/datum/brain_trauma/trauma = pick(traumalist)
 		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
 			temp_trauma = trauma
+			return
 		else
 			traumalist -= trauma
 
