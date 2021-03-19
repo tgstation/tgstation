@@ -162,7 +162,9 @@
 	obj_flags |= EMAGGED
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
-	return (severity < EXPLODE_LIGHT) ? ..() : FALSE
+	if(severity >= EXPLODE_LIGHT) // Note that the explosion defines are inverted. Stronger explosions have smaller numbers.
+		return FALSE
+	return ..()
 
 /obj/machinery/chem_dispenser/contents_explosion(severity, target)
 	..()
