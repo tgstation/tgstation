@@ -460,13 +460,13 @@
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
 	air_update_turf(FALSE, FALSE)
+	obj_break()
 
 	if(expelled_pressure > pressure_limit)
 		var/pressure_dif = expelled_pressure - pressure_limit
 		var/explosion_range = CEILING(min(pressure_dif, 20000) / 1000, 1)
 		explosion(T, 0, 0, explosion_range, 0, smoke = FALSE)
 
-	obj_break()
 	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
