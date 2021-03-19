@@ -12,6 +12,8 @@
 	var/addiction_loss_per_stage = list(0.5, 0.5, 1, 1.5)
 	///Rate at which high sanity helps addiction loss
 	var/high_sanity_addiction_loss = 2
+	///Amount of drugs you need in your system to be satisfied
+	var/addiction_relief_treshold = MIN_ADDICTION_REAGENT_AMOUNT
 
 ///Called when you gain addiction points somehow. Takes a mind as argument and sees if you gained the addiction
 /datum/addiction/proc/on_gain_addiction_points(datum/mind/victim_mind)
@@ -49,9 +51,9 @@
 	var/on_drug_of_this_addiction = FALSE
 	for(var/datum/reagent/possible_drug as anything in affected_carbon.reagents.reagent_list) //Go through the drugs in our system
 		for(var/addiction in possible_drug.addiction_types) //And check all of their addiction types
-			if(addiction == type && possible_drug.volume >= MIN_ADDICTION_REAGENT_AMOUNT) //If one of them matches, and we have enough of it in our system, we're not losing addiction
+			if(addiction == type && possible_drug.volume >= addiction_relief_treshold) //If one of them matches, and we have enough of it in our system, we're not losing addiction
 				if(current_addiction_cycle)
-					LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
+					LAZYSET(affected_carbon.mind.active_addictions, addiction, 1) //Keeps withdrawal at first cycle.
 				on_drug_of_this_addiction = TRUE
 				return
 
@@ -81,6 +83,8 @@
 			withdrawal_enters_stage_2(affected_carbon)
 		if(WITHDRAWAL_STAGE3_START_CYCLE)
 			withdrawal_enters_stage_3(affected_carbon)
+		else //you are not on withdrawl
+			SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "[type]_addiction")
 
 	///One cycle is 2 seconds
 	switch(withdrawal_stage)
