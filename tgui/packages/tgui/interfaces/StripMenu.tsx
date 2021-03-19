@@ -31,8 +31,6 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
   },
 };
 
-const ALTERNATE_ACTION_HEIGHT = "14px";
-
 const SLOTS_TO_GRID: Record<string, GridSpotKey> = {
   eyes: getGridSpotKey([0, 1]),
   head: getGridSpotKey([0, 2]),

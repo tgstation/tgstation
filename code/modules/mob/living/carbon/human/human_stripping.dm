@@ -1,5 +1,4 @@
 // MOTHBLOCKS TODO: Toggle internals
-// MOTHBLOCKS TODO: Tie shoes
 
 GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	/datum/strippable_item/mob_item_slot/head,

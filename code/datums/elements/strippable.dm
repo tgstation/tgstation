@@ -58,7 +58,6 @@
 /// This should be used for checking if an item CAN be equipped.
 /// It should not perform the equipping itself.
 /datum/strippable_item/proc/try_equip(atom/source, obj/item/equipping, mob/user)
-	// MOTHBLOCKS TODO: With tgui, we need to make sure this is only adjacent users.
 	if (HAS_TRAIT(equipping, TRAIT_NODROP))
 		to_chat(user, "<span class='warning'>You can't put [equipping] on [source], it's stuck to your hand!</span>")
 		return FALSE
@@ -320,9 +319,11 @@
 
 	switch (action)
 		if ("use")
-			// MOTHBLOCKS TODO: Check if obscured
 			var/datum/strippable_item/strippable_item = strippable.items[params["key"]]
 			if (isnull(strippable_item))
+				return
+
+			if (strippable_item.is_obscured(owner))
 				return
 
 			var/item = strippable_item.get_item(owner)
@@ -366,6 +367,9 @@
 		if ("alt")
 			var/datum/strippable_item/strippable_item = strippable.items[params["key"]]
 			if (isnull(strippable_item))
+				return
+
+			if (strippable_item.is_obscured(owner))
 				return
 
 			var/item = strippable_item.get_item(owner)
