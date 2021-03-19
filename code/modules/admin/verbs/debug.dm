@@ -495,39 +495,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Test Areas (ALL)"
 	cmd_admin_areatest(FALSE)
 
-/client/proc/cmd_admin_dress(mob/M in GLOB.mob_list)
-	set category = "Admin.Events"
-	set name = "Select equipment"
-	if(!(ishuman(M) || isobserver(M)))
-		alert("Invalid mob")
-		return
-
-	var/dresscode = robust_dress_shop()
-
-	if(!dresscode)
-		return
-
-	var/delete_pocket
-	var/mob/living/carbon/human/H
-	if(isobserver(M))
-		H = M.change_mob_type(/mob/living/carbon/human, null, null, TRUE)
-	else
-		H = M
-		if(H.l_store || H.r_store || H.s_store) //saves a lot of time for admins and coders alike
-			if(alert("Drop Items in Pockets? No will delete them.", "Robust quick dress shop", "Yes", "No") == "No")
-				delete_pocket = TRUE
-
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for (var/obj/item/I in H.get_equipped_items(delete_pocket))
-		qdel(I)
-	if(dresscode != "Naked")
-		H.equipOutfit(dresscode)
-
-	H.regenerate_icons()
-
-	log_admin("[key_name(usr)] changed the equipment of [key_name(H)] to [dresscode].")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(H)] to [dresscode].</span>")
-
 /client/proc/robust_dress_shop()
 
 	var/list/baseoutfits = list("Naked","Custom","As Job...", "As Plasmaman...")

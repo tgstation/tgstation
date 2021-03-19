@@ -16,13 +16,13 @@
 	result = /obj/item/food/sandwich
 	subcategory = CAT_SANDWICH
 
-/datum/crafting_recipe/food/grilledcheesesandwich
+/datum/crafting_recipe/food/cheese_sandwich
 	name = "Cheese sandwich"
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/cheese = 2
 	)
-	result = /obj/item/food/grilledcheese
+	result = /obj/item/food/cheese_sandwich
 	subcategory = CAT_SANDWICH
 
 /datum/crafting_recipe/food/slimesandwich

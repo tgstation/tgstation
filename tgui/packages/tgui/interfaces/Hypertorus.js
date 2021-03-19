@@ -2,7 +2,7 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, ProgressBar, Section, Stack } from '../components';
+import { Button, LabeledList, NumberInput, ProgressBar, Section, Stack, Box } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { formatSiBaseTenUnit, formatSiUnit } from '../format';
 import { Window } from '../layouts';
@@ -10,6 +10,7 @@ import { Window } from '../layouts';
 export const Hypertorus = (props, context) => {
   const { act, data } = useBackend(context);
   const filterTypes = data.filter_types || [];
+  const selectedFuels = data.selected_fuel || [];
   const {
     energy_level,
     core_temperature,
@@ -34,6 +35,8 @@ export const Hypertorus = (props, context) => {
     internal_output_temperature,
     internal_coolant_temperature,
     waste_remove,
+    selected,
+    product_gases,
   } = data;
   const fusion_gases = flow([
     filter(gas => gas.amount >= 0.01),
@@ -84,6 +87,29 @@ export const Hypertorus = (props, context) => {
                 onClick={() => act('start_fuel')} />
             </Stack.Item>
           </Stack>
+        </Section>
+        <Section>
+          <LabeledList>
+            <LabeledList.Item label="Fuel">
+              {selectedFuels.map(recipe => (
+                <Button
+                  disabled={data.power_level > 0}
+                  key={recipe.id}
+                  selected={recipe.id === selected}
+                  content={recipe.name}
+                  onClick={() => act('fuel', {
+                    mode: recipe.id,
+                  })} />
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Gases">
+              <Box m={1} style={{
+                'white-space': 'pre-wrap',
+              }}>
+                {product_gases}
+              </Box>
+            </LabeledList.Item>
+          </LabeledList>
         </Section>
         <Section title="Internal Fusion Gases">
           <LabeledList>

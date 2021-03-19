@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			flags |= CHANGETURF_RECALC_ADJACENT
 		return ..()
 
-// Take off the top layer turf and replace it with the next baseturf down
+/// Take off the top layer turf and replace it with the next baseturf down
 /turf/proc/ScrapeAway(amount=1, flags)
 	if(!amount)
 		return

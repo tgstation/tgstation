@@ -600,7 +600,7 @@
 				drop_light_tube()
 			new /obj/item/stack/cable_coil(loc, 1, "red")
 		transfer_fingerprints_to(newlight)
-		if(cell)
+		if(!QDELETED(cell))
 			newlight.cell = cell
 			cell.forceMove(newlight)
 			cell = null
