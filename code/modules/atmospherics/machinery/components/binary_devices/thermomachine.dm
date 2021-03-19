@@ -29,7 +29,6 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
-	initialize_directions = dir
 	RefreshParts()
 	update_appearance()
 
@@ -139,13 +138,14 @@
 
 	var/heat_amount = temperature_delta * (main_heat_capacity * heat_capacity / (main_heat_capacity + heat_capacity))
 	var/efficiency = 1
+	var/temperature_difference = 0
 	if(main_port.total_moles() && thermal_exchange_port.total_moles())
 		if(cooling)
 			thermal_exchange_port.temperature = max(thermal_exchange_port.temperature + heat_amount / thermal_heat_capacity + motor_heat / thermal_heat_capacity, TCMB)
-		var/temperature_difference = thermal_exchange_port.temperature - main_port.temperature
+		temperature_difference = thermal_exchange_port.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
-			efficiency = max(1 - log(10, temperature_difference) * 0.1, 1)
+			efficiency = max(1 - log(10, temperature_difference) * 0.1, 0)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency)/ main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 	else if(main_port.total_moles() && (thermal_exchange_port.total_moles() || !nodes[2]))
 		var/datum/gas_mixture/enviroment = local_turf.return_air()
@@ -153,17 +153,19 @@
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
 			enviroment.temperature = max(enviroment.temperature + heat_amount / enviroment_heat_capacity, TCMB)
 			air_update_turf(FALSE, FALSE)
-		var/temperature_difference = enviroment.temperature - main_port.temperature
+		temperature_difference = enviroment.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
-			efficiency = max(1 - log(10, temperature_difference) * 0.1, 1)
+			efficiency = max(1 - log(10, temperature_difference) * 0.1, 0)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency) / main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 
-	temperature_delta = abs(temperature_delta)
-	if(temperature_delta > 1)
-		active_power_usage = ((heat_capacity * temperature_delta) + idle_power_usage) ** (1 + (1 - efficiency))
+	heat_amount = abs(heat_amount)
+	var/power_usage
+	if(temperature_delta  > 1)
+		power_usage = (heat_amount * 1e-3 + idle_power_usage) ** (1 + (1 - efficiency))
 	else
-		active_power_usage = idle_power_usage
+		power_usage = idle_power_usage
+	use_power(power_usage)
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/I, mob/user, params)
@@ -177,7 +179,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
-	if(!.)
+	if(!..())
 		return FALSE
 	SetInitDirections()
 	var/obj/machinery/atmospherics/node1 = nodes[1]
