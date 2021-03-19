@@ -57,6 +57,7 @@
 	. = ..()
 	if(.)
 		return
+	. = TRUE
 	switch(action)
 		if("toggle_events_or_midrounds")
 			new_role_flags ^= GHOSTROLE_MIDROUND_EVENT

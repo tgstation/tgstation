@@ -166,6 +166,13 @@
 	)
 	parents = list("font-awesome.css" = 'html/font-awesome/css/all.min.css')
 
+/datum/asset/simple/namespaced/tgfont
+	assets = list(
+		"tgfont.eot" = 'tgui/packages/tgfont/dist/tgfont.eot',
+		"tgfont.woff2" = 'tgui/packages/tgfont/dist/tgfont.woff2',
+	)
+	parents = list("tgfont.css" = 'tgui/packages/tgfont/dist/tgfont.css')
+
 /datum/asset/spritesheet/chat
 	name = "chat"
 
@@ -529,3 +536,32 @@
 	assets = list(
 		"chem_help_advisor.gif" = 'icons/UI_Icons/Advisors/chem_help_advisor.gif',
 	)
+
+/datum/asset/spritesheet/moods
+	name = "moods"
+	var/iconinserted = 1
+
+/datum/asset/spritesheet/moods/register()
+	for(var/i in 1 to 9)
+		var/target_to_insert = "mood"+"[iconinserted]"
+		Insert(target_to_insert, 'icons/hud/screen_gen.dmi', target_to_insert)
+		iconinserted++
+	..()
+
+/datum/asset/spritesheet/moods/ModifyInserted(icon/pre_asset)
+	var/blended_color
+	switch(iconinserted)
+		if(1)
+			blended_color = "#f15d36"
+		if(2 to 3)
+			blended_color = "#f38943"
+		if(4)
+			blended_color = "#dfa65b"
+		if(5)
+			blended_color = "#4b96c4"
+		if(6)
+			blended_color = "#86d656"
+		else
+			blended_color = "#2eeb9a"
+	pre_asset.Blend(blended_color, ICON_MULTIPLY)
+	return pre_asset

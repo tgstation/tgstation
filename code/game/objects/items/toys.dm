@@ -401,21 +401,34 @@
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
-	icon_state = "his_grace"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	var/active = FALSE
-	icon = 'icons/obj/items_and_weapons.dmi'
 	hitsound = 'sound/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound =  'sound/items/handling/toolbox_pickup.ogg'
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
+	var/active = FALSE
+
+/obj/item/toy/windup_toolbox/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/item/toy/windup_toolbox/update_overlays()
+	. = ..()
+	if(active)
+		. += "single_latch_open"
+	else
+		. += "single_latch"
 
 /obj/item/toy/windup_toolbox/attack_self(mob/user)
 	if(!active)
-		icon_state = "his_grace_awakened"
 		to_chat(user, "<span class='notice'>You wind up [src], it begins to rumble.</span>")
 		active = TRUE
+		update_appearance()
 		playsound(src, 'sound/effects/pope_entry.ogg', 100)
 		Rumble()
 		addtimer(CALLBACK(src, .proc/stopRumble), 600)
@@ -440,9 +453,11 @@
 	animate(transform=transforms[4], time=0.3)
 
 /obj/item/toy/windup_toolbox/proc/stopRumble()
-	icon_state = initial(icon_state)
 	active = FALSE
-	animate(src, transform=matrix())
+	update_appearance()
+	visible_message("<span class='warning'>[src] slowly stops rattling and falls still, its latch snapping shut.</span>") //subtle difference
+	playsound(loc, 'sound/weapons/batonextend.ogg', 100, TRUE)
+	animate(src, transform = matrix())
 
 /*
  * Subtype of Double-Bladed Energy Swords

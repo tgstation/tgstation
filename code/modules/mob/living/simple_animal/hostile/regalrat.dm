@@ -22,7 +22,8 @@
 	melee_damage_upper = 15
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
 	faction = list("rat")
 	///The spell that the rat uses to generate miasma
@@ -96,7 +97,7 @@
 		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, "<span class='notice'>You finish licking [target].</span>")
-	else 
+	else
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 
 /**
@@ -320,7 +321,7 @@
 	if(HAS_TRAIT(L, TRAIT_AGEUSIA))
 		return
 	to_chat(L, "<span class='notice'>This food has a funny taste!</span>")
-	
+
 /datum/reagent/rat_spit/overdose_start(mob/living/M)
 	..()
 	var/mob/living/carbon/victim = M
@@ -328,7 +329,7 @@
 		to_chat(victim, "<span class='userdanger'>With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!</span>")
 		victim.faction |= "rat"
 		victim.vomit()
-	metabolization_rate = 10 * REAGENTS_METABOLISM 
+	metabolization_rate = 10 * REAGENTS_METABOLISM
 
 /datum/reagent/rat_spit/on_mob_life(mob/living/carbon/C)
 	if(prob(15))

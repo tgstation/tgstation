@@ -88,14 +88,3 @@
 /obj/item/fireaxe/metal_h2_axe/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="[base_icon_state]1")
-
-/obj/item/fireaxe/elder_atmosian_fireaxe
-	icon_state = "elder_axe0"
-	base_icon_state = "elder_axe"
-	name = "eldest fireaxe"
-	desc = "Upgrade of the metallic hydrogen axe; created by some madman with mysterious powers"
-
-/obj/item/fireaxe/elder_atmosian_fireaxe/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=25, icon_wielded="[base_icon_state]1")
-	AddComponent(/datum/component/lifesteal, 5)

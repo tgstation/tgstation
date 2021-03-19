@@ -255,7 +255,7 @@
 		if(construction_state == MECHA_OPEN_HATCH && (internal_damage & MECHA_INT_SHORT_CIRCUIT))
 			var/obj/item/stack/cable_coil/CC = W
 			if(CC.use(2))
-				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
+				clear_internal_damage(MECHA_INT_SHORT_CIRCUIT)
 				to_chat(user, "<span class='notice'>You replace the fused wires.</span>")
 			else
 				to_chat(user, "<span class='warning'>You need two lengths of cable to fix this mech!</span>")
@@ -294,7 +294,7 @@
 	..()
 	. = TRUE
 	if(internal_damage & MECHA_INT_TEMP_CONTROL)
-		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
+		clear_internal_damage(MECHA_INT_TEMP_CONTROL)
 		to_chat(user, "<span class='notice'>You repair the damaged temperature controller.</span>")
 		return
 
@@ -306,7 +306,7 @@
 	if(internal_damage & MECHA_INT_TANK_BREACH)
 		if(!W.use_tool(src, user, 0, volume=50, amount=1))
 			return
-		clearInternalDamage(MECHA_INT_TANK_BREACH)
+		clear_internal_damage(MECHA_INT_TANK_BREACH)
 		to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 		return
 	if(obj_integrity < max_integrity)
@@ -341,15 +341,15 @@
 	if(cell && charge_cell)
 		cell.charge = cell.maxcharge
 	if(internal_damage & MECHA_INT_FIRE)
-		clearInternalDamage(MECHA_INT_FIRE)
+		clear_internal_damage(MECHA_INT_FIRE)
 	if(internal_damage & MECHA_INT_TEMP_CONTROL)
-		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
+		clear_internal_damage(MECHA_INT_TEMP_CONTROL)
 	if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
-		clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
+		clear_internal_damage(MECHA_INT_SHORT_CIRCUIT)
 	if(internal_damage & MECHA_INT_TANK_BREACH)
-		clearInternalDamage(MECHA_INT_TANK_BREACH)
+		clear_internal_damage(MECHA_INT_TANK_BREACH)
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
-		clearInternalDamage(MECHA_INT_CONTROL_LOST)
+		clear_internal_damage(MECHA_INT_CONTROL_LOST)
 
 /obj/vehicle/sealed/mecha/narsie_act()
 	emp_act(EMP_HEAVY)
