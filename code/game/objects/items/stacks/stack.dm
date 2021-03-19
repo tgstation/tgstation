@@ -152,7 +152,7 @@
 		. += "There are [get_amount()] in the stack."
 	else
 		. += "There is [get_amount()] in the stack."
-	. += "<span class='notice'>Right-click with an empty hand to take a custom amount.</span>"
+	. += "<span class='notice'><b>Right-click</b> with an empty hand to take a custom amount.</span>"
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
