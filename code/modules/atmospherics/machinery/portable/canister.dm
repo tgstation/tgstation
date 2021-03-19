@@ -508,7 +508,7 @@
 		var/leak_chance = (1 - obj_integrity / max_integrity) * 100
 		if(prob(leak_chance))
 			mix_air = TRUE
-			pressure = air_contents.return_pressure()
+			pressure = air_contents.return_pressure() / 10
 			gas_mix = location.return_air()
 			air_update = TRUE
 
