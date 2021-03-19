@@ -1,4 +1,4 @@
-/// How much time is assumed to pass while assuming air. Used to scale overpressure/overtemp damage when assuming air.
+/// How much time (in seconds) is assumed to pass while assuming air. Used to scale overpressure/overtemp damage when assuming air.
 #define ASSUME_AIR_DT_FACTOR 1
 
 /**
@@ -283,12 +283,15 @@
 
 /// Handles the tank springing a leak.
 /obj/item/tank/obj_break(damage_flag)
-	if(!leaking)
-		leaking = TRUE
-		if(obj_integrity > 0) // So we don't play the alerts while we are exploding or rupturing.
-			visible_message("<span class='warning'>[src] springs a leak!</span>")
-			playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
-	return ..()
+	. = ..()
+	if(leaking)
+		return
+
+	leaking = TRUE
+	if(obj_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
+		return
+	visible_message("<span class='warning'>[src] springs a leak!</span>")
+	playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
 
 /// Handles rupturing and fragmenting
 /obj/item/tank/obj_destruction(damage_flag)
