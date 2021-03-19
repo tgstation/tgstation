@@ -505,7 +505,7 @@
 
 	// When at least 10% of integrity is lost it starts checking for leaking
 	if(obj_integrity < max_integrity * 0.9)
-		var/leak_chance = 1 - obj_integrity / max_integrity
+		var/leak_chance = (1 - obj_integrity / max_integrity) * 100
 		if(prob(leak_chance))
 			mix_air = TRUE
 			pressure = air_contents.return_pressure()
