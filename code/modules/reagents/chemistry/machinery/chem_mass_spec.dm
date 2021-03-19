@@ -241,6 +241,10 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 			beaker1.remove_reagent(reagent.type, reagent.volume)
 			continue
 
+		if(reagent.purity < reagent.inverse_chem_val) //Might as well make it do something
+			beaker2.add_reagent(reagent.inverse_chem, reagent.volume, reagtemp = beaker1.reagents.temp, added_purity = 1-reagent.purity)
+			continue
+
 		var/product_vol = reagent.vol * (1-delta_purity)
 		beaker2.add_reagent(reagent.type, product_vol, reagtemp = beaker1.reagents.temp, added_purity = initial(reagent.purity), added_ph = reagent.ph)
 		beaker1.remove_reagent(reagent.type, reagent.volume)
@@ -267,6 +271,8 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	var/time = 0
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
 		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
+			continue
+		if(reagent.purity < reagent.inverse_chem_val)
 			continue
 		time += (((reagent.mass * volume) / ((1-reagent.purity) * 0.1)) * 0.1) + 100 ///Roughly 10 - 30s?
 	delay_time = time
