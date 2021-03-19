@@ -1,18 +1,18 @@
 A reaction can be slowed down by cooling the beaker it's in!
 Chemical analysers scan more than just pH. They can tell you the purity of each reagent.
 The infomation depth of pH meter readouts can be reduced by using it in hand!
-Chem Masters can tell you the optimal pH of a reagent for it's reaction under the analyse function.
-Oculine slightly improves your eyesight when it's in your system, based on the purity of it, of course!
+ChemMaster 3000s can tell you the optimal pH of a reagent's reaction with their analyze function.
+Oculine slightly improves your eyesight while it's in your system, to a degree based on its purity.
 Merge my PRs!
 Nutriment can be created in the lab by failing food related reactions.
-Purity isn't that scary I promise!
-Inverse Neurine will not delete an imaginary friend, once a friend, always a friend.
-Overdosing on Mannitol will give you pro tips from your newfound enlightenment. Though, perhaps you know that already!
+Purity isn't that scary, I promise!
+Inverse Neurine will not delete an imaginary friend. Once a friend, always a friend!
+Overdosing on Mannitol will give you pro tips from your newfound enlightenment. Perhaps you know that already, though!
 Eigenstasium's wild ride can be halted by taking more eigenstasium, bluespace dust, or stabilising agent.
 The longer synthtissue has been growing, the more stuff it can do!
 Upgrading the MRS to tier 3 parts will give you the actual health values of the organ. At least it's something.
-100% pure inacusiate will let you hear whispers while it's in your system.
-Reacting sugar into caramel before attemping Eigenstasium makes it much easier to create.
+100% pure inacusiate will let you hear whispers from a distance while it's in your system.
+Turning sugar into caramel before attempting to make Eigenstasium makes it much easier to create.
 Oculine will help you see in the dark slightly.
-Thermometers crafted in the chemistry section will let you detect a person's chemical temperature too! 
-Thermometers crafted in the chemistry section will let you detect the temperature of anything that has a reagent temperature!
+Thermometers (which can be crafted in the chemistry section of the crafting menu) also work on people!
+Thermometers (which can be crafted in the chemistry section of the crafting menu) will let you detect the temperature of anything that has a reagent temperature!

@@ -723,7 +723,7 @@
 		return ..()
 	if(DT_PROB(100*(1-creation_purity), delta_time))
 		owner.become_blind("oculine_impure")
-		to_chat(owner, "<span class='warning'>You suddenly develop a pounding headache as your vision fluxuates</spans>")
+		to_chat(owner, "<span class='warning'>You suddenly develop a pounding headache as your vision fluxuates.</spans>")
 		headache = TRUE
 	..()
 
