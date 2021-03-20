@@ -39,8 +39,7 @@ snowflakes = [
 ignored_files = [
     "_readme.dm",           # It's a readme
     "unused.dm",            # Unused
-    "nanite_hijacker.dm",   # Wasnt imported
-    "xenobio.dm"            # Wasnt imported
+    "nanite_hijacker.dm"   # Wasnt imported
 ]
 """
 Shamelessly Stolen from https://kubanaltan.wordpress.com/2011/01/21/os-walk-alphabetically-directory-recursion/
@@ -51,7 +50,7 @@ def sortedWalk(top, topdown=True, onerror=None):
     from os.path import join, isdir, islink
 
     names = os.listdir(top)
-    names.sort(key=len)
+    names.sort(key=lambda x: -len(x))
     dirs, nondirs = [], []
 
     for name in names:
