@@ -388,6 +388,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassred"
 	ph = 3.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/ethanol/wine/on_merge(data)
 	. = ..()
@@ -423,6 +424,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A fine drink originally made to prevent waste by using the leftovers from winemaking."
 	ph = 3.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/ethanol/amaretto
 	name = "Amaretto"
@@ -435,6 +437,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A sweet and syrupy looking drink."
 	shot_glass_icon_state = "shotglassgold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
@@ -448,6 +451,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassbrown"
 	ph = 3.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/ethanol/absinthe
 	name = "Absinthe"

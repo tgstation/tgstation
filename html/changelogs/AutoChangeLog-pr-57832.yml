@@ -1,0 +1,4 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - bugfix: "Swapped OK/Cancel buttons in tgui list input, so that it stays consistent with Windows UI guidelines (was Cancel/OK before)."

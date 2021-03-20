@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/AddItemOnLift)
 	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
-	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, .proc/RemoveItemFromLift)
+	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, .proc/UncrossedRemoveItemFromLift)
 	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
 
 	if(!lift_master_datum)
@@ -174,13 +174,19 @@ GLOBAL_LIST_EMPTY(lifts)
 	. = ..()
 	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 
-/obj/structure/industrial_lift/proc/RemoveItemFromLift(datum/source, atom/movable/AM)
-	if(!(AM in lift_load))
+/obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/potential_rider)
+	SIGNAL_HANDLER
+	RemoveItemFromLift(potential_rider)
+
+/obj/structure/industrial_lift/proc/RemoveItemFromLift(atom/movable/potential_rider)
+	SIGNAL_HANDLER
+	if(!(potential_rider in lift_load))
 		return
-	LAZYREMOVE(lift_load, AM)
-	UnregisterSignal(AM, COMSIG_PARENT_QDELETING)
+	LAZYREMOVE(lift_load, potential_rider)
+	UnregisterSignal(potential_rider, COMSIG_PARENT_QDELETING)
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(istype(AM, /obj/structure/fluff/tram_rail))
 		return
 	if(AM in lift_load)
@@ -254,11 +260,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			var/atom/throw_target = get_edge_target_turf(collided, turn(going, pick(45, -45)))
 			collided.throw_at(throw_target, 200, 4)
 	forceMove(destination)
-	for(var/am in things2move)
-		if(isnull(am))
-			LAZYREMOVE(lift_load, am)//after enough use, one of these always ends up inside despite signals. when they show, we need to scrub them out.
-			continue
-		var/atom/movable/thing = am
+	for(var/atom/movable/thing as anything in things2move)
 		thing.forceMove(destination)
 
 /obj/structure/industrial_lift/proc/use(mob/living/user)

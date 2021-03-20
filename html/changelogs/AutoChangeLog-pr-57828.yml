@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Tramstation should lag a bit less when you drive the trolley around for fun and profit"
