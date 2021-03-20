@@ -558,8 +558,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
 
-	//For giving the bot temporary all-access. This method is bad and makes me feel bad. Refactoring access to a component is for another PR.
-	var/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
+	access_card.set_access(REGION_ACCESS_ALL_STATION)
 
 	set_path(get_path_to(src, waypoint, 200, id=all_access))
 	calling_ai = caller //Link the AI to the bot!
@@ -996,7 +995,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	// If we have any bonys player accesses, add them to our internal ID card.
+	// If we have any bonus player accesses, add them to our internal ID card.
 	if(length(player_access))
 		access_card.add_access(player_access)
 	diag_hud_set_botmode()
