@@ -9,6 +9,9 @@
 		"**/.yarn": true,
 		"**/.pnp.*": true
 	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
 	"workbench.editorAssociations": [
 		{
 			"filenamePattern": "*.dmi",

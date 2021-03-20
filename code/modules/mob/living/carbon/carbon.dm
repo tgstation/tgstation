@@ -1,6 +1,6 @@
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
-	create_reagents(1000)
+	create_reagents(1000, REAGENT_HOLDER_ALIVE)
 	assign_bodypart_ownership()
 	update_body_parts() //to update the carbon's new bodyparts appearance
 

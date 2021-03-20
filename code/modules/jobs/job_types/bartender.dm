@@ -8,6 +8,7 @@
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/bartender
+	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV

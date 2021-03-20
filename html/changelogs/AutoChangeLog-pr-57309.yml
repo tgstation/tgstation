@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - qol: "adds a wiki render button for reagent entries that will automatically write a table entry for you."

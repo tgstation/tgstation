@@ -109,7 +109,8 @@
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
 	step(src, dir)
-	if(!has_buckled_mobs() || !(locate(/obj/structure/table) in loc.contents))
+	if(!has_buckled_mobs() || !(locate(/obj/structure/table) in loc.contents) && !(locate(/obj/structure/fluff/tram_rail) in loc.contents))
+		obj_flags = CAN_BE_HIT
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
 		return
@@ -117,6 +118,7 @@
 	var/mob/living/skater = buckled_mobs[1]
 	skater.adjustStaminaLoss(instability*0.5)
 	if (skater.getStaminaLoss() >= 100)
+		obj_flags = CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 		unbuckle_mob(skater)
 		var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))

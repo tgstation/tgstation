@@ -2297,15 +2297,15 @@
 /area/space/nearstation)
 "aew" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /obj/machinery/door/airlock/research{
 	name = "Xenobiology Closet";
 	req_access_txt = "47"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 9
 	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
@@ -4383,7 +4383,9 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ajj" = (
-/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -4591,9 +4593,6 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -28
-	},
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
@@ -4976,10 +4975,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 8;
-	name = "Air to Room"
-	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
 "aku" = (
@@ -5788,9 +5783,6 @@
 	},
 /area/maintenance/fore)
 "alH" = (
-/obj/machinery/atmospherics/pipe/simple/supply/visible{
-	dir = 9
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -25905,6 +25897,9 @@
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/extinguisher,
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
 "bgx" = (
@@ -26299,6 +26294,10 @@
 	pixel_y = 26
 	},
 /obj/item/extinguisher,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 8;
+	name = "Air to Room"
+	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
 "bhh" = (
@@ -85572,6 +85571,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/cargo/sorting)
+"ura" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/science/xenobiology)
 "ure" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -131117,7 +131123,7 @@ bfi
 afv
 bgu
 aWR
-beY
+ura
 aew
 bwn
 agU

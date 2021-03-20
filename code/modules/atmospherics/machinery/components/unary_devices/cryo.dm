@@ -94,6 +94,7 @@
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
 	var/radio_channel = RADIO_CHANNEL_MEDICAL
+	vent_movement = NONE
 
 	/// Visual content - Occupant
 	var/atom/movable/visual/cryo_occupant/occupant_vis
@@ -488,6 +489,9 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 				beaker = null
 				. = TRUE
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/can_interact(mob/user)
+	return ..() && user.loc != src
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
 		set_on(!on)
@@ -506,9 +510,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
-	return // can't ventcrawl in or out of cryo.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return FALSE // you can't see the pipe network when inside a cryo cell.

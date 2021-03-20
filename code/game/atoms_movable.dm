@@ -120,12 +120,17 @@
 
 	. = ..()
 
+	//We add ourselves to this list, best to clear it out
+	LAZYCLEARLIST(area_sensitive_contents)
+
 	for(var/movable_content in contents)
 		qdel(movable_content)
 
 	LAZYCLEARLIST(client_mobs_in_contents)
 
 	moveToNullspace()
+
+	vis_contents.Cut()
 
 
 /atom/movable/proc/update_emissive_block()
@@ -506,6 +511,7 @@
 /atom/movable/Cross(atom/movable/AM)
 	. = TRUE
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, AM)
+	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSS_OVER, src)
 	return CanPass(AM, AM.loc, TRUE)
 
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
@@ -513,16 +519,20 @@
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
+	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, src)
 
 /atom/movable/Uncross(atom/movable/AM, atom/newloc)
 	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSS, AM) & COMPONENT_MOVABLE_BLOCK_UNCROSS)
+		return FALSE
+	if(SEND_SIGNAL(AM, COMSIG_MOVABLE_UNCROSS_OVER, src) & COMPONENT_MOVABLE_BLOCK_UNCROSS_OVER)
 		return FALSE
 	if(isturf(newloc) && !CheckExit(AM, newloc))
 		return FALSE
 
 /atom/movable/Uncrossed(atom/movable/AM)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
+	SEND_SIGNAL(AM, COMSIG_MOVABLE_UNCROSSED_OVER, src)
 
 /atom/movable/Bump(atom/A)
 	if(!A)

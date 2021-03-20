@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Agent ID cards now show the same SecHUD icons that their forged trim otherwise would instead of always showing as blank."

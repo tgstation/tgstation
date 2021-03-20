@@ -845,6 +845,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 					flick(icon_deny,src)
 					vend_ready = TRUE
 					return
+				else if(!C.registered_account.account_job)
+					say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
+					flick(icon_deny, src)
+					vend_ready = TRUE
+					return
 				else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
 					say("You are not of legal age to purchase [R.name].")
 					if(!(usr in GLOB.narcd_underages))
@@ -1006,6 +1011,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	tilt(L)
+
+/obj/machinery/vending/attack_tk_grab(mob/user)
+	to_chat(user, "<span class='warning'>[src] seems to resist your mental grasp!</span>")
 
 ///Crush the mob that the vending machine got thrown at
 /obj/machinery/vending/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
