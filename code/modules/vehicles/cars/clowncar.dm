@@ -13,6 +13,7 @@
 	light_range = 8
 	light_power = 2
 	light_on = FALSE
+	///list of headlight colors we use to pick through when we have party mode due to emag
 	var/headlight_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_LIME, COLOR_BRIGHT_BLUE, COLOR_CYAN, COLOR_PURPLE)
 	///Cooldown time inbetween [/obj/vehicle/sealed/car/clowncar/proc/roll_the_dice()] usages
 	var/dice_cooldown_time = 150
@@ -78,27 +79,27 @@
 	to_chat(user, "<span class='danger'>You use the [banana] to repair the [src]!</span>")
 	qdel(banana)
 
-/obj/vehicle/sealed/car/clowncar/Bump(atom/A)
+/obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
-	if(isliving(A))
-		if(ismegafauna(A))
+	if(isliving(bumped))
+		if(ismegafauna(bumped))
 			return
-		var/mob/living/liver = A
-		if(iscarbon(liver))
-			var/mob/living/carbon/carb = liver
+		var/mob/living/hittarget_living = bumped
+		if(iscarbon(hittarget_living))
+			var/mob/living/carbon/carb = hittarget_living
 			carb.Paralyze(40) //I play to make sprites go horizontal
-		liver.visible_message("<span class='warning'>[src] rams into [liver] and sucks [liver.p_them()] up!</span>") //fuck off shezza this isn't ERP.
-		mob_forced_enter(liver)
+		hittarget_living.visible_message("<span class='warning'>[src] rams into [hittarget_living] and sucks [hittarget_living.p_them()] up!</span>") //fuck off shezza this isn't ERP.
+		mob_forced_enter(hittarget_living)
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
-		log_combat(src, liver, "sucked up")
+		log_combat(src, hittarget_living, "sucked up")
 		return
-	if(!istype(A, /turf/closed))
+	if(!istype(bumped, /turf/closed))
 		return
-	visible_message("<span class='warning'>[src] rams into [A] and crashes!</span>")
+	visible_message("<span class='warning'>[src] rams into [bumped] and crashes!</span>")
 	playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
 	playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
 	dump_mobs(TRUE)
-	log_combat(src, A, "crashed into", null, "dumping all passengers")
+	log_combat(src, bumped, "crashed into", null, "dumping all passengers")
 
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -205,7 +206,7 @@
 ///Finalizes canon activation
 /obj/vehicle/sealed/car/clowncar/proc/activate_cannon()
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
-	cannonmode++
+	cannonmode = CLOWN_CANNON_READY
 	for(var/mob/living/driver as anything in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE))
 		driver.update_mouse_pointer()
 
@@ -213,7 +214,7 @@
 /obj/vehicle/sealed/car/clowncar/proc/deactivate_cannon()
 	canmove = TRUE
 	mouse_pointer = null
-	cannonmode--
+	cannonmode = CLOWN_CANNON_INACTIVE
 	for(var/mob/living/driver as anything in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE))
 		driver.update_mouse_pointer()
 
@@ -232,7 +233,8 @@
 
 ///Increments the thanks counter every time someone thats been kidnapped thanks the driver
 /obj/vehicle/sealed/car/clowncar/proc/increment_thanks_counter()
-	if(++thankscount < 100)
+	thankscount++
+	if(thankscount < 100)
 		return
 	for(var/mob/busdriver as anything in return_drivers())
 		busdriver.client.give_award(/datum/award/achievement/misc/the_best_driver, busdriver)

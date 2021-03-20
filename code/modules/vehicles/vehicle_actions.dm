@@ -166,7 +166,7 @@
 	button_icon_state = "car_rtd"
 
 /datum/action/vehicle/sealed/roll_the_dice/Trigger()
-	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
 		return
 	var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
 	C.roll_the_dice(owner)
