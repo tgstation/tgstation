@@ -176,6 +176,7 @@ SUBSYSTEM_DEF(vote)
 			if(next_allowed_time > world.time && !lower_admin)
 				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!</span>")
 				return FALSE
+
 		reset()
 		switch(vote_type)
 			if("restart")
@@ -229,14 +230,6 @@ SUBSYSTEM_DEF(vote)
 				SEND_SOUND(C, sound('sound/misc/bloop.ogg'))
 		return TRUE
 	return FALSE
-
-/datum/controller/subsystem/vote/proc/remove_action_buttons()
-	for(var/v in generated_actions)
-		var/datum/action/vote/V = v
-		if(!QDELETED(V))
-			V.remove_from_client()
-			V.Remove(V.owner)
-	generated_actions = list()
 
 /mob/verb/vote()
 	set category = "OOC"
@@ -295,6 +288,8 @@ SUBSYSTEM_DEF(vote)
 	switch(action)
 		if("cancel")
 			if(usr.client.holder)
+				usr.log_message("[key_name_admin(usr)] cancelled a vote.", LOG_ADMIN)
+				message_admins("[key_name_admin(usr)] has cancelled the current vote.")
 				reset()
 		if("toggle_restart")
 			if(usr.client.holder && upper_admin)
@@ -320,6 +315,14 @@ SUBSYSTEM_DEF(vote)
 		if("vote")
 			submit_vote(round(text2num(params["index"])))
 	return TRUE
+
+/datum/controller/subsystem/vote/proc/remove_action_buttons()
+	for(var/v in generated_actions)
+		var/datum/action/vote/V = v
+		if(!QDELETED(V))
+			V.remove_from_client()
+			V.Remove(V.owner)
+	generated_actions = list()
 
 /datum/controller/subsystem/vote/ui_close(mob/user)
 	voting -= user.client?.ckey
