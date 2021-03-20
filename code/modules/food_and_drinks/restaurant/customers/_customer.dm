@@ -293,7 +293,7 @@
 	prefix_file = "strings/names/british_prefix.txt"
 	speech_sound = 'sound/creatures/tourist/tourist_talk_british.ogg'
 	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/fishandchips = 10, /obj/item/food/soup/stew = 10, , /obj/item/food/salad/ricepudding = 5, /obj/item/food/grilledcheese = 5, /obj/item/food/pie/meatpie = 5, /obj/item/food/benedict = 5, /obj/item/food/full_english = 2, /obj/item/food/soup/indian_curry = 3, /obj/item/food/beef_wellington/slice = 2),
+	/datum/venue/restaurant = list(/obj/item/food/fishandchips = 10, /obj/item/food/soup/stew = 10, , /obj/item/food/salad/ricepudding = 5, /obj/item/food/grilled_cheese_sandwich = 5, /obj/item/food/pie/meatpie = 5, /obj/item/food/benedict = 5, /obj/item/food/full_english = 2, /obj/item/food/soup/indian_curry = 3, /obj/item/food/beef_wellington/slice = 2),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/ale = 10, /datum/reagent/consumable/ethanol/beer = 10, /datum/reagent/consumable/ethanol/gin = 5, /datum/reagent/consumable/ethanol/hcider = 10, /datum/reagent/consumable/ethanol/alliescocktail = 5, /datum/reagent/consumable/ethanol/martini = 5, /datum/reagent/consumable/ethanol/gintonic = 5, /datum/reagent/consumable/tea = 10))
 
 	friendly_pull_line = "I don't enjoy being pulled around like this."
