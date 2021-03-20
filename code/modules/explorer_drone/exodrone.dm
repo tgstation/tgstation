@@ -94,11 +94,6 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 			else
 				return "Idle."
 
-/// Is the drone ready to start traveling for exploration site
-/obj/item/exodrone/proc/ready_to_launch()
-	var/obj/machinery/exodrone_launcher/pad = locate() in loc
-	return pad && pad.fuel_canister != null && pad.fuel_canister.uses > 0 //On pad and pad is fueled
-
 /// Starts travel for site, does not validate if it's possible
 /obj/item/exodrone/proc/launch_for(datum/exploration_site/target_site)
 	if(!location) //We're launching from station, fuel up
@@ -305,10 +300,25 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/item/exodrone/proc/busy_time_left()
 	return busy_duration - (world.time - busy_start_time)
 
-/// Can the drone start traveling now
-/obj/item/exodrone/proc/can_travel()
+/// Returns failure message or FALSE if we're ready to travel
+/obj/item/exodrone/proc/travel_error()
 	/// We're home and on ready pad or exploring and out of any events/adventures
-	return (drone_status == EXODRONE_IDLE && ready_to_launch()) || (drone_status == EXODRONE_EXPLORATION && current_event_ui_data == null)
+	switch(drone_status)
+		if(EXODRONE_IDLE)
+			var/obj/machinery/exodrone_launcher/pad = locate() in loc
+			if(!pad)
+				return "No launcher"
+			if(!pad.fuel_canister)
+				return "No fuel in launcher"
+			if(pad.fuel_canister.uses <= 0)
+				return "Launcher fuel used up"
+			return FALSE
+		if(EXODRONE_EXPLORATION)
+			if(current_event_ui_data)
+				return "Busy"
+			return FALSE
+		else
+			return ""
 
 /// Deals damage in adventures/events.
 /obj/item/exodrone/proc/damage(amount)

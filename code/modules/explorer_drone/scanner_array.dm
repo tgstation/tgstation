@@ -160,16 +160,12 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	create_scan(EXOSCAN_WIDE)
 
 /obj/machinery/computer/exoscanner_control/proc/start_point_scan()
-	if(GLOB.exoscanner_controller.current_scan || !selected_site)
-		return
-	if(!selected_site || selected_site.point_scan_complete)
+	if(GLOB.exoscanner_controller.current_scan || !selected_site || selected_site.point_scan_complete)
 		return
 	create_scan(EXOSCAN_POINT,selected_site)
 
 /obj/machinery/computer/exoscanner_control/proc/start_deep_scan()
-	if(GLOB.exoscanner_controller.current_scan || !selected_site)
-		return
-	if(!selected_site || selected_site.deep_scan_complete)
+	if(GLOB.exoscanner_controller.current_scan || !selected_site || selected_site.deep_scan_complete)
 		return
 	create_scan(EXOSCAN_DEEP,selected_site)
 

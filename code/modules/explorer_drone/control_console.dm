@@ -63,7 +63,9 @@
 		.["configurable"] = controlled_drone.drone_status == EXODRONE_IDLE
 		.["cargo"] = controlled_drone.get_cargo_data()
 		.["drone_travel_coefficent"] = controlled_drone.get_travel_coeff()
-		.["can_travel"] = controlled_drone.can_travel()
+		var/travel_error = controlled_drone.travel_error()
+		.["can_travel"] = !travel_error
+		.["travel_error"] = travel_error ? travel_error : ""
 		switch(controlled_drone.drone_status) //could move this down to drone.ui_data()
 			if(EXODRONE_IDLE)
 				.["sites"] = build_exploration_site_ui_data()
@@ -123,7 +125,7 @@
 				controlled_drone.remove_tool(params["tool_type"])
 			return TRUE
 		if("start_travel")
-			if(controlled_drone && controlled_drone.can_travel())
+			if(controlled_drone && !controlled_drone.travel_error())
 				var/datum/exploration_site/target_site
 				if(params["target_site"])
 					target_site = locate(params["target_site"]) in GLOB.exploration_sites

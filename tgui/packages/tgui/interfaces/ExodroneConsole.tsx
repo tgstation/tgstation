@@ -91,6 +91,7 @@ type ExodroneConsoleData = {
   configurable?: boolean,
   cargo?: Array<CargoData>,
   can_travel?: boolean,
+  travel_error: string,
   sites?: Array<SiteData>,
   site?: SiteData,
   travel_time?: number,
@@ -425,6 +426,7 @@ const TravelTargetSelectionScreen = (props, context) => {
     sites,
     site,
     can_travel,
+    travel_error,
     drone_travel_coefficent,
     all_bands,
     drone_status,
@@ -485,7 +487,7 @@ const TravelTargetSelectionScreen = (props, context) => {
               <Box>
                 <Button
                   mr={1}
-                  content="Launch!"
+                  content={can_travel ? "Launch!" : travel_error}
                   onClick={() => travel_to(null)}
                   disabled={!can_travel} />
                 ETA: {formatTime(site.distance * drone_travel_coefficent, "short")}
@@ -501,7 +503,7 @@ const TravelTargetSelectionScreen = (props, context) => {
               <>
                 <Button
                   mr={1}
-                  content="Launch!"
+                  content={can_travel ? "Launch!" : travel_error}
                   onClick={() => travel_to(destination.ref)}
                   disabled={!can_travel} />
                 ETA: {formatTime(travel_cost(destination), "short")}
