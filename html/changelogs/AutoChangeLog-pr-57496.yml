@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "the HFR now supports different gas mixtures as fuel, the GUI has been updated with the necessary informations, it will also show what gases will be produced."
-  - balance: "tweaked how the HFR takes damage, made it easier to maintain at high power levels and much easier to repair"
