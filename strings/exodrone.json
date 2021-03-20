@@ -58,7 +58,7 @@
 	],
 	"fluff_space": [
 		"You detect stardrive activation readings nearby. By time time you arrive at the spot there's nothing there but space dust.",
-		"You pass my small field of space debris. Nothing but useless junk."
+		"You pass by a small field of space debris. Nothing but useless junk."
 	],
 	"fluff_trading": [
 		"You ecounter a maintenance drone busy at work. It ignores you completely.",
@@ -66,8 +66,8 @@
 		"You pass by a drunked local. Good thing smell is not conducted through the drone feed."
 	],
 	"fluff_ruins": [
-		"You ecounter a broken statue. You can't tell what was it's original shape.",
-		"You have to backtrack from collapsed passage.",
-		"You pass through a corriddor full of cracked tiles."
+		"You encounter a broken statue. You can't tell what was it's original shape.",
+		"You have to backtrack from a collapsed passage.",
+		"You pass through a corridor full of cracked tiles."
 	]
 }
