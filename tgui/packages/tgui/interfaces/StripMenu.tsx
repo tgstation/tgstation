@@ -126,6 +126,11 @@ const SLOTS: Record<
   },
 };
 
+enum ObscuringLevel {
+  Completely = 1,
+  Hidden = 2,
+}
+
 type StripMenuItem =
   | null
   | {
@@ -134,7 +139,7 @@ type StripMenuItem =
       alternate?: string;
     }
   | {
-      obscured: true;
+      obscured: ObscuringLevel;
     };
 
 type StripMenuData = {
@@ -224,7 +229,9 @@ export const StripMenu = (props, context) => {
       } else if ("obscured" in item) {
         content = (
           <Icon
-            name="ban"
+            name={
+              item.obscured === ObscuringLevel.Completely ? "ban" : "eye-slash"
+            }
             size={3}
             ml={0}
             mt={1.3}

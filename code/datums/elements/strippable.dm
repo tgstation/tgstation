@@ -1,6 +1,4 @@
-// MOTHBLOCKS TODO: Don't pockets hide themselves?
 // MOTHBLOCKS TODO: Cuffs
-// MOTHBLOCKS TODO: Pickpocketing
 // MOTHBLOCKS TODO: Don't show abstract items
 
 /// An element for atoms that, when dragged and dropped onto a mob, opens a strip panel.
@@ -136,10 +134,10 @@
 /datum/strippable_item/proc/finish_unequip(atom/source, mob/user)
 	SHOULD_NOT_SLEEP(TRUE)
 
-/// Returns whether or not this is obscured.
-/datum/strippable_item/proc/is_obscured(atom/source)
+/// Returns a STRIPPABLE_OBSCURING_* define to report on whether or not this is obscured.
+/datum/strippable_item/proc/get_obscuring(atom/source)
 	SHOULD_NOT_SLEEP(TRUE)
-	return FALSE
+	return STRIPPABLE_OBSCURING_NONE
 
 /// Returns the ID of this item's strippable action.
 /// Return `null` if there is no alternate action.
@@ -191,7 +189,7 @@
 	if (!ismob(source))
 		return FALSE
 
-	if (!do_mob(user, source, equipping.equip_delay_other))
+	if (!do_mob(user, source, get_equip_delay(equipping)))
 		return FALSE
 
 	if (!equipping.mob_can_equip(
@@ -215,10 +213,12 @@
 	var/mob/mob_source = source
 	mob_source.equip_to_slot(equipping, item_slot)
 
-/datum/strippable_item/mob_item_slot/is_obscured(atom/source)
+/datum/strippable_item/mob_item_slot/get_obscuring(atom/source)
 	if (iscarbon(source))
 		var/mob/living/carbon/carbon_source = source
-		return carbon_source.check_obscured_slots() & item_slot
+		return (carbon_source.check_obscured_slots() & item_slot) \
+			? STRIPPABLE_OBSCURING_COMPLETELY \
+			: STRIPPABLE_OBSCURING_NONE
 
 	return FALSE
 
@@ -239,9 +239,13 @@
 
 	return finish_unequip_mob(item, source, user)
 
+/// Returns the delay of equipping this item to a mob
+/datum/strippable_item/mob_item_slot/proc/get_equip_delay(obj/item/equipping)
+	return equipping.equip_delay_other
+
 /// A utility function for `/datum/strippable_item`s to start unequipping an item from a mob.
-/proc/start_unequip_mob(obj/item/item, mob/source, mob/user)
-	if (!do_mob(user, source, item.strip_delay, interaction_key = REF(item)))
+/proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay)
+	if (!do_mob(user, source, strip_delay || item.strip_delay, interaction_key = REF(item)))
 		return FALSE
 
 	return TRUE
@@ -296,8 +300,9 @@
 	for (var/strippable_key in strippable.items)
 		var/datum/strippable_item/item_data = strippable.items[strippable_key]
 
-		if (item_data.is_obscured(owner))
-			items[strippable_key] = list("obscured" = TRUE)
+		var/obscuring = item_data.get_obscuring(owner)
+		if (obscuring != STRIPPABLE_OBSCURING_NONE)
+			items[strippable_key] = list("obscured" = obscuring)
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
@@ -330,7 +335,7 @@
 			if (isnull(strippable_item))
 				return
 
-			if (strippable_item.is_obscured(owner))
+			if (strippable_item.get_obscuring(owner) == STRIPPABLE_OBSCURING_COMPLETELY)
 				return
 
 			var/item = strippable_item.get_item(owner)
@@ -376,7 +381,7 @@
 			if (isnull(strippable_item))
 				return
 
-			if (strippable_item.is_obscured(owner))
+			if (strippable_item.get_obscuring(owner) == STRIPPABLE_OBSCURING_COMPLETELY)
 				return
 
 			var/item = strippable_item.get_item(owner)

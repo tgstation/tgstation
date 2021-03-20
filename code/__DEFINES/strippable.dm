@@ -16,3 +16,12 @@
 #define STRIPPABLE_ITEM_RPOCKET "right_pocket"
 #define STRIPPABLE_ITEM_LHAND "left_hand"
 #define STRIPPABLE_ITEM_RHAND "right_hand"
+
+/// This slot is not obscured.
+#define STRIPPABLE_OBSCURING_NONE 0
+
+/// This slot is completely obscured, and cannot be accessed.
+#define STRIPPABLE_OBSCURING_COMPLETELY 1
+
+/// This slot can't be seen, but can be accessed.
+#define STRIPPABLE_OBSCURING_HIDDEN 2
