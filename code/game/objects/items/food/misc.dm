@@ -288,6 +288,7 @@
 	tastes = list("eggplant" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/tortilla
 	name = "tortilla"
