@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - qol: "Borg model selection is now done by radial menu"
