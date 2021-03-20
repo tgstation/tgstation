@@ -75,7 +75,6 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		updateUsrDialog()
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	//The beaker keeps splashing itself onto the machine! aaaa
 
 /obj/machinery/chem_mass_spec/AltClick(mob/living/user)
 	. = ..()
@@ -96,6 +95,15 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	replace_beaker(user, BEAKER2)
 
 ///Gee how come you get two beakers?
+/*
+ * Similar to other replace beaker procs, except now there are two of them!
+ * When passed a beaker along with a position define it will swap a beaker in that slot (if there is one) with the beaker the machine is bonked with
+ *
+ * arguments:
+ * * user - The one bonking the machine
+ * * target beaker - the define (BEAKER1/BEAKER2) of what position to replace
+ * * new beaker - the new beaker to add/replace the slot with
+ */
 /obj/machinery/chem_mass_spec/proc/replace_beaker(mob/living/user, target_beaker, obj/item/reagent_containers/new_beaker)
 	if(!user)
 		return FALSE

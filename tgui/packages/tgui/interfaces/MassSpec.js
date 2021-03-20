@@ -2,7 +2,6 @@ import { round } from 'common/math';
 import { useBackend } from '../backend';
 import { Box, Button, Dimmer, Icon, Section, Slider, Table } from '../components';
 import { Window } from '../layouts';
-import { BeakerContents } from './common/BeakerContents';
 
 export const MassSpec = (props, context) => {
   const { act, data } = useBackend(context);
@@ -12,7 +11,6 @@ export const MassSpec = (props, context) => {
     upperRange,
     graphUpperRange,
     graphLowerRange,
-    log,
     eta,
     beaker1CurrentVolume,
     beaker2CurrentVolume,
@@ -266,7 +264,7 @@ const MassSpectroscopy = (props, context) => {
           })} >
           {" "}
         </Slider>
-        <Box mt="5" mb="5">
+        <Box>
           <Slider
             name={"Center slider"}
             position="relative"
