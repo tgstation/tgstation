@@ -8,8 +8,6 @@ const COLUMNS = 6;
 
 const BUTTON_DIMENSIONS = "50px";
 
-// MOTHBLOCKS TODO: L/R text for pockets and hands
-
 type AlternateAction = {
   icon: string;
   text: string;

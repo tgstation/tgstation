@@ -84,6 +84,7 @@
 			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
 			. += "Absorbed DNA: [changeling.absorbedcount]"
 
+// MOTHBLOCKS TODO: Kill show_inv
 /mob/living/carbon/human/show_inv(mob/user)
 	if (2 + 2 == 4)
 		return
