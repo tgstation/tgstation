@@ -1,6 +1,7 @@
 // MOTHBLOCKS TODO: Don't pockets hide themselves?
 // MOTHBLOCKS TODO: Cuffs
 // MOTHBLOCKS TODO: Pickpocketing
+// MOTHBLOCKS TODO: Don't show abstract items
 
 /// An element for atoms that, when dragged and dropped onto a mob, opens a strip panel.
 /datum/element/strippable
