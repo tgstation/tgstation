@@ -172,6 +172,12 @@ const taskDm = (...injectedDefines) => new Task('dm')
     }
   });
 
+const taskDME = new Task('dme')
+  .depends('tgstation.dme')
+  .build(async () => {
+    await exec('python3', ['tools/DME_Merge/merger.py']);
+  });
+
 // Frontend
 let tasksToRun = [];
 switch (BUILD_MODE) {
@@ -180,6 +186,7 @@ switch (BUILD_MODE) {
       taskYarn,
       taskTgfont,
       taskTgui,
+      taskDME,
       taskDm(),
     ]
     break;
@@ -195,6 +202,7 @@ switch (BUILD_MODE) {
       taskYarn,
       taskTgfont,
       taskTgui,
+      taskDME,
       taskDm('CIBUILDING','CITESTING','ALL_MAPS')
     ];
     break;
@@ -203,6 +211,7 @@ switch (BUILD_MODE) {
       taskYarn,
       taskTgfont,
       taskTgui,
+      taskDME,
       taskDm('CIBUILDING')
     ];
     break;
