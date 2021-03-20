@@ -24072,7 +24072,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/layer_manifold/visible,
+/obj/machinery/atmospherics/pipe/simple/dark/visible/layer1,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "cmN" = (
@@ -32424,6 +32424,9 @@
 "fQc" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/foamtank,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "fQd" = (
@@ -37571,9 +37574,7 @@
 	dir = 8;
 	name = "Port to Filter"
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Port to Incinerator"
-	},
+/obj/machinery/atmospherics/pipe/simple/dark/visible/layer1,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "ikD" = (
@@ -39265,7 +39266,9 @@
 /area/commons/vacant_room/office)
 "iZX" = (
 /obj/machinery/meter/atmos/atmos_waste_loop,
-/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "jad" = (
@@ -45692,6 +45695,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
+"mgx" = (
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "mgz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
@@ -51722,6 +51729,12 @@
 "oYl" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/radshelter/civil)
+"oYp" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Port to Incinerator"
+	},
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "oYD" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -52450,9 +52463,7 @@
 /area/maintenance/starboard/secondary)
 "pnF" = (
 /obj/effect/landmark/start/atmospheric_technician,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
-	},
+/obj/machinery/atmospherics/pipe/layer_manifold/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "pnN" = (
@@ -107130,7 +107141,7 @@ woj
 tnL
 dGY
 fQc
-tnL
+oYp
 pnF
 iky
 cmE
@@ -107386,7 +107397,7 @@ lsZ
 wIq
 oBQ
 qyQ
-qyQ
+mgx
 qyQ
 iZX
 uPi
