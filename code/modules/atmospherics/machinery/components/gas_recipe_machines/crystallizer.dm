@@ -109,8 +109,7 @@
 
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
-	var/datum/gas_mixture/contents = airs[2]
-	if(contents.temperature >= selected_recipe.min_temp * MIN_DEVIATION_RATE && contents.temperature <= selected_recipe.max_temp * MAX_DEVIATION_RATE)
+	if(internal.temperature >= selected_recipe.min_temp * MIN_DEVIATION_RATE && internal.temperature <= selected_recipe.max_temp * MAX_DEVIATION_RATE)
 		return TRUE
 	return FALSE
 
@@ -133,17 +132,15 @@
 ///Calculation for the heat of the various gas mixes and controls the quality of the item
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_calculations()
 	var/datum/gas_mixture/cooling_port = airs[1]
-	if(cooling_port.total_moles() * 0.25 > MINIMUM_MOLE_COUNT)
-		var/datum/gas_mixture/cooling_remove = cooling_port.remove_ratio(0.25)
-
+	if(cooling_port.total_moles() > MINIMUM_MOLE_COUNT)
 		if(internal.total_moles() > 0)
-			var/coolant_temperature_delta = cooling_remove.temperature - internal.temperature
-			var/cooling_heat_capacity = cooling_remove.heat_capacity()
+			var/coolant_temperature_delta = cooling_port.temperature - internal.temperature
+			var/cooling_heat_capacity = cooling_port.heat_capacity()
 			var/internal_heat_capacity = internal.heat_capacity()
 			var/cooling_heat_amount = HIGH_CONDUCTIVITY_RATIO * coolant_temperature_delta * (cooling_heat_capacity * internal_heat_capacity / (cooling_heat_capacity + internal_heat_capacity))
-			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_heat_capacity, TCMB)
+			cooling_port.temperature = max(cooling_port.temperature - cooling_heat_amount / cooling_heat_capacity, TCMB)
 			internal.temperature = max(internal.temperature + cooling_heat_amount / internal_heat_capacity, TCMB)
-		cooling_port.merge(cooling_remove)
+		update_parents()
 
 	if(	(internal.temperature >= (selected_recipe.min_temp * MIN_DEVIATION_RATE) && internal.temperature <= selected_recipe.min_temp) || \
 		(internal.temperature >= selected_recipe.max_temp && internal.temperature <= (selected_recipe.max_temp * MAX_DEVIATION_RATE)))

@@ -613,7 +613,7 @@
 	desc = "A staff ID used to access the hotel's doors."
 	trim = /datum/id_trim/away/hotel
 
-/obj/item/card/id/away/hotel/securty
+/obj/item/card/id/away/hotel/security
 	name = "Officer ID"
 	trim = /datum/id_trim/away/hotel/security
 

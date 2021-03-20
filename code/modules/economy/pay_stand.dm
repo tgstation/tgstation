@@ -49,6 +49,9 @@
 			return
 		var/obj/item/card/id/pay_card = W
 		if(pay_card.registered_account)
+			if(!pay_card.registered_account.account_job)//Departmental budget cards like cargo's fall under this
+				to_chat(user, "<span class='warning'>ERROR: Personal use of department budgets is not authorized.</span>")
+				return
 			var/credit_amount = 0
 			if(!force_fee)
 				credit_amount = input(user, "How much would you like to deposit?", "Money Deposit") as null|num

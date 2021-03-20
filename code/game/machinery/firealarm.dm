@@ -57,10 +57,8 @@
 	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/firealarm/Destroy()
+	myarea.firereset(src)
 	LAZYREMOVE(myarea.firealarms, src)
-	if(triggered)
-		triggered = FALSE
-		myarea.triggered_firealarms -= 1
 	return ..()
 
 /obj/machinery/firealarm/update_icon_state()
@@ -161,7 +159,7 @@
 	if(!is_operational)
 		return
 	var/area/A = get_area(src)
-	A.firereset(src)
+	A.firereset()
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 

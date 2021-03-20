@@ -10,6 +10,7 @@
 	exp_requirements = 60
 
 	outfit = /datum/outfit/job/geneticist
+	plasmaman_outfit = /datum/outfit/plasmaman/genetics
 	departments = DEPARTMENT_MEDICAL
 
 	paycheck = PAYCHECK_MEDIUM

@@ -104,7 +104,7 @@
 
 /datum/station_trait/slow_shuttle
 	name = "Slow Shuttle"
-	trait_type = STATION_TRAIT_NEUTRAL
+	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	show_in_report = TRUE
 	report_message = "Due to distance to our supply station, the cargo shuttle will have a slower flight time to your cargo department."
@@ -113,3 +113,24 @@
 /datum/station_trait/slow_shuttle/on_round_start()
 	. = ..()
 	SSshuttle.supply.callTime *= 1.5
+
+/datum/station_trait/bot_languages
+	name = "Bot Language Matrix Malfunction"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 3
+	show_in_report = TRUE
+	report_message = "Your station's friendly bots have had their language matrix fried due to an event, resulting in some strange and unfamiliar speech patterns."
+
+/datum/station_trait/bot_languages/New()
+	. = ..()
+	/// What "caused" our robots to go haywire (fluff)
+	var/event_source = pick(list("an ion storm", "a syndicate hacking attempt", "a malfunction", "issues with your onboard AI", "an intern's mistakes", "budget cuts"))
+	report_message = "Your station's friendly bots have had their language matrix fried due to [event_source], resulting in some strange and unfamiliar speech patterns."
+
+/datum/station_trait/bot_languages/on_round_start()
+	. = ..()
+	//All bots that exist round start have their set language randomized.
+	for(var/mob/living/simple_animal/bot/found_bot in GLOB.alive_mob_list)
+		/// The bot's language holder - so we can randomize and change their language
+		var/datum/language_holder/bot_languages = found_bot.get_language_holder()
+		bot_languages.selected_language = bot_languages.get_random_spoken_language()

@@ -159,7 +159,18 @@
  * Getter for fusion fuel moles
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_fuel()
-	return (internal_fusion.gases[/datum/gas/tritium][MOLES] > FUSION_MOLE_THRESHOLD && internal_fusion.gases[/datum/gas/hydrogen][MOLES] > FUSION_MOLE_THRESHOLD)
+	if(!selected_fuel)
+		return FALSE
+	if(!internal_fusion.total_moles())
+		return FALSE
+	var/gas_check = 0
+	for(var/gas_type in selected_fuel.requirements)
+		internal_fusion.assert_gas(gas_type)
+		if(internal_fusion.gases[gas_type][MOLES] >= FUSION_MOLE_THRESHOLD)
+			gas_check++
+	if(gas_check == length(selected_fuel.requirements))
+		return TRUE
+	return FALSE
 
 /**
  * Called by the main fusion processes in hfr_main_processes.dm
@@ -171,6 +182,21 @@
 	if(use_power == ACTIVE_POWER_USE)
 		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
 	return TRUE
+
+///Checks if the gases in the input are the ones needed by the recipe
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gas_requirements()
+	var/datum/gas_mixture/contents = linked_input.airs[1]
+	for(var/gas_type in selected_fuel.requirements)
+		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
+			return FALSE
+	return TRUE
+
+///Removes the gases from the internal gasmix when the recipe is changed
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/dump_gases()
+	var/datum/gas_mixture/remove = internal_fusion.remove(internal_fusion.total_moles())
+	linked_output.airs[1].merge(remove)
+	internal_fusion.garbage_collect()
+	linked_input.airs[1].garbage_collect()
 
 /**
  * Called by alarm() in this file

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - rscdel: "Animals are no loner n(e)igh-immune to stuttering."
-  - bugfix: "Silicons and animals won't keep stuttering or slurring forever after being struck by something that made them like that in the first place (such as a Blue Space Artillery)."
