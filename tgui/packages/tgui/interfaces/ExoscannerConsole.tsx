@@ -1,10 +1,7 @@
-/* eslint-disable max-len */
-import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Button, Flex, Icon, Modal, NumberInput, Section, Slider, LabeledList, NoticeBox, ProgressBar, TimeDisplay, Stack } from '../components';
+import { useBackend } from '../backend';
+import { BlockQuote, Box, Button, Flex, Icon, Modal, Section, LabeledList, NoticeBox, Stack } from '../components';
 import { Window } from '../layouts';
-import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
-import { toKeyedArray } from '../../common/collections';
 
 
 type SiteData = {
@@ -34,7 +31,9 @@ const ScanFailedModal = (props, context) => {
           <Box color="bad">SCAN FAILURE!</Box>
         </Flex.Item>
         <Flex.Item>
-          <Button onClick={() => act("confirm_fail")}>Confirm</Button>
+          <Button
+            content="Confirm"
+            onClick={() => act("confirm_fail")} />
         </Flex.Item>
       </Flex>
     </Modal>);
@@ -58,7 +57,14 @@ const ScanSelectionSection = (props, context) => {
   return (
     <Stack vertical fill>
       <Stack.Item grow>
-        <Section fill title="Site Data" buttons={<Button onClick={() => act("select_site", { "site_ref": null })}>Back</Button>}>
+        <Section
+          fill
+          title="Site Data"
+          buttons={
+            <Button
+              content="Back"
+              onClick={() => act("select_site", { "site_ref": null })} />
+          }>
           <LabeledList>
             <LabeledList.Item label="Name">{site.name}</LabeledList.Item>
             <LabeledList.Item label="Description">
@@ -68,7 +74,12 @@ const ScanSelectionSection = (props, context) => {
             <LabeledList.Divider />
             <LabeledList.Item label="Spectrography Data" />
             <LabeledList.Divider />
-            {Object.keys(site.band_info).map(band => (<LabeledList.Item key={band} label={band}>{site.band_info[band]}</LabeledList.Item>))}
+            {Object.keys(site.band_info).map(band => (
+              <LabeledList.Item
+                key={band}
+                label={band}>
+                {site.band_info[band]}
+              </LabeledList.Item>))}
           </LabeledList>
         </Section>
       </Stack.Item>
@@ -77,14 +88,40 @@ const ScanSelectionSection = (props, context) => {
           <Section fill title="Scans">
             {!point_scan_complete && (
               <Section title="Point Scan">
-                <BlockQuote>Point scan performs rudimentary scan of the site, revealing its general characteristics.</BlockQuote>
-                <Box><Button disabled={scan_power <= 0} onClick={() => act("start_point_scan")}>Scan</Button> <Box inline pl={3}>Estimated Time: {point_cost}.</Box></Box>
+                <BlockQuote>
+                  Point scan performs rudimentary scan of
+                  the site, revealing its general characteristics.
+                </BlockQuote>
+                <Box>
+                  <Button
+                    content="Scan"
+                    disabled={scan_power <= 0}
+                    onClick={() => act("start_point_scan")} />
+                  <Box
+                    inline
+                    pl={3}>
+                    Estimated Time: {point_cost}.
+                  </Box>
+                </Box>
               </Section>
             )}
             {!deep_scan_complete && (
               <Section title="Deep Scan">
-                <BlockQuote>Deep scan performs full scan of the site, revealing all details.</BlockQuote>
-                <Box><Button disabled={scan_power <= 0} onClick={() => act("start_deep_scan")}>Scan</Button> <Box inline pl={3}>Estimated Time: {deep_cost}.</Box></Box>
+                <BlockQuote>
+                  Deep scan performs full scan
+                  of the site, revealing all details.
+                </BlockQuote>
+                <Box>
+                  <Button
+                    content="Scan"
+                    disabled={scan_power <= 0}
+                    onClick={() => act("start_deep_scan")} />
+                  <Box
+                    inline
+                    pl={3}>
+                    Estimated Time: {deep_cost}.
+                  </Box>
+                </Box>
               </Section>
             )}
           </Section>
@@ -181,7 +218,12 @@ export const ExoscannerConsole = (props, context) => {
                 </Stack.Item>
               </Stack>
               <Section title="Special Scan Condtions">
-                {scan_conditions && scan_conditions.map(condition => <NoticeBox key={condition} warning>{condition}</NoticeBox>)}
+                {scan_conditions && scan_conditions.map(condition => (
+                  <NoticeBox
+                    key={condition}
+                    warning>
+                    {condition}
+                  </NoticeBox>))}
               </Section>
             </Section>
           </Stack.Item>
@@ -196,7 +238,8 @@ export const ExoscannerConsole = (props, context) => {
                   <Stack>
                     <Stack.Item>
                       <BlockQuote>
-                        Broad spectrum scan looking for anything not matching known start charts.
+                        Broad spectrum scan looking for
+                        anything not matching known start charts.
                       </BlockQuote>
                     </Stack.Item>
                     <Stack.Item>

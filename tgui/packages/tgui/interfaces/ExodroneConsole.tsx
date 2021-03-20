@@ -1,15 +1,10 @@
-/* eslint-disable max-len */
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Button, Dimmer, Divider, Icon, LabeledList, Modal, NoticeBox, ProgressBar, Section, Stack } from '../components';
+import { BlockQuote, Box, Button, Dimmer, Icon, LabeledList, Modal, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
 import { capitalize } from 'common/string';
-import { map, toKeyedArray } from '../../common/collections';
-import { IconStack } from '../components/Icon';
 import nt_logo from '../assets/bg-nanotrasen.svg';
-import { MiningVendor } from './MiningVendor';
-
 
 type ExplorationEventData = {
   name: string,
@@ -201,6 +196,7 @@ const ToolSelectionModal = (props, context) => {
     setChoosingTools,
   ] = useLocalState(context, 'choosingTools', false);
 
+  const toolData = Object.keys(all_tools);
   return (
     <Modal>
       <Stack fill vertical pr={2}>
@@ -209,7 +205,7 @@ const ToolSelectionModal = (props, context) => {
         </Stack.Item>
         <Stack.Item>
           <Stack textAlign="center">
-            {!!Object.keys(all_tools) && Object.keys(all_tools).map(tool_name => (
+            {!!toolData && toolData.map(tool_name => (
               <Stack.Item key={tool_name}>
                 <Button
                   onClick={() => {
@@ -361,8 +357,10 @@ const EquipmentGrid = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Stack wrap="wrap" width={10}>
-              {cargo.map(cargo_element =>
-                (<EquipmentBox key={cargo_element.name} cargo={cargo_element} />))}
+              {cargo.map(cargo_element => (
+                <EquipmentBox
+                  key={cargo_element.name}
+                  cargo={cargo_element} />))}
             </Stack>
           </Stack.Item>
         </Section>
@@ -434,7 +432,8 @@ const TravelTargetSelectionScreen = (props, context) => {
 
   const travel_cost = target_site => {
     if (site) {
-      return Math.max(Math.abs(site.distance - target_site.distance), 1) * drone_travel_coefficent;
+      return Math.max(Math.abs(site.distance - target_site.distance), 1)
+      * drone_travel_coefficent;
     }
     else {
       return target_site.distance * drone_travel_coefficent;
@@ -454,6 +453,13 @@ const TravelTargetSelectionScreen = (props, context) => {
     act("start_travel", { "target_site": ref });
   };
 
+  const non_empty_bands = (dest : SiteData) => {
+    const band_check = (s: string) => dest.band_info[s] !== undefined
+    && dest.band_info[s] !== 0;
+    return Object.keys(all_bands).filter(band_check);
+  };
+  const valid_destinations = sites.filter(destination => !site
+    || destination.ref !== site.ref);
   return (
     drone_status === "travel" && (
       <TravelDimmer />
@@ -495,7 +501,7 @@ const TravelTargetSelectionScreen = (props, context) => {
             }
           />
         )}
-        {sites.filter(destination => !site || destination.ref !== site.ref).map(destination => (
+        {valid_destinations.map(destination => (
           <Section
             key={destination.ref}
             title={destination.name}
@@ -517,7 +523,12 @@ const TravelTargetSelectionScreen = (props, context) => {
                 {destination.description}
               </LabeledList.Item>
               <LabeledList.Divider />
-              {Object.keys(all_bands).filter(band => (destination.band_info[band] !== undefined && destination.band_info[band] !== 0)).map(band => (<LabeledList.Item key={band} label={band}>{destination.band_info[band]}</LabeledList.Item>))}
+              {non_empty_bands(destination).map(band => (
+                <LabeledList.Item
+                  key={band}
+                  label={band}>
+                  {destination.band_info[band]}
+                </LabeledList.Item>))}
             </LabeledList>
           </Section>
         ))}
@@ -591,8 +602,9 @@ const ExplorationScreen = (props, context) => {
     setTravelDimmerShown,
   ] = useLocalState(context, 'TravelDimmerShown', false);
 
-  if (TravelDimmerShown) { return (<TravelTargetSelectionScreen showCancelButton />); }
-  // List of repeatables, Explore button. Last found event popup and continue exploring. Return home button.
+  if (TravelDimmerShown) {
+    return (<TravelTargetSelectionScreen showCancelButton />);
+  }
   return (
     <Section
       fill
@@ -695,6 +707,8 @@ const AdventureScreen = (props, context) => {
   const {
     adventure_data,
   } = data;
+  const rawData = adventure_data.raw_image;
+  const imgSource = rawData ? rawData : resolveAsset(adventure_data.image);
   return (
     <Section
       fill
@@ -707,7 +721,7 @@ const AdventureScreen = (props, context) => {
         <Stack.Divider />
         <Stack.Item>
           <img
-            src={adventure_data.raw_image ? adventure_data.raw_image : resolveAsset(adventure_data.image)}
+            src={imgSource}
             height="100px"
             width="200px"
             style={{
