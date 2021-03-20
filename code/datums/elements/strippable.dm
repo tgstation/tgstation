@@ -177,7 +177,7 @@
 		disable_warning = TRUE,
 		bypass_equip_delay_self = TRUE,
 	))
-		to_chat(src, "<span class='warning'>\The [equipping] doesn't fit in that place!</span>")
+		to_chat(user, "<span class='warning'>\The [equipping] doesn't fit in that place!</span>")
 		return FALSE
 
 	return TRUE
