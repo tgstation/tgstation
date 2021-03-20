@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(vote)
 		return FALSE
 	if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
 		return FALSE
-	if(!(vote && 1<=vote && vote<=choices.len))
+	if(!vote || vote < 1 || vote > choices.len))
 		return FALSE
 	// If user has already voted
 	if(usr.ckey in voted)
