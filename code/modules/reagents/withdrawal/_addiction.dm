@@ -55,7 +55,7 @@
 				if(current_addiction_cycle)
 					LAZYSET(affected_carbon.mind.active_addictions, addiction, 1) //Keeps withdrawal at first cycle.
 				on_drug_of_this_addiction = TRUE
-				return
+				break
 
 	var/withdrawal_stage
 
