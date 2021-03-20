@@ -70,7 +70,7 @@
 #define FOOD_PRICE_LEGENDARY 1300 //Large windfall for making something from this list.
 
 
-#define DRINK_PRICE_STOCK 20
-#define DRINK_PRICE_EASY 35
-#define DRINK_PRICE_MEDIUM 80
+#define DRINK_PRICE_STOCK 35
+#define DRINK_PRICE_EASY 50
+#define DRINK_PRICE_MEDIUM 100
 #define DRINK_PRICE_HIGH 200

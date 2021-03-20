@@ -422,6 +422,7 @@
 	glass_name = "glass of Space Cola"
 	glass_desc = "A glass of refreshing Space Cola."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
@@ -770,6 +771,7 @@
 	glass_name = "blue cherry shake"
 	glass_desc = "An exotic blue milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_HIGH
 
 /datum/reagent/consumable/pumpkin_latte
 	name = "Pumpkin Latte"
@@ -794,6 +796,7 @@
 	glass_name = "Gibbfloat"
 	glass_desc = "Dr. Gibb with ice cream on top."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/pumpkinjuice
 	name = "Pumpkin Juice"
