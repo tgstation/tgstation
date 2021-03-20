@@ -9,6 +9,7 @@
 	var/lawyers = 0 //Counts lawyer amount
 
 	outfit = /datum/outfit/job/lawyer
+	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
