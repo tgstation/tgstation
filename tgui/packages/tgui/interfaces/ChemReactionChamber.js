@@ -188,7 +188,7 @@ export const ChemReactionChamber = (props, context) => {
                   })} />
               </td>
             </tr>
-          {map((amount, reagent) => (
+            {map((amount, reagent) => (
           <LabeledList.Item
               key={reagent}
               label={reagent}
