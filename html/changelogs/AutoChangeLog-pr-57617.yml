@@ -1,0 +1,5 @@
+author: "KathyRyals"
+delete-after: True
+changes: 
+  - bugfix: "Can pull things as a simplemob with ctrl click again."
+  - refactor: "Refactored /mob/living/CtrlClick(mob/user)"
