@@ -28,6 +28,16 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
     icon: "shoe-prints",
     text: "Unknot",
   },
+
+  enable_internals: {
+    icon: "tg-air-tank",
+    text: "Enable internals",
+  },
+
+  disable_internals: {
+    icon: "tg-air-tank-slash",
+    text: "Disable internals",
+  },
 };
 
 const SLOTS: Record<
@@ -301,7 +311,6 @@ export const StripMenu = (props, context) => {
                     key: keyAtSpot,
                   });
                 }}
-                icon={alternateAction.icon}
                 tooltip={alternateAction.text}
                 style={{
                   background: "rgba(0, 0, 0, 0.6)",
@@ -310,7 +319,9 @@ export const StripMenu = (props, context) => {
                   right: 0,
                   "z-index": 2,
                 }}
-              />
+              >
+                <Icon name={alternateAction.icon} />
+              </Button>
             )}
           </Box>
         </Stack.Item>
