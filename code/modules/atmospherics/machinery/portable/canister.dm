@@ -91,7 +91,7 @@
 	else
 		create_gas()
 
-	var/random_quality = rand(0, 100) / 100
+	var/random_quality = rand()
 	pressure_limit = initial(pressure_limit) * (1 + 0.1 * random_quality)
 
 	update_appearance()
