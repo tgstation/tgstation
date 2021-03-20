@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - bugfix: "AIs piloting a shell when the round ends will now correctly have their laws shown on the round-end report."
