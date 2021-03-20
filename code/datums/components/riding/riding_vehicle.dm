@@ -25,7 +25,6 @@
 			vehicle_parent.unbuckle_mob(user, TRUE)
 			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
 			"<span class='danger'>You slip off \the [vehicle_parent] as your body slumps!</span>")
-			user.Stun(3 SECONDS)
 
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, "<span class='warning'>You cannot operate \the [vehicle_parent] right now!</span>")
@@ -37,7 +36,6 @@
 			vehicle_parent.unbuckle_mob(user, TRUE)
 			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
 			"<span class='danger'>You fall off \the [vehicle_parent] while trying to operate it while unable to stand!</span>")
-			user.Stun(3 SECONDS)
 
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, "<span class='warning'>You can't seem to manage that while unable to stand up enough to move \the [vehicle_parent]...</span>")
@@ -49,7 +47,6 @@
 			vehicle_parent.unbuckle_mob(user, TRUE)
 			user.visible_message("<span class='danger'>[user] falls off \the [vehicle_parent].</span>",\
 			"<span class='danger'>You fall off \the [vehicle_parent] while trying to operate it without being able to hold on!</span>")
-			user.Stun(3 SECONDS)
 
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			to_chat(user, "<span class='warning'>You can't seem to hold onto \the [vehicle_parent] to move it...</span>")
