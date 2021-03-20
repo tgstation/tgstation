@@ -158,13 +158,13 @@ SUBSYSTEM_DEF(vote)
 	choices[choices[vote]]++	//check this
 	return vote
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, forced=FALSE, popup=FALSE)
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
 	if(!Master.current_runlevel) //Server is still intializing.
 		to_chat(usr, "<span class='warning'>Cannot start vote, server is not done initializing.</span>")
 		return FALSE
 	var/lower_admin = FALSE
 	var/ckey = ckey(initiator_key)
-	if(GLOB.admin_datums[ckey] || forced)
+	if(GLOB.admin_datums[ckey])
 		lower_admin = TRUE
 
 	if(!mode)
@@ -225,8 +225,8 @@ SUBSYSTEM_DEF(vote)
 			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
-			if(popup)
-				C?.mob?.vote() // automatically popup the vote
+			if(C.prefs.toggles & SOUND_ANNOUNCEMENTS)
+				SEND_SOUND(C, sound('sound/misc/bloop.ogg'))
 		return TRUE
 	return FALSE
 
@@ -287,10 +287,10 @@ SUBSYSTEM_DEF(vote)
 	if(.)
 		return
 
-	var/upper_admin = 0
+	var/upper_admin = FALSE
 	if(usr.client.holder)
 		if(check_rights_for(usr.client, R_ADMIN))
-			upper_admin = 1
+			upper_admin = TRUE
 
 	switch(action)
 		if("cancel")
