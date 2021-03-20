@@ -447,6 +447,13 @@
 	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
 	credit_cost = CARGO_CRATE_VALUE * 16
 
+/datum/map_template/shuttle/emergency/outpost
+	suffix = "outpost"
+	name = "Outpoststation Emergency Shuttle"
+	description = "The perfect shuttle for rectangle enthuasiasts, this long and slender shuttle has been known for it's incredible(Citation Needed) safety rating."
+	admin_notes = "Has airlocks on both sides of the shuttle and will probably ram deltastation's maint wing below medical. Oh well?"
+	credit_cost = CARGO_CRATE_VALUE * 4
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
@@ -514,6 +521,10 @@
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
+
+/datum/map_template/shuttle/whiteship/outpost
+	suffix = "outpost"
+	name = "SciMed Transport Craft"
 
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
@@ -633,6 +644,10 @@
 /datum/map_template/shuttle/arrival/omega
 	suffix = "omega"
 	name = "arrival shuttle (Omega)"
+	
+/datum/map_template/shuttle/arrival/outpost
+	suffix = "outpost"
+	name = "arrival shuttle (Outpost)"
 
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"

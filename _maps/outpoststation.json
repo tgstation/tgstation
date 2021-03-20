@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "map_name": "Outpost Station",
+    "map_path": "map_files/OutpostStation",
+    "map_file": "outpoststation.dmm",
+	"shuttles": {
+	    "emergency": "emergency_outpost",
+	    "whiteship": "whiteship_pubby",
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_box"
+    }
+}

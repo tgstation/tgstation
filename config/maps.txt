@@ -39,6 +39,11 @@ map tramstation
 	votable
 endmap
 
+map outpoststation
+	minplayers 25
+	votable
+endmap
+
 map runtimestation
 endmap
 
