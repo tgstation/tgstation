@@ -211,7 +211,7 @@ SUBSYSTEM_DEF(vote)
 		mode = vote_type
 		initiator = initiator_key
 		started_time = world.time
-		var/text = "[capitalize(mode)] vote started by [initiator ? initiator : "CentCom"]."
+		var/text = "[capitalize(mode)] vote started by [initiator || "CentCom"]."
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
