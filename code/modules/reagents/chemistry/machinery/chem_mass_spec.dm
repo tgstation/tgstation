@@ -27,25 +27,17 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	///Upper_mass_range - for mass selection of what will be processed
 	var/upper_mass_range = INFINITY
 	///The log output to clarify how the thing works
-	var/log
+	var/list/log = list()
 	///Input reagents container
 	var/obj/item/reagent_containers/beaker1
 	///Output reagents container
 	var/obj/item/reagent_containers/beaker2
-	///Overlays for the beakers
-	var/mutable_appearance/beaker1_overlay
-	var/mutable_appearance/beaker2_overlay
-	///Overlay for activity
-	var/mutable_appearance/processing_overlay
 
 /obj/machinery/chem_mass_spec/Initialize()
 	. = ..()
-	beaker1_overlay = mutable_appearance(icon, "HPLC_beaker")
-	beaker2_overlay = mutable_appearance(icon, "HPLC_beaker")
-	beaker2_overlay.pixel_x = 5
-	processing_overlay = mutable_appearance(icon, "HPLC_graph")
 	beaker2 = new /obj/item/reagent_containers/glass/beaker/large(src)
-
+	ADD_TRAIT(src, DO_NOT_SPLASH, src.type)
+	//update_appearance()
 
 /obj/machinery/chem_mass_spec/Destroy()
 	QDEL_NULL(beaker1)
@@ -67,7 +59,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		replace_beaker(user, BEAKER1, beaker)
 		to_chat(user, "<span class='notice'>You add [beaker] to [src].</span>")
 		updateUsrDialog()
-	update_icon_state()
+	update_appearance()
 	..()
 
 ///Adds beaker 2
@@ -82,18 +74,24 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		replace_beaker(user, BEAKER2, beaker)
 		to_chat(user, "<span class='notice'>You add [beaker] to [src].</span>")
 		updateUsrDialog()
-	update_icon_state()
+	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	//The beaker keeps splashing itself onto the machine! aaaa
 
 /obj/machinery/chem_mass_spec/AltClick(mob/living/user)
 	. = ..()
+	if(processing_reagents)
+		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
+		return
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return ..()
 	replace_beaker(user, BEAKER1)
 
 /obj/machinery/chem_mass_spec/AltClick_secondary(mob/living/user)
 	. = ..()
+	if(processing_reagents)
+		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
+		return
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user, BEAKER2)
@@ -114,29 +112,29 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 				try_put_in_hand(beaker2, user)
 				beaker2 = null
 			beaker2 = new_beaker
-			lower_mass_range = calculate_smallest_mass()
-			upper_mass_range = calculate_largest_mass()
-	update_icon_state()
+	update_appearance()
 	return TRUE
 
 /*			Icon code			*/
 
 /obj/machinery/chem_mass_spec/update_icon_state()
-	. = ..()
 	if(powered())
 		icon_state = "HPLC_on"
 	else
 		icon_state = "HPLC"
-	update_overlays()
+	return ..()
 
 /obj/machinery/chem_mass_spec/update_overlays()
 	. = ..()
 	if(beaker1)
-		. += beaker1_overlay
+		. += "HPLC_beaker1"
 	if(beaker2)
-		. += beaker2_overlay
-	if(processing_reagents)
-		. += processing_overlay
+		. += "HPLC_beaker2"
+	if(powered())
+		if(processing_reagents)
+			. += "HPLC_graph_active"
+		else if (length(beaker1?.reagents.reagent_list))
+			. += "HPLC_graph_idle"
 
 /*			UI Code				*/
 
@@ -148,8 +146,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 
 /obj/machinery/chem_mass_spec/ui_data(mob/user)
 	var/data = list()
-	data["graphUpperRange"] = calculate_largest_mass()
-	data["graphLowerRange"] = calculate_smallest_mass()
+	data["graphLowerRange"] = 0
 	data["lowerRange"] = lower_mass_range
 	data["upperRange"] = upper_mass_range
 	data["processing"] = processing_reagents
@@ -162,31 +159,42 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		data["eta"] = estimate_time()
 
 	var/beakerContents[0]
-	if(beaker1 && beaker1.reagents && beaker1.reagents.reagent_list.len)
-		for(var/datum/reagent/reagent in beaker1.reagents.reagent_list)
+	if(beaker1 && beaker1.reagents)
+		for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
 			var/in_range = TRUE
-			data["peakHeight"] = max(data["peakHeight"], reagent.volume)
-
 			if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
-				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
+				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
 				if(inverse_reagent.mass < lower_mass_range || inverse_reagent.mass > upper_mass_range)
 					in_range = FALSE
-				beakerContents.Add(list(list("name" = inverse_reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = inverse_reagent.mass, "purity" = 1-reagent.purity, "inversePurity" = reagent.inverse_chem_val, "selected" = in_range, "color" = COLOR_RED)))
+				beakerContents.Add(list(list("name" = inverse_reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = inverse_reagent.mass, "purity" = 1-reagent.purity, "selected" = in_range, "color" = "#b60046", "type" = "Inverted")))
+				data["peakHeight"] = max(data["peakHeight"], reagent.volume)
 				continue
 			if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 				in_range = FALSE
+			///We want to be sure that the impure chem appears after the parent chem in the list so that it always overshadows pure reagents
+			beakerContents.Add(list(list("name" = reagent.name, "volume" = round(reagent.volume * reagent.purity, 0.01), "mass" = reagent.mass, "purity" = reagent.purity, "selected" = in_range, "color" = "#3cf096", "type" = "Clean")))
 			if(1 > reagent.purity && reagent.impure_chem)
 				var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
-				beakerContents.Add(list(list("name" = impure_reagent.name, "volume" = round(reagent.volume * (1-reagent.purity), 0.01), "mass" = reagent.mass, "purity" = 1-reagent.purity, "inversePurity" = reagent.inverse_chem_val, "selected" = in_range, "color" = COLOR_YELLOW)))
-			beakerContents.Add(list(list("name" = reagent.name, "volume" = round(reagent.volume * reagent.purity, 0.01), "mass" = reagent.mass, "purity" = reagent.purity, "inversePurity" = reagent.inverse_chem_val, "selected" = in_range, "color" = COLOR_GREEN)))
+				beakerContents.Add(list(list("name" = impure_reagent.name, "volume" = round(reagent.volume * (1-reagent.purity), 0.01), "mass" = reagent.mass, "purity" = 1-reagent.purity, "selected" = in_range, "color" = "#fc9738", "type" = "Impurity")))
+				data["peakHeight"] = max(data["peakHeight"], reagent.volume * (1-reagent.purity))
+			data["peakHeight"] = max(data["peakHeight"], reagent.volume * reagent.purity)
+
+		data["beaker1CurrentVolume"] = beaker1.reagents.total_volume
+		data["beaker1MaxVolume"] = beaker1.reagents.maximum_volume
 	data["beaker1Contents"] = beakerContents
+	data["graphUpperRange"] = calculate_largest_mass()  //+10 because of the range on the peak
 
 	beakerContents = list()
-	if(beaker2 && beaker2.reagents && beaker2.reagents.reagent_list.len)
+	if(beaker2 && beaker2.reagents)
 		for(var/datum/reagent/reagent in beaker2.reagents.reagent_list)
-			data["beaker2Vol"] = beaker2.reagents.total_volume
-			data["beaker2pH"] = beaker2.reagents.ph
-			beakerContents.Add(list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01), "mass" = reagent.mass, "purity" = reagent.purity)))
+			///Normal stuff
+			beakerContents.Add(list(list("name" = reagent.name, "volume" = round(reagent.volume * reagent.purity, 0.01), "mass" = reagent.mass, "purity" = reagent.purity, "color" = "#3cf096", "type" = "Clean", log = log[reagent.type])))
+			///Impure stuff
+			if(1 > reagent.purity && reagent.impure_chem)
+				var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
+				beakerContents.Add(list(list("name" = impure_reagent.name, "volume" = round(reagent.volume * (1-reagent.purity), 0.01), "mass" = reagent.mass, "purity" = 1-reagent.purity, "color" = "#fc9738", "type" = "Impurity")))
+		data["beaker2CurrentVolume"] = beaker2.reagents.total_volume
+		data["beaker2MaxVolume"] = beaker2.reagents.maximum_volume
 	data["beaker2Contents"] = beakerContents
 
 	return data
@@ -207,7 +215,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 			processing_reagents = TRUE
 			estimate_time()
 			progress_time = 0
-			update_icon_state()
+			update_appearance()
 			begin_processing()
 			. = TRUE
 		if("leftSlider")
@@ -256,6 +264,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		progress_time = 0
 		purify_reagents()
 		end_processing()
+		update_appearance()
 		return TRUE
 	progress_time += delta_time
 	return FALSE
@@ -263,25 +272,31 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 /obj/machinery/chem_mass_spec/proc/purify_reagents()
 	log = list()
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
+		//Inverse first
+		var/volume = reagent.volume
+		if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+			if(inverse_reagent.mass < lower_mass_range || inverse_reagent.mass > upper_mass_range)
+				continue
+			log += list(inverse_reagent.type = "Cannot purify inverted") //Might as well make it do something - just updates the reagent's name
+			beaker2.reagents.add_reagent(reagent.inverse_chem, volume, reagtemp = beaker1.reagents.chem_temp, added_purity = 1-reagent.purity)
+			beaker1.reagents.remove_reagent(reagent.type, volume)
+			continue
+
 		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 			continue
 
 		var/delta_purity = initial(reagent.purity) - reagent.purity
-		if(delta_purity =< 0)//As pure as we can be - so lets not add more than we need
-			log += "Could not purify [reagent.name] past it's standard purity of [initial(reagent.purity)*100]%\n"
-			beaker2.reagents.add_reagent(reagent.type, reagent.volume, reagtemp = beaker1.reagents.chem_temp, added_purity = reagent.purity, added_ph = reagent.ph)
-			beaker1.reagents.remove_reagent(reagent.type, reagent.volume)
-			continue
-
-		if(reagent.purity < reagent.inverse_chem_val) //Might as well make it do something
-			beaker2.reagents.add_reagent(reagent.inverse_chem, reagent.volume, reagtemp = beaker1.reagents.chem_temp, added_purity = 1-reagent.purity)
-			beaker1.reagents.remove_reagent(reagent.inverse_chem, reagent.volume)
+		if(delta_purity <= 0)//As pure as we can be - so lets not add more than we need
+			log += list(reagent.type = "Can't purify over [initial(reagent.purity)*100]%")
+			beaker2.reagents.add_reagent(reagent.type, volume, reagtemp = beaker1.reagents.chem_temp, added_purity = reagent.purity, added_ph = reagent.ph)
+			beaker1.reagents.remove_reagent(reagent.type, volume)
 			continue
 
 		var/product_vol = reagent.volume * (1-delta_purity)
 		beaker2.reagents.add_reagent(reagent.type, product_vol, reagtemp = beaker1.reagents.chem_temp, added_purity = initial(reagent.purity), added_ph = reagent.ph)
 		beaker1.reagents.remove_reagent(reagent.type, reagent.volume)
-		log += "Purified [reagent.name] to [initial(reagent.purity)*100]%\n"
+		log += list(reagent.type = "Purified to [initial(reagent.purity)*100]%")
 
 /*				Mass spec graph calcs		 	 */
 
@@ -291,6 +306,10 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		return 0
 	var/max_mass = 0
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
+		if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+			max_mass = max(max_mass, inverse_reagent.mass)
+			continue
 		max_mass = max(max_mass, reagent.mass)
 	return CEILING(max_mass, 50)
 
@@ -300,20 +319,28 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		return 0
 	var/min_mass = 0
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
+		if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+			min_mass = min(min_mass, inverse_reagent.mass)
+			continue
 		min_mass = min(min_mass, reagent.mass)
 	return FLOOR(min_mass, 50)
 
-///Estimates how long something will take to process
+///Estimates how long the highlighted range will take to process
 /obj/machinery/chem_mass_spec/proc/estimate_time()
 	if(!beaker1?.reagents)
 		return 0
 	var/time = 0
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
+		if(reagent.inverse_chem_val > reagent.purity && reagent.inverse_chem)
+			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+			if(inverse_reagent.mass < lower_mass_range || inverse_reagent.mass > upper_mass_range)
+				continue
+			time += (((inverse_reagent.mass * reagent.volume) + (inverse_reagent.mass * reagent.purity * 0.1)) * 0.003) + 10 ///Roughly 10 - 30s?
+			continue
 		if(reagent.mass < lower_mass_range || reagent.mass > upper_mass_range)
 			continue
-		if(reagent.purity < reagent.inverse_chem_val)
-			continue
 		var/inverse_purity = 1-reagent.purity
-		time += (((reagent.mass * reagent.volume) + (reagent.mass * inverse_purity * 0.1)) * 0.0025) + 10 ///Roughly 10 - 30s?
+		time += (((reagent.mass * reagent.volume) + (reagent.mass * inverse_purity * 0.1)) * 0.0035) + 10 ///Roughly 10 - 30s?
 	delay_time = time
 	return delay_time

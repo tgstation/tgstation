@@ -57,7 +57,7 @@
 
 ///Enable the machine
 /obj/machinery/chem_recipe_debug/attackby(obj/item/I, mob/user, params)
-	. = .()
+	. = ..()
 	ui_interact(usr)
 
 ///Enable the machine
