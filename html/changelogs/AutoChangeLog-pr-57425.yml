@@ -1,5 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "fixes helgrasp's lag compensator and text"
-  - qol: "Sets helgrasp to fire faster but last shorter"

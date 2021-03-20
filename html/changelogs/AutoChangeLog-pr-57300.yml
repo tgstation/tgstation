@@ -1,5 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - rscadd: "You can now download a cyborg's internal logs by right-clicking them with a mobile device running SiliConnect. Take a look if one is acting a bit strange, you might find something interesting."
-  - rscadd: "Borg integrity (health) is now roughly shown in SiliConnect, under \"Condition\"."
