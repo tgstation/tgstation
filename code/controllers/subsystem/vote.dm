@@ -17,14 +17,14 @@ SUBSYSTEM_DEF(vote)
 	var/list/choice_by_ckey = list()
 	var/list/generated_actions = list()
 
-/datum/controller/subsystem/vote/fire()	//called by master_controller
-	if(!mode)
-		return
-	time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
-	if(time_remaining < 0)
-		result()
-		SStgui.close_uis(src)
-		reset()
+// /datum/controller/subsystem/vote/fire()	//called by master_controller
+// 	if(!mode)
+// 		return
+// 	time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
+// 	if(time_remaining < 0)
+// 		result()
+// 		SStgui.close_uis(src)
+// 		reset()
 
 /datum/controller/subsystem/vote/proc/reset()
 	mode = null
@@ -146,16 +146,15 @@ SUBSYSTEM_DEF(vote)
 		return FALSE
 	if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
 		return FALSE
-	if(!vote || vote < 1 || vote > choices.len))
+	if(!vote || vote < 1 || vote > choices.len)
 		return FALSE
 	// If user has already voted
 	if(usr.ckey in voted)
-		choices[choices[choice_by_ckey[usr.ckey]]]--
+		choices[choices[choice_by_ckey[usr.ckey]]]-- // This removes the user's specific vote
 	else
 		voted += usr.ckey
-
 	choice_by_ckey[usr.ckey] = vote
-	choices[choices[vote]]++	//check this
+	choices[choices[vote]]++
 	return vote
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
@@ -250,22 +249,23 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/ui_data(mob/user)
 	var/list/data = list(
-		"mode" = mode,
-		"voted" = voted,
-		"voting" = voting,
+		"allow_vote_map" = CONFIG_GET(flag/allow_vote_map),
+		"allow_vote_mode" = CONFIG_GET(flag/allow_vote_mode),
+		"allow_vote_restart" = CONFIG_GET(flag/allow_vote_restart),
 		"choices" = list(),
-		"question" = question,
-		"initiator" = initiator,
-		"started_time" = started_time,
-		"time_remaining" = time_remaining,
-		"lower_admin" = !!user.client?.holder,
 		"generated_actions" = generated_actions,
-		"avm" = CONFIG_GET(flag/allow_vote_mode),
-		"avmap" = CONFIG_GET(flag/allow_vote_map),
-		"avr" = CONFIG_GET(flag/allow_vote_restart),
-		"selectedChoice" = choice_by_ckey[user.client?.ckey],
+		"initiator" = initiator,
+		"lower_admin" = !!user.client?.holder,
+		"mode" = mode,
+		"question" = question,
+		"selected_choice" = choice_by_ckey[user.client?.ckey],
+		"started_time" = started_time,
 		"upper_admin" = check_rights_for(user.client, R_ADMIN),
+		"voting" = list()
 	)
+
+	if(!!user.client?.holder)
+		data["voting"] += list(voting)
 
 	for(var/key in choices)
 		data["choices"] += list(list(
