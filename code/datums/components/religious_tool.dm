@@ -7,6 +7,8 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// Enables access to the global sect directly
 	var/datum/religion_sect/easy_access_sect
+	/// Prevents double selecting sects
+	var/selecting_sect = FALSE
 	/// What extent do we want this religious tool to act? In case you don't want full access to the list. Generated on New
 	var/operation_flags
 	/// The rite currently being invoked
@@ -83,10 +85,16 @@
 	var/list/available_options = generate_available_sects(user)
 	if(!available_options)
 		return
-
+	if(selecting_sect)
+		to_chat(user,"<span class='warning'>Someone is already deciding a sect!</span>")
+		return
+	selecting_sect = TRUE
 	var/sect_select = input(user,"Select a sect (You CANNOT revert this decision!)","Select a Sect",null) in available_options
-	if(!sect_select || !user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
-		to_chat(user,"<span class ='warning'>You cannot select a sect at this time.</span>")
+	selecting_sect = FALSE
+	if(!sect_select)
+		return
+	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
+		to_chat(user,"<span class='warning'>You cannot select a sect at this time.</span>")
 		return
 	var/type_selected = available_options[sect_select]
 	GLOB.religious_sect = new type_selected()
@@ -102,6 +110,9 @@
 
 /// Perform the rite, called async from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/perform_rite(mob/living/user)
+	if(user.mind.holy_role == HOLY_ROLE_DEACON)
+		to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+		return
 	if(!easy_access_sect.rites_list)
 		to_chat(user, "<span class='notice'>Your sect doesn't have any rites to perform!")
 		return
@@ -152,7 +163,9 @@
 			examine_list += "<span class='notice'>This looks like it can be used to select a sect.</span>"
 			return
 
-	examine_list += "<span class='notice'>The sect currently has [round(easy_access_sect.favor)] favor with [GLOB.deity].[(operation_flags & RELIGION_TOOL_SACRIFICE) ? "Desired items can be used on this to increase favor." : ""]</span>"
+	examine_list += easy_access_sect.tool_examine(user)
+	if(operation_flags & RELIGION_TOOL_SACRIFICE)
+		examine_list += "<span class='notice'>Desired items can be used on this to increase favor.</span>"
 	if(!easy_access_sect.rites_list)
 		return //if we dont have rites it doesnt do us much good if the object can be used to invoke them!
 	if(operation_flags & RELIGION_TOOL_INVOKE)

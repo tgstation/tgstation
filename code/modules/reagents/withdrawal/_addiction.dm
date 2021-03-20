@@ -69,7 +69,7 @@
 		else
 			withdrawal_stage = 0
 
-	if(!on_drug_of_this_addiction)
+	if(!on_drug_of_this_addiction && !HAS_TRAIT(affected_carbon, TRAIT_HOPELESSLY_ADDICTED))
 		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss_per_stage[withdrawal_stage + 1] * delta_time)) //If true was returned, we lost the addiction!
 			return
 

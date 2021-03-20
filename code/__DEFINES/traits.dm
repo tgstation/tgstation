@@ -253,6 +253,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KISS_OF_DEATH "kiss_of_death"
 /// Used on limbs in the process of turning a human into a plasmaman while in plasma lava
 #define TRAIT_PLASMABURNT "plasma_burnt"
+/// Addictions don't tick down, basically they're permanently addicted
+#define TRAIT_HOPELESSLY_ADDICTED "hopelessly_addicted"
+
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met

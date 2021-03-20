@@ -92,6 +92,7 @@
 
 /datum/addiction/maintenance_drugs
 	name = "maintenance drug"
+	withdrawal_stage_messages = list("", "", "")
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -120,12 +121,17 @@
 	. = ..()
 	if(!ishuman(affected_carbon))
 		return
+	to_chat(affected_carbon, "<span class='warning'>You feel yourself adapt to the darkness.</span>")
+	var/mob/living/carbon/human/affected_human = affected_carbon
 
-	var/mob/living/carbon/human/affected_human
-	var/obj/item/organ/eyes/eyes = affected_human.getorgan(/obj/item/organ/eyes)
+	var/obj/item/organ/liver/empowered_liver = affected_carbon.getorgan(/obj/item/organ/liver)
+	if(empowered_liver)
+		ADD_TRAIT(empowered_liver, TRAIT_GREYTIDE_METABOLISM, "maint_drug_addiction")
 
-	ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, type)
-	eyes.refresh()
+	var/obj/item/organ/eyes/empowered_eyes = affected_human.getorgan(/obj/item/organ/eyes)
+	if(empowered_eyes)
+		ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
+		empowered_eyes?.refresh()
 
 /datum/addiction/maintenance_drugs/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	if(!ishuman(affected_carbon))
@@ -151,7 +157,7 @@
 	affected_human.dna?.species.liked_food = initial(affected_human.dna?.species.liked_food)
 	affected_human.dna?.species.disliked_food = initial(affected_human.dna?.species.disliked_food)
 	affected_human.dna?.species.toxic_food = initial(affected_human.dna?.species.toxic_food)
-	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, type)
+	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
 	var/obj/item/organ/eyes/eyes = affected_human.getorgan(/obj/item/organ/eyes)
 	eyes.refresh()
 
