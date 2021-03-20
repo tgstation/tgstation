@@ -96,8 +96,8 @@
 	second_warning_line = "Last warning! Do not touch my spaghet."
 	self_defense_line = "I'm going to knead you like mama kneaded her delicious meatballs!"
 	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/spaghetti/pastatomato = 20, /obj/item/food/spaghetti/copypasta = 6, /obj/item/food/spaghetti/meatballspaghetti = 4, /obj/item/food/pizza/vegetable = 2, /obj/item/food/pizza/mushroom = 2, /obj/item/food/pizza/meat = 2, /obj/item/food/pizza/margherita = 2),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/fanciulli = 5, /datum/reagent/consumable/ethanol/branca_menta = 3, /datum/reagent/consumable/ethanol/beer = 10, /datum/reagent/consumable/lemonade = 8, /datum/reagent/consumable/ethanol/godfather = 5))
+	/datum/venue/restaurant = list(/obj/item/food/spaghetti/pastatomato = 20, /obj/item/food/spaghetti/copypasta = 6, /obj/item/food/spaghetti/meatballspaghetti = 4, /obj/item/food/spaghetti/butternoodles = 4, /obj/item/food/pizza/vegetable = 2, /obj/item/food/pizza/mushroom = 2, /obj/item/food/pizza/meat = 2, /obj/item/food/pizza/margherita = 2, /obj/item/food/lasagna = 4, /obj/item/food/cannoli = 3, /obj/item/food/eggplantparm = 3, /obj/item/food/cornuto = 2),
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/fanciulli = 5, /datum/reagent/consumable/ethanol/branca_menta = 3, /datum/reagent/consumable/ethanol/beer = 5, , /datum/reagent/consumable/lemonade = 8, /datum/reagent/consumable/ethanol/godfather = 5, /datum/reagent/consumable/ethanol/wine = 3, /datum/reagent/consumable/ethanol/grappa = 3, /datum/reagent/consumable/ethanol/amaretto = 3))
 
 
 /datum/customer_data/french
@@ -117,7 +117,7 @@
 	speech_sound = 'sound/creatures/tourist/tourist_talk_french.ogg'
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/baguette = 20, /obj/item/food/garlicbread = 5, /obj/item/food/soup/onion = 4, /obj/item/food/pie/berryclafoutis = 2, /obj/item/food/omelette = 15),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 15, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 10))
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 10, /datum/reagent/consumable/ethanol/cognac = 5, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 5, /datum/reagent/consumable/ethanol/wine = 5))
 
 /datum/customer_data/french/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING])
