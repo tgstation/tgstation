@@ -1,3 +1,4 @@
+import { resolveAsset } from "../assets";
 import { useBackend } from "../backend";
 import { Box, Button, Icon, Stack } from "../components";
 import { Window } from "../layouts";
@@ -31,24 +32,97 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
   },
 };
 
-const SLOTS_TO_GRID: Record<string, GridSpotKey> = {
-  eyes: getGridSpotKey([0, 1]),
-  head: getGridSpotKey([0, 2]),
-  neck: getGridSpotKey([1, 1]),
-  mask: getGridSpotKey([1, 2]),
-  ears: getGridSpotKey([1, 3]),
-  jumpsuit: getGridSpotKey([2, 1]),
-  suit: getGridSpotKey([2, 2]),
-  gloves: getGridSpotKey([2, 3]),
-  left_hand: getGridSpotKey([2, 4]),
-  right_hand: getGridSpotKey([2, 5]),
-  shoes: getGridSpotKey([3, 2]),
-  suit_storage: getGridSpotKey([4, 0]),
-  id: getGridSpotKey([4, 1]),
-  belt: getGridSpotKey([4, 2]),
-  back: getGridSpotKey([4, 3]),
-  left_pocket: getGridSpotKey([4, 4]),
-  right_pocket: getGridSpotKey([4, 5]),
+const SLOTS: Record<
+  string,
+  {
+    gridSpot: GridSpotKey;
+    image: string;
+  }
+> = {
+  eyes: {
+    gridSpot: getGridSpotKey([0, 1]),
+    image: "inventory-glasses.png",
+  },
+
+  head: {
+    gridSpot: getGridSpotKey([0, 2]),
+    image: "inventory-head.png",
+  },
+
+  neck: {
+    gridSpot: getGridSpotKey([1, 1]),
+    image: "inventory-neck.png",
+  },
+
+  mask: {
+    gridSpot: getGridSpotKey([1, 2]),
+    image: "inventory-mask.png",
+  },
+
+  ears: {
+    gridSpot: getGridSpotKey([1, 3]),
+    image: "inventory-ears.png",
+  },
+
+  jumpsuit: {
+    gridSpot: getGridSpotKey([2, 1]),
+    image: "inventory-uniform.png",
+  },
+
+  suit: {
+    gridSpot: getGridSpotKey([2, 2]),
+    image: "inventory-suit.png",
+  },
+
+  gloves: {
+    gridSpot: getGridSpotKey([2, 3]),
+    image: "inventory-gloves.png",
+  },
+
+  right_hand: {
+    gridSpot: getGridSpotKey([2, 4]),
+    image: "inventory-hand_r.png",
+  },
+
+  left_hand: {
+    gridSpot: getGridSpotKey([2, 5]),
+    image: "inventory-hand_l.png",
+  },
+
+  shoes: {
+    gridSpot: getGridSpotKey([3, 2]),
+    image: "inventory-shoes.png",
+  },
+
+  suit_storage: {
+    gridSpot: getGridSpotKey([4, 0]),
+    image: "inventory-suit_storage.png",
+  },
+
+  id: {
+    gridSpot: getGridSpotKey([4, 1]),
+    image: "inventory-id.png",
+  },
+
+  belt: {
+    gridSpot: getGridSpotKey([4, 2]),
+    image: "inventory-belt.png",
+  },
+
+  back: {
+    gridSpot: getGridSpotKey([4, 3]),
+    image: "inventory-back.png",
+  },
+
+  left_pocket: {
+    gridSpot: getGridSpotKey([4, 4]),
+    image: "inventory-pocket.png",
+  },
+
+  right_pocket: {
+    gridSpot: getGridSpotKey([4, 5]),
+    image: "inventory-pocket.png",
+  },
 };
 
 type StripMenuItem =
@@ -63,7 +137,7 @@ type StripMenuItem =
     };
 
 type StripMenuData = {
-  items: Record<keyof typeof SLOTS_TO_GRID, StripMenuItem>;
+  items: Record<keyof typeof SLOTS, StripMenuItem>;
 };
 
 type GridSpotKey = string;
@@ -78,7 +152,7 @@ export const StripMenu = (props, context) => {
 
   const gridSpots = new Map<GridSpotKey, string>();
   for (const key of Object.keys(data.items)) {
-    gridSpots.set(SLOTS_TO_GRID[key], key);
+    gridSpots.set(SLOTS[key].gridSpot, key);
   }
 
   const grid = [];
@@ -101,25 +175,14 @@ export const StripMenu = (props, context) => {
       }
 
       const item = data.items[keyAtSpot];
+      const slot = SLOTS[keyAtSpot];
+
       let alternateAction: AlternateAction | undefined;
 
       let content;
       let tooltip;
 
       if (item === null) {
-        content = (
-          <Icon
-            name="times"
-            size={3}
-            ml={0}
-            mt={1.3}
-            style={{
-              textAlign: "center",
-              height: "100%",
-              width: "100%",
-            }}
-          />
-        );
         tooltip = "TODO: NAME GOES HERE";
       } else if ("name" in item) {
         alternateAction = ALTERNATE_ACTIONS[item.alternate];
@@ -156,54 +219,6 @@ export const StripMenu = (props, context) => {
         tooltip = `Obscured TODO: PUT NAME HERE`;
       }
 
-      let innerButton = (
-        <Button
-          onClick={() => {
-            act("use", {
-              key: keyAtSpot,
-            });
-          }}
-          fluid
-          tooltip={tooltip}
-          style={{
-            width: "100%",
-            height: "100%",
-            padding: 0,
-          }}
-        >
-          {content}
-        </Button>
-      );
-
-      if (alternateAction !== undefined) {
-        innerButton = (
-          <Box
-            style={{
-              position: "relative",
-            }}
-          >
-            {innerButton}
-
-            <Button
-              onClick={() => {
-                act("alt", {
-                  key: keyAtSpot,
-                });
-              }}
-              icon={alternateAction.icon}
-              tooltip={alternateAction.text}
-              style={{
-                background: "rgba(0, 0, 0, 0.6)",
-                position: "absolute",
-                bottom: 0,
-                right: 0,
-                "z-index": 2,
-              }}
-            />
-          </Box>
-        );
-      }
-
       buttons.push(
         <Stack.Item
           style={{
@@ -211,7 +226,64 @@ export const StripMenu = (props, context) => {
             height: BUTTON_DIMENSIONS,
           }}
         >
-          {innerButton}
+          <Box
+            style={{
+              position: "relative",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <Button
+              onClick={() => {
+                act("use", {
+                  key: keyAtSpot,
+                });
+              }}
+              fluid
+              tooltip={tooltip}
+              style={{
+                position: "relative",
+                width: "100%",
+                height: "100%",
+                padding: 0,
+              }}
+            >
+              <Box
+                as="img"
+                src={resolveAsset(slot.image)}
+                opacity={0.7}
+                style={{
+                  position: "absolute",
+                  width: "32px",
+                  height: "32px",
+                  left: "50%",
+                  top: "50%",
+                  transform: "translateX(-50%) translateY(-50%) scale(0.8)",
+                }}
+              />
+
+              <Box style={{ position: "relative" }}>{content}</Box>
+            </Button>
+
+            {alternateAction !== undefined && (
+              <Button
+                onClick={() => {
+                  act("alt", {
+                    key: keyAtSpot,
+                  });
+                }}
+                icon={alternateAction.icon}
+                tooltip={alternateAction.text}
+                style={{
+                  background: "rgba(0, 0, 0, 0.6)",
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  "z-index": 2,
+                }}
+              />
+            )}
+          </Box>
         </Stack.Item>
       );
     }

@@ -281,7 +281,12 @@
 		ui = new(user, src, "StripMenu")
 		ui.open()
 
-// TODO: Make this show what you're interacting with, like an animating border around the icon
+/datum/strip_menu/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/simple/inventory),
+	)
+
+// MOTHBLOCKS TODO: Make this show what you're interacting with, like an animating border around the icon
 /datum/strip_menu/ui_data(mob/user)
 	var/list/data = list()
 
