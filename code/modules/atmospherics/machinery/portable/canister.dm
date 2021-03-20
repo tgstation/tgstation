@@ -514,7 +514,7 @@
 
 	// Handle gas transfer.
 	if(mix_air)
-		var/datum/gas_mixture/target_air = gas_mix ? gas_mix : location.return_air()
+		var/datum/gas_mixture/target_air = gas_mix || location.return_air()
 
 		if(air_contents.release_gas_to(target_air, pressure) && (!holding || air_update))
 			air_update_turf(FALSE, FALSE)
