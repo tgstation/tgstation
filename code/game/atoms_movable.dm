@@ -36,7 +36,6 @@
 	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/area_sensitive_contents // A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
-	var/list/acted_explosions //for explosion dodging
 	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
 
 	/**
@@ -939,14 +938,6 @@
 	. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]'>Follow</option>"
 	. += "<option value='?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]'>Get</option>"
 
-/atom/movable/proc/ex_check(ex_id)
-	if(!ex_id)
-		return TRUE
-	LAZYINITLIST(acted_explosions)
-	if(ex_id in acted_explosions)
-		return FALSE
-	acted_explosions += ex_id
-	return TRUE
 
 /* Language procs
 * Unless you are doing something very specific, these are the ones you want to use.
