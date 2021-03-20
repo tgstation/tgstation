@@ -1,14 +1,20 @@
 
 /* TODO:
-after someone passes honor checks you still can't attack them
+after someone passes honor checks you still can't attack them --still present? test
+
+//magic shit
+sort schools
+write out honorbound writ rules
+
 */
 ///Honorbound prevents you from attacking the unready, the just, or the innocent
 /datum/mutation/human/honorbound
 	name = "Honorbound"
-	desc = "Less of a genome and of a forceful rewrite of genes. Nothing Nanotrasen supplies allows for a genetic restructure like this... \
+	desc = "Less of a genome and more of a forceful rewrite of genes. Nothing Nanotrasen supplies allows for a genetic restructure like this... \
 	The user feels compelled to follow supposed \"rules of combat\" but in reality they physically are unable to. \
 	Their brain is rewired to excuse any curious inabilities that arise from this odd effect."
 	quality = POSITIVE //so it gets carried over on revives
+	power = /obj/effect/proc_holder/spell/pointed/declare_evil
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel honorbound!</span>"
 	text_lose_indication = "<span class='warning'>You feel unshackled from your code of honor!</span>"
@@ -17,9 +23,10 @@ after someone passes honor checks you still can't attack them
 /datum/mutation/human/honorbound/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-
 	//moodlet
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/honorbound)
+	//checking spells cast by honorbound
+	RegisterSignal(owner, COMSIG_MOB_CAST_SPELL, .proc/spell_check)
 	//signals that check for guilt
 	RegisterSignal(owner, COMSIG_PARENT_ATTACKBY, .proc/attackby_guilt)
 	RegisterSignal(owner, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_guilt)
@@ -32,6 +39,7 @@ after someone passes honor checks you still can't attack them
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, .proc/attack_honor)
 
 /datum/mutation/human/honorbound/on_losing(mob/living/carbon/human/owner)
+	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "honorbound")
 	UnregisterSignal(owner, list(COMSIG_PARENT_ATTACKBY,COMSIG_ATOM_HULK_ATTACK,COMSIG_ATOM_ATTACK_HAND,COMSIG_ATOM_ATTACK_PAW,COMSIG_ATOM_BULLET_ACT,COMSIG_ATOM_HITBY,COMSIG_MOB_CLICKON))
 	. = ..()
 
@@ -122,4 +130,42 @@ after someone passes honor checks you still can't attack them
 		var/obj/item/thrown_item = thrown_movable
 		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_item.thrownby))
 			guilty(thrown_item.thrownby)
+
+//spell checking
+/datum/mutation/human/honorbound/proc/spell_check(obj/effect/proc_holder/spell/spell_cast, mob/user)
+	SIGNAL_HANDLER
+	switch(spell_cast.school)
+		if(SCHOOL_EVOCATION, SCHOOL_TRANSMUTATION, SCHOOL_ILLUSION, SCHOOL_CONJURATION)
+			to_chat(user, "<span class='userdanger'>[GLOB.deity] is angered by your use of [spell_cast.school] magic!</span>")
+			lightningbolt(user)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound_punishment", /datum/mood_event/holy_smite)
+		if(SCHOOL_NECROMANCY)
+			to_chat(user, "<span class='userdanger'>[GLOB.deity] is enraged by your use of forbidden magic!</span>")
+			lightningbolt(user)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound_punishment", /datum/mood_event/banished)
+			user.mind.holy_role = NONE
+			to_chat(user, "<span class='userdanger'>You have been excommunicated! You are no longer holy!</span>")
+
+/datum/mutation/human/honorbound/proc/lightningbolt(mob/user)
+	var/turf/lightning_source = get_step(get_step(user, NORTH), NORTH)
+	lightning_source.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
+	user.adjustFireLoss(LIGHTNING_BOLT_DAMAGE)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_target = user
+		human_target.electrocution_animation(LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH)
+
+/obj/effect/proc_holder/spell/pointed/declare_evil
+	name = "Declare Evil"
+	desc = "This spell allows the user to switch bodies with a target next to him."
+	school = SCHOOL_TRANSMUTATION
+	charge_max = 0
+	clothes_req = FALSE
+	invocation = "GIN'YU CAPAN"
+	invocation_type = INVOCATION_WHISPER
+	range = 1
+	cooldown_min = 200
+	ranged_mousepointer = 'icons/effects/mouse_pointers/honorbound.dmi'
+	action_icon_state = "declaration"
+	active_msg = "You prepare to declare a sinner..."
+
 

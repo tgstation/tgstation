@@ -7,7 +7,7 @@
 ///Burdened grants some more mutations upon injuring yourself sufficiently
 /datum/mutation/human/burdened
 	name = "Burdened"
-	desc = "Less of a genome and of a forceful rewrite of genes. Nothing Nanotrasen supplies allows for a genetic restructure like this... \
+	desc = "Less of a genome and more of a forceful rewrite of genes. Nothing Nanotrasen supplies allows for a genetic restructure like this... \
 	The user feels compelled to injure themselves in various incapacitating and horrific ways. Oddly enough, this gene seems to be connected \
 	to several other ones, possibly ready to trigger more genetic changes in the future."
 	quality = POSITIVE //so it gets carried over on revives
@@ -152,7 +152,7 @@
 	for(var/datum/mutation/human/mutation as anything in burdened.dna.mutations)
 		if(mutation.quality == NEGATIVE)
 			bad_mutations++
-	if(bad_mutations == BAD_MUTATIONS_REQUIRED == 2) //looks bad but can only be checked if we are losing a mutation
+	if(bad_mutations == BAD_MUTATIONS_REQUIRED - 1) //one less than mutations required on a proc that goes off when you lose one = no more burden
 		burden_level -= 1 //you're no longer badly mutated!
 		update_burden(FALSE)
 

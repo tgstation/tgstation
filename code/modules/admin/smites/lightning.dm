@@ -1,6 +1,3 @@
-#define LIGHTNING_BOLT_DAMAGE 75
-#define LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH 40
-
 /// Strikes the target with a lightning bolt
 /datum/smite/lightning
 	name = "Lightning bolt"
@@ -14,6 +11,3 @@
 		var/mob/living/carbon/human/human_target = target
 		human_target.electrocution_animation(LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH)
 	to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>", confidential = TRUE)
-
-#undef LIGHTNING_BOLT_DAMAGE
-#undef LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH

@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
 	name = "Ashen Passage"
 	desc = "A short range spell allowing you to pass unimpeded through a few walls."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	invocation = "ASH'N P'SSG'"
 	invocation_type = INVOCATION_WHISPER
 	charge_max = 150
@@ -33,7 +33,7 @@
 	name = "Mansus Grasp"
 	desc = "A touch spell that lets you channel the power of the Old Gods through your grip."
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 100
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -79,7 +79,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"
 	desc = "Spreads rust onto nearby surfaces."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
 	invocation = "A'GRSV SPR'D"
@@ -106,7 +106,7 @@
 /obj/effect/proc_holder/spell/pointed/blood_siphon
 	name = "Blood Siphon"
 	desc = "A touch spell that heals your wounds while damaging the enemy. It has a chance to transfer wounds between you and your enemy."
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 150
 	clothes_req = FALSE
 	invocation = "FL'MS O'ET'RN'ITY"
@@ -212,7 +212,7 @@
 /obj/effect/proc_holder/spell/pointed/cleave
 	name = "Cleave"
 	desc = "Causes severe bleeding on a target and several targets around them."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 350
 	clothes_req = FALSE
 	invocation = "CL'VE"
@@ -267,7 +267,7 @@
 /obj/effect/proc_holder/spell/pointed/touch/mad_touch
 	name = "Touch of Madness"
 	desc = "A touch spell that drains your enemy's sanity."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 150
 	clothes_req = FALSE
 	invocation_type = "none"
@@ -301,7 +301,7 @@
 /obj/effect/proc_holder/spell/pointed/ash_final
 	name = "Nightwatcher's Rite"
 	desc = "A powerful spell that releases 5 streams of fire away from you."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	invocation = "F'RE"
 	invocation_type = INVOCATION_WHISPER
 	charge_max = 300
@@ -391,7 +391,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade
 	name = "Fire Cascade"
 	desc = "Heats the air around you."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
 	invocation = "C'SC'DE"
@@ -529,7 +529,7 @@
 /obj/effect/proc_holder/spell/pointed/manse_link
 	name = "Mansus Link"
 	desc = "Piercing through reality, connecting minds. This spell allows you to add people to a Mansus Net, allowing them to communicate with each other from afar."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 300
 	clothes_req = FALSE
 	invocation = "PI'RC' TH' M'ND"
@@ -635,7 +635,7 @@
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	name = "Entropic Plume"
 	desc = "Spews forth a disorienting plume that causes enemies to strike each other, briefly blinds them(increasing with range) and poisons them(decreasing with range). Also spreads rust in the path of the plume."
-	school = "illusion"
+	school = SCHOOL_ILLUSION
 	invocation = "'NTR'P'C PL'M'"
 	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE

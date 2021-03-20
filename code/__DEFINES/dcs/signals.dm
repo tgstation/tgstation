@@ -784,6 +784,9 @@
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GUN_FIRED "gun_fired"
 
+///called from /obj/effect/proc_holder/spell/cast (user)
+#define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
+
 // /obj/item/grenade signals
 
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)

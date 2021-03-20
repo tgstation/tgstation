@@ -106,25 +106,25 @@
 /datum/religion_sect/proc/sect_bless(mob/living/chap, mob/living/user)
 	if(!ishuman(chap))
 		return FALSE
-	var/mob/living/carbon/human/H = chap
-	for(var/X in H.bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(BP.status == BODYPART_ROBOTIC)
+	var/mob/living/carbon/human/blessed = chap
+	for(var/X in blessed.bodyparts)
+		var/obj/item/bodypart/bodypart = X
+		if(bodypart.status == BODYPART_ROBOTIC)
 			to_chat(user, "<span class='warning'>[GLOB.deity] refuses to heal this metallic taint!</span>")
 			return TRUE
 
 	var/heal_amt = 10
-	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
+	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
 
 	if(hurt_limbs.len)
 		for(var/X in hurt_limbs)
 			var/obj/item/bodypart/affecting = X
 			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
-				H.update_damage_overlays()
-		H.visible_message("<span class='notice'>[user] heals [H] with the power of [GLOB.deity]!</span>")
-		to_chat(H, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed!</span>")
+				blessed.update_damage_overlays()
+		blessed.visible_message("<span class='notice'>[user] heals [blessed] with the power of [GLOB.deity]!</span>")
+		to_chat(blessed, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed!</span>")
 		playsound(user, "punch", 25, TRUE, -1)
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
 /datum/religion_sect/puritanism
@@ -157,35 +157,35 @@
 		return TRUE
 	if(!ishuman(chap))
 		return
-	var/mob/living/carbon/human/H = chap
+	var/mob/living/carbon/human/blessed = chap
 
 	//first we determine if we can charge them
 	var/did_we_charge = FALSE
-	var/obj/item/organ/stomach/ethereal/eth_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/ethereal/eth_stomach = blessed.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(eth_stomach))
 		eth_stomach.adjust_charge(60)
 		did_we_charge = TRUE
 
 	//if we're not targetting a robot part we stop early
-	var/obj/item/bodypart/BP = H.get_bodypart(user.zone_selected)
-	if(BP.status != BODYPART_ROBOTIC)
+	var/obj/item/bodypart/bodypart = blessed.get_bodypart(user.zone_selected)
+	if(bodypart.status != BODYPART_ROBOTIC)
 		if(!did_we_charge)
 			to_chat(user, "<span class='warning'>[GLOB.deity] scoffs at the idea of healing such fleshy matter!</span>")
 		else
-			H.visible_message("<span class='notice'>[user] charges [H] with the power of [GLOB.deity]!</span>")
-			to_chat(H, "<span class='boldnotice'>You feel charged by the power of [GLOB.deity]!</span>")
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+			blessed.visible_message("<span class='notice'>[user] charges [blessed] with the power of [GLOB.deity]!</span>")
+			to_chat(blessed, "<span class='boldnotice'>You feel charged by the power of [GLOB.deity]!</span>")
+			SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 			playsound(user, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
 		return TRUE
 
 	//charge(?) and go
-	if(BP.heal_damage(5,5,null,BODYPART_ROBOTIC))
-		H.update_damage_overlays()
+	if(bodypart.heal_damage(5,5,null,BODYPART_ROBOTIC))
+		blessed.update_damage_overlays()
 
-	H.visible_message("<span class='notice'>[user] [did_we_charge ? "repairs" : "repairs and charges"] [H] with the power of [GLOB.deity]!</span>")
-	to_chat(H, "<span class='boldnotice'>The inner machinations of [GLOB.deity] [did_we_charge ? "repairs" : "repairs and charges"] you!</span>")
+	blessed.visible_message("<span class='notice'>[user] [did_we_charge ? "repairs" : "repairs and charges"] [blessed] with the power of [GLOB.deity]!</span>")
+	to_chat(blessed, "<span class='boldnotice'>The inner machinations of [GLOB.deity] [did_we_charge ? "repairs" : "repairs and charges"] you!</span>")
 	playsound(user, 'sound/effects/bang.ogg', 25, TRUE, -1)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
 /datum/religion_sect/technophile/on_sacrifice(obj/item/I, mob/living/chap)
@@ -228,6 +228,8 @@
 	qdel(offering)
 	return TRUE
 
+#define GREEDY_HEAL_COST 50
+
 /datum/religion_sect/greed
 	name = "Greedy God"
 	desc = "A very mercantile sect."
@@ -242,52 +244,59 @@
 	return "<span class='notice'>In the eyes of [GLOB.deity], your <b>wealth</b> is your favor.</span>"
 
 /datum/religion_sect/greed/sect_bless(mob/living/blessed_living, mob/living/user)
-	if(!ishuman(blessed_living))
-		return FALSE
-	/*
+	var/datum/bank_account/account = user.get_bank_account()
+	if(!account)
+		to_chat(user, "<span class='warning'>You need a way to pay for the heal!</span>")
+		return TRUE
+	if(account.account_balance < GREEDY_HEAL_COST)
+		to_chat(user, "<span class='warning'>Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!</span>")
+		return TRUE
 	var/mob/living/carbon/human/blessed = blessed_living
-	if(blessed.reagents.has_reagent(/datum/reagent/drug/maint/sludge))
-		to_chat(blessed, "<span class='warning'>[GLOB.deity] has already empowered them.</span>")
-		return FALSE
-	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
-	blessed.visible_message("<span class='notice'>[user] empowers [H] with the power of [GLOB.deity]!</span>")
-	to_chat(blessed, "<span class='boldnotice'>The power of [GLOB.deity] has made you harder to wound for awhile!</span>")
-	playsound(user, "punch", 25, TRUE, -1)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
-	return FALSE //trust me, you'll be feeling the pain from the maint drugs all well enough
-
-	if(!ishuman(chap))
-		return FALSE
-	var/mob/living/carbon/human/H = chap
-	for(var/X in H.bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(BP.status == BODYPART_ROBOTIC)
+	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
+		if(robolimb.status == BODYPART_ROBOTIC)
 			to_chat(user, "<span class='warning'>[GLOB.deity] refuses to heal this metallic taint!</span>")
 			return TRUE
-
-	var/heal_amt = 10
-	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
-
+	if(!ishuman(blessed_living))
+		return FALSE
+	account.adjust_money(-GREEDY_HEAL_COST)
+	var/heal_amt = 30
+	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
 	if(hurt_limbs.len)
-		for(var/X in hurt_limbs)
-			var/obj/item/bodypart/affecting = X
+		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
 			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
-				H.update_damage_overlays()
-		H.visible_message("<span class='notice'>[user] heals [H] with the power of [GLOB.deity]!</span>")
-		to_chat(H, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed!</span>")
-		playsound(user, "punch", 25, TRUE, -1)
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
+				blessed.update_damage_overlays()
+		blessed.visible_message("<span class='notice'>[user] barters a heal for [blessed] from [GLOB.deity]!</span>")
+		to_chat(blessed, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!</span>")
+		playsound(user, 'sound/effects/cashregister.ogg', 60, TRUE)
+		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
-	*/
+
+#undef GREEDY_HEAL_COST
 
 /datum/religion_sect/honorbound
 	name = "Honorbound God"
-	desc = "A sect that does not engage in harm."
+	desc = "A sect that follows a strict code for engaging evil."
 	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
-	convert_opener = "\"A good, honourable crusade against evil is required.\"<br>\
+	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
+	convert_opener = "\"A good, honorable crusade against evil is required.\"<br>\
 	Your deity requires fair fights from you. You may not attack the unready, the just, or the innocent.<br>\
 	You earn favor by getting others to join the crusade, and you may spend favor to announce a battle, bypassing some conditions to attack."
+	///people who have agreed to join the crusade, and can be deaconized
+	var/list/possible_crusaders = list()
+	///people who have been offered an invitation, they haven't finished the alert though.
+	var/list/currently_asking = list()
+
+/**
+ * Called by deaconize rite, this async'd proc waits for a response on joining the sect.
+ * If yes, the deaconize rite can now recruit them instead of just offering invites
+ */
+/datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
+	currently_asking += invited
+	var/ask = alert("Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", "Yes", "No")
+	currently_asking -= invited
+	if(ask == "Yes")
+		possible_crusaders += invited
 
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	if(!ishuman(new_convert))

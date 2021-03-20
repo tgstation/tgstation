@@ -76,7 +76,7 @@
 	clothes_req = FALSE
 	var/obj/item/item
 	var/item_type = /obj/item/banhammer
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 150
 	cooldown_min = 10
 	var/delete_old = TRUE //TRUE to delete the last summoned object if it's still there, FALSE for infinite item stream weeeee
