@@ -1448,8 +1448,8 @@
 	name = "ventriloquist dummy"
 	desc = "It's a dummy, dummy."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "assistant"
-	inhand_icon_state = "doll"
+	icon_state = "puppet"
+	inhand_icon_state = "puppet"
 	var/doll_name = "Dummy"
 
 //Add changing looks when i feel suicidal about making 20 inhands for these.
