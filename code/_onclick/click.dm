@@ -349,9 +349,9 @@
 	if(world.time < user.next_move)
 		return FALSE
 
-	var/mob/living/carbon/human/H = user
-	if(H.dna.species.grab(H, src, H.mind.martial_art))
-		H.changeNext_move(CLICK_CD_MELEE)
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
+		human_user.changeNext_move(CLICK_CD_MELEE)
 		return TRUE
 
 	return ..()
