@@ -12,7 +12,7 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter)
 
 /obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
+	..()
 	to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
 	if(!I.use_tool(src, user, 40, volume=50))
 		return TRUE
@@ -219,11 +219,11 @@
 	if(!I.use_tool(src, user, 25, volume=50, amount=2))
 		return
 	to_chat(user, "<span class='notice'>You add the rods to [src], creating handlebars.</span>")
-	var/obj/vehicle/ridden/scooter/S = new(loc)
+	var/obj/vehicle/ridden/scooter/skaterskoot = new(loc)
 	if(has_buckled_mobs())
-		var/mob/living/carbon/H = buckled_mobs[1]
-		unbuckle_mob(H)
-		S.buckle_mob(H)
+		var/mob/living/carbon/skaterboy = buckled_mobs[1]
+		unbuckle_mob(skaterboy)
+		skaterskoot.buckle_mob(skaterboy)
 	qdel(src)
 
 /obj/vehicle/ridden/scooter/skateboard/improvised/screwdriver_act(mob/living/user, obj/item/I)
@@ -237,8 +237,8 @@
 	new /obj/item/stack/sheet/iron(drop_location(), 5)
 	new /obj/item/scooter_frame(drop_location())
 	if(has_buckled_mobs())
-		var/mob/living/carbon/H = buckled_mobs[1]
-		unbuckle_mob(H)
+		var/mob/living/carbon/skatergirl = buckled_mobs[1]
+		unbuckle_mob(skatergirl)
 	qdel(src)
 	return TRUE
 
