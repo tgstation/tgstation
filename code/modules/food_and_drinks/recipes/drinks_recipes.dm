@@ -1,7 +1,7 @@
 //////////////////////////////////////// DRINK RECIPE BASE ////////////////////////////////
 
 /datum/chemical_reaction/drink
-	optimal_temp = 400
+	optimal_temp = 200
 	temp_exponent_factor = 1
 	optimal_ph_min = 2
 	optimal_ph_max = 10
