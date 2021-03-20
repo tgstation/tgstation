@@ -280,7 +280,7 @@
 			list("name" = "H_ion_release" , "var" = edit_recipe.H_ion_release),
 			list("name" = "rate_up_lim" , "var" = edit_recipe.rate_up_lim),
 			list("name" = "purity_min" , "var" = edit_recipe.purity_min),
-			)
+		)
 
 	return data
 
