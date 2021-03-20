@@ -235,7 +235,7 @@
 	alignment = ALIGNMENT_EVIL //greed is not good wtf
 	rites_list = list(/datum/religion_rites/greed/vendatray, /datum/religion_rites/greed/custom_vending)
 	convert_opener = "\"Greed is good.\"<br>\
-	In the eyes of your mercantile diety, your wealth is your favor. Earn enough wealth to purchase some more business opportunities."
+	In the eyes of your mercantile deity, your wealth is your favor. Earn enough wealth to purchase some more business opportunities."
 	altar_icon_state = "convertaltar-yellow"
 
 /datum/religion_sect/greed/tool_examine(mob/living/holy_creature) //display money policy
@@ -286,7 +286,7 @@
 	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
 	convert_opener = "\"A good, honourable crusade against evil is required.\"<br>\
-	Your diety requires fair fights from you. You may not attack the unready, the just, or the innocent.<br>\
+	Your deity requires fair fights from you. You may not attack the unready, the just, or the innocent.<br>\
 	You earn favor by getting others to join the crusade, and you may spend favor to announce a battle, bypassing some conditions to attack."
 
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
@@ -360,5 +360,4 @@
 	return TRUE
 
 #undef MINIMUM_YUCK_REQUIRED
-
 
