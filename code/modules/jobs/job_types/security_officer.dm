@@ -267,7 +267,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	 * - cargo: 1
 	 *
 	 * We need 2 to fill the first group. There are enough medical staff to do it. Thus, we take the first 2 medical staff
-	 * and update the output, making it now: [?, medical, medical, ?, ?, cargo].
+	 * and update the output, making it now: [engineer, medical, medical, ?, ?, cargo].
 	 *
 	 * The remaining two want-to-be-medical officers are now updated to act as no preference. We run the algorithm again.
 	 * This time, are candidates are [engineer, none, none, cargo].
