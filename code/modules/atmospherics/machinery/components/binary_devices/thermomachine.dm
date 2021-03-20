@@ -128,6 +128,7 @@
 	var/datum/gas_mixture/main_port = airs[1]
 	var/datum/gas_mixture/thermal_exchange_port = airs[2]
 	var/turf/local_turf = get_turf(src)
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
 	var/main_heat_capacity = main_port.heat_capacity()
 	var/thermal_heat_capacity = thermal_exchange_port.heat_capacity()
 	var/temperature_delta = main_port.temperature - target_temperature
@@ -147,8 +148,7 @@
 		if(temperature_difference > 0)
 			efficiency = max(1 - log(10, temperature_difference) * 0.1, 0)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency)/ main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
-	else if(main_port.total_moles() && (thermal_exchange_port.total_moles() || !nodes[2]))
-		var/datum/gas_mixture/enviroment = local_turf.return_air()
+	else if(main_port.total_moles() && enviroment.total_moles() && (!thermal_exchange_port.total_moles() || !nodes[2]))
 		if(cooling)
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
 			enviroment.temperature = max(enviroment.temperature + heat_amount / enviroment_heat_capacity, TCMB)
@@ -162,7 +162,7 @@
 	heat_amount = abs(heat_amount)
 	var/power_usage
 	if(temperature_delta  > 1)
-		power_usage = (heat_amount * 0.3 + idle_power_usage) ** (1.3 - (1e7 * 0.5) / (max(1e7, heat_amount)))
+		power_usage = (heat_amount * 0.3 + idle_power_usage) ** (1.2 - (5e6 * efficiency) / (max(5e6, heat_amount)))
 	else
 		power_usage = idle_power_usage
 	use_power(power_usage)
