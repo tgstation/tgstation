@@ -136,6 +136,6 @@
 	C.air_contents.garbage_collect()
 	return worth
 
-/datum/export/large/gas_canister/proc/get_gas_value(gasType, moles)
-	var/baseValue = GLOB.meta_gas_info[gasType].base_value
+/datum/export/large/gas_canister/proc/get_gas_value(datum/gas/gasType, moles)
+	var/baseValue = initial(gasType.base_value)
 	return round((baseValue/k_elasticity) * 1 - NUM_E**(-1 * k_elasticity * moles))
