@@ -10222,14 +10222,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
 /turf/open/floor/iron/showroomfloor,
@@ -15561,6 +15561,7 @@
 	dir = 1
 	},
 /obj/structure/filingcabinet/filingcabinet,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/psychology)
 "aNN" = (
@@ -57094,6 +57095,7 @@
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "eJQ" = (
@@ -57892,6 +57894,13 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/engineering/main)
+"fdd" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engineering/main)
 "fdr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -58608,6 +58617,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
 /obj/machinery/meter/atmos/distro_loop,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer1,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "fzM" = (
@@ -60495,6 +60505,9 @@
 	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer1{
+	dir = 9
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
@@ -62981,6 +62994,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer1,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "hYb" = (
@@ -65594,6 +65608,16 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port)
+"jxa" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engineering/main)
 "jxk" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -66451,6 +66475,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer1,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "jUZ" = (
@@ -66619,6 +66644,7 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/heater/on{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "kbd" = (
@@ -68098,6 +68124,19 @@
 	icon_state = "wood-broken6"
 	},
 /area/commons/locker)
+"kLZ" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "kNb" = (
 /obj/structure/chair/stool/bar,
 /mob/living/simple_animal/hostile/russian{
@@ -68262,6 +68301,13 @@
 /obj/machinery/atmospherics/pipe/simple/purple/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"kSC" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/engineering/main)
 "kSE" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
@@ -68442,6 +68488,19 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/iron/dark,
+/area/engineering/main)
+"kVD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 9
+	},
+/turf/open/floor/engine,
 /area/engineering/main)
 "kVV" = (
 /obj/effect/turf_decal/bot,
@@ -70545,6 +70604,10 @@
 	},
 /turf/open/floor/iron,
 /area/command/bridge)
+"maO" = (
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/turf/closed/wall,
+/area/medical/psychology)
 "maY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -77526,6 +77589,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engineering/break_room)
+"pSU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "pSW" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -81342,8 +81409,8 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -90538,6 +90605,9 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	name = "Mix to Distro"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible/layer1{
+	dir = 5
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -112124,7 +112194,7 @@ aOl
 aPe
 avC
 aNM
-yio
+maO
 aNR
 aOj
 aOp
@@ -121177,11 +121247,11 @@ bYL
 bFa
 aRQ
 rXr
-iVw
-iVw
-qxq
+pSU
+pSU
+fsJ
 eJP
-nYq
+kLZ
 gnH
 tth
 tth
@@ -128895,7 +128965,7 @@ nMp
 shf
 oOq
 sPq
-jRr
+jxa
 dgl
 qkL
 qoR
@@ -129151,8 +129221,8 @@ fUt
 oIr
 uuT
 oOE
-sPq
-jRr
+fdd
+kVD
 qdR
 rJc
 mGI
@@ -129408,7 +129478,7 @@ fUt
 tfz
 uuT
 oOE
-sPq
+kSC
 jRr
 sCE
 lkf
