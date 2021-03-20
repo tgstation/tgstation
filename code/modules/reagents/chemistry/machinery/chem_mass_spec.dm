@@ -37,7 +37,6 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	. = ..()
 	beaker2 = new /obj/item/reagent_containers/glass/beaker/large(src)
 	ADD_TRAIT(src, DO_NOT_SPLASH, src.type)
-	//update_appearance()
 
 /obj/machinery/chem_mass_spec/Destroy()
 	QDEL_NULL(beaker1)
@@ -87,7 +86,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		return ..()
 	replace_beaker(user, BEAKER1)
 
-/obj/machinery/chem_mass_spec/AltClick_secondary(mob/living/user)
+/obj/machinery/chem_mass_spec/alt_click_secondary(mob/living/user)
 	. = ..()
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
@@ -96,6 +95,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		return
 	replace_beaker(user, BEAKER2)
 
+///Gee how come you get two beakers?
 /obj/machinery/chem_mass_spec/proc/replace_beaker(mob/living/user, target_beaker, obj/item/reagent_containers/new_beaker)
 	if(!user)
 		return FALSE
@@ -253,6 +253,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 
 /*				processing procs				*/
 
+///Increments time if it's progressing - if it's past time then it purifies and stops processing
 /obj/machinery/chem_mass_spec/process(delta_time)
 	. = ..()
 	if(!is_operational)
@@ -269,6 +270,12 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	progress_time += delta_time
 	return FALSE
 
+/*
+ * Processing through the reagents in beaker 1
+ * For all the reagents within the selected range - we will then purify them up to their initial purity (usually 75%). It will take away the relative reagent volume from the sum volume of the reagent however.
+ * If there are any inverted reagents - then it will instead just create a new reagent of the inverted type. This doesn't really do anything other than change the name of it,
+ * As it processes through the reagents, it saves what changes were applied to each reagent in a log var to show the results at the end
+ */
 /obj/machinery/chem_mass_spec/proc/purify_reagents()
 	log = list()
 	for(var/datum/reagent/reagent as anything in beaker1.reagents.reagent_list)
@@ -326,7 +333,12 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		min_mass = min(min_mass, reagent.mass)
 	return FLOOR(min_mass, 50)
 
-///Estimates how long the highlighted range will take to process
+/*
+ * Estimates how long the highlighted range will take to process
+ * The time will increase based off the reagent's volume, mass and purity.
+ * In most cases this is between 10 to 30s for a single reagent.
+ * This is why having a higher mass for a reagent is a balancing tool.
+ */
 /obj/machinery/chem_mass_spec/proc/estimate_time()
 	if(!beaker1?.reagents)
 		return 0

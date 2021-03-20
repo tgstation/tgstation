@@ -93,7 +93,7 @@
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			AltClickOn_secondary(A)
+			alt_click_on_secondary(A)
 		else
 			AltClickOn(A)
 		return
@@ -368,15 +368,15 @@
 		user.listed_turf = T
 		user.client << output("[url_encode(json_encode(T.name))];", "statbrowser:create_listedturf")
 
-///The base proc of when something is right clicked on when alt is held - generally use AltClick_secondary instead
-/atom/proc/AltClickOn_secondary(atom/A)
+///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead
+/atom/proc/alt_click_on_secondary(atom/A)
 	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON_SECONDARY, A)
 	if(. & COMSIG_MOB_CANCEL_CLICKON)
 		return
-	A.AltClick_secondary(src)
+	A.alt_click_secondary(src)
 
 ///The base proc of when something is right clicked on when alt is held
-/atom/proc/AltClick_secondary(mob/user)
+/atom/proc/alt_click_secondary(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
 		return
 

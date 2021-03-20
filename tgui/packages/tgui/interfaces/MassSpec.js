@@ -109,7 +109,7 @@ export const MassSpec = (props, context) => {
           <BeakerMassProfile
             loaded={!!beaker2}
             beaker={beaker2Contents}
-            details={true} />
+            details />
         </Section>
       </Window.Content>
     </Window>
@@ -224,21 +224,10 @@ const MassSpectroscopy = (props, context) => {
           </text>
           <g transform="translate(0, 0) scale(0.8 0.8)">
             {reagentPeaks.map(peak => (
-              //Triangle peak
-              <polygon key={peak.name} points={`
-                ${((peak.mass - 10) / graphUpperRange) * 500},265
-                ${((peak.mass) / graphUpperRange) * 500},${250 - ((peak.volume / maxAbsorbance) * 250)}
-                ${((peak.mass + 10) / graphUpperRange) * 500},265 `}
-                opacity="0.6"
-                style={`fill:${peak.color}`} />
+              // Triangle peak
+              <polygon key={peak.name} points={`${((peak.mass - 10) / graphUpperRange) * 500},265 ${((peak.mass) / graphUpperRange) * 500},${250 - ((peak.volume / maxAbsorbance) * 250)} ${((peak.mass + 10) / graphUpperRange) * 500},265 `} opacity="0.6" style={`fill:${peak.color}`} />
             ))}
-            <polygon points={`
-              ${(lowerRange/deltaRange)*500},265
-              ${(lowerRange/deltaRange)*500},0
-              ${(upperRange/deltaRange)*500},0
-              ${(upperRange/deltaRange)*500},265`}
-              opacity="0.2"
-              style={`fill:blue`} />
+            <polygon points={`${(lowerRange/deltaRange)*500},265 ${(lowerRange/deltaRange)*500},0 ${(upperRange/deltaRange)*500},0 ${(upperRange/deltaRange)*500},265`} opacity="0.2" style={`fill:blue`} />
             <line x1={0} y1={265} x2={502} y2={264} stroke={"white"} stroke-width={3} />
             <line x1={501} y1={264} x2={501} y2={0} stroke={"white"} stroke-width={3} />
           </g>

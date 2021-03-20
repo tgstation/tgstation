@@ -308,7 +308,7 @@
 ///from base of atom/AltClick(): (/mob)
 #define COMSIG_CLICK_ALT "alt_click"
 	#define COMPONENT_CANCEL_CLICK_ALT (1<<0)
-///from base of atom/AltClick_secondary(): (/mob)
+///from base of atom/alt_click_secondary(): (/mob)
 #define COMSIG_CLICK_ALT_SECONDARY "alt_click_secondary"
 	#define COMPONENT_CANCEL_CLICK_ALT_SECONDARY (1<<0)
 ///from base of atom/CtrlShiftClick(/mob)
