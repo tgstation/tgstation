@@ -125,10 +125,14 @@
 		return
 	else if(is_operational && was_on == TRUE)  //if it was switched on before it turned off due to no power, turn the machine back on
 		on = TRUE
-	var/datum/gas_mixture/main_port = airs[1]
-	var/datum/gas_mixture/thermal_exchange_port = airs[2]
+
 	var/turf/local_turf = get_turf(src)
 	var/datum/gas_mixture/enviroment = local_turf.return_air()
+	if(!local_turf)
+		return
+
+	var/datum/gas_mixture/main_port = airs[1]
+	var/datum/gas_mixture/thermal_exchange_port = airs[2]
 	var/main_heat_capacity = main_port.heat_capacity()
 	var/thermal_heat_capacity = thermal_exchange_port.heat_capacity()
 	var/temperature_delta = main_port.temperature - target_temperature
@@ -149,15 +153,18 @@
 			efficiency = max(1 - log(10, temperature_difference) * 0.1, 0)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency)/ main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 	else if(main_port.total_moles() && enviroment.total_moles() && (!thermal_exchange_port.total_moles() || !nodes[2]))
+		var/enviroment_efficiency = 0
 		if(cooling)
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
+			if(enviroment.total_moles())
+				enviroment_efficiency = clamp(log(1.55, enviroment.total_moles()) * 0.1, 0, 1)
 			enviroment.temperature = max(enviroment.temperature + heat_amount / enviroment_heat_capacity, TCMB)
 			air_update_turf(FALSE, FALSE)
 		temperature_difference = enviroment.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
 			efficiency = max(1 - log(10, temperature_difference) * 0.1, 0)
-		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency) / main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
+		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency * enviroment_efficiency) / main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 
 	heat_amount = abs(heat_amount)
 	var/power_usage
