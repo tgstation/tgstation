@@ -37,6 +37,7 @@ const SLOTS: Record<
   {
     gridSpot: GridSpotKey;
     image: string;
+    additionalComponent?: JSX.Element;
   }
 > = {
   eyes: {
@@ -82,11 +83,13 @@ const SLOTS: Record<
   right_hand: {
     gridSpot: getGridSpotKey([2, 4]),
     image: "inventory-hand_r.png",
+    additionalComponent: <CornerText align="left">R</CornerText>,
   },
 
   left_hand: {
     gridSpot: getGridSpotKey([2, 5]),
     image: "inventory-hand_l.png",
+    additionalComponent: <CornerText align="right">L</CornerText>,
   },
 
   shoes: {
@@ -146,9 +149,28 @@ function getGridSpotKey(spot: [number, number]): GridSpotKey {
   return `${spot[0]}/${spot[1]}`;
 }
 
+function CornerText(props: {
+  align: "left" | "right";
+  children: string;
+}): JSX.Element {
+  const { align, children } = props;
+
+  return (
+    <Box
+      style={{
+        position: "relative",
+        left: align === "left" ? "2px" : "-2px",
+        "text-align": align,
+        "text-shadow": "1px 1px 1px #555",
+      }}
+    >
+      {children}
+    </Box>
+  );
+}
+
 export const StripMenu = (props, context) => {
-  let { act, data: untypedData } = useBackend(context);
-  let data = untypedData as StripMenuData;
+  let { act, data } = useBackend<StripMenuData>(context);
 
   const gridSpots = new Map<GridSpotKey, string>();
   for (const key of Object.keys(data.items)) {
@@ -263,6 +285,8 @@ export const StripMenu = (props, context) => {
               />
 
               <Box style={{ position: "relative" }}>{content}</Box>
+
+              {slot.additionalComponent}
             </Button>
 
             {alternateAction !== undefined && (
