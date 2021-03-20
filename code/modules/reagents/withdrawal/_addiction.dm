@@ -109,7 +109,7 @@
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_severe, name)
 
 /datum/addiction/proc/end_withdrawal(mob/living/carbon/affected_carbon)
-	LAZYSET(affected_carbon.mind.active_addictions, addiction, 1) //Keeps withdrawal at first cycle.
+	LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
 
 /// Called when addiction is in stage 1 every process
 /datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
