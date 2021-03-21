@@ -6,7 +6,7 @@
 	var/knockdown_time = 0
 	/// How long the slip paralyzes for.
 	var/paralyze_time = 0
-	/// Flags for how slippery the parent is.
+	/// Flags for how slippery the parent is. See [__DEFINES/mobs.dm]
 	var/lube_flags
 	/// A proc callback to call on slip.
 	var/datum/callback/callback
@@ -15,13 +15,13 @@
 	/// Whitelist of item slots the parent can be equipped in that make the holder slippery. If null or empty, it will always make the holder slippery.
 	var/list/slot_whitelist
 
-/datum/component/slippery/Initialize(_knockdown, _lube_flags = NONE, datum/callback/_callback, _paralyze, _force_drop = FALSE, _slot_whitelist)
-	knockdown_time = max(_knockdown, 0)
-	paralyze_time = max(_paralyze, 0)
-	force_drop_items = _force_drop
-	lube_flags = _lube_flags
-	callback = _callback
-	slot_whitelist = _slot_whitelist
+/datum/component/slippery/Initialize(knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
+	src.knockdown_time = max(knockdown, 0)
+	src.paralyze_time = max(paralyze, 0)
+	src.force_drop_items = force_drop
+	src.lube_flags = lube_flags
+	src.callback = callback
+	src.slot_whitelist = slot_whitelist
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/Slip)
 	if(isitem(parent))
 		holder = parent
