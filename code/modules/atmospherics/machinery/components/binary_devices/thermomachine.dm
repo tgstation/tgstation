@@ -188,8 +188,17 @@
 	if(!..())
 		return FALSE
 	SetInitDirections()
+	var/turf/local_turf = get_turf(src)
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	var/obj/machinery/atmospherics/node2 = nodes[2]
+	if(airs[1].total_moles())
+		var/datum/gas_mixture/remove = airs[1].remove(airs[1].total_moles())
+		enviroment.merge(remove)
+	if(airs[2].total_moles())
+		var/datum/gas_mixture/remove = airs[2].remove(airs[2].total_moles())
+		enviroment.merge(remove)
+	air_update_turf(FALSE, FALSE)
 	if(node1)
 		if(src in node1.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
 			node1.disconnect(src)
