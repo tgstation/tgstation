@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - balance: "All gas prices have been standardized and based on a single base value, this has resulted in some fluctuations in the purchase price of various gases."
