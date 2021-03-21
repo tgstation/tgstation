@@ -228,7 +228,7 @@
 ///all greed rites cost money instead
 /datum/religion_rites/greed
 	ritual_length = 5 SECONDS
-	invoke_msg = "Sorry I was late I was just making a shitload of money."
+	invoke_msg = "Sorry I was late, I was just making a shitload of money."
 	var/money_cost = 0
 
 /datum/religion_rites/greed/can_afford(mob/living/user)
@@ -265,7 +265,7 @@
 /datum/religion_rites/greed/custom_vending
 	name = "Purchase Personal Vending Machine"
 	desc = "Summons a custom vending machine. You can use it to sell MANY items!"
-	invoke_msg = "If I get a custom vending machine for my products, I'll be RICH!"
+	invoke_msg = "If I get a custom vending machine for my products, I can be RICH!"
 	money_cost = 1000 //quite a step up from vendatray
 
 /datum/religion_rites/greed/custom_vending/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -333,7 +333,7 @@
 		to_chat(user, "<span class='warning'>The new member has no mind!</span>")
 		return FALSE
 	if(joining_now.mind.has_antag_datum(/datum/antagonist/cult))//what the fuck?!
-		to_chat(user, "<span class='warning'>[GLOB.deity] has seen a true, dark evil in [joining_now]'s heart and they have been smitten!</span>")
+		to_chat(user, "<span class='warning'>[GLOB.deity] has seen a true, dark evil in [joining_now]'s heart, and they have been smitten!</span>")
 		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
 		joining_now.gib(TRUE)
 		return FALSE
@@ -448,7 +448,7 @@
 
 /datum/religion_rites/maint_adaptation
 	name = "Maintenance Adaptation"
-	desc = "Begin your metamorphasis into a being more fit for maintenance."
+	desc = "Begin your metamorphasis into a being more fit for Maintenance."
 	ritual_length = 10 SECONDS
 	ritual_invocations = list("I abandon the world ...",
 	"... to become one with the deep.",
@@ -572,11 +572,10 @@
 	if(holiness == NONE)
 		to_chat(taker, "<span class='warning'>Try as you may, you're seemingly unable to pick [src] up!</span>")
 		no_take = TRUE
-	if(holiness == HOLY_ROLE_DEACON) //deacons cannot pick them up either
+	else if(holiness == HOLY_ROLE_DEACON) //deacons cannot pick them up either
 		no_take = TRUE
 		to_chat(taker, "<span class='warning'>You cannot pick [src] up. It seems you aren't important enough to [GLOB.deity] to do that.</span>")
 	..()
 	if(no_take)
 		taker.dropItemToGround(src)
 		forceMove(initial_loc)
-
