@@ -117,7 +117,7 @@ finish burden hooks
 /datum/mutation/human/honorbound/proc/bullet_guilt(datum/source, obj/projectile/Proj)
 	SIGNAL_HANDLER
 	var/mob/living/shot_honorbound = source
-	if(istype(Proj, /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))
+	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet) || istype(Proj, /obj/projectile/magic))
 		if((Proj.damage_type != STAMINA))
 			if(!Proj.nodamage && Proj.damage < shot_honorbound.health && isliving(Proj.firer))
 				guilty(Proj.firer)
