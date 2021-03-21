@@ -473,7 +473,7 @@
 	if(teamsize <= 0)
 		return FALSE
 
-	candidates = pollGhostCandidates("Do you wish to be considered for a nanotrasen emergency response drone?", "Drone")
+	candidates = pollGhostCandidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
 
 	if(length(candidates) == 0)
 		return FALSE
