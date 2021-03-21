@@ -11,7 +11,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
-	var/obj/item/gun/ballistic/minigun/gun
+	var/obj/item/gun/energy/minigun/gun
+	var/obj/item/stock_parts/cell/minigun/battery
 	var/armed = FALSE //whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
 	var/overheat = 0
 	var/overheat_max = 40
@@ -20,6 +21,7 @@
 /obj/item/minigunpack/Initialize()
 	. = ..()
 	gun = new(src)
+	battery = new(src)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/minigunpack/Destroy()
@@ -91,29 +93,24 @@
 	user.update_inv_back()
 
 
-/obj/item/gun/ballistic/minigun
+/obj/item/gun/energy/minigun
 	name = "laser gatling gun"
 	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "minigun_spin"
 	inhand_icon_state = "minigun"
-	flags_1 = CONDUCT_1
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
 	custom_materials = null
-	burst_size = 3
-	automatic = 0
-	fire_delay = 1
 	weapon_weight = WEAPON_HEAVY
-	fire_sound = 'sound/weapons/laser.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/minigun
-	tac_reloads = FALSE
-	casing_ejector = FALSE
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/minigun)
+	cell_type = /obj/item/stock_parts/cell/crap
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
+	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack
 
-/obj/item/gun/ballistic/minigun/Initialize()
+/obj/item/gun/energy/minigun/Initialize()
 	if(istype(loc, /obj/item/minigunpack)) //We should spawn inside an ammo pack so let's use that one.
 		ammo_pack = loc
 	else
@@ -121,25 +118,41 @@
 
 	return ..()
 
-/obj/item/gun/ballistic/minigun/attack_self(mob/living/user)
+/obj/item/gun/energy/minigun/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+
+/obj/item/gun/energy/minigun/attack_self(mob/living/user)
 	return
 
-/obj/item/gun/ballistic/minigun/dropped(mob/user)
+/obj/item/gun/energy/minigun/dropped(mob/user)
 	SHOULD_CALL_PARENT(FALSE)
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
 		qdel(src)
 
-/obj/item/gun/ballistic/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(ammo_pack)
-		if(ammo_pack.overheat < ammo_pack.overheat_max)
-			ammo_pack.overheat += burst_size
-			..()
-		else
-			to_chat(user, "<span class='warning'>The gun's heat sensor locked the trigger to prevent lens damage!</span>")
+/obj/item/gun/energy/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
+		to_chat(user, "<span class='warning'>The gun's heat sensor locked the trigger to prevent lens damage!</span>")
+		return
+	..()
+	ammo_pack.overheat += burst_size
+	if(ammo_pack.battery)
+		var/totransfer = min(100, ammo_pack.battery.charge)
+		var/transferred = cell.give(totransfer)
+		ammo_pack.battery.use(transferred)
 
-/obj/item/gun/ballistic/minigun/afterattack(atom/target, mob/living/user, flag, params)
+
+/obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
 		to_chat(user, "<span class='warning'>You need the backpack power source to fire the gun!</span>")
 	. = ..()
+
+/obj/item/stock_parts/cell/minigun
+	name = "gatling gun fusion core"
+	desc = "Where did these come from?"
+	icon_state = "h+cell"
+	maxcharge = 500000
+	chargerate = 5000
