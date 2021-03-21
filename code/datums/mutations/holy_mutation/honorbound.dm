@@ -40,7 +40,17 @@ finish burden hooks
 
 /datum/mutation/human/honorbound/on_losing(mob/living/carbon/human/owner)
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "honorbound")
-	UnregisterSignal(owner, list(COMSIG_PARENT_ATTACKBY,COMSIG_ATOM_HULK_ATTACK,COMSIG_ATOM_ATTACK_HAND,COMSIG_ATOM_ATTACK_PAW,COMSIG_ATOM_BULLET_ACT,COMSIG_ATOM_HITBY,COMSIG_MOB_CLICKON))
+	UnregisterSignal(owner, list(
+		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_HULK_ATTACK,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_ATTACK_PAW,
+		COMSIG_ATOM_BULLET_ACT,
+		COMSIG_ATOM_HITBY,
+		COMSIG_MOB_CLICKON,
+		COMSIG_MOB_CAST_SPELL,
+		COMSIG_MOB_FIRED_GUN,
+		))
 	. = ..()
 
 /datum/mutation/human/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, params)
@@ -140,21 +150,22 @@ finish burden hooks
 
 /datum/mutation/human/honorbound/proc/staff_check(mob/user, obj/item/gun/gun_fired, target, params, zone_override)
 	SIGNAL_HANDLER
-	if(!istype(gun_fired, /obj/item/gun/magic/staff))
+	if(!istype(gun_fired, /obj/item/gun/magic))
 		return
-	var/obj/item/gun/magic/staff/offending_staff = gun_fired
+	var/obj/item/gun/magic/offending_staff = gun_fired
 	punishment(user, offending_staff.school)
 
-/datum/mutation/human/honorbound/proc/punishment(mob/living/user, school)
+/datum/mutation/human/honorbound/proc/punishment(mob/living/carbon/human/user, school)
 	switch(school)
 		if(SCHOOL_EVOCATION, SCHOOL_TRANSMUTATION, SCHOOL_CONJURATION, SCHOOL_TRANSMUTATION)
 			to_chat(user, "<span class='userdanger'>[GLOB.deity] is angered by your use of [school] magic!</span>")
 			lightningbolt(user)
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound_punishment", /datum/mood_event/holy_smite)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN)
 			to_chat(user, "<span class='userdanger'>[GLOB.deity] is enraged by your use of forbidden magic!</span>")
 			lightningbolt(user)
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound_punishment", /datum/mood_event/banished)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/banished)
+			user.dna.remove_mutation(HONORBOUND)
 			user.mind.holy_role = NONE
 			to_chat(user, "<span class='userdanger'>You have been excommunicated! You are no longer holy!</span>")
 
@@ -162,6 +173,7 @@ finish burden hooks
 	var/turf/lightning_source = get_step(get_step(user, NORTH), NORTH)
 	lightning_source.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
 	user.adjustFireLoss(LIGHTNING_BOLT_DAMAGE)
+	playsound(get_turf(user), 'sound/magic/lightningbolt.ogg', 50, TRUE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_target = user
 		human_target.electrocution_animation(LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH)
@@ -182,7 +194,7 @@ finish burden hooks
 /obj/effect/proc_holder/spell/pointed/declare_evil/cast(list/targets, mob/living/carbon/human/user, silent = FALSE)
 	if(!ishuman(user))
 		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
 	var/datum/religion_sect/honorbound/honorsect = GLOB.religious_sect
 	if(honorsect.favor < 150)
 		to_chat(user, "<span class='warning'>You need at least 150 favor to declare someone evil!</span>")

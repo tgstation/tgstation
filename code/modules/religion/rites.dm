@@ -320,7 +320,7 @@
 		new_crusader = possible_crusader
 		return ..()
 
-/datum/religion_rites/deaconize/invoke_effect(mob/living/user, atom/movable/religious_tool)
+/datum/religion_rites/deaconize/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	var/mob/living/carbon/human/joining_now = new_crusader
 	new_crusader = null
 	if(!(joining_now in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
@@ -337,6 +337,9 @@
 		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
 		joining_now.gib(TRUE)
 		return FALSE
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	if(joining_now in honormut.guilty)
+		honormut.guilty -= joining_now
 	GLOB.religious_sect.adjust_favor(200, user)
 	to_chat(user, "<span class='notice'>[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)</span>")
 	joining_now.mind.holy_role = HOLY_ROLE_DEACON
@@ -348,13 +351,13 @@
 /datum/religion_rites/forgive
 	name = "Forgive"
 	desc = "Forgives someone, making them no longer considered guilty. A kind gesture, all things considered!"
-	invoke_msg = "To err is human. You are absolved of sin."
+	invoke_msg = "You are absolved of sin."
 	var/mob/living/who
 
 /datum/religion_rites/forgive/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
 	if(!ishuman(user))
 		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
 	if(!honormut)
 		return FALSE
 	if(!honormut.guilty.len)
@@ -370,7 +373,7 @@
 	..()
 	if(in_range(user, religious_tool))
 		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
 	if(!honormut) //edge case
 		return FALSE
 	honormut.guilty -= who
