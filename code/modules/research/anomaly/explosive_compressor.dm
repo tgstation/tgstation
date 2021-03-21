@@ -114,12 +114,8 @@
 /obj/machinery/research/explosive_compressor/proc/do_implosion()
 	var/required_radius = get_required_radius(inserted_core.anomaly_type)
 	// By now, we should be sure that we have a core, a TTV, and that the TTV has both tanks in place.
-	var/datum/gas_mixture/mix1 = inserted_bomb.tank_one.air_contents
-	var/datum/gas_mixture/mix2 = inserted_bomb.tank_two.air_contents
-	// Snowflaked tank explosion
-	var/datum/gas_mixture/mix = new(70) // Standard tank volume, 70L
-	mix.merge(mix1)
-	mix.merge(mix2)
+	var/datum/gas_mixture/mix = new(0)
+	inserted_bomb.merge_gases(mix)
 	mix.react()
 	if(mix.return_pressure() < TANK_FRAGMENT_PRESSURE)
 		// They failed so miserably we're going to give them their bomb back.
@@ -128,18 +124,21 @@
 		inserted_core.forceMove(drop_location())
 		inserted_core = null
 		say("Transfer valve resulted in negligible explosive power. Items ejected.")
-		return
+		return FALSE
 	mix.react() // build more pressure
-	var/pressure = mix.return_pressure()
-	var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
-	if(range < required_radius)
-		inserted_bomb.forceMove(src)
-		say("Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Core ejected.")
-		return
+
+	var/range = (mix.return_pressure() - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
 	QDEL_NULL(inserted_bomb) // bomb goes poof
+	if(range < required_radius)
+		say("Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Core ejected.")
+		inserted_core.forceMove(drop_location())
+		inserted_core = null
+		return FALSE
+
 	inserted_core.create_core(drop_location(), TRUE, TRUE)
 	inserted_core = null
 	say("Success. Resultant detonation has theoretical range of [range]. Required radius was [required_radius]. Core production complete.")
+	return TRUE
 
 #undef MAX_RADIUS_REQUIRED
 #undef MIN_RADIUS_REQUIRED

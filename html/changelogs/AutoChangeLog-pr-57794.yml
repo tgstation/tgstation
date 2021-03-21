@@ -1,4 +1,0 @@
-author: "Trigg"
-delete-after: True
-changes: 
-  - admin: "The Outfit Manager now updates the Select Equipment menu when an outfit is created or deleted"

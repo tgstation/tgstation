@@ -43,8 +43,6 @@
 #define CALIBER_LASER "laser"
 /// The caliber used by most energy guns.
 #define CALIBER_ENERGY "energy"
-/// The caliber used by the laser minigun.
-#define CALIBER_GATLING "gatling"
 /// The acliber used by foam force and donksoft toy guns.
 #define CALIBER_FOAM "foam_force"
 /// The caliber used by the bow and arrow.
