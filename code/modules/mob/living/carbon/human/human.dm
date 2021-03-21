@@ -23,6 +23,7 @@
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
+	// MOTHBLOCKS TODO: Add callback to make sure we're not fireman carrying
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items)
 	GLOB.human_list += src
 
