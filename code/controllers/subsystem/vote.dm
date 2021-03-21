@@ -6,16 +6,16 @@ SUBSYSTEM_DEF(vote)
 
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
+	var/list/choices = list()
+	var/list/choice_by_ckey = list()
+	var/list/generated_actions = list()
+	var/initiator
 	var/mode
 	var/question
-	var/initiator
 	var/started_time
 	var/time_remaining
 	var/list/voted = list()
 	var/list/voting = list()
-	var/list/choices = list()
-	var/list/choice_by_ckey = list()
-	var/list/generated_actions = list()
 
 // Called by master_controller
 /datum/controller/subsystem/vote/fire()
@@ -28,14 +28,14 @@ SUBSYSTEM_DEF(vote)
 		reset()
 
 /datum/controller/subsystem/vote/proc/reset()
+	choices.Cut()
+	choice_by_ckey.Cut()
+	initiator = null
 	mode = null
+	question = null
+	time_remaining = 0
 	voted.Cut()
 	voting.Cut()
-	choices.Cut()
-	question = null
-	initiator = null
-	time_remaining = 0
-	choice_by_ckey.Cut()
 
 	remove_action_buttons()
 
