@@ -1,14 +1,5 @@
 import { useBackend } from "../backend";
-import {
-  Box,
-  Icon,
-  Stack,
-  Button,
-  Section,
-  NoticeBox,
-  LabeledList,
-  Collapsible,
-} from "../components";
+import { Box, Icon, Stack, Button, Section, NoticeBox, LabeledList, Collapsible } from "../components";
 import { Window } from "../layouts";
 
 export const Vote = (props, context) => {
@@ -18,8 +9,7 @@ export const Vote = (props, context) => {
   // Adds the voting type to title if there is an ongoing vote
   let windowTitle = "Vote";
   if (mode) {
-    windowTitle
-      += ": " + (question || mode).replace(/^\w/, c => c.toUpperCase());
+    windowTitle += ": " + (question || mode).replace(/^\w/, c => c.toUpperCase());
   }
 
   return (
@@ -43,7 +33,9 @@ export const Vote = (props, context) => {
 // Gives access to starting votes
 const VoteOptions = (props, context) => {
   const { act, data } = useBackend(context);
-  const { avm, avr, avmap, upper_admin } = data;
+  const { allow_vote_mode, allow_vote_restart, allow_vote_map,
+    upper_admin } = data;
+
   return (
     <Stack.Item>
       <Collapsible title="Start a Vote">
@@ -55,14 +47,14 @@ const VoteOptions = (props, context) => {
                   <Button.Checkbox
                     mr={1}
                     color="red"
-                    checked={avmap}
+                    checked={!!allow_vote_map}
                     onClick={() => act("toggle_map")}
                   >
-                    {avmap ? "Enabled" : "Disabled"}
+                    {allow_vote_map ? "Enabled" : "Disabled"}
                   </Button.Checkbox>
                 )}
                 <Button
-                  disabled={!upper_admin || !avmap}
+                  disabled={!upper_admin || !allow_vote_map}
                   onClick={() => act("map")}
                 >
                   Map
@@ -73,14 +65,14 @@ const VoteOptions = (props, context) => {
                   <Button.Checkbox
                     mr={1}
                     color="red"
-                    checked={avr}
+                    checked={!!allow_vote_restart}
                     onClick={() => act("toggle_restart")}
                   >
-                    {avr ? "Enabled" : "Disabled"}
+                    {allow_vote_restart ? "Enabled" : "Disabled"}
                   </Button.Checkbox>
                 )}
                 <Button
-                  disabled={!upper_admin || !avr}
+                  disabled={!upper_admin || !allow_vote_restart}
                   onClick={() => act("restart")}
                 >
                   Restart
@@ -91,14 +83,14 @@ const VoteOptions = (props, context) => {
                   <Button.Checkbox
                     mr={1}
                     color="red"
-                    checked={avm}
+                    checked={!!allow_vote_mode}
                     onClick={() => act("toggle_gamemode")}
                   >
-                    {avm ? "Enabled" : "Disabled"}
+                    {allow_vote_mode ? "Enabled" : "Disabled"}
                   </Button.Checkbox>
                 )}
                 <Button
-                  disabled={!upper_admin || !avm}
+                  disabled={!upper_admin || !allow_vote_mode}
                   onClick={() => act("gamemode")}
                 >
                   Gamemode

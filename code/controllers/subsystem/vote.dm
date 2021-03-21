@@ -10,21 +10,22 @@ SUBSYSTEM_DEF(vote)
 	var/question
 	var/initiator
 	var/started_time
-	var/time_remaining = 0
+	var/time_remaining
 	var/list/voted = list()
 	var/list/voting = list()
 	var/list/choices = list()
 	var/list/choice_by_ckey = list()
 	var/list/generated_actions = list()
 
-// /datum/controller/subsystem/vote/fire()	//called by master_controller
-// 	if(!mode)
-// 		return
-// 	time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
-// 	if(time_remaining < 0)
-// 		result()
-// 		SStgui.close_uis(src)
-// 		reset()
+// Called by master_controller
+/datum/controller/subsystem/vote/fire()
+	if(!mode)
+		return
+	time_remaining = round((started_time + CONFIG_GET(number/vote_period) - world.time)/10)
+	if(time_remaining < 0)
+		result()
+		SStgui.close_uis(src)
+		reset()
 
 /datum/controller/subsystem/vote/proc/reset()
 	mode = null
@@ -69,6 +70,8 @@ SUBSYSTEM_DEF(vote)
 				for (var/non_voter_ckey in non_voters)
 					var/client/C = non_voters[non_voter_ckey]
 					var/preferred_map = C.prefs.preferred_map
+					if(isnull(global.config.defaultmap))
+						continue
 					if(!preferred_map)
 						preferred_map = global.config.defaultmap.map_name
 					choices[preferred_map] += 1
@@ -134,7 +137,8 @@ SUBSYSTEM_DEF(vote)
 				active_admins = TRUE
 				break
 		if(!active_admins)
-			SSticker.Reboot("Restart vote successful.", "restart vote", 1) //no delay in case the restart is due to lag
+			// No delay in case the restart is due to lag
+			SSticker.Reboot("Restart vote successful.", "restart vote", 1)
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
@@ -148,9 +152,9 @@ SUBSYSTEM_DEF(vote)
 		return FALSE
 	if(!vote || vote < 1 || vote > choices.len)
 		return FALSE
-	// If user has already voted
+	// If user has already voted, remove their specific vote
 	if(usr.ckey in voted)
-		choices[choices[choice_by_ckey[usr.ckey]]]-- // This removes the user's specific vote
+		choices[choices[choice_by_ckey[usr.ckey]]]--
 	else
 		voted += usr.ckey
 	choice_by_ckey[usr.ckey] = vote
@@ -158,7 +162,8 @@ SUBSYSTEM_DEF(vote)
 	return vote
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
-	if(!Master.current_runlevel) //Server is still intializing.
+	//Server is still intializing.
+	if(!Master.current_runlevel)
 		to_chat(usr, "<span class='warning'>Cannot start vote, server is not done initializing.</span>")
 		return FALSE
 	var/lower_admin = FALSE
@@ -259,9 +264,9 @@ SUBSYSTEM_DEF(vote)
 		"mode" = mode,
 		"question" = question,
 		"selected_choice" = choice_by_ckey[user.client?.ckey],
-		"started_time" = started_time,
+		"time_remaining" = time_remaining,
 		"upper_admin" = check_rights_for(user.client, R_ADMIN),
-		"voting" = list()
+		"voting" = list(),
 	)
 
 	if(!!user.client?.holder)
