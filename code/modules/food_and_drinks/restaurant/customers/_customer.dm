@@ -96,8 +96,8 @@
 	second_warning_line = "Last warning! Do not touch my spaghet."
 	self_defense_line = "I'm going to knead you like mama kneaded her delicious meatballs!"
 	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/spaghetti/pastatomato = 20, /obj/item/food/spaghetti/copypasta = 6, /obj/item/food/spaghetti/meatballspaghetti = 4, /obj/item/food/pizza/vegetable = 2, /obj/item/food/pizza/mushroom = 2, /obj/item/food/pizza/meat = 2, /obj/item/food/pizza/margherita = 2),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/fanciulli = 5, /datum/reagent/consumable/ethanol/branca_menta = 3, /datum/reagent/consumable/ethanol/beer = 10, /datum/reagent/consumable/lemonade = 8, /datum/reagent/consumable/ethanol/godfather = 5))
+	/datum/venue/restaurant = list(/obj/item/food/spaghetti/pastatomato = 20, /obj/item/food/spaghetti/copypasta = 6, /obj/item/food/spaghetti/meatballspaghetti = 4, /obj/item/food/spaghetti/butternoodles = 4, /obj/item/food/pizza/vegetable = 2, /obj/item/food/pizza/mushroom = 2, /obj/item/food/pizza/meat = 2, /obj/item/food/pizza/margherita = 2, /obj/item/food/lasagna = 4, /obj/item/food/cannoli = 3, /obj/item/food/eggplantparm = 3, /obj/item/food/cornuto = 2),
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/fanciulli = 5, /datum/reagent/consumable/ethanol/branca_menta = 3, /datum/reagent/consumable/ethanol/beer = 5, , /datum/reagent/consumable/lemonade = 8, /datum/reagent/consumable/ethanol/godfather = 5, /datum/reagent/consumable/ethanol/wine = 3, /datum/reagent/consumable/ethanol/grappa = 3, /datum/reagent/consumable/ethanol/amaretto = 3))
 
 
 /datum/customer_data/french
@@ -117,7 +117,7 @@
 	speech_sound = 'sound/creatures/tourist/tourist_talk_french.ogg'
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/baguette = 20, /obj/item/food/garlicbread = 5, /obj/item/food/soup/onion = 4, /obj/item/food/pie/berryclafoutis = 2, /obj/item/food/omelette = 15),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 15, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 10))
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 10, /datum/reagent/consumable/ethanol/cognac = 5, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 5, /datum/reagent/consumable/ethanol/wine = 5))
 
 /datum/customer_data/french/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING])
@@ -286,6 +286,38 @@
 	first_warning_line = "Amigo! Don't touch me like that."
 	second_warning_line = "Compadre, enough is enough! Last warning!"
 	self_defense_line = "Time for you to find out what kind of robot I am, eh?"
+
+/datum/customer_data/british
+	nationality = "Space-British"
+	base_icon = "british"
+	prefix_file = "strings/names/british_prefix.txt"
+	speech_sound = 'sound/creatures/tourist/tourist_talk_british.ogg'
+	orderable_objects = list(
+	/datum/venue/restaurant = list(/obj/item/food/fishandchips = 10, /obj/item/food/soup/stew = 10, , /obj/item/food/salad/ricepudding = 5, /obj/item/food/grilled_cheese_sandwich = 5, /obj/item/food/pie/meatpie = 5, /obj/item/food/benedict = 5, /obj/item/food/full_english = 2, /obj/item/food/soup/indian_curry = 3, /obj/item/food/beef_wellington/slice = 2),
+	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/ale = 10, /datum/reagent/consumable/ethanol/beer = 10, /datum/reagent/consumable/ethanol/gin = 5, /datum/reagent/consumable/ethanol/hcider = 10, /datum/reagent/consumable/ethanol/alliescocktail = 5, /datum/reagent/consumable/ethanol/martini = 5, /datum/reagent/consumable/ethanol/gintonic = 5, /datum/reagent/consumable/tea = 10))
+
+	friendly_pull_line = "I don't enjoy being pulled around like this."
+	first_warning_line = "Our sovereign lord the Queen chargeth and commandeth all persons, being assembled, immediately to disperse themselves."
+	second_warning_line = "And peaceably to depart to their habitations, or to their lawful business, upon the pains contained in the act made in the first year of King George, for preventing tumults and riotous assemblies. There will be no further warnings."
+	self_defense_line = "God Save the Queen."
+
+/datum/customer_data/british/gent
+	clothing_sets = list("british_gentleman")
+
+	found_seat_lines = list("Ah, what a fine establishment.", "Time for some great British cuisine, how bloody exciting!", "Excellent, now onto the menu...", "Rule Britannia, Britannia rules the waves...")
+	cant_find_seat_lines = list("A true Briton does not stand, except while queuing!", "Goodness me chap, not an empty seat in sight!", "I stand on the shoulders of giants, not at restaurants!")
+	leave_mad_lines = list("I say good day to you, sir. Good day!", "This place is a bigger disgrace than France during the war!", "I knew I should have went to the bloody chippy!", "On second thoughts, let's not go to Space Station 13. 'tis a silly place.")
+	leave_happy_lines = list("That was bloody delicious!", "By God, Queen and Country, that was jolly good!", "I haven't felt this good since the days of the Raj! Jolly good!")
+	wait_for_food_lines = list("This is bloody well taking forever...", "Excuse me, good sir, but might I be able to inquire about the status of my order?")
+
+/datum/customer_data/british/bobby
+	clothing_sets = list("british_bobby")
+
+	found_seat_lines = list("A fine and upstanding establishment, I hope.", "I suppose the old beat can wait a minute.", "By God, Queen and Country, I'm famished.", "Have you any Great British fare, my good man?")
+	cant_find_seat_lines = list("I stand enough out on the beat!", "Do you expect me to sit on my helmet? A seat, please!", "Do I look like a beefeater? I need a seat!")
+	leave_mad_lines = list("Seems that the Bill shan't be paying a bill today.", "Were rudeness a crime, you'd be nicked right now!", "You're no better than a common gangster, you loathesome rapscallion!", "We should bring back deportation for the likes of you, let the Outback sort you out.")
+	leave_happy_lines = list("My word, just what I needed.", "Back to the beat I go. Thank you kindly for the meal!", "I tip my helmet to you, good sir.")
+	wait_for_food_lines = list("Dear Lord, I've had paperwork take less time...", "Any word on my order, sir?")
 
 ///MALFUNCTIONING - only shows up once per venue, very rare
 /datum/customer_data/malfunction

@@ -270,12 +270,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
-			return
-		if(2)
+			return TRUE
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(60)
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/hostile/guardian/gib()
