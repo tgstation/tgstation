@@ -112,7 +112,7 @@
 	name = "Blink"
 	desc = "This spell randomly teleports you a short distance."
 
-	school = SCHOOL_ABJURATION
+	school = SCHOOL_FORBIDDEN
 	charge_max = 20
 	clothes_req = TRUE
 	invocation = "none"
@@ -142,7 +142,7 @@
 	name = "Teleport"
 	desc = "This spell teleports you to an area of your selection."
 
-	school = SCHOOL_ABJURATION
+	school = SCHOOL_FORBIDDEN
 	charge_max = 600
 	clothes_req = TRUE
 	invocation = "SCYAR NILA"
@@ -171,6 +171,7 @@
 	clothes_req = TRUE
 	invocation = "TOKI YO TOMARE"
 	invocation_type = INVOCATION_SHOUT
+	school = SCHOOL_FORBIDDEN //fucking with time is not appreciated by anyone
 	range = 0
 	cooldown_min = 100
 	action_icon_state = "time"
@@ -249,6 +250,7 @@
 	clothes_req = TRUE
 	invocation = "GITTAH WEIGH"
 	invocation_type = INVOCATION_SHOUT
+	school = SCHOOL_EVOCATION
 	range = 5
 	cooldown_min = 150
 	selection_type = "view"
@@ -325,6 +327,7 @@
 	clothes_req = FALSE
 	invocation = "FI'RAN DADISKO"
 	invocation_type = INVOCATION_SHOUT
+	school = SCHOOL_EVOCATION
 	max_targets = 0
 	range = 6
 	include_user = TRUE

@@ -2,11 +2,10 @@
 /* TODO:
 after someone passes honor checks you still can't attack them --still present? test
 
-//magic shit
-sort schools
-write out honorbound writ rules
+finish burden hooks
 
 */
+
 ///Honorbound prevents you from attacking the unready, the just, or the innocent
 /datum/mutation/human/honorbound
 	name = "Honorbound"
@@ -27,6 +26,7 @@ write out honorbound writ rules
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/honorbound)
 	//checking spells cast by honorbound
 	RegisterSignal(owner, COMSIG_MOB_CAST_SPELL, .proc/spell_check)
+	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, .proc/staff_check)
 	//signals that check for guilt
 	RegisterSignal(owner, COMSIG_PARENT_ATTACKBY, .proc/attackby_guilt)
 	RegisterSignal(owner, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_guilt)
@@ -50,11 +50,6 @@ write out honorbound writ rules
 
 	if(!isliving(clickingon))
 		return
-	//fucking YUGE check but essentially is every situation where a click shouldn't be checked for honor:
-	//non combat mode clicks:
-	//* no weapon, not disarming, weapon has no force
-	//combat mode clicks
-	//* is not a gun and out of range of attacking
 	if(!honorbound.DirectAccess(clickingon) && !isgun(weapon))
 		return
 	if(!honorbound.combat_mode && ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK)))
@@ -63,7 +58,7 @@ write out honorbound writ rules
 	if(!is_honorable(honorbound, clickedmob))
 		return COMSIG_MOB_CANCEL_CLICKON
 
-/datum/mutation/human/honorbound/proc/guilty(mob/living/user)
+/datum/mutation/human/honorbound/proc/guilty(mob/living/user, declaration = FALSE)
 	if(user in guilty)
 		return
 	var/datum/mind/guilty_conscience = user.mind
@@ -71,13 +66,17 @@ write out honorbound writ rules
 		var/job = guilty_conscience.assigned_role
 		if(job in (GLOB.security_positions + GLOB.medical_positions))
 			return
-	to_chat(owner, "<span class='notice'>[user] is now considered guilty by [GLOB.deity] for attacking you first.</span>")
+	if(declaration)
+		to_chat(owner, "<span class='notice'>[user] is now considered guilty by [GLOB.deity] from your declaration.</span>")
+		to_chat(user, "<span class='danger'>[GLOB.deity] no longer considers you innocent!</span>")
+	else
+		to_chat(owner, "<span class='notice'>[user] is now considered guilty by [GLOB.deity] for attacking you first.</span>")
 	guilty += user
 
 /datum/mutation/human/honorbound/proc/is_honorable(mob/living/carbon/human/honorbound_human, mob/living/target_creature)
 	var/is_guilty = (target_creature in guilty)
 	//THE UNREADY (Applies over ANYTHING else!)
-	if(target_creature.IsSleeping() || HAS_TRAIT(target_creature, TRAIT_RESTRAINED))
+	if(target_creature.IsSleeping() || target_creature.IsUnconscious() || HAS_TRAIT(target_creature, TRAIT_RESTRAINED))
 		to_chat(honorbound_human, "<span class='warning'>There is no honor in attacking the <b>unready</b>.</span>")
 		return FALSE
 	//THE JUST (Applies over guilt except for med, so you best be careful!)
@@ -119,7 +118,7 @@ write out honorbound writ rules
 	SIGNAL_HANDLER
 	var/mob/living/shot_honorbound = source
 	if(istype(Proj, /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))
-		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
+		if((Proj.damage_type != STAMINA))
 			if(!Proj.nodamage && Proj.damage < shot_honorbound.health && isliving(Proj.firer))
 				guilty(Proj.firer)
 
@@ -134,19 +133,29 @@ write out honorbound writ rules
 //spell checking
 /datum/mutation/human/honorbound/proc/spell_check(obj/effect/proc_holder/spell/spell_cast, mob/user)
 	SIGNAL_HANDLER
-	switch(spell_cast.school)
-		if(SCHOOL_EVOCATION, SCHOOL_TRANSMUTATION, SCHOOL_ILLUSION, SCHOOL_CONJURATION)
-			to_chat(user, "<span class='userdanger'>[GLOB.deity] is angered by your use of [spell_cast.school] magic!</span>")
+	punishment(user, spell_cast.school)
+
+/datum/mutation/human/honorbound/proc/staff_check(obj/item/gun/source, mob/user, target, params, zone_override)
+	SIGNAL_HANDLER
+	if(!istype(source, /obj/item/gun/magic/staff))
+		return
+	var/obj/item/gun/magic/staff/offending_staff
+	punishment(user, offending_staff.school)
+
+/datum/mutation/human/honorbound/proc/punishment(mob/living/user, school)
+	switch(school)
+		if(SCHOOL_EVOCATION, SCHOOL_TRANSMUTATION, SCHOOL_CONJURATION, SCHOOL_TRANSMUTATION)
+			to_chat(user, "<span class='userdanger'>[GLOB.deity] is angered by your use of [school] magic!</span>")
 			lightningbolt(user)
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound_punishment", /datum/mood_event/holy_smite)
-		if(SCHOOL_NECROMANCY)
+		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN)
 			to_chat(user, "<span class='userdanger'>[GLOB.deity] is enraged by your use of forbidden magic!</span>")
 			lightningbolt(user)
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound_punishment", /datum/mood_event/banished)
 			user.mind.holy_role = NONE
 			to_chat(user, "<span class='userdanger'>You have been excommunicated! You are no longer holy!</span>")
 
-/datum/mutation/human/honorbound/proc/lightningbolt(mob/user)
+/datum/mutation/human/honorbound/proc/lightningbolt(mob/living/user)
 	var/turf/lightning_source = get_step(get_step(user, NORTH), NORTH)
 	lightning_source.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
 	user.adjustFireLoss(LIGHTNING_BOLT_DAMAGE)
@@ -156,16 +165,63 @@ write out honorbound writ rules
 
 /obj/effect/proc_holder/spell/pointed/declare_evil
 	name = "Declare Evil"
-	desc = "This spell allows the user to switch bodies with a target next to him."
-	school = SCHOOL_TRANSMUTATION
+	desc = "If someone is so obviously an evil of this world you can spend a huge amount of favor to declare them guilty."
+	school = SCHOOL_HOLY
 	charge_max = 0
 	clothes_req = FALSE
-	invocation = "GIN'YU CAPAN"
-	invocation_type = INVOCATION_WHISPER
 	range = 1
-	cooldown_min = 200
+	cooldown_min = 0
 	ranged_mousepointer = 'icons/effects/mouse_pointers/honorbound.dmi'
 	action_icon_state = "declaration"
 	active_msg = "You prepare to declare a sinner..."
 
+/obj/effect/proc_holder/spell/pointed/declare_evil/cast(list/targets, mob/living/carbon/human/user, silent = FALSE)
+	if(!ishuman(user))
+		return FALSE
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
+	if(!honormut)
+		return FALSE
+	if(!targets.len)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Nobody to declare evil here!</span>")
+		return FALSE
+	if(targets.len > 1)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Too many people to declare! Pick ONE!</span>")
+		return FALSE
+	var/declaration_message = "[targets[1]]! By the divine light of [GLOB.deity], You are an evil of this world that must be wrought low!"
+	if(!user.can_speak(declaration_message))
+		to_chat(user, "<span class='warning'>You can't get the declaration out!</span>")
+		return FALSE
+	if(!can_target(targets[1], user, silent))
+		return FALSE
+	honormut.guilty(targets[1], declaration = TRUE)
+	return TRUE
 
+/obj/effect/proc_holder/spell/pointed/declare_evil/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!isliving(target))
+		if(!silent)
+			to_chat(user, "<span class='warning'>You can only declare living beings evil!</span>")
+		return FALSE
+	var/mob/living/victim = target
+	if(victim.stat == DEAD)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Declaration on the dead? Really?</span>")
+		return FALSE
+	var/datum/mind/guilty_conscience = victim.mind
+	if(!victim.key ||!guilty_conscience) //sec and medical are immune to becoming guilty through attack (we don't check holy because holy shouldn't be able to attack eachother anyways)
+		if(!silent)
+			to_chat(user, "<span class='warning'>There is no evil a vacant mind can do.</span>")
+		return FALSE
+	if(guilty_conscience.holy_role)//also handles any kind of issues with self declarations
+		if(!silent)
+			to_chat(user, "<span class='warning'>Followers of [GLOB.deity] cannot be evil!</span>")
+		return FALSE
+	if(guilty_conscience.assigned_role in GLOB.security_positions)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Members of security are uncorruptable! You cannot declare one evil!</span>")
+		return FALSE
+	return TRUE

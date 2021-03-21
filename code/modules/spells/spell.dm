@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	opacity = FALSE
 
 	///checked by some holy sects to punish the caster for casting things that do not align with their sect's alignment - see magic.dm in defines to learn more
-	var/school = SCHOOL_EVOCATION
+	var/school = SCHOOL_UNSET
 
 	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
 
@@ -317,6 +317,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		recharging = TRUE
 	if(sound)
 		playMagSound()
+	SEND_SIGNAL(user, COMSIG_MOB_CAST_SPELL, user)
 	cast(targets,user=user)
 	after_cast(targets)
 	if(action)
@@ -364,8 +365,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets,mob/user = usr)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(user, COMSIG_MOB_CAST_SPELL, user)
 
 /obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
 	switch(type)

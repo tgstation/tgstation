@@ -307,11 +307,14 @@
 		if(possible_crusader.stat != CONSCIOUS)
 			to_chat(user, "<span class='warning'>[possible_crusader] needs to be alive and conscious to join the crusade!</span>")
 			return FALSE
-		if(!possible_crusader in sect.currently_asking)
+		if(possible_crusader.dna.species.inherent_traits & TRAIT_GENELESS)
+			to_chat(user, "<span class='warning'>This species disgusts [GLOB.deity]! They would never be allowed to join the crusade!</span>")
+			return FALSE
+		if(!(possible_crusader in sect.currently_asking))
 			to_chat(user, "<span class='warning'>Wait for them to decide on whether to join or not!</span>")
 			return FALSE
-		if(!possible_crusader in sect.possible_crusaders)
-			INVOKE_ASYNC(sect, /datum/religion_sect/proc/invite_crusader, possible_crusader)
+		if(!(possible_crusader in sect.possible_crusaders))
+			INVOKE_ASYNC(sect, /datum/religion_sect/honorbound.proc/invite_crusader, possible_crusader)
 			to_chat(user, "<span class='notice'>They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again.</span>")
 			return FALSE
 		new_crusader = possible_crusader
@@ -334,7 +337,7 @@
 		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
 		joining_now.gib(TRUE)
 		return FALSE
-	GLOB.religious_sect.adjust_favor(250, user)
+	GLOB.religious_sect.adjust_favor(200, user)
 	to_chat(user, "<span class='notice'>[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)</span>")
 	joining_now.mind.holy_role = HOLY_ROLE_DEACON
 	GLOB.religious_sect.on_conversion(joining_now)
@@ -351,7 +354,7 @@
 /datum/religion_rites/forgive/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
 	if(!ishuman(user))
 		return FALSE
-	var/datum/mutation/human/burdened/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
 	if(!honormut)
 		return FALSE
 	if(!honormut.guilty.len)
@@ -363,9 +366,9 @@
 	who = forgiven_choice
 	return ..()
 
-/datum/religion_rites/forgive/invoke_effect(mob/living/user, atom/movable/religious_tool)
+/datum/religion_rites/forgive/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
-	var/datum/mutation/human/burdened/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
 	if(!honormut) //edge case
 		return FALSE
 	honormut.guilty -= who
@@ -375,8 +378,71 @@
 
 /datum/religion_rites/summon_rules
 	name = "Summon Honorbound Rules"
-	desc = "Enscribes paper with the honorbound rules and regulations."
+	desc = "Enscribes a paper with the honorbound rules and regulations."
 	invoke_msg = "Bring forth the holy writ!"
+	///paper to turn into holy writ
+	var/obj/item/paper/writ_target
+
+/datum/religion_rites/summon_rules/perform_rite(mob/living/user, atom/religious_tool)
+	for(var/obj/item/paper/could_writ in get_turf(religious_tool))
+		if(istype(could_writ, /obj/item/paper/holy_writ))
+			continue
+		if(could_writ.info) //blank paper pls
+			continue
+		writ_target = could_writ //PLEASE SIGN MY AUTOGRAPH
+		return ..()
+	to_chat(user, "<span class='warning'>You need to place blank paper on [religious_tool] to do this!</span>")
+	return FALSE
+
+/datum/religion_rites/summon_rules/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/obj/item/paper/autograph = writ_target
+	var/turf/tool_turf = get_turf(religious_tool)
+	writ_target = null
+	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the same food is still there
+		to_chat(user, "<span class='warning'>Your target left the altar!</span>")
+		return FALSE
+	autograph.visible_message("<span class='notice'>words magically form on [autograph]!</span>")
+	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
+	new /obj/item/paper/holy_writ(tool_turf)
+	qdel(autograph)
+	return TRUE
+
+/obj/item/paper/holy_writ
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "scroll"
+	slot_flags = null
+	show_written_words = FALSE
+
+	//info set in here because we need GLOB.deity
+/obj/item/paper/holy_writ/Initialize()
+	add_filter("holy_outline", 9, list("type" = "outline", "color" = "#fdff6c"))
+	name = "[GLOB.deity]'s honorbound rules"
+	info = {"[GLOB.deity]'s honorbound rules:
+	<br>
+	1.) Thou shalt not attack the unready!<br>
+	Those who are not ready for battle should not be wrought low. The evil of this world must lose
+	in a fair battle if you are to conquer them completely.
+	<br>
+	<br>
+	2.) Thou shalt not attack the just!<br>
+	Those who fight for justice and good must not be harmed. Security is uncorruptable and must
+	be respected. Healers are mostly uncorruptable and if you are truly sure Medical has fallen
+	to the scourge of evil, use a declaration of evil.
+	<br>
+	<br>
+	3.) Thou shalt not attack the innocent!<br>
+	There is no honor on a pre-emptive strike, unless they are truly evil vermin.
+	Those who are guilty will either lay a hand on you first, or you may declare their evil.
+	<br>
+	<br>
+	4.) Thou shalt not use profane magicks!<br>
+	You are not a warlock, you are an honorable warrior. There is nothing more corruptive than
+	the vile magicks used by witches, warlocks, and necromancers. There are exceptions to this rule.<br>
+	You may use holy magic, and, if you recruit one, the mime may use holy mimery. Restoration has also
+	been allowed as it is a school focused on the light and mending of this world.
+	"}
+	. = ..()
 
 /*********Maintenance God**********/
 

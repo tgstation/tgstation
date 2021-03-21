@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
 	name = "Ashen Passage"
 	desc = "A short range spell allowing you to pass unimpeded through a few walls."
-	school = SCHOOL_TRANSMUTATION
+	school = SCHOOL_FORBIDDEN
 	invocation = "ASH'N P'SSG'"
 	invocation_type = INVOCATION_WHISPER
 	charge_max = 150
@@ -79,7 +79,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"
 	desc = "Spreads rust onto nearby surfaces."
-	school = SCHOOL_TRANSMUTATION
+	school = SCHOOL_FORBIDDEN
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
 	invocation = "A'GRSV SPR'D"
@@ -163,6 +163,7 @@
 	name = "Patron's Reach"
 	desc = "Channels energy into your gauntlet- unleashing it creates a wave of rust in its wake."
 	proj_type = /obj/projectile/magic/spell/rust_wave
+	school = SCHOOL_FORBIDDEN
 	charge_max = 350
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -212,7 +213,7 @@
 /obj/effect/proc_holder/spell/pointed/cleave
 	name = "Cleave"
 	desc = "Causes severe bleeding on a target and several targets around them."
-	school = SCHOOL_TRANSMUTATION
+	school = SCHOOL_FORBIDDEN
 	charge_max = 350
 	clothes_req = FALSE
 	invocation = "CL'VE"
@@ -267,7 +268,7 @@
 /obj/effect/proc_holder/spell/pointed/touch/mad_touch
 	name = "Touch of Madness"
 	desc = "A touch spell that drains your enemy's sanity."
-	school = SCHOOL_TRANSMUTATION
+	school = SCHOOL_FORBIDDEN
 	charge_max = 150
 	clothes_req = FALSE
 	invocation_type = "none"
@@ -301,7 +302,7 @@
 /obj/effect/proc_holder/spell/pointed/ash_final
 	name = "Nightwatcher's Rite"
 	desc = "A powerful spell that releases 5 streams of fire away from you."
-	school = SCHOOL_TRANSMUTATION
+	school = SCHOOL_FORBIDDEN
 	invocation = "F'RE"
 	invocation_type = INVOCATION_WHISPER
 	charge_max = 300
@@ -379,6 +380,7 @@
 /obj/effect/proc_holder/spell/targeted/emplosion/eldritch
 	name = "Energetic Pulse"
 	invocation = "E'P"
+	school = SCHOOL_FORBIDDEN
 	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
@@ -391,7 +393,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade
 	name = "Fire Cascade"
 	desc = "Heats the air around you."
-	school = SCHOOL_TRANSMUTATION
+	school = SCHOOL_FORBIDDEN
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
 	invocation = "C'SC'DE"
@@ -430,6 +432,7 @@
 	desc = "For a minute, you will passively create a ring of fire around you."
 	invocation = "FL'MS"
 	invocation_type = INVOCATION_WHISPER
+	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -468,6 +471,7 @@
 	name = "Force Contract"
 	desc = "Forces your body to contract onto a single tile."
 	invocation_type = "none"
+	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -499,6 +503,7 @@
 	desc = "Drains nearby alive people that are engulfed in flames. It heals 10 of each damage type per person. If a target is in critical condition it drains the last of their vitality, killing them."
 	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER"
 	invocation_type = INVOCATION_WHISPER
+	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -529,7 +534,7 @@
 /obj/effect/proc_holder/spell/pointed/manse_link
 	name = "Mansus Link"
 	desc = "Piercing through reality, connecting minds. This spell allows you to add people to a Mansus Net, allowing them to communicate with each other from afar."
-	school = SCHOOL_TRANSMUTATION
+	school = SCHOOL_FORBIDDEN
 	charge_max = 300
 	clothes_req = FALSE
 	invocation = "PI'RC' TH' M'ND"
@@ -635,7 +640,7 @@
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	name = "Entropic Plume"
 	desc = "Spews forth a disorienting plume that causes enemies to strike each other, briefly blinds them(increasing with range) and poisons them(decreasing with range). Also spreads rust in the path of the plume."
-	school = SCHOOL_ILLUSION
+	school = SCHOOL_FORBIDDEN
 	invocation = "'NTR'P'C PL'M'"
 	invocation_type = INVOCATION_WHISPER
 	clothes_req = FALSE
@@ -677,6 +682,7 @@
 	desc = "Shed your fragile form, become one with the arms, become one with the emperor."
 	invocation_type = INVOCATION_SHOUT
 	invocation = "REALITY UNCOIL!"
+	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
@@ -719,6 +725,7 @@
 	name = "Void Phase"
 	desc = "Let's you blink to your pointed destination, causes 3x3 aoe damage bubble around your pointed destination and your current location. It has a minimum range of 3 tiles and a maximum range of 9 tiles."
 	invocation_type = INVOCATION_WHISPER
+	school = SCHOOL_FORBIDDEN
 	invocation = "RE'L'TY PH'S'E"
 	clothes_req = FALSE
 	range = 9
@@ -777,6 +784,7 @@
 	desc = "Call the void, this pulls all nearby people closer to you, damages people already around you. If they are 4 tiles or closer they are also knocked down and a micro-stun is applied."
 	invocation_type = INVOCATION_WHISPER
 	invocation = "BR'NG F'RTH TH'M T' M'"
+	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1

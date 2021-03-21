@@ -18,6 +18,8 @@
 	var/alignment = ALIGNMENT_GOOD
 /// Does this require something before being available as an option?
 	var/starter = TRUE
+/// species traits that block you from picking
+	var/invalidating_qualities = NONE
 /// The Sect's 'Mana'
 	var/favor = 0 //MANA!
 /// The max amount of favor the sect can have
@@ -278,6 +280,7 @@
 	desc = "A sect that follows a strict code for engaging evil."
 	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
+	invalidating_qualities = TRAIT_GENELESS
 	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
 	convert_opener = "\"A good, honorable crusade against evil is required.\"<br>\
 	Your deity requires fair fights from you. You may not attack the unready, the just, or the innocent.<br>\
@@ -301,28 +304,37 @@
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	if(!ishuman(new_convert))
 		to_chat("<span class='warning'>[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound.</span>")
-	else
-		var/datum/dna/holy_dna = new_convert.dna
-		holy_dna.add_mutation(/datum/mutation/human/honorbound)
+		return FALSE
+	if(new_convert.dna.species.inherent_traits & TRAIT_GENELESS)
+		to_chat("<span class='warning'>[GLOB.deity] has deemed your species as one that could never show honor.</span>")
+		return FALSE
+	var/datum/dna/holy_dna = new_convert.dna
+	holy_dna.add_mutation(/datum/mutation/human/honorbound)
 
 /datum/religion_sect/burden
 	name = "Punished God"
 	desc = "A sect that desires to feel the pain of their god."
 	altar_icon_state = "convertaltar-burden"
 	alignment = ALIGNMENT_NEUT
+	invalidating_qualities = TRAIT_GENELESS
 	convert_opener = "\"To feel the freedom, you must first understand captivity.\"<br>\
 	Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, even addictions. You will learn the secrets of the universe \
 	from your defeated shell."
 	//a list for keeping track of how burdened each member is
 
-/datum/religion_sect/burden/on_conversion(mob/living/carbon/new_convert)
+/datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
 	if(!ishuman(new_convert))
 		to_chat("<span class='warning'>[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened.</span>")
-	else
-		var/datum/dna/holy_dna = new_convert.dna
-		holy_dna.add_mutation(/datum/mutation/human/burdened)
+		return
+	if(new_convert.dna.species.inherent_traits & TRAIT_GENELESS)
+		to_chat("<span class='warning'>[GLOB.deity] cannot help a species such as yourself comprehend the suffering. You are not burdened.</span>")
+		return
+	var/datum/dna/holy_dna = new_convert.dna
+	holy_dna.add_mutation(/datum/mutation/human/burdened)
 
-/datum/religion_sect/burden/tool_examine(mob/living/carbon/human/burdened) //display money policy
+/datum/religion_sect/burden/tool_examine(mob/living/carbon/human/burdened) //display burden level
+	if(!ishuman(burdened))
+		return FALSE
 	var/datum/mutation/human/burdened/burdenmut = burdened.dna.check_mutation(/datum/mutation/human/burdened)
 	if(burdenmut)
 		return "<span class='notice'>You are at burden level [burdenmut.burden_level]/6.</span>"

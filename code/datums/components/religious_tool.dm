@@ -137,10 +137,16 @@
  */
 /datum/component/religious_tool/proc/generate_available_sects(mob/user)
 	. = list()
-	for(var/i in subtypesof(/datum/religion_sect))
-		var/datum/religion_sect/not_a_real_instance_rs = i
+	var/human_highpriest = ishuman(user)
+	var/mob/living/carbon/human/highpriest = user
+	for(var/path in subtypesof(/datum/religion_sect))
+		if(human_highpriest && easy_access_sect.invalidating_qualities)
+			var/datum/species/highpriest_species = highpriest.dna.species
+			if(highpriest_species.inherent_traits & easy_access_sect.invalidating_qualities)
+				continue
+		var/datum/religion_sect/not_a_real_instance_rs = path
 		if(initial(not_a_real_instance_rs.starter))
-			. += list(initial(not_a_real_instance_rs.name) = i)
+			. += list(initial(not_a_real_instance_rs.name) = path)
 
 /**
  * Appends to examine so the user knows it can be used for religious purposes.

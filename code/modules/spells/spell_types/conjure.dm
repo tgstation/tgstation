@@ -2,6 +2,8 @@
 	name = "Conjure"
 	desc = "This spell conjures objs of the specified types in range."
 
+	school = SCHOOL_CONJURATION
+
 	var/list/summon_type = list() //determines what exactly will be summoned
 	//should be text, like list("/mob/living/simple_animal/bot/ed209")
 
