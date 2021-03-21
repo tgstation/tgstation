@@ -44,6 +44,7 @@
 /datum/addiction/proc/lose_addiction(datum/mind/victim_mind)
 	SEND_SIGNAL(victim_mind.current, COMSIG_CLEAR_MOOD_EVENT, "[type]_addiction")
 	to_chat(victim_mind.current, "<span class='notice'>You feel like you've gotten over your need for drugs.</span>")
+	end_withdrawal(victim_mind.current)
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
 /datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon, delta_time, times_fired)
@@ -53,9 +54,9 @@
 		for(var/addiction in possible_drug.addiction_types) //And check all of their addiction types
 			if(addiction == type && possible_drug.volume >= addiction_relief_treshold) //If one of them matches, and we have enough of it in our system, we're not losing addiction
 				if(current_addiction_cycle)
-					LAZYSET(affected_carbon.mind.active_addictions, addiction, 1) //Keeps withdrawal at first cycle.
+					end_withdrawal(affected_carbon) //stop the pain
 				on_drug_of_this_addiction = TRUE
-				return
+				break
 
 	var/withdrawal_stage
 
@@ -83,8 +84,6 @@
 			withdrawal_enters_stage_2(affected_carbon)
 		if(WITHDRAWAL_STAGE3_START_CYCLE)
 			withdrawal_enters_stage_3(affected_carbon)
-		else //you are not on withdrawl
-			SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "[type]_addiction")
 
 	///One cycle is 2 seconds
 	switch(withdrawal_stage)
@@ -109,6 +108,8 @@
 /datum/addiction/proc/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_severe, name)
 
+/datum/addiction/proc/end_withdrawal(mob/living/carbon/affected_carbon)
+	LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
 
 /// Called when addiction is in stage 1 every process
 /datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
