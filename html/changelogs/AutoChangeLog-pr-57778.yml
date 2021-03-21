@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - bugfix: "Did you know defibs can be manually attached to medical cyborgs? The description of defibrillator now reflects this fact"

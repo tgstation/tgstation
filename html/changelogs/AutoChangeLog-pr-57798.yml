@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscdel: "removes medkit from ert engineer"

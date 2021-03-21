@@ -282,3 +282,4 @@
 	tastes = list("chopped hazelnuts", "waffle")
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 4, /datum/reagent/consumable/sugar = 2)
 	foodtypes = DAIRY | SUGAR
+	venue_value = FOOD_PRICE_NORMAL
