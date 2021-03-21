@@ -197,4 +197,11 @@
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)
 
+/obj/item/pet_carrier/biopod
+	name = "biopod"
+	desc = "Alien device used for undescribable purpose. Or carrying pets."
+	base_icon_state = "biopod"
+	icon_state = "biopod_open"
+	inhand_icon_state = "biopod"
+
 #undef pet_carrier_full

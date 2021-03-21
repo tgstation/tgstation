@@ -99,33 +99,11 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	carrier.add_occupant(pet)
 	return carrier
 
-/obj/item/pet_carrier/biopod
-	name = "biopod"
-	desc = "Alien device used for undescribable purpose. Or carrying pets."
-	base_icon_state = "biopod"
-	icon_state = "biopod_open"
-	inhand_icon_state = "biopod"
-
 /obj/item/antique
 	name = "antique"
 	desc = "Valuable and completly incomprehensible."
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "antique"
-
-/obj/item/petri_dish/random
-	var/static/list/possible_samples = list(
-		list(CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5),
-		list(CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5),
-		list(CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7),
-		list(CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	)
-
-/obj/item/petri_dish/random/Initialize()
-	. = ..()
-	var/list/chosen = pick(possible_samples)
-	sample = new
-	sample.GenerateSample(chosen[1],chosen[2],chosen[3],chosen[4])
-	update_appearance()
 
 /// Supply pack unlocker chip
 /obj/item/trade_chip
