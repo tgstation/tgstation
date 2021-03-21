@@ -258,8 +258,6 @@ SUBSYSTEM_DEF(vote)
 		"allow_vote_mode" = CONFIG_GET(flag/allow_vote_mode),
 		"allow_vote_restart" = CONFIG_GET(flag/allow_vote_restart),
 		"choices" = list(),
-		"generated_actions" = generated_actions,
-		"initiator" = initiator,
 		"lower_admin" = !!user.client?.holder,
 		"mode" = mode,
 		"question" = question,

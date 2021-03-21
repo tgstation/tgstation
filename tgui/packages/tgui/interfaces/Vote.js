@@ -45,54 +45,48 @@ const VoteOptions = (props, context) => {
               <Stack.Item>
                 {!!upper_admin && (
                   <Button.Checkbox
-                    mr={1}
+                    mr={!allow_vote_map ? 1 : 1.6}
                     color="red"
                     checked={!!allow_vote_map}
-                    onClick={() => act("toggle_map")}
-                  >
+                    onClick={() => act("toggle_map")} >
                     {allow_vote_map ? "Enabled" : "Disabled"}
                   </Button.Checkbox>
                 )}
                 <Button
                   disabled={!upper_admin || !allow_vote_map}
-                  onClick={() => act("map")}
-                >
+                  onClick={() => act("map")} >
                   Map
                 </Button>
               </Stack.Item>
               <Stack.Item>
                 {!!upper_admin && (
                   <Button.Checkbox
-                    mr={1}
+                    mr={!allow_vote_restart ? 1 : 1.6}
                     color="red"
                     checked={!!allow_vote_restart}
-                    onClick={() => act("toggle_restart")}
-                  >
+                    onClick={() => act("toggle_restart")} >
                     {allow_vote_restart ? "Enabled" : "Disabled"}
                   </Button.Checkbox>
                 )}
                 <Button
                   disabled={!upper_admin || !allow_vote_restart}
-                  onClick={() => act("restart")}
-                >
+                  onClick={() => act("restart")} >
                   Restart
                 </Button>
               </Stack.Item>
               <Stack.Item>
                 {!!upper_admin && (
                   <Button.Checkbox
-                    mr={1}
+                    mr={!allow_vote_mode ? 1 : 1.6}
                     color="red"
                     checked={!!allow_vote_mode}
-                    onClick={() => act("toggle_gamemode")}
-                  >
+                    onClick={() => act("toggle_gamemode")} >
                     {allow_vote_mode ? "Enabled" : "Disabled"}
                   </Button.Checkbox>
                 )}
                 <Button
                   disabled={!upper_admin || !allow_vote_mode}
-                  onClick={() => act("gamemode")}
-                >
+                  onClick={() => act("gamemode")} >
                   Gamemode
                 </Button>
               </Stack.Item>
@@ -130,7 +124,7 @@ const VotersList = (props, context) => {
 // Display choices
 const ChoicesPanel = (props, context) => {
   const { act, data } = useBackend(context);
-  const { choices, selectedChoice } = data;
+  const { choices, selected_choice } = data;
 
   return (
     <Stack.Item grow>
@@ -144,22 +138,19 @@ const ChoicesPanel = (props, context) => {
                   textAlign="right"
                   buttons={
                     <Button
-                      disabled={i === selectedChoice - 1}
+                      disabled={i === selected_choice - 1}
                       onClick={() => {
                         act("vote", { index: i + 1 });
-                      }}
-                    >
+                      }} >
                       Vote
                     </Button>
-                  }
-                >
-                  {i === selectedChoice - 1 && (
+                  } >
+                  {i === selected_choice - 1 && (
                     <Icon
                       alignSelf="right"
                       mr={2}
                       color="green"
-                      name="vote-yea"
-                    />
+                      name="vote-yea" />
                   )}
                   {choice.votes} Votes
                 </LabeledList.Item>
@@ -184,19 +175,18 @@ const TimePanel = (props, context) => {
     <Stack.Item mt={1}>
       <Section>
         <Stack justify="space-between">
+            <Box fontSize={1.5}>
+              Time Remaining: {time_remaining || 0}s
+            </Box>
           {!!upper_admin && (
             <Button
               onClick={() => {
                 act("cancel");
               }}
-              color="red"
-            >
+              color="red" >
               Cancel Vote
             </Button>
           )}
-          <Box fontSize={1.5} textAlign="right">
-            Time Remaining: {time_remaining}s
-          </Box>
         </Stack>
       </Section>
     </Stack.Item>
