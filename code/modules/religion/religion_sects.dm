@@ -365,7 +365,7 @@
 		return TRUE
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
 	blessed.visible_message("<span class='notice'>[user] empowers [blessed] with the power of [GLOB.deity]!</span>")
-	to_chat(blessed, "<span class='boldnotice'>The power of [GLOB.deity] has made you harder to wound for awhile!</span>")
+	to_chat(blessed, "<span class='boldnotice'>The power of [GLOB.deity] has made you harder to wound for a while!</span>")
 	playsound(user, "punch", 25, TRUE, -1)
 	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
@@ -376,13 +376,12 @@
 	var/datum/reagent/yuck/wanted_yuck = offering.reagents.has_reagent(/datum/reagent/yuck, MINIMUM_YUCK_REQUIRED)
 	var/favor_earned = offering.reagents.get_reagent_amount(/datum/reagent/yuck)
 	if(!wanted_yuck)
-		to_chat(user, "<span class='warning'>[offering] does not have enough Organic Slurry for [GLOB.deity] to enjoy.</span>")
+		to_chat(user, "<span class='warning'>[offering] does not have enough organic slurry for [GLOB.deity] to enjoy.</span>")
 		return
-	to_chat(user, "<span class='notice'>[GLOB.deity] loves Organic Slurry.</span>")
+	to_chat(user, "<span class='notice'>[GLOB.deity] loves organic slurry.</span>")
 	adjust_favor(favor_earned, user)
 	playsound(get_turf(offering), 'sound/items/drink.ogg', 50, TRUE)
 	offering.reagents.clear_reagents()
 	return TRUE
 
 #undef MINIMUM_YUCK_REQUIRED
-
