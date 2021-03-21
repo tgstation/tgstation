@@ -304,6 +304,7 @@
 		possible_crusaders += invited
 
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
+	..()
 	if(!ishuman(new_convert))
 		to_chat("<span class='warning'>[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound.</span>")
 		return FALSE
