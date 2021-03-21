@@ -140,9 +140,9 @@
 	var/human_highpriest = ishuman(user)
 	var/mob/living/carbon/human/highpriest = user
 	for(var/path in subtypesof(/datum/religion_sect))
-		if(human_highpriest && easy_access_sect.invalidating_qualities)
+		if(human_highpriest && initial(easy_access_sect.invalidating_qualities))
 			var/datum/species/highpriest_species = highpriest.dna.species
-			if(highpriest_species.inherent_traits & easy_access_sect.invalidating_qualities)
+			if(initial(easy_access_sect.invalidating_qualities) in highpriest_species.inherent_traits)
 				continue
 		var/datum/religion_sect/not_a_real_instance_rs = path
 		if(initial(not_a_real_instance_rs.starter))

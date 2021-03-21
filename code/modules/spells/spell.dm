@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		recharging = TRUE
 	if(sound)
 		playMagSound()
-	SEND_SIGNAL(user, COMSIG_MOB_CAST_SPELL, user)
+	SEND_SIGNAL(user, COMSIG_MOB_CAST_SPELL, src)
 	cast(targets,user=user)
 	after_cast(targets)
 	if(action)

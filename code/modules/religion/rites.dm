@@ -284,11 +284,11 @@
 	ritual_length = 30 SECONDS
 	ritual_invocations = list(
 	"A good, honorable crusade against evil is required.",
-	"We need the Righteous ...",
-	"... the Unflinching ...",
-	"... the Just.",
-	"Sinners will be silenced ...",)
-	invoke_msg = "... And the code will be upheld!"
+	"We need the righteous ...",
+	"... the unflinching ...",
+	"... and the just.",
+	"Sinners must be silenced ...",)
+	invoke_msg = "... And the code must be upheld!"
 	///the invited crusader
 	var/mob/living/carbon/human/new_crusader
 
@@ -307,10 +307,10 @@
 		if(possible_crusader.stat != CONSCIOUS)
 			to_chat(user, "<span class='warning'>[possible_crusader] needs to be alive and conscious to join the crusade!</span>")
 			return FALSE
-		if(possible_crusader.dna.species.inherent_traits & TRAIT_GENELESS)
+		if(TRAIT_GENELESS in possible_crusader.dna.species.inherent_traits)
 			to_chat(user, "<span class='warning'>This species disgusts [GLOB.deity]! They would never be allowed to join the crusade!</span>")
 			return FALSE
-		if(!(possible_crusader in sect.currently_asking))
+		if(possible_crusader in sect.currently_asking)
 			to_chat(user, "<span class='warning'>Wait for them to decide on whether to join or not!</span>")
 			return FALSE
 		if(!(possible_crusader in sect.possible_crusaders))
@@ -368,6 +368,8 @@
 
 /datum/religion_rites/forgive/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
+	if(in_range(user, religious_tool))
+		return FALSE
 	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
 	if(!honormut) //edge case
 		return FALSE

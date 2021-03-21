@@ -68,6 +68,7 @@
 
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/chap)
+	SHOULD_CALL_PARENT(TRUE)
 	to_chat(chap, "<span class='notice'>[convert_opener]</span")
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
@@ -132,7 +133,8 @@
 /datum/religion_sect/puritanism
 	name = "Puritanism (Default)"
 	desc = "Nothing special."
-	convert_opener = "Your run-of-the-mill sect, there are no benefits or boons associated. Praise normalcy!"
+	convert_opener = "\"Praise normalcy!\"<br>\
+	Your run-of-the-mill sect, there are no benefits or boons associated."
 
 /datum/religion_sect/technophile
 	name = "Technophile"
@@ -296,7 +298,7 @@
  */
 /datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
 	currently_asking += invited
-	var/ask = alert("Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", "Yes", "No")
+	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"))
 	currently_asking -= invited
 	if(ask == "Yes")
 		possible_crusaders += invited
@@ -305,12 +307,13 @@
 	if(!ishuman(new_convert))
 		to_chat("<span class='warning'>[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound.</span>")
 		return FALSE
-	if(new_convert.dna.species.inherent_traits & TRAIT_GENELESS)
+	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
 		to_chat("<span class='warning'>[GLOB.deity] has deemed your species as one that could never show honor.</span>")
 		return FALSE
 	var/datum/dna/holy_dna = new_convert.dna
 	holy_dna.add_mutation(/datum/mutation/human/honorbound)
 
+/*
 /datum/religion_sect/burden
 	name = "Punished God"
 	desc = "A sect that desires to feel the pain of their god."
@@ -326,7 +329,7 @@
 	if(!ishuman(new_convert))
 		to_chat("<span class='warning'>[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened.</span>")
 		return
-	if(new_convert.dna.species.inherent_traits & TRAIT_GENELESS)
+	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
 		to_chat("<span class='warning'>[GLOB.deity] cannot help a species such as yourself comprehend the suffering. You are not burdened.</span>")
 		return
 	var/datum/dna/holy_dna = new_convert.dna
@@ -339,6 +342,7 @@
 	if(burdenmut)
 		return "<span class='notice'>You are at burden level [burdenmut.burden_level]/6.</span>"
 	return "<span class='notice'>You are not burdened.</span>"
+*/
 
 #define MINIMUM_YUCK_REQUIRED 5
 

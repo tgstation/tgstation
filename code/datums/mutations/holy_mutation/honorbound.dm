@@ -56,7 +56,7 @@ finish burden hooks
 		return
 	var/mob/living/clickedmob = clickingon
 	if(!is_honorable(honorbound, clickedmob))
-		return COMSIG_MOB_CANCEL_CLICKON
+		return (COMSIG_MOB_CANCEL_CLICKON)
 
 /datum/mutation/human/honorbound/proc/guilty(mob/living/user, declaration = FALSE)
 	if(user in guilty)
@@ -76,6 +76,8 @@ finish burden hooks
 /datum/mutation/human/honorbound/proc/is_honorable(mob/living/carbon/human/honorbound_human, mob/living/target_creature)
 	var/is_guilty = (target_creature in guilty)
 	//THE UNREADY (Applies over ANYTHING else!)
+	if(honorbound_human == target_creature)
+		return TRUE //oh come on now
 	if(target_creature.IsSleeping() || target_creature.IsUnconscious() || HAS_TRAIT(target_creature, TRAIT_RESTRAINED))
 		to_chat(honorbound_human, "<span class='warning'>There is no honor in attacking the <b>unready</b>.</span>")
 		return FALSE
@@ -85,15 +87,16 @@ finish burden hooks
 		var/job = target_human.mind?.assigned_role
 		var/is_holy = target_human.mind?.holy_role
 		if(job in GLOB.security_positions || is_holy)
-			to_chat(honorbound_human, "<span class='warning'>There is nothing rightous in attacking the <b>just</b>.</span>")
+			to_chat(honorbound_human, "<span class='warning'>There is nothing righteous in attacking the <b>just</b>.</span>")
 			return FALSE
 		if(job in GLOB.medical_positions)
 			to_chat(honorbound_human, "<span class='warning'>If you truly think this healer is not <b>innocent</b>, declare them guilty.</span>")
 			return FALSE
 	//THE INNOCENT
 	if(!is_guilty)
-		to_chat(honorbound_human, "<span class='warning'>There is nothing rightous in attacking the <b>innocent</b>.</span>")
+		to_chat(honorbound_human, "<span class='warning'>There is nothing righteous in attacking the <b>innocent</b>.</span>")
 		return FALSE
+	return TRUE
 
 // SIGNALS THAT ARE FOR BEING ATTACKED FIRST (GUILTY)
 /datum/mutation/human/honorbound/proc/attackby_guilt(datum/source, obj/item/I, mob/attacker)
@@ -131,15 +134,15 @@ finish burden hooks
 			guilty(thrown_item.thrownby)
 
 //spell checking
-/datum/mutation/human/honorbound/proc/spell_check(obj/effect/proc_holder/spell/spell_cast, mob/user)
+/datum/mutation/human/honorbound/proc/spell_check(mob/user, obj/effect/proc_holder/spell/spell_cast)
 	SIGNAL_HANDLER
 	punishment(user, spell_cast.school)
 
-/datum/mutation/human/honorbound/proc/staff_check(obj/item/gun/source, mob/user, target, params, zone_override)
+/datum/mutation/human/honorbound/proc/staff_check(mob/user, obj/item/gun/gun_fired, target, params, zone_override)
 	SIGNAL_HANDLER
-	if(!istype(source, /obj/item/gun/magic/staff))
+	if(!istype(gun_fired, /obj/item/gun/magic/staff))
 		return
-	var/obj/item/gun/magic/staff/offending_staff
+	var/obj/item/gun/magic/staff/offending_staff = gun_fired
 	punishment(user, offending_staff.school)
 
 /datum/mutation/human/honorbound/proc/punishment(mob/living/user, school)
@@ -169,16 +172,21 @@ finish burden hooks
 	school = SCHOOL_HOLY
 	charge_max = 0
 	clothes_req = FALSE
-	range = 1
+	range = 7
 	cooldown_min = 0
 	ranged_mousepointer = 'icons/effects/mouse_pointers/honorbound.dmi'
 	action_icon_state = "declaration"
 	active_msg = "You prepare to declare a sinner..."
+	deactive_msg = "You decide against a declaration."
 
 /obj/effect/proc_holder/spell/pointed/declare_evil/cast(list/targets, mob/living/carbon/human/user, silent = FALSE)
 	if(!ishuman(user))
 		return FALSE
 	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
+	var/datum/religion_sect/honorbound/honorsect = GLOB.religious_sect
+	if(honorsect.favor < 150)
+		to_chat(user, "<span class='warning'>You need at least 150 favor to declare someone evil!</span>")
+		return FALSE
 	if(!honormut)
 		return FALSE
 	if(!targets.len)
@@ -195,6 +203,7 @@ finish burden hooks
 		return FALSE
 	if(!can_target(targets[1], user, silent))
 		return FALSE
+	user.say(declaration_message)
 	honormut.guilty(targets[1], declaration = TRUE)
 	return TRUE
 

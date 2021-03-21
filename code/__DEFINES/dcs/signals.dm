@@ -779,14 +779,14 @@
 
 // /obj/item/gun signals
 
-///called in /obj/item/gun/process_fire (user, target, params, zone_override)
+///called in /obj/item/gun/process_fire (src, target, params, zone_override)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GUN_FIRED "gun_fired"
 
 // /obj/effect/proc_holder/spell signals
 
-///called from /obj/effect/proc_holder/spell/perform (user)
+///called from /obj/effect/proc_holder/spell/perform (src)
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
 
 // /obj/item/grenade signals
