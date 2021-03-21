@@ -103,6 +103,13 @@
 /atom/proc/attack_ai(mob/user)
 	return
 
+/**
+ * What happens when the AI holds right-click on an item. Returns a SECONDARY_ATTACK_* value.
+ *
+ * Arguments:
+ * * user The mob holding the right click
+ * * modifiers The list of the custom click modifiers
+ */
 /atom/proc/attack_ai_secondary(mob/user, list/modifiers)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
