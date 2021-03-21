@@ -214,7 +214,10 @@ export const ExoscannerConsole = (props, context) => {
                       <Icon
                         name="satellite-dish"
                         size={3} />
-                    </>) || ("No properly configured scanner arrays detected.")}
+                    </>
+                  ) || (
+                    "No properly configured scanner arrays detected."
+                  )}
                 </Stack.Item>
               </Stack>
               <Section title="Special Scan Condtions">

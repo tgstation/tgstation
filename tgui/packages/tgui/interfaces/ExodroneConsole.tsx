@@ -820,7 +820,8 @@ const ExodroneConsoleContent = (props, context) => {
             {drone_log.map((log_line, ix) => (
               <LabeledList.Item key={log_line} label={`Entry ${ix + 1}`}>
                 {log_line}
-              </LabeledList.Item>))}
+              </LabeledList.Item>
+            ))}
           </LabeledList>
         </Section>
       </Stack.Item>
