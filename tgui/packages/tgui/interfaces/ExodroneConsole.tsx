@@ -5,6 +5,7 @@ import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
 import { capitalize } from 'common/string';
 import nt_logo from '../assets/bg-nanotrasen.svg';
+import { Fragment } from 'inferno';
 
 type ExplorationEventData = {
   name: string,
@@ -130,16 +131,37 @@ export const ExodroneConsole = (props, context) => {
 const SignalLostModal = (props, context) => {
   const { act } = useBackend(context);
   return (
-    <Modal backgroundColor="red" textAlign="center" width={30} height={22} p={0} style={{ "border-radius": "5%" }}>
+    <Modal
+      backgroundColor="red"
+      textAlign="center"
+      width={30}
+      height={22}
+      p={0}
+      style={{ "border-radius": "5%" }}>
       <img src={nt_logo} width={64} height={64} />
-      <Box backgroundColor="black" textColor="red" fontSize={2} style={{ "border-radius": "-10%" }}>CONNECTION LOST</Box>
+      <Box
+        backgroundColor="black"
+        textColor="red"
+        fontSize={2}
+        style={{ "border-radius": "-10%" }}>
+        CONNECTION LOST
+      </Box>
       <Box p={2} italic>
         Connection to exploration drone interrupted.
         Please contact nearest Nanotrasen Exploration Division
         representative for further instructions.
       </Box>
-      <Icon name="exclamation-triangle" textColor="black" size={5} />
-      <Box><Button color="danger" style={{ "border": "1px solid black" }} onClick={() => act("confirm_signal_lost")}>Confirm</Button></Box>
+      <Icon
+        name="exclamation-triangle"
+        textColor="black"
+        size={5} />
+      <Box>
+        <Button
+          content="Confirm"
+          color="danger"
+          style={{ "border": "1px solid black" }}
+          onClick={() => act("confirm_signal_lost")} />
+      </Box>
     </Modal>);
 };
 
@@ -153,8 +175,8 @@ const DroneSelectionSection = (props, context) => {
     <Section scrollable fill title="Exploration Drone Listing">
       <Stack vertical>
         {all_drones.map(drone => (
-          <>
-            <Stack.Item grow key={drone.ref}>
+          <Fragment key={drone.ref}>
+            <Stack.Item grow>
               <Stack fill>
                 <Stack.Item basis={10} fontFamily="monospace" fontSize="18px">
                   {drone.name}
@@ -178,7 +200,7 @@ const DroneSelectionSection = (props, context) => {
               </Stack>
             </Stack.Item>
             <Stack.Divider />
-          </>
+          </Fragment>
         ))}
       </Stack>
     </Section>);
