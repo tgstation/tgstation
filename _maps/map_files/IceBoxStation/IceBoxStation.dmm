@@ -11606,7 +11606,7 @@
 "bba" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "bbb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -11644,7 +11644,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "bbA" = (
 /obj/machinery/camera{
 	c_tag = "Starboard Primary Hallway 2"
@@ -11653,7 +11653,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "bbE" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/green,
@@ -11948,7 +11948,7 @@
 /obj/machinery/light,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "bdf" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -26479,7 +26479,7 @@
 "cBm" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "cBr" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/bot,
@@ -26984,7 +26984,7 @@
 "cMu" = (
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "cNc" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -33427,7 +33427,7 @@
 /area/engineering/supermatter)
 "hul" = (
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "hun" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
@@ -43232,7 +43232,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "opE" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -43614,7 +43614,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "oHS" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -46957,7 +46957,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "qYV" = (
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
@@ -48537,7 +48537,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "rZy" = (
 /obj/structure/chair/office,
 /turf/open/floor/wood,
@@ -49705,7 +49705,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "sUX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -49997,7 +49997,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "tfw" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
@@ -54172,7 +54172,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "vUg" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -55981,7 +55981,7 @@
 "xhe" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "xhB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -56212,7 +56212,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "xoj" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
@@ -57041,7 +57041,7 @@
 "xQr" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/service/kitchen/diner)
+/area/service/kitchen/tourist_seating_area)
 "xQP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
