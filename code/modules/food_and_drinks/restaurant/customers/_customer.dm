@@ -280,7 +280,6 @@
 	self_defense_line = "Time for you to find out what kind of robot I am, eh?"
 
 /datum/customer_data/british
-	nationality = "Space-British"
 	base_icon = "british"
 	prefix_file = "strings/names/british_prefix.txt"
 	speech_sound = 'sound/creatures/tourist/tourist_talk_british.ogg'
