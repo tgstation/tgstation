@@ -25,7 +25,6 @@
 	var/cooling = TRUE
 	var/base_heating = 140
 	var/base_cooling = 170
-	var/was_on = FALSE      //checks if the machine was on before it lost power
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
@@ -121,10 +120,10 @@
 		to_chat(user, "<span class='notice'>You maximize the target temperature on [src] to [target_temperature] K.</span>")
 
 /obj/machinery/atmospherics/components/binary/thermomachine/process_atmos()
-	if(!is_operational || !on || !nodes[1])  //if it has no power or its switched off, dont process atmos
+	if(!is_operational || !on)  //if it has no power or its switched off, dont process atmos
+		on = FALSE
+		update_appearance()
 		return
-	else if(is_operational && was_on == TRUE)  //if it was switched on before it turned off due to no power, turn the machine back on
-		on = TRUE
 
 	var/turf/local_turf = get_turf(src)
 	var/datum/gas_mixture/enviroment = local_turf.return_air()
@@ -169,7 +168,7 @@
 	heat_amount = abs(heat_amount)
 	var/power_usage
 	if(temperature_delta  > 1)
-		power_usage = (heat_amount * 0.3 + idle_power_usage) ** (1.2 - (5e6 * efficiency) / (max(5e6, heat_amount)))
+		power_usage = (heat_amount * 0.3 + idle_power_usage) ** (1.2 - (5e8 * efficiency) / (max(5e8, heat_amount)))
 	else
 		power_usage = idle_power_usage
 	use_power(power_usage)
@@ -254,7 +253,6 @@
 			use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
-			was_on = !was_on  //if the machine was manually turned on, ensure it remembers it
 		if("cooling")
 			swap_function()
 			investigate_log("was changed to [cooling ? "cooling" : "heating"] by [key_name(usr)]", INVESTIGATE_ATMOS)
