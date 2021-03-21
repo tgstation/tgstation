@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - spellcheck: "Restaurant customer bots no longer list imaginary countries in their names"

@@ -121,17 +121,17 @@
 
 /obj/singularity/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			if(current_size <= STAGE_TWO)
 				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_SINGULO)
 				qdel(src)
 				return
-			else
-				energy -= round(((energy+1)/2),1)
-		if(2)
-			energy -= round(((energy+1)/3),1)
-		if(3)
-			energy -= round(((energy+1)/4),1)
+
+			energy -= round(((energy + 1) / 2), 1)
+		if(EXPLODE_HEAVY)
+			energy -= round(((energy + 1) / 3), 1)
+		if(EXPLODE_LIGHT)
+			energy -= round(((energy + 1) / 4), 1)
 
 /obj/singularity/process(delta_time)
 	if(current_size >= STAGE_TWO)
