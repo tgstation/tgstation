@@ -31,6 +31,7 @@
 	tastes = list("bread" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/cheese_sandwich/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese_sandwich, rand(30 SECONDS, 60 SECONDS), TRUE)

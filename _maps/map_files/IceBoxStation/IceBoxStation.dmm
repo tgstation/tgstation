@@ -13020,6 +13020,7 @@
 /area/medical/morgue)
 "bhs" = (
 /obj/structure/cable,
+/obj/effect/landmark/start/depsec/medical,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "bht" = (
@@ -13680,6 +13681,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/effect/landmark/start/depsec/medical,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "bjN" = (
@@ -14197,6 +14199,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/effect/landmark/start/depsec/medical,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "blq" = (
@@ -16190,6 +16193,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/effect/landmark/start/depsec/supply,
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "bsW" = (
@@ -17227,6 +17231,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/landmark/start/depsec/science,
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "bwO" = (
@@ -18138,6 +18143,7 @@
 /area/icemoon/surface/outdoors)
 "bAG" = (
 /obj/structure/cable,
+/obj/effect/landmark/start/depsec/science,
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "bAH" = (
@@ -26518,6 +26524,7 @@
 "cBI" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/landmark/start/depsec/engineering,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "cBK" = (
@@ -39520,6 +39527,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/landmark/start/depsec/engineering,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "lNw" = (
@@ -47720,6 +47728,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/landmark/start/depsec/supply,
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "rAo" = (
@@ -54642,6 +54651,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/landmark/start/depsec/supply,
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "wlA" = (

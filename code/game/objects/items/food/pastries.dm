@@ -855,6 +855,7 @@
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	w_class = WEIGHT_CLASS_TINY
+	venue_value = FOOD_PRICE_CHEAP // Pastry base, 3u of sugar and a single. fucking. unit. of. milk. really?
 
 
 #undef DONUT_SPRINKLE_CHANCE

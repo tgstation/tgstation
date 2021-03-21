@@ -431,6 +431,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["preferred_ai_core_display"], preferred_ai_core_display)
 	READ_FILE(S["prefered_security_department"], prefered_security_department)
 
+	// This is the version when the random security department was removed.
+	// When the minimum is higher than that version, it's impossible for someone to have the "Random" department.
+	#if SAVEFILE_VERSION_MIN > 40
+	#warn The prefered_security_department check in preferences_savefile.dm is no longer necessary.
+	#endif
+
+	if (!(prefered_security_department in GLOB.security_depts_prefs))
+		prefered_security_department = SEC_DEPT_NONE
+
 	//Jobs
 	READ_FILE(S["joblessrole"], joblessrole)
 	//Load prefs
