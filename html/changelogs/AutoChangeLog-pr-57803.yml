@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer make infinite money off of some cargo crates improper sell values."
