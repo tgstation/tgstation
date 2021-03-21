@@ -25,6 +25,7 @@
 	var/cooling = TRUE
 	var/base_heating = 140
 	var/base_cooling = 170
+	var/obj/item/tank/holding
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
@@ -94,6 +95,9 @@
 	. = ..()
 	. += getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer)
 	. += getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer)
+	if(holding)
+		var/mutable_appearance/holding = mutable_appearance(icon, "holding")
+		. += holding
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_icon_nopipes()
 	cut_overlays()
@@ -143,7 +147,7 @@
 	var/heat_amount = temperature_delta * (main_heat_capacity * heat_capacity / (main_heat_capacity + heat_capacity))
 	var/efficiency = 1
 	var/temperature_difference = 0
-	if(main_port.total_moles() && thermal_exchange_port.total_moles())
+	if(main_port.total_moles() && thermal_exchange_port.total_moles() && nodes[2])
 		if(cooling)
 			thermal_exchange_port.temperature = max(thermal_exchange_port.temperature + heat_amount / thermal_heat_capacity + motor_heat / thermal_heat_capacity, TCMB)
 		temperature_difference = thermal_exchange_port.temperature - main_port.temperature
@@ -168,20 +172,30 @@
 	heat_amount = abs(heat_amount)
 	var/power_usage
 	if(temperature_delta  > 1)
-		power_usage = (heat_amount * 0.3 + idle_power_usage) ** (1.2 - (5e8 * efficiency) / (max(5e8, heat_amount)))
+		power_usage = (heat_amount * 0.3 + idle_power_usage) ** (1.2 - (3e7 * efficiency) / (max(3e7, heat_amount)))
 	else
 		power_usage = idle_power_usage
 	use_power(power_usage)
 	update_parents()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/I, mob/user, params)
-	if(!on)
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
+/obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/item, mob/user, params)
+	if(!on && !holding)
+		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, item))
 			return
-	if(default_change_direction_wrench(user, I))
+	if(default_change_direction_wrench(user, item))
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(item))
 		return
+
+	if(istype(item, /obj/item/tank))
+		var/obj/item/tank/tank = item
+		if(!user.transferItemToLoc(tank, src))
+			return FALSE
+		to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [tank]" : "You insert [tank] into [src]"].</span>")
+		investigate_log("had its internal [holding] swapped with [tank] by [key_name(user)].", INVESTIGATE_ATMOS)
+		replace_tank(user, tank)
+		update_appearance()
+
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
@@ -225,6 +239,17 @@
 	SSair.add_to_rebuild_queue(src)
 	return TRUE
 
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/replace_tank(mob/living/user, obj/item/tank/new_tank)
+	if(!user)
+		return FALSE
+	if(holding)
+		user.put_in_hands(holding)
+		holding = null
+	if(new_tank)
+		holding = new_tank
+	update_appearance()
+	return TRUE
+
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_status(mob/user)
 	if(interactive)
 		return ..()
@@ -249,6 +274,11 @@
 	var/datum/gas_mixture/air1 = airs[1]
 	data["temperature"] = air1.temperature
 	data["pressure"] = air1.return_pressure()
+
+	data["holding"] = holding ? TRUE : FALSE
+	data["tank_gas"] = FALSE
+	if(holding && holding.air_contents.total_moles())
+		data["tank_gas"] = TRUE
 	return data
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_act(action, params)
@@ -282,6 +312,16 @@
 			if(.)
 				target_temperature = clamp(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
+		if("pumping")
+			if(holding && nodes[2])
+				var/datum/gas_mixture/thermal_exchange_port = airs[2]
+				var/datum/gas_mixture/remove = holding.air_contents.remove(holding.air_contents.total_moles())
+				thermal_exchange_port.merge(remove)
+				. = TRUE
+		if("eject")
+			if(holding)
+				replace_tank(usr)
+				. = TRUE
 
 	update_appearance()
 
