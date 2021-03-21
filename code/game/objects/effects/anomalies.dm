@@ -75,7 +75,7 @@
 	return
 
 /obj/effect/anomaly/ex_act(severity, target)
-	if(severity == 1)
+	if(severity == EXPLODE_DEVASTATE)
 		qdel(src)
 
 /obj/effect/anomaly/proc/anomalyNeutralize()

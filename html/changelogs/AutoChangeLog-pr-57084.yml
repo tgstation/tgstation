@@ -1,0 +1,6 @@
+author: "Fikou, Rohesie, Ryll/Shaps, MrDoomBringer"
+delete-after: True
+changes: 
+  - rscadd: "Full-Automatic Gun component! Your L6 Saws and Laser Gatling Guns have it now."
+  - rscadd: "The Tesla Cannon! A fully automatic replacement to the tesla revolver, it shoots balls of shock."
+  - code_imp: "Makes the Laser Gatling Gun less bad."

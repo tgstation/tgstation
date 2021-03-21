@@ -288,6 +288,7 @@
 	tastes = list("eggplant" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/tortilla
 	name = "tortilla"
@@ -766,6 +767,7 @@
 	icon_state = "peachcanmaint"
 	trash_type = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
+	venue_value = FOOD_EXOTIC
 
 /obj/item/food/crab_rangoon
 	name = "Crab Rangoon"

@@ -110,6 +110,11 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/arena_source)
+"bp" = (
+/obj/item/trash/sosjerky,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/centcom/control)
 "dn" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -147,6 +152,14 @@
 "ez" = (
 /turf/open/floor/circuit/green,
 /area/tdome/arena_source)
+"eP" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/mob_spawn/human/intern,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/centcom/control)
 "eX" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/green,
@@ -15032,6 +15045,23 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/control)
+"Ok" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/pen{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/centcom/control)
 "Op" = (
 /obj/structure/sink{
 	dir = 4;
@@ -15629,6 +15659,13 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/centcom/supplypod)
+"TU" = (
+/obj/machinery/computer/security{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/centcom/control)
 "Ud" = (
 /obj/effect/landmark/holding_facility,
 /turf/open/floor/wood,
@@ -15760,6 +15797,10 @@
 /obj/effect/spawner/randomarcade,
 /turf/open/floor/wood,
 /area/centcom/holding)
+"Vc" = (
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron/dark,
+/area/centcom/control)
 "Vk" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -15873,6 +15914,17 @@
 /obj/machinery/light,
 /turf/open/floor/iron,
 /area/centcom/supplypod)
+"WP" = (
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
+/obj/item/radio/intercom{
+	desc = "Talk smack through this.";
+	pixel_x = 28;
+	syndie = 1
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/control)
 "WQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -16039,6 +16091,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/supplypod)
+"YA" = (
+/obj/machinery/door/airlock/centcom{
+	locked = 1;
+	name = "CentCom Auxiliary Announcement Closet"
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/control)
 "YJ" = (
 /obj/item/reagent_containers/food/condiment/enzyme,
 /obj/item/reagent_containers/food/drinks/shaker,
@@ -60524,9 +60583,9 @@ mk
 yU
 iu
 io
-iu
 io
-iu
+io
+io
 io
 tL
 tL
@@ -60781,10 +60840,10 @@ nM
 nM
 nM
 io
-mQ
-iu
-rK
-iu
+bp
+eP
+Vc
+YA
 tN
 nq
 mR
@@ -61038,9 +61097,9 @@ mk
 Oj
 iu
 io
-io
-io
-io
+TU
+WP
+Ok
 io
 tO
 tN
@@ -61294,8 +61353,8 @@ iT
 iT
 iT
 ls
-iu
-lN
+io
+io
 io
 io
 io
