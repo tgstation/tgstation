@@ -143,7 +143,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 				targets += "[pda.owner] ([pda.ownjob])"
 
 	if (!targets.len)
-		continue
+		return
 
 	var/datum/signal/subspace/messaging/pda/signal = new(announcement_system, list(
 		"name" = "Security Department Update",
