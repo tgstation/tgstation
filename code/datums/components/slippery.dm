@@ -1,17 +1,27 @@
+/// Slippery component, for making anything slippery. Of course.
 /datum/component/slippery
+	/// If the slip forces you to drop held items.
 	var/force_drop_items = FALSE
+	/// How long the slip keeps you knocked down.
 	var/knockdown_time = 0
+	/// How long the slip paralyzes for.
 	var/paralyze_time = 0
+	/// Flags for how slippery the parent is.
 	var/lube_flags
+	/// A proc callback to call on slip.
 	var/datum/callback/callback
+	/// If parent is an item, this is the person currently holding/wearing the parent (or the parent if no one is holding it)
 	var/mob/living/holder
+	/// Whitelist of item slots the parent can be equipped in that make the holder slippery. If null or empty, it will always make the holder slippery.
+	var/list/slot_whitelist
 
-/datum/component/slippery/Initialize(_knockdown, _lube_flags = NONE, datum/callback/_callback, _paralyze, _force_drop = FALSE)
+/datum/component/slippery/Initialize(_knockdown, _lube_flags = NONE, datum/callback/_callback, _paralyze, _force_drop = FALSE, _slot_whitelist)
 	knockdown_time = max(_knockdown, 0)
 	paralyze_time = max(_paralyze, 0)
 	force_drop_items = _force_drop
 	lube_flags = _lube_flags
 	callback = _callback
+	slot_whitelist = _slot_whitelist
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/Slip)
 	if(isitem(parent))
 		holder = parent
@@ -31,7 +41,7 @@
 /datum/component/slippery/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	if((slot in list(ITEM_SLOT_ID, ITEM_SLOT_BELT)) && isliving(equipper))
+	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
 		holder = equipper
 		RegisterSignal(holder, COMSIG_MOVABLE_CROSSED, .proc/Slip_on_wearer)
 		RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
