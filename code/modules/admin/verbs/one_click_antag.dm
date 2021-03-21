@@ -468,7 +468,7 @@
 	var/mob/living/simple_animal/drone/nerd
 	var/teamsize
 
-	teamsize = input(usr, "How many drones ?", "N.E.R.D. team size", 2) as num|null
+	teamsize = input(usr, "How many drones?", "N.E.R.D. team size", 2) as num|null
 
 	if(teamsize <= 0)
 		return FALSE
