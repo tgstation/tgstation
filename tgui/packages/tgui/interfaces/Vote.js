@@ -33,8 +33,12 @@ export const Vote = (props, context) => {
 // Gives access to starting votes
 const VoteOptions = (props, context) => {
   const { act, data } = useBackend(context);
-  const { allow_vote_mode, allow_vote_restart, allow_vote_map,
-    upper_admin } = data;
+  const {
+    allow_vote_mode,
+    allow_vote_restart,
+    allow_vote_map,
+    upper_admin,
+  } = data;
 
   return (
     <Stack.Item>
@@ -48,13 +52,13 @@ const VoteOptions = (props, context) => {
                     mr={!allow_vote_map ? 1 : 1.6}
                     color="red"
                     checked={!!allow_vote_map}
-                    onClick={() => act("toggle_map")} >
+                    onClick={() => act("toggle_map")}>
                     {allow_vote_map ? "Enabled" : "Disabled"}
                   </Button.Checkbox>
                 )}
                 <Button
                   disabled={!upper_admin || !allow_vote_map}
-                  onClick={() => act("map")} >
+                  onClick={() => act("map")}>
                   Map
                 </Button>
               </Stack.Item>
@@ -64,13 +68,13 @@ const VoteOptions = (props, context) => {
                     mr={!allow_vote_restart ? 1 : 1.6}
                     color="red"
                     checked={!!allow_vote_restart}
-                    onClick={() => act("toggle_restart")} >
+                    onClick={() => act("toggle_restart")}>
                     {allow_vote_restart ? "Enabled" : "Disabled"}
                   </Button.Checkbox>
                 )}
                 <Button
                   disabled={!upper_admin || !allow_vote_restart}
-                  onClick={() => act("restart")} >
+                  onClick={() => act("restart")}>
                   Restart
                 </Button>
               </Stack.Item>
@@ -80,13 +84,13 @@ const VoteOptions = (props, context) => {
                     mr={!allow_vote_mode ? 1 : 1.6}
                     color="red"
                     checked={!!allow_vote_mode}
-                    onClick={() => act("toggle_gamemode")} >
+                    onClick={() => act("toggle_gamemode")}>
                     {allow_vote_mode ? "Enabled" : "Disabled"}
                   </Button.Checkbox>
                 )}
                 <Button
                   disabled={!upper_admin || !allow_vote_mode}
-                  onClick={() => act("gamemode")} >
+                  onClick={() => act("gamemode")}>
                   Gamemode
                 </Button>
               </Stack.Item>
@@ -141,10 +145,10 @@ const ChoicesPanel = (props, context) => {
                       disabled={i === selected_choice - 1}
                       onClick={() => {
                         act("vote", { index: i + 1 });
-                      }} >
+                      }}>
                       Vote
                     </Button>
-                  } >
+                  }>
                   {i === selected_choice - 1 && (
                     <Icon
                       alignSelf="right"
@@ -175,15 +179,11 @@ const TimePanel = (props, context) => {
     <Stack.Item mt={1}>
       <Section>
         <Stack justify="space-between">
-            <Box fontSize={1.5}>
-              Time Remaining: {time_remaining || 0}s
-            </Box>
+          <Box fontSize={1.5}>
+            Time Remaining: {time_remaining || 0}s
+          </Box>
           {!!upper_admin && (
-            <Button
-              onClick={() => {
-                act("cancel");
-              }}
-              color="red" >
+            <Button color="red" onClick={() => act('cancel')}>
               Cancel Vote
             </Button>
           )}
