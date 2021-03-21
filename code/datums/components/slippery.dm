@@ -30,6 +30,12 @@
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/Slip)
 
+/*
+ * The proc that does the sliping. Invokes the slip callback we have set.
+ *
+ * source - the source of the signal
+ * AM - the atom/movable that is being slipped.
+ */
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 
@@ -37,7 +43,15 @@
 	if(istype(victim) && !(victim.movement_type & FLYING) && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
 		callback.Invoke(victim)
 
-///gets called when COMSIG_ITEM_EQUIPPED is sent to parent
+/*
+ * Gets called when COMSIG_ITEM_EQUIPPED is sent to parent.
+ * This proc register slip signals to the equipper.
+ * If we have a slot whitelist, we only register the signals if the slot is valid (ex: clown PDA only slips in ID or belt slot).
+ *
+ * source - the source of the signal
+ * equipper - the mob we're equipping the slippery thing to
+ * slot - the slot we're equipping the slippery thing to on the equipper.
+ */
 /datum/component/slippery/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
@@ -46,26 +60,47 @@
 		RegisterSignal(holder, COMSIG_MOVABLE_CROSSED, .proc/Slip_on_wearer)
 		RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
 
+/*
+ * Detects if the holder mob is deleted.
+ * If our holder mob is the holder set in this component, we null it.
+ *
+ * source - the source of the signal
+ * possible_holder - the mob being deleted.
+ */
 /datum/component/slippery/proc/holder_deleted(datum/source, datum/possible_holder)
 	SIGNAL_HANDLER
 
 	if(possible_holder == holder)
 		holder = null
 
-///gets called when COMSIG_ITEM_DROPPED is sent to parent
+/*
+ * Gets called when COMSIG_ITEM_DROPPED is sent to parent.
+ * Makes our holder mob un-slippery.
+ *
+ * source - the source of the signal
+ * user - the mob that was formerly wearing our slippery item.
+ */
 /datum/component/slippery/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	holder = null
 	UnregisterSignal(user, COMSIG_MOVABLE_CROSSED)
 
+/*
+ * The slip proc, but for equipped items.
+ * Slips the person who crossed us if we're lying down and unbuckled.
+ *
+ * source - the source of the signal
+ * AM - the atom/movable that slipped on us.
+ */
 /datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 
 	if(holder.body_position == LYING_DOWN && !holder.buckled)
 		Slip(source, AM)
 
-/datum/component/slippery/clowning //used for making the clown PDA only slip if the clown is wearing his shoes and the elusive banana-skin belt
+/// Used for making the clown PDA only slip if the clown is wearing his shoes and the elusive banana-skin belt
+/datum/component/slippery/clowning
 
 /datum/component/slippery/clowning/Slip_on_wearer(datum/source, atom/movable/AM)
 	var/obj/item/I = holder.get_item_by_slot(ITEM_SLOT_FEET)
