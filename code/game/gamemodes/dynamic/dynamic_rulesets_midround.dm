@@ -210,6 +210,8 @@
 	living_players -= M
 	var/datum/antagonist/traitor/newTraitor = new
 	M.mind.add_antag_datum(newTraitor)
+	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [rule.name] ruleset and was made into a midround traitor.")
+	log_game("DYNAMIC: [key_name(M)] was selected by the [rule.name] ruleset and was made into a midround traitor.")
 	return TRUE
 
 //////////////////////////////////////////////
