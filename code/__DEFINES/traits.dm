@@ -132,7 +132,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CHUNKYFINGERS "chunkyfingers" //means that you can't use weapons with normal trigger guards.
 #define TRAIT_DUMB "dumb"
 #define TRAIT_ADVANCEDTOOLUSER "advancedtooluser" //Whether a mob is dexterous enough to use machines and certain items or not.
-#define TRAIT_MONKEYLIKE "monkeylike" //Antagonizes the above.
+#define TRAIT_DISCOORDINATED_TOOL_USER "monkeylike" //Antagonizes the above.
 #define TRAIT_PACIFISM "pacifism"
 #define TRAIT_IGNORESLOWDOWN "ignoreslow"
 #define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
