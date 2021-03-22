@@ -191,8 +191,10 @@ type Interactable = {
  *
  * null - No interactions, no item, but is an available slot
  * { interacting: 1 } - No item, but we're interacting with it
- * { icon: icon, name: name } - An item with no alternate actions that we're not interacting with.
- * { icon, name, interacting: 1 } - An item with no alternate actions that we're interacting with.
+ * { icon: icon, name: name } - An item with no alternate actions
+ *   that we're not interacting with.
+ * { icon, name, interacting: 1 } - An item with no alternate actions
+ *   that we're interacting with.
  */
 type StripMenuItem =
   | null
@@ -216,14 +218,14 @@ type StripMenuData = {
 
 type GridSpotKey = string;
 
-function getGridSpotKey(spot: [number, number]): GridSpotKey {
+const getGridSpotKey = (spot: [number, number]): GridSpotKey => {
   return `${spot[0]}/${spot[1]}`;
-}
+};
 
-function CornerText(props: {
+const CornerText = (props: {
   align: "left" | "right";
   children: string;
-}): JSX.Element {
+}): JSX.Element => {
   const { align, children } = props;
 
   return (
@@ -238,7 +240,7 @@ function CornerText(props: {
       {children}
     </Box>
   );
-}
+};
 
 export const StripMenu = (props, context) => {
   let { act, data } = useBackend<StripMenuData>(context);
