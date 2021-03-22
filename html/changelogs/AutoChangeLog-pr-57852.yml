@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - imageadd: "New bio hood sprites."

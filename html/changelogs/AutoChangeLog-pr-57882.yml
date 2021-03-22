@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Admins can once again open the stat panels to look at active, disconnected, closed and resolved tickets."

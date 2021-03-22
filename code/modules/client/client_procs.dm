@@ -811,8 +811,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		ip_intel = res.intel
 
 /client/Click(atom/object, atom/location, control, params)
-	if(!control)
-		return
 	if(click_intercept_time)
 		if(click_intercept_time >= world.time)
 			click_intercept_time = 0 //Reset and return. Next click should work, but not this one.

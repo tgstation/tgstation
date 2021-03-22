@@ -1,4 +1,0 @@
-author: "Hadza"
-delete-after: True
-changes: 
-  - balance: "Reverts the TK range for movable atoms (machinery, lockers, crates) from \"as good as removed\" back to useful"

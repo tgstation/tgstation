@@ -1,4 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "Fixes being on a drug not stopping the effects of withdrawal when you're addicted"
