@@ -77,40 +77,21 @@
 /datum/mutation/human/thermal/x_ray
 	name = "X Ray Vision"
 	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, wich might be fun for later //hmb
-	text_gain_indication = "<span class='notice'>The walls suddenly disappear! You blink, and they're back.</span>"
+	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 	instability = 35
-	power = /obj/effect/proc_holder/spell/self/xray_vision_activate
 	locked = TRUE
 
-/obj/effect/proc_holder/spell/self/xray_vision_activate
-	name = "Activate xray vision"
-	desc = "You can see through walls, at the cost of your brain's health."
-	charge_max = 30 SECONDS
-	clothes_req = FALSE
-
-/obj/effect/proc_holder/spell/self/xray_vision_activate/cast(list/targets, mob/user = usr)
-	. = ..()
-
-	if(HAS_TRAIT(user,TRAIT_XRAY_VISION))
+/datum/mutation/human/thermal/xray/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
 		return
+	ADD_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
+	owner.update_sight()
 
-	ADD_TRAIT(user, TRAIT_XRAY_VISION, GENETIC_MUTATION)
-	user.update_sight()
-	to_chat(user, text("You focus your eyes intensely, as your vision pierces everything around you."))
-
-	addtimer(CALLBACK(src, .proc/xray_vision_deactivate), 10 SECONDS)
-
-/obj/effect/proc_holder/spell/self/xray_vision_activate/proc/xray_vision_deactivate(mob/user = usr)
-	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GENETIC_MUTATION)
-	user.update_sight()
-	to_chat(user, text("You blink a few times, your vision returning to normal as a dull pain settles in your head."))
-
-	var/mob/living/carbon/user_mob = user
-	if(!istype(user_mob))
+/datum/mutation/human/thermal/xray/on_losing(mob/living/carbon/human/owner)
+	if(..())
 		return
-
-	user_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50)
-
+	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
+	owner.update_sight()
 
 
 ///Laser Eyes lets you shoot lasers from your eyes!
