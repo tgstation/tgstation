@@ -13,11 +13,11 @@
  *
  * @returns {any[]}
  */
-export const toArray = collection => {
+ export const toArray = collection => {
   if (Array.isArray(collection)) {
     return collection;
   }
-  if (typeof collection === "object") {
+  if (typeof collection === 'object') {
     const hasOwnProperty = Object.prototype.hasOwnProperty;
     const result = [];
     for (let i in collection) {
@@ -55,7 +55,7 @@ export const toArray = collection => {
  * @param {string} keyProp Property, to which key will be assigned
  * @returns {T[]} Array of keyed objects
  */
-export const toKeyedArray = (obj, keyProp = "key") => {
+export const toKeyedArray = (obj, keyProp = 'key') => {
   return map((item, key) => ({
     [keyProp]: key,
     ...item,
@@ -110,7 +110,7 @@ export const map = iterateeFn => collection => {
     }
     return result;
   }
-  if (typeof collection === "object") {
+  if (typeof collection === 'object') {
     const hasOwnProperty = Object.prototype.hasOwnProperty;
     const result = [];
     for (let i in collection) {
@@ -183,7 +183,8 @@ export const reduce = (reducerFn, initialValue) => array => {
   if (initialValue === undefined) {
     i = 1;
     result = array[0];
-  } else {
+  }
+  else {
     i = 0;
     result = initialValue;
   }
@@ -204,37 +205,39 @@ export const reduce = (reducerFn, initialValue) => array => {
  * is determined by the order they occur in the array. The iteratee is
  * invoked with one argument: value.
  */
-export const uniqBy = <T extends unknown>(
+ export const uniqBy = <T extends unknown>(
   iterateeFn?: (value: T) => unknown
 ) => (array: T[]) => {
-    const { length } = array;
-    const result = [];
-    const seen = iterateeFn ? [] : result;
-    let index = -1;
-    outer: while (++index < length) {
-      let value: T | 0 = array[index];
-      const computed = iterateeFn ? iterateeFn(value) : value;
-      value = value !== 0 ? value : 0;
-      if (computed === computed) {
-        let seenIndex = seen.length;
-        while (seenIndex--) {
-          if (seen[seenIndex] === computed) {
-            continue outer;
-          }
+  const { length } = array;
+  const result = [];
+  const seen = iterateeFn ? [] : result;
+  let index = -1;
+  outer:
+  while (++index < length) {
+    let value: T | 0 = array[index];
+    const computed = iterateeFn ? iterateeFn(value) : value;
+    value = value !== 0 ? value : 0;
+    if (computed === computed) {
+      let seenIndex = seen.length;
+      while (seenIndex--) {
+        if (seen[seenIndex] === computed) {
+          continue outer;
         }
-        if (iterateeFn) {
-          seen.push(computed);
-        }
-        result.push(value);
-      } else if (!seen.includes(computed)) {
-        if (seen !== result) {
-          seen.push(computed);
-        }
-        result.push(value);
       }
+      if (iterateeFn) {
+        seen.push(computed);
+      }
+      result.push(value);
     }
-    return result;
-  };
+    else if (!seen.includes(computed)) {
+      if (seen !== result) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+  }
+  return result;
+};
 
 export const uniq = uniqBy();
 
