@@ -47,6 +47,10 @@
 	var/obj/machinery/door_buttons/airlock_controller/controller
 	var/busy
 
+/obj/machinery/door_buttons/access_button/Initialize()
+	. = ..()
+	AddElement(/datum/element/wall_mount)
+
 /obj/machinery/door_buttons/access_button/findObjsByTag()
 	for(var/obj/machinery/door_buttons/airlock_controller/A in GLOB.machines)
 		if(A.idSelf == idSelf)
@@ -103,13 +107,17 @@
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_control_standby"
 	name = "access console"
-	desc = "A small console that can cycle opening between two airlocks."
+	desc = "A small terminal that can cycle opening between two airlocks."
 	var/obj/machinery/door/airlock/interiorAirlock
 	var/obj/machinery/door/airlock/exteriorAirlock
 	var/idInterior
 	var/idExterior
 	var/busy
 	var/lostPower
+
+/obj/machinery/door_buttons/airlock_controller/Initialize()
+	. = ..()
+	AddElement(/datum/element/wall_mount)
 
 /obj/machinery/door_buttons/airlock_controller/removeMe(obj/O)
 	if(O == interiorAirlock)

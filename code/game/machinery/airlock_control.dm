@@ -99,6 +99,10 @@
 	var/on = TRUE
 	var/alert = FALSE
 
+/obj/machinery/airlock_sensor/Initialize()
+	. = ..()
+	AddElement(/datum/element/wall_mount)
+
 /obj/machinery/airlock_sensor/incinerator_toxmix
 	id_tag = INCINERATOR_TOXMIX_AIRLOCK_SENSOR
 	master_tag = INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER

@@ -143,6 +143,10 @@
 	icon_keyboard = "no_keyboard"
 	density = FALSE
 
+/obj/machinery/computer/pod/old/mass_driver_controller/Initialize()
+	. = ..()
+	AddElement(/datum/element/wall_mount)
+
 /obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver
 	id = MASSDRIVER_TOXINS
 
