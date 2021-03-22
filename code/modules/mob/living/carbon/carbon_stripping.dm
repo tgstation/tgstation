@@ -1,14 +1,3 @@
-GLOBAL_LIST_INIT(strippable_carbon_items, list(
-	/datum/strippable_item/mob_item_slot/head,
-	/datum/strippable_item/mob_item_slot/back,
-	/datum/strippable_item/mob_item_slot/mask,
-	/datum/strippable_item/mob_item_slot/neck,
-	/datum/strippable_item/hand/left,
-	/datum/strippable_item/hand/right,
-	/datum/strippable_item/mob_item_slot/handcuffs,
-	/datum/strippable_item/mob_item_slot/legcuffs,
-))
-
 /datum/strippable_item/mob_item_slot/head
 	key = STRIPPABLE_ITEM_HEAD
 	item_slot = ITEM_SLOT_HEAD

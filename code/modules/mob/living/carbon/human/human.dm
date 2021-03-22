@@ -947,16 +947,6 @@
 		arm.attack_self(src)
 	return ..()
 
-/mob/living/carbon/human/proc/should_strip(mob/user)
-	if (user.pulling != src || user.grab_state != GRAB_AGGRESSIVE)
-		return TRUE
-
-	if (ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		return !human_user.can_be_firemanned(src)
-
-	return TRUE
-
 /mob/living/carbon/human/mouse_buckle_handling(mob/living/M, mob/living/user)
 	if(pulling != M || grab_state != GRAB_AGGRESSIVE || stat != CONSCIOUS)
 		return FALSE
