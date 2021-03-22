@@ -47,7 +47,7 @@
 /obj/effect/proc_holder/spell/self/thermal_vision_activate
 	name = "Activate thermal vision"
 	desc = "You can see thermal signatures, at the cost of your eyesight."
-	charge_max = 15 SECONDS
+	charge_max = 20 SECONDS
 	clothes_req = FALSE
 
 /obj/effect/proc_holder/spell/self/thermal_vision_activate/cast(list/targets, mob/user = usr)
@@ -85,7 +85,7 @@
 /obj/effect/proc_holder/spell/self/xray_vision_activate
 	name = "Activate xray vision"
 	desc = "You can see through walls, at the cost of your brain's health."
-	charge_max = 15 SECONDS
+	charge_max = 30 SECONDS
 	clothes_req = FALSE
 
 /obj/effect/proc_holder/spell/self/xray_vision_activate/cast(list/targets, mob/user = usr)
