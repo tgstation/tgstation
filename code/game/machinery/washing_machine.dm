@@ -335,6 +335,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_appearance()
 
 /obj/machinery/washing_machine/attack_hand_secondary(mob/user, modifiers)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy!</span>")
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
