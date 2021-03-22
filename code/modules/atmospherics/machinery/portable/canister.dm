@@ -37,7 +37,7 @@
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
 	var/heat_limit = 5000
 	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
-	var/pressure_limit = 50000
+	var/pressure_limit = 46000
 	///Maximum amount of heat that the canister can handle before taking damage
 	var/temperature_resistance = 1000 + T0C
 	///Initial temperature gas mixture
@@ -92,7 +92,7 @@
 		create_gas()
 
 	var/random_quality = rand()
-	pressure_limit = initial(pressure_limit) * (1 + 0.1 * random_quality)
+	pressure_limit = initial(pressure_limit) * (1 + 0.2 * random_quality)
 
 	update_appearance()
 
@@ -332,12 +332,12 @@
 
 /obj/machinery/portable_atmospherics/canister/tier_1
 	heat_limit = 5000
-	pressure_limit = 50000
+	pressure_limit = 46000
 	mode = CANISTER_TIER_1
 
 /obj/machinery/portable_atmospherics/canister/tier_2
 	heat_limit = 500000
-	pressure_limit = 5e6
+	pressure_limit = 4600000
 	volume = 3000
 	max_integrity = 300
 	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
@@ -346,7 +346,7 @@
 
 /obj/machinery/portable_atmospherics/canister/tier_3
 	heat_limit = 1e12
-	pressure_limit = 1e14
+	pressure_limit = 9.2e13
 	volume = 5000
 	max_integrity = 500
 	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
