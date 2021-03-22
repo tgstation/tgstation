@@ -331,6 +331,7 @@
 		)
 
 	data["items"] = items
+	data["name"] = "[owner]"
 
 	return data
 

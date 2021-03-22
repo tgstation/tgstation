@@ -43,102 +43,122 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
 const SLOTS: Record<
   string,
   {
+    displayName: string;
     gridSpot: GridSpotKey;
     image?: string;
     additionalComponent?: JSX.Element;
   }
 > = {
   eyes: {
+    displayName: "eyewear",
     gridSpot: getGridSpotKey([0, 1]),
     image: "inventory-glasses.png",
   },
 
   head: {
+    displayName: "headwear",
     gridSpot: getGridSpotKey([0, 2]),
     image: "inventory-head.png",
   },
 
   neck: {
+    displayName: "neckwear",
     gridSpot: getGridSpotKey([1, 1]),
     image: "inventory-neck.png",
   },
 
   mask: {
+    displayName: "mask",
     gridSpot: getGridSpotKey([1, 2]),
     image: "inventory-mask.png",
   },
 
   ears: {
+    displayName: "earwear",
     gridSpot: getGridSpotKey([1, 3]),
     image: "inventory-ears.png",
   },
 
   handcuffs: {
+    displayName: "handcuffs",
     gridSpot: getGridSpotKey([1, 4]),
   },
 
   legcuffs: {
+    displayName: "legcuffs",
     gridSpot: getGridSpotKey([1, 5]),
   },
 
   jumpsuit: {
+    displayName: "uniform",
     gridSpot: getGridSpotKey([2, 1]),
     image: "inventory-uniform.png",
   },
 
   suit: {
+    displayName: "suit",
     gridSpot: getGridSpotKey([2, 2]),
     image: "inventory-suit.png",
   },
 
   gloves: {
+    displayName: "gloves",
     gridSpot: getGridSpotKey([2, 3]),
     image: "inventory-gloves.png",
   },
 
   right_hand: {
+    displayName: "right hand",
     gridSpot: getGridSpotKey([2, 4]),
     image: "inventory-hand_r.png",
     additionalComponent: <CornerText align="left">R</CornerText>,
   },
 
   left_hand: {
+    displayName: "left hand",
     gridSpot: getGridSpotKey([2, 5]),
     image: "inventory-hand_l.png",
     additionalComponent: <CornerText align="right">L</CornerText>,
   },
 
   shoes: {
+    displayName: "shoes",
     gridSpot: getGridSpotKey([3, 2]),
     image: "inventory-shoes.png",
   },
 
   suit_storage: {
+    displayName: "suit storage item",
     gridSpot: getGridSpotKey([4, 0]),
     image: "inventory-suit_storage.png",
   },
 
   id: {
+    displayName: "ID",
     gridSpot: getGridSpotKey([4, 1]),
     image: "inventory-id.png",
   },
 
   belt: {
+    displayName: "belt",
     gridSpot: getGridSpotKey([4, 2]),
     image: "inventory-belt.png",
   },
 
   back: {
+    displayName: "backpack",
     gridSpot: getGridSpotKey([4, 3]),
     image: "inventory-back.png",
   },
 
   left_pocket: {
+    displayName: "left pocket",
     gridSpot: getGridSpotKey([4, 4]),
     image: "inventory-pocket.png",
   },
 
   right_pocket: {
+    displayName: "right pocket",
     gridSpot: getGridSpotKey([4, 5]),
     image: "inventory-pocket.png",
   },
@@ -162,6 +182,7 @@ type StripMenuItem =
 
 type StripMenuData = {
   items: Record<keyof typeof SLOTS, StripMenuItem>;
+  name: string;
 };
 
 type GridSpotKey = string;
@@ -226,7 +247,7 @@ export const StripMenu = (props, context) => {
       let tooltip;
 
       if (item === null) {
-        tooltip = "MOTHBLOCKS TODO: NAME GOES HERE";
+        tooltip = slot.displayName;
       } else if ("name" in item) {
         alternateAction = ALTERNATE_ACTIONS[item.alternate];
 
@@ -261,7 +282,7 @@ export const StripMenu = (props, context) => {
           />
         );
 
-        tooltip = `Obscured MOTHBLOCKS TODO: PUT NAME HERE`;
+        tooltip = `obscured ${slot.displayName}`;
       }
 
       buttons.push(
@@ -346,8 +367,8 @@ export const StripMenu = (props, context) => {
   }
 
   return (
-    <Window title="Stripping MOTHBLOCKS TODO: NAME HERE" width={400} height={500}>
-      <Window.Content scrollable>
+    <Window title={`Stripping ${data.name}`} width={400} height={400}>
+      <Window.Content>
         <Stack fill vertical>
           {grid}
         </Stack>
