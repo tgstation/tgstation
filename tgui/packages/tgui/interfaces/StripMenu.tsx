@@ -9,6 +9,32 @@ const COLUMNS = 6;
 
 const BUTTON_DIMENSIONS = "50px";
 
+type GridSpotKey = string;
+
+const getGridSpotKey = (spot: [number, number]): GridSpotKey => {
+  return `${spot[0]}/${spot[1]}`;
+};
+
+const CornerText = (props: {
+  align: "left" | "right";
+  children: string;
+}): JSX.Element => {
+  const { align, children } = props;
+
+  return (
+    <Box
+      style={{
+        position: "relative",
+        left: align === "left" ? "2px" : "-2px",
+        "text-align": align,
+        "text-shadow": "1px 1px 1px #555",
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
+
 type AlternateAction = {
   icon: string;
   text: string;
@@ -214,32 +240,6 @@ type StripMenuItem =
 type StripMenuData = {
   items: Record<keyof typeof SLOTS, StripMenuItem>;
   name: string;
-};
-
-type GridSpotKey = string;
-
-const getGridSpotKey = (spot: [number, number]): GridSpotKey => {
-  return `${spot[0]}/${spot[1]}`;
-};
-
-const CornerText = (props: {
-  align: "left" | "right";
-  children: string;
-}): JSX.Element => {
-  const { align, children } = props;
-
-  return (
-    <Box
-      style={{
-        position: "relative",
-        left: align === "left" ? "2px" : "-2px",
-        "text-align": align,
-        "text-shadow": "1px 1px 1px #555",
-      }}
-    >
-      {children}
-    </Box>
-  );
 };
 
 export const StripMenu = (props, context) => {
