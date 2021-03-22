@@ -1,3 +1,4 @@
+import { BooleanLike } from "common/react";
 import { resolveAsset } from "../assets";
 import { useBackend } from "../backend";
 import { Box, Button, Icon, Stack } from "../components";
@@ -181,16 +182,32 @@ enum ObscuringLevel {
   Hidden = 2,
 }
 
+type Interactable = {
+  interacting: BooleanLike;
+};
+
+/**
+ * Some possible options:
+ *
+ * null - No interactions, no item, but is an available slot
+ * { interacting: 1 } - No item, but we're interacting with it
+ * { icon: icon, name: name } - An item with no alternate actions that we're not interacting with.
+ * { icon, name, interacting: 1 } - An item with no alternate actions that we're interacting with.
+ */
 type StripMenuItem =
   | null
-  | {
-      icon: string;
-      name: string;
-      alternate?: string;
-    }
-  | {
-      obscured: ObscuringLevel;
-    };
+  | Interactable
+  | ((
+      | {
+          icon: string;
+          name: string;
+          alternate?: string;
+        }
+      | {
+          obscured: ObscuringLevel;
+        }
+    ) &
+      Partial<Interactable>);
 
 type StripMenuData = {
   items: Record<keyof typeof SLOTS, StripMenuItem>;
@@ -320,6 +337,7 @@ export const StripMenu = (props, context) => {
               fluid
               tooltip={tooltip}
               style={{
+                background: item?.interacting ? "hsl(39, 73%, 30%)" : undefined,
                 position: "relative",
                 width: "100%",
                 height: "100%",

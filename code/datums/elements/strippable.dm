@@ -286,6 +286,9 @@
 	/// The strippable element itself
 	var/datum/element/strippable/strippable
 
+	/// A lazy list of user mobs to a list of strip menu keys that they're interacting with
+	var/list/interactions
+
 /datum/strip_menu/New(atom/movable/owner, datum/element/strippable/strippable)
 	. = ..()
 	src.owner = owner
@@ -308,7 +311,6 @@
 		get_asset_datum(/datum/asset/simple/inventory),
 	)
 
-// MOTHBLOCKS TODO: Make this show what you're interacting with, like an animating border around the icon
 /datum/strip_menu/ui_data(mob/user)
 	var/list/data = list()
 
@@ -320,21 +322,29 @@
 		if (!item_data.should_show(owner, user))
 			continue
 
+		var/list/result
+
+		if(strippable_key in LAZYACCESS(interactions, user))
+			LAZYSET(result, "interacting", TRUE)
+
 		var/obscuring = item_data.get_obscuring(owner)
 		if (obscuring != STRIPPABLE_OBSCURING_NONE)
-			items[strippable_key] = list("obscured" = obscuring)
+			LAZYSET(result, "obscured", obscuring)
+			items[strippable_key] = result
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
 		if (isnull(item))
-			items[strippable_key] = null
+			items[strippable_key] = result
 			continue
 
-		items[strippable_key] = list(
-			"icon" = icon2base64(icon(item.icon, item.icon_state)),
-			"name" = item.name,
-			"alternate" = item_data.get_alternate_action(owner, user),
-		)
+		LAZYINITLIST(result)
+
+		result["icon"] = icon2base64(icon(item.icon, item.icon_state))
+		result["name"] = item.name
+		result["alternate"] = item_data.get_alternate_action(owner, user)
+
+		items[strippable_key] = result
 
 	data["items"] = items
 
@@ -358,7 +368,8 @@
 
 	switch (action)
 		if ("use")
-			var/datum/strippable_item/strippable_item = strippable.items[params["key"]]
+			var/key = params["key"]
+			var/datum/strippable_item/strippable_item = strippable.items[key]
 
 			if (isnull(strippable_item))
 				return
@@ -376,8 +387,14 @@
 					return
 
 				if (strippable_item.try_equip(owner, held_item, user))
+					LAZYORASSOCLIST(interactions, user, key)
+
 					// Yielding call
-					if (!strippable_item.start_equip(owner, held_item, user))
+					var/should_finish = strippable_item.start_equip(owner, held_item, user)
+
+					LAZYREMOVEASSOC(interactions, user, key)
+
+					if (!should_finish)
 						return
 
 					if (QDELETED(src) || QDELETED(owner))
@@ -392,8 +409,14 @@
 
 					strippable_item.finish_equip(owner, held_item, user)
 			else if (strippable_item.try_unequip(owner, user))
+				LAZYORASSOCLIST(interactions, user, key)
+
+				var/should_unequip = strippable_item.start_unequip(owner, user)
+
+				LAZYREMOVEASSOC(interactions, user, key)
+
 				// Yielding call
-				if (!strippable_item.start_unequip(owner, user))
+				if (!should_unequip)
 					return
 
 				if (QDELETED(src) || QDELETED(owner))
@@ -408,7 +431,8 @@
 
 				strippable_item.finish_unequip(owner, user)
 		if ("alt")
-			var/datum/strippable_item/strippable_item = strippable.items[params["key"]]
+			var/key = params["key"]
+			var/datum/strippable_item/strippable_item = strippable.items[key]
 
 			if (isnull(strippable_item))
 				return
@@ -426,7 +450,12 @@
 			if (isnull(strippable_item.get_alternate_action(owner, user)))
 				return
 
+			LAZYORASSOCLIST(interactions, user, key)
+
+			// Potentially yielding
 			strippable_item.alternate_action(owner, user)
+
+			LAZYREMOVEASSOC(interactions, user, key)
 
 /datum/strip_menu/ui_host(mob/user)
 	return owner
