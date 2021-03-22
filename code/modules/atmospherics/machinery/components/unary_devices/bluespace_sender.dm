@@ -18,29 +18,7 @@
 	///Rate of gas transfer inside the network (from 0 to 1)
 	var/gas_transfer_rate = 0.5
 	///A base price for each and every gases, in case you don't want to change them
-	var/list/base_prices = list(
-		/datum/gas/oxygen = 1,
-		/datum/gas/nitrogen = 1,
-		/datum/gas/carbon_dioxide = 1,
-		/datum/gas/miasma = 4,
-		/datum/gas/plasma = 1,
-		/datum/gas/nitrous_oxide = 1,
-		/datum/gas/bz = 2,
-		/datum/gas/hypernoblium = 5,
-		/datum/gas/water_vapor = 2,
-		/datum/gas/tritium = 3,
-		/datum/gas/stimulum = 5,
-		/datum/gas/nitryl = 4,
-		/datum/gas/pluoxium = 3,
-		/datum/gas/freon = 3,
-		/datum/gas/hydrogen = 2,
-		/datum/gas/healium = 4,
-		/datum/gas/proto_nitrate = 2,
-		/datum/gas/zauker = 10,
-		/datum/gas/helium = 1,
-		/datum/gas/antinoblium = 1,
-		/datum/gas/halon = 1
-	)
+	var/list/base_prices = list()
 	///List storing all the vendors connected to the machine
 	var/list/vendors
 	///Amount of credits gained from each vendor
@@ -52,6 +30,10 @@
 	bluespace_network = new
 	for(var/gas_id in GLOB.meta_gas_info)
 		bluespace_network.assert_gas(gas_id)
+	for(var/gas_id in GLOB.meta_gas_info)
+		var/datum/gas/gas = gas_id
+		base_prices |= gas_id
+		base_prices[gas_id] = initial(gas.base_value)
 
 	update_appearance()
 
