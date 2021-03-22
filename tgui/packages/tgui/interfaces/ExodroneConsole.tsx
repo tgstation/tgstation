@@ -480,7 +480,7 @@ const TravelTargetSelectionScreen = (props, context) => {
     && dest.band_info[s] !== 0;
     return Object.keys(all_bands).filter(band_check);
   };
-  const valid_destinations = sites.filter(destination => !site
+  const valid_destinations = !!sites && sites.filter(destination => !site
     || destination.ref !== site.ref);
   return (
     drone_status === "travel" && (
@@ -515,7 +515,7 @@ const TravelTargetSelectionScreen = (props, context) => {
               <Box>
                 ETA: {formatTime(site.distance * drone_travel_coefficent, "short")}
                 <Button
-                  mr={1}
+                  ml={1}
                   content={can_travel ? "Launch!" : travel_error}
                   onClick={() => travel_to(null)}
                   disabled={!can_travel} />
@@ -531,7 +531,7 @@ const TravelTargetSelectionScreen = (props, context) => {
               <>
                 ETA: {formatTime(travel_cost(destination), "short")}
                 <Button
-                  mr={1}
+                  ml={1}
                   content={can_travel ? "Launch!" : travel_error}
                   onClick={() => travel_to(destination.ref)}
                   disabled={!can_travel} />

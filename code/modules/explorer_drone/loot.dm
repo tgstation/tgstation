@@ -44,8 +44,8 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /datum/adventure_loot_generator/cargo/generate()
 	var/list/still_locked_packs = list()
 	for(var/pack_type in unlockable_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack_type]
-		if(!P.special_enabled)
+		var/datum/supply_pack/pack_singleton = SSshuttle.supply_packs[pack_type]
+		if(!pack_singleton.special_enabled)
 			still_locked_packs += pack_type
 	if(!length(still_locked_packs)) // Just give out some cash instead.
 		var/datum/adventure_loot_generator/simple/cash/replacement = new
@@ -118,15 +118,15 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	. = ..()
 	if(pack_type)
 		unlocked_pack_type = pack_type
-		var/datum/supply_pack/P = pack_type
-		name += "- [initial(P.name)]"
+		var/datum/supply_pack/typed_pack_type = pack_type
+		name += "- [initial(typed_pack_type.name)]"
 
 /obj/item/trade_chip/proc/try_to_unlock_contract(mob/user)
-	var/datum/supply_pack/P = SSshuttle.supply_packs[unlocked_pack_type]
-	if(!unlocked_pack_type || !P || !P.special)
+	var/datum/supply_pack/pack_singleton = SSshuttle.supply_packs[unlocked_pack_type]
+	if(!unlocked_pack_type || !pack_singleton || !pack_singleton.special)
 		to_chat(user,"<span class='danger'>This chip is invalid!</span>")
 		return
-	P.special_enabled = TRUE
+	pack_singleton.special_enabled = TRUE
 	to_chat(user,"<span class='notice'>Contract accepted into nanotrasen supply database.</span>")
 	qdel(src)
 
@@ -175,9 +175,9 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 		var/turf/start_turf = get_turf(user)
 		var/turf/last_turf = get_ranged_target_turf(start_turf,user.dir,melt_range)
 		start_turf.Beam(last_turf,icon_state="solar_beam",time=1 SECONDS)
-		for(var/turf/T in getline(start_turf,last_turf))
-			if(T.density)
-				T.Melt()
+		for(var/turf/turf_to_melt in getline(start_turf,last_turf))
+			if(turf_to_melt.density)
+				turf_to_melt.Melt()
 	inhand_icon_state = initial(inhand_icon_state)
 	user.update_inv_hands()
 	REMOVE_TRAIT(user,TRAIT_IMMOBILIZED,src)

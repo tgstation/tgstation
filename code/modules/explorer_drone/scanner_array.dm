@@ -15,8 +15,8 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 #define MAX_SCAN_DISTANCE 10
 
 #define WIDE_SCAN_COST(BAND, SCAN_POWER) (((BAND*BAND)/(SCAN_POWER))*2*60*10)
-#define BASE_POINT_SCAN_TIME 5*60*10
-#define BASE_DEEP_SCAN_TIME 5*60*10
+#define BASE_POINT_SCAN_TIME 5 MINUTES
+#define BASE_DEEP_SCAN_TIME 5 MINUTES
 
 /// Represents scan in progress, only one globally for now, todo later split per z or allow partial dish swarm usage
 /datum/exoscan
@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 /obj/machinery/computer/exoscanner_control/ui_data(mob/user)
 	. = ..()
 	.["failed"] = failed_popup
-	.["selected_site"] = selected_site ? ref(selected_site) : null
+	.["selected_site"] = selected_site && ref(selected_site)
 	var/scan_power = 0
 	if(selected_site)
 		.["site_data"] = selected_site.site_data()
@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 		.["possible_sites"] = build_exploration_site_ui_data()
 		.["scan_conditions"] = null
 
-	.["scan_in_progress"] = GLOB.exoscanner_controller.current_scan ? TRUE : FALSE
+	.["scan_in_progress"] = !!GLOB.exoscanner_controller.current_scan
 	if(GLOB.exoscanner_controller.current_scan) //Display scan in progress info
 		.["scan_time"] = timeleft(GLOB.exoscanner_controller.current_scan.scan_timer)
 		.["current_scan_power"] = GLOB.exoscanner_controller.current_scan.scan_power
@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 /obj/machinery/computer/exoscanner_control/proc/create_scan(scan_type,target)
 	var/datum/exoscan/scan = GLOB.exoscanner_controller.create_scan(scan_type,target)
 	if(scan)
-		RegisterSignal(scan,COMSIG_EXOSCAN_INTERRUPTED, .proc/scan_failed)
+		RegisterSignal(scan, COMSIG_EXOSCAN_INTERRUPTED, .proc/scan_failed)
 
 /obj/machinery/computer/exoscanner_control/proc/scan_failed()
 	SIGNAL_HANDLER
@@ -345,10 +345,8 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	description = "An asteroid belt is obscuring the direct line of sight from the station to the site, ensure the dishes are placed outside of station z level."
 
 /datum/scan_condition/asteroid_belt/check_dish(obj/machinery/exoscanner/dish)
-	var/turf/T = get_turf(dish)
-	if(!is_station_level(T.z))
-		return 1
-	return 0
+	var/turf/dish_turf = get_turf(dish)
+	return is_station_level(dish_turf.z) ? 0 : 1
 
 /datum/scan_condition/black_hole
 	name = "Black Hole"
@@ -356,9 +354,9 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /datum/scan_condition/black_hole/check_dish(obj/machinery/exoscanner/dish)
 	var/wall_count = 0
-	for(var/turf/T in range(1,get_turf(dish)))
-		if(T.density)
-			wall_count +=1
+	for(var/turf/turf_in_dish_range in range(1,get_turf(dish)))
+		if(turf_in_dish_range.density)
+			wall_count += 1
 	return wall_count > 6 ? 1 : 0
 
 /datum/scan_condition/easy

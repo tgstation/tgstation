@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 /datum/exploration_site/New(band)
 	. = ..()
 	distance = max(band+pick(-1,0,1,2),1)
-	coordinates = "\u2113:[rand(0,360)]\u00B0,\U01D44F:[rand(0,90)]\u00B0"
+	coordinates = "ℓ:[rand(0,360)]°,𝑏:[rand(0,90)]°" // ℓ and 𝑏 are symbols for longitude/inclination in made-up station centric coordinate system.
 	generate_events()
 	generate_scan_conditions()
 
@@ -140,15 +140,15 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 	var/was_known_before = revealed
 	reveal()
 	if(!was_known_before)
-		drone.drone_log("Discovered [name] at [coordinates]")
+		drone.drone_log("Discovered [name] at [coordinates].")
 	else
-		drone.drone_log("Arrived at [display_name()]")
+		drone.drone_log("Arrived at [display_name()].")
 
 /datum/exploration_site/proc/reveal()
 	revealed = TRUE
 
 /datum/exploration_site/proc/display_name()
-	return revealed ? "[name]" : "Anomaly"
+	return revealed ? name : "Anomaly"
 
 /datum/exploration_site/proc/display_description()
 	if(!revealed)

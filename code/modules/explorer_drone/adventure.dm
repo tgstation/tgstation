@@ -47,19 +47,19 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 /proc/load_adventures()
 	. = list()
 	for(var/filename in flist(ADVENTURE_DIR))
-		var/datum/adventure/A = try_loading_adventure(filename)
-		if(A)
-			. += A
+		var/datum/adventure/adventure = try_loading_adventure(filename)
+		if(adventure)
+			. += adventure
 
 /proc/try_loading_adventure(filename)
 	var/list/json_data = json_load(ADVENTURE_DIR+filename)
 	if(!islist(json_data))
-		CRASH("Invalid JSON in adventure file [replacetext(filename,ADVENTURE_DIR,"")]")
+		CRASH("Invalid JSON in adventure file [filename]")
 	//Basic validation of required fields, don't even bother loading if they are missing.
 	var/static/list/required_fields = list(ADVENTURE_NAME_FIELD,ADVENTURE_STARTING_NODE_FIELD,ADVENTURE_NODES_FIELD)
 	for(var/field in required_fields)
 		if(!json_data[field])
-			CRASH("Adventure file [replacetext(filename,ADVENTURE_DIR,"")] missing [field] value")
+			CRASH("Adventure file [filename] missing [field] value")
 
 	var/datum/adventure/loaded_adventure = new
 	//load properties
@@ -72,19 +72,19 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	loaded_adventure.deep_scan_description = json_data[ADVENTURE_DEEP_SCAN_DESCRIPTION]
 
 	for(var/list/node_data in json_data[ADVENTURE_NODES_FIELD])
-		var/datum/adventure_node/node = try_loading_node(node_data)
+		var/datum/adventure_node/node = try_loading_node(node_data,filename)
 		if(node)
 			if(loaded_adventure.nodes[node.id])
-				CRASH("Duplicate [node.id] node in [replacetext(filename,ADVENTURE_DIR,"")] adventure")
+				CRASH("Duplicate [node.id] node in [filename] adventure")
 			loaded_adventure.nodes[node.id] = node
 	loaded_adventure.triggers = json_data[ADVENTURE_TRIGGERS_FIELD]
 	if(!loaded_adventure.validate())
-		CRASH("Validation failed for [replacetext(filename,ADVENTURE_DIR,"")] adventure")
+		CRASH("Validation failed for [filename] adventure")
 	return loaded_adventure
 
-/proc/try_loading_node(node_data)
+/proc/try_loading_node(node_data,adventure_filename)
 	if(!islist(node_data))
-		CRASH("Invalid adventure node data")
+		CRASH("Invalid adventure node data in [adventure_filename] adventure.")
 	var/datum/adventure_node/fresh_node = new
 	fresh_node.id = node_data[NODE_NAME_FIELD]
 	fresh_node.description = node_data[NODE_DESCRIPTION_FIELD]
@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	fresh_node.on_enter_effects = node_data[NODE_ON_ENTER_EFFECTS_FIELD]
 	fresh_node.on_exit_effects = node_data[NODE_ON_EXIT_EFFECTS_FIELD]
 	return fresh_node
-
+/// text adventure instance, holds data about nodes/choices/etc and of current play state.
 /datum/adventure
 	/// Adventure name, this organization only, not visible to users
 	var/name
@@ -221,7 +221,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	.["description"] = current_node?.description
 	.["image"] = current_node?.image_name
 	.["raw_image"] = current_node?.raw_image
-	.["choices"] = current_node?.get_availible_choices(src)
+	.["choices"] = current_node?.get_available_choices(src)
 
 
 /datum/adventure_node
@@ -257,7 +257,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 			return TRUE
 
 
-/datum/adventure_node/proc/get_availible_choices(datum/adventure/context)
+/datum/adventure_node/proc/get_available_choices(datum/adventure/context)
 	. = list()
 	for(var/choice_key in choices)
 		var/list/choice_data = choices[choice_key]

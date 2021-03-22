@@ -65,7 +65,8 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	. = ..()
 	name = pick(strings(EXODRONE_FILE,"probe_names"))
 	if(name_counter[name])
-		name = "[name] \Roman[++name_counter[name]]"
+		name_counter[name]++
+		name = "[name] \Roman[name_counter[name]]"
 	else
 		name_counter[name] = 1
 	GLOB.exodrones += src
@@ -200,7 +201,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 				continue
 			events_to_encounter += event
 		if(!length(events_to_encounter))
-			drone_log("It seems there's nothing interesting left around [location.name]")
+			drone_log("It seems there's nothing interesting left around [location.name].")
 			return
 		var/datum/exploration_event/encountered_event = pick(events_to_encounter)
 		encountered_event.encounter(src)
@@ -440,3 +441,12 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/item/fuel_pellet/exotic
 	fuel_type = FUEL_EXOTIC
 	icon_state = "fuel_exotic"
+
+#undef EXODRONE_LOG_SIZE
+#undef EXODRONE_CARGO_SLOTS
+#undef FUEL_BASIC
+#undef BASIC_FUEL_TIME_COST
+#undef FUEL_ADVANCED
+#undef ADVANCED_FUEL_TIME_COST
+#undef FUEL_EXOTIC
+#undef EXOTIC_FUEL_TIME_COST

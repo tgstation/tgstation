@@ -32,7 +32,6 @@
 /datum/experiment/exploration_scan/actionable(datum/component/experiment_handler/experiment_handler)
 	return !is_complete()
 
-/// TODO: Come up where these experiments go
 /datum/experiment/exploration_scan/asteroid_belt
 	name = "Scan Asteroid Belt"
 	description = "We're looking for a site to test our asteroid blasting caps. Perform point scan of one."

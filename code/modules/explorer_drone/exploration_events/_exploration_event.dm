@@ -21,7 +21,9 @@
 	/// Optional description that will be added to site description when point scan is completed.
 	var/deep_scan_description
 
+/// Main event functionality, called when exploring randomly/revisiting.
 /datum/exploration_event/proc/encounter(obj/item/exodrone/drone)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!visited)
 		var/log = get_discovery_message(drone)
 		if(log)
@@ -35,7 +37,6 @@
 /// Should this event show up on site exploration list.
 /datum/exploration_event/proc/is_targetable()
 	return FALSE
-
 
 /// Simple events, not a full fledged adventure, consist only of single encounter screen
 /datum/exploration_event/simple
