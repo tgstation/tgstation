@@ -18,7 +18,6 @@
 	name = "Detective Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/enviroslacks
-	ears = /obj/item/radio/headset/headset_sec
 	gloves = /obj/item/clothing/gloves/color/plasmaman/white
 	head = /obj/item/clothing/head/helmet/space/plasmaman/white
 
