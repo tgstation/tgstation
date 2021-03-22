@@ -353,7 +353,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/washing_machine/attack_ai_secondary(mob/user, modifiers)
-	. = attack_hand_secondary(user, modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
 	if (!(flags_1 & NODECONSTRUCT_1))

@@ -185,4 +185,4 @@
  * * modifiers The list of the custom click modifiers
  */
 /atom/proc/attack_robot_secondary(mob/user, list/modifiers)
-	. = attack_ai_secondary(user, modifiers)
+	return attack_ai_secondary(user, modifiers)
