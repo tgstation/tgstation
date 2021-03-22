@@ -45,7 +45,7 @@ export const round = (value, precision) => {
   m = Math.pow(10, precision);
   value *= m;
   // sign of the number
-  sgn = (value > 0) | -(value < 0);
+  sgn = +(value > 0) | -(value < 0);
   // isHalf = value % 1 === 0.5 * sgn;
   isHalf = Math.abs(value % 1) >= 0.4999999999854481;
   f = Math.floor(value);
@@ -98,3 +98,10 @@ export const numberOfDecimalDigits = value => {
   }
   return 0;
 };
+
+/**
+ * Returns a range of numbers from start to end, exclusively.
+ * For example, range(0, 5) will return [0, 1, 2, 3, 4].
+ */
+export const range = (start: number, end: number): number[] =>
+  new Array(end - start).fill(null).map((_, index) => index + start);
