@@ -71,7 +71,7 @@
 	if(!istype(user_mob))
 		return
 
-	user_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 20)
+	user_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 10)
 
 ///X-ray Vision lets you see through walls.
 /datum/mutation/human/thermal/x_ray
