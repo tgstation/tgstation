@@ -75822,20 +75822,20 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/circuitboard/machine/HFR_corner,
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
 	pixel_y = -7
 	},
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
 /obj/machinery/camera{
 	c_tag = "Incinerator Entrance";
 	dir = 8;
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
+/obj/item/hfr_box/body,
+/obj/item/hfr_box/body,
+/obj/item/hfr_box/body,
+/obj/item/hfr_box/body,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "oXB" = (
@@ -76344,11 +76344,11 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/circuitboard/machine/HFR_core,
-/obj/item/circuitboard/machine/HFR_fuel_input,
-/obj/item/circuitboard/machine/HFR_interface,
-/obj/item/circuitboard/machine/HFR_moderator_input,
-/obj/item/circuitboard/machine/HFR_waste_output,
+/obj/item/hfr_box/core,
+/obj/item/hfr_box/corner,
+/obj/item/hfr_box/corner,
+/obj/item/hfr_box/corner,
+/obj/item/hfr_box/corner,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "pmY" = (

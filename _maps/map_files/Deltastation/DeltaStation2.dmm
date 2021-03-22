@@ -57692,14 +57692,11 @@
 "ebC" = (
 /obj/machinery/light,
 /obj/structure/table/reinforced,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
-	},
+/obj/item/hfr_box/core,
+/obj/item/hfr_box/corner,
+/obj/item/hfr_box/corner,
+/obj/item/hfr_box/corner,
+/obj/item/hfr_box/corner,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "ebD" = (
@@ -107228,23 +107225,14 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/circuitboard/machine/HFR_waste_output,
-/obj/item/circuitboard/machine/HFR_moderator_input,
-/obj/item/circuitboard/machine/HFR_interface,
-/obj/item/circuitboard/machine/HFR_fuel_input,
-/obj/item/circuitboard/machine/HFR_core,
-/obj/item/stack/cable_coil{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/stack/cable_coil{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/item/hfr_box/body,
+/obj/item/hfr_box/body,
+/obj/item/hfr_box/body,
+/obj/item/hfr_box/body,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "vHN" = (
