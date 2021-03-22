@@ -15,6 +15,7 @@
 #CROSS_COMMS_NETWORK default_network
 
 ## Where the mass driver shoots people, preferably somewhere just absolutely awful
-#HELL byond://terry.tgstation13.org:3336
+HELL byond:\\terry.tgstation13.org:3336
+
 ## If we're already in hell, go to an empty, desolate void instead
-#THE_ABYSS byond://campbell.tgstation13.org:6337
+THE_ABYSS byond:\\campbell.tgstation13.org:6337

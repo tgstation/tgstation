@@ -5,7 +5,9 @@
 	var/launch_dir
 
 /datum/component/exile/Initialize(direction)
-	. = ..()
+	if(!ismob(parent))
+		return COMPONENT_INCOMPATIBLE
+
 	launch_dir = direction
 
 /datum/component/exile/RegisterWithParent()
@@ -36,6 +38,10 @@
 	exile_info["name"] = exilee.real_name
 	exile_info["dir"] = launch_dir
 	var/client/exilee_client = exilee.client
+
+	deadchat_broadcast("[exilee.real_name] has been shot towards another station by a mass-driver!")
+	message_admins("[exilee.real_name] ([exilee.ckey]) has been shot towards another server ([youre_on_your_way_to]) by a mass-driver.")
+
 	send2otherserver(station_name(), null, "incoming_exile", youre_on_your_way_to, exile_info)
 	exilee_client << link(youre_on_your_way_to)
 	exilee.dust()

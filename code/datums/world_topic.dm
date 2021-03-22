@@ -196,9 +196,10 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/incoming_exile/Run(list/input)
-	var/exp_ckey = input["expected_ckey"]
+	var/exp_ckey = ckey(input["expected_ckey"]) // this should already be ckey form anyway, but let's be safe
 	var/force_name = input["name"]
 	var/launching_dir = input["dir"]
+
 	for(var/client/iter_client in GLOB.joined_player_list)
 		if(iter_client.ckey == exp_ckey) // they're already here in hell
 			return

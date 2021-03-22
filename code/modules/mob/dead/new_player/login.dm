@@ -37,9 +37,9 @@
 			register_for_interview()
 			return
 
-	if(SSticker.current_state >= GAME_STATE_PLAYING && SSticker.current_state < GAME_STATE_FINISHED)
+	if(SSticker.current_state >= GAME_STATE_PLAYING)
 		for(var/datum/refugee/possible_match as anything in GLOB.refugees)
-			if(possible_match.expected_ckey == ckey)
+			if(possible_match.expected_ckey == client.ckey)
 				possible_match.execute_introduction(src)
 				GLOB.refugees -= possible_match
 				return

@@ -13,9 +13,16 @@
 	launching_dir = heading_dir
 
 /datum/refugee/proc/execute_introduction(mob/dead/new_player/our_new_player)
+	GLOB.refugees -= src
 	var/mob/living/carbon/human/new_body = our_new_player.create_character(TRUE)
 	new_body.real_name = char_name
+	deadchat_broadcast("[char_name] has been shot towards this station from another server!", follow_target=new_body)
+	message_admins("[ADMIN_LOOKUPFLW(new_body)] has been shot towards this station from another server.")
+	ADD_TRAIT(new_body, TRAIT_XRAY_VISION, MAFIA_TRAIT) // so they see the spawn splash screen instead of the spawn box area area
+	new_body.update_sight()
+	addtimer(CALLBACK(src, .proc/delayed_spawn, new_body), 10 SECONDS) // delay actually spawning them and flinging them at the station a bit in case they're loading so they can see it
 
+/datum/refugee/proc/delayed_spawn(mob/living/carbon/human/the_body)
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn the incoming body
@@ -27,9 +34,11 @@
 		if(isspaceturf(pickedstart))
 			break
 
-	new_body.forceMove(pickedstart)
+	the_body.forceMove(pickedstart)
+	REMOVE_TRAIT(the_body, TRAIT_XRAY_VISION, MAFIA_TRAIT)
+	the_body.update_sight()
 	var/obj/machinery/mass_driver/typical_driver = /obj/machinery/mass_driver
 	var/throw_speed = initial(typical_driver.power)
-	new_body.throw_at(pickedgoal, 50, throw_speed)
+	the_body.throw_at(pickedgoal, 50, throw_speed)
 	priority_announce("Our scanners are picking up what appears to be a person being flung at your station at high speeds. Please do your best to make sure they don't get their grubby hands on anything.", sender_override = "Nanotrasen Department of Spacings")
 	qdel(src)

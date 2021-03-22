@@ -39,20 +39,21 @@
 	use_power(500)
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, dir)
-	for(var/atom/movable/O in loc)
-		if(!O.anchored || ismecha(O)) //Mechs need their launch platforms.
-			if(ismob(O) && !isliving(O))
-				continue
-			O_limit++
-			if(O_limit >= 20)
-				audible_message("<span class='notice'>[src] lets out a screech, it doesn't seem to be able to handle the load.</span>")
-				break
-			use_power(500)
-			if(isliving(O))
-				var/mob/living/possible_exilee = O
-				if(possible_exilee.client)
-					possible_exilee.AddComponent(/datum/component/exile, dir)
-			O.throw_at(target, drive_range * power, power)
+	for(var/atom/movable/possible_launchable in loc)
+		if(possible_launchable.anchored && !ismecha(possible_launchable)) //Mechs need their launch platforms.
+			continue
+		if(ismob(possible_launchable) && !isliving(possible_launchable))
+			continue
+		O_limit++
+		if(O_limit >= 20)
+			audible_message("<span class='notice'>[src] lets out a screech, it doesn't seem to be able to handle the load.</span>")
+			break
+		use_power(500)
+		if(isliving(possible_launchable))
+			var/mob/living/possible_exilee = possible_launchable
+			if(possible_exilee.client)
+				possible_exilee.AddComponent(/datum/component/exile, dir)
+		possible_launchable.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
 
 /obj/machinery/mass_driver/emp_act(severity)
