@@ -392,3 +392,72 @@
 	-In case of a power shortage, the fusion reaction will CONTINUE but the cooling will STOP<BR><BR>\
 	The writer of the quick guide will not be held responsible for misuses and meltdown caused by the use of the guide, \
 	use more advanced guides to understando how the various gases will act as moderators."
+
+/obj/item/hfr_box
+	name = "HFR box"
+	desc = "If you see this, call the police."
+	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon_state = "box"
+
+/obj/item/hfr_box/corner
+	name = "HFR box corner"
+	desc = "Place this as the corner of your 3x3 multiblock fusion reactor"
+	icon_state = "box_corner"
+
+/obj/item/hfr_box/body
+	name = "HFR box body"
+	desc = "Place this as the main part of the fusion reactor around the core box"
+	icon_state = "box_body"
+
+/obj/item/hfr_box/core
+	name = "HFR box core"
+	desc = "Activate this with a multitool to deploy the full machine after setting up the other boxes"
+	icon_state = "box_core"
+	var/list/body_components = list(
+		/obj/machinery/hypertorus/interface,
+		/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input,
+		/obj/machinery/atmospherics/components/unary/hypertorus/waste_output,
+		/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
+	)
+
+/obj/item/hfr_box/core/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	var/list/parts = list()
+	for(var/obj/item/hfr_box/box in orange(1,src))
+		var/direction = get_dir(src, box)
+		if(istype(box,/obj/item/hfr_box/corner))
+			if(ISDIAGONALDIR(direction))
+				box.dir = direction
+				parts |= box
+			continue
+		if(istype(box,/obj/item/hfr_box/body))
+			if(direction in GLOB.cardinals)
+				box.dir = DIRFLIP(direction)
+				parts |= box
+			continue
+	if(parts.len == 8)
+		build_reactor(parts)
+	return
+
+/obj/item/hfr_box/core/proc/build_reactor(list/parts)
+	for(var/obj/item/hfr_box/box in parts)
+		if(istype(box,/obj/item/hfr_box/corner))
+			var/obj/machinery/hypertorus/corner/corner = new(box.loc)
+			corner.dir = box.dir
+			qdel(box)
+			continue
+		if(istype(box,/obj/item/hfr_box/body))
+			var/location = get_turf(box)
+			var/piece = pick_n_take(body_components)
+			if(istype(piece,/obj/machinery/atmospherics/components/unary/hypertorus))
+				var/obj/machinery/atmospherics/components/unary/hypertorus/part = new piece(location, TRUE, box.dir)
+				part.dir = box.dir
+				qdel(box)
+				continue
+			else
+				var/obj/machinery/hypertorus/interface/interface = new piece(location)
+				interface.dir = box.dir
+				qdel(box)
+				continue
+	new/obj/machinery/atmospherics/components/unary/hypertorus/core(loc, TRUE)
+	qdel(src)
