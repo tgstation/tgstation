@@ -16,6 +16,8 @@
 #define STRIPPABLE_ITEM_RPOCKET "right_pocket"
 #define STRIPPABLE_ITEM_LHAND "left_hand"
 #define STRIPPABLE_ITEM_RHAND "right_hand"
+#define STRIPPABLE_ITEM_HANDCUFFS "handcuffs"
+#define STRIPPABLE_ITEM_LEGCUFFS "legcuffs"
 
 /// This slot is not obscured.
 #define STRIPPABLE_OBSCURING_NONE 0

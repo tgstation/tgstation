@@ -1,4 +1,3 @@
-// MOTHBLOCKS TODO: Cuffs
 // MOTHBLOCKS TODO: Don't show abstract items
 
 /// An element for atoms that, when dragged and dropped onto a mob, opens a strip panel.
@@ -148,6 +147,10 @@
 /// Performs an alternative action on this strippable_item.
 /// `has_alternate_action` needs to be TRUE.
 /datum/strippable_item/proc/alternate_action(atom/source, mob/user)
+
+/// Returns whether or not this item should show.
+/datum/strippable_item/proc/should_show(atom/source, mob/user)
+	return TRUE
 
 /// A preset for equipping items onto mob slots
 /datum/strippable_item/mob_item_slot
@@ -300,6 +303,9 @@
 	for (var/strippable_key in strippable.items)
 		var/datum/strippable_item/item_data = strippable.items[strippable_key]
 
+		if (!item_data.should_show(owner, user))
+			continue
+
 		var/obscuring = item_data.get_obscuring(owner)
 		if (obscuring != STRIPPABLE_OBSCURING_NONE)
 			items[strippable_key] = list("obscured" = obscuring)
@@ -332,7 +338,11 @@
 	switch (action)
 		if ("use")
 			var/datum/strippable_item/strippable_item = strippable.items[params["key"]]
+
 			if (isnull(strippable_item))
+				return
+
+			if (!strippable_item.should_show(owner, user))
 				return
 
 			if (strippable_item.get_obscuring(owner) == STRIPPABLE_OBSCURING_COMPLETELY)
@@ -378,7 +388,11 @@
 				strippable_item.finish_unequip(owner, user)
 		if ("alt")
 			var/datum/strippable_item/strippable_item = strippable.items[params["key"]]
+
 			if (isnull(strippable_item))
+				return
+
+			if (!strippable_item.should_show(owner, user))
 				return
 
 			if (strippable_item.get_obscuring(owner) == STRIPPABLE_OBSCURING_COMPLETELY)

@@ -44,7 +44,7 @@ const SLOTS: Record<
   string,
   {
     gridSpot: GridSpotKey;
-    image: string;
+    image?: string;
     additionalComponent?: JSX.Element;
   }
 > = {
@@ -71,6 +71,14 @@ const SLOTS: Record<
   ears: {
     gridSpot: getGridSpotKey([1, 3]),
     image: "inventory-ears.png",
+  },
+
+  handcuffs: {
+    gridSpot: getGridSpotKey([1, 4]),
+  },
+
+  legcuffs: {
+    gridSpot: getGridSpotKey([1, 5]),
   },
 
   jumpsuit: {
@@ -285,19 +293,21 @@ export const StripMenu = (props, context) => {
                 padding: 0,
               }}
             >
-              <Box
-                as="img"
-                src={resolveAsset(slot.image)}
-                opacity={0.7}
-                style={{
-                  position: "absolute",
-                  width: "32px",
-                  height: "32px",
-                  left: "50%",
-                  top: "50%",
-                  transform: "translateX(-50%) translateY(-50%) scale(0.8)",
-                }}
-              />
+              {slot.image && (
+                <Box
+                  as="img"
+                  src={resolveAsset(slot.image)}
+                  opacity={0.7}
+                  style={{
+                    position: "absolute",
+                    width: "32px",
+                    height: "32px",
+                    left: "50%",
+                    top: "50%",
+                    transform: "translateX(-50%) translateY(-50%) scale(0.8)",
+                  }}
+                />
+              )}
 
               <Box style={{ position: "relative" }}>{content}</Box>
 

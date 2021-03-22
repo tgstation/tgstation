@@ -9,6 +9,6 @@ module.exports = {
   inputDir: './icons',
   outputDir: './dist',
   fontTypes: ['woff2', 'eot'],
-  assetTypes: ['css', 'html'],
+  assetTypes: ['css'],
   prefix: 'tg',
 };

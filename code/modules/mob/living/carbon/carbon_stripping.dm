@@ -5,6 +5,8 @@ GLOBAL_LIST_INIT(strippable_carbon_items, list(
 	/datum/strippable_item/mob_item_slot/neck,
 	/datum/strippable_item/hand/left,
 	/datum/strippable_item/hand/right,
+	/datum/strippable_item/mob_item_slot/handcuffs,
+	/datum/strippable_item/mob_item_slot/legcuffs,
 ))
 
 /datum/strippable_item/mob_item_slot/head
@@ -22,6 +24,36 @@ GLOBAL_LIST_INIT(strippable_carbon_items, list(
 /datum/strippable_item/mob_item_slot/neck
 	key = STRIPPABLE_ITEM_NECK
 	item_slot = ITEM_SLOT_NECK
+
+/datum/strippable_item/mob_item_slot/handcuffs
+	key = STRIPPABLE_ITEM_HANDCUFFS
+	item_slot = ITEM_SLOT_HANDCUFFED
+
+/datum/strippable_item/mob_item_slot/handcuffs/should_show(atom/source, mob/user)
+	if (!iscarbon(source))
+		return FALSE
+
+	var/mob/living/carbon/carbon_source = source
+	return !isnull(carbon_source.handcuffed)
+
+// You shouldn't be able to equip things to handcuff slots.
+/datum/strippable_item/mob_item_slot/handcuffs/try_equip(atom/source, obj/item/equipping, mob/user)
+	return FALSE
+
+/datum/strippable_item/mob_item_slot/legcuffs
+	key = STRIPPABLE_ITEM_LEGCUFFS
+	item_slot = ITEM_SLOT_LEGCUFFED
+
+/datum/strippable_item/mob_item_slot/legcuffs/should_show(atom/source, mob/user)
+	if (!iscarbon(source))
+		return FALSE
+
+	var/mob/living/carbon/carbon_source = source
+	return !isnull(carbon_source.legcuffed)
+
+// You shouldn't be able to equip things to legcuff slots.
+/datum/strippable_item/mob_item_slot/legcuffs/try_equip(atom/source, obj/item/equipping, mob/user)
+	return FALSE
 
 /// A strippable item for a hand
 /datum/strippable_item/hand
