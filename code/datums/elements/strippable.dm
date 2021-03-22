@@ -57,6 +57,9 @@
 	/// The STRIPPABLE_ITEM_* key
 	var/key
 
+	/// Should we warn about dangerous clothing?
+	var/warn_dangerous_clothing = TRUE
+
 /// Gets the item from the given source.
 /datum/strippable_item/proc/get_item(atom/source)
 
@@ -73,8 +76,7 @@
 /// Start the equipping process. This is the proc you should yield in.
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
-	// MOTHBLOCKS TODO: This shouldn't trigger if you're equipping in their hand.
-	if (isclothing(source))
+	if (warn_dangerous_clothing && isclothing(source))
 		var/obj/item/clothing/clothing = source
 		if(clothing.clothing_flags & DANGEROUS_OBJECT)
 			source.visible_message(
