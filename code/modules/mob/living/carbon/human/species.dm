@@ -651,7 +651,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// eyes
 		if(!(NOEYESPRITES in species_traits))
 			var/obj/item/organ/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
-			if(eye_organ.overlay_ignore_lighting)
+			if(eye_organ?.overlay_ignore_lighting)
 				// This makes the eyes pierce the darkness with viscontents
 				SSvis_overlays.add_vis_overlay(species_human, 'icons/mob/human_face.dmi', eye_organ.eye_icon_state, species_human.layer, species_human.plane, eye_organ.dir)
 				SSvis_overlays.add_vis_overlay(species_human, 'icons/mob/human_face.dmi', eye_organ.eye_icon_state, EMISSIVE_LAYER, EMISSIVE_PLANE, eye_organ.dir)
