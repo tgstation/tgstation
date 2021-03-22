@@ -98,11 +98,8 @@
 	if(holding)
 		var/mutable_appearance/holding = mutable_appearance(icon, "holding")
 		. += holding
-
-/obj/machinery/atmospherics/components/binary/thermomachine/update_icon_nopipes()
-	cut_overlays()
 	if(showpipe)
-		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
+		. += getpipeimage(icon, "scrub_cap", initialize_directions)
 
 /obj/machinery/atmospherics/components/binary/thermomachine/examine(mob/user)
 	. = ..()
@@ -130,9 +127,11 @@
 		return
 
 	var/turf/local_turf = get_turf(src)
-	var/datum/gas_mixture/enviroment = local_turf.return_air()
 	if(!local_turf)
+		on = FALSE
+		update_appearance()
 		return
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
 
 	var/datum/gas_mixture/main_port = airs[1]
 	var/datum/gas_mixture/thermal_exchange_port = airs[2]
