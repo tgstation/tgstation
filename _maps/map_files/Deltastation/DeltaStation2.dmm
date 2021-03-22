@@ -36085,10 +36085,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
 "cVl" = (
@@ -84743,6 +84739,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
 "nAP" = (
@@ -91063,7 +91060,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/security/brig)
+/area/security/office)
 "pNg" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -103643,8 +103640,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
 "uqr" = (
