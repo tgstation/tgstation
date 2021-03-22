@@ -1,5 +1,3 @@
-// MOTHBLOCKS TODO: Don't show abstract items
-
 /// An element for atoms that, when dragged and dropped onto a mob, opens a strip panel.
 /datum/element/strippable
 	element_flags = ELEMENT_DETACH
