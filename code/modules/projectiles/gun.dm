@@ -56,7 +56,9 @@
 	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
 
 	var/can_flashlight = FALSE //if a flashlight can be added or removed if it already has one.
+	var/can_laser = FALSE //if a laser pointer can be added or removed if it already has one.
 	var/obj/item/flashlight/seclite/gun_light
+	var/obj/item/laser_pointer/twin_linker
 	var/datum/action/item_action/toggle_gunlight/alight
 	var/gunlight_state = "flight"
 
@@ -99,6 +101,8 @@
 		QDEL_NULL(azoom)
 	if(suppressed)
 		QDEL_NULL(suppressed)
+	if(twin_linker)
+		QDEL_NULL(twin_linker)
 	return ..()
 
 /obj/item/gun/handle_atom_del(atom/A)
@@ -136,6 +140,13 @@
 			. += "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_flashlight)
 		. += "It has a mounting point for a <b>seclite</b>."
+
+	if(twin_linker)
+		. += "It has \a [twin_linker] [can_laser ? "" : "permanently "]mounted on it."
+		if(can_laser) //if it has a light and this is false, the light is permanent.
+			. += "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>"
+	else if(can_laser)
+		. += "It has a mounting point for a <b>laser pointer</b>."
 
 	if(bayonet)
 		. += "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it."
@@ -415,6 +426,15 @@
 			alight = new(src)
 			if(loc == user)
 				alight.Grant(user)
+	else if(istype(I, /obj/item/laser_pointer))
+		if(!can_laser)
+			return ..()
+		var/obj/item/flashlight/seclite/S = I
+		if(!twin_linker)
+			if(!user.transferItemToLoc(I, src))
+				return
+			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
+			ADD_TRAIT(src, TRAIT_TWIN_LINKER, INNATE_TRAIT)
 	else if(istype(I, /obj/item/kitchen/knife))
 		var/obj/item/kitchen/knife/K = I
 		if(!can_bayonet || !K.bayonet || bayonet) //ensure the gun has an attachment point available, and that the knife is compatible with it.
@@ -434,7 +454,9 @@
 		return
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	if((can_flashlight && gun_light) && (can_bayonet && bayonet)) //give them a choice instead of removing both
+	if(can_laser && twin_linker)
+		return remove_gun_attachment(user, I, twin_linker)
+	else if((can_flashlight && gun_light) && (can_bayonet && bayonet)) //give them a choice instead of removing both
 		var/list/possible_items = list(gun_light, bayonet)
 		var/obj/item/item_to_remove = input(user, "Select an attachment to remove", "Attachment Removal") as null|obj in sortNames(possible_items)
 		if(!item_to_remove || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -505,6 +527,8 @@
 		return clear_bayonet()
 	else if(item_to_remove == gun_light)
 		return clear_gunlight()
+	else if(item_to_remove == twin_linker)
+		return clear_twin_linker()
 
 /obj/item/gun/proc/clear_bayonet()
 	if(!bayonet)
@@ -520,6 +544,14 @@
 	set_gun_light(null)
 	update_gunlight()
 	removed_light.update_brightness()
+	QDEL_NULL(alight)
+	return TRUE
+
+/obj/item/gun/proc/clear_twin_linker()
+	if(!twin_linker)
+		return
+	var/obj/item/laser_pointer/removed_pointer = gun_light
+	REMOVE_TRAIT(src, TRAIT_TWIN_LINKER, INNATE_TRAIT)
 	QDEL_NULL(alight)
 	return TRUE
 

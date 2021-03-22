@@ -22,6 +22,7 @@
 	ammo_x_offset = 2
 	charge_sections = 3
 	can_flashlight = FALSE // Can't attach or detach the flashlight, and override it's icon update
+	can_laser = FALSE
 	gunlight_state = "mini-light"
 	flight_x_offset = 19
 	flight_y_offset = 13
@@ -71,6 +72,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	w_class = WEIGHT_CLASS_NORMAL
 	can_flashlight = FALSE
+	can_laser = FALSE
 	ammo_x_offset = 1
 
 /obj/item/gun/energy/e_gun/dragnet/snare
@@ -88,6 +90,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	weapon_weight = WEAPON_HEAVY
 	can_flashlight = FALSE
+	can_laser = FALSE
 	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2
 

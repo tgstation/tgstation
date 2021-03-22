@@ -1,4 +1,8 @@
 /obj/item/ammo_casing/proc/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
+	if(fired_from && HAS_TRAIT(fired_from, TRAIT_TWIN_LINKER))
+		pellets = initial(pellets) * 2
+	else
+		pellets = initial(pellets)
 	distro += variance
 	var/targloc = get_turf(target)
 	ready_proj(target, user, quiet, zone_override, fired_from)
