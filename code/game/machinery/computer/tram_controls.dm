@@ -15,13 +15,25 @@
 	//find the tram, late so the tram is all... set up so when this is called? i'm seriously stupid and 90% of what i do consists of barely educated guessing :)
 	find_tram()
 
+/**
+ * Finds the tram from the console
+ *
+ * Locates tram parts in the lift global list after everything is done.
+ */
 /obj/machinery/computer/tram_controls/proc/find_tram()
-	var/obj/structure/industrial_lift/tram/tram_struct = locate(/obj/structure/industrial_lift/tram) in GLOB.lifts
-	tram_part = tram_struct //possibly setting to something null, that's fine, but
+	var/obj/structure/industrial_lift/tram/central/tram_loc = locate() in GLOB.lifts
+	tram_part = tram_loc //possibly setting to something null, that's fine, but
 	tram_part.find_our_location()
 
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
+
+/obj/machinery/computer/tram_controls/ui_status(mob/user,/datum/tgui/ui)
+	if(tram_part.travelling)
+		return UI_CLOSE
+	if(!in_range(user, src) && !isobserver(user))
+		return UI_CLOSE
+	return ..()
 
 /obj/machinery/computer/tram_controls/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -40,6 +52,13 @@
 	data["destinations"] = get_destinations()
 	return data
 
+/**
+ * Finds the destinations for the tram console gui
+ *
+ * Pulls tram landmarks from the landmark gobal list 
+ * and uses those to show the proper icons and destination
+ * names for the tram console gui.
+ */
 /obj/machinery/computer/tram_controls/proc/get_destinations()
 	. = list()
 	for(var/obj/effect/landmark/tram/destination in GLOB.landmarks_list)
