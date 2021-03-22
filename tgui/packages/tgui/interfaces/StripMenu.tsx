@@ -226,7 +226,7 @@ export const StripMenu = (props, context) => {
       let tooltip;
 
       if (item === null) {
-        tooltip = "TODO: NAME GOES HERE";
+        tooltip = "MOTHBLOCKS TODO: NAME GOES HERE";
       } else if ("name" in item) {
         alternateAction = ALTERNATE_ACTIONS[item.alternate];
 
@@ -261,7 +261,7 @@ export const StripMenu = (props, context) => {
           />
         );
 
-        tooltip = `Obscured TODO: PUT NAME HERE`;
+        tooltip = `Obscured MOTHBLOCKS TODO: PUT NAME HERE`;
       }
 
       buttons.push(
@@ -346,7 +346,7 @@ export const StripMenu = (props, context) => {
   }
 
   return (
-    <Window title="Stripping NAME HERE" width={400} height={500}>
+    <Window title="Stripping MOTHBLOCKS TODO: NAME HERE" width={400} height={500}>
       <Window.Content scrollable>
         <Stack fill vertical>
           {grid}

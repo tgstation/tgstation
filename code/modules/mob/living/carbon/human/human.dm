@@ -23,8 +23,7 @@
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
-	// MOTHBLOCKS TODO: Add callback to make sure we're not fireman carrying
-	AddElement(/datum/element/strippable, GLOB.strippable_human_items)
+	AddElement(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -947,6 +946,16 @@
 	if(arm)
 		arm.attack_self(src)
 	return ..()
+
+/mob/living/carbon/human/proc/should_strip(mob/user)
+	if (user.pulling != src || user.grab_state != GRAB_AGGRESSIVE)
+		return TRUE
+
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		return !human_user.can_be_firemanned(src)
+
+	return TRUE
 
 /mob/living/carbon/human/mouse_buckle_handling(mob/living/M, mob/living/user)
 	if(pulling != M || grab_state != GRAB_AGGRESSIVE || stat != CONSCIOUS)
