@@ -285,6 +285,16 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	equipping.forceMove(source)
 	corgi_source.access_card = equipping
 
+/datum/strippable_item/corgi_id/finish_unequip(atom/source, mob/user)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	user.put_in_hands(corgi_source.access_card)
+	corgi_source.access_card = null
+	corgi_source.update_corgi_fluff()
+	corgi_source.regenerate_icons()
+
 /mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
 	var/armorval = 0
 
