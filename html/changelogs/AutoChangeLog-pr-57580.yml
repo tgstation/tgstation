@@ -1,0 +1,4 @@
+author: "Ghilker, tralezab"
+delete-after: True
+changes: 
+  - rscadd: "Add gas vendor and gas sender. The gas sender is located on round start in atmos, it has a port where you connect pipes to send the gases you want into the bluespace gas network. To this machine will connect gas vendors (or you can multitool the sender and then the vendor to do the connection), the vendors are wall mounted tank dispensers where you can decide you gas mix based on the input in the UI. The gases are not free tho (unless the atmos man that is managing the sender just set them free), you will have to pay a sum based on the gas price times the gas amounts, the sum will be taken from your card and sent to the engi department."
