@@ -14,3 +14,35 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 /// The whole result is then clamped to within the range above.
 /// Not very readable but it works
 #define DELAY_TO_GLIDE_SIZE(delay) (clamp(((32 / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
+
+/// defines for [/atom/movable/var/currently_z_moving]. Higher numbers have higher priority.
+#define CURRENTLY_Z_MOVING_GENERIC 1
+/// This one is for falling down.
+#define CURRENTLY_Z_FALLING 2
+/// This one is for going upstairs.
+#define CURRENTLY_Z_ASCENDING 3
+
+/// possible bitflag return values of [atom/proc/intercept_zImpact] calls
+#define FALL_INTERCEPTED (1<<0) //Stops the movable from falling further and crashing on the ground
+#define FALL_NO_MESSAGE (1<<1) //Suppresses the "[A] falls through [old_turf]" messages where it'd make little sense at all, like going downstairs.
+#define FALL_STOP_INTERCEPTING (1<<2) //Used in situations where halting the whole "intercept" loop would be better, like supermatter dusting (and thus deleting) the atom.
+
+/// Runs check_pulling() by the end of [/atom/movable/proc/zMove] for every movable that's pulling something. Should be kept enabled unless you know what you are doing.
+#define ZMOVE_CHECK_PULLING (1<<0)
+/// Checks if pulledby is nearby. if not, stop being pulled.
+#define ZMOVE_CHECK_PULLEDBY (1<<1)
+/// flags for different checks done in [/atom/movable/proc/can_z_move]
+#define ZMOVE_FALL_CHECKS (1<<2)
+#define ZMOVE_CAN_FLY_CHECKS (1<<3)
+#define ZMOVE_INCAPACITATED_CHECKS (1<<4)
+/// Doesn't call zPassIn() and zPassOut()
+#define ZMOVE_IGNORE_OBSTACLES (1<<5)
+/// Gives players chat feedbacks if they're unable to move through z levels.
+#define ZMOVE_FEEDBACK (1<<6)
+
+#define ZMOVE_CHECK_PULLS (ZMOVE_CHECK_PULLING|ZMOVE_CHECK_PULLEDBY)
+/// default flags used in "Move Upwards" and "Move Downwards" verbs.
+#define ZMOVE_FLIGHT_FLAGS (ZMOVE_CAN_FLY_CHECKS|ZMOVE_INCAPACITATED_CHECKS|ZMOVE_CHECK_PULLS)
+
+/// Defines used in [/atom/movable/proc/z_move_conga_step] && [/atom/movable/proc/z_move_conga_callback]
+#define ZMOVE_CONGA_METHOD_MOVE 1

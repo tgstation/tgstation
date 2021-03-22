@@ -185,8 +185,7 @@ SUBSYSTEM_DEF(throwing)
 
 	if(!thrownthing.currently_z_moving) // I don't think you can zfall while thrown but hey, just in case.
 		var/turf/T = get_turf(thrownthing)
-		if(T && thrownthing.has_gravity(T))
-			T.zFall(thrownthing)
+		T?.zFall(thrownthing)
 
 	if(thrownthing)
 		SEND_SIGNAL(thrownthing, COMSIG_MOVABLE_THROW_LANDED, src)

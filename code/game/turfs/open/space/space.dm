@@ -182,12 +182,12 @@
 				ty--
 			DT = locate(tx, ty, destination_z)
 
-		A.zMove(null, DT, forced = TRUE, affect_pulling = FALSE) //zMove itself doesn't handle conga lines of pulled movables
+		A.zMove(null, DT, NONE, 0) //we handle conga lines a bit differently.
 
 		var/atom/movable/current_pull = A.pulling
 		while (current_pull)
 			var/turf/target_turf = get_step(current_pull.pulledby.loc, REVERSE_DIR(current_pull.pulledby.dir)) || current_pull.pulledby.loc
-			current_pull.zMove(null, target_turf, forced = TRUE)
+			current_pull.zMove(null, target_turf, NONE, 0)
 			current_pull = current_pull.pulling
 
 		//now we're on the new z_level, proceed the space drifting

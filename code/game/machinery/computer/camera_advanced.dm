@@ -210,11 +210,13 @@
 		return eye_user.client
 	return null
 
-/mob/camera/ai_eye/remote/xenobio/can_z_move(direction, turf/start, turf/destination, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
-	var/area/new_area = get_area(destination)
-	if(new_area && new_area.name == allowed_area || new_area && (new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
-		return TRUE
-	return FALSE
+/mob/camera/ai_eye/remote/xenobio/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS)
+	. = ..()
+	if(!.)
+		return
+	var/area/new_area = get_area(.)
+	if(!new_area || (new_area.name != allowed_area && !(new_area.area_flags & XENOBIOLOGY_COMPATIBLE)))
+		return FALSE
 
 /mob/camera/ai_eye/remote/setLoc(turf/T, force_update = FALSE)
 	if(eye_user)
@@ -313,7 +315,7 @@
 		return
 	var/mob/living/user_mob = target
 	var/mob/camera/ai_eye/remote/remote_eye = user_mob.remote_control
-	if(remote_eye.zMove(UP, FALSE))
+	if(remote_eye.zMove(UP))
 		to_chat(user_mob, "<span class='notice'>You move upwards.</span>")
 	else
 		to_chat(user_mob, "<span class='notice'>You couldn't move upwards!</span>")
@@ -328,7 +330,7 @@
 		return
 	var/mob/living/user_mob = target
 	var/mob/camera/ai_eye/remote/remote_eye = user_mob.remote_control
-	if(remote_eye.zMove(DOWN, FALSE))
+	if(remote_eye.zMove(DOWN))
 		to_chat(user_mob, "<span class='notice'>You move downwards.</span>")
 	else
 		to_chat(user_mob, "<span class='notice'>You couldn't move downwards!</span>")

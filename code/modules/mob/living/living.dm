@@ -40,9 +40,10 @@
 	QDEL_LIST(diseases)
 	return ..()
 
-/mob/living/onZImpact(turf/T, levels)
+/mob/living/onZImpact(turf/T, levels, message = TRUE)
 	if(!isgroundlessturf(T))
 		ZImpactDamage(T, levels)
+		message = FALSE
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
@@ -763,9 +764,10 @@
 		lying_angle_on_movement(direct)
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
-			return buckled.Move(newloc, direct, glide_size)
-		else
-			return FALSE
+			buckled.moving_from_pull = moving_from_pull
+			. = buckled.Move(newloc, direct, glide_size)
+			buckled.moving_from_pull = null
+		return
 
 	var/old_direction = dir
 	var/turf/T = loc
@@ -775,9 +777,7 @@
 
 	. = ..()
 
-	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1 && (pulledby != moving_from_pull))//separated from our puller and not in the middle of a diagonal move.
-		pulledby.stop_pulling()
-	else if(isliving(pulledby))
+	if(moving_diagonally != FIRST_DIAG_STEP && isliving(pulledby))
 		var/mob/living/L = pulledby
 		L.set_pull_offsets(src, pulledby.grab_state)
 

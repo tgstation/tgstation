@@ -1012,12 +1012,11 @@
 	set name = "Move Upwards"
 	set category = "IC"
 
-	if(zMove(UP, feedback = TRUE))
+	if(zMove(UP))
 		to_chat(src, "<span class='notice'>You move upwards.</span>")
 
-/mob/living/silicon/ai/zMove(dir, turf/target, feedback = FALSE, forced = FALSE, affect_pulling = TRUE)
-	return eyeobj.zMove(dir, feedback)
-
+/mob/living/silicon/ai/zMove(dir, turf/target, z_move_flags = ZMOVE_FLIGHT_FLAGS, recursions_left = 1, list/falling_movs)
+	return eyeobj.zMove(arglist(args))
 
 /// Proc to hook behavior to the changes of the value of [aiRestorePowerRoutine].
 /mob/living/silicon/ai/proc/setAiRestorePowerRoutine(new_value)

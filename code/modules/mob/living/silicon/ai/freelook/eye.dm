@@ -94,13 +94,14 @@
 		if(ai.master_multicam)
 			ai.master_multicam.refresh_view()
 
-/mob/camera/ai_eye/zMove(dir, turf/target, feedback = FALSE, forced = FALSE, affect_pulling = TRUE)
+/mob/camera/ai_eye/zMove(dir, turf/target, z_move_flags = ZMOVE_FLIGHT_FLAGS, recursions_left = 1, list/falling_movs)
 	. = ..()
 	if(.)
 		setLoc(loc, force_update = TRUE)
 
-/mob/camera/ai_eye/can_z_move(direction, turf/start, turf/destination, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
-	return TRUE //cameras do not respect these FLOORS you speak so much of
+/mob/camera/ai_eye/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE)
+	z_move_flags |= ZMOVE_IGNORE_OBSTACLES  //cameras do not respect these FLOORS you speak so much of
+	return ..()
 
 /mob/camera/ai_eye/Move()
 	return

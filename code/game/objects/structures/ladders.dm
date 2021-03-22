@@ -78,7 +78,7 @@
 		show_fluff_message(going_up, user)
 
 	var/turf/target = get_turf(ladder)
-	user.zMove(null, target, forced = TRUE)
+	user.zMove(target = target)
 	ladder.use(user) //reopening ladder radial menu ahead
 
 /obj/structure/ladder/proc/use(mob/user, is_ghost=FALSE)

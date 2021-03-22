@@ -215,46 +215,43 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/zAirOut(direction, turf/source)
 	return FALSE
 
-/turf/proc/zImpact(atom/movable/falling, levels = 1, turf/prev_turf)
-	var/flags = NONE
-	var/list/falling_and_buckled_mobs = list(falling)
-	var/list/mov_names = list(falling.name)
-	for(var/mob/buckled_mob as anything in falling.buckled_mobs)
-		falling_and_buckled_mobs += buckled_mob
-		mov_names += buckled_mob.name
-	for(var/i in contents)
-		var/atom/thing = i
-		flags |= thing.intercept_zImpact(falling_and_buckled_mobs, levels)
-		if(flags & FALL_STOP_INTERCEPTING)
-			break
-	if(prev_turf && !(flags & FALL_NO_MESSAGE))
-		for(var/mov_name in mov_names)
-			prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
-	if(flags & FALL_INTERCEPTED)
-		return
-	if(zFall(falling, levels + 1))
-		return FALSE
-	for(var/atom/movable/falling_mov as anything in falling_and_buckled_mobs)
-		falling_mov.visible_message("<span class='danger'>[falling_mov] crashes into [src]!</span>")
-		falling_mov.onZImpact(src, levels)
-	return TRUE
-
+/// Recursive proc that precipitates a movable (plus whatever they may be pulling) to lower z levels if possible.
 /turf/proc/zFall(atom/movable/falling, levels = 1, force = FALSE, turf/oldloc)
 	var/turf/target = get_step_multiz(src, DOWN)
 	if(!target || (!isobj(falling) && !ismob(falling)))
 		return FALSE
-	if(!force && !falling.can_z_move(DOWN, src, target, ZTRAVEL_FALL_CHECKS))
+	if(!force && !falling.can_z_move(DOWN, src, target, ZMOVE_FALL_CHECKS))
 		return FALSE
-	if(levels == 1) //first iteration; bring whatever they're pulling down with them next.
-		for(var/mob/buckled_mob as anything in falling.buckled_mobs)
-			buckled_mob.currently_z_moving = TRUE // Prevents the buckled mob from falling before whatever they are buckled in.
-			buckled_mob.Move(src, get_dir(buckled_mob, src)) // this should move the items they are pulling to their previous location.
-			if(buckled_mob.pulling)
-				addtimer(CALLBACK(buckled_mob.pulling, /atom/movable/.proc/fallen_movable_conga_pull, buckled_mob.pulling.loc, src), 0.2 SECONDS)
-		if(falling.pulling) // Unlike objects pulled by buckled mobs, the object pulled by the falling movable will move after the fall has come to an end.
-			addtimer(CALLBACK(falling.pulling, /atom/movable/.proc/fallen_movable_conga_pull, oldloc, src), 0.2 SECONDS) // That's why we use oldloc, the previous loc of 'falling'.
-	falling.zMove(null, target, forced = TRUE, affect_pulling = FALSE)
+
+	if(levels == 1)
+		falling.z_move_conga_step(oldloc || src, src, target)
+	else
+		falling.zMove(null, target, NONE, falling.moving_from_pull ? 0 : 1) // Not a bool.
 	target.zImpact(falling, levels, src)
+	return TRUE
+
+///Called each time the target falls down a z level, possibly making their trajectory come to a halt. see __DEFINES/movement.dm.
+/turf/proc/zImpact(atom/movable/falling, levels = 1, turf/prev_turf)
+	var/flags = NONE
+	var/list/falling_movs = falling.get_pulled_and_buckled_conga(falling.moving_from_pull ? 0 : 1) // Not a bool.
+	var/list/falling_mov_names
+	for(var/atom/movable/falling_mov as anything in falling_movs)
+		falling_mov_names += falling_mov.name
+	for(var/i in contents)
+		var/atom/thing = i
+		flags |= thing.intercept_zImpact(falling_movs, levels)
+		if(flags & FALL_STOP_INTERCEPTING)
+			break
+	if(prev_turf && !(flags & FALL_NO_MESSAGE))
+		for(var/mov_name in falling_mov_names)
+			prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
+	if(!(flags & FALL_INTERCEPTED) && zFall(falling, levels + 1))
+		return FALSE
+	for(var/atom/movable/falling_mov as anything in falling_movs)
+		if(!(flags & FALL_INTERCEPTED))
+			falling_mov.onZImpact(src, levels)
+		if(falling_mov.pulledby && (falling_mov.z != falling_mov.pulledby.z || get_dist(falling_mov, falling_mov.pulledby) > 1))
+			falling_mov.pulledby.stop_pulling()
 	return TRUE
 
 /turf/proc/handleRCL(obj/item/rcl/C, mob/user)

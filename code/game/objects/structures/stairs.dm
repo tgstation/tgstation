@@ -56,7 +56,7 @@
 /obj/structure/stairs/Uncross(atom/movable/AM, atom/newloc)
 	if(!newloc || !AM)
 		return ..()
-	if(!isobserver(AM) && isTerminator() && (get_dir(src, newloc) == dir))
+	if(!isobserver(AM) && isTerminator() && (get_dir(src, newloc) == dir) && AM.set_currently_z_moving(CURRENTLY_Z_ASCENDING))
 		stair_ascend(AM)
 		return FALSE
 	return ..()
@@ -77,8 +77,8 @@
 	if(!checking.zPassIn(climber, UP, get_turf(src)))
 		return
 	var/turf/target = get_step_multiz(get_turf(src), (dir|UP))
-	if(istype(target) && !climber.can_z_move(DOWN, target, ztravel_check_flags = ZTRAVEL_FALL_CHECKS)) //Don't throw them into a tile that will just dump them back down.
-		climber.zMove(null, target, forced = TRUE)
+	if(istype(target) && !climber.can_z_move(DOWN, target, z_move_flags = ZMOVE_FALL_CHECKS)) //Don't throw them into a tile that will just dump them back down.
+		climber.zMove(target = target)
 
 
 /obj/structure/stairs/vv_edit_var(var_name, var_value)
@@ -117,7 +117,7 @@
 
 /obj/structure/stairs/intercept_zImpact(list/falling_movables, levels = 1)
 	. = ..()
-	if(isTerminator())
+	if(levels == 1 && isTerminator()) // Stairs won't save you from a steep fall.
 		. |= FALL_INTERCEPTED | FALL_NO_MESSAGE
 
 /obj/structure/stairs/proc/isTerminator() //If this is the last stair in a chain and should move mobs up

@@ -488,12 +488,15 @@
 
 	var/turf/current_turf = get_turf(src)
 	var/turf/above_turf = SSmapping.get_turf_above(current_turf)
+	if(!above_turf)
+		to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
+		return
 
-	if(can_z_move(DOWN, above_turf, current_turf, ZTRAVEL_FALL_CHECKS)) //Will be fall down if we go up?
+	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_CHECKS)) //Will be fall down if we go up?
 		to_chat(src, "<span class='notice'>You are not Superman.<span>")
 		return
 
-	if(zMove(UP, feedback = TRUE))
+	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, "<span class='notice'>You move upwards.</span>")
 
 ///Moves a mob down a z level
@@ -501,10 +504,24 @@
 	set name = "Move Down"
 	set category = "IC"
 
-	if(zMove(DOWN, feedback = TRUE))
+	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, "<span class='notice'>You move down.</span>")
 
-/mob/zMove(dir, turf/target, feedback = FALSE, forced = FALSE, affect_pulling = TRUE)
-	if(buckled?.currently_z_moving) //so they don't fall twice.
-		return FALSE
+/mob/set_currently_z_moving(value)
+	if(buckled)
+		return buckled.set_currently_z_moving(value)
+	return ..()
+
+/mob/zMove(dir, turf/target, z_move_flags = ZMOVE_FLIGHT_FLAGS, recursions_left = 1, list/falling_movs)
+	if(buckled)
+		if(buckled.currently_z_moving)
+			return FALSE
+		if(!target)
+			target = can_z_move(dir, get_turf(src), null, z_move_flags)
+		return target && buckled.zMove(arglist(args))
+	return ..()
+
+/mob/z_move_conga_step(turf/start, turf/middle, turf/destination, z_move_flags = NONE, method = ZMOVE_CONGA_METHOD_MOVE)
+	if(buckled)
+		return !buckled.currently_z_moving && buckled.z_move_conga_step(arglist(args))
 	return ..()

@@ -51,21 +51,32 @@
 			return
 	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
-/mob/living/can_z_move(direction, turf/start, turf/destination, ztravel_check_flags = ZTRAVEL_CAN_FLY_CHECKS)
-	if(ztravel_check_flags & ZTRAVEL_CAN_FLY_CHECKS && !(movement_type & FLYING | FLOATING))
+/mob/living/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS)
+	if(z_move_flags & ZMOVE_FALL_CHECKS && buckled && (buckled.anchored || buckled.movement_type & FLYING || buckled.throwing || !buckled.has_gravity(start)))
+		z_move_flags &= ~ZMOVE_FALL_CHECKS //safe against falling since they're buckled to something that shouldn't fall.
+	. = ..()
+	if(!.)
+		return
+	if(z_move_flags & ZMOVE_INCAPACITATED_CHECKS && incapacitated())
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
-	if(ztravel_check_flags & ZTRAVEL_FALL_CHECKS && buckled?.movement_type & FLYING)
-		return FALSE
-	return ..()
+	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS)
+		if(buckled && !isvehicle(buckled))
+			if(z_move_flags & ZMOVE_FEEDBACK)
+				to_chat(src, "<span class='notice'>Unbuckle from [buckled] first.<span>")
+			return FALSE
+		if(buckled && !(buckled.movement_type & (FLYING|FLOATING)) && buckled.has_gravity(start))
+			if(z_move_flags & ZMOVE_FEEDBACK)
+				to_chat(src, "<span class='notice'>Your [buckled.name] is not capable of flight.<span>")
+			return FALSE
+		if(!buckled && !(movement_type & (FLYING|FLOATING)))
+			if(z_move_flags & ZMOVE_FEEDBACK)
+				to_chat(src, "<span class='notice'>You are not Superman.<span>")
+			return FALSE
+
 
 /mob/living/keybind_face_direction(direction)
 	if(stat > SOFT_CRIT)
 		return
-	return ..()
-
-/mob/living/zMove(dir, turf/target, feedback = FALSE, forced = FALSE, affect_pulling = TRUE)
-	if(!forced && incapacitated())
-		if(feedback)
-			to_chat(src, "<span class='warning'>You can't do that right now!</span>")
-		return FALSE
 	return ..()
