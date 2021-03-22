@@ -273,7 +273,9 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 	if (!istype(equipping, /obj/item/card/id))
 		to_chat(user, "<span class='warning'>You can't pin [equipping] to [source]!</span>")
-		return
+		return FALSE
+
+	return TRUE
 
 /datum/strippable_item/corgi_id/finish_equip(atom/source, obj/item/equipping, mob/user)
 	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
