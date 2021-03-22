@@ -32,7 +32,6 @@
 		bluespace_network.assert_gas(gas_id)
 	for(var/gas_id in GLOB.meta_gas_info)
 		var/datum/gas/gas = gas_id
-		base_prices |= gas_id
 		base_prices[gas_id] = initial(gas.base_value)
 
 	update_appearance()
