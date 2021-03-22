@@ -1,3 +1,5 @@
+// MOTHBLOCKS TODO: Cyborgs
+
 /// An element for atoms that, when dragged and dropped onto a mob, opens a strip panel.
 /datum/element/strippable
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH

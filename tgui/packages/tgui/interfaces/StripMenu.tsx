@@ -73,6 +73,12 @@ const SLOTS: Record<
     image: "inventory-mask.png",
   },
 
+  corgi_collar: {
+    displayName: "collar",
+    gridSpot: getGridSpotKey([1, 2]),
+    image: "inventory-mask.png",
+  },
+
   ears: {
     displayName: "earwear",
     gridSpot: getGridSpotKey([1, 3]),
