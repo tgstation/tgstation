@@ -196,6 +196,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
 	var/list/knife_butcher_results
 
+	///List of visual overlays created by handle_body()
+	var/list/body_vis_overlays = list()
+
 ///////////
 // PROCS //
 ///////////
@@ -651,22 +654,35 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// eyes
 		if(!(NOEYESPRITES in species_traits))
 			var/obj/item/organ/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
-			if(eye_organ?.overlay_ignore_lighting)
-				// This makes the eyes pierce the darkness with viscontents
-				SSvis_overlays.add_vis_overlay(species_human, 'icons/mob/human_face.dmi', eye_organ.eye_icon_state, species_human.layer, species_human.plane, eye_organ.dir)
-				SSvis_overlays.add_vis_overlay(species_human, 'icons/mob/human_face.dmi', eye_organ.eye_icon_state, EMISSIVE_LAYER, EMISSIVE_PLANE, eye_organ.dir)
-			else
-				var/mutable_appearance/eye_overlay
-				if(!eye_organ)
-					eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
-				else
-					eye_overlay = mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
-				if((EYECOLOR in species_traits) && eye_organ)
-					eye_overlay.color = "#" + species_human.eye_color
-				if(OFFSET_FACE in species_human.dna.species.offset_features)
-					eye_overlay.pixel_x += species_human.dna.species.offset_features[OFFSET_FACE][1]
-					eye_overlay.pixel_y += species_human.dna.species.offset_features[OFFSET_FACE][2]
+			var/mutable_appearance/eye_overlay
+			var/add_pixel_x = 0
+			var/add_pixel_y = 0
+			//cut any possible vis overlays
+			if(body_vis_overlays.len)
+				SSvis_overlays.remove_vis_overlay(species_human, body_vis_overlays)
+			if(OFFSET_FACE in species_human.dna.species.offset_features)
+				add_pixel_x = species_human.dna.species.offset_features[OFFSET_FACE][1]
+				add_pixel_y = species_human.dna.species.offset_features[OFFSET_FACE][2]
+			if(!eye_organ)
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				eye_overlay.pixel_x += add_pixel_x
+				eye_overlay.pixel_y += add_pixel_y
 				standing += eye_overlay
+			if(!eye_overlay) //we are NOT eyeless so we need eyes, basically is what this is saying
+				if(eye_organ.overlay_ignore_lighting)
+					// viscontents overlays to bypass dorkness- icon is over the lighting layer
+					var/obscured = species_human.check_obscured_slots(TRUE) //because of which we cannot apply this icon if we shouldn't see it
+					if(!(obscured & ITEM_SLOT_EYES))
+						body_vis_overlays += SSvis_overlays.add_vis_overlay(species_human, 'icons/mob/human_face.dmi', eye_organ.eye_icon_state, species_human.layer, species_human.plane, eye_organ.dir, 255, NONE, FALSE, add_pixel_x, add_pixel_y)
+						body_vis_overlays += SSvis_overlays.add_vis_overlay(species_human, 'icons/mob/human_face.dmi', eye_organ.eye_icon_state, EMISSIVE_UNBLOCKABLE_LAYER, EMISSIVE_UNBLOCKABLE_PLANE, eye_organ.dir, 255, NONE, FALSE, add_pixel_x, add_pixel_y)
+				else
+					// normal system for eyes
+					eye_overlay = mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
+					eye_overlay.pixel_x += add_pixel_x
+					eye_overlay.pixel_y += add_pixel_y
+					if((EYECOLOR in species_traits) && eye_organ)
+						eye_overlay.color = "#" + species_human.eye_color
+					standing += eye_overlay
 
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)

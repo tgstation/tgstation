@@ -589,8 +589,9 @@
 	inhand_icon_state = "sheet-wood"
 	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
-	force = 0
-	throwforce = 0
+	//made out of a single sheet of wood
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
+	item_flags = NO_PIXEL_RANDOM_DROP
 
 /obj/item/ritual_totem/Initialize()
 	. = ..()

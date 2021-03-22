@@ -139,7 +139,7 @@
 	var/mob/living/carbon/human/affected_human = affected_carbon
 	var/turf/T = get_turf(affected_human)
 	var/lums = T.get_lumcount()
-	if(lums >= 0.4)
+	if(lums > 0.5)
 		SEND_SIGNAL(affected_human, COMSIG_ADD_MOOD_EVENT, "too_bright", /datum/mood_event/bright_light)
 		affected_human.dizziness = min(40, affected_human.dizziness + 3)
 		affected_human.set_confusion(min(affected_human.get_confusion() + (0.5 * delta_time), 20))

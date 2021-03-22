@@ -20,6 +20,7 @@
 	low_threshold_cleared = "<span class='info'>Your vision is cleared of any ailment.</span>"
 
 	var/sight_flags = 0
+	/// changes how the eyes overlay is applied, makes it apply over the lighting layer
 	var/overlay_ignore_lighting = FALSE
 	var/see_in_dark = 2
 	var/tint = 0
@@ -163,7 +164,7 @@
 
 /obj/item/organ/eyes/robotic/basic
 	name = "basic robotic eyes"
-	desc = "A pair of basic cybernetic eyes that restore vision, but at some vulnerability to light."
+	desc = "A pair of basic cybernetic eyes that restore vision, but at some vulnerability to adapt_light."
 	eye_color = "5500ff"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
@@ -333,7 +334,7 @@
 /obj/item/organ/eyes/robotic/glow/proc/activate(silent = FALSE)
 	start_visuals()
 	if(!silent)
-		to_chat(owner, "<span class='warning'>Your [src] clicks and makes a whining noise, before shooting out a beam of light!</span>")
+		to_chat(owner, "<span class='warning'>Your [src] clicks and makes a whining noise, before shooting out a beam of adapt_light!</span>")
 	cycle_mob_overlay()
 
 /obj/item/organ/eyes/robotic/glow/proc/deactivate(silent = FALSE)
@@ -431,7 +432,7 @@
 
 /obj/item/organ/eyes/moth
 	name = "moth eyes"
-	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
+	desc = "These eyes seem to have increased sensitivity to bright adapt_light, with no improvement to low adapt_light vision."
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/snail
@@ -457,30 +458,43 @@
 	desc = "These red eyes look like two foggy marbles. They give off a particularly worrying glow in the dark."
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	eye_color = "f00"
+	icon_state = "adapted_eyes"
 	eye_icon_state = "eyes_glow_red"
 	overlay_ignore_lighting = TRUE
-	var/image/mob_overlay
+	var/obj/item/flashlight/eyelight/adapted/adapt_light
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/Initialize()
 	. = ..()
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/Insert(mob/living/carbon/adapted, special = FALSE)
 	. = ..()
+	//add lighting
+	if(!adapt_light)
+		adapt_light = new /obj/item/flashlight/eyelight/adapted()
+	adapt_light.on = TRUE
+	adapt_light.forceMove(adapted)
+	adapt_light.update_brightness(adapted)
+	//traits
 	ADD_TRAIT(adapted, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 	ADD_TRAIT(adapted, CULT_EYES, ORGAN_TRAIT)
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
 	var/turf/T = get_turf(owner)
 	var/lums = T.get_lumcount()
-	if(lums >= 0.4)
+	if(lums > 0.5) //we allow a little more than usual so we can produce light from the adapted eyes
 		to_chat(owner, "<span class='danger'>Your eyes! They burn in the light!</span>")
-		applyOrganDamage(10)
+		applyOrganDamage(10) //blind quickly
 		playsound(owner, 'sound/machines/grill/grillsizzle.ogg', 50)
 	else
-		applyOrganDamage(-1)
+		applyOrganDamage(-10) //heal quickly
 	. = ..()
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/Remove(mob/living/carbon/unadapted, special = FALSE)
+	//remove lighting
+	adapt_light.on = FALSE
+	adapt_light.update_brightness(unadapted)
+	adapt_light.forceMove(src)
+	//traits
 	REMOVE_TRAIT(unadapted, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 	REMOVE_TRAIT(unadapted, CULT_EYES, ORGAN_TRAIT)
 	return ..()
