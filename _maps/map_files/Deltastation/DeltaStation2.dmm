@@ -23894,6 +23894,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"caO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/engineering/atmos/upper)
 "caT" = (
 /obj/machinery/telecomms/bus/preset_one,
 /obj/effect/turf_decal/tile/blue{
@@ -25851,7 +25858,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
-/area/space/nearstation)
+/area/engineering/atmos/upper)
 "cid" = (
 /obj/machinery/telecomms/bus/preset_four,
 /obj/effect/turf_decal/tile/brown{
@@ -65176,6 +65183,7 @@
 /area/cargo/warehouse)
 "gAo" = (
 /obj/effect/landmark/blobstart,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "gAp" = (
@@ -68762,6 +68770,15 @@
 	heat_capacity = 1e+006
 	},
 /area/commons/locker)
+"hNe" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/engineering/atmos/upper)
 "hNT" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -79536,6 +79553,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "lQk" = (
@@ -84279,7 +84297,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/space/nearstation)
+/area/engineering/atmos/upper)
 "nyX" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
@@ -85052,6 +85070,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
+"nKO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/engineering/atmos/upper)
 "nLa" = (
 /obj/structure/table/wood,
 /obj/item/paicard,
@@ -89471,6 +89494,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
+"pmc" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/engineering/atmos/upper)
 "pmI" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -94259,6 +94286,7 @@
 	name = "Atmospherics Access";
 	req_one_access_txt = "24"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "qUN" = (
@@ -99509,6 +99537,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "sVm" = (
@@ -103629,9 +103658,6 @@
 	},
 /turf/open/floor/plating,
 /area/service/abandoned_gambling_den)
-"usO" = (
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "uta" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -110651,6 +110677,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "wXK" = (
@@ -137548,8 +137575,8 @@ ajr
 ajr
 ajr
 aad
-usO
-usO
+iqM
+iqM
 iqM
 wWz
 kfz
@@ -139875,7 +139902,7 @@ xfl
 awb
 awb
 wXI
-wLZ
+pmc
 lQg
 qUE
 rVj
@@ -140131,7 +140158,7 @@ xnM
 mJo
 kWt
 umA
-rAZ
+hNe
 xNR
 wsq
 iqZ
@@ -140384,11 +140411,11 @@ kHb
 wLZ
 xNR
 wLZ
-wLZ
+pmc
 gAo
-wLZ
+pmc
 sUR
-wLZ
+pmc
 wLZ
 tWY
 awb
@@ -140641,7 +140668,7 @@ kHb
 wLZ
 wLZ
 wLZ
-wLZ
+pmc
 hEB
 wLZ
 cDs
@@ -140898,7 +140925,7 @@ kHb
 xNR
 wLZ
 xNR
-xNR
+nKO
 wLZ
 wLZ
 cDs
@@ -141155,7 +141182,7 @@ aEd
 wLZ
 wLZ
 xNR
-wLZ
+pmc
 wLZ
 wLZ
 cDs
@@ -141412,7 +141439,7 @@ uvc
 cyD
 uXM
 wLZ
-wLZ
+pmc
 wLZ
 wLZ
 cDs
@@ -141669,7 +141696,7 @@ xwC
 wLZ
 xNR
 xNR
-wLZ
+pmc
 hYs
 wLZ
 cDs
@@ -141926,7 +141953,7 @@ rZZ
 luc
 gsr
 xpD
-xpD
+caO
 tiF
 wLZ
 qLu
