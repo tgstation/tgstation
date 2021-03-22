@@ -149,7 +149,6 @@
 
 /// The proc that unequips the item from the source. This should not yield.
 /datum/strippable_item/proc/finish_unequip(atom/source, mob/user)
-	SHOULD_NOT_SLEEP(TRUE)
 
 /// Returns a STRIPPABLE_OBSCURING_* define to report on whether or not this is obscured.
 /datum/strippable_item/proc/get_obscuring(atom/source)
