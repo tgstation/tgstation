@@ -313,7 +313,6 @@
 		return FALSE
 	var/datum/dna/holy_dna = new_convert.dna
 	holy_dna.add_mutation(HONORBOUND)
-
 /*
 /datum/religion_sect/burden
 	name = "Punished God"
@@ -327,6 +326,7 @@
 	//a list for keeping track of how burdened each member is
 
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
+	..()
 	if(!ishuman(new_convert))
 		to_chat("<span class='warning'>[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened.</span>")
 		return
@@ -343,6 +343,7 @@
 	if(burdenmut)
 		return "<span class='notice'>You are at burden level [burdenmut.burden_level]/6.</span>"
 	return "<span class='notice'>You are not burdened.</span>"
+
 */
 
 #define MINIMUM_YUCK_REQUIRED 5
@@ -354,7 +355,7 @@
 	alignment = ALIGNMENT_EVIL //while maint is more neutral in my eyes, the flavor of it kinda pertains to rotting and becoming corrupted by the maints
 	convert_opener = "\"Your kingdom in the darkness.\"<br>\
 	Sacrifice the organic slurry created from rats dipped in welding fuel to gain favor. Exchange favor to adapt to the maintenance shafts."
-	rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/adapted_food, /datum/religion_rites/ritual_totem)
+	rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/adapted_eyes, /datum/religion_rites/adapted_food, /datum/religion_rites/ritual_totem)
 	desired_items = list(/obj/item/reagent_containers)
 
 /datum/religion_sect/maintenance/sect_bless(mob/living/blessed_living, mob/living/user)

@@ -58,6 +58,7 @@
 
 ///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, atom/religious_tool)
+	SHOULD_CALL_PARENT(TRUE)
 	GLOB.religious_sect.on_riteuse(user,religious_tool)
 	return TRUE
 
@@ -91,6 +92,7 @@
 	return ..()
 
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, atom/religious_tool)
+	..()
 	if(!ismovable(religious_tool))
 		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
 	var/atom/movable/movable_reltool = religious_tool
@@ -138,6 +140,7 @@
 	return FALSE
 
 /datum/religion_rites/fireproof/invoke_effect(mob/living/user, atom/religious_tool)
+	..()
 	if(!QDELETED(chosen_clothing) && get_turf(religious_tool) == chosen_clothing.loc) //check if the same clothing is still there
 		if(istype(chosen_clothing,/obj/item/clothing/suit/hooded) || istype(chosen_clothing,/obj/item/clothing/suit/space/hardsuit ))
 			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
@@ -187,6 +190,7 @@
 		return ..()
 
 /datum/religion_rites/burning_sacrifice/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
 	if(!(chosen_sacrifice in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
 		to_chat(user, "<span class='warning'>The right sacrifice is no longer on the altar!</span>")
 		chosen_sacrifice = null
@@ -200,7 +204,7 @@
 		chosen_sacrifice = null
 		return FALSE
 	var/favor_gained = 100 + round(chosen_sacrifice.getFireLoss())
-	GLOB.religious_sect?.adjust_favor(favor_gained, user)
+	GLOB.religious_sect.adjust_favor(favor_gained, user)
 	to_chat(user, "<span class='notice'>[GLOB.deity] absorb the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor.</span>")
 	chosen_sacrifice.dust(force = TRUE)
 	playsound(get_turf(religious_tool), 'sound/effects/supermatter.ogg', 50, TRUE)
@@ -217,6 +221,7 @@
 	favor_cost = 200
 
 /datum/religion_rites/infinite_candle/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
 	var/altar_turf = get_turf(religious_tool)
 	for(var/i in 1 to 5)
 		new /obj/item/candle/infinite(altar_turf)
@@ -269,6 +274,7 @@
 	money_cost = 1000 //quite a step up from vendatray
 
 /datum/religion_rites/greed/custom_vending/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
 	var/altar_turf = get_turf(religious_tool)
 	new /obj/machinery/vending/custom/greed(altar_turf)
 	playsound(get_turf(religious_tool), 'sound/effects/cashregister.ogg', 60, TRUE)
@@ -321,6 +327,7 @@
 		return ..()
 
 /datum/religion_rites/deaconize/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+	..()
 	var/mob/living/carbon/human/joining_now = new_crusader
 	new_crusader = null
 	if(!(joining_now in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
@@ -461,6 +468,15 @@
 	invoke_msg = "... but my smile I will keep!"
 	favor_cost = 150 //150u of organic slurry
 
+/datum/religion_rites/maint_adaptation/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
+	if(!ishuman(user))
+		return FALSE
+	//uses HAS_TRAIT_FROM because junkies are also hopelessly addicted
+	if(HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
+		to_chat(user, "<span class='warning'>You've already adapted.</b></span>")
+		return FALSE
+	return ..()
+
 /datum/religion_rites/maint_adaptation/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	to_chat(user, "<span class='warning'>You feel your genes rattled and reshaped. <b>You're becoming something new.</b></span>")
@@ -475,6 +491,35 @@
 		dna?.add_mutation(/datum/mutation/human/stimmed) //some fluff mutations
 		dna?.add_mutation(/datum/mutation/human/strong)
 	user.mind.add_addiction_points(/datum/addiction/maintenance_drugs, 1000)//ensure addiction
+
+/datum/religion_rites/adapted_eyes
+	name = "Adapted Eyes"
+	desc = "Only available after maintenance adaptation. Your eyes will adapt as well, becoming useless in the light."
+	ritual_length = 10 SECONDS
+	invoke_msg = "I no longer want to see the light."
+	favor_cost = 300 //300u of organic slurry, i'd consider this a reward of the sect
+
+/datum/religion_rites/adapted_eyes/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
+	if(!ishuman(user))
+		return FALSE
+	if(!HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
+		to_chat(user, "<span class='warning'>You need to adapt to maintenance first.</span>")
+		return FALSE
+	var/obj/item/organ/eyes/night_vision/maintenance_adapted/adapted = user.getorganslot(ORGAN_SLOT_EYES)
+	if(adapted && istype(adapted))
+		to_chat(user, "<span class='warning'>Your eyes are already adapted!</span>")
+		return FALSE
+	return ..()
+
+/datum/religion_rites/adapted_eyes/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+	..()
+	var/obj/item/organ/eyes/oldeyes = user.getorganslot(ORGAN_SLOT_EYES)
+	to_chat(user, "<span class='warning'>You feel your eyes adapt to the darkness!</span>")
+	if(oldeyes)
+		oldeyes.Remove(user, special = TRUE)
+		qdel(oldeyes)//eh
+	var/obj/item/organ/eyes/night_vision/maintenance_adapted/neweyes = new
+	neweyes.Insert(user, special = TRUE)
 
 /datum/religion_rites/adapted_food
 	name = "Moldify"
@@ -523,6 +568,7 @@
 	return FALSE
 
 /datum/religion_rites/ritual_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
 	var/altar_turf = get_turf(religious_tool)
 	var/obj/item/stack/sheet/mineral/wood/padala = converted
 	converted = null

@@ -20,6 +20,7 @@
 	low_threshold_cleared = "<span class='info'>Your vision is cleared of any ailment.</span>"
 
 	var/sight_flags = 0
+	var/overlay_ignore_lighting = FALSE
 	var/see_in_dark = 2
 	var/tint = 0
 	var/eye_color = "" //set to a hex code to override a mob's eye color
@@ -449,4 +450,37 @@
 
 /obj/item/organ/eyes/fly/Remove(mob/living/carbon/M, special = FALSE)
 	REMOVE_TRAIT(M, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
+	return ..()
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted
+	name = "adapted eyes"
+	desc = "These red eyes look like two foggy marbles. They give off a particularly worrying glow in the dark."
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	eye_color = "f00"
+	eye_icon_state = "eyes_glow_red"
+	overlay_ignore_lighting = TRUE
+	var/image/mob_overlay
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted/Initialize()
+	. = ..()
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted/Insert(mob/living/carbon/adapted, special = FALSE)
+	. = ..()
+	ADD_TRAIT(adapted, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
+	ADD_TRAIT(adapted, CULT_EYES, ORGAN_TRAIT)
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
+	var/turf/T = get_turf(owner)
+	var/lums = T.get_lumcount()
+	if(lums >= 0.4)
+		to_chat(owner, "<span class='danger'>Your eyes! They burn in the light!</span>")
+		applyOrganDamage(10)
+		playsound(owner, 'sound/machines/grill/grillsizzle.ogg', 50)
+	else
+		applyOrganDamage(-1)
+	. = ..()
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted/Remove(mob/living/carbon/unadapted, special = FALSE)
+	REMOVE_TRAIT(unadapted, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
+	REMOVE_TRAIT(unadapted, CULT_EYES, ORGAN_TRAIT)
 	return ..()

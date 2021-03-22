@@ -1,6 +1,6 @@
 
-#define FIRST_TRUTH_REWARD 3
-#define SECOND_TRUTH_REWARD 6
+#define FIRST_TRUTH_REWARD 2
+#define SECOND_TRUTH_REWARD 4
 
 #define BAD_MUTATIONS_REQUIRED 3
 
@@ -28,11 +28,17 @@
 	//one burden - an addiction
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_ADDICTION, .proc/addict_added_burden)
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ADDICTION, .proc/addict_removed_burden)
-	//one burden - 3 major negative mutations
+	//one burden - 2 major negative mutations
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_MUTATION, .proc/mutation_added_burden)
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_MUTATION, .proc/mutation_removed_burden)
+	//one burden - a severe trauma
+	RegisterSignal(owner, COMSIG_CARBON_GAIN_TRAUMA, .proc/trauma_added_burden)
+	RegisterSignal(owner, COMSIG_CARBON_LOSE_TRAUMA, .proc/trauma_removed_burden)
+
 
 /datum/mutation/human/burdened/proc/update_burden(increase)
+	//adjust burden
+	burden_level = increase ? burden_level + 1 : burden_level - 1
 	if(owner.dna)
 		var/datum/dna/woke_dna = owner.dna
 		if(burden_level >= FIRST_TRUTH_REWARD)
@@ -42,7 +48,8 @@
 		else
 			woke_dna.remove_mutation(TELEPATHY)
 			woke_dna.remove_mutation(MUT_MUTE)
-		if(burden_level == SECOND_TRUTH_REWARD)
+			owner.remove_filter("burden_outline")
+		if(burden_level >= SECOND_TRUTH_REWARD)
 			woke_dna.add_mutation(TK)
 			woke_dna.add_mutation(GLOWY)
 			owner.add_filter("burden_rays", 10, list("type" = "rays", "size" = 35, "color" = "#6c6eff"))
@@ -87,8 +94,10 @@
 	if(istype(new_organ, /obj/item/organ/eyes))
 		var/obj/item/organ/eyes/new_eyes = new_organ
 		if(new_eyes.tint < TINT_BLIND) //unless you added unworking eyes (flashlight eyes), this is removing burden
-			burden_level -= 1
 			update_burden(FALSE)
+
+	else if(istype(new_organ, /obj/item/organ/tongue))
+		update_burden(FALSE)//working tongue
 
 /datum/mutation/human/burdened/proc/organ_removed_burden(mob/burdened, obj/item/organ/old_organ)
 	SIGNAL_HANDLER
@@ -96,8 +105,10 @@
 	if(istype(old_organ, /obj/item/organ/eyes))
 		var/obj/item/organ/eyes/old_eyes = old_organ
 		if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
-			burden_level += 1
 			update_burden(TRUE)
+
+	else if(istype(old_organ, /obj/item/organ/tongue))
+		update_burden(TRUE)//lost tongue
 
 /datum/mutation/human/burdened/proc/limbs_added_burden(obj/item/bodypart/limb_added, special, dismembered)
 	SIGNAL_HANDLER
@@ -106,7 +117,6 @@
 		return
 	var/mob/living/carbon/burdened = limb_added.owner
 	if(burdened.bodyparts.len == 5) //adding a limb got you to chest, head, 3 limbs
-		burden_level -= 1 //which counts as removing burden
 		update_burden(FALSE)
 
 /datum/mutation/human/burdened/proc/limbs_removed_burden(obj/item/bodypart/limb_lost, special, dismembered)
@@ -116,7 +126,6 @@
 		return
 	var/mob/living/carbon/burdened = limb_lost.owner
 	if(burdened.bodyparts.len == 4) //adding a limb got you to chest, head, 2 limbs
-		burden_level += 1 //which counts as adding burden
 		update_burden(TRUE)
 
 /datum/mutation/human/burdened/proc/addict_added_burden(datum/addiction/new_addiction, datum/mind/addict_mind)
@@ -124,17 +133,15 @@
 
 	if(addict_mind.active_addictions.len)
 		return //already did this
-	burden_level += 1 //you're addicted to something
 	update_burden(TRUE)
 
 /datum/mutation/human/burdened/proc/addict_removed_burden(datum/addiction/old_addiction, datum/mind/nonaddict_mind)
 	SIGNAL_HANDLER
 
 	if(!nonaddict_mind.active_addictions.len)
-		burden_level -= 1 //no longer addicted to anything
 		update_burden(FALSE)
 
-/datum/mutation/human/burdened/proc/mutation_added_burden(mob/living/carbon/burdened, datum/mind/addict_mind)
+/datum/mutation/human/burdened/proc/mutation_added_burden(mob/living/carbon/burdened, mutation_type)
 	SIGNAL_HANDLER
 
 	var/bad_mutations = 0
@@ -142,10 +149,9 @@
 		if(mutation.quality == NEGATIVE)
 			bad_mutations++
 	if(bad_mutations == BAD_MUTATIONS_REQUIRED)
-		burden_level += 1 //you're badly mutated!
 		update_burden(TRUE)
 
-/datum/mutation/human/burdened/proc/mutation_removed_burden(mob/living/carbon/burdened, datum/mind/nonaddict_mind)
+/datum/mutation/human/burdened/proc/mutation_removed_burden(mob/living/carbon/burdened, mutation_type)
 	SIGNAL_HANDLER
 
 	var/bad_mutations = 0
@@ -153,7 +159,20 @@
 		if(mutation.quality == NEGATIVE)
 			bad_mutations++
 	if(bad_mutations == BAD_MUTATIONS_REQUIRED - 1) //one less than mutations required on a proc that goes off when you lose one = no more burden
-		burden_level -= 1 //you're no longer badly mutated!
+		update_burden(FALSE)
+
+/datum/mutation/human/burdened/proc/trauma_added_burden(mob/living/carbon/burdened, datum/brain_trauma/trauma_added)
+	SIGNAL_HANDLER
+
+	var/obj/item/organ/brain/trauma_brain = burdened.getorganslot(ORGAN_SLOT_BRAIN)
+	if(trauma_brain.traumas.len == 1) //your first trauma
+		update_burden(TRUE)
+
+/datum/mutation/human/burdened/proc/trauma_removed_burden(mob/living/carbon/burdened, datum/brain_trauma/trauma_removed)
+	SIGNAL_HANDLER
+
+	var/obj/item/organ/brain/trauma_brain = burdened.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!trauma_brain.traumas.len) //your last trauma
 		update_burden(FALSE)
 
 #undef FIRST_TRUTH_REWARD

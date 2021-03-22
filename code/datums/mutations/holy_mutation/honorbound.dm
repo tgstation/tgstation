@@ -62,6 +62,8 @@ finish burden hooks
 		return
 	if(!honorbound.DirectAccess(clickingon) && !isgun(weapon))
 		return
+	if(weapon.item_flags & NOBLUDGEON)
+		return
 	if(!honorbound.combat_mode && ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK)))
 		return
 	var/mob/living/clickedmob = clickingon
@@ -78,9 +80,9 @@ finish burden hooks
 			return
 	if(declaration)
 		to_chat(owner, "<span class='notice'>[user] is now considered guilty by [GLOB.deity] from your declaration.</span>")
-		to_chat(user, "<span class='danger'>[GLOB.deity] no longer considers you innocent!</span>")
 	else
 		to_chat(owner, "<span class='notice'>[user] is now considered guilty by [GLOB.deity] for attacking you first.</span>")
+	to_chat(user, "<span class='danger'>[GLOB.deity] no longer considers you innocent!</span>")
 	guilty += user
 
 /datum/mutation/human/honorbound/proc/is_honorable(mob/living/carbon/human/honorbound_human, mob/living/target_creature)
@@ -215,6 +217,7 @@ finish burden hooks
 		return FALSE
 	if(!can_target(targets[1], user, silent))
 		return FALSE
+	GLOB.religious_sect.adjust_favor(-150, user)
 	user.say(declaration_message)
 	honormut.guilty(targets[1], declaration = TRUE)
 	return TRUE

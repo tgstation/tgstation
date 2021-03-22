@@ -588,6 +588,10 @@
 #define COMSIG_CARBON_GAIN_ADDICTION "carbon_gain_addiction"
 ///Called when a carbon is no longer addicted (source = what addiction datum was lost, addicted_mind = mind of the freed carbon)
 #define COMSIG_CARBON_LOSE_ADDICTION "carbon_lose_addiction"
+///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added) - this is before on_gain()
+#define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
+///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
+#define COMSIG_CARBON_LOSE_TRAUMA "carbon_gain_trauma"
 
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
