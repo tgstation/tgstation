@@ -2,7 +2,7 @@
 /datum/exploration_event/simple/resource
 	name = "Retrievable resource"
 	root_abstract_type = /datum/exploration_event/simple/resource
-	discovery_log = "Ecountered recoverable resource"
+	discovery_log = "Encountered recoverable resource"
 	action_text = "Extract"
 	/// Tool type required to recover this resource
 	var/required_tool
@@ -154,7 +154,7 @@
 	required_tool = EXODRONE_TOOL_LASER
 	discovery_log = "Discovered an alien pod."
 	success_log = "Retrieved contents of the alien pod"
-	description = "You ecounter an alien biomachinery full of sacks containing some lifeform."
+	description = "You encounter an alien biomachinery full of sacks containing some lifeform."
 	no_tool_description = "You can't open them without precise laser."
 	has_tool_description = "You can try to cut one open with a laser."
 	delay_message = "Opening..."

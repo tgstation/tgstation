@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventures)
 	var/list/nodes = list()
 	/// Triggers for this adventure, checked after quality changes to cause instantenous results
 	var/list/triggers = list()
-	/// List of starting quality values, these will be set before first node is ecountered.
+	/// List of starting quality values, these will be set before first node is encountered.
 	var/list/starting_qualities = list()
 	///Keeps track firing of triggers until stop state to prevent loops
 	var/list/trigger_loop_safety = list()

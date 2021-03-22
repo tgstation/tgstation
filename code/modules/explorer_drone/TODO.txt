@@ -8,3 +8,4 @@ Future improvements:
 	Unit test for json loading?
 	Mk II drones with more tool slots/other buffs researchable at R&D ?
 	Could use more scan conditions
+	Exit Node - Random Node

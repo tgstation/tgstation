@@ -4,13 +4,13 @@
 	var/root_abstract_type = /datum/exploration_event
 	///This name will show up in exploration list if it's repeatable
 	var/name = "Something interesting"
-	/// Ecountered at least once
+	/// encountered at least once
 	var/visited = FALSE
 	/// Modifies site scan results by these
 	var/band_values
 	/// This will be added to site description, mind this will most likely reveal presence of this event early if set.
 	var/site_description_mod
-	/// message logged when first ecountering the event.
+	/// message logged when first encountering the event.
 	var/discovery_log
 	/// Exploration site required_traits for this event to show up
 	var/required_site_traits
@@ -21,7 +21,7 @@
 	/// Optional description that will be added to site description when point scan is completed.
 	var/deep_scan_description
 
-/datum/exploration_event/proc/ecounter(obj/item/exodrone/drone)
+/datum/exploration_event/proc/encounter(obj/item/exodrone/drone)
 	if(!visited)
 		var/log = get_discovery_message(drone)
 		if(log)
@@ -37,7 +37,7 @@
 	return FALSE
 
 
-/// Simple events, not a full fledged adventure, consist only of single ecounter screen
+/// Simple events, not a full fledged adventure, consist only of single encounter screen
 /datum/exploration_event/simple
 	root_abstract_type = /datum/exploration_event/simple
 	var/ui_image = "default"
@@ -46,12 +46,12 @@
 	/// Ignore button text
 	var/ignore_text = "Ignore"
 	/// Action text, can be further parametrized in get_action_text()
-	var/action_text = "Ecounter"
+	var/action_text = "encounter"
 	/// Description, can be further parametrized in get_description()
-	var/description = "You ecounter a bug."
+	var/description = "You encounter a bug."
 
 /// On exploration, only display our information with the act/ignore options
-/datum/exploration_event/simple/ecounter(obj/item/exodrone/drone)
+/datum/exploration_event/simple/encounter(obj/item/exodrone/drone)
 	. = ..()
 	drone.current_event_ui_data = build_ui_event(drone)
 

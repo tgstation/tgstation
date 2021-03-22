@@ -19,17 +19,17 @@
 
 /datum/exploration_event/simple/trader/get_discovery_message(obj/item/exodrone/drone)
 	if(requires_translator && !drone.has_tool(EXODRONE_TOOL_TRANSLATOR))
-		return "You ecountered [name] but could not understand what they want without a translator."
+		return "You encountered [name] but could not understand what they want without a translator."
 	var/obj/want = required_path
 	var/obj/gives = traded_path
-	return "Ecountered [name] willing to trade [initial(want.name)] for [initial(gives.name)]"
+	return "Encountered [name] willing to trade [initial(want.name)] for [initial(gives.name)]"
 
 /datum/exploration_event/simple/trader/get_description(obj/item/exodrone/drone)
 	if(requires_translator && !drone.has_tool(EXODRONE_TOOL_TRANSLATOR))
-		return "You ecounter [name] but cannot understand what they want without a translator."
+		return "You encounter [name] but cannot understand what they want without a translator."
 	var/obj/want = required_path
 	var/obj/gives = traded_path
-	return "You ecounter [name] willing to trade [initial(want.name)] for [initial(gives.name)] [amount > 1 ? "[amount] times":""]."
+	return "You encounter [name] willing to trade [initial(want.name)] for [initial(gives.name)] [amount > 1 ? "[amount] times":""]."
 
 /datum/exploration_event/simple/trader/is_targetable()
 	return visited && (amount > 0)
@@ -114,10 +114,10 @@
 	var/static/list/possible_card_states = list("card_flames","card_carp","card_rainbow")
 
 /datum/exploration_event/simple/trader/flame_card/get_discovery_message(obj/item/exodrone/drone)
-	return "Ecountered [name] willing to customize any id card you bring them."
+	return "Encountered [name] willing to customize any id card you bring them."
 
 /datum/exploration_event/simple/trader/flame_card/get_description(obj/item/exodrone/drone)
-	return "You ecounter local craftsman willing to improve an id card for you free of charge."
+	return "You encounter local craftsman willing to improve an id card for you free of charge."
 
 /datum/exploration_event/simple/trader/flame_card/trade(obj/item/exodrone/drone)
 	var/obj/item/card/id/card = locate(required_path) in drone.contents

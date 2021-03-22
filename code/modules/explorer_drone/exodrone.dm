@@ -191,21 +191,21 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	for(var/obj/machinery/exodrone_launcher/other_pad in GLOB.exodrone_launchers)
 		return other_pad
 
-/// Ecounters random or specificed event for the current site.
+/// encounters random or specificed event for the current site.
 /obj/item/exodrone/proc/explore_site(datum/exploration_event/specific_event)
-	if(!specific_event) //Ecounter random event
-		var/list/events_to_ecounter = list()
+	if(!specific_event) //encounter random event
+		var/list/events_to_encounter = list()
 		for(var/datum/exploration_event/event in location.events)
 			if(event.visited)
 				continue
-			events_to_ecounter += event
-		if(!length(events_to_ecounter))
+			events_to_encounter += event
+		if(!length(events_to_encounter))
 			drone_log("It seems there's nothing interesting left around [location.name]")
 			return
-		var/datum/exploration_event/ecountered_event = pick(events_to_ecounter)
-		ecountered_event.ecounter(src)
+		var/datum/exploration_event/encountered_event = pick(events_to_encounter)
+		encountered_event.encounter(src)
 	else if(specific_event.is_targetable())
-		specific_event.ecounter(src)
+		specific_event.encounter(src)
 
 /obj/item/exodrone/proc/get_adventure_data()
 	var/list/data = current_adventure?.ui_data()

@@ -1,7 +1,7 @@
 /// Danger event - unskippable, if you have appriopriate tool you can mitigate damage.
 /datum/exploration_event/simple/danger
 	root_abstract_type = /datum/exploration_event/simple/danger
-	description = "You ecounter a giant error."
+	description = "You encounter a giant error."
 	var/required_tool = EXODRONE_TOOL_LASER
 	var/has_tool_action_text = "Fight"
 	var/no_tool_action_text = "Endure"
@@ -51,7 +51,7 @@
 	name = "assistant attack"
 	required_site_traits = list(EXPLORATION_SITE_STATION)
 	deep_scan_description = "Detected mask usage coefficent suggests a sizeable crowd of undersirables on the site."
-	description = "You ecounter a shaggy creature dressed in gray! It's a deranged assistant!"
+	description = "You encounter a shaggy creature dressed in gray! It's a deranged assistant!"
 	has_tool_action_text = "Fight"
 	no_tool_action_text = "Escape!"
 	has_tool_description = "You charge your laser to fend it off."
@@ -107,12 +107,12 @@
 	avoid_log = "Avoided alien security"
 
 /datum/exploration_event/simple/danger/beast
-	name = "alien ecounter"
+	name = "alien encounter"
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE)
 	blacklisted_site_traits = list(EXPLORATION_SITE_CIVILIZED)
 	required_tool = EXODRONE_TOOL_LASER
 	deep_scan_description = "Dangerous fauna detected on site."
-	description = "You ecounter BEAST. It prepares to strike."
+	description = "You encounter BEAST. It prepares to strike."
 	has_tool_action_text = "Fight"
 	no_tool_action_text = "Escape"
 	has_tool_description = "You ready your laser."
