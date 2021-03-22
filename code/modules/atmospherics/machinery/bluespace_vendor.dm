@@ -88,8 +88,6 @@
 	if(!map_spawned)
 		return
 	for(var/obj/machinery/atmospherics/components/unary/bluespace_sender/sender in GLOB.machines)
-		if(!sender)
-			continue
 		register_machine(sender)
 
 /obj/machinery/bluespace_vendor/Destroy()
@@ -117,22 +115,24 @@
 	connected_machine.bluespace_network.pump_gas_to(internal_tank.air_contents, (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
 
 /obj/machinery/bluespace_vendor/multitool_act(mob/living/user, obj/item/multitool/multitool)
-	if(istype(multitool))
-		if(istype(multitool.buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
-			if(connected_machine)
-				to_chat(user, "<span class='notice'>Changing [src] bluespace network...</span>")
-			if(!do_after(user, 0.2 SECONDS, src))
-				return
-			playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
-			register_machine(multitool.buffer)
-			to_chat(user, "<span class='notice'>You link [src] to the console in [multitool]'s buffer.</span>")
-			return TRUE
+	if(!istype(multitool))
+		return
+	if(!istype(multitool.buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
+		to_chat(user, "<span class='notice'>Wrong machine type in [multitool] buffer...</span>")
+		return
+	if(connected_machine)
+		to_chat(user, "<span class='notice'>Changing [src] bluespace network...</span>")
+	if(!do_after(user, 0.2 SECONDS, src))
+		return
+	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
+	register_machine(multitool.buffer)
+	to_chat(user, "<span class='notice'>You link [src] to the console in [multitool]'s buffer.</span>")
+	return TRUE
 
 /obj/machinery/bluespace_vendor/attackby(obj/item/item, mob/living/user)
-	if(!pumping)
-		if(default_deconstruction_screwdriver(user, "[base_icon]_open", "[base_icon]_off", item))
-			check_mode()
-			return
+	if(!pumping && default_deconstruction_screwdriver(user, "[base_icon]_open", "[base_icon]_off", item))
+		check_mode()
+		return
 	if(default_deconstruction_crowbar(item, FALSE, custom_deconstruct = TRUE))
 		new/obj/item/wallframe/bluespace_vendor_mount(user.loc)
 		qdel(src)
@@ -143,7 +143,6 @@
 		if (iron.use(1))
 			empty_tanks++
 			return TRUE
-		return ..()
 	return ..()
 
 /obj/machinery/bluespace_vendor/examine(mob/user)
@@ -185,7 +184,7 @@
 /obj/machinery/bluespace_vendor/proc/check_price(mob/user)
 	var/temp_price = 0
 	for(var/gas_id in internal_tank.air_contents.gases)
-		temp_price += internal_tank.air_contents.total_moles(gas_id) * connected_machine.base_prices[gas_id]
+		temp_price += internal_tank.air_contents.total_moles_specific(gas_id) * connected_machine.base_prices[gas_id]
 	gas_price = temp_price
 
 	if(attempt_charge(src, user, gas_price) & COMPONENT_OBJ_CANCEL_CHARGE)

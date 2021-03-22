@@ -103,11 +103,15 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
 
 /// Calculate moles
-/datum/gas_mixture/proc/total_moles(gas_id = null)
+/datum/gas_mixture/proc/total_moles()
+	var/cached_gases = gases
+	TOTAL_MOLES(cached_gases, .)
+
+/// Calculate moles for a specific gas in the mixture
+/datum/gas_mixture/proc/total_moles_specific(gas_id = null)
 	var/cached_gases = gases
 	if(!gas_id)
-		TOTAL_MOLES(cached_gases, .)
-		return
+		return null
 	TOTAL_MOLES_SPECIFIC(cached_gases, gas_id, .)
 
 /// Checks to see if gas amount exists in mixture.
