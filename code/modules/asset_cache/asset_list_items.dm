@@ -545,6 +545,7 @@
 		"inventory-belt.png" = 'icons/UI_Icons/inventory/belt.png',
 		"inventory-back.png" = 'icons/UI_Icons/inventory/back.png',
 		"inventory-pocket.png" = 'icons/UI_Icons/inventory/pocket.png',
+		"inventory-collar.png" = 'icons/UI_Icons/inventory/collar.png',
 	)
 
 /// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
