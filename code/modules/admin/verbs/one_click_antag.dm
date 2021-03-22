@@ -12,7 +12,6 @@
 
 
 /datum/admins/proc/one_click_antag()
-
 	var/dat = {"
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=traitors'>Make Traitors</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=changelings'>Make Changelings</a><br>
@@ -24,6 +23,7 @@
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=nerd'>Make N.E.R.D. (Requires Ghost)</a><br>
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
@@ -455,10 +455,37 @@
 //Abductors
 /datum/admins/proc/makeAbductorTeam()
 	new /datum/round_event/ghost_role/abductor
-	return 1
+	return TRUE
 
 /datum/admins/proc/makeRevenant()
 	new /datum/round_event/ghost_role/revenant(TRUE, TRUE)
-	return 1
+	return TRUE
+
+/datum/admins/proc/makeNerd()
+	var/spawnpoint = pick(GLOB.blobstart)
+	var/list/mob/dead/observer/candidates
+	var/mob/dead/observer/chosen_candidate
+	var/mob/living/simple_animal/drone/nerd
+	var/teamsize
+
+	teamsize = input(usr, "How many drones?", "N.E.R.D. team size", 2) as num|null
+
+	if(teamsize <= 0)
+		return FALSE
+
+	candidates = pollGhostCandidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
+
+	if(length(candidates) == 0)
+		return FALSE
+
+	while(length(candidates) && teamsize)
+		chosen_candidate = pick(candidates)
+		candidates -= chosen_candidate
+		nerd = new /mob/living/simple_animal/drone(spawnpoint)
+		nerd.key = chosen_candidate.key
+		log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
+		teamsize--
+
+	return TRUE
 
 #undef ERT_EXPERIENCED_LEADER_CHOOSE_TOP
