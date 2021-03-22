@@ -513,12 +513,12 @@ const TravelTargetSelectionScreen = (props, context) => {
             title="Home"
             buttons={
               <Box>
+                ETA: {formatTime(site.distance * drone_travel_coefficent, "short")}
                 <Button
                   mr={1}
                   content={can_travel ? "Launch!" : travel_error}
                   onClick={() => travel_to(null)}
                   disabled={!can_travel} />
-                ETA: {formatTime(site.distance * drone_travel_coefficent, "short")}
               </Box>
             }
           />
@@ -529,12 +529,12 @@ const TravelTargetSelectionScreen = (props, context) => {
             title={destination.name}
             buttons={
               <>
+                ETA: {formatTime(travel_cost(destination), "short")}
                 <Button
                   mr={1}
                   content={can_travel ? "Launch!" : travel_error}
                   onClick={() => travel_to(destination.ref)}
                   disabled={!can_travel} />
-                ETA: {formatTime(travel_cost(destination), "short")}
               </>
             }>
             <LabeledList>

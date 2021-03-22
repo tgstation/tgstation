@@ -210,13 +210,16 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/item/exodrone/proc/get_adventure_data()
 	var/list/data = current_adventure?.ui_data()
 	data["description"] = updateKeywords(data["description"])
+	var/list/choices = data["choices"]
+	for(var/list/choice in choices)
+		choice["text"] = updateKeywords(choice["text"])
 	return data
 
 ///Replaces $$SITE_NAME with site name and $$QualityName with quality values
-/obj/item/exodrone/proc/updateKeywords(description)
+/obj/item/exodrone/proc/updateKeywords(text)
 	_regex_context = src
 	var/static/regex/keywordRegex = regex(@"\$\$(\S*)","g")
-	. = keywordRegex.Replace(description,/obj/item/exodrone/proc/replace_keyword)
+	. = keywordRegex.Replace(text,/obj/item/exodrone/proc/replace_keyword)
 	_regex_context = null
 
 /// This is called with src = regex datum, so don't try to access any instance variables directly here.
