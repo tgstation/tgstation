@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Admins should no longer be triggered by simple bots creating Captain's Spares in nullspace."
