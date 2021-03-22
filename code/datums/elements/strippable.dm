@@ -108,6 +108,8 @@
 /// This should be used for checking if it CAN be unequipped.
 /// It should not perform the unequipping itself.
 /datum/strippable_item/proc/try_unequip(atom/source, mob/user)
+	SHOULD_NOT_SLEEP(TRUE)
+
 	var/obj/item/item = get_item(source)
 	if (isnull(item))
 		return FALSE
@@ -333,7 +335,13 @@
 		)
 
 	data["items"] = items
-	data["name"] = "[owner]"
+
+	// While most `\the`s are implicit, this one is not.
+	// In this case, `\The` would otherwise be used.
+	// This doesn't match with what it's used for, which is to say "Stripping the alien drone",
+	// as opposed to "Stripping The alien drone".
+	// Human names will still show without "the", as they are proper nouns.
+	data["name"] = "\the [owner]"
 
 	return data
 
