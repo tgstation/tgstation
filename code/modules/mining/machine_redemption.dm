@@ -347,7 +347,7 @@
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
-	..()
+	return ..()
 
 /obj/machinery/mineral/ore_redemption/update_icon_state()
 	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"

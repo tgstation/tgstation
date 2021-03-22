@@ -1,0 +1,4 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - qol: "restores drink mixing speeds back to what it was (or slightly faster)"
