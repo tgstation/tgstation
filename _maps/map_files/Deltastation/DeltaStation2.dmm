@@ -19611,8 +19611,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /obj/item/radio/intercom/directional/east,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/iron,
 /area/security/warden)
 "bNp" = (
@@ -71356,7 +71356,7 @@
 /area/service/hydroponics/garden/abandoned)
 "iHG" = (
 /turf/closed/wall,
-/area/security/office)
+/area/security/interrogation)
 "iHK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -82686,8 +82686,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/machinery/airalarm/directional/west,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "mRh" = (
@@ -91824,6 +91824,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/transit_tube)
+"qds" = (
+/turf/closed/wall/r_wall,
+/area/security/interrogation)
 "qdJ" = (
 /obj/machinery/nanite_programmer,
 /obj/effect/turf_decal/bot,
@@ -94858,8 +94861,8 @@
 /area/hallway/primary/fore)
 "rdR" = (
 /obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/ian,
 /obj/machinery/airalarm/directional/east,
+/mob/living/simple_animal/pet/dog/corgi/ian,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "rdS" = (
@@ -108076,11 +108079,6 @@
 "vZj" = (
 /turf/closed/wall/r_wall,
 /area/command/gateway)
-"vZk" = (
-/obj/effect/spawner/structure/window/reinforced/tinted,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/security/office)
 "vZl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/purple{
@@ -165803,11 +165801,11 @@ pfP
 tOv
 eMy
 tuZ
-tuZ
+qds
 iHG
 fgM
 iHG
-tuZ
+qds
 bFL
 bHD
 bFL
@@ -166060,11 +166058,11 @@ xWK
 oXg
 mau
 xYt
-tuZ
+qds
 pOl
 wDF
 mwQ
-tuZ
+qds
 tyx
 bHE
 bJz
@@ -166317,11 +166315,11 @@ lhR
 sAv
 uyV
 sIg
-tuZ
+qds
 mwQ
 fxW
 wOj
-tuZ
+qds
 bFM
 bHE
 bHH
@@ -166578,7 +166576,7 @@ oRZ
 mwQ
 jji
 kKT
-tuZ
+qds
 bFN
 bHG
 bFM
@@ -166831,11 +166829,11 @@ oDa
 oQR
 nOL
 mmo
-tuZ
+qds
 brq
 jLl
 gZx
-tuZ
+qds
 bFO
 bHH
 bJB
@@ -167088,11 +167086,11 @@ mau
 lTi
 jFj
 jCE
-tuZ
+qds
 mwQ
 mwQ
 mwQ
-tuZ
+qds
 bFP
 bHI
 bFP
@@ -167345,11 +167343,11 @@ lyL
 fNO
 nxf
 qUA
-tuZ
+qds
 lwS
 lwS
 lwS
-tuZ
+qds
 bFQ
 bHJ
 bJD
@@ -167602,11 +167600,11 @@ fWW
 hSS
 xBb
 mau
-vZk
+lwS
 mdk
 kdt
 aQh
-tuZ
+qds
 bFR
 bHK
 bJE
@@ -167863,7 +167861,7 @@ hWf
 szZ
 xUy
 kdh
-tuZ
+qds
 bFL
 bFP
 bFL
@@ -168116,11 +168114,11 @@ kAO
 kAO
 qVt
 pJV
-vZk
+lwS
 uUk
 uQF
 qKY
-tuZ
+qds
 aad
 aaa
 aad
@@ -168373,11 +168371,11 @@ uwE
 uwE
 frV
 frV
-tuZ
-tuZ
-tuZ
-tuZ
-tuZ
+qds
+qds
+qds
+qds
+qds
 aad
 aaa
 aad
