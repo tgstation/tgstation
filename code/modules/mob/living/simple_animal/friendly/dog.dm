@@ -202,8 +202,6 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if (!istype(corgi_source))
 		return
 
-	// MOTHBLOCKS TODO: C4 shit
-
 	equipping.forceMove(corgi_source)
 	corgi_source.inventory_back = equipping
 	corgi_source.update_corgi_fluff()
@@ -332,11 +330,6 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 // > some will probably be removed
 
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
-
-	if(istype(item_to_add, /obj/item/grenade/c4)) // last thing he ever wears, I guess
-		INVOKE_ASYNC(item_to_add, /obj/item.proc/afterattack, src, user, 1)
-		return
-
 	if(inventory_head)
 		if(user)
 			to_chat(user, "<span class='warning'>You can't put more than one hat on [src]!</span>")
