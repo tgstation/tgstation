@@ -79,6 +79,12 @@ const SLOTS: Record<
     image: "inventory-ears.png",
   },
 
+  parrot_headset: {
+    displayName: "headset",
+    gridSpot: getGridSpotKey([1, 3]),
+    image: "inventory-ears.png",
+  },
+
   handcuffs: {
     displayName: "handcuffs",
     gridSpot: getGridSpotKey([1, 4]),

@@ -1,6 +1,6 @@
 /// An element for atoms that, when dragged and dropped onto a mob, opens a strip panel.
 /datum/element/strippable
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2
 
 	/// An assoc list of keys to /datum/strippable_item
