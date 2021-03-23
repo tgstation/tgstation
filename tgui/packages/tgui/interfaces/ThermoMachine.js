@@ -15,7 +15,7 @@ export const ThermoMachine = (props, context) => {
         {"No enviromental pressure or ports not connected/with no gas"}
       </Box>
     </Modal>
-  )
+  );
   return (
     <Window
       width={300}
