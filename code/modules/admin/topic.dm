@@ -63,12 +63,13 @@
 					message_admins("[key_name_admin(usr)] tried to create  [traitorCount] traitor(s). Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create  [traitorCount] traitor(s).")
 			if("changelings")
-				if(src.makeChangelings())
-					message_admins("[key_name(usr)] created changelings.")
-					log_admin("[key_name(usr)] created changelings.")
+				var/changelingCount = input("Set number of Changelings","Set Changeling Count (max)",1) as num|null
+				if(src.makeChangelings(changelingCount))
+					message_admins("[key_name(usr)] created [changelingCount] changelings.")
+					log_admin("[key_name(usr)] created [changelingCount] changelings.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create changelings. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create changelings.")
+					message_admins("[key_name_admin(usr)] tried to create [changelingCount] changelings. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create [changelingCount] changelings.")
 			if("revs")
 				if(src.makeRevs())
 					message_admins("[key_name(usr)] started a revolution.")
