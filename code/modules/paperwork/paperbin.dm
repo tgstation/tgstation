@@ -82,6 +82,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(at_overlay_limit())
 		dump_contents(drop_location(), TRUE)
+		return
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen
 		P.add_fingerprint(user)
@@ -106,6 +107,7 @@
 /obj/item/paper_bin/attackby(obj/item/I, mob/user, params)
 	if(at_overlay_limit())
 		dump_contents(drop_location(), TRUE)
+		return
 	if(istype(I, /obj/item/paper))
 		var/obj/item/paper/P = I
 		if(!user.transferItemToLoc(P, src))
@@ -170,6 +172,11 @@
 
 	if(bin_pen)
 		. += pen_overlay
+
+/obj/item/paper_bin/corporate
+	name = "corporate paper bin"
+	desc = "For Nanotrasen's highest-ranking bureaucrats. Recalled due to inevitable collapse, which creates a pile of paper so large it has the tendency to interrupt the conscious experience of anyone looking through it."
+	total_paper = 800
 
 /obj/item/paper_bin/construction
 	name = "construction paper bin"
