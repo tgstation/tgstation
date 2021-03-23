@@ -102,7 +102,7 @@
 		. += holding
 	if(showpipe)
 		. += getpipeimage(icon, "scrub_cap", initialize_directions)
-	if(skipping_work && on && use_enviroment_heat)
+	if(skipping_work && on)
 		var/mutable_appearance/skipping = mutable_appearance(icon, "blinking")
 		. += skipping
 
