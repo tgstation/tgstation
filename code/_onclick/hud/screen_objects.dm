@@ -634,7 +634,7 @@
 	screen_loc = ui_internal
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/healths/blob/naut/core
+/atom/movable/screen/healths/blob/overmind
 	name = "overmind health"
 	icon = 'icons/hud/blob.dmi'
 	icon_state = "corehealth"
