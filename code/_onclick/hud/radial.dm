@@ -262,6 +262,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/mutable_appearance/MA = new /mutable_appearance(to_extract_from)
 	if(MA)
 		MA.plane = ABOVE_HUD_PLANE
+		MA.layer = 20 //normalize layer so we always know which one it's on (above radial hud elements)
 		MA.appearance_flags |= RESET_TRANSFORM
 	return MA
 
