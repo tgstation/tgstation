@@ -1,9 +1,8 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
-//and coresponding datum controller for them
+//and corresponding datum controller for them
 
-// If true, it's the probability of triggering "survivor" antag.
-GLOBAL_VAR(summon_guns)
-GLOBAL_VAR(summon_magic)
+GLOBAL_DATUM(summon_guns, /datum/summon_guns_controller)
+GLOBAL_DATUM(summon_magic, /datum/summon_magic_controller)
 
 // 1 in 50 chance of getting something really special.
 #define SPECIALIST_MAGIC_PROB 2
@@ -185,7 +184,12 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 #undef SPECIALIST_MAGIC_PROB
 
+/**
+ * The magic controller handles the summon magic event.
+ * It is first created when summon magic event is triggered, and it can be referenced from GLOB.summon_magic
+ */
 /datum/summon_magic_controller
+	///chances someone who is given magic will be an antagonist
 	var/survivor_probability = 0
 
 /datum/summon_magic_controller/New(survivor_probability)
@@ -194,8 +198,8 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/magic_up_new_crew)
 
 	for(var/mob/living/carbon/human/unarmed_human in GLOB.player_list)
-		var/turf/T = get_turf(unarmed_human)
-		if(T && is_away_level(T.z))
+		var/turf/turf_check = get_turf(unarmed_human)
+		if(turf_check && is_away_level(turf_check.z))
 			continue
 		give_magic(unarmed_human)
 
@@ -205,10 +209,15 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 ///signal proc to give magic to new crewmembers
 /proc/magic_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
-	SIGNAL_HANDLER_DOES_SLEEP
-	give_magic(new_crewmember)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(GLOB.summon_magic, .proc/give_magic, new_crewmember)
 
+/**
+ * The guns controller handles the summon guns event.
+ * It is first created when summon guns event is triggered, and it can be referenced from GLOB.summon_guns
+ */
 /datum/summon_guns_controller
+	///chances someone who is given guns will be an antagonist
 	var/survivor_probability = 0
 
 /datum/summon_guns_controller/New(survivor_probability)
@@ -217,8 +226,8 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/arm_up_new_crew)
 
 	for(var/mob/living/carbon/human/unarmed_human in GLOB.player_list)
-		var/turf/T = get_turf(unarmed_human)
-		if(T && is_away_level(T.z))
+		var/turf/turf_check = get_turf(unarmed_human)
+		if(turf_check && is_away_level(turf_check.z))
 			continue
 		give_guns(unarmed_human)
 
@@ -227,7 +236,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 
 ///signal proc to give guns to new crewmembers
-/datum/summon_guns_controller/proc/arm_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
-	SIGNAL_HANDLER_DOES_SLEEP
-	give_guns(new_crewmember)
+/proc/arm_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(GLOB.summon_guns, .proc/give_guns, new_crewmember)
 

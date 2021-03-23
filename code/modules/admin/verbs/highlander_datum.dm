@@ -1,7 +1,11 @@
 
-GLOBAL_VAR(highlander_datum)
+GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 
-//yep you guessed it back at it again with another datum singleton. proc to create it further down
+
+/**
+ * The highlander controller handles the admin highlander mode, if enabled.
+ * It is first created when "there can only be one" triggers it, and it can be referenced from GLOB.highlander_controller
+ */
 /datum/highlander_controller
 
 /datum/highlander_controller/New()
@@ -40,13 +44,35 @@ GLOBAL_VAR(highlander_datum)
 	. = ..()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 
+/**
+ * Triggers at beginning of the game when there is a confirmed list of valid, ready players.
+ * Creates a 100% ready game that has NOT started (no players in bodies)
+ * Followed by start game
+ *
+ * Does the following:
+ * * Picks map, and loads it
+ * * Grabs landmarks if it is the first time it's loading
+ * * Sets up the role list
+ * * Puts players in each role randomly
+ * Arguments:
+ * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
+ * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
+ */
 /datum/highlander_controller/proc/new_highlander(mob/living/carbon/human/new_crewmember, rank)
 	SIGNAL_HANDLER
 
 	to_chat(new_crewmember, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 	new_crewmember.make_scottish()
 
-/client/proc/only_one(was_delayed = FALSE) //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
+/**
+ * Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
+ * Uses highlander controller to do so!
+ *
+ * Arguments:
+ * * was_delayed: boolean: whether the option to do a "delayed" highlander was pressed before this was called, changes up the logging a bit.
+
+ */
+/client/proc/only_one(was_delayed = FALSE)
 	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
@@ -58,7 +84,7 @@ GLOBAL_VAR(highlander_datum)
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
 		log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
 
-	GLOB.highlander_datum = new /datum/highlander_controller
+	GLOB.highlander_controller = new /datum/highlander_controller
 
 /client/proc/only_one_delayed()
 	send_to_playing_players("<span class='userdanger'>Bagpipes begin to blare. You feel Scottish pride coming over you.</span>")
@@ -71,9 +97,3 @@ GLOBAL_VAR(highlander_datum)
 
 /mob/living/silicon/robot/proc/make_scottish()
 	mind.add_antag_datum(/datum/antagonist/highlander/robot)
-
-/proc/new_highlander(mob/living/carbon/human/new_crewmember, rank)
-	SIGNAL_HANDLER
-
-	to_chat(new_crewmember, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
-	new_crewmember.make_scottish()
