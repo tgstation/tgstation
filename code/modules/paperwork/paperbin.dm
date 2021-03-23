@@ -124,9 +124,7 @@
 		return ..()
 
 /obj/item/paper_bin/proc/at_overlay_limit()
-	if(overlays.len >= MAX_ATOM_OVERLAYS)
-		return TRUE
-	return FALSE
+	return (overlays.len >= MAX_ATOM_OVERLAYS)
 
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
@@ -154,20 +152,20 @@
 		bin_overlay = mutable_appearance(icon, bin_overlay_string)
 
 	if(LAZYLEN(papers))
-		var/paper_number = 1
-		for(var/obj/item/paper/current_paper in papers)
-			if(paper_number == LAZYLEN(papers) || paper_number % 8 == 0)
-				var/mutable_appearance/paper_overlay = mutable_appearance(current_paper.icon, current_paper.icon_state)
-				paper_overlay.color = current_paper.color
-				paper_overlay.pixel_y = paper_number/8 - 2 //gives the illusion of stacking
-				. += paper_overlay
-				if(paper_number == LAZYLEN(papers)) //this is our top paper
-					. += current_paper.overlays //add overlays only for top paper
-					if(istype(src, /obj/item/paper_bin/bundlenatural))
-						bin_overlay.pixel_y = paper_overlay.pixel_y //keeps binding centred on stack
-					if(bin_pen)
-						pen_overlay.pixel_y = paper_overlay.pixel_y //keeps pen on top of stack
-			paper_number++
+		for(var/paper_number in 1 to LAZYLEN(papers))
+			if(paper_number != LAZYLEN(papers) && paper_number % 8 != 0) //only top paper and every 8th paper get overlays
+				continue
+			var/obj/item/paper/current_paper = papers[paper_number]
+			var/mutable_appearance/paper_overlay = mutable_appearance(current_paper.icon, current_paper.icon_state)
+			paper_overlay.color = current_paper.color
+			paper_overlay.pixel_y = paper_number/8 - 2 //gives the illusion of stacking
+			. += paper_overlay
+			if(paper_number == LAZYLEN(papers)) //this is our top paper
+				. += current_paper.overlays //add overlays only for top paper
+				if(istype(src, /obj/item/paper_bin/bundlenatural))
+					bin_overlay.pixel_y = paper_overlay.pixel_y //keeps binding centred on stack
+				if(bin_pen)
+					pen_overlay.pixel_y = paper_overlay.pixel_y //keeps pen on top of stack
 		. += bin_overlay
 
 	if(bin_pen)
