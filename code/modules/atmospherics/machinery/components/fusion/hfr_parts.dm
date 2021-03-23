@@ -406,7 +406,7 @@
 
 /obj/item/hfr_box/body
 	name = "HFR box body"
-	desc = "Place this as the main part of the fusion reactor around the core box"
+	desc = "Place this on the sides of the core box of your 3x3 multiblock fusion reactor"
 	icon_state = "box_body"
 
 /obj/item/hfr_box/core
@@ -452,12 +452,11 @@
 			if(istype(piece,/obj/machinery/atmospherics/components/unary/hypertorus))
 				var/obj/machinery/atmospherics/components/unary/hypertorus/part = new piece(location, TRUE, box.dir)
 				part.dir = box.dir
-				qdel(box)
-				continue
 			else
-				var/obj/machinery/hypertorus/interface/interface = new piece(location)
-				interface.dir = box.dir
-				qdel(box)
-				continue
+				var/obj/machinery/hypertorus/interface/part = new piece(location)
+				part.dir = box.dir
+			qdel(box)
+			continue
+
 	new/obj/machinery/atmospherics/components/unary/hypertorus/core(loc, TRUE)
 	qdel(src)
