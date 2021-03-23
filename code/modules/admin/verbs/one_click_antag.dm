@@ -46,7 +46,7 @@
 	return !is_banned_from(applicant.ckey, list(targetrole, ROLE_SYNDICATE))
 
 
-/datum/admins/proc/makeTraitors()
+/datum/admins/proc/makeTraitors(traitorCount = 3)
 	var/datum/game_mode/traitor/temp = new
 
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -65,7 +65,7 @@
 					candidates += applicant
 
 	if(candidates.len)
-		var/numTraitors = min(candidates.len, 3)
+		var/numTraitors = min(candidates.len, traitorCount)
 
 		for(var/i = 0, i<numTraitors, i++)
 			H = pick(candidates)

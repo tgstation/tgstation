@@ -55,12 +55,13 @@
 			return
 		switch(href_list["makeAntag"])
 			if("traitors")
-				if(src.makeTraitors())
-					message_admins("[key_name_admin(usr)] created traitors.")
-					log_admin("[key_name(usr)] created traitors.")
+				var/traitorCount = input("Set number of Traitors","Set Traitor Count (max)",1) as num|null
+				if(src.makeTraitors(traitorCount))
+					message_admins("[key_name_admin(usr)] created [traitorCount] traitor(s).")
+					log_admin("[key_name(usr)] created [traitorCount] traitor(s).")
 				else
-					message_admins("[key_name_admin(usr)] tried to create traitors. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create traitors.")
+					message_admins("[key_name_admin(usr)] tried to create  [traitorCount] traitor(s). Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create  [traitorCount] traitor(s).")
 			if("changelings")
 				if(src.makeChangelings())
 					message_admins("[key_name(usr)] created changelings.")
