@@ -49,8 +49,9 @@
 
 /obj/effect/fun_balloon/sentience/effect()
 	var/list/bodies = list()
-	for(var/mob/living/M in range(effect_range, get_turf(src)))
-		bodies += M
+	for(var/mob/living/possessable in range(effect_range, get_turf(src)))
+		if (possessable.stat == CONSCIOUS) // Only assign ghosts to living mobs!
+			bodies += possessable
 
 	var/question = "Would you like to be [group_name]?"
 	var/list/candidates = pollCandidatesForMobs(question, ROLE_PAI, null, FALSE, 100, bodies)
