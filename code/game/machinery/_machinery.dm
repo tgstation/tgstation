@@ -493,9 +493,9 @@
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = 0)
+/obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = 0, custom_deconstruct = FALSE)
 	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_CROWBAR
-	if(.)
+	if(. && !custom_deconstruct)
 		I.play_tool_sound(src, 50)
 		deconstruct(TRUE)
 
@@ -548,7 +548,16 @@
 		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
-	occupant?.ex_act(severity, target)
+	if(!occupant)
+		return
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += occupant
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += occupant
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += occupant
 
 /obj/machinery/handle_atom_del(atom/A)
 	if(A == occupant)

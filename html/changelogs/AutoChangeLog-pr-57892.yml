@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - imageadd: "The Flyperson left leg has been given an extra pixel"

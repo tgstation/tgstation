@@ -109,7 +109,7 @@
 	AddComponent(/datum/component/rot/gibs)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/L)
 	if(isliving(L) && has_gravity(loc))

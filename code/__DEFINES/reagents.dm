@@ -106,6 +106,8 @@
 
 ///Minimum requirement for addiction buzz to be met
 #define MIN_ADDICTION_REAGENT_AMOUNT 2
+///Nicotine requires much less in your system to be happy
+#define MIN_NICOTINE_ADDICTION_REAGENT_AMOUNT 0.1
 #define MAX_ADDICTION_POINTS 1000
 
 ///Addiction start/ends

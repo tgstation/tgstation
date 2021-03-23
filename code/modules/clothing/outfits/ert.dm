@@ -152,7 +152,6 @@
 	belt = /obj/item/storage/belt/utility/full/powertools
 	glasses =  /obj/item/clothing/glasses/meson/engine
 	l_pocket = /obj/item/rcd_ammo/large
-	l_hand = /obj/item/storage/firstaid/regular
 
 /datum/outfit/centcom/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

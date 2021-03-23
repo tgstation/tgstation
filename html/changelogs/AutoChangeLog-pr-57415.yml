@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - rscadd: "Sundae, honkdae and space freezy can be filled with ice cream from the ice cream vat."
+  - rscadd: "Ice creams cones, as well as the aforementioned treats, can hold multiple servings of ice cream now, up to three."
+  - refactor: "All because ice cream has been refactored into a component, and its flavours made into datums."

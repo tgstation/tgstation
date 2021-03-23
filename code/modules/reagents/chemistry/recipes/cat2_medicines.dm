@@ -33,7 +33,7 @@
 			new /obj/effect/hotspot(holder.my_atom.loc)
 			holder.remove_reagent(/datum/reagent/medicine/c2/helbital, 2)
 			holder.chem_temp += 5
-			holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))]The impurity of the reacting helbital is too great causing the helbital to let out a hearty burst of flame, evaporating part of the product!</span>")
+			holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The impurity of the reacting helbital is too great causing [holder.my_atom] to let out a hearty burst of flame, evaporating part of the product!</span>")
 
 /datum/chemical_reaction/medicine/helbital/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()//drains product
