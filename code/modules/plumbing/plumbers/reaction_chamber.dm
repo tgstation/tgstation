@@ -6,7 +6,8 @@
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
 
-	/**list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
+	/**
+	* list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
 	*/
 	var/list/required_reagents = list()
@@ -83,9 +84,9 @@
 	var/list/data = list()
 
 	var/list/text_reagents = list()
-	for(var/A in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
-		var/datum/reagent/R = A
-		text_reagents[initial(R.name)] = required_reagents[R]
+	for(var/required_reagent_but_not_typecasted_yet in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
+		var/datum/reagent/required_reagent = required_reagent_but_not_typecasted_yet as anything
+		text_reagents[initial(required_reagent.name)] = required_reagents[required_reagent]
 
 	data["reagents"] = text_reagents
 	data["emptying"] = emptying

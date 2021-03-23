@@ -9,34 +9,34 @@
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
 	. = ..()
-	var/obj/machinery/plumbing/reaction_chamber/RC = parent
-	if(!. || !RC.emptying || reagents.is_reacting == TRUE)
+	var/obj/machinery/plumbing/reaction_chamber/reaction_chamber = parent
+	if(!. || !reaction_chamber.emptying || reagents.is_reacting == TRUE)
 		return FALSE
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
-	var/obj/machinery/plumbing/reaction_chamber/RC = parent
-	if(RC.emptying)
+	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
+	if(chamber.emptying)
 		return
 
-	for(var/RT in RC.required_reagents)
+	for(var/required_reagent in chamber.required_reagents)
 		var/has_reagent = FALSE
-		for(var/A in reagents.reagent_list)
-			var/datum/reagent/RD = A
-			if(RT == RD.type)
+		for(var/containing_reagent_but_not_typecasted_yet in reagents.reagent_list)
+			var/datum/reagent/containg_reagent = containing_reagent_but_not_typecasted_yet as anything
+			if(required_reagent == containg_reagent.type)
 				has_reagent = TRUE
-				if(RD.volume < RC.required_reagents[RT])
-					process_request(min(RC.required_reagents[RT] - RD.volume, MACHINE_REAGENT_TRANSFER) , RT, dir)
+				if(containg_reagent.volume < chamber.required_reagents[required_reagent])
+					process_request(min(chamber.required_reagents[required_reagent] - containg_reagent.volume, MACHINE_REAGENT_TRANSFER) , required_reagent, dir)
 					return
 		if(!has_reagent)
-			process_request(min(RC.required_reagents[RT], MACHINE_REAGENT_TRANSFER), RT, dir)
+			process_request(min(chamber.required_reagents[required_reagent], MACHINE_REAGENT_TRANSFER), required_reagent, dir)
 			return
 
 	reagents.flags &= ~NO_REACT
 	reagents.handle_reactions()
 
-	RC.emptying = TRUE //If we move this up, it'll instantly get turned off since any reaction always sets the reagent_total to zero. Other option is make the reaction update
+	chamber.emptying = TRUE //If we move this up, it'll instantly get turned off since any reaction always sets the reagent_total to zero. Other option is make the reaction update
 	//everything for every chemical removed, wich isn't a good option either.
-	RC.on_reagent_change(reagents) //We need to check it now, because some reactions leave nothing left.
+	chamber.on_reagent_change(reagents) //We need to check it now, because some reactions leave nothing left.
 
 ///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs seperate, like into a special internal acid container
 /datum/component/plumbing/acidic_input
