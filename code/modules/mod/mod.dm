@@ -277,12 +277,19 @@
 			return FALSE
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
+		return TRUE
 	else if(istype(attacking_item, /obj/item/mod/paint) && paint(user, attacking_item))
 		to_chat(user, "<span class='notice'>You paint [src] with [attacking_item].</span>")
 		qdel(attacking_item)
+		return TRUE
 	else if(open && attacking_item.GetID())
 		update_access(attacking_item)
-	..()
+		return TRUE
+	return ..()
+
+/obj/item/mod/control/emag_act(mob/user)
+	locked = !locked
+	to_chat(user, "<span class='notice'>You emag [src], [locked ? "locking" : "unlocking"] it.</span>")
 
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
 	if(theme.skins.len <= 1)
@@ -388,6 +395,8 @@
 		return
 	if(mod_parts.Find(part))
 		conceal(wearer, part)
+		if(active)
+			toggle_activate(wearer, TRUE)
 		return
 
 /obj/item/clothing/head/helmet/space/mod

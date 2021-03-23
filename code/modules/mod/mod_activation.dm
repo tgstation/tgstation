@@ -64,7 +64,7 @@
 /obj/item/mod/control/proc/toggle_activate(mob/user, force_deactivate = FALSE)
 	for(var/p in mod_parts)
 		var/obj/item/part = p
-		if(part.loc == src)
+		if(!force_deactivate && part.loc == src)
 			to_chat(user, "<span class='warning'>ERROR: Not all parts deployed.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
