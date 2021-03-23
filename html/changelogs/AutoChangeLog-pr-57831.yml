@@ -1,7 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "READ ME thermomachines now have 2 ports, the green one is used as you normally do, by cooling/heating the gases connected to it, the red port is optional but it helps move the heat from the green port to the red one (and vice-versa), if no pipe is connected to the red port or there is no gas in it, the heat will be moved from the enviroment;"
-  - balance: "ALL the station freezers are now connected to the waste loop, where the CO2 gets collected and used to store that heat (atmos should now manage the waste pipenet more actively);"
-  - balance: "the best way to now use freezers is to connect their red port to the waste system (there is at least one pipe in every room)"
-  - balance: "Rotate the machine without emptying the content will release the gas onto the atmosphere"
