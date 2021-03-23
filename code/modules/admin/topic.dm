@@ -61,7 +61,7 @@
 					log_admin("[key_name(usr)] created [traitorCount] traitor(s).")
 				else
 					message_admins("[key_name_admin(usr)] tried to create  [traitorCount] traitor(s). Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create  [traitorCount] traitor(s).")
+					log_admin("[key_name(usr)] failed to create [traitorCount] traitor(s).")
 			if("changelings")
 				var/changelingCount = input("Set number of Changelings","Set Changeling Count (max)",1) as num|null
 				if(src.makeChangelings(changelingCount))
@@ -71,19 +71,21 @@
 					message_admins("[key_name_admin(usr)] tried to create [changelingCount] changelings. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create [changelingCount] changelings.")
 			if("revs")
-				if(src.makeRevs())
-					message_admins("[key_name(usr)] started a revolution.")
-					log_admin("[key_name(usr)] started a revolution.")
+				var/revCount = input("Set number of Revolutionaries","Set Revolutionaries Count (max)",1) as num|null
+				if(src.makeRevs(revCount))
+					message_admins("[key_name(usr)] started a revolution with [revCount] freedom fighters.")
+					log_admin("[key_name(usr)] started a [revCount] freedom fighters.")
 				else
-					message_admins("[key_name_admin(usr)] tried to start a revolution. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a revolution.")
+					message_admins("[key_name_admin(usr)] tried to start a revolution with [revCount] freedom fighters. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to start a revolution with [revCount] freedom fighters.")
 			if("cult")
-				if(src.makeCult())
-					message_admins("[key_name(usr)] started a cult.")
-					log_admin("[key_name(usr)] started a cult.")
+				var/cultCount = input("Set number of Cultists","Set Cultist Count (max)",1) as num|null
+				if(src.makeCult(cultCount))
+					message_admins("[key_name(usr)] started a cult with [cultCount] cultists.")
+					log_admin("[key_name(usr)] started a cult with [cultCount] cultists.")
 				else
-					message_admins("[key_name_admin(usr)] tried to start a cult. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a cult.")
+					message_admins("[key_name_admin(usr)] tried to start a cult with [cultCount] cultists. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to start a cult with [cultCount] cultists.")
 			if("wizard")
 				message_admins("[key_name(usr)] is creating a wizard...")
 				if(src.makeWizard())
