@@ -10,11 +10,21 @@
 	/// How much space it takes up in the MOD
 	var/complexity = 0
 	/// Power use when idle
-	var/idle_power_use = 0
+	var/idle_power_cost = 0
+	/// Power use when active
+	var/active_power_cost = 0
 	/// Power use when used
-	var/active_power_use = 0
+	var/use_power_cost = 0
 	/// Linked MODsuit
 	var/obj/item/mod/control/mod
+	/// If we're an active module, what item are we?
+	var/obj/item/device
+	/// Overlay added to the user when equipped.
+	var/mutable_appearance/wearer_overlay
+	/// Overlay given to the user when the module is inactive
+	var/overlay_state_inactive
+	/// Overlay given to the user when the module is active
+	var/overlay_state_active
 	/// What modules are we incompatible with?
 	var/list/incompatible_modules = list()
 	/// Cooldown after use
@@ -22,9 +32,24 @@
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
+/obj/item/mod/module/Initialize()
+	. = ..()
+	if(module_type != MODULE_ACTIVE)
+		return
+	if(ispath(device))
+		device = new device(src)
+		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
+		RegisterSignal(device, COMSIG_PARENT_PREQDELETED, .proc/on_device_deletion)
+		RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+	if(overlay_state_active || overlay_state_inactive)
+		wearer_overlay = mutable_appearance('icons/mob/mod.dmi', "[overlay_state_inactive ? overlay_state_inactive : null]", -ABOVE_BODY_FRONT_LAYER)
+
 /obj/item/mod/module/Destroy()
 	if(mod)
 		mod.uninstall(src)
+	if(device)
+		UnregisterSignal(device, COMSIG_PARENT_PREQDELETED)
+		QDEL_NULL(device)
 	..()
 
 /obj/item/mod/module/proc/on_install()
@@ -45,44 +70,73 @@
 		on_use(mod.wearer)
 
 /obj/item/mod/module/proc/on_activation()
+	if(!COOLDOWN_FINISHED(src, cooldown_timer))
+		return FALSE
 	if(!mod.active || !mod.cell?.charge)
 		return FALSE
 	active = TRUE
-	if(module_type == MODULE_TOGGLE)
-		mod.cell_drain += active_power_use
 	if(module_type == MODULE_ACTIVE)
-		RegisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON), .proc/on_middleclick)
 		mod.selected_module.on_deactivation()
 		mod.selected_module = src
+		mod.wearer.put_in_hands(device)
+		to_chat(mod.wearer, "<span class='notice'>You extend [device].</span>")
+		RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+	if(wearer_overlay && overlay_state_active)
+		wearer_overlay.icon_state = overlay_state_active
+	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	return TRUE
 
 /obj/item/mod/module/proc/on_deactivation()
 	active = FALSE
-	if(module_type == MODULE_TOGGLE)
-		mod.cell_drain -= active_power_use
 	if(module_type == MODULE_ACTIVE)
-		UnregisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON))
 		mod.selected_module = null
+		mod.wearer.transferItemToLoc(device, src, TRUE)
+		to_chat(mod.wearer, "<span class='notice'>You retract [device].</span>")
+		UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
+	if(wearer_overlay && overlay_state_inactive)
+		wearer_overlay.icon_state = overlay_state_inactive
 	return TRUE
 
 /obj/item/mod/module/proc/on_use(mob/living/user, atom/A)
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		return FALSE
-	if(mod.cell?.charge < active_power_use)
+	if(!drain_power(use_power_cost))
 		return FALSE
-	mod.cell.charge = max(0, mod.cell.charge -= active_power_use)
+	if(wearer_overlay && overlay_state_active)
+		wearer_overlay.icon_state = overlay_state_active
+		addtimer(VARSET_CALLBACK(wearer_overlay, icon_state, "[overlay_state_inactive ? overlay_state_inactive : null]"), cooldown_time)
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	return TRUE
 
 /obj/item/mod/module/proc/on_process(delta_time)
-	return
+	if(active)
+		if(!drain_power(active_power_cost * delta_time))
+			on_deactivation()
+			return FALSE
+	else
+		drain_power(idle_power_cost * delta_time)
+	return TRUE
 
-/obj/item/mod/module/proc/on_middleclick(mob/living/user, atom/A)
+/obj/item/mod/module/proc/drain_power(amount)
+	if(!mod.cell || (mod.cell.charge < amount))
+		return FALSE
+	mod.cell.charge = max(0, mod.cell.charge - amount)
+	return TRUE
+
+/obj/item/mod/module/proc/on_exit(datum/source, atom/movable/offender, atom/newloc)
 	SIGNAL_HANDLER
 
-	user.changeNext_move(CLICK_CD_MELEE)
-	on_use(user, A)
-	return COMSIG_MOB_CANCEL_CLICKON
+	if(newloc == mod.wearer || newloc == src)
+		return
+	if(offender == device)
+		on_deactivation()
+
+/obj/item/mod/module/proc/on_device_deletion(datum/source)
+	SIGNAL_HANDLER
+
+	if(source == device)
+		device = null
+		qdel(src)
 
 /obj/item/mod/module/storage
 	name = "MOD storage module"
@@ -125,7 +179,7 @@
 	desc = "A module installed to the helmet, allowing access to different views."
 	module_type = MODULE_TOGGLE
 	complexity = 3
-	active_power_use = 5
+	active_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/visor)
 	var/helmet_tint = 0
 	var/helmet_flash_protect = FLASH_PROTECTION_NONE
@@ -144,6 +198,7 @@
 	for(var/trait in visor_traits)
 		ADD_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
+	mod.wearer.update_tint()
 
 /obj/item/mod/module/visor/on_deactivation()
 	. = ..()
@@ -192,7 +247,7 @@
 	desc = "A module with a microchip health analyzer to instantly scan the wearer's vitals."
 	module_type = MODULE_USABLE
 	complexity = 2
-	active_power_use = 10
+	active_power_cost = 50
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	var/module_advanced = FALSE
 

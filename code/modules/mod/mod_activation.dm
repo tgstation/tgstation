@@ -35,7 +35,7 @@
 	if(piece == boots && wearer.shoes)
 		boots.overslot = wearer.shoes
 		wearer.transferItemToLoc(boots.overslot, boots, TRUE)
-	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags,0,0,1))
+	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags, FALSE, TRUE))
 		user.visible_message("<span class='notice'>[wearer]'s [piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
 						"<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
 						"<span class='hear'>You hear a mechanical hiss.</span>")
@@ -62,8 +62,8 @@
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/mod/control/proc/toggle_activate(mob/user, force_deactivate = FALSE)
-	for(var/h in mod_parts)
-		var/obj/item/part = h
+	for(var/p in mod_parts)
+		var/obj/item/part = p
 		if(part.loc == src)
 			to_chat(user, "<span class='warning'>ERROR: Not all parts deployed.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
@@ -135,11 +135,16 @@
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = 6000)
 			slowdown = theme.slowdown_active
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
+			for(var/obj/item/mod/module/module in modules)
+				if(module.wearer_overlay)
+					wearer.add_overlay(module.wearer_overlay)
 			START_PROCESSING(SSobj,src)
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = 6000)
 			slowdown = theme.slowdown_unactive
 			for(var/obj/item/mod/module/module in modules)
+				if(module.wearer_overlay)
+					wearer.cut_overlay(module.wearer_overlay)
 				if(module.active)
 					module.on_deactivation()
 			STOP_PROCESSING(SSobj, src)

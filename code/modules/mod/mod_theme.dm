@@ -47,7 +47,7 @@
 	desc = "This one is engineering themed, offering radiation and fire protection."
 	default_skin = "engineering"
 	skins = list("engineering")
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 75, FIRE = 100, ACID = 25, WOUND = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, RAD = 75, FIRE = 100, ACID = 25, WOUND = 10)
 	resistance_flags = FIRE_PROOF
 	siemens_coefficient = 0
 

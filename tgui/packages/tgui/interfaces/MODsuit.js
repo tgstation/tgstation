@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, ProgressBar, Section, Collapsible, Box } from '../components';
+import { Button, LabeledList, ProgressBar, Section, Collapsible, Box, Icon } from '../components';
 import { Window } from '../layouts';
 
 export const MODsuit = (props, context) => {
@@ -15,8 +15,21 @@ export const MODsuit = (props, context) => {
           return "Toggle"
       case 3:
           return "Select"
-  }
-  };
+  }}
+  const LockedInterface = (props) => (
+    <Window.Content>
+      <Section align="center" fill>
+        <Icon
+          color="red"
+          name="exclamation-triangle"
+          size={15}
+           />
+        <Box fontSize="30px" color="red">
+          ERROR: INTERFACE UNRESPONSIVE.
+        </Box>
+      </Section>
+    </Window.Content>
+  );
   return (
     <Window
       width={400}
@@ -24,6 +37,9 @@ export const MODsuit = (props, context) => {
       theme={data.ui_theme}
       title="MOD Interface Panel"
       resizable>
+      {data.interface_break && (
+        <LockedInterface />
+      ) || (
       <Window.Content scrollable>
         <Section title="Parameters">
           <LabeledList>
@@ -109,18 +125,21 @@ export const MODsuit = (props, context) => {
                   {module.description}
                 </Box>
                 <LabeledList>
-                  <LabeledList.Item label="Idle Power Use">
+                  <LabeledList.Item label="Idle Power Cost">
                     {module.idle_power}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Active Power Use">
+                  <LabeledList.Item label="Active Power Cost">
                     {module.active_power}
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Use Power Cost">
+                    {module.use_power}
                   </LabeledList.Item>
                 </LabeledList>
               </Collapsible>
             );
           }))}
         </Section>
-      </Window.Content>
+      </Window.Content> )}
     </Window>
   );
 };

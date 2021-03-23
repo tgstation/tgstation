@@ -23,15 +23,16 @@
 	data["gauntlets"] = gauntlets?.name
 	data["boots"] = boots?.name
 	data["modules"] = list()
-	for(var/obj/item/mod/module/thingy in modules)
+	for(var/obj/item/mod/module/module in modules)
 		var/list/module_data = list(
-			name = thingy.name,
-			description = thingy.desc,
-			module_type = thingy.module_type,
-			active = thingy.active,
-			idle_power = thingy.idle_power_use,
-			active_power = thingy.active_power_use,
-			ref = REF(thingy)
+			name = module.name,
+			description = module.desc,
+			module_type = module.module_type,
+			active = module.active,
+			idle_power = module.idle_power_cost,
+			active_power = module.active_power_cost,
+			use_power = module.use_power_cost,
+			ref = REF(module)
 		)
 		data["modules"] += list(module_data)
 

@@ -33,15 +33,13 @@
 	var/locked = FALSE
 	/// If the suit is malfunctioning.
 	var/malfunctioning = FALSE
-	/// If the suit has EMP protection.
-	var/emp_protection = FALSE
 	/// If the suit is currently activating/deactivating.
 	var/activating = FALSE
 	/// How long the MOD is electrified for.
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	/// If the suit interface is broken.
 	var/interface_break = FALSE
-	/// How much modules can this MOD carry without malfunctioning.
+	/// How much modules can this MOD carry.
 	var/complexity_max = DEFAULT_MAX_COMPLEXITY
 	/// How much modules this MOD is carrying.
 	var/complexity = 0
@@ -60,11 +58,11 @@
 	/// MOD boots.
 	var/obj/item/clothing/shoes/mod/boots
 	/// List of parts.
-	var/list/mod_parts
+	var/list/mod_parts = list()
 	/// Modules the MOD should spawn with.
 	var/list/initial_modules = list()
 	/// Modules the MOD currently possesses.
-	var/list/modules
+	var/list/modules = list()
 	/// Currently used module.
 	var/obj/item/mod/module/selected_module
 	/// AI mob inhabiting the MOD.
@@ -93,25 +91,25 @@
 	if(ispath(theme.helmet_path))
 		helmet = new theme.helmet_path(src)
 		helmet.mod = src
-		LAZYADD(mod_parts, helmet)
+		mod_parts += helmet
 	else
 		CRASH("A MODsuit spawned without a helmet.")
 	if(ispath(theme.chestplate_path))
 		chestplate = new theme.chestplate_path(src)
 		chestplate.mod = src
-		LAZYADD(mod_parts, chestplate)
+		mod_parts += chestplate
 	else
 		CRASH("A MODsuit spawned without a chestplate.")
 	if(ispath(theme.gauntlets_path))
 		gauntlets = new theme.gauntlets_path(src)
 		gauntlets.mod = src
-		LAZYADD(mod_parts, gauntlets)
+		mod_parts += gauntlets
 	else
 		CRASH("A MODsuit spawned without gauntlets.")
 	if(ispath(theme.boots_path))
 		boots = new theme.boots_path(src)
 		boots.mod = src
-		LAZYADD(mod_parts, boots)
+		mod_parts += boots
 	else
 		CRASH("A MODsuit spawned without boots.")
 	var/list/all_parts = mod_parts.Copy() + src
@@ -130,6 +128,7 @@
 		for(var/obj/item/mod/module/module in initial_modules)
 			module = new module(src)
 			install(module, TRUE)
+	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
 /obj/item/mod/control/Destroy()
@@ -160,15 +159,22 @@
 	if(!cell?.charge && active && !activating)
 		power_off()
 		return PROCESS_KILL
-	cell.charge = max(0, cell.charge -= cell_drain*delta_time)
+	var/malfunctioning_charge_drain = 0
+	if(malfunctioning)
+		malfunctioning_charge_drain = rand(1,20)
+	cell.charge = max(0, cell.charge - (cell_drain - malfunctioning_charge_drain)*delta_time)
 	for(var/obj/item/mod/module/module in modules)
+		if(malfunctioning && module.active && DT_PROB(5, delta_time))
+			module.on_deactivation()
 		module.on_process(delta_time)
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()
 	if(slot == ITEM_SLOT_BACK)
 		wearer = user
-	else
+		RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+	else if(wearer)
+		UnregisterSignal(wearer, COMSIG_ATOM_EXITED)
 		wearer = null
 
 /obj/item/mod/control/dropped(mob/user)
@@ -337,9 +343,8 @@
 		else
 			CRASH("MODsuit starting modules reach above max complexity.")
 	new_module.forceMove(src)
-	LAZYADD(modules, new_module)
+	modules += new_module
 	complexity += new_module.complexity
-	cell_drain += new_module.idle_power_use
 	new_module.mod = src
 	new_module.on_install()
 	if(!starting_module)
@@ -353,9 +358,10 @@
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	old_module.forceMove(get_turf(src))
-	LAZYREMOVE(modules, old_module)
+	modules -= old_module
 	complexity -= old_module.complexity
-	cell_drain -= old_module.idle_power_use
+	if(old_module.module_type == MODULE_ACTIVE || old_module.module_type == MODULE_TOGGLE)
+		old_module.on_deactivation()
 	old_module.on_uninstall()
 	old_module.mod = null
 
@@ -372,6 +378,18 @@
 	to_chat(wearer, "<span class='warning'>ERROR: Insufficient power.</span>")
 	toggle_activate(wearer, force_deactivate = TRUE)
 
+/obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, atom/newloc)
+	SIGNAL_HANDLER
+
+	if(newloc == wearer || newloc == src)
+		return
+	if(modules.Find(part))
+		uninstall(part)
+		return
+	if(mod_parts.Find(part))
+		conceal(wearer, part)
+		return
+
 /obj/item/clothing/head/helmet/space/mod
 	name = "MOD helmet"
 	desc = "A helmet for a MODsuit."
@@ -379,8 +397,14 @@
 	icon_state = "helmet"
 	worn_icon = 'icons/mob/mod.dmi'
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
-	flash_protect = FLASH_PROTECTION_NONE
+	body_parts_covered = HEAD
+	heat_protection = HEAD
+	cold_protection = HEAD
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
+	flash_protect = FLASH_PROTECTION_NONE
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEFACIALHAIR
 	flags_cover = HEADCOVERSMOUTH
@@ -402,10 +426,11 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "chestplate"
 	worn_icon = 'icons/mob/mod.dmi'
+	blood_overlay_type = "armor"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	heat_protection = CHEST|GROIN|LEGS|ARMS
-	cold_protection = CHEST|GROIN|LEGS|ARMS
+	body_parts_covered = CHEST|GROIN
+	heat_protection = CHEST|GROIN
+	cold_protection = CHEST|GROIN
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
@@ -428,6 +453,12 @@
 	icon_state = "gauntlets"
 	worn_icon = 'icons/mob/mod.dmi'
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
+	body_parts_covered = HANDS|ARMS
+	heat_protection = HANDS|ARMS
+	cold_protection = HANDS|ARMS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
@@ -445,8 +476,9 @@
 /obj/item/clothing/gloves/mod/proc/show_overslot(mob/user)
 	if(!overslot)
 		return
-	if(user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1))
-		overslot = null
+	if(!user.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
+		user.dropItemToGround(overslot, TRUE, TRUE)
+	overslot = null
 
 /obj/item/clothing/shoes/mod
 	name = "MOD boots"
@@ -455,6 +487,12 @@
 	icon_state = "boots"
 	worn_icon = 'icons/mob/mod.dmi'
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
+	body_parts_covered = FEET|LEGS
+	heat_protection = FEET|LEGS
+	cold_protection = FEET|LEGS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
@@ -472,8 +510,9 @@
 /obj/item/clothing/shoes/mod/proc/show_overslot(mob/user)
 	if(!overslot)
 		return
-	if(user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1))
-		overslot = null
+	if(!user.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
+		user.dropItemToGround(overslot, TRUE, TRUE)
+	overslot = null
 
 /obj/item/mod/control/pre_equipped
 	cell = /obj/item/stock_parts/cell/high

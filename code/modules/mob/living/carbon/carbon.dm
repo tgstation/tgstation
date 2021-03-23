@@ -630,7 +630,7 @@
 		if(!isnull(G.lighting_alpha))
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 
-	if(HAS_TRAIT(src, TRAIT_NIGHT_VISION))
+	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
 		see_in_dark = max(see_in_dark, 8)
 
