@@ -3992,11 +3992,6 @@
 	},
 /turf/open/floor/iron,
 /area/medical/virology)
-"ait" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/iron/dark,
-/area/medical/treatment_center)
 "aiu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
@@ -5075,19 +5070,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/lab)
-"akG" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/airalarm/directional/east,
-/turf/open/floor/iron,
-/area/security/checkpoint/science)
 "akH" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -8743,20 +8725,6 @@
 /obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
-"arL" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/east,
-/turf/open/floor/iron,
-/area/security/checkpoint/science)
 "arM" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
@@ -17893,16 +17861,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"aKK" = (
-/obj/effect/turf_decal/trimline/red/filled/line,
-/obj/machinery/computer/security/telescreen{
-	dir = 1;
-	name = "Medical Camera Monitor";
-	network = list("medbay");
-	pixel_y = -32
-	},
-/turf/open/floor/iron,
-/area/security/checkpoint/medical)
 "aKM" = (
 /obj/machinery/computer/secure_data{
 	dir = 1
@@ -24192,6 +24150,17 @@
 /obj/effect/loot_site_spawner,
 /turf/open/floor/iron/airless,
 /area/mine/explored)
+"cpt" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/computer/security/telescreen{
+	dir = 1;
+	name = "Medical Camera Monitor";
+	network = list("medbay");
+	pixel_y = -32
+	},
+/obj/effect/landmark/start/depsec/medical,
+/turf/open/floor/iron,
+/area/security/checkpoint/medical)
 "cpF" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -24462,6 +24431,21 @@
 	},
 /turf/closed/wall,
 /area/construction/mining/aux_base)
+"cxG" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
+/obj/effect/landmark/start/depsec/science,
+/turf/open/floor/iron,
+/area/security/checkpoint/science)
 "cyF" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1
@@ -27061,11 +27045,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat_interior)
-"dDP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/security/checkpoint/supply)
 "dDR" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -30260,6 +30239,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
+"eVr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/start/depsec/engineering,
+/turf/open/floor/iron,
+/area/security/checkpoint/engineering)
 "eVy" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -32465,15 +32452,6 @@
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/iron,
 /area/science/xenobiology)
-"fRA" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 9
-	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	name = "euthanization chamber freezer"
-	},
-/turf/open/floor/iron/white,
-/area/science/xenobiology)
 "fRN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/keycard_auth{
@@ -32676,6 +32654,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/surgery)
+"fVR" = (
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
+/obj/machinery/light_switch{
+	pixel_x = -25;
+	pixel_y = -8
+	},
+/turf/open/floor/iron,
+/area/science/mixing)
 "fWu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -33698,14 +33684,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
-"gvJ" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
-/obj/machinery/light_switch{
-	pixel_x = -25;
-	pixel_y = -8
-	},
-/turf/open/floor/iron,
-/area/science/mixing)
 "gvN" = (
 /obj/machinery/stasis,
 /obj/machinery/defibrillator_mount{
@@ -34287,13 +34265,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
 /area/security/brig)
-"gFM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/security/checkpoint/engineering)
 "gFR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
@@ -35285,6 +35256,20 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
+"hem" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/landmark/start/depsec/science,
+/turf/open/floor/iron,
+/area/security/checkpoint/science)
 "heF" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/structure/disposalpipe/segment,
@@ -36108,6 +36093,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"hwp" = (
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "hwy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/shower{
@@ -36246,6 +36237,13 @@
 "hAW" = (
 /turf/closed/wall/r_wall,
 /area/commons/storage/tools)
+"hBf" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/landmark/start/depsec/engineering,
+/turf/open/floor/iron,
+/area/security/checkpoint/engineering)
 "hBI" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -36419,15 +36417,6 @@
 	},
 /turf/open/floor/engine/n2,
 /area/engineering/atmos)
-"hEO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 10
-	},
-/obj/structure/cable,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/iron,
-/area/security/checkpoint/supply)
 "hEP" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
@@ -38214,15 +38203,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
-"iAg" = (
-/obj/effect/turf_decal/trimline/red/filled/line,
-/obj/structure/cable,
-/obj/machinery/airalarm/directional/south,
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/security/checkpoint/medical)
 "iAF" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -40621,6 +40601,18 @@
 	},
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain/private)
+"jJL" = (
+/obj/machinery/atmospherics/components/binary/thermomachine/heater,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Science - Toxins North";
+	dir = 6;
+	network = list("ss13","science")
+	},
+/turf/open/floor/iron,
+/area/science/mixing)
 "jJO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -40721,6 +40713,15 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
+"jNE" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+	name = "euthanization chamber freezer"
+	},
+/turf/open/floor/iron/white,
+/area/science/xenobiology)
 "jOk" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Escape Wing"
@@ -45359,6 +45360,13 @@
 /obj/item/pen,
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
+"lVb" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable,
+/obj/effect/landmark/start/depsec/medical,
+/turf/open/floor/iron,
+/area/security/checkpoint/medical)
 "lVh" = (
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 9
@@ -45561,15 +45569,6 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron,
 /area/science/mixing)
-"maq" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 9
-	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	name = "euthanization chamber freezer"
-	},
-/turf/open/floor/iron/dark,
-/area/science/xenobiology)
 "mau" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/techstorage/service,
@@ -45578,6 +45577,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
+"maZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/obj/effect/landmark/start/depsec/supply,
+/turf/open/floor/iron,
+/area/security/checkpoint/supply)
 "mbt" = (
 /obj/machinery/conveyor{
 	id = "packageSort2"
@@ -46979,6 +46988,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
+"mMU" = (
+/obj/machinery/atmospherics/components/binary/thermomachine/heater{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "mNh" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -47452,19 +47467,6 @@
 "mVs" = (
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
-"mVv" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 6
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/security/checkpoint/medical)
 "mVw" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
@@ -48476,12 +48478,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/engine,
 /area/engineering/main)
-"ntR" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "ntX" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/holosign/barrier/atmos,
@@ -48988,12 +48984,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
-"nGS" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/security/checkpoint/engineering)
 "nHG" = (
 /obj/effect/loot_site_spawner,
 /turf/open/floor/plating/asteroid,
@@ -52635,12 +52625,6 @@
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat_interior)
-"pqY" = (
-/obj/effect/turf_decal/trimline/red/filled/line,
-/obj/machinery/power/apc/auto_name/south,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/security/checkpoint/medical)
 "pre" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -53496,12 +53480,6 @@
 "pHW" = (
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)
-"pIu" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "pII" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/command/storage/eva)
@@ -57040,6 +57018,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/service/bar)
+"rpo" = (
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/dark,
+/area/medical/treatment_center)
 "rpt" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/disposalpipe/segment,
@@ -58560,6 +58543,15 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
+"sdJ" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+	name = "euthanization chamber freezer"
+	},
+/turf/open/floor/iron/dark,
+/area/science/xenobiology)
 "sdS" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small{
@@ -58802,6 +58794,20 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
+"skm" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/landmark/start/depsec/medical,
+/turf/open/floor/iron,
+/area/security/checkpoint/medical)
 "skn" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/machinery/door/poddoor/preopen{
@@ -59776,6 +59782,12 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/storage)
+"sDS" = (
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/science/server)
 "sEo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
@@ -60998,6 +61010,16 @@
 	},
 /turf/open/floor/iron,
 /area/commons/dorms)
+"thN" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/south,
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/landmark/start/depsec/medical,
+/turf/open/floor/iron,
+/area/security/checkpoint/medical)
 "thR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -62404,18 +62426,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
-"tMb" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Science - Toxins North";
-	dir = 6;
-	network = list("ss13","science")
-	},
-/turf/open/floor/iron,
-/area/science/mixing)
 "tMg" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 4
@@ -67013,12 +67023,6 @@
 /obj/structure/railing,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
-"vQX" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/science/server)
 "vRc" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -70704,6 +70708,12 @@
 /obj/item/storage/bag/ore,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"xCu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
+/obj/effect/landmark/start/depsec/supply,
+/turf/open/floor/iron,
+/area/security/checkpoint/supply)
 "xCz" = (
 /obj/effect/spawner/lootdrop/food_packaging,
 /turf/open/floor/plating/asteroid,
@@ -104122,7 +104132,7 @@ cGs
 iqY
 gUn
 tbl
-gFM
+eVr
 lcL
 uYT
 dKk
@@ -104636,7 +104646,7 @@ cGs
 iqY
 gUn
 tbl
-nGS
+hBf
 pHb
 uYT
 pMh
@@ -107730,8 +107740,8 @@ tnL
 oTZ
 oTZ
 oTZ
-ntR
-pIu
+mMU
+hwp
 spz
 tnL
 gUE
@@ -113650,7 +113660,7 @@ aPG
 lPd
 lPd
 lQG
-maq
+sdJ
 nQg
 pKo
 lQG
@@ -116193,7 +116203,7 @@ csY
 qSj
 oab
 der
-gvJ
+fVR
 oFQ
 bWx
 wAe
@@ -117221,7 +117231,7 @@ frL
 oJJ
 awM
 mSi
-tMb
+jJL
 cgy
 kWc
 jys
@@ -169911,7 +169921,7 @@ eyp
 gKY
 xNf
 rbb
-ait
+rpo
 aHC
 qor
 gKY
@@ -170951,7 +170961,7 @@ vYV
 ifn
 cpK
 hmE
-aKK
+cpt
 nAX
 nUi
 wHR
@@ -171208,7 +171218,7 @@ vYV
 ifn
 daq
 alE
-pqY
+lVb
 nAX
 aLs
 bLV
@@ -171465,7 +171475,7 @@ vYV
 kwQ
 lnB
 lzd
-iAg
+thN
 nAX
 wzJ
 vEm
@@ -171722,7 +171732,7 @@ vSv
 agI
 mZT
 mFx
-mVv
+skm
 nAX
 pHq
 gGx
@@ -178619,8 +178629,8 @@ pBg
 kjQ
 nYv
 vKE
-dDP
-hEO
+xCu
+maZ
 svw
 fZj
 atR
@@ -179443,7 +179453,7 @@ dGu
 dGu
 dGu
 lQG
-fRA
+jNE
 siQ
 epT
 tSI
@@ -183011,13 +183021,13 @@ tkL
 cVT
 vgd
 mEE
-akG
-arL
+hem
+cxG
 uNO
 xjn
 sby
 dzG
-vQX
+sDS
 xjn
 aIi
 tei

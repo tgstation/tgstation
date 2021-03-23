@@ -1,5 +1,0 @@
-author: "Sylphet"
-delete-after: True
-changes: 
-  - rscdel: "Removed toasted sandwich"
-  - qol: "Grilled cheese sandwiches are now made on the griddle using a cheese sandwich."
