@@ -3566,6 +3566,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-radar@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "eslint-plugin-radar@npm:0.2.1"
+  peerDependencies:
+    eslint: ">= 3.0.0 <= 7.x.x"
+  checksum: 120e130e22376a43708611b43da2955142c55cd7ad0a770225364df3164fb1d084f7284d1763261573ab5efe6e635345ea44badb3f8cdc71ed763becd26b8da3
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-react@npm:^7.22.0":
   version: 7.22.0
   resolution: "eslint-plugin-react@npm:7.22.0"
@@ -8194,6 +8203,7 @@ __metadata:
     common: "workspace:*"
     css-loader: ^5.1.1
     eslint: ^7.21.0
+    eslint-plugin-radar: ^0.2.1
     eslint-plugin-react: ^7.22.0
     file-loader: ^6.2.0
     inferno: ^7.4.8
