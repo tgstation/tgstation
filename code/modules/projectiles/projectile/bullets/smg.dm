@@ -8,7 +8,6 @@
 
 /obj/projectile/bullet/c45/ap
 	name = ".45 armor-piercing bullet"
-	damage = 30
 	armour_penetration = 50
 
 /obj/projectile/bullet/incendiary/c45
