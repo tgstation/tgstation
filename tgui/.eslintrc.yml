@@ -9,9 +9,8 @@ env:
   es6: true
   browser: true
   node: true
-globals:
-  Byond: readonly
 plugins:
+  - radar
   - react
 settings:
   react:
@@ -20,7 +19,6 @@ rules:
 
   ## Possible Errors
   ## ----------------------------------------
-
   ## Enforce “for” loop update clause moving the counter in the right
   ## direction.
   # for-direction: error
