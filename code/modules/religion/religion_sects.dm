@@ -313,7 +313,7 @@
 		return FALSE
 	var/datum/dna/holy_dna = new_convert.dna
 	holy_dna.add_mutation(HONORBOUND)
-/*
+
 /datum/religion_sect/burden
 	name = "Punished God"
 	desc = "A sect that desires to feel the pain of their god."
@@ -343,8 +343,6 @@
 	if(burdenmut)
 		return "<span class='notice'>You are at burden level [burdenmut.burden_level]/6.</span>"
 	return "<span class='notice'>You are not burdened.</span>"
-
-*/
 
 #define MINIMUM_YUCK_REQUIRED 5
 

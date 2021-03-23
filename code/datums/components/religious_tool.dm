@@ -170,10 +170,10 @@
 			return
 
 	examine_list += easy_access_sect.tool_examine(user)
-	if(operation_flags & RELIGION_TOOL_SACRIFICE)
-		examine_list += "<span class='notice'>Desired items can be used on this to increase favor.</span>"
 	if(!easy_access_sect.rites_list)
 		return //if we dont have rites it doesnt do us much good if the object can be used to invoke them!
+	if(operation_flags & RELIGION_TOOL_SACRIFICE)//this can be moved around if things change but usually no rites == no sacrifice
+		examine_list += "<span class='notice'>Desired items can be used on this to increase favor.</span>"
 	if(operation_flags & RELIGION_TOOL_INVOKE)
 		examine_list += "List of available Rites:"
 		examine_list += easy_access_sect.rites_list
