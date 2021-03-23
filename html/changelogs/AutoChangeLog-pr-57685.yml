@@ -1,6 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - rscadd: "Security officers are now paired up into departments together, rather than separated."
-  - rscadd: "DeltaStation now has departmental security officer spawners."
-  - bugfix: "Fixed MetaStation's science officer being marked as supply."

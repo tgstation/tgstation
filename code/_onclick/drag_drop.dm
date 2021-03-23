@@ -25,8 +25,6 @@
 
 
 /client/MouseDown(datum/object, location, control, params)
-	if(!control)
-		return
 	if(QDELETED(object)) //Yep, you can click on qdeleted things before they have time to nullspace. Fun.
 		return
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
@@ -44,8 +42,6 @@
 		active_mousedown_item.onMouseDown(object, location, params, mob)
 
 /client/MouseUp(object, location, control, params)
-	if(!control)
-		return
 	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
 		click_intercept_time = world.time
 	if(mouse_up_icon)

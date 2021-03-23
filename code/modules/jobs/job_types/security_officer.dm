@@ -133,7 +133,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	var/list/partners = list()
 	for (var/officer_ref in distribution)
 		var/mob/partner = locate(officer_ref)
-		if (!istype(partner))
+		if (!istype(partner) || distribution[officer_ref] != department)
 			continue
 		partners += partner.real_name
 
@@ -141,6 +141,9 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		for (var/obj/item/pda/pda as anything in GLOB.PDAs)
 			if (pda.owner in partners)
 				targets += "[pda.owner] ([pda.ownjob])"
+
+	if (!targets.len)
+		return
 
 	var/datum/signal/subspace/messaging/pda/signal = new(announcement_system, list(
 		"name" = "Security Department Update",

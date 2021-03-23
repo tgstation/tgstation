@@ -1,6 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - code_imp: "Gas tanks now use object integrity rather than their own snowflaked version."
-  - bugfix: "Bomb spawners now produce functional bombs.
-tweak: Tanks are no longer self-sealing."

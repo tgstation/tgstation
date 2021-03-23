@@ -1,4 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - bugfix: "The Tram Emergency Shuttle brig now has a brig area instead of its usual area for escape checking"
