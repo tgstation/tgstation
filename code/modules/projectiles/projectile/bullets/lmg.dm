@@ -32,7 +32,6 @@
 
 /obj/projectile/bullet/mm712x82/ap
 	name = "7.12x82mm armor-piercing bullet"
-	damage = 40
 	armour_penetration = 75
 
 /obj/projectile/bullet/mm712x82/hp
@@ -51,12 +50,10 @@
 
 /obj/projectile/bullet/mm712x82/match
 	name = "7.12x82mm match bullet"
-	damage = 40
 	ricochets_max = 2
 	ricochet_chance = 60
 	ricochet_auto_aim_range = 4
 	ricochet_incidence_leeway = 55
-	wound_bonus = -50
 
 /obj/projectile/bullet/mm712x82/bouncy
 	name = "7.12x82mm rubber bullet"
