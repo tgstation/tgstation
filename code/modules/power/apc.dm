@@ -581,6 +581,32 @@
 			return TRUE
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/kitchen))
+		var/metal = FALSE
+		var/shock_source = FALSE
+
+		if(LAZYLEN(W.custom_materials)) //This prevents wooden rolling pins from shocking the user
+			if(W.custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
+				metal += W.custom_materials[GET_MATERIAL_REF(/datum/material/iron)]
+
+		if(cell || terminal) //The mob gets shocked by whichever powersource has the most electricity
+			if(cell && terminal)
+				if(cell.charge > terminal.powernet.avail)
+					shock_source = cell
+				else
+					shock_source = terminal.powernet
+			if(!terminal)
+				shock_source = cell
+			if(!cell)
+				shock_source = terminal.powernet
+
+		if(shock_source && metal && !user.combat_mode && (panel_open || opened)) //Now you're cooking with electricity
+			if(electrocute_mob(user, shock_source, src, siemens_coeff = 1, dist_check = TRUE))//People with insulated gloves just attack the APC normally. They're just short of magical anyway
+				do_sparks(5, TRUE, src)
+				user.visible_message("<span class='notice'>[user.name] shoves [W] into the internal components of \the [src.name], erupting into a cascade of sparks!</span>")
+				if(shock_source == cell)//If the shock is coming from the cell just fully discharge it, because it's funny
+					cell.use(cell.charge)
+				return
 
 	if(issilicon(user) && get_dist(src,user)>1)
 		return attack_hand(user)
