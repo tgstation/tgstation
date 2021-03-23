@@ -551,6 +551,7 @@
 #include "code\datums\components\fantasy\prefixes.dm"
 #include "code\datums\components\fantasy\suffixes.dm"
 #include "code\datums\components\food\edible.dm"
+#include "code\datums\components\food\ice_cream_holder.dm"
 #include "code\datums\components\plumbing\_plumbing.dm"
 #include "code\datums\components\plumbing\chemical_acclimator.dm"
 #include "code\datums\components\plumbing\filter.dm"
