@@ -164,7 +164,7 @@
 
 /obj/item/organ/eyes/robotic/basic
 	name = "basic robotic eyes"
-	desc = "A pair of basic cybernetic eyes that restore vision, but at some vulnerability to adapt_light."
+	desc = "A pair of basic cybernetic eyes that restore vision, but at some vulnerability to light."
 	eye_color = "5500ff"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
@@ -334,7 +334,7 @@
 /obj/item/organ/eyes/robotic/glow/proc/activate(silent = FALSE)
 	start_visuals()
 	if(!silent)
-		to_chat(owner, "<span class='warning'>Your [src] clicks and makes a whining noise, before shooting out a beam of adapt_light!</span>")
+		to_chat(owner, "<span class='warning'>Your [src] clicks and makes a whining noise, before shooting out a beam of light!</span>")
 	cycle_mob_overlay()
 
 /obj/item/organ/eyes/robotic/glow/proc/deactivate(silent = FALSE)
@@ -432,7 +432,7 @@
 
 /obj/item/organ/eyes/moth
 	name = "moth eyes"
-	desc = "These eyes seem to have increased sensitivity to bright adapt_light, with no improvement to low adapt_light vision."
+	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/snail
