@@ -17388,6 +17388,10 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
 /area/commons/dorms)
+"bCD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/closed/wall/r_wall,
+/area/hallway/secondary/command)
 "bDl" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -28149,6 +28153,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/iron,
 /area/tcommsat/server)
 "cpV" = (
@@ -36013,6 +36018,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "cVQ" = (
@@ -36593,6 +36599,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "cXj" = (
@@ -37277,6 +37284,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "cYY" = (
@@ -37294,7 +37304,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "cYZ" = (
@@ -72532,6 +72544,9 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/science/research)
 "jli" = (
@@ -77559,6 +77574,9 @@
 /obj/effect/turf_decal/tile/purple,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/rd)
 "lfq" = (
@@ -81526,6 +81544,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
+"myc" = (
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/turf/closed/wall/r_wall,
+/area/command/heads_quarters/rd)
 "myk" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral{
@@ -90731,6 +90753,24 @@
 	},
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
+"pJr" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/science/research)
 "pJD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -90811,6 +90851,12 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/hallway/primary/port)
+"pLD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/closed/wall/r_wall,
+/area/command/heads_quarters/rd)
 "pLY" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
@@ -95389,6 +95435,16 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
+"rpk" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/hallway/secondary/command)
 "rpu" = (
 /obj/structure/table,
 /obj/item/wrench,
@@ -102002,6 +102058,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/command/heads_quarters/hos)
+"tKV" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/purple,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/science/research)
 "tLk" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/iron/fifty,
@@ -149108,7 +149173,7 @@ nwa
 ifj
 qPd
 lfn
-rsY
+myc
 aQc
 dFT
 dHs
@@ -149364,7 +149429,7 @@ rsY
 sdF
 rsY
 rsY
-rsY
+pLD
 rsY
 dEE
 dFU
@@ -149878,7 +149943,7 @@ dwt
 dya
 dwt
 duR
-dwt
+pJr
 duR
 dEF
 dFW
@@ -150135,7 +150200,7 @@ dwu
 dyb
 dCn
 dCn
-dCn
+tKV
 dDx
 dmY
 acj
@@ -153692,8 +153757,8 @@ ait
 had
 jao
 cpM
-cqY
-csz
+bCD
+rpk
 cuh
 cvx
 cwP
