@@ -78,6 +78,29 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
+/obj/item/chainsaw/afterattack(atom/A, mob/user, proximity)
+	if(!on)
+		return ..()
+
+	var/lignocellulose = counterlist_sum(A.has_material_type(/datum/material/wood))
+
+	if!lignocellulose)
+		return ..()
+
+	user.visible_message("<span class='notice'>[user] starts sawing [A] to pieces!</span>", "<span class='notice'>You start sawing [A] to pieces!</span>")
+	var/plank_harvest = round(lignocellulose / MINERAL_MATERIAL_AMOUNT)
+
+
+	if(plank_harvest >= 3)
+		if(!user.do_after(2 SECONDS))
+			return
+
+	if(plank_harvest)
+		new /obj/item/stack/sheet/mineral/wood(get_turf(src), new_amount = plank_harvest)
+
+	new /obj/effect/decal/cleanable/sawdust(get_turf(src), dust_amount = round((lignocellulose % MINERAL_MATERIAL_AMOUNT) / 100))
+	qdel(A)
+
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
