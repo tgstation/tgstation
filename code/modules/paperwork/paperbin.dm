@@ -66,7 +66,7 @@
 
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
 	if(LAZYLEN(papers))
-		papers.Cut()
+		LAZYNULL(papers)
 		update_appearance()
 	..()
 
