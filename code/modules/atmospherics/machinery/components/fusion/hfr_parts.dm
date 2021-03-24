@@ -398,21 +398,26 @@
 	desc = "If you see this, call the police."
 	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
 	icon_state = "box"
+	///What kind of box are we handling?
+	var/box_type = "impossible"
 
 /obj/item/hfr_box/corner
 	name = "HFR box corner"
 	desc = "Place this as the corner of your 3x3 multiblock fusion reactor"
 	icon_state = "box_corner"
+	box_type = "corner"
 
 /obj/item/hfr_box/body
 	name = "HFR box body"
 	desc = "Place this on the sides of the core box of your 3x3 multiblock fusion reactor"
 	icon_state = "box_body"
+	box_type = "body"
 
 /obj/item/hfr_box/core
 	name = "HFR box core"
 	desc = "Activate this with a multitool to deploy the full machine after setting up the other boxes"
 	icon_state = "box_core"
+	box_type = "core"
 	var/list/body_components = list(
 		/obj/machinery/hypertorus/interface,
 		/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input,
@@ -425,12 +430,12 @@
 	var/list/parts = list()
 	for(var/obj/item/hfr_box/box in orange(1,src))
 		var/direction = get_dir(src, box)
-		if(istype(box,/obj/item/hfr_box/corner))
+		if(box.box_type == "corner")
 			if(ISDIAGONALDIR(direction))
 				box.dir = direction
 				parts |= box
 			continue
-		if(istype(box,/obj/item/hfr_box/body))
+		if(box.box_type == "body")
 			if(direction in GLOB.cardinals)
 				box.dir = DIRFLIP(direction)
 				parts |= box
@@ -441,12 +446,12 @@
 
 /obj/item/hfr_box/core/proc/build_reactor(list/parts)
 	for(var/obj/item/hfr_box/box in parts)
-		if(istype(box,/obj/item/hfr_box/corner))
+		if(box.box_type == "corner")
 			var/obj/machinery/hypertorus/corner/corner = new(box.loc)
 			corner.dir = box.dir
 			qdel(box)
 			continue
-		if(istype(box,/obj/item/hfr_box/body))
+		if(box.box_type == "body")
 			var/location = get_turf(box)
 			var/piece = pick_n_take(body_components)
 			if(istype(piece,/obj/machinery/atmospherics/components/unary/hypertorus))
