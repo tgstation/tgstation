@@ -63,15 +63,15 @@
 	return TRUE
 
 
-/*********Technophiles**********/
+/**** Mechanical God ****/
 
 /datum/religion_rites/synthconversion
 	name = "Synthetic Conversion"
 	desc = "Convert a human-esque individual into a (superior) Android."
 	ritual_length = 30 SECONDS
-	ritual_invocations = list("By the inner workings of our god...",
-						"... We call upon you, in the face of adversity...",
-						"... to complete us, removing that which is undesirable...")
+	ritual_invocations = list("By the inner workings of our god ...",
+						"... We call upon you, in the face of adversity ...",
+						"... to complete us, removing that which is undesirable ...")
 	invoke_msg = "... Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
 	favor_cost = 1000
 
@@ -110,7 +110,7 @@
 	return TRUE
 
 
-/*********Ever-Burning Candle**********/
+/**** Pyre God ****/
 
 ///apply a bunch of fire immunity effect to clothing
 /datum/religion_rites/fireproof/proc/apply_fireproof(obj/item/clothing/fireproofed)
@@ -120,7 +120,7 @@
 	fireproofed.resistance_flags |= FIRE_PROOF
 
 /datum/religion_rites/fireproof
-	name = "Unmelting Wax"
+	name = "Unmelting Protection"
 	desc = "Grants fire immunity to any piece of clothing."
 	ritual_length = 15 SECONDS
 	ritual_invocations = list("And so to support the holder of the Ever-Burning candle...",
@@ -155,14 +155,14 @@
 
 
 /datum/religion_rites/burning_sacrifice
-	name = "Candle Fuel"
+	name = "Burning Offering"
 	desc = "Sacrifice a buckled burning corpse for favor, the more burn damage the corpse has the more favor you will receive."
 	ritual_length = 20 SECONDS
-	ritual_invocations = list("To feed the fire of the one true flame ...",
-	"... to make it burn brighter ...",
-	"... so that it may consume all in its path ...",
-	"... I offer you this pitiful being ...")
-	invoke_msg = "... may it join you in the amalgamation of wax and fire, and become one in the black and white scene. "
+	ritual_invocations = list("Burning body ...",
+	"... cleansed by the flame ...",
+	"... we were all created from fire ...",
+	"... and to it ...")
+	invoke_msg = "... WE RETURN! "
 ///the burning corpse chosen for the sacrifice of the rite
 	var/mob/living/carbon/chosen_sacrifice
 
@@ -217,7 +217,7 @@
 	name = "Immortal Candles"
 	desc = "Creates 5 candles that never run out of wax."
 	ritual_length = 10 SECONDS
-	invoke_msg = "please lend us five of your candles so we may bask in your burning glory."
+	invoke_msg = "Burn bright, little candles, for you will only extinguish along with the universe."
 	favor_cost = 200
 
 /datum/religion_rites/infinite_candle/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -464,7 +464,7 @@
 	ritual_length = 10 SECONDS
 	ritual_invocations = list("I abandon the world ...",
 	"... to become one with the deep.",
-	"My form will become twirled ...")
+	"My form will become twisted ...")
 	invoke_msg = "... but my smile I will keep!"
 	favor_cost = 150 //150u of organic slurry
 

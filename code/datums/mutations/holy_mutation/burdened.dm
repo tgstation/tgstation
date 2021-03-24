@@ -1,6 +1,6 @@
 
-#define FIRST_TRUTH_REWARD 2
-#define SECOND_TRUTH_REWARD 4
+#define FIRST_TRUTH_REWARD 3
+#define SECOND_TRUTH_REWARD 6
 
 ///Burdened grants some more mutations upon injuring yourself sufficiently
 /datum/mutation/human/burdened
@@ -49,7 +49,6 @@
 		))
 
 /datum/mutation/human/burdened/proc/update_burden(increase)
-	to_chat(world, "reached")
 	//adjust burden
 	burden_level = increase ? burden_level + 1 : burden_level - 1
 	if(burden_level < 0) //basically a clamp with a stack on it, because this shouldn't be happening
@@ -92,11 +91,13 @@
 				to_chat(owner, "<span class='warning'>The weight on your shoulders feels lighter. You have lost some universal truths.</span>")
 				dna.remove_mutation(TK)
 				dna.remove_mutation(GLOWY)
+				dna.remove_mutation(MINDREAD)
 				owner.remove_filter("burden_rays")
 		if(SECOND_TRUTH_REWARD)
 			to_chat(owner, "<span class='notice'>You have finally broken yourself enough to understand [GLOB.deity]. It's all so clear to you.</span>")
 			dna.add_mutation(TK)
 			dna.add_mutation(GLOWY)
+			dna.add_mutation(MINDREAD)
 			owner.add_filter("burden_rays", 10, list("type" = "rays", "size" = 35, "color" = "#6c6eff"))
 
 /datum/mutation/human/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)

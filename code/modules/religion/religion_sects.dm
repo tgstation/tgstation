@@ -136,10 +136,12 @@
 	convert_opener = "\"Praise normalcy!\"<br>\
 	Your run-of-the-mill sect, there are no benefits or boons associated."
 
-/datum/religion_sect/technophile
-	name = "Technophile"
+/**** Mechanical God ****/
+
+/datum/religion_sect/mechanical
+	name = "Mechanical God"
 	desc = "A sect oriented around technology."
-	convert_opener = "\"May you find peace in a metal shell, acolyte.\"<br>\
+	convert_opener = "\"May you find peace in a metal shell.\"<br>\
 	Bibles now recharge cyborgs and heal robotic limbs if targeted, but they do not heal organic limbs. \
 	You can now sacrifice cells, with favor depending on their charge."
 	alignment = ALIGNMENT_NEUT
@@ -147,7 +149,7 @@
 	rites_list = list(/datum/religion_rites/synthconversion)
 	altar_icon_state = "convertaltar-blue"
 
-/datum/religion_sect/technophile/sect_bless(mob/living/chap, mob/living/user)
+/datum/religion_sect/mechanical/sect_bless(mob/living/chap, mob/living/user)
 	if(iscyborg(chap))
 		var/mob/living/silicon/robot/R = chap
 		var/charge_amt = 50
@@ -192,7 +194,7 @@
 	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
-/datum/religion_sect/technophile/on_sacrifice(obj/item/I, mob/living/chap)
+/datum/religion_sect/mechanical/on_sacrifice(obj/item/I, mob/living/chap)
 	var/obj/item/stock_parts/cell/the_cell = I
 	if(!istype(the_cell)) //how...
 		return
@@ -204,12 +206,12 @@
 	qdel(I)
 	return TRUE
 
-/**** Ever-Burning Candle sect ****/
+/**** Pyre God ****/
 
-/datum/religion_sect/candle_sect
-	name = "Ever-Burning Candle"
-	desc = "A sect dedicated to candles."
-	convert_opener = "\"May you be the wax to keep the Ever-Burning Candle burning, acolyte.\"<br>\
+/datum/religion_sect/pyre
+	name = "Pyre God"
+	desc = "A sect dedicated to the flame."
+	convert_opener = "\"It must burn! The primal energy must be respected.\"<br>\
 	Sacrificing burning corpses with a lot of burn damage and candles grants you favor."
 	alignment = ALIGNMENT_NEUT
 	max_favor = 10000
@@ -218,16 +220,16 @@
 	altar_icon_state = "convertaltar-red"
 
 //candle sect bibles don't heal or do anything special apart from the standard holy water blessings
-/datum/religion_sect/candle_sect/sect_bless(mob/living/blessed, mob/living/user)
+/datum/religion_sect/pyre/sect_bless(mob/living/blessed, mob/living/user)
 	return TRUE
 
-/datum/religion_sect/candle_sect/on_sacrifice(obj/item/candle/offering, mob/living/user)
+/datum/religion_sect/pyre/on_sacrifice(obj/item/candle/offering, mob/living/user)
 	if(!istype(offering))
 		return
 	if(!offering.lit)
 		to_chat(user, "<span class='notice'>The candle needs to be lit to be offered!</span>")
 		return
-	to_chat(user, "<span class='notice'>Another candle for [GLOB.deity]'s collection.</span>")
+	to_chat(user, "<span class='notice'>[GLOB.deity] is pleased with your sacrifice.</span>")
 	adjust_favor(20, user) //it's not a lot but hey there's a pacifist favor option at least
 	qdel(offering)
 	return TRUE
