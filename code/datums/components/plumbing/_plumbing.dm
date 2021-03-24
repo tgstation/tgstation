@@ -1,4 +1,5 @@
 /datum/component/plumbing
+	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///Index with "1" = /datum/ductnet/theductpointingnorth etc. "1" being the num2text from NORTH define
 	var/list/datum/ductnet/ducts = list()
 	///shortcut to our parents' reagent holder
@@ -27,12 +28,12 @@
 	var/supply_color = "blue"
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
-/datum/component/plumbing/Initialize(start=TRUE, _turn_connects=TRUE, _ducting_layer, datum/reagents/custom_receiver)
+/datum/component/plumbing/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	if(_ducting_layer)
-		ducting_layer = ducting_layer
+		ducting_layer = _ducting_layer
 
 	var/atom/movable/AM = parent
 	if(!AM.reagents && !custom_receiver)
@@ -230,9 +231,12 @@
 					var/obj/machinery/duct/duct = A
 					duct.attempt_connect()
 				else
-					var/datum/component/plumbing/P = A.GetComponent(/datum/component/plumbing)
-					if(P && P.ducting_layer == ducting_layer)
-						direct_connect(P, D)
+					for(var/plumber in A.GetComponents(/datum/component/plumbing))
+						if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
+							continue
+						var/datum/component/plumbing/plumb = plumber
+						if(plumb && plumb.ducting_layer == ducting_layer)
+							direct_connect(plumb, D)
 
 /// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move
 /datum/component/plumbing/proc/toggle_active(obj/O, new_state)
@@ -316,6 +320,13 @@
 /datum/component/plumbing/tank
 	demand_connects = WEST
 	supply_connects = EAST
+
+/datum/component/plumbing/manifold
+	demand_connects = NORTH
+	supply_connects = SOUTH
+
+/datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/O, new_layer)
+	return
 
 #define READY 2
 ///Baby component for the buffer plumbing machine
