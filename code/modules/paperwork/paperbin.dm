@@ -126,7 +126,7 @@
 		return ..()
 
 /obj/item/paper_bin/proc/at_overlay_limit()
-	return (overlays.len >= MAX_ATOM_OVERLAYS)
+	return overlays.len >= MAX_ATOM_OVERLAYS
 
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
