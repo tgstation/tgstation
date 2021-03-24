@@ -20,8 +20,7 @@
 
 	for(var/required_reagent in chamber.required_reagents)
 		var/has_reagent = FALSE
-		for(var/containing_reagent_but_not_typecasted_yet in reagents.reagent_list)
-			var/datum/reagent/containg_reagent = containing_reagent_but_not_typecasted_yet as anything
+		for(var/datum/reagent/containg_reagent as anything in reagents.reagent_list)
 			if(required_reagent == containg_reagent.type)
 				has_reagent = TRUE
 				if(containg_reagent.volume < chamber.required_reagents[required_reagent])
