@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - rscadd: "Adds a plumbing layer manifold"
+  - qol: "Alt-click the plumbing RCD to change the creation layer"
