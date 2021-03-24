@@ -2328,6 +2328,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"bfP" = (
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "bgv" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
@@ -12509,6 +12514,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
+"fDO" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/camera/autoname,
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "fDS" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -20582,6 +20598,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
+"jic" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/machinery/camera/autoname,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "jij" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -22035,6 +22058,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"jRf" = (
+/obj/machinery/computer/arcade,
+/obj/machinery/camera/autoname,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "jRB" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -23852,6 +23880,9 @@
 /area/science/research)
 "kDR" = (
 /obj/machinery/vending/cola/random,
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "kEd" = (
@@ -32513,6 +32544,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "osH" = (
@@ -35970,6 +36002,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "pLW" = (
@@ -37104,6 +37140,7 @@
 "qnZ" = (
 /obj/structure/chair/comfy/brown,
 /obj/structure/cable,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "qoj" = (
@@ -39532,6 +39569,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "rsi" = (
@@ -45149,14 +45187,14 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/machinery/camera{
 	c_tag = "Engineering Supermatter Bow";
 	dir = 10;
 	network = list("ss13","engine")
+	},
+/obj/machinery/airalarm/unlocked{
+	dir = 1;
+	pixel_y = -24
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -48934,6 +48972,9 @@
 	pixel_y = -32
 	},
 /obj/structure/table,
+/obj/machinery/camera/autoname{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "vvc" = (
@@ -49419,6 +49460,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
+"vCZ" = (
+/obj/effect/landmark/event_spawn,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "vDb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -51227,6 +51275,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"wxy" = (
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "wxE" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -53884,6 +53938,9 @@
 /area/tcommsat/server)
 "xKV" = (
 /obj/structure/table,
+/obj/machinery/camera/autoname{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "xLA" = (
@@ -87989,7 +88046,7 @@ ssW
 upq
 rDg
 bDa
-rAn
+wxy
 kKk
 abk
 abk
@@ -88243,7 +88300,7 @@ pOF
 pjE
 hfZ
 kKk
-fwj
+jic
 pjr
 kKk
 dEl
@@ -92814,7 +92871,7 @@ lgR
 laM
 jfn
 oos
-dis
+bfP
 dis
 hlE
 dar
@@ -93038,7 +93095,7 @@ qtZ
 qtZ
 qtZ
 qtZ
-wxe
+vCZ
 qUS
 lLm
 iSg
@@ -94542,7 +94599,7 @@ ssW
 ssW
 ssW
 miJ
-uTn
+jRf
 htG
 gTi
 cWP
@@ -95573,7 +95630,7 @@ xst
 sUc
 esQ
 xst
-ubd
+fDO
 vko
 lMg
 kCb
@@ -102353,7 +102410,7 @@ ssW
 iRK
 ssW
 ssW
-ssW
+rrB
 cPP
 llo
 spp
