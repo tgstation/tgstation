@@ -1213,6 +1213,9 @@
 "aFM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aGg" = (
@@ -7982,6 +7985,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"dKg" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "dKm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -26833,6 +26843,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics/garden)
 "lRe" = (
@@ -34545,6 +34558,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "pjs" = (
@@ -34651,6 +34665,9 @@
 /obj/machinery/biogenerator,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics/garden)
@@ -44264,6 +44281,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"tsP" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "tsU" = (
 /obj/machinery/light{
 	dir = 8
@@ -93363,7 +93384,7 @@ uru
 pdg
 tCw
 ubd
-vko
+tsP
 lMg
 aeI
 lMg
@@ -96639,7 +96660,7 @@ pzj
 pzj
 rBX
 lUQ
-cpK
+dKg
 aic
 ltZ
 fvV
