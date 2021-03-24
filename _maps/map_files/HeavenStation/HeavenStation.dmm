@@ -3222,6 +3222,12 @@
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
+"bDF" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat/foyer)
 "bDV" = (
 /mob/living/simple_animal/pet/cat/original{
 	name = "Qb"
@@ -7985,13 +7991,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"dKg" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/crew_quarters/locker)
 "dKm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -8425,6 +8424,10 @@
 "dRb" = (
 /turf/closed/wall,
 /area/science/research)
+"dRq" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "dRB" = (
 /obj/machinery/shower{
 	pixel_y = 12
@@ -9900,6 +9903,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/transit_tube_pod,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ezf" = (
@@ -13385,6 +13389,13 @@
 /obj/effect/landmark/start/janitor,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"fUa" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "fUc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -21529,6 +21540,7 @@
 /area/science/xenobiology)
 "jDj" = (
 /obj/structure/table,
+/obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/satellite)
 "jDl" = (
@@ -28918,6 +28930,17 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/maintenance/central)
+"mLr" = (
+/obj/item/kirbyplants/photosynthetic,
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = 24
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai_upload)
 "mLy" = (
 /obj/structure/table,
 /obj/item/ai_module/supplied/quarantine,
@@ -35804,6 +35827,9 @@
 /obj/machinery/airalarm{
 	pixel_y = 26
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "pIN" = (
@@ -36534,6 +36560,9 @@
 /obj/machinery/flasher{
 	id = "AI";
 	pixel_y = 24
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -40345,6 +40374,9 @@
 /area/crew_quarters/toilet/restrooms)
 "rLA" = (
 /obj/item/kirbyplants/photosynthetic,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "rLO" = (
@@ -44281,10 +44313,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
-"tsP" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/crew_quarters/locker)
 "tsU" = (
 /obj/machinery/light{
 	dir = 8
@@ -44372,6 +44400,9 @@
 "tuJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
@@ -47384,6 +47415,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"uKc" = (
+/obj/item/kirbyplants/photosynthetic,
+/obj/machinery/light,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai_upload)
 "uKl" = (
 /obj/machinery/telecomms/processor/preset_four,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -49708,6 +49744,9 @@
 /obj/item/kirbyplants/photosynthetic,
 /obj/machinery/flasher{
 	pixel_y = -26
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -52285,6 +52324,9 @@
 	dir = 8
 	},
 /obj/machinery/power/port_gen/pacman,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/satellite)
 "wXc" = (
@@ -86030,7 +86072,7 @@ mEE
 sXO
 lXM
 nCv
-rLA
+uKc
 gCM
 gCM
 ssW
@@ -86534,7 +86576,7 @@ oXz
 sXO
 mLy
 nCv
-rLA
+uKc
 gCM
 gCM
 ssW
@@ -87285,7 +87327,7 @@ gVm
 gVm
 gCM
 gCM
-pWL
+mLr
 kLM
 vJi
 gCM
@@ -88551,7 +88593,7 @@ dgz
 onN
 dlk
 gYv
-iUd
+bDF
 yjE
 dlk
 pII
@@ -93384,7 +93426,7 @@ uru
 pdg
 tCw
 ubd
-tsP
+dRq
 lMg
 aeI
 lMg
@@ -96660,7 +96702,7 @@ pzj
 pzj
 rBX
 lUQ
-dKg
+fUa
 aic
 ltZ
 fvV
