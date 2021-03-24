@@ -211,7 +211,7 @@
 
 /obj/item/paper_bin/bundlenatural/deconstruct(disassembled)
 	dump_contents()
-	qdel(src)
+	return ..()
 
 /obj/item/paper_bin/bundlenatural/fire_act(exposed_temperature, exposed_volume)
 	qdel(src)
