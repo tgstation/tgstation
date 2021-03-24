@@ -97,7 +97,7 @@
 		top_paper.add_fingerprint(user)
 		top_paper.forceMove(user.loc)
 		user.put_in_hands(top_paper)
-		to_chat(user, "<span class='notice'>You take [top_paper] out of \the [src].</span>")
+		to_chat(user, "<span class='notice'>You take [top_paper] out of [src].</span>")
 		update_appearance()
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
