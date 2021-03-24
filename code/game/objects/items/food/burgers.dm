@@ -86,8 +86,8 @@
 	foodtypes = GRAIN | VEGETABLES
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/burger/roburger
-	name = "roburger"
+/obj/item/food/burger/borger
+	name = "borger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/cyborg_mutation_nanomachines = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
@@ -95,8 +95,8 @@
 	foodtypes = GRAIN | TOXIC
 	venue_value = FOOD_PRICE_EXOTIC
 
-/obj/item/food/burger/roburgerbig
-	name = "roburger"
+/obj/item/food/burger/borgerbig
+	name = "big borger"
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
 	max_volume = 120
