@@ -165,7 +165,7 @@ const taskDm = (...injectedDefines) => new Task('dm')
         // Rename rsc
         fs.renameSync(`${DME_NAME}.mdme.rsc`, `${DME_NAME}.rsc`)
         // Remove mdme
-        fs.rmSync(`${DME_NAME}.mdme`)
+        fs.unlinkSync(`${DME_NAME}.mdme`)
     }
     else {
       await exec(dmPath, [`${DME_NAME}.dme`]);
@@ -180,7 +180,7 @@ switch (BUILD_MODE) {
       taskYarn,
       taskTgfont,
       taskTgui,
-      taskDm(),
+      taskDm('CBT'),
     ]
     break;
   case TGS_BUILD:
@@ -195,7 +195,7 @@ switch (BUILD_MODE) {
       taskYarn,
       taskTgfont,
       taskTgui,
-      taskDm('CIBUILDING','CITESTING','ALL_MAPS')
+      taskDm('CBT','CIBUILDING','CITESTING','ALL_MAPS')
     ];
     break;
   case TEST_RUN_BUILD:
@@ -203,7 +203,7 @@ switch (BUILD_MODE) {
       taskYarn,
       taskTgfont,
       taskTgui,
-      taskDm('CIBUILDING')
+      taskDm('CBT','CIBUILDING')
     ];
     break;
   default:
