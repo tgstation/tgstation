@@ -93,6 +93,17 @@ const taskTgui = new Task('tgui')
     await yarn(['run', 'webpack-cli', '--mode=production']);
   });
 
+/// Prepends the defines to the .dme.
+/// Does not clean them up, as this is intended for TGS which
+/// clones new copies anyway.
+const taskPrependDefines = (...defines) => new Task('prepend defines')
+  .depends(`${DME_NAME}.dme`)
+  .build(async () => {
+    const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
+    const textToWrite = defines.map(define => `#define ${define}\n`);
+    fs.writeFileSync(`${DME_NAME}.dme`, `${textToWrite}\n${dmeContents}`);
+  });
+
 const taskDm = (...injectedDefines) => new Task('dm')
   .depends('_maps/map_files/generic/**')
   .depends('code/**')
@@ -187,7 +198,8 @@ switch (BUILD_MODE) {
     tasksToRun = [
       taskYarn,
       taskTgfont,
-      taskTgui
+      taskTgui,
+      taskPrependDefines('TGS'),
     ]
     break;
   case ALL_MAPS_BUILD:
