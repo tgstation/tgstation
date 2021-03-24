@@ -13,15 +13,14 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_highlander)
 	sound_to_playing_players('sound/misc/highlander.ogg')
 	send_to_playing_players("<span class='boldannounce'><font size=6>THERE CAN BE ONLY ONE</font></span>")
-	for(var/obj/item/disk/nuclear/N in GLOB.poi_list)
-		var/datum/component/stationloving/component = N.GetComponent(/datum/component/stationloving)
-		if (component)
-			component.relocate() //Gets it out of bags and such
+	for(var/obj/item/disk/nuclear/fukkendisk in GLOB.poi_list)
+		var/datum/component/stationloving/component = fukkendisk.GetComponent(/datum/component/stationloving)
+		component?.relocate() //Gets it out of bags and such
 
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(H.stat == DEAD)
+	for(var/mob/living/carbon/human/human in GLOB.player_list)
+		if(human.stat == DEAD)
 			continue
-		H.make_scottish()
+		human.make_scottish()
 
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		if(!istype(AI) || AI.stat == DEAD)
