@@ -1,0 +1,4 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - bugfix: "NanoTrasen & Noble realized that the holodecks ability to replicate books was cutting into its bottom line, so they convinced the branch responsible for the holodeck to patch it out"

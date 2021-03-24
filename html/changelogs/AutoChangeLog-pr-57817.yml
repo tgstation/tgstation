@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - refactor: "highlander + summon guns and magic are refactored"
