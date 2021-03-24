@@ -61,7 +61,7 @@
 			AM.pixel_y = rand(-3,3)
 		if(!AM.pixel_x)
 			AM.pixel_x = rand(-3,3)
-	papers.Cut()
+	LAZYNULL(papers)
 	update_appearance()
 
 /obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
