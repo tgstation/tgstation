@@ -532,3 +532,11 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Add the ID of the role you want assigning here
 #DISCORD_ROLEID 000000000000000000
+
+### Autotransfer Settings
+## Uncomment to enable shuttle autotransfer
+VOTE_AUTOTRANSFER_ENABLED
+## Time (in deciseconds) before the first transfer vote. Default: 2 hours
+VOTE_AUTOTRANSFER_INITIAL 54000
+## Time (in deciseconds) between subsequent transfer votes. Default: 30 minutes
+VOTE_AUTOTRANSFER_INTERVAL 18000

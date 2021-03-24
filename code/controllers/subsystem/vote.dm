@@ -76,6 +76,21 @@ SUBSYSTEM_DEF(vote)
 						preferred_map = global.config.defaultmap.map_name
 					choices[preferred_map] += 1
 					greatest_votes = max(greatest_votes, choices[preferred_map])
+			else if(mode == "transfer")
+				// Factor defines how non-voters are weighted towards calling the shuttle
+				var/factor = 1
+				switch(world.time / (1 MINUTES))
+					if(0 to 60)
+						factor = 0.5
+					if(61 to 120)
+						factor = 0.8
+					if(121 to 240)
+						factor = 1
+					if(241 to 300)
+						factor = 1.2
+					else
+						factor = 1.4
+				choices["Initiate Crew Transfer"] += round(non_voters.len * factor)
 	. = list()
 	if(greatest_votes)
 		for(var/option in choices)
@@ -130,6 +145,14 @@ SUBSYSTEM_DEF(vote)
 			if("map")
 				SSmapping.changemap(global.config.maplist[.])
 				SSmapping.map_voted = TRUE
+			if("transfer")
+				if(. == "Initiate Crew Transfer")
+					SSshuttle.requestEvac(null, "Crew Transfer Requested.")
+					// Prevent Recall
+					SSshuttle.emergencyNoRecall = TRUE
+					var/obj/machinery/computer/communications/C = locate() in GLOB.machines
+					if(C)
+						C.post_status("shuttle")
 	if(restart)
 		var/active_admins = FALSE
 		for(var/client/C in GLOB.admins + GLOB.deadmins)
@@ -201,6 +224,8 @@ SUBSYSTEM_DEF(vote)
 					shuffle_inplace(maps)
 				for(var/valid_map in maps)
 					choices.Add(valid_map)
+			if("transfer")
+				choices.Add("Initiate Crew Transfer", "Continue Playing")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
