@@ -82,7 +82,7 @@
 #define MAX_ATOM_OVERLAYS 100
 
 #if !defined(CBT) && !defined(SPACEMAN_DMM)
-#error "Building with Dream Maker is no longer supported."
-#error "In order to build, run BUILD.bat in the root directory."
-#error "Consider using Visual Studio Code instead, where you can Ctrl+Shift+B to build."
+#warn "Building with Dream Maker is no longer supported."
+#warn "In order to build, run BUILD.bat in the root directory."
+#warn "Consider using Visual Studio Code instead, where you can Ctrl+Shift+B to build."
 #endif
