@@ -173,11 +173,6 @@
 	if(bin_pen)
 		. += pen_overlay
 
-/obj/item/paper_bin/corporate
-	name = "corporate paper bin"
-	desc = "For Nanotrasen's highest-ranking bureaucrats. Recalled due to inevitable collapse, which creates a pile of paper so large it has the tendency to interrupt the conscious experience of anyone looking through it."
-	total_paper = 800
-
 /obj/item/paper_bin/construction
 	name = "construction paper bin"
 	desc = "Contains all the paper you'll never need, IN COLOR!"
