@@ -206,7 +206,7 @@
 	return ..()
 
 /obj/item/paper_bin/bundlenatural/attack_hand(mob/user, list/modifiers)
-	..()
+	. = ..()
 	if(!LAZYLEN(papers))
 		deconstruct(FALSE)
 
