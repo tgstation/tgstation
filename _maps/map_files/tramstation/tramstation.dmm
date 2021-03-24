@@ -824,6 +824,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/bluespace_vendor/north,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "abJ" = (
@@ -7646,6 +7647,7 @@
 /obj/effect/turf_decal/trimline/neutral/corner{
 	dir = 4
 	},
+/obj/machinery/bluespace_vendor/north,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
 "aqw" = (
@@ -10691,6 +10693,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/bluespace_vendor/east,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "awF" = (
@@ -12731,6 +12734,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/bluespace_vendor/east,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "aBp" = (
@@ -23928,6 +23932,11 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
+"cNO" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/bluespace_vendor/south,
+/turf/open/floor/iron/dark,
+/area/service/bar)
 "cNT" = (
 /turf/open/floor/iron/dark,
 /area/maintenance/radshelter/civil)
@@ -28994,6 +29003,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/bluespace_vendor/north,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "eTD" = (
@@ -55285,6 +55295,11 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/main)
+"qMn" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/hallway/secondary/command)
 "qMv" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
@@ -57138,6 +57153,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/bluespace_vendor/south,
 /turf/open/floor/iron,
 /area/cargo/miningdock)
 "rDF" = (
@@ -66061,6 +66077,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/machinery/bluespace_vendor/south,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "vzA" = (
@@ -69621,6 +69638,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
+"xaJ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/bluespace_vendor/north,
+/turf/open/floor/iron,
+/area/hallway/secondary/exit)
 "xaQ" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron/cafeteria{
@@ -92115,7 +92139,7 @@ nPP
 kKz
 aej
 alN
-aLM
+cNO
 aej
 aae
 aae
@@ -96227,7 +96251,7 @@ qGs
 ugs
 aej
 amV
-aLM
+cNO
 aej
 crx
 crx
@@ -169218,7 +169242,7 @@ hOf
 ajs
 aCN
 iMZ
-eHq
+qMn
 tjR
 ati
 avQ
@@ -182323,7 +182347,7 @@ msa
 arP
 jJo
 qze
-fxf
+xaJ
 uIa
 eWR
 aod
