@@ -96,8 +96,7 @@ const taskTgui = new Task('tgui')
 /// Prepends the defines to the .dme.
 /// Does not clean them up, as this is intended for TGS which
 /// clones new copies anyway.
-const taskPrependDefines = (...defines) => new Task('prepend defines')
-  .depends(`${DME_NAME}.dme`)
+const taskPrependDefines = (...defines) => new Task('prepend-defines')
   .build(async () => {
     const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
     const textToWrite = defines.map(define => `#define ${define}\n`);
