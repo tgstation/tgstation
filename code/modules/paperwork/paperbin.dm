@@ -218,7 +218,7 @@
 	qdel(src)
 
 /obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/paper/carbon) && (W.icon_state == "paper_stack" || W.icon_state == "paper_stack_words"))
+	if(istype(W, /obj/item/paper/carbon))
 		to_chat(user, "<span class='warning'>[W] won't fit into [src].</span>")
 		return
 	if(W.get_sharpness())
