@@ -118,7 +118,7 @@
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_icon_source(), user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_icon_source(), user, extra_classes = "bigicon idcard")]")
 
 /// Simple helper proc. Returns the source of the icon for this card. Advanced cards can override this to return their icon that has been cached due to using overlays.
 /obj/item/card/id/proc/get_icon_source()
