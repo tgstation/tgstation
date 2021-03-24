@@ -33,11 +33,3 @@
 	name = ".45 incendiary bullet casing"
 	desc = "A .45 bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c45
-
-// 9x19mm (PP-95)
-
-/obj/item/ammo_casing/c9x19mm
-	name = "9x19mm bullet casing"
-	desc = "A 9.19mm bullet casing."
-	caliber = CALIBER_9X19MM
-	projectile_type = /obj/projectile/bullet/c9x19mm

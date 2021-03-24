@@ -21,5 +21,13 @@
 	"files.eol": "\n",
 	"gitlens.advanced.blame.customArguments": ["-w"],
 	"tgstationTestExplorer.project.resultsType": "json",
-	"git.ignoreLimitWarning": true
+	"[javascript]": {
+		"editor.rulers": [80]
+	},
+	"[typescript]": {
+		"editor.rulers": [80]
+	},
+	"[scss]": {
+		"editor.rulers": [80]
+	}
 }

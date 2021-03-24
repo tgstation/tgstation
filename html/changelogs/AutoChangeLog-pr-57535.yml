@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - rscadd: "Adds some windoors and airlocks to better deal with gas movement"
+  - rscadd: "Shifts some of delta's areas around, hopefully this reduces mass fire alarm spam"

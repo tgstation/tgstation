@@ -175,8 +175,45 @@
 	else
 		to_chat(user, "<span class='notice'>Activate the machine first by using a multitool on the interface.</span>")
 
+/obj/machinery/hypertorus/interface/ui_static_data()
+	var/data = list()
+	data["selected_fuel"] = list(list("name" = "Nothing", "id" = null))
+	for(var/path in GLOB.hfr_fuels_list)
+		var/datum/hfr_fuel/recipe = GLOB.hfr_fuels_list[path]
+		data["selected_fuel"] += list(list("name" = recipe.name, "id" = recipe.id))
+	return data
+
 /obj/machinery/hypertorus/interface/ui_data()
 	var/data = list()
+
+	if(connected_core.selected_fuel)
+		data["selected"] = connected_core.selected_fuel.id
+	else
+		data["selected"] = ""
+
+	var/list/product_gases
+	if(!connected_core.selected_fuel)
+		product_gases = list("Select a fuel mix to see the output")
+	else
+		product_gases = list("The [connected_core.selected_fuel.name] mix will produce the following gases:")
+		for(var/gas_type in connected_core.selected_fuel.secondary_products)
+			var/datum/gas/gas_produced = gas_type
+			product_gases += "-[initial(gas_produced.name)]"
+		var/minimum_temp = connected_core.selected_fuel.negative_temperature_multiplier < 1 ? "Decrease" : "Increase"
+		var/maximum_temp = connected_core.selected_fuel.positive_temperature_multiplier < 1 ? "Decrease" : "Increase"
+		var/energy = connected_core.selected_fuel.energy_concentration_multiplier > 1 ? "Decrease" : "Increase"
+		var/fuel_consumption = connected_core.selected_fuel.fuel_consumption_multiplier > 1 ? "Decrease" : "Increase"
+		var/fuel_production = connected_core.selected_fuel.gas_production_multiplier < 1 ? "Decrease" : "Increase"
+		product_gases += "The fuel mix will"
+		product_gases += "-[minimum_temp] the minimum cooling by a factor of [connected_core.selected_fuel.negative_temperature_multiplier]"
+		product_gases += "-[maximum_temp] the maximum heating by a factor of [connected_core.selected_fuel.positive_temperature_multiplier]"
+		product_gases += "-[energy] the energy output consumption by a factor of [1 / connected_core.selected_fuel.energy_concentration_multiplier]"
+		product_gases += "-[fuel_consumption] the fuel consumption by a factor of [1 / connected_core.selected_fuel.fuel_consumption_multiplier]"
+		product_gases += "-[fuel_production] the gas production by a factor of [connected_core.selected_fuel.gas_production_multiplier]"
+		product_gases += "-Maximum fusion temperature with this mix: [FUSION_MAXIMUM_TEMPERATURE * connected_core.selected_fuel.temperature_change_multiplier] K."
+
+	data["product_gases"] = product_gases.Join("\n")
+
 	//Internal Fusion gases
 	var/list/fusion_gasdata = list()
 	if(connected_core.internal_fusion.total_moles())
@@ -303,6 +340,23 @@
 				connected_core.filter_type = gas
 				filter_name = GLOB.meta_gas_info[gas][META_GAS_NAME]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			. = TRUE
+		if("fuel")
+			connected_core.selected_fuel = null
+			var/fuel_mix = "nothing"
+			var/datum/hfr_fuel/fuel = null
+			if(params["mode"] != "")
+				fuel = GLOB.hfr_fuels_list[params["mode"]]
+			if(fuel)
+				connected_core.selected_fuel = fuel
+				fuel_mix = fuel.name
+			if(connected_core.internal_fusion.total_moles())
+				connected_core.dump_gases()
+			connected_core.update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating
+			connected_core.linked_input.update_parents()
+			connected_core.linked_output.update_parents()
+			connected_core.linked_moderator.update_parents()
+			investigate_log("was set to recipe [fuel_mix ? fuel_mix : "null"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 
 /obj/machinery/hypertorus/corner

@@ -136,15 +136,17 @@
 		charge = 0
 
 /obj/item/stock_parts/cell/ex_act(severity, target)
-	..()
-	if(!QDELETED(src))
-		switch(severity)
-			if(2)
-				if(prob(50))
-					corrupt()
-			if(3)
-				if(prob(25))
-					corrupt()
+	. = ..()
+	if(QDELETED(src))
+		return
+
+	switch(severity)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				corrupt()
+		if(EXPLODE_LIGHT)
+			if(prob(25))
+				corrupt()
 
 /obj/item/stock_parts/cell/attack_self(mob/user)
 	if(isethereal(user))
