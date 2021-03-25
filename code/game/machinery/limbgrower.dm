@@ -12,7 +12,7 @@
 	circuit = /obj/item/circuitboard/machine/limbgrower
 
 	/// The category of limbs we're browing in our UI.
-	var/selected_category
+	var/selected_category = "human"
 	/// If we're currently printing something.
 	var/busy = FALSE
 	/// How efficient our machine is. Better parts = less chemicals used and less power used. Range of 1 to 0.25.
@@ -193,10 +193,13 @@
 			break
 
 		reagents.remove_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
-	if(ispath(being_built.build_path, /obj/item/bodypart))
-		build_limb(being_built.build_path)
+
+	var/built_typepath = being_built.build_path
+	// If we have a bodypart, we need to initialize the limb on its own. Otherwise we can build it here.
+	if(ispath(built_typepath, /obj/item/bodypart))
+		build_limb(built_typepath)
 	else
-		new being_built.build_path(loc)
+		new built_typepath(loc)
 
 	busy = FALSE
 	flick("limbgrower_unfill", src)

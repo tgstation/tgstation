@@ -232,12 +232,9 @@
 /obj/item/disk/design_disk/limbs/Initialize()
 	. = ..()
 	max_blueprints = limb_designs.len
-	var/blueprint_num = 1
 	for(var/design in limb_designs)
-		message_admins("Adding [design] to [blueprint_num]")
 		var/datum/design/new_design = design
-		blueprints[blueprint_num] = new new_design
-		blueprint_num++
+		blueprints += new new_design
 
 /datum/design/limb_disk
 	name = "Limb Design Disk"

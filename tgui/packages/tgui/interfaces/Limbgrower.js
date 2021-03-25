@@ -33,7 +33,7 @@ export const Limbgrower = (props, context) => {
             </Flex.Item>
             <Flex.Item>
               <LabeledList>
-                {reagents.len && reagents.map(reagent => (
+                { reagents.map(reagent => (
                   <LabeledList.Item
                     label={reagent.reagent_name}
                     buttons={(
@@ -50,9 +50,7 @@ export const Limbgrower = (props, context) => {
             </Flex.Item>
           </Flex>
         </Section>
-
         <Divider/>
-
         <Section title="Designs">
           <Flex direction="column">
             <Flex.Item>
