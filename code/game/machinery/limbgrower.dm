@@ -80,12 +80,11 @@
 		for(var/datum/design/found_design in species_categories[category])
 			var/list/all_reagents = list()
 			for(var/reagent_typepath in found_design.reagents_list)
-				var/datum/reagent/reagent_id = new reagent_typepath()
+				var/datum/reagent/reagent_id = find_reagent_object_from_type(reagent_typepath)
 				var/list/reagent_data = list(
 					name = reagent_id.name,
 					amount = found_design.reagents_list[reagent_typepath],
 				)
-				qdel(reagent_id)
 				all_reagents += list(reagent_data)
 
 			category_data["designs"] += list(list(

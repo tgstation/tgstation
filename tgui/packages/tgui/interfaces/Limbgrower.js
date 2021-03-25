@@ -22,7 +22,7 @@ export const Limbgrower = (props, context) => {
       {!!busy && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin={1} />
-          {' Building limb...'}
+          {' Building...'}
         </Dimmer>
       )}
       <Window.Content scrollable>
