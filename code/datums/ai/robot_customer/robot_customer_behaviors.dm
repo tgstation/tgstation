@@ -29,9 +29,11 @@
 		controller.blackboard[BB_CUSTOMER_MY_SEAT] = found_seat
 		attending_venue.linked_seats[found_seat] = customer_pawn
 		finish_action(controller, TRUE)
-	else
+		return
+
+	if(DT_PROB(0.1, delta_time))
 		customer_pawn.say(pick(customer_data.cant_find_seat_lines))
-		finish_action(controller, FALSE)
+	finish_action(controller, FALSE)
 
 
 /datum/ai_behavior/order_food
@@ -69,7 +71,7 @@
 		finish_action(controller, FALSE)
 		return
 
-	if(DT_PROB(1, delta_time))
+	if(DT_PROB(0.1, delta_time))
 		var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 		customer_pawn.say(pick(customer_data.wait_for_food_lines))
