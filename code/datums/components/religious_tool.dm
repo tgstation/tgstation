@@ -172,6 +172,9 @@
 			var/datum/species/highpriest_species = highpriest.dna.species
 			if(initial(easy_access_sect.invalidating_qualities) in highpriest_species.inherent_traits)
 				continue
+		var/list/sect = list()
+		sect["name"] = initial(not_a_real_instance_rs.name)
+		sect["desc"] = WIP
 		var/datum/religion_sect/not_a_real_instance_rs = path
 		if(initial(not_a_real_instance_rs.starter))
 			. += list(initial(not_a_real_instance_rs.name) = path)
