@@ -12,7 +12,8 @@ export const Limbgrower = (props, context) => {
     busy,
   } = data;
   const [tab, setTab] = useSharedState(context, 'category', categories[0]?.name);
-  const designList = categories.find(category => category.name === tab)?.designs
+  const designList = categories.find(category =>
+    category.name === tab)?.designs;
 
   return (
     <Window
@@ -35,6 +36,7 @@ export const Limbgrower = (props, context) => {
               <LabeledList>
                 { reagents.map(reagent => (
                   <LabeledList.Item
+                    key={reagent.reagent_name}
                     label={reagent.reagent_name}
                     buttons={(
                       <Button.Confirm
@@ -42,7 +44,7 @@ export const Limbgrower = (props, context) => {
                         width="120px"
                         content="Remove Reagent"
                         color="bad"
-                        onClick={() => act('empty_reagent', {reagent_type: reagent.reagent_type})} />)} >
+                        onClick={() => act('empty_reagent', { reagent_type: reagent.reagent_type })} />)} >
                     {reagent.reagent_amount}u
                   </LabeledList.Item>
                 ))}
@@ -50,7 +52,7 @@ export const Limbgrower = (props, context) => {
             </Flex.Item>
           </Flex>
         </Section>
-        <Divider/>
+        <Divider />
         <Section title="Designs">
           <Flex direction="column">
             <Flex.Item>
@@ -58,6 +60,7 @@ export const Limbgrower = (props, context) => {
                 {categories.map(category => (
                   <Tabs.Tab
                     fluid
+                    key={category.name}
                     selected={tab === category.name}
                     onClick={() => setTab(category.name)}>
                     {category.name}
@@ -67,25 +70,26 @@ export const Limbgrower = (props, context) => {
             </Flex.Item>
             <Flex.Item>
               <LabeledList>
-                  {designList.map(design => (
-                    <LabeledList.Item
-                      label={design.name}
-                      buttons={(
-                        <Button
-                          content="Make"
-                          color="good"
-                          onClick={() => act('make_limb', {
-                            design_id: design.id,
-                            active_tab: design.parent_category,
-                          })}/>
-                        )}>
-                      {design.needed_reagents.map(reagent => (
-                        <Box>
-                          {reagent.name}: {reagent.amount}u
-                        </Box>
-                        ))}
-                    </LabeledList.Item>
-                  ))}
+                {designList.map(design => (
+                  <LabeledList.Item
+                    key={design.name}
+                    label={design.name}
+                    buttons={(
+                      <Button
+                        content="Make"
+                        color="good"
+                        onClick={() => act('make_limb', {
+                          design_id: design.id,
+                          active_tab: design.parent_category,
+                        })} />
+                    )}>
+                    {design.needed_reagents.map(reagent => (
+                      <Box key={reagent.name}>
+                        {reagent.name}: {reagent.amount}u
+                      </Box>
+                    ))}
+                  </LabeledList.Item>
+                ))}
               </LabeledList>
             </Flex.Item>
           </Flex>
