@@ -447,7 +447,7 @@
 		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
 		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY || holding.weapon_weight > WEAPON_MEDIUM)
 			return
-		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE)
+		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE))
 			holstered = holding
 			to_chat(mod.wearer, "<span class='notice'>You holster [holstered].</span>")
 	else
