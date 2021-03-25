@@ -219,10 +219,12 @@
 /obj/machinery/door/proc/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
 	return
 
-/obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
+
+/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user)
 	return
 
-/obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/I, mob/user)
+/// Called when the user right-clicks on the door with a crowbar.
+/obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)

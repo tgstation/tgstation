@@ -131,7 +131,7 @@
 		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
 		update_appearance()
 
-/// Closes opened firedoors and 
+/// We check for adjacency when using the primary attack.
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/acting_object, mob/user)
 	if(welded || operating)
 		return
