@@ -45,10 +45,12 @@
 	power = /obj/effect/proc_holder/spell/self/thermal_vision_activate
 
 /obj/effect/proc_holder/spell/self/thermal_vision_activate
-	name = "Activate thermal vision"
+	name = "Activate Thermal Vision"
 	desc = "You can see thermal signatures, at the cost of your eyesight."
 	charge_max = 20 SECONDS
 	clothes_req = FALSE
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "augmented_eyesight"
 
 /obj/effect/proc_holder/spell/self/thermal_vision_activate/cast(list/targets, mob/user = usr)
 	. = ..()
@@ -63,6 +65,11 @@
 	addtimer(CALLBACK(src, .proc/thermal_vision_deactivate), 10 SECONDS)
 
 /obj/effect/proc_holder/spell/self/thermal_vision_activate/proc/thermal_vision_deactivate(mob/user = usr)
+
+
+	if(!HAS_TRAIT_FROM(user,TRAIT_THERMAL_VISION, GENETIC_MUTATION))
+		return
+
 	REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
 	user.update_sight()
 	to_chat(user, text("You blink a few times, your vision returning to normal as a dull pain settles in your eyes."))
