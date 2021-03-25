@@ -49,3 +49,44 @@
 
 	data["OutfitSlots"] = serialize_outfit()
 	return data
+
+/datum/outfit_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	if(..())
+		return
+	switch(action)
+		if("click")
+			edit_item(params["slot"])
+
+/datum/outfit_manager/proc/edit_item(slot)
+	var/list/options
+	switch(slot)
+		if("head")
+			options = typesof(/obj/item/clothing/head)
+		if("glasses")
+			options = typesof(/obj/item/clothing/glasses)
+		//ears
+		//neck
+		if("mask")
+			options = typesof(/obj/item/clothing/mask)
+		if("uniform")
+			options = typesof(/obj/item/clothing/under)
+		if("suit")
+			options = typesof(/obj/item/clothing/suit)
+		if("gloves")
+			options = typesof(/obj/item/clothing/gloves)
+		//suit storage
+		//belt
+		if("id")
+			options = typesof(/obj/item/card/id)
+		//lhand
+		//back
+		//rhand
+		//lpocket
+		if("shoes")
+			options = typesof(/obj/item/clothing/shoes)
+		if("r_pocket")
+			options = typesof(/obj/item)
+
+
+	if(length(options))
+		tgui_input_list(user, "Choose an item", "Outfit-O-Tron 9000", options)
