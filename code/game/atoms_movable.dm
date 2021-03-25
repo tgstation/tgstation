@@ -75,13 +75,7 @@
 
 /atom/movable/Initialize(mapload)
 	. = ..()
-	switch(blocks_emissive)
-		if(EMISSIVE_BLOCK_GENERIC)
-			update_emissive_block()
-		if(EMISSIVE_BLOCK_UNIQUE)
-			render_target = ref(src)
-			em_block = new(src, render_target)
-			vis_contents += em_block
+	update_appearance()
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)
@@ -131,15 +125,24 @@
 
 	vis_contents.Cut()
 
-
 /atom/movable/proc/update_emissive_block()
-	if(blocks_emissive != EMISSIVE_BLOCK_GENERIC)
+	if(!blocks_emissive)
 		return
-	var/mutable_appearance/gen_emissive_blocker = mutable_appearance(icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE)
-	gen_emissive_blocker.dir = dir
-	gen_emissive_blocker.alpha = alpha
-	gen_emissive_blocker.appearance_flags |= appearance_flags
-	add_overlay(list(gen_emissive_blocker))
+	else if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
+		var/mutable_appearance/gen_emissive_blocker = mutable_appearance(icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE)
+		gen_emissive_blocker.dir = dir
+		gen_emissive_blocker.alpha = alpha
+		gen_emissive_blocker.appearance_flags |= appearance_flags
+		return gen_emissive_blocker
+	else if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
+		if(!em_block)
+			render_target = ref(src)
+			em_block = new(src, render_target)
+		return em_block
+
+/atom/movable/update_overlays()
+	. = ..()
+	. += update_emissive_block()
 
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
 	if(!direction)
