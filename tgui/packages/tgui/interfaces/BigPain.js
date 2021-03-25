@@ -5,7 +5,6 @@ import { Window } from '../layouts';
 export const BigPain = (props, context) => {
   const { act, data } = useBackend(context);
   const { OutfitSlots } = data;
-
   const {
     head,
     glasses,
@@ -77,8 +76,7 @@ export const BigPain = (props, context) => {
 
 const OutfitSlot = (props, context) => {
   const { act, data } = useBackend(context);
-  const { slotName, icon } = props;
-  const { currItem } = data[slotName]||"Empty";
+  const { slotName, currItem, icon } = props;
   return (
     <Stack.Item grow={1} basis={0} textAlign="center">
       <Button icon={icon} fluid height={2}>
@@ -86,13 +84,13 @@ const OutfitSlot = (props, context) => {
       </Button>
       <Box
         color="label"
-        title={currItem}
+        title={currItem?.path}
         style={{
           'overflow': 'hidden',
           'white-space': 'nowrap',
           'text-overflow': 'ellipsis',
         }}>
-        {currItem||"Empty"}
+        {currItem?.name||"Empty"}
       </Box>
     </Stack.Item>
   );
