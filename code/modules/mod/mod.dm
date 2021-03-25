@@ -397,7 +397,7 @@
 		return
 	if(modules.Find(part))
 		var/obj/item/mod/module/module = part
-		if(part.module_type == MODULE_TOGGLE || part.module_type == MODULE_ACTIVE)
+		if(module.module_type == MODULE_TOGGLE || module.module_type == MODULE_ACTIVE)
 			module.on_deactivation()
 		uninstall(module)
 		return
