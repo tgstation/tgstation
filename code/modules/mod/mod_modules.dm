@@ -285,8 +285,8 @@
 		return
 	if(bumpoff)
 		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, .proc/unstealth)
-	RegisterSignal(mod.wearer, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_unarmed_attack)
-	RegisterSignal(mod.wearer, list(COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
+	RegisterSignal(mod.wearer, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_unarmed_attack)
+	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
 	RegisterSignal(mod.wearer, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 
@@ -447,10 +447,10 @@
 		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
 		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY || holding.weapon_weight > WEAPON_MEDIUM)
 			return
-		if(transferItemToLoc(holding, src, FALSE, FALSE))
+		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE)
 			holstered = holding
 			to_chat(mod.wearer, "<span class='notice'>You holster [holstered].</span>")
 	else
-		if(put_in_active_hand(holstered, FALSE, TRUE))
+		if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
 			to_chat(mod.wearer, "<span class='notice'>You draw [holstered].</span>")
 			holstered = null
