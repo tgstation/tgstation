@@ -8,35 +8,37 @@
  *
  */
 /datum/religion_sect
-/// Name of the religious sect
+	/// Name of the religious sect
 	var/name = "Religious Sect Base Type"
-/// Description of the religious sect, Presents itself in the selection menu (AKA be brief)
+	/// Flavorful quote given about the sect, used in tgui
+	var/quote = "Hail Coderbus! Coderbus #1! Fuck the playerbase!"
+	/// Opening message when someone gets converted
 	var/desc = "Oh My! What Do We Have Here?!!?!?!?"
-/// Opening message when someone gets converted
-	var/convert_opener
-/// holder for alignments.
+	/// Tgui icon used by this sect - https://fontawesome.com/icons/
+	var/tgui_icon = "bug"
+	/// holder for alignments.
 	var/alignment = ALIGNMENT_GOOD
-/// Does this require something before being available as an option?
+	/// Does this require something before being available as an option?
 	var/starter = TRUE
-/// species traits that block you from picking
+	/// species traits that block you from picking
 	var/invalidating_qualities = NONE
-/// The Sect's 'Mana'
+	/// The Sect's 'Mana'
 	var/favor = 0 //MANA!
-/// The max amount of favor the sect can have
+	/// The max amount of favor the sect can have
 	var/max_favor = 1000
-/// The default value for an item that can be sacrificed
+	/// The default value for an item that can be sacrificed
 	var/default_item_favor = 5
-/// Turns into 'desired_items_typecache', lists the types that can be sacrificed barring optional features in can_sacrifice()
+	/// Turns into 'desired_items_typecache', lists the types that can be sacrificed barring optional features in can_sacrifice()
 	var/list/desired_items
-/// Autopopulated by `desired_items`
+	/// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
-/// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
+	/// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
 	var/list/rites_list
-/// Changes the Altar of Gods icon
+	/// Changes the Altar of Gods icon
 	var/altar_icon
-/// Changes the Altar of Gods icon_state
+	/// Changes the Altar of Gods icon_state
 	var/altar_icon_state
-/// Currently Active (non-deleted) rites
+	/// Currently Active (non-deleted) rites
 	var/list/active_rites
 
 /datum/religion_sect/New()
@@ -132,18 +134,18 @@
 
 /datum/religion_sect/puritanism
 	name = "Puritanism (Default)"
-	desc = "Nothing special."
-	convert_opener = "\"Praise normalcy!\"<br>\
-	Your run-of-the-mill sect, there are no benefits or boons associated."
+	desc = "Your run-of-the-mill sect, there are no benefits or boons associated."
+	quote = "Praise normalcy!"
+	tgui_icon = "bible"
 
 /**** Mechanical God ****/
 
 /datum/religion_sect/mechanical
 	name = "Mechanical God"
-	desc = "A sect oriented around technology."
-	convert_opener = "\"May you find peace in a metal shell.\"<br>\
-	Bibles now recharge cyborgs and heal robotic limbs if targeted, but they do not heal organic limbs. \
-	You can now sacrifice cells, with favor depending on their charge."
+	quote = "May you find peace in a metal shell."
+	desc = "Bibles now recharge cyborgs and heal robotic limbs if targeted, but they \
+	do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
+	tgui_icon = "robot"
 	alignment = ALIGNMENT_NEUT
 	desired_items = list(/obj/item/stock_parts/cell)
 	rites_list = list(/datum/religion_rites/synthconversion)
@@ -173,24 +175,24 @@
 		did_we_charge = TRUE
 
 	//if we're not targetting a robot part we stop early
-	var/obj/item/bodypart/bodypart = blessed.get_bodypart(user.zone_selected)
+	var/obj/item/bodypart/bodypart = blessed.get_bodypart(chap.zone_selected)
 	if(bodypart.status != BODYPART_ROBOTIC)
 		if(!did_we_charge)
-			to_chat(user, "<span class='warning'>[GLOB.deity] scoffs at the idea of healing such fleshy matter!</span>")
+			to_chat(chap, "<span class='warning'>[GLOB.deity] scoffs at the idea of healing such fleshy matter!</span>")
 		else
 			blessed.visible_message("<span class='notice'>[user] charges [blessed] with the power of [GLOB.deity]!</span>")
 			to_chat(blessed, "<span class='boldnotice'>You feel charged by the power of [GLOB.deity]!</span>")
 			SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
-			playsound(user, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
+			playsound(chap, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
 		return TRUE
 
 	//charge(?) and go
 	if(bodypart.heal_damage(5,5,null,BODYPART_ROBOTIC))
 		blessed.update_damage_overlays()
 
-	blessed.visible_message("<span class='notice'>[user] [did_we_charge ? "repairs" : "repairs and charges"] [blessed] with the power of [GLOB.deity]!</span>")
+	blessed.visible_message("<span class='notice'>[chap] [did_we_charge ? "repairs" : "repairs and charges"] [blessed] with the power of [GLOB.deity]!</span>")
 	to_chat(blessed, "<span class='boldnotice'>The inner machinations of [GLOB.deity] [did_we_charge ? "repairs" : "repairs and charges"] you!</span>")
-	playsound(user, 'sound/effects/bang.ogg', 25, TRUE, -1)
+	playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -210,9 +212,9 @@
 
 /datum/religion_sect/pyre
 	name = "Pyre God"
-	desc = "A sect dedicated to the flame."
-	convert_opener = "\"It must burn! The primal energy must be respected.\"<br>\
-	Sacrificing burning corpses with a lot of burn damage and candles grants you favor."
+	desc = "Sacrificing burning corpses with a lot of burn damage and candles grants you favor."
+	quote = "It must burn! The primal energy must be respected."
+	tgui_icon = "fire-alt"
 	alignment = ALIGNMENT_NEUT
 	max_favor = 10000
 	desired_items = list(/obj/item/candle)
@@ -238,31 +240,31 @@
 
 /datum/religion_sect/greed
 	name = "Greedy God"
-	desc = "A very mercantile sect."
+	quote = "Greed is good."
+	desc = "In the eyes of your mercantile deity, your wealth is your favor. Earn enough wealth to purchase some more business opportunities."
+	tgui_icon = "dollar-sign"
 	altar_icon_state = "convertaltar-yellow"
 	alignment = ALIGNMENT_EVIL //greed is not good wtf
 	rites_list = list(/datum/religion_rites/greed/vendatray, /datum/religion_rites/greed/custom_vending)
-	convert_opener = "\"Greed is good.\"<br>\
-	In the eyes of your mercantile deity, your wealth is your favor. Earn enough wealth to purchase some more business opportunities."
 	altar_icon_state = "convertaltar-yellow"
 
 /datum/religion_sect/greed/tool_examine(mob/living/holy_creature) //display money policy
 	return "<span class='notice'>In the eyes of [GLOB.deity], your <b>wealth</b> is your favor.</span>"
 
 /datum/religion_sect/greed/sect_bless(mob/living/blessed_living, mob/living/chap)
-	var/datum/bank_account/account = user.get_bank_account()
+	var/datum/bank_account/account = chap.get_bank_account()
 	if(!account)
-		to_chat(user, "<span class='warning'>You need a way to pay for the heal!</span>")
+		to_chat(chap, "<span class='warning'>You need a way to pay for the heal!</span>")
 		return TRUE
 	if(account.account_balance < GREEDY_HEAL_COST)
-		to_chat(user, "<span class='warning'>Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!</span>")
+		to_chat(chap, "<span class='warning'>Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!</span>")
 		return TRUE
 	if(!ishuman(blessed_living))
 		return FALSE
 	var/mob/living/carbon/human/blessed = blessed_living
 	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
 		if(robolimb.status == BODYPART_ROBOTIC)
-			to_chat(user, "<span class='warning'>[GLOB.deity] refuses to heal this metallic taint!</span>")
+			to_chat(chap, "<span class='warning'>[GLOB.deity] refuses to heal this metallic taint!</span>")
 			return TRUE
 
 	account.adjust_money(-GREEDY_HEAL_COST)
@@ -272,7 +274,7 @@
 		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
 			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
 				blessed.update_damage_overlays()
-		blessed.visible_message("<span class='notice'>[user] barters a heal for [blessed] from [GLOB.deity]!</span>")
+		blessed.visible_message("<span class='notice'>[chap] barters a heal for [blessed] from [GLOB.deity]!</span>")
 		to_chat(blessed, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!</span>")
 		playsound(user, 'sound/effects/cashregister.ogg', 60, TRUE)
 		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
@@ -282,14 +284,14 @@
 
 /datum/religion_sect/honorbound
 	name = "Honorbound God"
-	desc = "A sect that follows a strict code for engaging evil."
+	quote = "A good, honorable crusade against evil is required."
+	desc = "Your deity requires fair fights from you. You may not attack the unready, the just, or the innocent. \
+	You earn favor by getting others to join the crusade, and you may spend favor to announce a battle, bypassing some conditions to attack."
+	tgui_icon = "scroll"
 	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
 	invalidating_qualities = TRAIT_GENELESS
 	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
-	convert_opener = "\"A good, honorable crusade against evil is required.\"<br>\
-	Your deity requires fair fights from you. You may not attack the unready, the just, or the innocent.<br>\
-	You earn favor by getting others to join the crusade, and you may spend favor to announce a battle, bypassing some conditions to attack."
 	///people who have agreed to join the crusade, and can be deaconized
 	var/list/possible_crusaders = list()
 	///people who have been offered an invitation, they haven't finished the alert though.
@@ -320,13 +322,13 @@
 /datum/religion_sect/burden
 	name = "Punished God"
 	desc = "A sect that desires to feel the pain of their god."
+	tgui_icon = "user-injured"
 	altar_icon_state = "convertaltar-burden"
 	alignment = ALIGNMENT_NEUT
 	invalidating_qualities = TRAIT_GENELESS
 	convert_opener = "\"To feel the freedom, you must first understand captivity.\"<br>\
 	Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, even addictions. You will learn the secrets of the universe \
 	from your defeated shell."
-	//a list for keeping track of how burdened each member is
 
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
 	..()
@@ -351,11 +353,11 @@
 
 /datum/religion_sect/maintenance
 	name = "Maintenance God"
-	desc = "A sect based around the maintenance shafts of the station."
+	quote = "Your kingdom in the darkness."
+	desc = "Sacrifice the organic slurry created from rats dipped in welding fuel to gain favor. Exchange favor to adapt to the maintenance shafts."
+	tgui_icon = "eye"
 	altar_icon_state = "convertaltar-maint"
 	alignment = ALIGNMENT_EVIL //while maint is more neutral in my eyes, the flavor of it kinda pertains to rotting and becoming corrupted by the maints
-	convert_opener = "\"Your kingdom in the darkness.\"<br>\
-	Sacrifice the organic slurry created from rats dipped in welding fuel to gain favor. Exchange favor to adapt to the maintenance shafts."
 	rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/adapted_eyes, /datum/religion_rites/adapted_food, /datum/religion_rites/ritual_totem)
 	desired_items = list(/obj/item/reagent_containers)
 
