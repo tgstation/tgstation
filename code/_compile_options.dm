@@ -72,6 +72,17 @@
 #define TESTING
 #endif
 
+#ifdef TGS
+// TGS performs its own build of dm.exe, but includes a prepended TGS define.
+#define CBT
+#endif
+
 // A reasonable number of maximum overlays an object needs
 // If you think you need more, rethink it
 #define MAX_ATOM_OVERLAYS 100
+
+#if !defined(CBT) && !defined(SPACEMAN_DMM)
+#warn "Building with Dream Maker is no longer supported and may result in errors."
+#warn "In order to build, run BUILD.bat in the root directory."
+#warn "Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build."
+#endif

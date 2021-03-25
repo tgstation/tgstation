@@ -26,6 +26,8 @@
 	var/base_heating = 140
 	var/base_cooling = 170
 	var/obj/item/tank/holding
+	var/use_enviroment_heat = FALSE
+	var/skipping_work = FALSE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
@@ -100,6 +102,9 @@
 		. += holding
 	if(showpipe)
 		. += getpipeimage(icon, "scrub_cap", initialize_directions)
+	if(skipping_work && on)
+		var/mutable_appearance/skipping = mutable_appearance(icon, "blinking")
+		. += skipping
 
 /obj/machinery/atmospherics/components/binary/thermomachine/examine(mob/user)
 	. = ..()
@@ -146,7 +151,8 @@
 	var/heat_amount = temperature_delta * (main_heat_capacity * heat_capacity / (main_heat_capacity + heat_capacity))
 	var/efficiency = 1
 	var/temperature_difference = 0
-	if(main_port.total_moles() && thermal_exchange_port.total_moles() && nodes[2])
+	var/skip_tick = TRUE
+	if(!use_enviroment_heat && main_port.total_moles() > 0.01 && thermal_exchange_port.total_moles() > 0.01 && nodes[2])
 		if(cooling)
 			thermal_exchange_port.temperature = max(thermal_exchange_port.temperature + heat_amount / thermal_heat_capacity + motor_heat / thermal_heat_capacity, TCMB)
 		temperature_difference = thermal_exchange_port.temperature - main_port.temperature
@@ -154,7 +160,8 @@
 		if(temperature_difference > 0)
 			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency)/ main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
-	else if(main_port.total_moles() && enviroment.total_moles() && (!thermal_exchange_port.total_moles() || !nodes[2]))
+		skip_tick = FALSE
+	else if(use_enviroment_heat && main_port.total_moles() > 0.01 && enviroment.total_moles() > 0.01 && (!thermal_exchange_port.total_moles() || !nodes[2]))
 		var/enviroment_efficiency = 0
 		if(cooling)
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
@@ -167,14 +174,20 @@
 		if(temperature_difference > 0)
 			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency * enviroment_efficiency) / main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
+		skip_tick = FALSE
+	else if(use_enviroment_heat)
+		skip_tick = TRUE
+
+	skipping_work = skip_tick
 
 	heat_amount = abs(heat_amount)
-	var/power_usage
+	var/power_usage = 0
 	if(temperature_delta  > 1)
 		power_usage = (heat_amount * 0.35 + idle_power_usage) ** (1.25 - (5e6 * efficiency) / (max(5e6, heat_amount)))
 	else
 		power_usage = idle_power_usage
 	use_power(power_usage)
+	update_appearance()
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/item, mob/user, params)
@@ -278,6 +291,8 @@
 	data["tank_gas"] = FALSE
 	if(holding && holding.air_contents.total_moles())
 		data["tank_gas"] = TRUE
+	data["use_env_heat"] = use_enviroment_heat
+	data["skipping_work"] = skipping_work
 	return data
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_act(action, params)
@@ -321,6 +336,9 @@
 			if(holding)
 				replace_tank(usr)
 				. = TRUE
+		if("use_env_heat")
+			use_enviroment_heat = !use_enviroment_heat
+			. = TRUE
 
 	update_appearance()
 
