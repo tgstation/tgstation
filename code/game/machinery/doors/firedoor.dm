@@ -141,7 +141,6 @@
 		open()
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
 		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
-		handle_held_open_adjacency(user)
 	else
 		close()
 
@@ -157,13 +156,13 @@
 
 /obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
 	var/mob/living/living_user = user
-	if(!Adjacent(user) || !isliving(user) || !living_user.is_standing())
-		being_held_open = FALSE
-		close()
-		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
+	if(Adjacent(user) && isliving(user) && living_user.is_standing())
 		return
-
+	being_held_open = FALSE
+	close()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
+	
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
 	if(welded || operating || machine_stat & NOPOWER)
