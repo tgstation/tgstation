@@ -416,6 +416,8 @@
 	. = ..()
 	if(slot != ITEM_SLOT_HEAD)
 		return
+	if(istype(user, /mob/living/carbon/human/dummy)) //Prevents ghosts from being polled when the helmet is put on a dummy.
+		return
 	if(!ismonkey(user) || user.ckey)
 		var/mob/living/something = user
 		to_chat(something, "<span class='boldnotice'>You feel a stabbing pain in the back of your head for a moment.</span>")
@@ -428,14 +430,19 @@
 	magnification = user //this polls ghosts
 	visible_message("<span class='warning'>[src] powers up!</span>")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
 	polling = TRUE
 	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
 	polling = FALSE
+	if(!magnification)
+		return
 	if(!candidates.len)
+		UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 		magnification = null
 		visible_message("<span class='notice'>[src] falls silent and drops on the floor. Maybe you should try again later?</span>")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		user.dropItemToGround(src)
+		return
 	var/mob/picked = pick(candidates)
 	magnification.key = picked.key
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
@@ -467,6 +474,7 @@
 				if(4) //genetic mass susceptibility (gib)
 					magnification.gib()
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
+	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message("<span class='warning'>[src] fizzles and breaks apart!</span>")
@@ -478,6 +486,10 @@
 	if(magnification || polling)
 		qdel(src)//runs disconnect code
 
+/obj/item/clothing/head/helmet/monkey_sentience/proc/make_fall_off()
+	if(magnification)
+		visible_message("<span class='warning'>[src] falls off of [magnification]'s head as it changes shape!</span>")
+		magnification.dropItemToGround(src)
 
 //LightToggle
 

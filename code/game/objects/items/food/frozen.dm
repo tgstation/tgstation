@@ -29,6 +29,10 @@
 	tastes = list("blue cherries" = 2, "ice cream" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
 
+/obj/item/food/spacefreezy/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder)
+
 /obj/item/food/sundae
 	name = "sundae"
 	desc = "A classic dessert."
@@ -39,6 +43,10 @@
 	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
 
+/obj/item/food/sundae/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, y_offset = -2, sweetener = /datum/reagent/consumable/caramel)
+
 /obj/item/food/honkdae
 	name = "honkdae"
 	desc = "The clown's favorite dessert."
@@ -48,6 +56,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
+
+/obj/item/food/honkdae/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, y_offset = -2) //The sugar will react with the banana forming laughter. Honk!
 
 /////////////
 //SNOWCONES//

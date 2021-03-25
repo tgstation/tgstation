@@ -149,8 +149,8 @@
 		usr.update_inv_hands()
 	return TRUE
 
-/atom/movable/screen/inventory/MouseEntered()
-	..()
+/atom/movable/screen/inventory/MouseEntered(location, control, params)
+	. = ..()
 	add_overlays()
 
 /atom/movable/screen/inventory/MouseExited()
@@ -500,6 +500,7 @@
 	return set_selected_zone(choice, usr)
 
 /atom/movable/screen/zone_sel/MouseEntered(location, control, params)
+	. = ..()
 	MouseMove(location, control, params)
 
 /atom/movable/screen/zone_sel/MouseMove(location, control, params)

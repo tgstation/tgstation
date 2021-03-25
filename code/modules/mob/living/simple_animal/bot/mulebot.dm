@@ -213,12 +213,12 @@
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
 	unload(0)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
-		if(2)
-			for(var/i = 1; i < 3; i++)
-				wires.cut_random()
-		if(3)
+		if(EXPLODE_HEAVY)
+			wires.cut_random()
+			wires.cut_random()
+		if(EXPLODE_LIGHT)
 			wires.cut_random()
 
 

@@ -107,6 +107,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/cached_gases = gases
 	TOTAL_MOLES(cached_gases, .)
 
+/// Calculate moles for a specific gas in the mixture
+/datum/gas_mixture/proc/total_moles_specific(gas_id = null)
+	var/cached_gases = gases
+	if(!gas_id)
+		return null
+	TOTAL_MOLES_SPECIFIC(cached_gases, gas_id, .)
+
 /// Checks to see if gas amount exists in mixture.
 /// Do NOT use this in code where performance matters!
 /// It's better to batch calls to garbage_collect(), especially in places where you're checking many gastypes
@@ -513,7 +520,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 **/
 
 /// Pumps gas from src to output_air. Amount depends on target_pressure
-/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure)
+/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure, specific_gas = null)
 	var/output_starting_pressure = output_air.return_pressure()
 
 	if((target_pressure - output_starting_pressure) < 0.01)
@@ -526,6 +533,10 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
+		if(specific_gas)
+			var/datum/gas_mixture/removed = remove_specific(specific_gas, transfer_moles)
+			output_air.merge(removed)
+			return TRUE
 		var/datum/gas_mixture/removed = remove(transfer_moles)
 		output_air.merge(removed)
 		return TRUE

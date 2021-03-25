@@ -144,6 +144,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a revenant.")
+			if("nerd")
+				if(src.makeNerd())
+					message_admins("[key_name(usr)] created a nanotrasen emergency response drone.")
+					log_admin("[key_name(usr)] created a nanotrasen emergency response drone.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a nanotrasen emergency response drone. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a nanotrasen emergency response drone.")
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))

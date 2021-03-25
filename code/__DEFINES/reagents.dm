@@ -111,11 +111,11 @@
 #define MAX_ADDICTION_POINTS 1000
 
 ///Addiction start/ends
-#define WITHDRAWAL_STAGE1_START_CYCLE 15
-#define WITHDRAWAL_STAGE1_END_CYCLE 70
-#define WITHDRAWAL_STAGE2_START_CYCLE 71
-#define WITHDRAWAL_STAGE2_END_CYCLE 130
-#define WITHDRAWAL_STAGE3_START_CYCLE 131
+#define WITHDRAWAL_STAGE1_START_CYCLE 1
+#define WITHDRAWAL_STAGE1_END_CYCLE 60
+#define WITHDRAWAL_STAGE2_START_CYCLE 61
+#define WITHDRAWAL_STAGE2_END_CYCLE 120
+#define WITHDRAWAL_STAGE3_START_CYCLE 121
 
 ///reagent tags - used to look up reagents for specific effects. Feel free to add to but comment it
 /// This reagent does brute effects (BOTH damaging and healing)

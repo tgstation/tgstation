@@ -406,6 +406,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	//kind of a centerpiece of the station, so pretty tough to destroy
 	armor = list(MELEE = 80, BULLET = 80, LASER = 80, ENERGY = 80, BOMB = 100, BIO = 80, RAD = 80, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	///set by the tram control console in late initialize
 	var/travelling = FALSE
 	var/travel_distance = 0
 	///for finding the landmark initially - should be the exact same as the landmark's destination id.
@@ -420,6 +421,16 @@ GLOBAL_LIST_EMPTY(lifts)
 	. = ..()
 	find_our_location()
 
+
+/**
+ * Finds the location of the tram
+ *
+ * The initial_id is assumed to the be the landmark the tram is built on in the map
+ * and where the tram will set itself to be on roundstart.
+ * The central tram piece goes further into this by actually checking the contents of the turf its on
+ * for a tram landmark when it docks anywhere. This assures the tram actually knows where it is after docking,
+ * even in the worst cast scenario.
+ */
 /obj/structure/industrial_lift/tram/proc/find_our_location()
 	if(!from_where)
 		for(var/obj/effect/landmark/tram/our_location in GLOB.landmarks_list)
@@ -447,6 +458,14 @@ GLOBAL_LIST_EMPTY(lifts)
 		travel_distance--
 		lift_master_datum.MoveLiftHorizontal(travel_direction, z)
 
+/**
+ * Handles moving the tram
+ *
+ * Tells the individual tram parts where to actually go and has an extra safety check
+ * incase multiple inputs get through, preventing conflicting directions and the tram
+ * literally ripping itself apart. The proc handles the first move before the subsystem
+ * takes over to keep moving it in process()
+ */
 /obj/structure/industrial_lift/tram/proc/tram_travel(obj/effect/landmark/tram/from_where, obj/effect/landmark/tram/to_where)
 	visible_message("<span class='notice'>[src] has been called to the [to_where]!</span")
 
@@ -464,6 +483,13 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	START_PROCESSING(SStramprocess, src)
 
+/**
+ * Handles unlocking the tram controls for use after moving
+ *
+ * More safety checks to make sure the tram has actually docked properly
+ * at a location before users are allowed to interact with the tram console again.
+ * Tram finds its location at this point before fully unlocking controls to the user.
+ */
 /obj/structure/industrial_lift/tram/proc/unlock_controls()
 	visible_message("<span class='notice'>[src]'s controls are now unlocked.</span")
 	for(var/lift in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.

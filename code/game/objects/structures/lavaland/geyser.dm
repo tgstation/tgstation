@@ -76,7 +76,7 @@
 	var/target_layer = DUCT_LAYER_DEFAULT
 
 	///Assoc list for possible layers
-	var/list/layers = list("Alternate Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT)
+	var/list/layers = list("Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, "Fourth Layer" = FOURTH_DUCT_LAYER)
 
 /obj/item/plunger/attack_obj(obj/O, mob/living/user, params)
 	if(layer_mode)
