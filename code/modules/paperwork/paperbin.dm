@@ -1,4 +1,5 @@
 #define PAPERS_PER_OVERLAY 8
+#define PAPER_OVERLAY_PIXEL_SHIFT 2
 /obj/item/paper_bin
 	name = "paper bin"
 	desc = "Contains all the paper you'll never need."
@@ -161,7 +162,7 @@
 			var/obj/item/paper/current_paper = papers[paper_number]
 			var/mutable_appearance/paper_overlay = mutable_appearance(current_paper.icon, current_paper.icon_state)
 			paper_overlay.color = current_paper.color
-			paper_overlay.pixel_y = paper_number/PAPERS_PER_OVERLAY - 2 //gives the illusion of stacking
+			paper_overlay.pixel_y = paper_number/PAPERS_PER_OVERLAY - PAPER_OVERLAY_PIXEL_SHIFT //gives the illusion of stacking
 			. += paper_overlay
 			if(paper_number == papers.len) //this is our top paper
 				. += current_paper.overlays //add overlays only for top paper
@@ -191,7 +192,7 @@
 
 /obj/item/paper_bin/bundlenatural/Initialize(mapload)
 	binding_cable = new /obj/item/stack/cable_coil(src, 2)
-	binding_cable.color = COLOR_ANOTHER_BROWN
+	binding_cable.color = COLOR_ORANGE_BROWN
 	binding_cable.cable_color = "brown"
 	binding_cable.desc += " Non-natural."
 	return ..()
@@ -234,3 +235,6 @@
 	icon_state = "paper_bin_carbon0"
 	papertype = /obj/item/paper/carbon
 	bin_overlay_string = "paper_bin_carbon_overlay"
+
+#undef PAPERS_PER_OVERLAY
+#undef PAPER_OVERLAY_PIXEL_SHIFT
