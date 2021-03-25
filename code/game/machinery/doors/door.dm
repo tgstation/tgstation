@@ -222,6 +222,10 @@
 /obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	return
 
+/obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/I, mob/user)
+	try_to_crowbar(I, user)
+	// Only firelocks have a special secondary usage for now, might want to make this simply return in the future.
+
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
 	if(!user.combat_mode && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		var/forced_open = FALSE
@@ -246,7 +250,7 @@
 		if(istype(weapon, /obj/item/crowbar))
 			var/obj/item/crowbar/crowbar = weapon
 			forced_open = crowbar.force_opens
-		try_to_crowbar(weapon, user, forced_open, secondary = TRUE)
+		try_to_crowbar_secondary(weapon, user, forced_open)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

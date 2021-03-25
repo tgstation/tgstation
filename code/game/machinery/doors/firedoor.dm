@@ -131,25 +131,29 @@
 		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
 		update_appearance()
 
-/obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user, var/secondary = FALSE)
+/obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
 	if(welded || operating)
 		return
 
 	if(density)
-		if(!secondary)
-			being_held_open = TRUE
-			open()
-			handle_held_open_adjacency(user)
-		else
-			open()
-			
+		being_held_open = TRUE
+		open()
+		handle_held_open_adjacency(user)
+	else
+		close()
+
+/obj/machinery/door/firedoor/try_to_crowbar_secondary(obj/item/I, mob/user)
+	if(welded || operating)
+		return
+
+	if(density)
+		open()
 	else
 		close()
 
 /obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
-	var/distance = get_dist(user, src)
 	var/mob/living/living_user = isliving(user) ? user : null
-	if(distance>1 || !isliving(user) || !living_user.is_standing())
+	if(!Adjacent(user) || !isliving(user) || !living_user.is_standing())
 		being_held_open = FALSE
 		close()
 		return
