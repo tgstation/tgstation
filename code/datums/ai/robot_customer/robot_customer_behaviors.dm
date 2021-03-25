@@ -31,8 +31,8 @@
 		finish_action(controller, TRUE)
 		return
 
-	// At 8 SECONDS action_cooldown, DT_PROB 0.15 equates to prob(11.316) or ~11% chance every 8 seconds.
-	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || DT_PROB(0.15, action_cooldown))
+	// DT_PROB 1.5 equates to approx 60% chance per minute.
+	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || DT_PROB(1.5, delta_time))
 		customer_pawn.say(pick(customer_data.cant_find_seat_lines))
 		controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] = TRUE
 
@@ -68,12 +68,13 @@
 		finish_action(controller, TRUE)
 		return
 
-	controller.blackboard[BB_CUSTOMER_PATIENCE] -= delta_time
+	controller.blackboard[BB_CUSTOMER_PATIENCE] -= delta_time * 10 // Convert delta_time to a SECONDS equivalent.
 	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_CUSTOMER_LEAVING]) // Check if we're leaving because sometthing mightve forced us to
 		finish_action(controller, FALSE)
 		return
 
-	if(DT_PROB(0.1, delta_time))
+	// DT_PROB 0.85 equates to approx 40% chance per minute.
+	if(DT_PROB(0.85, delta_time))
 		var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 		customer_pawn.say(pick(customer_data.wait_for_food_lines))
@@ -82,7 +83,6 @@
 		var/obj/structure/chair/my_seat = locate(/obj/structure/chair) in get_turf(controller.pawn)
 		if(my_seat)
 			controller.pawn.setDir(my_seat.dir) //Sit in your seat
-
 
 	///Now check if theres a meal infront of us.
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]

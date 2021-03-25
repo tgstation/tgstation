@@ -113,17 +113,17 @@ have ways of interacting with a specific atom and control it. They posses a blac
 			if(current_behavior.required_distance >= get_dist(pawn, current_movement_target)) ///Are we close enough to engage?
 				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.else
 					ai_movement.stop_moving_towards(src)
-				current_behavior.perform(delta_time, src)
+				current_behavior.perform(current_behavior.action_cooldown ? current_behavior.action_cooldown * 0.1 : delta_time, src)
 				return
 
 			else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
 				ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
 
 			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
-				current_behavior.perform(delta_time, src)
+				current_behavior.perform(current_behavior.action_cooldown ? current_behavior.action_cooldown * 0.1 : delta_time, src)
 				return
 		else //No movement required
-			current_behavior.perform(delta_time, src)
+			current_behavior.perform(current_behavior.action_cooldown ? current_behavior.action_cooldown * 0.1 : delta_time, src)
 			return
 
 
