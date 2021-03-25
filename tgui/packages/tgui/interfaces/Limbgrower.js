@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Section, Divider, Tabs, LabeledList, Flex } from '../components';
+import { Box, Button, Section, Divider, Tabs, LabeledList, Flex, Dimmer, Icon } from '../components';
 import { Window } from '../layouts';
 
 export const Limbgrower = (props, context) => {
@@ -9,6 +9,7 @@ export const Limbgrower = (props, context) => {
     total_reagents,
     max_reagents,
     categories = [],
+    busy,
   } = data;
   const [tab, setTab] = useSharedState(context, 'category', categories[0]?.name);
   const designList = categories.find(category => category.name === tab)?.designs
@@ -18,6 +19,12 @@ export const Limbgrower = (props, context) => {
       width={400}
       height={550}
       title="Limb Grower">
+      {!!busy && (
+        <Dimmer fontSize="32px">
+          <Icon name="cog" spin={1} />
+          {' Building limb...'}
+        </Dimmer>
+      )}
       <Window.Content scrollable>
         <Section title="Reagents">
           <Flex direction="column">
@@ -26,11 +33,13 @@ export const Limbgrower = (props, context) => {
             </Flex.Item>
             <Flex.Item>
               <LabeledList>
-                {reagents.map(reagent => (
+                {reagents.len && reagents.map(reagent => (
                   <LabeledList.Item
                     label={reagent.reagent_name}
                     buttons={(
-                      <Button
+                      <Button.Confirm
+                        textAlign="center"
+                        width="120px"
                         content="Remove Reagent"
                         color="bad"
                         onClick={() => act('empty_reagent', {reagent_type: reagent.reagent_type})} />)} >
@@ -52,10 +61,7 @@ export const Limbgrower = (props, context) => {
                   <Tabs.Tab
                     fluid
                     selected={tab === category.name}
-                    onClick={() => {
-                      act("updated_active_tab", {active_tab: category.name});
-                      setTab(category.name);
-                    }}>
+                    onClick={() => setTab(category.name)}>
                     {category.name}
                   </Tabs.Tab>
                 ))}
@@ -70,7 +76,10 @@ export const Limbgrower = (props, context) => {
                         <Button
                           content="Make"
                           color="good"
-                          onClick={() => act('make_limb', {design_id: design.id})}/>
+                          onClick={() => act('make_limb', {
+                            design_id: design.id,
+                            active_tab: design.parent_category,
+                          })}/>
                         )}>
                       {design.needed_reagents.map(reagent => (
                         <Box>

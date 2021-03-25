@@ -27,9 +27,9 @@
 	var/list/categories = list("human", "lizard", "moth", "plasmaman", "ethereal", "other")
 
 /obj/machinery/limbgrower/Initialize()
-	. = ..()
 	create_reagents(100, OPENCONTAINER)
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
+	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
 
 /obj/machinery/limbgrower/ui_interact(mob/user, datum/tgui/ui)
@@ -49,12 +49,13 @@
 		var/list/reagent_data = list(
 			reagent_name = reagent_id.name,
 			reagent_amount = reagent_id.volume,
-			reagent_type = reagent_id
+			reagent_type = reagent_id.type
 		)
 		data["reagents"] += list(reagent_data)
 
 	data["total_reagents"] = reagents.total_volume
 	data["max_reagents"] = reagents.maximum_volume
+	data["busy"] = busy
 
 	return data
 
@@ -71,12 +72,12 @@
 			if(found_category in limb_design.category)
 				species_categories[found_category] += limb_design
 
-	for(var/all_category in species_categories)
+	for(var/category in species_categories)
 		var/list/category_data = list(
-			name = all_category,
+			name = category,
 			designs = list(),
 		)
-		for(var/datum/design/found_design in species_categories[all_category])
+		for(var/datum/design/found_design in species_categories[category])
 			var/list/all_reagents = list()
 			for(var/reagent_typepath in found_design.reagents_list)
 				var/datum/reagent/reagent_id = new reagent_typepath()
@@ -88,6 +89,7 @@
 				all_reagents += list(reagent_data)
 
 			category_data["designs"] += list(list(
+				parent_category = category,
 				name = found_design.name,
 				id = found_design.id,
 				needed_reagents = all_reagents,
@@ -136,13 +138,10 @@
 		return
 
 	if (busy)
-		to_chat(usr, "<span class=\"alert\">The limb grower is busy. Please wait for completion of previous operation.</span>")
+		to_chat(usr, "<span class='danger'>The limb grower is busy. Please wait for completion of previous operation.</span>")
 		return
 
 	switch(action)
-
-		if("update_active_tab")
-			selected_category = params["active_tab"]
 
 		if("empty_reagent")
 			reagents.del_reagent(text2path(params["reagent_type"]))
@@ -158,7 +157,7 @@
 			/// The amount of power we're going to use, based on how much reagent we use.
 			var/power = 0
 
-			for(var/datum/reagent/reagent_id in consumed_reagents_list)
+			for(var/reagent_id in consumed_reagents_list)
 				consumed_reagents_list[reagent_id] *= production_coefficient
 				if(!reagents.has_reagent(reagent_id, consumed_reagents_list[reagent_id]))
 					audible_message("<span class='notice'>The [src] buzzes.</span>")
@@ -171,6 +170,7 @@
 			use_power(power)
 			flick("limbgrower_fill",src)
 			icon_state = "limbgrower_idleon"
+			selected_category = params["active_tab"]
 			addtimer(CALLBACK(src, .proc/build_item, consumed_reagents_list), production_speed * production_coefficient)
 			. = TRUE
 
@@ -186,7 +186,7 @@
  * modified_consumed_reagents_list - the list of reagents we will consume on build, modified by the production coefficient.
  */
 /obj/machinery/limbgrower/proc/build_item(list/modified_consumed_reagents_list)
-	for(var/datum/reagent/reagent_id in modified_consumed_reagents_list)
+	for(var/reagent_id in modified_consumed_reagents_list)
 		if(!reagents.has_reagent(reagent_id, modified_consumed_reagents_list[reagent_id]))
 			audible_message("<span class='notice'>The [src] buzzes.</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)

@@ -116,6 +116,7 @@
 	build_path = /obj/item/organ/tongue
 	category = list("human","initial")
 
+// Grows a fake lizard tail - not usable in lizard wine and other similar recipes.
 /datum/design/lizard_tail
 	name = "Lizard Tail"
 	id = "liztail"
@@ -138,7 +139,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/tail/monkey
-	category = list("other")
+	category = list("other","initial")
 
 /datum/design/cat_tail
 	name = "Cat Tail"
@@ -204,6 +205,7 @@
 	build_path = /obj/item/organ/tongue/ethereal
 	category = list("ethereal")
 
+// Not growable by normal means.
 /datum/design/ethereal_heart
 	name = "Crystal Core"
 	id = "etherealheart"
@@ -231,8 +233,10 @@
 	. = ..()
 	max_blueprints = limb_designs.len
 	var/blueprint_num = 1
-	for(var/datum/design/design in limb_designs)
-		blueprints[blueprint_num] = new design()
+	for(var/design in limb_designs)
+		message_admins("Adding [design] to [blueprint_num]")
+		var/datum/design/new_design = design
+		blueprints[blueprint_num] = new new_design
 		blueprint_num++
 
 /datum/design/limb_disk
@@ -240,7 +244,7 @@
 	desc = "Limb designs but you shouldn't see this!"
 	id = "limbdesign_parent"
 	build_type = PROTOLATHE
-	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
+	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	build_path = /obj/item/disk/design_disk/limbs
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -277,10 +281,10 @@
 
 /obj/item/disk/design_disk/limbs/ethereal
 	name = "Ethereal Limb Design Disk"
-	limb_designs = list(/datum/design/ethereal_heart, /datum/design/ethereal_stomach, /datum/design/ethereal_tongue)
+	limb_designs = list(/datum/design/ethereal_stomach, /datum/design/ethereal_tongue)
 
 /datum/design/limb_disk/ethereal
 	name = "Ethereal Limb Design Disk"
-	desc = "Contains designs for ethereal organs for the limbgrower - Ethereal tongue, stomach, and heart."
+	desc = "Contains designs for ethereal organs for the limbgrower - Ethereal tongue and stomach."
 	id = "limbdesign_ethereal"
 	build_path = /obj/item/disk/design_disk/limbs/ethereal
