@@ -150,7 +150,7 @@
 	return TRUE
 
 /atom/movable/screen/inventory/MouseEntered(location, control, params)
-	..()
+	. = ..()
 	add_overlays()
 
 /atom/movable/screen/inventory/MouseExited()
