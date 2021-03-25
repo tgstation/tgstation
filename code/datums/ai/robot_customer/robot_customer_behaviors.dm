@@ -31,7 +31,7 @@
 		finish_action(controller, TRUE)
 		return
 
-	// DT_PROB 1.5 equates to approx 60% chance per minute.
+	// DT_PROB 1.5 is about a 60% chance that the tourist will have vocalised at least once every minute.
 	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || DT_PROB(1.5, delta_time))
 		customer_pawn.say(pick(customer_data.cant_find_seat_lines))
 		controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] = TRUE
@@ -73,7 +73,7 @@
 		finish_action(controller, FALSE)
 		return
 
-	// DT_PROB 0.85 equates to approx 40% chance per minute.
+	// DT_PROB 1.5 is about a 40% chance that the tourist will have vocalised at least once every minute.
 	if(DT_PROB(0.85, delta_time))
 		var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
