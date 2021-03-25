@@ -61,4 +61,4 @@
 
 /// Used as a callback proc by handle_forced_open_adjacency under firedoor.dm
 /mob/living/proc/is_standing()
-	return (body_position == STANDING_UP)
+	return body_position == STANDING_UP
