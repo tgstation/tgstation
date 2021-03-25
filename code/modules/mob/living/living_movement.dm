@@ -58,3 +58,7 @@
 	if(stat > SOFT_CRIT)
 		return
 	return ..()
+
+/// Used as a callback proc by handle_forced_open_adjacency under firedoor.dm
+/mob/living/proc/is_standing()
+	return (body_position == STANDING_UP)

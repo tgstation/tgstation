@@ -24,6 +24,7 @@
 	var/nextstate = null
 	var/boltslocked = TRUE
 	var/list/affecting_areas
+	var/being_held_open = FALSE
 
 /obj/machinery/door/firedoor/Initialize()
 	. = ..()
@@ -130,14 +131,35 @@
 		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
 		update_appearance()
 
-/obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
+/obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user, secondary = FALSE)
 	if(welded || operating)
 		return
 
 	if(density)
-		open()
+		if(!secondary)
+			being_held_open = TRUE
+			open()
+			handle_held_open_adjacency(user)
+		else
+			open()
+			
 	else
 		close()
+
+/obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
+	var/distance = get_dist(user, src)
+	var/mob/living/living_user = isliving(user) ? user : null
+	if(distance>1 || !isliving(user) || !living_user.is_standing())
+		being_held_open = FALSE
+		close()
+		return
+
+	if (!do_after(living_user, 30 SECONDS, src, progress=FALSE, extra_checks = CALLBACK(living_user, /mob/living/.proc/is_standing)))
+		handle_held_open_adjacency(living_user)
+	
+	being_held_open = FALSE
+	close()
+	return
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)

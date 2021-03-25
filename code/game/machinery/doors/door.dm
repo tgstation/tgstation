@@ -246,7 +246,7 @@
 		if(istype(weapon, /obj/item/crowbar))
 			var/obj/item/crowbar/crowbar = weapon
 			forced_open = crowbar.force_opens
-		try_to_crowbar(weapon, user, forced_open)
+		try_to_crowbar(weapon, user, forced_open, secondary = TRUE)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
