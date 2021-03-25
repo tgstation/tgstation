@@ -95,7 +95,6 @@
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	rift = new
 	rift.Grant(src)
-	SSshuttle.registerHostileEnvironment(src)
 
 /mob/living/simple_animal/hostile/space_dragon/Login()
 	. = ..()
@@ -113,7 +112,7 @@
 		visible_message("<span class='danger'>[src] vomits up [consumed_mob]!</span>")
 		consumed_mob.forceMove(loc)
 		consumed_mob.Paralyze(50)
-	if(rifts_charged == 3 && !objective_complete)
+	if((rifts_charged == 3 || SSshuttle.emergency.mode == SHUTTLE_DOCKED) && !objective_complete)
 		victory()
 	if(riftTimer == -1)
 		return
@@ -121,7 +120,7 @@
 	if(riftTimer == (maxRiftTimer - 60))
 		to_chat(src, "<span class='boldwarning'>You have a minute left to summon the rift!  Get to it!</span>")
 		return
-	if(riftTimer == maxRiftTimer)
+	if(riftTimer >= maxRiftTimer)
 		to_chat(src, "<span class='boldwarning'>You've failed to summon the rift in a timely manner!  You're being pulled back from whence you came!</span>")
 		destroy_rifts()
 		playsound(src, 'sound/magic/demon_dies.ogg', 100, TRUE)
@@ -400,10 +399,9 @@
 /mob/living/simple_animal/hostile/space_dragon/proc/destroy_rifts()
 	rifts_charged = 0
 	add_movespeed_modifier(/datum/movespeed_modifier/dragon_depression)
-	maxRiftTimer = -1
+	riftTimer = -1
 	tiredness_mult = 5
 	playsound(src, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
-	SSshuttle.clearHostileEnvironment(src)
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.dragon = null
 		rift_list -= rift
@@ -458,6 +456,7 @@
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/victory()
 	objective_complete = TRUE
+	rift_empower(TRUE, TRUE)
 	var/datum/antagonist/space_dragon/S = mind.has_antag_datum(/datum/antagonist/space_dragon)
 	if(S)
 		var/datum/objective/summon_carp/main_objective = locate() in S.objectives
@@ -467,7 +466,7 @@
 	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg')
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.carp_stored = 999999
-	SSshuttle.clearHostileEnvironment(src)
+		rift.time_charged = rift.max_charge
 
 /datum/action/innate/summon_rift
 	name = "Summon Rift"
@@ -480,7 +479,7 @@
 	var/mob/living/simple_animal/hostile/space_dragon/S = owner
 	if(S.using_special)
 		return
-	if(S.maxRiftTimer == -1)
+	if(S.riftTimer == -1)
 		to_chat(S, "<span class='warning'>Your death has left you unable to summon rifts!</span>")
 	var/area/A = get_area(S)
 	if(!(A.area_flags & VALID_TERRITORY))
@@ -626,13 +625,11 @@
 		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
-		if(dragon.rifts_charged != 3)
+		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
 			dragon.rift = new
 			dragon.rift.Grant(dragon)
 			dragon.riftTimer = 0
 			dragon.rift_empower(TRUE, FALSE)
-		else
-			dragon.rift_empower(TRUE, TRUE)
 		// Early return, nothing to do after this point.
 		return
 
