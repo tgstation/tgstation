@@ -31,7 +31,8 @@
 		finish_action(controller, TRUE)
 		return
 
-	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || DT_PROB(0.1, delta_time))
+	// At 8 SECONDS action_cooldown, DT_PROB 0.15 equates to prob(11.316) or ~11% chance every 8 seconds.
+	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || DT_PROB(0.15, action_cooldown))
 		customer_pawn.say(pick(customer_data.cant_find_seat_lines))
 		controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] = TRUE
 
