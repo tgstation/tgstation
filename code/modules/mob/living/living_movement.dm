@@ -58,7 +58,3 @@
 	if(stat > SOFT_CRIT)
 		return
 	return ..()
-
-/// Check whether the mob is standing or not.
-/mob/living/proc/is_standing()
-	return body_position == STANDING_UP

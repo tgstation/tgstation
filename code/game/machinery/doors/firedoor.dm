@@ -156,7 +156,7 @@
 
 /obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
 	var/mob/living/living_user = user
-	if(Adjacent(user) && isliving(user) && living_user.is_standing())
+	if(Adjacent(user) && isliving(user) && (living_user.body_position == STANDING_UP))
 		return
 	being_held_open = FALSE
 	close()
