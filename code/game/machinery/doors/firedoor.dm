@@ -163,8 +163,6 @@
 	
 	being_held_open = FALSE
 	close()
-	return
-
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
 	if(welded || operating || machine_stat & NOPOWER)
