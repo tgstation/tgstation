@@ -1379,7 +1379,7 @@
 /area/shuttle/abandoned/bridge)
 "dx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled,

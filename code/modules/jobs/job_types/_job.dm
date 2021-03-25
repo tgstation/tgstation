@@ -43,6 +43,9 @@
 
 	var/outfit = null
 
+	/// The job's outfit that will be assigned for plasmamen.
+	var/plasmaman_outfit = null
+
 	var/exp_requirements = 0
 
 	var/exp_type = ""

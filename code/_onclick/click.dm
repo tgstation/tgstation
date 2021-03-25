@@ -159,7 +159,10 @@
 			else
 				W.afterattack(A,src,0,params)
 		else
-			RangedAttack(A,modifiers)
+			if(LAZYACCESS(modifiers, RIGHT_CLICK))
+				ranged_secondary_attack(A, modifiers)
+			else
+				RangedAttack(A,modifiers)
 
 /// Is the atom obscured by a PREVENT_CLICK_UNDER_1 object above it
 /atom/proc/IsObscured()
@@ -285,6 +288,14 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 
+/**
+ * Ranged secondary attack
+ *
+ * If the same conditions are met to trigger RangedAttack but it is
+ * instead initialized via a right click, this will trigger instead.
+ * Useful for mobs that have their abilities mapped to right click.
+ */
+/mob/proc/ranged_secondary_attack(atom/target, modifiers)
 
 /**
  * Middle click
@@ -327,26 +338,35 @@
 		ML.pulled(src)
 
 /mob/living/CtrlClick(mob/user)
-	if(isliving(user) && Adjacent(user) && !user.incapacitated())
-		if(world.time < user.next_move)
-			return FALSE
-		var/mob/living/user_living = user
-		if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
-			user_living.changeNext_move(CLICK_CD_MELEE)
-			return
-	else
-		..()
+	if(!isliving(user) || !Adjacent(user) || user.incapacitated())
+		return ..()
+
+	if(world.time < user.next_move)
+		return FALSE
+
+	var/mob/living/user_living = user
+	if(user_living.apply_martial_art(src, null, is_grab=TRUE) == MARTIAL_ATTACK_SUCCESS)
+		user_living.changeNext_move(CLICK_CD_MELEE)
+		return TRUE
+
+	return ..()
 
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
-		if(world.time < user.next_move)
-			return FALSE
-		var/mob/living/carbon/human/H = user
-		H.dna.species.grab(H, src, H.mind.martial_art)
-		H.changeNext_move(CLICK_CD_MELEE)
-	else
-		..()
+
+	if(!ishuman(user) ||!Adjacent(user) || user.incapacitated())
+		return ..()
+
+	if(world.time < user.next_move)
+		return FALSE
+
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.dna.species.grab(human_user, src, human_user.mind.martial_art))
+		human_user.changeNext_move(CLICK_CD_MELEE)
+		return TRUE
+
+	return ..()
+
 /**
  * Alt click
  * Unused except for AI

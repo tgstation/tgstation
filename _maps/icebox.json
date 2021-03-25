@@ -51,7 +51,7 @@
 			"spawn_positions": 4
 		},
 		"cook": {
-			"additional_cqc_areas": ["/area/service/kitchen/tourist_seating_area"]
+			"additional_cqc_areas": ["/area/service/kitchen/diner"]
 		}
 	}
 }
