@@ -148,3 +148,6 @@
 #define COMMAND_ATTACK "Attack"
 #define COMMAND_DIE "Play Dead"
 
+///bane ai
+#define BB_BANE_BATMAN "BB_bane_batman"
+//yep thats it
