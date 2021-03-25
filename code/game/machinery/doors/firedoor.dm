@@ -137,10 +137,7 @@
 		return
 
 	if(density)
-		being_held_open = TRUE
 		open()
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
-		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
 	else
 		close()
 
@@ -150,7 +147,10 @@
 		return
 
 	if(density)
+		being_held_open = TRUE
 		open()
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
+		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
 	else
 		close()
 
@@ -160,7 +160,7 @@
 	if(Adjacent(user) && isliving(user) && (living_user.body_position == STANDING_UP))
 		return
 	being_held_open = FALSE
-	close()
+	addtimer(CALLBACK(src, .proc/close), 0.1 SECONDS)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 	
