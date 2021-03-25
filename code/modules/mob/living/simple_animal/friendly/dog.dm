@@ -61,6 +61,15 @@
 	QDEL_NULL(inventory_back)
 	return ..()
 
+/mob/living/simple_animal/pet/dog/corgi/gib()
+	if(inventory_head)
+		inventory_head.forceMove(drop_location())
+		inventory_head = null
+	if(inventory_back)
+		inventory_back.forceMove(drop_location())
+		inventory_back = null
+	return ..()
+
 /mob/living/simple_animal/pet/dog/corgi/handle_atom_del(atom/A)
 	if(A == inventory_head)
 		inventory_head = null
@@ -569,7 +578,7 @@
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		to_chat(usr, "<span class='warning'>You can't fit this on [src]!</span>")
+		to_chat(usr, "<span class='warning'>You can't fit this on [src], [p_they()] [p_are()] too small!</span>")
 		return
 	..()
 

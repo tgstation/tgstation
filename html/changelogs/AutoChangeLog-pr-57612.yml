@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "The interrogation room is now it's own distinct room, with an air alarm and APC like everything else, as opposed to being blobbed together with the rest of the brig."

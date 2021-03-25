@@ -1020,14 +1020,6 @@
 	category = CAT_MISC
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
-/datum/crafting_recipe/multiduct
-	name = "Multi-layer duct"
-	result = /obj/machinery/duct/multilayered
-	time = 5
-	reqs = list(/obj/item/stack/ducts = 5)
-	category = CAT_MISC
-	tool_behaviors = list(TOOL_WELDER)
-
 /datum/crafting_recipe/rib
 	name = "Collosal Rib"
 	always_available = FALSE
