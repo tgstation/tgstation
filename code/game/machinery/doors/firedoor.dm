@@ -131,7 +131,7 @@
 		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
 		update_appearance()
 
-/obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user, secondary = FALSE)
+/obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user, var/secondary = FALSE)
 	if(welded || operating)
 		return
 
