@@ -46,10 +46,7 @@
 	return paper
 
 /obj/item/paper_bin/Destroy()
-	if(LAZYLEN(papers))
-		for(var/paper in papers)
-			qdel(paper)
-		LAZYNULL(papers)
+	QDEL_LIST(papers)
 	. = ..()
 
 /obj/item/paper_bin/dump_contents(atom/droppoint, collapse = FALSE)
