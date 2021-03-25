@@ -1,7 +1,4 @@
 
-#define FIRST_TRUTH_REWARD 3
-#define SECOND_TRUTH_REWARD 6
-
 ///Burdened grants some more mutations upon injuring yourself sufficiently
 /datum/mutation/human/burdened
 	name = "Burdened"
@@ -12,7 +9,7 @@
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel burdened!</span>"
 	text_lose_indication = "<span class='warning'>You no longer feel the need to burden yourself!</span>"
-	//goes from 0 to 6 (but can be beyond 6, just does nothing) and gives rewards. increased by disabling yourself with debuffs
+	/// goes from 0 to 6 (but can be beyond 6, just does nothing) and gives rewards. increased by disabling yourself with debuffs
 	var/burden_level = 0
 
 /datum/mutation/human/burdened/on_acquiring(mob/living/carbon/human/owner)
@@ -48,6 +45,13 @@
 		COMSIG_CARBON_LOSE_TRAUMA,
 		))
 
+/**
+ * Called by hooked signals whenever burden_level var needs to go up or down by 1.
+ * Sends messages on burden level, gives powers and takes them if needed, etc
+ *
+ * Arguments:
+ * * increase: whether to tick burden_level up or down 1
+ */
 /datum/mutation/human/burdened/proc/update_burden(increase)
 	//adjust burden
 	burden_level = increase ? burden_level + 1 : burden_level - 1
@@ -71,7 +75,7 @@
 				dna.remove_mutation(TELEPATHY)
 				dna.remove_mutation(MUT_MUTE)
 				owner.remove_filter("burden_outline")
-		if(FIRST_TRUTH_REWARD)
+		if(3)
 			if(increase)
 				to_chat(owner, "<span class='notice'>Your suffering is only a fraction of [GLOB.deity]'s, and yet the universal truths are coming to you.</span>")
 				dna.add_mutation(TELEPATHY)
@@ -93,13 +97,14 @@
 				dna.remove_mutation(GLOWY)
 				dna.remove_mutation(MINDREAD)
 				owner.remove_filter("burden_rays")
-		if(SECOND_TRUTH_REWARD)
+		if(6)
 			to_chat(owner, "<span class='notice'>You have finally broken yourself enough to understand [GLOB.deity]. It's all so clear to you.</span>")
 			dna.add_mutation(TK)
 			dna.add_mutation(GLOWY)
 			dna.add_mutation(MINDREAD)
 			owner.add_filter("burden_rays", 10, list("type" = "rays", "size" = 35, "color" = "#6c6eff"))
 
+/// Signal to decrease burden_level (see update_burden proc) if an organ is added
 /datum/mutation/human/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
 
@@ -113,6 +118,7 @@
 		return
 	update_burden(FALSE)//working organ
 
+/// Signal to increase burden_level (see update_burden proc) if an organ is removed
 /datum/mutation/human/burdened/proc/organ_removed_burden(mob/burdened, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
 
@@ -126,6 +132,7 @@
 
 	update_burden(TRUE)//lost organ
 
+/// Signal to decrease burden_level (see update_burden proc) if a limb is added
 /datum/mutation/human/burdened/proc/limbs_added_burden(datum/source, obj/item/bodypart/new_limb, special)
 	SIGNAL_HANDLER
 
@@ -133,6 +140,7 @@
 		return
 	update_burden(FALSE)
 
+/// Signal to increase burden_level (see update_burden proc) if a limb is removed
 /datum/mutation/human/burdened/proc/limbs_removed_burden(datum/source, obj/item/bodypart/old_limb, special)
 	SIGNAL_HANDLER
 
@@ -140,16 +148,19 @@
 		return
 	update_burden(TRUE)
 
+/// Signal to increase burden_level (see update_burden proc) if an addiction is added
 /datum/mutation/human/burdened/proc/addict_added_burden(datum/addiction/new_addiction, datum/mind/addict_mind)
 	SIGNAL_HANDLER
 
 	update_burden(TRUE)
 
+/// Signal to decrease burden_level (see update_burden proc) if an addiction is removed
 /datum/mutation/human/burdened/proc/addict_removed_burden(datum/addiction/old_addiction, datum/mind/nonaddict_mind)
 	SIGNAL_HANDLER
 
 	update_burden(FALSE)
 
+/// Signal to increase burden_level (see update_burden proc) if a mutation is added
 /datum/mutation/human/burdened/proc/mutation_added_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type, class)
 	SIGNAL_HANDLER
 
@@ -158,6 +169,7 @@
 	if(initial(mutation_type.quality) == NEGATIVE)
 		update_burden(TRUE)
 
+/// Signal to decrease burden_level (see update_burden proc) if a mutation is removed
 /datum/mutation/human/burdened/proc/mutation_removed_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type)
 	SIGNAL_HANDLER
 
@@ -166,12 +178,14 @@
 	if(initial(mutation_type.quality) == NEGATIVE)
 		update_burden(FALSE)
 
+/// Signal to increase burden_level (see update_burden proc) if a trauma is added
 /datum/mutation/human/burdened/proc/trauma_added_burden(mob/living/carbon/burdened, datum/brain_trauma/trauma_added)
 	SIGNAL_HANDLER
 
 	if(istype(trauma_added, /datum/brain_trauma/severe))
 		update_burden(TRUE)
 
+/// Signal to decrease burden_level (see update_burden proc) if a trauma is removed
 /datum/mutation/human/burdened/proc/trauma_removed_burden(mob/living/carbon/burdened, datum/brain_trauma/trauma_removed)
 	SIGNAL_HANDLER
 

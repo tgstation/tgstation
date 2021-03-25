@@ -1,11 +1,4 @@
 
-/* TODO:
-after someone passes honor checks you still can't attack them --still present? test
-
-finish burden hooks
-
-*/
-
 ///Honorbound prevents you from attacking the unready, the just, or the innocent
 /datum/mutation/human/honorbound
 	name = "Honorbound"
@@ -17,7 +10,8 @@ finish burden hooks
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel honorbound!</span>"
 	text_lose_indication = "<span class='warning'>You feel unshackled from your code of honor!</span>"
-	var/list/guilty = list() //list of guilty people
+	/// list of guilty people
+	var/list/guilty = list()
 
 /datum/mutation/human/honorbound/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -53,8 +47,10 @@ finish burden hooks
 		))
 	. = ..()
 
+/// Signal to see if the mutation allows us to attack a target
 /datum/mutation/human/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, params)
 	SIGNAL_HANDLER
+
 	var/obj/item/weapon = honorbound.get_active_held_item()
 	var/list/modifiers = params2list(params)
 
@@ -70,6 +66,14 @@ finish burden hooks
 	if(!is_honorable(honorbound, clickedmob))
 		return (COMSIG_MOB_CANCEL_CLICKON)
 
+/**
+ * Called by hooked signals whenever someone attacks the person with this mutation
+ * Checks if the attacker should be considered guilty and adds them to the guilty list if true
+ *
+ * Arguments:
+ * * user: person who attacked the honorbound
+ * * declaration: if this wasn't an attack, but instead the honorbound spending favor on declaring this person guilty
+ */
 /datum/mutation/human/honorbound/proc/guilty(mob/living/user, declaration = FALSE)
 	if(user in guilty)
 		return
@@ -85,6 +89,13 @@ finish burden hooks
 	to_chat(user, "<span class='danger'>[GLOB.deity] no longer considers you innocent!</span>")
 	guilty += user
 
+/**
+ * Called by attack_honor signal to check whether an attack should be allowed or not
+ *
+ * Arguments:
+ * * honorbound_human: typecasted owner of mutation
+ * * target_creature: person honorbound_human is attacking
+ */
 /datum/mutation/human/honorbound/proc/is_honorable(mob/living/carbon/human/honorbound_human, mob/living/target_creature)
 	var/is_guilty = (target_creature in guilty)
 	//THE UNREADY (Applies over ANYTHING else!)
@@ -129,13 +140,20 @@ finish burden hooks
 	SIGNAL_HANDLER
 	guilty(attacker)
 
-/datum/mutation/human/honorbound/proc/bullet_guilt(datum/source, obj/projectile/Proj)
+/datum/mutation/human/honorbound/proc/bullet_guilt(datum/source, obj/projectile/proj)
 	SIGNAL_HANDLER
 	var/mob/living/shot_honorbound = source
-	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet) || istype(Proj, /obj/projectile/magic))
-		if((Proj.damage_type != STAMINA))
-			if(!Proj.nodamage && Proj.damage < shot_honorbound.health && isliving(Proj.firer))
-				guilty(Proj.firer)
+	var/guilty_projectiles = typecacheof(list(
+		/obj/projectile/beam,
+		/obj/projectile/bullet,
+		/obj/projectile/magic,
+		))
+	if(!is_type_in_typecache(proj, guilty_projectiles))
+		return
+	if((proj.damage_type == STAMINA))
+		return
+	if(!proj.nodamage && proj.damage < shot_honorbound.health && isliving(proj.firer))
+		guilty(proj.firer)
 
 /datum/mutation/human/honorbound/proc/thrown_guilt(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
@@ -157,12 +175,15 @@ finish burden hooks
 	var/obj/item/gun/magic/offending_staff = gun_fired
 	punishment(user, offending_staff.school)
 
+/**
+ * Called when a spell is casted or a magic gun is fired, checks the signal and punishes accordingly
+ *
+ * Arguments:
+ * * user: typecasted owner of mutation
+ * * school: school of magic casted from the staff/spell
+ */
 /datum/mutation/human/honorbound/proc/punishment(mob/living/carbon/human/user, school)
 	switch(school)
-		if(SCHOOL_EVOCATION, SCHOOL_TRANSMUTATION, SCHOOL_CONJURATION, SCHOOL_TRANSMUTATION)
-			to_chat(user, "<span class='userdanger'>[GLOB.deity] is angered by your use of [school] magic!</span>")
-			lightningbolt(user)
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN)
 			to_chat(user, "<span class='userdanger'>[GLOB.deity] is enraged by your use of forbidden magic!</span>")
 			lightningbolt(user)
@@ -170,6 +191,10 @@ finish burden hooks
 			user.dna.remove_mutation(HONORBOUND)
 			user.mind.holy_role = NONE
 			to_chat(user, "<span class='userdanger'>You have been excommunicated! You are no longer holy!</span>")
+		else
+			to_chat(user, "<span class='userdanger'>[GLOB.deity] is angered by your use of [school] magic!</span>")
+			lightningbolt(user)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 
 /datum/mutation/human/honorbound/proc/lightningbolt(mob/living/user)
 	var/turf/lightning_source = get_step(get_step(user, NORTH), NORTH)

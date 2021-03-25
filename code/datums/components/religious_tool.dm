@@ -55,6 +55,9 @@
 /datum/component/religious_tool/proc/AttemptActions(datum/source, obj/item/the_item, mob/living/user)
 	SIGNAL_HANDLER
 
+	if(istype(the_item, catalyst_type))
+		ui_interact(user)
+
 	/**********Sect Selection**********/
 	if(!SetGlobalToLocal())
 		if(!(operation_flags & RELIGION_TOOL_SECTSELECT))
@@ -76,6 +79,31 @@
 			return
 		easy_access_sect.on_sacrifice(the_item,user)
 		return COMPONENT_NO_AFTERATTACK
+
+/datum/component/religious_tool/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ReligiousTool")
+		ui.open()
+	return COMPONENT_NO_AFTERATTACK
+
+/datum/component/religious_tool/ui_state(mob/user)
+	if(!iscarbon(user))
+		return UI_CLOSE
+	var/mob/living/carbon/carbon = user
+	if(!carbon.is_holding_item_of_type(catalyst_type))
+		return UI_CLOSE
+	return ..() //default state if addditional checks pass
+
+/datum/component/religious_tool/ui_data(mob/user)
+	var/list/data = list()
+	//cannot find global vars, so lets offer options
+	if(!SetGlobalToLocal())
+
+	data["can_select_sect"] = (operation_flags & RELIGION_TOOL_SECTSELECT)
+	data["can_invoke_rite"] = (operation_flags & RELIGION_TOOL_INVOKE)
+	data["can_sacrifice_item"] = (operation_flags & RELIGION_TOOL_SACRIFICE)
+
 
 /// Select the sect, called async from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/select_sect(mob/living/user)
@@ -136,7 +164,7 @@
  * Generates a list of available sects to the user. Intended to support custom-availability sects. Because these are not instanced, we cannot put the availability on said sect beyond variables.
  */
 /datum/component/religious_tool/proc/generate_available_sects(mob/user)
-	. = list()
+	var/list/sects_to_pick = list()
 	var/human_highpriest = ishuman(user)
 	var/mob/living/carbon/human/highpriest = user
 	for(var/path in subtypesof(/datum/religion_sect))

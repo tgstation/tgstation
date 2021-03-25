@@ -106,10 +106,10 @@
 /datum/religion_sect/proc/on_riteuse(mob/living/user, atom/religious_tool)
 
 /// Replaces the bible's bless mechanic. Return TRUE if you want to not do the brain hit.
-/datum/religion_sect/proc/sect_bless(mob/living/chap, mob/living/user)
-	if(!ishuman(chap))
+/datum/religion_sect/proc/sect_bless(mob/living/target, mob/living/chap)
+	if(!ishuman(target))
 		return FALSE
-	var/mob/living/carbon/human/blessed = chap
+	var/mob/living/carbon/human/blessed = target
 	for(var/X in blessed.bodyparts)
 		var/obj/item/bodypart/bodypart = X
 		if(bodypart.status == BODYPART_ROBOTIC)
@@ -149,21 +149,21 @@
 	rites_list = list(/datum/religion_rites/synthconversion)
 	altar_icon_state = "convertaltar-blue"
 
-/datum/religion_sect/mechanical/sect_bless(mob/living/chap, mob/living/user)
-	if(iscyborg(chap))
-		var/mob/living/silicon/robot/R = chap
+/datum/religion_sect/mechanical/sect_bless(mob/living/target, mob/living/chap)
+	if(iscyborg(target))
+		var/mob/living/silicon/robot/R = target
 		var/charge_amt = 50
-		if(chap.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
+		if(target.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
 			charge_amt *= 2
 		R.cell?.charge += charge_amt
-		R.visible_message("<span class='notice'>[user] charges [R] with the power of [GLOB.deity]!</span>")
+		R.visible_message("<span class='notice'>[chap] charges [R] with the power of [GLOB.deity]!</span>")
 		to_chat(R, "<span class='boldnotice'>You are charged by the power of [GLOB.deity]!</span>")
 		SEND_SIGNAL(R, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
-		playsound(user, 'sound/effects/bang.ogg', 25, TRUE, -1)
+		playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 		return TRUE
-	if(!ishuman(chap))
+	if(!ishuman(target))
 		return
-	var/mob/living/carbon/human/blessed = chap
+	var/mob/living/carbon/human/blessed = target
 
 	//first we determine if we can charge them
 	var/did_we_charge = FALSE
@@ -220,7 +220,7 @@
 	altar_icon_state = "convertaltar-red"
 
 //candle sect bibles don't heal or do anything special apart from the standard holy water blessings
-/datum/religion_sect/pyre/sect_bless(mob/living/blessed, mob/living/user)
+/datum/religion_sect/pyre/sect_bless(mob/living/target, mob/living/chap)
 	return TRUE
 
 /datum/religion_sect/pyre/on_sacrifice(obj/item/candle/offering, mob/living/user)
@@ -249,7 +249,7 @@
 /datum/religion_sect/greed/tool_examine(mob/living/holy_creature) //display money policy
 	return "<span class='notice'>In the eyes of [GLOB.deity], your <b>wealth</b> is your favor.</span>"
 
-/datum/religion_sect/greed/sect_bless(mob/living/blessed_living, mob/living/user)
+/datum/religion_sect/greed/sect_bless(mob/living/blessed_living, mob/living/chap)
 	var/datum/bank_account/account = user.get_bank_account()
 	if(!account)
 		to_chat(user, "<span class='warning'>You need a way to pay for the heal!</span>")
@@ -257,13 +257,14 @@
 	if(account.account_balance < GREEDY_HEAL_COST)
 		to_chat(user, "<span class='warning'>Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!</span>")
 		return TRUE
+	if(!ishuman(blessed_living))
+		return FALSE
 	var/mob/living/carbon/human/blessed = blessed_living
 	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
 		if(robolimb.status == BODYPART_ROBOTIC)
 			to_chat(user, "<span class='warning'>[GLOB.deity] refuses to heal this metallic taint!</span>")
 			return TRUE
-	if(!ishuman(blessed_living))
-		return FALSE
+
 	account.adjust_money(-GREEDY_HEAL_COST)
 	var/heal_amt = 30
 	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
@@ -358,7 +359,7 @@
 	rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/adapted_eyes, /datum/religion_rites/adapted_food, /datum/religion_rites/ritual_totem)
 	desired_items = list(/obj/item/reagent_containers)
 
-/datum/religion_sect/maintenance/sect_bless(mob/living/blessed_living, mob/living/user)
+/datum/religion_sect/maintenance/sect_bless(mob/living/blessed_living, mob/living/chap)
 	if(!ishuman(blessed_living))
 		return TRUE
 	var/mob/living/carbon/human/blessed = blessed_living
@@ -366,9 +367,9 @@
 		to_chat(blessed, "<span class='warning'>[GLOB.deity] has already empowered them.</span>")
 		return TRUE
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
-	blessed.visible_message("<span class='notice'>[user] empowers [blessed] with the power of [GLOB.deity]!</span>")
+	blessed.visible_message("<span class='notice'>[chap] empowers [blessed] with the power of [GLOB.deity]!</span>")
 	to_chat(blessed, "<span class='boldnotice'>The power of [GLOB.deity] has made you harder to wound for a while!</span>")
-	playsound(user, "punch", 25, TRUE, -1)
+	playsound(chap, "punch", 25, TRUE, -1)
 	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
 
