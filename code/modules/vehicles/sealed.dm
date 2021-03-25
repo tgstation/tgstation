@@ -2,6 +2,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
+	var/headlights_toggle = FALSE
 
 /obj/vehicle/sealed/generate_actions()
 	. = ..()
@@ -30,8 +31,8 @@
 	. = ..()
 	if(istype(A, /obj/machinery/door))
 		var/obj/machinery/door/conditionalwall = A
-		for(var/m in occupants)
-			conditionalwall.bumpopen(m)
+		for(var/occupant in occupants)
+			conditionalwall.bumpopen(occupant)
 
 /obj/vehicle/sealed/after_add_occupant(mob/M)
 	. = ..()

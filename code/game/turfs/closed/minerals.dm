@@ -162,16 +162,16 @@
 	ScrapeAway()
 
 /turf/closed/mineral/ex_act(severity, target)
-	..()
+	. = ..()
 	switch(severity)
-		if(3)
-			if (prob(75))
-				gets_drilled(null, FALSE)
-		if(2)
-			if (prob(90))
-				gets_drilled(null, FALSE)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gets_drilled(null, FALSE)
+		if(EXPLODE_HEAVY)
+			if(prob(90))
+				gets_drilled(null, FALSE)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				gets_drilled(null, FALSE)
 	return
 
 /turf/closed/mineral/random
@@ -235,6 +235,14 @@
 		/obj/item/stack/ore/uranium = 2, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 4, /obj/item/stack/ore/titanium = 4,
 		/obj/item/stack/ore/silver = 6, /obj/item/stack/ore/plasma = 15, /obj/item/stack/ore/iron = 40,
 		/turf/closed/mineral/gibtonite = 2, /obj/item/stack/ore/bluespace_crystal = 1)
+
+//extremely low chance of rare ores, meant mostly for populating stations with large amounts of asteroid
+/turf/closed/mineral/random/stationside
+	icon_state = "rock_nochance"
+	mineralChance = 4
+	mineralSpawnChanceList = list(
+		/obj/item/stack/ore/uranium = 1, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 3, /obj/item/stack/ore/titanium = 5,
+		/obj/item/stack/ore/silver = 4, /obj/item/stack/ore/plasma = 3, /obj/item/stack/ore/iron = 50)
 
 /turf/closed/mineral/random/volcanic
 	environment_type = "basalt"
@@ -491,6 +499,21 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
+//yoo RED ROCK RED ROCK
+
+/turf/closed/mineral/asteroid
+	name = "iron rock"
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "redrock"
+	smooth_icon = 'icons/turf/walls/red_wall.dmi'
+	base_icon_state = "red_wall"
+
+/turf/closed/mineral/random/stationside/asteroid
+	name = "iron rock"
+	icon = 'icons/turf/mining.dmi'
+	smooth_icon = 'icons/turf/walls/red_wall.dmi'
+	base_icon_state = "red_wall"
+
 //GIBTONITE
 
 /turf/closed/mineral/gibtonite
@@ -651,6 +674,6 @@
 	return
 
 /turf/closed/mineral/strong/ex_act(severity, target)
-	return
+	return FALSE
 
 #undef MINING_MESSAGE_COOLDOWN

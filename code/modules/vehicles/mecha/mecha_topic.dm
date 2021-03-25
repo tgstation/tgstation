@@ -413,7 +413,7 @@
 ///Repairs internal damage if the mech hasn't moved.
 /obj/vehicle/sealed/mecha/proc/stationary_repair(location)
 	if(location == loc)
-		clearInternalDamage(MECHA_INT_CONTROL_LOST)
+		clear_internal_damage(MECHA_INT_CONTROL_LOST)
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Recalibration successful.</span>")
 		log_message("Recalibration of coordination system finished with 0 errors.", LOG_MECHA)
 	else
