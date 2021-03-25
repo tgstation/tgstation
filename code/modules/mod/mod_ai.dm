@@ -61,9 +61,11 @@
 		newaction.Grant(newAI)
 
 /obj/item/mod/control/relaymove(mob/user, direction)
-	if(!COOLDOWN_FINISHED(src, cooldown_mod_move) || user != AI || !wearer || !wearer.has_gravity()|| !active)
+	if(!active || user != AI || !COOLDOWN_FINISHED(src, cooldown_mod_move) || wearer && HAS_TRAIT(wearer, TRAIT_RESTRAINED))
 		return FALSE
-	var/timemodifier = (direction in GLOB.cardinals) ? 2 : 3
+	var/timemodifier = ((direction in GLOB.cardinals) ? 2 : 3) * wearer ? 1 : 2
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
 	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
+	if(!wearer)
+		return step(src, direction)
 	return step(wearer, direction)

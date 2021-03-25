@@ -38,10 +38,10 @@
 	. = ..()
 	if(!.)
 		if(mob_negates_gravity())
-			. = 1
+			. = TRUE
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return ((shoes?.negates_gravity()) || (dna.species.negates_gravity(src)))
+	return (dna.species.negates_gravity(src) || ..())
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()

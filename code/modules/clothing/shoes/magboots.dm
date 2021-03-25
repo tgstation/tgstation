@@ -11,6 +11,17 @@
 	equip_delay_other = 70
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/shoes/magboots/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_FEET)
+		RegisterSignal(user, COMSIG_MOB_GRAVITY, .proc/negates_gravity)
+	else
+		UnregisterSignal(user, COMSIG_MOB_GRAVITY)
+
+/obj/item/clothing/shoes/magboots/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_GRAVITY)
+
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
 	set category = "Object"
@@ -18,7 +29,6 @@
 	if(!can_use(usr))
 		return
 	attack_self(usr)
-
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
 	if(magpulse)
@@ -37,8 +47,11 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/shoes/magboots/negates_gravity()
-	return clothing_flags & NOSLIP
+/obj/item/clothing/shoes/magboots/proc/negates_gravity(datum/source)
+	SIGNAL_HANDLER
+
+	if(magpulse)
+		return COMSIG_MOB_NEGATES_GRAVITY
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	. = ..()

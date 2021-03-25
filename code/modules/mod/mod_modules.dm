@@ -59,7 +59,7 @@
 	return
 
 /obj/item/mod/module/proc/on_select()
-	if(!mod.active)
+	if(!mod.active || mod.activating)
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
@@ -72,7 +72,7 @@
 /obj/item/mod/module/proc/on_activation()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		return FALSE
-	if(!mod.active || !mod.cell?.charge)
+	if(!mod.active || mod.activating || !mod.cell?.charge)
 		return FALSE
 	active = TRUE
 	if(module_type == MODULE_ACTIVE)
@@ -246,8 +246,8 @@
 	name = "MOD health analyzer module"
 	desc = "A module with a microchip health analyzer to instantly scan the wearer's vitals."
 	module_type = MODULE_USABLE
-	complexity = 2
-	active_power_cost = 50
+	complexity = 1
+	use_power_cost = 30
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	var/module_advanced = FALSE
 
@@ -256,3 +256,201 @@
 	if(!.)
 		return
 	healthscan(mod.wearer, mod.wearer, advanced = module_advanced)
+
+/obj/item/mod/module/stealth
+	name = "MOD prototype cloaking module"
+	desc = "A module using prototype cloaking technology to hide the user from plain sight."
+	module_type = MODULE_TOGGLE
+	complexity = 5
+	active_power_cost = 50
+	use_power_cost = 150
+	cooldown_time = 5 SECONDS
+	var/bumpoff = TRUE
+	var/stealth_alpha = 50
+	var/datum/effect_system/spark_spread/spark_system
+
+/obj/item/mod/module/stealth/Initialize()
+	. = ..()
+	spark_system = new
+	spark_system.set_up(2,1,src)
+	spark_system.attach(src)
+
+/obj/item/mod/module/stealth/Destroy()
+	QDEL_NULL(spark_system)
+	return ..()
+
+/obj/item/mod/module/stealth/on_activation()
+	. = ..()
+	if(!.)
+		return
+	if(bumpoff)
+		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, .proc/unstealth)
+	RegisterSignal(mod.wearer, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_unarmed_attack)
+	RegisterSignal(mod.wearer, list(COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
+	RegisterSignal(mod.wearer, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
+	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
+
+/obj/item/mod/module/stealth/on_deactivation()
+	. = ..()
+	if(!.)
+		return
+	if(bumpoff)
+		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
+	UnregisterSignal(mod.wearer, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED))
+	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
+
+/obj/item/mod/module/stealth/proc/unstealth(datum/source)
+	SIGNAL_HANDLER
+
+	to_chat(mod.wearer, "<span class='warning'>[src] gets discharged from contact!</span>")
+	spark_system.start()
+	drain_power(use_power_cost)
+	on_deactivation()
+
+/obj/item/mod/module/stealth/proc/on_unarmed_attack(datum/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return
+	unstealth(source)
+
+/obj/item/mod/module/stealth/proc/on_bullet_act(datum/source, obj/projectile/Proj)
+	SIGNAL_HANDLER
+
+	if(!Proj.nodamage)
+		unstealth(source)
+
+/obj/item/mod/module/stealth/ninja
+	name = "MOD advanced cloaking module"
+	desc = "A module using advanced cloaking technology to hide the user from plain sight."
+	bumpoff = FALSE
+	stealth_alpha = 20
+	active_power_cost = 10
+	use_power_cost = 50
+
+/obj/item/mod/module/jetpack
+	name = "MOD ion jetpack module"
+	desc = "A module that runs a micro-jetpack using a MOD's power cell."
+	module_type = MODULE_TOGGLE
+	complexity = 3
+	active_power_cost = 20
+	use_power_cost = 80
+	var/full_speed = FALSE
+	var/datum/effect_system/trail_follow/ion/ion_trail
+
+/obj/item/mod/module/jetpack/Initialize()
+	. = ..()
+	ion_trail = new
+	ion_trail.auto_process = FALSE
+	ion_trail.set_up(src)
+
+/obj/item/mod/module/jetpack/Destroy()
+	QDEL_NULL(ion_trail)
+	return ..()
+
+/obj/item/mod/module/jetpack/on_activation()
+	. = ..()
+	if(!. || !allow_thrust())
+		return
+	ion_trail.start()
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/move_react)
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
+	if(full_speed)
+		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+
+/obj/item/mod/module/jetpack/on_deactivation(mob/user)
+	. = ..()
+	if(!.)
+		return
+	ion_trail.stop()
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE)
+	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+
+/obj/item/mod/module/jetpack/proc/move_react(mob/user)
+	if(!active)//If jet dont work, it dont work
+		return
+	if(!mod.wearer?.client)//Don't allow jet self using
+		return
+	if(!isturf(mod.wearer.loc))//You can't use jet in nowhere or from mecha/closet
+		return
+	if(!(mod.wearer.movement_type & FLOATING) || mod.wearer.buckled)//You don't want use jet in gravity or while buckled.
+		return
+	if(mod.wearer.pulledby)//You don't must use jet if someone pull you
+		return
+	if(mod.wearer.throwing)//You don't must use jet if you thrown
+		return
+	if(length(mod.wearer.client.keys_held & mod.wearer.client.movement_keys))//You use jet when press keys. yes.
+		allow_thrust()
+
+/obj/item/mod/module/jetpack/proc/pre_move_react(mob/user)
+	ion_trail.oldposition = get_turf(src)
+
+/obj/item/mod/module/jetpack/proc/spacemove_react(mob/user, movement_dir)
+	SIGNAL_HANDLER
+
+	if(active && movement_dir)
+		return COMSIG_MOVABLE_STOP_SPACEMOVE
+
+/obj/item/mod/module/jetpack/proc/allow_thrust()
+	if(!drain_power(use_power_cost))
+		return
+	ion_trail.generate_effect()
+	return TRUE
+
+/obj/item/mod/module/magboot
+	name = "MOD magnetic stability module"
+	desc = "A module granting magnetic stability to the wearer, protecting them from forces pushing them away."
+	module_type = MODULE_TOGGLE
+	complexity = 2
+	active_power_cost = 20
+	var/slowdown_active = 1
+
+/obj/item/mod/module/magboot/on_activation()
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(mod.wearer, COMSIG_MOB_GRAVITY, .proc/negates_gravity)
+	mod.slowdown += slowdown_active
+	mod.wearer.update_equipment_speed_mods()
+	mod.wearer.update_gravity(mod.wearer.has_gravity())
+
+/obj/item/mod/module/magboot/on_deactivation()
+	. = ..()
+	if(!.)
+		return
+	UnregisterSignal(mod.wearer, COMSIG_MOB_GRAVITY)
+	mod.slowdown -= slowdown_active
+	mod.wearer.update_equipment_speed_mods()
+	mod.wearer.update_gravity(mod.wearer.has_gravity())
+
+/obj/item/mod/module/magboot/proc/negates_gravity(datum/source)
+	SIGNAL_HANDLER
+
+	return COMSIG_MOB_NEGATES_GRAVITY
+
+/obj/item/mod/module/holster
+	name = "MOD holster module"
+	desc = "A module that can instantly holster a gun inside the MOD."
+	module_type = MODULE_USABLE
+	complexity = 2
+	use_power_cost = 25
+	var/obj/item/gun/holstered
+
+/obj/item/mod/module/holster/on_use()
+	. = ..()
+	if(!.)
+		return
+	if(!holstered)
+		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
+		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY || holding.weapon_weight > WEAPON_MEDIUM)
+			return
+		if(transferItemToLoc(holding, src, FALSE, FALSE))
+			holstered = holding
+			to_chat(mod.wearer, "<span class='notice'>You holster [holstered].</span>")
+	else
+		if(put_in_active_hand(holstered, FALSE, TRUE))
+			to_chat(mod.wearer, "<span class='notice'>You draw [holstered].</span>")
+			holstered = null

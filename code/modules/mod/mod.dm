@@ -12,6 +12,7 @@
 	icon_state = "control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	strip_delay = 10 SECONDS
 	slowdown = 2
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
 	actions_types = list(/datum/action/item_action/mod/deploy, /datum/action/item_action/mod/activate, /datum/action/item_action/mod/panel)
@@ -116,7 +117,7 @@
 	for(var/obj/item/piece in all_parts)
 		piece.name = "[theme.name] [piece.name]"
 		piece.desc = "[piece.desc] [theme.desc]"
-		piece.armor = theme.armor
+		piece.armor = getArmor(arglist(theme.armor))
 		piece.resistance_flags = theme.resistance_flags
 		piece.max_heat_protection_temperature = theme.max_heat_protection_temperature
 		piece.min_cold_protection_temperature = theme.min_cold_protection_temperature
@@ -162,7 +163,7 @@
 	var/malfunctioning_charge_drain = 0
 	if(malfunctioning)
 		malfunctioning_charge_drain = rand(1,20)
-	cell.charge = max(0, cell.charge - (cell_drain - malfunctioning_charge_drain)*delta_time)
+	cell.charge = max(0, cell.charge - (cell_drain + malfunctioning_charge_drain)*delta_time)
 	for(var/obj/item/mod/module/module in modules)
 		if(malfunctioning && module.active && DT_PROB(5, delta_time))
 			module.on_deactivation()
@@ -291,6 +292,12 @@
 	locked = !locked
 	to_chat(user, "<span class='notice'>You emag [src], [locked ? "locking" : "unlocking"] it.</span>")
 
+/obj/item/mod/control/doStrip(mob/stripper, mob/owner)
+	toggle_activate(stripper, TRUE)
+	for(var/part in modules)
+		conceal(stripper, part)
+	return ..()
+
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
 	if(theme.skins.len <= 1)
 		return FALSE
@@ -367,8 +374,6 @@
 	old_module.forceMove(get_turf(src))
 	modules -= old_module
 	complexity -= old_module.complexity
-	if(old_module.module_type == MODULE_ACTIVE || old_module.module_type == MODULE_TOGGLE)
-		old_module.on_deactivation()
 	old_module.on_uninstall()
 	old_module.mod = null
 
@@ -391,12 +396,15 @@
 	if(newloc == wearer || newloc == src)
 		return
 	if(modules.Find(part))
-		uninstall(part)
+		var/obj/item/mod/module/module = part
+		if(part.module_type == MODULE_TOGGLE || part.module_type == MODULE_ACTIVE)
+			module.on_deactivation()
+		uninstall(module)
 		return
 	if(mod_parts.Find(part))
 		conceal(wearer, part)
 		if(active)
-			toggle_activate(wearer, TRUE)
+			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
 		return
 
 /obj/item/clothing/head/helmet/space/mod
@@ -485,8 +493,8 @@
 /obj/item/clothing/gloves/mod/proc/show_overslot(mob/user)
 	if(!overslot)
 		return
-	if(!user.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
-		user.dropItemToGround(overslot, TRUE, TRUE)
+	user.dropItemToGround(overslot, TRUE, TRUE)
+	user.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE)
 	overslot = null
 
 /obj/item/clothing/shoes/mod
@@ -519,8 +527,8 @@
 /obj/item/clothing/shoes/mod/proc/show_overslot(mob/user)
 	if(!overslot)
 		return
-	if(!user.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
-		user.dropItemToGround(overslot, TRUE, TRUE)
+	user.dropItemToGround(overslot, TRUE, TRUE)
+	user.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE)
 	overslot = null
 
 /obj/item/mod/control/pre_equipped
