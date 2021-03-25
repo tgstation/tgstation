@@ -223,6 +223,7 @@ DEFINE_BITFIELD(mob_biotypes, list(
 	"MOB_ROBOTIC" = MOB_ROBOTIC,
 	"MOB_SPIRIT" = MOB_SPIRIT,
 	"MOB_UNDEAD" = MOB_UNDEAD,
+	"MOB_PLANT" = MOB_PLANT
 ))
 
 DEFINE_BITFIELD(mobility_flags, list(
