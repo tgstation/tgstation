@@ -1,0 +1,6 @@
+author: "Fox-McCloud"
+delete-after: True
+changes: 
+  - rscadd: "Plant-like mobs are now impacted and take damage from plant-b-gone and weedkiller reagents"
+  - rscadd: "Plant-like mobs can be health scanned with a plant analyzer"
+  - rscadd: "Plant-like mobs are impacted by the floral gun in the same manner pod people are"
