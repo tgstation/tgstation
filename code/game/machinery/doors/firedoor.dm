@@ -139,6 +139,8 @@
 	if(density)
 		being_held_open = TRUE
 		open()
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
+		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
 		handle_held_open_adjacency(user)
 	else
 		close()
@@ -161,9 +163,6 @@
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 		return
-
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
-	RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
