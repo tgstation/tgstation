@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - qol: "Added new status bar support for more objects that were previously visible in the old status bar, like action buttons."
