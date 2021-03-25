@@ -7,8 +7,8 @@ export const BigPain = (props, context) => {
 
   return (
     <Window
-      width={500}
-      height={600}>
+      width={380}
+      height={570}>
       <Window.Content>
 
         <Section fill textAlign="center">
@@ -28,17 +28,17 @@ export const BigPain = (props, context) => {
           </Stack>
           <Stack mb={2}>
             <OutfitSlot name="Suit Storage" slot="suit_store" />
-            <OutfitSlot name="Belt" slot="belt" />
+            <OutfitSlot name="Back" slot="back" />
             <OutfitSlot name="ID" slot="id" />
           </Stack>
           <Stack mb={2}>
+            <OutfitSlot name="Belt" slot="belt" />
             <OutfitSlot name="Left Hand" slot="l_hand" />
-            <OutfitSlot name="Back" slot="back" />
             <OutfitSlot name="Right Hand" slot="r_hand" />
           </Stack>
           <Stack>
-            <OutfitSlot name="Left Pocket" slot="l_pocket" />
             <OutfitSlot name="Shoes" icon="socks" slot="shoes" />
+            <OutfitSlot name="Left Pocket" slot="l_pocket" />
             <OutfitSlot name="Right Pocket" slot="r_pocket" />
           </Stack>
         </Section>
