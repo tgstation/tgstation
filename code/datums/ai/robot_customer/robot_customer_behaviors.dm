@@ -31,10 +31,11 @@
 		finish_action(controller, TRUE)
 		return
 
-	if(DT_PROB(0.1, delta_time))
+	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || DT_PROB(0.1, delta_time))
 		customer_pawn.say(pick(customer_data.cant_find_seat_lines))
-	finish_action(controller, FALSE)
+		controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] = TRUE
 
+	finish_action(controller, FALSE)
 
 /datum/ai_behavior/order_food
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
