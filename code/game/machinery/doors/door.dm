@@ -223,8 +223,7 @@
 	return
 
 /obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/I, mob/user)
-	try_to_crowbar(I, user)
-	// Only firelocks have a special secondary usage for now, might want to make this simply return in the future.
+	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
 	if(!user.combat_mode && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))

@@ -131,7 +131,8 @@
 		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
 		update_appearance()
 
-/obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
+/// Closes opened firedoors and 
+/obj/machinery/door/firedoor/try_to_crowbar(obj/item/acting_object, mob/user)
 	if(welded || operating)
 		return
 
@@ -142,7 +143,8 @@
 	else
 		close()
 
-/obj/machinery/door/firedoor/try_to_crowbar_secondary(obj/item/I, mob/user)
+/// A simple toggle for firedoors between on and off
+/obj/machinery/door/firedoor/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
 	if(welded || operating)
 		return
 
