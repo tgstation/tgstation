@@ -25,7 +25,7 @@
 
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
 		return FALSE
-	var/loot = rand(1,21)
+	var/loot = rand(1,20)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)

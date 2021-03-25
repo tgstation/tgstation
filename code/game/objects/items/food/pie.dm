@@ -85,6 +85,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("pie" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/pie/tofupie
 	name = "tofu-pie"
