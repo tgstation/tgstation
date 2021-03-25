@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Plant trash from grown foods (banana peels) now inherit their parent plant's traits properly again."

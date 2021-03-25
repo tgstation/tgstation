@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Only ghosts can see if something is deadchat controlled. Humans are no longer clairvoyant."
