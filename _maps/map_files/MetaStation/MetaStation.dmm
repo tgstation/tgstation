@@ -73283,11 +73283,6 @@
 	name = "Containment Pen #1";
 	req_access_txt = "55"
 	},
-/obj/machinery/door/window/northleft{
-	dir = 4;
-	name = "Containment Pen #1";
-	req_access_txt = "55"
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio1";
 	name = "Xenobio Pen 1 Blast Door"
