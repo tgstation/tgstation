@@ -5,9 +5,9 @@
 
 	methods = INJECT
 
-/datum/component/plumbing/iv_drip/Initialize()
+/datum/component/plumbing/iv_drip/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
 	. = ..()
-	
+
 	recipient_reagents_holder = null
 
 /datum/component/plumbing/iv_drip/RegisterWithParent()

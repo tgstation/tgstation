@@ -352,6 +352,9 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	START_PROCESSING(SSfastprocess, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/machinery/washing_machine/attack_ai_secondary(mob/user, modifiers)
+	return attack_hand_secondary(user, modifiers)
+
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
 	if (!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/iron(drop_location(), 2)

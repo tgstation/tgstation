@@ -16,9 +16,9 @@
 	///where beakers that are already full will be sent
 	var/turf/badspot = null
 
-/obj/machinery/plumbing/bottler/Initialize(mapload, bolt)
+/obj/machinery/plumbing/bottler/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt)
+	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 	setDir(dir)
 
 /obj/machinery/plumbing/bottler/examine(mob/user)
