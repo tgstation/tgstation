@@ -453,6 +453,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
 
+///generic atom traits
+#define DO_NOT_SPLASH "do_not_splash"
+
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
 #define STATUE_MUTE "statue"

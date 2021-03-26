@@ -310,6 +310,9 @@
 ///from base of atom/AltClick(): (/mob)
 #define COMSIG_CLICK_ALT "alt_click"
 	#define COMPONENT_CANCEL_CLICK_ALT (1<<0)
+///from base of atom/alt_click_secondary(): (/mob)
+#define COMSIG_CLICK_ALT_SECONDARY "alt_click_secondary"
+	#define COMPONENT_CANCEL_CLICK_ALT_SECONDARY (1<<0)
 ///from base of atom/CtrlShiftClick(/mob)
 #define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"
 ///from base of atom/MouseDrop(): (/atom/over, /mob/user)
@@ -444,7 +447,8 @@
 ///from base of mob/AltClickOn(): (atom/A)
 #define COMSIG_MOB_ALTCLICKON "mob_altclickon"
 	#define COMSIG_MOB_CANCEL_CLICKON (1<<0)
-
+///from base of mob/alt_click_on_secodary(): (atom/A)
+#define COMSIG_MOB_ALTCLICKON_SECONDARY "mob_altclickon_secondary"
 /// From base of /mob/living/simple_animal/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_PRE_STEP "mob_bot_pre_step"
 	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
