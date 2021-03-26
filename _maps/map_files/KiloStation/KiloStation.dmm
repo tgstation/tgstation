@@ -82707,7 +82707,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)
 "sKH" = (
 /obj/effect/turf_decal/arrows/white,
