@@ -530,7 +530,7 @@
 /datum/status_effect/eigenstasium/on_remove()
 	if(!QDELETED(alt_clone))//catch any stragilers
 		do_sparks(5, FALSE, alt_clone)
-		owner.visible_message("One of the [owner]s suddenly phases out of reality infront of you!")
+		owner.visible_message("One of the [owner]s suddenly phases out of reality in front of you!")
 		QDEL_NULL(alt_clone)
 	return ..()
 
