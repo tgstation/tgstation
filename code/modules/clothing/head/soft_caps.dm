@@ -136,3 +136,10 @@
 	icon_state = "paramedicsoft"
 	soft_type = "paramedic"
 	dog_fashion = null
+
+/obj/item/clothing/head/soft/sec/nemesis
+	name = "operative cap"
+	desc = "A fancy black cap from \"Nemesis Solutions\" with ablative plating."
+	icon_state = "nemesissoft"
+	soft_type = "nemesis"
+	armor = list(MELEE = 20, BULLET = 20, LASER = 35, ENERGY = 50, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50) //Less melee and bullet but nice laser and energy protection.

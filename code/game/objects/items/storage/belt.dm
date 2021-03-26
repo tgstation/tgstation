@@ -266,6 +266,97 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 
+/obj/item/storage/belt/security/nemesis
+	name = "power belt"
+	desc = "A tactical black belt with a blue strip and a battery, designed to be used along with stun gloves"
+	icon_state = "nemesis"
+	worn_icon_state = "nemesis"
+	var/overcharge = 0
+	//Timer for charge depletion
+	var/charge_depletion = 0
+	//Overlay that is added to the owner if overcharged
+	var/mutable_appearance/mob_overlay
+
+
+/obj/item/storage/belt/security/nemesis/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 7
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.set_holdable(list(
+		/obj/item/nemesis_mine,
+		/obj/item/nemesis_trap,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash/handheld,
+		/obj/item/clothing/glasses,
+		/obj/item/food/donut,
+		/obj/item/kitchen/knife/combat,
+		/obj/item/flashlight/seclite,
+		/obj/item/radio,
+		/obj/item/clothing/gloves,
+		/obj/item/restraints/legcuffs/bola
+		))
+
+/obj/item/storage/belt/security/nemesis/full/PopulateContents()
+	new /obj/item/nemesis_mine(src)
+	new /obj/item/nemesis_mine(src)
+	new /obj/item/nemesis_mine(src)
+	new /obj/item/nemesis_trap(src)
+	new /obj/item/nemesis_trap(src)
+	new /obj/item/restraints/handcuffs(src)
+	new /obj/item/restraints/legcuffs/bola(src)
+
+/obj/item/storage/belt/security/nemesis/Initialize()
+	. = ..()
+	mob_overlay = mutable_appearance('icons/effects/effects.dmi', "overcharged", BELOW_MOB_LAYER)
+
+/obj/item/storage/belt/security/nemesis/proc/update_charge(var/charge = 0)
+	var/charge_icon = 0
+	if((charge + overcharge) / NEMESIS_MAX_CHARGE >= 1)
+		charge_icon = 100
+	else if((charge + overcharge) / NEMESIS_MAX_CHARGE >= 0.75)
+		charge_icon = 75
+	else if((charge + overcharge) / NEMESIS_MAX_CHARGE >= 0.5)
+		charge_icon = 50
+	else if((charge + overcharge) / NEMESIS_MAX_CHARGE >= 0.25)
+		charge_icon = 25
+	icon_state = "nemesis[charge_icon]"
+	worn_icon_state = "nemesis[charge_icon]"
+	update_icon()
+
+	if(charge + overcharge > 0)
+		START_PROCESSING(SSobj, src)
+
+	if(overcharge)
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			H.overlays += mob_overlay
+			H.update_appearance()
+	else
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			H.overlays -= mob_overlay
+			H.update_appearance()
+
+/obj/item/storage/belt/security/nemesis/process(delta_time)
+	charge_depletion++
+	if(charge_depletion >= 5 SECONDS)
+		charge_depletion = 0
+		if(overcharge)
+			overcharge--
+		else
+			if(ishuman(loc))
+				var/mob/living/carbon/human/H = loc
+				if(istype(H.get_item_by_slot(ITEM_SLOT_GLOVES), /obj/item/clothing/gloves/rapid/nemesis))
+					var/obj/item/clothing/gloves/rapid/nemesis/gloves = H.get_item_by_slot(ITEM_SLOT_GLOVES)
+					gloves.lose_charge()
+					if(!gloves.charge)
+						STOP_PROCESSING(SSobj, src)
+			else
+				STOP_PROCESSING(SSobj, src)
+		update_charge()
+
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
 	desc = "A versatile chest rig, cherished by miners and hunters alike."

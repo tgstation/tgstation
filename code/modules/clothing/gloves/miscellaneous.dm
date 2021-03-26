@@ -183,3 +183,123 @@
 	name = "CentCom intern envirogloves"
 	icon_state = "internplasma"
 	inhand_icon_state = "internplasma"
+
+//Nemesis Solutions Gloves
+
+/obj/item/clothing/gloves/rapid/nemesis
+	name = "rapid stun gloves"
+	desc = "A pair of high-tech gloves with \"Nemesis Solutions\" written on the inside."
+	icon_state = "nemesis"
+	inhand_icon_state = "black"
+	transfer_prints = FALSE
+
+	var/charge = 0
+	var/datum/martial_art/nemesis/style
+	//To prevent spam from overcharge warnings
+	var/antispam = 0
+
+	var/obj/item/shield/energy/nemesis/shield
+
+/obj/item/clothing/gloves/rapid/nemesis/Initialize()
+	. = ..()
+	var/datum/component/wearertargeting/punchcooldown/punch_cooldown = GetComponent(/datum/component/wearertargeting/punchcooldown)
+	punch_cooldown.warcry = null
+	punch_cooldown.UnregisterSignal(src, COMSIG_ITEM_ATTACK_SELF)
+	style = new()
+	shield = new(src)
+
+/obj/item/clothing/gloves/rapid/nemesis/equipped(mob/user, slot)
+	. = ..()
+
+	if(!ishuman(user))
+		return
+
+	if(slot == ITEM_SLOT_GLOVES)
+		var/mob/living/student = user
+		style.teach(student, 1)
+
+/obj/item/clothing/gloves/rapid/nemesis/dropped(mob/user)
+	. = ..()
+
+	if(!ishuman(user))
+		return
+
+	var/mob/living/owner = user
+	style.remove(owner)
+
+/obj/item/clothing/gloves/rapid/nemesis/proc/lose_charge(amount_to_lose = 1)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(istype(H.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/storage/belt/security/nemesis)) //Just in case you somehow get rid of the belt while using nemesis suit
+			var/obj/item/storage/belt/security/nemesis/belt = H.get_item_by_slot(ITEM_SLOT_BELT)
+			for(var/tick = 1 to amount_to_lose)
+				if(belt.overcharge)
+					belt.overcharge--
+					amount_to_lose--
+				else
+					break
+	charge = max(0, charge - amount_to_lose)
+	update_charge()
+
+/obj/item/clothing/gloves/rapid/nemesis/proc/gain_charge(amount_to_gain = 1)
+	charge += amount_to_gain
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(charge > NEMESIS_MAX_CHARGE) //Overcharge will be turned into stamina damage and stored in the belt. Use your brain and gadgets, not gloves only
+
+			H.apply_damage(5 * (charge - NEMESIS_MAX_CHARGE), STAMINA)
+
+			if(world.time > antispam + 10 SECONDS)
+				antispam = world.time
+				to_chat(H, "<span class='userdanger'>OVERCHARGE DETECTED. Process to deplete the charge to avoid possible shocks.</span>")
+
+			if(istype(H.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/storage/belt/security/nemesis))
+				var/obj/item/storage/belt/security/nemesis/belt = H.get_item_by_slot(ITEM_SLOT_BELT)
+				belt.overcharge += (charge - NEMESIS_MAX_CHARGE)
+
+			charge = NEMESIS_MAX_CHARGE
+	else
+		charge = max(charge, NEMESIS_MAX_CHARGE) //...how did we get here?
+	update_charge()
+
+/obj/item/clothing/gloves/rapid/nemesis/proc/update_charge()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/H = loc
+	if(istype(H.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/armor/vest/nemesis))
+		var/obj/item/clothing/suit/armor/vest/nemesis/suit = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		suit.update_charge(charge)
+
+	if(istype(H.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/storage/belt/security/nemesis))
+		var/obj/item/storage/belt/security/nemesis/belt = H.get_item_by_slot(ITEM_SLOT_BELT)
+		belt.update_charge(charge)
+
+/obj/item/clothing/gloves/rapid/nemesis/attack_hand(mob/user, list/modifiers)
+	if(shield.loc != src)
+		return ..()
+
+	if(!ishuman(user) || user != loc)
+		return ..()
+
+	var/mob/living/carbon/human/H = user
+
+	shield.forceMove(get_turf(H))
+	H.put_in_hands(shield)
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+
+/obj/item/clothing/gloves/rapid/nemesis/dropped(mob/user)
+	. = ..()
+
+	if(shield.loc == src)
+		return
+
+	if(shield.active)
+		shield.active = FALSE
+		shield.icon_state = "[shield.base_icon_state][shield.active]"
+		shield.force = initial(shield.force)
+		shield.w_class = WEIGHT_CLASS_TINY
+		playsound(user, 'sound/weapons/saberoff.ogg', 35, TRUE)
+
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	user.dropItemToGround(shield, TRUE)
+	shield.forceMove(src)

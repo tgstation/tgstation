@@ -236,3 +236,14 @@
 	icon_state = "spacepolice_families"
 	inhand_icon_state = "spacepolice_families"
 	can_adjust = FALSE
+
+//Nemesis Solutions outfit
+
+/obj/item/clothing/under/rank/security/officer/nemesis
+	name = "\"Nemesis Solutions\" jumpsuit"
+	desc = "A \"Nemesis Solutions\" branded tactical jumpsuit with blue linings and ablative plating."
+	icon_state = "nemesis"
+	inhand_icon_state = "bl_suit"
+	armor = list(MELEE = 5, BULLET = 0, LASER = 10,ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30, WOUND = 10)
+	can_adjust = FALSE
+	siemens_coefficient = 0.5 //They use charge so it makes sense

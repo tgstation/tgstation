@@ -272,8 +272,8 @@
 		recharging_time = world.time + recharging_rate
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
-		
-/obj/item/clothing/shoes/bhop/rocket 
+
+/obj/item/clothing/shoes/bhop/rocket
 	name = "rocket boots"
 	desc = "Very special boots with built-in rocket thrusters! SHAZBOT!"
 	icon_state = "rocketboots"
@@ -544,3 +544,43 @@
 /obj/item/clothing/shoes/gunboots/Initialize()
 	. = ..()
 	AddComponent(/datum/component/projectile_shooter, projectile_type = projectile_type, shot_prob = shot_prob, signal_or_sig_list = list(COMSIG_SHOES_STEP_ACTION, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))
+
+//Nemesis Soutions boots
+
+/obj/item/clothing/shoes/bhop/nemesis
+	name = "combat jackboots"
+	desc = "A pair of modified jackboots from Nemesis Solutions, equipped with a propulsion system."
+	icon_state = "nemesis"
+
+	jumpdistance = 4
+	recharging_rate = 2 SECONDS
+	actions_types = list(/datum/action/item_action/bhop/nemesis)
+
+/obj/item/clothing/shoes/bhop/nemesis/ui_action_click(mob/user, action)
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/H = user
+
+	var/obj/item/clothing/gloves/rapid/nemesis/gloves = H.get_item_by_slot(ITEM_SLOT_GLOVES)
+	if(!gloves || !istype(gloves))
+		to_chat(user, "<span class='warning'>The boots' internal propulsion system fails to connect to your A.R.E.S. suit!</span>")
+		return
+
+	if(gloves.charge < NEMESIS_CHARGE_PER_JUMP)
+		to_chat(user, "<span class='warning'>Your A.R.E.S. suit does not posess enough charge for the internal propulsion system to activate!</span>")
+		return
+
+	if(recharging_time > world.time)
+		to_chat(user, "<span class='warning'>The boots' internal propulsion needs to recharge still!</span>")
+		return
+
+	var/atom/target = get_edge_target_turf(user, user.dir) //gets the user's direction
+
+	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE))
+		playsound(src, 'sound/effects/stealthoff.ogg', 50, TRUE, TRUE)
+		user.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
+		recharging_time = world.time + recharging_rate
+		gloves.lose_charge(NEMESIS_CHARGE_PER_JUMP)
+	else
+		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")

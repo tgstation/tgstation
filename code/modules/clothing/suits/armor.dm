@@ -312,3 +312,145 @@
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, RAD = 10, FIRE = 10, ACID = 60)
+
+//Nemesis Solutions armor
+
+/obj/item/clothing/suit/armor/vest/nemesis
+	name = "combat armor vest"
+	desc = "A tactical \"Nemesis Solutions\" combat vest with additional ablative plating installed in cost of melee protection."
+	icon_state = "nemesis"
+	inhand_icon_state = "armor"
+	armor = list(MELEE = 20, BULLET = 30, LASER = 40, ENERGY = 50, BOMB = 25, BIO = 0, RAD = 0, FIRE = 75, ACID = 75, WOUND = 10)
+
+	var/obj/item/clothing/gloves/rapid/nemesis/gloves
+	var/obj/item/storage/belt/security/nemesis/full/belt
+	var/obj/item/clothing/shoes/bhop/nemesis/boots
+
+	var/active = FALSE
+
+/obj/item/clothing/suit/armor/vest/nemesis/Initialize()
+	. = ..()
+	gloves = new(src)
+	belt = new(src)
+	boots = new(src)
+
+	ADD_TRAIT(gloves, TRAIT_NODROP, CLOTHING_TRAIT)
+	ADD_TRAIT(belt, TRAIT_NODROP, CLOTHING_TRAIT)
+	ADD_TRAIT(boots, TRAIT_NODROP, CLOTHING_TRAIT)
+
+/obj/item/clothing/suit/armor/vest/nemesis/proc/unfold()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/H = loc
+
+	to_chat(H, "<span class='notice'>Nemesis Solutions A.R.E.S. mk3 suit online. Attempting to unfold the suit.</span>")
+
+	sleep(1 SECONDS)
+
+	if(H.get_item_by_slot(ITEM_SLOT_GLOVES))
+		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the gloves. ABORTING.</span>")
+		return
+
+	if(H.get_item_by_slot(ITEM_SLOT_FEET))
+		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the boots. ABORTING.</span>")
+		return
+
+	if(H.get_item_by_slot(ITEM_SLOT_BELT))
+		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the belt. ABORTING.</span>")
+		return
+
+	if(H.get_item_by_slot(ITEM_SLOT_HEAD) && !istype(H.get_item_by_slot(ITEM_SLOT_HEAD), /obj/item/clothing/head/soft/sec/nemesis))
+		to_chat(H, "<span class='warning'>WARNING: Detected unrecommended headgear. Please use Nemesis Solutions softcap for optimal effect.</span>")
+
+	if(!do_after(H, 1 SECONDS, target = src) || !H.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES))
+		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the gloves. ABORTING.</span>")
+		return
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+
+	if(!do_after(H, 1 SECONDS, target = src) || !H.equip_to_slot_if_possible(boots, ITEM_SLOT_FEET))
+		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the boots. ABORTING.</span>")
+		H.dropItemToGround(gloves, TRUE)
+		gloves.forceMove(src)
+		return
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+
+	if(!do_after(H, 1 SECONDS, target = src) || !H.equip_to_slot_if_possible(belt, ITEM_SLOT_BELT))
+		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the belt. ABORTING.</span>")
+		H.dropItemToGround(gloves, TRUE)
+		gloves.forceMove(src)
+		H.dropItemToGround(boots, TRUE)
+		boots.forceMove(src)
+		return
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	active = TRUE
+
+	gloves.update_charge()
+
+	to_chat(H, "<span class='notice'>Suit successfully activated.</span>")
+
+/obj/item/clothing/suit/armor/vest/nemesis/proc/fold()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/H = loc
+
+	to_chat(H, "<span class='notice'>Attempting to fold the suit</span>")
+
+	if(!do_after(H, 5 SECONDS, target = src))
+		to_chat(H, "<span class='warning'>ERROR: Please retain from moving while the suit is deactivating. ABORTING.</span>")
+		return
+
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+
+	active = FALSE
+
+	H.dropItemToGround(gloves, TRUE)
+	gloves.forceMove(src)
+
+	H.dropItemToGround(boots, TRUE)
+	boots.forceMove(src)
+
+	H.dropItemToGround(belt, TRUE)
+	belt.forceMove(src)
+
+/obj/item/clothing/suit/armor/vest/nemesis/dropped(mob/user)
+	. = ..()
+	if(!ishuman(loc))
+		return
+
+	var/mob/living/carbon/human/H = loc
+
+	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+
+	active = FALSE
+
+	H.dropItemToGround(gloves, TRUE)
+	gloves.forceMove(src)
+
+	H.dropItemToGround(boots, TRUE)
+	boots.forceMove(src)
+
+	H.dropItemToGround(belt, TRUE)
+	belt.forceMove(src)
+
+/obj/item/clothing/suit/armor/vest/nemesis/proc/update_charge(var/charge = 0)
+	if(charge > 0)
+		icon_state = "nemesis_powered"
+	else
+		icon_state = "nemesis"
+	update_icon()
+	if(isliving(loc))
+		var/mob/living/L = loc
+		L.update_appearance()
+
+/obj/item/clothing/suit/armor/vest/nemesis/attack_hand(mob/user, list/modifiers)
+	if(!ishuman(user) || user != loc)
+		return ..()
+
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(ITEM_SLOT_OCLOTHING) != src)
+		return ..()
+
+	if(active)
+		fold()
+	else
+		unfold()

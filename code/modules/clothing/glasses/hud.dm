@@ -125,7 +125,6 @@
 		return
 	chameleon_action.emp_randomise()
 
-
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	name = "eyepatch HUD"
 	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
@@ -139,6 +138,14 @@
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
+
+//Nemesis Solutions sunglasses
+
+/obj/item/clothing/glasses/hud/security/sunglasses/nemesis
+	name = "advanced security HUDSunglasses"
+	desc = "Advanced SecHUD sunglasses from Nemesis Solutions."
+	icon_state = "sunhudmed"
+	glass_colour_type = /datum/client_colour/glass_colour/blue
 
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"
