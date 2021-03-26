@@ -144,7 +144,10 @@
 	if(!nodes[1] || !on)
 		on = FALSE
 		return FALSE
-	scrub(loc)
+	var/turf/open/us = loc
+	if(!istype(us))
+		return
+	scrub(us)
 	if(widenet)
 		for(var/turf/tile in adjacent_turfs)
 			scrub(tile)

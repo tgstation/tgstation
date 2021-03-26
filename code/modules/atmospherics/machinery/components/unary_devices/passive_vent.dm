@@ -22,7 +22,11 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/process_atmos()
 	..()
 
-	var/datum/gas_mixture/external = loc.return_air()
+	var/turf/location = get_turf(loc)
+	if(isclosedturf(location))
+		return PROCESS_KILL
+
+	var/datum/gas_mixture/external = location.return_air()
 	var/datum/gas_mixture/internal = airs[1]
 
 	if(internal.equalize(external))
