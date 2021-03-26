@@ -52,7 +52,7 @@
 ///One of two procs that modifies blockers, this one handles removing a blocker and potentially restarting the rot
 /datum/component/rot/proc/start_up(blocker_type)
 	blockers &= ~blocker_type //Yeet the type
-	if(blockers & ALL || active)  //If it's not empty
+	if(blockers || active)  //If it's not empty
 		return
 	start_time = world.time
 	active = TRUE
@@ -61,7 +61,7 @@
 /datum/component/rot/proc/rest(blocker_type)
 	var/old_blockers = blockers
 	blockers |= blocker_type
-	if(old_blockers & ALL || !active) //If it had anything before this
+	if(old_blockers || !active) //If it had anything before this
 		return
 	start_delay = max((start_time + start_delay) - world.time, 0) //Account for the time spent rotting
 	active = FALSE
