@@ -83,7 +83,7 @@ const taskTgui = new Task('tgui')
   .depends('tgui/.yarn/install-state.gz')
   .depends('tgui/webpack.config.js')
   .depends('tgui/**/package.json')
-  .depends('tgui/packages/**/*.+(js|jsx|ts|tsx|cjs|scss)')
+  .depends('tgui/packages/**/*.+(js|cjs|ts|tsx|scss)')
   .provides('tgui/public/tgui.bundle.css')
   .provides('tgui/public/tgui.bundle.js')
   .provides('tgui/public/tgui-common.bundle.js')
@@ -91,6 +91,16 @@ const taskTgui = new Task('tgui')
   .provides('tgui/public/tgui-panel.bundle.js')
   .build(async () => {
     await yarn(['run', 'webpack-cli', '--mode=production']);
+  });
+
+/// Prepends the defines to the .dme.
+/// Does not clean them up, as this is intended for TGS which
+/// clones new copies anyway.
+const taskPrependDefines = (...defines) => new Task('prepend-defines')
+  .build(async () => {
+    const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
+    const textToWrite = defines.map(define => `#define ${define}\n`);
+    fs.writeFileSync(`${DME_NAME}.dme`, `${textToWrite}\n${dmeContents}`);
   });
 
 const taskDm = (...injectedDefines) => new Task('dm')
@@ -165,7 +175,7 @@ const taskDm = (...injectedDefines) => new Task('dm')
         // Rename rsc
         fs.renameSync(`${DME_NAME}.mdme.rsc`, `${DME_NAME}.rsc`)
         // Remove mdme
-        fs.rmSync(`${DME_NAME}.mdme`)
+        fs.unlinkSync(`${DME_NAME}.mdme`)
     }
     else {
       await exec(dmPath, [`${DME_NAME}.dme`]);
@@ -180,14 +190,15 @@ switch (BUILD_MODE) {
       taskYarn,
       taskTgfont,
       taskTgui,
-      taskDm(),
+      taskDm('CBT'),
     ]
     break;
   case TGS_BUILD:
     tasksToRun = [
       taskYarn,
       taskTgfont,
-      taskTgui
+      taskTgui,
+      taskPrependDefines('TGS'),
     ]
     break;
   case ALL_MAPS_BUILD:
@@ -195,7 +206,7 @@ switch (BUILD_MODE) {
       taskYarn,
       taskTgfont,
       taskTgui,
-      taskDm('CIBUILDING','CITESTING','ALL_MAPS')
+      taskDm('CBT','CIBUILDING','CITESTING','ALL_MAPS')
     ];
     break;
   case TEST_RUN_BUILD:
@@ -203,7 +214,7 @@ switch (BUILD_MODE) {
       taskYarn,
       taskTgfont,
       taskTgui,
-      taskDm('CIBUILDING')
+      taskDm('CBT','CIBUILDING')
     ];
     break;
   default:

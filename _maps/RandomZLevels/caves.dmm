@@ -1950,7 +1950,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "gl" = (
-/obj/item/trash/plate,
+/obj/item/plate,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gm" = (
@@ -2010,7 +2010,7 @@
 "gx" = (
 /obj/structure/table,
 /obj/item/kitchen/fork,
-/obj/item/trash/plate,
+/obj/item/plate,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gy" = (

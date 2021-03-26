@@ -221,7 +221,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
 "aN" = (
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -272,7 +272,7 @@
 /area/ruin/unpowered)
 "aV" = (
 /obj/structure/table/wood,
-/obj/item/trash/plate,
+/obj/item/plate,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
@@ -346,7 +346,7 @@
 	},
 /area/ruin/unpowered)
 "bj" = (
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/effect/decal/remains/human,
 /turf/open/floor/iron/airless/cafeteria,
 /area/ruin/unpowered)

@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
-	SEND_SIGNAL(user, COMSIG_ARCADE_PRIZEVEND, user, prizes)
+	SEND_SIGNAL(src, COMSIG_ARCADE_PRIZEVEND, user, prizes)
 	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
 		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
 		"<span class='notice'>You hear a flurry of buttons being pressed.</span>")

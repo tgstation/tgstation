@@ -1,4 +1,0 @@
-author: "TheVekter"
-delete-after: True
-changes: 
-  - bugfix: "Ghosts should now be able to view the crew monitor console."

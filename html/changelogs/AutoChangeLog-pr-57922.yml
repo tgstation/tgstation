@@ -1,0 +1,7 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - qol: "Blobbernauts now have a generic living healthdoll and pull icon."
+  - qol: "Blobbernauts will now show severity of their injuries as a red screen overlay to the user."
+  - qol: "Blob core remaining health will now show in percentages and in green color. This affects both blobbernauts and blob overminds."
+  - qol: "Blob power is now in orange color for blob overminds."
