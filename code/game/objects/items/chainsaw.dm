@@ -84,7 +84,7 @@ ds
 
 	var/lignocellulose = counterlist_sum(A.has_material_type(/datum/material/wood))
 
-	if!lignocellulose)
+	if(!lignocellulose)
 		return ..()
 
 	user.visible_message("<span class='notice'>[user] starts sawing [A] to pieces!</span>", "<span class='notice'>You start sawing [A] to pieces!</span>")
@@ -92,7 +92,7 @@ ds
 
 
 	if(plank_harvest >= 3)
-		if(!user.do_after(2 SECONDS))
+		if(!do_after(user, 2 SECONDS, target = A))
 			return
 
 	if(plank_harvest)
