@@ -257,3 +257,16 @@
 /obj/effect/decal/cleanable/garbage/Initialize()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 15)
+
+/obj/effect/decal/cleanable/sawdust
+	name = "sawdust"
+	desc = "A pile of wooden particles. I wonder if there is a beaver around?"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "sawdust"
+	resistance_flags = FLAMMABLE
+	layer = OBJ_LAYER
+	clean_type = CLEAN_TYPE_HARD_DECAL
+
+/obj/effect/decal/cleanable/sawdust/Initialize(mapload, dust_amount)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/cellulose, dust_amount ? dust_amount : 10)

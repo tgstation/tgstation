@@ -1,4 +1,4 @@
-
+ds
 // CHAINSAW
 /obj/item/chainsaw
 	name = "chainsaw"
@@ -99,7 +99,13 @@
 		new /obj/item/stack/sheet/mineral/wood(get_turf(src), new_amount = plank_harvest)
 
 	new /obj/effect/decal/cleanable/sawdust(get_turf(src), dust_amount = round((lignocellulose % MINERAL_MATERIAL_AMOUNT) / 100))
-	qdel(A)
+		playsound(src, 'sound/weapons/chainsawhit.ogg', 50, TRUE)
+
+	if(isturf(A))
+		var/turf/scrape_target = A
+		scrape_target.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	else
+		qdel(A)
 
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
