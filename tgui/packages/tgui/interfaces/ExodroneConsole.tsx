@@ -204,7 +204,8 @@ const DroneSelectionSection = (props, context) => {
           </Fragment>
         ))}
       </Stack>
-    </Section>);
+    </Section>
+  );
 };
 
 
@@ -298,7 +299,8 @@ const EquipmentBox = (props, context) => {
                   tooltip="Remove Tool" />
               </Stack.Item>
             )}
-          </Stack>);
+          </Stack>
+        );
       case "cargo":// Jettison button.
         return (
           <Stack direction="column">
