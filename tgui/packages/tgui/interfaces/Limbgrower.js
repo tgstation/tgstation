@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Section, Divider, Tabs, LabeledList, Flex, Dimmer, Icon } from '../components';
+import { Box, Button, Dimmer, Icon, LabeledList, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const Limbgrower = (props, context) => {
