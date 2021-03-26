@@ -1,6 +1,8 @@
 #define WHITE_TEAM "White"
 #define RED_TEAM "Red"
 #define BLUE_TEAM "Blue"
+#define GREEN_TEAM "Green"
+#define YELLOW_TEAM "Yellow"
 #define FLAG_RETURN_TIME 200 // 20 seconds
 #define INSTAGIB_RESPAWN 50 //5 seconds
 #define DEFAULT_RESPAWN 150 //15 seconds
@@ -118,6 +120,23 @@
 	team = BLUE_TEAM
 	reset_path = /obj/effect/ctf/flag_reset/blue
 
+/obj/item/ctf/green
+	name = "green flag"
+	icon_state = "banner-green"
+	inhand_icon_state = "banner-green"
+	desc = "A green banner used to play capture the flag."
+	team = GREEN_TEAM
+	reset_path = /obj/effect/ctf/flag_reset/green
+
+
+/obj/item/ctf/yellow
+	name = "yellow flag"
+	icon_state = "banner-yellow"
+	inhand_icon_state = "banner-yellow"
+	desc = "A yellow banner used to play capture the flag."
+	team = YELLOW_TEAM
+	reset_path = /obj/effect/ctf/flag_reset/yellow
+
 /obj/effect/ctf/flag_reset
 	name = "banner landmark"
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -135,6 +154,18 @@
 	name = "blue flag landmark"
 	icon_state = "banner-blue"
 	desc = "This is where a blue banner used to play capture the flag \
+		would go."
+
+/obj/effect/ctf/flag_reset/green
+	name = "green flag landmark"
+	icon_state = "banner"
+	desc = "This is where a green banner used to play capture the flag \
+		would go."
+
+/obj/effect/ctf/flag_reset/yellow
+	name = "yellow flag landmark"
+	icon_state = "banner"
+	desc = "This is where a yellow banner used to play capture the flag \
 		would go."
 
 /proc/toggle_id_ctf(user, activated_id, automated = FALSE)
@@ -227,6 +258,22 @@
 	team_span = "blueteamradio"
 	ctf_gear = list("blue" = /datum/outfit/ctf/blue)
 	instagib_gear = /datum/outfit/ctf/blue/instagib
+
+/obj/machinery/capture_the_flag/green
+	name = "Green CTF Controller"
+	icon_state = "greenbeacon"
+	team = GREEN_TEAM
+	team_span = "greenteamradio"
+	ctf_gear = list("green" = /datum/outfit/ctf/green)
+	instagib_gear = /datum/outfit/ctf/green/instagib
+
+/obj/machinery/capture_the_flag/yellow
+	name = "Yellow CTF Controller"
+	icon_state = "yellowbeacon"
+	team = YELLOW_TEAM
+	team_span = "yellowteamradio"
+	ctf_gear = list("yellow" = /datum/outfit/ctf/yellow)
+	instagib_gear = /datum/outfit/ctf/yellow/instagib
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
@@ -545,6 +592,36 @@
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
+// GREEN TEAM GUNS
+
+/obj/item/gun/ballistic/automatic/laser/ctf/green
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/green
+
+/obj/item/ammo_box/magazine/recharge/ctf/green
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/green
+
+/obj/item/ammo_casing/caseless/laser/ctf/green
+	projectile_type = /obj/projectile/beam/ctf/green
+
+/obj/projectile/beam/ctf/green
+	icon_state = "xray"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+
+// YELLOW TEAM GUNS
+
+/obj/item/gun/ballistic/automatic/laser/ctf/yellow
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/yellow
+
+/obj/item/ammo_box/magazine/recharge/ctf/yellow
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/yellow
+
+/obj/item/ammo_casing/caseless/laser/ctf/yellow
+	projectile_type = /obj/projectile/beam/ctf/yellow
+
+/obj/projectile/beam/ctf/yellow
+	icon_state = "gaussstrong"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+
 /datum/outfit/ctf
 	name = "CTF"
 	ears = /obj/item/radio/headset
@@ -587,7 +664,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
-	id = /obj/item/card/id/advanced/black/syndicate_command //it's red
+	id = /obj/item/card/id/red //it's red
 
 /datum/outfit/ctf/red/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/red
@@ -598,10 +675,32 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
-	id = /obj/item/card/id/advanced/centcom //it's blue
+	id = /obj/item/card/id/blue //it's blue
 
 /datum/outfit/ctf/blue/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
+	shoes = /obj/item/clothing/shoes/jackboots/fast
+
+/datum/outfit/ctf/green
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/green
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/green
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/green
+	id = /obj/item/card/id/green //it's green
+
+/datum/outfit/ctf/green/instagib
+	r_hand = /obj/item/gun/energy/laser/instakill/green
+	shoes = /obj/item/clothing/shoes/jackboots/fast
+
+/datum/outfit/ctf/yellow
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
+	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/yellow
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/yellow
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/yellow
+	id = /obj/item/card/id/yellow //it's yellow
+
+/datum/outfit/ctf/yellow/instagib
+	r_hand = /obj/item/gun/energy/laser/instakill/yellow
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
@@ -620,6 +719,21 @@
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
 
+/datum/outfit/ctf/green/post_equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/radio/R = H.ears
+	R.set_frequency(FREQ_CTF_GREEN)
+	R.freqlock = TRUE
+	R.independent = TRUE
+	H.dna.species.stunmod = 0
+
+/datum/outfit/ctf/yellow/post_equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/radio/R = H.ears
+	R.set_frequency(FREQ_CTF_YELLOW)
+	R.freqlock = TRUE
+	R.independent = TRUE
+	H.dna.species.stunmod = 0
 
 
 /obj/structure/trap/ctf
@@ -649,6 +763,14 @@
 /obj/structure/trap/ctf/blue
 	team = BLUE_TEAM
 	icon_state = "trap-frost"
+
+/obj/structure/trap/ctf/green
+	team = GREEN_TEAM
+	icon_state = "trap-earth"
+
+/obj/structure/trap/ctf/yellow
+	team = YELLOW_TEAM
+	icon_state = "trap-shock"
 
 /obj/structure/barricade/security/ctf
 	name = "barrier"
@@ -732,6 +854,8 @@
 #undef WHITE_TEAM
 #undef RED_TEAM
 #undef BLUE_TEAM
+#undef GREEN_TEAM
+#undef YELLOW_TEAM
 #undef FLAG_RETURN_TIME
 #undef INSTAGIB_RESPAWN
 #undef DEFAULT_RESPAWN

@@ -174,6 +174,13 @@ export const sortBy = (...iterateeFns) => array => {
 export const sort = sortBy();
 
 /**
+ * Returns a range of numbers from start to end, exclusively.
+ * For example, range(0, 5) will return [0, 1, 2, 3, 4].
+ */
+export const range = (start: number, end: number): number[] =>
+  new Array(end - start).fill(null).map((_, index) => index + start);
+
+/**
  * A fast implementation of reduce.
  */
 export const reduce = (reducerFn, initialValue) => array => {
@@ -205,14 +212,17 @@ export const reduce = (reducerFn, initialValue) => array => {
  * is determined by the order they occur in the array. The iteratee is
  * invoked with one argument: value.
  */
-export const uniqBy = iterateeFn => array => {
+/* eslint-disable indent */
+export const uniqBy = <T extends unknown>(
+  iterateeFn?: (value: T) => unknown
+) => (array: T[]) => {
   const { length } = array;
   const result = [];
   const seen = iterateeFn ? [] : result;
   let index = -1;
   outer:
   while (++index < length) {
-    let value = array[index];
+    let value: T | 0 = array[index];
     const computed = iterateeFn ? iterateeFn(value) : value;
     value = value !== 0 ? value : 0;
     if (computed === computed) {
@@ -236,17 +246,20 @@ export const uniqBy = iterateeFn => array => {
   }
   return result;
 };
+/* eslint-enable indent */
 
 export const uniq = uniqBy();
+
+type Zip<T extends unknown[][]> = {
+  [I in keyof T]: T[I] extends (infer U)[] ? U : never;
+}[];
 
 /**
  * Creates an array of grouped elements, the first of which contains
  * the first elements of the given arrays, the second of which contains
  * the second elements of the given arrays, and so on.
- *
- * @returns {any[]}
  */
-export const zip = (...arrays) => {
+export const zip = <T extends unknown[][]>(...arrays: T): Zip<T> => {
   if (arrays.length === 0) {
     return;
   }

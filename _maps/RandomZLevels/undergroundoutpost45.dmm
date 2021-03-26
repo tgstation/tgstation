@@ -3925,7 +3925,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "il" = (
 /obj/structure/table,
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1

@@ -6,7 +6,7 @@
 	name = "chemical reaction tester"
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "HPLC"
+	icon_state = "HPLC_debug"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE

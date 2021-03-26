@@ -1151,4 +1151,24 @@
 	desc = "An internal ID card used by the station's non-sentient bots. You should report this to a coder if you're holding it."
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
+/obj/item/card/id/red
+	name = "Red Team identification card"
+	desc = "A card used to identify members of the red team for CTF"
+	icon_state = "ctf_red"
+
+/obj/item/card/id/blue
+	name = "Blue Team identification card"
+	desc = "A card used to identify members of the blue team for CTF"
+	icon_state = "ctf_blue"
+
+/obj/item/card/id/yellow
+	name = "Yellow Team identification card"
+	desc = "A card used to identify members of the yellow team for CTF"
+	icon_state = "ctf_yellow"
+
+/obj/item/card/id/green
+	name = "Green Team identification card"
+	desc = "A card used to identify members of the green team for CTF"
+	icon_state = "ctf_green"
+
 #undef ID_ICON_BORDERS

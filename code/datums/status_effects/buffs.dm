@@ -19,7 +19,7 @@
 	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
 	<br>Becomes undroppable at <b>[HIS_GRACE_FAMISHED]</b>\
 	<br>Will consume you at <b>[HIS_GRACE_CONSUME_OWNER]</b>"
-	..()
+	return ..()
 
 /datum/status_effect/his_grace/on_apply()
 	owner.log_message("gained His Grace's stun immunity", LOG_ATTACK)
