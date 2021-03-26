@@ -107229,10 +107229,10 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/north,
-/obj/item/hfr_box/body,
-/obj/item/hfr_box/body,
-/obj/item/hfr_box/body,
-/obj/item/hfr_box/body,
+/obj/item/hfr_box/body/fuel_input,
+/obj/item/hfr_box/body/interface,
+/obj/item/hfr_box/body/moderator_input,
+/obj/item/hfr_box/body/waste_output,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "vHN" = (

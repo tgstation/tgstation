@@ -35040,10 +35040,6 @@
 "hAM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
-/obj/item/circuitboard/machine/HFR_corner,
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
 	pixel_y = -7
@@ -35051,6 +35047,10 @@
 /obj/effect/turf_decal/bot,
 /obj/item/stack/sheet/plasteel/fifty,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/hfr_box/body/fuel_input,
+/obj/item/hfr_box/body/interface,
+/obj/item/hfr_box/body/moderator_input,
+/obj/item/hfr_box/body/waste_output,
 /turf/open/floor/iron,
 /area/engineering/atmospherics_engine)
 "hAW" = (
@@ -39566,11 +39566,6 @@
 /area/maintenance/central)
 "jIL" = (
 /obj/structure/table,
-/obj/item/circuitboard/machine/HFR_core,
-/obj/item/circuitboard/machine/HFR_fuel_input,
-/obj/item/circuitboard/machine/HFR_interface,
-/obj/item/circuitboard/machine/HFR_moderator_input,
-/obj/item/circuitboard/machine/HFR_waste_output,
 /obj/item/stack/cable_coil{
 	pixel_x = -3;
 	pixel_y = 3
@@ -39579,6 +39574,11 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
+/obj/item/hfr_box/core,
+/obj/item/hfr_box/corner,
+/obj/item/hfr_box/corner,
+/obj/item/hfr_box/corner,
+/obj/item/hfr_box/corner,
 /turf/open/floor/iron/dark,
 /area/engineering/atmospherics_engine)
 "jIS" = (

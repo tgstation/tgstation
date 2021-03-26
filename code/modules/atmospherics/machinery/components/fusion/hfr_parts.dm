@@ -400,30 +400,44 @@
 	icon_state = "box"
 	///What kind of box are we handling?
 	var/box_type = "impossible"
+	///What's the path of the machine we making
+	var/part_path
 
 /obj/item/hfr_box/corner
 	name = "HFR box corner"
 	desc = "Place this as the corner of your 3x3 multiblock fusion reactor"
 	icon_state = "box_corner"
 	box_type = "corner"
+	part_path = /obj/machinery/hypertorus/corner
 
 /obj/item/hfr_box/body
 	name = "HFR box body"
 	desc = "Place this on the sides of the core box of your 3x3 multiblock fusion reactor"
-	icon_state = "box_body"
 	box_type = "body"
+	icon_state = "box_body"
+
+/obj/item/hfr_box/body/fuel_input
+	name = "HFR box fuel input"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
+
+/obj/item/hfr_box/body/moderator_input
+	name = "HFR box moderator input"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
+
+/obj/item/hfr_box/body/waste_output
+	name = "HFR box waste output"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
+
+/obj/item/hfr_box/body/interface
+	name = "HFR box interface"
+	part_path = /obj/machinery/hypertorus/interface
 
 /obj/item/hfr_box/core
 	name = "HFR box core"
 	desc = "Activate this with a multitool to deploy the full machine after setting up the other boxes"
 	icon_state = "box_core"
 	box_type = "core"
-	var/list/body_components = list(
-		/obj/machinery/hypertorus/interface,
-		/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input,
-		/obj/machinery/atmospherics/components/unary/hypertorus/waste_output,
-		/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
-	)
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/core
 
 /obj/item/hfr_box/core/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -447,18 +461,17 @@
 /obj/item/hfr_box/core/proc/build_reactor(list/parts)
 	for(var/obj/item/hfr_box/box in parts)
 		if(box.box_type == "corner")
-			var/obj/machinery/hypertorus/corner/corner = new(box.loc)
+			var/obj/machinery/hypertorus/corner/corner = new box.part_path(box.loc)
 			corner.dir = box.dir
 			qdel(box)
 			continue
 		if(box.box_type == "body")
 			var/location = get_turf(box)
-			var/piece = pick_n_take(body_components)
-			if(istype(piece,/obj/machinery/atmospherics/components/unary/hypertorus))
-				var/obj/machinery/atmospherics/components/unary/hypertorus/part = new piece(location, TRUE, box.dir)
+			if(box.part_path != /obj/machinery/hypertorus/interface)
+				var/obj/machinery/atmospherics/components/unary/hypertorus/part = new box.part_path(location, TRUE, box.dir)
 				part.dir = box.dir
 			else
-				var/obj/machinery/hypertorus/interface/part = new piece(location)
+				var/obj/machinery/hypertorus/interface/part = new box.part_path(location)
 				part.dir = box.dir
 			qdel(box)
 			continue

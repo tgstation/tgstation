@@ -75832,10 +75832,10 @@
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
-/obj/item/hfr_box/body,
-/obj/item/hfr_box/body,
-/obj/item/hfr_box/body,
-/obj/item/hfr_box/body,
+/obj/item/hfr_box/body/fuel_input,
+/obj/item/hfr_box/body/interface,
+/obj/item/hfr_box/body/moderator_input,
+/obj/item/hfr_box/body/waste_output,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "oXB" = (

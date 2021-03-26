@@ -57735,10 +57735,10 @@
 /obj/effect/turf_decal/bot,
 /obj/item/stack/sheet/plasteel/fifty,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/hfr_box/body,
-/obj/item/hfr_box/body,
-/obj/item/hfr_box/body,
-/obj/item/hfr_box/body,
+/obj/item/hfr_box/body/waste_output,
+/obj/item/hfr_box/body/moderator_input,
+/obj/item/hfr_box/body/interface,
+/obj/item/hfr_box/body/fuel_input,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "olU" = (
