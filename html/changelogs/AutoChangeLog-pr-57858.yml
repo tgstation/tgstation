@@ -1,0 +1,8 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - rscadd: "Adds the HPLC purifying machine - this machine will indicate the purity of the reagent in it's input beaker and can partially purify selected reagents"
+  - rscadd: "Gives each reagent a mass"
+  - bugfix: "Fixes the debug recipe machine runtiming when hit by a beaker"
+  - code_imp: "Adds alt_click_secondary() which is called when right clicking on things with alt held down"
+  - imageadd: "added some more icons for the HPLC"

@@ -344,6 +344,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you
 #define TRAIT_APC_SHOCKING "apc_shocking"
+///Properly wielded two handed item
+#define TRAIT_WIELDED "wielded"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -450,6 +452,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MAFIA_TRAIT "mafia"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
+
+///generic atom traits
+#define DO_NOT_SPLASH "do_not_splash"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"

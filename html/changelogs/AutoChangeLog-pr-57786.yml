@@ -1,7 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - balance: "Cyborg treat dispensers now have a maximum treat storage capacity of 5 treats instead of 30 treats, and recharge their treats at a rate of one treat per 10 seconds instead of one treat per second. To compensate for this, the damage of gumballs and lollipops that have been launched from an emagged cyborg has been increased from 3 to 10."
-  - rscdel: "Launched gumballs and lollipops will no longer delete themselves after 2 minutes (if not equipped)."
-  - balance: "The 2u of omnizine in each cyborg lollipop has been replaced by 2u of psicodine. The contents of normal lollipops have not been modified."
-  - balance: "Cyborg cookie dispensers can now only dispense a cookie once every 10 seconds (instead of once per second). Non-cyborg cookie dispensers no longer self-recharge, but can now accept compressed matter cartirdges for reloading purposes. Support has been added for other types of RSFs to have use cooldowns."
