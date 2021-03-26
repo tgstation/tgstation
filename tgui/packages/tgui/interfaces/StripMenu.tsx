@@ -260,75 +260,14 @@ export const StripMenu = (props, context) => {
     <Window title={`Stripping ${data.name}`} width={400} height={400}>
       <Window.Content>
         <Stack fill vertical>
-          {range(0, ROWS).map(row => {
-            return (
-              <Stack.Item key={row}>
-                <Stack fill>
-                  {range(0, COLUMNS).map(column => {
-                    const key = getGridSpotKey([row, column]);
-                    const keyAtSpot = gridSpots.get(key);
+          {range(0, ROWS).map(row => (
+            <Stack.Item key={row}>
+              <Stack fill>
+                {range(0, COLUMNS).map(column => {
+                  const key = getGridSpotKey([row, column]);
+                  const keyAtSpot = gridSpots.get(key);
 
-                    if (!keyAtSpot) {
-                      return (
-                        <Stack.Item
-                          key={key}
-                          style={{
-                            width: BUTTON_DIMENSIONS,
-                            height: BUTTON_DIMENSIONS,
-                          }}
-                        />
-                      );
-                    }
-
-                    const item = data.items[keyAtSpot];
-                    const slot = SLOTS[keyAtSpot];
-
-                    let alternateAction: AlternateAction | undefined;
-
-                    let content;
-                    let tooltip;
-
-                    if (item === null) {
-                      tooltip = slot.displayName;
-                    } else if ("name" in item) {
-                      alternateAction = ALTERNATE_ACTIONS[item.alternate];
-
-                      content = (
-                        <Box
-                          as="img"
-                          src={`data:image/jpeg;base64,${item.icon}`}
-                          height="100%"
-                          width="100%"
-                          style={{
-                            "-ms-interpolation-mode": "nearest-neighbor",
-                            "vertical-align": "middle",
-                          }}
-                        />
-                      );
-
-                      tooltip = item.name;
-                    } else if ("obscured" in item) {
-                      content = (
-                        <Icon
-                          name={
-                            item.obscured === ObscuringLevel.Completely
-                              ? "ban"
-                              : "eye-slash"
-                          }
-                          size={3}
-                          ml={0}
-                          mt={1.3}
-                          style={{
-                            "text-align": "center",
-                            height: "100%",
-                            width: "100%",
-                          }}
-                        />
-                      );
-
-                      tooltip = `obscured ${slot.displayName}`;
-                    }
-
+                  if (!keyAtSpot) {
                     return (
                       <Stack.Item
                         key={key}
@@ -336,83 +275,142 @@ export const StripMenu = (props, context) => {
                           width: BUTTON_DIMENSIONS,
                           height: BUTTON_DIMENSIONS,
                         }}
+                      />
+                    );
+                  }
+
+                  const item = data.items[keyAtSpot];
+                  const slot = SLOTS[keyAtSpot];
+
+                  let alternateAction: AlternateAction | undefined;
+
+                  let content;
+                  let tooltip;
+
+                  if (item === null) {
+                    tooltip = slot.displayName;
+                  } else if ("name" in item) {
+                    alternateAction = ALTERNATE_ACTIONS[item.alternate];
+
+                    content = (
+                      <Box
+                        as="img"
+                        src={`data:image/jpeg;base64,${item.icon}`}
+                        height="100%"
+                        width="100%"
+                        style={{
+                          "-ms-interpolation-mode": "nearest-neighbor",
+                          "vertical-align": "middle",
+                        }}
+                      />
+                    );
+
+                    tooltip = item.name;
+                  } else if ("obscured" in item) {
+                    content = (
+                      <Icon
+                        name={
+                          item.obscured === ObscuringLevel.Completely
+                            ? "ban"
+                            : "eye-slash"
+                        }
+                        size={3}
+                        ml={0}
+                        mt={1.3}
+                        style={{
+                          "text-align": "center",
+                          height: "100%",
+                          width: "100%",
+                        }}
+                      />
+                    );
+
+                    tooltip = `obscured ${slot.displayName}`;
+                  }
+
+                  return (
+                    <Stack.Item
+                      key={key}
+                      style={{
+                        width: BUTTON_DIMENSIONS,
+                        height: BUTTON_DIMENSIONS,
+                      }}
+                    >
+                      <Box
+                        style={{
+                          position: "relative",
+                          width: "100%",
+                          height: "100%",
+                        }}
                       >
-                        <Box
+                        <Button
+                          onClick={() => {
+                            act("use", {
+                              key: keyAtSpot,
+                            });
+                          }}
+                          fluid
+                          tooltip={tooltip}
                           style={{
+                            background: item?.interacting
+                              ? "hsl(39, 73%, 30%)"
+                              : undefined,
                             position: "relative",
                             width: "100%",
                             height: "100%",
+                            padding: 0,
                           }}
                         >
+                          {slot.image && (
+                            <Box
+                              as="img"
+                              src={resolveAsset(slot.image)}
+                              opacity={0.7}
+                              style={{
+                                position: "absolute",
+                                width: "32px",
+                                height: "32px",
+                                left: "50%",
+                                top: "50%",
+                                transform:
+                                  "translateX(-50%) translateY(-50%) scale(0.8)",
+                              }}
+                            />
+                          )}
+
+                          <Box style={{ position: "relative" }}>
+                            {content}
+                          </Box>
+
+                          {slot.additionalComponent}
+                        </Button>
+
+                        {alternateAction !== undefined && (
                           <Button
                             onClick={() => {
-                              act("use", {
+                              act("alt", {
                                 key: keyAtSpot,
                               });
                             }}
-                            fluid
-                            tooltip={tooltip}
+                            tooltip={alternateAction.text}
                             style={{
-                              background: item?.interacting
-                                ? "hsl(39, 73%, 30%)"
-                                : undefined,
-                              position: "relative",
-                              width: "100%",
-                              height: "100%",
-                              padding: 0,
+                              background: "rgba(0, 0, 0, 0.6)",
+                              position: "absolute",
+                              bottom: 0,
+                              right: 0,
+                              "z-index": 2,
                             }}
                           >
-                            {slot.image && (
-                              <Box
-                                as="img"
-                                src={resolveAsset(slot.image)}
-                                opacity={0.7}
-                                style={{
-                                  position: "absolute",
-                                  width: "32px",
-                                  height: "32px",
-                                  left: "50%",
-                                  top: "50%",
-                                  transform:
-                                    "translateX(-50%) translateY(-50%) scale(0.8)",
-                                }}
-                              />
-                            )}
-
-                            <Box style={{ position: "relative" }}>
-                              {content}
-                            </Box>
-
-                            {slot.additionalComponent}
+                            <Icon name={alternateAction.icon} />
                           </Button>
-
-                          {alternateAction !== undefined && (
-                            <Button
-                              onClick={() => {
-                                act("alt", {
-                                  key: keyAtSpot,
-                                });
-                              }}
-                              tooltip={alternateAction.text}
-                              style={{
-                                background: "rgba(0, 0, 0, 0.6)",
-                                position: "absolute",
-                                bottom: 0,
-                                right: 0,
-                                "z-index": 2,
-                              }}
-                            >
-                              <Icon name={alternateAction.icon} />
-                            </Button>
-                          )}
-                        </Box>
-                      </Stack.Item>
-                    );
-                  })}
-                </Stack>
-              </Stack.Item>
-            );
-          })}
+                        )}
+                      </Box>
+                    </Stack.Item>
+                  );
+                })}
+              </Stack>
+            </Stack.Item>
+          ))}
         </Stack>
       </Window.Content>
     </Window>
