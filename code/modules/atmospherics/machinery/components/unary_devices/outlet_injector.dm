@@ -63,7 +63,7 @@
 
 	var/turf/location = get_turf(loc)
 	if(isclosedturf(location))
-		return PROCESS_KILL
+		return
 
 	var/datum/gas_mixture/air_contents = airs[1]
 

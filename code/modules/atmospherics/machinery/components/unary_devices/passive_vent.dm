@@ -20,11 +20,9 @@
 	icon_state = "passive_vent"
 
 /obj/machinery/atmospherics/components/unary/passive_vent/process_atmos()
-	..()
-
 	var/turf/location = get_turf(loc)
 	if(isclosedturf(location))
-		return PROCESS_KILL
+		return
 
 	var/datum/gas_mixture/external = location.return_air()
 	var/datum/gas_mixture/internal = airs[1]
