@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Fixes mined out turfs not sharing gas with their neighbors in a rare case, this most likely only effected one room on tramstation"
