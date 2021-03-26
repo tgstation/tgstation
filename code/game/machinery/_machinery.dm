@@ -145,6 +145,8 @@
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
+	isomatrixize()
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
@@ -352,7 +354,7 @@
 
 	if(!issilicon(user) && !is_dextrous && !user.can_hold_items())
 		return FALSE //spiders gtfo
-	
+
 	if(issilicon(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
 		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
 			return FALSE

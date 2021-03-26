@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/proc/on_rat_eat(mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
-	
+
 	if(avail())
 		king.apply_damage(10)
 		playsound(king, 'sound/effects/sparks2.ogg', 100, TRUE)

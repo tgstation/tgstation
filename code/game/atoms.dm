@@ -242,6 +242,12 @@
 
 	return INITIALIZE_HINT_NORMAL
 
+atom/proc/isomatrixize()
+	var/matrix/isomatrix = matrix()
+	isomatrix.Turn(45)
+	isomatrix.Scale(1, 0.5)
+	transform = isomatrix
+
 /**
  * Late Intialization, for code that should run after all atoms have run Intialization
  *

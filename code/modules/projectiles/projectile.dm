@@ -168,6 +168,7 @@
 
 /obj/projectile/Initialize()
 	. = ..()
+	isomatrixize()
 	decayedRange = range
 	if(embedding)
 		updateEmbedding()
