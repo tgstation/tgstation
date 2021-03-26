@@ -3,6 +3,7 @@
 		//////////////////////
 		//BLACK MAGIC THINGS//
 		//////////////////////
+	lazy_eye = 7
 	parent_type = /datum
 		////////////////
 		//ADMIN THINGS//
