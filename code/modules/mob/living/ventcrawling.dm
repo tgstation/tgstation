@@ -31,7 +31,7 @@
 			return
 	if(ventcrawl_target.welded)
 		to_chat(src, "<span class='warning'>You can't crawl around a welded vent!</span>")
-		return	
+		return
 
 	if(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
 		//Handle the exit here
@@ -68,12 +68,12 @@
 	return ..()
 
 /**
- * Everything related to pipe vision on ventcrawling is handled by update_pipe_vision(). 
+ * Everything related to pipe vision on ventcrawling is handled by update_pipe_vision().
  * Called on exit, entrance, and pipenet differences (e.g. moving to a new pipenet).
  * One important thing to note however is that the movement of the client's eye is handled by the relaymove() proc in /obj/machinery/atmospherics.
  * We move first and then call update. Dont flip this around
  */
-/mob/living/proc/update_pipe_vision() 
+/mob/living/proc/update_pipe_vision()
 	// Take the pipe images from the client
 	if (!isnull(client))
 		for(var/image/current_image in pipes_shown)
@@ -100,7 +100,7 @@
 					continue
 
 				if(!pipenet_part.pipe_vision_img)
-					pipenet_part.pipe_vision_img = image(pipenet_part, pipenet_part.loc, layer = ABOVE_HUD_LAYER, dir = pipenet_part.dir)
+					pipenet_part.pipe_vision_img = image(pipenet_part, pipenet_part.loc, dir = pipenet_part.dir)
 					pipenet_part.pipe_vision_img.plane = ABOVE_HUD_PLANE
 				client.images += pipenet_part.pipe_vision_img
 				pipes_shown += pipenet_part.pipe_vision_img

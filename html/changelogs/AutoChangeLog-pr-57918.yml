@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "adds use enviromental heat button to thermomachines to let players choose if use enviromental or pipe heat distribution"
-  - bugfix: "fix roundstart room heating due to freezer not having gas in the red port on startup"
