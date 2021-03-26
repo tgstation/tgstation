@@ -37,8 +37,8 @@
 	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
 		RegisterSignal(carbon_parent.reagents, list(COMSIG_REAGENTS_ADD_REAGENT,
-													COMSIG_REAGENTS_REM_REAGENT,
-													COMSIG_REAGENTS_DEL_REAGENT), .proc/check_reagent)
+			COMSIG_REAGENTS_REM_REAGENT,
+			COMSIG_REAGENTS_DEL_REAGENT), .proc/check_reagent)
 		RegisterSignal(parent, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), .proc/check_husk_trait)
 		check_reagent(carbon_parent.reagents, null)
 		check_husk_trait(null)
@@ -130,4 +130,3 @@
 #undef REAGENT_BLOCKER
 #undef TEMPERATURE_BLOCKER
 #undef HUSK_BLOCKER
-
