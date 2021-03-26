@@ -702,7 +702,7 @@
 	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 75, FIRE = 60, ACID = 30)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/clown
 
-/obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, slot)
+/obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!..() || !ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/H = M
