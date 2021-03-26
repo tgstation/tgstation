@@ -159,34 +159,34 @@
 		temperature_difference = thermal_exchange_port.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
-			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0)
+			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0.65)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency)/ main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 		skip_tick = FALSE
-	else if(use_enviroment_heat && main_port.total_moles() > 0.01 && enviroment.total_moles() > 0.01 && (!thermal_exchange_port.total_moles() || !nodes[2]))
+	if(use_enviroment_heat && main_port.total_moles() > 0.01 && enviroment.total_moles() > 0.01 && (!thermal_exchange_port.total_moles() || !nodes[2]))
 		var/enviroment_efficiency = 0
 		if(cooling)
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
 			if(enviroment.total_moles())
-				enviroment_efficiency = clamp(log(1.55, enviroment.total_moles()) * 0.15, 0, 1)
+				enviroment_efficiency = clamp(log(1.55, enviroment.total_moles()) * 0.15, 0.65, 1)
 			enviroment.temperature = max(enviroment.temperature + heat_amount / enviroment_heat_capacity, TCMB)
 			air_update_turf(FALSE, FALSE)
 		temperature_difference = enviroment.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
-			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0)
+			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0.65)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency * enviroment_efficiency) / main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 		skip_tick = FALSE
-	else if(use_enviroment_heat)
-		skip_tick = TRUE
 
 	skipping_work = skip_tick
 
 	heat_amount = abs(heat_amount)
 	var/power_usage = 0
 	if(temperature_delta  > 1)
-		power_usage = (heat_amount * 0.35 + idle_power_usage) ** (1.25 - (5e6 * efficiency) / (max(5e6, heat_amount)))
+		power_usage = (heat_amount * 0.35 + idle_power_usage) ** (1.25 - (5e7 * efficiency) / (max(5e7, heat_amount)))
 	else
 		power_usage = idle_power_usage
+	if(power_usage > 1e6)
+		power_usage *= efficiency
 	use_power(power_usage)
 	update_appearance()
 	update_parents()
