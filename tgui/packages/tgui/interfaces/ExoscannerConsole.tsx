@@ -79,7 +79,8 @@ const ScanSelectionSection = (props, context) => {
                 key={band}
                 label={band}>
                 {site.band_info[band]}
-              </LabeledList.Item>))}
+              </LabeledList.Item>
+            ))}
           </LabeledList>
         </Section>
       </Stack.Item>
@@ -127,7 +128,8 @@ const ScanSelectionSection = (props, context) => {
           </Section>
         </Stack.Item>
       )}
-    </Stack>);
+    </Stack>
+  );
 };
 
 type ScanInProgressData = {
@@ -170,7 +172,8 @@ const ScanInProgressModal = (props, context) => {
             onClick={() => act("stop_scan")} />
         </LabeledList.Item>
       </LabeledList>
-    </Modal>);
+    </Modal>
+  );
 };
 
 
@@ -200,8 +203,12 @@ export const ExoscannerConsole = (props, context) => {
 
   return (
     <Window>
-      {!!scan_in_progress && (<ScanInProgressModal />)}
-      {!!failed && (<ScanFailedModal />)}
+      {!!scan_in_progress && (
+        <ScanInProgressModal />
+      )}
+      {!!failed && (
+        <ScanFailedModal />
+      )}
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -226,14 +233,16 @@ export const ExoscannerConsole = (props, context) => {
                     key={condition}
                     warning>
                     {condition}
-                  </NoticeBox>))}
+                  </NoticeBox>
+                ))}
               </Section>
             </Section>
           </Stack.Item>
           {!!selected_site && (
             <Stack.Item grow>
               <ScanSelectionSection site_ref={selected_site} />
-            </Stack.Item>)}
+            </Stack.Item>
+          )}
           {!selected_site && (
             <>
               <Stack.Item>
@@ -280,8 +289,10 @@ export const ExoscannerConsole = (props, context) => {
                   </Stack>
                 </Section>
               </Stack.Item>
-            </>)}
+            </>
+          )}
         </Stack>
       </Window.Content>
-    </Window>);
+    </Window>
+  );
 };
