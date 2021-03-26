@@ -162,7 +162,7 @@
 			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0.65)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency)/ main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 		skip_tick = FALSE
-	if(use_enviroment_heat && main_port.total_moles() > 0.01 && enviroment.total_moles() > 0.01 && (!thermal_exchange_port.total_moles() || !nodes[2]))
+	if(use_enviroment_heat && main_port.total_moles() > 0.01 && enviroment.total_moles() > 0.01)
 		var/enviroment_efficiency = 0
 		if(cooling)
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
