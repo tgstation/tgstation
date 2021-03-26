@@ -539,7 +539,7 @@
 	inhand_icon_state = "red_glasses"
 
 	var/handled = TRUE
-	strip_delay = 200
+	strip_delay = 360
 	darkness_view = 5
 	var/old_hair
 	var/old_beard
