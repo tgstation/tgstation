@@ -114,7 +114,7 @@
 #define COLOR_THEME_CLOCKWORK "#CFBA47"
 
 ///Colors for eigenstates
-#define COLOR_EIGENSTATE "#9999FF"
+#define COLOR_PERIWINKLEE "#9999FF"
 /**
  * Some defines to generalise colours used in lighting.
  *

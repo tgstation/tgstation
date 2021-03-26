@@ -43,11 +43,11 @@ SUBSYSTEM_DEF(eigenstates)
 		target.RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, /obj/structure/closet/proc/bust_open)
 		var/obj/item = target
 		if(item)
-			item.color = COLOR_EIGENSTATE //Tint the locker slightly.
+			item.color = COLOR_PERIWINKLEE //Tint the locker slightly.
 			item.alpha = 200
 			do_sparks(3, FALSE, item)
 
-	visible_atom.visible_message("The items' shimmer and fizzle, turning a shade of violet blue.")
+	visible_atom.visible_message("The items shimmer and fizzle, turning a shade of violet blue.")
 	id_counter++
 	return TRUE
 
