@@ -52,7 +52,7 @@
 	taste_description = "an awful, strongly chemical taste"
 	color = "#270d03"
 
-/////////Unique
+// Unique
 
 /datum/reagent/impurity/eigenswap
 	name = "Eigenswap"
