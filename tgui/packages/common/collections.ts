@@ -214,7 +214,9 @@ export const reduce = (reducerFn, initialValue) => array => {
  */
 export const uniqBy = <T extends unknown>(
   iterateeFn?: (value: T) => unknown
-) => (array: T[]) => {
+) => (
+  array: T[]
+) => {
   const { length } = array;
   const result = [];
   const seen = iterateeFn ? [] : result;
