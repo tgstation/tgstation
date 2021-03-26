@@ -17,6 +17,9 @@
 		return FALSE
 	return ..()
 
+/obj/machinery/computer/shuttle/syndicate/screwdriver_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='warning'>The [I] bounces off!</span>")
+
 /obj/machinery/computer/shuttle/syndicate/launch_check(mob/user)
 	. = ..()
 	if(!.)
