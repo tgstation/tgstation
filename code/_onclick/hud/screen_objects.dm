@@ -633,15 +633,11 @@
 	screen_loc = ui_internal
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/healths/blob/naut
-	name = "health"
-	icon = 'icons/hud/blob.dmi'
-	icon_state = "nauthealth"
-
-/atom/movable/screen/healths/blob/naut/core
+/atom/movable/screen/healths/blob/overmind
 	name = "overmind health"
+	icon = 'icons/hud/blob.dmi'
 	icon_state = "corehealth"
-	screen_loc = ui_health
+	screen_loc = ui_blobbernaut_overmind_health
 
 /atom/movable/screen/healths/guardian
 	name = "summoner health"
