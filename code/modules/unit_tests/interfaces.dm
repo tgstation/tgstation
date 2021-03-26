@@ -1,7 +1,7 @@
 /**
  * Checks whether everything that declares that it uses a particular interface actually does so properly.
  */
-/datum/unit_test/Run()
+/datum/unit_test/interfaces/Run()
 	var/list/cached_implementations = SSinterfaces.aggregate_implementations() // So we aren't looping over entire typecaches. If these pass the subtypes should too.
 	for(var/interface_type in cached_implementations)
 		var/datum/interface/interface = new interface_type
@@ -13,7 +13,7 @@
 			for(var/varname in interface.vars)
 				if(varname == INTERFACE_PROC_CACHE_NAME_STRING)
 					continue
-				if(!varname in to_check.vars)
+				if(!(varname in to_check.vars))
 					missing_vars += varname
 
 			for(var/procname in interface.INTERFACE_PROC_CACHE_NAME)
