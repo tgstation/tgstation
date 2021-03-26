@@ -10,16 +10,12 @@
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "syndicate"
 	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s;syndicate_custom"
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF | NODECONSTRUCT_1
 
 /obj/machinery/computer/shuttle/syndicate/allowed(mob/M)
 	if(issilicon(M) && !(ROLE_SYNDICATE in M.faction))
 		return FALSE
 	return ..()
-
-/obj/machinery/computer/shuttle/syndicate/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
-	to_chat(user, "<span class='warning'>The [I] bounces off!</span>")
 
 /obj/machinery/computer/shuttle/syndicate/launch_check(mob/user)
 	. = ..()
