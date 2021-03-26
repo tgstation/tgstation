@@ -162,7 +162,6 @@
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
 	I.forceMove(src)
 	held_items[hand_index] = I
-	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 	I.equipped(src, ITEM_SLOT_HANDS)
 	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers and circle hands could be moved from hand to hand then delete, which meant you'd have a null in your hand until you cleared it (say, by dropping it)

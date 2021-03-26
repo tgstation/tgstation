@@ -3871,7 +3871,7 @@
 	dir = 8;
 	pixel_x = 27
 	},
-/obj/item/trash/plate,
+/obj/item/plate,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "amI" = (
