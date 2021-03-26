@@ -66,6 +66,11 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
     icon: "tg-air-tank-slash",
     text: "Disable internals",
   },
+
+  adjust_jumpsuit: {
+    icon: "tshirt",
+    text: "Adjust jumpsuit",
+  },
 };
 
 const SLOTS: Record<

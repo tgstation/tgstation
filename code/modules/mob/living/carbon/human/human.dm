@@ -106,59 +106,6 @@
 			to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 			return
 
-	if(href_list["pockets"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY)) //TODO: Make it match (or intergrate it into) strippanel so you get 'item cannot fit here' warnings if mob_can_equip fails
-		var/pocket_side = href_list["pockets"] != "right" ? "left" : "right"
-		var/pocket_id = (pocket_side == "right" ? ITEM_SLOT_RPOCKET : ITEM_SLOT_LPOCKET)
-		var/obj/item/pocket_item = (pocket_id == ITEM_SLOT_RPOCKET ? r_store : l_store)
-		var/obj/item/place_item = usr.get_active_held_item() // Item to place in the pocket, if it's empty
-
-		var/delay_denominator = 1
-		if(pocket_item && !(pocket_item.item_flags & ABSTRACT))
-			if(HAS_TRAIT(pocket_item, TRAIT_NODROP))
-				to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
-			to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
-			log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
-			usr.log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
-		else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
-			to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
-			log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [place_item] by [key_name(usr)]", LOG_ATTACK, color="red")
-			usr.log_message("[key_name(src)] is having their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [place_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
-			delay_denominator = 4
-		else
-			return
-
-		if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator)) //placing an item into the pocket is 4 times faster
-			if(pocket_item)
-				if(pocket_item == (pocket_id == ITEM_SLOT_RPOCKET ? r_store : l_store)) //item still in the pocket we search
-					dropItemToGround(pocket_item)
-					log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
-					usr.log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket emptied of [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
-			else
-				if(place_item)
-					if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
-						usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
-						equip_to_slot(place_item, pocket_id, TRUE)
-						log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red")
-						usr.log_message("[key_name(src)] had their [pocket_id == ITEM_SLOT_RPOCKET ? "right" : "left"] pocket filled with [pocket_item] by [key_name(usr)]", LOG_ATTACK, color="red", log_globally=FALSE)
-					//do nothing otherwise
-				//updating inv screen after handled by living/Topic()
-		else
-			// Display a warning if the user mocks up
-			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
-
-	if(href_list["toggle_uniform"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
-		var/obj/item/clothing/under/U = get_item_by_slot(ITEM_SLOT_ICLOTHING)
-		to_chat(src, "<span class='notice'>[usr.name] is trying to adjust your [U].</span>")
-		if(do_mob(usr, src, U.strip_delay/2))
-			to_chat(src, "<span class='notice'>[usr.name] successfully adjusted your [U].</span>")
-			U.toggle_jumpsuit_adjust()
-			update_inv_w_uniform()
-			update_body()
-
-	var/mob/living/user = usr
-	if(istype(user) && href_list["shoes"] && shoes && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
-		shoes.handle_tying(usr)
-
 ///////HUDs///////
 	if(href_list["hud"])
 		if(!ishuman(usr))

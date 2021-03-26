@@ -45,6 +45,29 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	key = STRIPPABLE_ITEM_JUMPSUIT
 	item_slot = ITEM_SLOT_ICLOTHING
 
+/datum/strippable_item/mob_item_slot/jumpsuit/get_alternate_action(atom/source, mob/user)
+	var/obj/item/clothing/under/jumpsuit = get_item(source)
+	if (!istype(jumpsuit))
+		return null
+	return jumpsuit?.can_adjust ? "adjust_jumpsuit" : null
+
+/datum/strippable_item/mob_item_slot/jumpsuit/alternate_action(atom/source, mob/user)
+	var/obj/item/clothing/under/jumpsuit = get_item(source)
+	if (!istype(jumpsuit))
+		return null
+	to_chat(source, "<span class='notice'>[user] is trying to adjust your [jumpsuit.name].")
+	if (!do_mob(user, source, jumpsuit.strip_delay * 0.5))
+		return
+	to_chat(source, "<span class='notice'>[user] successfully adjusted your [jumpsuit.name].")
+	jumpsuit.toggle_jumpsuit_adjust()
+
+	if (!ismob(source))
+		return
+
+	var/mob/mob_source = source
+	mob_source.update_inv_w_uniform()
+	mob_source.update_body()
+
 /datum/strippable_item/mob_item_slot/suit
 	key = STRIPPABLE_ITEM_SUIT
 	item_slot = ITEM_SLOT_OCLOTHING
