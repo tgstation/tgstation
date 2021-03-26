@@ -507,6 +507,13 @@
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
+#define TOTAL_MOLES_SPECIFIC(cached_gases, gas_id, out_var)\
+	out_var = 0;\
+	for(var/total_moles_id in cached_gases){\
+		if(total_moles_id == gas_id){\
+			out_var += cached_gases[total_moles_id][MOLES];\
+		}\
+	}
 #define NORMAL_TURF 1
 #define MAKE_ACTIVE 2
 #define KILL_EXCITED 3
@@ -544,3 +551,11 @@ GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 #define EUPHORIA_INACTIVE 0
 #define EUPHORIA_ACTIVE 1
 #define EUPHORIA_LAST_FLAG 2
+
+// Ventcrawling bitflags, handled in var/vent_movement
+///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
+#define VENTCRAWL_ALLOWED	(1<<0)
+///Allows mobs to enter or leave from atmospheric machines. On for passive, unary, and scrubber vents.
+#define VENTCRAWL_ENTRANCE_ALLOWED (1<<1)
+///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
+#define VENTCRAWL_CAN_SEE	(1<<2)

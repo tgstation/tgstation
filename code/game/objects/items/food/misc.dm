@@ -288,6 +288,7 @@
 	tastes = list("eggplant" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/tortilla
 	name = "tortilla"
@@ -515,19 +516,7 @@
 	throwforce = 0
 
 /obj/item/food/chewable/lollipop/cyborg
-	var/spamchecking = TRUE
-
-/obj/item/food/chewable/lollipop/cyborg/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
-
-/obj/item/food/chewable/lollipop/cyborg/equipped(mob/living/user, slot)
-	. = ..(user, slot)
-	spamchecking = FALSE
-
-/obj/item/food/chewable/lollipop/cyborg/proc/spamcheck()
-	if(spamchecking)
-		qdel(src)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/psicodine = 2) //psicodine instead of omnizine, because the latter was making coders freak out
 
 /obj/item/food/chewable/bubblegum
 	name = "bubblegum"
@@ -608,21 +597,6 @@
 /obj/item/food/chewable/gumball/Initialize()
 	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-
-/obj/item/food/chewable/gumball/cyborg
-	var/spamchecking = TRUE
-
-/obj/item/food/chewable/gumball/cyborg/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
-
-/obj/item/food/chewable/gumball/cyborg/equipped(mob/living/user, slot)
-	. = ..(user, slot)
-	spamchecking = FALSE
-
-/obj/item/food/chewable/gumball/cyborg/proc/spamcheck()
-	if(spamchecking)
-		qdel(src)
 
 /obj/item/food/taco
 	name = "classic taco"
@@ -766,6 +740,7 @@
 	icon_state = "peachcanmaint"
 	trash_type = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
+	venue_value = FOOD_EXOTIC
 
 /obj/item/food/crab_rangoon
 	name = "Crab Rangoon"

@@ -54,6 +54,7 @@
 #define MOB_EPIC (1 << 7) //megafauna
 #define MOB_REPTILE (1 << 8)
 #define MOB_SPIRIT (1 << 9)
+#define MOB_PLANT (1 << 10)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -229,7 +230,7 @@
 //Sentience types, to prevent things like sentience potions from giving bosses sentience
 #define SENTIENCE_ORGANIC 1
 #define SENTIENCE_ARTIFICIAL 2
-// #define SENTIENCE_OTHER 3 unused
+#define SENTIENCE_HUMANOID 3
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
 

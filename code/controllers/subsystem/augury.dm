@@ -14,8 +14,11 @@ SUBSYSTEM_DEF(augury)
 
 /datum/controller/subsystem/augury/proc/register_doom(atom/A, severity)
 	doombringers[A] = severity
+	RegisterSignal(A, COMSIG_PARENT_QDELETING, .proc/unregister_doom)
 
 /datum/controller/subsystem/augury/proc/unregister_doom(atom/A)
+	SIGNAL_HANDLER
+	UnregisterSignal(A, COMSIG_PARENT_QDELETING)
 	doombringers -= A
 
 /datum/controller/subsystem/augury/fire()
