@@ -34,6 +34,8 @@
 
 /obj/item/mod/module/Initialize()
 	. = ..()
+	if(overlay_state_active || overlay_state_inactive)
+		wearer_overlay = mutable_appearance('icons/mob/mod.dmi', "[overlay_state_inactive ? overlay_state_inactive : null]", -ABOVE_BODY_FRONT_LAYER)
 	if(module_type != MODULE_ACTIVE)
 		return
 	if(ispath(device))
@@ -41,8 +43,6 @@
 		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
 		RegisterSignal(device, COMSIG_PARENT_PREQDELETED, .proc/on_device_deletion)
 		RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
-	if(overlay_state_active || overlay_state_inactive)
-		wearer_overlay = mutable_appearance('icons/mob/mod.dmi', "[overlay_state_inactive ? overlay_state_inactive : null]", -ABOVE_BODY_FRONT_LAYER)
 
 /obj/item/mod/module/Destroy()
 	if(mod)
@@ -76,11 +76,16 @@
 		return FALSE
 	active = TRUE
 	if(module_type == MODULE_ACTIVE)
-		mod.selected_module.on_deactivation()
+		if(mod.selected_module)
+			mod.selected_module.on_deactivation()
 		mod.selected_module = src
-		mod.wearer.put_in_hands(device)
-		to_chat(mod.wearer, "<span class='notice'>You extend [device].</span>")
-		RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+		if(device)
+			mod.wearer.put_in_hands(device)
+			to_chat(mod.wearer, "<span class='notice'>You extend [device].</span>")
+			RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+		else
+			to_chat(mod.wearer, "<span class='notice'>You activate [src]. You can use the middle-click button to use it.</span>")
+			RegisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON, .proc/on_select_use)
 	if(wearer_overlay && overlay_state_active)
 		wearer_overlay.icon_state = overlay_state_active
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
@@ -90,14 +95,15 @@
 	active = FALSE
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
-		mod.wearer.transferItemToLoc(device, src, TRUE)
-		to_chat(mod.wearer, "<span class='notice'>You retract [device].</span>")
-		UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
+		if(device)
+			mod.wearer.transferItemToLoc(device, src, TRUE)
+			to_chat(mod.wearer, "<span class='notice'>You retract [device].</span>")
+			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
 	if(wearer_overlay && overlay_state_inactive)
 		wearer_overlay.icon_state = overlay_state_inactive
 	return TRUE
 
-/obj/item/mod/module/proc/on_use(mob/living/user, atom/A)
+/obj/item/mod/module/proc/on_use()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		return FALSE
 	if(!drain_power(use_power_cost))
@@ -107,6 +113,13 @@
 		addtimer(VARSET_CALLBACK(wearer_overlay, icon_state, "[overlay_state_inactive ? overlay_state_inactive : null]"), cooldown_time)
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	return TRUE
+
+/obj/item/mod/module/proc/on_select_use(mob/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(!on_use())
+		return NONE
+	return COMSIG_MOB_CANCEL_CLICKON
 
 /obj/item/mod/module/proc/on_process(delta_time)
 	if(active)
@@ -446,11 +459,60 @@
 	if(!holstered)
 		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
 		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY || holding.weapon_weight > WEAPON_MEDIUM)
+			to_chat(mod.wearer, "<span class='notice'>[holding] doesn't fit in the holster!</span>")
 			return
 		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE))
 			holstered = holding
 			to_chat(mod.wearer, "<span class='notice'>You holster [holstered].</span>")
+			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 	else
 		if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
 			to_chat(mod.wearer, "<span class='notice'>You draw [holstered].</span>")
 			holstered = null
+			playsound(src, "rustle", 50, TRUE)
+
+/obj/item/mod/module/holster/on_uninstall()
+	if(holstered)
+		holstered.forceMove(drop_location())
+		holstered = null
+
+/obj/item/mod/module/tether
+	name = "MOD emergency tether module"
+	desc = "A module that can shoot an emergency tether to pull yourself towards an object."
+	module_type = MODULE_ACTIVE
+	complexity = 3
+	use_power_cost = 50
+
+/obj/item/mod/module/tether/on_select_use(mob/source, atom/target)
+	. = ..()
+	if(!.)
+		return
+	var/obj/projectile/tether = new /obj/projectile/tether
+	tether.preparePixelProjectile(target, mod.wearer)
+	tether.firer = mod.wearer
+	tether.fire()
+
+/obj/projectile/tether
+	name = "tether"
+	icon_state = "hook"
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	pass_flags = PASSTABLE
+	damage = 0
+	nodamage = TRUE
+	hitsound = 'sound/effects/splat.ogg'
+	range = 10
+	var/line
+
+/obj/projectile/tether/fire(setAngle)
+	if(firer)
+		line = firer.Beam(src, icon_state = "chain")
+	..()
+
+/obj/projectile/tether/on_hit(atom/target)
+	. = ..()
+	if(firer)
+		firer.throw_at(target, range = 10, speed = 1, spin = FALSE, gentle = TRUE)
+
+/obj/projectile/tether/Destroy()
+	QDEL_NULL(line)
+	return ..()

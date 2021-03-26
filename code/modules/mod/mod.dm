@@ -351,7 +351,7 @@
 	complexity_with_module += new_module.complexity
 	if(complexity_with_module > complexity_max)
 		if(!starting_module)
-			audible_message("<span class='warning'>[src] indicates that [new_module] would make it overheat.</span>")
+			audible_message("<span class='warning'>[src] indicates that [new_module] is too complex for its' firmware.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
 		else
