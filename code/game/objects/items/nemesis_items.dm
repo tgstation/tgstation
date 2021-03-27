@@ -354,8 +354,8 @@
 	if(!do_after(user, disarm_time, src))
 		return
 
-	qdel(src)
 	to_chat(user, "<span class='notice'>You successfully disarm [src].</span>")
+	qdel(src)
 
 /obj/item/nemesis_trap/attackby(obj/O, mob/user, params)
 	if(!active)
@@ -374,8 +374,8 @@
 	if(!do_after(user, disarm_time, src))
 		return
 
-	qdel(src)
 	to_chat(user, "<span class='notice'>You successfully disarm [src].</span>")
+	qdel(src)
 
 /obj/item/nemesis_trap/proc/deploy_beams()
 	for(var/obj/item/nemesis_trap/trap in view(3, get_turf(src)))
