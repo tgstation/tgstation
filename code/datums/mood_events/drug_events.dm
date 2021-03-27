@@ -79,6 +79,23 @@
 	mood_change = 6
 	timeout = 3 MINUTES
 
+#define EIGENTRIP_MOOD_RANGE 10
+
+/datum/mood_event/eigentrip
+	description = "<span class='nicegreen'>I swapped places with an alternate reality version of myself!</span>\n"
+	mood_change = 0
+	timeout = 10 MINUTES
+
+/datum/mood_event/eigentrip/add_effects(param)
+	var/value = rand(-EIGENTRIP_MOOD_RANGE,EIGENTRIP_MOOD_RANGE)
+	mood_change = value
+	if(value < 0)
+		description = "<span class='warning'>I swapped places with an alternate reality version of myself! I want to go home!</span>\n"
+	else
+		description = "<span class='nicegreen'>I swapped places with an alternate reality version of myself! Though, this place is much better than my old life.</span>\n"
+
+#undef EIGENTRIP_MOOD_RANGE
+
 /datum/mood_event/nicotine_withdrawal_moderate
 	description = "<span class='warning'>Haven't had a smoke in a while. Feeling a little on edge... </span>\n"
 	mood_change = -5
