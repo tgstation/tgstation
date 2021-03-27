@@ -247,11 +247,6 @@
 		/obj/item/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,
-		/obj/item/stack/sheet/iron,
-		/obj/item/stack/sheet/glass,
-		/obj/item/stack/sheet/rglass/cyborg,
-		/obj/item/stack/rods/cyborg,
-		/obj/item/stack/tile/iron,
 		/obj/item/stack/cable_coil)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(/obj/item/borg/stun)
