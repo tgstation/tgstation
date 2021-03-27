@@ -108,10 +108,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	TOTAL_MOLES(cached_gases, .)
 
 /// Calculate moles for a specific gas in the mixture
-/datum/gas_mixture/proc/total_moles_specific(gas_id = null)
+/datum/gas_mixture/proc/total_moles_specific(gas_id)
 	var/cached_gases = gases
-	if(!gas_id)
-		return null
 	TOTAL_MOLES_SPECIFIC(cached_gases, gas_id, .)
 
 /// Checks to see if gas amount exists in mixture.

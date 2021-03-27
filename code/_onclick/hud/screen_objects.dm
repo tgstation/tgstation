@@ -149,8 +149,8 @@
 		usr.update_inv_hands()
 	return TRUE
 
-/atom/movable/screen/inventory/MouseEntered()
-	..()
+/atom/movable/screen/inventory/MouseEntered(location, control, params)
+	. = ..()
 	add_overlays()
 
 /atom/movable/screen/inventory/MouseExited()
@@ -241,7 +241,6 @@
 
 /atom/movable/screen/close
 	name = "close"
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	icon_state = "backpack_close"
 
@@ -500,6 +499,7 @@
 	return set_selected_zone(choice, usr)
 
 /atom/movable/screen/zone_sel/MouseEntered(location, control, params)
+	. = ..()
 	MouseMove(location, control, params)
 
 /atom/movable/screen/zone_sel/MouseMove(location, control, params)
@@ -528,7 +528,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 128
 	anchored = TRUE
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/zone_sel/MouseExited(location, control, params)
@@ -634,15 +633,11 @@
 	screen_loc = ui_internal
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/healths/blob/naut
-	name = "health"
-	icon = 'icons/hud/blob.dmi'
-	icon_state = "nauthealth"
-
-/atom/movable/screen/healths/blob/naut/core
+/atom/movable/screen/healths/blob/overmind
 	name = "overmind health"
+	icon = 'icons/hud/blob.dmi'
 	icon_state = "corehealth"
-	screen_loc = ui_health
+	screen_loc = ui_blobbernaut_overmind_health
 
 /atom/movable/screen/healths/guardian
 	name = "summoner health"
@@ -738,7 +733,6 @@
 	icon_state = ""
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = ui_combo
-	layer = ABOVE_HUD_LAYER
 	var/timerid
 
 /atom/movable/screen/combo/proc/clear_streak()

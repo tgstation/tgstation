@@ -209,17 +209,17 @@ export const Experiment = (props, context) => {
             color={!controllable || selectable
               ? "rgba(255, 255, 255, 0.5)"
               : "rgba(0, 0, 0, 0.5)"}>
-            <Box className="ExperimentConfigure__TagContainer">
-              {tag}
-              <Icon
-                name="question-circle"
-                mx={0.5} />
-              <Box className="ExperimentConfigure__PerformanceHint">
-                <Tooltip
-                  content={performance_hint}
-                  position="bottom-left" />
+            <Tooltip
+              content={performance_hint}
+              position="bottom-start"
+            >
+              <Box className="ExperimentConfigure__TagContainer">
+                {tag}
+                <Icon
+                  name="question-circle"
+                  mx={0.5} />
               </Box>
-            </Box>
+            </Tooltip>
           </Flex.Item>
         </Flex>
       </Button>

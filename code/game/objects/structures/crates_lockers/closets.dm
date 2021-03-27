@@ -1,3 +1,5 @@
+#define LOCKER_FULL -1
+
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
@@ -39,7 +41,6 @@
 	var/icon_welded = "welded"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
-
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
@@ -146,7 +147,7 @@
 /obj/structure/closet/proc/take_contents()
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in L)
-		if(AM != src && insert(AM) == -1) // limit reached
+		if(AM != src && insert(AM) == LOCKER_FULL) // limit reached
 			break
 	for(var/i in reverseRange(L.GetAllContents()))
 		var/atom/movable/thing = i
@@ -172,14 +173,15 @@
 /obj/structure/closet/proc/after_open(mob/living/user, force = FALSE)
 	return
 
-/obj/structure/closet/proc/insert(atom/movable/AM)
-	if(contents.len >= storage_capacity)
-		return -1
-	if(insertion_allowed(AM))
-		AM.forceMove(src)
-		return TRUE
-	else
+/obj/structure/closet/proc/insert(atom/movable/inserted)
+	if(length(contents) >= storage_capacity)
+		return LOCKER_FULL
+	if(!insertion_allowed(inserted))
 		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted) & COMPONENT_CLOSET_INSERT_INTERRUPT)
+		return TRUE
+	inserted.forceMove(src)
+	return TRUE
 
 /obj/structure/closet/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
@@ -440,6 +442,7 @@
 			to_chat(user, "<span class='warning'>You fail to break out of [src]!</span>")
 
 /obj/structure/closet/proc/bust_open()
+	SIGNAL_HANDLER
 	welded = FALSE //applies to all lockers
 	locked = FALSE //applies to critter crates and secure lockers only
 	broken = TRUE //applies to secure lockers only
@@ -517,6 +520,7 @@
 /obj/structure/closet/AllowDrop()
 	return TRUE
 
-
 /obj/structure/closet/return_temperature()
 	return
+
+#undef LOCKER_FULL

@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "atmos components and pipes now show the piping layer on examine"
