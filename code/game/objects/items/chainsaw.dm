@@ -105,7 +105,11 @@
 		new /obj/effect/decal/cleanable/sawdust(get_turf(A), dust_harvest) //spawn an amount of cellulose inside the decal equal to dust_harvest.
 	playsound(src, 'sound/weapons/chainsawhit.ogg', 50, TRUE)
 	to_chat(user, "<span class='notice'>You saw [A] into [plank_harvest ? "planks" : "splints"].</span>")
-	if(isturf(A))
+
+	if(ishuman(A))
+		var/mob/living/carbon/human/pinocchio = A
+		pinocchio.gib(no_bodyparts = TRUE, safe_gib = TRUE)
+	else if(isturf(A))
 		var/turf/scrape_target = A
 		scrape_target.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else

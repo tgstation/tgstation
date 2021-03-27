@@ -151,3 +151,7 @@
 		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs)
 	gibamounts[6] = pick(0, 1, 2)
 	return ..()
+
+/obj/effect/gibspawner/wooden
+	gibtypes = list(/obj/effect/decal/cleanable/sawdust)
+	gibamounts = list(1)
