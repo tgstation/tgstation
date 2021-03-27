@@ -45,6 +45,7 @@
 	del_on_death = 1
 
 	var/is_tree = TRUE
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 
 /mob/living/simple_animal/hostile/tree/Initialize()
 	. = ..()
@@ -93,6 +94,7 @@
 	faction = list()
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	is_tree = FALSE
+	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 10)´
 
 /mob/living/simple_animal/hostile/tree/festivus/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
