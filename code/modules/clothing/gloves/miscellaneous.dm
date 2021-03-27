@@ -217,6 +217,7 @@
 	if(slot == ITEM_SLOT_GLOVES)
 		var/mob/living/student = user
 		style.teach(student, 1)
+		ADD_TRAIT(student, TRAIT_NOGUNS, NEMESIS_TRAIT)
 
 /obj/item/clothing/gloves/rapid/nemesis/dropped(mob/user)
 	. = ..()
@@ -226,6 +227,22 @@
 
 	var/mob/living/owner = user
 	style.remove(owner)
+	REMOVE_TRAIT(owner, TRAIT_NOGUNS, NEMESIS_TRAIT)
+
+	if(shield.loc == src)
+		return
+
+	if(shield.active)
+		shield.active = FALSE
+		shield.icon_state = "[shield.base_icon_state][shield.active]"
+		shield.force = initial(shield.force)
+		shield.w_class = WEIGHT_CLASS_TINY
+		playsound(user, 'sound/weapons/saberoff.ogg', 35, TRUE)
+		shield.slowdown = 0
+
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	user.dropItemToGround(shield, TRUE)
+	shield.forceMove(src)
 
 /obj/item/clothing/gloves/rapid/nemesis/proc/lose_charge(amount_to_lose = 1)
 	if(ishuman(loc))
@@ -286,24 +303,6 @@
 	shield.forceMove(get_turf(owner))
 	owner.put_in_hands(shield)
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-
-/obj/item/clothing/gloves/rapid/nemesis/dropped(mob/user)
-	. = ..()
-
-	if(shield.loc == src)
-		return
-
-	if(shield.active)
-		shield.active = FALSE
-		shield.icon_state = "[shield.base_icon_state][shield.active]"
-		shield.force = initial(shield.force)
-		shield.w_class = WEIGHT_CLASS_TINY
-		playsound(user, 'sound/weapons/saberoff.ogg', 35, TRUE)
-		shield.slowdown = 0
-
-	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-	user.dropItemToGround(shield, TRUE)
-	shield.forceMove(src)
 
 /obj/item/clothing/gloves/rapid/nemesis/emp_act(severity)
 	. = ..()

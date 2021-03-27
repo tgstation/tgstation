@@ -500,6 +500,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MAFIA_TRAIT "mafia"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
+/// Trait associated with Nemesis Solutions
+#define NEMESIS_TRAIT "nemesis solutions"
 
 ///generic atom traits
 #define DO_NOT_SPLASH "do_not_splash"
