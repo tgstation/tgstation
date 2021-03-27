@@ -35,7 +35,10 @@
 	if(!density)
 		. += "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>"
 	else if(!welded)
-		. += "<span class='notice'>It is closed, but could be <i>pried</i> open. Deconstruction would require it to be <b>welded</b> shut.</span>"
+		. += "<span class='notice'>It is closed, but could be <b>pried</b> open.</span>"
+		. += "<span class='notice'>Hold the door open by prying it with <i>left-click</i> and standing next to it.</span>"
+		. += "<span class='notice'>Prying by <i>right-clicking</i> the door will simply open it.</span>"
+		. += "<span class='notice'>Deconstruction would require it to be <b>welded</b> shut.</span>"
 	else if(boltslocked)
 		. += "<span class='notice'>It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.</span>"
 	else
@@ -137,7 +140,11 @@
 		return
 
 	if(density)
+		being_held_open = TRUE
 		open()
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
+		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
+		handle_held_open_adjacency(user)
 	else
 		close()
 
@@ -147,11 +154,7 @@
 		return
 
 	if(density)
-		being_held_open = TRUE
 		open()
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
-		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
-		handle_held_open_adjacency(user)
 	else
 		close()
 
@@ -161,7 +164,7 @@
 	if(Adjacent(user) && isliving(user) && (living_user.body_position == STANDING_UP))
 		return
 	being_held_open = FALSE
-	addtimer(CALLBACK(src, .proc/close), 0.1 SECONDS)
+	INVOKE_ASYNC(src, .proc/close)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 	
