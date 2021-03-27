@@ -1,0 +1,5 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - qol: "sentience fun balloons can no longer assign ghosts to dead mobs"
+  - qol: "sentience fun balloons only work on mobs without a ckey"

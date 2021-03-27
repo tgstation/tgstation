@@ -8,8 +8,7 @@
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 	GLOB.carbon_list += src
-	if(!mapload)  //I don't want no gas leaks on my space ruin you hear?
-		RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
+	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -1273,4 +1272,4 @@
 
 
 /mob/living/carbon/proc/attach_rot(mapload)
-	AddComponent(/datum/component/rot/corpse)
+	AddComponent(/datum/component/rot, 6 MINUTES, 1)

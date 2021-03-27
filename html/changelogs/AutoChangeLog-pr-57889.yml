@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - refactor: "The strip panel has been completely remodeled in tgui."

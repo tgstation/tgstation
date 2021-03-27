@@ -55978,7 +55978,7 @@
 "nEQ" = (
 /obj/machinery/nanite_program_hub,
 /obj/machinery/requests_console{
-	department = "Law office";
+	department = "Nanite Lab";
 	pixel_y = 32
 	},
 /turf/open/floor/circuit/green,
