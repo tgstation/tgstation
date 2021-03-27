@@ -72,16 +72,12 @@
 	heat_capacity = 7500 * ((calculated_bin_rating - 1) ** 2)
 	min_temperature = T20C
 	max_temperature = T20C
-	if(cooling)
-		var/calculated_laser_rating
-		for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-			calculated_laser_rating += laser.rating
-		min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
-	else
-		var/calculated_laser_rating
-		for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-			calculated_laser_rating += laser.rating
-		max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
+	var/calculated_laser_rating
+	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
+		calculated_laser_rating += laser.rating
+	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
+	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
+
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_icon_state()
 	if(panel_open)
