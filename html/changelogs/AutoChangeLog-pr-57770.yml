@@ -1,5 +1,0 @@
-author: "Kryson, Qustinnus"
-delete-after: True
-changes: 
-  - rscadd: "You can now put food on plates, and plate no longer materialize out of nowhere as you cook"
-  - code_imp: "Items no longer appear on a different layer when they're in your inventory, just a different plane."
