@@ -1,7 +1,7 @@
 import { createPopper, Placement } from '@popperjs/core';
 import { Component, createPortal, createRef, InfernoNode } from 'inferno';
 
-const DEFAULT_PLACEMENT = "bottom";
+const DEFAULT_PLACEMENT = "top";
 
 type TooltipProps = {
   children?: InfernoNode;
