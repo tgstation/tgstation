@@ -128,7 +128,11 @@
  * * max_temp (optional) The maximum body temperature after adjustment
  */
 /mob/living/carbon/human/proc/adjust_coretemperature(amount, min_temp=0, max_temp=INFINITY)
-	coretemperature = clamp(coretemperature + amount, min_temp, max_temp)
+	set_coretemperature(clamp(coretemperature + amount, min_temp, max_temp))
+
+/mob/living/carbon/human/proc/set_coretemperature(value)
+	SEND_SIGNAL(src, COMSIG_HUMAN_CORETEMP_CHANGE, coretemperature, value)
+	coretemperature = value
 
 /**
  * get_body_temperature Returns the body temperature with any modifications applied

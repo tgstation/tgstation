@@ -69,6 +69,12 @@
 /obj/item/ammo_casing/energy/instakill/red
 	projectile_type = /obj/projectile/beam/instakill/red
 
+/obj/item/ammo_casing/energy/instakill/green
+	projectile_type = /obj/projectile/beam/instakill/green
+
+/obj/item/ammo_casing/energy/instakill/yellow
+	projectile_type = /obj/projectile/beam/instakill/yellow
+
 /obj/item/ammo_casing/energy/tesla_cannon
 	fire_sound = 'sound/magic/lightningshock.ogg'
 	e_cost = 50

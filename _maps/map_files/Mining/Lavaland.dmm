@@ -184,7 +184,7 @@
 /area/mine/laborcamp)
 "aG" = (
 /obj/structure/table,
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/item/kitchen/fork,
 /turf/open/floor/iron,
 /area/mine/laborcamp)

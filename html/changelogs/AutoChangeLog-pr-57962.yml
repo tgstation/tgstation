@@ -1,0 +1,4 @@
+author: "bloons3"
+delete-after: True
+changes: 
+  - bugfix: "The already indestructible Syndicate Shuttle Terminal now cannot be deconstructed with tools"
