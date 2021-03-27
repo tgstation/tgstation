@@ -10,6 +10,7 @@
 	var/open = FALSE
 	var/can_open = TRUE
 	var/speed_multiplier = 1 //How fast it distills. Defaults to 100% (1.0). Lower is better.
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 8)
 
 /obj/structure/fermenting_barrel/Initialize()
 	// Bluespace beakers, but without the portability or efficiency in circuits.

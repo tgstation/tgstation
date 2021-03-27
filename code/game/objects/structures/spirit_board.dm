@@ -9,6 +9,7 @@
 	var/next_use = 0
 	var/planchette = "A"
 	var/lastuser = null
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 5)
 
 /obj/structure/spirit_board/examine()
 	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."

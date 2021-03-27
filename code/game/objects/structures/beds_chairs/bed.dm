@@ -172,6 +172,7 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
 	var/owned = FALSE
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 
 /obj/structure/bed/dogbed/ian
 	desc = "Ian's bed! Looks comfy."

@@ -397,6 +397,7 @@
 	max_integrity = 70
 	smoothing_groups = list(SMOOTH_GROUP_WOOD_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_TABLES)
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)

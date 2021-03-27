@@ -28,6 +28,7 @@
 	var/blade_sharpness = GUILLOTINE_BLADE_MAX_SHARP // How sharp the blade is
 	var/kill_count = 0
 	var/current_action = 0 // What's currently happening to the guillotine
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 20, /datum/material/alloy/plasteel = MINERAL_MATERIAL_AMOUNT * 3)
 
 /obj/structure/guillotine/Initialize()
 	LAZYINITLIST(buckled_mobs)

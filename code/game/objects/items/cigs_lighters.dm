@@ -27,6 +27,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
 	grind_results = list(/datum/reagent/phosphorus = 2)
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.05)
 
 /obj/item/match/process(delta_time)
 	smoketime -= delta_time

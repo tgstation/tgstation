@@ -32,6 +32,7 @@
 	var/random_category = null
 	/// How many random books to generate.
 	var/books_to_load = 0
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 4)
 
 /obj/structure/bookcase/examine(mob/user)
 	. = ..()

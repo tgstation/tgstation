@@ -94,6 +94,7 @@
 	framestack = /obj/item/stack/sheet/mineral/wood
 	framestackamount = 2
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 
 /obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/stack))

@@ -291,6 +291,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 
 /obj/structure/mineral_door/wood/pickaxe_door(mob/living/user, obj/item/I)
 	return
@@ -317,6 +318,7 @@
 	sheetAmount = 3
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 
 /obj/structure/mineral_door/paperframe/Initialize()
 	. = ..()

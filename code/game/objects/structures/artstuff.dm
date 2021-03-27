@@ -12,6 +12,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 60
 	var/obj/item/canvas/painting = null
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 5)
 
 //Adding canvases
 /obj/structure/easel/attackby(obj/item/I, mob/user, params)
@@ -233,7 +234,7 @@
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
@@ -244,7 +245,7 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 	buildable_sign = FALSE
 	///Canvas we're currently displaying.
 	var/obj/item/canvas/current_canvas

@@ -167,6 +167,7 @@
 	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "fokof"
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3)
 
 /obj/structure/fluff/big_chain
 	name = "giant chain"
@@ -261,6 +262,7 @@
 	anchored = TRUE
 	deconstructible = FALSE
 	max_integrity = 80
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.5)
 
 /obj/structure/fluff/hedge/attacked_by(obj/item/I, mob/living/user)
 	if(opacity && HAS_TRAIT(user, TRAIT_BONSAI) && I.get_sharpness())

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "honey_frame"
 	var/honeycomb_capacity = 10 //10 Honeycomb per frame by default, researchable frames perhaps?
-
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 5)
 
 /obj/item/honey_frame/Initialize()
 	. = ..()

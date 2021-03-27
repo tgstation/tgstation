@@ -16,6 +16,7 @@
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.25)
 
 /turf/open/floor/wood/setup_broken_states()
 	return list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")

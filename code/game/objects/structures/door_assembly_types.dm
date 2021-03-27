@@ -240,6 +240,7 @@
 	airlock_type = /obj/machinery/door/airlock/wood
 	mineral = "wood"
 	glass_type = /obj/machinery/door/airlock/wood/glass
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 
 /obj/structure/door_assembly/door_assembly_bronze
 	name = "bronze airlock assembly"

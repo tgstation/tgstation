@@ -13,6 +13,7 @@
 	attack_verb_continuous = list("bashes", "batters", "judges", "whacks")
 	attack_verb_simple = list("bash", "batter", "judge", "whack")
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 
 /obj/item/gavelhammer/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] has sentenced [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -28,6 +29,7 @@
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 
 /obj/item/gavelblock/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/gavelhammer))

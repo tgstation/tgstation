@@ -5,6 +5,7 @@
 	icon_state = "dresser"
 	density = TRUE
 	anchored = TRUE
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 
 /obj/structure/dresser/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH)

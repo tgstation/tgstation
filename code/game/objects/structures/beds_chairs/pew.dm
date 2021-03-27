@@ -8,6 +8,7 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
 	item_chair = null
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3)
 
 /obj/structure/chair/pew/left
 	name = "left wooden pew end"

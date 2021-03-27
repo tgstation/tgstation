@@ -11,6 +11,7 @@
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 4)
 
 	// Stops people from "diving into" a crate you can't open normally
 	divable = FALSE

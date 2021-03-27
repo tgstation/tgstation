@@ -53,6 +53,7 @@
 	inhand_icon_state = "violin"
 	hitsound = "swing_hit"
 	allowed_instrument_ids = "violin"
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 
 /obj/item/instrument/violin/golden
 	name = "golden violin"
@@ -60,6 +61,7 @@
 	icon_state = "golden_violin"
 	inhand_icon_state = "golden_violin"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 2)
 
 /obj/item/instrument/piano_synth
 	name = "synthesizer"
@@ -125,6 +127,7 @@
 	attack_verb_simple = list("scruggs-style", "hum-diggity", "shin-dig", "clawhammer")
 	hitsound = 'sound/weapons/banjoslap.ogg'
 	allowed_instrument_ids = "banjo"
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 
 /obj/item/instrument/guitar
 	name = "guitar"
@@ -135,6 +138,7 @@
 	attack_verb_simple = list("play metal on", "serenade", "crash", "smash")
 	hitsound = 'sound/weapons/stringsmash.ogg'
 	allowed_instrument_ids = list("guitar","csteelgt","cnylongt", "ccleangt", "cmutedgt")
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 
 /obj/item/instrument/eguitar
 	name = "electric guitar"

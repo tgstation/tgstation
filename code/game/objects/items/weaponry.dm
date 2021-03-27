@@ -430,7 +430,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.5)
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 
@@ -447,6 +447,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	armour_penetration = 100
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
 	attack_verb_simple = list("bludgeon", "whack", "discipline")
 	resistance_flags = FLAMMABLE
@@ -783,6 +784,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "gohei"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.25)
 
 //HF blade
 /obj/item/vibro_weapon

@@ -11,6 +11,7 @@
 	pixel_x = -16
 	layer = FLY_LAYER
 	var/log_amount = 10
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
 	if(log_amount && (!(flags_1 & NODECONSTRUCT_1)))
@@ -37,6 +38,7 @@
 	icon_state = "tree_stump"
 	density = FALSE
 	pixel_x = -16
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 5)
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"

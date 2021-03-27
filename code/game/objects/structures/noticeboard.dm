@@ -7,6 +7,7 @@
 	anchored = TRUE
 	max_integrity = 150
 	var/notices = 0
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 4)
 
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()

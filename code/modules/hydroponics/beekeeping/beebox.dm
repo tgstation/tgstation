@@ -38,7 +38,7 @@
 	var/list/honeycombs = list()
 	var/list/honey_frames = list()
 	var/bee_resources = 0
-
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 40)
 
 /obj/structure/beebox/Initialize()
 	. = ..()

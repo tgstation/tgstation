@@ -167,7 +167,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 
 /turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
 	if(W.get_sharpness() && W.force)

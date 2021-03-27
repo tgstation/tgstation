@@ -8,6 +8,7 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	max_integrity = 70
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 4)
 
 /obj/structure/closet/acloset
 	name = "strange closet"

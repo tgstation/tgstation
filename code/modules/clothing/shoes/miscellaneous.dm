@@ -36,7 +36,7 @@
 	desc = "A pair of rather plain wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1)
 	strip_delay = 5
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
@@ -272,8 +272,8 @@
 		recharging_time = world.time + recharging_rate
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
-		
-/obj/item/clothing/shoes/bhop/rocket 
+
+/obj/item/clothing/shoes/bhop/rocket
 	name = "rocket boots"
 	desc = "Very special boots with built-in rocket thrusters! SHAZBOT!"
 	icon_state = "rocketboots"

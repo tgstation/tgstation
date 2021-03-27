@@ -13,6 +13,7 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 	var/obj/item/tank/internals/emergency_oxygen/tank
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 4)
 
 /obj/structure/closet/crate/critter/Initialize()
 	. = ..()

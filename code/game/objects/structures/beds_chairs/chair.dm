@@ -155,6 +155,7 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3)
 
 /obj/structure/chair/wood/narsie_act()
 	return
@@ -400,6 +401,7 @@
 	origin_type = /obj/structure/chair/wood
 	custom_materials = null
 	break_chance = 50
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3)
 
 /obj/item/chair/wood/narsie_act()
 	return

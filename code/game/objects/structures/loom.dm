@@ -9,6 +9,7 @@
 	icon_state = "loom"
 	density = TRUE
 	anchored = TRUE
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 
 /obj/structure/loom/attackby(obj/item/I, mob/user)
 	if(weave(I, user))

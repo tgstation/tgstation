@@ -62,6 +62,7 @@
 	icon_state = "woodenbarricade"
 	bar_material = WOOD
 	var/drop_amount = 3
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 5)
 
 /obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/stack/sheet/mineral/wood))
@@ -87,6 +88,7 @@
 	drop_amount = 1
 	max_integrity = 50
 	proj_pass_rate = 65
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3)
 
 /obj/structure/barricade/wooden/crude/snow
 	desc = "This space is blocked off by a crude assortment of planks. It seems to be covered in a layer of snow."

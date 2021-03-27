@@ -303,6 +303,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 
 /obj/structure/falsewall/iron
 	name = "rough metal wall"

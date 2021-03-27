@@ -36,6 +36,7 @@
 	icon_state = "minimoog"
 	anchored = TRUE
 	density = TRUE
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 8)
 
 /obj/structure/musician/piano/unanchored
 	anchored = FALSE

@@ -260,6 +260,7 @@
 	visible_contents = FALSE
 	base_build_path = /obj/machinery/smartfridge/drying_rack //should really be seeing this without admin fuckery.
 	var/drying = FALSE
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
 	. = ..()

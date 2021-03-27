@@ -131,6 +131,7 @@
 	turf_type = /turf/open/floor/wood
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/wood
+	mats_per_unit = list(/datum/material/wood=500)
 
 //Basalt
 /obj/item/stack/tile/basalt
