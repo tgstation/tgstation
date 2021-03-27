@@ -37,15 +37,6 @@
 
 /datum/reagent/eigenstate/expose_mob(mob/living/living_mob, methods, reac_volume, show_message, touch_protection)
 	. = ..()
-	if(!(methods & INGEST))
-		return
-	if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
-		do_sparks(5,FALSE,living_mob)
-		do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
-		do_sparks(5,FALSE,living_mob)
-
-//Main functions
-/datum/reagent/eigenstate/on_mob_add(mob/living/living_mob, amount)
 	//make hologram at return point
 	eigenstate = new (living_mob.loc)
 	eigenstate.appearance = living_mob.appearance
@@ -60,7 +51,14 @@
 	location_return = get_turf(living_mob)	//sets up return point
 	to_chat(living_mob, "<span class='userdanger'>You feel like part of yourself has split off!</span>")
 
-	return ..()
+	if(!(methods & INGEST))
+		return
+	if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
+		do_sparks(5,FALSE,living_mob)
+		do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
+		do_sparks(5,FALSE,living_mob)
+
+
 
 /datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob)
 	if(prob(20))
