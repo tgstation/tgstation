@@ -598,9 +598,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 			continue
 		if(carbon.dna.activate_mutation(potential_option))
 			speech_option = potential_option
-			speech_options -= potential_option
 			return
-		speech_options -= potential_option
+		else
+			speech_options -= potential_option
 
 
 /datum/reagent/impurity/mannitol/on_mob_delete(mob/living/owner)
@@ -714,7 +714,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(original_heart) //Mostly a just in case
 		original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
 		original_heart.Insert(carbon_mob, special = TRUE)
-	manual_heart.forceMove(null) //so we can be sure this is removed
 	qdel(manual_heart)
 	to_chat(owner, "<span class='userdanger'>You feel your heart start beating normally again!</spans>")
 	..()
