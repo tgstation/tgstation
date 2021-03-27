@@ -1,4 +1,3 @@
-import { classes } from 'common/react';
 import { createPopper, Placement } from '@popperjs/core';
 import { Component, createPortal, createRef, InfernoNode } from 'inferno';
 
@@ -7,10 +6,7 @@ const DEFAULT_PLACEMENT = "bottom";
 type TooltipProps = {
   children?: InfernoNode;
   content: string;
-  // TODO: Fix old tooltips to match this
   position?: Placement;
-
-  // TODO: Find uses of overrideLong
 };
 
 type TooltipState = {
