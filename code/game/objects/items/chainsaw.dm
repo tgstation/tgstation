@@ -87,15 +87,15 @@ ds
 	if(!lignocellulose)
 		return ..()
 
-	user.visible_message("<span class='notice'>[user] starts sawing [A] to pieces!</span>", "<span class='notice'>You start sawing [A] to pieces!</span>")
+
 
 	var/dust_harvest = lignocellulose * 0.1 //you lose 10% as sawdust
 	lignocellulose *= 0.9
 	dust_harvest = round((lignocellulose % MINERAL_MATERIAL_AMOUNT) / 100) //the leftover wood material also becomes sawdust.
 	var/plank_harvest = round(lignocellulose / (MINERAL_MATERIAL_AMOUNT))
 
-
 	if(plank_harvest >= 3)
+		user.visible_message("<span class='notice'>[user] starts sawing [A] to pieces!</span>", "<span class='notice'>You start sawing [A] to pieces!</span>")
 		if(!do_after(user, 2 SECONDS, target = A))
 			return
 
@@ -105,7 +105,7 @@ ds
 	if(lignocellulose % MINERAL_MATERIAL_AMOUNT)
 		new /obj/effect/decal/cleanable/sawdust(get_turf(A), dust_harvest) //spawn an amount of cellulose inside the decal equal to dust_harvest.
 	playsound(src, 'sound/weapons/chainsawhit.ogg', 50, TRUE)
-
+	to_chat(user, "<span class='notice'>You saw [A] into [plank_harvest ? "planks" : "splints"].</span>")
 	if(isturf(A))
 		var/turf/scrape_target = A
 		scrape_target.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
