@@ -13,43 +13,72 @@
 
 
 /datum/game_mode
+	/// Self explanitory, name of the game mode.
 	var/name = "invalid"
+	/// In determining gamemode weights, what is this gamemode called?
 	var/config_tag = null
-	var/votable = 1
+	/// Can this map be voted for in config?
+	var/votable = TRUE
+	///Typically overwritten in config, what are the odds of this gamemode being selected?
 	var/probability = 0
-	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
-	var/report_type = "invalid" //gamemodes with the same report type will not show up in the command report together.
-	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
-	var/nuke_off_station = 0 //Used for tracking where the nuke hit
-	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
-	var/list/datum/mind/antag_candidates = list() // List of possible starting antags goes here
-	var/list/restricted_jobs = list() // Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
-	var/list/protected_jobs = list() // Jobs that can't be traitors because
-	var/list/required_jobs = list() // alternative required job groups eg list(list(cap=1),list(hos=1,sec=2)) translates to one captain OR one hos and two secmans
+	///How often will this show up incorrectly in a centcom report?
+	var/false_report_weight = 0
+	/// Gamemodes with the same report type will not show up in the command report together.
+	var/report_type = "invalid"
+	/// See nuclearbomb.dm and malfunction.dm, does this gamemode end with a nuke endscreen?
+	var/station_was_nuked = FALSE
+	/// Used for tracking where the nuke hit. Changes cinematic if the nuke is deployed off station zlevel.
+	var/nuke_off_station = FALSE
+	/// flags the "one verse the station" antags as such. The classic example is non-dynamic wizard.
+	var/round_ends_with_antag_death = FALSE
+	/// List of possible starting antags goes here
+	var/list/datum/mind/antag_candidates = list()
+	/// Jobs that a gamemode cannot be, for sanity. Eg: A blood cultist AI or chaplain.
+	var/list/restricted_jobs = list()
+	/// Jobs that can't be traitors to protect round flow, like security traitors.
+	var/list/protected_jobs = list()
+	/// Jobs that MUST be rolled in order for the gamemode to be selected. Eg. list(list(cap=1),list(hos=1,sec=2)) translates to one captain OR one hos and two security.
+	var/list/required_jobs = list()
+	/// Number of players required to play this gamemode.
 	var/required_players = 0
-	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
+	/// -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
+	var/maximum_players = -1
+	/// Minimum number of antagonists that the gamemode will roll on selection.
 	var/required_enemies = 0
+	/// A game mode's suggested count for how many antagonists should be created. If the number of available players with the game mode enabled is not larger than this count, then people without it enabled may be drafted into the role. If there's not enough players to draft after that, the gamemode defaults to something else.
 	var/recommended_enemies = 0
-	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
+	/// Preferences flag such as BE_WIZARD that need to be turned on for players to be antag
+	var/antag_flag = null
+	/// A reference to a gamemode's sole important antagonist if one exists.
 	var/mob/living/living_antag_player = null
+	/// Matters more outside of dynamic, if a gamemode is converted mid-round due to a mulligan or due to admin action, the new mode is stored here.
 	var/datum/game_mode/replacementmode = null
-	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
-	var/reroll_friendly //During mode conversion only these are in the running
-	var/continuous_sanity_checked //Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
-	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
+	///0: round not converted, 1: round going to convert, 2: round converted
+	var/round_converted = 0
+	///Can this game mode be re-rolled? If so, puts it up for a mulligan if the round ends early.
+	var/reroll_friendly
+	///Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
+	var/continuous_sanity_checked
+	///How many days of playtime must players have been playing before they can play this antagonist at roundstart.
+	var/enemy_minimum_age = 7
 
-	var/announce_span = "warning" //The gamemode's name will be in this span during announcement.
-	var/announce_text = "This gamemode forgot to set a descriptive text! Uh oh!" //Used to describe a gamemode when it's announced.
+	///The gamemode's name will be in this span during announcement.
+	var/announce_span = "warning"
+	///Used to describe a gamemode when it's announced. Not seen during secret or dynamic.
+	var/announce_text = "This gamemode forgot to set a descriptive text! Uh oh!"
 
+	/// What is the lower bound of when the roundstart annoucement is sent out?
 	var/const/waittime_l = 600
-	var/const/waittime_h = 1800 // started at 1800
-
+	/// What is the higher bound of when the roundstart annoucement is sent out?
+	var/const/waittime_h = 1800
+	/// List of available station goals for the crew to be working on, built into the round-type.
 	var/list/datum/station_goal/station_goals = list()
-
+	/// Does this gamemode allow the collection of persistance features? (Scars, etc.)
 	var/allow_persistence_save = TRUE
-
-	var/gamemode_ready = FALSE //Is the gamemode all set up and ready to start checking for ending conditions.
-	var/setup_error //What stopepd setting up the mode.
+	///Is the gamemode all set up and ready to start checking for ending conditions.
+	var/gamemode_ready = FALSE
+	/////What reason do we have for not setting up the game mode.
+	var/setup_error
 
 	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS = list(), CURRENT_LIVING_ANTAGS = list(), CURRENT_DEAD_PLAYERS = list(), CURRENT_OBSERVERS = list())
@@ -233,7 +262,7 @@
 			for(var/mob/Player in GLOB.mob_list)
 				if(Player.mind)
 					if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums))
-						continuous_sanity_checked = 1
+						continuous_sanity_checked = TRUE
 						return FALSE
 			if(!continuous_sanity_checked)
 				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")

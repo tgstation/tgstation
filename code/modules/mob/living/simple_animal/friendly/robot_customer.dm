@@ -35,7 +35,7 @@
 	ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE] = attending_venue
 	ai_controller.blackboard[BB_CUSTOMER_PATIENCE] = customer_info.total_patience
 	icon_state = customer_info.base_icon
-	name = "[pick(customer_info.name_prefixes)]-bot ([customer_info.nationality])"
+	name = "[pick(customer_info.name_prefixes)]-bot"
 	color = rgb(rand(80,255), rand(80,255), rand(80,255))
 	update_icon()
 
@@ -61,6 +61,14 @@
 
 /mob/living/simple_animal/robot_customer/update_overlays()
 	. = ..()
+
+	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
+
+	var/new_underlays = customer_info.get_underlays(src)
+	if (new_underlays)
+		underlays.Cut()
+		underlays += new_underlays
+
 	var/mutable_appearance/features = mutable_appearance(icon, "[icon_state]_features")
 	features.appearance_flags = RESET_COLOR
 	. += features
@@ -68,8 +76,6 @@
 	var/mutable_appearance/clothes = mutable_appearance(icon, clothes_set)
 	clothes.appearance_flags = RESET_COLOR
 	. += clothes
-
-	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 
 	var/bonus_overlays = customer_info.get_overlays(src)
 	if(bonus_overlays)

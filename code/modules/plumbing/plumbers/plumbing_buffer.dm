@@ -12,10 +12,10 @@
 	var/activation_volume = 100
 	var/mode
 
-/obj/machinery/plumbing/buffer/Initialize(mapload, bolt)
+/obj/machinery/plumbing/buffer/Initialize(mapload, bolt, layer)
 	. = ..()
 
-	AddComponent(/datum/component/plumbing/buffer, bolt)
+	AddComponent(/datum/component/plumbing/buffer, bolt, layer)
 
 /obj/machinery/plumbing/buffer/create_reagents(max_vol, flags)
 	. = ..()

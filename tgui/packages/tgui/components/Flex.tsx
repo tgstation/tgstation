@@ -8,11 +8,11 @@ import { BooleanLike, classes, pureComponentHooks } from 'common/react';
 import { Box, BoxProps, unit } from './Box';
 
 export interface FlexProps extends BoxProps {
-  direction: string | BooleanLike;
-  wrap: string | BooleanLike;
-  align: string | BooleanLike;
-  justify: string | BooleanLike;
-  inline: BooleanLike;
+  direction?: string | BooleanLike;
+  wrap?: string | BooleanLike;
+  align?: string | BooleanLike;
+  justify?: string | BooleanLike;
+  inline?: BooleanLike;
 }
 
 export const computeFlexProps = (props: FlexProps) => {

@@ -5,10 +5,21 @@
 	req_access = ACCESS_KITCHEN
 	min_time_between_visitor = 80 SECONDS
 	max_time_between_visitor = 100 SECONDS
-
+	customer_types = list(
+		/datum/customer_data/american = 50,
+		/datum/customer_data/italian = 30,
+		/datum/customer_data/french = 30,
+		/datum/customer_data/mexican = 30,
+		/datum/customer_data/japanese = 30,
+		/datum/customer_data/japanese/salaryman = 20,
+		/datum/customer_data/british/bobby = 20,
+		/datum/customer_data/british/gent = 20,
+		/datum/customer_data/moth = 1,
+		/datum/customer_data/malfunction = 1,
+	)
 
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
-	var/obj/item/object_to_order = pickweight(customer_data.orderable_objects[type]) //Get what object we are ordering
+	var/obj/item/object_to_order = customer_data.get_order(src)
 
 	. = object_to_order
 
@@ -43,7 +54,6 @@
 	var/obj/item/food/ordered_food = order_item
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [ordered_food] into their mouth-shaped hole!</span>", "<span class='danger'>You push [ordered_food] into your mouth-shaped hole.</span>")
 	playsound(get_turf(customer_pawn),'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	total_income += ordered_food.venue_value
 	customers_served += 1
 	qdel(ordered_food)
 
@@ -66,6 +76,17 @@
 	req_access = ACCESS_BAR
 	min_time_between_visitor = 40 SECONDS
 	max_time_between_visitor = 60 SECONDS
+	customer_types = list(
+		/datum/customer_data/american = 50,
+		/datum/customer_data/italian = 30,
+		/datum/customer_data/french = 30,
+		/datum/customer_data/mexican = 30,
+		/datum/customer_data/japanese = 30,
+		/datum/customer_data/japanese/salaryman = 20,
+		/datum/customer_data/british/bobby = 20,
+		/datum/customer_data/british/gent = 20,
+		/datum/customer_data/malfunction = 1,
+	)
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[type])

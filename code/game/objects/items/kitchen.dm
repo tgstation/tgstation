@@ -15,6 +15,10 @@
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 
+/obj/item/kitchen/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_APC_SHOCKING, INNATE_TRAIT)
+
 /obj/item/kitchen/fork
 	name = "fork"
 	desc = "Pointy."

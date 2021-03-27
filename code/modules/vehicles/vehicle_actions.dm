@@ -127,24 +127,28 @@
 	desc = "Honk your classy horn."
 	button_icon_state = "car_horn"
 	var/hornsound = 'sound/items/carhorn.ogg'
-	var/last_honk_time
 
 /datum/action/vehicle/sealed/horn/Trigger()
-	if(world.time - last_honk_time > 20)
-		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks!</span>")
-		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
-		playsound(vehicle_entered_target, hornsound, 75)
-		last_honk_time = world.time
+	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CAR_HONK))
+		return
+	TIMER_COOLDOWN_START(src, COOLDOWN_CAR_HONK, 2 SECONDS)
+	vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks!</span>")
+	to_chat(owner, "<span class='notice'>You press [vehicle_entered_target]'s horn.</span>")
+	if(istype(vehicle_target.inserted_key, /obj/item/bikehorn))
+		vehicle_target.inserted_key.attack_self(owner) //The bikehorn plays a sound instead
+		return
+	playsound(vehicle_entered_target, hornsound, 75)
 
-/datum/action/vehicle/sealed/horn/clowncar/Trigger()
-	if(world.time - last_honk_time > 20)
-		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks!</span>")
-		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
-		last_honk_time = world.time
-		if(vehicle_target.inserted_key)
-			vehicle_target.inserted_key.attack_self(owner) //The key plays a sound
-		else
-			playsound(vehicle_entered_target, hornsound, 75)
+/datum/action/vehicle/sealed/headlights
+	name = "Toggle Headlights"
+	desc = "Turn on your brights!"
+	button_icon_state = "car_headlights"
+
+/datum/action/vehicle/sealed/headlights/Trigger()
+	to_chat(owner, "<span class='notice'>You flip the switch for the vehicle's headlights.</span>")
+	vehicle_entered_target.headlights_toggle = !vehicle_entered_target.headlights_toggle
+	vehicle_entered_target.set_light_on(vehicle_entered_target.headlights_toggle)
+	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs
 	name = "Dump Kidnapped Mobs"
@@ -162,9 +166,10 @@
 	button_icon_state = "car_rtd"
 
 /datum/action/vehicle/sealed/roll_the_dice/Trigger()
-	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
-		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
-		C.RollTheDice(owner)
+	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		return
+	var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
+	C.roll_the_dice(owner)
 
 /datum/action/vehicle/sealed/cannon
 	name = "Toggle Siege Mode"
@@ -172,11 +177,10 @@
 	button_icon_state = "car_cannon"
 
 /datum/action/vehicle/sealed/cannon/Trigger()
-	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
-		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
-		if(C.cannonbusy)
-			to_chat(owner, "<span class='notice'>Please wait for the vehicle to finish its current action first.</span>")
-		C.ToggleCannon()
+	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		return
+	var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
+	C.toggle_cannon(owner)
 
 
 /datum/action/vehicle/sealed/thank
@@ -193,12 +197,11 @@
 		return
 	COOLDOWN_START(src, thank_time_cooldown, 6 SECONDS)
 	var/obj/vehicle/sealed/car/clowncar/clown_car = vehicle_entered_target
-	var/list/drivers = clown_car.return_drivers()
-	if(!length(drivers))
+	var/mob/living/carbon/human/clown = pick(clown_car.return_drivers())
+	if(!clown)
 		return
-	var/mob/living/carbon/human/clown = pick(drivers)
 	owner.say("Thank you for the fun ride, [clown.name]!")
-	clown_car.ThanksCounter()
+	clown_car.increment_thanks_counter()
 
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie

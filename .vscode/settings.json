@@ -9,6 +9,9 @@
 		"**/.yarn": true,
 		"**/.pnp.*": true
 	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
 	"workbench.editorAssociations": [
 		{
 			"filenamePattern": "*.dmi",
@@ -17,5 +20,14 @@
 	],
 	"files.eol": "\n",
 	"gitlens.advanced.blame.customArguments": ["-w"],
-	"tgstationTestExplorer.project.resultsType": "json"
+	"tgstationTestExplorer.project.resultsType": "json",
+	"[javascript]": {
+		"editor.rulers": [80]
+	},
+	"[typescript]": {
+		"editor.rulers": [80]
+	},
+	"[scss]": {
+		"editor.rulers": [80]
+	}
 }
