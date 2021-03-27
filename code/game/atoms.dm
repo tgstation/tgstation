@@ -9,6 +9,7 @@
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND
 
+	var/dont_flatten = FALSE
 	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
 	var/pass_flags_self = NONE
 
@@ -243,9 +244,16 @@
 	return INITIALIZE_HINT_NORMAL
 
 atom/proc/isomatrixize()
+	if(dont_flatten)
+		return
 	var/matrix/isomatrix = matrix()
-	isomatrix.Turn(45)
-	isomatrix.Scale(1, 0.5)
+	if(ismob(src))
+		base_pixel_y += 10
+		isomatrix.Scale(0.75, 0.75)
+		AddElement(/datum/element/waddling)
+	else
+		isomatrix.Turn(45)
+		isomatrix.Scale(1, 0.5)
 	transform = isomatrix
 
 /**
