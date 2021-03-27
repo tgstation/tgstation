@@ -600,6 +600,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 			speech_option = potential_option
 			speech_options -= potential_option
 			return
+		speech_options -= potential_option
 
 
 /datum/reagent/impurity/mannitol/on_mob_delete(mob/living/owner)
@@ -700,7 +701,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	original_heart.forceMove(organ.loc)
 	original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
-	organ.forceMove(null)
 	qdel(organ)
 
 ///We're done - remove the curse and restore the old one
