@@ -24,7 +24,7 @@
 	inverse_chem_val = 0
 	failed_chem = /datum/reagent/bluespace //crashes out
 	chemical_flags = REAGENT_DEAD_PROCESS //So if you die with it in your body, you still get teleported back to the location as a corpse
-	data = list("location_created" = null, "exposure_type" = null)//So we retain the target location and creator between reagent instances
+	data = list("location_created" = null, "location_return" = null, "eigenstate" = null)//So we retain the target location and creator between reagent instances
 	///The creation point assigned during the reaction
 	var/turf/location_created
 	///The return point indicator
@@ -34,12 +34,12 @@
 
 /datum/reagent/eigenstate/on_new(list/data)
 	location_created = data["location_created"]
+	location_return = data["location_return"]
+	eigenstate = data["eigenstate"]
 
 /datum/reagent/eigenstate/expose_mob(mob/living/living_mob, methods, reac_volume, show_message, touch_protection)
 	. = ..()
 	data["exposure_type"] = methods
-
-/datum/reagent/eigenstate/on_mob_add(mob/living/living_mob, amount)
 
 	//make hologram at return point
 	eigenstate = new (living_mob.loc)
@@ -51,11 +51,13 @@
 	eigenstate.anchored = 1//So space wind cannot drag it.
 	eigenstate.name = "[living_mob.name]'s eigenstate"//If someone decides to right click.
 	eigenstate.set_light(2)	//hologram lighting
+	data["eigenstate"] = eigenstate
 
 	location_return = get_turf(living_mob)	//sets up return point
+	data["location_return"] = location_return
 	to_chat(living_mob, "<span class='userdanger'>You feel like part of yourself has split off!</span>")
 
-	if(data["exposure_type"] & INGEST)
+	if(!(data["exposure_type"] & INGEST))
 		return ..()
 	if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
 		do_sparks(5,FALSE,living_mob)
