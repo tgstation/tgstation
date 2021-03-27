@@ -17102,6 +17102,7 @@
 /area/crew_quarters/theatre)
 "hsi" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/mob/living/simple_animal/pet/raphael,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "hsy" = (
@@ -45371,7 +45372,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/largeapostle/raphael/pet,
 /turf/open/floor/wood,
 /area/library)
 "tiv" = (
