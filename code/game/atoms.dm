@@ -245,6 +245,8 @@
 		flatify()
 	if(isometric_mode == ISOMETRIC_BLOCKIFY)
 		blockify()
+	if(isometric_mode == NONE)
+		pixel_z += 10
 
 	return INITIALIZE_HINT_NORMAL
 

@@ -169,17 +169,17 @@
 		pixel_y += cos(angle)+16*cos(angle)*2
 	var/new_x = starting.x
 	var/new_y = starting.y
-	while(pixel_x > 16)
-		pixel_x -= 32
+	while(pixel_x > world.icon_size/2)
+		pixel_x -= world.icon_size
 		new_x++
-	while(pixel_x < -16)
-		pixel_x += 32
+	while(pixel_x < -world.icon_size/2)
+		pixel_x += world.icon_size
 		new_x--
-	while(pixel_y > 16)
-		pixel_y -= 32
+	while(pixel_y > world.icon_size/2)
+		pixel_y -= world.icon_size
 		new_y++
-	while(pixel_y < -16)
-		pixel_y += 32
+	while(pixel_y < -world.icon_size/2)
+		pixel_y += world.icon_size
 		new_y--
 	new_x = clamp(new_x, 1, world.maxx)
 	new_y = clamp(new_y, 1, world.maxy)

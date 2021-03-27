@@ -554,9 +554,9 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/proc/get_item_offsets_for_index(i)
 	switch(i)
 		if(3) //odd = left hands
-			return list("x" = 0, "y" = 16)
+			return list("x" = 0, "y" = world.icon_size/2)
 		if(4) //even = right hands
-			return list("x" = 0, "y" = 16)
+			return list("x" = 0, "y" = world.icon_size/2)
 		else //No offsets or Unwritten number of hands
 			return list("x" = 0, "y" = 0)//Handle held offsets
 

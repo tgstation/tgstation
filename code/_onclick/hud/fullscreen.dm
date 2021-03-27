@@ -78,6 +78,12 @@
 		return FALSE
 	return TRUE
 
+/atom/movable/screen/fullscreen/Initialize(mapload)
+	. = ..()
+	var/matrix/biggering = matrix()
+	biggering.Scale(2,2)
+	transform = biggering
+
 /atom/movable/screen/fullscreen/Destroy()
 	severity = 0
 	. = ..()

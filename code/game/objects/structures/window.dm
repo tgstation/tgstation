@@ -15,7 +15,7 @@
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
 	set_dir_on_move = FALSE
-	isometric_mode = ISOMETRIC_BLOCKIFY
+	isometric_mode = ISOMETRIC_FLATTEN
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
 	var/heat_resistance = 800
@@ -609,6 +609,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
@@ -624,6 +625,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
@@ -657,6 +659,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/window/reinforced/fulltile/unanchored
 	anchored = FALSE
@@ -672,6 +675,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/window/reinforced/fulltile/ice
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
@@ -679,6 +683,7 @@
 	base_icon_state = "rice_window"
 	max_integrity = 150
 	glass_amount = 2
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/window/shuttle
 	name = "shuttle window"
@@ -700,6 +705,7 @@
 	glass_type = /obj/item/stack/sheet/titaniumglass
 	glass_amount = 2
 	receive_ricochet_chance_mod = 1.2
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/window/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
@@ -761,6 +767,7 @@
 	hitsound = 'sound/weapons/slashmiss.ogg'
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/window/paperframe/Initialize()
 	. = ..()
@@ -836,6 +843,7 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	max_integrity = 50
 	glass_amount = 2
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/window/bronze/fulltile/unanchored
 	anchored = FALSE

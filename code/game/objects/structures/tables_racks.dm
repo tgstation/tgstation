@@ -35,6 +35,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_TABLES)
 	canSmoothWith = list(SMOOTH_GROUP_TABLES)
+	isometric_mode = ISOMETRIC_FLATTEN
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
