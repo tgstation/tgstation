@@ -50,7 +50,7 @@
 
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing(delta_time, times_fired)
-	var/next_breath = 4
+	var/next_breath = 3
 	var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
 	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
 	if(L)
@@ -61,7 +61,7 @@
 			next_breath--
 
 	if((times_fired % next_breath) == 0 || failed_last_breath)
-		breathe(delta_time, times_fired) //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
+		breathe(delta_time, times_fired) //Breathe per 3 ticks if healthy, down to 1 if our lungs and heart are damaged, unless suffocating
 		if(failed_last_breath)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 		else
