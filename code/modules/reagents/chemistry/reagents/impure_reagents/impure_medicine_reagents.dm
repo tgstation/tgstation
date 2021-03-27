@@ -570,7 +570,9 @@
 		if(carbon.dna.get_mutation(potential_option))
 			speech_options -= potential_option
 			continue
-		if(carbon.dna.activate_mutation(speech_option))
+		if(carbon.dna.activate_mutation(potential_option))
+			speech_option = potential_option
+			speech_options -= potential_option
 			return
 
 
