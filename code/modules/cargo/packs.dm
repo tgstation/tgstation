@@ -285,6 +285,18 @@
 					/obj/item/ammo_box/c38/iceblox)
 	crate_name = "ammo crate"
 
+/datum/supply_pack/security/nemesis
+	name = "Nemesis Solutions Equipment"
+	desc = "Contains full equipment for one security officer and a high-tech combat vest from Nemesis Solutions along with some gadgets for them to use."
+	cost = CARGO_CRATE_VALUE * 2
+	access_view = ACCESS_ARMORY
+	contains = list(/obj/item/clothing/suit/armor/vest/nemesis,
+					/obj/item/storage/box/nemesis_equipment,
+					/obj/item/clothing/under/rank/security/officer/nemesis,
+					/obj/item/clothing/glasses/hud/security/sunglasses/nemesis,
+					/obj/item/clothing/head/soft/sec/nemesis)
+	crate_name = "nemesis solutions equipment crate"
+
 /datum/supply_pack/security/armor
 	name = "Armor Crate"
 	desc = "Three vests of well-rounded, decently-protective armor. Requires Security access to open."

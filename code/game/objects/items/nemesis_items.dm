@@ -346,3 +346,16 @@
 
 		trap_one.trigger()
 		trap_two.trigger()
+
+/obj/item/storage/box/nemesis_equipment
+	icon_state = "black_box"
+
+/obj/item/storage/box/nemesis_equipment/PopulateContents()
+	new /obj/item/nemesis_trap(src)
+	new /obj/item/nemesis_trap(src)
+	new /obj/item/nemesis_trap(src)
+	new /obj/item/nemesis_trap(src)
+	new /obj/item/nemesis_mine(src)
+	new /obj/item/nemesis_mine(src)
+	new /obj/item/nemesis_mine(src)
+	new /obj/item/nemesis_mine(src)
