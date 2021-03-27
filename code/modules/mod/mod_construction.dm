@@ -26,23 +26,18 @@
 /obj/item/mod/construction/core
 	name = "MOD core"
 	icon_state = "mod-core"
-	desc = "A mystical crystal able to convert cell power into energy usable by MODs."
+	desc = "A mystical crystal able to convert cell power into energy usable by MODsuits."
 
-/obj/item/mod/armor
-	name = "MOD external armor"
+/obj/item/mod/construction/armor
+	name = "MOD standard armor plates"
+	desc = "Armor plates used to finish a MOD"
 	icon_state = "armor"
-	inhand_icon_state = "armor"
-	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
-	var/theme = "standard"
+	var/theme = /datum/mod_theme
 
-/obj/item/mod/armor/Initialize()
-	. = ..()
-	name = "[theme] [name]"
-	icon_state  = "[theme]-armor"
-
-/obj/item/mod/armor/engineering
-	theme = "engineering"
+/obj/item/mod/construction/armor/engineering
+	name = "MOD engineering armor plates"
+	icon_state = "engineering-armor"
+	theme = /datum/mod_theme/engineering
 
 /obj/item/mod/paint
 	name = "MOD paint kit"
@@ -137,28 +132,16 @@
 					build_step--
 
 		if(8)
-			if(istype(I, /obj/item/mod/armor)) //Construct
-				if(!user.temporarilyRemoveItemFromInventory(I))
+			if(istype(I, /obj/item/mod/construction/armor)) //Construct
+				var/obj/item/mod/construction/armor/external_armor = I
+				if(!user.temporarilyRemoveItemFromInventory(external_armor))
 					return
-				to_chat(user, "<span class='notice'>You fit \the [I] onto \the [src].</span>")
-				build_step++
-				qdel(I)
+				to_chat(user, "<span class='notice'>You fit \the [external_armor] onto \the [src], finishing your new MODsuit.</span>")
+				new /obj/item/mod/control(Tsec, external_armor.theme)
+				qdel(external_armor)
 			if(I.tool_behaviour == TOOL_WRENCH) //Construct
 				if(I.use_tool(src, user, 0, volume=30))
 					to_chat(user, "<span class='notice'>You unwrench the assembled parts.</span>")
-					build_step--
-
-		if(9)
-			if(I.tool_behaviour == TOOL_WELDER) //Construct
-				if(I.use_tool(src, user, 0, volume=30))
-					to_chat(user, "<span class='notice'>You weld the armor onto the now finished MOD suit.</span>")
-					new /obj/item/mod/control(Tsec)
-					qdel(src)
-					return
-			if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-				if(I.use_tool(src, user, 0, volume=30))
-					var/obj/item/mod/armor/newarmor = new(drop_location())
-					to_chat(user, "<span class='notice'>You pry \the [newarmor] from \the [src].</span>")
 					build_step--
 	update_icon_state()
 
