@@ -48,7 +48,7 @@
 		return ..()
 
 	to_chat(user, "<span class='warning'>You attempt to disarm [src]...</span>")
-	if(!do_after(user, 7 SECONDS, src))
+	if(!do_after(user, 5 SECONDS, src))
 		return
 	active = FALSE
 	icon_state = initial(icon_state)
@@ -99,6 +99,16 @@
 			if(istype(owner.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/hud/security/sunglasses/nemesis))
 				glasses = owner.get_item_by_slot(ITEM_SLOT_EYES)
 
+/obj/item/nemesis_mine/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	var/datum/effect_system/spark_spread/sparks = new(get_turf(src))
+	sparks.set_up(4, 0, loc)
+	sparks.start()
+	qdel(src)
+
 /obj/effect/temp_visual/nemesis_circle
 	name = "energy blast"
 	icon = 'icons/obj/nemesis.dmi'
@@ -120,6 +130,9 @@
 	icon_state = "nemesis0"
 	base_icon_state = "nemesis"
 	force = 3
+
+	item_flags = SLOWS_WHILE_IN_HAND
+	slowdown = 0
 
 /obj/item/shield/energy/nemesis/Initialize()
 	. = ..()
@@ -148,6 +161,7 @@
 		w_class = WEIGHT_CLASS_BULKY
 		playsound(user, 'sound/weapons/saberon.ogg', 35, TRUE)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
+		slowdown = 2 //Heavy slowdown
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
@@ -155,6 +169,7 @@
 		w_class = WEIGHT_CLASS_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, TRUE)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
+		slowdown = 0
 	add_fingerprint(user)
 
 /obj/item/shield/energy/nemesis/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
@@ -166,6 +181,7 @@
 		w_class = WEIGHT_CLASS_TINY
 		playsound(owner, 'sound/weapons/saberoff.ogg', 35, TRUE)
 		to_chat(owner, "<span class='warning'>[src] turns off!</span>")
+		slowdown = 0
 
 	if(istype(gloves))
 		if(damage < 10)
@@ -190,11 +206,25 @@
 			w_class = WEIGHT_CLASS_TINY
 			playsound(owner, 'sound/weapons/saberoff.ogg', 35, TRUE)
 			to_chat(owner, "<span class='warning'>[src] turns off!</span>")
+			slowdown = 0
 		return FALSE
 
 	gloves.lose_charge(2)
 
-	return (active) && prob((gloves.charge + 2) / NEMESIS_MAX_CHARGE * 100)
+	return (active) && prob((gloves.charge + 2) / NEMESIS_MAX_CHARGE * 80) //Maximum 80% chance for the balance reasons
+
+/obj/item/shield/energy/nemesis/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(active)
+		active = !active
+		icon_state = "[base_icon_state][active]"
+		force = initial(force)
+		w_class = WEIGHT_CLASS_TINY
+		playsound(src, 'sound/weapons/saberoff.ogg', 35, TRUE)
+		slowdown = 0
 
 /obj/item/shield/energy/nemesis/AltClick(mob/user)
 	if(!ishuman(user))
@@ -211,6 +241,7 @@
 		force = initial(force)
 		w_class = WEIGHT_CLASS_TINY
 		playsound(owner, 'sound/weapons/saberoff.ogg', 35, TRUE)
+		slowdown = 0
 
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	user.dropItemToGround(src, TRUE)
@@ -230,6 +261,7 @@
 		force = initial(force)
 		w_class = WEIGHT_CLASS_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, TRUE)
+		slowdown = 0
 
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	user.dropItemToGround(src, TRUE)
@@ -269,6 +301,17 @@
 	playsound(src, 'sound/magic/blind.ogg', 50, TRUE)
 	deploy_beams()
 
+/obj/item/nemesis_trap/attack_hand(mob/living/user, list/modifiers)
+	if(!active)
+		return ..()
+
+	to_chat(user, "<span class='warning'>You attempt to disarm [src]...</span>")
+	if(!do_after(user, 5 SECONDS, src))
+		return
+	active = FALSE
+	to_chat(user, "<span class='notice'>You successfully disarm [src].</span>")
+	qdel(src)
+
 /obj/item/nemesis_trap/proc/deploy_beams()
 	for(var/obj/item/nemesis_trap/trap in view(3, get_turf(src)))
 		if(trap == src || !trap.active)
@@ -285,7 +328,7 @@
 		trap.beams += beam
 
 /obj/item/nemesis_trap/proc/trigger()
-	var/datum/effect_system/spark_spread/sparks = new
+	var/datum/effect_system/spark_spread/sparks = new(get_turf(src))
 	sparks.set_up(4, 0, loc)
 	sparks.start()
 	qdel(src)
@@ -329,6 +372,12 @@
 
 		trap_one.trigger()
 		trap_two.trigger()
+
+/obj/item/nemesis_trap/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	trigger()
 
 /obj/item/storage/box/nemesis_equipment
 	icon_state = "black_box"

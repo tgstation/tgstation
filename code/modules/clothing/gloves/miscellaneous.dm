@@ -299,7 +299,38 @@
 		shield.force = initial(shield.force)
 		shield.w_class = WEIGHT_CLASS_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, TRUE)
+		shield.slowdown = 0
 
 	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	user.dropItemToGround(shield, TRUE)
 	shield.forceMove(src)
+
+/obj/item/clothing/gloves/rapid/nemesis/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	switch(rand(1, 6))
+		if(1)
+			if(isliving(loc))
+				var/mob/living/owner = loc
+				to_chat(owner, "<span class='notice'>[src] absorbed EMP and gained some charge from it!</span>")
+				gain_charge(rand(1, 3))
+		if(2)
+			if(isliving(loc))
+				var/mob/living/owner = loc
+				to_chat(owner, "<span class='warning'>[src] malfunctions and loses some charge!</span>")
+				lose_charge(rand(1, 3))
+		if(3 to 5)
+			if(isliving(loc))
+				var/mob/living/owner = loc
+				to_chat(owner, "<span class='warning'>[src] malfunctions and depletes all of it's charge!</span>")
+				lose_charge(charge)
+		if(6)
+			if(isliving(loc))
+				var/mob/living/owner = loc
+				to_chat(owner, "<span class='warning'>[src] malfunctions and electrocutes you!</span>") //Fuck you specifically
+				lose_charge(charge)
+				owner.electrocute_act(35, src, flags = SHOCK_NOGLOVES)
+				owner.Paralyze(3 SECONDS)
+				owner.Jitter(3 SECONDS)
