@@ -328,6 +328,8 @@
 
 	var/active = FALSE
 
+	var/has_core = FALSE
+
 /obj/item/clothing/suit/armor/vest/nemesis/Initialize()
 	. = ..()
 	gloves = new(src)
@@ -453,7 +455,19 @@
 	if(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING) != src)
 		return ..()
 
+	if(!has_core)
+		to_chat(user, "<span class='warning'>[src] is dull and inactive, it requires a flux anomaly core to function!</span>")
+		return
+
 	if(active)
 		fold()
 	else
 		unfold()
+
+/obj/item/clothing/suit/armor/vest/nemesis/attackby(obj/item/I, mob/user, params)
+	. = ..()
+
+	if(istype(I, /obj/item/assembly/signaler/anomaly/flux))
+		to_chat(user, "<span class='notice'>You insert [I] into [src] and it activates!</span>")
+		has_core = TRUE
+		I.forceMove(src)
