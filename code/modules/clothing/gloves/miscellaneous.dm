@@ -229,9 +229,9 @@
 
 /obj/item/clothing/gloves/rapid/nemesis/proc/lose_charge(amount_to_lose = 1)
 	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		if(istype(H.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/storage/belt/security/nemesis)) //Just in case you somehow get rid of the belt while using nemesis suit
-			var/obj/item/storage/belt/security/nemesis/belt = H.get_item_by_slot(ITEM_SLOT_BELT)
+		var/mob/living/carbon/human/owner = loc
+		if(istype(owner.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/storage/belt/security/nemesis)) //Just in case you somehow get rid of the belt while using nemesis suit
+			var/obj/item/storage/belt/security/nemesis/belt = owner.get_item_by_slot(ITEM_SLOT_BELT)
 			for(var/tick = 1 to amount_to_lose)
 				if(belt.overcharge)
 					belt.overcharge--
@@ -244,17 +244,17 @@
 /obj/item/clothing/gloves/rapid/nemesis/proc/gain_charge(amount_to_gain = 1)
 	charge += amount_to_gain
 	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
+		var/mob/living/carbon/human/owner = loc
 		if(charge > NEMESIS_MAX_CHARGE) //Overcharge will be turned into stamina damage and stored in the belt. Use your brain and gadgets, not gloves only
 
-			H.apply_damage(5 * (charge - NEMESIS_MAX_CHARGE), STAMINA)
+			owner.apply_damage(5 * (charge - NEMESIS_MAX_CHARGE), STAMINA)
 
 			if(world.time > antispam + 10 SECONDS)
 				antispam = world.time
-				to_chat(H, "<span class='userdanger'>OVERCHARGE DETECTED. Process to deplete the charge to avoid possible shocks.</span>")
+				to_chat(owner, "<span class='userdanger'>OVERCHARGE DETECTED. Process to deplete the charge to avoid possible shocks.</span>")
 
-			if(istype(H.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/storage/belt/security/nemesis))
-				var/obj/item/storage/belt/security/nemesis/belt = H.get_item_by_slot(ITEM_SLOT_BELT)
+			if(istype(owner.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/storage/belt/security/nemesis))
+				var/obj/item/storage/belt/security/nemesis/belt = owner.get_item_by_slot(ITEM_SLOT_BELT)
 				belt.overcharge += (charge - NEMESIS_MAX_CHARGE)
 
 			charge = NEMESIS_MAX_CHARGE
@@ -265,13 +265,13 @@
 /obj/item/clothing/gloves/rapid/nemesis/proc/update_charge()
 	if(!ishuman(loc))
 		return
-	var/mob/living/carbon/human/H = loc
-	if(istype(H.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/armor/vest/nemesis))
-		var/obj/item/clothing/suit/armor/vest/nemesis/suit = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	var/mob/living/carbon/human/owner = loc
+	if(istype(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/armor/vest/nemesis))
+		var/obj/item/clothing/suit/armor/vest/nemesis/suit = owner.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		suit.update_charge(charge)
 
-	if(istype(H.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/storage/belt/security/nemesis))
-		var/obj/item/storage/belt/security/nemesis/belt = H.get_item_by_slot(ITEM_SLOT_BELT)
+	if(istype(owner.get_item_by_slot(ITEM_SLOT_BELT), /obj/item/storage/belt/security/nemesis))
+		var/obj/item/storage/belt/security/nemesis/belt = owner.get_item_by_slot(ITEM_SLOT_BELT)
 		belt.update_charge(charge)
 
 /obj/item/clothing/gloves/rapid/nemesis/attack_hand(mob/user, list/modifiers)
@@ -281,10 +281,10 @@
 	if(!ishuman(user) || user != loc)
 		return ..()
 
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/owner = user
 
-	shield.forceMove(get_turf(H))
-	H.put_in_hands(shield)
+	shield.forceMove(get_turf(owner))
+	owner.put_in_hands(shield)
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/gloves/rapid/nemesis/dropped(mob/user)

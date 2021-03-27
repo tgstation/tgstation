@@ -560,9 +560,9 @@
 	if(!ishuman(user))
 		return
 
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/owner = user
 
-	var/obj/item/clothing/gloves/rapid/nemesis/gloves = H.get_item_by_slot(ITEM_SLOT_GLOVES)
+	var/obj/item/clothing/gloves/rapid/nemesis/gloves = owner.get_item_by_slot(ITEM_SLOT_GLOVES)
 	if(!gloves || !istype(gloves))
 		to_chat(user, "<span class='warning'>The boots' internal propulsion system fails to connect to your A.R.E.S. suit!</span>")
 		return

@@ -341,75 +341,75 @@
 /obj/item/clothing/suit/armor/vest/nemesis/proc/unfold()
 	if(!ishuman(loc))
 		return
-	var/mob/living/carbon/human/H = loc
+	var/mob/living/carbon/human/owner = loc
 
-	to_chat(H, "<span class='notice'>Nemesis Solutions A.R.E.S. mk3 suit online. Attempting to unfold the suit.</span>")
+	to_chat(owner, "<span class='notice'>Nemesis Solutions A.R.E.S. mk3 suit online. Attempting to unfold the suit.</span>")
 
 	sleep(1 SECONDS)
 
-	if(H.get_item_by_slot(ITEM_SLOT_GLOVES))
-		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the gloves. ABORTING.</span>")
+	if(owner.get_item_by_slot(ITEM_SLOT_GLOVES))
+		to_chat(owner, "<span class='warning'>ERROR: Unable to unfold the gloves. ABORTING.</span>")
 		return
 
-	if(H.get_item_by_slot(ITEM_SLOT_FEET))
-		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the boots. ABORTING.</span>")
+	if(owner.get_item_by_slot(ITEM_SLOT_FEET))
+		to_chat(owner, "<span class='warning'>ERROR: Unable to unfold the boots. ABORTING.</span>")
 		return
 
-	if(H.get_item_by_slot(ITEM_SLOT_BELT))
-		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the belt. ABORTING.</span>")
+	if(owner.get_item_by_slot(ITEM_SLOT_BELT))
+		to_chat(owner, "<span class='warning'>ERROR: Unable to unfold the belt. ABORTING.</span>")
 		return
 
-	if(H.get_item_by_slot(ITEM_SLOT_HEAD) && !istype(H.get_item_by_slot(ITEM_SLOT_HEAD), /obj/item/clothing/head/soft/sec/nemesis))
-		to_chat(H, "<span class='warning'>WARNING: Detected unrecommended headgear. Please use Nemesis Solutions softcap for optimal effect.</span>")
+	if(owner.get_item_by_slot(ITEM_SLOT_HEAD) && !istype(owner.get_item_by_slot(ITEM_SLOT_HEAD), /obj/item/clothing/head/soft/sec/nemesis))
+		to_chat(owner, "<span class='warning'>WARNING: Detected unrecommended headgear. Please use Nemesis Solutions softcap for optimal effect.</span>")
 
-	if(!do_after(H, 1 SECONDS, target = src) || !H.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES))
-		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the gloves. ABORTING.</span>")
+	if(!do_after(owner, 1 SECONDS, target = src) || !owner.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES))
+		to_chat(owner, "<span class='warning'>ERROR: Unable to unfold the gloves. ABORTING.</span>")
 		return
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-	if(!do_after(H, 1 SECONDS, target = src) || !H.equip_to_slot_if_possible(boots, ITEM_SLOT_FEET))
-		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the boots. ABORTING.</span>")
-		H.dropItemToGround(gloves, TRUE)
+	if(!do_after(owner, 1 SECONDS, target = src) || !owner.equip_to_slot_if_possible(boots, ITEM_SLOT_FEET))
+		to_chat(owner, "<span class='warning'>ERROR: Unable to unfold the boots. ABORTING.</span>")
+		owner.dropItemToGround(gloves, TRUE)
 		gloves.forceMove(src)
 		return
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-	if(!do_after(H, 1 SECONDS, target = src) || !H.equip_to_slot_if_possible(belt, ITEM_SLOT_BELT))
-		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the belt. ABORTING.</span>")
-		H.dropItemToGround(gloves, TRUE)
+	if(!do_after(owner, 1 SECONDS, target = src) || !owner.equip_to_slot_if_possible(belt, ITEM_SLOT_BELT))
+		to_chat(owner, "<span class='warning'>ERROR: Unable to unfold the belt. ABORTING.</span>")
+		owner.dropItemToGround(gloves, TRUE)
 		gloves.forceMove(src)
-		H.dropItemToGround(boots, TRUE)
+		owner.dropItemToGround(boots, TRUE)
 		boots.forceMove(src)
 		return
-	playsound(src., 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	active = TRUE
 
 	gloves.update_charge()
 
-	to_chat(H, "<span class='notice'>Suit successfully activated.</span>")
+	to_chat(owner, "<span class='notice'>Suit successfully activated.</span>")
 
 /obj/item/clothing/suit/armor/vest/nemesis/proc/fold()
 	if(!ishuman(loc))
 		return
-	var/mob/living/carbon/human/H = loc
+	var/mob/living/carbon/human/owner = loc
 
-	to_chat(H, "<span class='notice'>Attempting to fold the suit</span>")
+	to_chat(owner, "<span class='notice'>Attempting to fold the suit</span>")
 
-	if(!do_after(H, 5 SECONDS, target = src))
-		to_chat(H, "<span class='warning'>ERROR: Please retain from moving while the suit is deactivating. ABORTING.</span>")
+	if(!do_after(owner, 5 SECONDS, target = src))
+		to_chat(owner, "<span class='warning'>ERROR: Please retain from moving while the suit is deactivating. ABORTING.</span>")
 		return
 
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 	active = FALSE
 
-	H.dropItemToGround(gloves, TRUE)
+	owner.dropItemToGround(gloves, TRUE)
 	gloves.forceMove(src)
 
-	H.dropItemToGround(boots, TRUE)
+	owner.dropItemToGround(boots, TRUE)
 	boots.forceMove(src)
 
-	H.dropItemToGround(belt, TRUE)
+	owner.dropItemToGround(belt, TRUE)
 	belt.forceMove(src)
 
 /obj/item/clothing/suit/armor/vest/nemesis/dropped(mob/user)
@@ -417,19 +417,19 @@
 	if(!ishuman(loc))
 		return
 
-	var/mob/living/carbon/human/H = loc
+	var/mob/living/carbon/human/owner = loc
 
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 	active = FALSE
 
-	H.dropItemToGround(gloves, TRUE)
+	owner.dropItemToGround(gloves, TRUE)
 	gloves.forceMove(src)
 
-	H.dropItemToGround(boots, TRUE)
+	owner.dropItemToGround(boots, TRUE)
 	boots.forceMove(src)
 
-	H.dropItemToGround(belt, TRUE)
+	owner.dropItemToGround(belt, TRUE)
 	belt.forceMove(src)
 
 /obj/item/clothing/suit/armor/vest/nemesis/proc/update_charge(var/charge = 0)
@@ -442,15 +442,15 @@
 	update_icon()
 	boots.update_icon()
 	if(isliving(loc))
-		var/mob/living/L = loc
-		L.update_appearance()
+		var/mob/living/owner = loc
+		owner.update_appearance()
 
 /obj/item/clothing/suit/armor/vest/nemesis/attack_hand(mob/user, list/modifiers)
 	if(!ishuman(user) || user != loc)
 		return ..()
 
-	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(ITEM_SLOT_OCLOTHING) != src)
+	var/mob/living/carbon/human/owner = user
+	if(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING) != src)
 		return ..()
 
 	if(active)

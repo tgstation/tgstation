@@ -330,14 +330,14 @@
 
 	if(overcharge)
 		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			H.overlays += mob_overlay
-			H.update_appearance()
+			var/mob/living/carbon/human/owner = loc
+			owner.overlays += mob_overlay
+			owner.update_appearance()
 	else
 		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			H.overlays -= mob_overlay
-			H.update_appearance()
+			var/mob/living/carbon/human/owner = loc
+			owner.overlays -= mob_overlay
+			owner.update_appearance()
 
 	if(charge + overcharge > 0)
 		START_PROCESSING(SSobj, src)
@@ -350,9 +350,9 @@
 			overcharge--
 		else
 			if(ishuman(loc))
-				var/mob/living/carbon/human/H = loc
-				if(istype(H.get_item_by_slot(ITEM_SLOT_GLOVES), /obj/item/clothing/gloves/rapid/nemesis))
-					var/obj/item/clothing/gloves/rapid/nemesis/gloves = H.get_item_by_slot(ITEM_SLOT_GLOVES)
+				var/mob/living/carbon/human/owner = loc
+				if(istype(owner.get_item_by_slot(ITEM_SLOT_GLOVES), /obj/item/clothing/gloves/rapid/nemesis))
+					var/obj/item/clothing/gloves/rapid/nemesis/gloves = owner.get_item_by_slot(ITEM_SLOT_GLOVES)
 					gloves.lose_charge()
 					if(!gloves.charge)
 						STOP_PROCESSING(SSobj, src)

@@ -25,8 +25,8 @@
 	if(!ishuman(user))
 		return ..()
 
-	var/mob/living/carbon/human/H = user
-	var/obj/item/clothing/gloves/rapid/nemesis/gloves = H.get_item_by_slot(ITEM_SLOT_GLOVES)
+	var/mob/living/carbon/human/owner = user
+	var/obj/item/clothing/gloves/rapid/nemesis/gloves = owner.get_item_by_slot(ITEM_SLOT_GLOVES)
 	if(!gloves || !istype(gloves))
 		return ..()
 
@@ -56,26 +56,26 @@
 	anchored = FALSE
 	to_chat(user, "<span class='notice'>You successfully disarm [src].</span>")
 
-/obj/item/nemesis_mine/proc/trigger(mob/living/L)
-	var/turf/T = get_turf(src)
-	new /obj/effect/temp_visual/nemesis_circle(T)
-	L.apply_damage(75, STAMINA)
-	to_chat(L, "<span class='userdanger'>You trigger [src] and it explodes in shower of sparks!</span>")
-	playsound(T, 'sound/magic/disable_tech.ogg', 50, TRUE)
+/obj/item/nemesis_mine/proc/trigger(mob/living/victim)
+	var/turf/cur_loc = get_turf(src)
+	new /obj/effect/temp_visual/nemesis_circle(cur_loc)
+	victim.apply_damage(75, STAMINA)
+	to_chat(victim, "<span class='userdanger'>You trigger [src] and it explodes in shower of sparks!</span>")
+	playsound(cur_loc, 'sound/magic/disable_tech.ogg', 50, TRUE)
 
 	if(glasses && ishuman(glasses.loc))
-		var/mob/living/carbon/human/H = glasses.loc
-		if(H.get_item_by_slot(ITEM_SLOT_EYES) != glasses)
+		var/mob/living/carbon/human/owner = glasses.loc
+		if(owner.get_item_by_slot(ITEM_SLOT_EYES) != glasses)
 			return
-		glasses.say("Attention: Tactical energy mine in [get_area(T)] has detonated.")
+		glasses.say("Attention: Tactical energy mine in [get_area(cur_loc)] has detonated.")
 
 	qdel(src)
 
 /obj/item/nemesis_mine/proc/trigger_overload()
-	var/turf/T = get_turf(src)
-	new /obj/effect/temp_visual/nemesis_circle/huge(T)
-	playsound(T, 'sound/magic/disable_tech.ogg', 50, TRUE)
-	for(var/mob/living/victim in range(1, T))
+	var/turf/cur_loc = get_turf(src)
+	new /obj/effect/temp_visual/nemesis_circle/huge(cur_loc)
+	playsound(cur_loc, 'sound/magic/disable_tech.ogg', 50, TRUE)
+	for(var/mob/living/victim in range(1, cur_loc))
 		to_chat(victim, "<span class='userdanger'>You are hit by an energy blast!</span>")
 		victim.apply_damage(55, STAMINA)
 	qdel(src)
@@ -95,9 +95,9 @@
 		anchored = TRUE
 		playsound(src, 'sound/magic/blind.ogg', 50, TRUE)
 		if(ishuman(throwingdatum.thrower))
-			var/mob/living/carbon/human/H = throwingdatum.thrower
-			if(istype(H.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/hud/security/sunglasses/nemesis))
-				glasses = H.get_item_by_slot(ITEM_SLOT_EYES)
+			var/mob/living/carbon/human/owner = throwingdatum.thrower
+			if(istype(owner.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/hud/security/sunglasses/nemesis))
+				glasses = owner.get_item_by_slot(ITEM_SLOT_EYES)
 
 /obj/effect/temp_visual/nemesis_circle
 	name = "energy blast"
@@ -177,8 +177,8 @@
 	if(!ishuman(loc))
 		return (active)
 
-	var/mob/living/carbon/human/H = loc
-	var/obj/item/clothing/gloves/rapid/nemesis/gloves = H.get_item_by_slot(ITEM_SLOT_GLOVES)
+	var/mob/living/carbon/human/owner = loc
+	var/obj/item/clothing/gloves/rapid/nemesis/gloves = owner.get_item_by_slot(ITEM_SLOT_GLOVES)
 	if(!gloves || !istype(gloves))
 		return (active)
 
@@ -188,8 +188,8 @@
 			icon_state = "[base_icon_state][active]"
 			force = initial(force)
 			w_class = WEIGHT_CLASS_TINY
-			playsound(H, 'sound/weapons/saberoff.ogg', 35, TRUE)
-			to_chat(H, "<span class='warning'>[src] turns off!</span>")
+			playsound(owner, 'sound/weapons/saberoff.ogg', 35, TRUE)
+			to_chat(owner, "<span class='warning'>[src] turns off!</span>")
 		return FALSE
 
 	gloves.lose_charge(2)
@@ -256,9 +256,9 @@
 		return ..()
 
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(istype(H.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/hud/security/sunglasses/nemesis))
-			glasses = H.get_item_by_slot(ITEM_SLOT_EYES)
+		var/mob/living/carbon/human/owner = user
+		if(istype(owner.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/hud/security/sunglasses/nemesis))
+			glasses = owner.get_item_by_slot(ITEM_SLOT_EYES)
 
 	active = TRUE
 	icon_state = "trap_deployed"
@@ -285,9 +285,15 @@
 		trap.beams += beam
 
 /obj/item/nemesis_trap/proc/trigger()
-	for(var/datum/beam/beam in beams)
-		qdel(beam)
+	var/datum/effect_system/spark_spread/sparks = new
+	sparks.set_up(4, 0, loc)
+	sparks.start()
 	qdel(src)
+
+/obj/item/nemesis_trap/Destroy()
+	for(var/datum/beam/beam in beams)
+		QDEL_NULL(beam)
+	. = ..()
 
 /obj/effect/ebeam/nemesis
 	name = "energy beam"
@@ -298,28 +304,28 @@
 /obj/effect/ebeam/nemesis/Crossed(atom/movable/AM)
 	. = ..()
 	if(isliving(AM))
-		var/mob/living/L = AM
-		if(L.body_position == LYING_DOWN)
+		var/mob/living/target = AM
+		if(target.body_position == LYING_DOWN)
 			return
 
-		var/turf/T = get_turf(src)
+		var/turf/cur_loc = get_turf(src)
 		var/obj/item/nemesis_trap/trap_one = owner.origin
 		var/obj/item/nemesis_trap/trap_two = owner.target
 
-		new /obj/effect/temp_visual/nemesis_circle/huge(T)
+		new /obj/effect/temp_visual/nemesis_circle/huge(cur_loc)
 
-		to_chat(L, "<span class='userdanger'>You cross [src] and it destabilises, releasing a large energy blast!</span>")
-		playsound(T, 'sound/magic/disable_tech.ogg', 50, TRUE)
+		to_chat(target, "<span class='userdanger'>You cross [src] and it destabilises, releasing a large energy blast!</span>")
+		playsound(cur_loc, 'sound/magic/disable_tech.ogg', 50, TRUE)
 
-		for(var/mob/living/victim in range(1, T))
-			if(victim != L)
+		for(var/mob/living/victim in range(1, cur_loc))
+			if(victim != target)
 				to_chat(victim, "<span class='userdanger'>You are hit by an energy blast!</span>")
 			victim.apply_damage(35, STAMINA)
 
 		if(trap_one.glasses && ishuman(trap_one.glasses.loc))
-			var/mob/living/carbon/human/H = trap_one.glasses.loc
-			if(H.get_item_by_slot(ITEM_SLOT_EYES) == trap_one.glasses)
-				trap_one.glasses.say("Attention: Disk trap in [get_area(T)] has detonated.")
+			var/mob/living/carbon/human/owner = trap_one.glasses.loc
+			if(owner.get_item_by_slot(ITEM_SLOT_EYES) == trap_one.glasses)
+				trap_one.glasses.say("Attention: Disk trap in [get_area(cur_loc)] has detonated.")
 
 		trap_one.trigger()
 		trap_two.trigger()
