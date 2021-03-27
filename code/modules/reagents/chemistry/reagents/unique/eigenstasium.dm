@@ -55,7 +55,7 @@
 	location_return = get_turf(living_mob)	//sets up return point
 	to_chat(living_mob, "<span class='userdanger'>You feel like part of yourself has split off!</span>")
 
-	if(!(data["exposure_type"] & INGEST))
+	if(data["exposure_type"] & INGEST)
 		return ..()
 	if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
 		do_sparks(5,FALSE,living_mob)
