@@ -77,7 +77,6 @@
 	update_config_movespeed()
 	initialize_actionspeed()
 	update_movespeed(TRUE)
-	isomatrixize() //makes smoller
 
 /**
  * Generate the tag for this mob

@@ -118,5 +118,5 @@
 
 /proc/getScreenSize(widescreen)
 	if(widescreen)
-		return "15x11"
-	return "15x11"
+		return CONFIG_GET(string/default_view)
+	return CONFIG_GET(string/default_view_square)

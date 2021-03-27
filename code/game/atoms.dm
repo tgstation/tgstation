@@ -9,7 +9,7 @@
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND
 
-	var/dont_flatten = FALSE
+	var/isometric_mode = ISOMETRIC_NONE
 	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
 	var/pass_flags_self = NONE
 
@@ -241,20 +241,12 @@
 	ComponentInitialize()
 	InitializeAIController()
 
-	return INITIALIZE_HINT_NORMAL
+	if(isometric_mode == ISOMETRIC_FLATTEN)
+		flatify()
+	if(isometric_mode == ISOMETRIC_BLOCKIFY)
+		blockify()
 
-atom/proc/isomatrixize()
-	if(dont_flatten)
-		return
-	var/matrix/isomatrix = matrix()
-	if(ismob(src))
-		base_pixel_y += 10
-		isomatrix.Scale(0.75, 0.75)
-		AddElement(/datum/element/waddling)
-	else
-		isomatrix.Turn(45)
-		isomatrix.Scale(1, 0.5)
-	transform = isomatrix
+	return INITIALIZE_HINT_NORMAL
 
 /**
  * Late Intialization, for code that should run after all atoms have run Intialization

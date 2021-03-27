@@ -125,7 +125,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	ComponentInitialize()
 
-	isomatrixize()
+	if(isometric_mode == ISOMETRIC_FLATTEN)
+		flatify()
+	if(isometric_mode == ISOMETRIC_BLOCKIFY)
+		blockify()
 
 	return INITIALIZE_HINT_NORMAL
 

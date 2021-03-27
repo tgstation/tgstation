@@ -11,6 +11,7 @@
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
 	vis_flags = VIS_HIDE
+	isometric_mode = ISOMETRIC_FLATTEN
 
 	var/needs_update = FALSE
 	var/turf/myturf

@@ -7,6 +7,8 @@
 	var/clawfootstep = null
 	var/heavyfootstep = null
 
+	isometric_mode = ISOMETRIC_FLATTEN
+
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
 	if(direction == DOWN)

@@ -20,7 +20,6 @@
 		if(smoothing_flags & SMOOTH_CORNERS)
 			icon_state = ""
 	GLOB.cameranet.updateVisibility(src)
-	isomatrixize()
 
 /obj/structure/Destroy()
 	GLOB.cameranet.updateVisibility(src)

@@ -20,6 +20,8 @@
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
+	isometric_mode = ISOMETRIC_BLOCKIFY
+
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 	var/shockedby
 	var/visible = TRUE

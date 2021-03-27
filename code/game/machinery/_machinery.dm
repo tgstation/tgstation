@@ -145,7 +145,6 @@
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
-	isomatrixize()
 
 	return INITIALIZE_HINT_LATELOAD
 
