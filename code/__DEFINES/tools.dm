@@ -22,3 +22,6 @@
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
 // tool sound is only played when op is started. If not, it's played twice.
 #define MIN_TOOL_SOUND_DELAY 20
+
+//This define determines how much of wooden material is lost as sawdust when cut into planks with a chainsaw.
+#define CHAINSAW_LOSS_FACTOR 0.1

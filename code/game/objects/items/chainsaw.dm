@@ -1,4 +1,3 @@
-ds
 // CHAINSAW
 /obj/item/chainsaw
 	name = "chainsaw"
@@ -89,20 +88,20 @@ ds
 
 
 
-	var/dust_harvest = lignocellulose * 0.1 //you lose 10% as sawdust
-	lignocellulose *= 0.9
+	var/dust_harvest = lignocellulose * CHAINSAW_LOSS_FACTOR //A percentage is always lost as sawdust.
+	lignocellulose *= 1 - CHAINSAW_LOSS_FACTOR
 	dust_harvest = round((lignocellulose % MINERAL_MATERIAL_AMOUNT) / 100) //the leftover wood material also becomes sawdust.
 	var/plank_harvest = round(lignocellulose / (MINERAL_MATERIAL_AMOUNT))
 
 	if(plank_harvest >= 3)
 		user.visible_message("<span class='notice'>[user] starts sawing [A] to pieces!</span>", "<span class='notice'>You start sawing [A] to pieces!</span>")
-		if(!do_after(user, 2 SECONDS, target = A))
+		if(!do_after(user, 4 SECONDS * toolspeed, target = A))
 			return
 
 	if(plank_harvest)
 		new /obj/item/stack/sheet/mineral/wood(get_turf(A),plank_harvest) //spawn an amount of planks equal to plank_harvest
 
-	if(lignocellulose % MINERAL_MATERIAL_AMOUNT)
+	if(dust_harvest) //if dust_harvest is somehow 0, we don't want to spawn an empty decal.
 		new /obj/effect/decal/cleanable/sawdust(get_turf(A), dust_harvest) //spawn an amount of cellulose inside the decal equal to dust_harvest.
 	playsound(src, 'sound/weapons/chainsawhit.ogg', 50, TRUE)
 	to_chat(user, "<span class='notice'>You saw [A] into [plank_harvest ? "planks" : "splints"].</span>")

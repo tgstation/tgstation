@@ -267,6 +267,6 @@
 	layer = OBJ_LAYER
 	clean_type = CLEAN_TYPE_HARD_DECAL
 
-/obj/effect/decal/cleanable/sawdust/Initialize(mapload, dust_amount)
+/obj/effect/decal/cleanable/sawdust/Initialize(mapload, dust_amount = 10)
 	. = ..()
-	reagents.add_reagent(/datum/reagent/cellulose, dust_amount ? dust_amount : 10)
+	reagents.add_reagent(/datum/reagent/cellulose, dust_amount)
