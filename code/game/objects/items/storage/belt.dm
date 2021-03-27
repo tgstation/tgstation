@@ -314,7 +314,7 @@
 	. = ..()
 	mob_overlay = mutable_appearance('icons/effects/effects.dmi', "overcharged", BELOW_MOB_LAYER)
 
-/obj/item/storage/belt/security/nemesis/proc/update_charge(var/charge = 0)
+/obj/item/storage/belt/security/nemesis/proc/update_charge(charge = 0)
 	var/charge_icon = 0
 	if((charge + overcharge) / NEMESIS_MAX_CHARGE >= 1)
 		charge_icon = 100

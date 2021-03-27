@@ -432,7 +432,7 @@
 	owner.dropItemToGround(belt, TRUE)
 	belt.forceMove(src)
 
-/obj/item/clothing/suit/armor/vest/nemesis/proc/update_charge(var/charge = 0)
+/obj/item/clothing/suit/armor/vest/nemesis/proc/update_charge(charge = 0)
 	if(charge > 0)
 		icon_state = "nemesis_powered"
 		boots.icon_state = "nemesis_powered"
