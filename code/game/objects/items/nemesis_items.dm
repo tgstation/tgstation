@@ -48,7 +48,13 @@
 		return ..()
 
 	to_chat(user, "<span class='warning'>You attempt to disarm [src]...</span>")
-	if(!do_after(user, 5 SECONDS, src))
+	var/disarm_time = 15 SECONDS
+	if(ishuman(user))
+		var/mob/living/carbon/human/disarmer = user
+		if(istype(disarmer.get_item_by_slot(ITEM_SLOT_GLOVES), /obj/item/clothing/gloves/rapid/nemesis))
+			disarm_time = 1 SECONDS
+
+	if(!do_after(user, disarm_time, src))
 		return
 	active = FALSE
 	icon_state = initial(icon_state)
@@ -56,11 +62,41 @@
 	anchored = FALSE
 	to_chat(user, "<span class='notice'>You successfully disarm [src].</span>")
 
+/obj/item/nemesis_mine/attackby(obj/O, mob/user, params)
+	if(!active)
+		return ..()
+
+	if(!istype(O, /obj/item/screwdriver))
+		return ..()
+
+	to_chat(user, "<span class='warning'>You attempt to disarm [src]...</span>")
+	var/disarm_time = 3 SECONDS
+	if(ishuman(user))
+		var/mob/living/carbon/human/disarmer = user
+		if(istype(disarmer.get_item_by_slot(ITEM_SLOT_GLOVES), /obj/item/clothing/gloves/rapid/nemesis))
+			disarm_time = 1 SECONDS
+
+	if(!do_after(user, disarm_time, src))
+		return
+
+	active = FALSE
+	icon_state = initial(icon_state)
+	update_icon()
+	anchored = FALSE
+	to_chat(user, "<span class='notice'>You successfully disarm [src].</span>")
+
+
 /obj/item/nemesis_mine/proc/trigger(mob/living/victim)
 	var/turf/cur_loc = get_turf(src)
 	new /obj/effect/temp_visual/nemesis_circle(cur_loc)
-	victim.apply_damage(75, STAMINA)
-	to_chat(victim, "<span class='userdanger'>You trigger [src] and it explodes in shower of sparks!</span>")
+
+	if(!victim)
+		victim = locate() in cur_loc
+
+	if(victim)
+		victim.apply_damage(75, STAMINA)
+		to_chat(victim, "<span class='userdanger'>You trigger [src] and it explodes in shower of sparks!</span>")
+
 	playsound(cur_loc, 'sound/magic/disable_tech.ogg', 50, TRUE)
 
 	if(glasses && ishuman(glasses.loc))
@@ -103,6 +139,9 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
+
+	if(prob(35))
+		trigger()
 
 	var/datum/effect_system/spark_spread/sparks = new(get_turf(src))
 	sparks.set_up(4, 0, loc)
@@ -306,11 +345,37 @@
 		return ..()
 
 	to_chat(user, "<span class='warning'>You attempt to disarm [src]...</span>")
-	if(!do_after(user, 5 SECONDS, src))
+	var/disarm_time = 15 SECONDS
+	if(ishuman(user))
+		var/mob/living/carbon/human/disarmer = user
+		if(istype(disarmer.get_item_by_slot(ITEM_SLOT_GLOVES), /obj/item/clothing/gloves/rapid/nemesis))
+			disarm_time = 1 SECONDS
+
+	if(!do_after(user, disarm_time, src))
 		return
-	active = FALSE
-	to_chat(user, "<span class='notice'>You successfully disarm [src].</span>")
+
 	qdel(src)
+	to_chat(user, "<span class='notice'>You successfully disarm [src].</span>")
+
+/obj/item/nemesis_trap/attackby(obj/O, mob/user, params)
+	if(!active)
+		return ..()
+
+	if(!istype(O, /obj/item/screwdriver))
+		return ..()
+
+	to_chat(user, "<span class='warning'>You attempt to disarm [src]...</span>")
+	var/disarm_time = 3 SECONDS
+	if(ishuman(user))
+		var/mob/living/carbon/human/disarmer = user
+		if(istype(disarmer.get_item_by_slot(ITEM_SLOT_GLOVES), /obj/item/clothing/gloves/rapid/nemesis))
+			disarm_time = 1 SECONDS
+
+	if(!do_after(user, disarm_time, src))
+		return
+
+	qdel(src)
+	to_chat(user, "<span class='notice'>You successfully disarm [src].</span>")
 
 /obj/item/nemesis_trap/proc/deploy_beams()
 	for(var/obj/item/nemesis_trap/trap in view(3, get_turf(src)))
