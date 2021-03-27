@@ -1354,10 +1354,3 @@
 
 	if(. && slowdown_edit && isnum(diff))
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/admin_varedit, multiplicative_slowdown = diff)
-
-/mob/get_pulled_and_buckled_conga(recursions_left = 1, list/checked)
-	if(buckled)
-		if(buckled.anchored || (buckled in checked))
-			return list()
-		return buckled.get_pulled_and_buckled_conga(recursions_left, checked)
-	return ..()

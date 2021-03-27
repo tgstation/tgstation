@@ -178,7 +178,7 @@
 	for(var/atom/movable/falling_mov as anything in falling_movs)
 		falling_mov.currently_z_moving = currently_z_moving || CURRENTLY_Z_MOVING_GENERIC
 		falling_mov.forceMove(target)
-	if(z_move_flags & ZMOVE_CHECK_PULLS) // Checks if the pulledby is next to src; stops the pull if false.
+	if(z_move_flags & ZMOVE_CHECK_PULLS)
 		for(var/atom/movable/fallen_mov as anything in falling_movs)
 			if(z_move_flags & ZMOVE_CHECK_PULLEDBY && fallen_mov.pulledby && (fallen_mov.z != fallen_mov.pulledby.z || get_dist(fallen_mov, fallen_mov.pulledby) > 1))
 				fallen_mov.pulledby.stop_pulling()
@@ -187,7 +187,7 @@
 	return TRUE
 
 /// Checks if the destination turf is elegible for z movement from the start turf.
-/atom/movable/proc/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS)
+/atom/movable/proc/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
 	if(!start)
 		start = get_turf(src)
 		if(!start)
@@ -202,13 +202,20 @@
 		destination = get_step_multiz(start, direction)
 		if(!destination)
 			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
+				to_chat(rider || src, "<span class='warning'>There's nowhere to go in that direction!</span>")
 			return FALSE
-	if(z_move_flags & ZMOVE_FALL_CHECKS && (throwing || movement_type & FLYING || !has_gravity(start)))
+	if(z_move_flags & ZMOVE_FALL_CHECKS && !throwing && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
+		return FALSE
+	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			if(rider)
+				to_chat(rider, "<span class='notice'>[src] is is not capable of flight.<span>")
+			else
+				to_chat(src, "<span class='notice'>You are not Superman.<span>")
 		return FALSE
 	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, start)))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(src, "<span class='warning'>You couldn't move there!</span>")
+			to_chat(rider || src, "<span class='warning'>You couldn't move there!</span>")
 		return FALSE
 	return destination //used by some child types checks and zMove()
 
@@ -216,7 +223,7 @@
 	// The first batch of pulled movables is moved now for convenience, so pulls won't break from running too fast.
 	if(!start || !middle || !destination)
 		return
-	var/list/falling_movs = get_pulled_and_buckled_conga(moving_from_pull ? 0 : 1)
+	var/list/falling_movs = get_pulled_and_buckled_conga(moving_from_pull ? 0 : 1) //Not a boolean.
 	if(!zMove(null, destination, z_move_flags|ZMOVE_CHECK_PULLEDBY, falling_movs = falling_movs))
 		return
 
@@ -291,8 +298,6 @@
 		if(ZMOVE_CONGA_METHOD_MOVE) // src is moved to 'middle' (e.g. an open space turf which will then zFall() them)
 			Move(middle, get_dir(src, middle))
 	moving_from_pull = null
-
-
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x" = TRUE, "step_y" = TRUE, "step_size" = TRUE, "bounds" = TRUE)
@@ -601,7 +606,7 @@
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
 		. = FALSE
 
-	if(. && currently_z_moving == CURRENTLY_Z_FALLING && loc == newloc)
+	if(. && currently_z_moving == CURRENTLY_Z_FALLING_FROM_MOVE && loc == newloc)
 		var/turf/pitfall = get_turf(src)
 		pitfall.zFall(src, oldloc = T)
 	currently_z_moving = FALSE
@@ -694,8 +699,9 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
 /atom/movable/proc/set_currently_z_moving(value)
+	var/old_value = currently_z_moving
 	currently_z_moving = max(currently_z_moving, value)
-	return currently_z_moving == value
+	return currently_z_moving > old_value
 
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE

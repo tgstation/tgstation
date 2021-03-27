@@ -51,30 +51,58 @@
 			return
 	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
-/mob/living/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS)
-	if(z_move_flags & ZMOVE_FALL_CHECKS && buckled && (buckled.anchored || buckled.movement_type & FLYING || buckled.throwing || !buckled.has_gravity(start)))
-		z_move_flags &= ~ZMOVE_FALL_CHECKS //safe against falling since they're buckled to something that shouldn't fall.
-	. = ..()
-	if(!.)
-		return
+/mob/set_currently_z_moving(value)
+	if(buckled)
+		return buckled.set_currently_z_moving(value)
+	return ..()
+
+/mob/living/zMove(dir, turf/target, z_move_flags = ZMOVE_FLIGHT_FLAGS, recursions_left = 1, list/falling_movs)
+	if(buckled)
+		if(buckled.currently_z_moving)
+			return FALSE
+		if(!(z_move_flags & ZMOVE_ALLOW_BUCKLED))
+			buckled.unbuckle_mob(src, TRUE)
+		else
+			if(!target)
+				target = can_z_move(dir, get_turf(src), null, z_move_flags, src)
+				if(!target)
+					return FALSE
+			return buckled.zMove(arglist(args)) // Return value is a loc.
+	return ..()
+
+/mob/living/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
 	if(z_move_flags & ZMOVE_INCAPACITATED_CHECKS && incapacitated())
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(src, "<span class='warning'>You can't do that right now!</span>")
+			to_chat(rider || src, "<span class='warning'>[rider ? src : "You"] can't do that right now!</span>")
 		return FALSE
-	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS)
-		if(buckled && !isvehicle(buckled))
+	if(!buckled || !(z_move_flags & ZMOVE_ALLOW_BUCKLED))
+		return ..()
+	switch(SEND_SIGNAL(buckled, COMSIG_BUCKLED_CAN_Z_MOVE, direction, start, destination, z_move_flags, src))
+		if(COMPONENT_RIDDEN_ALLOW_Z_MOVE) // Can be ridden.
+			return buckled.can_z_move(direction, start, destination, z_move_flags, src)
+		if(COMPONENT_RIDDEN_STOP_Z_MOVE) // Is a ridable but can't be ridden right now. Feedback messages already done.
+			return FALSE
+		else
+			if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS) && !buckled.anchored)
+				return buckled.can_z_move(direction, start, destination, z_move_flags, src)
 			if(z_move_flags & ZMOVE_FEEDBACK)
 				to_chat(src, "<span class='notice'>Unbuckle from [buckled] first.<span>")
 			return FALSE
-		if(buckled && !(buckled.movement_type & (FLYING|FLOATING)) && buckled.has_gravity(start))
-			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(src, "<span class='notice'>Your [buckled.name] is not capable of flight.<span>")
-			return FALSE
-		if(!buckled && !(movement_type & (FLYING|FLOATING)))
-			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(src, "<span class='notice'>You are not Superman.<span>")
-			return FALSE
 
+/mob/living/z_move_conga_step(turf/start, turf/middle, turf/destination, z_move_flags = NONE, method = ZMOVE_CONGA_METHOD_MOVE)
+	if(buckled)
+		if(!(z_move_flags & ZMOVE_ALLOW_BUCKLED))
+			buckled.unbuckle_mob(src, TRUE)
+		else
+			return !buckled.currently_z_moving && buckled.z_move_conga_step(arglist(args))
+	return ..()
+
+/mob/living/get_pulled_and_buckled_conga(recursions_left = 1, list/checked)
+	if(buckled)
+		if(buckled.anchored || (buckled in checked))
+			return list()
+		return buckled.get_pulled_and_buckled_conga(recursions_left, checked)
+	return ..()
 
 /mob/living/keybind_face_direction(direction)
 	if(stat > SOFT_CRIT)

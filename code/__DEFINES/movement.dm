@@ -15,12 +15,14 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 /// Not very readable but it works
 #define DELAY_TO_GLIDE_SIZE(delay) (clamp(((32 / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
 
-/// defines for [/atom/movable/var/currently_z_moving]. Higher numbers have higher priority.
+/// defines for [/atom/movable/var/currently_z_moving]. Higher numbers mean higher priority.
 #define CURRENTLY_Z_MOVING_GENERIC 1
-/// This one is for falling down.
+/// This one is for falling down open space from stuff such as deleted tile, pit grate...
 #define CURRENTLY_Z_FALLING 2
+/// This one is for falling down open space from movement.
+#define CURRENTLY_Z_FALLING_FROM_MOVE 3
 /// This one is for going upstairs.
-#define CURRENTLY_Z_ASCENDING 3
+#define CURRENTLY_Z_ASCENDING 4
 
 /// possible bitflag return values of [atom/proc/intercept_zImpact] calls
 #define FALL_INTERCEPTED (1<<0) //Stops the movable from falling further and crashing on the ground
@@ -39,10 +41,15 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define ZMOVE_IGNORE_OBSTACLES (1<<5)
 /// Gives players chat feedbacks if they're unable to move through z levels.
 #define ZMOVE_FEEDBACK (1<<6)
+/// Whether we check the movable (if it exists) the living mob is buckled on instead or not.
+#define ZMOVE_ALLOW_BUCKLED (1<<7)
 
 #define ZMOVE_CHECK_PULLS (ZMOVE_CHECK_PULLING|ZMOVE_CHECK_PULLEDBY)
-/// default flags used in "Move Upwards" and "Move Downwards" verbs.
-#define ZMOVE_FLIGHT_FLAGS (ZMOVE_CAN_FLY_CHECKS|ZMOVE_INCAPACITATED_CHECKS|ZMOVE_CHECK_PULLS)
+
+/// flags used in "Move Upwards" and "Move Downwards" verbs.
+#define ZMOVE_FLIGHT_FLAGS (ZMOVE_CAN_FLY_CHECKS|ZMOVE_INCAPACITATED_CHECKS|ZMOVE_CHECK_PULLS|ZMOVE_ALLOW_BUCKLED)
+/// Used for falling down open space.
+#define ZMOVE_FALL_FLAGS (ZMOVE_FALL_CHECKS|ZMOVE_ALLOW_BUCKLED)
 
 /// Defines used in [/atom/movable/proc/z_move_conga_step] && [/atom/movable/proc/z_move_conga_callback]
 #define ZMOVE_CONGA_METHOD_MOVE 1

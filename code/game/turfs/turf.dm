@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
 	..()
-	
+
 	vis_contents.Cut()
 
 /turf/attack_hand(mob/user, list/modifiers)
@@ -220,8 +220,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/turf/target = get_step_multiz(src, DOWN)
 	if(!target || (!isobj(falling) && !ismob(falling)))
 		return FALSE
-	if(!force && !falling.can_z_move(DOWN, src, target, ZMOVE_FALL_CHECKS))
+	if(!force && !falling.can_z_move(DOWN, src, target, ZMOVE_FALL_FLAGS))
 		return FALSE
+
+	falling.currently_z_moving = CURRENTLY_Z_FALLING // So it doesn't trigger other zFall calls on forceMove()
 
 	if(levels == 1)
 		falling.z_move_conga_step(oldloc || src, src, target)

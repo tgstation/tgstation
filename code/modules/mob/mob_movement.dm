@@ -500,8 +500,11 @@
 		to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
 		return
 
-	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_CHECKS)) //Will be fall down if we go up?
-		to_chat(src, "<span class='notice'>You are not Superman.<span>")
+	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_FLAGS)) //Will we fall down if we go up?
+		if(buckled)
+			to_chat(src, "<span class='notice'>[buckled] is is not capable of flight.<span>")
+		else
+			to_chat(src, "<span class='notice'>You are not Superman.<span>")
 		return
 
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
@@ -514,22 +517,3 @@
 
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
 		to_chat(src, "<span class='notice'>You move down.</span>")
-
-/mob/set_currently_z_moving(value)
-	if(buckled)
-		return buckled.set_currently_z_moving(value)
-	return ..()
-
-/mob/zMove(dir, turf/target, z_move_flags = ZMOVE_FLIGHT_FLAGS, recursions_left = 1, list/falling_movs)
-	if(buckled)
-		if(buckled.currently_z_moving)
-			return FALSE
-		if(!target)
-			target = can_z_move(dir, get_turf(src), null, z_move_flags)
-		return target && buckled.zMove(arglist(args))
-	return ..()
-
-/mob/z_move_conga_step(turf/start, turf/middle, turf/destination, z_move_flags = NONE, method = ZMOVE_CONGA_METHOD_MOVE)
-	if(buckled)
-		return !buckled.currently_z_moving && buckled.z_move_conga_step(arglist(args))
-	return ..()
