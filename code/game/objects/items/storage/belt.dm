@@ -281,31 +281,34 @@
 /obj/item/storage/belt/security/nemesis/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 7
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
-		/obj/item/nemesis_mine,
-		/obj/item/nemesis_trap,
+		/obj/item/melee/baton,
+		/obj/item/melee/classic_baton,
+		/obj/item/grenade,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash/handheld,
 		/obj/item/clothing/glasses,
+		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_box,
 		/obj/item/food/donut,
 		/obj/item/kitchen/knife/combat,
 		/obj/item/flashlight/seclite,
+		/obj/item/melee/classic_baton/telescopic,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
-		/obj/item/restraints/legcuffs/bola
+		/obj/item/restraints/legcuffs/bola,
+		/obj/item/holosign_creator/security,
+		/obj/item/nemesis_mine,
+		/obj/item/nemesis_trap,
 		))
 
 /obj/item/storage/belt/security/nemesis/full/PopulateContents()
-	new /obj/item/nemesis_mine(src)
-	new /obj/item/nemesis_mine(src)
-	new /obj/item/nemesis_mine(src)
-	new /obj/item/nemesis_trap(src)
-	new /obj/item/nemesis_trap(src)
+	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/restraints/handcuffs(src)
-	new /obj/item/restraints/legcuffs/bola(src)
+	new /obj/item/restraints/handcuffs(src) //Stunbatons are useless so we give them additional handcuffs
+	new /obj/item/grenade/flashbang(src)
+	new /obj/item/assembly/flash/handheld(src)
 
 /obj/item/storage/belt/security/nemesis/Initialize()
 	. = ..()

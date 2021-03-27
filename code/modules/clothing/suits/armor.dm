@@ -435,9 +435,12 @@
 /obj/item/clothing/suit/armor/vest/nemesis/proc/update_charge(var/charge = 0)
 	if(charge > 0)
 		icon_state = "nemesis_powered"
+		boots.icon_state = "nemesis_powered"
 	else
 		icon_state = "nemesis"
+		boots.icon_state = "nemesis"
 	update_icon()
+	boots.update_icon()
 	if(isliving(loc))
 		var/mob/living/L = loc
 		L.update_appearance()
