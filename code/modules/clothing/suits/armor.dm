@@ -365,14 +365,14 @@
 	if(!do_after(H, 1 SECONDS, target = src) || !H.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES))
 		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the gloves. ABORTING.</span>")
 		return
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 	if(!do_after(H, 1 SECONDS, target = src) || !H.equip_to_slot_if_possible(boots, ITEM_SLOT_FEET))
 		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the boots. ABORTING.</span>")
 		H.dropItemToGround(gloves, TRUE)
 		gloves.forceMove(src)
 		return
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 	if(!do_after(H, 1 SECONDS, target = src) || !H.equip_to_slot_if_possible(belt, ITEM_SLOT_BELT))
 		to_chat(H, "<span class='warning'>ERROR: Unable to unfold the belt. ABORTING.</span>")
@@ -381,7 +381,7 @@
 		H.dropItemToGround(boots, TRUE)
 		boots.forceMove(src)
 		return
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(src., 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	active = TRUE
 
 	gloves.update_charge()
@@ -399,7 +399,7 @@
 		to_chat(H, "<span class='warning'>ERROR: Please retain from moving while the suit is deactivating. ABORTING.</span>")
 		return
 
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 	active = FALSE
 
@@ -419,7 +419,7 @@
 
 	var/mob/living/carbon/human/H = loc
 
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 	active = FALSE
 

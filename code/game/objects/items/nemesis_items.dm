@@ -21,25 +21,6 @@
 
 	trigger(AM)
 
-/* //Uncomment if you want to remove overloading
-
-/obj/item/nemesis_mine/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>You begin setting [src] up...</span>")
-	if(!do_after(user, 3 SECONDS, src))
-		return
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(istype(H.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/hud/security/sunglasses/nemesis))
-			glasses = H.get_item_by_slot(ITEM_SLOT_EYES)
-
-	active = TRUE
-	icon_state = "trap_small"
-	user.dropItemToGround(src, TRUE)
-	update_icon()
-	anchored = TRUE
-	playsound(get_turf(src), 'sound/magic/blind.ogg', 50, TRUE) */
-
 /obj/item/nemesis_mine/attack_self(mob/user)
 	if(!ishuman(user))
 		return ..()
@@ -50,7 +31,7 @@
 		return ..()
 
 	if(overloaded)
-		gloves.gain_charge(round(NEMESIS_CHARGE_PER_MINE / 2)) //Small refund
+		gloves.gain_charge(round(NEMESIS_CHARGE_PER_MINE * 0.5)) //Small refund
 	else
 		if(gloves.charge < NEMESIS_CHARGE_PER_MINE)
 			to_chat(user, "<span class='warning'>Your A.R.E.S. suit does not posess enough charge to overload [src]! ([gloves.charge]/[NEMESIS_CHARGE_PER_MINE])</span>")
@@ -112,7 +93,7 @@
 		icon_state = "trap_small"
 		update_icon()
 		anchored = TRUE
-		playsound(get_turf(src), 'sound/magic/blind.ogg', 50, TRUE)
+		playsound(src, 'sound/magic/blind.ogg', 50, TRUE)
 		if(ishuman(throwingdatum.thrower))
 			var/mob/living/carbon/human/H = throwingdatum.thrower
 			if(istype(H.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/hud/security/sunglasses/nemesis))
@@ -138,10 +119,7 @@
 	icon = 'icons/obj/nemesis.dmi'
 	icon_state = "nemesis0"
 	base_icon_state = "nemesis"
-	throw_range = 0
 	force = 3
-	throwforce = 0
-	throw_speed = 0
 
 /obj/item/shield/energy/nemesis/Initialize()
 	. = ..()
@@ -193,7 +171,7 @@
 		if(damage < 10)
 			gloves.lose_charge(1)
 			return
-		gloves.lose_charge(round(damage / 10))
+		gloves.lose_charge(round(damage * 0.1))
 
 /obj/item/shield/energy/nemesis/IsReflect()
 	if(!ishuman(loc))
@@ -234,7 +212,7 @@
 		w_class = WEIGHT_CLASS_TINY
 		playsound(owner, 'sound/weapons/saberoff.ogg', 35, TRUE)
 
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	user.dropItemToGround(src, TRUE)
 	forceMove(gloves)
 
@@ -253,7 +231,7 @@
 		w_class = WEIGHT_CLASS_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, TRUE)
 
-	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	user.dropItemToGround(src, TRUE)
 	forceMove(gloves)
 
@@ -263,6 +241,7 @@
 	icon = 'icons/obj/nemesis.dmi'
 	icon_state = "trap"
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NO_PIXEL_RANDOM_DROP | NOBLUDGEON
 
 	var/active = FALSE
 	var/obj/item/clothing/glasses/hud/security/sunglasses/nemesis/glasses
@@ -287,9 +266,7 @@
 	user.dropItemToGround(src, TRUE)
 	update_icon()
 	anchored = TRUE
-	pixel_x = 0
-	pixel_y = 0
-	playsound(get_turf(src), 'sound/magic/blind.ogg', 50, TRUE)
+	playsound(src, 'sound/magic/blind.ogg', 50, TRUE)
 	deploy_beams()
 
 /obj/item/nemesis_trap/proc/deploy_beams()

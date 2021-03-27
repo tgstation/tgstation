@@ -142,4 +142,4 @@
 	desc = "A fancy black cap from \"Nemesis Solutions\" with ablative plating."
 	icon_state = "nemesissoft"
 	soft_type = "nemesis"
-	armor = list(MELEE = 20, BULLET = 20, LASER = 35, ENERGY = 50, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50) //Less melee and bullet but nice laser and energy protection.
+	armor = list(MELEE = 20, BULLET = 30, LASER = 40, ENERGY = 50, BOMB = 25, BIO = 0, RAD = 0, FIRE = 75, ACID = 75) //Less melee and bullet but nice laser and energy protection.
