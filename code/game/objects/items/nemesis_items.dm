@@ -190,6 +190,9 @@
 		to_chat(owner, "<span class='warning'>[src] turns off!</span>")
 
 	if(istype(gloves))
+		if(damage < 10)
+			gloves.lose_charge(1)
+			return
 		gloves.lose_charge(round(damage / 10))
 
 /obj/item/shield/energy/nemesis/IsReflect()

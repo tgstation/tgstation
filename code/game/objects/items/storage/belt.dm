@@ -328,9 +328,6 @@
 	worn_icon_state = "nemesis[charge_icon]"
 	update_icon()
 
-	if(charge + overcharge > 0)
-		START_PROCESSING(SSobj, src)
-
 	if(overcharge)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -341,6 +338,9 @@
 			var/mob/living/carbon/human/H = loc
 			H.overlays -= mob_overlay
 			H.update_appearance()
+
+	if(charge + overcharge > 0)
+		START_PROCESSING(SSobj, src)
 
 /obj/item/storage/belt/security/nemesis/process(delta_time)
 	charge_depletion++

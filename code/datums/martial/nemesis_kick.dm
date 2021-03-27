@@ -66,7 +66,7 @@
 		to_chat(A, "<span class='danger'>You overcharge your gloves and punch [D] with all of your might, finishing them!</span>")
 		playsound(get_turf(A), 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 		D.Paralyze(NEMESIS_PARALYZIS_LENGTH)
-		gloves.lose_charge(NEMESIS_PARALYZIS_LENGTH)
+		gloves.lose_charge(NEMESIS_CHARGE_PER_PARALYZE)
 		return TRUE
 
 	D.visible_message("<span class='danger'>[A] punches [D] with [gloves], knocking them down!</span>", \
