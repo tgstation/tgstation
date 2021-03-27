@@ -48306,7 +48306,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/maintenance/department/science/xenobiology)
 "kxJ" = (
 /turf/open/floor/plating,
 /area/security/prison)
