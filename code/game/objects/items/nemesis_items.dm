@@ -50,7 +50,7 @@
 		return ..()
 
 	if(overloaded)
-		gloves.gain_charge(NEMESIS_CHARGE_PER_MINE) //Refund
+		gloves.gain_charge(round(NEMESIS_CHARGE_PER_MINE / 2)) //Small refund
 	else
 		if(gloves.charge < NEMESIS_CHARGE_PER_MINE)
 			to_chat(user, "<span class='warning'>Your A.R.E.S. suit does not posess enough charge to overload [src]! ([gloves.charge]/[NEMESIS_CHARGE_PER_MINE])</span>")
