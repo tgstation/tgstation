@@ -1,0 +1,7 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - balance: "Increased internal heat_capacity of the thermomachine to increase the speed of cooling/heating"
+  - balance: "Added a check to stop the machine from cooling when set to heater and vice versa"
+  - balance: "power consumption lowered and efficiency capped"
+  - balance: "can use enviromental heat even with red port connected and with gas"
