@@ -72,3 +72,9 @@
 	name = "Reinforced glass floor"
 	desc = "Do jump on it, it can take it."
 	icon = 'icons/turf/floors/reinf_glass.dmi'
+
+/turf/open/transparent/glass/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/transparent/glass/reinforced/airless
+	initial_gas_mix = AIRLESS_ATMOS
