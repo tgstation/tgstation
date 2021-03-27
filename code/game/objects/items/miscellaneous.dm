@@ -462,3 +462,13 @@
 	name = "picture of guirec"
 	desc = "A picture Guirec! He's beaming with joy."
 	icon_state = "guirecphoto"
+
+/obj/item/shiny
+	name = "Shiny"
+	desc = "A projection of a soldier, you notice the neocanadian insignias on his armor. You can't help but notice how...well. shiny. The armor is, even if it is a projection."
+	icon_state = "shiny"
+
+/obj/item/howie
+	name = "Howie"
+	desc = "A modified Neocanadian Assault Rifle, looks like its more for display than for live fire use now. Has a similar aesthetic to a certain old Goat you know, maybe you should show it to someone."
+	icon_state = "howie"

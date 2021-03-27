@@ -75,8 +75,9 @@
 
 /mob/living/simple_animal/pet/cat/bolty
 	name = "Bolty"
-	desc = "You have an unbelievable urge to punt it."
+	desc = "You have an extreme urge to punt it."
 	icon_state = "bolt"
+	gender = MALE
 	icon_living = "bolt"
 	icon_dead = "bolt_dead"
 	unsuitable_atmos_damage = 0
@@ -130,6 +131,14 @@
 	collar_type = null
 	unique_pet = TRUE
 	held_state = "original"
+
+/mob/living/simple_animal/pet/cat/original/qb
+	name = "QB"
+	desc = "Looking at it makes you unbelievably angry."
+	gender = MALE
+	unsuitable_atmos_damage = 0
+	minbodytemp = TCMB
+	maxbodytemp = T0C + 40
 
 /mob/living/simple_animal/pet/cat/original/add_cell_sample()
 	return

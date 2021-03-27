@@ -82,6 +82,7 @@
 
 /mob/living/simple_animal/hostile/largeapostle/raphael
 	name = "Raphael"
+	icon = 'icons/mob/largeapostles_raphael.dmi'
 	desc = "One blessed by Sabbatziege's mercy. It feeds on your sin and redeems you, should you let it."
 	icon_state = "raphael"
 	health = 100
@@ -90,6 +91,29 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 
+
+/mob/living/simple_animal/hostile/largeapostle/raphael/pet
+	desc = "And to think I wanted to kill you two times, in this timeloop you have become my friend.. I love you Raphael."
+	ventcrawler = VENTCRAWLER_ALWAYS
+	health = 50
+	maxHealth = 50
+	mob_size = MOB_SIZE_SMALL
+	pass_flags = PASSTABLE
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	pet_bonus = TRUE
+	pet_bonus_emote = "cries!"
+	speak = list("eugh!", "Esp!", "Brlb", "Plip")
+	speak_emote = list("bubbles", "pops")
+	emote_hear = list("sizzles.", "bubbles.")
+	emote_see = list("shudders.", "shivers.")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
 
 /mob/living/simple_animal/hostile/largeapostle/tzadkiel
 	name = "Tzadkiel"

@@ -68,6 +68,9 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
 	mask_type = /obj/item/clothing/mask/breath
 
+/obj/machinery/suit_storage_unit/engine/hev
+	suit_type = /obj/item/clothing/suit/space/hardsuit/hev
+
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	mask_type = /obj/item/clothing/mask/gas/atmos
@@ -101,7 +104,7 @@
 	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/rd
-	suit_type = /obj/item/clothing/suit/space/hardsuit/rd/HEV
+	suit_type = /obj/item/clothing/suit/space/hardsuit/rd
 	mask_type = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/syndicate
