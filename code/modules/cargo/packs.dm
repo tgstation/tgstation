@@ -288,7 +288,7 @@
 /datum/supply_pack/security/nemesis
 	name = "Nemesis Solutions Equipment"
 	desc = "Contains full equipment for one security officer and a high-tech combat vest from Nemesis Solutions along with some gadgets for them to use."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/clothing/suit/armor/vest/nemesis,
 					/obj/item/storage/box/nemesis_equipment,
