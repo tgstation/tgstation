@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - imageadd: "Cyborg charge alerts now use the same icon states as ethereal charge alerts. I also conformally resprited the no cell alert icon state."
