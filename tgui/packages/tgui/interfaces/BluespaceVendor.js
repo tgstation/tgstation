@@ -87,7 +87,7 @@ export const BluespaceVendor = (props, context) => {
                 <Button
                   color="transparent"
                   icon="info"
-                  tooltipPosition="bottom-left"
+                  tooltipPosition="bottom-start"
                   tooltip={multiline`
                   Quick guide for machine use: prepare a tank to create a
                   new one in the machine, pick how much you want it filled,
