@@ -12,7 +12,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	layer           = SPLASHSCREEN_LAYER
 	//I don't know why the others are aligned but I shall do the same.
 	vis_flags = VIS_INHERIT_ID
-	appearance_flags = RESET_TRANSFORM
+	isometric_mode = ISOMETRIC_FLATTEN
 
 /turf/open/openspace
 	name = "open space"

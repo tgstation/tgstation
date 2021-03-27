@@ -20,6 +20,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
+	isometric_mode = ISOMETRIC_FLATTEN
 	var/linked_dirs = 0 //bitflag
 	var/node = FALSE //used for sprites display
 	var/cable_layer = CABLE_LAYER_2 //bitflag

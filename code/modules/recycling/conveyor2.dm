@@ -12,6 +12,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	layer = BELOW_OPEN_DOOR_LAYER
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	isometric_mode = ISOMETRIC_FLATTEN
 	var/operating = 0 // 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1 // true if can operate (no broken segments in this belt run)
 	var/forwards // this is the default (forward) direction, set by the map dir

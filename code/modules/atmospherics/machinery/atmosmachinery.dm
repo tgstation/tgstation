@@ -20,6 +20,7 @@
 	resistance_flags = FIRE_PROOF
 	max_integrity = 200
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
+	isometric_mode = ISOMETRIC_FLATTEN
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
 	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
@@ -59,7 +60,7 @@
 	///Is the thing being rebuilt by SSair or not. Prevents list bloat
 	var/rebuilding = FALSE
 
-	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes. 
+	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
 
 /obj/machinery/atmospherics/examine(mob/user)

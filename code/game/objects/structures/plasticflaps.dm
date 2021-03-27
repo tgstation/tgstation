@@ -8,6 +8,7 @@
 	density = FALSE
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE

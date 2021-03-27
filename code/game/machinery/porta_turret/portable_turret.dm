@@ -40,6 +40,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	max_integrity = 160 //the turret's health
 	integrity_failure = 0.5
 	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
+	isometric_mode = ISOMETRIC_FLATTEN
 	base_icon_state = "standard"
 
 	///if TRUE this will cause the turret to stop working if the stored_gun var is null in process()
