@@ -78,17 +78,25 @@
 	. = ..()
 	INVOKE_ASYNC(src, .proc/latetoggle)
 
-/obj/machinery/door/firedoor/attack_hand(mob/user, list/modifiers)
+/obj/machinery/door/firedoor/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(operating || !density)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	if(user.combat_mode)
+		user.changeNext_move(CLICK_CD_MELEE)
 
-	user.visible_message("<span class='notice'>[user] bangs on \the [src].</span>", \
-		"<span class='notice'>You bang on \the [src].</span>")
-	playsound(loc, 'sound/effects/glassknock.ogg', 10, FALSE, frequency = 32000)
+		user.visible_message("<span class='notice'>[user] bangs on \the [src].</span>", \
+			"<span class='notice'>You bang on \the [src].</span>")
+		playsound(loc, 'sound/effects/glassknock.ogg', 10, FALSE, frequency = 32000)
+	else
+		user.visible_message("<span class='notice'>[user] tries to open \the [src] with their hands.</span>", \
+			"<span class='notice'> You try to pry open \the [src] with your hands.</span>")
+		if(do_after(user, 60, src))
+			user.visible_message("<span class='notice'>[user] opens \the [src] with their hands.</span>", \
+				"<span class='notice'>You pry open \the [src] with your hands.</span>")
+			open()
 
 /obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
 	add_fingerprint(user)
