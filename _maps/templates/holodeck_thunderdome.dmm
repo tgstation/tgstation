@@ -11,7 +11,7 @@
 /area/template_noop)
 "h" = (
 /obj/structure/table,
-/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/clothing/head/helmet/thunderdome/holosuit,
 /obj/item/clothing/suit/armor/tdome/holosuit/green,
 /obj/item/clothing/under/color/green,
 /obj/item/holo/esword/green,
@@ -19,7 +19,7 @@
 /area/template_noop)
 "q" = (
 /obj/structure/table,
-/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/clothing/head/helmet/thunderdome/holosuit,
 /obj/item/clothing/suit/armor/tdome/holosuit/red,
 /obj/item/clothing/under/color/red,
 /obj/item/holo/esword/red,

@@ -241,6 +241,8 @@
 /obj/item/clothing/suit/armor/tdome/holosuit
 	name = "thunderdome suit"
 	armor = list(MELEE = 10, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	cold_protection = null
+	heat_protection = null
 
 /obj/item/clothing/suit/armor/tdome/holosuit/red
 	desc = "Reddish armor."
