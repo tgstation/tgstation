@@ -154,6 +154,10 @@ SUBSYSTEM_DEF(blackbox)
 			record_feedback("tally", "radio_usage", 1, "CTF red team")
 		if(FREQ_CTF_BLUE)
 			record_feedback("tally", "radio_usage", 1, "CTF blue team")
+		if(FREQ_CTF_GREEN)
+			record_feedback("tally", "radio_usage", 1, "CTF green team")
+		if(FREQ_CTF_YELLOW)
+			record_feedback("tally", "radio_usage", 1, "CTF yellow team")
 		else
 			record_feedback("tally", "radio_usage", 1, "other")
 
