@@ -98,6 +98,11 @@
 				"<span class='notice'>You pry open \the [src] with your hands.</span>")
 			open()
 
+/obj/machinery/door/firedoor/attack_paw(mob/living/user, list/modifiers)
+	. = ..()
+	if(!user.combat_mode)
+		attack_hand(user, modifiers)
+
 /obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
 	add_fingerprint(user)
 	if(operating)
