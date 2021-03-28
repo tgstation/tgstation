@@ -136,7 +136,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Whether a mob is dexterous enough to use machines and certain items or not.
 #define TRAIT_ADVANCEDTOOLUSER "advancedtooluser"
 // Antagonizes the above.
-#define TRAIT_MONKEYLIKE "monkeylike"
+#define TRAIT_DISCOORDINATED_TOOL_USER "discoordinated_tool_user"
 #define TRAIT_PACIFISM "pacifism"
 #define TRAIT_IGNORESLOWDOWN "ignoreslow"
 #define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
