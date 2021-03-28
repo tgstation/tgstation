@@ -171,7 +171,7 @@
 		STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
-	explosion(src.loc, 2, 5, 2, -1)
+	explosion(src, 2, 5, 2, -1)
 
 /obj/machinery/power/port_gen/pacman/set_anchored(anchorvalue)
 	. = ..()
@@ -285,4 +285,4 @@
 	time_per_sheet = 85
 
 /obj/machinery/power/port_gen/pacman/super/overheat()
-	explosion(src.loc, 3, 3, 3, -1)
+	explosion(src, 3, 3, 3, -1)

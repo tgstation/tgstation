@@ -858,7 +858,7 @@
 
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
-		explosion(get_turf(owner),1,2,4,flame_range = 5)
+		explosion(owner, 1, 2, 4, flame_range = 5)
 	return ..()
 
 /datum/status_effect/stabilized/black

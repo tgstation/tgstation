@@ -1081,7 +1081,7 @@
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if (obj_flags & EMAGGED)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
-		explosion(get_turf(hit_atom), -1, -1, 1)
+		explosion(src, -1, -1, 1)
 		for(var/mob/M in urange(10, src))
 			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)

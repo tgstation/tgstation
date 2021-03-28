@@ -360,7 +360,7 @@
 				FB.fire()
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and releasing a burst of flame!</span>")
-			explosion(loc, -1, 0, 0, 0, 0, flame_range = 2)
+			explosion(src, -1, 0, 0, 0, 0, flame_range = 2)
 			investigate_log("Experimentor started a fire.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
@@ -654,7 +654,7 @@
 /obj/item/relic/proc/do_explode(mob/user)
 	if(loc == user)
 		visible_message("<span class='notice'>\The [src]'s top opens, releasing a powerful blast!</span>")
-		explosion(user.loc, 0, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
+		explosion(src, 0, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
 		warn_admins(user, "Explosion")
 		qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 

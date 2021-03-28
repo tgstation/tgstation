@@ -169,8 +169,62 @@ SUBSYSTEM_DEF(explosions)
 // 5 explosion power is a (0, 1, 3) explosion.
 // 1 explosion power is a (0, 0, 1) explosion.
 
-/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
+/**
+ * Makes a given atom explode.
+ *
+ * Arguments:
+ * - [origin][/atom]: The atom that's exploding.
+ * - devastation_range: The range at which the effects of the explosion are at their strongest.
+ * - heavy_impact_range: The range at which the effects of the explosion are relatively severe.
+ * - light_impact_range: The range at which the effects of the explosion are relatively weak.
+ * - flash_range: The range at which the explosion flashes people.
+ * - adminlog: Whether to log the explosion/report it to the administration.
+ * - ignorecap: Whether to ignore the relevant bombcap. Defaults to FALSE.
+ * - flame_range: The range at which the explosion should produce hotspots.
+ * - silent: Whether to generate/execute sound effects.
+ * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ */
+/proc/explosion(atom/origin, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
 	. = SSexplosions.explode(arglist(args))
+
+/**
+ * Makes a given atom explode. Now on the explosions subsystem!
+ *
+ * Arguments:
+ * - [origin][/atom]: The atom that's exploding.
+ * - devastation_range: The range at which the effects of the explosion are at their strongest.
+ * - heavy_impact_range: The range at which the effects of the explosion are relatively severe.
+ * - light_impact_range: The range at which the effects of the explosion are relatively weak.
+ * - flash_range: The range at which the explosion flashes people.
+ * - adminlog: Whether to log the explosion/report it to the administration.
+ * - ignorecap: Whether to ignore the relevant bombcap. Defaults to FALSE.
+ * - flame_range: The range at which the explosion should produce hotspots.
+ * - silent: Whether to generate/execute sound effects.
+ * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ */
+/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
+	var/list/arguments = list("origin" = origin, "devastation_range" = devastation_range, "heavy_impact_range" = heavy_impact_range, "light_impact_range" = light_impact_range, "flash_range" = flash_range, "adminlog" = adminlog, "ignorecap" = ignorecap, "flame_range" = flame_range, "silent" = silent, "smoke" = smoke)
+	var/atom/location = isturf(origin) ? origin : origin.loc
+	if(SEND_SIGNAL(origin, COMSIG_ATOM_EXPLODE, arguments["devastation_range"], arguments["heavy_impact_range"], arguments["light_impact_range"], arguments["flash_range"], arguments["adminlog"], arguments["ignorecap"], arguments["flame_range"], arguments["silent"], arguments["smoke"], arguments) & COMSIG_CANCEL_EXPLOSION)
+		return
+
+	while(location)
+		var/next_loc = location.loc
+		if(SEND_SIGNAL(location, COMSIG_ATOM_INTERNAL_EXPLOSION, arguments["origin"], arguments["devastation_range"], arguments["heavy_impact_range"], arguments["light_impact_range"], arguments["flash_range"], arguments["adminlog"], arguments["ignorecap"], arguments["flame_range"], arguments["silent"], arguments["smoke"], arguments) & COMSIG_CANCEL_EXPLOSION)
+			return
+		if(isturf(location))
+			break
+		location = next_loc
+
+	if(!location)
+		return
+
+	var/area/epicenter_area = get_area(location)
+	if(SEND_SIGNAL(epicenter_area, COMSIG_AREA_INTERNAL_EXPLOSION, arguments["origin"], arguments["devastation_range"], arguments["heavy_impact_range"], arguments["light_impact_range"], arguments["flash_range"], arguments["adminlog"], arguments["ignorecap"], arguments["flame_range"], arguments["silent"], arguments["smoke"], arguments) & COMSIG_CANCEL_EXPLOSION)
+		return
+
+	propagate_blastwave(location, arguments["devastation_range"], arguments["heavy_impact_range"], arguments["light_impact_range"], arguments["flash_range"], arguments["adminlog"], arguments["ignorecap"], arguments["flame_range"], arguments["silent"], arguments["smoke"])
+
 
 #define CREAK_DELAY 5 SECONDS //Time taken for the creak to play after explosion, if applicable.
 #define DEVASTATION_PROB 30 //The probability modifier for devistation, maths!
@@ -182,7 +236,27 @@ SUBSYSTEM_DEF(explosions)
 #define FREQ_UPPER 40 //The upper limit for the randomly selected frequency.
 #define FREQ_LOWER 25 //The lower of the above.
 
-/datum/controller/subsystem/explosions/proc/explode(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
+/**
+ * Handles the effects of an explosion originating from a given point.
+ *
+ * Primarily handles popagating the balstwave of the explosion to the relevant turfs.
+ * Also handles the fireball from the explosion.
+ * Also handles the smoke cloud from the explosion.
+ * Also handles sfx and screenshake.
+ *
+ * Arguments:
+ * - [epicenter][/atom]: The location of the explosion rounded to the nearest turf.
+ * - devastation_range: The range at which the effects of the explosion are at their strongest.
+ * - heavy_impact_range: The range at which the effects of the explosion are relatively severe.
+ * - light_impact_range: The range at which the effects of the explosion are relatively weak.
+ * - flash_range: The range at which the explosion flashes people.
+ * - adminlog: Whether to log the explosion/report it to the administration.
+ * - ignorecap: Whether to ignore the relevant bombcap. Defaults to TRUE for some mysterious reason.
+ * - flame_range: The range at which the explosion should produce hotspots.
+ * - silent: Whether to generate/execute sound effects.
+ * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ */
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return

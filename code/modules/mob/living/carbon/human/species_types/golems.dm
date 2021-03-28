@@ -107,7 +107,7 @@
 			boom_warning = FALSE
 
 	if(H.bodytemperature > 850 && H.on_fire && prob(25))
-		explosion(get_turf(H), 1, 2, 4, flame_range = 5)
+		explosion(H, 1, 2, 4, flame_range = 5)
 		if(H)
 			H.gib()
 	if(H.fire_stacks < 2) //flammable

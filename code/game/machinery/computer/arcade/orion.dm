@@ -527,7 +527,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 	sleep(3.6)
 	visible_message("<span class='userdanger'>[src] explodes!</span>")
-	explosion(loc, 2,4,8, flame_range = 16)
+	explosion(src, 2,4,8, flame_range = 16)
 	qdel(src)
 
 #undef ORION_TRAIL_WINTURN

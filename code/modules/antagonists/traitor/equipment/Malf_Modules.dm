@@ -513,7 +513,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		var/turf/T = get_turf(M)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] overloaded [M.name] ([M.type]) at [ADMIN_VERBOSEJMP(T)].")
 		log_game("[key_name(usr)] overloaded [M.name] ([M.type]) at [AREACOORD(T)].")
-		explosion(get_turf(M), 0, 2, 3, 0)
+		explosion(M, 0, 2, 3, 0)
 		if(M) //to check if the explosion killed it before we try to delete it
 			qdel(M)
 

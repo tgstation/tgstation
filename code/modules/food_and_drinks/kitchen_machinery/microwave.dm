@@ -333,7 +333,7 @@
 		spark()
 		broken = 2
 		if(prob(max(metal / 2, 33)))
-			explosion(loc, 0, 1, 2)
+			explosion(src, 0, 1, 2)
 	else
 		dump_inventory_contents()
 

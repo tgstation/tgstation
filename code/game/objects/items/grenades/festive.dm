@@ -113,8 +113,7 @@
 /obj/item/grenade/firecracker/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
-	var/explosion_loc = get_turf(src)
+	explosion(src, -1, -1, 2)
 	qdel(src)
-	explosion(explosion_loc,-1,-1,2)
 
 
