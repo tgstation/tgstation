@@ -43,7 +43,7 @@
 			airlock_transform = matrix(1, 0, -16, -0.5, 1, 8)
 			airlock_transform.Translate(16, 8)
 		else
-			airlock_transform = matrix(0, 1, 16, -1, 0.5, 8)
+			airlock_transform = matrix(1, 0, 16, 0.5, 1, 8) // THIS ONE CHANGED
 			airlock_transform.Translate(-16, 8)
 		transform = airlock_transform
 		return
@@ -65,7 +65,7 @@
 	mut_app_b.appearance_flags |= RESET_TRANSFORM
 
 	//Smoothing
-	if(smoothing_flags & SMOOTH_BITMASK)
+	if(smoothing_flags & SMOOTH_BITMASK && !(smoothing_flags & SMOOTH_BORDER))
 		var/side_junction = smoothing_junction
 		side_junction &= ~(NORTH_JUNCTION|NORTHEAST_JUNCTION|NORTHWEST_JUNCTION)
 		mut_app_a.icon_state = "[base_icon_state]-[side_junction]"

@@ -46,13 +46,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!! */
 
 	///Dimensions of the icon file used when this item is worn, eg: hats.dmi (32x32 sprite, 64x64 sprite, etc.). Allows inhands/worn sprites to be of any size, but still centered on a mob properly
-	var/worn_x_dimension = 32
+	var/worn_x_dimension = 64
 	///Dimensions of the icon file used when this item is worn, eg: hats.dmi (32x32 sprite, 64x64 sprite, etc.). Allows inhands/worn sprites to be of any size, but still centered on a mob properly
-	var/worn_y_dimension = 32
+	var/worn_y_dimension = 64
 	///Same as for [worn_x_dimension][/obj/item/var/worn_x_dimension] but for inhands, uses the lefthand_ and righthand_ file vars
-	var/inhand_x_dimension = 32
+	var/inhand_x_dimension = 64
 	///Same as for [worn_y_dimension][/obj/item/var/worn_y_dimension] but for inhands, uses the lefthand_ and righthand_ file vars
-	var/inhand_y_dimension = 32
+	var/inhand_y_dimension = 64
 
 
 	max_integrity = 200

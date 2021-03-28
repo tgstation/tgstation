@@ -494,7 +494,7 @@ Difficulty: Hard
 /obj/effect/temp_visual/hierophant
 	name = "vortex energy"
 	layer = BELOW_MOB_LAYER
-	isometric_mode == ISOMETRIC_FLATTEN
+	isometric_mode = ISOMETRIC_FLATTEN
 	var/mob/living/caster //who made this, anyway
 
 /obj/effect/temp_visual/hierophant/Initialize(mapload, new_caster)
@@ -730,7 +730,7 @@ Difficulty: Hard
 	icon_state = "hierophant_tele_off"
 	light_range = 2
 	layer = LOW_OBJ_LAYER
-	isometric_mode == ISOMETRIC_FLATTEN
+	isometric_mode = ISOMETRIC_FLATTEN
 	anchored = TRUE
 
 /obj/effect/hierophant/attackby(obj/item/I, mob/user, params)
