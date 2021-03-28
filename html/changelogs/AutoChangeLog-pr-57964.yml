@@ -1,0 +1,4 @@
+author: "MLGTASTICa"
+delete-after: True
+changes: 
+  - bugfix: "fixed mech hud's not being removed when leaving the mech."
