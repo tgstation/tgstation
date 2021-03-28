@@ -119,7 +119,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Doesn't miss attacks
 #define TRAIT_PERFECT_ATTACKER "perfect_attacker"
 #define TRAIT_INCAPACITATED "incapacitated"
-#define TRAIT_CRITICAL_CONDITION "critical-condition" //In some kind of critical condition. Is able to succumb.
+/// In some kind of critical condition. Is able to succumb.
+#define TRAIT_CRITICAL_CONDITION "critical-condition"
 #define TRAIT_BLIND "blind"
 #define TRAIT_MUTE "mute"
 #define TRAIT_EMOTEMUTE "emotemute"
@@ -129,20 +130,27 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HUSK "husk"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
-#define TRAIT_CHUNKYFINGERS "chunkyfingers" //means that you can't use weapons with normal trigger guards.
+/// means that you can't use weapons with normal trigger guards.
+#define TRAIT_CHUNKYFINGERS "chunkyfingers"
 #define TRAIT_DUMB "dumb"
-#define TRAIT_ADVANCEDTOOLUSER "advancedtooluser" //Whether a mob is dexterous enough to use machines and certain items or not.
-#define TRAIT_MONKEYLIKE "monkeylike" //Antagonizes the above.
+/// Whether a mob is dexterous enough to use machines and certain items or not.
+#define TRAIT_ADVANCEDTOOLUSER "advancedtooluser"
+// Antagonizes the above.
+#define TRAIT_DISCOORDINATED_TOOL_USER "discoordinated_tool_user"
 #define TRAIT_PACIFISM "pacifism"
 #define TRAIT_IGNORESLOWDOWN "ignoreslow"
 #define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
-#define TRAIT_DEATHCOMA "deathcoma" //Causes death-like unconsciousness
-#define TRAIT_FAKEDEATH "fakedeath" //Makes the owner appear as dead to most forms of medical examination
+/// Causes death-like unconsciousness
+#define TRAIT_DEATHCOMA "deathcoma"
+/// Makes the owner appear as dead to most forms of medical examination
+#define TRAIT_FAKEDEATH "fakedeath"
 #define TRAIT_DISFIGURED "disfigured"
-#define TRAIT_XENO_HOST "xeno_host" //Tracks whether we're gonna be a baby alien's mummy.
+/// Tracks whether we're gonna be a baby alien's mummy.
+#define TRAIT_XENO_HOST "xeno_host"
 #define TRAIT_STUNIMMUNE "stun_immunity"
-#define TRAIT_STUNRESISTANCE    "stun_resistance"
-#define TRAIT_IWASBATONED "iwasbatoned" //Anti Dual-baton cooldown bypass exploit.
+#define TRAIT_STUNRESISTANCE "stun_resistance"
+/// Anti Dual-baton cooldown bypass exploit.
+#define TRAIT_IWASBATONED "iwasbatoned"
 #define TRAIT_SLEEPIMMUNE "sleep_immunity"
 #define TRAIT_PUSHIMMUNE "push_immunity"
 #define TRAIT_SHOCKIMMUNE "shock_immunity"
@@ -153,7 +161,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STABLELIVER "stable_liver"
 #define TRAIT_VATGROWN "vatgrown"
 #define TRAIT_RESISTHEAT "resist_heat"
-#define TRAIT_RESISTHEATHANDS "resist_heat_handsonly" //For when you want to be able to touch hot things, but still want fire to be an issue.
+/// For when you want to be able to touch hot things, but still want fire to be an issue.
+#define TRAIT_RESISTHEATHANDS "resist_heat_handsonly"
 #define TRAIT_RESISTCOLD "resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE "resist_high_pressure"
 #define TRAIT_RESISTLOWPRESSURE "resist_low_pressure"
@@ -189,62 +198,83 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOSOFTCRIT "nosoftcrit"
 #define TRAIT_MINDSHIELD "mindshield"
 #define TRAIT_DISSECTED "dissected"
-#define TRAIT_SIXTHSENSE "sixth_sense" //I can hear dead people
+/// Can hear observers
+#define TRAIT_SIXTHSENSE "sixth_sense"
 #define TRAIT_FEARLESS "fearless"
-#define TRAIT_PARALYSIS_L_ARM "para-l-arm" //These are used for brain-based paralysis, where replacing the limb won't fix it
+/// These are used for brain-based paralysis, where replacing the limb won't fix it
+#define TRAIT_PARALYSIS_L_ARM "para-l-arm"
 #define TRAIT_PARALYSIS_R_ARM "para-r-arm"
 #define TRAIT_PARALYSIS_L_LEG "para-l-leg"
 #define TRAIT_PARALYSIS_R_LEG "para-r-leg"
 #define TRAIT_CANNOT_OPEN_PRESENTS "cannot-open-presents"
-#define TRAIT_PRESENT_VISION    "present-vision"
-#define TRAIT_DISK_VERIFIER     "disk-verifier"
-#define TRAIT_NOMOBSWAP         "no-mob-swap"
-#define TRAIT_XRAY_VISION       "xray_vision"
-#define TRAIT_THERMAL_VISION    "thermal_vision"
+#define TRAIT_PRESENT_VISION "present-vision"
+#define TRAIT_DISK_VERIFIER "disk-verifier"
+#define TRAIT_NOMOBSWAP "no-mob-swap"
+#define TRAIT_XRAY_VISION "xray_vision"
+#define TRAIT_THERMAL_VISION "thermal_vision"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
-#define TRAIT_SURGEON           "surgeon"
+#define TRAIT_SURGEON "surgeon"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
 #define TRAIT_MAGIC_CHOKE "magic_choke"
-#define TRAIT_SOOTHED_THROAT    "soothed-throat"
-#define TRAIT_BOOZE_SLIDER      "booze-slider"
-#define TRAIT_QUICK_CARRY "quick-carry" //We place people into a fireman carry quicker than standard
-#define TRAIT_QUICKER_CARRY "quicker-carry" //We place people into a fireman carry especially quickly compared to quick_carry
+#define TRAIT_SOOTHED_THROAT "soothed-throat"
+#define TRAIT_BOOZE_SLIDER "booze-slider"
+/// We place people into a fireman carry quicker than standard
+#define TRAIT_QUICK_CARRY "quick-carry"
+/// We place people into a fireman carry especially quickly compared to quick_carry
+#define TRAIT_QUICKER_CARRY "quicker-carry"
 #define TRAIT_QUICK_BUILD "quick-build"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_UNSTABLE "unstable"
 #define TRAIT_OIL_FRIED "oil_fried"
 #define TRAIT_MEDICAL_HUD "med_hud"
 #define TRAIT_SECURITY_HUD "sec_hud"
-#define TRAIT_DIAGNOSTIC_HUD "diag_hud" //for something granting you a diagnostic hud
-#define TRAIT_MEDIBOTCOMINGTHROUGH "medbot" //Is a medbot healing you
+/// for something granting you a diagnostic hud
+#define TRAIT_DIAGNOSTIC_HUD "diag_hud"
+/// Is a medbot healing you
+#define TRAIT_MEDIBOTCOMINGTHROUGH "medbot"
 #define TRAIT_PASSTABLE "passtable"
-#define TRAIT_NOFLASH "noflash" //Makes you immune to flashes
-#define TRAIT_XENO_IMMUNE "xeno_immune"//prevents xeno huggies implanting skeletons
-#define TRAIT_FLASH_SENSITIVE "flash_sensitive"//Makes you flashable from any direction
+/// Makes you immune to flashes
+#define TRAIT_NOFLASH "noflash"
+/// prevents xeno huggies implanting skeletons
+#define TRAIT_XENO_IMMUNE "xeno_immune"
+/// Makes you flashable from any direction
+#define TRAIT_FLASH_SENSITIVE "flash_sensitive"
 #define TRAIT_NAIVE "naive"
 #define TRAIT_PRIMITIVE "primitive"
 #define TRAIT_GUNFLIP "gunflip"
-#define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost" ///Increases chance of getting special traumas, makes them harder to cure
+/// Increases chance of getting special traumas, makes them harder to cure
+#define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
 #define TRAIT_BLOODCRAWL_EAT "bloodcrawl_eat"
 #define TRAIT_SPACEWALK "spacewalk"
-#define TRAIT_GAMERGOD "gamer-god" //double arcade prizes
+/// Gets double arcade prizes
+#define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
 #define TRAIT_DWARF "dwarf"
-#define TRAIT_SILENT_FOOTSTEPS "silent_footsteps" //makes your footsteps completely silent
-#define TRAIT_NICE_SHOT "nice_shot" //hnnnnnnnggggg..... you're pretty good....
-#define TRAIT_TUMOR_SUPPRESSED "brain_tumor_suppressed" //prevents the damage done by a brain tumor
-#define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire" //overrides the update_fire proc to always add fire (for lava)
-#define TRAIT_SIGN_LANG "sign_language" //Galactic Common Sign Language
-#define TRAIT_NANITE_MONITORING "nanite_monitoring" //The mob's nanites are sending a monitoring signal visible on diag HUD
-#define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune" // nobody can use martial arts on this mob
-#define TRAIT_DUFFEL_CURSED "duffel_cursed" //You've been cursed with a living duffelbag, and can't have more added
+/// makes your footsteps completely silent
+#define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
+/// hnnnnnnnggggg..... you're pretty good....
+#define TRAIT_NICE_SHOT "nice_shot"
+/// prevents the damage done by a brain tumor
+#define TRAIT_TUMOR_SUPPRESSED "brain_tumor_suppressed"
+/// overrides the update_fire proc to always add fire (for lava)
+#define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
+/// Galactic Common Sign Language
+#define TRAIT_SIGN_LANG "sign_language"
+/// The mob's nanites are sending a monitoring signal visible on diag HUD
+#define TRAIT_NANITE_MONITORING "nanite_monitoring"
+/// nobody can use martial arts on this mob
+#define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune"
+/// You've been cursed with a living duffelbag, and can't have more added
+#define TRAIT_DUFFEL_CURSED "duffel_cursed"
 /// Revenants draining you only get a very small benefit.
 #define TRAIT_WEAK_SOUL "weak_soul"
 /// Prevents mob from riding mobs when buckled onto something
 #define TRAIT_CANT_RIDE "cant_ride"
-#define TRAIT_BLOODY_MESS "bloody_mess" //from heparin, makes open bleeding wounds rapidly spill more blood
-#define TRAIT_COAGULATING "coagulating" //from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
+/// from heparin, makes open bleeding wounds rapidly spill more blood
+#define TRAIT_BLOODY_MESS "bloody_mess"
+/// from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
+#define TRAIT_COAGULATING "coagulating"
 /// From anti-convulsant medication against seizures.
 #define TRAIT_ANTICONVULSANT "anticonvulsant"
 /// The holder of this trait has antennae or whatever that hurt a ton when noogied
@@ -272,6 +302,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 * When present in the mob's mind, they will always love donuts.
 */
 #define TRAIT_DONUT_LOVER "donut_lover"
+
+/// `do_teleport` will not allow this atom to teleport
+#define TRAIT_NO_TELEPORT "no-teleport"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -333,15 +366,23 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 // item traits
 #define TRAIT_NODROP "nodrop"
-#define TRAIT_NO_STORAGE_INSERT "no_storage_insert" //cannot be inserted in a storage.
-#define TRAIT_T_RAY_VISIBLE "t-ray-visible" // Visible on t-ray scanners if the atom/var/level == 1
-#define TRAIT_NO_TELEPORT "no-teleport" //you just can't
+/// cannot be inserted in a storage.
+#define TRAIT_NO_STORAGE_INSERT "no_storage_insert"
+/// Visible on t-ray scanners if the atom/var/level == 1
+#define TRAIT_T_RAY_VISIBLE "t-ray-visible"
 #define TRAIT_FOOD_GRILLED "food_grilled"
-#define TRAIT_NEEDS_TWO_HANDS "needstwohands" //The items needs two hands to be carried
-#define TRAIT_FISH_SAFE_STORAGE "fish_case" //Fish in this won't die
-#define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile" //Stuff that can go inside fish cases
+/// The items needs two hands to be carried
+#define TRAIT_NEEDS_TWO_HANDS "needstwohands"
+/// Fish in this won't die
+#define TRAIT_FISH_SAFE_STORAGE "fish_case"
+/// Stuff that can go inside fish cases
+#define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
+/// If you hit an APC with exposed internals with this item it will try to shock you
+#define TRAIT_APC_SHOCKING "apc_shocking"
+///Properly wielded two handed item
+#define TRAIT_WIELDED "wielded"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -376,7 +417,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items
 #define TRAIT_DRIED "trait_dried"
-//Trait for customizable reagent holder
+/// Trait for customizable reagent holder
 #define TRAIT_CUSTOMIZABLE_REAGENT_HOLDER "customizable_reagent_holder"
 
 /* Traits for ventcrawling.
@@ -411,33 +452,44 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define DISEASE_TRAIT "disease"
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
-#define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
+/// cannot be removed without admin intervention
+#define ROUNDSTART_TRAIT "roundstart"
 #define JOB_TRAIT "job"
 #define CYBORG_ITEM_TRAIT "cyborg-item"
-#define ADMIN_TRAIT "admin" // (B)admins only.
+/// (B)admins only.
+#define ADMIN_TRAIT "admin"
 #define CHANGELING_TRAIT "changeling"
 #define CULT_TRAIT "cult"
-#define CURSED_ITEM_TRAIT "cursed-item" // The item is magically cursed
+/// The item is magically cursed
+#define CURSED_ITEM_TRAIT "cursed-item"
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 #define STATUS_EFFECT_TRAIT "status-effect"
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
-#define MASK_TRAIT "mask" //inherited from the mask
-#define SHOES_TRAIT "shoes" //inherited from your sweet kicks
+/// inherited from the mask
+#define MASK_TRAIT "mask"
+/// inherited from your sweet kicks
+#define SHOES_TRAIT "shoes"
 /// Trait inherited by implants
 #define IMPLANT_TRAIT "implant"
 #define GLASSES_TRAIT "glasses"
-#define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
+/// inherited from riding vehicles
+#define VEHICLE_TRAIT "vehicle"
 #define INNATE_TRAIT "innate"
 #define CRIT_HEALTH_TRAIT "crit_health"
 #define OXYLOSS_TRAIT "oxyloss"
 #define TURF_TRAIT "turf"
-#define BUCKLED_TRAIT "buckled" //trait associated to being buckled
-#define CHOKEHOLD_TRAIT "chokehold" //trait associated to being held in a chokehold
-#define RESTING_TRAIT "resting" //trait associated to resting
-#define STAT_TRAIT "stat" //trait associated to a stat value or range of
+/// trait associated to being buckled
+#define BUCKLED_TRAIT "buckled"
+/// trait associated to being held in a chokehold
+#define CHOKEHOLD_TRAIT "chokehold"
+/// trait associated to resting
+#define RESTING_TRAIT "resting"
+/// trait associated to a stat value or range of
+#define STAT_TRAIT "stat"
 #define STATION_TRAIT "station-trait"
-#define MAPPING_HELPER_TRAIT "mapping-helper" //obtained from mapping helper
+/// obtained from mapping helper
+#define MAPPING_HELPER_TRAIT "mapping-helper"
 /// Trait associated to wearing a suit
 #define SUIT_TRAIT "suit"
 /// Trait associated to lying down (having a [lying_angle] of a different value than zero).
@@ -448,6 +500,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MAFIA_TRAIT "mafia"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
+
+///generic atom traits
+#define DO_NOT_SPLASH "do_not_splash"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
@@ -492,14 +547,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
 #define NO_GRAVITY_TRAIT "no-gravity"
 #define LEAPER_BUBBLE_TRAIT "leaper-bubble"
-#define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
+/// sticky nodrop sounds like a bad soundcloud rapper's name
+#define STICKY_NODROP "sticky-nodrop"
 #define SKILLCHIP_TRAIT "skillchip"
 #define BUSY_FLOORBOT_TRAIT "busy-floorbot"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
-#define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades" //trait associated to not having locomotion appendages nor the ability to fly or float
+/// trait associated to not having locomotion appendages nor the ability to fly or float
+#define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades"
 #define CRYO_TRAIT "cryo"
-#define LACKING_MANIPULATION_APPENDAGES_TRAIT "lacking-manipulation-appengades" //trait associated to not having fine manipulation appendages such as hands
+/// trait associated to not having fine manipulation appendages such as hands
+#define LACKING_MANIPULATION_APPENDAGES_TRAIT "lacking-manipulation-appengades"
 #define HANDCUFFED_TRAIT "handcuffed"
 /// Trait granted by [/obj/item/warpwhistle]
 #define WARPWHISTLE_TRAIT "warpwhistle"

@@ -77,11 +77,15 @@
 	. = ..()
 	switch(blocks_emissive)
 		if(EMISSIVE_BLOCK_GENERIC)
-			update_emissive_block()
+			var/mutable_appearance/gen_emissive_blocker = mutable_appearance(icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE)
+			gen_emissive_blocker.dir = dir
+			gen_emissive_blocker.alpha = alpha
+			gen_emissive_blocker.appearance_flags |= appearance_flags
+			add_overlay(list(gen_emissive_blocker))
 		if(EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
 			em_block = new(src, render_target)
-			vis_contents += em_block
+			add_overlay(list(em_block))
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)
@@ -131,17 +135,24 @@
 
 	vis_contents.Cut()
 
-
 /atom/movable/proc/update_emissive_block()
-	if(blocks_emissive != EMISSIVE_BLOCK_GENERIC)
+	if(!blocks_emissive)
 		return
-	if(length(managed_vis_overlays))
-		for(var/a in managed_vis_overlays)
-			var/obj/effect/overlay/vis/vs
-			if(vs.plane == EMISSIVE_BLOCKER_PLANE)
-				SSvis_overlays.remove_vis_overlay(src, list(vs))
-				break
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE, dir)
+	else if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
+		var/mutable_appearance/gen_emissive_blocker = mutable_appearance(icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE)
+		gen_emissive_blocker.dir = dir
+		gen_emissive_blocker.alpha = alpha
+		gen_emissive_blocker.appearance_flags |= appearance_flags
+		return gen_emissive_blocker
+	else if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
+		if(!em_block)
+			render_target = ref(src)
+			em_block = new(src, render_target)
+		return em_block
+
+/atom/movable/update_overlays()
+	. = ..()
+	. += update_emissive_block()
 
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
 	if(!direction)
@@ -472,8 +483,8 @@
 			stop_pulling()
 		else
 			var/pull_dir = get_dir(src, pulling)
-			//puller and pullee more than one tile away or in diagonal position
-			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+			//puller and pullee more than one tile away or in diagonal position and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
+			if(!pulling.pulling?.moving_from_pull && (get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir))))
 				pulling.moving_from_pull = src
 				pulling.Move(T, get_dir(pulling, T), glide_size) //the pullee tries to reach our previous position
 				pulling.moving_from_pull = null

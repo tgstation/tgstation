@@ -83,14 +83,13 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	AddElement(/datum/element/point_of_interest)
 
-	if(special_target)
-		walk_towards(src, special_target, 1)
-		return
-
-	walk_towards(src, destination, 1)
-
 	RegisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, .proc/on_crossed_over_movable)
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, .proc/on_entering_atom)
+
+	if(special_target)
+		walk_towards(src, special_target, 1)
+	else
+		walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/Destroy(force)
 	UnregisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, COMSIG_ATOM_ENTERING)
