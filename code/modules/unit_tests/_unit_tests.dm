@@ -37,6 +37,9 @@
 #define UNIT_TEST_FAILED 1
 #define UNIT_TEST_SKIPPED 2
 
+/// A trait source when adding traits through unit tests
+#define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
+
 #include "anchored_mobs.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
@@ -79,6 +82,7 @@
 #include "spawn_mobs.dm"
 #include "species_whitelists.dm"
 #include "stomach.dm"
+#include "strippable.dm"
 #include "subsystem_init.dm"
 #include "surgeries.dm"
 #include "teleporters.dm"
