@@ -58,15 +58,15 @@
 	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return
 	if(panel_open)
-		. += mutable_appearance(icon, "recharger-open", layer, plane, dir, alpha)
+		. += mutable_appearance(icon, "recharger-open", layer, plane, alpha)
 		return
 	if(inserted_id)
-		. += mutable_appearance(icon, "recharger-full", layer, plane, dir, alpha)
-		. += mutable_appearance(icon, "recharger-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+		. += mutable_appearance(icon, "recharger-full", layer, plane, alpha)
+		. += mutable_appearance(icon, "recharger-full", EMISSIVE_LAYER, EMISSIVE_PLANE, alpha)
 		return
 
-	. += mutable_appearance(icon, "recharger-empty", layer, plane, dir, alpha)
-	. += mutable_appearance(icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+	. += mutable_appearance(icon, "recharger-empty", layer, plane, alpha)
+	. += mutable_appearance(icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, alpha)
 
 /obj/machinery/accounting/update_appearance(updates)
 	. = ..()

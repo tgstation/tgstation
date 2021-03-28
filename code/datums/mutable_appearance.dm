@@ -16,7 +16,6 @@
 	MA.icon_state = icon_state
 	MA.layer = layer
 	MA.plane = plane
-	MA.dir = dir
 	MA.alpha = alpha
 	MA.appearance_flags |= appearance_flags
 	return MA
