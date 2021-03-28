@@ -221,3 +221,14 @@
 			M.Unconscious(force / 0.3)
 			M.Paralyze(force / 0.75)
 		M.drop_all_held_items()
+
+/obj/item/britevidence/foxglove/attackby(obj/item/O, mob/user)
+	if(istype(O, /obj/item/britevidence/ribbon))
+		to_chat(user, "<span class='notice'>You carefully tie the ribbon to the flower's stem.</span>")
+		qdel(O)
+		icon_state = "flower_ribbon"
+
+/obj/item/britevidence/ribbon
+	name = "blue ribbon"
+	desc = "It's surprisingly intact. Made of a soft material, with pieces of fur sticking to it."
+	icon_state = "ribbon"

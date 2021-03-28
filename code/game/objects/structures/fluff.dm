@@ -187,9 +187,20 @@
 	anchored = TRUE
 	density = FALSE
 	deconstructible = FALSE
+
+/obj/structure/fluff/lightbulb_light
+	name = "red glow"
+	desc = "The room's walls flicker with shadows from the light."
 	light_power = 5
 	light_range = 2
 	light_color = "#bd3827"
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "red_bulb_light"
+	layer = TURF_LAYER
+	anchored = TRUE
+	density = FALSE
+	deconstructible = FALSE
+
 
 /obj/structure/fluff/beach_towel
 	name = "beach towel"
