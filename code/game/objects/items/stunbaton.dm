@@ -159,7 +159,7 @@
 
 /obj/item/melee/baton/proc/toggle_on(mob/user)
 	if(!turned_on && istype(user.mind?.martial_art, /datum/martial_art/nemesis)) //I really, REALLY don't want Nemesis Kick users to be able to use stunbatons
-		to_chat(user, "<span class='warning'>[src] sparks and fails to turn on. You probably shouldn't use it along with the gloves</span>")
+		to_chat(user, "<span class='warning'>[src] sparks and fails to turn on. You probably shouldn't use it along with the gloves.</span>")
 		return
 
 	if(cell && cell.charge >= cell_hit_cost)
@@ -187,7 +187,7 @@
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user, params)
 	if(turned_on && istype(user.mind?.martial_art, /datum/martial_art/nemesis))
-		to_chat(user, "<span class='warning'>[src] sparks and turns off. You probably shouldn't use it along with the gloves</span>")
+		to_chat(user, "<span class='warning'>[src] sparks and turns off. You probably shouldn't use it along with the gloves.</span>")
 		turned_on = FALSE
 		playsound(src, activate_sound, 75, TRUE, -1)
 

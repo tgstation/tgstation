@@ -193,12 +193,17 @@
 	inhand_icon_state = "black"
 	transfer_prints = FALSE
 
+	actions_types = list(/datum/action/item_action/nemesis_shield)
+
 	var/charge = 0
 	var/datum/martial_art/nemesis/style
 	//To prevent spam from overcharge warnings
 	var/antispam = 0
 
 	var/obj/item/shield/energy/nemesis/shield
+
+	//NS suit
+	var/obj/item/clothing/suit/armor/vest/nemesis/suit
 
 /obj/item/clothing/gloves/rapid/nemesis/Initialize()
 	. = ..()
@@ -244,6 +249,13 @@
 	user.dropItemToGround(shield, TRUE)
 	shield.forceMove(src)
 
+	addtimer(CALLBACK(src, .proc/check_location), 2)
+
+/obj/item/clothing/gloves/rapid/nemesis/proc/check_location()
+	if(loc != suit)
+		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+		forceMove(suit)
+
 /obj/item/clothing/gloves/rapid/nemesis/proc/lose_charge(amount_to_lose = 1)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/owner = loc
@@ -276,7 +288,7 @@
 
 			charge = NEMESIS_MAX_CHARGE
 	else
-		charge = max(charge, NEMESIS_MAX_CHARGE) //...how did we get here?
+		charge = min(charge, NEMESIS_MAX_CHARGE) //...how did we get here?
 	update_charge()
 
 /obj/item/clothing/gloves/rapid/nemesis/proc/update_charge()
@@ -304,6 +316,31 @@
 	owner.put_in_hands(shield)
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
+/obj/item/clothing/gloves/rapid/nemesis/ui_action_click(mob/user, action)
+	if(!ishuman(user) || user != loc)
+		return ..()
+
+	var/mob/living/carbon/human/owner = user
+	if(shield.loc == src)
+		shield.forceMove(get_turf(owner))
+		owner.put_in_hands(shield)
+		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+		shield.attack_self(owner)
+		return
+
+	if(shield.active)
+		shield.active = FALSE
+		shield.icon_state = "[shield.base_icon_state][shield.active]"
+		shield.force = initial(shield.force)
+		shield.w_class = WEIGHT_CLASS_TINY
+		playsound(owner, 'sound/weapons/saberoff.ogg', 35, TRUE)
+		shield.slowdown = 0
+
+	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+	user.dropItemToGround(shield, TRUE)
+	forceMove(src)
+
+
 /obj/item/clothing/gloves/rapid/nemesis/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -313,7 +350,7 @@
 		if(1)
 			if(isliving(loc))
 				var/mob/living/owner = loc
-				to_chat(owner, "<span class='notice'>[src] absorbed EMP and gained some charge from it!</span>")
+				to_chat(owner, "<span class='notice'>[src] absorbed the EMP and gained some charge from it!</span>")
 				gain_charge(rand(1, 3))
 		if(2)
 			if(isliving(loc))

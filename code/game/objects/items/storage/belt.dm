@@ -276,7 +276,8 @@
 	var/charge_depletion = 0
 	//Overlay that is added to the owner if overcharged
 	var/mutable_appearance/mob_overlay
-
+	//NS suit
+	var/obj/item/clothing/suit/armor/vest/nemesis/suit
 
 /obj/item/storage/belt/security/nemesis/ComponentInitialize()
 	. = ..()
@@ -356,9 +357,20 @@
 					gloves.lose_charge()
 					if(!gloves.charge)
 						STOP_PROCESSING(SSobj, src)
+				else
+					STOP_PROCESSING(SSobj, src)
 			else
 				STOP_PROCESSING(SSobj, src)
 		update_charge()
+
+/obj/item/storage/belt/security/nemesis/dropped(mob/user)
+	. = ..()
+	addtimer(CALLBACK(src, .proc/check_location), 2)
+
+/obj/item/storage/belt/security/nemesis/proc/check_location()
+	if(loc != suit)
+		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+		forceMove(suit)
 
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"

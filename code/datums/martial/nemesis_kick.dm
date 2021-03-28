@@ -10,7 +10,6 @@
 /datum/martial_art/nemesis //Funny, but there are no actuall kicks in this bootleg martial art
 	name = "Nemesis Kick"
 	id = MARTIALART_NEMESIS
-	block_chance = 15 //Lets give them a small block chance, Nemesis Solutions equipment is also based around defencive moves
 
 /datum/martial_art/nemesis/can_use(mob/living/owner)
 	if (!ishuman(owner))
@@ -53,6 +52,7 @@
 	return TRUE
 
 /datum/martial_art/nemesis/disarm_act(mob/living/carbon/human/A, mob/living/D)
+	A.changeNext_move(CLICK_CD_MELEE)
 	var/obj/item/clothing/gloves/rapid/nemesis/gloves = A.get_item_by_slot(ITEM_SLOT_GLOVES)
 	if(!gloves || !istype(gloves))
 		return FALSE

@@ -244,6 +244,6 @@
 	desc = "A \"Nemesis Solutions\" branded tactical jumpsuit with blue linings and ablative plating."
 	icon_state = "nemesis"
 	inhand_icon_state = "bl_suit"
-	armor = list(MELEE = 5, BULLET = 0, LASER = 10,ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30, WOUND = 10)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30, WOUND = 10)
 	can_adjust = FALSE
 	siemens_coefficient = 0.5 //They use charge so it makes sense

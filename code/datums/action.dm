@@ -773,3 +773,11 @@
 	target.layer = old_layer
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
+
+//Nemesis Solutions
+
+/datum/action/item_action/nemesis_shield
+	name = "Activate Wrist-Mounted Shield"
+	desc = "Activates a wrist-mounted energy shield that allows you to block energy projectiles."
+	icon_icon = 'icons/obj/nemesis.dmi'
+	button_icon_state = "nemesis1"

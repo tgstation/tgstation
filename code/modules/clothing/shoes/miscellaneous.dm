@@ -556,6 +556,9 @@
 	recharging_rate = 2 SECONDS
 	actions_types = list(/datum/action/item_action/bhop/nemesis)
 
+	//NS suit
+	var/obj/item/clothing/suit/armor/vest/nemesis/suit
+
 /obj/item/clothing/shoes/bhop/nemesis/ui_action_click(mob/user, action)
 	if(!ishuman(user))
 		return
@@ -584,3 +587,12 @@
 		gloves.lose_charge(NEMESIS_CHARGE_PER_JUMP)
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
+
+/obj/item/clothing/shoes/bhop/nemesis/dropped(mob/user)
+	. = ..()
+	addtimer(CALLBACK(src, .proc/check_location), 2)
+
+/obj/item/clothing/shoes/bhop/nemesis/proc/check_location()
+	if(loc != suit)
+		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+		forceMove(suit)

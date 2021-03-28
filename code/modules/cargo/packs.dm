@@ -287,7 +287,7 @@
 
 /datum/supply_pack/security/nemesis
 	name = "Nemesis Solutions Equipment"
-	desc = "Contains full equipment for one security officer and a high-tech combat vest from Nemesis Solutions along with some gadgets for them to use."
+	desc = "Contains full equipment for one security officer and a high-tech combat vest from Nemesis Solutions along with some gadgets for them to use. ATTENTION: Flux anomaly core required for the suit to activate."
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/clothing/suit/armor/vest/nemesis,
@@ -295,6 +295,15 @@
 					/obj/item/clothing/under/rank/security/officer/nemesis,
 					/obj/item/clothing/glasses/hud/security/sunglasses/nemesis,
 					/obj/item/clothing/head/soft/sec/nemesis)
+	crate_name = "nemesis solutions equipment crate"
+
+/datum/supply_pack/security/nemesis
+	name = "Nemesis Solutions Gadgets crate"
+	desc = "Contains 2 boxes of high-tech mines and booby traps. ATTENTION: Mines and booby traps require an A.R.E.S. suit to activate."
+	cost = CARGO_CRATE_VALUE * 3
+	access_view = ACCESS_ARMORY
+	contains = list(/obj/item/storage/box/nemesis_equipment,
+					/obj/item/storage/box/nemesis_equipment)
 	crate_name = "nemesis solutions equipment crate"
 
 /datum/supply_pack/security/armor

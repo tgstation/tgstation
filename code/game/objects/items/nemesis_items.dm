@@ -125,15 +125,28 @@
 		if(overloaded)
 			trigger_overload()
 			return
+
+		if(ishuman(throwingdatum.thrower))
+			var/mob/living/carbon/human/owner = throwingdatum.thrower
+			if(istype(owner.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/hud/security/sunglasses/nemesis))
+				glasses = owner.get_item_by_slot(ITEM_SLOT_EYES)
+
+			if(!istype(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/armor/vest/nemesis))
+				return
+
+			var/obj/item/clothing/suit/armor/vest/nemesis/suit = owner.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+			if(!suit.active)
+				return
+
+		for(var/obj/item/nemesis_mine/mine in get_turf(src))
+			if(mine != src)
+				return
+
 		active = TRUE
 		icon_state = "trap_small"
 		update_icon()
 		anchored = TRUE
 		playsound(src, 'sound/magic/blind.ogg', 50, TRUE)
-		if(ishuman(throwingdatum.thrower))
-			var/mob/living/carbon/human/owner = throwingdatum.thrower
-			if(istype(owner.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/hud/security/sunglasses/nemesis))
-				glasses = owner.get_item_by_slot(ITEM_SLOT_EYES)
 
 /obj/item/nemesis_mine/emp_act(severity)
 	. = ..()
@@ -178,10 +191,6 @@
 	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
 /obj/item/shield/energy/nemesis/attack_self(mob/living/carbon/human/user)
-	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		to_chat(user, "<span class='userdanger'>You beat yourself in the head with [src]!</span>")
-		user.take_bodypart_damage(5)
-
 	var/obj/item/clothing/gloves/rapid/nemesis/gloves = user.get_item_by_slot(ITEM_SLOT_GLOVES)
 	if(!gloves || !istype(gloves))
 		return FALSE
@@ -210,23 +219,6 @@
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 		slowdown = 0
 	add_fingerprint(user)
-
-/obj/item/shield/energy/nemesis/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/item/clothing/gloves/rapid/nemesis/gloves = owner.get_item_by_slot(ITEM_SLOT_GLOVES)
-	if(!gloves || !istype(gloves) || gloves.charge <= round(damage / 10))
-		active = !active
-		icon_state = "[base_icon_state][active]"
-		force = initial(force)
-		w_class = WEIGHT_CLASS_TINY
-		playsound(owner, 'sound/weapons/saberoff.ogg', 35, TRUE)
-		to_chat(owner, "<span class='warning'>[src] turns off!</span>")
-		slowdown = 0
-
-	if(istype(gloves))
-		if(damage < 10)
-			gloves.lose_charge(1)
-			return
-		gloves.lose_charge(round(damage * 0.1))
 
 /obj/item/shield/energy/nemesis/IsReflect()
 	if(!ishuman(loc))
@@ -331,6 +323,18 @@
 		if(istype(owner.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/hud/security/sunglasses/nemesis))
 			glasses = owner.get_item_by_slot(ITEM_SLOT_EYES)
 
+		if(!istype(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/armor/vest/nemesis))
+			return
+
+		var/obj/item/clothing/suit/armor/vest/nemesis/suit = owner.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		if(!suit.active)
+			return
+
+	for(var/obj/item/nemesis_trap/trap in get_turf(src))
+		if(trap != src)
+			to_chat(user, "<span class='notice'>[src] fails to activate since there are already another trap on [target]!</span>")
+			return
+
 	active = TRUE
 	icon_state = "trap_deployed"
 	dir = get_dir(target, user)
@@ -380,6 +384,9 @@
 /obj/item/nemesis_trap/proc/deploy_beams()
 	for(var/obj/item/nemesis_trap/trap in view(3, get_turf(src)))
 		if(trap == src || !trap.active)
+			continue
+
+		if(length(trap.beams))
 			continue
 
 		icon_state = "trap_deployed_active"

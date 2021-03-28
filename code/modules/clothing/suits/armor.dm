@@ -335,6 +335,9 @@
 	gloves = new(src)
 	belt = new(src)
 	boots = new(src)
+	gloves.suit = src
+	belt.suit = src
+	boots.suit = src
 
 	ADD_TRAIT(gloves, TRAIT_NODROP, CLOTHING_TRAIT)
 	ADD_TRAIT(belt, TRAIT_NODROP, CLOTHING_TRAIT)
@@ -346,8 +349,6 @@
 	var/mob/living/carbon/human/owner = loc
 
 	to_chat(owner, "<span class='notice'>Nemesis Solutions A.R.E.S. mk3 suit online. Attempting to unfold the suit.</span>")
-
-	sleep(1 SECONDS)
 
 	if(owner.get_item_by_slot(ITEM_SLOT_GLOVES))
 		to_chat(owner, "<span class='warning'>ERROR: Unable to unfold the gloves. ABORTING.</span>")
@@ -362,7 +363,7 @@
 		return
 
 	if(owner.get_item_by_slot(ITEM_SLOT_HEAD) && !istype(owner.get_item_by_slot(ITEM_SLOT_HEAD), /obj/item/clothing/head/soft/sec/nemesis))
-		to_chat(owner, "<span class='warning'>WARNING: Detected unrecommended headgear. Please use Nemesis Solutions softcap for optimal effect.</span>")
+		to_chat(owner, "<span class='warning'>WARNING: Non-recommended headgear detected. Please use Nemesis Solutions softcap for optimal effect.</span>")
 
 	if(!do_after(owner, 1 SECONDS, target = src) || !owner.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES))
 		to_chat(owner, "<span class='warning'>ERROR: Unable to unfold the gloves. ABORTING.</span>")
@@ -397,7 +398,7 @@
 
 	to_chat(owner, "<span class='notice'>Attempting to fold the suit</span>")
 
-	if(!do_after(owner, 5 SECONDS, target = src))
+	if(!do_after(owner, 3 SECONDS, target = src))
 		to_chat(owner, "<span class='warning'>ERROR: Please retain from moving while the suit is deactivating. ABORTING.</span>")
 		return
 
