@@ -98,7 +98,7 @@
 	SIGNAL_HANDLER
 
 	if(!active)
-		return	//no hitting everyone/everything just to try to slot tcs in!
+		return //no hitting everyone/everything just to try to slot tcs in!
 	if(istype(I, /obj/item/stack/telecrystal))
 		LoadTC(user, I)
 	for(var/category in uplink_items)

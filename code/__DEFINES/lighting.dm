@@ -44,7 +44,7 @@
 	)                        \
 
 ///How many tiles standard fires glow.
-#define LIGHT_RANGE_FIRE		3
+#define LIGHT_RANGE_FIRE 3
 
 #define LIGHTING_PLANE_ALPHA_VISIBLE 255
 #define LIGHTING_PLANE_ALPHA_NV_TRAIT 245

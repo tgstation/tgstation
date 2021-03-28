@@ -13,7 +13,7 @@
 	alert_able = TRUE
 	var/last_status = SUPERMATTER_INACTIVE
 	var/list/supermatters
-	var/obj/machinery/power/supermatter_crystal/active		// Currently selected supermatter crystal.
+	var/obj/machinery/power/supermatter_crystal/active // Currently selected supermatter crystal.
 
 /datum/computer_file/program/supermatter_monitor/Destroy()
 	clear_signals()
@@ -28,7 +28,7 @@
 		ui_header = "smmon_[last_status].gif"
 		program_icon_state = "smmon_[last_status]"
 		if(istype(computer))
-			computer.update_icon()
+			computer.update_appearance()
 
 /datum/computer_file/program/supermatter_monitor/run_program(mob/living/user)
 	. = ..(user)
@@ -131,11 +131,13 @@
 		data["SM_power"] = active.power
 		data["SM_ambienttemp"] = air.temperature
 		data["SM_ambientpressure"] = air.return_pressure()
-		//data["SM_EPR"] = round((air.total_moles / air.group_multiplier) / 23.1, 0.01)
+		data["SM_bad_moles_amount"] = MOLE_PENALTY_THRESHOLD / active.gasefficency 
+		data["SM_moles"] = 0
+		
 		var/list/gasdata = list()
 
-
 		if(air.total_moles())
+			data["SM_moles"] = air.total_moles()
 			for(var/gasid in air.gases)
 				gasdata.Add(list(list(
 				"name"= air.gases[gasid][GAS_META][META_GAS_NAME],

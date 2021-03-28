@@ -30,7 +30,7 @@
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 
-/obj/structure/falsewall/attack_hand(mob/user)
+/obj/structure/falsewall/attack_hand(mob/user, list/modifiers)
 	if(opening)
 		return
 	. = ..()
@@ -38,7 +38,7 @@
 		return
 
 	opening = TRUE
-	update_icon()
+	update_appearance()
 	if(!density)
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
@@ -51,24 +51,27 @@
 		density = !density
 		set_opacity(density)
 		opening = FALSE
-		update_icon()
+		update_appearance()
 		air_update_turf(TRUE, !density)
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+	. = ..()
+	if(!density)
+		return
+
 	if(opening)
-		if(density)
-			icon_state = "fwall_opening"
-			smoothing_flags = NONE
-			clear_smooth_overlays()
-		else
-			icon_state = "fwall_closing"
+		smoothing_flags = NONE
+		clear_smooth_overlays()
 	else
-		if(density)
-			icon_state = "[base_icon_state]-[smoothing_junction]"
-			smoothing_flags = SMOOTH_BITMASK
-			QUEUE_SMOOTH(src)
-		else
-			icon_state = "fwall_open"
+		smoothing_flags = SMOOTH_BITMASK
+		QUEUE_SMOOTH(src)
+
+/obj/structure/falsewall/update_icon_state()
+	if(opening)
+		icon_state = "fwall_[density ? "opening" : "closing"]"
+		return ..()
+	icon_state = density ? "[base_icon_state]-[smoothing_junction]" : "fwall_open"
+	return ..()
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
@@ -171,7 +174,7 @@
 	radiate()
 	return ..()
 
-/obj/structure/falsewall/uranium/attack_hand(mob/user)
+/obj/structure/falsewall/uranium/attack_hand(mob/user, list/modifiers)
 	radiate()
 	. = ..()
 

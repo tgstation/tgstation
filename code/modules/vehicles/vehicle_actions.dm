@@ -12,13 +12,13 @@
 /obj/vehicle/proc/initialize_passenger_action_type(actiontype)
 	autogrant_actions_passenger += actiontype
 	for(var/i in occupants)
-		grant_passenger_actions(i)	//refresh
+		grant_passenger_actions(i) //refresh
 
 /obj/vehicle/proc/initialize_controller_action_type(actiontype, control_flag)
 	LAZYINITLIST(autogrant_actions_controller["[control_flag]"])
 	autogrant_actions_controller["[control_flag]"] += actiontype
 	for(var/i in occupants)
-		grant_controller_actions(i)	//refresh
+		grant_controller_actions(i) //refresh
 
 /obj/vehicle/proc/grant_action_type_to_mob(actiontype, mob/m)
 	if(isnull(LAZYACCESS(occupants, m)) || !actiontype)
@@ -127,24 +127,28 @@
 	desc = "Honk your classy horn."
 	button_icon_state = "car_horn"
 	var/hornsound = 'sound/items/carhorn.ogg'
-	var/last_honk_time
 
 /datum/action/vehicle/sealed/horn/Trigger()
-	if(world.time - last_honk_time > 20)
-		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks!</span>")
-		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
-		playsound(vehicle_entered_target, hornsound, 75)
-		last_honk_time = world.time
+	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CAR_HONK))
+		return
+	TIMER_COOLDOWN_START(src, COOLDOWN_CAR_HONK, 2 SECONDS)
+	vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks!</span>")
+	to_chat(owner, "<span class='notice'>You press [vehicle_entered_target]'s horn.</span>")
+	if(istype(vehicle_target.inserted_key, /obj/item/bikehorn))
+		vehicle_target.inserted_key.attack_self(owner) //The bikehorn plays a sound instead
+		return
+	playsound(vehicle_entered_target, hornsound, 75)
 
-/datum/action/vehicle/sealed/horn/clowncar/Trigger()
-	if(world.time - last_honk_time > 20)
-		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks!</span>")
-		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
-		last_honk_time = world.time
-		if(vehicle_target.inserted_key)
-			vehicle_target.inserted_key.attack_self(owner) //The key plays a sound
-		else
-			playsound(vehicle_entered_target, hornsound, 75)
+/datum/action/vehicle/sealed/headlights
+	name = "Toggle Headlights"
+	desc = "Turn on your brights!"
+	button_icon_state = "car_headlights"
+
+/datum/action/vehicle/sealed/headlights/Trigger()
+	to_chat(owner, "<span class='notice'>You flip the switch for the vehicle's headlights.</span>")
+	vehicle_entered_target.headlights_toggle = !vehicle_entered_target.headlights_toggle
+	vehicle_entered_target.set_light_on(vehicle_entered_target.headlights_toggle)
+	playsound(owner, vehicle_entered_target.headlights_toggle ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 
 /datum/action/vehicle/sealed/dump_kidnapped_mobs
 	name = "Dump Kidnapped Mobs"
@@ -162,9 +166,10 @@
 	button_icon_state = "car_rtd"
 
 /datum/action/vehicle/sealed/roll_the_dice/Trigger()
-	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
-		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
-		C.RollTheDice(owner)
+	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		return
+	var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
+	C.roll_the_dice(owner)
 
 /datum/action/vehicle/sealed/cannon
 	name = "Toggle Siege Mode"
@@ -172,11 +177,10 @@
 	button_icon_state = "car_cannon"
 
 /datum/action/vehicle/sealed/cannon/Trigger()
-	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
-		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
-		if(C.cannonbusy)
-			to_chat(owner, "<span class='notice'>Please wait for the vehicle to finish its current action first.</span>")
-		C.ToggleCannon()
+	if(!istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		return
+	var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
+	C.toggle_cannon(owner)
 
 
 /datum/action/vehicle/sealed/thank
@@ -193,12 +197,11 @@
 		return
 	COOLDOWN_START(src, thank_time_cooldown, 6 SECONDS)
 	var/obj/vehicle/sealed/car/clowncar/clown_car = vehicle_entered_target
-	var/list/drivers = clown_car.return_drivers()
-	if(!length(drivers))
+	var/mob/living/carbon/human/clown = pick(clown_car.return_drivers())
+	if(!clown)
 		return
-	var/mob/living/carbon/human/clown = pick(drivers)
 	owner.say("Thank you for the fun ride, [clown.name]!")
-	clown_car.ThanksCounter()
+	clown_car.increment_thanks_counter()
 
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie
@@ -211,12 +214,14 @@
 /datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger()
 	if(world.time > next_ollie)
 		var/obj/vehicle/ridden/scooter/skateboard/vehicle = vehicle_target
+		vehicle.obj_flags |= BLOCK_Z_OUT_DOWN
 		if (vehicle.grinding)
 			return
 		var/mob/living/rider = owner
 		var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
 		rider.adjustStaminaLoss(vehicle.instability*2)
 		if (rider.getStaminaLoss() >= 100)
+			vehicle.obj_flags &= ~CAN_BE_HIT
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 			vehicle.unbuckle_mob(rider)
 			rider.throw_at(landing_turf, 2, 2)
@@ -232,8 +237,9 @@
 			rider.Move(landing_turf, vehicle_target.dir)
 			passtable_off(rider, VEHICLE_TRAIT)
 			vehicle.pass_flags &= ~PASSTABLE
-		if(locate(/obj/structure/table) in vehicle.loc.contents)
+		if((locate(/obj/structure/table) in vehicle.loc.contents) || (locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents))
+			/*if(locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents)
+				rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)*/
 			vehicle.grinding = TRUE
 			vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
 			addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
-		next_ollie = world.time + 5

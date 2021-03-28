@@ -35,7 +35,7 @@
 		to_chat(user, "<span class='warning'>[I] seems to be stuck to your hand!</span>")
 		return
 	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
-	if(inserted_key)	//just in case there's an invalid key
+	if(inserted_key) //just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
 	inserted_key = I
 
@@ -53,7 +53,7 @@
 /obj/vehicle/ridden/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(!in_range(user, src) || !in_range(M, src))
 		return FALSE
-	. = ..(M, user, FALSE)
+	return ..(M, user, FALSE)
 
 /obj/vehicle/ridden/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!force && occupant_amount() >= max_occupants)

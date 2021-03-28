@@ -7,9 +7,9 @@
 	var/active_msg = "You charge your projectile!"
 	var/active_icon_state = "projectile"
 	var/list/projectile_var_overrides = list()
-	var/projectile_amount = 1	//Projectiles per cast.
-	var/current_amount = 0	//How many projectiles left.
-	var/projectiles_per_fire = 1		//Projectiles per fire. Probably not a good thing to use unless you override ready_projectile().
+	var/projectile_amount = 1 //Projectiles per cast.
+	var/current_amount = 0 //How many projectiles left.
+	var/projectiles_per_fire = 1 //Projectiles per fire. Probably not a good thing to use unless you override ready_projectile().
 
 /obj/effect/proc_holder/spell/aimed/Click()
 	var/mob/living/user = usr
@@ -43,6 +43,8 @@
 /obj/effect/proc_holder/spell/aimed/update_icon()
 	if(!action)
 		return
+
+	. = ..()
 	action.button_icon_state = "[base_icon_state][active]"
 	action.UpdateButtonIcon()
 

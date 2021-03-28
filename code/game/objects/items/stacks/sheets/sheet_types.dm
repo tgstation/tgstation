@@ -402,67 +402,67 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 /*
  * Cardboard
  */
-GLOBAL_LIST_INIT(cardboard_recipes, list (														\
-	new/datum/stack_recipe("box", /obj/item/storage/box),										\
-	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3),				\
-	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg),				\
+GLOBAL_LIST_INIT(cardboard_recipes, list ( \
+	new/datum/stack_recipe("box", /obj/item/storage/box), \
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
+	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5),					\
-	null,																						\
+	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
+	null, \
 
-	new/datum/stack_recipe("pizza box", /obj/item/pizzabox),									\
-	new/datum/stack_recipe("folder", /obj/item/folder),											\
-	null,																						\
+	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
+	new/datum/stack_recipe("folder", /obj/item/folder), \
+	null, \
 	//TO-DO: Find a proper way to just change the illustration on the box. Code isn't the issue, input is.
 	new/datum/stack_recipe_list("fancy boxes", list(
-		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box),				\
-		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box),					\
-		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets),			\
-		new /datum/stack_recipe("donk-pockets spicy box", /obj/item/storage/box/donkpockets/donkpocketspicy),			\
-		new /datum/stack_recipe("donk-pockets teriyaki box", /obj/item/storage/box/donkpockets/donkpocketteriyaki),		\
-		new /datum/stack_recipe("donk-pockets pizza box", /obj/item/storage/box/donkpockets/donkpocketpizza),			\
-		new /datum/stack_recipe("donk-pockets berry box", /obj/item/storage/box/donkpockets/donkpocketberry),			\
-		new /datum/stack_recipe("donk-pockets honk box", /obj/item/storage/box/donkpockets/donkpockethonk),				\
+		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box), \
+		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box), \
+		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets), \
+		new /datum/stack_recipe("donk-pockets spicy box", /obj/item/storage/box/donkpockets/donkpocketspicy), \
+		new /datum/stack_recipe("donk-pockets teriyaki box", /obj/item/storage/box/donkpockets/donkpocketteriyaki), \
+		new /datum/stack_recipe("donk-pockets pizza box", /obj/item/storage/box/donkpockets/donkpocketpizza), \
+		new /datum/stack_recipe("donk-pockets berry box", /obj/item/storage/box/donkpockets/donkpocketberry), \
+		new /datum/stack_recipe("donk-pockets honk box", /obj/item/storage/box/donkpockets/donkpockethonk), \
 		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes),
-		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box),			\
-		null,																					\
+		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box), \
+		null, \
 
-		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot),			\
-		new /datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot),		\
-		new /datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag),			\
-		new /datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs),				\
-		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes),					\
-		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs),				\
-		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids),						\
-		new /datum/stack_recipe("PDA box", /obj/item/storage/box/pdas),							\
-		null,																					\
+		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot), \
+		new /datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot), \
+		new /datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag), \
+		new /datum/stack_recipe("flashbang box", /obj/item/storage/box/flashbangs), \
+		new /datum/stack_recipe("flashes box", /obj/item/storage/box/flashes), \
+		new /datum/stack_recipe("handcuffs box", /obj/item/storage/box/handcuffs), \
+		new /datum/stack_recipe("ID card box", /obj/item/storage/box/ids), \
+		new /datum/stack_recipe("PDA box", /obj/item/storage/box/pdas), \
+		null, \
 
-		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles),			\
-		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers),					\
-		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes),					\
-		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves),				\
-		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks),				\
-		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
-		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses),	\
-		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens),					\
-		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank),	\
-		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank),	\
-		null,																					\
+		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles), \
+		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers), \
+		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes), \
+		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves), \
+		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks), \
+		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags), \
+		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses), \
+		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens), \
+		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank), \
+		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank), \
+		null, \
 
-		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival),				\
-		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer),					\
-		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
-		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
-		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
-		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed),		\
-		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps),			\
+		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival), \
+		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer), \
+		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks), \
+		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes), \
+		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs), \
+		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed), \
+		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps), \
 		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box)
 		)),
 
-	null,																						\
+	null, \
 ))
 
-/obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
+/obj/item/stack/sheet/cardboard //BubbleWrap //it's cardboard you fuck
 	name = "cardboard"
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"
@@ -510,7 +510,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	new /datum/stack_recipe("runed door (a weak door that stuns non-cultists who touch it))", /obj/machinery/door/airlock/cult, 1, time = 5 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
 	new /datum/stack_recipe("runed girder (not a recommended usage of runed metal)", /obj/structure/girder/cult, 1, time = 5 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
 	new /datum/stack_recipe("pylon (heals (and regenerates the blood of) nearby blood cultists and constructs, but also turns nearby floor tiles into engraved flooring)", /obj/structure/destructible/cult/pylon, 4, time = 4 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
-	new /datum/stack_recipe("daemon forge (can make shielded robes, flagellant's robes, and mirror shields)", /obj/structure/destructible/cult/forge, 3, time = 4 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
+	new /datum/stack_recipe("daemon forge (can make Nar'Sien hardened armor, flagellant's robes, and eldritch longswords)", /obj/structure/destructible/cult/forge, 3, time = 4 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
 	new /datum/stack_recipe("archives (can make zealot's blindfolds, shuttle curse orbs, and veil walker equipment)", /obj/structure/destructible/cult/tome, 3, time = 4 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
 	new /datum/stack_recipe("altar (can make eldritch whetstones, construct shells, and flasks of unholy water)", /obj/structure/destructible/cult/talisman, 3, time = 4 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
 	))
@@ -536,7 +536,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	var/turf/T = get_turf(user) //we may have moved. adjust as needed...
 	var/area/A = get_area(user)
-	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !(A.flags_1 & CULT_PERMITTED_1)))
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !(A.area_flags & CULT_PERMITTED)))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
 	return ..()
@@ -660,6 +660,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/food/drinks/waterbottle/large/empty, 3), \
 	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/food/drinks/colocup, 1), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2), \
+	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2), \
 	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1)))
 
 /obj/item/stack/sheet/plastic

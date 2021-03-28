@@ -128,7 +128,7 @@
 
 /datum/quirk/light_step
 	name = "Light Step"
-	desc = "You walk with a gentle step; footsteps and stepping on sharp objects is quieter and less painful."
+	desc = "You walk with a gentle step; footsteps and stepping on sharp objects is quieter and less painful. Also, your hands and clothes will not get messed in case of stepping in blood."
 	value = 4
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
@@ -173,7 +173,7 @@
 	var/obj/item/organ/eyes/eyes = H.getorgan(/obj/item/organ/eyes)
 	if(!eyes || eyes.lighting_alpha)
 		return
-	eyes.Insert(H) //refresh their eyesight and vision
+	eyes.refresh() //refresh their eyesight and vision
 
 /datum/quirk/selfaware
 	name = "Self-Aware"

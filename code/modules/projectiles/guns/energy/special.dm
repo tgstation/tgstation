@@ -2,7 +2,7 @@
 	name = "ion rifle"
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
-	inhand_icon_state = null	//so the human update icon uses the icon_state instead.
+	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	worn_icon_state = null
 	shaded_charge = TRUE
 	can_flashlight = TRUE
@@ -59,7 +59,7 @@
 	inhand_icon_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = "/obj/item/stock_parts/cell/potato"
+	cell_type = /obj/item/stock_parts/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
 
@@ -201,6 +201,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = null
 	icon_state = "wormhole_projector"
+	base_icon_state = "wormhole_projector"
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
@@ -224,7 +225,8 @@
 	to_chat(user, "<span class='danger'>The display says, 'NO CORE INSTALLED'.</span>")
 
 /obj/item/gun/energy/wormhole_projector/update_icon_state()
-	icon_state = inhand_icon_state = "[initial(icon_state)][select]"
+	. = ..()
+	icon_state = inhand_icon_state = "[base_icon_state][select]"
 
 /obj/item/gun/energy/wormhole_projector/update_ammo_types()
 	. = ..()
@@ -232,7 +234,7 @@
 		var/obj/item/ammo_casing/energy/wormhole/W = ammo_type[i]
 		if(istype(W))
 			W.gun = src
-			var/obj/projectile/beam/wormhole/WH = W.BB
+			var/obj/projectile/beam/wormhole/WH = W.loaded_projectile
 			if(istype(WH))
 				WH.gun = src
 
@@ -289,7 +291,7 @@
 	name = "cyborg lmg"
 	desc = "An LMG that fires 3D-printed flechettes. They are slowly resupplied using the cyborg's internal power source."
 	icon_state = "l6_cyborg"
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	cell_type = "/obj/item/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = FALSE
@@ -308,7 +310,7 @@
 	desc = "A gun that changes temperatures. Comes with a collapsible stock."
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
-	cell_type = "/obj/item/stock_parts/cell/high"
+	cell_type = /obj/item/stock_parts/cell/high
 	pin = null
 
 /obj/item/gun/energy/temperature/security
@@ -340,6 +342,18 @@
 	inhand_icon_state = "instagibblue"
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill/blue)
 
+/obj/item/gun/energy/laser/instakill/green
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a green design."
+	icon_state = "instagibgreen"
+	inhand_icon_state = "instagibgreen"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/green)
+
+/obj/item/gun/energy/laser/instakill/yellow
+	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a yellow design."
+	icon_state = "instagibyellow"
+	inhand_icon_state = "instagibyellow"
+	ammo_type = list(/obj/item/ammo_casing/energy/instakill/yellow)
+
 /obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return
 
@@ -367,3 +381,15 @@
 		return FALSE
 	return ..()
 
+/obj/item/gun/energy/tesla_cannon
+	name = "tesla cannon"
+	icon_state = "tesla"
+	inhand_icon_state = "tesla"
+	desc = "A gun that shoots balls of \"tesla\", whatever that is."
+	ammo_type = list(/obj/item/ammo_casing/energy/tesla_cannon)
+	shaded_charge = 1
+	weapon_weight = WEAPON_HEAVY
+
+/obj/item/gun/energy/tesla_cannon/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)

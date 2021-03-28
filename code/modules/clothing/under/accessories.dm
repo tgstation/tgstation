@@ -3,12 +3,16 @@
 	desc = "Something has gone wrong!"
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "plasma"
-	inhand_icon_state = ""	//no inhands
+	inhand_icon_state = "" //no inhands
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_SMALL
+	/// Whether or not the accessory displays through suits and the like.
 	var/above_suit = FALSE
-	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
+	/// TRUE if shown as a small icon in corner, FALSE if overlayed
+	var/minimize_when_attached = TRUE
+	/// Whether the accessory has any storage to apply to the clothing it's attached to.
 	var/datum/component/storage/detached_pockets
+	/// What equipment slot the accessory attaches to.
 	var/attachment_slot = CHEST
 
 /obj/item/clothing/accessory/proc/can_attach_accessory(obj/item/clothing/U, mob/user)
@@ -29,13 +33,13 @@
 	layer = FLOAT_LAYER
 	plane = FLOAT_PLANE
 	if(minimize_when_attached)
-		transform *= 0.5	//halve the size so it doesn't overpower the under
+		transform *= 0.5 //halve the size so it doesn't overpower the under
 		pixel_x += 8
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	if (islist(U.armor) || isnull(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
-		U.armor = getArmor(arglist(U.armor))	// we have to check that the armor list has been transformed into a datum before we try to call a proc on it
+	if (islist(U.armor) || isnull(U.armor)) // This proc can run before /obj/Initialize has run for U and src,
+		U.armor = getArmor(arglist(U.armor)) // we have to check that the armor list has been transformed into a datum before we try to call a proc on it
 																					// This is safe to do as /obj/Initialize only handles setting up the datum if actually needed.
 	if (islist(armor) || isnull(armor))
 		armor = getArmor(arglist(armor))

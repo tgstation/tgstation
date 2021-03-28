@@ -3,9 +3,9 @@
 	unit_name = "toolbox"
 	export_types = list(/obj/item/storage/toolbox)
 
-// mechanical toolbox:	22cr
-// emergency toolbox:	17-20cr
-// electrical toolbox:	36cr
+// mechanical toolbox: 22cr
+// emergency toolbox: 17-20cr
+// electrical toolbox: 36cr
 // robust: priceless
 
 // Basic tools

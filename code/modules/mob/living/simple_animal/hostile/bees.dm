@@ -1,14 +1,14 @@
 
-#define BEE_IDLE_ROAMING		70 //The value of idle at which a bee in a beebox will try to wander
-#define BEE_IDLE_GOHOME			0  //The value of idle at which a bee will try to go home
-#define BEE_PROB_GOHOME			35 //Probability to go home when idle is below BEE_IDLE_GOHOME
-#define BEE_PROB_GOROAM			5 //Probability to go roaming when idle is above BEE_IDLE_ROAMING
-#define BEE_TRAY_RECENT_VISIT	200	//How long in deciseconds until a tray can be visited by a bee again
-#define BEE_DEFAULT_COLOUR		"#e5e500" //the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
+#define BEE_IDLE_ROAMING 70 //The value of idle at which a bee in a beebox will try to wander
+#define BEE_IDLE_GOHOME 0  //The value of idle at which a bee will try to go home
+#define BEE_PROB_GOHOME 35 //Probability to go home when idle is below BEE_IDLE_GOHOME
+#define BEE_PROB_GOROAM 5 //Probability to go roaming when idle is above BEE_IDLE_ROAMING
+#define BEE_TRAY_RECENT_VISIT 200 //How long in deciseconds until a tray can be visited by a bee again
+#define BEE_DEFAULT_COLOUR "#e5e500" //the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
 
-#define BEE_POLLINATE_YIELD_CHANCE		33
-#define BEE_POLLINATE_PEST_CHANCE		33
-#define BEE_POLLINATE_POTENCY_CHANCE	50
+#define BEE_POLLINATE_YIELD_CHANCE 33
+#define BEE_POLLINATE_PEST_CHANCE 33
+#define BEE_POLLINATE_POTENCY_CHANCE 50
 
 /mob/living/simple_animal/hostile/poison/bees
 	name = "bee"
@@ -93,7 +93,7 @@
 	if(beegent)
 		bee_to_eat.beegent = beegent
 		bee_to_eat.reagents.add_reagent(beegent.type, 5)
-	bee_to_eat.update_icon()
+	bee_to_eat.update_appearance()
 	beegent = null
 	..()
 
@@ -356,10 +356,9 @@
 	. = ..()
 	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
 
-/obj/item/trash/bee/update_icon()
+/obj/item/trash/bee/update_overlays()
 	. = ..()
-	cut_overlays()
 	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
 	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
-	add_overlay(body_overlay)
+	. += body_overlay
 

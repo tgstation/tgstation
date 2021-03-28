@@ -210,6 +210,8 @@
 	living_players -= M
 	var/datum/antagonist/traitor/newTraitor = new
 	M.mind.add_antag_datum(newTraitor)
+	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
+	log_game("DYNAMIC: [key_name(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	return TRUE
 
 //////////////////////////////////////////////
@@ -284,7 +286,7 @@
 //////////////////////////////////////////////
 //                                          //
 //         Malfunctioning AI                //
-//                              		    //
+//     //
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/midround/malf
@@ -344,7 +346,7 @@
 	required_candidates = 1
 	weight = 1
 	cost = 20
-	requirements = list(90,90,70,40,30,20,10,10,10,10)
+	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)

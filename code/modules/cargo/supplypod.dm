@@ -107,7 +107,7 @@
 		door = "[base]_door"
 	else
 		door = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/SetReverseIcon()
 	fin_mask = "bottomfin"
@@ -115,7 +115,7 @@
 		icon_state = GLOB.podstyles[style][POD_BASE] + "_reverse"
 	pixel_x = initial(pixel_x)
 	transform = matrix()
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/backToNonReverseIcon()
 	fin_mask = initial(fin_mask)
@@ -123,33 +123,35 @@
 		icon_state = GLOB.podstyles[style][POD_BASE]
 	pixel_x = initial(pixel_x)
 	transform = matrix()
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/closet_update_overlays(list/new_overlays)
 	return
 
 /obj/structure/closet/supplypod/update_overlays()
 	. = ..()
-	if (style == STYLE_INVISIBLE)
+	if(style == STYLE_INVISIBLE)
 		return
-	if (rubble)
+
+	if(rubble)
 		. += rubble.getForeground(src)
-	if (style == STYLE_SEETHROUGH)
-		for (var/atom/A in contents)
+
+	if(style == STYLE_SEETHROUGH)
+		for(var/atom/A in contents)
 			var/mutable_appearance/itemIcon = new(A)
 			itemIcon.transform = matrix().Translate(-1 * SUPPLYPOD_X_OFFSET, 0)
 			. += itemIcon
-		for (var/t in turfs_in_cargo)//T is just a turf's type
+		for(var/t in turfs_in_cargo)//T is just a turf's type
 			var/turf/turf_type = t
 			var/mutable_appearance/itemIcon = mutable_appearance(initial(turf_type.icon), initial(turf_type.icon_state))
 			itemIcon.transform = matrix().Translate(-1 * SUPPLYPOD_X_OFFSET, 0)
 			. += itemIcon
 		return
 
-	if (opened) //We're opened means all we have to worry about is masking a decal if we have one
-		if (!decal) //We don't have a decal to mask
+	if(opened) //We're opened means all we have to worry about is masking a decal if we have one
+		if(!decal) //We don't have a decal to mask
 			return
-		if (!door) //We have a decal but no door, so let's just add the decal
+		if(!door) //We have a decal but no door, so let's just add the decal
 			. += decal
 			return
 		var/icon/masked_decal = new(icon, decal) //The decal we want to apply
@@ -159,23 +161,25 @@
 		door_masker.Blend("#000000", ICON_SUBTRACT)
 		masked_decal.Blend(door_masker, ICON_ADD)
 		. += masked_decal
-	else //If we're closed
-		if (!door) //We have no door, lets see if we have a decal. If not, theres nothing we need to do
-			if (decal)
-				. += decal
-			return
-		else if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML) //If we're not a normal pod shape (aka, if we don't have fins), just add the door without masking
-			. += door
-		else
-			var/icon/masked_door = new(icon, door) //The door we want to apply
-			var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
-			fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
-			fin_masker.SwapColor("#ffffffff", null)
-			fin_masker.Blend("#000000", ICON_SUBTRACT)
-			masked_door.Blend(fin_masker, ICON_ADD)
-			. += masked_door
-		if (decal)
+		return
+
+	//If we're closed
+	if(!door) //We have no door, lets see if we have a decal. If not, theres nothing we need to do
+		if(decal)
 			. += decal
+		return
+	else if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML) //If we're not a normal pod shape (aka, if we don't have fins), just add the door without masking
+		. += door
+	else
+		var/icon/masked_door = new(icon, door) //The door we want to apply
+		var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
+		fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
+		fin_masker.SwapColor("#ffffffff", null)
+		fin_masker.Blend("#000000", ICON_SUBTRACT)
+		masked_door.Blend(fin_masker, ICON_ADD)
+		. += masked_door
+	if(decal)
+		. += decal
 
 /obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
 	if(bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
@@ -184,7 +188,7 @@
 		..()
 
 /obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
-	return
+	return FALSE
 
 /obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return
@@ -408,17 +412,17 @@
 /obj/structure/closet/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
 	opened = TRUE
 	density = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/extractionpod/setOpened()
 	opened = TRUE
 	density = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/setClosed() //Ditto
 	opened = FALSE
 	density = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)
@@ -431,7 +435,7 @@
 		return
 	rubble = new /obj/effect/supplypod_rubble(T)
 	rubble.setStyle(rubble_type, src)
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/Moved()
 	deleteRubble()
@@ -440,7 +444,7 @@
 /obj/structure/closet/supplypod/proc/deleteRubble()
 	rubble?.fadeAway()
 	rubble = null
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/addGlow()
 	if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML)
@@ -587,7 +591,7 @@
 
 /obj/effect/pod_landingzone/proc/beginLaunch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
 	pod.addGlow()
-	pod.update_icon()
+	pod.update_appearance()
 	if (pod.style != STYLE_INVISIBLE)
 		pod.add_filter("motionblur",1,list("type"="motion_blur", "x"=0, "y"=3))
 	pod.forceMove(drop_location())

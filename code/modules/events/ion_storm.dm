@@ -11,7 +11,7 @@
 	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
 	var/botEmagChance = 1
 	var/ionMessage = null
-	announceWhen	= 1
+	announceWhen = 1
 	announceChance = 33
 
 /datum/round_event/ion_storm/add_law_only // special subtype that adds a law only

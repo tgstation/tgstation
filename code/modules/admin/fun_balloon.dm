@@ -49,8 +49,9 @@
 
 /obj/effect/fun_balloon/sentience/effect()
 	var/list/bodies = list()
-	for(var/mob/living/M in range(effect_range, get_turf(src)))
-		bodies += M
+	for(var/mob/living/possessable in range(effect_range, get_turf(src)))
+		if (!possessable.ckey && possessable.stat == CONSCIOUS) // Only assign ghosts to living, non-occupied mobs!
+			bodies += possessable
 
 	var/question = "Would you like to be [group_name]?"
 	var/list/candidates = pollCandidatesForMobs(question, ROLE_PAI, null, FALSE, 100, bodies)
@@ -58,9 +59,8 @@
 		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
 
-		to_chat(body, "<span class='warning'>Your mob has been taken over by a ghost!</span>", confidential = TRUE)
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
-		body.ghostize(0)
+		body.ghostize(FALSE)
 		body.key = C.key
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
@@ -141,6 +141,8 @@
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>", confidential = TRUE)
 		for(var/obj/item/chainsaw/doomslayer/chainsaw in L)
 			qdel(chainsaw)
+		var/obj/item/skeleton_key/key = new(L)
+		L.put_in_hands(key)
 	else
 		to_chat(L, "<span class='warning'>You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.</span>", confidential = TRUE)
 

@@ -149,8 +149,8 @@
 		usr.update_inv_hands()
 	return TRUE
 
-/atom/movable/screen/inventory/MouseEntered()
-	..()
+/atom/movable/screen/inventory/MouseEntered(location, control, params)
+	. = ..()
 	add_overlays()
 
 /atom/movable/screen/inventory/MouseExited()
@@ -162,11 +162,10 @@
 	if(!icon_empty)
 		icon_empty = icon_state
 
-	if(hud?.mymob && slot_id && icon_full)
-		if(hud.mymob.get_item_by_slot(slot_id))
-			icon_state = icon_full
-		else
-			icon_state = icon_empty
+	if(!hud?.mymob || !slot_id || !icon_full)
+		return ..()
+	icon_state = hud.mymob.get_item_by_slot(slot_id) ? icon_full : icon_empty
+	return ..()
 
 /atom/movable/screen/inventory/proc/add_overlays()
 	var/mob/user = hud?.mymob
@@ -242,7 +241,6 @@
 
 /atom/movable/screen/close
 	name = "close"
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	icon_state = "backpack_close"
 
@@ -274,20 +272,20 @@
 
 /atom/movable/screen/combattoggle/New(loc, ...)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /atom/movable/screen/combattoggle/Click()
 	if(isliving(usr))
 		var/mob/living/owner = usr
 		owner.set_combat_mode(!owner.combat_mode, FALSE)
-		update_icon()
+		update_appearance()
 
 /atom/movable/screen/combattoggle/update_icon_state()
-	. = ..()
 	var/mob/living/user = hud?.mymob
 	if(!istype(user) || !user.client)
-		return
+		return ..()
 	icon_state = user.combat_mode ? "combat" : "combat_off" //Treats the combat_mode
+	return ..()
 
 //Version of the combat toggle with the flashy overlay
 /atom/movable/screen/combattoggle/flashy
@@ -300,11 +298,13 @@
 	if(!istype(user) || !user.client)
 		return
 
-	if(user.combat_mode)
-		if(!flashy)
-			flashy = mutable_appearance('icons/hud/screen_gen.dmi', "togglefull_flash")
-			flashy.color = "#C62727"
-		. += flashy
+	if(!user.combat_mode)
+		return
+
+	if(!flashy)
+		flashy = mutable_appearance('icons/hud/screen_gen.dmi', "togglefull_flash")
+		flashy.color = "#C62727"
+	. += flashy
 
 /atom/movable/screen/combattoggle/robot
 	icon = 'icons/hud/screen_cyborg.dmi'
@@ -389,6 +389,7 @@
 			icon_state = "walking"
 		if(MOVE_INTENT_RUN)
 			icon_state = "running"
+	return ..()
 
 /atom/movable/screen/mov_intent/proc/toggle(mob/user)
 	if(isobserver(user))
@@ -399,6 +400,7 @@
 	name = "stop pulling"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "pull"
+	base_icon_state = "pull"
 
 /atom/movable/screen/pull/Click()
 	if(isobserver(usr))
@@ -406,10 +408,8 @@
 	usr.stop_pulling()
 
 /atom/movable/screen/pull/update_icon_state()
-	if(hud?.mymob?.pulling)
-		icon_state = "pull"
-	else
-		icon_state = "pull0"
+	icon_state = "[base_icon_state][hud?.mymob?.pulling ? null : 0]"
+	return ..()
 
 /atom/movable/screen/resist
 	name = "resist"
@@ -427,6 +427,7 @@
 	name = "rest"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "act_rest"
+	base_icon_state = "act_rest"
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
@@ -438,11 +439,9 @@
 /atom/movable/screen/rest/update_icon_state()
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
-		return
-	if(!user.resting)
-		icon_state = "act_rest"
-	else
-		icon_state = "act_rest0"
+		return ..()
+	icon_state = "[base_icon_state][user.resting ? 0 : null]"
+	return ..()
 
 /atom/movable/screen/storage
 	name = "storage"
@@ -490,9 +489,9 @@
 	if(isobserver(usr))
 		return
 
-	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/list/modifiers = params2list(params)
+	var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
+	var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 	var/choice = get_zone_at(icon_x, icon_y)
 	if (!choice)
 		return 1
@@ -500,15 +499,16 @@
 	return set_selected_zone(choice, usr)
 
 /atom/movable/screen/zone_sel/MouseEntered(location, control, params)
+	. = ..()
 	MouseMove(location, control, params)
 
 /atom/movable/screen/zone_sel/MouseMove(location, control, params)
 	if(isobserver(usr))
 		return
 
-	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/list/modifiers = params2list(params)
+	var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
+	var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 	var/choice = get_zone_at(icon_x, icon_y)
 
 	if(hovering == choice)
@@ -528,7 +528,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 128
 	anchored = TRUE
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/zone_sel/MouseExited(location, control, params)
@@ -580,7 +579,7 @@
 
 	if(choice != hud.mymob.zone_selected)
 		hud.mymob.zone_selected = choice
-		update_icon()
+		update_appearance()
 
 	return TRUE
 
@@ -634,15 +633,11 @@
 	screen_loc = ui_internal
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/healths/blob/naut
-	name = "health"
-	icon = 'icons/hud/blob.dmi'
-	icon_state = "nauthealth"
-
-/atom/movable/screen/healths/blob/naut/core
+/atom/movable/screen/healths/blob/overmind
 	name = "overmind health"
+	icon = 'icons/hud/blob.dmi'
 	icon_state = "corehealth"
-	screen_loc = ui_health
+	screen_loc = ui_blobbernaut_overmind_health
 
 /atom/movable/screen/healths/guardian
 	name = "summoner health"
@@ -654,12 +649,6 @@
 	name = "essence"
 	icon = 'icons/mob/actions/backgrounds.dmi'
 	icon_state = "bg_revenant"
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/atom/movable/screen/healths/construct
-	icon = 'icons/hud/screen_construct.dmi'
-	icon_state = "artificer_health0"
-	screen_loc = ui_construct_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/healthdoll
@@ -744,23 +733,28 @@
 	icon_state = ""
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = ui_combo
-	layer = ABOVE_HUD_LAYER
 	var/timerid
 
 /atom/movable/screen/combo/proc/clear_streak()
+	animate(src, alpha = 0, 2 SECONDS, SINE_EASING)
+	timerid = addtimer(CALLBACK(src, .proc/reset_icons), 2 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+
+/atom/movable/screen/combo/proc/reset_icons()
 	cut_overlays()
 	icon_state = ""
 
-/atom/movable/screen/combo/update_icon_state(streak = "")
-	clear_streak()
-	if (timerid)
+/atom/movable/screen/combo/update_icon_state(streak = "", time = 2 SECONDS)
+	reset_icons()
+	if(timerid)
 		deltimer(timerid)
-	if (!streak)
-		return
-	timerid = addtimer(CALLBACK(src, .proc/clear_streak), 20, TIMER_UNIQUE | TIMER_STOPPABLE)
+	alpha = 255
+	if(!streak)
+		return ..()
+	timerid = addtimer(CALLBACK(src, .proc/clear_streak), time, TIMER_UNIQUE | TIMER_STOPPABLE)
 	icon_state = "combo"
-	for (var/i = 1; i <= length(streak); ++i)
+	for(var/i = 1; i <= length(streak); ++i)
 		var/intent_text = copytext(streak, i, i + 1)
 		var/image/intent_icon = image(icon,src,"combo_[intent_text]")
 		intent_icon.pixel_x = 16 * (i - 1) - 8 * length(streak)
 		add_overlay(intent_icon)
+	return ..()

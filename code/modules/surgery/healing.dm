@@ -94,7 +94,7 @@
 		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>", TRUE)
 	var/brute_dealt = brutehealing * 0.8
 	var/burn_dealt = burnhealing * 0.8
-	brute_dealt	+= round((target.getBruteLoss() * (brute_multiplier * 0.5)),0.1)
+	brute_dealt += round((target.getBruteLoss() * (brute_multiplier * 0.5)),0.1)
 	burn_dealt += round((target.getFireLoss() * (burn_multiplier * 0.5)),0.1)
 	target.take_bodypart_damage(brute_dealt, burn_dealt, wound_bonus=CANT_WOUND)
 	return FALSE

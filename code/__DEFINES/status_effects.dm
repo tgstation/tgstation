@@ -9,6 +9,12 @@
 
 #define STATUS_EFFECT_REFRESH 3 // if it only allows one, and new instances just instead refresh the timer
 
+///Processing flags - used to define the speed at which the status will work
+///This is fast - 0.2s between ticks (I believe!)
+#define STATUS_EFFECT_FAST_PROCESS 0
+///This is slower and better for more intensive status effects - 1s between ticks
+#define STATUS_EFFECT_NORMAL_PROCESS 1
+
 ///////////
 // BUFFS //
 ///////////
@@ -70,10 +76,10 @@
 #define STATUS_EFFECT_CONVULSING /datum/status_effect/convulsing
 
 #define STATUS_EFFECT_NECROPOLIS_CURSE /datum/status_effect/necropolis_curse
-#define CURSE_BLINDING	1 //makes the edges of the target's screen obscured
-#define CURSE_SPAWNING	2 //spawns creatures that attack the target only
-#define CURSE_WASTING	4 //causes gradual damage
-#define CURSE_GRASPING	8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
+#define CURSE_BLINDING 1 //makes the edges of the target's screen obscured
+#define CURSE_SPAWNING 2 //spawns creatures that attack the target only
+#define CURSE_WASTING 4 //causes gradual damage
+#define CURSE_GRASPING 8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
 
 #define STATUS_EFFECT_GONBOLAPACIFY /datum/status_effect/gonbola_pacify //Gives the user gondola traits while the gonbola is attached to them.
 
@@ -92,6 +98,17 @@
 #define STATUS_EFFECT_AMOK /datum/status_effect/amok //Makes the target automatically strike out at adjecent non-heretics.
 
 #define STATUS_EFFECT_CLOUDSTRUCK /datum/status_effect/cloudstruck //blinds and applies an overlay.
+
+///Raises click cooldowns for everything you do.
+#define STATUS_EFFECT_WOOZY /datum/status_effect/woozy
+
+///Makes you bleed harder
+#define STATUS_EFFECT_HIGHBLOODPRESSURE /datum/status_effect/high_blood_pressure
+
+
+/// makes you seize up. reminds me of this video https://www.youtube.com/watch?v=wvkHIZg_954
+#define STATUS_EFFECT_SEIZURE /datum/status_effect/seizure
+
 
 /// Makes the mob move randomly.
 /// Read the documentation for /datum/status_effect/confusion for more information.
@@ -116,6 +133,8 @@
 #define STATUS_EFFECT_HIGHFIVE /datum/status_effect/high_fiving // you are angling for a high five
 
 #define STATUS_EFFECT_SURRENDER /datum/status_effect/grouped/surrender // gives an alert to quickly surrender
+
+#define STATUS_EFFECT_EIGEN /datum/status_effect/eigenstasium
 /////////////
 //  SLIME  //
 /////////////
@@ -126,6 +145,8 @@
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 
 #define STASIS_MACHINE_EFFECT "stasis_machine"
+
+#define STASIS_CHEMICAL_EFFECT "stasis_chemical"
 
 #define STASIS_ASCENSION_EFFECT "heretic_ascension"
 

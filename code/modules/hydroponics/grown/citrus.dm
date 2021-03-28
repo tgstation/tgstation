@@ -113,9 +113,6 @@
 /obj/item/food/grown/firelemon/attack_self(mob/living/user)
 	user.visible_message("<span class='warning'>[user] primes [src]!</span>", "<span class='userdanger'>You prime [src]!</span>")
 	log_bomber(user, "primed a", src, "for detonation")
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.throw_mode_on()
 	icon_state = "firelemon_active"
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
 	addtimer(CALLBACK(src, .proc/detonate), rand(10, 60))

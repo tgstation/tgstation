@@ -11,7 +11,8 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-
+	flags_1 = NO_SCREENTIPS_1
+	turf_flags = CAN_BE_DIRTY_1
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
 	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
 
@@ -60,21 +61,22 @@
 	return ..()
 
 /turf/open/floor/ex_act(severity, target)
-	var/shielded = is_shielded()
-	..()
-	if(severity != 1 && shielded && target != src)
-		return
+	. = ..()
+
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		return
-	if(target != null)
-		severity = 3
+		return TRUE
+	if(severity != EXPLODE_DEVASTATE && is_shielded())
+		return FALSE
+
+	if(target)
+		severity = EXPLODE_LIGHT
 
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
-		if(2)
-			switch(rand(1,3))
+		if(EXPLODE_HEAVY)
+			switch(rand(1, 3))
 				if(1)
 					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
 						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
@@ -93,7 +95,7 @@
 					hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33))
 						new /obj/item/stack/sheet/iron(src)
-		if(3)
+		if(EXPLODE_LIGHT)
 			if (prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
@@ -109,8 +111,8 @@
 	. = ..()
 	update_visuals()
 
-/turf/open/floor/attack_paw(mob/user)
-	return attack_hand(user)
+/turf/open/floor/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
@@ -148,7 +150,7 @@
 	var/old_dir = dir
 	var/turf/open/floor/W = ..()
 	W.setDir(old_dir)
-	W.update_icon()
+	W.update_appearance()
 	return W
 
 /turf/open/floor/attackby(obj/item/object, mob/living/user, params)
@@ -274,7 +276,7 @@
 					new_window.req_one_access = the_rcd.airlock_electronics.one_access
 					new_window.unres_sides = the_rcd.airlock_electronics.unres_sides
 				new_window.autoclose = TRUE
-				new_window.update_icon()
+				new_window.update_appearance()
 				return TRUE
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src)
@@ -290,7 +292,7 @@
 			if(new_airlock.electronics.unres_sides)
 				new_airlock.unres_sides = new_airlock.electronics.unres_sides
 			new_airlock.autoclose = TRUE
-			new_airlock.update_icon()
+			new_airlock.update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))

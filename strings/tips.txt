@@ -9,7 +9,7 @@ You can change the control scheme by pressing tab. One is WASD, the other is the
 Firesuits and winter coats offer mild protection from the cold, allowing you to spend longer periods of time near breaches and space than if wearing nothing at all.
 Glass shards can be welded to make glass, and iron rods can be welded to make iron. Ores can be welded too, but this takes a lot of fuel.
 If you need to drag multiple people either to safety or to space, bring a locker or crate over and stuff them all in before hauling them off.
-You can grab someone by clicking on them with the grab intent, then upgrade the grab by clicking on them once more. An aggressive grab will momentarily stun someone, allow you to place them on a table by clicking on it, or throw them by toggling on throwing.
+You can grab someone by holding Ctrl and clicking on them, then upgrade the grab by Ctrl-clicking on them once more. An aggressive grab will momentarily stun someone, allow you to place them on a table by clicking on it, or throw them by toggling on throwing.
 Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than right clicking.
 The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
 You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
@@ -19,8 +19,8 @@ Some roles cannot be antagonists by default, but antag selection is decided firs
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
 You can use a machine in the vault to deposit cash or rob Cargo's department funds.
 When in doubt about technicial issues, clear your cache (byond launcher > cogwheel > preferences > game prefs), update your BYOND, and relog.
-Most things have special interactions with your middle mouse button, alt, shift, and control click. Experiment!
-You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to 3 seconds, to 1 second, to instant boom! Nobody ever expects this.
+Most things have special interactions with right, alt, shift, and control click. Experiment!
+You can screwdriver any non-chemical grenade to shorten fuses from 5 seconds, to 3 seconds, to instant boom! Nobody ever expects this.
 If you find yourself in a fistfight with another player, staying on the offensive is usually the smart move. Running away often won't accomplish much.
 Different weapons have different strengths. Some weapons, such as spears, floor tiles, and throwing stars, deal more damage when thrown compared to when attacked normally.
 A thrown glass of water can make a slippery tile, allowing you to slow down your pursuers in a pinch.
@@ -45,7 +45,7 @@ As the Chief Medical Officer, coordinate and communicate with your doctors, chem
 As the Chief Medical Officer, your hardsuit can hold an entire medkit in its suit storage!
 As a Medical Doctor, you can attempt to drain blood from a husk with a syringe to determine the cause. If you can extract blood, it was caused by extreme temperatures or lasers, if there is no blood to extract, you have confirmed the presence of changelings.
 As a Medical Doctor, you can surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
-As a Medical Doctor, you must target the correct limb and be on help intent when trying to perform surgery on someone. Using disarm attempt will intentionally fail the surgery step.
+As a Medical Doctor, you must target the correct limb and not be in combat mode when trying to perform surgery on someone. Right clicking your patient will intentionally fail the surgery step.
 As a Medical Doctor, corpses with the "...and their soul has departed" description no longer have a ghost attached to them and can't be revived.
 As a Medical Doctor, treating plasmamen is not impossible! Salbutamol stops them from suffocating and showers stop them from burning alive. You can even perform surgery on them by doing the procedure on a roller bed under a shower.
 As a Medical Doctor, you can point your penlight at people to create a medical hologram. This lets them know that you're coming to treat them.
@@ -62,7 +62,6 @@ As a Chemist, you will be expected to supply crew with certain chemicals. For ex
 As a Chemist, you can make 100u bottles from plastic sheets. The ChemMaster can produce infinite 30u glass bottles as well and if researched the medical techfab can make beakers with capacity ranging from 120u to 300u.
 As a Chemist, you can recharge your chemical dispenser with an inducer or by replacing its cell.
 As a Chemist, Water and Potassium mixed together will create an explosion, with power scaling by amount used. Don't do it.
-As a Geneticist, you can eject someone from cloning early by disabling power in genetics. Note that they will suffer more genetic damage and may lose vital organs from this.
 As a Geneticist, T goes to A, and G goes to C.
 As a Geneticist, becoming a hulk makes you capable of dealing high melee damage, stunlocking people, and punching through walls. However, you can't fire guns, will lose your hulk status if you go into critical condition, and are not considered a human by the AI while you are a hulk.
 As the Virologist, your viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
@@ -71,11 +70,11 @@ As the Research Director, you can take AIs out of their cores by loading them in
 As the Research Director, you can lock down cyborgs instead of blowing them up. Then you can have their laws reset or if that doesn't work, safely dismantled.
 As a Scientist, you can use the mutation toxin obtained from green slimes to turn yourself into a jelly mutant. Each subspecies has unique features - for example telepathic powers, duplicating bodies or integrating slime extracts!
 As a Scientist, you can maximize the number of uses you get out of a slime by feeding it slime steroid, created from purple slimes, while alive. You can then apply extract enhancer, created from cerulean slimes, on each extract.
-As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signaling device, or if researched, hit the anomaly an anomaly analyzer. This will leave behind an anomaly core, which can be used to construct a Phazon mech or reactive armors!
+As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signaling device, or if researched, hit the anomaly an anomaly analyzer. This will leave behind an anomaly core, which can be used to construct a Phazon mech, reactive armors, or various unique and powerful weapons!
 As a Scientist, researchable stock parts can seriously improve the efficiency and speed of machines around the station. In some cases, it can even unlock new functions.
-As a Scientist, you can generate research points by letting the tachyon-doppler array record increasingly large explosions.
+As a Scientist, you can generate money for Science, and complete experiments by letting the tachyon-doppler array record increasingly large explosions.
 As a Scientist, getting drunk just enough will speed up research. Skol!
-As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on an anomaly core, you can build a Phazon mech!
+As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on a bluespace anomaly core, you can build a Phazon mech!
 As a Roboticist, you can repair your cyborgs with a welding tool. If they have taken burn damage, you can remove their battery, expose the wiring with a screwdriver and replace their wires with a cable coil.
 As a Roboticist, you can reset a cyborg's model by cutting and mending the reset wire with a wire cutter.
 As a Roboticist, you can greatly help out Shaft Miners by building a Clarke equipped with a hydraulic clamp and plasma cutter. The mech is ash storm proof and can even walk across lava!
@@ -98,12 +97,11 @@ As the Chief Engineer, you can spy on and even forge PDA communications with the
 As the Chief Engineer, your locker contains a jetpack upgrade that can be attached to hardsuits.
 As the Chief Engineer, the power flow control console in your office will show you APC infos and lets you control them remotely.
 As an Engineer, the supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you. So will touching it with telepathy.
-As an Engineer, you can electrify grilles by placing wire "nodes" beneath them: the big seemingly unconnected bulges from a half completed wiring job.
-As an Engineer, return to Engineering once in a while to check on the engine and SMES cells. It's always a good idea to make sure containment isn't compromised.
+As an Engineer, you can electrify grilles by placing powered cables beneath them.
+As an Engineer, return to Engineering once in a while to check on the engine and SMES cells. It's always a good idea to make sure the supermatter isn't delaminating.
 As an Engineer, you can temporarily power the station solely with the solar arrays. They will provide just enough electricity to power the station for a while, however their output is just slightly below what is truely needed to consistently power the station.
 As an Engineer, you can cool the supermatter crystal by spraying it with a fire extinguisher. Only for the brave!
-As an Engineer, the Particle Accelerator that powers singularity engines is also effective at killing blobs!
-As an Engineer, you can repair windows by using a welding tool on them while on any intent other than harm.
+As an Engineer, you can repair windows by using a welding tool on them while not in combat mode.
 As an Engineer, you can lock APCs, fire alarms, emitters and radiation collectors using your ID card to prevent others from disabling them.
 As an Engineer, you can convert tesla coils into corona analyzers by using a screwdriver on the circuit board. They will produce less power, but generate research points!
 As an Engineer, you can use radiation collectors to generate research points. Load them with a 50/50 oxygen/tritium tank and use a multitool to switch them to research mode.
@@ -116,7 +114,7 @@ As an Atmospheric Technician, you can unwrench a pipe regardless of the pressure
 As an Atmospheric Technician, look into replacing your gas pumps with volumetric gas pumps, as those move air in flat numerical amounts, rather than percentages which leave trace gases.
 As an Atmospheric Technician, you are better suited to fighting fires than anyone else. As such, you have access to better firesuits, backpack firefighter tanks, and a completely heat and fire proof hardsuit.
 As an Atmospheric Technician, your backpack firefighter tank can launch resin. This resin will extinguish fires and replace any gases with a safe, room-temperature airmix.
-As an Atmospheric Technician, your ATMOS holofan projector blocks gases while allowing objects to pass through. With it, you can quickly contain gas spills, fires and hull breaches. Or, use it to seal a plasmaman cloning room.
+As an Atmospheric Technician, your ATMOS holofan projector blocks gases while allowing objects to pass through. With it, you can quickly contain gas spills, fires and hull breaches.
 As an Atmospheric Technician, burning a plasma/oxygen mix inside the incinerator will not only produce power, but also gases such as tritium, water vapor and carbon dioxide.
 As an Atmospheric Technician, you can change the layer of a pipe by clicking with it on a wrenched pipe or other atmos component of the desired layer.
 As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the station. Sometimes it means making use of the armory to handle a blob, sometimes it means being ruthless during a revolution or cult.
@@ -137,7 +135,6 @@ As the Detective, your revolver can be loaded with .357 ammunition obtained from
 As the Lawyer, try to negotiate with the Warden if sentences seem too high for the crime.
 As the Lawyer, you can try to convince the Captain and Head of Security to hold trials for prisoners in the courtroom.
 As the Head of Personnel, you are not higher ranking than other heads of staff, even though you are expected to take the Captain's place first should he go missing. If the situation seems too rough for you, consider allowing another head to become temporary Captain.
-As the Head of Personnel, you are just as large a target as the Captain because of the potential power your ID and computer can hand out.
 As the Mime, your invisible wall power blocks people as well as projectiles. You can use it in a pinch to delay your pursuer.
 As the Mime, you can use :r and :l to speak through your ventriloquist dummy.
 As the Mime, your oath of silence is your source of power. Breaking it robs you of your powers and of your honor.
@@ -154,8 +151,8 @@ As a Botanist, you can hack the MegaSeed Vendor to get access to more exotic see
 As a Botanist, you can mutate the plants growing in your hydroponics trays with unstable mutagen from chemistry or, as an alternative, grow glowshrooms for their radium which also mutates plants to start you up! You can also take uranium out of the servicelathe and grind that up to mutate plants, isn't science amazing?
 As a Botanist, you should look into increasing the potency of your plants. This increases the size, amount of chemicals, points gained from grinding them in the biogenerator, and lets people know you are a proficient botanist.
 As a Botanist, you can combine production trait chemicals just like a Chemist. Chlorine (blumpkin) + radium and phosphorus (glowshrooms) equals unstable mutagen!
-As a Cook, you can load your food into snack vending machines.
-As a Cook, you can create a very wide variety of food with the crafting menu. You can find it by looking for the hammer icon near your intents.
+As a Cook, you can load your food into smartfridges and custom vending machines.
+As a Cook, you can create a very wide variety of food with the crafting menu. You can find it by looking for the hammer icon near your combat mode indicator.
 As a Cook, you can rename your custom made food with a pen.
 As a Cook, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.
 As a Cook, being in the kitchen will make you remember the basics of Close Quarters Cooking. It is highly effective at removing Assistants from your workplace.
@@ -173,7 +170,7 @@ As the Quartermaster, be sure to check the manifests on crates you receive to ma
 As the Quartermaster, you can construct an express supply console that instantly delivers crates by drop pod. The impact will cause a small explosion as well.
 As a Shaft Miner, the northern side of Lavaland has a lot more rare minerals than on the south.
 As a Shaft Miner, every monster on Lavaland has a pattern you can exploit to minimize damage from the encounters.
-As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your explorer's suit, mining hardsuits as well as Firefighter APLUs with them, greatly reducing incoming melee damage.
+As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your explorer's suit and mining hardsuits, greatly reducing incoming melee damage.
 As a Shaft Miner, always have a GPS on you, so a fellow miner or cyborg can come to save you if you die.
 As a Shaft Miner, you can craft a variety of equipment from the local fauna. Bone axes, lava boats and ash drake armour are just a few of them!
 As a Traitor, the cryptographic sequencer (emag) can not only open lockers, crates, APCs and more. It can also do things like hack cyborgs, and even cause bots to go berserk. Use it on the right machines, and you can even contact the Syndicate. Experiment!
@@ -200,7 +197,7 @@ As an Alien, you are unable to pick up or use any human items or machinery. Inst
 When fighting the Blob, you can hit it with an analyzer to check its chemical effects and the type of blob analyzed. Examining it with a research scanner or medical hud active will also reveal this information.
 As the Blob, you can place your core at any clear, unobserved, spot you can move to after 3 minutes have passed. If you wait too long, you will be automatically placed at a random location. Use this wait time to coordinate with any other overminds.
 As the Blob, keep your core some distance from space, as it is both expensive to expand onto space, easy to be attacked from, and does not count towards your win condition. Emitter platforms built in space are especially dangerous.
-As the Blob, you can randomly repick your reagent type if the crew has adapted and protected themselves against your current one.
+As the Blob, you can repick your reagent type from six random options if the crew has adapted and protected themselves against your current one.
 As the Blob, you fight a war of attrition: Take out medbay and fight in chokepoints to prevent continued assaults and coordinated burst damage attacks!
 As the Blob, you can attack anything next to a blob tile, but can only expand in cardinal directions, and diagonal attacks are slightly weaker.
 As the Blob, don't neglect the creation of factories. These create spores that carry your reagent and can chase crewmembers far further than you. Spores can also be rallied to swarm the crew and cause panic, and can even take over corpses to create much more dangerous blob zombies!
@@ -210,7 +207,7 @@ As the Blob, removing strong blobs, resource nodes, factories, and nodes will gi
 As the Blob, talking will send a message to all other overminds and all Blobbernauts, allowing you to direct attacks and coordinate.
 As a Blobbernaut, you can communicate with overminds and other Blobbernauts via :b.
 As a Blobbernaut, your HUD shows your health and the core health of the overmind that created you.
-As a Revolutionary, you cannot convert a head of staff or someone who has a mindshield implant, such as a security officer or those they implant. Implants can however be surgically removed, and do not carry over with cloning. Take control of medbay to keep control of conversions!
+As a Revolutionary, you cannot convert a head of staff or someone who has a mindshield implant, such as a security officer or those they implant. Implants are often purchased by the Quartermaster, but the implants can be surgically removed. Take control of cargo to keep control of conversions!
 As a Revolutionary, cargo can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armor, in the worst case scenario security will take control and order a limitless number of mindshield implants to turn your fellow revolutionaries against you.
 As a Revolutionary, your main power comes from who you convert, choose your converts wisely to ensure you win the round.
 As a Changeling, the Extract DNA sting counts for your genome absorb objective, but does not let you respec your powers.
@@ -219,7 +216,6 @@ As a Changeling, your Regenerate Limbs power will quickly heal all of your wound
 As a Cultist, do not cause too much chaos before your objective is completed. If the shuttle gets called too soon, you may not have enough time to win.
 As a Cultist, your team starts off very weak, but if necessary can quickly convert everything they have into raw power. Make sure you have the numbers and equipment to support going loud, or the cult will fall flat on its face.
 As a Cultist, the Blood Boil rune will deal massive amounts of brute damage to non-cultists, and some damage to fellow cultists of Nar'Sie nearby, but will create a fire where the rune stands on use.
-As a Cultist, you can create an army of manifested goons using a combination of the Manifest rune, which creates homunculi from ghosts, and the Blood Drain rune, which drains life from anyone standing on any blood drain rune.
 As a Cultist, check the alert in the upper-right of your screen for all the details about your cult's current status and objective.
 You can deconvert Cultists of Nar'Sie by feeding them large amounts of holy water. Unlike revolutionaries, implanting them with mindshield implants won't do it!
 The Chaplain can bless any container with water by hitting it with their bible. Holy water has a myriad of uses against both cults and large amounts of it are a great contributor to success against them.

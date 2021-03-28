@@ -6,6 +6,7 @@
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
 	turns_per_move = 3
 	speed = 0
@@ -19,7 +20,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	combat_mode = TRUE
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 15
+	unsuitable_atmos_damage = 7.5
 	faction = list(ROLE_WIZARD)
 	status_flags = CANPUSH
 

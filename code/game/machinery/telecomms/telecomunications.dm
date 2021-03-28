@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	var/list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
 
 	var/on = TRUE
-	var/toggled = TRUE 	// Is it toggled on
+	var/toggled = TRUE // Is it toggled on
 	var/long_range_link = FALSE  // Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/hide = FALSE  // Is it a hidden machine?
 
@@ -115,16 +115,8 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 
 /obj/machinery/telecomms/update_icon_state()
-	if(on)
-		if(panel_open)
-			icon_state = "[initial(icon_state)]_o"
-		else
-			icon_state = initial(icon_state)
-	else
-		if(panel_open)
-			icon_state = "[initial(icon_state)]_o_off"
-		else
-			icon_state = "[initial(icon_state)]_off"
+	icon_state = "[initial(icon_state)][panel_open ? "_o" : null][on ? null : "_off"]"
+	return ..()
 
 /obj/machinery/telecomms/proc/update_power()
 
@@ -143,7 +135,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	update_power()
 
 	// Update the icon
-	update_icon()
+	update_appearance()
 
 	if(traffic > 0)
 		traffic -= netspeed * delta_time

@@ -2,9 +2,9 @@
 //sets you on fire, does burn damage, explodes into flame when burnt, weak to water
 /datum/blobstrain/reagent/blazing_oil
 	name = "Blazing Oil"
-	description = "will do medium burn damage and set targets on fire."
+	description = "will do medium-high burn damage ignoring armor, and set targets on fire."
 	effectdesc = "will also release bursts of flame when burnt, but takes damage from water."
-	analyzerdescdamage = "Does medium burn damage and sets targets on fire."
+	analyzerdescdamage = "Does medium-high burn damage and sets targets on fire."
 	analyzerdesceffect = "Releases fire when burnt, but takes damage from water and other extinguishing liquids."
 	color = "#B68D00"
 	complementary_color = "#BE5532"

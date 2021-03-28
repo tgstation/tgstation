@@ -76,7 +76,7 @@
 			M.temporarilyRemoveItemFromInventory(noz, TRUE)
 		noz.forceMove(src)
 
-/obj/item/watertank/attack_hand(mob/user)
+/obj/item/watertank/attack_hand(mob/user, list/modifiers)
 	if (user.get_item_by_slot(user.getBackSlot()) == src)
 		toggle_mister(user)
 	else
@@ -126,7 +126,7 @@
 	tank = loc
 	if(!istype(tank))
 		return INITIALIZE_HINT_QDEL
-	reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
+	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
 
 /obj/item/reagent_containers/spray/mister/attack_self()
 	return
@@ -423,7 +423,7 @@
 	var/inj_am = injection_amount * delta_time
 	var/used_amount = inj_am / usage_ratio
 	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
-	update_icon()
+	update_appearance()
 	user.update_inv_back() //for overlays update
 
 //Operator backpack spray

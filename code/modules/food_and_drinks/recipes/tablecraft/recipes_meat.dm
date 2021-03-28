@@ -131,7 +131,7 @@
 		/datum/reagent/consumable/ethanol/manly_dorf = 5,
 		/obj/item/food/meat/steak/bear = 1,
 	)
-	tools = list(/obj/item/lighter)
+	tool_paths = list(/obj/item/lighter)
 	result = /obj/item/food/bearsteak
 	subcategory = CAT_MEAT
 
@@ -269,4 +269,48 @@
 		/datum/reagent/consumable/corn_starch = 5,
 	)
 	result = /obj/item/food/fried_chicken
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/beef_stroganoff
+	name = "Beef Stroganoff"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/consumable/milk = 5,
+		/datum/reagent/consumable/salt = 5,
+		/datum/reagent/consumable/blackpepper = 5,
+		/obj/item/food/grown/mushroom = 2,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/meat/steak = 1,
+	)
+	result = /obj/item/food/beef_stroganoff
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/beef_wellington
+	name = "Beef Wellington"
+	reqs = list(
+		/obj/item/food/meat/steak = 1,
+		/obj/item/food/grown/mushroom = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/flatdough = 1,
+		/datum/reagent/consumable/cream = 5,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/beef_wellington
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/full_english
+	name = "Full English Breakfast"
+	reqs = list(
+		/obj/item/food/sausage = 1,
+		/obj/item/food/friedegg = 2,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/grown/mushroom = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/canned/beans = 1,
+		/obj/item/food/butteredtoast = 1
+	)
+	result = /obj/item/food/full_english
 	subcategory = CAT_MEAT

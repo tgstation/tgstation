@@ -8,7 +8,7 @@
 	density = TRUE
 	anchored = FALSE
 	COOLDOWN_DECLARE(cooldown_vehicle_move)
-	var/list/mob/occupants				//mob = bitflags of their control level.
+	var/list/mob/occupants //mob = bitflags of their control level.
 	///Maximum amount of passengers plus drivers
 	var/max_occupants = 1
 	////Maximum amount of drivers
@@ -25,9 +25,9 @@
 	var/obj/item/key/inserted_key
 	/// Whether the vehicle os currently able to move
 	var/canmove = TRUE
-	var/list/autogrant_actions_passenger	//plain list of typepaths
-	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
-	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
+	var/list/autogrant_actions_passenger //plain list of typepaths
+	var/list/autogrant_actions_controller //assoc list "[bitflag]" = list(typepaths)
+	var/list/mob/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
 	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
@@ -100,7 +100,7 @@
 /obj/vehicle/proc/after_add_occupant(mob/M)
 	auto_assign_occupant_flags(M)
 
-/obj/vehicle/proc/auto_assign_occupant_flags(mob/M)	//override for each type that needs it. Default is assign driver if drivers is not at max.
+/obj/vehicle/proc/auto_assign_occupant_flags(mob/M) //override for each type that needs it. Default is assign driver if drivers is not at max.
 	if(driver_amount() < max_drivers)
 		add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
 

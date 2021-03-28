@@ -28,7 +28,8 @@ BONUS
 	symptom_delay_max = 90
 
 /datum/symptom/shedding/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	var/mob/living/M = A.affected_mob

@@ -267,7 +267,7 @@
 	to_chat(user, "<span class='warning'>The [name] is not ready yet.</span>")
 
 /obj/item/gun/magic/tentacle/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
-	var/obj/projectile/tentacle/tentacle_shot = chambered.BB //Gets the actual projectile we will fire
+	var/obj/projectile/tentacle/tentacle_shot = chambered.loaded_projectile //Gets the actual projectile we will fire
 	tentacle_shot.fire_modifiers = params2list(params)
 	. = ..()
 	if(charges == 0)
@@ -318,8 +318,8 @@
 	..()
 
 /obj/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)
-	if(H.in_throw_mode)
-		H.throw_mode_off() //Don't annoy the changeling if he doesn't catch the item
+	if(H.throw_mode)
+		H.throw_mode_off(THROW_MODE_TOGGLE) //Don't annoy the changeling if he doesn't catch the item
 
 /obj/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
@@ -349,7 +349,7 @@
 		var/obj/item/I = target
 		if(!I.anchored)
 			to_chat(firer, "<span class='notice'>You pull [I] towards yourself.</span>")
-			H.throw_mode_on()
+			H.throw_mode_on(THROW_MODE_TOGGLE)
 			I.throw_at(H, 10, 2)
 			. = BULLET_ACT_HIT
 
@@ -465,7 +465,7 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/changeling
 	suit_name_simple = "flesh shell"
 	helmet_name_simple = "space helmet"
-	recharge_slowdown = 0.5
+	recharge_slowdown = 0.25
 	blood_on_castoff = 1
 
 /obj/item/clothing/suit/space/changeling
@@ -520,7 +520,7 @@
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1
-	recharge_slowdown = 0.25
+	recharge_slowdown = 0.125
 
 	suit_type = /obj/item/clothing/suit/armor/changeling
 	helmet_type = /obj/item/clothing/head/helmet/changeling

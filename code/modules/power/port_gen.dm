@@ -48,16 +48,17 @@
 /obj/machinery/power/port_gen/proc/TogglePower()
 	if(active)
 		active = FALSE
-		update_icon()
+		update_appearance()
 		soundloop.stop()
 	else if(HasFuel())
 		active = TRUE
 		START_PROCESSING(SSmachines, src)
-		update_icon()
+		update_appearance()
 		soundloop.start()
 
 /obj/machinery/power/port_gen/update_icon_state()
 	icon_state = "[base_icon]_[active]"
+	return ..()
 
 /obj/machinery/power/port_gen/process()
 	if(active)
@@ -224,7 +225,7 @@
 /obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
+/obj/machinery/power/port_gen/pacman/attack_paw(mob/user, list/modifiers)
 	interact(user)
 
 /obj/machinery/power/port_gen/pacman/ui_interact(mob/user, datum/tgui/ui)

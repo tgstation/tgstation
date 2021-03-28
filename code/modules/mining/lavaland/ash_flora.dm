@@ -66,7 +66,7 @@
 	else
 		return ..()
 
-/obj/structure/flora/ash/attack_hand(mob/user)
+/obj/structure/flora/ash/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -335,11 +335,13 @@
 
 /obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_overlays()
 	. = ..()
-	if(reagents?.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/lavaland/ash_flora.dmi', "fullbowl")
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		. += filling
+	if(!reagents?.total_volume)
+		return
+	var/mutable_appearance/filling = mutable_appearance('icons/obj/lavaland/ash_flora.dmi', "fullbowl")
+	filling.color = mix_color_from_reagents(reagents.reagent_list)
+	. += filling
 
 /obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_icon_state()
 	if(!reagents || !reagents.total_volume)
 		icon_state = "mushroom_bowl"
+	return ..()

@@ -50,7 +50,7 @@
 		department = pick(list("Uprising of Assistants", "Medical", "Engineering", "Science", "Supply", "Service", "Security") - cannot_pick)
 		if(!department)
 			message_admins("Department Revolt could not create a nation, as all the departments are independent! You have created nations, you madman!")
-	var/list/jobs_to_revolt	= list()
+	var/list/jobs_to_revolt = list()
 	var/nation_name
 	var/list/citizens = list()
 

@@ -47,7 +47,7 @@
 	M.Turn(90)
 	transform = M
 
-/obj/structure/sign/attack_hand(mob/user)
+/obj/structure/sign/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(. || user.is_blind())
 		return

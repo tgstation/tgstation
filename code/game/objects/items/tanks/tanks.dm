@@ -1,3 +1,12 @@
+/// How much time (in seconds) is assumed to pass while assuming air. Used to scale overpressure/overtemp damage when assuming air.
+#define ASSUME_AIR_DT_FACTOR 1
+
+/**
+ * # Gas Tank
+ *
+ * Handheld gas canisters
+ * Can rupture explosively if overpressurized
+ */
 /obj/item/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
@@ -16,10 +25,15 @@
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
+	integrity_failure = 0.5
+	/// The gases this tank contains.
 	var/datum/gas_mixture/air_contents = null
-	var/distribute_pressure = ONE_ATMOSPHERE
-	var/integrity = 3
+	/// The volume of this tank.
 	var/volume = 70
+	/// Whether the tank is currently leaking.
+	var/leaking = FALSE
+	/// The pressure of the gases this tank supplies to internals.
+	var/distribute_pressure = ONE_ATMOSPHERE
 	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
 	var/tank_holder_icon_state = "holder_generic"
 
@@ -74,7 +88,7 @@
 		QDEL_NULL(air_contents)
 
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	return ..()
 
 /obj/item/tank/ComponentInitialize()
 	. = ..()
@@ -111,25 +125,13 @@
 
 	. += "<span class='notice'>It feels [descriptive].</span>"
 
-/obj/item/tank/blob_act(obj/structure/blob/B)
-	if(B && B.loc == loc)
-		var/turf/location = get_turf(src)
-		if(!location)
-			qdel(src)
-
-		if(air_contents)
-			location.assume_air(air_contents)
-
-		qdel(src)
-
 /obj/item/tank/deconstruct(disassembled = TRUE)
-	if(!disassembled)
-		var/turf/T = get_turf(src)
-		if(T)
-			T.assume_air(air_contents)
-			air_update_turf(FALSE, FALSE)
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-	qdel(src)
+	var/turf/location = get_turf(src)
+	if(location)
+		location.assume_air(air_contents)
+		location.air_update_turf(FALSE, FALSE)
+		playsound(location, 'sound/effects/spray.ogg', 10, TRUE, -3)
+	return ..()
 
 /obj/item/tank/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -146,9 +148,9 @@
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/assembly_holder))
-		bomb_assemble(W,user)
-	else
-		. = ..()
+		bomb_assemble(W, user)
+		return TRUE
+	return ..()
 
 /obj/item/tank/ui_state(mob/user)
 	return GLOB.hands_state
@@ -213,10 +215,15 @@
 
 /obj/item/tank/assume_air(datum/gas_mixture/giver)
 	air_contents.merge(giver)
+	handle_tolerances(ASSUME_AIR_DT_FACTOR)
+	return TRUE
 
-	check_status()
-	return 1
-
+/**
+ * Removes some volume of the tanks gases as the tanks distribution pressure.
+ *
+ * Arguments:
+ * - volume_to_return: The amount of volume to remove from the tank.
+ */
 /obj/item/tank/proc/remove_air_volume(volume_to_return)
 	if(!air_contents)
 		return null
@@ -224,63 +231,89 @@
 	var/tank_pressure = air_contents.return_pressure()
 	var/actual_distribute_pressure = clamp(tank_pressure, 0, distribute_pressure)
 
+	// Lets do some algebra to understand why this works, yeah?
+	// R_IDEAL_GAS_EQUATION is (kPa * L) / (K * mol) by the by, so the units in this equation look something like this
+	// kpa * L / (R_IDEAL_GAS_EQUATION * K)
+	// Or restated (kpa * L / K) * 1/R_IDEAL_GAS_EQUATION
+	// (kpa * L * K * mol) / (kpa * L * K)
+	// If we cancel it all out, we get moles, which is the expected unit
+	// This sort of thing comes up often in atmos, keep the tool in mind for other bits of code
 	var/moles_needed = actual_distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 	return remove_air(moles_needed)
 
-/obj/item/tank/process()
-	//Allow for reactions
-	air_contents.react()
-	check_status()
-
-/obj/item/tank/proc/check_status()
-	//Handle exploding, leaking, and rupturing of the tank
-
+/obj/item/tank/process(delta_time)
 	if(!air_contents)
-		return 0
+		return
+
+	//Allow for reactions
+	air_contents.react(src)
+	handle_tolerances(delta_time)
+	if(QDELETED(src) || !leaking || !air_contents)
+		return
+	var/turf/location = get_turf(src)
+	if(!location)
+		return
+	var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
+	location.assume_air(leaked_gas)
+	location.air_update_turf(FALSE, FALSE)
+
+/**
+ * Handles the minimum and maximum pressure tolerances of the tank.
+ *
+ * Arguments:
+ * - delta_time: How long has passed between ticks.
+ */
+/obj/item/tank/proc/handle_tolerances(delta_time)
+	if(!air_contents)
+		return FALSE
 
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
+	if(temperature >= TANK_MELT_TEMPERATURE)
+		var/temperature_damage_ratio = (temperature - TANK_MELT_TEMPERATURE) / temperature
+		take_damage(max_integrity * temperature_damage_ratio * delta_time, BURN, FIRE, FALSE, NONE)
+		if(QDELETED(src))
+			return TRUE
 
+	if(pressure >= TANK_LEAK_PRESSURE)
+		var/pressure_damage_ratio = (pressure - TANK_LEAK_PRESSURE) / (TANK_RUPTURE_PRESSURE - TANK_LEAK_PRESSURE)
+		take_damage(max_integrity * pressure_damage_ratio * delta_time, BRUTE, BOMB, FALSE, NONE)
+	return TRUE
+
+/// Handles the tank springing a leak.
+/obj/item/tank/obj_break(damage_flag)
+	. = ..()
+	if(leaking)
+		return
+
+	leaking = TRUE
+	if(obj_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
+		return
+	visible_message("<span class='warning'>[src] springs a leak!</span>")
+	playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
+
+/// Handles rupturing and fragmenting
+/obj/item/tank/obj_destruction(damage_flag)
+	if(!air_contents)
+		return ..()
+
+	var/turf/location = get_turf(src)
+	if(!location)
+		return ..()
+
+	/// Handle fragmentation
+	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
-		if(!istype(src.loc, /obj/item/transfer_valve))
+		if(!istype(loc, /obj/item/transfer_valve))
 			log_bomber(get_mob_by_key(fingerprintslast), "was last key to touch", src, "which ruptured explosively")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
-		var/turf/epicenter = get_turf(loc)
 
-
-		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		if(istype(src.loc, /obj/item/transfer_valve))
-			qdel(src.loc)
-		else
-			qdel(src)
-
-	else if(pressure > TANK_RUPTURE_PRESSURE || temperature > TANK_MELT_TEMPERATURE)
-		if(integrity <= 0)
-			var/turf/T = get_turf(src)
-			if(!T)
-				return
-			T.assume_air(air_contents)
-			playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-			qdel(src)
-		else
-			integrity--
-
-	else if(pressure > TANK_LEAK_PRESSURE)
-		if(integrity <= 0)
-			var/turf/T = get_turf(src)
-			if(!T)
-				return
-			var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
-			T.assume_air(leaked_gas)
-		else
-			integrity--
-
-	else if(integrity < 3)
-		integrity++
+		explosion(location, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+	return ..()
 
 /obj/item/tank/rad_act(strength)
 	. = ..()
@@ -305,3 +338,5 @@
 
 	if(gas_change)
 		air_contents.garbage_collect()
+
+#undef ASSUME_AIR_DT_FACTOR

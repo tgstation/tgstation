@@ -253,11 +253,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/strandling
 
 /datum/status_effect/strandling/on_apply()
-	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
+	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
 	return ..()
 
 /datum/status_effect/strandling/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, "dumbmoron")
+	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
 	return ..()
 
 /atom/movable/screen/alert/status_effect/strandling
@@ -268,14 +268,15 @@
 
 /atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
-	if(usr != owner)
+	if(!.)
 		return
+
 	to_chat(owner, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
 	if(do_after(owner, 3.5 SECONDS, owner))
 		if(isliving(owner))
-			var/mob/living/L = owner
-			to_chat(owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
-			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			var/mob/living/living_owner = owner
+			to_chat(living_owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			living_owner.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 //OTHER DEBUFFS
 /datum/status_effect/pacify
@@ -291,11 +292,11 @@
 	. = ..()
 
 /datum/status_effect/pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
@@ -381,13 +382,13 @@
 /datum/status_effect/eldritch/on_apply()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
 		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
-		owner.update_icon()
+		owner.update_appearance()
 		return TRUE
 	return FALSE
 
 /datum/status_effect/eldritch/on_remove()
 	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
-	owner.update_icon()
+	owner.update_appearance()
 	return ..()
 
 /datum/status_effect/eldritch/proc/update_owner_underlay(atom/source, list/overlays)
@@ -635,14 +636,14 @@
 
 /datum/status_effect/gonbola_pacify/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, type)
-	ADD_TRAIT(owner, TRAIT_MUTE, type)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
+	ADD_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, type, /datum/mood_event/gondola)
 	to_chat(owner, "<span class='notice'>You suddenly feel at peace and feel no need to make any sudden or rash actions...</span>")
 
 /datum/status_effect/gonbola_pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
-	REMOVE_TRAIT(owner, TRAIT_MUTE, type)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, CLOTHING_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, CLOTHING_TRAIT)
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, type)
 	return ..()
 
@@ -669,7 +670,7 @@
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
-	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
+	ADD_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
 	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
@@ -682,7 +683,7 @@
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
+	REMOVE_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
 	owner.dizziness = 0
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
@@ -760,7 +761,7 @@
 
 /datum/status_effect/convulsing
 	id = "convulsing"
-	duration = 	150
+	duration = 150
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/convulsing
 
@@ -950,18 +951,18 @@
 /datum/status_effect/cloudstruck/on_apply()
 	mob_overlay = mutable_appearance('icons/effects/eldritch.dmi', "cloud_swirl", ABOVE_MOB_LAYER)
 	owner.overlays += mob_overlay
-	owner.update_icon()
-	ADD_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
+	owner.update_appearance()
+	ADD_TRAIT(owner, TRAIT_BLIND, STATUS_EFFECT_TRAIT)
 	return TRUE
 
 /datum/status_effect/cloudstruck/on_remove()
 	. = ..()
 	if(QDELETED(owner))
 		return
-	REMOVE_TRAIT(owner, TRAIT_BLIND, "cloudstruck")
+	REMOVE_TRAIT(owner, TRAIT_BLIND, STATUS_EFFECT_TRAIT)
 	if(owner)
 		owner.overlays -= mob_overlay
-		owner.update_icon()
+		owner.update_appearance()
 
 /datum/status_effect/cloudstruck/Destroy()
 	. = ..()

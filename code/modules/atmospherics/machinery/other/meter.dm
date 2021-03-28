@@ -144,7 +144,7 @@
 		deconstruct()
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
-//	why are you yelling?
+// why are you yelling?
 /obj/machinery/meter/turf
 
 /obj/machinery/meter/turf/reattach_to_layer()

@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscdel: "Removes older ID consoles completely. You will no longer be able to find the circuitboard or research it. Consider creating a computer and installing the Plexagon Crew Management app instead."

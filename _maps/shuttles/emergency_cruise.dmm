@@ -393,9 +393,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ni" = (
-/turf/open/floor/light/colour_cycle{
-	name = "dancefloor"
-	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "nU" = (
 /obj/structure/chair/comfy/brown{
@@ -1041,6 +1039,9 @@
 /area/shuttle/escape)
 "Iu" = (
 /obj/machinery/computer/slot_machine,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "IL" = (
@@ -1554,12 +1555,6 @@
 "WT" = (
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"Xa" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "Xd" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -2008,7 +2003,7 @@ KD
 Vv
 Vm
 Vm
-Xa
+WT
 WT
 NH
 NH
@@ -2103,8 +2098,8 @@ qX
 WT
 WT
 OJ
-OJ
 ni
+OJ
 WT
 uV
 uV
@@ -2148,7 +2143,7 @@ jW
 Vm
 Iu
 WT
-OJ
+ni
 OJ
 ni
 WT
@@ -2194,8 +2189,8 @@ tB
 Vm
 Iu
 WT
-ni
 OJ
+ni
 OJ
 WT
 Sp
@@ -2242,7 +2237,7 @@ WT
 WT
 ni
 OJ
-OJ
+ni
 WT
 uV
 uV
@@ -2330,7 +2325,7 @@ KD
 Kc
 Vm
 Vm
-Xa
+WT
 WT
 nU
 nU

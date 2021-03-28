@@ -76,9 +76,7 @@
 	var/list/L
 	for(var/i in 1 to held_items.len)
 		if(!held_items[i])
-			if(!L)
-				L = list()
-			L += i
+			LAZYADD(L, i)
 	return L
 
 /mob/proc/get_held_index_of_item(obj/item/I)
@@ -164,7 +162,6 @@
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
 	I.forceMove(src)
 	held_items[hand_index] = I
-	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 	I.equipped(src, ITEM_SLOT_HANDS)
 	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers and circle hands could be moved from hand to hand then delete, which meant you'd have a null in your hand until you cleared it (say, by dropping it)
@@ -186,7 +183,7 @@
 	return put_in_hand(I, get_empty_held_index_for_side(RIGHT_HANDS))
 
 /mob/proc/put_in_hand_check(obj/item/I)
-	return FALSE					//nonliving mobs don't have hands
+	return FALSE //nonliving mobs don't have hands
 
 /mob/living/put_in_hand_check(obj/item/I)
 	if(istype(I) && ((mobility_flags & MOBILITY_PICKUP) || (I.item_flags & ABSTRACT)))
@@ -283,7 +280,7 @@
 */
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
 	. = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
-	if(. && I) //ensure the item exists and that it was dropped properly.
+	if(. && I && !(I.item_flags & NO_PIXEL_RANDOM_DROP)) //ensure the item exists and that it was dropped properly.
 		I.pixel_x = I.base_pixel_x + rand(-6, 6)
 		I.pixel_y = I.base_pixel_y + rand(-6, 6)
 
@@ -319,7 +316,7 @@
 		I.layer = initial(I.layer)
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
-		if(!no_move && !(I.item_flags & DROPDEL))	//item may be moved/qdel'd immedietely, don't bother moving it
+		if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
 			if (isnull(newloc))
 				I.moveToNullspace()
 			else

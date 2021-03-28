@@ -19,8 +19,8 @@
 	var/list/user_interact_cooldowns = list()
 	///How many credits the dispenser account starts with to cover wayfinder refunds.
 	var/start_bal = 400
-	///How many credits recycling a pinpointer rewards you.
-	var/refund_amt = 40
+	///How many credits recycling a pinpointer rewards you. Set to 2/3 of cost in Initialize().
+	var/refund_amt = 0
 	var/datum/bank_account/synth_acc = new /datum/bank_account/remote
 	var/ppt_cost = 0 //Jan 9 '21: 2560 had its difficulties for NT as well
 	var/expression_timer
@@ -29,7 +29,7 @@
 	///List of slogans used by the dispenser to attract customers.
 	var/list/slogan_list = list("Find a wayfinding pinpointer? Give it to me! I'll make it worth your while. Please. Daddy needs his medicine.", //last sentence is a reference to Sealab 2021
 								"See a wayfinding pinpointer? Don't let it go to the crusher! Recycle it with me instead. I'll pay you!", //I see these things heading for disposals through cargo all the time
-								"Need the disk? Can't get a pinpointer? Buy a wayfinding pinpointer and find the captain's office today!",
+								"Can't find the disk? Need a pinpointer? Buy a wayfinding pinpointer and find the captain's office today!",
 								"Bleeding to death? Can't read? Find your way to medbay today!", //there are signs that point to medbay but you need basic literacy to get the most out of them
 								"Voted tenth best pinpointer in the universe in 2560!", //there were no more than ten pinpointers in the game in 2020
 								"Helping assistants find the departments they tide since 2560.", //not really but it's advertising
@@ -61,6 +61,8 @@
 	COOLDOWN_START(src, next_slogan_tick, COOLDOWN_SLOGAN)
 	slogan_list = shuffle(slogan_list) //minimise repetition
 
+	refund_amt = round(ppt_cost * 2/3)
+
 /obj/machinery/pinpointer_dispenser/power_change()
 	. = ..()
 	cut_overlays()
@@ -68,13 +70,12 @@
 		set_expression("veryhappy", 2 SECONDS) //v happy to be back in the pinpointer business
 		START_PROCESSING(SSmachines, src)
 
-/obj/machinery/pinpointer_dispenser/update_icon_state()
-	if(machine_stat & BROKEN)
+/obj/machinery/pinpointer_dispenser/update_appearance(updates)
+	. = ..()
+	if((machine_stat & BROKEN) || !powered())
 		set_light(0)
-	else if(powered())
-		set_light(1.4)
-	else
-		set_light(0)
+		return
+	set_light(1.4)
 
 /obj/machinery/pinpointer_dispenser/process(delta_time)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -97,7 +98,7 @@
 		explosion(get_turf(src), devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE)
 	return ..()
 
-/obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user)
+/obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -110,7 +111,7 @@
 
 	user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
 
-	for(var/obj/item/pinpointer/wayfinding/WP in user.GetAllContents())
+	for(var/obj/item/pinpointer/wayfinding/held_pinpointer in user.GetAllContents())
 		set_expression("veryhappy", 2 SECONDS)
 		say("<span class='robot'>You already have a pinpointer!</span>")
 		return
@@ -118,8 +119,8 @@
 	var/msg
 	var/dispense = TRUE
 	var/pnpts_found = 0
-	for(var/obj/item/pinpointer/wayfinding/WP in view(9, src))
-		point_at(WP)
+	for(var/obj/item/pinpointer/wayfinding/found_pinpointer in view(9, src))
+		point_at(found_pinpointer)
 		pnpts_found++
 
 	if(pnpts_found)
@@ -155,57 +156,46 @@
 		user.put_in_hands(P)
 		P.owner = user.real_name
 
-/obj/machinery/pinpointer_dispenser/attackby(obj/item/I, mob/user, params)
+/obj/machinery/pinpointer_dispenser/attackby(obj/item/I, mob/living/user, params)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return ..()
 
 	if(istype(I, /obj/item/pinpointer/wayfinding))
-		var/obj/item/pinpointer/wayfinding/WP = I
+		var/obj/item/pinpointer/wayfinding/attacking_pinpointer = I
 
-		to_chat(user, "<span class='notice'>You put \the [WP] in the return slot.</span>")
-
-		var/refundiscredits = FALSE
 		var/itsmypinpointer = TRUE
-
-		//Will they meet the conditions to get a credit reward for recycling?
-		if(WP.owner != user.real_name)
+		if(attacking_pinpointer.owner != user.real_name)
 			itsmypinpointer = FALSE
 
-			if(synth_acc.has_money(refund_amt) && !WP.roundstart) //can it afford to refund and is the pinpointer not from the quirk
-				refundiscredits = TRUE
-				qdel(WP)
-				synth_acc._adjust_money(-refund_amt)
-				var/obj/item/holochip/holochip = new (loc)
-				holochip.credits = refund_amt
-				holochip.name = "[holochip.credits] credit holochip"
-				if(ishuman(user))
-					var/mob/living/carbon/human/customer = user
-					customer.put_in_hands(holochip)
-
-		if(!refundiscredits)
-			qdel(WP)
+		var/is_a_thing = "are [refund_amt] credit\s."
+		if(refund_amt > 0 && synth_acc.has_money(refund_amt) && !attacking_pinpointer.roundstart)
+			synth_acc.adjust_money(-refund_amt)
+			var/obj/item/holochip/holochip = new (user.loc)
+			holochip.credits = refund_amt
+			holochip.name = "[holochip.credits] credit holochip"
+			user.put_in_hands(holochip)
+		else if(!itsmypinpointer)
 			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume))
 			new costume(user.loc)
-
-		set_expression("veryhappy", 2 SECONDS)
-
-		var/is_a_thing = "are [refund_amt] credit\s."
-		if(!refundiscredits)
 			is_a_thing = "is a freshly synthesised costume!"
 			if(prob(funnyprob))
 				is_a_thing = "is a pulse rifle! Just kidding it's a costume."
+		else
+			is_a_thing = "is a smile!"
 
 		var/recycling = "recycling"
 		if(prob(funnyprob))
 			recycling = "feeding me"
 
-		//To imply they got a costume instead of money because it was their pinpointer they recycled
-		var/the_pinpointer = "your pinpointer"
+		var/the_pinpointer = "your pinpointer" //To imply they got a costume because it was their pinpointer
 		if(!itsmypinpointer)
 			the_pinpointer = "that pinpointer"
 
-		say("<span class='robot'>Thank you for [recycling] [the_pinpointer]! Here [is_a_thing]</span>")
+		to_chat(user, "<span class='notice'>You put [attacking_pinpointer] in the return slot.</span>")
+		qdel(attacking_pinpointer)
 
+		set_expression("veryhappy", 2 SECONDS)
+		say("<span class='robot'>Thank you for [recycling] [the_pinpointer]! Here [is_a_thing]</span>")
 		return
 
 	else if(istype(I, /obj/item/pinpointer))
@@ -215,7 +205,7 @@
 		//Any other type of pinpointer can make it throw up.
 		if(COOLDOWN_FINISHED(src, next_spew_tick))
 			I.forceMove(loc)
-			visible_message("<span class='warning'>\The [src] smartly rejects [I].</span>")
+			visible_message("<span class='warning'>[src] smartly rejects [I].</span>")
 			say("BLEURRRRGH!")
 			I.throw_at(user, 2, 3)
 			COOLDOWN_START(src, next_spew_tick, COOLDOWN_SPEW)

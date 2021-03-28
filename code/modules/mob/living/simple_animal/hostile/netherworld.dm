@@ -12,6 +12,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH // I always thought they bit. Guess I was wrong.
 	faction = list("nether")
 	speak_emote = list("screams")
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -115,11 +116,11 @@
 	var/chosen_sound = pick(migo_sounds)
 	playsound(src, chosen_sound, 50, TRUE)
 
-/mob/living/simple_animal/hostile/netherworld/migo/Life()
+/mob/living/simple_animal/hostile/netherworld/migo/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
-	if(prob(10))
+	if(DT_PROB(5, delta_time))
 		var/chosen_sound = pick(migo_sounds)
 		playsound(src, chosen_sound, 50, TRUE)
 
@@ -162,7 +163,7 @@
 	else
 		. += "A direct link to another dimension full of creatures not very happy to see you. <span class='warning'>Entering the link would be a very bad idea.</span>"
 
-/obj/structure/spawner/nether/attack_hand(mob/user)
+/obj/structure/spawner/nether/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(isskeleton(user) || iszombie(user))
 		to_chat(user, "<span class='notice'>You don't feel like going home yet...</span>")

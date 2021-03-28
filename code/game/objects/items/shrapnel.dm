@@ -11,11 +11,11 @@
 /obj/item/shrapnel/stingball // stingbang grenades
 	name = "stingball"
 	icon_state = "tiny"
-	sharpness = SHARP_NONE
+	sharpness = NONE
 
 /obj/item/shrapnel/bullet // bullets
 	name = "bullet"
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/guns/ammo.dmi'
 	icon_state = "s-casing"
 	embedding = null // embedding vars are taken from the projectile itself
 

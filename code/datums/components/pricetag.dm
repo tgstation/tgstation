@@ -5,7 +5,7 @@
 	var/list/payees = list()
 
 /datum/component/pricetag/Initialize(_owner,_profit_ratio)
-	if(!isobj(parent))	//Has to account for both objects and sellable structures like crates.
+	if(!isobj(parent)) //Has to account for both objects and sellable structures like crates.
 		return COMPONENT_INCOMPATIBLE
 
 	if(_profit_ratio)

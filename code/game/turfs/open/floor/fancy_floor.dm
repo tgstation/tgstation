@@ -208,7 +208,7 @@
 
 /turf/open/floor/carpet/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /turf/open/floor/carpet/update_icon()
 	. = ..()
@@ -367,11 +367,11 @@
 
 /turf/open/floor/carpet/break_tile()
 	broken = TRUE
-	update_icon()
+	update_appearance()
 
 /turf/open/floor/carpet/burn_tile()
 	burnt = TRUE
-	update_icon()
+	update_appearance()
 
 /turf/open/floor/carpet/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE

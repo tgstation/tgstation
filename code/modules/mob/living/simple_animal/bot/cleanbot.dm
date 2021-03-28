@@ -105,9 +105,10 @@
 	get_targets()
 	icon_state = "cleanbot[on]"
 
-	var/datum/job/janitor/J = new/datum/job/janitor
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
+	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
 	stolen_valor = list()
 
 	prefixes = list(command, security, engineering)
@@ -253,19 +254,19 @@
 			return
 
 		if(loc == get_turf(target))
-			if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
-				UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+			if(!(check_bot(target) && prob(50))) //Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
+				UnarmedAttack(target) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
 				if(QDELETED(target)) //We done here.
 					target = null
 					mode = BOT_IDLE
 					return
 			else
-				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
+				shuffle = TRUE //Shuffle the list the next time we scan so we dont both go the same way.
 			path = list()
 
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
+			path = get_path_to(src, target, 30, id=access_card)
 			if(!bot_move(target))
 				add_to_ignore(target)
 				target = null
@@ -311,7 +312,7 @@
 
 	target_types = typecacheof(target_types)
 
-/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(ismopable(A))

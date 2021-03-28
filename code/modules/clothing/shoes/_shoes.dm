@@ -136,6 +136,13 @@
 	if(!istype(our_guy))
 		return
 
+	if (!isliving(user))
+		return
+
+	var/mob/living/living_user = user
+	if (!(living_user.mobility_flags & MOBILITY_USE))
+		return
+
 	if(!in_range(user, our_guy))
 		to_chat(user, "<span class='warning'>You aren't close enough to interact with [src]'s laces!</span>")
 		return
@@ -236,7 +243,7 @@
 			our_alert = our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/untied)
 
 
-/obj/item/clothing/shoes/attack_hand(mob/living/carbon/human/user)
+/obj/item/clothing/shoes/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!istype(user))
 		return ..()
 	if(loc == user && tied != SHOES_TIED && (user.mobility_flags & MOBILITY_USE))

@@ -3,8 +3,8 @@
 
 /* Teleportation devices.
  * Contains:
- *		Locator
- *		Hand-tele
+ * Locator
+ * Hand-tele
  */
 
 /*
@@ -213,7 +213,7 @@
 		var/list/dangerous_turfs = list()
 		for(var/turf/dangerous_turf in urange(10, orange=1))
 			if(dangerous_turf.x > world.maxx - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.x < PORTAL_DANGEROUS_EDGE_LIMIT)
-				continue	//putting them at the edge is dumb
+				continue //putting them at the edge is dumb
 			if(dangerous_turf.y > world.maxy - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.y < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue
 			var/area/dangerous_area = dangerous_turf.loc
@@ -277,7 +277,7 @@
 /obj/item/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER
 
-	active_portal_pairs -= P	//If this portal pair is made by us it'll be erased along with the other portal by the portal.
+	active_portal_pairs -= P //If this portal pair is made by us it'll be erased along with the other portal by the portal.
 
 /obj/item/hand_tele/proc/is_parent_of_portal(obj/effect/portal/P)
 	if(!istype(P))

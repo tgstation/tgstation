@@ -29,6 +29,7 @@
 	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
 
 	var/mob/living/owner = parent
+	owner.become_area_sensitive(MOOD_COMPONENT_TRAIT)
 	if(owner.hud_used)
 		modify_hud()
 		var/datum/hud/hud = owner.hud_used
@@ -36,6 +37,7 @@
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
+	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
 	unmodify_hud()
 	return ..()
 
@@ -201,6 +203,8 @@
 
 	if(HAS_TRAIT(parent, TRAIT_JOLLY) && DT_PROB(0.416, delta_time))
 		add_event(null, "jolly", /datum/mood_event/jolly)
+
+
 
 
 ///Sets sanity to the specified amount and applies effects.
@@ -423,6 +427,19 @@
 
 	add_event(null, "slipped", /datum/mood_event/slipped)
 
+
+/datum/component/mood/proc/HandleAddictions()
+	if(!iscarbon(parent))
+		return
+
+	var/mob/living/carbon/affected_carbon = parent
+
+	if(sanity < SANITY_GREAT) ///Sanity is low, stay addicted.
+		return
+
+	for(var/addiction_type in affected_carbon.mind.addiction_points)
+		var/datum/addiction/addiction_to_remove = SSaddiction.all_addictions[type]
+		affected_carbon.mind.remove_addiction_points(type, addiction_to_remove.high_sanity_addiction_loss) //If true was returned, we lost the addiction!
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

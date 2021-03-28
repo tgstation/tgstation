@@ -129,6 +129,21 @@
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
+
+	//Cooling method
+	if(istype(I, /obj/item/extinguisher))
+		var/obj/item/extinguisher/extinguisher = I
+		if(extinguisher.safety)
+			return
+		if (extinguisher.reagents.total_volume < 1)
+			to_chat(user, "<span class='warning'>\The [extinguisher] is empty!</span>")
+			return
+		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
+		reagents.expose_temperature(cooling)
+		to_chat(user, "<span class='notice'>You cool the [name] with the [I]!</span>")
+		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+		extinguisher.reagents.remove_all(1)
+
 	return ..()
 
 /obj/item/reagent_containers/spray/verb/empty()
@@ -253,7 +268,7 @@
 	var/generate_amount = 5
 	var/generate_type = /datum/reagent/water
 	var/last_generate = 0
-	var/generate_delay = 10	//deciseconds
+	var/generate_delay = 10 //deciseconds
 	can_fill_from_container = FALSE
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/hacked
@@ -263,7 +278,7 @@
 	volume = 3
 	generate_type = /datum/reagent/clf3
 	generate_amount = 1
-	generate_delay = 40		//deciseconds
+	generate_delay = 40 //deciseconds
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/Initialize()
 	. = ..()
@@ -290,7 +305,7 @@
 /obj/item/reagent_containers/spray/chemsprayer
 	name = "chem sprayer"
 	desc = "A utility used to spray large amounts of reagents in a given area."
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "chemsprayer"
 	inhand_icon_state = "chemsprayer"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -340,7 +355,7 @@
 	var/generate_amount = 50
 	var/generate_type = /datum/reagent/space_cleaner
 	var/last_generate = 0
-	var/generate_delay = 10	//deciseconds
+	var/generate_delay = 10 //deciseconds
 
 /obj/item/reagent_containers/spray/chemsprayer/janitor/Initialize()
 	. = ..()
