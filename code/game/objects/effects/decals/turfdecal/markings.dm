@@ -320,3 +320,6 @@
 
 /obj/effect/turf_decal/siding/wideplating/dark/end
 	icon_state = "siding_wideplating_end"
+
+/obj/effect/turf_decal/red_light
+	icon_state = "red_bulb_light"

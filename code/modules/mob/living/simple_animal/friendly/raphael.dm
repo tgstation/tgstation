@@ -1,6 +1,6 @@
 /mob/living/simple_animal/pet/raphael
 	name = "Raphael"
-	desc = "And to think you wanted to kill him 2 times, in this timeloop you have become my friend.. I love you Raphael"
+	desc = "And to think you wanted to kill him 2 times, in this timeloop he has become your friend.. We love you Raphael"
 	icon = 'icons/mob/pets.dmi'
 	icon_state = "raphael"
 	icon_living = "raphael"

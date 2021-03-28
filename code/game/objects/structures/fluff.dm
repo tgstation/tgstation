@@ -178,6 +178,19 @@
 	density = TRUE
 	deconstructible = FALSE
 
+/obj/structure/fluff/lightbulb
+	name = "red lightbulb"
+	desc = "Its warm light calms your nerves."
+	icon = 'icons/effects/bulb.dmi'
+	icon_state = "bulb"
+	layer = MOB_LAYER
+	anchored = TRUE
+	density = FALSE
+	deconstructible = FALSE
+	light_power = 5
+	light_range = 2
+	light_color = "#bd3827"
+
 /obj/structure/fluff/beach_towel
 	name = "beach towel"
 	desc = "A towel decorated in various beach-themed designs."
