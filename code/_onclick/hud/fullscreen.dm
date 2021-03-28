@@ -149,7 +149,7 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 	plane = SPLASHSCREEN_PLANE
-	layer = -1
+	layer = CINEMATIC_LAYER
 	color = "#000000"
 	show_when_dead = TRUE
 
