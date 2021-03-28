@@ -102,6 +102,12 @@
 		// we don't need to manage that.
 		new_tail.Insert(C, TRUE, FALSE)
 
+/datum/species/lizard/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
+	var/tail = pick(GLOB.tails_list_lizard)
+	human_mob.dna.features["tail_lizard"] = tail
+	mutant_bodyparts["tail_lizard"] = tail
+	human_mob.update_body()
+
 /*
 Lizard subspecies: ASHWALKERS
 */

@@ -166,6 +166,13 @@
 	)
 	parents = list("font-awesome.css" = 'html/font-awesome/css/all.min.css')
 
+/datum/asset/simple/namespaced/tgfont
+	assets = list(
+		"tgfont.eot" = 'tgui/packages/tgfont/dist/tgfont.eot',
+		"tgfont.woff2" = 'tgui/packages/tgfont/dist/tgfont.woff2',
+	)
+	parents = list("tgfont.css" = 'tgui/packages/tgfont/dist/tgfont.css')
+
 /datum/asset/spritesheet/chat
 	name = "chat"
 
@@ -519,6 +526,35 @@
 			continue
 		Insert(id, fish_icon, fish_icon_state)
 	..()
+
+/datum/asset/simple/adventure
+	assets = list(
+		"default" = 'icons/UI_Icons/adventure/default.png',
+		"grue" = 'icons/UI_Icons/adventure/grue.png',
+		"signal_lost" ='icons/UI_Icons/adventure/signal_lost.png',
+		"trade" = 'icons/UI_Icons/adventure/trade.png',
+	)
+
+/datum/asset/simple/inventory
+	assets = list(
+		"inventory-glasses.png" = 'icons/UI_Icons/inventory/glasses.png',
+		"inventory-head.png" = 'icons/UI_Icons/inventory/head.png',
+		"inventory-neck.png" = 'icons/UI_Icons/inventory/neck.png',
+		"inventory-mask.png" = 'icons/UI_Icons/inventory/mask.png',
+		"inventory-ears.png" = 'icons/UI_Icons/inventory/ears.png',
+		"inventory-uniform.png" = 'icons/UI_Icons/inventory/uniform.png',
+		"inventory-suit.png" = 'icons/UI_Icons/inventory/suit.png',
+		"inventory-gloves.png" = 'icons/UI_Icons/inventory/gloves.png',
+		"inventory-hand_l.png" = 'icons/UI_Icons/inventory/hand_l.png',
+		"inventory-hand_r.png" = 'icons/UI_Icons/inventory/hand_r.png',
+		"inventory-shoes.png" = 'icons/UI_Icons/inventory/shoes.png',
+		"inventory-suit_storage.png" = 'icons/UI_Icons/inventory/suit_storage.png',
+		"inventory-id.png" = 'icons/UI_Icons/inventory/id.png',
+		"inventory-belt.png" = 'icons/UI_Icons/inventory/belt.png',
+		"inventory-back.png" = 'icons/UI_Icons/inventory/back.png',
+		"inventory-pocket.png" = 'icons/UI_Icons/inventory/pocket.png',
+		"inventory-collar.png" = 'icons/UI_Icons/inventory/collar.png',
+	)
 
 /// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
 /proc/sanitize_css_class_name(name)

@@ -305,3 +305,19 @@
 	id = "bounty_pad_control"
 	build_path = /obj/item/circuitboard/computer/bountypad
 	category = list("Computer Boards")
+
+/datum/design/board/exoscanner_console
+	name = "Computer Design (Scanner Array Control Console)"
+	desc = "Allows for the construction of circuit boards used to build a new scanner array control console."
+	id = "exoscanner_console"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/computer/exoscanner_console
+	category = list("Computer Boards")
+
+/datum/design/board/exodrone_console
+	name = "Computer Design (Exploration Drone Control Console)"
+	desc = "Allows for the construction of circuit boards used to build a new exploration drone control console."
+	id = "exodrone_console"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/computer/exodrone_console
+	category = list("Computer Boards")

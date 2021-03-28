@@ -56,9 +56,11 @@
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
 			to_chat(user, scan_plant_stats(scanned_object))
 			return TRUE
-	if(ispodperson(scan_target))
-		pod_person_health_scan(scan_target, user)
-		return TRUE
+	if(isliving(scan_target))
+		var/mob/living/L = scan_target
+		if(L.mob_biotypes & MOB_PLANT)
+			plant_biotype_health_scan(scan_target, user)
+			return TRUE
 
 	return FALSE
 
@@ -87,19 +89,21 @@
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
 			to_chat(user, scan_plant_chems(scanned_object))
 			return TRUE
-	if(ispodperson(scan_target))
-		pod_person_chem_scan(scan_target, user)
-		return TRUE
+	if(isliving(scan_target))
+		var/mob/living/L = scan_target
+		if(L.mob_biotypes & MOB_PLANT)
+			plant_biotype_chem_scan(scan_target, user)
+			return TRUE
 
 	return FALSE
 
 /*
- * Scan a podperson's health with the plant analyzer. No wound scanning, though.
+ * Scan a living mob's (with MOB_PLANT biotype) health with the plant analyzer. No wound scanning, though.
  *
- * scanned_mob - the podperson being scanned
+ * scanned_mob - the living mob being scanned
  * user - the person doing the scanning
  */
-/obj/item/plant_analyzer/proc/pod_person_health_scan(mob/living/carbon/human/scanned_mob, mob/living/carbon/human/user)
+/obj/item/plant_analyzer/proc/plant_biotype_health_scan(mob/living/scanned_mob, mob/living/carbon/human/user)
 	user.visible_message("<span class='notice'>[user] analyzes [scanned_mob]'s vitals.</span>", \
 						"<span class='notice'>You analyze [scanned_mob]'s vitals.</span>")
 
@@ -107,12 +111,12 @@
 	add_fingerprint(user)
 
 /*
- * Scan a podperson's chemical contents with the plant analyzer.
+ * Scan a living mob's (with MOB_PLANT biotype) chemical contents with the plant analyzer.
  *
- * scanned_mob - the podperson being scanned
+ * scanned_mob - the living mob being scanned
  * user - the person doing the scanning
  */
-/obj/item/plant_analyzer/proc/pod_person_chem_scan(mob/living/carbon/human/scanned_mob, mob/living/carbon/human/user)
+/obj/item/plant_analyzer/proc/plant_biotype_chem_scan(mob/living/scanned_mob, mob/living/carbon/human/user)
 	user.visible_message("<span class='notice'>[user] analyzes [scanned_mob]'s bloodstream.</span>", \
 						"<span class='notice'>You analyze [scanned_mob]'s bloodstream.</span>")
 	chemscan(user, scanned_mob)

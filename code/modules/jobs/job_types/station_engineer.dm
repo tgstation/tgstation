@@ -10,6 +10,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/engineer
+	plasmaman_outfit = /datum/outfit/plasmaman/engineering
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG

@@ -71,6 +71,7 @@
 
 #define COLOR_BROWN "#BA9F6D"
 #define COLOR_DARK_BROWN "#997C4F"
+#define COLOR_ORANGE_BROWN "#a9734f"
 
 #define COLOR_GREEN_GRAY       "#99BB76"
 #define COLOR_RED_GRAY         "#B4696A"
@@ -113,6 +114,8 @@
 #define COLOR_THEME_GLASS "#75A4C4"
 #define COLOR_THEME_CLOCKWORK "#CFBA47"
 
+///Colors for eigenstates
+#define COLOR_PERIWINKLEE "#9999FF"
 /**
  * Some defines to generalise colours used in lighting.
  *
