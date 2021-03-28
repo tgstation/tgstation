@@ -1,0 +1,28 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"i" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors/explored)
+"j" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors/explored)
+"l" = (/turf/closed/wall/r_wall/rust,/area/ruin/powered/mindpalace)
+"w" = (/turf/open/floor/plating,/area/ruin/powered/mindpalace)
+"x" = (/obj/structure/toilet{dir = 8},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/powered/mindpalace)
+"y" = (/turf/open/chasm/lavaland,/area/lavaland/surface/outdoors/explored)
+"D" = (/obj/machinery/door/airlock/grunge{name = "Common Area"},/obj/effect/mapping_helpers/airlock/locked,/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
+"E" = (/turf/open/floor/plating{icon_state = "platingdmg1"},/area/ruin/powered/mindpalace)
+"I" = (/obj/effect/spawner/structure/window/reinforced,/obj/item/gps{alpha = 1; gpstag = "Calming Signal"},/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
+"J" = (/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
+"K" = (/obj/structure/bed/maint,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
+"U" = (/obj/structure/fluff/lightbulb,/obj/effect/turf_decal/red_light,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
+"V" = (/obj/machinery/door/airlock/security/glass{name = "High-Risk Cell"},/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
+"X" = (/turf/closed/wall/r_wall,/area/ruin/powered/mindpalace)
+
+(1,1,1) = {"
+aaiiiiaaaa
+aiiyyyiiaa
+iilXDlliia
+iiXKJxXiia
+iiXJUEliia
+iilEwJliia
+aiXIVlXiia
+aiijjjiiaa
+aaiajaaaaa
+aaaaaaaaaa
+"}

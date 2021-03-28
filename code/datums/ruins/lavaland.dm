@@ -140,6 +140,14 @@
 	allow_duplicates = FALSE
 	always_place = TRUE
 
+/datum/map_template/ruin/lavaland/godpainting
+	name = "Mind Palace"
+	id = "palace"
+	description = "The entrance to a mind palace, made physical."
+	suffix = "lavaland_surface_palace.dmm"
+	allow_duplicates = FALSE
+	always_place = TRUE
+
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
 	id = "hierophant"
