@@ -1537,6 +1537,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@popperjs/core@npm:^2.9.1":
+  version: 2.9.1
+  resolution: "@popperjs/core@npm:2.9.1"
+  checksum: 6739f6344b67c393dd06dee4a8b60dbc22abec502497b5cef091aa859efc35fe1c924e3b21762bef2667b4736a5fe713ad075dcd8429a6671bf30470e8090898
+  languageName: node
+  linkType: hard
+
 "@sinonjs/commons@npm:^1.7.0":
   version: 1.8.2
   resolution: "@sinonjs/commons@npm:1.8.2"
@@ -3563,6 +3570,15 @@ __metadata:
     escodegen: bin/escodegen.js
     esgenerate: bin/esgenerate.js
   checksum: 548c5a83a81a51122f1006309a392e1412bb00657f15aca60f01f9d4553851bdaf0519d898fd3ee2bb46f116e03ee48757f4d9a28a7b58bc8c096fd4b33f6cbc
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-radar@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "eslint-plugin-radar@npm:0.2.1"
+  peerDependencies:
+    eslint: ">= 3.0.0 <= 7.x.x"
+  checksum: 120e130e22376a43708611b43da2955142c55cd7ad0a770225364df3164fb1d084f7284d1763261573ab5efe6e635345ea44badb3f8cdc71ed763becd26b8da3
   languageName: node
   linkType: hard
 
@@ -8194,6 +8210,7 @@ __metadata:
     common: "workspace:*"
     css-loader: ^5.1.1
     eslint: ^7.21.0
+    eslint-plugin-radar: ^0.2.1
     eslint-plugin-react: ^7.22.0
     file-loader: ^6.2.0
     inferno: ^7.4.8
@@ -8217,6 +8234,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "tgui@workspace:packages/tgui"
   dependencies:
+    "@popperjs/core": ^2.9.1
     common: "workspace:*"
     dompurify: ^2.2.6
     inferno: ^7.4.8

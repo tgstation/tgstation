@@ -145,7 +145,7 @@
 /area/mine/laborcamp)
 "aG" = (
 /obj/structure/table,
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/item/kitchen/fork,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -545,7 +545,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "cd" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{

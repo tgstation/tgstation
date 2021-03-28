@@ -104,7 +104,7 @@ const MafiaLobby = (props, context) => {
           {' '}
           <Button
             icon="clipboard-check"
-            tooltipPosition="bottom-left"
+            tooltipPosition="bottom-start"
             tooltip={multiline`
               Signs you up for the next game. If there
               is an ongoing one, you will be signed up
@@ -114,7 +114,7 @@ const MafiaLobby = (props, context) => {
             onClick={() => act('mf_signup')} />
           <Button
             icon="eye"
-            tooltipPosition="bottom-left"
+            tooltipPosition="bottom-start"
             tooltip={multiline`
               Spectates games until you turn it off.
               Automatically enabled when you die in game,
@@ -225,7 +225,7 @@ const MafiaListOfRoles = (props, context) => {
           <Button
             color="transparent"
             icon="address-book"
-            tooltipPosition="bottom-left"
+            tooltipPosition="bottom-start"
             tooltip={multiline`
               The top section is the roles in the game. You can
               press the question mark to get a quick blurb
@@ -234,7 +234,7 @@ const MafiaListOfRoles = (props, context) => {
           <Button
             color="transparent"
             icon="edit"
-            tooltipPosition="bottom-left"
+            tooltipPosition="bottom-start"
             tooltip={multiline`
               The bottom section are your notes. on some roles this
               will just be an empty box, but on others it records the

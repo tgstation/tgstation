@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Some worn things that previously used to be slippery are now properly slippery again."
-  - code_imp: "Slip component can be given a whitelist of valid worn slots. (B)Admins can now make anything worn slippery, again."
