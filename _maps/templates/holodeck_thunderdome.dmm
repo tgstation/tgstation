@@ -12,7 +12,7 @@
 "h" = (
 /obj/structure/table,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/clothing/suit/armor/tdome/green,
+/obj/item/clothing/suit/armor/tdome/holosuit/green,
 /obj/item/clothing/under/color/green,
 /obj/item/holo/esword/green,
 /turf/open/floor/holofloor/basalt,
@@ -20,7 +20,7 @@
 "q" = (
 /obj/structure/table,
 /obj/item/clothing/head/helmet/thunderdome,
-/obj/item/clothing/suit/armor/tdome/red,
+/obj/item/clothing/suit/armor/tdome/holosuit/red,
 /obj/item/clothing/under/color/red,
 /obj/item/holo/esword/red,
 /turf/open/floor/holofloor/basalt,
