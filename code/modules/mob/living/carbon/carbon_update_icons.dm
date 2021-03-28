@@ -7,14 +7,6 @@
 	if(lying_angle != lying_prev && rotate_on_lying)
 		changed++
 		ntransform.TurnTo(lying_prev , lying_angle)
-		if(!lying_angle) //Lying to standing
-			var/matrix/unflatten = matrix(1, 1, 0, -0.5, 0.5, 0)
-			unflatten.Invert()
-			ntransform.Multiply(unflatten)
-		else
-			if(lying_prev == 0) //Standing to lying
-				var/matrix/flatten = matrix(1, 1, 0, -0.5, 0.5, 0)
-				ntransform.Add(flatten)
 	if(resize != RESIZE_DEFAULT_SIZE)
 		changed++
 		ntransform.Scale(resize)

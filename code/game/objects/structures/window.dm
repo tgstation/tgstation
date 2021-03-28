@@ -736,6 +736,7 @@
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
 	rad_insulation = RAD_HEAVY_INSULATION
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/window/plasma/reinforced/plastitanium/unanchored
 	anchored = FALSE

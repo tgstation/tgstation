@@ -59,7 +59,6 @@
 /atom/movable/screen/fullscreen
 	icon = 'icons/hud/screen_full.dmi'
 	icon_state = "default"
-	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -77,12 +76,6 @@
 	if(!show_when_dead && mymob.stat == DEAD)
 		return FALSE
 	return TRUE
-
-/atom/movable/screen/fullscreen/Initialize(mapload)
-	. = ..()
-	var/matrix/biggering = matrix()
-	biggering.Scale(2,2)
-	transform = biggering
 
 /atom/movable/screen/fullscreen/Destroy()
 	severity = 0

@@ -21,7 +21,32 @@
 #define SOUTHWEST_JUNCTION (1<<6)
 #define NORTHWEST_JUNCTION (1<<7)
 
+#define AIRLOCK_DETERMINE_ORIENTATION(TYPEPATH) do { \
+    for(var/TYPEPATH/object in orange(1, src)) { \
+        if(src.x == object.x && src.y != object.y) { \
+            airlock_orientation = EAST; \
+            break; \
+        }; \
+    }; \
+} while(FALSE);
+
 /atom/proc/blockify()
+	if(istype(src, /obj/machinery/door/airlock) && !istype(src, /obj/machinery/door/firedoor))
+		// Check for connected objects
+		var/airlock_orientation = NORTH
+		AIRLOCK_DETERMINE_ORIENTATION(obj/machinery/door)
+		AIRLOCK_DETERMINE_ORIENTATION(obj/structure/window)
+		AIRLOCK_DETERMINE_ORIENTATION(turf/closed/wall)
+		// Orient the door plane along NORTH or EAST axis
+		var/matrix/airlock_transform
+		if(airlock_orientation == NORTH)
+			airlock_transform = matrix(1, 0, -16, -0.5, 1, 8)
+			airlock_transform.Translate(16, 8)
+		else
+			airlock_transform = matrix(0, 1, 16, -1, 0.5, 8)
+			airlock_transform.Translate(-16, 8)
+		transform = airlock_transform
+		return
 	var/mutable_appearance/mut_app_a = new(src)
 	var/mutable_appearance/mut_app_b = new(src) //quick maffs
 	/* 32 icon_size transforms
