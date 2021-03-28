@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Spoons are consistently rendered in the correct hand on the player's sprite, rather than floating away from the wielder's hand, or even showing up behind them. You can also see held plastic spoons now."

@@ -1,6 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - qol: "Tourist bots are now significantly less chatty when waiting for a seat and slightly less chatty when waiting to be served their order."
-  - bugfix: "AI controller now passes sane delta_time values to AI behaviours."
-  - bugfix: "Tourists now get bored and leave after the intended 10 minutes of waiting instead of the unintended 100 minutes."
