@@ -52,11 +52,23 @@
 
 /datum/eldritch_knowledge/rust_regen
 	name = "Leeching Walk"
-	desc = "Passively heals you when you are on rusted tiles."
+	desc = "Passively heals you and provides stun resistance when you are on rusted tiles."
 	gain_text = "The strength was unparalleled, unnatural. The Blacksmith was smiling."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/armor,/datum/eldritch_knowledge/essence)
 	route = PATH_RUST
+
+/datum/eldritch_knowledge/rust_regen/on_gain(mob/user)
+	. = ..()
+	RegisterSignal(user,COMSIG_MOVABLE_MOVED,.proc/on_move)
+
+/datum/eldritch_knowledge/rust_regen/proc/on_move(mob/mover)
+	SIGNAL_HANDLER
+
+	if(istype(get_turf(mover),/turf/open/floor/plating/rust))
+		ADD_TRAIT(mover,TRAIT_STUNRESISTANCE,type)
+	else
+		REMOVE_TRAIT(mover,TRAIT_STUNRESISTANCE,type)
 
 /datum/eldritch_knowledge/rust_regen/on_life(mob/user)
 	. = ..()
@@ -136,15 +148,35 @@
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_RUST
+	var/list/conditional_immunities = list(TRAIT_STUNIMMUNE,TRAIT_SLEEPIMMUNE,TRAIT_PUSHIMMUNE,TRAIT_SHOCKIMMUNE,TRAIT_NOSLIPALL,TRAIT_RADIMMUNE,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RESISTCOLD,TRAIT_RESISTHEAT,TRAIT_PIERCEIMMUNE,TRAIT_BOMBIMMUNE)
+	///if this is set to true then immunities are active, if false then they are not active, simple as.
+	var/delta = FALSE
+
 
 /datum/eldritch_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/H = user
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
 	H.client?.give_award(/datum/award/achievement/misc/rust_ascension, H)
+	RegisterSignal(H,COMSIG_MOVABLE_MOVED,.proc/on_move)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
 	new /datum/rust_spread(loc)
 	return ..()
+
+/datum/eldritch_knowledge/rust_regen/proc/on_move(mob/mover)
+	SIGNAL_HANDLER
+	var/expression = istype(get_turf(mover),/turf/open/floor/plating/rust)
+	//Delta makes sure we apply and de-apply immunities only once - when we are leaving OR entering a rusted tile into/from a non-rusted tile.
+	if(expression && !delta)
+		for(var/trait in conditional_immunities)
+			ADD_TRAIT(mover,trait,type)
+		delta = TRUE
+		return
+
+	if(!expression && delta)
+		for(var/trait in conditional_immunities)
+			REMOVE_TRAIT(mover,trait,type)
+		delta = FALSE
 
 
 /datum/eldritch_knowledge/final/rust_final/on_life(mob/user)
@@ -156,9 +188,7 @@
 	human_user.adjustBruteLoss(-4, FALSE)
 	human_user.adjustFireLoss(-4, FALSE)
 	human_user.adjustToxLoss(-4, FALSE, forced = TRUE)
-	human_user.adjustOxyLoss(-2, FALSE)
-	human_user.adjustStaminaLoss(-20)
-	human_user.AdjustAllImmobility(-10)
+	human_user.adjustOxyLoss(-4, FALSE)
 
 /**
  * #Rust spread datum
