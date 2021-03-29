@@ -2,8 +2,26 @@
 	desc = "A loot crate."
 	name = "loot crate"
 	icon_state = "weaponcrate"
-	var/list/loot_table_armor = list(/obj/item/gun/ballistic/shotgun)
-	var/list/loot_table_heal = list(/obj/item/gun/ballistic/shotgun)
+
+	var/list/loot_table_armor = list(
+		/obj/item/clothing/suit/armor/vest = 25,
+		/obj/item/clothing/head/helmet/sec = 25,
+		/obj/item/clothing/under/rank/security/officer = 20,
+		/obj/item/clothing/suit/armor/bulletproof = 10,
+		/obj/item/clothing/head/helmet/alt = 10,
+		/obj/item/clothing/suit/armor/hos/trenchcoat = 10,
+		/obj/item/clothing/under/syndicate = 15,
+		/obj/item/clothing/suit/armor/vest/capcarapace/syndicate = 15,
+		/obj/item/clothing/gloves/tackler/combat/insulated = 10,
+		/obj/item/clothing/suit/space/hardsuit/ert/sec = 1
+	)
+
+	var/list/loot_table_heal = list(
+		/obj/item/reagent_containers/pill/patch/libital = 20,
+		/obj/item/reagent_containers/medigel/libital = 15,
+		/obj/item/storage/firstaid/brute = 10,
+		/obj/item/reagent_containers/hypospray/combat = 5
+		/obj/item/reagent_containers/hypospray/combat/nanites = 2)
 
 	var/list/loot_table_basic = list(
 		/obj/item/gun/ballistic/automatic/pistol=25,
@@ -64,6 +82,7 @@
 /obj/structure/closet/crate/loot/rare/Initialize()
 	var/list/loot_table = loot_table_rare + loot_table_legendary
 	LAZYADD(loot_content,pickweight(loot_table))
+	src.add_filter("default",10, list("type"="rays","density" = 10, "size" = 32, "color" = "#00BFFF"))
 	..()
 
 /obj/structure/closet/crate/loot/rare/PopulateContents()
@@ -79,6 +98,7 @@
 /obj/structure/closet/crate/loot/legendary/Initialize()
 	var/list/loot_table =  loot_table_legendary
 	LAZYADD(loot_content,pickweight(loot_table))
+	src.add_filter("default",10, list("type"="rays","density" = 10, "size" = 40, "color" = "#f18f1f"))
 	..()
 
 /obj/structure/closet/crate/loot/legendary/PopulateContents()
