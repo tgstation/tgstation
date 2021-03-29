@@ -54,9 +54,19 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
+			var/cost = 8
+			var/delay = 2 SECONDS
+
 			if(the_rcd.window_glass == RCD_WINDOW_REINFORCED)
-				return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 12)
-			return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
+				delay = 4 SECONDS
+				cost = 12
+
+			var/turf/grille_turf = get_turf(src)
+
+			if (grille_turf?.rcd_memory == RCD_MEMORY_WINDOWGRILLE)
+				delay /= RCD_MEMORY_SPEED_BUFF
+
+			return list("mode" = RCD_WINDOWGRILLE, "delay" = delay, "cost" = cost)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
