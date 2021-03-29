@@ -1,6 +1,9 @@
 
 
 
+
+
+
 GLOBAL_DATUM(storm_controller, /datum/storm_controller)
 
 /datum/storm_controller
@@ -8,11 +11,11 @@ GLOBAL_DATUM(storm_controller, /datum/storm_controller)
 	///which list to pick from
 	var/list/current_area_pick
 	///outer areas, does not include space
-	var/list/outer_areas
+	var/list/outer_areas = list()
 	///middle areas
-	var/list/middle_areas
+	var/list/middle_areas = list()
 	///inner areas
-	var/list/inner_areas
+	var/list/inner_areas = list()
 	///how many lists it has left
 	var/progression = 3
 	///timer id to the next area consumption
@@ -21,17 +24,18 @@ GLOBAL_DATUM(storm_controller, /datum/storm_controller)
 	var/list/storms = list()
 
 /datum/storm_controller/New()
+	//see bottom of file for these
 	outer_areas = GLOB.externalareasstorm.Copy()
 	//middle
 	//inner
 	current_area_pick = outer_areas
 	send_to_playing_players("<span class='userdanger'>The storm has been created! It will consume the station from the outside in, so keep on the move!</span>")
-	consume_area(area/space, repeat = FALSE)
-	consume_area(area/space/nearstation, repeat = TRUE) //start the storm
+	consume_area(/area/space, repeat = FALSE)
+	consume_area(/area/space/nearstation, repeat = TRUE) //start the storm
 
 
 /datum/storm_controller/proc/consume_area(area/area_path, repeat = TRUE)
-	var/datum/weather/royale_storm/storm = new storm(list(SSmapping.levels_by_trait(STATION_TRAIT)))
+	var/datum/weather/royale_storm/storm = new(list(SSmapping.levels_by_trait(STATION_TRAIT)))
 	storms += storm
 	storm.area_type = area_path
 	storm.telegraph()
@@ -91,3 +95,83 @@ GLOBAL_DATUM(storm_controller, /datum/storm_controller)
 	else
 		to_chat(L, "<span class='userdanger'>You're badly burned by the storm!</span>")
 
+GLOBAL_LIST_INIT(externalareasstorm, list(
+	/area/space,
+	/area/space/nearstation,
+	/area/hallway/secondary/entry,
+	/area/solars/starboard/fore,
+	/area/maintenance/solars/starboard/fore,
+	/area/construction/mining/aux_base,
+	/area/maintenance/starboard/fore,
+	/area/security/checkpoint,
+	/area/security/checkpoint/customs,
+	/area/maintenance/disposal,
+	/area/cargo/storage,
+	/area/cargo/warehouse,
+	/area/cargo/sorting,
+	/area/security/checkpoint/supply,
+	/area/security/prison,
+	/area/security/prison/safe,
+	/area/security/execution/education,
+	/area/security/brig,
+	/area/security/execution/transfer,
+	/area/security/office,
+	/area/command/heads_quarters/hos,
+	/area/security/interrogation,
+	/area/security/warden,
+	/area/ai_monitored/security/armory,
+	/area/security/range,
+	/area/commons/fitness/recreation,
+	/area/holodeck/rec_center,
+	/area/solars/starboard/aft,
+	/area/medical/psychology,
+	/area/hallway/secondary/construction,
+	/area/maintenance/solars/starboard/aft,
+	/area/security/detectives_office/private_investigators_office,
+	/area/service/theater/abandoned,
+	/area/medical/virology,
+	/area/medical/surgery,
+	/area/medical/surgery/room_b,
+	/area/command/heads_quarters/cmo,
+	/area/medical/morgue,
+	/area/maintenance/aft,
+	/area/maintenance/port/aft,
+	/area/security/checkpoint/customs/auxiliary,
+	/area/hallway/secondary/exit/departure_lounge,
+	/area/security/checkpoint/escape,
+	/area/service/chapel/main,
+	/area/service/chapel/office,
+	/area/maintenance/solars/port/aft,
+	/area/solars/port/aft,
+	/area/service/library/abandoned,
+	/area/science/storage,
+	/area/science/mixing,
+	/area/science/misc_lab,
+	/area/science/research/abandoned,
+	/area/maintenance/department/science,
+	/area/science/misc_lab/range,
+	/area/science/genetics,
+	/area/service/abandoned_gambling_den,
+	/area/maintenance/department/electrical,
+	/area/engineering/main,
+	/area/engineering/storage,
+	/area/command/heads_quarters/ce,
+	/area/security/checkpoint/engineering,
+	/area/engineering/gravity_generator,
+	/area/engineering/break_room,
+	/area/engineering/storage_shared,
+	/area/engineering/atmos,
+	/area/maintenance/disposal/incinerator,
+	/area/maintenance/solars/port/fore,
+	/area/solars/port/fore,
+	/area/engineering/atmos/upper,
+	/area/maintenance/port/fore,
+	/area/service/abandoned_gambling_den/secondary,
+	/area/service/theater,
+	/area/service/bar,
+	/area/service/bar/atrium,
+	/area/service/hydroponics/garden/abandoned,
+	/area/service/electronic_marketing_den,
+	/area/commons/vacant_room/office,
+	/area/service/janitor,
+	/area/commons/toilet/auxiliary))
