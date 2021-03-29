@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	var/on_store_name = "Cryogenic Oversight"
 
 	// 3 minutes-ish safe period before being despawned.
-	var/time_till_despawn = 3 * 600 // This is reduced to 30 seconds if a player manually enters cryo
+	var/time_till_despawn = 3 MINUTES // This is reduced to 30 seconds if a player manually enters cryo
 	var/despawn_world_time = null          // Used to keep track of the safe period.
 
 	var/obj/machinery/computer/cryopod/control_computer
@@ -189,7 +189,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	control_computer = null
 	return ..()
 
-/obj/machinery/cryopod/proc/find_control_computer(urgent = 0)
+/obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
 	for(var/cryo_console as anything in GLOB.cryopod_computers)
 		var/obj/machinery/computer/cryopod/console = cryo_console
 		if(get_area(console) == get_area(src))
@@ -197,7 +197,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			break
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
-	if(!control_computer && urgent && last_no_computer_message + 5*60*10 < world.time)
+	if(!control_computer && urgent && last_no_computer_message + 5 MINUTES < world.time)
 		log_admin("Cryopod in [get_area(src)] could not find control computer!")
 		message_admins("Cryopod in [get_area(src)] could not find control computer!")
 		last_no_computer_message = world.time
@@ -341,13 +341,11 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 				else
 					mob_occupant.transferItemToLoc(W, loc, TRUE)
 
-	for(var/obj/item/W in mob_occupant.GetAllContents())
-		qdel(W) // because we moved all items to preserve away
-		// and yes, this totally deletes their bodyparts one by one, I just couldn't bother
+	QDEL_LIST(mob_occupant.GetAllContents())
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(TRUE))
-		if(world.time < 15 * 600) // before the 15 minute mark
+		if(world.time < 15 MINUTES) // before the 15 minute mark
 			mob_occupant.ghostize(FALSE) // Players despawned too early may not re-enter the game
 		else
 			mob_occupant.ghostize(TRUE)
