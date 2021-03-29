@@ -75,8 +75,10 @@
 	/// Person wearing the MODsuit.
 	var/mob/living/carbon/human/wearer
 
-/obj/item/mod/control/Initialize()
+/obj/item/mod/control/Initialize(newtheme)
 	. = ..()
+	if(newtheme)
+		theme = newtheme
 	if(!ispath(theme))
 		CRASH("A MODsuit spawned without a proper theme.")
 	theme = GLOB.mod_themes[theme]

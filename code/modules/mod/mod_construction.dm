@@ -132,6 +132,18 @@
 					build_step--
 
 		if(8)
+			if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
+				if(I.use_tool(src, user, 0, volume=30))
+					to_chat(user, "<span class='notice'>You screw together the assembly.</span>")
+					build_step++
+					return
+			if(I.tool_behaviour == TOOL_WRENCH) //Deconstruct
+				if(I.use_tool(src, user, 0, volume=30))
+					var/obj/item/mod/construction/boots/newboots = new(drop_location())
+					to_chat(user, "<span class='notice'>You unwrench the assembled parts.</span>")
+					build_step--
+
+		if(9)
 			if(istype(I, /obj/item/mod/construction/armor)) //Construct
 				var/obj/item/mod/construction/armor/external_armor = I
 				if(!user.temporarilyRemoveItemFromInventory(external_armor))
@@ -139,9 +151,9 @@
 				to_chat(user, "<span class='notice'>You fit \the [external_armor] onto \the [src], finishing your new MODsuit.</span>")
 				new /obj/item/mod/control(Tsec, external_armor.theme)
 				qdel(external_armor)
-			if(I.tool_behaviour == TOOL_WRENCH) //Construct
+			if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(I.use_tool(src, user, 0, volume=30))
-					to_chat(user, "<span class='notice'>You unwrench the assembled parts.</span>")
+					to_chat(user, "<span class='notice'>You unscrew the assembled parts.</span>")
 					build_step--
 	update_icon_state()
 
