@@ -1,4 +1,0 @@
-author: "DuffCreeper"
-delete-after: True
-changes: 
-  - rscadd: "RPDs can now apply the unwrench upgrade by interacting with the upgrade disk"
