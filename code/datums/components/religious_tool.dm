@@ -99,33 +99,29 @@
 	var/list/data = list()
 	//cannot find global vars, so lets offer options
 	if(!SetGlobalToLocal())
+		generate_available_sects(user)
 
 	data["can_select_sect"] = (operation_flags & RELIGION_TOOL_SECTSELECT)
 	data["can_invoke_rite"] = (operation_flags & RELIGION_TOOL_INVOKE)
 	data["can_sacrifice_item"] = (operation_flags & RELIGION_TOOL_SACRIFICE)
 
+/datum/component/religious_tool/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if("sect_select")
+		var/path = params["path"]
+		to_chat(world, path)
+		select_sect(usr, path)
+
 
 /// Select the sect, called async from [/datum/component/religious_tool/proc/AttemptActions]
-/datum/component/religious_tool/proc/select_sect(mob/living/user)
+/datum/component/religious_tool/proc/select_sect(mob/living/user, path)
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
-		return
-	var/list/available_options = generate_available_sects(user)
-	if(!available_options)
-		return
-	if(selecting_sect)
-		to_chat(user,"<span class='warning'>Someone is already deciding a sect!</span>")
-		return
-	selecting_sect = TRUE
-	var/sect_select = input(user,"Select a sect (You CANNOT revert this decision!)","Select a Sect",null) in available_options
-	selecting_sect = FALSE
-	if(!sect_select)
 		return
 	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
 		to_chat(user,"<span class='warning'>You cannot select a sect at this time.</span>")
 		return
-	var/type_selected = available_options[sect_select]
-	GLOB.religious_sect = new type_selected()
+	GLOB.religious_sect = new path()
 	for(var/i in GLOB.player_list)
 		if(!isliving(i))
 			continue
@@ -177,8 +173,10 @@
 		sect["name"] = initial(not_a_real_instance_rs.name)
 		sect["desc"] = initial(not_a_real_instance_rs.desc)
 		sect["quote"] = initial(not_a_real_instance_rs.quote)
+		sect["icon"] = initial(not_a_real_instance_rs.tgui_icon)
 		sect["path"] = path
 		sects_to_pick += list(sect)
+	return sects_to_pick
 
 /**
  * Appends to examine so the user knows it can be used for religious purposes.

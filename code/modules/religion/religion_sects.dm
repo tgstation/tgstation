@@ -71,7 +71,8 @@
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/chap)
 	SHOULD_CALL_PARENT(TRUE)
-	to_chat(chap, "<span class='notice'>[convert_opener]</span")
+	to_chat(chap, "<span class='bold notice'>\"[quote]\"</span")
+	to_chat(chap, "<span class='notice'>[desc]</span")
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/I, mob/living/chap)
@@ -321,14 +322,13 @@
 
 /datum/religion_sect/burden
 	name = "Punished God"
-	desc = "A sect that desires to feel the pain of their god."
+	quote = "To feel the freedom, you must first understand captivity."
+	desc = "Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, \
+	even addictions. You will learn the secrets of the universe from your defeated shell."
 	tgui_icon = "user-injured"
 	altar_icon_state = "convertaltar-burden"
 	alignment = ALIGNMENT_NEUT
 	invalidating_qualities = TRAIT_GENELESS
-	convert_opener = "\"To feel the freedom, you must first understand captivity.\"<br>\
-	Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, even addictions. You will learn the secrets of the universe \
-	from your defeated shell."
 
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
 	..()
