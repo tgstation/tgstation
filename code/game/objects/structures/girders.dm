@@ -385,11 +385,15 @@
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
+			var/cost = 8
 			var/delay = 2 SECONDS
+
 			var/turf/grille_turf = get_turf(src)
 			if (grille_turf?.rcd_memory == RCD_MEMORY_WALL)
+				cost /= RCD_MEMORY_COST_BUFF
 				delay /= RCD_MEMORY_SPEED_BUFF
-			return list("mode" = RCD_FLOORWALL, "delay" = delay, "cost" = 8)
+
+			return list("mode" = RCD_FLOORWALL, "delay" = delay, "cost" = cost)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 13)
 	return FALSE

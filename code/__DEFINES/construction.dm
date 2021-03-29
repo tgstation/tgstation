@@ -123,3 +123,6 @@
 
 // How much faster to use the RCD when on a tile with memory
 #define RCD_MEMORY_SPEED_BUFF 5
+
+/// How much less resources the RCD uses when reconstructing
+#define RCD_MEMORY_COST_BUFF 8

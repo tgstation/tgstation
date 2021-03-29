@@ -64,6 +64,7 @@
 			var/turf/grille_turf = get_turf(src)
 
 			if (grille_turf?.rcd_memory == RCD_MEMORY_WINDOWGRILLE)
+				cost /= RCD_MEMORY_COST_BUFF
 				delay /= RCD_MEMORY_SPEED_BUFF
 
 			return list("mode" = RCD_WINDOWGRILLE, "delay" = delay, "cost" = cost)
