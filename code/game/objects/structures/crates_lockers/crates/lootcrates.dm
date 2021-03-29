@@ -6,9 +6,9 @@
 	var/list/loot_table_heal = list(/obj/item/gun/ballistic/shotgun)
 
 	var/list/loot_table_basic = list(
-		/obj/item/gun/ballistic/pistol=25,
-		/obj/item/gun/ballistic/pistol/suppressed=20,
-		/obj/item/gun/ballistic/pistol/toy/riot=20,
+		/obj/item/gun/ballistic/automatic/pistol=25,
+		/obj/item/gun/ballistic/automatic/pistol/suppressed=20,
+		/obj/item/gun/ballistic/automatic/pistol/toy/riot=20,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun=20,
 		/obj/item/gun/ballistic/revolver/detective=20)
 
