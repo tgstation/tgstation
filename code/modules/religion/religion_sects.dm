@@ -45,25 +45,7 @@
 	. = ..()
 	if(desired_items)
 		desired_items_typecache = typecacheof(desired_items)
-	if(rites_list)
-		var/listylist = generate_rites_list()
-		rites_list = listylist
 	on_select()
-
-///Generates a list of rites with 'name' = 'type'
-/datum/religion_sect/proc/generate_rites_list()
-	. = list()
-	for(var/i in rites_list)
-		if(!ispath(i))
-			continue
-		var/datum/religion_rites/RI = i
-		var/name_entry = "[initial(RI.name)]"
-		if(initial(RI.desc))
-			name_entry += " - [initial(RI.desc)]"
-		if(initial(RI.favor_cost))
-			name_entry += " ([initial(RI.favor_cost)] favor)"
-
-		. += list("[name_entry]" = i)
 
 /// Activates once selected
 /datum/religion_sect/proc/on_select()
@@ -116,7 +98,7 @@
 	for(var/X in blessed.bodyparts)
 		var/obj/item/bodypart/bodypart = X
 		if(bodypart.status == BODYPART_ROBOTIC)
-			to_chat(user, "<span class='warning'>[GLOB.deity] refuses to heal this metallic taint!</span>")
+			to_chat(chap, "<span class='warning'>[GLOB.deity] refuses to heal this metallic taint!</span>")
 			return TRUE
 
 	var/heal_amt = 10
@@ -127,9 +109,9 @@
 			var/obj/item/bodypart/affecting = X
 			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
 				blessed.update_damage_overlays()
-		blessed.visible_message("<span class='notice'>[user] heals [blessed] with the power of [GLOB.deity]!</span>")
+		blessed.visible_message("<span class='notice'>[chap] heals [blessed] with the power of [GLOB.deity]!</span>")
 		to_chat(blessed, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed!</span>")
-		playsound(user, "punch", 25, TRUE, -1)
+		playsound(chap, "punch", 25, TRUE, -1)
 		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -181,7 +163,7 @@
 		if(!did_we_charge)
 			to_chat(chap, "<span class='warning'>[GLOB.deity] scoffs at the idea of healing such fleshy matter!</span>")
 		else
-			blessed.visible_message("<span class='notice'>[user] charges [blessed] with the power of [GLOB.deity]!</span>")
+			blessed.visible_message("<span class='notice'>[chap] charges [blessed] with the power of [GLOB.deity]!</span>")
 			to_chat(blessed, "<span class='boldnotice'>You feel charged by the power of [GLOB.deity]!</span>")
 			SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 			playsound(chap, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
@@ -277,7 +259,7 @@
 				blessed.update_damage_overlays()
 		blessed.visible_message("<span class='notice'>[chap] barters a heal for [blessed] from [GLOB.deity]!</span>")
 		to_chat(blessed, "<span class='boldnotice'>May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!</span>")
-		playsound(user, 'sound/effects/cashregister.ogg', 60, TRUE)
+		playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
 		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 

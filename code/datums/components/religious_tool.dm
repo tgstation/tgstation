@@ -58,6 +58,8 @@
 	if(istype(the_item, catalyst_type))
 		ui_interact(user)
 
+	/*
+
 	/**********Sect Selection**********/
 	if(!SetGlobalToLocal())
 		if(!(operation_flags & RELIGION_TOOL_SECTSELECT))
@@ -80,6 +82,8 @@
 		easy_access_sect.on_sacrifice(the_item,user)
 		return COMPONENT_NO_AFTERATTACK
 
+	*/
+
 /datum/component/religious_tool/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -99,7 +103,15 @@
 	var/list/data = list()
 	//cannot find global vars, so lets offer options
 	if(!SetGlobalToLocal())
-		generate_available_sects(user)
+		data["sects"] = generate_available_sects(user)
+	else
+		data["sects"] = null
+		data["name"] = initial(easy_access_sect.name)
+		data["desc"] = initial(easy_access_sect.desc)
+		data["quote"] = initial(easy_access_sect.quote)
+		data["icon"] = initial(easy_access_sect.tgui_icon)
+		data["rites"] = generate_available_rites()
+
 
 	data["can_select_sect"] = (operation_flags & RELIGION_TOOL_SECTSELECT)
 	data["can_invoke_rite"] = (operation_flags & RELIGION_TOOL_INVOKE)
@@ -107,10 +119,12 @@
 
 /datum/component/religious_tool/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if("sect_select")
-		var/path = params["path"]
-		to_chat(world, path)
-		select_sect(usr, path)
+	switch(action)
+		if("sect_select")
+			var/path = params["path"]
+			select_sect(usr, path)
+		else
+			to_chat(world, action)
 
 
 /// Select the sect, called async from [/datum/component/religious_tool/proc/AttemptActions]
@@ -133,22 +147,17 @@
 	after_sect_select_cb.Invoke()
 
 /// Perform the rite, called async from [/datum/component/religious_tool/proc/AttemptActions]
-/datum/component/religious_tool/proc/perform_rite(mob/living/user)
+/datum/component/religious_tool/proc/perform_rite(mob/living/user, path)
 	if(user.mind.holy_role == HOLY_ROLE_DEACON)
 		to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
 		return
-	if(!easy_access_sect.rites_list)
-		to_chat(user, "<span class='notice'>Your sect doesn't have any rites to perform!")
-		return
 	if(performing_rite)
-		to_chat(user, "<span class='notice'>There is a rite currently being performed here already!")
+		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
 		return
-	var/rite_select = input(user,"Select a rite to perform!","Select a rite",null) in easy_access_sect.rites_list
-	if(!rite_select || !user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
-		to_chat(user,"<span class ='warning'>You cannot perform the rite at this time.</span>")
+	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
+		to_chat(user,"<span class='warning'>You are not close enough to perform the rite.</span>")
 		return
-	var/selection2type = easy_access_sect.rites_list[rite_select]
-	performing_rite = new selection2type(parent)
+	performing_rite = new path(parent)
 	if(!performing_rite.perform_rite(user, parent))
 		QDEL_NULL(performing_rite)
 	else
@@ -157,7 +166,7 @@
 		QDEL_NULL(performing_rite)
 
 /**
- * Generates a list of available sects to the user. Intended to support custom-availability sects. Because these are not instanced, we cannot put the availability on said sect beyond variables.
+ * Generates a list of available sects to the user. Intended to support custom-availability sects.
  */
 /datum/component/religious_tool/proc/generate_available_sects(mob/user)
 	var/list/sects_to_pick = list()
@@ -177,6 +186,22 @@
 		sect["path"] = path
 		sects_to_pick += list(sect)
 	return sects_to_pick
+
+/**
+ * Generates available rites to pick from. It expects the sect to be picked by the time it was called (by tgui data)
+ */
+/datum/component/religious_tool/proc/generate_available_rites()
+	var/list/rites_to_pick = list()
+	for(var/path in easy_access_sect.rites_list)
+		///checks to invalidate
+		var/list/rite = list()
+		var/datum/religion_rites/rite_type = path
+		rite["name"] = initial(rite_type.name)
+		rite["desc"] = initial(rite_type.desc)
+		rite["favor"] = initial(rite_type.favor_cost)
+		rite["path"] = path
+		rites_to_pick += list(rite)
+	return rites_to_pick
 
 /**
  * Appends to examine so the user knows it can be used for religious purposes.
