@@ -187,6 +187,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/briefcase/sniperbundle
 	cost = 20 // normally 26
 	include_modes = list(/datum/game_mode/nuclear)
+	illegal_tech = FALSE
 
 /datum/uplink_item/bundles_tc/firestarter
 	name = "Spetsnaz Pyro bundle"
