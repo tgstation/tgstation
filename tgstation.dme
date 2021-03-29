@@ -3370,6 +3370,7 @@
 #include "code\modules\tgs\includes.dm"
 #include "code\modules\tgui\external.dm"
 #include "code\modules\tgui\states.dm"
+#include "code\modules\tgui\status_composers.dm"
 #include "code\modules\tgui\tgui.dm"
 #include "code\modules\tgui\tgui_alert.dm"
 #include "code\modules\tgui\tgui_input_list.dm"
