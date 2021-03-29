@@ -54,12 +54,12 @@
 	var/on = FALSE
 
 	///Whether it can be painted
-	var/paintable = FALSE
+	var/paintable = TRUE
 
 	///Is the thing being rebuilt by SSair or not. Prevents list bloat
 	var/rebuilding = FALSE
 
-	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes. 
+	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
 
 /obj/machinery/atmospherics/examine(mob/user)
@@ -198,9 +198,14 @@
  * * direction - the direction we are checking against
  * * prompted_layer - the piping_layer we are inside
  */
-/obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer)
+/obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer, connect_all = FALSE, color_piping)
 	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
 		if(target.initialize_directions & get_dir(target,src))
+			if(connect_all)
+				if(target.pipe_color != GLOB.pipe_paint_colors[color_piping] || target.piping_layer != prompted_layer)
+					continue
+				else
+					return target
 			if(connection_check(target, prompted_layer))
 				return target
 
@@ -228,7 +233,8 @@
 /obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, given_layer)
 	if(isnull(given_layer))
 		given_layer = piping_layer
-	if((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER))
+	if(	((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER)) && \
+		((target.pipe_color == pipe_color) || (target.pipe_flags & PIPING_ALL_COLORS) || (target.pipe_color == null) || (pipe_color == null)))
 		return TRUE
 	return FALSE
 
@@ -487,7 +493,7 @@
  * Update the layer in which the pipe/device is in, that way pipes have consistent layer depending on piping_layer
  */
 /obj/machinery/atmospherics/proc/update_layer()
-	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE
+	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * PIPING_LAYER_LCHANGE)
 
 /**
  * Called by the RPD.dm pre_attack(), overriden by pipes.dm

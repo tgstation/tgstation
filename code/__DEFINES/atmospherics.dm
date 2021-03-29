@@ -479,6 +479,8 @@
 #define PIPING_DEFAULT_LAYER_ONLY (1<<2)
 /// north/south east/west doesn't matter, auto normalize on build.
 #define PIPING_CARDINAL_AUTONORMALIZE (1<<3)
+/// intended to connect with everything, both layers and colors
+#define PIPING_ALL_COLORS (1<<4)
 
 // Ventcrawling bitflags, handled in var/vent_movement
 ///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
@@ -495,12 +497,27 @@ GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 		"cyan" = rgb(0,255,249),
 		"dark" = rgb(69,69,69),
 		"green" = rgb(30,255,0),
-		"grey" = rgb(255,255,255),
+		"grey" = rgb(254,254,254),
 		"orange" = rgb(255,129,25),
 		"purple" = rgb(128,0,182),
 		"red" = rgb(255,0,0),
 		"violet" = rgb(64,0,128),
 		"yellow" = rgb(255,198,0)
+)))
+
+GLOBAL_LIST_INIT(pipe_colors_ordered, sortList(list(
+		rgb(130,43,255) = 1,
+		rgb(0,0,255) = 2,
+		rgb(178,100,56) = 3,
+		rgb(0,255,249) = 4,
+		rgb(69,69,69) = 5,
+		rgb(30,255,0) = 6,
+		rgb(254,254,254) = 7,
+		rgb(255,129,25) = 8,
+		rgb(128,0,182) = 9,
+		rgb(255,0,0) = 10,
+		rgb(64,0,128) = 11,
+		rgb(255,198,0) = 12
 )))
 
 //Helpers

@@ -11,7 +11,7 @@
 	volume = 260
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
-	paintable = FALSE
+	paintable = TRUE
 
 	var/list/front_nodes
 	var/list/back_nodes
@@ -74,7 +74,7 @@
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)
-	if(!given_layer)
+	if(!given_layer && target.pipe_color == pipe_color)
 		return TRUE
 	. = ..()
 
