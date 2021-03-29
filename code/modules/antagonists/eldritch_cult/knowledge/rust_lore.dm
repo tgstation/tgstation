@@ -143,15 +143,14 @@
 
 /datum/eldritch_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
-	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resillient overall."
+	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become extremely more resillient."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for the Rustbringer has come! Rusted Hills, CALL MY NAME!"
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_RUST
-	var/list/conditional_immunities = list(TRAIT_STUNIMMUNE,TRAIT_SLEEPIMMUNE,TRAIT_PUSHIMMUNE,TRAIT_SHOCKIMMUNE,TRAIT_NOSLIPALL,TRAIT_RADIMMUNE,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RESISTCOLD,TRAIT_RESISTHEAT,TRAIT_PIERCEIMMUNE,TRAIT_BOMBIMMUNE)
+	var/list/conditional_immunities = list(TRAIT_STUNIMMUNE,TRAIT_SLEEPIMMUNE,TRAIT_PUSHIMMUNE,TRAIT_SHOCKIMMUNE,TRAIT_NOSLIPALL,TRAIT_RADIMMUNE,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RESISTCOLD,TRAIT_RESISTHEAT,TRAIT_PIERCEIMMUNE,TRAIT_BOMBIMMUNE,TRAIT_NOBREATH)
 	///if this is set to true then immunities are active, if false then they are not active, simple as.
 	var/delta = FALSE
-
 
 /datum/eldritch_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/H = user
@@ -163,7 +162,7 @@
 	new /datum/rust_spread(loc)
 	return ..()
 
-/datum/eldritch_knowledge/rust_regen/proc/on_move(mob/mover)
+/datum/eldritch_knowledge/final/rust_final/proc/on_move(mob/mover)
 	SIGNAL_HANDLER
 	var/expression = istype(get_turf(mover),/turf/open/floor/plating/rust)
 	//Delta makes sure we apply and de-apply immunities only once - when we are leaving OR entering a rusted tile into/from a non-rusted tile.
@@ -226,8 +225,7 @@
 	for(var/i in 0 to spread_am)
 		if(!edge_turfs.len)
 			continue
-		T = pick(edge_turfs)
-		edge_turfs -= T
+		T = pick(edge_turfs - turfs)
 		T.rust_heretic_act()
 		turfs += T
 
@@ -248,6 +246,7 @@
 		max_dist = max(max_dist,get_dist(turfie,centre)+1)
 	turfs -= removal_list
 	for(var/turfie in spiral_range_turfs(max_dist,centre,FALSE))
+
 		if(turfie in turfs || is_type_in_typecache(turfie,blacklisted_turfs))
 			continue
 		for(var/line_turfie_owo in getline(turfie,centre))
