@@ -1,7 +1,7 @@
 /* Code for the Wild West map by Brotemis
  * Contains:
- *		Wish Granter
- *		Meat Grinder
+ * Wish Granter
+ * Meat Grinder
  */
 
 //Areas
@@ -31,7 +31,7 @@
 	requires_power = FALSE
 
 
- ////////// wildwest papers
+///////// wildwest papers
 
 /obj/item/paper/fluff/awaymissions/wildwest/grinder
 	info = "meat grinder requires sacri"

@@ -77,7 +77,6 @@
 /area/shuttle/hunter)
 "q" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -133,7 +132,6 @@
 /area/shuttle/hunter)
 "A" = (
 /obj/machinery/computer/shuttle/hunter{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/pod/dark,
@@ -173,7 +171,6 @@
 /area/shuttle/hunter)
 "I" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/pod/dark,
@@ -216,14 +213,12 @@
 /area/shuttle/hunter)
 "M" = (
 /obj/effect/mob_spawn/human/fugitive/bounty/armor{
-	icon_state = "sleeper";
 	dir = 1
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "P" = (
 /obj/structure/fluff/empty_sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/pod/light,

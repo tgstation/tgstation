@@ -77,15 +77,15 @@
 					/obj/item/clothing/mask/gas/sexymime = 1,
 					/obj/item/clothing/under/rank/civilian/mime/sexy = 1,
 					/obj/item/clothing/under/rank/civilian/mime/skirt = 1,
-					/obj/item/clothing/mask/rat/bat = 1,
-					/obj/item/clothing/mask/rat/bee = 1,
-					/obj/item/clothing/mask/rat/bear = 1,
-					/obj/item/clothing/mask/rat/raven = 1,
-					/obj/item/clothing/mask/rat/jackal = 1,
-					/obj/item/clothing/mask/rat/fox = 1,
-					/obj/item/clothing/mask/frog = 1,
-					/obj/item/clothing/mask/rat/tribal = 1,
-					/obj/item/clothing/mask/rat = 1,
+					/obj/item/clothing/mask/animal/rat/bat = 1,
+					/obj/item/clothing/mask/animal/rat/bee = 1,
+					/obj/item/clothing/mask/animal/rat/bear = 1,
+					/obj/item/clothing/mask/animal/rat/raven = 1,
+					/obj/item/clothing/mask/animal/rat/jackal = 1,
+					/obj/item/clothing/mask/animal/rat/fox = 1,
+					/obj/item/clothing/mask/animal/frog = 1,
+					/obj/item/clothing/mask/animal/rat/tribal = 1,
+					/obj/item/clothing/mask/animal/rat = 1,
 					/obj/item/clothing/suit/apron/overalls = 1,
 					/obj/item/clothing/head/rabbitears =1,
 					/obj/item/clothing/head/sombrero = 1,
@@ -146,8 +146,8 @@
 				   /obj/item/clothing/head/weddingveil = 1,
 				   /obj/item/storage/belt/cummerbund = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
-	default_price = 180
-	extra_price = 360
+	default_price = PAYCHECK_ASSISTANT * 0.8 //Default of 40.
+	extra_price = PAYCHECK_HARD
 	payment_department = ACCOUNT_SRV
 	light_mask="theater-light-mask"
 

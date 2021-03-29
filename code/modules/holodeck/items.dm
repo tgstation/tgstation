@@ -40,14 +40,14 @@
 		return ..()
 	return 0
 
-/obj/item/holo/esword/attack(target as mob, mob/user as mob)
+/obj/item/holo/esword/attack(target, mob/user)
 	..()
 
 /obj/item/holo/esword/Initialize()
 	. = ..()
 	saber_color = pick("red","blue","green","purple")
 
-/obj/item/holo/esword/attack_self(mob/living/user as mob)
+/obj/item/holo/esword/attack_self(mob/living/user)
 	active = !active
 	if (active)
 		force = 30
@@ -103,16 +103,16 @@
 	anchored = TRUE
 	density = TRUE
 
-/obj/structure/holohoop/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/holohoop/attackby(obj/item/W, mob/user, params)
 	if(get_dist(src,user)<2)
 		if(user.transferItemToLoc(W, drop_location()))
 			visible_message("<span class='warning'>[user] dunks [W] into \the [src]!</span>")
 
-/obj/structure/holohoop/attack_hand(mob/user)
+/obj/structure/holohoop/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
@@ -156,18 +156,18 @@
 	active_power_usage = 6
 	power_channel = AREA_USAGE_ENVIRON
 
-/obj/machinery/readybutton/attack_ai(mob/user as mob)
+/obj/machinery/readybutton/attack_ai(mob/user)
 	to_chat(user, "<span class='warning'>The station AI is not to interact with these devices!</span>")
 	return
 
-/obj/machinery/readybutton/attack_paw(mob/user as mob)
+/obj/machinery/readybutton/attack_paw(mob/user, list/modifiers)
 	to_chat(user, "<span class='warning'>You are too primitive to use this device!</span>")
 	return
 
-/obj/machinery/readybutton/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/machinery/readybutton/attackby(obj/item/W, mob/user, params)
 	to_chat(user, "<span class='warning'>The device is a solid button, there's nothing you can do with it!</span>")
 
-/obj/machinery/readybutton/attack_hand(mob/user as mob)
+/obj/machinery/readybutton/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -185,7 +185,7 @@
 
 	ready = !ready
 
-	update_icon()
+	update_appearance()
 
 	var/numbuttons = 0
 	var/numready = 0
@@ -198,10 +198,8 @@
 		begin_event()
 
 /obj/machinery/readybutton/update_icon_state()
-	if(ready)
-		icon_state = "auth_on"
-	else
-		icon_state = "auth_off"
+	icon_state = "auth_[ready ? "on" : "off"]"
+	return ..()
 
 /obj/machinery/readybutton/proc/begin_event()
 
@@ -234,4 +232,4 @@
 	instability = 6
 
 /obj/vehicle/ridden/scooter/skateboard/pro/holodeck/pick_up_board() //picking up normal skateboards spawned in the holodeck gets rid of the holo flag, now you cant pick them up.
-    return
+	return

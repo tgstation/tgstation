@@ -23,9 +23,7 @@
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	else
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		flip(user)
 
 
@@ -38,7 +36,7 @@
 		else
 			icon_state = "[soft_type]soft"
 			to_chat(user, "<span class='notice'>You flip the hat back in normal position.</span>")
-		usr.update_inv_head()	//so our mob-overlays update
+		usr.update_inv_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	. = ..()
@@ -78,6 +76,15 @@
 	icon_state = "greysoft"
 	soft_type = "grey"
 	dog_fashion = null
+
+/* A grey baseball cap that grants TRAIT_JOLLY when it's on your head.
+ * Used for testing that gaining and losing the JOLLY trait behaves properly.
+ * Also a perfectly valid weird admin reward.
+ */
+/obj/item/clothing/head/soft/grey/jolly
+	name = "jolly grey cap"
+	desc = "It's a baseball hat in a sublime grey colour. Why, wearing this alone would boost a person's spirits!"
+	clothing_traits = list(TRAIT_JOLLY)
 
 /obj/item/clothing/head/soft/orange
 	name = "orange cap"

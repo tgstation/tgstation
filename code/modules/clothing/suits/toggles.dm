@@ -4,10 +4,13 @@
 	actions_types = list(/datum/action/item_action/toggle_hood)
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
+	///Alternative mode for hiding the hood, instead of storing the hood in the suit it qdels it, useful for when you deal with hooded suit with storage.
+	var/alternative_mode = FALSE
 
 /obj/item/clothing/suit/hooded/Initialize()
 	. = ..()
-	MakeHood()
+	if(!alternative_mode)
+		MakeHood()
 
 /obj/item/clothing/suit/hooded/Destroy()
 	. = ..()
@@ -35,12 +38,18 @@
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
 	src.icon_state = "[initial(icon_state)]"
 	suittoggled = FALSE
-	if(ishuman(hood.loc))
-		var/mob/living/carbon/H = hood.loc
-		H.transferItemToLoc(hood, src, TRUE)
-		H.update_inv_wear_suit()
-	else
-		hood.forceMove(src)
+
+	if(hood)
+		if(ishuman(hood.loc))
+			var/mob/living/carbon/human/H = hood.loc
+			H.transferItemToLoc(hood, src, TRUE)
+			H.update_inv_wear_suit()
+		else
+			hood.forceMove(src)
+
+		if(alternative_mode)
+			QDEL_NULL(hood)
+
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -51,21 +60,28 @@
 
 /obj/item/clothing/suit/hooded/proc/ToggleHood()
 	if(!suittoggled)
-		if(ishuman(src.loc))
-			var/mob/living/carbon/human/H = src.loc
-			if(H.wear_suit != src)
-				to_chat(H, "<span class='warning'>You must be wearing [src] to put up the hood!</span>")
+		if(!ishuman(loc))
+			return
+		var/mob/living/carbon/human/H = loc
+		if(H.wear_suit != src)
+			to_chat(H, "<span class='warning'>You must be wearing [src] to put up the hood!</span>")
+			return
+		if(H.head)
+			to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
+			return
+		else
+			if(alternative_mode)
+				MakeHood()
+			if(!H.equip_to_slot_if_possible(hood,ITEM_SLOT_HEAD,0,0,1))
+				if(alternative_mode)
+					RemoveHood()
 				return
-			if(H.head)
-				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
-				return
-			else if(H.equip_to_slot_if_possible(hood,ITEM_SLOT_HEAD,0,0,1))
-				suittoggled = TRUE
-				src.icon_state = "[initial(icon_state)]_t"
-				H.update_inv_wear_suit()
-				for(var/X in actions)
-					var/datum/action/A = X
-					A.UpdateButtonIcon()
+			suittoggled = TRUE
+			icon_state = "[initial(icon_state)]_t"
+			H.update_inv_wear_suit()
+			for(var/X in actions)
+				var/datum/action/A = X
+				A.UpdateButtonIcon()
 	else
 		RemoveHood()
 
@@ -94,7 +110,7 @@
 
 /obj/item/clothing/suit/toggle/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 	else
 		suit_toggle(user)

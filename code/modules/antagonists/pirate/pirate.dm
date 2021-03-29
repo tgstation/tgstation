@@ -18,6 +18,7 @@
 	if(!new_team)
 		for(var/datum/antagonist/pirate/P in GLOB.antagonists)
 			if(!P.owner)
+				stack_trace("Antagonist datum without owner in GLOB.antagonists: [P]")
 				continue
 			if(P.crew)
 				crew = P.crew

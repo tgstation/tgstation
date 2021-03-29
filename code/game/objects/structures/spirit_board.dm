@@ -14,7 +14,7 @@
 	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."
 	. = ..()
 
-/obj/structure/spirit_board/attack_hand(mob/user)
+/obj/structure/spirit_board/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -67,7 +67,7 @@
 	var/users_in_range = 0
 	for(var/mob/living/L in orange(1,src))
 		if(L.ckey && L.client)
-			if((world.time - L.client.inactivity) < (world.time - 300) || L.stat != CONSCIOUS || L.restrained())//no playing with braindeads or corpses or handcuffed dudes.
+			if((world.time - L.client.inactivity) < (world.time - 300) || L.stat != CONSCIOUS || HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))//no playing with braindeads or corpses or handcuffed dudes.
 				to_chat(M, "<span class='warning'>[L] doesn't seem to be paying attention...</span>")
 			else
 				users_in_range++

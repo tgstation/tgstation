@@ -15,17 +15,20 @@
 	icon_dead = "mook_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	pixel_x = -16
+	base_pixel_x = -16
+	pixel_y = -8
+	base_pixel_y = -8
 	maxHealth = 45
 	health = 45
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	pixel_y = -8
 	ranged = TRUE
 	ranged_cooldown_time = 10
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	robust_searching = TRUE
 	stat_attack = HARD_CRIT
 	attack_sound = 'sound/weapons/rapierhit.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	deathsound = 'sound/voice/mook_death.ogg'
 	aggro_vision_range = 15 //A little more aggressive once in combat to balance out their really low HP
 	var/attack_state = MOOK_ATTACK_NEUTRAL
@@ -217,7 +220,9 @@
 	icon_state = "mook_leap_cloud"
 	layer = BELOW_MOB_LAYER
 	pixel_x = -16
+	base_pixel_x = -16
 	pixel_y = -16
+	base_pixel_y = -16
 	duration = 10
 
 #undef MOOK_ATTACK_NEUTRAL

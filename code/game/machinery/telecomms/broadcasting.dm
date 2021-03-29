@@ -1,5 +1,4 @@
-
-/**
+/*
 
 	Here is the big, bad function that broadcasts a message given the appropriate
 	parameters.

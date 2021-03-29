@@ -123,3 +123,51 @@
 	desc = "Just a taste, for science!"
 	database_id = MEDAL_FRENCHING
 	icon = "frenching"
+
+/datum/award/achievement/misc/ash_ascension
+	name = "Nightwatcher's Eyes"
+	desc = "You've risen above the flames, became one with the ashes. You've been reborn as one with the Nightwatcher."
+	database_id = MEDAL_ASH_ASCENSION
+	icon = "ashascend"
+
+/datum/award/achievement/misc/flesh_ascension
+	name = "Vortex of Arms"
+	desc = "You've became something more, something greater. A piece of the emperor resides within you, and you within him."
+	database_id = MEDAL_FLESH_ASCENSION
+	icon = "fleshascend"
+
+/datum/award/achievement/misc/rust_ascension
+	name = "Hills of Rust"
+	desc = "You've summoned a piece of the Hill of rust, and so the Hills welcome you."
+	database_id = MEDAL_RUST_ASCENSION
+	icon = "rustascend"
+
+/datum/award/achievement/misc/void_ascension
+	name = "All that perish"
+	desc = "Place of a different being, different time. Everything ends there... but maybe it is just the beginning?"
+	database_id = MEDAL_VOID_ASCENSION
+	icon = "voidascend"
+
+/datum/award/achievement/misc/toolbox_soul
+	name = "SOUL'd Out"
+	desc = "My eternal soul was destroyed to make a toolbox look funny and all I got was this achievement..."
+	database_id = MEDAL_TOOLBOX_SOUL
+	icon = "toolbox_soul"
+
+/datum/award/achievement/misc/hot_damn
+	name = "Hot Damn!"
+	desc = "Sometimes you need to make some noise to make a point."
+	database_id = MEDAL_HOT_DAMN
+	icon = "hotdamn"
+
+/datum/award/achievement/misc/cayenne_disk
+	name = "Very Important Piscis"
+	desc = "You can rest well now."
+	database_id = MEDAL_CAYENNE_DISK
+	icon = "cayenne_disk"
+
+/datum/award/achievement/misc/tram_surfer
+	name = "Tram Surfer"
+	desc = "Lights out, guerilla radio!"
+	database_id = MEDAL_TRAM_SURFER
+	icon = "tram_surfer"

@@ -6,7 +6,7 @@
 	icon_living = "curseblob"
 	icon_aggro = "curseblob"
 	mob_biotypes = MOB_SPIRIT
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	move_to_delay = 5
 	vision_range = 20
 	aggro_vision_range = 20
@@ -18,6 +18,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/effects/curseattack.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	throw_message = "passes through the smokey body of"
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE

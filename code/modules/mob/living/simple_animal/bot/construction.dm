@@ -25,13 +25,13 @@
 	created_name = t
 
 /**
-  * Checks if the user can finish constructing a bot with a given item.
-  *
-  * Arguments:
-  * * I - Item to be used
-  * * user - Mob doing the construction
-  * * drop_item - Whether or no the item should be dropped; defaults to 1. Should be set to 0 if the item is a tool, stack, or otherwise doesn't need to be dropped. If not set to 0, item must be deleted afterwards.
-  */
+ * Checks if the user can finish constructing a bot with a given item.
+ *
+ * Arguments:
+ * * I - Item to be used
+ * * user - Mob doing the construction
+ * * drop_item - Whether or no the item should be dropped; defaults to 1. Should be set to 0 if the item is a tool, stack, or otherwise doesn't need to be dropped. If not set to 0, item must be deleted afterwards.
+ */
 /obj/item/bot_assembly/proc/can_finish_build(obj/item/I, mob/user, drop_item = 1)
 	if(istype(loc, /obj/item/storage/backpack))
 		to_chat(user, "<span class='warning'>You must take [src] out of [loc] first!</span>")
@@ -175,19 +175,30 @@
 
 /obj/item/bot_assembly/floorbot/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
-/obj/item/bot_assembly/floorbot/update_icon()
-	..()
+/obj/item/bot_assembly/floorbot/update_name()
+	. = ..()
 	switch(build_step)
-		if(ASSEMBLY_FIRST_STEP)
-			desc = initial(desc)
+		if(ASSEMBLY_SECOND_STEP)
+			name = "incomplete floorbot assembly"
+		else
 			name = initial(name)
-			icon_state = "[toolbox_color]toolbox_tiles"
 
+/obj/item/bot_assembly/floorbot/update_desc()
+	. = ..()
+	switch(build_step)
 		if(ASSEMBLY_SECOND_STEP)
 			desc = "It's a toolbox with tiles sticking out the top and a sensor attached."
-			name = "incomplete floorbot assembly"
+		else
+			desc = initial(desc)
+
+/obj/item/bot_assembly/floorbot/update_icon_state()
+	. = ..()
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			icon_state = "[toolbox_color]toolbox_tiles"
+		if(ASSEMBLY_SECOND_STEP)
 			icon_state = "[toolbox_color]toolbox_tiles_sensor"
 
 /obj/item/bot_assembly/floorbot/attackby(obj/item/W, mob/user, params)
@@ -200,7 +211,7 @@
 				to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
 				qdel(W)
 				build_step++
-				update_icon()
+				update_appearance()
 
 		if(ASSEMBLY_SECOND_STEP)
 			if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
@@ -470,26 +481,37 @@
 
 /obj/item/bot_assembly/hygienebot/attackby(obj/item/I, mob/user, params)
 	. = ..()
+	var/atom/Tsec = drop_location()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(I.tool_behaviour == TOOL_WELDER)
+			if(I.tool_behaviour == TOOL_WELDER) //Construct
 				if(I.use_tool(src, user, 0, volume=40))
 					to_chat(user, "<span class='notice'>You weld a water hole in [src]!</span>")
 					build_step++
 					return
+			if(I.tool_behaviour == TOOL_WRENCH) //Deconstruct
+				if(I.use_tool(src, user, 0, volume=40))
+					new /obj/item/stack/sheet/iron(Tsec, 2)
+					to_chat(user, "<span class='notice'>You disconnect the hygienebot assembly.</span>")
+					qdel(src)
 
 		if(ASSEMBLY_SECOND_STEP)
-			if(isprox(I))
+			if(isprox(I)) //Construct
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
 				build_step++
 				to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
 				qdel(I)
+			if(I.tool_behaviour == TOOL_WELDER) //Deconstruct
+				if(I.use_tool(src, user, 0, volume=30))
+					to_chat(user, "<span class='notice'>You weld close the water hole in [src]!</span>")
+					build_step--
+					return
 
 		if(ASSEMBLY_THIRD_STEP)
 			if(!can_finish_build(I, user, 0))
 				return
-			if(istype(I, /obj/item/stack/ducts))
+			if(istype(I, /obj/item/stack/ducts)) //Construct
 				var/obj/item/stack/ducts/D = I
 				if(D.get_amount() < 1)
 					to_chat(user, "<span class='warning'>You need one fluid duct to finish [src]</span>")
@@ -500,3 +522,7 @@
 					var/mob/living/simple_animal/bot/hygienebot/H = new(drop_location())
 					H.name = created_name
 					qdel(src)
+			if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
+				new /obj/item/assembly/prox_sensor(Tsec)
+				to_chat(user, "<span class='notice'>You detach the proximity sensor from [src].</span>")
+				build_step--

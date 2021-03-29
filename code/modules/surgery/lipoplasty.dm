@@ -47,12 +47,12 @@
 	target.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 	removednutriment -= NUTRITION_LEVEL_WELL_FED //whatever was removed goes into the meat
 	var/mob/living/carbon/human/H = target
-	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human
+	var/typeofmeat = /obj/item/food/meat/slab/human
 
 	if(H.dna && H.dna.species)
 		typeofmeat = H.dna.species.meat
 
-	var/obj/item/reagent_containers/food/snacks/meat/slab/human/newmeat = new typeofmeat
+	var/obj/item/food/meat/slab/human/newmeat = new typeofmeat
 	newmeat.name = "fatty meat"
 	newmeat.desc = "Extremely fatty tissue taken from a patient."
 	newmeat.subjectname = H.real_name

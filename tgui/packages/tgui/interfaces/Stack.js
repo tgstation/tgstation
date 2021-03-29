@@ -1,6 +1,7 @@
+import { createSearch } from 'common/string';
 import { sortBy } from 'common/collections';
-import { useBackend } from "../backend";
-import { Box, Button, Section, Collapsible, Table } from "../components";
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from "../components";
 import { Window } from "../layouts";
 
 export const Stack = (props, context) => {
@@ -8,19 +9,53 @@ export const Stack = (props, context) => {
 
   const {
     amount,
-    recipes,
+    recipes = [],
   } = data;
 
-  const height = Math.max(90 + Object.keys(recipes).length * 25, 250);
+  const [
+    searchText,
+    setSearchText,
+  ] = useLocalState(context, 'searchText', '');
+
+  const testSearch = createSearch(searchText, item => {
+    return item;
+  });
+
+  const items = searchText.length > 0
+   && Object.keys(recipes)
+     .filter(testSearch)
+     .reduce((obj, key) => {
+       obj[key] = recipes[key];
+       return obj;
+     }, {})
+    || recipes;
+
+  const height = Math.max(94 + Object.keys(recipes).length * 26, 250);
 
   return (
     <Window
       width={400}
-      height={Math.min(height, 500)}
-      resizable>
+      height={Math.min(height, 500)}>
       <Window.Content scrollable>
-        <Section title={"Amount: " + amount}>
-          <RecipeList recipes={recipes} />
+        <Section
+          title={"Amount: " + amount}
+          buttons={(
+            <>
+              Search
+              <Input
+                autoFocus
+                value={searchText}
+                onInput={(e, value) => setSearchText(value)}
+                mx={1} />
+            </>
+          )}>
+          {items.length === 0 && (
+            <NoticeBox>
+              No recipes found.
+            </NoticeBox>
+          ) || (
+            <RecipeList recipes={items} />
+          )}
         </Section>
       </Window.Content>
     </Window>
@@ -141,7 +176,7 @@ const Recipe = (props, context) => {
   const maxMultiplier = buildMultiplier(recipe, amount);
 
   return (
-    <Box mb={0.8}>
+    <Box mb={1}>
       <Table>
         <Table.Row>
           <Table.Cell>

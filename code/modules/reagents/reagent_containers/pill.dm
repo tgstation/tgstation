@@ -4,6 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pill"
 	inhand_icon_state = "pill"
+	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	possible_transfer_amounts = list()
@@ -46,6 +47,10 @@
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces you to [apply_method] [src].</span>")
 
+	return on_consumption(M, user)
+
+///Runs the consumption code, can be overriden for special effects
+/obj/item/reagent_containers/pill/proc/on_consumption(mob/M, mob/user)
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, M, "<span class='notice'>[pick(strings(REDPILL_FILE, "redpill_questions"))]</span>"), 50)
 
@@ -76,12 +81,9 @@
 /*
  * On accidental consumption, consume the pill
  */
-/obj/item/reagent_containers/pill/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
-	to_chat(M, "<span class='warning'>You swallow something small. Was that in \the [source_item]?</span>")
-	if(reagents?.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INGEST)
-
-	source_item?.contents -= src
+/obj/item/reagent_containers/pill/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
+	to_chat(victim, "<span class='warning'>You swallow something small. [source_item ? "Was that in [source_item]?" : ""]</span>")
+	reagents?.trans_to(victim, reagents.total_volume, transfered_by = user, methods = INGEST)
 	qdel(src)
 	return discover_after
 
@@ -257,20 +259,26 @@
 	list_reagents = list(/datum/reagent/drug/aranesp = 10)
 	icon_state = "pill3"
 
-/obj/item/reagent_containers/pill/floorpill
-	name = "floorpill"
-	desc = "A strange pill found in the depths of maintenance"
+///Black and white pills that spawn in maintenance and have random reagent contents
+/obj/item/reagent_containers/pill/maintenance
+	name = "maintenance pill"
+	desc = "A strange pill found in the depths of maintenance."
 	icon_state = "pill21"
-	var/static/list/names = list("maintenance pill","floorpill","mystery pill","suspicious pill","strange pill")
+	var/static/list/names = list("maintenance pill", "floor pill", "mystery pill", "suspicious pill", "strange pill", "lucky pill", "ominous pill", "eerie pill")
 	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
-	, "Surely, there's no way this could go bad.")
+	, "Surely, there's no way this could go bad.", "Winners don't do dr- oh what the heck!", "Free pills? At no cost, how could I lose?")
 
-/obj/item/reagent_containers/pill/floorpill/Initialize()
-	list_reagents = list(get_random_reagent_id() = rand(10,50))
+/obj/item/reagent_containers/pill/maintenance/Initialize()
+	list_reagents = list(get_random_reagent_id() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
 	. = ..()
 	name = pick(names)
-	if(prob(20))
+	if(prob(30))
 		desc = pick(descs)
+
+/obj/item/reagent_containers/pill/maintenance/achievement/on_consumption(mob/M, mob/user)
+	. = ..()
+
+	M.client?.give_award(/datum/award/score/maintenance_pill, M)
 
 /obj/item/reagent_containers/pill/potassiodide
 	name = "potassium iodide pill"

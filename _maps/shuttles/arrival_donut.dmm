@@ -23,7 +23,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "f" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "g" = (

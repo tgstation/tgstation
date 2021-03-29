@@ -26,8 +26,8 @@
 /area/icemoon/underground/explored)
 "cj" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/fishandchips,
-/turf/open/floor/plasteel/checker,
+/obj/item/food/fishandchips,
+/turf/open/floor/iron/checker,
 /area/ruin/powered)
 "cB" = (
 /obj/effect/decal/cleanable/blood,
@@ -46,7 +46,7 @@
 /area/ruin/powered)
 "gG" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/sashimi{
+/obj/item/food/sashimi{
 	pixel_y = 10
 	},
 /obj/item/reagent_containers/food/drinks/mug/coco{
@@ -182,13 +182,13 @@
 /area/ruin/powered)
 "rC" = (
 /obj/structure/closet/secure_closet/freezer,
-/obj/item/reagent_containers/food/snacks/carpmeat,
-/obj/item/reagent_containers/food/snacks/carpmeat,
-/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
 /obj/item/reagent_containers/food/condiment/pack/ketchup,
 /obj/item/reagent_containers/food/condiment/pack/ketchup,
 /obj/item/reagent_containers/food/condiment/pack/ketchup,
-/turf/open/floor/plasteel/checker,
+/turf/open/floor/iron/checker,
 /area/ruin/powered)
 "sG" = (
 /obj/effect/decal/cleanable/vomit,
@@ -203,7 +203,7 @@
 	pixel_x = -12
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/checker,
+/turf/open/floor/iron/checker,
 /area/ruin/powered)
 "tg" = (
 /obj/structure/fence{
@@ -213,7 +213,7 @@
 /area/icemoon/underground/explored)
 "tt" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered)
 "tF" = (
 /obj/structure/fence,
@@ -226,7 +226,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "tN" = (
-/turf/closed/mineral/random/snow/more_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored)
 "tX" = (
 /obj/structure/table/wood,
@@ -304,9 +304,9 @@
 /obj/item/reagent_containers/glass/bottle/curare,
 /obj/item/kitchen/knife/combat/survival,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/meat/slab/human,
-/obj/item/reagent_containers/food/snacks/meat/slab/human,
-/obj/item/reagent_containers/food/snacks/meat/slab/human,
+/obj/item/food/meat/slab/human,
+/obj/item/food/meat/slab/human,
+/obj/item/food/meat/slab/human,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Bq" = (
@@ -336,7 +336,7 @@
 /obj/item/clothing/mask/breath/medical,
 /obj/item/clothing/mask/breath/medical,
 /obj/item/flashlight/lantern,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered)
 "DM" = (
 /obj/structure/flora/bush,
@@ -374,7 +374,7 @@
 	pixel_y = -4
 	},
 /obj/item/clothing/neck/petcollar,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered)
 "Gy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -409,7 +409,7 @@
 /obj/item/clothing/under/rank/cargo/miner,
 /obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/card/id/mining,
+/obj/item/card/id/advanced/mining,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/powered)
@@ -435,7 +435,7 @@
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered)
 "Og" = (
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -447,7 +447,7 @@
 /turf/open/floor/carpet,
 /area/ruin/powered)
 "Pp" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/holofloor/wood,
 /area/ruin/powered)
 "PQ" = (
@@ -482,7 +482,7 @@
 /obj/item/bodypart/chest,
 /obj/item/organ/heart,
 /obj/item/multitool,
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered)
 "Qt" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -513,7 +513,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "SN" = (
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/ruin/powered)
 "SZ" = (
 /obj/machinery/door/airlock/wood,
@@ -531,7 +531,7 @@
 "UI" = (
 /obj/machinery/washing_machine,
 /obj/effect/decal/cleanable/blood,
-/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/food/meat/slab/corgi,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Vn" = (

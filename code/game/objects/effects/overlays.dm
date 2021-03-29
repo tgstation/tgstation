@@ -49,7 +49,7 @@
 /obj/effect/overlay/vis
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	vis_flags = NONE
+	vis_flags = VIS_INHERIT_DIR
 	///When detected to be unused it gets set to world.time, after a while it gets removed
 	var/unused = 0
 	///overlays which go unused for this amount of time get cleaned up
@@ -64,16 +64,24 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-	layer = ATMOS_GROUP_LAYER
 	plane = ATMOS_GROUP_PLANE
 
 /obj/effect/overlay/light_visible
 	name = ""
 	icon = 'icons/effects/light_overlays/light_32.dmi'
 	icon_state = "light"
-	layer = O_LIGHTING_VISUAL_LAYER
 	plane = O_LIGHTING_VISUAL_PLANE
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 0
 	vis_flags = NONE
+
+/obj/effect/overlay/light_cone
+	name = ""
+	icon = 'icons/effects/light_overlays/light_cone.dmi'
+	icon_state = "light"
+	plane = O_LIGHTING_VISUAL_PLANE
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	vis_flags = NONE
+	alpha = 110

@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "You can now manufacture bone gel by combining 10u of bone dust (obtainable by grinding any organic arm/leg [so no heads/chests]) and 10u of carbon, then heating to 673K."

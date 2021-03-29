@@ -2,10 +2,10 @@
 
 /datum/objective_item
 	var/name = "A silly bike horn! Honk!"
-	var/targetitem = /obj/item/bikehorn		//typepath of the objective item
-	var/difficulty = 9001							//vaguely how hard it is to do this objective
-	var/list/excludefromjob = list()				//If you don't want a job to get a certain objective (no captain stealing his own medal, etcetc)
-	var/list/altitems = list()				//Items which can serve as an alternative to the objective (darn you blueprints)
+	var/targetitem = /obj/item/bikehorn //typepath of the objective item
+	var/difficulty = 9001 //vaguely how hard it is to do this objective
+	var/list/excludefromjob = list() //If you don't want a job to get a certain objective (no captain stealing his own medal, etcetc)
+	var/list/altitems = list() //Items which can serve as an alternative to the objective (darn you blueprints)
 	var/list/special_equipment = list()
 
 /datum/objective_item/proc/check_special_completion() //for objectives with special checks (is that slime extract unused? does that intellicard have an ai in it? etcetc)
@@ -151,7 +151,7 @@
 		return TRUE
 	if(istype(I, /obj/item/photo))
 		var/obj/item/photo/P = I
-		if(P.picture.has_blueprints)	//if the blueprints are in frame
+		if(P.picture.has_blueprints) //if the blueprints are in frame
 			return TRUE
 	return FALSE
 
@@ -217,7 +217,7 @@
 
 /datum/objective_item/special/corgimeat
 	name = "a piece of corgi meat."
-	targetitem = /obj/item/reagent_containers/food/snacks/meat/slab/corgi
+	targetitem = /obj/item/food/meat/slab/corgi
 	difficulty = 5
 
 /datum/objective_item/stack/New()

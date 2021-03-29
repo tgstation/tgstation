@@ -1,8 +1,8 @@
 /**
-  *
-  * Allows parent (obj) to initiate surgeries.
-  *
-  */
+ *
+ * Allows parent (obj) to initiate surgeries.
+ *
+ */
 /datum/component/surgery_initiator
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///allows for post-selection manipulation of parent
@@ -31,16 +31,17 @@
 	  *
 	  */
 /datum/component/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
-	SIGNAL_HANDLER_DOES_SLEEP
-
+	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
+	INVOKE_ASYNC(src, .proc/do_initiate_surgery_moment, source, target, user)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/component/surgery_initiator/proc/do_initiate_surgery_moment(datum/source, atom/target, mob/user)
 	var/mob/living/livingtarget = target
 	var/mob/living/carbon/carbontarget
 	var/obj/item/bodypart/affecting
 	var/selected_zone = user.zone_selected
-	. = COMPONENT_ITEM_NO_ATTACK
-
 	if(iscarbon(livingtarget))
 		carbontarget = livingtarget
 		affecting = carbontarget.get_bodypart(check_zone(selected_zone))
@@ -69,7 +70,7 @@
 					continue
 			else if(carbontarget && surgeryloop_two.requires_bodypart) //mob with no limb in surgery zone when we need a limb
 				continue
-			if(surgeryloop_two.lying_required && (livingtarget.mobility_flags & MOBILITY_STAND))
+			if(surgeryloop_two.lying_required && livingtarget.body_position != LYING_DOWN)
 				continue
 			if(!surgeryloop_two.can_start(user, livingtarget))
 				continue
@@ -100,7 +101,7 @@
 					return
 			else if(carbontarget && surgeryinstance_notonmob.requires_bodypart)
 				return
-			if(surgeryinstance_notonmob.lying_required && (livingtarget.mobility_flags & MOBILITY_STAND))
+			if(surgeryinstance_notonmob.lying_required && livingtarget.body_position != LYING_DOWN)
 				return
 			if(!surgeryinstance_notonmob.can_start(user, livingtarget))
 				return

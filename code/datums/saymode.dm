@@ -9,59 +9,6 @@
 /datum/saymode/proc/handle_message(mob/living/user, message, datum/language/language)
 	return TRUE
 
-
-/datum/saymode/changeling
-	key = MODE_KEY_CHANGELING
-	mode = MODE_CHANGELING
-
-/datum/saymode/changeling/handle_message(mob/living/user, message, datum/language/language)
-	switch(user.lingcheck())
-		if(LINGHIVE_LINK)
-			var/msg = "<span class='changeling'><b>[user.mind]:</b> [message]</span>"
-			for(var/_M in GLOB.player_list)
-				var/mob/M = _M
-				if(M in GLOB.dead_mob_list)
-					var/link = FOLLOW_LINK(M, user)
-					to_chat(M, "[link] [msg]")
-				else
-					switch(M.lingcheck())
-						if (LINGHIVE_LING)
-							var/mob/living/L = M
-							if (!HAS_TRAIT(L, CHANGELING_HIVEMIND_MUTE))
-								to_chat(M, msg)
-						if(LINGHIVE_LINK)
-							to_chat(M, msg)
-						if(LINGHIVE_OUTSIDER)
-							if(prob(40))
-								to_chat(M, "<span class='changeling'>We can faintly sense an outsider trying to communicate through the hivemind...</span>")
-		if(LINGHIVE_LING)
-			if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
-				to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
-				return FALSE
-			var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-			var/msg = "<span class='changeling'><b>[changeling.changelingID]:</b> [message]</span>"
-			user.log_talk(message, LOG_SAY, tag="changeling [changeling.changelingID]")
-			for(var/_M in GLOB.player_list)
-				var/mob/M = _M
-				if(M in GLOB.dead_mob_list)
-					var/link = FOLLOW_LINK(M, user)
-					to_chat(M, "[link] [msg]")
-				else
-					switch(M.lingcheck())
-						if(LINGHIVE_LINK)
-							to_chat(M, msg)
-						if(LINGHIVE_LING)
-							var/mob/living/L = M
-							if (!HAS_TRAIT(L, CHANGELING_HIVEMIND_MUTE))
-								to_chat(M, msg)
-						if(LINGHIVE_OUTSIDER)
-							if(prob(40))
-								to_chat(M, "<span class='changeling'>We can faintly sense another of our kind trying to communicate through the hivemind...</span>")
-		if(LINGHIVE_OUTSIDER)
-			to_chat(user, "<span class='changeling'>Our senses have not evolved enough to be able to communicate this way...</span>")
-	return FALSE
-
-
 /datum/saymode/xeno
 	key = "a"
 	mode = MODE_ALIEN
@@ -80,7 +27,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		var/obj/item/organ/vocal_cords/V = C.getorganslot(ORGAN_SLOT_VOICE)
-		if(V && V.can_speak_with())
+		if(V?.can_speak_with())
 			V.handle_speech(message) //message
 			V.speak_with(message) //action
 	return FALSE
@@ -140,6 +87,7 @@
 
 /datum/saymode/mafia
 	key = "j"
+	mode = MODE_MAFIA
 
 /datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
 	var/datum/mafia_controller/MF = GLOB.mafia_game

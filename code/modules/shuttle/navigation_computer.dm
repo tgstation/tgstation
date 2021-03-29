@@ -3,6 +3,11 @@
 	desc = "Used to designate a precise transit location for a spacecraft."
 	jump_action = null
 	should_supress_view_changes  = FALSE
+
+	// Docking cameras should only interact with their current z-level.
+	move_up_action = null
+	move_down_action = null
+
 	var/datum/action/innate/shuttledocker_rotate/rotate_action = new
 	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
@@ -21,9 +26,18 @@
 	var/turf/designating_target_loc
 	var/jammed = FALSE
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	GLOB.navigation_computers += src
+
+	if(!mapload)
+		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
+
+		for(var/port_id in SSshuttle.stationary)
+			var/obj/docking_port/stationary/S = SSshuttle.stationary[port_id]
+			if(S.id == shuttleId)
+				jumpto_ports[S.id] = TRUE
+
 	for(var/V in SSshuttle.stationary)
 		if(!V)
 			continue
@@ -36,7 +50,7 @@
 	. = ..()
 	GLOB.navigation_computers -= src
 
-	if(my_port && my_port.get_docked())
+	if(my_port?.get_docked())
 		my_port.delete_after = TRUE
 		my_port.id = null
 		my_port.name = "Old [my_port.name]"
@@ -44,7 +58,7 @@
 	else
 		QDEL_NULL(my_port)
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user, list/modifiers)
 	if(jammed)
 		to_chat(user, "<span class='warning'>The Syndicate is jamming the console!</span>")
 		return
@@ -127,7 +141,7 @@
 	if(designate_time && (landing_clear != SHUTTLE_DOCKER_BLOCKED))
 		to_chat(current_user, "<span class='warning'>Targeting transit location, please wait [DisplayTimeText(designate_time)]...</span>")
 		designating_target_loc = the_eye.loc
-		var/wait_completed = do_after(current_user, designate_time, FALSE, designating_target_loc, TRUE, CALLBACK(src, /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget))
+		var/wait_completed = do_after(current_user, designate_time, designating_target_loc, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget))
 		designating_target_loc = null
 		if(!current_user)
 			return
@@ -145,7 +159,8 @@
 		return
 
 	///Make one use port that deleted after fly off, to don't lose info that need on to properly fly off.
-	if(my_port && my_port.get_docked())
+	if(my_port?.get_docked())
+		my_port.unregister()
 		my_port.delete_after = TRUE
 		my_port.id = null
 		my_port.name = "Old [my_port.name]"
@@ -153,6 +168,7 @@
 
 	if(!my_port)
 		my_port = new()
+		my_port.unregister()
 		my_port.name = shuttlePortName
 		my_port.id = shuttlePortId
 		my_port.height = shuttle_port.height
@@ -160,6 +176,7 @@
 		my_port.dheight = shuttle_port.dheight
 		my_port.dwidth = shuttle_port.dwidth
 		my_port.hidden = shuttle_port.hidden
+		my_port.register(TRUE)
 	my_port.setDir(the_eye.dir)
 	my_port.forceMove(locate(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.z))
 
@@ -267,12 +284,12 @@
 				return SHUTTLE_DOCKER_BLOCKED
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/update_hidden_docking_ports(list/remove_images, list/add_images)
-	if(!see_hidden && current_user && current_user.client)
+	if(!see_hidden && current_user?.client)
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	if(port && (shuttleId == initial(shuttleId) || override))
+/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	if(port)
 		shuttleId = port.id
 		shuttlePortId = "[port.id]_custom"
 	if(dock)
@@ -372,7 +389,7 @@
 			playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 			remote_eye.setLoc(T)
 			to_chat(target, "<span class='notice'>Jumped to [selected].</span>")
-			C.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
+			C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 			C.clear_fullscreen("flash", 3)
 	else
 		playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)

@@ -2,6 +2,7 @@
 	desc = "A silent, fast, and nigh-invisible miming exosuit. Popular among mimes and mime assassins."
 	name = "\improper reticence"
 	icon_state = "reticence"
+	base_icon_state = "reticence"
 	movedelay = 2
 	dir_in = 1 //Facing North.
 	max_integrity = 100
@@ -11,13 +12,11 @@
 	wreckage = /obj/structure/mecha_wreckage/reticence
 	operation_req_access = list(ACCESS_THEATRE)
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
-	mecha_flags =  CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
+	mecha_flags =  CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | QUIET_STEPS | QUIET_TURNS
 	internal_damage_threshold = 25
 	max_equip = 2
 	step_energy_drain = 3
 	color = "#87878715"
-	stepsound = null
-	turnsound = null
 
 /obj/vehicle/sealed/mecha/combat/reticence/loaded/Initialize()
 	. = ..()

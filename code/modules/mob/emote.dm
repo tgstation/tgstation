@@ -6,7 +6,7 @@
 #define BEYBLADE_CONFUSION_LIMIT 40 //A max for how penalized a carbon will be for beyblading
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE)
+/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
 	act = lowertext(act)
 	var/param = message
 	var/custom_param = findchar(act, " ")
@@ -17,7 +17,7 @@
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
-		if(intentional)
+		if(intentional && !force_silence)
 			to_chat(src, "<span class='notice'>'[act]' emote does not exist. Say *help for a list.</span>")
 		return FALSE
 	var/silenced = FALSE
@@ -28,16 +28,38 @@
 		if(P.run_emote(src, param, m_type, intentional))
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
 			return TRUE
-	if(intentional && !silenced)
+	if(intentional && !silenced && !force_silence)
 		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 	return FALSE
+
+/datum/emote/help
+	key = "help"
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai)
+
+/datum/emote/help/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	var/list/keys = list()
+	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
+
+	for(var/key in GLOB.emote_list)
+		for(var/datum/emote/P in GLOB.emote_list[key])
+			if(P.key in keys)
+				continue
+			if(P.can_run_emote(user, status_check = FALSE , intentional = TRUE))
+				keys += P.key
+
+	keys = sortList(keys)
+	message += keys.Join(", ")
+	message += "."
+	message = message.Join("")
+	to_chat(user, message)
 
 /datum/emote/flip
 	key = "flip"
 	key_third_person = "flips"
-	restraint_check = TRUE
+	hands_use_check = TRUE
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai)
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
@@ -69,7 +91,7 @@
 /datum/emote/spin
 	key = "spin"
 	key_third_person = "spins"
-	restraint_check = TRUE
+	hands_use_check = TRUE
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
 
@@ -77,19 +99,6 @@
 	. = ..()
 	if(.)
 		user.spin(20, 1)
-
-		if((iscyborg(user) || isanimal(user)) && user.has_buckled_mobs())
-			var/mob/living/L = user
-			var/datum/component/riding/riding_datum = L.GetComponent(/datum/component/riding)
-			if(riding_datum)
-				if(L.a_intent == INTENT_HELP)
-					for(var/mob/M in L.buckled_mobs)
-						riding_datum.force_dismount(M, TRUE)
-				else
-					for(var/mob/M in L.buckled_mobs)
-						riding_datum.force_dismount(M)
-			else
-				L.unbuckle_all_mobs()
 
 /datum/emote/spin/check_cooldown(mob/living/carbon/user, intentional)
 	. = ..()

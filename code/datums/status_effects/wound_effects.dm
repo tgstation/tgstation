@@ -1,27 +1,34 @@
 
 // The shattered remnants of your broken limbs fill you with determination!
-/obj/screen/alert/status_effect/determined
+/atom/movable/screen/alert/status_effect/determined
 	name = "Determined"
 	desc = "The serious wounds you've sustained have put your body into fight-or-flight mode! Now's the time to look for an exit!"
 	icon_state = "regenerative_core"
 
 /datum/status_effect/determined
 	id = "determined"
-	alert_type = /obj/screen/alert/status_effect/determined
+	alert_type = /atom/movable/screen/alert/status_effect/determined
 
 /datum/status_effect/determined/on_apply()
 	. = ..()
-	owner.visible_message("<span class='danger'>[owner] grits [owner.p_their()] teeth in pain!</span>", "<span class='notice'><b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	owner.visible_message("<span class='danger'>[owner]'s body tenses up noticeably, gritting against [owner.p_their()] pain!</span>", "<span class='notice'><b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b></span>", \
+		vision_distance=COMBAT_MESSAGE_RANGE)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.bleed_mod *= WOUND_DETERMINATION_BLEED_MOD
 
 /datum/status_effect/determined/on_remove()
 	owner.visible_message("<span class='danger'>[owner]'s body slackens noticeably!</span>", "<span class='warning'><b>Your adrenaline rush dies off, and the pain from your wounds come aching back in...</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.bleed_mod /= WOUND_DETERMINATION_BLEED_MOD
 	return ..()
 
 /datum/status_effect/limp
 	id = "limp"
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 10
-	alert_type = /obj/screen/alert/status_effect/limp
+	alert_type = /atom/movable/screen/alert/status_effect/limp
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 	/// The left leg of the limping person
 	var/obj/item/bodypart/l_leg/left
@@ -48,18 +55,18 @@
 /datum/status_effect/limp/on_remove()
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
 
-/obj/screen/alert/status_effect/limp
+/atom/movable/screen/alert/status_effect/limp
 	name = "Limping"
-	desc = "One or more of your legs has been wounded, slowing down steps with that leg! Get it fixed, or at least splinted!"
+	desc = "One or more of your legs has been wounded, slowing down steps with that leg! Get it fixed, or at least in a sling of gauze!"
 
 /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced)
 	SIGNAL_HANDLER
 
-	if(!owner.client || !(owner.mobility_flags & MOBILITY_STAND) || !owner.has_gravity() || (owner.movement_type & FLYING) || forced)
+	if(!owner.client || owner.body_position == LYING_DOWN || !owner.has_gravity() || (owner.movement_type & FLYING) || forced || owner.buckled)
 		return
-	var/determined_mod = 1
-	if(owner.has_status_effect(STATUS_EFFECT_DETERMINED))
-		determined_mod = 0.25
+	// less limping while we have determination still
+	var/determined_mod = owner.has_status_effect(STATUS_EFFECT_DETERMINED) ? 0.25 : 1
+
 	if(next_leg == left)
 		owner.client.move_delay += slowdown_left * determined_mod
 		next_leg = right
@@ -102,13 +109,17 @@
 /////////////////////////
 
 // wound alert
-/obj/screen/alert/status_effect/wound
+/atom/movable/screen/alert/status_effect/wound
 	name = "Wounded"
 	desc = "Your body has sustained serious damage, click here to inspect yourself."
 
-/obj/screen/alert/status_effect/wound/Click()
-	var/mob/living/carbon/C = usr
-	C.check_self_for_injuries()
+/atom/movable/screen/alert/status_effect/wound/Click()
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.check_self_for_injuries()
 
 // wound status effect base
 /datum/status_effect/wound

@@ -1,7 +1,7 @@
 
 #define GASMINER_POWER_NONE 0
 #define GASMINER_POWER_STATIC 1
-#define GASMINER_POWER_MOLES 2	//Scaled from here on down.
+#define GASMINER_POWER_MOLES 2 //Scaled from here on down.
 #define GASMINER_POWER_KPA 3
 #define GASMINER_POWER_FULLSCALE 4
 
@@ -22,7 +22,7 @@
 	var/active = TRUE
 	var/power_draw = 0
 	var/power_draw_static = 2000
-	var/power_draw_dynamic_mol_coeff = 5	//DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
+	var/power_draw_dynamic_mol_coeff = 5 //DO NOT USE DYNAMIC SETTINGS UNTIL SOMEONE MAKES A USER INTERFACE/CONTROLLER FOR THIS!
 	var/power_draw_dynamic_kpa_coeff = 0.5
 	var/broken = FALSE
 	var/broken_message = "ERROR"
@@ -31,7 +31,7 @@
 
 /obj/machinery/atmospherics/miner/Initialize()
 	. = ..()
-	set_active(active)				//Force overlay update.
+	set_active(active) //Force overlay update.
 
 /obj/machinery/atmospherics/miner/examine(mob/user)
 	. = ..()
@@ -72,12 +72,12 @@
 /obj/machinery/atmospherics/miner/proc/set_active(setting)
 	if(active != setting)
 		active = setting
-		update_icon()
+		update_appearance()
 
 /obj/machinery/atmospherics/miner/proc/set_broken(setting)
 	if(broken != setting)
 		broken = setting
-		update_icon()
+		update_appearance()
 
 /obj/machinery/atmospherics/miner/proc/update_power()
 	if(!active)
@@ -113,7 +113,9 @@
 	. = ..()
 	if(broken)
 		. += "broken"
-	else if(active)
+		return
+
+	if(active)
 		var/mutable_appearance/on_overlay = mutable_appearance(icon, "on")
 		on_overlay.color = overlay_color
 		. += on_overlay
@@ -136,7 +138,7 @@
 	merger.gases[spawn_id][MOLES] = spawn_mol * delta_time
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
-	O.air_update_turf(TRUE)
+	O.air_update_turf(FALSE, FALSE)
 
 /obj/machinery/atmospherics/miner/attack_ai(mob/living/silicon/user)
 	if(broken)
@@ -177,3 +179,73 @@
 	name = "\improper Water Vapor Gas Miner"
 	overlay_color = "#99928E"
 	spawn_id = /datum/gas/water_vapor
+
+/obj/machinery/atmospherics/miner/freon
+	name = "\improper Freon Gas Miner"
+	overlay_color = "#61edff"
+	spawn_id = /datum/gas/freon
+
+/obj/machinery/atmospherics/miner/halon
+	name = "\improper Halon Gas Miner"
+	overlay_color = "#5f0085"
+	spawn_id = /datum/gas/halon
+
+/obj/machinery/atmospherics/miner/healium
+	name = "\improper Healium Gas Miner"
+	overlay_color = "#da4646"
+	spawn_id = /datum/gas/healium
+
+/obj/machinery/atmospherics/miner/hydrogen
+	name = "\improper Hydrogen Gas Miner"
+	overlay_color = "#ffffff"
+	spawn_id = /datum/gas/hydrogen
+
+/obj/machinery/atmospherics/miner/hypernoblium
+	name = "\improper Hypernoblium Gas Miner"
+	overlay_color = "#00f7ff"
+	spawn_id = /datum/gas/hypernoblium
+
+/obj/machinery/atmospherics/miner/miasma
+	name = "\improper Miasma Gas Miner"
+	overlay_color = "#395806"
+	spawn_id = /datum/gas/miasma
+
+/obj/machinery/atmospherics/miner/nitryl
+	name = "\improper Nitryl Gas Miner"
+	overlay_color = "#752b00"
+	spawn_id = /datum/gas/nitryl
+
+/obj/machinery/atmospherics/miner/pluoxium
+	name = "\improper Pluoxium Gas Miner"
+	overlay_color = "#4b54a3"
+	spawn_id = /datum/gas/pluoxium
+
+/obj/machinery/atmospherics/miner/proto_nitrate
+	name = "\improper Proto-Nitrate Gas Miner"
+	overlay_color = "#00571d"
+	spawn_id = /datum/gas/proto_nitrate
+
+/obj/machinery/atmospherics/miner/stimulum
+	name = "\improper Stimulum Gas Miner"
+	overlay_color = "#d577dd"
+	spawn_id = /datum/gas/stimulum
+
+/obj/machinery/atmospherics/miner/tritium
+	name = "\improper Tritium Gas Miner"
+	overlay_color = "#15ff00"
+	spawn_id = /datum/gas/tritium
+
+/obj/machinery/atmospherics/miner/zauker
+	name = "\improper Zauker Gas Miner"
+	overlay_color = "#022e00"
+	spawn_id = /datum/gas/zauker
+
+/obj/machinery/atmospherics/miner/helium
+	name = "\improper Helium Gas Miner"
+	overlay_color = "#022e00"
+	spawn_id = /datum/gas/helium
+
+/obj/machinery/atmospherics/miner/antinoblium
+	name = "\improper Antinoblium Gas Miner"
+	overlay_color = "#022e00"
+	spawn_id = /datum/gas/antinoblium

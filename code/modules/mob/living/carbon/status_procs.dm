@@ -19,24 +19,26 @@
 	ADD_TRAIT(src, TRAIT_FLOORED, STAMINA)
 	if(getStaminaLoss() < 120) // Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
 		adjustStaminaLoss(30, FALSE)
-	update_mobility()
+
 
 /mob/living/carbon/adjust_drugginess(amount)
 	druggy = max(druggy+amount, 0)
 	if(druggy)
-		overlay_fullscreen("high", /obj/screen/fullscreen/high)
-		throw_alert("high", /obj/screen/alert/high)
+		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
+		throw_alert("high", /atom/movable/screen/alert/high)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high", /datum/mood_event/high)
+		sound_environment_override = SOUND_ENVIRONMENT_DRUGGED
 	else
 		clear_fullscreen("high")
 		clear_alert("high")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "high")
+		sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 /mob/living/carbon/set_drugginess(amount)
 	druggy = max(amount, 0)
 	if(druggy)
-		overlay_fullscreen("high", /obj/screen/fullscreen/high)
-		throw_alert("high", /obj/screen/alert/high)
+		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
+		throw_alert("high", /atom/movable/screen/alert/high)
 	else
 		clear_fullscreen("high")
 		clear_alert("high")

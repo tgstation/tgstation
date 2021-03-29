@@ -15,7 +15,7 @@
 
 /obj/structure/frame/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 5)
+		new /obj/item/stack/sheet/iron(loc, 5)
 		if(circuit)
 			circuit.forceMove(loc)
 			circuit = null
@@ -71,7 +71,7 @@
 		amt += req_components[path]
 	return amt
 
-/obj/structure/frame/machine/attackby(obj/item/P, mob/user, params)
+/obj/structure/frame/machine/attackby(obj/item/P, mob/living/user, params)
 	switch(state)
 		if(1)
 			if(istype(P, /obj/item/circuitboard/machine))
@@ -97,11 +97,15 @@
 				if(P.use_tool(src, user, 40, volume=50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
-						var/obj/item/stack/sheet/metal/M = new (loc, 5)
+						var/obj/item/stack/sheet/iron/M = new (loc, 5)
 						M.add_fingerprint(user)
 						qdel(src)
 				return
 			if(P.tool_behaviour == TOOL_WRENCH)
+				var/turf/ground = get_turf(src)
+				if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+					to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
+					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
 				if(P.use_tool(src, user, 40, volume=75))
 					if(state == 1)
@@ -176,29 +180,42 @@
 				return
 
 			if(P.tool_behaviour == TOOL_SCREWDRIVER)
-				var/component_check = 1
+				var/component_check = TRUE
 				for(var/R in req_components)
 					if(req_components[R] > 0)
-						component_check = 0
+						component_check = FALSE
 						break
 				if(component_check)
 					P.play_tool_sound(src)
-					var/obj/potential_machine = new circuit.build_path(loc)
-					if(ismachinery(potential_machine))
-						var/obj/machinery/new_machine = potential_machine
+					var/obj/machinery/new_machine = new circuit.build_path(loc)
+					if(istype(new_machine))
+						// Machines will init with a set of default components. Move to nullspace so we don't trigger handle_atom_del, then qdel.
+						// Finally, replace with this frame's parts.
 						if(new_machine.circuit)
+							// Move to nullspace and delete.
+							new_machine.circuit.moveToNullspace()
 							QDEL_NULL(new_machine.circuit)
-						new_machine.circuit = circuit
+						for(var/obj/old_part in new_machine.component_parts)
+							// Move to nullspace and delete.
+							old_part.moveToNullspace()
+							qdel(old_part)
+
+						// Set anchor state and move the frame's parts over to the new machine.
+						// Then refresh parts and call on_construction().
+
 						new_machine.set_anchored(anchored)
-						new_machine.on_construction()
-						for(var/obj/O in new_machine.component_parts)
-							qdel(O)
 						new_machine.component_parts = list()
-						for(var/obj/O in src)
-							O.moveToNullspace()
-							new_machine.component_parts += O
-						circuit.moveToNullspace()
+
+						circuit.forceMove(new_machine)
+						new_machine.component_parts += circuit
+						new_machine.circuit = circuit
+
+						for(var/obj/new_part in src)
+							new_part.forceMove(new_machine)
+							new_machine.component_parts += new_part
 						new_machine.RefreshParts()
+
+						new_machine.on_construction()
 					qdel(src)
 				return
 
@@ -232,12 +249,15 @@
 
 				for(var/obj/item/part in added_components)
 					if(istype(part,/obj/item/stack))
-						var/obj/item/stack/S = part
-						var/obj/item/stack/NS = locate(S.merge_type) in components //find a stack to merge with
-						if(NS)
-							S.merge(NS)
+						var/obj/item/stack/incoming_stack = part
+						for(var/obj/item/stack/merge_stack in components)
+							if(incoming_stack.can_merge(merge_stack))
+								incoming_stack.merge(merge_stack)
+								if(QDELETED(incoming_stack))
+									break
 					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
 						components += part
+						part.forceMove(src)
 					to_chat(user, "<span class='notice'>[part.name] applied.</span>")
 				if(added_components.len)
 					replacer.play_rped_sound()
@@ -270,7 +290,7 @@
 						return TRUE
 				to_chat(user, "<span class='warning'>You cannot add that to the machine!</span>")
 				return FALSE
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return ..()
 
 /obj/structure/frame/machine/deconstruct(disassembled = TRUE)

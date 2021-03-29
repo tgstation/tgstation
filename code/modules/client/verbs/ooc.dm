@@ -5,7 +5,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
@@ -56,12 +56,12 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	mob.log_talk(raw_msg, LOG_OOC)
 
 	var/keyname = key
-	if(prefs.hearted)
-		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
-		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
+	if(prefs.hearted)
+		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
+		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -104,17 +104,42 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	else
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
-/client/proc/set_ooc(newColor as color)
+
+/client/proc/set_ooc()
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"
 	set category = "Server"
-	GLOB.OOC_COLOR = sanitize_ooccolor(newColor)
+	if(IsAdminAdvancedProcCall())
+		return
+	var/newColor = input(src, "Please select the new player OOC color.", "OOC color") as color|null
+	if(isnull(newColor))
+		return
+	if(!check_rights(R_FUN))
+		message_admins("[usr.key] has attempted to use the Set Player OOC Color verb!")
+		log_admin("[key_name(usr)] tried to set player ooc color without authorization.")
+		return
+	var/new_color = sanitize_ooccolor(newColor)
+	message_admins("[key_name_admin(usr)] has set the players' ooc color to [new_color].")
+	log_admin("[key_name_admin(usr)] has set the player ooc color to [new_color].")
+	GLOB.OOC_COLOR = new_color
+
 
 /client/proc/reset_ooc()
 	set name = "Reset Player OOC Color"
 	set desc = "Returns player OOC Color to default"
 	set category = "Server"
+	if(IsAdminAdvancedProcCall())
+		return
+	if(alert(usr, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", "Yes", "No") != "Yes")
+		return
+	if(!check_rights(R_FUN))
+		message_admins("[usr.key] has attempted to use the Reset Player OOC Color verb!")
+		log_admin("[key_name(usr)] tried to reset player ooc color without authorization.")
+		return
+	message_admins("[key_name_admin(usr)] has reset the players' ooc color.")
+	log_admin("[key_name_admin(usr)] has reset player ooc color.")
 	GLOB.OOC_COLOR = null
+
 
 /client/verb/colorooc()
 	set name = "Set Your OOC Color"
@@ -125,11 +150,13 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			return
 
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
-	if(new_ooccolor)
-		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)
-		prefs.save_preferences()
+	if(isnull(new_ooccolor))
+		return
+	new_ooccolor = sanitize_ooccolor(new_ooccolor)
+	prefs.ooccolor = new_ooccolor
+	prefs.save_preferences()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set OOC Color") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
+
 
 /client/verb/resetcolorooc()
 	set name = "Reset Your OOC Color"
@@ -185,11 +212,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(usr, "<span class='notice'>Sorry, tracking is currently disabled.</span>")
 		return
 
-	var/list/body = list()
-	body += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime for [key]</title></head><BODY><BR>Playtime:"
-	body += get_exp_report()
-	body += "</BODY></HTML>"
-	usr << browse(body.Join(), "window=playerplaytime[ckey];size=550x615")
+	new /datum/job_report_menu(src, usr)
 
 // Ignore verb
 /client/verb/select_ignore()
@@ -227,9 +250,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 		// Check if both we and the player are ghosts and they're not using a fakekey
 		if(isobserver(mob) && isobserver(C.mob) && !C.holder?.fakekey)
-			// Show us the player's mob name in the list in front of their displayed key
+			// Show us if the player is a ghost or not after their displayed key
 			// Add the player's displayed key to the list
-			players["[C.mob]([displayed_key])"] = displayed_key
+			players["[displayed_key](ghost)"] = displayed_key
 
 		// Add the player's displayed key to the list if we or the player aren't a ghost or they're using a fakekey
 		else
@@ -316,7 +339,14 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set category = "OOC"
 	set desc = "View the last round end report you've seen"
 
-	SSticker.show_roundend_report(src, TRUE)
+	SSticker.show_roundend_report(src, report_type = PERSONAL_LAST_ROUND)
+
+/client/proc/show_servers_last_roundend_report()
+	set name = "Server's Last Round"
+	set category = "OOC"
+	set desc = "View the last round end report from this server"
+
+	SSticker.show_roundend_report(src, report_type = SERVER_LAST_ROUND)
 
 /client/verb/fit_viewport()
 	set name = "Fit Viewport"

@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, LabeledList, Modal, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
@@ -11,8 +10,7 @@ export const Holopad = (props, context) => {
   return (
     <Window
       width={440}
-      height={245}
-      resizable>
+      height={245}>
       {!!calling && (
         <Modal
           fontSize="36px"
@@ -61,15 +59,15 @@ const HolopadContent = (props, context) => {
     holo_calls = [],
   } = data;
   return (
-    <Fragment>
+    <>
       <Section
         title="Holopad"
         buttons={(
           <Button
             icon="bell"
             content={on_cooldown
-              ? "AI Presence Requested"
-              : "Request AI Presence"}
+              ? "AI's Presence Requested"
+              : "Request AI's Presence"}
             disabled={!on_network || on_cooldown}
             onClick={() => act('AIrequest')} />
         )} >
@@ -154,6 +152,6 @@ const HolopadContent = (props, context) => {
           </LabeledList>
         )}
       </Section>
-    </Fragment>
+    </>
   );
 };

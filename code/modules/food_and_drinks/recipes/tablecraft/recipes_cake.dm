@@ -7,7 +7,7 @@
 	name = "Carrot cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/carrot = 2
+		/obj/item/food/grown/carrot = 2
 	)
 	result = /obj/item/food/cake/carrot
 	subcategory = CAT_CAKE
@@ -16,7 +16,7 @@
 	name = "Cheese cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 2
+		/obj/item/food/cheese = 2
 	)
 	result = /obj/item/food/cake/cheese
 	subcategory = CAT_CAKE
@@ -25,7 +25,7 @@
 	name = "Apple cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/apple = 2
+		/obj/item/food/grown/apple = 2
 	)
 	result = /obj/item/food/cake/apple
 	subcategory = CAT_CAKE
@@ -34,7 +34,7 @@
 	name = "Orange cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/citrus/orange = 2
+		/obj/item/food/grown/citrus/orange = 2
 	)
 	result = /obj/item/food/cake/orange
 	subcategory = CAT_CAKE
@@ -43,7 +43,7 @@
 	name = "Lime cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/citrus/lime = 2
+		/obj/item/food/grown/citrus/lime = 2
 	)
 	result = /obj/item/food/cake/lime
 	subcategory = CAT_CAKE
@@ -52,7 +52,7 @@
 	name = "Lemon cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/citrus/lemon = 2
+		/obj/item/food/grown/citrus/lemon = 2
 	)
 	result = /obj/item/food/cake/lemon
 	subcategory = CAT_CAKE
@@ -61,7 +61,7 @@
 	name = "Chocolate cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 2
+		/obj/item/food/chocolatebar = 2
 	)
 	result = /obj/item/food/cake/chocolate
 	subcategory = CAT_CAKE
@@ -109,7 +109,7 @@
 	name = "Pumpkin spice cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/pumpkin = 2
+		/obj/item/food/grown/pumpkin = 2
 	)
 	result = /obj/item/food/cake/pumpkinspice
 	subcategory = CAT_CAKE
@@ -145,8 +145,8 @@
 	name = "blackberry and strawberry chocolate cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 2,
-		/obj/item/reagent_containers/food/snacks/grown/berries = 5
+		/obj/item/food/chocolatebar = 2,
+		/obj/item/food/grown/berries = 5
 	)
 	result = /obj/item/food/cake/bscc
 	subcategory = CAT_CAKE
@@ -155,7 +155,7 @@
 	name = "blackberry and strawberry vanilla cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/berries = 5
+		/obj/item/food/grown/berries = 5
 	)
 	result = /obj/item/food/cake/bsvc
 	subcategory = CAT_CAKE
@@ -165,8 +165,8 @@
 	always_available = FALSE
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/sundae = 2,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 5
+		/obj/item/food/sundae = 2,
+		/obj/item/food/grown/banana = 5
 	)
 	result = /obj/item/food/cake/clown_cake
 	subcategory = CAT_CAKE
@@ -176,7 +176,7 @@
 	always_available = FALSE
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/vanillapod = 2
+		/obj/item/food/grown/vanillapod = 2
 	)
 	result = /obj/item/food/cake/vanilla_cake
 	subcategory = CAT_CAKE
@@ -185,7 +185,7 @@
 	name = "Spaceman's Cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/trumpet = 2,
+		/obj/item/food/grown/trumpet = 2,
 		/datum/reagent/consumable/cream = 5,
 		/datum/reagent/consumable/berryjuice = 5
 	)
@@ -199,7 +199,7 @@
 		/obj/item/organ/brain = 1,
 		/obj/item/organ/heart = 1,
 		/obj/item/food/cake/birthday = 1,
-		/obj/item/reagent_containers/food/snacks/meat/slab = 3,
+		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 30,
 		/datum/reagent/consumable/sprinkles = 5,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life

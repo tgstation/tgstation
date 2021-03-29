@@ -43,14 +43,14 @@ namespace), then a longer paragraph which will be shown when the user clicks on
 the proc to jump to it's definition
 ```
 /**
-  * Short description of the proc
-  *
-  * Longer detailed paragraph about the proc
-  * including any relevant detail
-  * Arguments:
-  * * arg1 - Relevance of this argument
-  * * arg2 - Relevance of this argument
-  */
+ * Short description of the proc
+ *
+ * Longer detailed paragraph about the proc
+ * including any relevant detail
+ * Arguments:
+ * * arg1 - Relevance of this argument
+ * * arg2 - Relevance of this argument
+ */
 ```
 
 ### Documenting a class
@@ -62,15 +62,15 @@ Then we give a short oneline description of the class
 Finally we give a longer multi paragraph description of the class and it's details
 ```
 /**
-  * # Classname (Can be omitted if it's just going to be the typepath)
-  *
-  * The short overview
-  *
-  * A longer
-  * paragraph of functionality about the class
-  * including any assumptions/special cases
-  *
-  */
+ * # Classname (Can be omitted if it's just going to be the typepath)
+ *
+ * The short overview
+ *
+ * A longer
+ * paragraph of functionality about the class
+ * including any assumptions/special cases
+ *
+ */
 ```
 
 ### Documenting a variable/define

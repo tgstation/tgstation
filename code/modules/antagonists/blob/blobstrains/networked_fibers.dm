@@ -1,34 +1,31 @@
 //does massive brute and burn damage, but can only expand manually
 /datum/blobstrain/reagent/networked_fibers
 	name = "Networked Fibers"
-	description = "will do high brute and burn damage and will generate resources quicker, but can only expand manually using the core."
-	shortdesc = "will do high brute and burn damage."
-	effectdesc = "will move your core when manually expanding near it."
-	analyzerdescdamage = "Does high brute and burn damage."
-	analyzerdesceffect = "Is highly mobile and generates resources rapidly."
+	description = "will do a high mix of brute and burn damage, and will generate resources quicker, but can only expand manually using the core or nodes."
+	shortdesc = "will do a high mix of brute and burn damage."
+	effectdesc = "will move your core or node when manually expanding near it."
+	analyzerdescdamage = "Does a high mix of brute and burn damage."
+	analyzerdesceffect = "Is mobile and generates resources rapidly."
 	color = "#4F4441"
 	complementary_color = "#414C4F"
 	reagent = /datum/reagent/blob/networked_fibers
-	core_regen = 5
-	point_rate = 3
+	core_regen_bonus = 5
 
-/datum/blobstrain/reagent/networked_fibers/expand_reaction(obj/structure/blob/B, obj/structure/blob/newB, turf/T, mob/camera/blob/O)
-	if(!O && newB.overmind)
-		if(!istype(B, /obj/structure/blob/node))
-			newB.overmind.add_points(1)
-			qdel(newB)
-	else
-		var/area/A = get_area(T)
-		if(!isspaceturf(T) && !istype(A, /area/shuttle))
-			for(var/obj/structure/blob/core/C in range(1, newB))
-				if(C.overmind == O)
-					newB.forceMove(get_turf(C))
-					C.forceMove(T)
-					C.setDir(get_dir(newB, C))
-					O.add_points(1)
-					return
-			O.add_points(4)
-			qdel(newB)
+/datum/blobstrain/reagent/networked_fibers/expand_reaction(obj/structure/blob/spawning_blob, obj/structure/blob/new_blob, turf/chosen_turf, mob/camera/blob/overmind)
+	if(!overmind && new_blob.overmind)
+		new_blob.overmind.add_points(1)
+		qdel(new_blob)
+		return
+	if(isspaceturf(chosen_turf))
+		return
+	for(var/obj/structure/blob/possible_expander in range(1, new_blob))
+		if(possible_expander.overmind == overmind && (istype(possible_expander, /obj/structure/blob/special/core) || istype(possible_expander, /obj/structure/blob/special/node)))
+			new_blob.forceMove(get_turf(possible_expander))
+			possible_expander.forceMove(chosen_turf)
+			possible_expander.setDir(get_dir(new_blob, possible_expander))
+			return
+	overmind.add_points(4)
+	qdel(new_blob)
 
 //does massive brute and burn damage, but can only expand manually
 /datum/reagent/blob/networked_fibers

@@ -79,7 +79,8 @@
 	return data
 
 /obj/machinery/telecomms/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if(!issilicon(usr))
@@ -92,7 +93,7 @@
 		if("toggle")
 			toggled = !toggled
 			update_power()
-			update_icon()
+			update_appearance()
 			log_game("[key_name(operator)] toggled [toggled ? "On" : "Off"] [src] at [AREACOORD(src)].")
 			. = TRUE
 		if("id")

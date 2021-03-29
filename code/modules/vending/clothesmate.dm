@@ -119,7 +119,9 @@
 		              /obj/item/clothing/suit/jacket/letterman_syndie = 1,
 		              /obj/item/clothing/under/costume/jabroni = 1,
 		              /obj/item/clothing/suit/vapeshirt = 1,
-		              /obj/item/clothing/under/costume/geisha = 1)
+		              /obj/item/clothing/under/costume/geisha = 1,
+					  /obj/item/clothing/under/rank/centcom/officer/replica = 1,
+					  /obj/item/clothing/under/rank/centcom/officer_skirt/replica = 1)
 	premium = list(/obj/item/clothing/under/suit/checkered = 1,
 		           /obj/item/clothing/head/mailman = 1,
 		           /obj/item/clothing/under/misc/mailman = 1,
@@ -128,10 +130,12 @@
 		           /obj/item/clothing/under/pants/mustangjeans = 1,
 		           /obj/item/clothing/neck/necklace/dope = 3,
 		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1,
+				   /obj/item/clothing/under/costume/swagoutfit = 1,
+				   /obj/item/clothing/shoes/swagshoes = 1,
 		           /obj/item/instrument/piano_synth/headphones/spacepods = 1)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = 60
-	extra_price = 120
+	default_price = PAYCHECK_ASSISTANT * 0.7 //Default of
+	extra_price = PAYCHECK_HARD
 	payment_department = NO_FREEBIES
 	light_mask = "wardrobe-light-mask"
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN

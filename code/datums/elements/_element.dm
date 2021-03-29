@@ -1,9 +1,9 @@
 /**
-  * A holder for simple behaviour that can be attached to many different types
-  *
-  * Only one element of each type is instanced during game init.
-  * Otherwise acts basically like a lightweight component.
-  */
+ * A holder for simple behaviour that can be attached to many different types
+ *
+ * Only one element of each type is instanced during game init.
+ * Otherwise acts basically like a lightweight component.
+ */
 /datum/element
 	/// Option flags for element behaviour
 	var/element_flags = NONE
@@ -49,9 +49,9 @@
 		CRASH("Incompatible [arguments[1]] assigned to a [type]! args: [json_encode(args)]")
 
 /**
-  * Finds the singleton for the element type given and detaches it from src
-  * You only need additional arguments beyond the type if you're using [ELEMENT_BESPOKE]
-  */
+ * Finds the singleton for the element type given and detaches it from src
+ * You only need additional arguments beyond the type if you're using [ELEMENT_BESPOKE]
+ */
 /datum/proc/_RemoveElement(list/arguments)
 	var/datum/element/ele = SSdcs.GetElement(arguments)
 	ele.Detach(src)

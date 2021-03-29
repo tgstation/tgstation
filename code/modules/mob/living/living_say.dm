@@ -26,37 +26,47 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Misc
 	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
-	MODE_KEY_VOCALCORDS = MODE_VOCALCORDS,		// vocal cords, used by Voice of God
 
 
 	//kinda localization -- rastaf0
-	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
+	//same keys as above, but on russian keyboard layout.
 	// Location
-	"ê" = MODE_R_HAND,
-	"ä" = MODE_L_HAND,
-	"ø" = MODE_INTERCOM,
+	"к" = MODE_R_HAND,
+	"л" = MODE_L_HAND,
+	"ш" = MODE_INTERCOM,
 
 	// Department
-	"ð" = MODE_DEPARTMENT,
-	"ñ" = RADIO_CHANNEL_COMMAND,
-	"ò" = RADIO_CHANNEL_SCIENCE,
-	"ü" = RADIO_CHANNEL_MEDICAL,
-	"ó" = RADIO_CHANNEL_ENGINEERING,
-	"û" = RADIO_CHANNEL_SECURITY,
-	"ã" = RADIO_CHANNEL_SUPPLY,
-	"ì" = RADIO_CHANNEL_SERVICE,
+	"р" = MODE_DEPARTMENT,
+	"с" = RADIO_CHANNEL_COMMAND,
+	"т" = RADIO_CHANNEL_SCIENCE,
+	"ь" = RADIO_CHANNEL_MEDICAL,
+	"у" = RADIO_CHANNEL_ENGINEERING,
+	"ы" = RADIO_CHANNEL_SECURITY,
+	"г" = RADIO_CHANNEL_SUPPLY,
+	"м" = RADIO_CHANNEL_SERVICE,
 
 	// Faction
-	"å" = RADIO_CHANNEL_SYNDICATE,
-	"í" = RADIO_CHANNEL_CENTCOM,
+	"е" = RADIO_CHANNEL_SYNDICATE,
+	"н" = RADIO_CHANNEL_CENTCOM,
 
 	// Admin
-	"ç" = MODE_ADMIN,
-	"â" = MODE_ADMIN,
+	"з" = MODE_ADMIN,
+	"в" = MODE_KEY_DEADMIN,
 
 	// Misc
-	"ù" = RADIO_CHANNEL_AI_PRIVATE,
-	"÷" = MODE_VOCALCORDS
+	"щ" = RADIO_CHANNEL_AI_PRIVATE
+))
+
+/**
+ * Whitelist of saymodes or radio extensions that can be spoken through even if not fully conscious.
+ * Associated values are their maximum allowed mob stats.
+ */
+GLOBAL_LIST_INIT(message_modes_stat_limits, list(
+	MODE_INTERCOM = HARD_CRIT,
+	MODE_ALIEN = HARD_CRIT,
+	MODE_BINARY = HARD_CRIT, //extra stat check on human/binarycheck()
+	MODE_MONKEY = HARD_CRIT,
+	MODE_MAFIA = HARD_CRIT
 ))
 
 /mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
@@ -117,14 +127,21 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(stat != DEAD && check_emote(original_message, forced))
 		return
 
+	// Checks if the saymode or channel extension can be used even if not totally conscious.
+	var/say_radio_or_mode = saymode || message_mods[RADIO_EXTENSION]
+	if(say_radio_or_mode)
+		var/mob_stat_limit = GLOB.message_modes_stat_limits[say_radio_or_mode]
+		if(stat > (isnull(mob_stat_limit) ? CONSCIOUS : mob_stat_limit))
+			saymode = null
+			message_mods -= RADIO_EXTENSION
+
 	switch(stat)
 		if(SOFT_CRIT)
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 		if(UNCONSCIOUS)
-			if(!(message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
-				return
+			return
 		if(HARD_CRIT)
-			if(!(message_mods[WHISPER_MODE] || message_mods[MODE_CHANGELING] || message_mods[MODE_ALIEN]))
+			if(!message_mods[WHISPER_MODE])
 				return
 		if(DEAD)
 			say_dead(original_message)
@@ -277,23 +294,23 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			var/empty_indexes = get_empty_held_indexes() //How many hands the player has empty
 			if(length(empty_indexes) == 1 || !mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))
 				message = stars(message)
-			if(length(empty_indexes) == 0)//Both hands full, can't sign
-				to_chat(src, "<span class='warning'>You can't sign with your hands full!</span.?>")
+			if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && (!mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))))//All existing hands full, can't sign
+				mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!</span.?>", visible_message_flags = EMOTE_MESSAGE)
 				return FALSE
 			if(!mute.get_bodypart(BODY_ZONE_L_ARM) && !mute.get_bodypart(BODY_ZONE_R_ARM))//Can't sign with no arms!
 				to_chat(src, "<span class='warning'>You can't sign with no hands!</span.?>")
 				return FALSE
 			if(mute.handcuffed)//Can't sign when your hands are cuffed, but can at least make a visual effort to
-				mute.visible_message("<span class='warning'>[src] tries to sign, but can't with [src.p_their()] hands cuffed!</span.?>")
+				mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!</span.?>", visible_message_flags = EMOTE_MESSAGE)
 				return FALSE
-			if(mute.has_status_effect(STATUS_EFFECT_PARALYZED))
-				to_chat(src, "<span class='warning'>You can't sign in this state!</span.?>")
+			if(HAS_TRAIT(mute, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(mute, TRAIT_EMOTEMUTE))
+				to_chat(src, "<span class='warning'>You can't sign at the moment!</span.?>")
 				return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/_M in GLOB.player_list)
 			var/mob/M = _M
-			if(QDELETED(M))	//Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
-				continue	//Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
+			if(QDELETED(M)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
+				continue //Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
 			if(M.stat != DEAD) //not dead, not important
 				continue
 			if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
@@ -384,7 +401,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/radio(message, list/message_mods = list(), list/spans, language)
 	var/obj/item/implant/radio/imp = locate() in src
-	if(imp && imp.radio.on)
+	if(imp?.radio.on)
 		if(message_mods[MODE_HEADSET])
 			imp.radio.talk_into(src, message, , spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
@@ -407,9 +424,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			for (var/obj/item/radio/intercom/I in view(MODE_RANGE_INTERCOM, null))
 				I.talk_into(src, message, , spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
-
-		if(MODE_BINARY)
-			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
 
 	return 0
 

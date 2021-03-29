@@ -102,7 +102,7 @@
 	hidden = TRUE
 
 /datum/mood_event/heretics
-	description = "<span class='nicegreen'>THE HIGHER I RISE , THE MORE I SEE.</span>\n"
+	description = "<span class='nicegreen'>THE HIGHER I RISE, THE MORE I SEE.</span>\n"
 	mood_change = 10 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
 
@@ -138,7 +138,7 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/religiously_comforted
-	description = "<span class='nicegreen'>You are comforted by the presence of a holy person.</span>\n"
+	description = "<span class='nicegreen'>I feel comforted by the presence of a holy person.</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
 
@@ -203,3 +203,36 @@
 	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
 	mood_change = 5
 	timeout = 3 MINUTES
+
+/datum/mood_event/high_five
+	description = "<span class='nicegreen'>I love getting high fives!</span>\n"
+	mood_change = 2
+	timeout = 45 SECONDS
+
+/datum/mood_event/high_ten
+	description = "<span class='nicegreen'>AMAZING! A HIGH-TEN!</span>\n"
+	mood_change = 3
+	timeout = 45 SECONDS
+
+/datum/mood_event/down_low
+	description = "<span class='nicegreen'>HA! What a rube, they never stood a chance...</span>\n"
+	mood_change = 4
+	timeout = 90 SECONDS
+
+/datum/mood_event/aquarium_positive
+	description = "<span class='nicegreen'>Watching fish in an aquarium is calming.</span>\n"
+	mood_change = 3
+	timeout = 90 SECONDS
+
+/datum/mood_event/gondola
+	description = "<span class='nicegreen'>I feel at peace and feel no need to make any sudden or rash actions.</span>\n"
+	mood_change = 6
+
+/datum/mood_event/kiss
+	description = "<span class='nicegreen'>Someone blew a kiss at me, I must be a real catch!</span>\n"
+	mood_change = 1.5
+	timeout = 2 MINUTES
+
+/datum/mood_event/kiss/add_effects(mob/beau)
+	if(beau)
+		description = "<span class='nicegreen'>[beau.name] blew a kiss at me, I must be a real catch!</span>\n"

@@ -1,9 +1,9 @@
-#define SIZE_DOESNT_MATTER 	-1
-#define BABIES_ONLY			0
-#define ADULTS_ONLY			1
+#define SIZE_DOESNT_MATTER -1
+#define BABIES_ONLY 0
+#define ADULTS_ONLY 1
 
-#define NO_GROWTH_NEEDED	0
-#define GROWTH_NEEDED		1
+#define NO_GROWTH_NEEDED 0
+#define GROWTH_NEEDED 1
 
 /datum/action/innate/slime
 	check_flags = AB_CHECK_CONSCIOUS
@@ -140,6 +140,8 @@
 			amount_grown = 0
 			for(var/datum/action/innate/slime/evolve/E in actions)
 				E.Remove(src)
+			var/datum/action/innate/slime/reproduce/reproduce_action = new
+			reproduce_action.Grant(src)
 			regenerate_icons()
 			update_name()
 		else
@@ -155,9 +157,6 @@
 /datum/action/innate/slime/evolve/Activate()
 	var/mob/living/simple_animal/slime/S = owner
 	S.Evolve()
-	if(S.is_adult)
-		var/datum/action/innate/slime/reproduce/A = new
-		A.Grant(S)
 
 /mob/living/simple_animal/slime/verb/Reproduce()
 	set category = "Slime"
@@ -204,7 +203,7 @@
 					SEND_SIGNAL(M, COMSIG_NANITE_SYNC, original_nanites, TRUE, TRUE) //The trues are to copy activation as well
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
-			new_slime.a_intent = INTENT_HARM
+			new_slime.set_combat_mode(TRUE)
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else

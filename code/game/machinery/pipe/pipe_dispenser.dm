@@ -8,8 +8,8 @@
 	var/wait = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
-/obj/machinery/pipedispenser/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/machinery/pipedispenser/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/machinery/pipedispenser/ui_interact(mob/user)
 	. = ..()
@@ -35,7 +35,7 @@
 	if(..())
 		return 1
 	var/mob/living/L = usr
-	if(!anchored || (istype(L) && !(L.mobility_flags & MOBILITY_UI)) || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(!anchored || (istype(L) && !(L.mobility_flags & MOBILITY_UI)) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
 		return 1
 	usr.set_machine(src)
@@ -148,7 +148,7 @@
 			if(href_list["dir"])
 				C.setDir(text2num(href_list["dir"]))
 			C.add_fingerprint(usr)
-			C.update_icon()
+			C.update_appearance()
 			wait = world.time + 15
 	return
 

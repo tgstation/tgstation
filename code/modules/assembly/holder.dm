@@ -1,7 +1,7 @@
 /obj/item/assembly_holder
 	name = "Assembly"
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
-	icon_state = "holder"
+	icon_state = "assembly_holder"
 	inhand_icon_state = "assembly"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
@@ -27,7 +27,7 @@
 	attach(A,user)
 	attach(A2,user)
 	name = "[A.name]-[A2.name] assembly"
-	update_icon()
+	update_appearance()
 	SSblackbox.record_feedback("tally", "assembly_made", 1, "[initial(A.name)]-[initial(A2.name)]")
 
 /obj/item/assembly_holder/proc/attach(obj/item/assembly/A, mob/user)
@@ -44,27 +44,31 @@
 		a_right = A
 	A.holder_movement()
 
-/obj/item/assembly_holder/update_icon()
-	cut_overlays()
+/obj/item/assembly_holder/update_appearance(updates=ALL)
+	. = ..()
+	master?.update_appearance(updates)
+
+/obj/item/assembly_holder/update_overlays()
+	. = ..()
 	if(a_left)
-		add_overlay("[a_left.icon_state]_left")
-		for(var/O in a_left.attached_overlays)
-			add_overlay("[O]_l")
+		. += "[a_left.icon_state]_left"
+		for(var/left_overlay in a_left.attached_overlays)
+			. += "[left_overlay]_l"
 
-	if(a_right)
-		if(a_right.is_position_sensitive)
-			add_overlay("[a_right.icon_state]_right")
-			for(var/O in a_right.attached_overlays)
-				add_overlay("[O]_r")
-		else
-			var/mutable_appearance/right = mutable_appearance(icon, "[a_right.icon_state]_left")
-			right.transform = matrix(-1, 0, 0, 0, 1, 0)
-			for(var/O in a_right.attached_overlays)
-				right.add_overlay("[O]_l")
-			add_overlay(right)
+	if(!a_right)
+		return
 
-	if(master)
-		master.update_icon()
+	if(a_right.is_position_sensitive)
+		. += "[a_right.icon_state]_right"
+		for(var/right_overlay in a_right.attached_overlays)
+			. += "[right_overlay]_r"
+		return
+
+	var/mutable_appearance/right = mutable_appearance(icon, "[a_right.icon_state]_left")
+	right.transform = matrix(-1, 0, 0, 0, 1, 0)
+	for(var/right_overlay in a_right.attached_overlays)
+		right.add_overlay("[right_overlay]_l")
+	. += right
 
 /obj/item/assembly_holder/Crossed(atom/movable/AM as mob|obj)
 	. = ..()
@@ -93,7 +97,7 @@
 	if(a_right)
 		a_right.dropped()
 
-/obj/item/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
+/obj/item/assembly_holder/attack_hand(mob/living/user, list/modifiers)//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	. = ..()
 	if(.)
 		return
