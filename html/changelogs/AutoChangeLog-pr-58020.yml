@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Fixes runtime in turf destruction that could cause transparent turfs to render incorrectly."
