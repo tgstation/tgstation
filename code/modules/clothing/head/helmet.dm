@@ -17,13 +17,8 @@
 
 	var/can_flashlight = FALSE //if a flashlight can be mounted. if it has a flashlight and this is false, it is permanently attached.
 	var/obj/item/flashlight/seclite/attached_light
-	var/datum/action/item_action/toggle_helmet_flashlight/alight
-
-/obj/item/clothing/head/helmet/Initialize()
-	. = ..()
-	if(attached_light)
-		alight = new(src)
-
+	///Used for creating the examine message provided based on what you are toggling with a can_toggle helmet
+	var/toggle_description = null
 
 /obj/item/clothing/head/helmet/Destroy()
 	var/obj/item/flashlight/seclite/old_light = set_attached_light(null)
@@ -35,11 +30,13 @@
 /obj/item/clothing/head/helmet/examine(mob/user)
 	. = ..()
 	if(attached_light)
-		. += "It has \a [attached_light] [can_flashlight ? "" : "permanently "]mounted on it."
+		. += "It has \a [attached_light] [can_flashlight ? "" : "permanently "]mounted on it. Right click with an empty active hand to toggle it."
 		if(can_flashlight)
 			. += "<span class='info'>[attached_light] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_flashlight)
 		. += "It has a mounting point for a <b>seclite</b>."
+	if(can_toggle)
+		. += "<span class='notice'>Right click on it with an empty active hand to [toggle_description].</span>"
 
 
 /obj/item/clothing/head/helmet/handle_atom_del(atom/A)
@@ -47,7 +44,6 @@
 		set_attached_light(null)
 		update_helmlight()
 		update_appearance()
-		QDEL_NULL(alight)
 		qdel(A)
 	return ..()
 
@@ -114,42 +110,28 @@
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	inhand_icon_state = "helmet"
+	toggle_description = "adjust the visor"
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80, WOUND = 15)
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
 	strip_delay = 80
-	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEFACE|HIDESNOUT
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	dog_fashion = null
 
-/obj/item/clothing/head/helmet/attack_self(mob/user)
-	if(can_toggle && !user.incapacitated())
-		if(world.time > cooldown + toggle_cooldown)
-			cooldown = world.time
-			up = !up
-			flags_1 ^= visor_flags
-			flags_inv ^= visor_flags_inv
-			flags_cover ^= visor_flags_cover
-			icon_state = "[initial(icon_state)][up ? "up" : ""]"
-			to_chat(user, "<span class='notice'>[up ? alt_toggle_message : toggle_message] \the [src].</span>")
 
-			user.update_inv_head()
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.head_update(src, forced = 1)
 
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"
 	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
 	icon_state = "justice"
+	toggle_description = "toggle the lights"
 	toggle_message = "You turn off the lights on"
 	alt_toggle_message = "You turn on the lights on"
-	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	can_toggle = 1
 	toggle_cooldown = 20
 	dog_fashion = null
@@ -164,12 +146,13 @@
 	QDEL_NULL(weewooloop)
 	return ..()
 
-/obj/item/clothing/head/helmet/justice/attack_self(mob/user)
+/obj/item/clothing/head/helmet/justice/attack_hand_secondary(mob/user, params)
 	. = ..()
 	if(up)
 		weewooloop.start()
 	else
 		weewooloop.stop()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/head/helmet/justice/escape
 	name = "alarm helmet"
@@ -508,11 +491,23 @@
 	icon_state = state
 	return ..()
 
-/obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
-	if(istype(action, alight))
+/obj/item/clothing/head/helmet/attack_hand_secondary(mob/user, params)
+	if(can_toggle && !user.incapacitated()) //For visored helmets like riot helmets and... the justice helmet...
+		if(world.time > cooldown + toggle_cooldown)
+			cooldown = world.time
+			up = !up
+			flags_1 ^= visor_flags
+			flags_inv ^= visor_flags_inv
+			flags_cover ^= visor_flags_cover
+			icon_state = "[initial(icon_state)][up ? "up" : ""]"
+			to_chat(user, "<span class='notice'>[up ? alt_toggle_message : toggle_message] \the [src].</span>")
+			user.update_inv_head()
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.head_update(src, forced = 1)
+	if(attached_light) //For helmets with flashlights
 		toggle_helmlight()
-	else
-		..()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/flashlight/seclite))
@@ -524,9 +519,6 @@
 			set_attached_light(S)
 			update_appearance()
 			update_helmlight()
-			alight = new(src)
-			if(loc == user)
-				alight.Grant(user)
 		return
 	return ..()
 
@@ -544,7 +536,6 @@
 		removed_light.update_brightness(user)
 		update_appearance()
 		user.update_inv_head()
-		QDEL_NULL(alight)
 		return TRUE
 
 /obj/item/clothing/head/helmet/proc/toggle_helmlight()

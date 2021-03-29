@@ -23,7 +23,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
-	actions_types = list(/datum/action/item_action/toggle_light)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
@@ -106,6 +105,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if((!isnull(cartridge)))
 		. += "<span class='notice'>Ctrl+Shift-click to remove the cartridge.</span>" //won't name cart on examine in case it's Detomatix
+	. += "<span class='notice'>Right click on it with an empty active hand to toggle its light.</span>"
 
 /obj/item/pda/Initialize()
 	. = ..()
@@ -856,13 +856,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	..()
 	eject_cart(user)
 
-/obj/item/pda/verb/verb_toggle_light()
-	set name = "Toggle light"
-	set category = "Object"
-	set src in oview(1)
-
-	toggle_light(usr)
-
 /obj/item/pda/verb/verb_remove_id()
 	set category = "Object"
 	set name = "Eject ID"
@@ -886,6 +879,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	set src in usr
 
 	eject_cart(usr)
+
+/obj/item/pda/attack_hand_secondary(mob/user, params)
+	toggle_light(user)
+	if(!silent)
+		playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pda/proc/toggle_light(mob/user)
 	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE))

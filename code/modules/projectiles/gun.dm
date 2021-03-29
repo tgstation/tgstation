@@ -57,7 +57,6 @@
 
 	var/can_flashlight = FALSE //if a flashlight can be added or removed if it already has one.
 	var/obj/item/flashlight/seclite/gun_light
-	var/datum/action/item_action/toggle_gunlight/alight
 	var/gunlight_state = "flight"
 
 	var/can_bayonet = FALSE //if a bayonet can be added or removed if it already has one.
@@ -82,8 +81,6 @@
 	. = ..()
 	if(pin)
 		pin = new pin(src)
-	if(gun_light)
-		alight = new(src)
 	build_zooming()
 
 /obj/item/gun/Destroy()
@@ -131,7 +128,7 @@
 		. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
 
 	if(gun_light)
-		. += "It has \a [gun_light] [can_flashlight ? "" : "permanently "]mounted on it."
+		. += "It has \a [gun_light] [can_flashlight ? "" : "permanently "]mounted on it. Right click with an empty active hand to toggle it."
 		if(can_flashlight) //if it has a light and this is false, the light is permanent.
 			. += "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_flashlight)
@@ -412,9 +409,6 @@
 			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 			set_gun_light(S)
 			update_gunlight()
-			alight = new(src)
-			if(loc == user)
-				alight.Grant(user)
 	else if(istype(I, /obj/item/kitchen/knife))
 		var/obj/item/kitchen/knife/K = I
 		if(!can_bayonet || !K.bayonet || bayonet) //ensure the gun has an attachment point available, and that the knife is compatible with it.
@@ -520,7 +514,6 @@
 	set_gun_light(null)
 	update_gunlight()
 	removed_light.update_brightness()
-	QDEL_NULL(alight)
 	return TRUE
 
 
@@ -552,11 +545,9 @@
 
 	gun_light = new_light
 
-/obj/item/gun/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, alight))
-		toggle_gunlight()
-	else
-		..()
+/obj/item/gun/attack_hand_secondary(mob/user, params)
+	toggle_gunlight()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/proc/toggle_gunlight()
 	if(!gun_light)

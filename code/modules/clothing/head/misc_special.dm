@@ -24,15 +24,18 @@
 	tint = 2
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 60)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
-	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT
 
-/obj/item/clothing/head/welding/attack_self(mob/user)
+/obj/item/clothing/head/welding/attack_hand_secondary(mob/user, params)
 	weldingvisortoggle(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/clothing/head/welding/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click with an empty active hand to adjust it.</span>"
 /*
  * Cakehat
  */

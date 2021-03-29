@@ -39,15 +39,19 @@
 	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
 	tint = 2
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 55)
-	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/mask/gas/welding/attack_self(mob/user)
+/obj/item/clothing/mask/gas/welding/attack_hand_secondary(mob/user, params)
 	weldingvisortoggle(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/clothing/mask/gas/welding/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click with an empty active hand to adjust its visor.</span>"
 
 /obj/item/clothing/mask/gas/welding/up
 
@@ -82,7 +86,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	actions_types = list(/datum/action/item_action/adjust)
+
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
 	var/list/clownmask_designs = list()
@@ -98,9 +102,7 @@
 		)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
-/obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
-	if(!istype(user) || user.incapacitated())
-		return
+/obj/item/clothing/mask/gas/clown_hat/attack_hand_secondary(mob/user, params)
 
 	var/list/options = list()
 	options["True Form"] = "clown"
@@ -111,7 +113,7 @@
 
 	var/choice = show_radial_menu(user,src, clownmask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)
-		return FALSE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -120,7 +122,11 @@
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
 		to_chat(user, "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
-		return TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/clothing/mask/gas/clown_hat/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click on it with an empty active hand to adjust it.</span>"
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
@@ -141,7 +147,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
 	var/list/mimemask_designs = list()
 
@@ -154,9 +159,9 @@
 		"Effrayé" = image(icon = src.icon, icon_state = "scaredmime")
 		)
 
-/obj/item/clothing/mask/gas/mime/ui_action_click(mob/user)
+/obj/item/clothing/mask/gas/mime/attack_hand_secondary(mob/user, params)
 	if(!istype(user) || user.incapacitated())
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/list/options = list()
 	options["Blanc"] = "mime"
@@ -166,7 +171,7 @@
 
 	var/choice = show_radial_menu(user,src, mimemask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)
-		return FALSE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -175,7 +180,7 @@
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
 		to_chat(user, "<span class='notice'>Your Mime Mask has now morphed into [choice]!</span>")
-		return TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"

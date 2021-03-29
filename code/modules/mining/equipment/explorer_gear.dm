@@ -42,12 +42,8 @@
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
-	actions_types = list(/datum/action/item_action/adjust)
 	armor = list(MELEE = 10, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 0, BIO = 50, RAD = 0, FIRE = 20, ACID = 40, WOUND = 5)
 	resistance_flags = FIRE_PROOF
-
-/obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
-	adjustmask(user)
 
 /obj/item/clothing/mask/gas/explorer/adjustmask(user)
 	..()
@@ -56,6 +52,14 @@
 /obj/item/clothing/mask/gas/explorer/folded/Initialize()
 	. = ..()
 	adjustmask()
+
+/obj/item/clothing/mask/gas/explorer/attack_hand_secondary(mob/user, params)
+	adjustmask(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/clothing/mask/gas/explorer/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click on it with an empty active hand to adjust it.</span>"
 
 /obj/item/clothing/suit/space/hostile_environment
 	name = "H.E.C.K. suit"

@@ -139,7 +139,7 @@
 	var/datum/component/storage/active_storage
 	/// Active hud
 	var/datum/hud/hud_used = null
-	/// I have no idea tbh
+	/// Used to determine if the mob can see additional research/material information when examining something when wearing science goggles
 	var/research_scanner = FALSE
 
 	/// Is the mob throw intent on

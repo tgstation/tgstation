@@ -5,7 +5,6 @@
 	inhand_icon_state = "hardhat0_yellow"
 	armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 10, BOMB = 20, BIO = 10, RAD = 20, FIRE = 100, ACID = 50, WOUND = 10) // surprisingly robust against head trauma
 	flags_inv = 0
-	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	clothing_flags = SNUG_FIT
 	resistance_flags = FIRE_PROOF
 	dynamic_hair_suffix = "+generic"
@@ -25,8 +24,13 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/clothing/head/hardhat/attack_self(mob/living/user)
+/obj/item/clothing/head/hardhat/attack_hand_secondary(mob/user, params)
 	toggle_helmet_light(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/clothing/head/hardhat/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click on it with an empty active hand to toggle its light.</span>"
 
 /obj/item/clothing/head/hardhat/proc/toggle_helmet_light(mob/living/user)
 	on = !on

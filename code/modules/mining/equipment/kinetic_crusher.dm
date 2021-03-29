@@ -19,7 +19,6 @@
 	attack_verb_continuous = list("smashes", "crushes", "cleaves", "chops", "pulps")
 	attack_verb_simple = list("smash", "crush", "cleave", "chop", "pulp")
 	sharpness = SHARP_EDGED
-	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = UNIQUE_RENAME
 	light_system = MOVABLE_LIGHT
 	light_range = 5
@@ -60,6 +59,7 @@
 	for(var/t in trophies)
 		var/obj/item/crusher_trophy/T = t
 		. += "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>"
+	. += "<span class='notice'>Right click on it with an empty active hand to toggle its light.</span>"
 
 /obj/item/kinetic_crusher/attackby(obj/item/I, mob/living/user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
@@ -150,10 +150,11 @@
 		update_appearance()
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, TRUE)
 
-/obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
+/obj/item/kinetic_crusher/attack_hand_secondary(mob/user, params)
 	set_light_on(!light_on)
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 
 /obj/item/kinetic_crusher/update_icon_state()

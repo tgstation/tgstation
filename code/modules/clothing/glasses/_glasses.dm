@@ -131,14 +131,33 @@
 	icon_state = "purple"
 	inhand_icon_state = "glasses"
 	clothing_flags = SCAN_REAGENTS //You can see reagents while wearing science goggles
-	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
+	///Used to determine if additional information is displayed when examining things
+	var/active = FALSE
 
-/obj/item/clothing/glasses/science/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_EYES)
-		return 1
+/obj/item/clothing/glasses/science/attack_hand_secondary(mob/user, params)
+	if(user.get_item_by_slot(ITEM_SLOT_EYES) != src)
+		to_chat(user, "<span class='notice'>You must wear [src] to toggle its research scanner.</span>")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	active = !active
+	if(active)
+		user.research_scanner = TRUE
+	else
+		user.research_scanner = FALSE
+	to_chat(user, "<span class='notice'>[src] research scanner has been [active ? "activated" : "deactivated"].</span>")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/clothing/glasses/science/dropped(mob/user)
+	. = ..()
+	if(user.get_item_by_slot(ITEM_SLOT_EYES) == src && active)
+		active = FALSE
+		user.research_scanner = FALSE
+
+/obj/item/clothing/glasses/science/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click with an empty active hand to toggle its research scanner while worn.</span>"
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
@@ -295,7 +314,6 @@
 	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."
 	icon_state = "welding-g"
 	inhand_icon_state = "welding-g"
-	actions_types = list(/datum/action/item_action/toggle)
 	flash_protect = FLASH_PROTECTION_WELDER
 	custom_materials = list(/datum/material/iron = 250)
 	tint = 2
@@ -303,9 +321,13 @@
 	flags_cover = GLASSESCOVERSEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
-/obj/item/clothing/glasses/welding/attack_self(mob/user)
+/obj/item/clothing/glasses/welding/attack_hand_secondary(mob/user, params)
 	weldingvisortoggle(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/clothing/glasses/welding/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click with an empty active hand to adjust it.</span>"
 
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"

@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you tase them. Do not tamper with the device."
-	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
+	actions_types = list(/datum/action/item_action/halt)
 	icon_state = "sechailer"
 	inhand_icon_state = "sechailer"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
@@ -104,11 +104,13 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
 		aggressiveness = AGGR_BROKEN
 
-/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/halt))
-		halt()
-	else
-		adjustmask(user)
+/obj/item/clothing/mask/gas/sechailer/attack_hand_secondary(mob/user, params)
+	adjustmask(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/clothing/mask/gas/sechailer/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click on it with an empty active hand to adjust it.</span>"
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()

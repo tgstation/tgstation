@@ -12,7 +12,6 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
-	actions_types = list(/datum/action/item_action/toggle_light)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 4
 	light_power = 1
@@ -36,14 +35,15 @@
 		update_light()
 
 
-/obj/item/flashlight/attack_self(mob/user)
+/obj/item/flashlight/attack_hand_secondary(mob/user, params)
 	on = !on
 	playsound(user, on ? 'sound/weapons/magin.ogg' : 'sound/weapons/magout.ogg', 40, TRUE)
 	update_brightness(user)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
-	return 1
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/flashlight/examine(mob/living/user)
+	. = ..()
+	. += "<span class='notice'>Right click on it with an empty active hand to toggle its light.</span>"
 
 /obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
 	if (user.is_blind())

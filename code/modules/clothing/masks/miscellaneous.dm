@@ -29,10 +29,14 @@
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.01
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 25, RAD = 0, FIRE = 0, ACID = 0)
-	actions_types = list(/datum/action/item_action/adjust)
 
-/obj/item/clothing/mask/surgical/attack_self(mob/user)
+/obj/item/clothing/mask/surgical/attack_hand_secondary(mob/user, params)
 	adjustmask(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/clothing/mask/surgical/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click on it with an empty active hand to adjust it.</span>"
 
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"

@@ -23,7 +23,6 @@
 	throw_speed = 1
 	throw_range = 4
 	custom_materials = list(/datum/material/iron = 500)
-	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
 	integrity_failure = 0.5
 	/// The gases this tank contains.
@@ -37,8 +36,12 @@
 	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
 	var/tank_holder_icon_state = "holder_generic"
 
-/obj/item/tank/ui_action_click(mob/user)
+/obj/item/tank/attack_hand_secondary(mob/user, params)
+	if(src.loc != user)
+		to_chat(user, "<span class='warning'>You can't open [src] valve from there!</span>")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	toggle_internals(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/tank/proc/toggle_internals(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -106,6 +109,7 @@
 		return
 
 	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
+	. += "<span class='notice'>Right click on it with an empty active hand to open the valve.</span>"
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
