@@ -146,7 +146,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	var/despawn_world_time = null          // Used to keep track of the safe period.
 
 	var/obj/machinery/computer/cryopod/control_computer
-	var/last_no_computer_message = 0
+	COOLDOWN_DECLARE(last_no_computer_message)
 
 	// These items are preserved when the process() despawn proc occurs.
 	var/static/list/preserve_items = list(
@@ -190,6 +190,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	return ..()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
+
 	for(var/cryo_console as anything in GLOB.cryopod_computers)
 		var/obj/machinery/computer/cryopod/console = cryo_console
 		if(get_area(console) == get_area(src))
@@ -197,7 +198,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			break
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
-	if(!control_computer && urgent && last_no_computer_message + 5 MINUTES < world.time)
+	if(!control_computer && urgent && COOLDOWN_FINISHED(src, last_no_computer_message))
+		COOLDOWN_START(src, last_no_computer_message, 5 MINUTES)
 		log_admin("Cryopod in [get_area(src)] could not find control computer!")
 		message_admins("Cryopod in [get_area(src)] could not find control computer!")
 		last_no_computer_message = world.time
