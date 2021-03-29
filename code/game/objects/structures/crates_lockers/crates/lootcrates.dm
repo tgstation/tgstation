@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 /obj/structure/closet/crate/loot
 	desc = "A loot crate."
 	name = "loot crate"
@@ -104,3 +112,32 @@
 /obj/structure/closet/crate/loot/legendary/PopulateContents()
 	for(var/item in loot_content)
 		new item(src)
+
+
+
+//Handles the drop events
+
+/datum/round_event_control/stray_cargo/fortnite
+	name = "DROP EPICNESS"
+	typepath = /datum/round_event/stray_cargo/fortnite
+/datum/round_event/stray_cargo/fortnite
+	possible_pack_types = list(/obj/structure/closet/crate/loot/basic)
+
+///Apply the box pod skin
+/datum/round_event/stray_cargo/fortnite/make_pod()
+	var/obj/structure/closet/supplypod/S = new
+	S.setStyle(STYLE_BOX)
+	return S
+
+/datum/round_event_control/stray_cargo/fortnite/rare
+	name = "DROP RARE EPICNESS"
+	typepath = /datum/round_event/stray_cargo/fortnite/rare
+
+/datum/round_event/stray_cargo/fortnite/rare
+	possible_pack_types = list(/obj/structure/closet/crate/loot/rare)
+/datum/round_event_control/stray_cargo/fortnite/legendary
+	name = "DROP LEGENDARY EPICNESS"
+	typepath = /datum/round_event/stray_cargo/fortnite/legendary
+
+/datum/round_event/stray_cargo/fortnite/legendary
+	possible_pack_types = list(/obj/structure/closet/crate/loot/legendary)
