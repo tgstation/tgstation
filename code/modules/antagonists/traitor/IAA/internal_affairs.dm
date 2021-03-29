@@ -11,11 +11,7 @@
 	antagpanel_category = "IAA"
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
-	var/list/datum/mind/targets_stolen
-
-/datum/antagonist/traitor/internal_affairs/New()
-	. = ..()
-	targets_stolen = list()
+	var/list/datum/mind/targets_stolen = list()
 
 /datum/antagonist/traitor/internal_affairs/proc/give_pinpointer()
 	if(!owner)
