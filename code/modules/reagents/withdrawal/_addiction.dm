@@ -14,6 +14,12 @@
 	var/high_sanity_addiction_loss = 2
 	///Amount of drugs you need in your system to be satisfied
 	var/addiction_relief_treshold = MIN_ADDICTION_REAGENT_AMOUNT
+	///moodlet for light withdrawal
+	var/light_withdrawal_moodlet = /datum/mood_event/withdrawal_light
+	///moodlet for medium withdrawal
+	var/medium_withdrawal_moodlet = /datum/mood_event/withdrawal_medium
+	///moodlet for severe withdrawal
+	var/severe_withdrawal_moodlet = /datum/mood_event/withdrawal_severe
 
 ///Called when you gain addiction points somehow. Takes a mind as argument and sees if you gained the addiction
 /datum/addiction/proc/on_gain_addiction_points(datum/mind/victim_mind)
@@ -61,14 +67,14 @@
 	var/withdrawal_stage
 
 	switch(current_addiction_cycle)
+		if(WITHDRAWAL_STAGE0_START_CYCLE to WITHDRAWAL_STAGE0_END_CYCLE)
+			withdrawal_stage = 0
 		if(WITHDRAWAL_STAGE1_START_CYCLE to WITHDRAWAL_STAGE1_END_CYCLE)
 			withdrawal_stage = 1
 		if(WITHDRAWAL_STAGE2_START_CYCLE to WITHDRAWAL_STAGE2_END_CYCLE)
 			withdrawal_stage = 2
 		if(WITHDRAWAL_STAGE3_START_CYCLE to INFINITY)
 			withdrawal_stage = 3
-		else
-			withdrawal_stage = 0
 
 	if(!on_drug_of_this_addiction)
 		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss_per_stage[withdrawal_stage + 1] * delta_time)) //If true was returned, we lost the addiction!
@@ -98,18 +104,20 @@
 
 /// Called when addiction enters stage 1
 /datum/addiction/proc/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
-	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_light, name)
+	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", light_withdrawal_moodlet, name)
 
 /// Called when addiction enters stage 2
 /datum/addiction/proc/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
-	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_medium, name)
+	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", medium_withdrawal_moodlet, name)
 
 /// Called when addiction enters stage 3
 /datum/addiction/proc/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
-	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_severe, name)
+	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", severe_withdrawal_moodlet, name)
 
 /datum/addiction/proc/end_withdrawal(mob/living/carbon/affected_carbon)
+	SHOULD_CALL_PARENT(TRUE)
 	LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
+	SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "[type]_addiction")
 
 /// Called when addiction is in stage 1 every process
 /datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
