@@ -20,7 +20,7 @@
 		/obj/item/reagent_containers/pill/patch/libital = 20,
 		/obj/item/reagent_containers/medigel/libital = 15,
 		/obj/item/storage/firstaid/brute = 10,
-		/obj/item/reagent_containers/hypospray/combat = 5
+		/obj/item/reagent_containers/hypospray/combat = 5,
 		/obj/item/reagent_containers/hypospray/combat/nanites = 2)
 
 	var/list/loot_table_basic = list(
@@ -47,10 +47,10 @@
 
 /obj/structure/closet/crate/loot/Initialize()
 	//Check for an armour spawn
-	if(prob(90))
+	if(prob(50))
 		loot_content = loot_content + pickweight(loot_table_armor)
 	//Check for a heal spawn
-	if(prob(20))
+	if(prob(70))
 		loot_content = loot_content +  pickweight(loot_table_heal)
 	..()
 
