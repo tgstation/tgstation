@@ -28,6 +28,7 @@
 	var/obj/item/tank/holding
 	var/use_enviroment_heat = FALSE
 	var/skipping_work = FALSE
+	var/auto_thermal_regulator = FALSE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
@@ -36,20 +37,6 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/getNodeConnects()
 	return list(dir, turn(dir, 180))
-
-/obj/machinery/atmospherics/components/binary/thermomachine/proc/swap_function()
-	cooling = !cooling
-	if(cooling)
-		icon_state_off = "freezer"
-		icon_state_on = "freezer_1"
-		icon_state_open = "freezer-o"
-	else
-		icon_state_off = "heater"
-		icon_state_on = "heater_1"
-		icon_state_open = "heater-o"
-	target_temperature = T20C
-	RefreshParts()
-	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/on_construction(obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
@@ -80,6 +67,14 @@
 
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_icon_state()
+	if(cooling)
+		icon_state_off = "freezer"
+		icon_state_on = "freezer_1"
+		icon_state_open = "freezer-o"
+	else
+		icon_state_off = "heater"
+		icon_state_on = "heater_1"
+		icon_state_open = "heater-o"
 	if(panel_open)
 		icon_state = icon_state_open
 		return ..()
@@ -139,7 +134,10 @@
 	var/main_heat_capacity = main_port.heat_capacity()
 	var/thermal_heat_capacity = thermal_exchange_port.heat_capacity()
 	var/temperature_delta = main_port.temperature - target_temperature
-	temperature_delta = cooling ? max(temperature_delta, 0) : min(temperature_delta, 0) //no cheesy strats
+	if(auto_thermal_regulator)
+		cooling = temperature_delta > 0 ? TRUE : FALSE
+	else
+		temperature_delta = cooling ? max(temperature_delta, 0) : min(temperature_delta, 0) //no cheesy strats
 
 	var/motor_heat = 2500
 	if(abs(temperature_delta) < 1.5) //allow the machine to work more finely
@@ -149,23 +147,33 @@
 	var/efficiency = 1
 	var/temperature_difference = 0
 	var/skip_tick = TRUE
-	if(!use_enviroment_heat && main_port.total_moles() > 0.01 && thermal_exchange_port.total_moles() > 0.01 && nodes[2])
-		if(cooling)
+	if(!use_enviroment_heat && main_port.total_moles() > 0.01)
+		if(cooling && thermal_exchange_port.total_moles() > 0.01 && nodes[2])
 			thermal_exchange_port.temperature = max(thermal_exchange_port.temperature + heat_amount / thermal_heat_capacity + motor_heat / thermal_heat_capacity, TCMB)
+		else if(cooling && (!thermal_exchange_port.total_moles() || !nodes[2]))
+			skipping_work = skip_tick
+			update_appearance()
+			update_parents()
+			return
 		temperature_difference = thermal_exchange_port.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
 			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0.65)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency)/ main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 		skip_tick = FALSE
-	if(use_enviroment_heat && main_port.total_moles() > 0.01 && enviroment.total_moles() > 0.01)
-		var/enviroment_efficiency = 0
-		if(cooling)
+	if(use_enviroment_heat && main_port.total_moles() > 0.01)
+		var/enviroment_efficiency = 1
+		if(cooling && enviroment.total_moles() > 0.01)
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
 			if(enviroment.total_moles())
 				enviroment_efficiency = clamp(log(1.55, enviroment.total_moles()) * 0.15, 0.65, 1)
 			enviroment.temperature = max(enviroment.temperature + heat_amount / enviroment_heat_capacity, TCMB)
 			air_update_turf(FALSE, FALSE)
+		else if(cooling && !enviroment.total_moles())
+			skipping_work = skip_tick
+			update_appearance()
+			update_parents()
+			return
 		temperature_difference = enviroment.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
@@ -290,6 +298,7 @@
 		data["tank_gas"] = TRUE
 	data["use_env_heat"] = use_enviroment_heat
 	data["skipping_work"] = skipping_work
+	data["auto_thermal_regulator"] = auto_thermal_regulator
 	return data
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_act(action, params)
@@ -304,7 +313,7 @@
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("cooling")
-			swap_function()
+			cooling = !cooling
 			investigate_log("was changed to [cooling ? "cooling" : "heating"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("target")
@@ -335,6 +344,9 @@
 				. = TRUE
 		if("use_env_heat")
 			use_enviroment_heat = !use_enviroment_heat
+			. = TRUE
+		if("auto_thermal_regulator")
+			auto_thermal_regulator = !auto_thermal_regulator
 			. = TRUE
 
 	update_appearance()
