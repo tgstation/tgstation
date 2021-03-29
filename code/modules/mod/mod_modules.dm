@@ -490,7 +490,7 @@
 	var/obj/projectile/tether = new /obj/projectile/tether
 	tether.preparePixelProjectile(target, mod.wearer)
 	tether.firer = mod.wearer
-	tether.fire()
+	INVOKE_ASYNC(tether, /obj/projectile/proc/fire)
 
 /obj/projectile/tether
 	name = "tether"
@@ -511,7 +511,7 @@
 /obj/projectile/tether/on_hit(atom/target)
 	. = ..()
 	if(firer)
-		firer.throw_at(target, range = 10, speed = 1, spin = FALSE, gentle = TRUE)
+		firer.throw_at(target, 10, 1, FALSE, FALSE, null, TRUE)
 
 /obj/projectile/tether/Destroy()
 	QDEL_NULL(line)
