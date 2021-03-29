@@ -153,10 +153,10 @@
 	modes = list(MODE_NONE = MODE_SHUTTLE, MODE_SHUTTLE = MODE_NONE)
 
 /obj/item/clothing/glasses/meson/engine/smart
-	name = "optical t-ray scanner"
+	name = "smart pipe scanner"
 	icon_state = "trayson-t-ray"
 	inhand_icon_state = "trayson-t-ray"
-	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
+	desc = "Used by engineering staff to project a solid light overlay of the pipes."
 	range = 3
 	var/choosen_color
 
