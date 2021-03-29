@@ -181,12 +181,12 @@
 
 	if(!charging)
 		. += mutable_appearance(icon, "[base_icon_state]-empty", layer, plane, alpha)
-		. += mutable_appearance(icon, "[base_icon_state]-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-empty", 0, EMISSIVE_PLANE, alpha)
 		return
 	if(using_power)
 		. += mutable_appearance(icon, "[base_icon_state]-charging", layer, plane, alpha)
-		. += mutable_appearance(icon, "[base_icon_state]-charging", EMISSIVE_LAYER, EMISSIVE_PLANE, alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-charging", 0, EMISSIVE_PLANE, alpha)
 		return
 
 	. += mutable_appearance(icon, "[base_icon_state]-full", layer, plane, alpha)
-	. += mutable_appearance(icon, "[base_icon_state]-full", EMISSIVE_LAYER, EMISSIVE_PLANE, alpha)
+	. += mutable_appearance(icon, "[base_icon_state]-full", 0, EMISSIVE_PLANE, alpha)

@@ -387,15 +387,15 @@
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
 		. += "dispover-full"
-		. += mutable_appearance(icon, "dispover-full", EMISSIVE_LAYER, EMISSIVE_PLANE, alpha)
+		. += mutable_appearance(icon, "dispover-full", 0, EMISSIVE_PLANE, alpha)
 
 	//charging and ready light
 	if(pressure_charging)
 		. += "dispover-charge"
-		. += mutable_appearance(icon, "dispover-charge-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, alpha)
+		. += mutable_appearance(icon, "dispover-charge-glow", 0, EMISSIVE_PLANE, alpha)
 	else if(full_pressure)
 		. += "dispover-ready"
-		. += mutable_appearance(icon, "dispover-ready-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, alpha)
+		. += mutable_appearance(icon, "dispover-ready-glow", 0, EMISSIVE_PLANE, alpha)
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
