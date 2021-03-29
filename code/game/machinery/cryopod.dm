@@ -345,13 +345,6 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		qdel(W) // because we moved all items to preserve away
 		// and yes, this totally deletes their bodyparts one by one, I just couldn't bother
 
-	if(iscyborg(mob_occupant))
-		var/mob/living/silicon/robot/R = occupant
-		if(!istype(R)) return
-
-		R.contents -= R.mmi
-		qdel(R.mmi)
-
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(TRUE))
 		if(world.time < 15 * 600) // before the 15 minute mark
