@@ -98,7 +98,7 @@
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	hitsound_off = 'sound/weapons/tap.ogg'
 	damtype_on = BRUTE
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	force_on = 30 //same as esword (but makes you an epic gamer)
 	light_range = 3 //ditto
 	heat = 1000 //energy cakes are hot. they conduct a lot of heat, too.
