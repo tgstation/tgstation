@@ -39,6 +39,7 @@
 	return front_nodes + back_nodes + nodes
 
 /obj/machinery/atmospherics/pipe/color_adapter/update_icon()
+	. = ..()
 	cut_overlays()
 	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE)	//This is above everything else.
 

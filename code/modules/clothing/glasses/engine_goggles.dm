@@ -231,8 +231,9 @@
 		for(var/obj/machinery/atmospherics/pipe/smart/smart in turf.contents)
 			if(smart.pipe_color == choosen_color)
 				var/obj/effect/smart_pipe = new
+				smart_pipe.appearance = smart.pipe_appearance
 				smart_pipe.layer = HIGH_OBJ_LAYER
-				smart_pipe.vis_flags |= VIS_INHERIT_ICON | VIS_INHERIT_ICON_STATE | VIS_INHERIT_DIR | VIS_INHERIT_ID
+				smart_pipe.vis_flags |= VIS_INHERIT_DIR | VIS_INHERIT_ID
 				smart.vis_contents += smart_pipe
 				addtimer(CALLBACK(src, .proc/remove_vis, smart, smart_pipe), 2 SECONDS)
 

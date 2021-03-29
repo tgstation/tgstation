@@ -13,6 +13,7 @@
 	var/connection_num = 0
 	var/list/connections
 	var/static/list/mutable_appearance/center_cache = list()
+	var/mutable_appearance/pipe_appearance
 
 /obj/machinery/atmospherics/pipe/smart/New()
 	icon_state = ""
@@ -83,11 +84,14 @@
 	center = check_connections()
 	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
 	center_cache["[piping_layer]"] = center
+	pipe_appearance = center
 	. +=center
+
+	update_layer()
 
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
 		if(nodes[i])
-			. += getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i]))
-
-	update_layer()
+			var/image/pipe = getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i]))
+			pipe.layer = layer + 0.01
+			. += pipe
