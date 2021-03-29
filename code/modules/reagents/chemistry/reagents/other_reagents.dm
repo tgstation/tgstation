@@ -105,6 +105,12 @@
 	ph = 7.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/bone_dust
+	name = "bone dust"
+	color = "#dbcdcb"
+	description = "Ground up bones, gross!"
+	taste_description = "the most disgusting grain in existence"
+
 /datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
