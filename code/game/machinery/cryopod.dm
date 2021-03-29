@@ -190,10 +190,10 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	return ..()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent = 0)
-	for(var/M in GLOB.cryopod_computers)
-		var/obj/machinery/computer/cryopod/C = M
-		if(get_area(C) == get_area(src))
-			control_computer = C
+	for(var/cryo_console as anything in GLOB.cryopod_computers)
+		var/obj/machinery/computer/cryopod/console = cryo_console
+		if(get_area(console) == get_area(src))
+			control_computer = console
 			break
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
