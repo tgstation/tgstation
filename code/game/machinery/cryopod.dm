@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 /obj/machinery/computer/cryopod/attack_ai()
 	attack_hand()
 
-/obj/machinery/computer/cryopod/attack_hand(mob/user = usr)
+/obj/machinery/computer/cryopod/attack_hand(mob/user, list/modifiers)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 
@@ -127,12 +127,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	updateUsrDialog()
 	return
-/* Should more cryos be buildable?
-    /obj/item/circuitboard/cryopodcontrol
-	name = "Circuit board (Cryogenic Oversight Console)"
-	build_path = "/obj/machinery/computer/cryopod"
-	origin_tech = "programming=1"
-*/
+
 //Cryopods themselves.
 /obj/machinery/cryopod
 	name = "cryogenic freezer"
@@ -358,11 +353,11 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		qdel(R.mmi)
 
 	// Ghost and delete the mob.
-	if(!mob_occupant.get_ghost(1))
+	if(!mob_occupant.get_ghost(TRUE))
 		if(world.time < 15 * 600) // before the 15 minute mark
-			mob_occupant.ghostize(0) // Players despawned too early may not re-enter the game
+			mob_occupant.ghostize(FALSE) // Players despawned too early may not re-enter the game
 		else
-			mob_occupant.ghostize(1)
+			mob_occupant.ghostize(TRUE)
 	handle_objectives()
 	QDEL_NULL(occupant)
 	open_machine()

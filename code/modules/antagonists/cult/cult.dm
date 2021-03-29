@@ -291,9 +291,9 @@
 		H.apply_overlay(HALO_LAYER)
 
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
-	var/datum/job/sacjob = SSjob.GetJob(sac_objective.target.assigned_role)
-	var/datum/preferences/sacface = sac_objective.target.current.client.prefs
-	var/icon/reshape = get_flat_human_icon(null, sacjob, sacface, list(SOUTH))
+	var/datum/job/job_of_sacrifice = SSjob.GetJob(sac_objective.target.assigned_role)
+	var/datum/preferences/face_of_sacrifice = sac_objective.target.current.client.prefs
+	var/icon/reshape = get_flat_human_icon(null, job_of_sacrifice, face_of_sacrifice, list(SOUTH))
 	reshape.Shift(SOUTH, 4)
 	reshape.Shift(EAST, 1)
 	reshape.Crop(7,4,26,31)
