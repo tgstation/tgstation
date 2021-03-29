@@ -56,7 +56,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
-	inhand_icon_state = "claymore"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -86,7 +85,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "cutlass"
 	desc = "A piratey sword used by buckaneers to \"negotiate\" the transfer of treasure."
 	icon_state = "cutlass"
-	inhand_icon_state = "cutlass"
 	worn_icon_state = "cutlass"
 	slot_flags = ITEM_SLOT_BACK
 	force = 30
@@ -214,13 +212,25 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			new_name = "gore-stained claymore"
 			add_atom_colour(rgb(255, 95, 95), ADMIN_COLOUR_PRIORITY)
 		if(10)
+			to_chat(user, "<span class='userdanger'>YOUR GREATNESS TRANSFORMS THE BLADE. CONQUER THEM <i>ALL</i>!</span>")
+			new_name = "GOD-BLESSED CLAYMORE OF GOLD"
+			icon_state = "claymore_gold"
+			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+			user.update_inv_hands()
+		if(15)
+			to_chat(user, "<span class='userdanger'>THE <i>FIRE</i> IN YOUR HEART FURTHER BLESSES THE BLADE. YOU ARE SO CLOSE TO <i>VALHALLA</i></span>")
+			new_name = "FIRE-BLAZING CLAYMORE OF GREATNESS"
+			icon_state = "claymore_blazing"
+			user.update_inv_hands()
+		if(20)
 			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
 			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
-			user.update_icons()
+			ADD_TRAIT(user, CULT_EYES, HIGHLANDER_TRAIT)
+			user.update_body()
+			to_chat(user, "<span class='userdanger'>ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE.</span>")
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
-			icon_state = "claymore_gold"
-			inhand_icon_state = "cultblade"
-			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+			icon_state = "claymore_valhalla"
+			user.update_inv_hands()
 
 	name = new_name
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
