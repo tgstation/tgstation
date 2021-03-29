@@ -62,6 +62,8 @@ GLOBAL_DATUM(storm_controller, /datum/storm_controller)
 /datum/storm_controller/proc/end_storm()
 	for(var/datum/weather/storm as anything in storms)
 		storm.wind_down()
+	storms = null
+	qdel(src)
 
 /// these nuts?
 /datum/weather/royale_storm
