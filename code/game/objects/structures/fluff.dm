@@ -201,7 +201,6 @@
 	density = FALSE
 	deconstructible = FALSE
 
-
 /obj/structure/fluff/beach_towel
 	name = "beach towel"
 	desc = "A towel decorated in various beach-themed designs."
