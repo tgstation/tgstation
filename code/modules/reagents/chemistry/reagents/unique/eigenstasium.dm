@@ -64,8 +64,7 @@
 	eigenstate.name = "[living_mob.name]'s eigenstate"//If someone decides to right click.
 	eigenstate.set_light(2)	//hologram lighting
 
-	if(!location_return)
-		location_return = get_turf(living_mob)	//sets up return point
+	location_return = get_turf(living_mob)	//sets up return point
 	to_chat(living_mob, "<span class='userdanger'>You feel like part of yourself has split off!</span>")
 
 	//Teleports you home if it's pure enough
