@@ -28,6 +28,15 @@
 	STR.display_numerical_stacking = TRUE
 	STR.click_gather = TRUE
 
+/obj/item/storage/bag/attack_hand_secondary(mob/user, params)
+	var/datum/component/storage/storage_component = GetComponent(/datum/component/storage)
+	storage_component.gather_mode_switch(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/storage/bag/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click with an empty active hand to change its gathering mode.</span>"
+
 // -----------------------------
 //          Trash bag
 // -----------------------------

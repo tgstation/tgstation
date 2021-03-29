@@ -1,7 +1,6 @@
 //Hoods for winter coats and chaplain hoodie etc
 
 /obj/item/clothing/suit/hooded
-	actions_types = list(/datum/action/item_action/toggle_hood)
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
 	///Alternative mode for hiding the hood, instead of storing the hood in the suit it qdels it, useful for when you deal with hooded suit with storage.
@@ -23,8 +22,9 @@
 		W.suit = src
 		hood = W
 
-/obj/item/clothing/suit/hooded/ui_action_click()
+/obj/item/clothing/suit/hooded/attack_hand_secondary(mob/user, params)
 	ToggleHood()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
 	if(slot == ITEM_SLOT_OCLOTHING)
@@ -84,6 +84,10 @@
 				A.UpdateButtonIcon()
 	else
 		RemoveHood()
+
+/obj/item/clothing/suit/hooded/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>Right click with an empty active hand to adjust [hood].</span>"
 
 /obj/item/clothing/head/hooded
 	var/obj/item/clothing/suit/hooded/suit

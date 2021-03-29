@@ -44,7 +44,6 @@
 	var/attack_hand_interact = TRUE //interact on attack hand.
 	var/quickdraw = FALSE //altclick interact
 
-	var/datum/action/item_action/storage_gather_mode/modeswitch_action
 
 	//Screen variables: Do not mess with these vars unless you know what you're doing. They're not defines so storage that isn't in the same location can be supported in the future.
 	var/screen_max_columns = 7 //These two determine maximum screen sizes.
@@ -93,7 +92,6 @@
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/update_actions)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
@@ -102,8 +100,6 @@
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 
-	update_actions()
-
 /datum/component/storage/Destroy()
 	close_all()
 	QDEL_NULL(boxes)
@@ -111,8 +107,6 @@
 	LAZYCLEARLIST(is_using)
 	return ..()
 
-/datum/component/storage/PreTransfer()
-	update_actions()
 
 /datum/component/storage/proc/set_holdable(can_hold_list, cant_hold_list)
 	can_hold_description = generate_hold_desc(can_hold_list)
@@ -131,19 +125,6 @@
 		desc += "\a [initial(valid_item.name)]"
 
 	return "\n\t<span class='notice'>[desc.Join("\n\t")]</span>"
-
-/datum/component/storage/proc/update_actions()
-	QDEL_NULL(modeswitch_action)
-	if(!isitem(parent) || !allow_quick_gather)
-		return
-	var/obj/item/I = parent
-	modeswitch_action = new(I)
-	RegisterSignal(modeswitch_action, COMSIG_ACTION_TRIGGER, .proc/action_trigger)
-	if(I.obj_flags & IN_INVENTORY)
-		var/mob/M = I.loc
-		if(!istype(M))
-			return
-		modeswitch_action.Grant(M)
 
 /datum/component/storage/proc/change_master(datum/component/storage/concrete/new_master)
 	if(new_master == src || (!isnull(new_master) && !istype(new_master)))
@@ -806,7 +787,6 @@
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	update_actions()
 	for(var/mob/M in can_see_contents() - user)
 		close(M)
 
@@ -852,12 +832,6 @@
 		to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
 		return
 	user.visible_message("<span class='warning'>[user] draws [I] from [parent]!</span>", "<span class='notice'>You draw [I] from [parent].</span>")
-
-/datum/component/storage/proc/action_trigger(datum/signal_source, datum/action/source)
-	SIGNAL_HANDLER
-
-	gather_mode_switch(source.owner)
-	return COMPONENT_ACTION_BLOCK_TRIGGER
 
 /datum/component/storage/proc/gather_mode_switch(mob/user)
 	collection_mode = (collection_mode+1)%3
