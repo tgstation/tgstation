@@ -1,5 +1,5 @@
 /datum/round_event_control/wizard/doppelganger //Mirror Mania
-	name = "doppelganger Wizard"
+	name = "Doppelganger Wizard"
 	weight = 1
 	typepath = /datum/round_event/wizard/doppelganger
 	max_occurrences = 1
@@ -10,7 +10,7 @@
 		if(!ishuman(M.current))
 			continue
 		var/mob/living/carbon/human/W = M.current
-		var/list/candidates = pollGhostCandidates("Would you like to be an doppelganger wizard?", ROLE_WIZARD)
+		var/list/candidates = pollGhostCandidates("Would you like to be a Doppelganger wizard?", ROLE_WIZARD)
 		if(!candidates)
 			return //Sad Trombone
 		var/mob/dead/observer/C = pick(candidates)
@@ -34,7 +34,7 @@
 		I.mind.add_antag_datum(doppelganger)
 		//Remove if possible
 		SSticker.mode.apprentices += I.mind
-		I.mind.special_role = "doppelganger"
+		I.mind.special_role = "Doppelganger"
 		//
-		I.log_message("is an doppelganger!", LOG_ATTACK, color="red") //?
+		I.log_message("is a Doppelganger!", LOG_ATTACK, color="red") //?
 		SEND_SOUND(I, sound('sound/effects/magic.ogg'))

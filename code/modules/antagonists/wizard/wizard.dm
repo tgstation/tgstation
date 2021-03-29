@@ -225,12 +225,12 @@
 
 //Random event wizard
 /datum/antagonist/wizard/apprentice/doppelganger
-	name = "Wizard doppelganger"
+	name = "Wizard Doppelganger"
 	allow_rename = FALSE
 	move_to_lair = FALSE
 
 /datum/antagonist/wizard/apprentice/doppelganger/greet()
-	to_chat(owner, "<B>You are an doppelganger! Trick and confuse the crew to misdirect malice from your handsome original!</B>")
+	to_chat(owner, "<B>You are a Doppelganger! Trick and confuse the crew to misdirect malice from your handsome original!</B>")
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/doppelganger/equip_wizard()
