@@ -205,7 +205,7 @@
 	build_path = /obj/item/organ/tongue/ethereal
 	category = list("ethereal")
 
-// Not growable by normal means.
+// Intentionally not growable by normal means - for balance conerns.
 /datum/design/ethereal_heart
 	name = "Crystal Core"
 	id = "etherealheart"
@@ -227,6 +227,7 @@
 	name = "Limb Design Disk"
 	desc = "A disk containing limb and organ designs for a limbgrower."
 	icon_state = "datadisk1"
+	/// List of all limb designs this disk contains.
 	var/list/limb_designs = list()
 
 /obj/item/disk/design_disk/limbs/Initialize()
@@ -238,7 +239,7 @@
 
 /datum/design/limb_disk
 	name = "Limb Design Disk"
-	desc = "Limb designs but you shouldn't see this!"
+	desc = "Contains designs for various limbs."
 	id = "limbdesign_parent"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)

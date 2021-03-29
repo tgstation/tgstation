@@ -83,7 +83,7 @@
 				var/datum/reagent/reagent_id = find_reagent_object_from_type(reagent_typepath)
 				var/list/reagent_data = list(
 					name = reagent_id.name,
-					amount = found_design.reagents_list[reagent_typepath],
+					amount = (found_design.reagents_list[reagent_typepath] * production_coefficient),
 				)
 				all_reagents += list(reagent_data)
 
@@ -122,7 +122,7 @@
 		return
 
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", user_item))
-		ui_close()
+		ui_close(user)
 		return
 
 	if(panel_open && default_deconstruction_crowbar(user_item))
