@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - bugfix: "The light eater will now gnaw the lights off of things you are holding again. Really should have tested this while I was reworking them."

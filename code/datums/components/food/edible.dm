@@ -448,3 +448,4 @@ Behavior that's still missing from this component that original food items had t
 		for (var/t in E.tastes)
 			tastes[t] += E.tastes[t]
 	foodtypes |= E.foodtypes
+

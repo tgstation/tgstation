@@ -345,9 +345,9 @@
 	name = "treat fabricator"
 	desc = "Reward humans with various treats. Toggle in-module to switch between dispensing and high velocity ejection modes."
 	icon_state = "lollipop"
-	var/candy = 30
-	var/candymax = 30
-	var/charge_delay = 10
+	var/candy = 5
+	var/candymax = 5
+	var/charge_delay = 10 SECONDS
 	var/charging = FALSE
 	var/mode = DISPENSE_LOLLIPOP_MODE
 
@@ -365,9 +365,7 @@
 	check_amount()
 
 /obj/item/borg/lollipop/proc/check_amount() //Doesn't even use processing ticks.
-	if(charging)
-		return
-	if(candy < candymax)
+	if(!charging && candy < candymax)
 		addtimer(CALLBACK(src, .proc/charge_lollipops), charge_delay)
 		charging = TRUE
 
@@ -393,10 +391,8 @@
 		if(DISPENSE_LOLLIPOP_MODE)
 			food_item = new /obj/item/food/chewable/lollipop(T)
 		if(DISPENSE_ICECREAM_MODE)
-			food_item = new /obj/item/food/icecream(T)
-			var/obj/item/food/icecream/I = food_item
-			I.add_ice_cream("vanilla")
-			I.desc = "Eat the ice cream."
+			food_item = new /obj/item/food/icecream(T, list(ICE_CREAM_VANILLA))
+			food_item.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
 	if(ismob(A))
@@ -502,15 +498,14 @@
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/food/chewable/gumball/cyborg
+	ammo_type = /obj/item/food/chewable/gumball
 	nodamage = TRUE
 	damage = 0
 	speed = 0.5
 
 /obj/projectile/bullet/reusable/gumball/harmful
-	ammo_type = /obj/item/food/chewable/gumball/cyborg
 	nodamage = FALSE
-	damage = 3
+	damage = 10 //mediborgs get 5 shots before needing to reload at a rate of 1 shot/10 seconds, so they can do 50 damage from range max before needing to close the distance or retreat
 
 /obj/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
@@ -541,7 +536,7 @@
 
 /obj/projectile/bullet/reusable/lollipop/harmful
 	embedding = list(embed_chance=35, fall_chance=2, jostle_chance=0, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=3, rip_time=10)
-	damage = 3
+	damage = 10
 	nodamage = FALSE
 	embed_falloff_tile = 0
 

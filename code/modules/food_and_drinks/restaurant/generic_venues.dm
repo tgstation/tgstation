@@ -12,6 +12,8 @@
 		/datum/customer_data/mexican = 30,
 		/datum/customer_data/japanese = 30,
 		/datum/customer_data/japanese/salaryman = 20,
+		/datum/customer_data/british/bobby = 20,
+		/datum/customer_data/british/gent = 20,
 		/datum/customer_data/moth = 1,
 		/datum/customer_data/malfunction = 1,
 	)
@@ -31,7 +33,7 @@
 		SSrestaurant.food_appearance_cache[object_to_order] = appearance //and cache it for future orders
 		qdel(temp_object)
 
-	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, layer = HUD_LAYER)
+	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn)
 
 	I.appearance = appearance
 	I.underlays += mutable_appearance(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
@@ -81,6 +83,8 @@
 		/datum/customer_data/mexican = 30,
 		/datum/customer_data/japanese = 30,
 		/datum/customer_data/japanese/salaryman = 20,
+		/datum/customer_data/british/bobby = 20,
+		/datum/customer_data/british/gent = 20,
 		/datum/customer_data/malfunction = 1,
 	)
 
@@ -100,7 +104,7 @@
 
 	customer_pawn.say(order_food_line(reagent_to_order))
 
-	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, layer = HUD_LAYER)
+	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn)
 	I.add_overlay(mutable_appearance('icons/obj/drinks.dmi', glass_visual))
 	I.pixel_y = 32
 	I.pixel_x = 16

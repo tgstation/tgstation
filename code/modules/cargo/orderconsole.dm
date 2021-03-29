@@ -43,6 +43,14 @@
 	QDEL_NULL(radio)
 	return ..()
 
+/obj/machinery/computer/cargo/attacked_by(obj/item/I, mob/living/user)
+	if(istype(I,/obj/item/trade_chip))
+		var/obj/item/trade_chip/contract = I
+		contract.try_to_unlock_contract(user)
+		return TRUE
+	else
+		return ..()
+
 /obj/machinery/computer/cargo/proc/get_export_categories()
 	. = EXPORT_CARGO
 	if(contraband)

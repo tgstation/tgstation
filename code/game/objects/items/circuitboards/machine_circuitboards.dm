@@ -274,7 +274,7 @@
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine (Machine Board)"
 	icon_state = "engineering"
-	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+	build_path = /obj/machinery/atmospherics/components/binary/thermomachine/freezer
 	var/pipe_layer = PIPING_LAYER_DEFAULT
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
@@ -342,6 +342,15 @@
 	name = "Crystallizer (Machine Board)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/atmospherics/components/binary/crystallizer
+	req_components = list(
+		/obj/item/stack/cable_coil = 10,
+		/obj/item/stack/sheet/glass = 10,
+		/obj/item/stack/sheet/plasteel = 5)
+
+/obj/item/circuitboard/machine/bluespace_sender
+	name = "Bluespace Sender (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/atmospherics/components/unary/bluespace_sender
 	req_components = list(
 		/obj/item/stack/cable_coil = 10,
 		/obj/item/stack/sheet/glass = 10,
@@ -1320,4 +1329,20 @@
 	build_path = /obj/machinery/doppler_array/research
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/scanning_module = 4)
+
+/obj/item/circuitboard/machine/exoscanner
+	name = "Exoscanner (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/exoscanner
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 4,
+		/obj/item/stock_parts/scanning_module = 4)
+
+/obj/item/circuitboard/machine/exodrone_launcher
+	name = "Exploration Drone Launcher (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/exodrone_launcher
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 4,
 		/obj/item/stock_parts/scanning_module = 4)
