@@ -142,7 +142,7 @@
 	if(density)
 		being_held_open = TRUE
 		open()
-		if(!user || QDELETED(user))
+		if(QDELETED(user))
 			being_held_open = FALSE
 			return
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
