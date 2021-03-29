@@ -183,9 +183,17 @@
 		test_status = "ERROR: No core present during detonation."
 		return
 
-	var/explosion_range = light_impact_range
+	var/explosion_range = max(devastation_range, heavy_impact_range, light_impact_range, 0)
 	var/required_range = get_required_radius(inserted_core.anomaly_type)
-	playsound(src, "explosion", min(50 + explosion_range * 2.5, 100))
+	var/turf/location = get_turf(src)
+
+	var/cap_multiplier = SSmapping.level_trait(location.z, ZTRAIT_BOMBCAP_MULTIPLIER)
+	if(isnull(cap_multiplier))
+		cap_multiplier = 1
+	var/capped_heavy = min(GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier, light / devastation_range)
+	var/capped_medium = min(GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier, light / heavy_impact_range)
+	SSexplosions.shake_the_room(location, explosion_range, (capped_heavy * 15) + (capped_medium * 20), capped_heavy, capped_medium)
+
 	if(explosion_range < required_range)
 		test_status = "Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Core ejected."
 		return
@@ -193,7 +201,7 @@
 	if(test_status)
 		return
 	inserted_core = inserted_core.create_core(src, TRUE, TRUE)
-	test_status = "Success. Resultant detonation has theoretical range of [explosion_range]. Required radius was [required_range]. Core production complete."
+	test_status = "Success. Resultant detonation has theoretical range of [light_impact_range]. Required radius was [required_range]. Core production complete."
 	return
 
 /**

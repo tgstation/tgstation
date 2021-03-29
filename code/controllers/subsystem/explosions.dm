@@ -226,16 +226,6 @@ SUBSYSTEM_DEF(explosions)
 	propagate_blastwave(location, arguments["devastation_range"], arguments["heavy_impact_range"], arguments["light_impact_range"], arguments["flash_range"], arguments["adminlog"], arguments["ignorecap"], arguments["flame_range"], arguments["silent"], arguments["smoke"])
 
 
-#define CREAK_DELAY 5 SECONDS //Time taken for the creak to play after explosion, if applicable.
-#define DEVASTATION_PROB 30 //The probability modifier for devistation, maths!
-#define HEAVY_IMPACT_PROB 5 //ditto
-#define FAR_UPPER 60 //Upper limit for the far_volume, distance, clamped.
-#define FAR_LOWER 40 //lower limit for the far_volume, distance, clamped.
-#define PROB_SOUND 75 //The probability modifier for a sound to be an echo, or a far sound. (0-100)
-#define SHAKE_CLAMP 2.5 //The limit for how much the camera can shake for out of view booms.
-#define FREQ_UPPER 40 //The upper limit for the randomly selected frequency.
-#define FREQ_LOWER 25 //The lower of the above.
-
 /**
  * Handles the effects of an explosion originating from a given point.
  *
@@ -308,56 +298,7 @@ SUBSYSTEM_DEF(explosions)
 	far_dist += devastation_range * 20
 
 	if(!silent)
-		var/frequency = get_rand_frequency()
-		var/sound/explosion_sound = sound(get_sfx("explosion"))
-		var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
-		var/sound/creaking_explosion_sound = sound(get_sfx("explosion_creaking"))
-		var/sound/hull_creaking_sound = sound(get_sfx("hull_creaking"))
-		var/sound/explosion_echo_sound = sound('sound/effects/explosion_distant.ogg')
-		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION)
-		var/creaking_explosion = FALSE
-
-		if(prob(devastation_range*DEVASTATION_PROB+heavy_impact_range*HEAVY_IMPACT_PROB) && on_station) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
-			creaking_explosion = TRUE // prob over 100 always returns true
-
-		for(var/MN in GLOB.player_list)
-			var/mob/M = MN
-			// Double check for client
-			var/turf/M_turf = get_turf(M)
-			if(M_turf && M_turf.z == z0)
-				var/dist = get_dist(M_turf, epicenter)
-				var/baseshakeamount
-				if(orig_max_distance - dist > 0)
-					baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
-				// If inside the blast radius + world.view - 2
-				if(dist <= round(max_range + world.view - 2, 1))
-					M.playsound_local(epicenter, null, 100, 1, frequency, S = explosion_sound)
-					if(baseshakeamount > 0)
-						shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
-				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
-				else if(dist <= far_dist)
-					var/far_volume = clamp(far_dist/2, FAR_LOWER, FAR_UPPER) // Volume is based on explosion size and dist
-					if(creaking_explosion)
-						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = creaking_explosion_sound, distance_multiplier = 0)
-					else if(prob(PROB_SOUND)) // Sound variety during meteor storm/tesloose/other bad event
-						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = far_explosion_sound, distance_multiplier = 0) // Far sound
-					else
-						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0) // Echo sound
-
-					if(baseshakeamount > 0 || devastation_range)
-						if(!baseshakeamount) // Devastating explosions rock the station and ground
-							baseshakeamount = devastation_range*3
-						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, SHAKE_CLAMP))
-				else if(!isspaceturf(get_turf(M)) && heavy_impact_range) // Big enough explosions echo throughout the hull
-					var/echo_volume = 40
-					if(devastation_range)
-						baseshakeamount = devastation_range
-						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, SHAKE_CLAMP))
-						echo_volume = 60
-					M.playsound_local(epicenter, null, echo_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0)
-
-				if(creaking_explosion) // 5 seconds after the bang, the station begins to creak
-					addtimer(CALLBACK(M, /mob/proc/playsound_local, epicenter, null, rand(FREQ_LOWER, FREQ_UPPER), 1, frequency, null, null, FALSE, hull_creaking_sound, 0), CREAK_DELAY)
+		shake_the_room(epicenter, orig_max_distance, far_dist, devastation_range, heavy_impact_range)
 
 	if(heavy_impact_range > 1)
 		var/datum/effect_system/explosion/E
@@ -457,13 +398,110 @@ SUBSYSTEM_DEF(explosions)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 
+// Explosion SFX defines...
+/// The probability that a quaking explosion will make the station creak per unit. Maths!
+#define QUAKE_CREAK_PROB 30
+/// The probability that an echoing explosion will make the station creak per unit.
+#define ECHO_CREAK_PROB 5
+/// Time taken for the hull to begin to creak after an explosion, if applicable.
+#define CREAK_DELAY (5 SECONDS)
+/// Lower limit for far explosion SFX volume.
+#define FAR_LOWER 40
+/// Upper limit for far explosion SFX volume.
+#define FAR_UPPER 60
+/// The probability that a distant explosion SFX will be a far explosion sound rather than an echo. (0-100)
+#define FAR_SOUND_PROB 75
+/// The upper limit on screenshake amplitude for nearby explosions.
+#define NEAR_SHAKE_CAP 10
+/// The upper limit on screenshake amplifude for distant explosions.
+#define FAR_SHAKE_CAP 2.5
+/// The duration of the screenshake for nearby explosions.
+#define NEAR_SHAKE_DURATION (2.5 SECONDS)
+/// The duration of the screenshake for distant explosions.
+#define FAR_SHAKE_DURATION (1 SECONDS)
+/// The lower limit for the randomly selected hull creaking frequency.
+#define FREQ_LOWER 25
+/// The upper limit for the randomly selected hull creaking frequency.
+#define FREQ_UPPER 40
+
+/**
+ * Handles the sfx and screenshake caused by an explosion.
+ *
+ * Arguments:
+ * - [epicenter][/turf]: The location of the explosion.
+ * - near_distance: How close to the explosion you need to be to get the full effect of the explosion.
+ * - far_distance: How close to the explosion you need to be to hear more than echos.
+ * - quake_factor: Main scaling factor for screenshake.
+ * - echo_factor: Whether to make the explosion echo off of very distant parts of the station.
+ * - creaking: Whether to make the station creak. Autoset if null.
+ * - [near_sound][/sound]: The sound that plays if you are close to the explosion.
+ * - [far_sound][/sound]: The sound that plays if you are far from the explosion.
+ * - [echo_sound][/sound]: The sound that plays as echos for the explosion.
+ * - [creaking_sound][/sound]: The sound that plays when the station creaks during the explosion.
+ * - [hull_creaking_sound][/sound]: The sound that plays when the station creaks after the explosion.
+ */
+/datum/controller/subsystem/explosions/proc/shake_the_room(turf/epicenter, near_distance, far_distance, quake_factor, echo_factor, creaking, sound/near_sound = sound(get_sfx("explosion")), sound/far_sound = sound('sound/effects/explosionfar.ogg'), sound/echo_sound = sound('sound/effects/explosion_distant.ogg'), sound/creaking_sound = sound(get_sfx("explosion_creaking")), hull_creaking_sound = sound(get_sfx("hull_creaking")))
+	var/frequency = get_rand_frequency()
+	var/blast_z = epicenter.z
+	if(isnull(creaking)) // Autoset creaking.
+		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION)
+		if(on_station && prob((quake_factor * QUAKE_CREAK_PROB) + (echo_factor * ECHO_CREAK_PROB))) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
+			creaking = TRUE // prob over 100 always returns true
+		else
+			creaking = FALSE
+
+	for(var/mob/listener as anything in GLOB.player_list)
+		var/turf/listener_turf = get_turf(listener)
+		if(!listener_turf || listener_turf.z != blast_z)
+			continue
+
+		var/distance = get_dist(epicenter, listener_turf)
+		var/base_shake_amount
+		if(near_distance > distance)
+			base_shake_amount = sqrt((near_distance - distance) / 10)
+
+		if(distance <= round(near_distance + world.view - 2, 1)) // If you are close enough to see the effects of the explosion first-hand (ignoring walls)
+			listener.playsound_local(epicenter, null, 100, TRUE, frequency, S = near_sound)
+			if(base_shake_amount > 0)
+				shake_camera(listener, NEAR_SHAKE_DURATION, clamp(base_shake_amount, 0, NEAR_SHAKE_CAP))
+
+		else if(distance < far_distance) // You can hear a far explosion if you are outside the blast radius. Small explosions shouldn't be heard throughout the station.
+			var/far_volume = clamp(far_distance / 2, FAR_LOWER, FAR_UPPER)
+			if(creaking)
+				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, S = creaking_sound, distance_multiplier = 0)
+			else if(prob(FAR_SOUND_PROB)) // Sound variety during meteor storm/tesloose/other bad event
+				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, S = far_sound, distance_multiplier = 0)
+			else
+				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, S = echo_sound, distance_multiplier = 0)
+
+			if(base_shake_amount || quake_factor)
+				if(!base_shake_amount) // Devastating explosions rock the station and ground
+					base_shake_amount = quake_factor * 3
+				shake_camera(listener, FAR_SHAKE_DURATION, clamp(base_shake_amount / 4, 0, FAR_SHAKE_CAP))
+
+		else if(!isspaceturf(listener_turf) && echo_factor) // Big enough explosions echo through the hull.
+			var/echo_volume
+			if(quake_factor)
+				base_shake_amount = quake_factor
+				echo_volume = 60
+				shake_camera(listener, FAR_SHAKE_DURATION, clamp(base_shake_amount / 4, 0, FAR_SHAKE_CAP))
+			else
+				echo_volume = 40
+			listener.playsound_local(epicenter, null, echo_volume, TRUE, frequency, S = echo_sound, distance_multiplier = 0)
+
+		if(creaking) // 5 seconds after the bang, the station begins to creak
+			addtimer(CALLBACK(listener, /mob/proc/playsound_local, epicenter, null, rand(FREQ_LOWER, FREQ_UPPER), TRUE, frequency, null, null, FALSE, hull_creaking_sound, 0), CREAK_DELAY)
+
 #undef CREAK_DELAY
-#undef DEVASTATION_PROB
-#undef HEAVY_IMPACT_PROB
+#undef QUAKE_CREAK_PROB
+#undef ECHO_CREAK_PROB
 #undef FAR_UPPER
 #undef FAR_LOWER
-#undef PROB_SOUND
-#undef SHAKE_CLAMP
+#undef FAR_SOUND_PROB
+#undef NEAR_SHAKE_CAP
+#undef FAR_SHAKE_CAP
+#undef NEAR_SHAKE_DURATION
+#undef FAR_SHAKE_DURATION
 #undef FREQ_UPPER
 #undef FREQ_LOWER
 
