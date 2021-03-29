@@ -4,9 +4,26 @@
 	icon_state = "weaponcrate"
 	var/list/loot_table_armor = list(/obj/item/gun/ballistic/shotgun)
 	var/list/loot_table_heal = list(/obj/item/gun/ballistic/shotgun)
-	var/list/loot_table_basic = list(/obj/item/gun/ballistic/shotgun)
-	var/list/loot_table_rare = list(/obj/item/gun/ballistic/shotgun)
-	var/list/loot_table_legendary = list(/obj/item/gun/ballistic/shotgun)
+
+	var/list/loot_table_basic = list(
+		/obj/item/gun/ballistic/pistol=25,
+		/obj/item/gun/ballistic/pistol/suppressed=20,
+		/obj/item/gun/ballistic/pistol/toy/riot=20,
+		/obj/item/gun/ballistic/rifle/boltaction/pipegun=20,
+		/obj/item/gun/ballistic/revolver/detective=20)
+
+	var/list/loot_table_rare = list(
+		/obj/item/gun/ballistic/shotgun/lethal=8,
+		/obj/item/gun/ballistic/automatic/surplus=9,
+		/obj/item/gun/ballistic/automatic/pistol/m1911=8,
+		/obj/item/gun/ballistic/automatic/wt550=9,
+		/obj/item/gun/ballistic/automatic/plastikov=9)
+
+	var/list/loot_table_legendary = list(
+		/obj/item/gun/ballistic/automatic/sniper_rifle=2,
+		/obj/item/gun/ballistic/revolver=2,
+		/obj/item/gun/ballistic/automatic/pistol/deagle/gold=1,
+		/obj/item/gun/ballistic/automatic/ar=1)
 	var/list/loot_content
 
 
