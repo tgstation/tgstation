@@ -870,6 +870,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "acN" = (
@@ -1750,6 +1751,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/power/apc/auto_name/west,
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
 "agn" = (
@@ -3428,6 +3430,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/carpet,
 /area/hallway/secondary/entry)
 "anq" = (
@@ -4145,6 +4148,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/maintenance/disposal)
 "arf" = (
@@ -11589,6 +11593,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
 "bgw" = (
@@ -12741,6 +12746,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
 "bpb" = (
@@ -17609,6 +17615,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory)
 "bPA" = (
@@ -23640,6 +23647,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "ckk" = (
@@ -25074,6 +25082,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/tcommsat/server)
 "cpL" = (
@@ -28998,6 +29007,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "cPG" = (
@@ -31727,6 +31737,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
 "cWW" = (
@@ -35845,6 +35856,7 @@
 /area/medical/psychology)
 "dhx" = (
 /obj/effect/turf_decal/tile/blue,
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron/white,
 /area/medical/psychology)
 "dhy" = (
@@ -39287,6 +39299,11 @@
 	icon_state = "chapel"
 	},
 /area/service/chapel/main)
+"dqA" = (
+/obj/structure/cable,
+/obj/effect/spawner/lootdrop/lootcrate,
+/turf/open/floor/plating,
+/area/security/range)
 "dqC" = (
 /obj/structure/chair/wood,
 /obj/effect/landmark/start/hangover,
@@ -39486,6 +39503,7 @@
 /area/medical/medbay/central)
 "drl" = (
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible,
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/medical/medbay/central)
 "drm" = (
@@ -49580,6 +49598,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dSx" = (
@@ -51470,6 +51489,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dZA" = (
@@ -54605,6 +54625,7 @@
 /area/cargo/office)
 "exE" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "eyc" = (
@@ -62145,6 +62166,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
 "hbO" = (
@@ -64018,6 +64040,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron/grimy,
 /area/service/chapel/main)
 "hHF" = (
@@ -65670,7 +65693,6 @@
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "ihC" = (
-/obj/structure/closet/secure_closet/hop,
 /obj/item/clothing/suit/ianshirt,
 /obj/item/bedsheet/ian,
 /turf/open/floor/iron/grimy,
@@ -69121,6 +69143,23 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
+"jtK" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/lootcrate,
+/turf/open/floor/iron,
+/area/hallway/secondary/exit/departure_lounge)
 "jtP" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/iron/grimy,
@@ -79231,7 +79270,6 @@
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "mMH" = (
-/obj/structure/closet/secure_closet/captains,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -81843,6 +81881,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
 "nEf" = (
@@ -84065,6 +84104,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "ooa" = (
@@ -85572,6 +85612,11 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"oMA" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/lootdrop/lootcrate,
+/turf/open/floor/iron,
+/area/cargo/storage)
 "oMB" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -87999,6 +88044,7 @@
 /area/engineering/main)
 "pxU" = (
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "pyO" = (
@@ -92698,6 +92744,21 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/main)
+"qYj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/effect/spawner/lootdrop/lootcrate,
+/turf/open/floor/iron,
+/area/maintenance/aft)
 "qYo" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -95290,6 +95351,14 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/cargo/office)
+"rRN" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/lootcrate,
+/turf/open/floor/iron,
+/area/command/heads_quarters/ce)
 "rRR" = (
 /obj/structure/table/wood,
 /obj/item/stack/package_wrap,
@@ -96233,6 +96302,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/cargo/qm)
 "shN" = (
@@ -96387,6 +96457,10 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/service/chapel/main)
+"slv" = (
+/obj/effect/spawner/lootdrop/lootcrate,
+/turf/open/floor/iron/grimy,
+/area/command/heads_quarters/hop)
 "slz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -97118,6 +97192,10 @@
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/iron/grimy,
 /area/service/bar/atrium)
+"szI" = (
+/obj/effect/spawner/lootdrop/lootcrate,
+/turf/open/floor/plating,
+/area/security/prison)
 "szL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/toilet{
@@ -99429,6 +99507,7 @@
 	dir = 8
 	},
 /obj/machinery/newscaster/directional/west,
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/medical/morgue)
 "tpQ" = (
@@ -100664,6 +100743,10 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"tJT" = (
+/obj/effect/spawner/lootdrop/lootcrate,
+/turf/open/floor/carpet,
+/area/commons/dorms)
 "tKa" = (
 /obj/structure/chair/stool,
 /obj/structure/window{
@@ -106363,6 +106446,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "vzy" = (
@@ -107113,6 +107197,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
 "vKM" = (
@@ -107273,6 +107358,11 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central/aft)
+"vNY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/lootcrate,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "vNZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -107355,6 +107445,7 @@
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/effect/spawner/lootdrop/lootcrate,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -136954,7 +137045,7 @@ tFA
 oLP
 uUh
 eys
-eys
+rRN
 eys
 wLP
 oyd
@@ -151099,7 +151190,7 @@ tfO
 sjC
 sjC
 sjC
-sjC
+slv
 sjC
 qEq
 oYF
@@ -152710,7 +152801,7 @@ dUx
 dXN
 dYH
 dZp
-dZZ
+jtK
 dUx
 ebm
 dYH
@@ -155778,7 +155869,7 @@ uIV
 dIU
 dCy
 bMb
-dMA
+qYj
 dNS
 aaa
 aaa
@@ -158760,7 +158851,7 @@ wlt
 mfN
 vGD
 jpQ
-mvl
+oMA
 ffH
 qll
 feG
@@ -159081,7 +159172,7 @@ jDc
 qtk
 mqR
 pZu
-cHW
+vNY
 cIW
 cZU
 dAh
@@ -167045,7 +167136,7 @@ cxt
 coI
 vbb
 ekx
-xvn
+tJT
 uhs
 suW
 glU
@@ -168062,7 +168153,7 @@ che
 ciO
 biy
 clL
-cnp
+dqA
 coW
 clA
 aad
@@ -170068,7 +170159,7 @@ pff
 bzW
 wDB
 gEN
-bbt
+szI
 gRM
 aKV
 jWa
