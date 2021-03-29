@@ -1,3 +1,7 @@
-/obj/effect/spawner/structure/lootcrate
+/obj/effect/spawner/lootdrop/lootcrate
 	name = "lootcrate spawner"
-	spawn_list = list(/obj/item/pen)
+	loot = list(
+			/obj/structure/closet/crate/loot/basic = 20,
+			/obj/structure/closet/crate/loot/rare = 5,
+			/obj/structure/closet/crate/loot/legendary = 1,
+		)
