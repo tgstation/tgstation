@@ -387,8 +387,8 @@
 	name = "suspicious spray bottle"
 	desc = "A spray bottle, with a high performance plastic nozzle. The color scheme makes you feel slightly uneasy."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "sprayer_sus_8"
-	inhand_icon_state = "sprayer_sus"
+	icon_state = "sprayer_syndie_8"
+	inhand_icon_state = "sprayer_syndie"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	spray_range = 4
@@ -398,7 +398,7 @@
 
 /obj/item/reagent_containers/spray/syndicate/Initialize()
 	. = ..()
-	icon_state = pick("sprayer_sus_1", "sprayer_sus_2", "sprayer_sus_3", "sprayer_sus_4", "sprayer_sus_5","sprayer_sus_6", "sprayer_sus_7", "sprayer_sus_8")
+	icon_state = pick("sprayer_syndie_1", "sprayer_syndie_2", "sprayer_syndie_3", "sprayer_syndie_4", "sprayer_syndie_5","sprayer_syndie_6", "sprayer_syndie_7", "sprayer_syndie_8")
 
 /obj/item/reagent_containers/spray/medical
 	name = "medical spray bottle"
