@@ -1155,20 +1155,24 @@
 	name = "Red Team identification card"
 	desc = "A card used to identify members of the red team for CTF"
 	icon_state = "ctf_red"
+	registered_age = 30
 
 /obj/item/card/id/blue
 	name = "Blue Team identification card"
 	desc = "A card used to identify members of the blue team for CTF"
 	icon_state = "ctf_blue"
+	registered_age = 30
 
 /obj/item/card/id/yellow
 	name = "Yellow Team identification card"
 	desc = "A card used to identify members of the yellow team for CTF"
 	icon_state = "ctf_yellow"
+	registered_age = 30
 
 /obj/item/card/id/green
 	name = "Green Team identification card"
 	desc = "A card used to identify members of the green team for CTF"
 	icon_state = "ctf_green"
+	registered_age = 30
 
 #undef ID_ICON_BORDERS
