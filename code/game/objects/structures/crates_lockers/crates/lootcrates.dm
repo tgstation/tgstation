@@ -3,10 +3,10 @@
 	name = "loot crate"
 	icon_state = "weaponcrate"
 	var/list/loot_table_armor = list(/obj/item/gun/ballistic/shotgun)
+	var/list/loot_table_heal = list(/obj/item/gun/ballistic/shotgun)
 	var/list/loot_table_basic = list(/obj/item/gun/ballistic/shotgun)
 	var/list/loot_table_rare = list(/obj/item/gun/ballistic/shotgun)
 	var/list/loot_table_legendary = list(/obj/item/gun/ballistic/shotgun)
-	var/list/loot_table_heal = list(/obj/item/gun/ballistic/shotgun)
 	var/list/loot_content
 
 
@@ -31,7 +31,7 @@
 
 /obj/structure/closet/crate/loot/basic/Initialize()
 	var/list/loot_table = loot_table_basic + loot_table_rare + loot_table_legendary
-	loot_content = loot_content + pickweight(loot_table)
+	LAZYADD(loot_content,pickweight(loot_table))
 	..()
 
 /obj/structure/closet/crate/loot/basic/PopulateContents()
@@ -46,7 +46,7 @@
 
 /obj/structure/closet/crate/loot/rare/Initialize()
 	var/list/loot_table = loot_table_rare + loot_table_legendary
-	loot_content = loot_content + pickweight(loot_table)
+	LAZYADD(loot_content,pickweight(loot_table))
 	..()
 
 /obj/structure/closet/crate/loot/rare/PopulateContents()
@@ -61,7 +61,7 @@
 
 /obj/structure/closet/crate/loot/legendary/Initialize()
 	var/list/loot_table =  loot_table_legendary
-	loot_content = loot_content + pickweight(loot_table)
+	LAZYADD(loot_content,pickweight(loot_table))
 	..()
 
 /obj/structure/closet/crate/loot/legendary/PopulateContents()
