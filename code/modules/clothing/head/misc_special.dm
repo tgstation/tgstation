@@ -50,6 +50,8 @@
 	var/force_on = 15
 	var/throwforce_on = 15
 	var/damtype_on = BURN
+	wound_bonus = 10
+	bare_wound_bonus = 15
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	light_range = 2 //luminosity when on
