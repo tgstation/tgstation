@@ -391,11 +391,7 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M, check_hand = TRUE)
-	if(check_hand && src != M.get_active_held_item())
-		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
-		return FALSE
-
+/obj/item/proc/equip_to_best_slot(mob/M)
 	if(M.equip_to_appropriate_slot(src))
 		M.update_inv_hands()
 		return TRUE
@@ -423,8 +419,15 @@
 	set hidden = TRUE
 
 	var/obj/item/I = get_active_held_item()
-	if (I)
-		I.equip_to_best_slot(src)
+	if(!I)
+		to_chat(src, "<span class='warning'>You are not holding anything to equip!</span>")
+		return
+	if (temporarilyRemoveItemFromInventory(I) && !QDELETED(I)) //Try remove it from hand slot, make sure that didn't destroy it.
+		if(I.equip_to_best_slot(src)) // Try to put in appriopriate slot
+			return
+		if(put_in_active_hand(I)) // If trying to find best slot fails try to put it back.
+			return
+		I.forceMove(drop_location())// If putting it back fails just drop it. (How did you do this.)
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()
