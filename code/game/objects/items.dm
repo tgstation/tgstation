@@ -217,9 +217,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL //prevent reqdels
-	if(ismob(loc))
-		var/mob/m = loc
-		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
 	return ..()
@@ -957,18 +954,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return 0
 
 /obj/item/doMove(atom/destination)
-	if (ismob(loc))
-		var/mob/M = loc
-		var/hand_index = M.get_held_index_of_item(src)
-		if(hand_index)
-			M.held_items[hand_index] = null
-			M.update_inv_hands()
-			if(M.client)
-				M.client.screen -= src
-			layer = initial(layer)
-			plane = initial(plane)
-			appearance_flags &= ~NO_CLIENT_COLOR
-			dropped(M, FALSE)
+	if(ismob(loc))
+		var/mob/holder_mob = loc
+		holder_mob.temporarilyRemoveItemFromInventory(src, TRUE)
 	return ..()
 
 /obj/item/proc/embedded(atom/embedded_target, obj/item/bodypart/part)
