@@ -8,15 +8,12 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	beauty = -100
 	clean_type = CLEAN_TYPE_BLOOD
-	var/should_dry = TRUE
 	var/dryname = "dried blood" //when the blood lasts long enough, it becomes dry and gets a new name
 	var/drydesc = "Looks like it's been here a while. Eew." //as above
 	var/drytime = 0
 
-/obj/effect/decal/cleanable/blood/Initialize(mapload)
+/obj/effect/decal/cleanable/blood/Initialize()
 	. = ..()
-	if(!should_dry)
-		return
 	if(bloodiness)
 		start_drying()
 	else
@@ -101,13 +98,15 @@
 	. = ..()
 	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
+	if(mapload) //Don't rot at roundstart for the love of god
+		return
 
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
 	return FALSE //Never fail to place us
 
 /obj/effect/decal/cleanable/blood/gibs/dry()
 	. = ..()
-	AddComponent(/datum/component/rot, 0, 0.7)
+	AddComponent(/datum/component/rot/gibs)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return FALSE
@@ -170,7 +169,6 @@
 	desc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
 	icon_state = "gib1-old"
 	bloodiness = 0
-	should_dry = FALSE
 	dryname = "old rotting gibs"
 	drydesc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
 
@@ -179,7 +177,6 @@
 	setDir(pick(1,2,4,8))
 	add_blood_DNA(list("Non-human DNA" = random_blood_type()))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
-	dry()
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
