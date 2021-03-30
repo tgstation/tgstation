@@ -75,10 +75,9 @@
 		reagents.trans_to(reagent_puff, amount_per_transfer_from_this, 1/range)
 	reagent_puff.color = mix_color_from_reagents(reagent_puff.reagents.reagent_list)
 	var/wait_step = max(round(2+3/range), 2)
-	do_spray(target, wait_step, reagent_puff, range, puff_reagent_left, user)
 
-	// Clean up our reagent puff.
-	qdel(reagent_puff)
+	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
+	do_spray(target, wait_step, reagent_puff, range, puff_reagent_left, user)
 
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
 	set waitfor = FALSE
@@ -108,11 +107,11 @@
 					if((turf_mob.body_position == STANDING_UP) || has_travelled_max_distance)
 						reagent_puff.reagents.expose(turf_mob, VAPOR)
 						log_combat(user, turf_mob, "sprayed with", src, addition="which had [puff_reagents_string]")
-
 						puff_reagent_left -= 1
 				else if(has_travelled_max_distance)
 					reagent_puff.reagents.expose(turf_atom, VAPOR)
 					log_combat(user, turf_atom, "sprayed with", src, addition="which had [puff_reagents_string]")
+					puff_reagent_left -= 1
 			else
 				reagent_puff.reagents.expose(turf_atom, VAPOR)
 				log_combat(user, turf_atom, "sprayed with", src, addition="which had [puff_reagents_string]")
@@ -125,9 +124,12 @@
 			log_combat(user, puff_turf, "sprayed with", src, addition="which had [puff_reagents_string]")
 			puff_reagent_left -= 1
 
-		// Used all the puff. Time to return.
+		// Did we use up all the puff early? Time to delete the puff and return.
 		if(puff_reagent_left <= 0)
+			qdel(reagent_puff)
 			return
+
+	qdel(reagent_puff)
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
 	stream_mode = !stream_mode
