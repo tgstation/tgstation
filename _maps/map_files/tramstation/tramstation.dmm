@@ -5869,7 +5869,7 @@
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
 "amQ" = (
-/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/engine,
 /area/science/cytology)
 "amR" = (
@@ -51507,7 +51507,7 @@
 	name = "Secure Pen";
 	req_access_txt = "55"
 	},
-/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/engine,
 /area/science/cytology)
 "oZH" = (
@@ -72068,7 +72068,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "xVk" = (
-/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
