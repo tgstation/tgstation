@@ -260,7 +260,7 @@
 
 
 /obj/item/gun/proc/do_autofire(datum/source, atom/target, mob/living/shooter, params)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
 		return NONE
