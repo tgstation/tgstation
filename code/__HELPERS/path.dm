@@ -6,6 +6,7 @@
 
 /**
  * This is the proc you use whenever you want to have pathfinding more complex than "try stepping towards the thing"
+ * If no path was found, returns an empty list, which is important for bots like medibots who expect an empty list rather than nothing
  *
  * Arguments:
  * * caller: The movable atom that's trying to find the path
@@ -31,6 +32,8 @@
 	qdel(pathfind_datum)
 
 	SSpathfinder.mobs.found(l)
+	if(!path)
+		path = list()
 	return path
 
 /**
@@ -130,7 +133,7 @@
  * search() is the proc you call to kick off and handle the actual pathfinding, and kills the pathfind datum instance when it's done.
  *
  * If a valid path was found, it's returned as a list. If invalid or cross-z-level params are entered, returns FALSE.
- * If no valid path is found, returns an empty list, which is important for simple bot mobs who rely on an empty list meaning no path found.
+ * If no valid path is found, returns FALSE or null, which [/proc/get_path_to] translates to an empty list (notable for simple bots, who need empty lists)
  */
 /datum/pathfind/proc/search()
 	start = get_turf(caller)
@@ -140,7 +143,7 @@
 	if(start.z != end.z || start == end ) //no pathfinding between z levels
 		return FALSE
 	if(max_distance && (max_distance < get_dist(start, end))) //if start turf is farther than max_distance from end turf, no need to do anything
-		return list()
+		return FALSE
 
 	//initialization
 	var/datum/jps_node/current_processed_node = new (start, -1, 0, end)
@@ -168,8 +171,7 @@
 	if(path)
 		for(var/i = 1 to round(0.5 * length(path)))
 			path.Swap(i, length(path) - i + 1)
-	else
-		path = new()
+
 	sources = null
 	qdel(open)
 	return path
