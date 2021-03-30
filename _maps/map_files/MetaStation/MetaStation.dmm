@@ -17212,7 +17212,7 @@
 /area/commons/dorms)
 "bJb" = (
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
 /turf/open/space,
@@ -21003,15 +21003,8 @@
 /area/space/nearstation)
 "cfw" = (
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible{
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
 	dir = 8
-	},
-/turf/open/space,
-/area/space/nearstation)
-"cfx" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	dir = 9
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -25825,7 +25818,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "cGZ" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 6
 	},
 /turf/open/floor/iron,
@@ -28900,7 +28893,7 @@
 /area/space/nearstation)
 "dhc" = (
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
@@ -33371,7 +33364,7 @@
 /turf/open/floor/iron,
 /area/commons/dorms)
 "eGj" = (
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible{
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -35921,7 +35914,7 @@
 /area/science/xenobiology)
 "fFp" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "fFD" = (
@@ -41808,7 +41801,7 @@
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
 "hYI" = (
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible,
+/obj/machinery/atmospherics/pipe/manifold/orange/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "hZj" = (
@@ -45821,7 +45814,7 @@
 /area/service/chapel/main)
 "jGc" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
@@ -50301,7 +50294,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible{
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -52858,7 +52851,7 @@
 /turf/open/floor/iron/dark/corner,
 /area/engineering/storage_shared)
 "msd" = (
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible{
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -54139,7 +54132,7 @@
 /turf/open/floor/iron/dark/corner,
 /area/engineering/atmos)
 "mTb" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "mTf" = (
@@ -54357,7 +54350,7 @@
 "mVL" = (
 /obj/machinery/meter,
 /obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
@@ -61317,7 +61310,7 @@
 /area/maintenance/starboard)
 "pDb" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible{
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -61340,7 +61333,7 @@
 /area/science/cytology)
 "pDq" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 6
 	},
 /turf/open/floor/iron,
@@ -62229,7 +62222,7 @@
 /area/science/lab)
 "pYr" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -62335,13 +62328,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/nanite)
-"qbe" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "qby" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -64891,7 +64877,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/security/prison)
 "rcv" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "rcM" = (
@@ -69799,13 +69785,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
-"sVq" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/engineering/atmos)
 "sVy" = (
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom,
 /obj/effect/turf_decal/delivery,
@@ -70226,7 +70205,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "teW" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -78650,7 +78629,7 @@
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
 "wuH" = (
-/obj/machinery/atmospherics/pipe/manifold4w/yellow/visible,
+/obj/machinery/atmospherics/pipe/manifold4w/orange/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "wuI" = (
@@ -80748,7 +80727,7 @@
 /turf/open/floor/iron,
 /area/science/robotics/mechbay)
 "xlZ" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	name = "Mix to Engine"
@@ -125451,7 +125430,7 @@ cGZ
 dHs
 mTb
 fFp
-cfx
+dhl
 deP
 deP
 deP
@@ -126479,7 +126458,7 @@ eGj
 nBP
 mTb
 fFp
-cfx
+dhl
 deP
 deP
 deP
@@ -127748,15 +127727,15 @@ ibn
 hGN
 sQb
 moI
-sVq
+wcB
 hRS
 nFa
 wcB
-sVq
+wcB
 hRS
 nFa
 hRS
-sVq
+wcB
 hRS
 nFa
 ojj
@@ -128005,15 +127984,15 @@ eyx
 cor
 pid
 cor
-qbe
+byG
 cor
 pid
 byG
-qbe
+byG
 cor
 pid
 cor
-qbe
+byG
 cor
 pid
 jMk
