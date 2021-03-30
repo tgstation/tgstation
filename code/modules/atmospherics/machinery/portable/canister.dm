@@ -289,6 +289,13 @@
 	filled = 1
 	release_pressure = ONE_ATMOSPHERE*2
 
+/obj/machinery/portable_atmospherics/canister/proto/default/tritium
+	name = "prototype canister"
+	desc = "A prototype canister for a prototype bike, what could go wrong? Filled with tritium."
+	gas_type = /datum/gas/tritium
+	filled = 1
+	release_pressure = ONE_ATMOSPHERE*2
+
 /obj/machinery/portable_atmospherics/canister/tier_1
 	heat_limit = 5000
 	pressure_limit = 50000
