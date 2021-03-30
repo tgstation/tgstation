@@ -46,21 +46,14 @@
 		to_chat(user, "<span class='warning'>Not enough left!</span>")
 		return
 
-	var/contained = reagents.log_list()
-
 	spray(target, user)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(target, user))
-
-	var/turf/src_turf = get_turf(src)
-
-	log_combat(user, src_turf, "sprayed", src, addition="which had [contained]")
-	log_game("[key_name(user)] fired [contained] from \a [src] at [AREACOORD(src_turf)].") //copypasta falling out of my pockets
 	return
 
-
+/// Handles creating a chem puff that travels towards the target atom, exposing reagents to everything it hits on the way.
 /obj/item/reagent_containers/spray/proc/spray(atom/target, mob/user)
 	var/range = max(min(current_range, get_dist(src, target)), 1)
 
@@ -76,9 +69,16 @@
 	reagent_puff.color = mix_color_from_reagents(reagent_puff.reagents.reagent_list)
 	var/wait_step = max(round(2+3/range), 2)
 
+	var/puff_reagent_string = reagent_puff.reagents.log_list()
+	var/turf/src_turf = get_turf(src)
+
+	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string]")
+	log_game("[key_name(user)] fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string] at [AREACOORD(src_turf)].")
+
 	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
 	do_spray(target, wait_step, reagent_puff, range, puff_reagent_left, user)
 
+/// Handles exposing atoms to the reagents contained in a spray's chempuff. Deletes the chempuff when it's completed.
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
 	set waitfor = FALSE
 
@@ -106,22 +106,22 @@
 
 					if((turf_mob.body_position == STANDING_UP) || has_travelled_max_distance)
 						reagent_puff.reagents.expose(turf_mob, VAPOR)
-						log_combat(user, turf_mob, "sprayed with", src, addition="which had [puff_reagents_string]")
+						log_combat(user, turf_mob, "sprayed", src, addition="which had [puff_reagents_string]")
 						puff_reagent_left -= 1
 				else if(has_travelled_max_distance)
 					reagent_puff.reagents.expose(turf_atom, VAPOR)
-					log_combat(user, turf_atom, "sprayed with", src, addition="which had [puff_reagents_string]")
+					log_combat(user, turf_atom, "sprayed", src, addition="which had [puff_reagents_string]")
 					puff_reagent_left -= 1
 			else
 				reagent_puff.reagents.expose(turf_atom, VAPOR)
-				log_combat(user, turf_atom, "sprayed with", src, addition="which had [puff_reagents_string]")
+				log_combat(user, turf_atom, "sprayed", src, addition="which had [puff_reagents_string]")
 				if(ismob(turf_atom))
 					puff_reagent_left -= 1
 
 		if(puff_reagent_left > 0 && (!stream_mode || has_travelled_max_distance))
 			var/turf/puff_turf = get_turf(reagent_puff)
 			reagent_puff.reagents.expose(puff_turf, VAPOR)
-			log_combat(user, puff_turf, "sprayed with", src, addition="which had [puff_reagents_string]")
+			log_combat(user, puff_turf, "sprayed", src, addition="which had [puff_reagents_string]")
 			puff_reagent_left -= 1
 
 		// Did we use up all the puff early? Time to delete the puff and return.
