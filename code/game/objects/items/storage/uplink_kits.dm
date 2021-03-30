@@ -394,49 +394,44 @@
 /obj/item/storage/box/syndie_kit/imp_macrobomb
 	name = "macrobomb implant box"
 	items_inside = list(
-		/obj/item/implanter/explosive_macro
+		/obj/item/implanter/explosive_macro = 1
 	)
-
-/obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
-	new (src)
 
 /obj/item/storage/box/syndie_kit/imp_uplink
 	name = "uplink implant box"
-
-/obj/item/storage/box/syndie_kit/imp_uplink/PopulateContents()
-	new /obj/item/implanter/uplink(src)
+	items_inside = list(
+		/obj/item/implanter/uplink = 1
+	)
 
 /obj/item/storage/box/syndie_kit/bioterror
 	name = "bioterror syringe box"
-
-/obj/item/storage/box/syndie_kit/bioterror/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/syringe/bioterror(src)
+	items_inside = list(
+		/obj/item/reagent_containers/syringe/bioterror = 7
+	)
 
 /obj/item/storage/box/syndie_kit/clownpins
 	name = "ultra hilarious firing pin box"
-
-/obj/item/storage/box/syndie_kit/clownpins/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/firing_pin/clown/ultra(src)
+	items_inside = list(
+		/obj/item/firing_pin/clown/ultra = 7
+	)
 
 /obj/item/storage/box/syndie_kit/imp_storage
 	name = "storage implant box"
-
-/obj/item/storage/box/syndie_kit/imp_storage/PopulateContents()
-	new /obj/item/implanter/storage(src)
+	items_inside = list(
+		/obj/item/implanter/storage = 1
+	)
 
 /obj/item/storage/box/syndie_kit/imp_stealth
 	name = "stealth implant box"
-
-/obj/item/storage/box/syndie_kit/imp_stealth/PopulateContents()
-	new /obj/item/implanter/stealth(src)
+	items_inside = list(
+		/obj/item/implanter/stealth = 1
+	)
 
 /obj/item/storage/box/syndie_kit/imp_radio
 	name = "syndicate radio implant box"
-
-/obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
-	new /obj/item/implanter/radio/syndicate(src)
+	items_inside = list(
+		/obj/item/implanter/radio/syndicate = 1
+	)
 
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
@@ -458,55 +453,58 @@
 
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
-
-/obj/item/storage/box/syndie_kit/emp/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/grenade/empgrenade(src)
-	new /obj/item/implanter/emp(src)
+	items_inside = list(
+		/obj/item/grenade/empgrenade = 5,
+		/obj/item/implanter/emp = 1
+	)
 
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
+	items_inside = list(
+		new /obj/item/reagent_containers/glass/bottle/polonium = 1,
+		new /obj/item/reagent_containers/glass/bottle/venom = 1,
+		new /obj/item/reagent_containers/glass/bottle/fentanyl = 1,
+		new /obj/item/reagent_containers/glass/bottle/formaldehyde = 1,
+		new /obj/item/reagent_containers/glass/bottle/spewium = 1,
+		new /obj/item/reagent_containers/glass/bottle/cyanide = 1,
+		new /obj/item/reagent_containers/glass/bottle/histamine = 1,
+		new /obj/item/reagent_containers/glass/bottle/initropidril = 1,
+		new /obj/item/reagent_containers/glass/bottle/pancuronium = 1,
+		new /obj/item/reagent_containers/glass/bottle/sodium_thiopental = 1,
+		new /obj/item/reagent_containers/glass/bottle/coniine = 1,
+		new /obj/item/reagent_containers/glass/bottle/curare = 1,
+		new /obj/item/reagent_containers/glass/bottle/amanitin = 1,
+		new /obj/item/reagent_containers/syringe = 1
+	)
 
 /obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 14
 
-/obj/item/storage/box/syndie_kit/chemical/PopulateContents()
-	new /obj/item/reagent_containers/glass/bottle/polonium(src)
-	new /obj/item/reagent_containers/glass/bottle/venom(src)
-	new /obj/item/reagent_containers/glass/bottle/fentanyl(src)
-	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
-	new /obj/item/reagent_containers/glass/bottle/spewium(src)
-	new /obj/item/reagent_containers/glass/bottle/cyanide(src)
-	new /obj/item/reagent_containers/glass/bottle/histamine(src)
-	new /obj/item/reagent_containers/glass/bottle/initropidril(src)
-	new /obj/item/reagent_containers/glass/bottle/pancuronium(src)
-	new /obj/item/reagent_containers/glass/bottle/sodium_thiopental(src)
-	new /obj/item/reagent_containers/glass/bottle/coniine(src)
-	new /obj/item/reagent_containers/glass/bottle/curare(src)
-	new /obj/item/reagent_containers/glass/bottle/amanitin(src)
-	new /obj/item/reagent_containers/syringe(src)
-
 /obj/item/storage/box/syndie_kit/nuke
 	name = "box"
-
-/obj/item/storage/box/syndie_kit/nuke/PopulateContents()
-	new /obj/item/screwdriver/nuke(src)
-	new /obj/item/nuke_core_container(src)
-	new /obj/item/paper/guides/antag/nuke_instructions(src)
+	items_inside = list(
+		/obj/item/screwdriver/nuke = 1,
+		/obj/item/nuke_core_container = 1,
+		/obj/item/paper/guides/antag/nuke_instructions = 1
+	)
 
 /obj/item/storage/box/syndie_kit/supermatter
 	name = "box"
+	items_inside = list(
+		/obj/item/scalpel/supermatter = 1,
+		/obj/item/hemostat/supermatter = 1,
+		/obj/item/nuke_core_container/supermatter = 1,
+		/obj/item/paper/guides/antag/supermatter_sliver = 1
+	)
 
-/obj/item/storage/box/syndie_kit/supermatter/PopulateContents()
-	new /obj/item/scalpel/supermatter(src)
-	new /obj/item/hemostat/supermatter(src)
-	new /obj/item/nuke_core_container/supermatter(src)
-	new /obj/item/paper/guides/antag/supermatter_sliver(src)
 
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade
 	name = "virus grenade kit"
+	items_inside = list(
+
+	)
 
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade/PopulateContents()
 	new /obj/item/grenade/chem_grenade/tuberculosis(src)
@@ -517,6 +515,9 @@
 
 /obj/item/storage/box/syndie_kit/chameleon
 	name = "chameleon kit"
+	items_inside = list(
+
+	)
 
 /obj/item/storage/box/syndie_kit/chameleon/PopulateContents()
 	new /obj/item/clothing/under/chameleon(src)
@@ -535,27 +536,31 @@
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
-/obj/item/storage/box/syndie_kit/throwing_weapons/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/throwing_star(src)
-	for(var/i in 1 to 2)
-		new /obj/item/paperplane/syndicate(src)
-	new /obj/item/restraints/legcuffs/bola/tactical(src)
-	new /obj/item/restraints/legcuffs/bola/tactical(src)
+/obj/item/storage/box/syndie_kit/throwing_weapons
+	items_inside = list(
+		/obj/item/throwing_star = 5,
+		/obj/item/paperplane/syndicate = 2,
+		/obj/item/restraints/legcuffs/bola/tactical = 2
+	)
 
-/obj/item/storage/box/syndie_kit/cutouts/PopulateContents()
-	for(var/i in 1 to 3)
-		new/obj/item/cardboard_cutout/adaptive(src)
-	new/obj/item/toy/crayon/rainbow(src)
+/obj/item/storage/box/syndie_kit/cutouts
+	items_inside = list(
+		/obj/item/cardboard_cutout/adaptive = 3,
+		/obj/item/toy/crayon/rainbow = 1
+	)
 
-/obj/item/storage/box/syndie_kit/romerol/PopulateContents()
-	new /obj/item/reagent_containers/glass/bottle/romerol(src)
-	new /obj/item/reagent_containers/syringe(src)
-	new /obj/item/reagent_containers/dropper(src)
+/obj/item/storage/box/syndie_kit/romerol
+	items_inside = list(
+		/obj/item/reagent_containers/glass/bottle/romerol = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/dropper = 1
+	)
 
-/obj/item/storage/box/syndie_kit/ez_clean/PopulateContents()
-	for(var/i in 1 to 3)
-		new/obj/item/grenade/chem_grenade/ez_clean(src)
+
+/obj/item/storage/box/syndie_kit/ez_clean
+	items_inside = list(
+		new/obj/item/grenade/chem_grenade/ez_clean = 3
+	)
 
 /obj/item/storage/box/hug/reverse_revolver/PopulateContents()
 	new /obj/item/gun/ballistic/revolver/reverse(src)
@@ -593,10 +598,9 @@
 /obj/item/storage/box/syndie_kit/bee_grenades
 	name = "buzzkill grenade box"
 	desc = "A sleek, sturdy box with a buzzing noise coming from the inside. Uh oh."
-
-/obj/item/storage/box/syndie_kit/bee_grenades/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/grenade/spawnergrenade/buzzkill(src)
+	items_inside = list(
+		/obj/item/grenade/spawnergrenade/buzzkill = 3
+	)
 
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
 	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
@@ -606,14 +610,11 @@
 
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage
-
-/obj/item/storage/backpack/duffelbag/syndie/sabotage/PopulateContents()
-	new /obj/item/grenade/c4(src)
-	new /obj/item/grenade/c4(src)
-	new /obj/item/grenade/c4(src)
-	new /obj/item/grenade/c4/x4(src)
-	new /obj/item/grenade/c4/x4(src)
-	new /obj/item/storage/box/syndie_kit/signaler(src)
+	items_inside = list(
+		/obj/item/grenade/c4 = 3,
+		/obj/item/grenade/c4/x4 = 2,
+		/obj/item/storage/box/syndie_kit/signaler = 6
+	)
 
 /obj/item/storage/box/syndie_kit/signaler
 	name = "signaler box"
