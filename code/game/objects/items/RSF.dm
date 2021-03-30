@@ -44,6 +44,10 @@ RSF
 	var/discriptor = "fabrication-units"
 	///The verb that describes what we're doing, for use in text
 	var/action_type = "Dispensing"
+	///Holds a copy of world.time from the last time the synth was used.
+	var/cooldown = 0
+	///How long should the minimum period between this RSF's item dispensings be?
+	var/cooldowndelay = 0 SECONDS
 
 /obj/item/rsf/Initialize()
 	. = ..()
@@ -111,15 +115,16 @@ RSF
 	return TRUE
 
 /obj/item/rsf/afterattack(atom/A, mob/user, proximity)
-	. = ..()
-	if(!proximity)
+	if(cooldown > world.time)
 		return
-	if(!is_allowed(A))
+	. = ..()
+	if(!proximity || !is_allowed(A))
 		return
 	if(use_matter(dispense_cost, user))//If we can charge that amount of charge, we do so and return true
 		playsound(loc, 'sound/machines/click.ogg', 10, TRUE)
 		var/atom/meme = new to_dispense(get_turf(A))
 		to_chat(user, "<span class='notice'>[action_type] [meme.name]...</span>")
+		cooldown = world.time + cooldowndelay
 
 ///A helper proc. checks to see if we can afford the amount of charge that is passed, and if we can docs the charge from our base, and returns TRUE. If we can't we return FALSE
 /obj/item/rsf/proc/use_matter(charge, mob/user)
@@ -159,23 +164,9 @@ RSF
 	dispense_cost = 100
 	discriptor = "cookie-units"
 	action_type = "Fabricates"
+	cooldowndelay = 10 SECONDS
 	///Tracks whether or not the cookiesynth is about to print a poisoned cookie
 	var/toxin = FALSE //This might be better suited to some initialize fuckery, but I don't have a good "poisoned" sprite
-	///Holds a copy of world.time taken the last time the synth gained a charge. Used with cooldowndelay to track when the next charge should be gained
-	var/cooldown = 0
-	///The period between recharges
-	var/cooldowndelay = 10
-
-/obj/item/rsf/cookiesynth/Initialize()
-	. = ..()
-	START_PROCESSING(SSprocessing, src)
-
-/obj/item/rsf/cookiesynth/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
-	return ..()
-
-/obj/item/rsf/cookiesynth/attackby()
-	return
 
 /obj/item/rsf/cookiesynth/emag_act(mob/user)
 	obj_flags ^= EMAGGED
@@ -196,16 +187,4 @@ RSF
 		toxin = FALSE
 		to_dispense = /obj/item/food/cookie
 		to_chat(user, "<span class='notice'>Cookie Synthesizer reset.</span>")
-
-/obj/item/rsf/cookiesynth/process(delta_time)
-	matter = min(matter += delta_time, max_matter) //We add 1 up to a point
-	if(matter >= max_matter)
-		STOP_PROCESSING(SSprocessing, src)
-
-/obj/item/rsf/cookiesynth/afterattack(atom/A, mob/user, proximity)
-	if(cooldown > world.time)
-		return
-	. = ..()
-	cooldown = world.time + cooldowndelay
-	if(!(datum_flags & DF_ISPROCESSING))
-		START_PROCESSING(SSprocessing, src)
+	

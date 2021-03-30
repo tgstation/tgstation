@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "AI dogs holding onto something in their mouth will drop them upon death"
-  - bugfix: "Corgis and pets in general are better about dropping equipped items when gibbed rather than deleting them"

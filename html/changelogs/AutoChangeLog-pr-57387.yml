@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "modular computers shouldn't leave behind power cells, id cards, or any knick-knack for that matter, anymore when deleted."

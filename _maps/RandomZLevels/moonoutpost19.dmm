@@ -578,7 +578,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
 	},
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/item/cigbutt,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -4019,7 +4019,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "iB" = (
 /obj/structure/table,
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -5042,7 +5042,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "kM" = (
 /obj/structure/closet/crate/bin,
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/item/food/badrecipe,
 /turf/open/floor/iron/cafeteria{
 	dir = 5

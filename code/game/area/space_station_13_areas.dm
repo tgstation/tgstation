@@ -399,6 +399,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Central Primary Hallway"
 	icon_state = "hallC"
 
+/area/hallway/primary/central/fore
+	name = "Fore Central Primary Hallway"
+	icon_state = "hallCF"
+
+/area/hallway/primary/central/aft
+	name = "Aft Cntral Primary Hallway"
+	icon_state = "hallCA"
+
 /area/hallway/primary/upper
 	name = "Upper Central Primary Hallway"
 	icon_state = "hallC"
