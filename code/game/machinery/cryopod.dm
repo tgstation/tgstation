@@ -96,18 +96,18 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
 			return
 
-		var/obj/item/I = input(user, "Please choose which object to retrieve.","Object recovery",null) as null|anything in frozen_items
-		if(!I)
+		var/obj/item/item = input(user, "Please choose which object to retrieve.","Object recovery",null) as null|anything in frozen_items
+		if(!item)
 			return
 
-		if(!(I in frozen_items))
-			to_chat(user, "<span class='notice'>\The [I] is no longer in storage.</span>")
+		if(!(item in frozen_items))
+			to_chat(user, "<span class='notice'>\The [item] is no longer in storage.</span>")
 			return
 
-		visible_message("<span class='notice'>The console beeps happily as it disgorges \the [I].</span>")
+		visible_message("<span class='notice'>The console beeps happily as it disgorges \the [item].</span>")
 
-		I.forceMove(get_turf(src))
-		frozen_items -= I
+		item.forceMove(get_turf(src))
+		frozen_items -= item
 
 	else if(href_list["allitems"])
 		if(!allowed(user))
@@ -121,14 +121,14 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 		visible_message("<span class='notice'>The console beeps happily as it disgorges the desired objects.</span>")
 
-		for(var/obj/item/I in frozen_items)
-			I.forceMove(get_turf(src))
-			frozen_items -= I
+		for(var/obj/item/item in frozen_items)
+			item.forceMove(get_turf(src))
+			frozen_items -= item
 
 	updateUsrDialog()
 	return
 
-//Cryopods themselves.
+// Cryopods themselves.
 /obj/machinery/cryopod
 	name = "cryogenic freezer"
 	desc = "Suited for Cyborgs and Humanoids, the pod is a safe place for personnel affected by the Space Sleep Disorder to get some rest."
@@ -262,9 +262,9 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		if(istype(objective,/datum/objective/mutiny) && objective.target == mob_occupant.mind)
 			objective.team.objectives -= objective
 			qdel(objective)
-			for(var/datum/mind/M in objective.team.members)
-				to_chat(M.current, "<BR><span class='userdanger'>Your target is no longer within reach. Objective removed!</span>")
-				M.announce_objectives()
+			for(var/datum/mind/mind in objective.team.members)
+				to_chat(mind.current, "<BR><span class='userdanger'>Your target is no longer within reach. Objective removed!</span>")
+				mind.announce_objectives()
 		else if(objective.target && istype(objective.target, /datum/mind))
 			if(objective.target == mob_occupant.mind)
 				var/old_target = objective.target
@@ -274,8 +274,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 				objective.find_target()
 				if(!objective.target && objective.owner)
 					to_chat(objective.owner.current, "<BR><span class='userdanger'>Your target is no longer within reach. Objective removed!</span>")
-					for(var/datum/antagonist/A in objective.owner.antag_datums)
-						A.objectives -= objective
+					for(var/datum/antagonist/antag in objective.owner.antag_datums)
+						antag.objectives -= objective
 				if (!objective.team)
 					objective.update_explanation_text()
 					objective.owner.announce_objectives()
@@ -310,16 +310,16 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	// Delete them from datacore.
 	var/announce_rank = null
-	for(var/datum/data/record/R in GLOB.data_core.medical)
-		if((R.fields["name"] == mob_occupant.real_name))
-			qdel(R)
-	for(var/datum/data/record/T in GLOB.data_core.security)
-		if((T.fields["name"] == mob_occupant.real_name))
-			qdel(T)
-	for(var/datum/data/record/G in GLOB.data_core.general)
-		if((G.fields["name"] == mob_occupant.real_name))
-			announce_rank = G.fields["rank"]
-			qdel(G)
+	for(var/datum/data/record/med_record in GLOB.data_core.medical)
+		if((med_record.fields["name"] == mob_occupant.real_name))
+			qdel(med_record)
+	for(var/datum/data/record/sec_record in GLOB.data_core.security)
+		if((sec_record.fields["name"] == mob_occupant.real_name))
+			qdel(sec_record)
+	for(var/datum/data/record/gen_record in GLOB.data_core.general)
+		if((gen_record.fields["name"] == mob_occupant.real_name))
+			announce_rank = gen_record.fields["rank"]
+			qdel(gen_record)
 
 	// Make an announcement and log the person entering storage.
 	if(control_computer)
@@ -331,17 +331,17 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		visible_message("<span class='notice'>\The [src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
 
 
-	for(var/obj/item/W in mob_occupant.GetAllContents())
-		if(W.loc.loc && (( W.loc.loc == loc ) || (W.loc.loc == control_computer)))
+	for(var/obj/item/items in mob_occupant.GetAllContents())
+		if(items.loc.loc && (( items.loc.loc == loc ) || (items.loc.loc == control_computer)))
 			continue // means we already moved whatever this thing was in
 			// I'm a professional, okay
-		for(var/T in preserve_items)
-			if(istype(W, T))
+		for(var/preserved in preserve_items)
+			if(istype(items, preserved))
 				if(control_computer && control_computer.allow_items)
-					control_computer.frozen_items += W
-					mob_occupant.transferItemToLoc(W, control_computer, TRUE)
+					control_computer.frozen_items += items
+					mob_occupant.transferItemToLoc(items, control_computer, TRUE)
 				else
-					mob_occupant.transferItemToLoc(W, loc, TRUE)
+					mob_occupant.transferItemToLoc(items, loc, TRUE)
 
 	QDEL_LIST(mob_occupant.GetAllContents())
 
@@ -370,9 +370,9 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	if(target.client && user != target)
 		if(iscyborg(target))
-			to_chat(user, "<span class='danger'>You can't put [target] into [src]. They're online.</span>")
+			to_chat(user, "<span class='danger'>You can't put [target] into [src]. [target.p_theyre()] online.</span>")
 		else
-			to_chat(user, "<span class='danger'>You can't put [target] into [src]. They're conscious.</span>")
+			to_chat(user, "<span class='danger'>You can't put [target] into [src]. [target.p_theyre()] conscious.</span>")
 		return
 	else if(target.client)
 		if(alert(target,"Would you like to enter cryosleep?",,"Yes","No") == "No")
@@ -380,17 +380,17 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	var/generic_plsnoleave_message = " Please adminhelp before leaving the round, even if there are no administrators online!"
 
-	if(target == user && world.time - target.client.cryo_warned > 5 MINUTES)//if we haven't warned them in the last 5 minutes
+	if(target == user && COOLDOWN_FINISHED(target.client, cryo_warned))
 		var/caught = FALSE
-		var/datum/antagonist/A = target.mind.has_antag_datum(/datum/antagonist)
+		var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
 		if(target.mind.assigned_role in GLOB.command_positions)
 			alert("You're a Head of Staff![generic_plsnoleave_message]")
 			caught = TRUE
-		if(A)
-			alert("You're a [A.name]![generic_plsnoleave_message]")
+		if(antag)
+			alert("You're a [antag.name]![generic_plsnoleave_message]")
 			caught = TRUE
 		if(caught)
-			target.client.cryo_warned = world.time
+			COOLDOWN_START(target.client, cryo_warned, 5 MINUTES)
 			return
 
 	if(!target || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
