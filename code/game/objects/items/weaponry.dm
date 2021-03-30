@@ -108,6 +108,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/claymore/highlander/Destroy()
@@ -216,12 +217,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			new_name = "GOD-BLESSED CLAYMORE OF GOLD"
 			icon_state = "claymore_gold"
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-			user.update_inv_hands()
 		if(15)
 			to_chat(user, "<span class='userdanger'>THE <i>FIRE</i> IN YOUR HEART FURTHER BLESSES THE BLADE. YOU ARE SO CLOSE TO <i>VALHALLA</i></span>")
 			new_name = "FIRE-BLAZING CLAYMORE OF GREATNESS"
 			icon_state = "claymore_blazing"
-			user.update_inv_hands()
 		if(20)
 			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
 			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
@@ -229,7 +228,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.update_body()
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_valhalla"
-			user.update_inv_hands()
 
 	name = new_name
 	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
