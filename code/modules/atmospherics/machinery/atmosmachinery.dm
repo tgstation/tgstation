@@ -25,7 +25,7 @@
 	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
 	var/initialize_directions = 0
 	///The color of the pipe
-	var/pipe_color
+	var/pipe_color = rgb(254,254,254)
 	///What layer the pipe is in (from 1 to 5, default 3)
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	///The flags of the pipe/component (PIPING_ALL_LAYER | PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE)
@@ -233,8 +233,8 @@
 /obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, given_layer)
 	if(isnull(given_layer))
 		given_layer = piping_layer
-	if(	((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER)) && \
-		((target.pipe_color == pipe_color) || (target.pipe_flags & PIPING_ALL_COLORS) || (target.pipe_color == null) || (pipe_color == null)))
+	if(	((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER)) && (target.loc != loc) && \
+		((target.pipe_color == pipe_color) || (target.pipe_flags & PIPING_ALL_COLORS) || (target.pipe_color == rgb(254,254,254)) || (pipe_color == rgb(254,254,254))))
 		return TRUE
 	return FALSE
 
@@ -293,6 +293,7 @@
 		P.destroy_network()
 	nodes[nodes.Find(reference)] = null
 	update_appearance()
+	reference.update_appearance()
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pipe)) //lets you autodrop

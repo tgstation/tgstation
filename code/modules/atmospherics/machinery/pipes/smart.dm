@@ -37,13 +37,11 @@
 				continue
 			var/obj/machinery/atmospherics/machine = machine_type
 
-			if((machine.piping_layer != piping_layer || machine.pipe_color != pipe_color) && !(machine.pipe_flags & PIPING_ALL_COLORS))
-				continue
-
-			if(angle2dir(dir2angle(text2dir(direction))+180) & machine.initialize_directions)
+			if(connection_check(machine, piping_layer))
 				connections[direction] = TRUE
 				connection_num++
 				break
+
 	switch(connection_num)
 		if(0)
 			center = mutable_appearance('icons/obj/atmospherics/pipes/simple.dmi', "pipe00-3")
