@@ -4929,7 +4929,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "nc" = (
-/obj/machinery/atmospherics/pipe/simple/yellow,
+/obj/machinery/atmospherics/pipe/simple/orange,
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
 	id = "syndie_lavaland_incineratorturbine"
@@ -6027,7 +6027,7 @@
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "Lp" = (
-/obj/machinery/atmospherics/pipe/simple/yellow,
+/obj/machinery/atmospherics/pipe/simple/orange,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "LQ" = (

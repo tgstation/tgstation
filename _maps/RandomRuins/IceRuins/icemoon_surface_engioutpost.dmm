@@ -1029,11 +1029,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
-"da" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/simple/brown/visible,
-/turf/open/floor/engine/airless,
-/area/icemoon/surface/outdoors)
 "db" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
@@ -1082,10 +1077,6 @@
 "dl" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/engine/air,
-/area/icemoon/surface/outdoors)
-"dm" = (
-/obj/machinery/atmospherics/pipe/simple/brown/visible,
-/turf/open/floor/engine/vacuum,
 /area/icemoon/surface/outdoors)
 "dn" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
@@ -1953,8 +1944,8 @@ cc
 cq
 cy
 cO
-da
-dm
+db
+dn
 dy
 ae
 aa
