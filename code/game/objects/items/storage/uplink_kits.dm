@@ -381,21 +381,24 @@
 
 /obj/item/storage/box/syndie_kit/imp_freedom
 	name = "freedom implant box"
-
-/obj/item/storage/box/syndie_kit/imp_freedom/PopulateContents()
-	new /obj/item/implanter/freedom(src)
+	items_inside = list(
+		/obj/item/implanter/freedom = 1
+	)
 
 /obj/item/storage/box/syndie_kit/imp_microbomb
 	name = "microbomb implant box"
-
-/obj/item/storage/box/syndie_kit/imp_microbomb/PopulateContents()
-	new /obj/item/implanter/explosive(src)
+	items_inside = list(
+		/obj/item/implanter/explosive = 1
+	)
 
 /obj/item/storage/box/syndie_kit/imp_macrobomb
 	name = "macrobomb implant box"
+	items_inside = list(
+		/obj/item/implanter/explosive_macro
+	)
 
 /obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
-	new /obj/item/implanter/explosive_macro(src)
+	new (src)
 
 /obj/item/storage/box/syndie_kit/imp_uplink
 	name = "uplink implant box"
