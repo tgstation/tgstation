@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for(var/trf in shuttle_area)
 			var/turf/T = trf
 			for(var/item in T.GetAllContents())
-				if(is_type_in_typecache(item, GLOB.blacklisted_cargo_types) && !istype(item, /obj/docking_port) && SSeigenstates.eigen_id[item]) //SSeigenstates is if it is linked to another object - block it
+				if((is_type_in_typecache(item, GLOB.blacklisted_cargo_types) && !istype(item, /obj/docking_port)) || SSeigenstates.eigen_id[item]) //SSeigenstates is if it is linked to another object - block it
 					return FALSE
 	return TRUE
 
