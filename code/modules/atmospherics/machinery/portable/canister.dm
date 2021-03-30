@@ -490,17 +490,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		holding = null
 
 	transform = turn(transform, prob(50) ? 90 : -90)
-	filters += filter("alpha", icon = icon('icons/obj/atmospherics/canisters/default.dmi', "#broken-cutout"))
+	filters += filter(type="alpha", icon=icon('icons/obj/atmospherics/canisters/default.dmi', "#broken-cutout"))
 
 /obj/machinery/portable_atmospherics/canister/replace_tank(mob/living/user, close_valve)
 	. = ..()
-	if(.)
-		if(close_valve)
-			valve_open = FALSE
-			update_appearance()
-			investigate_log("Valve was <b>closed</b> by [key_name(user)].", INVESTIGATE_ATMOS)
-		else if(valve_open && holding)
-			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+	if(!.)
+		return
+	if(close_valve)
+		valve_open = FALSE
+		update_appearance()
+		investigate_log("Valve was <b>closed</b> by [key_name(user)].", INVESTIGATE_ATMOS)
+	else if(valve_open && holding)
+		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	. = ..()

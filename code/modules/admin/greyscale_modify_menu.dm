@@ -65,17 +65,17 @@
 				refresh_preview()
 		if("apply")
 			refresh_preview()
-			target.icon = preview
+			target.greyscale_colors = split_colors.Join()
+			target.update_appearance()
 		if("refresh_file")
 			target.greyscale_icon = file("[target.greyscale_icon]")
 			refresh_preview()
 
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)
-	split_colors = splittext(colorString, "#")
-	split_colors.Cut(1, 2)
-	for(var/i in 1 to length(split_colors))
-		split_colors[i] = "#[split_colors[i]]"
+	var/list/raw_colors = splittext(colorString, "#")
+	split_colors = list()
+	for(var/i in 2 to length(raw_colors))
+		split_colors += "#[raw_colors[i]]"
 
 /datum/greyscale_modify_menu/proc/refresh_preview()
-	var/list/preview_arguments = list(target.greyscale_icon) + split_colors.Copy()
-	preview = greyscale_sprite(arglist(preview_arguments))
+	preview = greyscale_sprite(target.greyscale_icon, split_colors)

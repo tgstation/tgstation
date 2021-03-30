@@ -2,8 +2,6 @@ GLOBAL_LIST_EMPTY_TYPED(greyscale_sprites, /datum/greyscale_sprite)
 GLOBAL_LIST_EMPTY(greyscale_filters)
 
 /proc/greyscale_sprite(sprite_file, list/colors)
-	RETURN_TYPE(/icon)
-
 	var/datum/greyscale_sprite/sprite_generator
 	if(GLOB.greyscale_sprites[sprite_file])
 		sprite_generator = GLOB.greyscale_sprites[sprite_file]
@@ -15,7 +13,7 @@ GLOBAL_LIST_EMPTY(greyscale_filters)
 /proc/greyscale_filter(sprite_file, list/sprite_colors, list/filter_arguments)
 	var/icon/greyscale_icon = greyscale_sprite(sprite_file, sprite_colors)
 
-	var/key = "[sprite_file]&[html_encode(sprite_colors)]&[html_encode(filter_arguments)]"
+	var/key = "[sprite_file]&[json_encode(sprite_colors)]&[json_encode(filter_arguments)]"
 	if(!GLOB.greyscale_filters[key])
 		var/list/arguments = filter_arguments + list("icon" = greyscale_icon)
 		GLOB.greyscale_filters[key] = filter(arglist(arguments))
@@ -66,30 +64,25 @@ GLOBAL_LIST_EMPTY(greyscale_filters)
 
 	return output
 
-/datum/greyscale_sprite/proc/ProcessedIcon(...)
-	RETURN_TYPE(/icon)
-
-	var/cache_key = args.Join("&");
-	if(cached_icons[cache_key])
-		return icon(cached_icons[cache_key])
-
-	var/icon/new_icon = ProcessIconGroup(layers, null, args)
-
-	cached_icons[cache_key] = new_icon
+/datum/greyscale_sprite/proc/ProcessedIcon(list/colors)
+	var/cache_key = colors.Join("&");
+	var/icon/new_icon = cached_icons[cache_key]
+	if(!new_icon)
+		new_icon = cached_icons[cache_key] = ProcessIconGroup(layers, null, colors)
 	return icon(new_icon)
 
 // foo <= ( bar <= ( boo <= color ) <= ( far <= color ) )
 // 1   11   2   6    3   5  4       10   7   9  8
-/datum/greyscale_sprite/proc/ProcessIconGroup(list/remaining, icon/target, list/arguments)
+/datum/greyscale_sprite/proc/ProcessIconGroup(list/remaining, icon/target, list/colors)
 	for(var/i in remaining)
 		if(islist(i))
-			target = ProcessIconGroup(i, target, arguments)
+			target = ProcessIconGroup(i, target, colors)
 			continue
 		var/datum/greyscale_layer/layer = i
 		var/icon/layer_icon = icon(layer.icon)
 		var/rgb = rgb(255, 255, 255)
 		if(layer.color_id)
-			rgb = arguments[layer.color_id]
+			rgb = colors[layer.color_id]
 		layer_icon.Blend(rgb, ICON_MULTIPLY)
 		if(!target)
 			target = layer_icon

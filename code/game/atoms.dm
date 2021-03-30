@@ -132,6 +132,8 @@
 	var/greyscale_icon
 	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
 	var/greyscale_colors
+	///The current applied greyscale as of the last update_icon call
+	var/greyscale_filter
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
@@ -226,13 +228,6 @@
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-
-	if(greyscale_icon && greyscale_colors)
-		var/list/colors = splittext(greyscale_colors, "#")
-		var/list/parsed = list()
-		for(var/i in 2 to length(colors))
-			parsed += "#[colors[i]]"
-		filters += greyscale_filter(greyscale_icon, parsed, list(blend_mode = ICON_OVERLAY))
 
 	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()
@@ -707,6 +702,17 @@
 		update_icon_state()
 		. |= UPDATE_ICON_STATE
 
+	if(updates & UPDATE_GREYSCALE)
+		var/list/colors = update_greyscale()
+		// Updating the greyscale icon in update_greyscale() is fine or we would check this earlier
+		if(greyscale_icon)
+			var/new_filter = greyscale_filter(greyscale_icon, colors, list(type="layer"))
+			if(greyscale_filter != new_filter)
+				filters -= greyscale_filter
+				filters += new_filter
+				greyscale_filter = new_filter
+		. |= UPDATE_GREYSCALE
+
 	if(updates & UPDATE_OVERLAYS)
 		if(LAZYLEN(managed_vis_overlays))
 			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
@@ -726,6 +732,14 @@
 /atom/proc/update_icon_state()
 	SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
+
+/atom/proc/update_greyscale()
+	SHOULD_CALL_PARENT(TRUE)
+	. = list()
+	var/list/raw_rgb = splittext(greyscale_colors, "#")
+	for(var/i in 2 to length(raw_rgb))
+		. += "#[raw_rgb[i]]"
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE, .)
 
 /// Updates the overlays of the atom
 /atom/proc/update_overlays()
