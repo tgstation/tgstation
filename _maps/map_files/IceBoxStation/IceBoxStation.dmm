@@ -2070,7 +2070,7 @@
 "ahY" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -2280,7 +2280,7 @@
 /turf/open/floor/iron/white,
 /area/security/brig)
 "aiP" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
@@ -2299,7 +2299,7 @@
 /area/security/brig)
 "aiR" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -2513,7 +2513,7 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "ajw" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -2636,7 +2636,7 @@
 /area/security/brig)
 "ajK" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -4100,7 +4100,7 @@
 	},
 /area/maintenance/port/aft)
 "anj" = (
-/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/manifold/orange/hidden{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -4113,7 +4113,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anl" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -4277,7 +4277,7 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "anJ" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anK" = (
@@ -4507,7 +4507,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aok" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -5281,14 +5281,14 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "aqL" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqM" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -8328,7 +8328,7 @@
 /area/security/checkpoint/auxiliary)
 "aFJ" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -53576,7 +53576,7 @@
 "vvZ" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
