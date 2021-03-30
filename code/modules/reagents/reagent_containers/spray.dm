@@ -172,7 +172,7 @@
 	if(isturf(usr.loc) && src.loc == usr)
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.expose(usr.loc)
-		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [puff_reagents_string]")
+		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [reagents.log_list()]")
 		src.reagents.clear_reagents()
 
 /// Handles updating the spray distance when the reagents change.
