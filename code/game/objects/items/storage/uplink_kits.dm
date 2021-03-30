@@ -434,6 +434,12 @@
 
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
+	items_inside = list( //won't proc since PopulateContents() overwritten
+		/obj/item/clothing/suit/space/syndicate/black/red = 1,
+		/obj/item/clothing/head/helmet/space/syndicate/black/red = 1,
+		/obj/item/clothing/head/helmet/space/syndicate = 1,
+		/obj/item/clothing/suit/space/syndicate = 1
+	)
 
 /obj/item/storage/box/syndie_kit/space/ComponentInitialize()
 	. = ..()
@@ -557,12 +563,22 @@
 		new/obj/item/grenade/chem_grenade/ez_clean = 3
 	)
 
-/obj/item/storage/box/hug/reverse_revolver/PopulateContents()
-	new /obj/item/gun/ballistic/revolver/reverse(src)
+/obj/item/storage/box/syndie_kit/reverse_revolver
+	name = "box of hugs"
+	desc = "A special box for sensitive people."
+	icon_state = "hugbox"
+	illustration = "heart"
+	items_inside = list(
+		/obj/item/gun/ballistic/revolver/reverse = 1
+	)
 
-/obj/item/storage/box/syndie_kit/mimery/PopulateContents()
-	new /obj/item/book/granter/spell/mimery_blockade(src)
-	new /obj/item/book/granter/spell/mimery_guns(src)
+
+/obj/item/storage/box/syndie_kit/mimery
+	items_inside = list(
+		/obj/item/book/granter/spell/mimery_blockade = 1,
+		/obj/item/book/granter/spell/mimery_guns = 1,
+	)
+
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom/officer(src)
