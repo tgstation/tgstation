@@ -422,12 +422,12 @@
 	if(!I)
 		to_chat(src, "<span class='warning'>You are not holding anything to equip!</span>")
 		return
-	if (temporarilyRemoveItemFromInventory(I) && !QDELETED(I)) //Try remove it from hand slot, make sure that didn't destroy it.
-		if(I.equip_to_best_slot(src)) // Try to put in appriopriate slot
+	if (temporarilyRemoveItemFromInventory(I) && !QDELETED(I))
+		if(I.equip_to_best_slot(src))
 			return
-		if(put_in_active_hand(I)) // If trying to find best slot fails try to put it back.
+		if(put_in_active_hand(I))
 			return
-		I.forceMove(drop_location())// If putting it back fails just drop it. (How did you do this.)
+		I.forceMove(drop_location())
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()
