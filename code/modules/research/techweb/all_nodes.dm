@@ -996,8 +996,6 @@
 		var/datum/uplink_item/UI = new path
 		if(!UI.item || !UI.illegal_tech) // if there is no item, or node does not allow illegal_tech
 			continue
-		if(ispath(UI.item, /obj/item/storage/box) || ispath(UI.item, /obj/item/storage/backpack)) //disallow box/item containers
-			continue
 		if(ispath(UI.item, /obj/item/storage/box/syndie_kit)) //if the item awards a syndie kit PATH
 			var/obj/item/storage/box/syndie_kit/my_kit = new UI.item //init that item so I can get the variables from it
 			for(var/each_item in my_kit.items_inside)
@@ -1006,6 +1004,8 @@
 				//or I change the box definition to major/minor items, but eh
 				// recursive check for contents?
 				boost_item_paths |= each_item
+		if(ispath(UI.item, /obj/item/storage/box) || ispath(UI.item, /obj/item/storage/backpack)) //disallow box/item containers
+			continue
 		boost_item_paths |= UI.item //allows deconning to unlock.
 
 
