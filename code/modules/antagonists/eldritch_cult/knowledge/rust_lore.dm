@@ -150,7 +150,7 @@
 	route = PATH_RUST
 	var/list/conditional_immunities = list(TRAIT_STUNIMMUNE,TRAIT_SLEEPIMMUNE,TRAIT_PUSHIMMUNE,TRAIT_SHOCKIMMUNE,TRAIT_NOSLIPALL,TRAIT_RADIMMUNE,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RESISTCOLD,TRAIT_RESISTHEAT,TRAIT_PIERCEIMMUNE,TRAIT_BOMBIMMUNE,TRAIT_NOBREATH)
 	///if this is set to true then immunities are active, if false then they are not active, simple as.
-	var/delta = FALSE
+	var/immunities_active = FALSE
 
 /datum/eldritch_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/H = user
@@ -164,18 +164,20 @@
 
 /datum/eldritch_knowledge/final/rust_final/proc/on_move(mob/mover)
 	SIGNAL_HANDLER
-	var/expression = istype(get_turf(mover),/turf/open/floor/plating/rust)
-	//Delta makes sure we apply and de-apply immunities only once - when we are leaving OR entering a rusted tile into/from a non-rusted tile.
-	if(expression && !delta)
+	var/istype_check = istype(get_turf(mover),/turf/open/floor/plating/rust)
+
+	//We check if we are currently standing on a rust tile, but the immunities are not active, if so apply immunities, set immunities_active to TRUE
+	if(istype_check && !immunities_active)
 		for(var/trait in conditional_immunities)
 			ADD_TRAIT(mover,trait,type)
-		delta = TRUE
+		immunities_active = TRUE
 		return
 
-	if(!expression && delta)
+	//We check if we are NOT standing on a rust tile, if so we check if immunities are active, if immunities are active then we de-apply them and set immunities to FALSE
+	if(!istype_check && immunities_active)
 		for(var/trait in conditional_immunities)
 			REMOVE_TRAIT(mover,trait,type)
-		delta = FALSE
+		immunities_active = FALSE
 
 
 /datum/eldritch_knowledge/final/rust_final/on_life(mob/user)
@@ -188,6 +190,7 @@
 	human_user.adjustFireLoss(-4, FALSE)
 	human_user.adjustToxLoss(-4, FALSE, forced = TRUE)
 	human_user.adjustOxyLoss(-4, FALSE)
+	human_user.adjustStaminaLoss(-20)
 
 /**
  * #Rust spread datum
