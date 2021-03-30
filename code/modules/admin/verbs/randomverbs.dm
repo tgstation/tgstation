@@ -911,21 +911,21 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/storm_start()
 	set name = "Start the Storm"
-	set category = "Admin.Events"
+	set category = "Admin.Fun"
 	set popup_menu = FALSE
-	if(!check_rights(R_DEBUG))
+	if(!check_rights(R_FUN))
 		return
 
 	if(GLOB.storm_controller)
 		to_chat(usr, "There is already a storm!", confidential = TRUE)
 		return
-	GLOB.highlander_controller = new /datum/storm_controller
+	GLOB.storm_controller = new /datum/storm_controller
 
 /client/proc/storm_halt()
 	set name = "Halt the Storm Permanently"
-	set category = "Admin.Events"
+	set category = "Admin.Fun"
 	set popup_menu = FALSE
-	if(!check_rights(R_DEBUG))
+	if(!check_rights(R_FUN))
 		return
 
 	var/datum/storm_controller/controller = GLOB.storm_controller
@@ -936,9 +936,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/storm_stop()
 	set name = "Stop the Storm Entirely"
-	set category = "Admin.Events"
+	set category = "Admin.Fun"
 	set popup_menu = FALSE
-	if(!check_rights(R_DEBUG))
+	if(!check_rights(R_FUN))
 		return
 
 	var/datum/storm_controller/controller = GLOB.storm_controller
