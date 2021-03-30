@@ -55,7 +55,8 @@
 	HELPER_PARTIAL(/obj/machinery/atmospherics/pipe/simple/##Type, "pipe11", Color) \
 	HELPER_PARTIAL(/obj/machinery/atmospherics/pipe/manifold/##Type, "manifold", Color) \
 	HELPER_PARTIAL(/obj/machinery/atmospherics/pipe/manifold4w/##Type, "manifold4w", Color) \
-	HELPER_PARTIAL(/obj/machinery/atmospherics/pipe/smart/##Type, "manifold4w", Color) \
+	HELPER_PARTIAL(/obj/machinery/atmospherics/pipe/smart/##Type, "smart", Color) \
+	HELPER_PARTIAL(/obj/machinery/atmospherics/pipe/bridge_pipe/##Type, "bridge_pipe", Color) \
 	HELPER_PARTIAL(/obj/machinery/atmospherics/pipe/layer_manifold/##Type, "manifoldlayer", Color) \
 	HELPER_PARTIAL(/obj/effect/mapping_helpers/simple_pipes/##Type,"pipe",Color)
 
@@ -63,7 +64,8 @@
 	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/pipe/simple/##Type, "pipe11", Name, Color) \
 	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/pipe/manifold/##Type, "manifold", Name, Color) \
 	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/pipe/manifold4w/##Type, "manifold4w", Name, Color) \
-	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/pipe/smart/##Type, "manifold4w", Name, Color) \
+	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/pipe/smart/##Type, "smart", Name, Color) \
+	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/pipe/bridge_pipe/##Type, "bridge_pipe", Name, Color) \
 	HELPER_PARTIAL_NAMED(/obj/effect/mapping_helpers/simple_pipes/##Type,"pipe", Name, Color)
 
 HELPER(general, rgb(254,254,254))

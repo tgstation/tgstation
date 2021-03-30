@@ -15,6 +15,10 @@
 
 	var/static/list/mutable_appearance/center_cache = list()
 
+/obj/machinery/atmospherics/pipe/bridge_pipe/New()
+	icon_state = ""
+	return ..()
+
 /obj/machinery/atmospherics/pipe/bridge_pipe/SetInitDirections()
 	switch(dir)
 		if(NORTH, SOUTH)
@@ -31,11 +35,12 @@
 		center_cache["[piping_layer]"] = center
 	. += center
 
-	update_layer()
+	layer = 2.40 //to stay above all sorts of pipes
 
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
 		if(nodes[i])
 			var/image/pipe = getpipeimage(icon, "pipe", get_dir(src, nodes[i]))
 			PIPING_LAYER_SHIFT(pipe, piping_layer)
+			pipe.layer = layer + 0.01
 			. += pipe
