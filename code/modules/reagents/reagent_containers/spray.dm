@@ -84,7 +84,7 @@
 
 	var/puff_reagents_string = reagent_puff.reagents.log_list()
 
-	for(var/travelled_distance in 0 to range)
+	for(var/travelled_distance in 1 to range)
 		var/has_travelled_max_distance = (travelled_distance == range)
 
 		step_towards(reagent_puff, target)
