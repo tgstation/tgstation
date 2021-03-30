@@ -481,6 +481,8 @@
 #define PIPING_CARDINAL_AUTONORMALIZE (1<<3)
 /// intended to connect with everything, both layers and colors
 #define PIPING_ALL_COLORS (1<<4)
+/// can bridge over pipenets
+#define PIPING_BRIDGE (1<<5)
 
 // Ventcrawling bitflags, handled in var/vent_movement
 ///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception

@@ -85,7 +85,7 @@
 	pipe_appearance = center
 	. +=center
 
-	update_layer()
+	layer = 2.40 //to stay above all sorts of pipes
 
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
