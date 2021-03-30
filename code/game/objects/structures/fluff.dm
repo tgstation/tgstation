@@ -201,6 +201,42 @@
 	density = FALSE
 	deconstructible = FALSE
 
+/obj/structure/fluff/mannequin
+	name = "mannequin"
+	desc = "It's staring directly at you."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "mannequin"
+	layer = MOB_LAYER
+	anchored = FALSE
+	density = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/vent
+	name = "wall vent"
+	desc = "An old wall vent from the station's previous atmospherics system. The space behind it has been filled in."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "vent"
+	anchored = TRUE
+	density = FALSE
+	deconstructible = TRUE
+
+/obj/structure/fluff/vent/north //Pixel offsets get overwritten on New()
+	dir = NORTH
+	pixel_y = 25
+
+/obj/structure/fluff/vent/south
+	dir = SOUTH
+	pixel_y = -25
+
+/obj/structure/fluff/vent/east
+	dir = EAST
+	pixel_x = 25
+
+/obj/structure/fluff/vent/west
+	dir = WEST
+	pixel_x = -25
+
+
 /obj/structure/fluff/beach_towel
 	name = "beach towel"
 	desc = "A towel decorated in various beach-themed designs."
