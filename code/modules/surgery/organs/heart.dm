@@ -419,6 +419,10 @@
 	///Is the crystal still being built? True by default, gets changed after a timer.
 	var/being_built = TRUE
 
+/obj/structure/ethereal_crystal/greytest
+	greyscale_icon = 'icons/obj/ethereal_crystal.dmi'
+	greyscale_colors = "#ff0000#c379e5"
+
 /obj/structure/ethereal_crystal/Initialize(mapload, obj/item/organ/heart/ethereal/ethereal_heart)
 	. = ..()
 	src.ethereal_heart = ethereal_heart

@@ -128,6 +128,11 @@
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
+	///The icon file to use for greyscaled sprites. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_icon
+	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
+	var/greyscale_colors
+
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
@@ -221,6 +226,13 @@
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+
+	if(greyscale_icon && greyscale_colors)
+		var/list/colors = splittext(greyscale_colors, "#")
+		var/list/parsed = list()
+		for(var/i in 2 to length(colors))
+			parsed += "#[colors[i]]"
+		filters += greyscale_filter(greyscale_icon, parsed, list(blend_mode = ICON_OVERLAY))
 
 	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()
@@ -1171,6 +1183,8 @@
 	VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
+	if(greyscale_colors)
+		VV_DROPDOWN_OPTION(VV_HK_MODIFY_GREYSCALE, "Modify greyscale colors")
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()

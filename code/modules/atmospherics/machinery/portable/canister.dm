@@ -111,6 +111,24 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(mode)
 		. += "<span class='notice'>This canister is Tier [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit_pressure(pressure_limit, 0)]</b>.</span>"
 
+/obj/machinery/portable_atmospherics/canister/greyscale
+	icon = 'icons/obj/atmospherics/canisters/default.dmi'
+	icon_state = "#mapme"
+	greyscale_icon = 'icons/obj/atmospherics/canisters/default.dmi'
+	greyscale_colors = "#ea3c3c"
+
+/obj/machinery/portable_atmospherics/canister/greyscale/horizontal_stripe
+	greyscale_icon = 'icons/obj/atmospherics/canisters/horizontal_stripe.dmi'
+	greyscale_colors = "#198cff#ccecff"
+
+/obj/machinery/portable_atmospherics/canister/greyscale/hazard
+	greyscale_icon = 'icons/obj/atmospherics/canisters/hazard.dmi'
+	greyscale_colors = "#ffff00#000000"
+
+/obj/machinery/portable_atmospherics/canister/greyscale/multi_stripe
+	greyscale_icon = 'icons/obj/atmospherics/canisters/multi_stripe.dmi'
+	greyscale_colors = "#ea3c3c#fdd6d6"
+
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
 	desc = "Nitrogen gas. Reportedly useful for something."
@@ -386,6 +404,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(connected_port)
 		. += "can-connector"
 
+	if(isBroken)
+		. += "#broken"
+
 	switch(air_contents.return_pressure())
 		if((40 * ONE_ATMOSPHERE) to INFINITY)
 			. += "can-3"
@@ -467,6 +488,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(holding)
 		holding.forceMove(T)
 		holding = null
+
+	transform = turn(transform, prob(50) ? 90 : -90)
+	filters += filter("alpha", icon = icon('icons/obj/atmospherics/canisters/default.dmi', "#broken-cutout"))
 
 /obj/machinery/portable_atmospherics/canister/replace_tank(mob/living/user, close_valve)
 	. = ..()
