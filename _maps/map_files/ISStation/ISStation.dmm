@@ -1,7 +1,22 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/space)
 "aU" = (
 /obj/structure/lattice,
 /turf/open/openspace/airless/planetary,
+/area/space)
+"bs" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/plating,
 /area/space)
 "bC" = (
 /obj/effect/turf_decal/stripes/end{
@@ -108,6 +123,17 @@
 	},
 /turf/open/floor/engine/airless,
 /area/space)
+"fC" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/freezer,
+/obj/structure/railing,
+/obj/item/tank/jetpack/carbondioxide{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/tank/jetpack/carbondioxide,
+/turf/open/openspace,
+/area/space)
 "fI" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/machinery/atmospherics/pipe/multiz/layer2,
@@ -174,6 +200,12 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space)
+"ir" = (
+/obj/machinery/atmospherics/components/binary/pump/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/space)
 "iA" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
@@ -186,6 +218,10 @@
 	req_access_txt = "56"
 	},
 /turf/open/floor/pod/light,
+/area/space)
+"iI" = (
+/obj/machinery/computer/atmos_control,
+/turf/open/floor/plating,
 /area/space)
 "iR" = (
 /obj/machinery/power/terminal{
@@ -251,7 +287,7 @@
 /turf/open/floor/plating,
 /area/space)
 "mK" = (
-/obj/machinery/vending/tool,
+/obj/machinery/vending/wardrobe/engi_wardrobe,
 /turf/open/floor/pod/dark,
 /area/space)
 "mY" = (
@@ -363,6 +399,11 @@
 	},
 /turf/open/floor/engine/airless,
 /area/space)
+"qO" = (
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/space)
 "ry" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave{
@@ -384,15 +425,37 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/space)
+"sh" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/space)
 "si" = (
 /obj/machinery/power/rtg/advanced,
 /turf/open/floor/plating/airless,
+/area/space)
+"sm" = (
+/obj/structure/closet/crate/freezer,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/item/storage/firstaid/o2,
+/turf/open/floor/pod/dark,
 /area/space)
 "sJ" = (
 /obj/machinery/modular_computer/console/preset/engineering{
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
+/area/space)
+"sL" = (
+/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/space)
 "sO" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -452,6 +515,10 @@
 /obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/pod/dark,
 /area/space)
+"wn" = (
+/obj/machinery/atmospherics/pipe/multiz/layer2,
+/turf/open/floor/plating,
+/area/space)
 "wu" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/space)
@@ -470,6 +537,10 @@
 	dir = 1
 	},
 /turf/open/floor/engine/airless,
+/area/space)
+"wW" = (
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
+/turf/open/floor/plating,
 /area/space)
 "xc" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
@@ -490,6 +561,17 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
+/area/space)
+"xy" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/freezer,
+/obj/item/storage/belt/utility,
+/obj/item/radio/off,
+/obj/item/multitool,
+/turf/open/openspace,
 /area/space)
 "xD" = (
 /obj/structure/lattice,
@@ -513,11 +595,28 @@
 	},
 /turf/open/floor/engine/airless,
 /area/space)
+"xQ" = (
+/obj/machinery/suit_storage_unit/atmos,
+/turf/open/floor/plating,
+/area/space)
+"xY" = (
+/obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/space)
 "yb" = (
 /obj/effect/turf_decal/siding/wideplating/light{
 	dir = 4
 	},
 /turf/open/floor/iron/freezer/airless,
+/area/space)
+"yq" = (
+/obj/machinery/atmospherics/components/binary/pump/layer4{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/space)
 "yR" = (
 /obj/effect/turf_decal/siding/wideplating/light/corner{
@@ -542,6 +641,15 @@
 /obj/structure/railing,
 /obj/structure/lattice/catwalk,
 /turf/open/openspace/airless/planetary,
+/area/space)
+"zE" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/space)
 "zU" = (
 /obj/effect/turf_decal/stripes/line{
@@ -592,10 +700,28 @@
 	},
 /turf/open/floor/plating,
 /area/space)
+"BH" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/freezer,
+/obj/structure/railing,
+/obj/item/clothing/shoes/magboots{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/clothing/shoes/magboots,
+/turf/open/openspace,
+/area/space)
 "BQ" = (
 /obj/structure/closet/crate/freezer,
 /obj/structure/railing{
 	dir = 1
+	},
+/obj/item/storage/toolbox/electrical,
+/obj/item/clothing/gloves/color/fyellow,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil{
+	pixel_x = 3;
+	pixel_y = -7
 	},
 /turf/open/floor/pod/dark,
 /area/space)
@@ -670,6 +796,22 @@
 	},
 /turf/open/floor/plating,
 /area/space)
+"Ey" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
+/area/space)
+"EO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/space)
 "EW" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
@@ -684,6 +826,10 @@
 	dir = 8
 	},
 /turf/open/openspace,
+/area/space)
+"FR" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
 /area/space)
 "FT" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -700,6 +846,10 @@
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,
 /turf/open/floor/engine/airless,
+/area/space)
+"Gf" = (
+/obj/machinery/atmospherics/pipe/multiz/layer2,
+/turf/open/floor/iron/freezer/airless,
 /area/space)
 "Gn" = (
 /obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
@@ -720,9 +870,17 @@
 	},
 /turf/open/floor/engine/airless,
 /area/space)
+"Hn" = (
+/obj/machinery/atmospherics/components/binary/pump/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/space)
 "Hr" = (
 /obj/structure/closet/crate/freezer,
 /obj/structure/railing,
+/obj/item/weldingtool/hugetank,
+/obj/item/clothing/head/welding,
 /turf/open/floor/pod/dark,
 /area/space)
 "HD" = (
@@ -736,6 +894,18 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark/airless,
+/area/space)
+"In" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/freezer,
+/obj/structure/railing,
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
+/turf/open/openspace,
 /area/space)
 "Ix" = (
 /obj/structure/window/reinforced/survival_pod{
@@ -757,6 +927,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace/airless/planetary,
 /area/space)
+"JY" = (
+/obj/structure/closet/secure_closet/atmospherics,
+/turf/open/floor/plating,
+/area/space)
 "JZ" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
@@ -774,6 +948,16 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark/airless,
+/area/space)
+"Ki" = (
+/obj/structure/closet/crate/freezer,
+/obj/structure/railing,
+/obj/item/food/syndicake,
+/obj/item/food/syndicake{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/turf/open/floor/pod/dark,
 /area/space)
 "Kw" = (
 /obj/structure/railing/corner{
@@ -879,6 +1063,16 @@
 	},
 /turf/open/floor/iron/freezer/airless,
 /area/space)
+"Nc" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/freezer,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/head/helmet/space/syndicate/black/engie,
+/turf/open/openspace,
+/area/space)
 "Nj" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
@@ -895,6 +1089,10 @@
 /area/space)
 "OE" = (
 /turf/open/floor/iron/dark/airless,
+/area/space)
+"Pb" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plating,
 /area/space)
 "Ph" = (
 /obj/effect/turf_decal/siding/wideplating/light/corner{
@@ -918,6 +1116,21 @@
 /area/space)
 "Qw" = (
 /turf/closed/wall/mineral/titanium,
+/area/space)
+"QI" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/closet/crate/freezer,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high/plus{
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/turf/open/openspace,
 /area/space)
 "QP" = (
 /obj/machinery/power/solar{
@@ -966,6 +1179,11 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"RL" = (
+/obj/structure/railing,
+/obj/machinery/space_heater,
+/turf/open/floor/pod/dark,
+/area/space)
 "Sf" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/structure/lattice/catwalk,
@@ -989,6 +1207,12 @@
 	},
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/iron/dark,
+/area/space)
+"SN" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer/airless,
 /area/space)
 "Tl" = (
 /obj/effect/turf_decal/stripes/line,
@@ -1036,6 +1260,15 @@
 /obj/item/stack/rods/fifty,
 /turf/open/floor/pod/dark,
 /area/space)
+"UE" = (
+/obj/structure/closet/crate/freezer,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/item/storage/box/shipping,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/pod/dark,
+/area/space)
 "Vv" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace/airless/planetary,
@@ -1081,6 +1314,10 @@
 	},
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/iron/showroomfloor,
+/area/space)
+"XI" = (
+/obj/machinery/computer/atmos_alert,
+/turf/open/floor/plating,
 /area/space)
 "XX" = (
 /obj/effect/turf_decal/stripes/line{
@@ -33663,9 +33900,9 @@ Zz
 Zz
 Zz
 wu
-Hr
+RL
 Ov
-BQ
+UE
 wu
 Zz
 Zz
@@ -33920,9 +34157,9 @@ Zz
 Zz
 Zz
 wu
-Hr
+Ki
 Kc
-BQ
+sm
 wu
 Zz
 Zz
@@ -98692,13 +98929,13 @@ Qw
 fL
 Qw
 Wv
-LG
-LG
-LG
-LG
-LG
-LG
-LG
+xY
+xY
+sL
+sL
+JY
+JY
+wW
 Wv
 Wv
 eB
@@ -98948,11 +99185,11 @@ WK
 gz
 gz
 gz
-LG
-LG
-LG
-LG
-LG
+iI
+ir
+ir
+yq
+yq
 LG
 LG
 LG
@@ -99206,12 +99443,12 @@ pQ
 Dp
 pQ
 LG
-LG
-LG
-LG
-LG
-LG
-LG
+zE
+zE
+bs
+Ey
+FR
+qO
 LG
 sd
 Ma
@@ -99462,11 +99699,11 @@ RG
 gz
 gz
 gz
+XI
+Hn
+Hn
 LG
-LG
-LG
-LG
-LG
+at
 LG
 LG
 LG
@@ -99720,13 +99957,13 @@ Qw
 fL
 Qw
 Wv
-LG
-LG
-LG
-LG
-LG
-LG
-LG
+sh
+sh
+wn
+EO
+xQ
+Pb
+xQ
 Wv
 Wv
 eB
@@ -164478,9 +164715,9 @@ QQ
 QQ
 YB
 wu
+BH
 Ma
-Ma
-Ma
+xy
 wu
 qf
 Bo
@@ -164735,9 +164972,9 @@ dE
 QQ
 YB
 wu
-Ma
+In
 Lt
-Ma
+QI
 wu
 Ue
 Bo
@@ -164992,9 +165229,9 @@ QQ
 QQ
 YB
 wu
+fC
 Ma
-Ma
-Ma
+Nc
 wu
 bC
 Bo
@@ -165258,8 +165495,8 @@ hb
 HD
 QQ
 QQ
-QQ
-QQ
+Gf
+SN
 QQ
 QQ
 QQ
