@@ -142,11 +142,9 @@
 	if(density)
 		being_held_open = TRUE
 		open()
-		if(QDELETED(user))
-			being_held_open = FALSE
-			return
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
 		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
+		RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/handle_held_open_adjacency)
 		handle_held_open_adjacency(user)
 	else
 		close()
@@ -163,6 +161,15 @@
 
 /obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
 	SIGNAL_HANDLER
+
+	//Handle qdeletion here
+	if(QDELETED(user))
+		being_held_open = FALSE
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
+		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+		return
+
 	var/mob/living/living_user = user
 	if(Adjacent(user) && isliving(user) && (living_user.body_position == STANDING_UP))
 		return
@@ -170,6 +177,7 @@
 	INVOKE_ASYNC(src, .proc/close)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
 	
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
