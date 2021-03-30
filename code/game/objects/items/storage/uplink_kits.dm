@@ -368,7 +368,6 @@
 
 /obj/item/storage/box/syndie_kit/PopulateContents()
 	if(items_inside?.len)
-		if(items_inside?.len)
 		generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/syndie_kit/origami_bundle
@@ -503,36 +502,32 @@
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade
 	name = "virus grenade kit"
 	items_inside = list(
-
+		/obj/item/grenade/chem_grenade/tuberculosis = 1,
+		/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure = 5,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/glass/bottle/tuberculosiscure = 1
 	)
-
-/obj/item/storage/box/syndie_kit/tuberculosisgrenade/PopulateContents()
-	new /obj/item/grenade/chem_grenade/tuberculosis(src)
-	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure(src)
-	new /obj/item/reagent_containers/syringe(src)
-	new /obj/item/reagent_containers/glass/bottle/tuberculosiscure(src)
 
 /obj/item/storage/box/syndie_kit/chameleon
 	name = "chameleon kit"
 	items_inside = list(
-
+		/obj/item/clothing/under/chameleon = 1,
+		/obj/item/clothing/suit/chameleon = 1,
+		/obj/item/clothing/gloves/chameleon = 1,
+		/obj/item/clothing/shoes/chameleon = 1,
+		/obj/item/clothing/glasses/chameleon = 1,
+		/obj/item/clothing/head/chameleon = 1,
+		/obj/item/clothing/mask/chameleon = 1,
+		/obj/item/clothing/neck/chameleon = 1,
+		/obj/item/storage/backpack/chameleon = 1,
+		/obj/item/storage/belt/chameleon = 1,
+		/obj/item/radio/headset/chameleon = 1,
+		/obj/item/stamp/chameleon = 1,
+		/obj/item/pda/chameleon = 1
 	)
 
 /obj/item/storage/box/syndie_kit/chameleon/PopulateContents()
-	new /obj/item/clothing/under/chameleon(src)
-	new /obj/item/clothing/suit/chameleon(src)
-	new /obj/item/clothing/gloves/chameleon(src)
-	new /obj/item/clothing/shoes/chameleon(src)
-	new /obj/item/clothing/glasses/chameleon(src)
-	new /obj/item/clothing/head/chameleon(src)
-	new /obj/item/clothing/mask/chameleon(src)
-	new /obj/item/clothing/neck/chameleon(src)
-	new /obj/item/storage/backpack/chameleon(src)
-	new /obj/item/storage/belt/chameleon(src)
-	new /obj/item/radio/headset/chameleon(src)
-	new /obj/item/stamp/chameleon(src)
-	new /obj/item/pda/chameleon(src)
+
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -609,12 +604,13 @@
 	new /obj/item/bedsheet/syndie(src)
 
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
-/obj/item/storage/backpack/duffelbag/syndie/sabotage
-	items_inside = list(
-		/obj/item/grenade/c4 = 3,
-		/obj/item/grenade/c4/x4 = 2,
-		/obj/item/storage/box/syndie_kit/signaler = 6
-	)
+/obj/item/storage/backpack/duffelbag/syndie/sabotage/PopulateContents()
+	new /obj/item/grenade/c4(src)
+	new /obj/item/grenade/c4(src)
+	new /obj/item/grenade/c4(src)
+	new /obj/item/grenade/c4/x4(src)
+	new /obj/item/grenade/c4/x4(src)
+	new /obj/item/storage/box/syndie_kit/signaler(src)
 
 /obj/item/storage/box/syndie_kit/signaler
 	name = "signaler box"
