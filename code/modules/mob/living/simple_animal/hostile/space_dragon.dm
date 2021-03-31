@@ -482,6 +482,7 @@
 		return
 	if(S.riftTimer == -1)
 		to_chat(S, "<span class='warning'>Your death has left you unable to summon rifts!</span>")
+		return
 	var/area/A = get_area(S)
 	if(!(A.area_flags & VALID_TERRITORY))
 		to_chat(S, "<span class='warning'>You can't summon a rift here!  Try summoning somewhere secure within the station!</span>")
