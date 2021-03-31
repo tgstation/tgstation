@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - code_imp: "Added right-click support to AIs and cyborgs. Cyborgs can use right click actions only if they do not have any tool selected, as to not conflict with the right click actions of the items themselves, like syringes."
-  - bugfix: "Silicons are now once again able to start a wash cycle due to newly added right click support."

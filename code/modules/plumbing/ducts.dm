@@ -72,10 +72,14 @@ All the important duct code:
 /obj/machinery/duct/proc/attempt_connect()
 
 	for(var/atom/movable/AM in loc)
-		var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
-		if(P?.active)
-			disconnect_duct() //let's not built under plumbing machinery
-			return
+		for(var/plumber in AM.GetComponents(/datum/component/plumbing))
+			if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
+				continue
+			var/datum/component/plumbing/plumb = plumber
+			if(plumb.active)
+				disconnect_duct() //let's not built under plumbing machinery
+				return
+
 	for(var/D in GLOB.cardinals)
 		if(dumb && !(D & connects))
 			continue
@@ -91,7 +95,7 @@ All the important duct code:
 
 	for(var/plumber in AM.GetComponents(/datum/component/plumbing))
 		if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
-			return
+			continue
 		. += connect_plumber(plumber, direction) //so that if one is true, all is true. beautiful.
 
 ///connect to a duct
@@ -183,10 +187,11 @@ All the important duct code:
 				duct.add_duct(D)
 				D.reconnect()
 		else
-			var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
 			if(AM in get_step(src, neighbours[AM])) //did we move?
-				if(P)
-					connect_plumber(P, neighbours[AM])
+				for(var/plumber in AM.GetComponents(/datum/component/plumbing))
+					if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
+						return
+					connect_plumber(plumber, neighbours[AM])
 			else
 				neighbours -= AM //we moved
 
@@ -296,6 +301,7 @@ All the important duct code:
 		"<span class='notice'>You [anchored ? null : "un"]fasten \the [src].</span>", \
 		"<span class='hear'>You hear ratcheting.</span>")
 	return TRUE
+
 ///collection of all the sanity checks to prevent us from stacking ducts that shouldn't be stacked
 /obj/machinery/duct/proc/can_anchor(turf/T)
 	if(!T)
@@ -338,53 +344,6 @@ All the important duct code:
 	connect_network(D, direction, TRUE)
 	update_appearance()
 
-///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect.
-/obj/machinery/duct/multilayered
-	name = "duct layer-manifold"
-	icon = 'icons/obj/2x2.dmi'
-	icon_state = "multiduct"
-	pixel_x = -15
-	pixel_y = -15
-
-	color_to_color_support = FALSE
-	duct_layer = FIRST_DUCT_LAYER | SECOND_DUCT_LAYER | THIRD_DUCT_LAYER | FOURTH_DUCT_LAYER | FIFTH_DUCT_LAYER
-	drop_on_wrench = null
-
-	lock_connects = TRUE
-	lock_layers = TRUE
-	ignore_colors = TRUE
-	dumb = TRUE
-
-	active = FALSE
-	anchored = FALSE
-
-/obj/machinery/duct/multilayered/Initialize(mapload, no_anchor, color_of_duct, layer_of_duct = DUCT_LAYER_DEFAULT, force_connects)
-	. = ..()
-	update_connects()
-
-/obj/machinery/duct/multilayered/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
-
-/obj/machinery/duct/multilayered/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	update_connects()
-
-/obj/machinery/duct/multilayered/proc/update_connects()
-	if(dir & NORTH || dir & SOUTH)
-		connects = NORTH | SOUTH
-	else
-		connects = EAST | WEST
-
-///don't connect to other multilayered stuff because honestly it shouldn't be done and I dont wanna deal with it
-/obj/machinery/duct/multilayered/connect_duct(obj/machinery/duct/D, direction, ignore_color)
-	if(istype(D, /obj/machinery/duct/multilayered))
-		return
-	return ..()
-
-/obj/machinery/duct/multilayered/handle_layer()
-	return
-
 /obj/item/stack/ducts
 	name = "stack of duct"
 	desc = "A stack of fluid ducts."
@@ -402,7 +361,7 @@ All the important duct code:
 	///Default layer of our duct
 	var/duct_layer = "Default Layer"
 	///Assoc index with all the available layers. yes five might be a bit much. Colors uses a global by the way
-	var/list/layers = list("Alternate Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT)
+	var/list/layers = list("Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, "Fourth Layer" = FOURTH_DUCT_LAYER)
 
 /obj/item/stack/ducts/examine(mob/user)
 	. = ..()
@@ -417,18 +376,21 @@ All the important duct code:
 		duct_color = new_color
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)
 
-/obj/item/stack/ducts/afterattack(atom/A, user, proximity)
+/obj/item/stack/ducts/afterattack(atom/target, user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(A, /obj/machinery/duct))
-		var/obj/machinery/duct/D = A
+	if(istype(target, /obj/machinery/duct))
+		var/obj/machinery/duct/D = target
 		if(!D.anchored)
 			add(1)
 			qdel(D)
-	if(istype(A, /turf/open) && use(1))
-		var/turf/open/OT = A
-		new /obj/machinery/duct(OT, FALSE, GLOB.pipe_paint_colors[duct_color], layers[duct_layer])
+	check_attach_turf(target)
+
+/obj/item/stack/ducts/proc/check_attach_turf(atom/target)
+	if(istype(target, /turf/open) && use(1))
+		var/turf/open/open_turf = target
+		new /obj/machinery/duct(open_turf, FALSE, GLOB.pipe_paint_colors[duct_color], layers[duct_layer])
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/stack/ducts/fifty

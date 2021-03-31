@@ -43,6 +43,14 @@
 	QDEL_NULL(radio)
 	return ..()
 
+/obj/machinery/computer/cargo/attacked_by(obj/item/I, mob/living/user)
+	if(istype(I,/obj/item/trade_chip))
+		var/obj/item/trade_chip/contract = I
+		contract.try_to_unlock_contract(user)
+		return TRUE
+	else
+		return ..()
+
 /obj/machinery/computer/cargo/proc/get_export_categories()
 	. = EXPORT_CARGO
 	if(contraband)
@@ -182,10 +190,11 @@
 		if("add")
 			if(is_express)
 				return
-			var/id = text2path(params["id"])
+			var/id = params["id"]
+			id = text2path(id) || id
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
-				return
+				CRASH("Unknown supply pack id given by order console ui. ID: [params["id"]]")
 			if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.DropPodOnly)
 				return
 
