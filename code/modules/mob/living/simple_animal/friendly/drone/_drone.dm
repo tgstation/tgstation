@@ -123,6 +123,10 @@
 	"<span class='notice'>     - Interacting with non-living beings (dragging bodies, looting bodies, etc.)</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+	/// blacklisted drone areas, direct
+	var/drone_area_blacklist_flat = list(/area/engineering/atmos, /area/engineering/atmospherics_engine, /area/engineering/supermatter)
+	/// blacklisted drone areas, recursive/includes descendants
+	var/drone_area_blacklist_recursive = list()
 
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
@@ -319,14 +323,20 @@
 	shy_update()
 
 /mob/living/simple_animal/drone/proc/shy_update()
+	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 		LoadComponent(/datum/component/shy, typecacheof(/mob/living/simple_animal/drone), 4, "Your laws prevent this action near %TARGET.", TRUE)
+		if(LAZYLEN(drone_bad_areas))
+			LoadComponent(/datum/component/shy_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 		var/datum/component/shy/S = GetComponent(/datum/component/shy)
+		var/datum/component/shy_room/SR = GetComponent(/datum/component/shy_room)
 		if(S)
 			qdel(S)
+		if(SR)
+			qdel(SR)
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
