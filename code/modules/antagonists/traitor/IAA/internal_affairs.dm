@@ -11,7 +11,11 @@
 	antagpanel_category = "IAA"
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
-	var/list/datum/mind/targets_stolen = list()
+	var/list/datum/mind/targets_stolen
+
+/datum/antagonist/traitor/internal_affairs/New()
+	. = ..()
+	LAZYADD(targets_stolen, src)
 
 /datum/antagonist/traitor/internal_affairs/proc/give_pinpointer()
 	if(!owner)
