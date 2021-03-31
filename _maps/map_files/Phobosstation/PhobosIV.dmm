@@ -27,6 +27,12 @@
 /obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/cargo/storage)
+"af" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
 "ag" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -505,6 +511,15 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/sorting)
+"bM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space)
 "bN" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
@@ -1757,6 +1772,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/corporate_showroom)
+"fW" = (
+/obj/structure/frame,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/space)
 "fY" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/landmark/start/cargo_technician,
@@ -2295,6 +2317,16 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/command/heads_quarters/hop)
+"hW" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/hallway/primary/central)
 "hX" = (
 /obj/structure/chair{
 	dir = 4
@@ -3515,6 +3547,12 @@
 "lY" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/airalarm/directional/south,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "lZ" = (
@@ -5343,6 +5381,12 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/atmos)
+"sD" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/space)
 "sE" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/door/window/westleft{
@@ -6780,6 +6824,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/hallway/primary/port)
+"xe" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/tcommsat/server)
 "xf" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -7398,6 +7449,13 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
+"zw" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/power/floodlight{
+	anchored = 1
+	},
+/turf/open/floor/plating,
+/area/space)
 "zx" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/boxing{
@@ -9273,6 +9331,22 @@
 /obj/item/gps,
 /turf/open/floor/plating/asteroid,
 /area/commons/storage/primary)
+"FB" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 "FC" = (
 /obj/structure/girder,
 /obj/structure/barricade/wooden/crude,
@@ -10278,6 +10352,10 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
+"ID" = (
+/obj/structure/shuttle/engine/large,
+/turf/open/space/basic,
+/area/space)
 "IE" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/dim{
@@ -40332,7 +40410,7 @@ zt
 fN
 UI
 zt
-zt
+Px
 zt
 zt
 fN
@@ -40597,7 +40675,7 @@ UI
 UI
 nu
 zt
-UI
+zw
 zt
 UI
 lc
@@ -41095,7 +41173,7 @@ zt
 zt
 zt
 zt
-zt
+Px
 Je
 Je
 yu
@@ -41873,7 +41951,7 @@ fN
 fN
 fN
 fN
-fN
+Wi
 fN
 fN
 fN
@@ -42400,7 +42478,7 @@ vF
 zt
 zt
 zt
-zt
+Px
 zt
 zt
 rx
@@ -42649,7 +42727,7 @@ vF
 vF
 vF
 vF
-fN
+in
 fN
 fN
 vF
@@ -42906,9 +42984,9 @@ fN
 vF
 vF
 vF
+CP
 fN
-fN
-fN
+Wi
 fN
 vF
 vF
@@ -43164,7 +43242,7 @@ vF
 vF
 vF
 vF
-fN
+CP
 fN
 fN
 fN
@@ -43410,7 +43488,7 @@ vF
 vF
 vF
 vF
-fN
+Wi
 vF
 vF
 fN
@@ -44630,7 +44708,7 @@ Ag
 TU
 Ag
 EK
-Ag
+MN
 vV
 Zv
 TN
@@ -44887,7 +44965,7 @@ Ag
 XV
 Ag
 EK
-Ag
+MN
 vV
 Vw
 qd
@@ -45144,7 +45222,7 @@ vV
 wY
 VI
 mQ
-VI
+FB
 wY
 Vw
 Zv
@@ -45401,7 +45479,7 @@ vV
 fz
 EK
 EK
-Ag
+MN
 ka
 Vw
 Vd
@@ -45658,7 +45736,7 @@ vV
 Ag
 Ag
 EK
-Ag
+MN
 wY
 oZ
 Vd
@@ -46172,7 +46250,7 @@ iO
 EK
 EK
 EK
-Ag
+MN
 RY
 Vd
 qi
@@ -46429,7 +46507,7 @@ Kb
 Kb
 wX
 JJ
-RY
+hW
 nl
 yp
 Rf
@@ -65509,12 +65587,12 @@ Jh
 Jh
 Jh
 da
-lP
+fW
 hg
 tM
 bQ
 PL
-lP
+bM
 PL
 Jh
 Jh
@@ -65771,7 +65849,7 @@ bQ
 Jh
 Jh
 bQ
-lP
+sD
 Jh
 Jh
 Jh
@@ -66021,7 +66099,7 @@ Jh
 Jh
 Jh
 Jh
-Jh
+af
 Jh
 Jh
 Jh
@@ -69277,9 +69355,9 @@ uS
 bj
 iE
 Pd
+xe
 ov
-ov
-Jh
+ID
 Jh
 Jh
 Jh
@@ -69534,7 +69612,7 @@ mg
 nW
 sT
 Pd
-ov
+xe
 ov
 Jh
 Jh
@@ -70562,9 +70640,9 @@ tX
 AY
 dA
 Pd
+xe
 ov
-ov
-Jh
+ID
 Jh
 Jh
 Jh
@@ -70819,7 +70897,7 @@ ob
 aS
 sb
 Pd
-ov
+xe
 ov
 Jh
 Jh
