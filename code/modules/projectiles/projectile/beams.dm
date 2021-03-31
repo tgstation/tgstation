@@ -29,19 +29,27 @@
 
 //overclocked laser, does a bit more damage but has much higher wound power (-0 vs -20)
 /obj/projectile/beam/laser/hellfire
-	name = "hellfire laser"
+	name = "hell-practice laser"
 	wound_bonus = 0
-	damage = 25
+	damage = 0
+	nodamage = TRUE
 	speed = 0.6 // higher power = faster, that's how light works right
 
 /obj/projectile/beam/laser/hellfire/Initialize()
 	. = ..()
 	transform *= 2
 
+/obj/projectile/beam/laser/hellfire/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/carbontarget = target
+		SEND_SIGNAL(carbontarget, COMSIG_ADD_MOOD_EVENT, "hell-practice laser", /datum/mood_event/depression_moderate) //oh my god you burned them out you monster
+
 /obj/projectile/beam/laser/heavylaser
-	name = "heavy laser"
+	name = "heavy practice laser"
 	icon_state = "heavylaser"
-	damage = 40
+	damage = 0
+	nodamage = TRUE
 	tracer_type = /obj/effect/projectile/tracer/heavy_laser
 	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
 	impact_type = /obj/effect/projectile/impact/heavy_laser
@@ -53,6 +61,19 @@
 		M.IgniteMob()
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
+
+/obj/projectile/beam/laser/heavylaser/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/carbontarget = target
+		carbontarget.say("BRAIN BLAST!!", forced = "heavy practice laser")
+		if(prob(33)) //mostly copy+pasted from the code for the brain trauma abductor gland
+			carbontarget.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
+		else
+			if(prob(20))
+				carbontarget.gain_trauma_type(BRAIN_TRAUMA_SEVERE, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
+			else
+				carbontarget.gain_trauma_type(BRAIN_TRAUMA_MILD, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 
 /obj/projectile/beam/weak
 	damage = 15
@@ -66,9 +87,10 @@
 	nodamage = TRUE
 
 /obj/projectile/beam/scatter
-	name = "laser pellet"
+	name = "practice laser pellet"
 	icon_state = "scatterlaser"
-	damage = 5
+	damage = 0
+	nodamage = TRUE
 
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
@@ -181,6 +203,7 @@
 				M.adjustStaminaLoss(34)
 
 /obj/projectile/beam/lasertag/redtag
+	name = "practice laser tag beam"
 	icon_state = "laser"
 	suit_types = list(/obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser

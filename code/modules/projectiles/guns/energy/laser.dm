@@ -96,19 +96,19 @@
 	ammo_x_offset = 3
 
 /obj/item/ammo_casing/energy/laser/accelerator
-	projectile_type = /obj/projectile/beam/laser/accelerator
-	select_name = "accelerator"
+	projectile_type = /obj/projectile/beam/laser/accelerator //I think this is also orange, but it tried to hide from me, so it must be punished
+	select_name = "practice accelerating"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/projectile/beam/laser/accelerator
 	name = "accelerator laser"
 	icon_state = "scatterlaser"
 	range = 255
-	damage = 6
+	damage = 0
+	nodamage = TRUE
 
 /obj/projectile/beam/laser/accelerator/Range()
 	..()
-	damage += 7
 	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
 
 ///X-ray gun
