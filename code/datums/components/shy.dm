@@ -1,10 +1,20 @@
+#define SHY_COMPONENT_CACHE_TIME 5 //deciseconds
+
 /// You can't use items on anyone other than yourself if there are other living mobs around you
 /datum/component/shy
 	can_transfer = TRUE
-	var/shy_range = 4 //! Range of your bashfullness
-	var/list/whitelist //! Typecache of mob types you are okay around
-	var/message = "You find yourself too shy to do that around %TARGET!" //! Message shown when you are bashful
-	var/dead_shy = FALSE //! Are you shy around a dead body?
+	/// Range of your bashfullness
+	var/shy_range = 4
+	/// Typecache of mob types you are okay around
+	var/list/whitelist
+	/// Message shown when you are bashful
+	var/message = "You find yourself too shy to do that around %TARGET!"
+	/// Are you shy around a dead body?
+	var/dead_shy = FALSE
+	/// Invalidate last_result at this time
+	var/result_expires = 0
+	/// What was our last result?
+	var/last_result = FALSE
 
 /// _shy_range, _whitelist, _message, dead_shy map to vars
 /datum/component/shy/Initialize(_whitelist, _shy_range, _message, _dead_shy)
@@ -37,15 +47,29 @@
 		message = friend.message
 
 /datum/component/shy/proc/bashful(atom/A)
+	var/result = FALSE
 	var/mob/owner = parent
-	var/list/strangers = view(shy_range, get_turf(owner))
-	if(!length(strangers) || !(locate(/mob/living) in strangers) || (A in owner.DirectAccess()))
+
+	if(A in owner.DirectAccess())
 		return
 
-	for(var/mob/living/person in strangers)
-		if(person != owner && !is_type_in_typecache(person, whitelist) && (person.stat != DEAD || dead_shy))
-			to_chat(owner, "<span class='warning'>[replacetext(message, "%TARGET", person)]</span>")
-			return TRUE
+	if(result_expires > world.time)
+		return last_result
+
+	var/list/strangers = view(shy_range, get_turf(owner))
+
+	if(length(strangers) && locate(/mob/living) in strangers)
+		for(var/mob/living/person in strangers)
+			if(person != owner && !is_type_in_typecache(person, whitelist) && (person.stat != DEAD || dead_shy))
+				to_chat(owner, "<span class='warning'>[replacetext(message, "%TARGET", person)]</span>")
+				result = TRUE
+				break
+
+	last_result = result
+	result_expires = world.time + SHY_COMPONENT_CACHE_TIME
+	return result
+
+
 
 /datum/component/shy/proc/bashful_click(datum/source, atom/A, params)
 	return bashful(A) && COMSIG_MOB_CANCEL_CLICKON
@@ -55,4 +79,6 @@
 
 /datum/component/shy/proc/bashful_unarmed(datum/source, atom/target, proximity, modifiers)
 	return bashful(target) && COMPONENT_CANCEL_ATTACK_CHAIN
+
+#undef SHY_COMPONENT_CACHE_TIME
 
