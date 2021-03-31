@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, Section, Box, Icon, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const BigPain = (props, context) => {
+export const OutfitEditor = (props, context) => {
   const { act, data } = useBackend(context);
 
   return (
