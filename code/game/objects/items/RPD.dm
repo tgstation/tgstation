@@ -10,7 +10,6 @@ RPD
 #define BUILD_MODE (1<<0)
 #define WRENCH_MODE (1<<1)
 #define DESTROY_MODE (1<<2)
-#define PAINT_MODE (1<<3)
 
 
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
@@ -404,7 +403,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/list/make_pipe_whitelist
 	if(!make_pipe_whitelist)
 		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe, /obj/structure/window, /obj/structure/grille))
-	if(istype(attack_target, /obj/machinery/atmospherics) && (mode & BUILD_MODE && !(mode & PAINT_MODE))) //Reduces pixelhunt when coloring is off.
+	if(istype(attack_target, /obj/machinery/atmospherics) && mode & BUILD_MODE) //Reduces pixelhunt when coloring is off.
 		attack_target = get_turf(attack_target)
 	var/can_make_pipe = (isturf(attack_target) || is_type_in_typecache(attack_target, make_pipe_whitelist))
 
@@ -417,24 +416,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			activate()
 			qdel(attack_target)
 		return
-
-	if((mode & PAINT_MODE))
-		var/obj/machinery/atmospherics/M = attack_target
-		if(istype(M) && M.paintable)
-			to_chat(user, "<span class='notice'>You start painting \the [M] [paint_color]...</span>")
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(do_after(user, paint_speed, target = M))
-				M.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
-				user.visible_message("<span class='notice'>[user] paints \the [M] [paint_color].</span>","<span class='notice'>You paint \the [M] [paint_color].</span>")
-			return
-		var/obj/item/pipe/I = attack_target
-		if(istype(I) && I.paintable)
-			to_chat(user, "<span class='notice'>You start painting \the [I] [paint_color]...</span>")
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(do_after(user, paint_speed, target = I))
-				I.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
-				user.visible_message("<span class='notice'>[user] paints \the [I] [paint_color].</span>","<span class='notice'>You paint \the [I] [paint_color].</span>")
-			return
 
 	if(mode & BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
@@ -555,7 +536,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 #undef BUILD_MODE
 #undef DESTROY_MODE
-#undef PAINT_MODE
 #undef WRENCH_MODE
 
 /obj/item/rpd_upgrade

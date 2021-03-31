@@ -3,7 +3,7 @@
 	icon_state = "bridge_center"
 
 	name = "bridge pipe"
-	desc = "A one meter section of regular pipe used to connect ."
+	desc = "A one meter section of regular pipe used to connect pipenets over pipes."
 
 	dir = SOUTH
 	initialize_directions = NORTH | SOUTH
