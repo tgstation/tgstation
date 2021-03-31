@@ -6,6 +6,9 @@
 /obj/item/storage/pod{
 	pixel_x = -26
 	},
+/obj/machinery/light/cold{
+	dir = 4
+	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pod_1)
 "e" = (
@@ -13,6 +16,9 @@
 	dir = 1
 	},
 /obj/structure/window/plasma/spawner/north,
+/obj/machinery/light/cold{
+	dir = 1
+	},
 /turf/open/floor/pod/light,
 /area/shuttle/pod_1)
 "h" = (
@@ -21,7 +27,9 @@
 "m" = (
 /obj/docking_port/mobile/pod{
 	dwidth = 4;
-	port_direction = 2
+	height = 7;
+	port_direction = 2;
+	width = 9
 	},
 /obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/stripes/box,

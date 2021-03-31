@@ -338,6 +338,10 @@
 /obj/effect/turf_decal/siding/wideplating/light/corner,
 /turf/open/floor/iron/freezer/airless,
 /area/space)
+"kf" = (
+/obj/machinery/computer/cargo,
+/turf/open/floor/plating,
+/area/space)
 "kl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -495,6 +499,12 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/space)
+"pj" = (
+/obj/effect/turf_decal/loading_area/red{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/space)
 "pK" = (
 /obj/structure/industrial_lift/tram/central,
 /obj/structure/industrial_lift/tram{
@@ -543,6 +553,18 @@
 	id = "left_part"
 	},
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/space)
+"rv" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "mining_home";
+	name = "mining shuttle bay";
+	roundstart_template = /datum/map_template/shuttle/mining/iss;
+	width = 7
+	},
+/turf/open/space/basic,
 /area/space)
 "ry" = (
 /obj/structure/table/reinforced,
@@ -679,6 +701,10 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/airless,
+/area/space)
+"uU" = (
+/obj/machinery/mineral/equipment_vendor,
+/turf/open/floor/plating,
 /area/space)
 "va" = (
 /obj/machinery/power/solar_control{
@@ -1350,6 +1376,15 @@
 /obj/structure/railing,
 /turf/open/openspace/airless/planetary,
 /area/space)
+"JD" = (
+/obj/machinery/mineral/ore_redemption{
+	dir = 4;
+	input_dir = 8;
+	output_dir = 4
+	},
+/obj/effect/turf_decal/delivery/red,
+/turf/open/floor/plating,
+/area/space)
 "JG" = (
 /obj/structure/railing{
 	dir = 1
@@ -1644,6 +1679,10 @@
 	dir = 4
 	},
 /turf/open/floor/iron/showroomfloor,
+/area/space)
+"Rn" = (
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plating,
 /area/space)
 "Ro" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
@@ -32934,7 +32973,7 @@ Zz
 Zz
 Zz
 Zz
-Zz
+rv
 Zz
 Zz
 Zz
@@ -33190,9 +33229,9 @@ Zz
 Zz
 Zz
 Zz
-Zz
-Zz
-Zz
+gz
+Ss
+gz
 Zz
 Zz
 Zz
@@ -33447,9 +33486,9 @@ Zz
 Zz
 Zz
 Zz
-Zz
-Zz
-Zz
+gz
+Dp
+gz
 Zz
 Zz
 Zz
@@ -33704,9 +33743,9 @@ Zz
 Zz
 Zz
 wu
-wu
-wu
-wu
+gz
+Ss
+gz
 wu
 Zz
 Zz
@@ -34217,11 +34256,11 @@ xw
 Wv
 Zz
 wu
+pj
 LG
 LG
 LG
-LG
-LG
+Rn
 wu
 Zz
 Zz
@@ -34474,11 +34513,11 @@ AC
 eB
 Zz
 wu
-LG
+JD
 LG
 Wc
 LG
-LG
+Rn
 wu
 Zz
 Zz
@@ -34731,11 +34770,11 @@ AC
 Wv
 Zz
 wu
+pj
 LG
 LG
 LG
-LG
-LG
+Rn
 wu
 Zz
 Zz
@@ -34989,7 +35028,7 @@ Wv
 Zz
 wu
 wu
-LG
+uU
 LG
 LG
 wu
@@ -99752,7 +99791,7 @@ WK
 gz
 gz
 gz
-LG
+kf
 LP
 Ma
 Ma
