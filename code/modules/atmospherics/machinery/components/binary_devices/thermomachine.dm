@@ -135,7 +135,7 @@
 	var/thermal_heat_capacity = thermal_exchange_port.heat_capacity()
 	var/temperature_delta = main_port.temperature - target_temperature
 	if(auto_thermal_regulator)
-		cooling = temperature_delta > 0 ? TRUE : FALSE
+		cooling = temperature_delta > 0
 	else
 		temperature_delta = cooling ? max(temperature_delta, 0) : min(temperature_delta, 0) //no cheesy strats
 
