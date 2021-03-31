@@ -77,8 +77,6 @@
 		else
 			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
 
-
-
 /obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0)
 	if(target.handcuffed)
 		return
@@ -100,16 +98,14 @@
 		qdel(src)
 	return
 
-
 /obj/item/restraints/handcuffs/fuzzy
 	name = "fuzzy cuffs"
 	icon = 'icons/obj/ERPcuffs.dmi'
 	icon_state = "fuzzycuff"
 	desc = "Use this to keep... 'prisoners' in line."
 	custom_materials = list(/datum/material/iron=250, /datum/material/plastic = 50)
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 
-/obj/item/restraints/handcuffs/fuzzy/suicide_act(mob/user)
+/obj/item/restraints/handcuffs/fuzzy/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to ERP [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off
 	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
@@ -252,9 +248,8 @@
 	icon = 'icons/obj/ERPcuffs.dmi'
 	icon_state = "fuzzylegcuff"
 	custom_materials = list(/datum/material/iron=500, /datum/material/plastic = 100)
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 
-/obj/item/restraints/legcuffs/fuzzy/suicide_act(mob/user)
+/obj/item/restraints/legcuffs/fuzzy/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to ERP [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off
 	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
