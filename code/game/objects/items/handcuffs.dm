@@ -101,11 +101,32 @@
 	return
 
 
-/obj/item/weapon/handcuffs/fuzzy
+/obj/item/restraints/handcuffs/fuzzy
 	name = "fuzzy cuffs"
 	icon = 'icons/obj/ERPcuffs.dmi'
 	icon_state = "fuzzycuff"
 	desc = "Use this to keep... 'prisoners' in line."
+	custom_materials = list(/datum/material/iron=250, /datum/material/plastic = 50)
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+
+/obj/item/restraints/handcuffs/fuzzy/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is trying to ERP [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off
+	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
+	user.set_light(2)
+	user.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
+	playsound(loc, 'sound/effects/curseattack.ogg', 50, TRUE, -1)
+
+	// Let the sound effect finish playing
+	add_fingerprint(user)
+	sleep(20)
+	if(!user)
+		return
+	for(var/obj/item/W in user)
+		user.dropItemToGround(W)
+	suicider = user.real_name
+	user.dust()
+	return OXYLOSS
 
 /obj/item/restraints/handcuffs/cable/sinew
 	name = "sinew restraints"
@@ -225,11 +246,33 @@
 	slowdown = 7
 	breakouttime = 30 SECONDS
 
-/obj/item/weapon/handcuffs/legcuffs/fuzzy
+/obj/item/restraints/legcuffs/fuzzy
 	name = "fuzzy legcuffs"
 	desc = "Use this to keep... 'prisoners' in line."
 	icon = 'icons/obj/ERPcuffs.dmi'
 	icon_state = "fuzzylegcuff"
+	custom_materials = list(/datum/material/iron=500, /datum/material/plastic = 100)
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+
+/obj/item/restraints/legcuffs/fuzzy/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is trying to ERP [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off
+	user.set_light_color(COLOR_VERY_SOFT_YELLOW)
+	user.set_light(2)
+	user.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
+	playsound(loc, 'sound/effects/curseattack.ogg', 50, TRUE, -1)
+
+	// Let the sound effect finish playing
+	add_fingerprint(user)
+	sleep(20)
+	if(!user)
+		return
+	for(var/obj/item/W in user)
+		user.dropItemToGround(W)
+	suicider = user.real_name
+	user.dust()
+	return OXYLOSS
+
 
 /obj/item/restraints/legcuffs/beartrap
 	name = "bear trap"
