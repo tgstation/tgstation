@@ -64,11 +64,18 @@ const yarn = args => {
   });
 };
 
-/// Installs all tgui dependencies
+/** Installs all tgui dependencies */
 const taskYarn = new Task('yarn')
+  // The following dependencies skip what could be considered an important
+  // step in Yarn: it verifies the integrity of cache. With this setup, if
+  // cache ever becomes corrupted, your only option is to clean build.
+  .depends('tgui/.yarn/+(cache|releases|plugins|sdks)/**/*')
+  .depends('tgui/**/package.json')
+  .depends('tgui/yarn.lock')
+  .provides('tgui/.yarn/install-state.gz')
   .build(() => yarn(['install']));
 
-/// Builds svg fonts
+/** Builds svg fonts */
 const taskTgfont = new Task('tgfont')
   .depends('tgui/.yarn/install-state.gz')
   .depends('tgui/packages/tgfont/**/*.+(js|cjs|svg)')
@@ -78,7 +85,7 @@ const taskTgfont = new Task('tgfont')
   .provides('tgui/packages/tgfont/dist/tgfont.woff2')
   .build(() => yarn(['workspace', 'tgfont', 'build']));
 
-/// Builds tgui
+/** Builds tgui */
 const taskTgui = new Task('tgui')
   .depends('tgui/.yarn/install-state.gz')
   .depends('tgui/webpack.config.js')
@@ -93,9 +100,11 @@ const taskTgui = new Task('tgui')
     await yarn(['run', 'webpack-cli', '--mode=production']);
   });
 
-/// Prepends the defines to the .dme.
-/// Does not clean them up, as this is intended for TGS which
-/// clones new copies anyway.
+/**
+ * Prepends the defines to the .dme.
+ * Does not clean them up, as this is intended for TGS which
+ * clones new copies anyway.
+ */
 const taskPrependDefines = (...defines) => new Task('prepend-defines')
   .build(async () => {
     const dmeContents = fs.readFileSync(`${DME_NAME}.dme`);
@@ -168,7 +177,6 @@ const taskDm = (...injectedDefines) => new Task('dm')
         // Add the actual dme content
         const dme_content = fs.readFileSync(`${DME_NAME}.dme`)
         fs.appendFileSync(`${DME_NAME}.mdme`, dme_content)
-
         await exec(dmPath, [`${DME_NAME}.mdme`]);
         // Rename dmb
         fs.renameSync(`${DME_NAME}.mdme.dmb`, `${DME_NAME}.dmb`)
