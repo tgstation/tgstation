@@ -46,6 +46,7 @@
 		whitelist = friend.whitelist
 		message = friend.message
 
+/// Returns TRUE or FALSE if you are within shy_range tiles from a /mob/living
 /datum/component/shy/proc/bashful(atom/A)
 	var/result = FALSE
 	var/mob/owner = parent

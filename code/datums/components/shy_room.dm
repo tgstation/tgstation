@@ -31,6 +31,7 @@
 		blacklist = friend.blacklist
 		message = friend.message
 
+/// Returns TRUE or FALSE if you are in a blacklisted area
 /datum/component/shy_room/proc/frightened(atom/A)
 	var/mob/owner = parent
 	if(!length(blacklist) || (A in owner.DirectAccess()))
