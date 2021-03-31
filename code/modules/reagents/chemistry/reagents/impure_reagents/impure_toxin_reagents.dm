@@ -5,8 +5,7 @@
 
 ////////////////////TOXINS///////////////////////////
 
-//Lipolicide
-//impure
+//Lipolicide - Impure Version
 /datum/reagent/impurity/ipecacide
 	name = "Ipecacide"
 	description = "An extremely gross substance that induces vomiting. It is produced when Lipolicide reactions are impure."
@@ -20,8 +19,7 @@
 	..()
 
 
-//Formaldehyde
-//impure
+//Formaldehyde - Impure Version
 /datum/reagent/impurity/methanol
 	name = "Methanol"
 	description = "A light, colourless liquid with a distinct smell. Ingestion can lead to blindness. It is a byproduct of organisms processing impure Formaldehyde."
@@ -29,19 +27,18 @@
 	color = "#aae7e4"
 	ph = 7
 
-/datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/owner)
+/datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/owner, delta_time)
 	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return ..()
-	eyes.applyOrganDamage(0.5)
+	eyes.applyOrganDamage(0.5 * REM * delta_time, 0)
 	..()
 
 
-//Chloral Hydrate
-//impure
+//Chloral Hydrate - Impure Version
 /datum/reagent/impurity/chloralax
 	name = "Chloralax"
-	description = "An oily, colorless and slightly toxic liquid. It is produced when impure chloral hydrate is broken down inside an organism."
+	description = "An oily, colorless and slightly toxic liquid. It is produced when impure choral hydrate is broken down inside an organism."
 	reagent_state = LIQUID
 	color = "#387774"
 	ph = 7
@@ -52,8 +49,7 @@
 	..()
 
 
-//Mindbreaker Toxin
-//impure
+//Mindbreaker Toxin - Impure Version
 /datum/reagent/impurity/rosenol
 	name = "Rosenol"
 	description = "A strange, blue liquid that is produced during impure mindbreaker toxin reactions. Historically it has been abused to write poetry."
