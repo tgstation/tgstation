@@ -12,7 +12,7 @@
 	range = 7
 	cooldown_min = 0
 	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'
-	action_icon_state = "barn"
+	action_icon_state = "sacredflame"
 	active_msg = "You prepare to curse a target..."
 	deactive_msg = "You dispel the curse..."
 	/// List of mobs which are allowed to be a target of the spell
