@@ -44,6 +44,8 @@
 //Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
 
 /obj/item/storage/proc/PopulateContents()
+	if(items_inside?.len)
+		generate_items_inside(items_inside,src)
 
 /obj/item/storage/proc/emptyStorage()
 	var/datum/component/storage/ST = GetComponent(/datum/component/storage)

@@ -365,11 +365,6 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
-
-/obj/item/storage/box/syndie_kit/PopulateContents()
-	if(items_inside?.len)
-		generate_items_inside(items_inside,src)
-
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
 	desc = "A box full of a number of rather masterfully engineered paper planes and a manual on \"The Art of Origami\"."
