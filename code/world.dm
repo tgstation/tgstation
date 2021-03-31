@@ -1,6 +1,8 @@
 //This file is just for the necessary /world definition
 //Try looking in game/world.dm
 
+// mothblocks was here :D
+
 /**
  * # World
  *
