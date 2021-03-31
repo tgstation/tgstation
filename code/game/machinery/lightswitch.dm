@@ -38,7 +38,7 @@
 /obj/machinery/light_switch/update_overlays()
 	. = ..()
 	if(!(machine_stat & NOPOWER))
-		SSvis_overlays.add_vis_overlay(src, icon, "[base_icon_state]-glow", 0, EMISSIVE_PLANE, dir, alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-glow", 0, EMISSIVE_PLANE, alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
