@@ -72,12 +72,13 @@ const taskYarn = new Task('yarn')
   .depends('tgui/.yarn/+(cache|releases|plugins|sdks)/**/*')
   .depends('tgui/**/package.json')
   .depends('tgui/yarn.lock')
-  .provides('tgui/.yarn/install-state.gz')
+  // Phony target (automatically created at the end of the task)
+  .provides('tgui/.yarn/install-target')
   .build(() => yarn(['install']));
 
 /** Builds svg fonts */
 const taskTgfont = new Task('tgfont')
-  .depends('tgui/.yarn/install-state.gz')
+  .depends('tgui/.yarn/install-target')
   .depends('tgui/packages/tgfont/**/*.+(js|cjs|svg)')
   .depends('tgui/packages/tgfont/package.json')
   .provides('tgui/packages/tgfont/dist/tgfont.css')
@@ -87,7 +88,7 @@ const taskTgfont = new Task('tgfont')
 
 /** Builds tgui */
 const taskTgui = new Task('tgui')
-  .depends('tgui/.yarn/install-state.gz')
+  .depends('tgui/.yarn/install-target')
   .depends('tgui/webpack.config.js')
   .depends('tgui/**/package.json')
   .depends('tgui/packages/**/*.+(js|cjs|ts|tsx|scss)')
