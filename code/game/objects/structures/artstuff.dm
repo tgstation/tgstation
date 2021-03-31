@@ -337,20 +337,21 @@
 	if(!persistence_id || !SSpersistence.paintings || !SSpersistence.paintings[persistence_id])
 		return
 	var/list/painting_category = SSpersistence.paintings[persistence_id]
-	var/found_painting = FALSE
-	while(!found_painting)
+	var/list/painting
+	while(!painting)
 		if(!length(SSpersistence.paintings[persistence_id]))
 			return //aborts loading anything this category has no usable paintings
 		var/list/chosen = pick(painting_category)
-		var/title = chosen["title"]
-		var/author = chosen["ckey"]
-		var/png = "data/paintings/[persistence_id]/[chosen["md5"]].png"
-		if(!title)
-			title = "Untitled Artwork" //Should prevent NULL named art from loading as NULL, if you're still getting the admin log chances are persistence is broken
-		if(!fexists(png)) //shitmin deleted this art, lets remove json entry to avoid errors
+		if(!fexists("data/paintings/[persistence_id]/[chosen["md5"]].png")) //shitmin deleted this art, lets remove json entry to avoid errors
 			painting_category.Remove(chosen)
-			continue //tries again
-		found_painting = TRUE
+			continue //and try again
+		painting = chosen
+	var/title = painting["title"]
+	var/author = painting["ckey"]
+	var/png = "data/paintings/[persistence_id]/[painting["md5"]].png"
+	if(!title)
+		title = "Untitled Artwork" //legacy artwork allowed null names which was bad for the json, lets fix that
+		painting["title"] = title
 	var/icon/I = new(png)
 	var/obj/item/canvas/new_canvas
 	var/w = I.Width()
