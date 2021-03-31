@@ -17,7 +17,8 @@
  * Space Dragon can summon only one rift at a time, and can do so anywhere a blob is allowed to spawn.  In order to trigger his victory condition, Space Dragon must summon and defend three rifts while they charge.
  * Space Dragon, when spawned, has five minutes to summon the first rift.  Failing to do so will cause Space Dragon to return from whence he came.
  * When the rift spawns, ghosts can interact with it to spawn in as space carp to help complete the mission.  One carp is granted when the rift is first summoned, with an extra one every 30 seconds.
- * Once the victory condition is met, the shuttle is called and all current rifts are allowed to spawn infinite sentient space carp.
+ * Once the victory condition is met, all current rifts become invulnerable to damage, are allowed to spawn infinite sentient space carp, and Space Dragon gets unlimited rage.
+ * Alternatively, if the shuttle arrives while Space Dragon is still active, their victory condition will automatically be met and all the rifts will immediately become fully charged.
  * If a charging rift is destroyed, Space Dragon will be incredibly slowed, and the endlag on his gust attack is greatly increased on each use.
  * Space Dragon has the following abilities to assist him with his objective:
  * - Can shoot fire in straight line, dealing 30 burn damage and setting those suseptible on fire.
@@ -481,7 +482,6 @@
 		return
 	if(S.riftTimer == -1)
 		to_chat(S, "<span class='warning'>Your death has left you unable to summon rifts!</span>")
-		return
 	var/area/A = get_area(S)
 	if(!(A.area_flags & VALID_TERRITORY))
 		to_chat(S, "<span class='warning'>You can't summon a rift here!  Try summoning somewhere secure within the station!</span>")
