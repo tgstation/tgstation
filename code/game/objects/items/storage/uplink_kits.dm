@@ -564,7 +564,7 @@
 
 /obj/item/storage/box/syndie_kit/ez_clean
 	items_inside = list(
-		new/obj/item/grenade/chem_grenade/ez_clean = 3
+		/obj/item/grenade/chem_grenade/ez_clean = 3
 	)
 
 /obj/item/storage/box/hug/reverse_revolver
