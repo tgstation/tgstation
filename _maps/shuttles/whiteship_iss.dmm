@@ -494,6 +494,20 @@
 "cN" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/door/airlock/shuttle/glass,
+/obj/docking_port/mobile{
+	callTime = 250;
+	can_move_docking_ports = 1;
+	dir = 2;
+	dwidth = 16;
+	height = 9;
+	id = "whiteship";
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Salvage Ship";
+	port_direction = 8;
+	preferred_direction = 4;
+	width = 31
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "cP" = (
@@ -818,6 +832,11 @@
 /obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned)
+"Io" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/airlock/shuttle/glass,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 ej
@@ -998,13 +1017,13 @@ ej
 (17,1,1) = {"
 cN
 dT
-cN
+Io
 dT
 dk
 dT
-cN
+Io
 dT
-cN
+Io
 "}
 (18,1,1) = {"
 ej
@@ -1088,7 +1107,7 @@ ae
 ej
 ej
 ej
-cN
+Io
 ej
 ej
 ej
