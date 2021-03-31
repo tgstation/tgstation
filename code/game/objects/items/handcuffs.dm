@@ -263,6 +263,7 @@
 	icon = 'icons/obj/ERPcuffs.dmi'
 	icon_state = "fuzzylegcuff"
 	custom_materials = list(/datum/material/iron=500, /datum/material/plastic = 100)
+	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 
 /obj/item/restraints/legcuffs/fuzzy/attack(mob/living/carbon/C, mob/living/user)
 	if(!istype(C))
@@ -300,10 +301,11 @@
 	if(target.legcuffed)
 		return
 
-	C.legcuffed = src
+	target.legcuffed = src
 	forceMove(C)
-	C.update_equipment_speed_mods()
-	C.update_inv_legcuffed()
+	target.update_equipment_speed_mods()
+	target.update_inv_legcuffed()
+	Sneed
 
 /obj/item/restraints/legcuffs/fuzzy/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to ERP [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
