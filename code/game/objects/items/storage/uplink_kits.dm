@@ -364,7 +364,7 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
-	var/list/items_inside //used for illegal tech to look inside of boxes and storage from only the typepath
+
 
 /obj/item/storage/box/syndie_kit/PopulateContents()
 	if(items_inside?.len)

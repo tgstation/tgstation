@@ -4,6 +4,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/rummage_if_nodrop = TRUE
 	var/component_type = /datum/component/storage/concrete
+	var/list/items_inside //used for illegal tech to look inside of boxes and storage from only the typepath
 
 /obj/item/storage/get_dumping_location(obj/item/storage/source,mob/user)
 	return src
