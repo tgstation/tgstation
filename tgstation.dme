@@ -3058,6 +3058,7 @@
 #include "code\modules\reagents\chemistry\reagents\toxin_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\impure_reagents\impure_medicine_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\unique\eigenstasium.dm"
+#include "code\modules\reagents\chemistry\reagents\impure_reagents\impure_toxin_reagents.dm"
 #include "code\modules\reagents\chemistry\recipes\cat2_medicines.dm"
 #include "code\modules\reagents\chemistry\recipes\catalysts.dm"
 #include "code\modules\reagents\chemistry\recipes\drugs.dm"
