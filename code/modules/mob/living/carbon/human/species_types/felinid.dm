@@ -4,6 +4,7 @@
 	id = "felinid"
 	say_mod = "meows"
 	limbs_id = "human"
+	exotic_blood = /datum/reagent/mutationtoxin/felinid
 
 	mutant_bodyparts = list("tail_human" = "Cat", "ears" = "Cat", "wings" = "None")
 
