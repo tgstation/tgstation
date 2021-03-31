@@ -1103,7 +1103,7 @@ Usage:
 
 **Props:**
 
-- `position: string` - Tooltip position. Valid positions are "bottom", "top", "left", and "right". You can affix "-start" and "-end" to achieve something like top left or top right respectively. Default to "top".
+- `position: string` - Tooltip position.
 - `content: string` - Content of the tooltip. Must be a plain string.
 Fragments or other elements are **not** supported.
 
