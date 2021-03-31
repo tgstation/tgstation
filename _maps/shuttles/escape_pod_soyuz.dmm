@@ -24,6 +24,9 @@
 "h" = (
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/shuttle/pod_1)
+"i" = (
+/turf/closed/wall/mineral/titanium/survival,
+/area/shuttle/pod_1)
 "m" = (
 /obj/docking_port/mobile/pod{
 	dwidth = 4;
@@ -138,7 +141,7 @@ M
 J
 h
 h
-h
+i
 "}
 (5,1,1) = {"
 p
@@ -156,7 +159,7 @@ M
 J
 h
 h
-h
+i
 "}
 (7,1,1) = {"
 Z

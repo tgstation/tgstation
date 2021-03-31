@@ -1,0 +1,292 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 6
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"c" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 10
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"d" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"e" = (
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"f" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 5
+	},
+/turf/open/floor/iron/airless/solarpanel,
+/area/shuttle/supply)
+"h" = (
+/obj/structure/window/reinforced/survival_pod,
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"i" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"j" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 5
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"k" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 6
+	},
+/turf/open/floor/iron/airless/solarpanel,
+/area/shuttle/supply)
+"l" = (
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"m" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 9
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"n" = (
+/obj/structure/chair/comfy/shuttle{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 6
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_x = 12
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"o" = (
+/obj/structure/chair/comfy/shuttle{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 10
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_x = -12
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"p" = (
+/obj/machinery/computer/security{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/supply)
+"q" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"r" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 9
+	},
+/turf/open/floor/iron/airless/solarpanel,
+/area/shuttle/supply)
+"s" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/airless/solarpanel,
+/area/shuttle/supply)
+"t" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 10
+	},
+/turf/open/floor/iron/airless/solarpanel,
+/area/shuttle/supply)
+"u" = (
+/obj/effect/turf_decal/siding/thinplating/dark,
+/turf/open/floor/iron/airless/solarpanel,
+/area/shuttle/supply)
+"v" = (
+/obj/effect/turf_decal/loading_area/red{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"w" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/supply)
+"x" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/airlock/shuttle/glass,
+/turf/open/floor/iron/dark,
+/area/shuttle/supply)
+"y" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/supply)
+"z" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"B" = (
+/turf/template_noop,
+/area/template_noop)
+"D" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
+"E" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/airlock/shuttle/glass,
+/obj/docking_port/mobile/supply{
+	dir = 1;
+	height = 8;
+	width = 11
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/supply)
+
+(1,1,1) = {"
+B
+B
+r
+t
+B
+B
+B
+B
+"}
+(2,1,1) = {"
+B
+B
+s
+u
+B
+B
+B
+B
+"}
+(3,1,1) = {"
+B
+B
+f
+k
+B
+B
+B
+B
+"}
+(4,1,1) = {"
+D
+w
+w
+w
+w
+z
+D
+B
+"}
+(5,1,1) = {"
+w
+b
+d
+j
+w
+n
+p
+D
+"}
+(6,1,1) = {"
+h
+q
+e
+l
+x
+y
+v
+E
+"}
+(7,1,1) = {"
+w
+c
+i
+m
+w
+o
+p
+D
+"}
+(8,1,1) = {"
+D
+w
+w
+w
+w
+z
+D
+B
+"}
+(9,1,1) = {"
+B
+B
+r
+t
+B
+B
+B
+B
+"}
+(10,1,1) = {"
+B
+B
+s
+u
+B
+B
+B
+B
+"}
+(11,1,1) = {"
+B
+B
+f
+k
+B
+B
+B
+B
+"}

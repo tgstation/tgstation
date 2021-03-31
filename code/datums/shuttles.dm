@@ -602,6 +602,10 @@
 	suffix = "iss"
 	name = "mining shuttle (ISS)"
 
+/datum/map_template/shuttle/cargo/iss
+	suffix = "iss"
+	name = "cargo ferry (ISS)"
+
 /datum/map_template/shuttle/mining/large
 	suffix = "large"
 	name = "mining shuttle (Large)"

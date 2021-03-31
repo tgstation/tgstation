@@ -1,0 +1,35 @@
+{
+	"version": 1,
+	"map_name": "ISStation",
+	"map_path": "map_files/ISStation",
+	"map_file": "ISStation.dmm",
+	"shuttles": {
+		"cargo": "cargo_iss",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_tram",
+		"emergency": "emergency_tram"
+	},
+	"traits": [
+		{
+			"Up": 1,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		},
+		{
+			"Down": -1,
+			"Up": 1,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		},
+		{
+			"Down": -1,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	],
+	"job_changes": {
+		"cook": {
+			"additional_cqc_areas": ["/area/hallway/secondary/service"]
+		}
+	}
+}
