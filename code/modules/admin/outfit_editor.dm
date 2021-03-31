@@ -40,7 +40,7 @@
 /datum/outfit_editor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "BigPain", OUTFITOTRON)
+		ui = new(user, src, "OutfitEditor", OUTFITOTRON)
 		ui.open()
 		ui.set_autoupdate(FALSE)
 
