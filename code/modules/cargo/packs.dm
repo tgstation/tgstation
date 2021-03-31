@@ -2443,6 +2443,19 @@
 					/obj/structure/musician/piano/unanchored)
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/ERPrestraints
+	name = "ERP restraints crate"
+	desc = "Restraints with plastic fur. Intended for \"ERP\" activities. Illegal to sell, use, own or discuss aboard Nanotrasen stations."
+	cost = CARGO_CRATE_VALUE * 1.6
+	contraband = TRUE
+	contains = list(/obj/item/restraints/handcuffs/fuzzy,
+					/obj/item/restraints/handcuffs/fuzzy,
+					/obj/item/restraints/handcuffs/fuzzy,
+					/obj/item/restraints/legcuffs/fuzzy,
+					/obj/item/restraints/legcuffs/fuzzy,
+					/obj/item/restraints/legcuffs/fuzzy)
+	crate_name = "ERP restrains crate"
+
 /datum/supply_pack/misc/book_crate
 	name = "Book Crate"
 	desc = "Surplus from the Nanotrasen Archives, these seven books are sure to be good reads."
