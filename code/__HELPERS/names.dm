@@ -274,4 +274,4 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 		if(TOOL_ROLLINGPIN)
 			return "a rolling pin"
 		else
-			return "uuuh... something? you should tell people why you can't figure out why the fuck you can't think of the tool needed for this task"
+			return "something... but the gods didn't set this up right (Please report this bug)"
