@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"map_name": "Phobos 4 - Moon of Spinward's Mars 4",
+	"map_path": "map_files/Phobosstation",
+	"map_file": "PhobosIV.dmm",
+	"shuttles": {
+		"cargo": "cargo_box",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_meta",
+		"emergency": "emergency_meta"
+	},
+	"job_changes": {
+		"cook": {
+			"additional_cqc_areas": ["/area/service/bar", "/area/service/kitchen/coldroom"]
+		}
+	}
+}

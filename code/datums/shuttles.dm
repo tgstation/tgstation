@@ -495,6 +495,10 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 
+/datum/map_template/shuttle/whiteship/camorant
+	suffix = "camorant"
+	name = "NT Courier Ship"
+
 /datum/map_template/shuttle/whiteship/kilo
 	suffix = "kilo"
 	name = "NT Mining Shuttle"

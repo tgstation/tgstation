@@ -13,24 +13,15 @@ Format:
 	votable (is this map votable)
 endmap
 
-map metastation
+map phobosstation
 	#default
 	minplayers 25
 	#voteweight 0.5
 	votable
 endmap
 
-map deltastation
-	minplayers 50
-	votable
-endmap
 
 map kilostation
-	votable
-endmap
-
-map icebox
-	minplayers 25
 	votable
 endmap
 
