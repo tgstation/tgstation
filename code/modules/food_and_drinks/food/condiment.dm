@@ -128,7 +128,7 @@
 	. += "<span class='notice'>[flour_required] flour, [eggyolk_required] egg yolk (or soy milk), [sugar_required] sugar makes cake dough. You can make pie dough from it.</span>"
 
 /obj/item/reagent_containers/food/condiment/saltshaker //Separate from above since it's a small shaker rather then
-	name = "salt shaker" // a large one.ba
+	name = "salt shaker" // a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
 	icon_empty = "emptyshaker"
