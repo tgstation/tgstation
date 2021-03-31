@@ -4,6 +4,10 @@
 		return FALSE
 	return TRUE
 
+/mob/living/carbon/human/canBeLegcuffed()
+	if(num_legs < 2)
+		return FALSE
+	return TRUE
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers

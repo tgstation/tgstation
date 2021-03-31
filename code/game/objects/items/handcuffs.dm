@@ -248,6 +248,47 @@
 	icon_state = "fuzzylegcuff"
 	custom_materials = list(/datum/material/iron=500, /datum/material/plastic = 100)
 
+/obj/item/restraints/legcuffs/fuzzy/attack(mob/living/carbon/C, mob/living/user)
+	if(!istype(C))
+		return
+	if(C.legcuffed)
+	to_chat(user, "<span class='warning'>[C] is already legcuffed...</span>")
+		return
+
+	SEND_SIGNAL(C, COMSIG_CARBON_CUFF_ATTEMPTED, user)
+	if(C.canBeLegcuffed())
+		C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
+							"<span class='userdanger'>[user] is trying to put [src.name] on you!</span>")
+
+		playsound(loc, cuffsound, 30, TRUE, -2)
+		log_combat(user, C, "attempted to legcuff")
+		if(do_mob(user, C, 30) && C.canBeLegcuffed())
+			apply_legcuffs(C, user)
+			C.visible_message("<span class='notice'>[user] legcuffs [C].</span>", \
+					"<span class='userdanger'>[user] legcuffs you.</span>")
+			log_combat(user, C, "legcuffed")
+		else
+			to_chat(user, "<span class='warning'>You fail to legcuff [C]!</span>")
+			log_combat(user, C, "failed to legcuff")
+	else
+		to_chat(user, "<span class='warning'>[C] doesn't have two legs...</span>")
+/**
+ * This fucking puts legcuffs on someone
+ *
+ * Because apparently we don't have any normal legcuffs for some fucking reason.
+ * Arguments:
+ * * mob/living/carbon/target - whoever the fuck is being legcuffed
+ * * mob/living/user - whatever the fuck is doing the legcuffing
+ */
+/obj/item/restraints/legcuffs/fuzzy/proc/apply_legcuffs(mob/living/carbon/target, mob/living/user)
+	if(target.legcuffed)
+		return
+
+	C.legcuffed = src
+	forceMove(C)
+	C.update_equipment_speed_mods()
+	C.update_inv_legcuffed()
+
 /obj/item/restraints/legcuffs/fuzzy/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to ERP [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off

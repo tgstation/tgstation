@@ -191,6 +191,9 @@
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
 
+/mob/living/carbon/proc/canBeLegcuffed()
+	return FALSE
+
 /mob/living/carbon/Topic(href, href_list)
 	..()
 	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
