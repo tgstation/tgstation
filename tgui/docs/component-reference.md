@@ -1083,7 +1083,8 @@ Intended for usage on interfaces where tab color has relevance.
 
 ### `Tooltip`
 
-A boxy tooltip that displays when hovering over its children.
+A boxy tooltip from tgui 1. It is very hacky in its current state, and
+requires setting `position: relative` on the container.
 
 Please note, that [Button](#button) component has a `tooltip` prop, and
 it is recommended to use that prop instead.
@@ -1091,14 +1092,12 @@ it is recommended to use that prop instead.
 Usage:
 
 ```jsx
-<Tooltip
-  position="bottom"
-  content="Box tooltip"
->
-  <Box>
-    Sample text.
-  </Box>
-</Tooltip>
+<Box position="relative">
+  Sample text.
+  <Tooltip
+    position="bottom"
+    content="Box tooltip" />
+</Box>
 ```
 
 **Props:**
