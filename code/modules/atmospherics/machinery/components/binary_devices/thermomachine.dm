@@ -11,6 +11,8 @@
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
 
+	hide = TRUE
+
 	move_resist = MOVE_RESIST_DEFAULT
 
 	pipe_flags = PIPING_ONE_PER_TURF
@@ -64,10 +66,7 @@
 		piping_layer = board.pipe_layer
 		set_layer = piping_layer
 
-	for(var/obj/machinery/atmospherics/device in get_turf(src))
-		if(device.piping_layer != piping_layer || device == src)
-			continue
-		visible_message("<span class='warning'>A pipe is hogging the output, remove the obstruction or change the machine piping layer.</span>")
+	if(check_pipe_on_turf())
 		deconstruct(TRUE)
 		return
 	return..()
@@ -264,8 +263,27 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/attackby_secondary(obj/item/item, mob/user, params)
 	. = ..()
-	if(panel_open && default_unfasten_wrench(user, item))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(panel_open && item.tool_behaviour == TOOL_WRENCH && !check_pipe_on_turf())
+		if(default_unfasten_wrench(user, item))
+			return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/check_pipe_on_turf()
+	for(var/obj/machinery/atmospherics/device in get_turf(src))
+		if(device == src)
+			continue
+		if(device.piping_layer == piping_layer)
+			visible_message("<span class='warning'>A pipe is hogging the ports, remove the obstruction or change the machine piping layer.</span>")
+			return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/components/binary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
+	if(!istype(multitool))
+		return
+	if(panel_open && !anchored)
+		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
+		to_chat(user, "<span class='notice'>You change the circuitboard to layer [piping_layer].</span>")
+		update_appearance()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/replace_tank(mob/living/user, obj/item/tank/new_tank)
 	if(!user)
