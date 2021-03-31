@@ -9,19 +9,19 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "ae" = (
 /turf/closed/wall/mineral/titanium,
-/area/space)
+/area/shuttle/abandoned)
 "af" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/space)
+/area/shuttle/abandoned)
 "ag" = (
 /obj/machinery/light/cold{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "ah" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
@@ -33,7 +33,7 @@
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /obj/effect/spawner/lootdrop/maintenance_carpet,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "ai" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -46,7 +46,7 @@
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "aj" = (
 /obj/machinery/button/door{
 	id = "whiteship_port";
@@ -58,7 +58,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "ak" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -69,7 +69,7 @@
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "al" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -80,7 +80,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "an" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/structure/closet/crate/freezer{
@@ -90,15 +90,15 @@
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /obj/effect/spawner/lootdrop/three_course_meal,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "ao" = (
 /obj/effect/turf_decal/box/white/corners,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "aq" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "ar" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
@@ -110,7 +110,7 @@
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /obj/effect/spawner/lootdrop/maintenance_carpet,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "as" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 10
@@ -119,7 +119,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "at" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/structure/closet/crate/freezer{
@@ -129,32 +129,32 @@
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /obj/effect/spawner/lootdrop/memeorgans,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "au" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/light/cold{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "av" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 6
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "aw" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 10
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "ay" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/shuttle/abandoned)
 "az" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
@@ -166,7 +166,7 @@
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "aA" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
@@ -176,17 +176,17 @@
 	dir = 6
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "aB" = (
 /obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 8;
 	pixel_x = -12
 	},
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
-/area/space)
+/area/shuttle/abandoned)
 "aC" = (
 /turf/closed/wall/mineral/titanium/survival,
-/area/space)
+/area/shuttle/abandoned)
 "aD" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
@@ -203,20 +203,20 @@
 /obj/effect/spawner/lootdrop/prison_contraband,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "aE" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/door/airlock/shuttle/glass,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/shuttle/abandoned)
 "aG" = (
 /obj/effect/turf_decal/stripes/red/corner,
 /obj/effect/turf_decal/stripes/red/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "aH" = (
 /obj/machinery/door/window/survival_pod{
 	dir = 4
@@ -225,7 +225,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "aI" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
@@ -235,7 +235,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "aJ" = (
 /obj/machinery/computer/arcade/orion_trail/kobayashi{
 	name = "Starship Main Control Computer"
@@ -247,13 +247,13 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/space)
+/area/shuttle/abandoned)
 "aK" = (
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
-/area/space)
+/area/shuttle/abandoned)
 "aL" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "aM" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 9
@@ -262,14 +262,14 @@
 	dir = 1
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "aN" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "aO" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
@@ -280,19 +280,19 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "aP" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 5
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "aQ" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 9
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "aT" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
@@ -302,7 +302,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "aU" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
@@ -312,7 +312,7 @@
 	},
 /obj/machinery/light/cold,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "aV" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
@@ -322,7 +322,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "aW" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 8;
@@ -331,7 +331,7 @@
 	y_offset = -8
 	},
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
-/area/space)
+/area/shuttle/abandoned)
 "aX" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -340,18 +340,18 @@
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /obj/effect/spawner/lootdrop/maintenance_carpet,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "aY" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "aZ" = (
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
 /obj/machinery/light/cold,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "ba" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -360,7 +360,7 @@
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /obj/effect/spawner/lootdrop/three_course_meal,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "bb" = (
 /obj/machinery/button/door{
 	id = "whiteship_starboard";
@@ -375,7 +375,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "bj" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -388,7 +388,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "bm" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
@@ -399,14 +399,14 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "by" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/red/corner,
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "bA" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
@@ -417,7 +417,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "bD" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -426,17 +426,17 @@
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /obj/effect/spawner/lootdrop/memeorgans,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "cl" = (
 /obj/machinery/door/poddoor{
 	id = "whiteship_port"
 	},
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "cv" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/space)
+/area/shuttle/abandoned)
 "cw" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -445,20 +445,20 @@
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /obj/effect/spawner/lootdrop/maintenance_carpet,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "cy" = (
 /obj/effect/turf_decal/stripes/red/end{
 	dir = 1
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "cD" = (
 /obj/structure/fluff/empty_cryostasis_sleeper,
 /obj/machinery/light/cold{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "cE" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -467,11 +467,11 @@
 /obj/effect/spawner/lootdrop/memeorgans,
 /obj/effect/spawner/lootdrop/memeorgans,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "cH" = (
 /obj/machinery/portable_atmospherics/canister/proto/default,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "cJ" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
@@ -480,7 +480,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "cK" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -490,12 +490,12 @@
 /obj/effect/spawner/lootdrop/prison_contraband,
 /obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "cN" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/door/airlock/shuttle/glass,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/shuttle/abandoned)
 "cP" = (
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/turf_decal/stripes/red/corner{
@@ -505,27 +505,27 @@
 	dir = 4
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "cS" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
 	},
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "da" = (
 /obj/vehicle/sealed/mecha/working/ripley/mk2,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "db" = (
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dc" = (
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dd" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
@@ -533,21 +533,21 @@
 /obj/effect/turf_decal/box/white/corners,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "di" = (
 /obj/effect/turf_decal/stripes/red/end{
 	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "dj" = (
 /obj/effect/turf_decal/stripes/red/end{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "dk" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
@@ -555,7 +555,7 @@
 /obj/effect/turf_decal/stripes/red/line,
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "dl" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
@@ -564,26 +564,26 @@
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "dm" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "dn" = (
 /obj/effect/turf_decal/stripes/red/end{
 	dir = 4
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "do" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "dp" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -593,14 +593,14 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/shuttle/abandoned)
 "dr" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "ds" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 5
@@ -609,28 +609,28 @@
 	dir = 4
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "dv" = (
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "dx" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dz" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/light/cold,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dE" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/door/airlock/shuttle,
 /turf/open/floor/iron/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dH" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -643,7 +643,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dJ" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -651,7 +651,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "dK" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -661,21 +661,21 @@
 /obj/effect/spawner/lootdrop/seed_vault,
 /obj/effect/spawner/lootdrop/seed_vault,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "dL" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "dM" = (
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "dN" = (
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dQ" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -683,10 +683,10 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dT" = (
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "dU" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -695,7 +695,7 @@
 /obj/effect/spawner/lootdrop/three_course_meal,
 /obj/effect/spawner/lootdrop/three_course_meal,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dW" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -705,7 +705,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dX" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
@@ -716,15 +716,15 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "dY" = (
 /obj/effect/turf_decal/stripes/red/end,
 /turf/open/floor/iron/showroomfloor,
-/area/space)
+/area/shuttle/abandoned)
 "dZ" = (
 /obj/machinery/portable_atmospherics/canister/proto/default,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "ea" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -733,27 +733,27 @@
 /obj/effect/spawner/lootdrop/maintenance/eight,
 /obj/machinery/light/cold,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "eb" = (
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "ec" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/machinery/light/small/red{
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "ed" = (
 /obj/structure/fluff/empty_cryostasis_sleeper,
 /obj/machinery/light/cold,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "ef" = (
 /obj/structure/fluff/empty_cryostasis_sleeper,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "eg" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -765,16 +765,16 @@
 /obj/effect/spawner/lootdrop/gloves,
 /obj/machinery/light/cold,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "ei" = (
 /obj/machinery/door/poddoor{
 	id = "whiteship_starboard"
 	},
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "ej" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/space)
+/area/shuttle/abandoned)
 "el" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
@@ -787,13 +787,13 @@
 /obj/effect/spawner/lootdrop/seed_vault,
 /obj/effect/spawner/lootdrop/seed_vault,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "em" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
 	},
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 "hv" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -803,10 +803,10 @@
 /obj/effect/spawner/lootdrop/prison_contraband,
 /obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "nT" = (
 /turf/open/floor/pod/dark,
-/area/space)
+/area/shuttle/abandoned)
 "wM" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -817,7 +817,7 @@
 /obj/effect/spawner/lootdrop/prison_contraband,
 /obj/effect/spawner/lootdrop/prison_contraband,
 /turf/open/floor/pod/light,
-/area/space)
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 ej
