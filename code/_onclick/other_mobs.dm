@@ -114,9 +114,15 @@
 /*
 	Animals & All Unspecified
 */
+
+// A common early return for all UnarmedAttacks
+#define UNARMED_ATTACK_COMMON \
+	if(	HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || \
+		SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, A, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN) \
+		return;
+
 /mob/living/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
+	UNARMED_ATTACK_COMMON
 	A.attack_animal(src, modifiers)
 
 /atom/proc/attack_animal(mob/user, list/modifiers)
@@ -134,8 +140,7 @@
 	Defaults to same as monkey in most places
 */
 /mob/living/carbon/alien/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
+	UNARMED_ATTACK_COMMON
 	A.attack_alien(src, modifiers)
 
 /atom/proc/attack_alien(mob/living/carbon/alien/user, list/modifiers)
@@ -145,8 +150,7 @@
 
 // Babby aliens
 /mob/living/carbon/alien/larva/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
+	UNARMED_ATTACK_COMMON
 	A.attack_larva(src)
 
 /atom/proc/attack_larva(mob/user)
@@ -158,8 +162,7 @@
 	Nothing happening here
 */
 /mob/living/simple_animal/slime/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
+	UNARMED_ATTACK_COMMON
 	if(isturf(A))
 		return ..()
 	A.attack_slime(src)
@@ -172,8 +175,7 @@
 	Drones
 */
 /mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
+	UNARMED_ATTACK_COMMON
 	A.attack_drone(src)
 
 /atom/proc/attack_drone(mob/living/simple_animal/drone/user)
@@ -201,8 +203,7 @@
 */
 
 /mob/living/simple_animal/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
+	UNARMED_ATTACK_COMMON
 	if(dextrous && (isitem(A) || !combat_mode))
 		A.attack_hand(src, modifiers)
 		update_inv_hands()
@@ -215,15 +216,14 @@
 */
 
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
+	UNARMED_ATTACK_COMMON
 	target = A
 	if(dextrous && (isitem(A) || !combat_mode))
 		..()
 	else
 		AttackingTarget(A)
 
-
+#undef UNARMED_ATTACK_COMMON
 
 /*
 	New Players:

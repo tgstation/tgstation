@@ -6,7 +6,7 @@
 	var/message = "You find yourself too shy to do that around %TARGET!" //! Message shown when you are bashful
 	var/dead_shy = FALSE //! Are you shy around a dead body?
 
-/// _shy_range, _whitelist, _message map to vars
+/// _shy_range, _whitelist, _message, dead_shy map to vars
 /datum/component/shy/Initialize(_whitelist, _shy_range, _message, _dead_shy)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -19,10 +19,12 @@
 		dead_shy = _dead_shy
 
 /datum/component/shy/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/bashful)
+	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/bashful_click)
+	RegisterSignal(parent, COMSIG_LIVING_TRY_PULL, .proc/bashful_pull)
+	RegisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), .proc/bashful_unarmed)
 
 /datum/component/shy/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOB_CLICKON)
+	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_LIVING_TRY_PULL, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK))
 
 /datum/component/shy/PostTransfer()
 	if(!ismob(parent))
@@ -34,7 +36,7 @@
 		whitelist = friend.whitelist
 		message = friend.message
 
-/datum/component/shy/proc/bashful(datum/source, atom/A, params)
+/datum/component/shy/proc/bashful(atom/A)
 	var/mob/owner = parent
 	var/list/strangers = view(shy_range, get_turf(owner))
 	if(!length(strangers) || !(locate(/mob/living) in strangers) || (A in owner.DirectAccess()))
@@ -43,4 +45,14 @@
 	for(var/mob/living/person in strangers)
 		if(person != owner && !is_type_in_typecache(person, whitelist) && (person.stat != DEAD || dead_shy))
 			to_chat(owner, "<span class='warning'>[replacetext(message, "%TARGET", person)]</span>")
-			return COMSIG_MOB_CANCEL_CLICKON
+			return TRUE
+
+/datum/component/shy/proc/bashful_click(datum/source, atom/A, params)
+	return bashful(A) && COMSIG_MOB_CANCEL_CLICKON
+
+/datum/component/shy/proc/bashful_pull(datum/source, atom/movable/AM, force)
+	return bashful(AM) && COMSIG_LIVING_CANCEL_PULL
+
+/datum/component/shy/proc/bashful_unarmed(datum/source, atom/target, proximity, modifiers)
+	return bashful(target) && COMPONENT_CANCEL_ATTACK_CHAIN
+
