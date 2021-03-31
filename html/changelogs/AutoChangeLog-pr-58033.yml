@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "putting a PDA into an exosuit storage slot won't cause the missing texture sprite any more."
