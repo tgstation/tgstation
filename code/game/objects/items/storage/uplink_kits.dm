@@ -470,20 +470,20 @@
 /obj/item/storage/box/syndie_kit/chemical
 	name = "chemical kit"
 	items_inside = list(
-		new /obj/item/reagent_containers/glass/bottle/polonium = 1,
-		new /obj/item/reagent_containers/glass/bottle/venom = 1,
-		new /obj/item/reagent_containers/glass/bottle/fentanyl = 1,
-		new /obj/item/reagent_containers/glass/bottle/formaldehyde = 1,
-		new /obj/item/reagent_containers/glass/bottle/spewium = 1,
-		new /obj/item/reagent_containers/glass/bottle/cyanide = 1,
-		new /obj/item/reagent_containers/glass/bottle/histamine = 1,
-		new /obj/item/reagent_containers/glass/bottle/initropidril = 1,
-		new /obj/item/reagent_containers/glass/bottle/pancuronium = 1,
-		new /obj/item/reagent_containers/glass/bottle/sodium_thiopental = 1,
-		new /obj/item/reagent_containers/glass/bottle/coniine = 1,
-		new /obj/item/reagent_containers/glass/bottle/curare = 1,
-		new /obj/item/reagent_containers/glass/bottle/amanitin = 1,
-		new /obj/item/reagent_containers/syringe = 1
+		/obj/item/reagent_containers/glass/bottle/polonium = 1,
+		/obj/item/reagent_containers/glass/bottle/venom = 1,
+		/obj/item/reagent_containers/glass/bottle/fentanyl = 1,
+		/obj/item/reagent_containers/glass/bottle/formaldehyde = 1,
+		/obj/item/reagent_containers/glass/bottle/spewium = 1,
+		/obj/item/reagent_containers/glass/bottle/cyanide = 1,
+		/obj/item/reagent_containers/glass/bottle/histamine = 1,
+		/obj/item/reagent_containers/glass/bottle/initropidril = 1,
+		/obj/item/reagent_containers/glass/bottle/pancuronium = 1,
+		/obj/item/reagent_containers/glass/bottle/sodium_thiopental = 1,
+		/obj/item/reagent_containers/glass/bottle/coniine = 1,
+		/obj/item/reagent_containers/glass/bottle/curare = 1,
+		/obj/item/reagent_containers/glass/bottle/amanitin = 1,
+		/obj/item/reagent_containers/syringe = 1
 	)
 
 /obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
