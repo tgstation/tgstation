@@ -189,10 +189,18 @@
 		var/list/messagevoice = list("No fires detected." = 'sound/voice/firebot/nofires.ogg',
 		"Only you can prevent station fires." = 'sound/voice/firebot/onlyyou.ogg',
 		"Temperature nominal." = 'sound/voice/firebot/tempnominal.ogg',
-		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg')
+		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg',
+		"What an awful assignment. Do we have anything to drink that's at least a thousand credits?" = 'sound/voice/firebot/idle1.ogg',
+		"This place reeks of poor." = 'sound/voice/firebot/idle2.ogg',
+		"Keep it cool, as the kids say." = 'sound/voice/firebot/idle3.ogg',
+		"If only the company would invest in sprinklers. Or fire alarms that work properly." = 'sound/voice/firebot/idle4.ogg',
+		"Twenty years of service, and I'm stuck in this dump." = 'sound/voice/firebot/idle5.ogg',
+		"I miss Space France." = 'sound/voice/firebot/idle6.ogg',
+		"You wore that jumpsuit? That's quite the bold fashion choice. It didn't work." = 'sound/voice/firebot/idle7.ogg',
+		"They tell me I can't smoke on the job. I hate this job." = 'sound/voice/firebot/idle8.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
-		playsound(src, messagevoice[message], 50)
+		playsound(src, messagevoice[message], 100)
 
 	// Couldn't reach the target, reset and try again ignoring the old one
 	if(frustration > 8)
@@ -217,10 +225,10 @@
 		if((speech_cooldown + SPEECH_INTERVAL) < world.time)
 			if(ishuman(target_fire))
 				speak("Stop, drop and roll!")
-				playsound(src, 'sound/voice/firebot/stopdropnroll.ogg', 50, FALSE)
+				playsound(src, 'sound/voice/firebot/stopdropnroll.ogg', 100, FALSE)
 			else
 				speak("Extinguishing!")
-				playsound(src, 'sound/voice/firebot/extinguishing.ogg', 50, FALSE)
+				playsound(src, 'sound/voice/firebot/extinguishing.ogg', 100, FALSE)
 			speech_cooldown = world.time
 
 			flick("firebot1_use", src)

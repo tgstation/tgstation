@@ -42,18 +42,20 @@
 	var/weapon_force = 20 // Only used for NAP violation beatdowns on non-grievous securitrons
 	var/market_verb = "Suspect"
 	var/payment_department = ACCOUNT_SEC
+	var/og_beepsky = FALSE
 
 /mob/living/simple_animal/bot/secbot/beepsky
-	name = "Commander Beep O'sky"
-	desc = "It's Commander Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day he was first fabricated."
+	name = "Sheriff Beep O'sky"
+	desc = "It's Sheriff Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day he was first fabricated."
 	idcheck = FALSE
 	weaponscheck = FALSE
 	auto_patrol = TRUE
 	commissioned = TRUE
+	og_beepsky = TRUE
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
-	name = "Officer Pipsqueak"
-	desc = "It's Commander Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
+	name = "Deputy Pipsqueak"
+	desc = "It's Sheriff Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
 	commissioned = FALSE
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize()
@@ -279,7 +281,22 @@ Auto Patrol: []"},
 	if(!C.handcuffed)
 		C.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(C))
 		C.update_handcuffed()
-		playsound(src, "law", 50, FALSE)
+		var/list/messagevoice = list(
+			"It's a hell of a thing, arresting a man. Take away all he's got and all he's ever gonna have." = 'sound/voice/beepsky/arrest1.ogg',
+			"You mighta went on livin, but you made one fatal slip. You tried to cross the sheriff with the big iron on his hip." = 'sound/voice/beepsky/arrest2.ogg',
+			"In this world, there's two kinds of people, my friend. Those with loaded guns, and those who dig. You dig." = 'sound/voice/beepsky/arrest3.ogg',
+			"Dying ain't much of a living, boy. You'd do best to remember that." = 'sound/voice/beepsky/arrest4.ogg',
+			"We'll give you a fair trial, followed by a first-class hanging." = 'sound/voice/beepsky/arrest5.ogg',
+			"It's the gallows for you, pardner." = 'sound/voice/beepsky/arrest6.ogg',
+			"You can't outrun a radio, boy!" = 'sound/voice/beepsky/radio.ogg',
+			"Have a secure day, pardner." = 'sound/voice/beepsky/secureday.ogg',
+			"God made tomorrow for the crooks we don't catch today, pardner." = 'sound/voice/beepsky/god.ogg',
+			"I! Am! The! Law!" = 'sound/voice/beepsky/iamthelaw.ogg',
+			"FUCK YOUR CUNT YOU SHIT EATING COCKSTORM AND EAT A DONG FUCKING ASS RAMMING SHIT FUCK!" = 'sound/voice/beepsky/insult.ogg',
+			"Your move, pardner!" = 'sound/voice/beepsky/creep.ogg')
+		var/message = pick(messagevoice)
+		speak(message)
+		playsound(src, messagevoice[message], 100, FALSE)
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C, harm = FALSE)
@@ -308,6 +325,21 @@ Auto Patrol: []"},
 	C.visible_message("<span class='danger'>[src] stuns [C]!</span>",\
 							"<span class='userdanger'>[src] stuns you!</span>")
 
+/mob/living/simple_animal/bot/secbot/proc/handle_idle_speech()
+	var/list/messagevoice = list(
+		"Anyone seen my hat? I think I lost it somewhere." = 'sound/voice/beepsky/idle1.ogg',
+		"I've been fixing for a drink. Think the deputy can take over for me?" = 'sound/voice/beepsky/idle2.ogg',
+		"Really gotta get myself some more tobacco." = 'sound/voice/beepsky/idle3.ogg',
+		"Y'all ever wonder when we get paid? I told my wife I'd buy her that teapot she's been eyeballing, and she's been waiting quite a while now." = 'sound/voice/beepsky/idle4.ogg',
+		"I just don't get why they keep sending all these assistants. All they do is slack off, steal, eat hot chip, and lie." = 'sound/voice/beepsky/idle5.ogg',
+		"Gotta get myself a new pair of spurs, preferably ones that go jingle jangle jingle." = 'sound/voice/beepsky/idle6.ogg',
+		"To the town of Agua Fria rode a stranger one fine day." = 'sound/voice/beepsky/idle7.ogg',
+		"I miss my wife. Can't wait to go see her tonight!" = 'sound/voice/beepsky/idle8.ogg',
+		"Give me a drink, bartender." = 'sound/voice/beepsky/idle9.ogg')
+	var/message = pick(messagevoice)
+	speak(message)
+	playsound(src, messagevoice[message], 100, FALSE)
+
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
 	if(!..())
 		return
@@ -315,7 +347,9 @@ Auto Patrol: []"},
 	switch(mode)
 
 		if(BOT_IDLE) // idle
-
+			if(og_beepsky)
+				if(prob(1))
+					handle_idle_speech()
 			walk_to(src,0)
 			look_for_perp() // see if any criminals are in range
 			if(!mode && auto_patrol) // still idle, and set to patrol
@@ -398,6 +432,9 @@ Auto Patrol: []"},
 		if(BOT_PATROL)
 			look_for_perp()
 			bot_patrol()
+			if(og_beepsky)
+				if(prob(1))
+					handle_idle_speech()
 
 
 	return
@@ -435,11 +472,16 @@ Auto Patrol: []"},
 		else if(threatlevel >= 4)
 			target = C
 			oldtarget_name = C.name
-			speak("Level [threatlevel] infraction alert!")
 			if(ranged)
 				playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
 			else
-				playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+				var/list/messagevoice = list(
+					"Outlaw detected!" = 'sound/voice/beepsky/criminal.ogg',
+					"Freeze, scumbag!" = 'sound/voice/beepsky/freeze.ogg',
+					"Prepare for justice!" = 'sound/voice/beepsky/justice.ogg')
+				var/message = pick(messagevoice)
+				speak(message)
+				playsound(src, messagevoice[message], 100, FALSE)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
 			INVOKE_ASYNC(src, .proc/handle_automated_action)
