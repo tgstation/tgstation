@@ -528,6 +528,7 @@
 #include "code\datums\components\shielded.dm"
 #include "code\datums\components\shrink.dm"
 #include "code\datums\components\shy.dm"
+#include "code\datums\components\shy_room.dm"
 #include "code\datums\components\singularity.dm"
 #include "code\datums\components\sitcomlaughter.dm"
 #include "code\datums\components\sizzle.dm"
