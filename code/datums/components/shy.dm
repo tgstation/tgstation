@@ -41,6 +41,6 @@
 		return
 
 	for(var/mob/living/person in strangers)
-		if(!is_type_in_typecache(person, whitelist) && (person.stat != DEAD || dead_shy))
+		if(person != owner && !is_type_in_typecache(person, whitelist) && (person.stat != DEAD || dead_shy))
 			to_chat(owner, "<span class='warning'>[replacetext(message, "%TARGET", person)]</span>")
 			return COMSIG_MOB_CANCEL_CLICKON
