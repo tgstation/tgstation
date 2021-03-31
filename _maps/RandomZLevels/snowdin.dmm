@@ -7217,7 +7217,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qy" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7225,14 +7225,14 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qz" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qA" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 10
 	},
 /obj/structure/cable,
@@ -7441,7 +7441,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qZ" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -14844,6 +14844,11 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/snowdin/post/cavern1)
+"Xh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/post/engineering)
 "Xu" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -29577,7 +29582,7 @@ nt
 pZ
 qx
 qZ
-rs
+Xh
 rO
 sj
 oW
@@ -30348,7 +30353,7 @@ nt
 qc
 qA
 qZ
-rs
+Xh
 rQ
 sk
 oW

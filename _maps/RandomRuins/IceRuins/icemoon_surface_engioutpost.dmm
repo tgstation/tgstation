@@ -615,14 +615,14 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bO" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
 	dir = 8;
 	icon_state = "pipe11-2"
 	},
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bP" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
 	dir = 10;
 	icon_state = "pipe11-2"
 	},
@@ -717,7 +717,7 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ce" = (
-/obj/machinery/atmospherics/pipe/manifold/orange/visible{
+/obj/machinery/atmospherics/pipe/manifold/dark/visible{
 	dir = 4;
 	icon_state = "manifold-2"
 	},
@@ -971,7 +971,7 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cR" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
 	dir = 6;
 	icon_state = "pipe11-2"
 	},
@@ -979,7 +979,7 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cS" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
 	dir = 9;
 	icon_state = "pipe11-2"
 	},
@@ -1031,7 +1031,7 @@
 /area/icemoon/surface/outdoors)
 "db" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/simple/brown/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "dc" = (
@@ -1079,7 +1079,7 @@
 /turf/open/floor/engine/air,
 /area/icemoon/surface/outdoors)
 "dn" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/simple/brown/visible,
 /turf/open/floor/engine/vacuum,
 /area/icemoon/surface/outdoors)
 "do" = (
@@ -1192,6 +1192,15 @@
 "dE" = (
 /obj/structure/door_assembly/door_assembly_eng,
 /turf/open/floor/iron/icemoon,
+/area/icemoon/surface/outdoors)
+"na" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/turf/open/floor/engine/airless,
+/area/icemoon/surface/outdoors)
+"UK" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/turf/open/floor/engine/vacuum,
 /area/icemoon/surface/outdoors)
 
 (1,1,1) = {"
@@ -1965,8 +1974,8 @@ cd
 cr
 cz
 cR
-db
-dn
+na
+UK
 dz
 ae
 aa

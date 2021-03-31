@@ -138,7 +138,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 6;
 	name = "N2 to Mix"
 	},
@@ -4275,13 +4275,13 @@
 /turf/open/floor/iron,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lt" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	name = "O2 to Mix"
 	},
 /turf/open/floor/iron,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lu" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 4;
 	name = "N2 to Mix"
 	},
@@ -4641,14 +4641,14 @@
 /turf/open/floor/iron,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mk" = (
-/obj/machinery/atmospherics/pipe/manifold/orange/visible{
+/obj/machinery/atmospherics/pipe/manifold/supplymain/visible{
 	name = "O2 to Mix"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ml" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 4;
 	name = "O2 to Mix"
 	},
@@ -4657,7 +4657,7 @@
 "mm" = (
 /obj/structure/grille,
 /obj/structure/window/plasma/reinforced/plastitanium,
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -4929,7 +4929,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "nc" = (
-/obj/machinery/atmospherics/pipe/simple/orange,
+/obj/machinery/atmospherics/pipe/simple/yellow,
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
 	id = "syndie_lavaland_incineratorturbine"
@@ -5853,7 +5853,7 @@
 "rF" = (
 /obj/structure/grille,
 /obj/structure/window/plasma/reinforced/plastitanium,
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "sc" = (
@@ -5996,7 +5996,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
 	dir = 9;
 	name = "N2 to Mix"
 	},
@@ -6027,7 +6027,7 @@
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "Lp" = (
-/obj/machinery/atmospherics/pipe/simple/orange,
+/obj/machinery/atmospherics/pipe/simple/yellow,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "LQ" = (

@@ -74,13 +74,19 @@
 	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/components/binary/pump/##Type, "pump", Name, Color) \
 	HELPER_PARTIAL_NAMED(/obj/effect/mapping_helpers/simple_pipes/##Type,"pipe", Name, Color)
 
+HELPER(yellow, rgb(255, 198, 0))
 HELPER(general, rgb(254,254,254))
 HELPER(cyan, rgb(0, 255, 249))
 HELPER(green, rgb(30, 255, 0))
 HELPER(orange, rgb(255, 129, 25))
+HELPER(purple, rgb(128, 0, 182))
+HELPER(dark, rgb(69, 69, 69))
+HELPER(brown, rgb(178, 100, 56))
+HELPER(violet, rgb(64, 0, 128))
 
 HELPER_NAMED(scrubbers, "scrubbers pipe", rgb(255, 0, 0))
 HELPER_NAMED(supply, "air supply pipe", rgb(0, 0, 255))
+HELPER_NAMED(supplymain, "main air supply pipe", rgb(130, 43, 255))
 
 #undef HELPER_NAMED
 #undef HELPER
