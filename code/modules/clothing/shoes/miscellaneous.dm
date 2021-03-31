@@ -150,6 +150,20 @@
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
 
+/obj/item/clothing/shoes/jackboots/blinding
+	name = "boots of blinding speed"
+	desc = "You know, I don't know what I expected."
+	slowdown = -5
+
+/obj/item/clothing/shoes/jackboots/blinding/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_FEET)
+		user.become_blind("zoom_zoom_motherfucker_[REF(src)]")
+
+/obj/item/clothing/shoes/jackboots/blinding/dropped(mob/living/carbon/human/user)
+	..()
+	user.cure_blind("zoom_zoom_motherfucker_[REF(src)]")
+
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
 	desc = "Boots lined with 'synthetic' animal fur."
