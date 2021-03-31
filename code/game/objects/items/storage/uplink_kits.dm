@@ -563,11 +563,7 @@
 		new/obj/item/grenade/chem_grenade/ez_clean = 3
 	)
 
-/obj/item/storage/box/syndie_kit/reverse_revolver
-	name = "box of hugs"
-	desc = "A special box for sensitive people."
-	icon_state = "hugbox"
-	illustration = "heart"
+/obj/item/storage/box/hug/reverse_revolver
 	items_inside = list(
 		/obj/item/gun/ballistic/revolver/reverse = 1
 	)
