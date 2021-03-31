@@ -120,7 +120,6 @@
 		return
 	for(var/obj/item/W in user)
 		user.dropItemToGround(W)
-	suicider = user.real_name
 	user.dust()
 	return OXYLOSS
 
@@ -264,7 +263,6 @@
 		return
 	for(var/obj/item/W in user)
 		user.dropItemToGround(W)
-	suicider = user.real_name
 	user.dust()
 	return OXYLOSS
 
