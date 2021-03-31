@@ -1,6 +1,8 @@
 #define CONSTRUCTION_PANEL_OPEN 1 //Maintenance panel is open, still functioning
 #define CONSTRUCTION_NO_CIRCUIT 2 //Circuit board removed, can safely weld apart
 #define DEFAULT_STEP_TIME 20 /// default time for each step
+#define MINIMUM_TEMPERATURE_TO_BURN_ARMS 500 ///everything above this temperature will start burning unprotected arms
+#define TOOLLESS_OPEN_DURATION_SOLO 20 SECONDS ///opening a firelock without a tool takes this long if only one person is doing it
 
 /obj/machinery/door/firedoor
 	name = "firelock"
@@ -91,17 +93,80 @@
 			"<span class='notice'>You bang on \the [src].</span>")
 		playsound(loc, 'sound/effects/glassknock.ogg', 10, FALSE, frequency = 32000)
 	else
-		user.visible_message("<span class='notice'>[user] tries to open \the [src] with their hands.</span>", \
-			"<span class='notice'> You try to pry open \the [src] with your hands.</span>")
-		if(do_after(user, 60, src))
-			user.visible_message("<span class='notice'>[user] opens \the [src] with their hands.</span>", \
-				"<span class='notice'>You pry open \the [src] with your hands.</span>")
+		///we dont want people with only one hand to have the same visible_message as people with two hands
+		var/hand_string = "hands"
+
+		if(iscarbon(user))
+			var/mob/living/carbon/user_as_carbon = user
+
+			var/obj/item/bodypart/right_arm = user_as_carbon.get_bodypart(BODY_ZONE_R_ARM)
+			var/obj/item/bodypart/left_arm = user_as_carbon.get_bodypart(BODY_ZONE_L_ARM)
+
+			if(!right_arm || right_arm.bodypart_disabled)
+				hand_string = "hand"
+			if(!left_arm || left_arm.bodypart_disabled)
+				hand_string = "hand"
+
+		user.visible_message("<span class='notice'>[user] tries to open \the [src] with their [hand_string], struggling greatly to open the heavy door by themselves.</span>", \
+			"<span class='notice'> You try with all your strength to pry open \the [src] with your [hand_string], barely moving it!</span>")
+
+		//burn arms in the do_after callback so that its applied continuosly instead of at the start and/or end
+		var/datum/callback/burning_callback = CALLBACK(src, .proc/burn_arms, user)
+
+		if(do_after(user, TOOLLESS_OPEN_DURATION_SOLO, src, extra_checks = burning_callback))
+			user.visible_message("<span class='notice'>[user] opens \the [src] with their [hand_string].</span>", \
+				"<span class='notice'>You pry open \the [src] with your [hand_string]!</span>")
+
 			open()
 
 /obj/machinery/door/firedoor/attack_paw(mob/living/user, list/modifiers)
 	. = ..()
 	if(!user.combat_mode)
 		attack_hand(user, modifiers)
+
+///deals burn damage to the user depending on whether theyre resistant to heat and how hot the door is, used as a callback in do_after
+/obj/machinery/door/firedoor/proc/burn_arms(mob/living/user)
+	. = TRUE //we dont want to interrupt the do_after
+
+	if(!iscarbon(user))//doing it to simplemobs is pretty simple
+		if(prob(10))
+			playsound(user, 'sound/effects/wounds/sizzle1.ogg', 70)
+		user.apply_damage(0.2, BURN)
+		return
+
+	var/mob/living/carbon/user_as_carbon = user
+
+	var/datum/gas_mixture/loc_air = loc.return_air()
+	var/max_temperature_of_adjacent_tiles = loc_air.temperature
+	for(var/cardinal_to_check in GLOB.cardinals)
+		var/turf/turf_to_check = get_step(src, cardinal_to_check)
+		var/datum/gas_mixture/environment = turf_to_check.return_air()
+		if(environment)
+			max_temperature_of_adjacent_tiles = max(max_temperature_of_adjacent_tiles, environment.temperature)
+
+	if(max_temperature_of_adjacent_tiles < MINIMUM_TEMPERATURE_TO_BURN_ARMS)
+		return
+
+	var/heat_protected = FALSE
+	if(HAS_TRAIT(user_as_carbon, TRAIT_RESISTHEAT) || HAS_TRAIT(user_as_carbon, TRAIT_RESISTHEATHANDS))
+		heat_protected = TRUE
+	else if(user_as_carbon.gloves)
+		var/obj/item/clothing/gloves/gloves_of_user = user_as_carbon.gloves
+
+		if(gloves_of_user.max_heat_protection_temperature)
+			heat_protected = (gloves_of_user.max_heat_protection_temperature >= max_temperature_of_adjacent_tiles)
+
+	if(!heat_protected)
+		var/obj/item/bodypart/right_arm = user_as_carbon.get_bodypart(BODY_ZONE_R_ARM)
+		var/obj/item/bodypart/left_arm = user_as_carbon.get_bodypart(BODY_ZONE_L_ARM)
+
+		if(prob(10))
+			playsound(user_as_carbon, 'sound/effects/wounds/sizzle1.ogg', 70)
+
+		if(right_arm && right_arm.status == BODYPART_ORGANIC && !right_arm.is_pseudopart)
+			right_arm.receive_damage(0, 0.2)
+		if(left_arm && left_arm.status == BODYPART_ORGANIC && !left_arm.is_pseudopart)
+			left_arm.receive_damage(0, 0.2)
 
 /obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
 	add_fingerprint(user)
@@ -417,5 +482,7 @@
 	name = "heavy firelock frame"
 	reinforced = TRUE
 
+#undef TOOLLESS_OPEN_DURATION_SOLO
+#undef MINIMUM_TEMPERATURE_TO_BURN_ARMS
 #undef CONSTRUCTION_PANEL_OPEN
 #undef CONSTRUCTION_NO_CIRCUIT
