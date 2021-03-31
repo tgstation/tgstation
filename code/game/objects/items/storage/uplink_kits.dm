@@ -310,14 +310,17 @@
 
 	return ..()
 
-/obj/item/storage/box/syndicate/contractor_loadout/PopulateContents()
-	new /obj/item/clothing/head/helmet/space/syndicate/contract(src)
-	new /obj/item/clothing/suit/space/syndicate/contract(src)
-	new /obj/item/clothing/under/chameleon(src)
-	new /obj/item/clothing/mask/chameleon(src)
-	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
-	new /obj/item/card/id/advanced/chameleon(src)
-	new /obj/item/lighter(src)
+/obj/item/storage/box/syndicate/contractor_loadout
+	items_inside = list(
+		/obj/item/clothing/head/helmet/space/syndicate/contract = 1,
+		/obj/item/clothing/suit/space/syndicate/contract = 1,
+		/obj/item/clothing/under/chameleon = 1,
+		/obj/item/clothing/mask/chameleon = 1,
+		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 1,
+		/obj/item/card/id/advanced/chameleon = 1,
+		/obj/item/lighter = 1
+	)
+
 
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
 	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
