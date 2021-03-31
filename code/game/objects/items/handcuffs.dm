@@ -302,7 +302,7 @@
 		return
 
 	target.legcuffed = src
-	forceMove(C)
+	forceMove(target)
 	target.update_equipment_speed_mods()
 	target.update_inv_legcuffed()
 	Sneed
