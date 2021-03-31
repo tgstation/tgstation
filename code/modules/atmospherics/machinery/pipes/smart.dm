@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/pipe/smart
-	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
-	icon_state = "manifold4w-3"
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
+	icon_state = "pipe11-3"
 
 	name = "pipe"
 	desc = "A one meter section of regular pipe."
@@ -19,6 +19,10 @@
 	icon_state = ""
 	connections = new/list(dir2text(NORTH) = FALSE, dir2text(SOUTH) = FALSE , dir2text(EAST) = FALSE , dir2text(WEST) = FALSE)
 	return ..()
+
+/obj/machinery/atmospherics/pipe/smart/Initialize()
+	. = ..()
+	update_appearance()
 
 /obj/machinery/atmospherics/pipe/smart/SetInitDirections()
 	initialize_directions = ALL_CARDINALS
@@ -90,6 +94,21 @@
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
 		if(nodes[i])
-			var/image/pipe = getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i]))
+			var/image/pipe = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "pipe-3", get_dir(src, nodes[i]))
+			PIPING_LAYER_DOUBLE_SHIFT(pipe, piping_layer)
 			pipe.layer = layer + 0.01
 			. += pipe
+
+
+//mapping helpers
+/obj/machinery/atmospherics/pipe/smart/simple
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
+	icon_state = "pipe11-3"
+
+/obj/machinery/atmospherics/pipe/smart/manifold
+	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
+	icon_state = "manifold-3"
+
+/obj/machinery/atmospherics/pipe/smart/manifold4w
+	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
+	icon_state = "manifold4w-3"
