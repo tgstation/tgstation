@@ -2455,6 +2455,7 @@
 					/obj/item/restraints/legcuffs/fuzzy,
 					/obj/item/restraints/legcuffs/fuzzy)
 	crate_name = "ERP restrains crate"
+	dangerous = TRUE
 
 /datum/supply_pack/misc/book_crate
 	name = "Book Crate"
