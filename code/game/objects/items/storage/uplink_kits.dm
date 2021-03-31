@@ -622,12 +622,9 @@
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
 /obj/item/storage/backpack/duffelbag/syndie/sabotage
 	items_inside = list(
-		/obj/item/grenade/c4(src) = 1,
-		/obj/item/grenade/c4(src) = 1,
-		/obj/item/grenade/c4(src) = 1,
-		/obj/item/grenade/c4/x4(src) = 1,
-		/obj/item/grenade/c4/x4(src) = 1,
-		/obj/item/storage/box/syndie_kit/signaler(src) = 1
+		/obj/item/grenade/c4 = 3,
+		/obj/item/grenade/c4/x4 = 2,
+		/obj/item/storage/box/syndie_kit/signaler = 1
 	)
 
 
