@@ -97,7 +97,14 @@
 	if(trashtype && !dispense)
 		qdel(src)
 	return
-
+/**
+ * # Fuzzy handcuffs
+ *
+ * Used for getting banned
+ *
+ * There is nothing more to say about those
+ *
+ */
 /obj/item/restraints/handcuffs/fuzzy
 	name = "fuzzy cuffs"
 	icon = 'icons/obj/ERPcuffs.dmi'
@@ -240,7 +247,16 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
 	breakouttime = 30 SECONDS
-
+/**
+ * # Fuzzy legcuffs
+ *
+ * The only actual legcuffs in the fucking codebase apparently
+ *
+ * Used for getting banned
+ * and maybe gamer moments.
+ * Fucking shit why did I actually spend time coding this
+ *
+ */
 /obj/item/restraints/legcuffs/fuzzy
 	name = "fuzzy legcuffs"
 	desc = "Use this to keep... 'prisoners' in line."
@@ -252,7 +268,7 @@
 	if(!istype(C))
 		return
 	if(C.legcuffed)
-	to_chat(user, "<span class='warning'>[C] is already legcuffed...</span>")
+		to_chat(user, "<span class='warning'>[C] is already legcuffed...</span>")
 		return
 
 	SEND_SIGNAL(C, COMSIG_CARBON_CUFF_ATTEMPTED, user)
