@@ -62,11 +62,15 @@
 	icon_state = "syndrone_item"
 	mob_name = "syndrone"
 	mob_type = /mob/living/simple_animal/drone/syndrone
+	short_desc = "You are a syndicate Maintenance Drone."
+	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some upgrades... and now serve an enemy of your former masters."
+	important_info = ""
 
 /obj/effect/mob_spawn/drone/syndrone/badass
 	name = "badass syndrone shell"
 	mob_name = "badass syndrone"
 	mob_type = /mob/living/simple_animal/drone/syndrone/badass
+	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some BETTER upgrades... and now serve an enemy of your former masters."
 
 /obj/effect/mob_spawn/drone/snowflake
 	name = "snowflake drone shell"
