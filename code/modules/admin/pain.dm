@@ -4,29 +4,30 @@
 
 	if(!check_rights(R_DEBUG))
 		return
-	var/datum/outfit_manager/ui = new(usr)
+	var/datum/outfit_editor/ui = new(usr)
 	ui.ui_interact(usr)
 
-/datum/outfit_manager
+#define OUTFITOTRON "Outfit-O-Tron 9000"
+/datum/outfit_editor
 	var/client/holder
 
 	var/dummy_key
 	var/static/list/allitems
 	var/datum/outfit/drip = /datum/outfit/job/miner/equipped/hardsuit
 
-/datum/outfit_manager/New(user)
+/datum/outfit_editor/New(user)
 	holder = CLIENT_FROM_VAR(user)
 	drip = new drip
 
-/datum/outfit_manager/ui_state(mob/user)
+/datum/outfit_editor/ui_state(mob/user)
 	return GLOB.admin_state
 
-/datum/outfit_manager/ui_close(mob/user)
+/datum/outfit_editor/ui_close(mob/user)
 	clear_human_dummy(dummy_key)
 	qdel(src)
 
-/datum/outfit_manager/proc/init_dummy()
-	dummy_key = "outfit_manager_[holder]"
+/datum/outfit_editor/proc/init_dummy()
+	dummy_key = "outfit_editor_[holder]"
 	var/mob/living/carbon/human/dummy/dummy = generate_or_wait_for_human_dummy(dummy_key)
 	var/mob/living/carbon/carbon_target = holder.mob
 	if(istype(carbon_target))
@@ -36,14 +37,14 @@
 	unset_busy_human_dummy(dummy_key)
 	return
 
-/datum/outfit_manager/ui_interact(mob/user, datum/tgui/ui)
+/datum/outfit_editor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "BigPain", "Outfit-O-Tron 9000")
+		ui = new(user, src, "BigPain", OUTFITOTRON)
 		ui.open()
 		ui.set_autoupdate(FALSE)
 
-/datum/outfit_manager/proc/entry(data)
+/datum/outfit_editor/proc/entry(data)
 	if(ispath(data, /obj/item))
 		var/obj/item/item = data
 		return list(
@@ -54,47 +55,55 @@
 
 	return data
 
-/datum/outfit_manager/proc/serialize_outfit()
+/datum/outfit_editor/proc/serialize_outfit()
 	var/list/outfit_slots = drip.get_json_data()
 	. = list()
 	for(var/key in outfit_slots)
 		var/val = outfit_slots[key]
 		. += list("[key]" = entry(val))
 
-/datum/outfit_manager/ui_data(mob/user)
+/datum/outfit_editor/ui_data(mob/user)
 	var/list/data = list()
 
 	data["outfit"] = serialize_outfit()
 
 	var/datum/preferences/prefs = holder.prefs
-	var/datum/outfit/temp_drip = drip //some pre_equip actions reset certain slots i.e /datum/outfit/job/pre_equip()
-	var/icon/dummysprite = get_flat_human_icon(null, prefs = prefs, dummy_key = dummy_key, showDirs = list(SOUTH), outfit_override = temp_drip)
+	var/icon/dummysprite = get_flat_human_icon(null, prefs = prefs, dummy_key = dummy_key, showDirs = list(SOUTH), outfit_override = drip)
 	data["dummy64"] = icon2base64(dummysprite)
 
 	return data
 
-/datum/outfit_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/outfit_editor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	. = TRUE
+
+	var/slot = params["slot"]
 	switch(action)
 		if("click")
-			choose_item(params["slot"])
+			choose_item(slot)
+		if("shift_click")
+			choose_any_item(slot)
+		if("clear")
+			if(drip.vars.Find(slot))
+				drip.vars[slot] = null
+
 		if("save")
 			GLOB.custom_outfits |= (drip)
 
-/datum/outfit_manager/proc/edit_item(slot, obj/item/choice)
-	if(ispath(choice))
+/datum/outfit_editor/proc/set_item(slot, obj/item/choice)
+	if(!ispath(choice))
+		return
+	if(drip.vars.Find(slot))
 		drip.vars[slot] = choice
+
 
 //this proc will try to give a good selection of items that the user can choose from
 //it does *not* give a selection of all items that can fit in a slot because lag;
 //most notably the hand and pocket slots because they accept pretty much anything
 //also stuff that fits in the belt and back slots are scattered pretty much all over the place
-/datum/outfit_manager/proc/choose_item(slot)
+/datum/outfit_editor/proc/choose_item(slot)
 	var/list/options = list()
-	if(!allitems)
-		allitems = typesof(/obj/item)
 
 	switch(slot)
 		if("head")
@@ -141,12 +150,23 @@
 			choose_any_item(slot)
 
 	if(length(options))
-		edit_item(slot, tgui_input_list(holder, "Choose an item", "Outfit-O-Tron 9000", options))
+		set_item(slot, tgui_input_list(holder, "Choose an item", OUTFITOTRON, options))
 
 
+/datum/outfit_editor/proc/choose_any_item(slot)
+	var/obj/item/choice = pick_closest_path(FALSE)
 
-/datum/outfit_manager/proc/choose_any_item(slot)
-	if(!allitems)
-		allitems = typesof(/obj/item)
+	if(!choice)
+		return
+	if(!ispath(choice, /obj/item))
+		alert(usr, "Invalid item", OUTFITOTRON, "oh no")
+		return
+	if(initial(choice.icon_state) == null) //hacky check copied from experimentor code
+		var/msg = "Warning: This item's icon_state is null, indicating it is very probably not actually a usable item."
+		if(alert(usr, msg, OUTFITOTRON, "Use it anyway", "Cancel") != "Use it anyway")
+			return
 
-	edit_item(slot, tgui_input_list(holder, "Choose an item", "Outfit-O-Tron 9000", allitems))
+	set_item(slot, choice)
+
+
+#undef OUTFITOTRON

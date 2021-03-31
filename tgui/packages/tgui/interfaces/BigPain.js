@@ -14,20 +14,19 @@ export const BigPain = (props, context) => {
 
         <Stack fill vertical>
 
-          <Stack.Item grow shrink={1}>
-
+          <Stack.Item grow={1}>
+            <Box
+              opacity={0.5}
+              py={3}
+              position="absolute"
+              as="img"
+              src={`data:image/jpeg;base64,${data.dummy64}`}
+              height="100%"
+              width="100%"
+              style={{
+                '-ms-interpolation-mode': 'nearest-neighbor',
+              }} />
             <Section fill textAlign="center">
-              <Box
-                opacity={0.5}
-                py={3}
-                position="absolute"
-                as="img"
-                src={`data:image/jpeg;base64,${data.dummy64}`}
-                height="100%"
-                width="100%"
-                style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                }} />
 
               <Stack mb={2}>
                 <OutfitSlot name="Headgear" slot="head" />
@@ -58,6 +57,7 @@ export const BigPain = (props, context) => {
                 <OutfitSlot name="Left Pocket" slot="l_pocket" />
                 <OutfitSlot name="Right Pocket" slot="r_pocket" />
               </Stack>
+
             </Section>
           </Stack.Item>
 
