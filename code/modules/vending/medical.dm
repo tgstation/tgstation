@@ -14,7 +14,7 @@
 					/obj/item/healthanalyzer/wound = 4,
 					/obj/item/stack/medical/ointment = 2,
 					/obj/item/stack/medical/suture = 2,
-					/obj/item/stack/medical/bone_gel = 4)
+					/obj/item/stack/medical/bone_gel/four = 4)
 	contraband = list(/obj/item/storage/box/gum/happiness = 3,
 						/obj/item/storage/box/hug/medical = 1)
 	premium = list(/obj/item/reagent_containers/hypospray/medipen = 3,

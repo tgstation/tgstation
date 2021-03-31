@@ -88,7 +88,7 @@
 	if(broken || !secure)
 		return
 	//Overlay is similar enough for both that we can use the same mask for both
-	SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+	SSvis_overlays.add_vis_overlay(src, icon, "locked", 0, EMISSIVE_PLANE, dir, alpha)
 	. += locked ? "locked" : "unlocked"
 
 /obj/structure/closet/examine(mob/user)

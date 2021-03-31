@@ -259,6 +259,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
 
+/obj/item/pipe_dispenser/pre_attack(atom/target, mob/user, params)
+	if(istype(target, /obj/item/rpd_upgrade/unwrench))
+		install_upgrade(target, user)
+		return TRUE
+	return ..()
+
 /obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rpd_upgrade))
 		install_upgrade(W, user)
