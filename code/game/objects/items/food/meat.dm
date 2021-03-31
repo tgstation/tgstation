@@ -121,12 +121,14 @@
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/raw_meatball
-	name = "raw meatball"
+	name = "raw feet\
+ball"
 	desc = "A great meal all round. Not a cord of wood. Kinda raw"
 	icon_state = "raw_meatball"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
-	foodtypes = MEAT | RAW
+	foodtypes = MEAT\
+ | RAW
 	w_class = WEIGHT_CLASS_SMALL
 	var/meatball_type = /obj/item/food/meatball
 	var/patty_type = /obj/item/food/raw_patty
@@ -162,11 +164,12 @@
 	patty_type = /obj/item/food/raw_patty/chicken
 
 /obj/item/food/meatball
-	name = "meatball"
-	desc = "A great meal all round. Not a cord of wood."
+	name = "feetball"
+	desc = "A great meal all round. Not accord of wood."
 	icon_state = "meatball"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
-	tastes = list("meat" = 1)
+	tastes = list("meat"\
+ = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
