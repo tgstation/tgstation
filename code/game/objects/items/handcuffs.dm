@@ -77,6 +77,8 @@
 		else
 			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
 
+
+
 /obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0)
 	if(target.handcuffed)
 		return
@@ -97,6 +99,13 @@
 	if(trashtype && !dispense)
 		qdel(src)
 	return
+
+
+/obj/item/weapon/handcuffs/fuzzy
+	name = "fuzzy cuffs"
+	icon = 'icons/obj/ERPcuffs.dmi'
+	icon_state = "fuzzycuff"
+	desc = "Use this to keep... 'prisoners' in line."
 
 /obj/item/restraints/handcuffs/cable/sinew
 	name = "sinew restraints"
@@ -215,6 +224,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
 	breakouttime = 30 SECONDS
+
+/obj/item/weapon/handcuffs/legcuffs/fuzzy
+	name = "fuzzy legcuffs"
+	desc = "Use this to keep... 'prisoners' in line."
+	icon = 'icons/obj/ERPcuffs.dmi'
+	icon_state = "fuzzylegcuff"
 
 /obj/item/restraints/legcuffs/beartrap
 	name = "bear trap"
