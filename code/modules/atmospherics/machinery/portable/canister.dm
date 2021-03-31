@@ -464,7 +464,8 @@
 
 	if(expelled_pressure > pressure_limit)
 		var/pressure_dif = expelled_pressure - pressure_limit
-		var/explosion_range = CEILING(min(pressure_dif, 20000) / 1000, 1)
+		var/max_pressure_difference = 20000
+		var/explosion_range = CEILING(min(pressure_dif, max_pressure_difference) / 1000, 1)
 		explosion(T, 0, 0, explosion_range, 0, smoke = FALSE)
 
 	density = FALSE
