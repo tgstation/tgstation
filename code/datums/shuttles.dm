@@ -650,6 +650,10 @@
 	suffix = "large"
 	name = "escape pod (Large)"
 
+/datum/map_template/shuttle/escape_pod/soyuz
+	suffix = "soyuz"
+	name = "escape pod (Soyuz)"
+
 /datum/map_template/shuttle/assault_pod/default
 	suffix = "default"
 	name = "assault pod (Default)"

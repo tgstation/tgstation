@@ -3,7 +3,25 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/space)
+"aR" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/computer/station_alert{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
 /area/space)
 "aU" = (
 /obj/structure/lattice,
@@ -16,7 +34,7 @@
 	},
 /obj/structure/window/reinforced/spawner/north,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "bC" = (
 /obj/effect/turf_decal/stripes/end{
@@ -44,12 +62,35 @@
 /obj/machinery/vending/engivend,
 /turf/open/floor/pod/dark,
 /area/space)
+"cK" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/open/openspace/airless/planetary,
+/area/space)
 "dl" = (
 /obj/machinery/vending/assist,
+/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/space)
 "dE" = (
 /turf/open/floor/glass/reinforced,
+/area/space)
+"dK" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 1;
+	height = 4;
+	roundstart_template = /datum/map_template/shuttle/escape_pod/soyuz;
+	width = 3
+	},
+/turf/open/openspace/airless/planetary,
 /area/space)
 "dP" = (
 /obj/effect/turf_decal/stripes/line{
@@ -68,6 +109,7 @@
 	id = "portsolar";
 	name = "Port Solar Array"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/solarpanel,
 /area/space)
 "dY" = (
@@ -97,6 +139,35 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/space)
+"eO" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/spawner/lootdrop/three_course_meal,
+/obj/effect/spawner/lootdrop/three_course_meal,
+/obj/effect/spawner/lootdrop/three_course_meal,
+/turf/open/floor/pod/dark,
+/area/space)
+"eS" = (
+/obj/machinery/button/tram{
+	id = "right_part"
+	},
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/space)
+"eZ" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/railing,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/open/openspace/airless/planetary,
+/area/space)
 "fi" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -125,13 +196,16 @@
 /area/space)
 "fC" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/closet/crate/freezer,
 /obj/structure/railing,
 /obj/item/tank/jetpack/carbondioxide{
 	pixel_x = -4;
 	pixel_y = 1
 	},
 /obj/item/tank/jetpack/carbondioxide,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
 /turf/open/openspace,
 /area/space)
 "fI" = (
@@ -198,13 +272,18 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space)
 "ir" = (
 /obj/machinery/atmospherics/components/binary/pump/layer4{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron/showroomfloor,
 /area/space)
 "iA" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -221,12 +300,13 @@
 /area/space)
 "iI" = (
 /obj/machinery/computer/atmos_control,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "iR" = (
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space)
 "iS" = (
@@ -235,8 +315,23 @@
 	},
 /turf/open/floor/engine/hull/reinforced,
 /area/space)
+"je" = (
+/obj/effect/turf_decal/stripes/end,
+/turf/open/floor/engine/hull/reinforced,
+/area/space)
+"jK" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/turf/open/openspace/airless/planetary,
+/area/space)
 "jL" = (
 /obj/machinery/autolathe,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/space)
+"jM" = (
+/obj/structure/ladder,
 /turf/open/floor/pod/dark,
 /area/space)
 "jP" = (
@@ -251,6 +346,13 @@
 	dir = 1
 	},
 /turf/open/floor/iron/showroomfloor,
+/area/space)
+"ko" = (
+/obj/structure/industrial_lift/tram,
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/turf/open/openspace/airless/planetary,
 /area/space)
 "kp" = (
 /obj/structure/closet/secure_closet/engineering_welding,
@@ -333,6 +435,25 @@
 "nG" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/space)
+"nH" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/space)
+"od" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/fluff/tram_rail/anchor{
+	dir = 1
+	},
+/turf/open/openspace/airless/planetary,
+/area/space)
 "oh" = (
 /obj/machinery/computer/rdconsole{
 	dir = 8
@@ -374,6 +495,19 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/space)
+"pK" = (
+/obj/structure/industrial_lift/tram/central,
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/open/openspace/airless/planetary,
+/area/space)
 "pQ" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/door/airlock/survival_pod/glass,
@@ -402,7 +536,13 @@
 "qO" = (
 /obj/structure/window/reinforced/spawner,
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
+/area/space)
+"qP" = (
+/obj/machinery/button/tram{
+	id = "left_part"
+	},
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/space)
 "ry" = (
 /obj/structure/table/reinforced,
@@ -410,6 +550,16 @@
 	pixel_y = 6
 	},
 /turf/open/floor/pod/dark,
+/area/space)
+"rF" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 1;
+	height = 4;
+	roundstart_template = /datum/map_template/shuttle/escape_pod/soyuz;
+	width = 3
+	},
+/turf/open/openspace/airless/planetary,
 /area/space)
 "rK" = (
 /obj/machinery/rnd/production/circuit_imprinter,
@@ -430,18 +580,21 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "si" = (
 /obj/machinery/power/rtg/advanced,
 /turf/open/floor/plating/airless,
 /area/space)
 "sm" = (
-/obj/structure/closet/crate/freezer,
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/item/storage/firstaid/o2,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
 /turf/open/floor/pod/dark,
 /area/space)
 "sJ" = (
@@ -455,13 +608,71 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "sO" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/airless,
+/area/space)
+"ti" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/item/seeds/coffee/robusta{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/seeds/coffee{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/seeds/coffee{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/storage/pill_bottle/happinesspsych{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/storage/box/drinkingglasses{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/condiment/soymilk{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/condiment/milk{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/cream{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/ice{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/food/muffin/berry{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/turf/open/floor/pod/dark,
+/area/space)
+"ut" = (
+/obj/structure/industrial_lift/tram,
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/effect/turf_decal/stripes/end,
+/turf/open/floor/engine/hull/reinforced,
 /area/space)
 "uI" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
@@ -475,6 +686,7 @@
 	id = "aftport";
 	name = "Port Quarter Solar Control"
 	},
+/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/space)
 "vd" = (
@@ -499,6 +711,7 @@
 /area/space)
 "vz" = (
 /obj/machinery/power/tracker,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space)
 "vN" = (
@@ -517,7 +730,8 @@
 /area/space)
 "wn" = (
 /obj/machinery/atmospherics/pipe/multiz/layer2,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/pod/dark,
 /area/space)
 "wu" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -540,7 +754,7 @@
 /area/space)
 "wW" = (
 /obj/machinery/vending/wardrobe/atmos_wardrobe,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "xc" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner,
@@ -556,21 +770,65 @@
 /obj/effect/turf_decal/trimline/neutral,
 /turf/open/floor/engine/airless,
 /area/space)
+"xm" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/spawner/lootdrop/space/material,
+/obj/effect/spawner/lootdrop/space/material,
+/obj/effect/spawner/lootdrop/space/material,
+/turf/open/floor/pod/dark,
+/area/space)
 "xn" = (
 /obj/structure/railing{
 	dir = 6
 	},
 /turf/open/floor/plating,
 /area/space)
+"xs" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/turf/open/floor/pod/dark,
+/area/space)
+"xw" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/item/storage/belt/utility/atmostech,
+/obj/item/storage/belt/utility/atmostech,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/radio{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/open/floor/pod/dark,
+/area/space)
 "xy" = (
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/structure/lattice/catwalk,
-/obj/structure/closet/crate/freezer,
 /obj/item/storage/belt/utility,
 /obj/item/radio/off,
 /obj/item/multitool,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
 /turf/open/openspace,
 /area/space)
 "xD" = (
@@ -579,6 +837,22 @@
 	dir = 1
 	},
 /turf/open/openspace/airless/planetary,
+/area/space)
+"xK" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/lizardboots,
+/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/lootdrop/gloves,
+/obj/effect/spawner/lootdrop/garbage_spawner,
+/turf/open/floor/pod/dark,
 /area/space)
 "xO" = (
 /obj/effect/turf_decal/stripes/line,
@@ -597,14 +871,14 @@
 /area/space)
 "xQ" = (
 /obj/machinery/suit_storage_unit/atmos,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "xY" = (
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "yb" = (
 /obj/effect/turf_decal/siding/wideplating/light{
@@ -616,7 +890,13 @@
 /obj/machinery/atmospherics/components/binary/pump/layer4{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
 /area/space)
 "yR" = (
 /obj/effect/turf_decal/siding/wideplating/light/corner{
@@ -630,6 +910,16 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space)
+"zp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/showroomfloor,
+/area/space)
 "zv" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -640,6 +930,7 @@
 "zy" = (
 /obj/structure/railing,
 /obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/openspace/airless/planetary,
 /area/space)
 "zE" = (
@@ -649,7 +940,20 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/space)
+"zO" = (
+/obj/structure/fluff/tram_rail/anchor{
+	dir = 1
+	},
+/turf/open/openspace/airless/planetary,
 /area/space)
 "zU" = (
 /obj/effect/turf_decal/stripes/line{
@@ -668,6 +972,17 @@
 /area/space)
 "At" = (
 /obj/machinery/rnd/production/protolathe/department/engineering,
+/turf/open/floor/pod/dark,
+/area/space)
+"AC" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/pod/dark,
 /area/space)
 "AM" = (
@@ -700,19 +1015,27 @@
 	},
 /turf/open/floor/plating,
 /area/space)
+"Bv" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/space)
 "BH" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/closet/crate/freezer,
 /obj/structure/railing,
 /obj/item/clothing/shoes/magboots{
 	pixel_x = -4;
 	pixel_y = 3
 	},
 /obj/item/clothing/shoes/magboots,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
 /turf/open/openspace,
 /area/space)
 "BQ" = (
-/obj/structure/closet/crate/freezer,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -722,6 +1045,10 @@
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
 	pixel_y = -7
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
 	},
 /turf/open/floor/pod/dark,
 /area/space)
@@ -770,6 +1097,15 @@
 /obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/pod/dark,
 /area/space)
+"DH" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/openspace/airless/planetary,
+/area/space)
 "DX" = (
 /obj/machinery/vending/engineering,
 /turf/open/floor/pod/dark,
@@ -804,18 +1140,28 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "EO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
-/turf/open/floor/plating,
+/obj/machinery/portable_atmospherics/scrubber/huge/movable,
+/turf/open/floor/pod/dark,
 /area/space)
 "EW" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
 /turf/open/floor/engine/hull/reinforced,
+/area/space)
+"EY" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
 /area/space)
 "Fh" = (
 /obj/machinery/rnd/destructive_analyzer,
@@ -827,9 +1173,30 @@
 	},
 /turf/open/openspace,
 /area/space)
+"Fm" = (
+/obj/machinery/atmospherics/components/binary/pump/layer2{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/space)
+"Fr" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/space)
 "FR" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "FT" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -874,10 +1241,19 @@
 /obj/machinery/atmospherics/components/binary/pump/layer2{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
 /area/space)
 "Hr" = (
-/obj/structure/closet/crate/freezer,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
 /obj/structure/railing,
 /obj/item/weldingtool/hugetank,
 /obj/item/clothing/head/welding,
@@ -895,9 +1271,30 @@
 	},
 /turf/open/floor/iron/dark/airless,
 /area/space)
+"HR" = (
+/obj/machinery/atmospherics/components/binary/pump/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/space)
+"If" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/landmark/start/atmospheric_technician,
+/turf/open/floor/iron/showroomfloor,
+/area/space)
 "In" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/closet/crate/freezer,
 /obj/structure/railing,
 /obj/item/stack/sheet/rglass{
 	amount = 50
@@ -905,6 +1302,10 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/emergency,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
 /turf/open/openspace,
 /area/space)
 "Ix" = (
@@ -920,16 +1321,46 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/iron/dark,
 /area/space)
+"IK" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/spawner/lootdrop/food_packaging,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/effect/spawner/lootdrop/donkpockets,
+/turf/open/floor/pod/dark,
+/area/space)
+"Ji" = (
+/obj/effect/landmark/tram/right_part{
+	tgui_icons = list("Departures" = "plane-departure")
+	},
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/open/openspace/airless/planetary,
+/area/space)
+"Jk" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/railing,
+/turf/open/openspace/airless/planetary,
+/area/space)
 "JG" = (
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/structure/lattice/catwalk,
+/obj/structure/cable,
 /turf/open/openspace/airless/planetary,
 /area/space)
 "JY" = (
 /obj/structure/closet/secure_closet/atmospherics,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "JZ" = (
 /obj/structure/window/reinforced/survival_pod{
@@ -950,12 +1381,15 @@
 /turf/open/floor/iron/dark/airless,
 /area/space)
 "Ki" = (
-/obj/structure/closet/crate/freezer,
 /obj/structure/railing,
 /obj/item/food/syndicake,
 /obj/item/food/syndicake{
 	pixel_x = -2;
 	pixel_y = 5
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
 	},
 /turf/open/floor/pod/dark,
 /area/space)
@@ -964,6 +1398,19 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/space)
+"KJ" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/industrial_lift/tram/central,
+/obj/effect/landmark/tram/left_part{
+	tgui_icons = list("Arrivals" = "plane-arrival")
+	},
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/open/openspace/airless/planetary,
 /area/space)
 "KV" = (
 /obj/effect/turf_decal/stripes/line{
@@ -984,6 +1431,7 @@
 	id = "aftport";
 	name = "Aft-Port Solar Array"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/solarpanel,
 /area/space)
 "Lt" = (
@@ -992,6 +1440,7 @@
 /area/space)
 "Lv" = (
 /obj/machinery/power/smes,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space)
 "Ly" = (
@@ -1038,11 +1487,23 @@
 	id = "forestarboard";
 	name = "Starboard Solar Control"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space)
 "My" = (
 /obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/pod/dark,
+/area/space)
+"ME" = (
+/obj/structure/industrial_lift/tram,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/openspace/airless/planetary,
+/area/space)
+"MF" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/glass/reinforced,
 /area/space)
 "MO" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1068,9 +1529,12 @@
 	dir = 1
 	},
 /obj/structure/lattice/catwalk,
-/obj/structure/closet/crate/freezer,
 /obj/item/clothing/suit/space/eva,
 /obj/item/clothing/head/helmet/space/syndicate/black/engie,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
 /turf/open/openspace,
 /area/space)
 "Nj" = (
@@ -1078,6 +1542,11 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
+/area/space)
+"NI" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/openspace/airless/planetary,
 /area/space)
 "Ov" = (
 /obj/structure/ladder,
@@ -1091,8 +1560,18 @@
 /turf/open/floor/iron/dark/airless,
 /area/space)
 "Pb" = (
-/obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plating,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing,
+/obj/item/storage/toolbox/electrical,
+/obj/item/radio,
+/obj/item/hand_labeler,
+/obj/item/stack/sheet/iron{
+	amount = 30
+	},
+/turf/open/floor/pod/dark,
 /area/space)
 "Ph" = (
 /obj/effect/turf_decal/siding/wideplating/light/corner{
@@ -1106,6 +1585,7 @@
 	id = "portsolar";
 	name = "Port Quarter Solar Control"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space)
 "Qf" = (
@@ -1113,6 +1593,16 @@
 	dir = 1
 	},
 /turf/open/floor/engine/airless,
+/area/space)
+"Qk" = (
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/space)
+"Qq" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/turf/open/openspace/airless/planetary,
 /area/space)
 "Qw" = (
 /turf/closed/wall/mineral/titanium,
@@ -1122,13 +1612,16 @@
 	dir = 1
 	},
 /obj/structure/lattice/catwalk,
-/obj/structure/closet/crate/freezer,
 /obj/item/tank/internals/oxygen,
 /obj/item/tank/internals/oxygen,
 /obj/item/stock_parts/cell/high/plus,
 /obj/item/stock_parts/cell/high/plus{
 	pixel_x = -8;
 	pixel_y = 9
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
 	},
 /turf/open/openspace,
 /area/space)
@@ -1137,6 +1630,7 @@
 	id = "forestarboard";
 	name = "Starboard Solar Array"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/solarpanel,
 /area/space)
 "QQ" = (
@@ -1160,6 +1654,12 @@
 	dir = 1
 	},
 /turf/open/floor/engine/airless,
+/area/space)
+"Rx" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/open/openspace/airless/planetary,
 /area/space)
 "RG" = (
 /obj/structure/railing/corner{
@@ -1214,6 +1714,21 @@
 	},
 /turf/open/floor/iron/freezer/airless,
 /area/space)
+"SU" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing,
+/obj/item/stack/rods{
+	amount = 25
+	},
+/obj/item/clothing/gloves/color/fyellow,
+/obj/item/gps,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/turf/open/floor/pod/dark,
+/area/space)
 "Tl" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -1229,6 +1744,15 @@
 	dir = 10
 	},
 /turf/open/floor/iron/freezer/airless,
+/area/space)
+"TO" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/openspace/airless/planetary,
 /area/space)
 "TR" = (
 /obj/machinery/computer/atmos_alert{
@@ -1260,24 +1784,47 @@
 /obj/item/stack/rods/fifty,
 /turf/open/floor/pod/dark,
 /area/space)
+"Ur" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/structure/railing,
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/turf/open/floor/pod/dark,
+/area/space)
 "UE" = (
-/obj/structure/closet/crate/freezer,
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/item/storage/box/shipping,
 /obj/item/storage/toolbox/mechanical,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
 /turf/open/floor/pod/dark,
 /area/space)
 "Vv" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace/airless/planetary,
 /area/space)
+"VO" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/space)
 "VT" = (
 /obj/machinery/computer/security{
 	dir = 8
 	},
 /turf/open/floor/pod/dark,
+/area/space)
+"VY" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/ladder,
+/obj/structure/cable,
+/turf/open/openspace/airless/planetary,
 /area/space)
 "Wc" = (
 /obj/structure/ladder,
@@ -1315,9 +1862,14 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/iron/showroomfloor,
 /area/space)
+"XG" = (
+/obj/structure/industrial_lift/tram,
+/obj/machinery/computer/tram_controls,
+/turf/open/openspace/airless/planetary,
+/area/space)
 "XI" = (
 /obj/machinery/computer/atmos_alert,
-/turf/open/floor/plating,
+/turf/open/floor/pod/dark,
 /area/space)
 "XX" = (
 /obj/effect/turf_decal/stripes/line{
@@ -33401,9 +33953,9 @@ Zz
 Zz
 Wv
 Wv
-LG
-LG
-LG
+xs
+IK
+xK
 Wv
 Wv
 Zz
@@ -33657,11 +34209,11 @@ Zz
 Zz
 Zz
 Wv
-LG
-LG
-LG
-LG
-LG
+Pb
+Cp
+XX
+QU
+xw
 Wv
 Zz
 wu
@@ -33914,11 +34466,11 @@ Zz
 Zz
 Zz
 eB
-LG
-LG
-Wc
-LG
-LG
+Ur
+nH
+jM
+nH
+AC
 eB
 Zz
 wu
@@ -34171,11 +34723,11 @@ Zz
 Zz
 Zz
 Wv
-LG
-LG
-LG
-LG
-LG
+SU
+ns
+XX
+kl
+AC
 Wv
 Zz
 wu
@@ -34429,9 +34981,9 @@ Zz
 Zz
 Wv
 Wv
-LG
-LG
-LG
+xm
+ti
+eO
 Wv
 Wv
 Zz
@@ -96091,7 +96643,7 @@ fL
 fL
 KZ
 KZ
-Vv
+NI
 KZ
 KZ
 fL
@@ -96348,7 +96900,7 @@ fL
 fL
 KZ
 KZ
-Vv
+NI
 KZ
 KZ
 fL
@@ -96605,7 +97157,7 @@ fL
 fL
 KZ
 KZ
-Vv
+NI
 KZ
 KZ
 fL
@@ -96862,7 +97414,7 @@ fL
 fL
 KZ
 KZ
-Vv
+NI
 KZ
 KZ
 fL
@@ -97119,7 +97671,7 @@ fL
 fL
 KZ
 KZ
-Vv
+NI
 KZ
 KZ
 fL
@@ -97376,7 +97928,7 @@ fL
 fL
 fL
 KZ
-Vv
+NI
 KZ
 fL
 fL
@@ -97633,7 +98185,7 @@ fL
 fL
 fL
 KZ
-Vv
+NI
 KZ
 fL
 fL
@@ -97890,7 +98442,7 @@ fL
 fL
 fL
 KZ
-Vv
+NI
 KZ
 fL
 fL
@@ -98147,7 +98699,7 @@ fL
 fL
 fL
 KZ
-Vv
+NI
 KZ
 fL
 fL
@@ -98404,7 +98956,7 @@ fL
 fL
 fL
 KZ
-Vv
+NI
 KZ
 fL
 fL
@@ -98661,7 +99213,7 @@ Wv
 Qw
 fL
 aU
-Vv
+NI
 aU
 fL
 fL
@@ -98918,7 +99470,7 @@ ry
 Wv
 Wv
 Wv
-eB
+VO
 Wv
 Wv
 Wv
@@ -99187,12 +99739,12 @@ gz
 gz
 iI
 ir
-ir
+HR
 yq
 yq
-LG
-LG
-LG
+If
+If
+QU
 Wv
 Fi
 So
@@ -99432,7 +99984,7 @@ Xv
 sd
 oR
 Zm
-XX
+zp
 Zm
 md
 sd
@@ -99442,14 +99994,14 @@ Ma
 pQ
 Dp
 pQ
-LG
+oR
 zE
-zE
+aR
 bs
 Ey
 FR
 qO
-LG
+nH
 sd
 Ma
 Lt
@@ -99701,12 +100253,12 @@ gz
 gz
 XI
 Hn
-Hn
-LG
+Fm
+XX
 at
-LG
-LG
-LG
+If
+If
+kl
 Wv
 rV
 ij
@@ -99946,7 +100498,7 @@ mK
 Wv
 Wv
 Wv
-eB
+VO
 Wv
 Wv
 Wv
@@ -99962,7 +100514,7 @@ sh
 wn
 EO
 xQ
-Pb
+fs
 xQ
 Wv
 Wv
@@ -100203,7 +100755,7 @@ Wv
 Qw
 fL
 aU
-Vv
+NI
 aU
 fL
 fL
@@ -100460,7 +101012,7 @@ fL
 fL
 fL
 KZ
-Vv
+NI
 KZ
 fL
 fL
@@ -100717,7 +101269,7 @@ fL
 fL
 fL
 KZ
-Vv
+NI
 KZ
 fL
 fL
@@ -100974,7 +101526,7 @@ fL
 fL
 fL
 KZ
-Vv
+NI
 KZ
 fL
 fL
@@ -101231,7 +101783,7 @@ fL
 fL
 fL
 KZ
-Vv
+NI
 KZ
 fL
 fL
@@ -101488,7 +102040,7 @@ fL
 fL
 fL
 KZ
-Vv
+NI
 KZ
 fL
 fL
@@ -101745,7 +102297,7 @@ fL
 fL
 KZ
 KZ
-Vv
+NI
 KZ
 KZ
 fL
@@ -102002,7 +102554,7 @@ fL
 fL
 KZ
 KZ
-Vv
+NI
 KZ
 KZ
 fL
@@ -102259,7 +102811,7 @@ fL
 fL
 KZ
 KZ
-Vv
+NI
 KZ
 KZ
 fL
@@ -102516,7 +103068,7 @@ fL
 fL
 KZ
 KZ
-Vv
+NI
 KZ
 KZ
 fL
@@ -102773,7 +103325,7 @@ fL
 fL
 KZ
 KZ
-Vv
+NI
 KZ
 KZ
 fL
@@ -154981,13 +155533,13 @@ dS
 dS
 dS
 dS
-Ce
-Ce
-Vv
+Qk
+Qk
+NI
 fL
-Vv
-Ce
-Ce
+NI
+Qk
+Qk
 dS
 dS
 dS
@@ -155241,7 +155793,7 @@ dS
 Vv
 fL
 JG
-Vv
+NI
 zy
 fL
 Vv
@@ -155498,7 +156050,7 @@ aU
 aU
 aU
 xD
-Vv
+NI
 Bf
 aU
 aU
@@ -155755,7 +156307,7 @@ dS
 Vv
 fL
 xD
-Vv
+NI
 Bf
 fL
 Vv
@@ -156009,13 +156561,13 @@ dS
 dS
 dS
 dS
-Ce
-Ce
-Ce
-Vv
-Ce
-Ce
-Ce
+Qk
+Qk
+Qk
+NI
+Qk
+Qk
+Qk
 dS
 dS
 dS
@@ -156269,7 +156821,7 @@ dS
 Vv
 fL
 xD
-Vv
+NI
 Bf
 fL
 Vv
@@ -156783,7 +157335,7 @@ dS
 Vv
 fL
 xD
-Vv
+NI
 Bf
 fL
 Vv
@@ -157037,13 +157589,13 @@ dS
 dS
 dS
 dS
-Ce
-Ce
-Ce
-Vv
-Ce
-Ce
-Ce
+Qk
+Qk
+Qk
+NI
+Qk
+Qk
+Qk
 dS
 dS
 dS
@@ -157297,7 +157849,7 @@ dS
 Vv
 fL
 xD
-Vv
+NI
 Bf
 fL
 Vv
@@ -157554,7 +158106,7 @@ aU
 aU
 aU
 xD
-Vv
+NI
 Bf
 aU
 aU
@@ -157811,7 +158363,7 @@ dS
 Vv
 fL
 xD
-Vv
+NI
 Bf
 fL
 Vv
@@ -158065,13 +158617,13 @@ dS
 dS
 dS
 dS
-Ce
-Ce
+Qk
+Qk
 iR
 PF
 iR
-Ce
-Ce
+Qk
+Qk
 dS
 dS
 dS
@@ -158581,9 +159133,9 @@ fL
 fL
 fL
 fL
-Vv
-Vv
-Vv
+NI
+NI
+NI
 fL
 fL
 fL
@@ -158839,7 +159391,7 @@ fL
 fL
 fL
 aU
-Vv
+NI
 aU
 fL
 fL
@@ -159096,10 +159648,10 @@ fL
 fL
 fL
 aU
-YI
+VY
 aU
 fL
-fL
+Qq
 fL
 fL
 fL
@@ -159353,10 +159905,10 @@ fL
 fL
 fL
 aU
-Vv
+NI
 aU
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -159612,8 +160164,8 @@ fL
 gz
 Ss
 gz
-fL
-fL
+ut
+od
 fL
 fL
 fL
@@ -159868,9 +160420,9 @@ fL
 fL
 gz
 Dp
-gz
-fL
-fL
+qP
+ME
+eZ
 fL
 fL
 fL
@@ -160126,9 +160678,9 @@ fL
 gz
 Ss
 gz
-fL
-fL
-fL
+ME
+pK
+TO
 fL
 fL
 fL
@@ -160383,9 +160935,9 @@ Vv
 Wv
 LG
 Wv
-fL
-fL
-fL
+XG
+KJ
+Jk
 fL
 fL
 fL
@@ -160640,9 +161192,9 @@ ZD
 Wv
 LG
 Wv
-fL
-fL
-fL
+ko
+cK
+DH
 fL
 fL
 fL
@@ -160898,7 +161450,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -161154,8 +161706,8 @@ fL
 eB
 LG
 eB
-fL
-fL
+je
+zO
 fL
 fL
 fL
@@ -161412,7 +161964,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -161669,7 +162221,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -161926,7 +162478,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -162182,8 +162734,8 @@ fL
 eB
 LG
 eB
-fL
-fL
+je
+zO
 fL
 fL
 fL
@@ -162440,7 +162992,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -162697,7 +163249,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -162954,7 +163506,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -163210,8 +163762,8 @@ fL
 gz
 pQ
 gz
-fL
-fL
+je
+zO
 fL
 fL
 fL
@@ -163468,7 +164020,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -163725,7 +164277,7 @@ LG
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -163982,7 +164534,7 @@ LG
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -164202,7 +164754,7 @@ fL
 fL
 fL
 fL
-fL
+rF
 fL
 fL
 fL
@@ -164239,7 +164791,7 @@ LG
 LG
 eB
 sO
-sO
+Fr
 sO
 sO
 iA
@@ -164496,7 +165048,7 @@ LG
 LG
 Wv
 OE
-OE
+Bv
 OE
 OE
 uI
@@ -164753,7 +165305,7 @@ LG
 LG
 Wv
 OE
-OE
+Bv
 OE
 OE
 OE
@@ -165010,7 +165562,7 @@ Wc
 AM
 Wv
 OE
-dE
+MF
 OE
 OE
 OE
@@ -165267,7 +165819,7 @@ LG
 LG
 Wv
 OE
-OE
+Bv
 OE
 OE
 OE
@@ -165524,7 +166076,7 @@ LG
 LG
 Wv
 OE
-OE
+Bv
 OE
 OE
 KY
@@ -165744,7 +166296,7 @@ fL
 fL
 fL
 fL
-fL
+dK
 fL
 fL
 fL
@@ -165781,7 +166333,7 @@ LG
 LG
 eB
 LT
-LT
+EY
 LT
 LT
 Ke
@@ -166038,7 +166590,7 @@ LG
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -166295,7 +166847,7 @@ LG
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -166552,7 +167104,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -166808,8 +167360,8 @@ fL
 gz
 pQ
 gz
-fL
-fL
+je
+zO
 fL
 fL
 fL
@@ -167066,7 +167618,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -167323,7 +167875,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -167580,7 +168132,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -167836,8 +168388,8 @@ fL
 eB
 LG
 eB
-fL
-fL
+je
+zO
 fL
 fL
 fL
@@ -168094,7 +168646,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -168351,7 +168903,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -168608,7 +169160,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -168864,8 +169416,8 @@ fL
 eB
 LG
 eB
-fL
-fL
+je
+zO
 fL
 fL
 fL
@@ -169122,7 +169674,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -169379,7 +169931,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -169636,7 +170188,7 @@ Wv
 LG
 Wv
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -169893,7 +170445,7 @@ gz
 Ss
 gz
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -170148,9 +170700,9 @@ fL
 fL
 gz
 Dp
-gz
+eS
 fL
-fL
+Ji
 fL
 fL
 fL
@@ -170406,8 +170958,8 @@ fL
 gz
 Ss
 gz
-fL
-fL
+je
+zO
 fL
 fL
 fL
@@ -170661,10 +171213,10 @@ fL
 fL
 fL
 aU
-Vv
+NI
 aU
 fL
-fL
+Rx
 fL
 fL
 fL
@@ -170918,10 +171470,10 @@ fL
 fL
 fL
 aU
-YI
+VY
 aU
 fL
-fL
+jK
 fL
 fL
 fL
@@ -171175,7 +171727,7 @@ fL
 fL
 fL
 aU
-Vv
+NI
 aU
 fL
 fL
@@ -171431,9 +171983,9 @@ fL
 fL
 fL
 fL
-Vv
-Vv
-Vv
+NI
+NI
+NI
 fL
 fL
 fL
@@ -171943,13 +172495,13 @@ QP
 QP
 QP
 QP
-Ce
-Ce
+Qk
+Qk
 im
 Mx
 im
-Ce
-Ce
+Qk
+Qk
 QP
 QP
 QP
@@ -172203,7 +172755,7 @@ QP
 Vv
 fL
 xD
-Vv
+NI
 Bf
 fL
 Vv
@@ -172460,7 +173012,7 @@ aU
 aU
 aU
 xD
-Vv
+NI
 Bf
 aU
 aU
@@ -172717,7 +173269,7 @@ QP
 Vv
 fL
 xD
-Vv
+NI
 Bf
 fL
 Vv
@@ -172971,13 +173523,13 @@ QP
 QP
 QP
 QP
-Ce
-Ce
-Ce
-Vv
-Ce
-Ce
-Ce
+Qk
+Qk
+Qk
+NI
+Qk
+Qk
+Qk
 QP
 QP
 QP
@@ -173231,7 +173783,7 @@ QP
 Vv
 fL
 xD
-Vv
+NI
 Bf
 fL
 Vv
@@ -173745,7 +174297,7 @@ QP
 Vv
 fL
 xD
-Vv
+NI
 Bf
 fL
 Vv
@@ -173999,13 +174551,13 @@ QP
 QP
 QP
 QP
-Ce
-Ce
-Ce
-Vv
-Ce
-Ce
-Ce
+Qk
+Qk
+Qk
+NI
+Qk
+Qk
+Qk
 QP
 QP
 QP
@@ -174259,7 +174811,7 @@ QP
 Vv
 fL
 xD
-Vv
+NI
 Bf
 fL
 Vv
@@ -174516,7 +175068,7 @@ aU
 aU
 aU
 xD
-Vv
+NI
 Bf
 aU
 aU
@@ -174773,7 +175325,7 @@ QP
 Vv
 fL
 JG
-Vv
+NI
 zy
 fL
 Vv
@@ -175027,13 +175579,13 @@ QP
 QP
 QP
 QP
-Ce
-Ce
-Vv
+Qk
+Qk
+NI
 fL
-Vv
-Ce
-Ce
+NI
+Qk
+Qk
 QP
 QP
 QP

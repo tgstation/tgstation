@@ -1,0 +1,179 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/item/storage/pod{
+	pixel_x = -26
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/pod_1)
+"e" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/window/plasma/spawner/north,
+/turf/open/floor/pod/light,
+/area/shuttle/pod_1)
+"h" = (
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/shuttle/pod_1)
+"m" = (
+/obj/docking_port/mobile/pod{
+	dwidth = 4;
+	port_direction = 2
+	},
+/obj/machinery/door/airlock/hatch,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/iron/dark,
+/area/shuttle/pod_1)
+"p" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 1
+	},
+/obj/structure/window/plasma/spawner,
+/turf/open/floor/plating,
+/area/shuttle/pod_1)
+"q" = (
+/obj/effect/turf_decal/siding/thinplating/dark/end{
+	dir = 4
+	},
+/turf/open/floor/iron/airless/solarpanel,
+/area/shuttle/pod_1)
+"r" = (
+/obj/effect/turf_decal/siding/thinplating/dark,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/airless/solarpanel,
+/area/shuttle/pod_1)
+"y" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/status_display/evac{
+	pixel_x = 32
+	},
+/obj/machinery/computer/shuttle/pod{
+	pixel_x = -32
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/pod_1)
+"D" = (
+/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pod_1)
+"E" = (
+/obj/effect/turf_decal/siding/thinplating/dark/end{
+	dir = 8
+	},
+/turf/open/floor/iron/airless/solarpanel,
+/area/shuttle/pod_1)
+"J" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/pod_1)
+"M" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pod_1)
+"T" = (
+/obj/machinery/door/airlock/hatch,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/iron/dark,
+/area/shuttle/pod_1)
+"W" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/radio/intercom{
+	pixel_x = 25
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/pod_1)
+"Z" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+Z
+E
+Z
+Z
+Z
+Z
+Z
+"}
+(2,1,1) = {"
+Z
+r
+Z
+Z
+Z
+Z
+Z
+"}
+(3,1,1) = {"
+Z
+q
+Z
+Z
+Z
+Z
+Z
+"}
+(4,1,1) = {"
+M
+D
+M
+J
+h
+h
+h
+"}
+(5,1,1) = {"
+p
+e
+y
+T
+d
+W
+m
+"}
+(6,1,1) = {"
+M
+D
+M
+J
+h
+h
+h
+"}
+(7,1,1) = {"
+Z
+E
+Z
+Z
+Z
+Z
+Z
+"}
+(8,1,1) = {"
+Z
+r
+Z
+Z
+Z
+Z
+Z
+"}
+(9,1,1) = {"
+Z
+q
+Z
+Z
+Z
+Z
+Z
+"}
