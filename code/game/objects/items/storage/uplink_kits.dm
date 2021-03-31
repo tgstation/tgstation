@@ -243,14 +243,17 @@
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
 
-/obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
-	new /obj/item/card/emag(src)
-	new /obj/item/pen/sleepy(src)
-	new /obj/item/reagent_containers/pill/cyanide(src)
-	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do.
-	new /obj/item/gun/ballistic/revolver(src)
-	new /obj/item/implanter/freedom(src)
-	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
+/obj/item/storage/toolbox/emergency/old/ancientbundle
+	items_inside = list(
+		/obj/item/card/emag = 1,
+		/obj/item/pen/sleepy = 1,
+		/obj/item/reagent_containers/pill/cyanide = 1,
+		/obj/item/chameleon = 1, //its not the original cloaking device, but it will do.
+		/obj/item/gun/ballistic/revolver = 1,
+		/obj/item/implanter/freedom = 1,
+		/obj/item/stack/telecrystal = 1, //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
+	)
+
 
 /obj/item/storage/box/syndicate/contract_kit
 	name = "Contract Kit"
@@ -438,6 +441,9 @@
 		/obj/item/clothing/head/helmet/space/syndicate = 1,
 		/obj/item/clothing/suit/space/syndicate = 1
 	)
+	var/set_a = list(
+
+	)
 
 /obj/item/storage/box/syndie_kit/space/ComponentInitialize()
 	. = ..()
@@ -614,21 +620,23 @@
 	new /obj/item/bedsheet/syndie(src)
 
 ///Subtype for the sabotage bundle. Contains three C4, two X4 and 6 signalers
-/obj/item/storage/backpack/duffelbag/syndie/sabotage/PopulateContents()
-	new /obj/item/grenade/c4(src)
-	new /obj/item/grenade/c4(src)
-	new /obj/item/grenade/c4(src)
-	new /obj/item/grenade/c4/x4(src)
-	new /obj/item/grenade/c4/x4(src)
-	new /obj/item/storage/box/syndie_kit/signaler(src)
+/obj/item/storage/backpack/duffelbag/syndie/sabotage
+	items_inside = list(
+		/obj/item/grenade/c4(src) = 1,
+		/obj/item/grenade/c4(src) = 1,
+		/obj/item/grenade/c4(src) = 1,
+		/obj/item/grenade/c4/x4(src) = 1,
+		/obj/item/grenade/c4/x4(src) = 1,
+		/obj/item/storage/box/syndie_kit/signaler(src) = 1
+	)
+
 
 /obj/item/storage/box/syndie_kit/signaler
 	name = "signaler box"
 	desc = "Contains everything an agent would need to remotely detonate their bombs."
-
-/obj/item/storage/box/syndie_kit/signaler/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/assembly/signaler(src)
+	items_inside = list(
+		/obj/item/assembly/signaler = 6
+	)
 
 /obj/item/storage/box/syndie_kit/imp_deathrattle
 	name = "deathrattle implant box"

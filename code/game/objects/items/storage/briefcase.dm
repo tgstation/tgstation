@@ -23,6 +23,7 @@
 	STR.max_combined_w_class = 21
 
 /obj/item/storage/briefcase/PopulateContents()
+	..()
 	new /obj/item/pen(src)
 	var/obj/item/folder/folder = new folder_path(src)
 	for(var/i in 1 to 6)
@@ -38,13 +39,15 @@
 /obj/item/storage/briefcase/sniperbundle
 	desc = "Its label reads \"genuine hardened Captain leather\", but suspiciously has no other tags or branding. Smells like L'Air du Temps."
 	force = 10
+	items_inside = list(
+		/obj/item/gun/ballistic/automatic/sniper_rifle/syndicate = 1,
+		/obj/item/clothing/neck/tie/red = 1,
+		/obj/item/clothing/under/syndicate/sniper = 1,
+		/obj/item/ammo_box/magazine/sniper_rounds/soporific = 1,
+		/obj/item/ammo_box/magazine/sniper_rounds/soporific = 1,
+		/obj/item/suppressor/specialoffer = 1
+	)
 
 /obj/item/storage/briefcase/sniperbundle/PopulateContents()
 	..() // in case you need any paperwork done after your rampage
-	new /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate(src)
-	new /obj/item/clothing/neck/tie/red(src)
-	new /obj/item/clothing/under/syndicate/sniper(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
-	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
-	new /obj/item/suppressor/specialoffer(src)
 
