@@ -1166,9 +1166,9 @@
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
 ///From base of mob/update_movespeed():area
 #define COMSIG_MOB_MOVESPEED_UPDATED "mob_update_movespeed"
-///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
+///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
-///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
+///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
 
 
