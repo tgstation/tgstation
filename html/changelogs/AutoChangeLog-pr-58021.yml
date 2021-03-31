@@ -1,0 +1,5 @@
+author: "SgtHunk"
+delete-after: True
+changes: 
+  - bugfix: "The Internal Affairs gamemode now actually works as intended, getting the target of the agent they just assassinated. Get to work, agents."
+  - bugfix: "IAA AIs will no longer always redtext their survive objective."
