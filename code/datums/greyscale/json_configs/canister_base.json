@@ -1,0 +1,17 @@
+{
+	"layers": [
+		{
+			"icon_state": "base",
+			"blend_mode": "overlay",
+			"color_id": 1
+		},
+		{
+			"icon_state": "outline",
+			"blend_mode": "overlay"
+		},
+		{
+			"icon_state": "lights",
+			"blend_mode": "overlay"
+		}
+	]
+}

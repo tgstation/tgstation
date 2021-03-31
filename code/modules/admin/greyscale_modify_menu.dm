@@ -68,7 +68,7 @@
 			target.greyscale_colors = split_colors.Join()
 			target.update_appearance()
 		if("refresh_file")
-			target.greyscale_icon = file("[target.greyscale_icon]")
+			//target.greyscale_icon = file("[target.greyscale_icon]")
 			refresh_preview()
 
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)
@@ -78,4 +78,4 @@
 		split_colors += "#[raw_colors[i]]"
 
 /datum/greyscale_modify_menu/proc/refresh_preview()
-	preview = greyscale_sprite(target.greyscale_icon, split_colors)
+	preview = SSgreyscale.GetColoredIconByType(target.greyscale_config, split_colors)

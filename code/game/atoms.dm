@@ -128,11 +128,11 @@
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
-	///The icon file to use for greyscaled sprites. Both this and greyscale_colors must be assigned to work.
-	var/greyscale_icon
+	///The config type to use for greyscaled sprites. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_config
 	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
 	var/greyscale_colors
-	///The current applied greyscale as of the last update_icon call
+	///Internal: The current applied greyscale as of the last update_icon call
 	var/greyscale_filter
 
 	///Icon-smoothing behavior.
@@ -704,13 +704,9 @@
 
 	if(updates & UPDATE_GREYSCALE)
 		var/list/colors = update_greyscale()
-		// Updating the greyscale icon in update_greyscale() is fine or we would check this earlier
-		if(greyscale_icon)
-			var/new_filter = greyscale_filter(greyscale_icon, colors, list(type="layer"))
-			if(greyscale_filter != new_filter)
-				filters -= greyscale_filter
-				filters += new_filter
-				greyscale_filter = new_filter
+		// Updating the greyscale config in update_greyscale() is fine or we would check this earlier
+		if(greyscale_config)
+			icon = SSgreyscale.GetColoredIconByType(greyscale_config, colors)
 		. |= UPDATE_GREYSCALE
 
 	if(updates & UPDATE_OVERLAYS)
