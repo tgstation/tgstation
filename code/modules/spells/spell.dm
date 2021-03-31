@@ -1,5 +1,5 @@
-#define TARGET_CLOSEST 1
-#define TARGET_RANDOM 2
+#define TARGET_CLOSEST 0
+#define TARGET_RANDOM 1
 
 
 /obj/effect/proc_holder
