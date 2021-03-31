@@ -26,12 +26,13 @@
 	reagent_state = LIQUID
 	color = "#aae7e4"
 	ph = 7
+	liver_damage = 0
 
 /datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/owner, delta_time)
 	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return ..()
-	eyes.applyOrganDamage(0.5 * REM * delta_time, 0)
+	eyes.applyOrganDamage(0.5 * REM * delta_time)
 	..()
 
 
