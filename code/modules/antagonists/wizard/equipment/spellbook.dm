@@ -294,6 +294,13 @@
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	spell_type = /obj/effect/proc_holder/spell/pointed/barnyardcurse
 
+/datum/spellbook_entry/nekos
+	name = "Cat Curse"
+	desc = "This spell dooms an unlucky(?) soul to become a kawaii catgirl. Nyaa~"
+	spell_type = /obj/effect/proc_holder/spell/pointed/catcurse
+	category = "Offensive"
+	cost = 0.25
+
 /datum/spellbook_entry/charge
 	name = "Charge"
 	desc = "This spell can be used to recharge a variety of things in your hands, from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."

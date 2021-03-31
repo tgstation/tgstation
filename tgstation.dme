@@ -3286,6 +3286,7 @@
 #include "code\modules\spells\spell_types\voice_of_god.dm"
 #include "code\modules\spells\spell_types\wizard.dm"
 #include "code\modules\spells\spell_types\pointed\barnyard.dm"
+#include "code\modules\spells\spell_types\pointed\kawaii.dm"
 #include "code\modules\spells\spell_types\pointed\blind.dm"
 #include "code\modules\spells\spell_types\pointed\mind_transfer.dm"
 #include "code\modules\spells\spell_types\pointed\pointed.dm"
