@@ -59,11 +59,11 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
 	equip_cooldown = 8
-	name = "\improper CH-PS \"Immolator\" laser"
+	name = "\improper CH-PS \"Immolator\" practice laser"
 	desc = "A weapon for combat exosuits. Shoots basic lasers."
 	icon_state = "mecha_laser"
 	energy_drain = 30
-	projectile = /obj/projectile/beam/laser
+	projectile = /obj/projectile/beam/practice
 	fire_sound = 'sound/weapons/laser.ogg'
 	harmful = TRUE
 
@@ -78,7 +78,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
-	name = "\improper CH-LC \"Solaris\" laser cannon"
+	name = "\improper CH-LC \"Solaris\" practice laser cannon"
 	desc = "A weapon for combat exosuits. Shoots heavy lasers."
 	icon_state = "mecha_laser"
 	energy_drain = 60
