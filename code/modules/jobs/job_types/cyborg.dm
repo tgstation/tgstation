@@ -3,7 +3,7 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = "Station"
 	total_positions = 0
-	spawn_positions = 1
+	spawn_positions = 0
 	supervisors = "your laws and the AI" //Nodrak
 	selection_color = "#ddffdd"
 	minimal_player_age = 21

@@ -25,6 +25,7 @@ Assistant
 	name = "Assistant"
 	jobtype = /datum/job/assistant
 	id_trim = /datum/id_trim/job/assistant
+	belt = /obj/item/storage/belt/utility/full/engi
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()
