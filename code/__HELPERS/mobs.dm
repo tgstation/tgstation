@@ -329,6 +329,83 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(interaction_key)
 		LAZYREMOVE(user.do_afters, interaction_key)
 
+/**
+ * Timed action involving one mob user. Target is optional. The amount of time left can be changed dynamically with a callback
+ *
+ * Checks that `user` does not move, change hands, get stunned, etc. for the
+ * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
+ * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
+ * dynamic_timer_change returns when invoked either a list or a number used according to dynamic_type
+ * dynamic_flags
+ */
+/proc/do_after_dynamic(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, datum/callback/dynamic_timer_change, dynamic_flags = SET_TIMELEFT(SET_MAX))
+	if(!user)
+		return FALSE
+	var/atom/target_loc = null
+	if(target && !isturf(target))
+		target_loc = target.loc
+
+	if(!interaction_key && target)
+		interaction_key = target //Use the direct ref to the target
+	if(interaction_key) //Do we have a interaction_key now?
+		var/current_interaction_count = LAZYACCESS(user.do_afters, interaction_key) || 0
+		if(current_interaction_count >= max_interact_count) //We are at our peak
+			return
+		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
+
+	var/atom/user_loc = user.loc
+
+	var/drifting = FALSE
+	if(!user.Process_Spacemove(0) && user.inertia_dir)
+		drifting = TRUE
+
+	var/holding = user.get_active_held_item()
+
+	delay *= user.cached_multiplicative_actions_slowdown
+
+	var/datum/progressbar/progbar
+	if(progress)
+		progbar = new(user, delay, target || user)
+
+	var/endtime = world.time + delay
+	var/starttime = world.time
+
+	. = TRUE
+	while (world.time < endtime)
+		stoplag(1)
+		var/list/timer_change = dynamic_timer_change.Invoke(endtime - world.time) //returns list(new time left, SET_MIN or SET_MAX)
+		if(!QDELETED(progbar))
+			progbar.update(world.time - starttime)
+
+		if(drifting && !user.inertia_dir)
+			drifting = FALSE
+			user_loc = user.loc
+
+		if(
+			QDELETED(user) \
+			|| (!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
+			|| (!(timed_action_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
+			|| (!(timed_action_flags & IGNORE_INCAPACITATED) && HAS_TRAIT(user, TRAIT_INCAPACITATED)) \
+			|| (extra_checks && !extra_checks.Invoke()) \
+		)
+			. = FALSE
+			break
+
+		if(
+			!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) \
+			&& !drifting \
+			&& !QDELETED(target_loc) \
+			&& (QDELETED(target) || target_loc != target.loc) \
+			&& ((user_loc != target_loc || target_loc != user)) \
+			)
+			. = FALSE
+			break
+
+	if(!QDELETED(progbar))
+		progbar.end_progress()
+
+	if(interaction_key)
+		LAZYREMOVE(user.do_afters, interaction_key)
 
 ///Timed action involving at least one mob user and a list of targets. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
 /proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)

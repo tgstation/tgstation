@@ -26,6 +26,8 @@
 	var/nextstate = null
 	var/boltslocked = TRUE
 	var/list/affecting_areas
+	///the number of people trying to open this firelock without any tools
+	var/number_of_people_trying_to_open = 0
 
 /obj/machinery/door/firedoor/Initialize()
 	. = ..()
@@ -93,12 +95,12 @@
 			"<span class='notice'>You bang on \the [src].</span>")
 		playsound(loc, 'sound/effects/glassknock.ogg', 10, FALSE, frequency = 32000)
 	else
+		number_of_people_trying_to_open++
+
 		///we dont want people with only one hand to have the same visible_message as people with two hands
 		var/hand_string = "hands"
-
 		if(iscarbon(user))
 			var/mob/living/carbon/user_as_carbon = user
-
 			var/obj/item/bodypart/right_arm = user_as_carbon.get_bodypart(BODY_ZONE_R_ARM)
 			var/obj/item/bodypart/left_arm = user_as_carbon.get_bodypart(BODY_ZONE_L_ARM)
 
@@ -107,17 +109,34 @@
 			if(!left_arm || left_arm.bodypart_disabled)
 				hand_string = "hand"
 
-		user.visible_message("<span class='notice'>[user] tries to open \the [src] with their [hand_string], struggling greatly to open the heavy door by themselves.</span>", \
-			"<span class='notice'> You try with all your strength to pry open \the [src] with your [hand_string], barely moving it!</span>")
+		//we want to acknowledge that several people are trying to open the same firelock to encourage them to do it
+		//also to signal to people doing it by themselves that its faster with help
+		if(number_of_people_trying_to_open == 1)
+			user.visible_message("<span class='notice'>[user] tries to open \the [src] with their [hand_string], struggling greatly to open the heavy door by themselves.</span>", \
+				"<span class='notice'> You try with all your strength to pry open \the [src] with your [hand_string], barely moving it!</span>")
+		else if (number_of_people_trying_to_open == 2)
+			user.visible_message("<span class='notice'>[user] joins another in trying to open \the [src] with their [hand_string].</span>", \
+				"<span class='notice'> You join another in trying to pry open \the [src] with your [hand_string]!</span>")
+		else
+			user.visible_message("<span class='notice'>[user] joins the others in trying to open \the [src] with their [hand_string]!</span>", \
+				"<span class='notice'> You join the others in trying to pry open \the [src] with your [hand_string]!</span>")
 
 		//burn arms in the do_after callback so that its applied continuosly instead of at the start and/or end
 		var/datum/callback/burning_callback = CALLBACK(src, .proc/burn_arms, user)
 
-		if(do_after(user, TOOLLESS_OPEN_DURATION_SOLO, src, extra_checks = burning_callback))
+		//players can team up to open it faster, but only up to a point
+		var/true_opening_time = TOOLLESS_OPEN_DURATION_SOLO / max((min(3, number_of_people_trying_to_open) * 0.5), 1)
+		//note that this only makes the do_after of the last one faster, find a way to show a unified do_after for all people opening it
+
+		//var/datum/callback/timer_callback = CALLBACK(src, .proc/adjust_do_after_timer)
+		//do_after_dynamic(user, true_opening_time, src, extra_checks = burning_callback, dynamic_timer_change = timer_callback, timer_flags = COORDINATE_TIMELEFT)
+		if(do_after(user, true_opening_time, src, extra_checks = burning_callback))
 			user.visible_message("<span class='notice'>[user] opens \the [src] with their [hand_string].</span>", \
 				"<span class='notice'>You pry open \the [src] with your [hand_string]!</span>")
 
 			open()
+
+		number_of_people_trying_to_open = max(0, --number_of_people_trying_to_open)
 
 /obj/machinery/door/firedoor/attack_paw(mob/living/user, list/modifiers)
 	. = ..()
@@ -128,18 +147,15 @@
 /obj/machinery/door/firedoor/proc/burn_arms(mob/living/user)
 	. = TRUE //we dont want to interrupt the do_after
 
-	if(!iscarbon(user))//doing it to simplemobs is pretty simple
-		if(prob(10))
-			playsound(user, 'sound/effects/wounds/sizzle1.ogg', 70)
-		user.apply_damage(0.2, BURN)
+	if(!iscarbon(user))//i dont want to deal with simplemobs so they get off scot free
 		return
 
 	var/mob/living/carbon/user_as_carbon = user
 
 	var/datum/gas_mixture/loc_air = loc.return_air()
 	var/max_temperature_of_adjacent_tiles = loc_air.temperature
-	for(var/cardinal_to_check in GLOB.cardinals)
-		var/turf/turf_to_check = get_step(src, cardinal_to_check)
+	for(var/i in GLOB.cardinals)
+		var/turf/turf_to_check = get_step(src, i)
 		var/datum/gas_mixture/environment = turf_to_check.return_air()
 		if(environment)
 			max_temperature_of_adjacent_tiles = max(max_temperature_of_adjacent_tiles, environment.temperature)
@@ -167,6 +183,13 @@
 			right_arm.receive_damage(0, 0.2)
 		if(left_arm && left_arm.status == BODYPART_ORGANIC && !left_arm.is_pseudopart)
 			left_arm.receive_damage(0, 0.2)
+
+/obj/machinery/door/firedoor/proc/adjust_do_after_timer()
+	. = list(20, SET_MIN)
+
+/obj/machinery/door/firedoor/proc/decrement_bare_hand_openers(datum/source)
+	SIGNAL_HANDLER
+	number_of_people_trying_to_open = max(0, --number_of_people_trying_to_open)
 
 /obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
 	add_fingerprint(user)
@@ -213,6 +236,9 @@
 		return
 
 	if(density)
+		if(number_of_people_trying_to_open)
+			user.visible_message("<span class='notice'>[user] easily opens \the [src] with his crowbar.</span>")
+			number_of_people_trying_to_open = 0
 		open()
 	else
 		close()
