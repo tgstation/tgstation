@@ -97,11 +97,11 @@
 
 /obj/item/ammo_casing/energy/laser/accelerator
 	projectile_type = /obj/projectile/beam/laser/accelerator //I think this is also orange, but it tried to hide from me, so it must be punished
-	select_name = "practice accelerating"
+	select_name = "long-distance practice"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/projectile/beam/laser/accelerator
-	name = "accelerator laser"
+	name = "accelerator practice laser"
 	icon_state = "scatterlaser"
 	range = 255
 	damage = 0
