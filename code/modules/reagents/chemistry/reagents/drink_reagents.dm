@@ -1031,7 +1031,7 @@
 	name = "Moth Milk"
 	description = "Whoever thought that milking moths is a good idea was totally wrong. Is it even milk?"
 	color = "#F0E9DA" // rgb: 240, 233, 218
-	taste_description = "salty and oily substance" //...are you sure that it's not just moth cum?
+	taste_description = "salty and oily substance"
 	glass_name = "milk?"
 	glass_desc = "It's looking pretty odd, are you sure that it's safe to drink?"
 	ph = 6.5
