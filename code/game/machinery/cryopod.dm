@@ -39,94 +39,73 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 /obj/machinery/computer/cryopod/attack_ai()
 	attack_hand()
 
-/obj/machinery/computer/cryopod/attack_hand(mob/user, list/modifiers)
+/obj/machinery/computer/cryopod/ui_interact(mob/user, datum/tgui/ui)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 
-	user.set_machine(src)
 	add_fingerprint(user)
 
-	var/dat
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CryopodConsole", name)
+		ui.open()
 
-	dat += "<hr/><br/><b>[storage_name]</b><br/>"
-	dat += "<i>Welcome, [user.real_name].</i><br/><br/><hr/>"
-	dat += "<a href='?src=[REF(src)];log=1'>View storage log</a>.<br>"
+/obj/machinery/computer/cryopod/ui_data()
+	var/list/data = list()
+	data["allow_items"] = allow_items
+	data["frozen_crew"] = frozen_crew
+	data["frozen_items"] = list()
+
 	if(allow_items)
-		dat += "<a href='?src=[REF(src)];view=1'>View objects</a>.<br>"
-		dat += "<a href='?src=[REF(src)];item=1'>Recover object</a>.<br>"
-		dat += "<a href='?src=[REF(src)];allitems=1'>Recover all objects</a>.<br>"
+		data["frozen_items"] = frozen_items
 
-	user << browse(dat, "window=cryopod_console")
-	onclose(user, "cryopod_console")
+	return data
 
-/obj/machinery/computer/cryopod/Topic(href, href_list)
-	if(..())
-		return 1
+/obj/machinery/computer/cryopod/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
 
 	var/mob/user = usr
 
 	add_fingerprint(user)
 
-	if(href_list["log"])
+	switch(action)
+		if("one_item")
+			var/obj/item/desired_item
+			if(!allowed(user))
+				to_chat(user, "<span class='warning'>Access Denied.</span>")
+				return
+			if(!allow_items) return
 
-		var/dat = "<b>Recently stored [storage_type]</b><br/><hr/><br/>"
-		for(var/person in frozen_crew)
-			dat += "[person]<br/>"
-		dat += "<hr/>"
+			if(!params["item"])
+				return
 
-		user << browse(dat, "window=cryolog")
+			if(params["item"])
+				desired_item = params["item"]
 
-	if(href_list["view"])
-		if(!allow_items) return
+			if(!(desired_item in frozen_items))
+				to_chat(user, "<span class='notice'>\The [desired_item] is no longer in storage.</span>")
+				return
 
-		var/dat = "<b>Recently stored objects</b><br/><hr/><br/>"
-		for(var/obj/item/I in frozen_items)
-			dat += "[I.name]<br/>"
-		dat += "<hr/>"
+			visible_message("<span class='notice'>The console beeps happily as it disgorges \the [desired_item].</span>")
 
-		user << browse(dat, "window=cryoitems")
+			desired_item.forceMove(get_turf(src))
+			frozen_items -= desired_item
 
-	else if(href_list["item"])
-		if(!allowed(user))
-			to_chat(user, "<span class='warning'>Access Denied.</span>")
-			return
-		if(!allow_items) return
+		if("all_items")
+			if(!allowed(user))
+				to_chat(user, "<span class='warning'>Access Denied.</span>")
+				return
+			if(!allow_items) return
 
-		if(frozen_items.len == 0)
-			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
-			return
+			visible_message("<span class='notice'>The console beeps happily as it disgorges the desired objects.</span>")
 
-		var/obj/item/item = input(user, "Please choose which object to retrieve.","Object recovery",null) as null|anything in frozen_items
-		if(!item)
-			return
+			for(var/obj/item/item in frozen_items)
+				item.forceMove(get_turf(src))
+				frozen_items -= item
 
-		if(!(item in frozen_items))
-			to_chat(user, "<span class='notice'>\The [item] is no longer in storage.</span>")
-			return
-
-		visible_message("<span class='notice'>The console beeps happily as it disgorges \the [item].</span>")
-
-		item.forceMove(get_turf(src))
-		frozen_items -= item
-
-	else if(href_list["allitems"])
-		if(!allowed(user))
-			to_chat(user, "<span class='warning'>Access Denied.</span>")
-			return
-		if(!allow_items) return
-
-		if(frozen_items.len == 0)
-			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
-			return
-
-		visible_message("<span class='notice'>The console beeps happily as it disgorges the desired objects.</span>")
-
-		for(var/obj/item/item in frozen_items)
-			item.forceMove(get_turf(src))
-			frozen_items -= item
-
-	updateUsrDialog()
-	return
+	return TRUE
 
 // Cryopods themselves.
 /obj/machinery/cryopod
