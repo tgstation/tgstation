@@ -1027,24 +1027,24 @@
 	return ..()
 
 
-/datum/reagent/consumable/mothmilk
+/datum/reagent/consumable/moth_milk
 	name = "Moth Milk"
 	description = "Whoever thought that milking moths is a good idea was totally wrong. Is it even milk?"
 	color = "#F0E9DA" // rgb: 240, 233, 218
-	taste_desc = "salty and oily substance" //...are you sure that it's not just moth cum?
+	taste_description = "salty and oily substance" //...are you sure that it's not just moth cum?
 	glass_name = "milk?"
 	glass_desc = "It's looking pretty odd, are you sure that it's safe to drink?"
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/mothmilk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/moth_milk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(!ismoth(M))
 		if(M.disgust < 80)
 			M.adjust_disgust(10 * REM * delta_time)
 		return TRUE
 	. = ..()
 
-/datum/reagent/consumable/mothmilk/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/consumable/moth_milk/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if(istype(exposed_obj, /obj/item/food))
 		var/obj/item/food/food = exposed_obj
