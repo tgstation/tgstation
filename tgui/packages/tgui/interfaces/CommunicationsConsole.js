@@ -299,6 +299,7 @@ const PageMain = (props, context) => {
   const {
     alertLevel,
     alertLevelTick,
+    aprilFools,
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
@@ -413,7 +414,7 @@ const PageMain = (props, context) => {
             onClick={() => act("makePriorityAnnouncement")}
           />}
 
-          {!!canMakeAnnouncement && <Button
+          {!!aprilFools && !!canMakeAnnouncement && <Button
             icon="bullhorn"
             content="Call Emergency Meeting"
             onClick={() => act("emergency_meeting")}

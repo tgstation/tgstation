@@ -29,14 +29,16 @@ SUBSYSTEM_DEF(communications)
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
 
-/datum/controller/subsystem/communications/proc/can_make_meeting(mob/living/user)
-	if(emergency_meeting_cooldown > world.time)
+/datum/controller/subsystem/communications/proc/can_make_emergency_meeting(mob/living/user)
+	if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
+		. = FALSE
+	else if(emergency_meeting_cooldown > world.time)
 		. = FALSE
 	else
 		. = TRUE
 
 /datum/controller/subsystem/communications/proc/emergency_meeting(mob/living/user)
-	if(!can_make_meeting(user))
+	if(!can_make_emergency_meeting(user))
 		return FALSE
 	call_emergency_meeting(user, get_area(user))
 	emergency_meeting_cooldown = world.time + 5 MINUTES

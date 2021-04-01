@@ -88,7 +88,6 @@
 		message_simple = S.deathmessage
 	. = ..()
 	message_simple = initial(message_simple)
-	playsound(user, 'sound/misc/emergency_meeting2.ogg', 200, FALSE, TRUE)
 	if(. && user.deathsound)
 		if(isliving(user))
 			var/mob/living/L = user

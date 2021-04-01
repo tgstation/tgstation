@@ -45,6 +45,8 @@
 				SEND_SOUND(M, s)
 
 /proc/call_emergency_meeting(mob/living/user, area/button_zone)
+	if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
+		return
 	var/announcement
 
 	announcement += "<h1 class='alert'>Captain Alert</h1>"
