@@ -12,11 +12,11 @@ SUBSYSTEM_DEF(communications)
 
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
-		. = FALSE
+		return TRUE
 	else if(!is_silicon && COOLDOWN_FINISHED(src, nonsilicon_message_cooldown))
-		. = FALSE
+		return TRUE
 	else
-		. = TRUE
+		return FALSE
 
 /datum/controller/subsystem/communications/proc/make_announcement(mob/living/user, is_silicon, input)
 	if(!can_announce(user, is_silicon))
@@ -42,9 +42,9 @@ SUBSYSTEM_DEF(communications)
 	if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		return FALSE
 	else if(COOLDOWN_FINISHED(src, emergency_meeting_cooldown))
-		return FALSE
-	else
 		return TRUE
+	else
+		return FALSE
 
 /**
  * Call an emergency meeting
