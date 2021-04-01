@@ -1,7 +1,7 @@
 /* // Simple Pipe
 // The regular pipe you see everywhere, including bent ones.
 
-/obj/machinery/atmospherics/pipe/simple
+/obj/machinery/atmospherics/pipe/smart/manifold4w/
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "pipe11-3"
 

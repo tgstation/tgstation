@@ -2558,7 +2558,7 @@
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "mG" = (
-/obj/machinery/atmospherics/pipe/simple{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{

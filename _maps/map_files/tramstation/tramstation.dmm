@@ -27088,7 +27088,7 @@
 "eaY" = (
 /obj/structure/grille,
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "ebe" = (
@@ -27363,7 +27363,7 @@
 /obj/machinery/meter{
 	name = "Mixed Air Tank Out"
 	},
-/obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "eiv" = (
@@ -44792,7 +44792,7 @@
 "lYu" = (
 /obj/structure/grille,
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
@@ -71596,7 +71596,7 @@
 /obj/machinery/meter{
 	name = "Mixed Air Tank In"
 	},
-/obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "xIM" = (
