@@ -55,6 +55,11 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/cargo/qm)
+"adZ" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/starboard/aft)
 "aer" = (
 /obj/machinery/door/airlock/vault{
 	name = "'Loyalty' Device";
@@ -3177,7 +3182,7 @@
 "dwa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname{
-	c_tag = "Jim Norton's Quebecois Coffee"
+	dir = 8
 	},
 /turf/open/floor/plating/asteroid,
 /area/hallway/primary/starboard)
@@ -3244,6 +3249,15 @@
 	},
 /turf/open/floor/plating,
 /area/science/research/abandoned)
+"dAz" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/obj/machinery/power/floodlight{
+	anchored = 1
+	},
+/obj/machinery/power/apc/auto_name/west,
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 "dAW" = (
 /obj/structure/sink/kitchen{
 	dir = 4;
@@ -9941,6 +9955,13 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/science/research)
+"kTH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid,
+/area/hallway/primary/central)
 "kUq" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium,
@@ -13541,6 +13562,16 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engineering/atmos)
+"oPe" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "oPm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output{
 	dir = 8;
@@ -15180,6 +15211,14 @@
 /obj/item/gun/grenadelauncher,
 /turf/open/floor/mineral/titanium,
 /area/ai_monitored/security/armory)
+"qCF" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 "qDi" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/decal/cleanable/dirt,
@@ -16253,6 +16292,7 @@
 /area/service/library)
 "rLl" = (
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/mineral/titanium,
 /area/maintenance/department/science/central)
 "rLI" = (
@@ -18293,6 +18333,12 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/cargo/storage)
+"tTw" = (
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid,
+/area/hallway/primary/central)
 "tTz" = (
 /obj/structure/chair/stool,
 /turf/open/floor/mineral/titanium,
@@ -19995,6 +20041,9 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/south,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "wbf" = (
@@ -20531,6 +20580,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/asteroid,
 /area/engineering/main)
+"wEd" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/camera/autoname{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 "wEh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -21031,6 +21087,10 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
+"xeO" = (
+/obj/machinery/power/apc/auto_name/west,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port/aft)
 "xeW" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/command/corporate_showroom)
@@ -21328,6 +21388,13 @@
 /obj/machinery/camera/autoname,
 /turf/open/floor/plating/asteroid,
 /area/medical/cryo)
+"xzl" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/fore)
 "xzJ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -44996,7 +45063,7 @@ qPB
 hor
 hor
 cCT
-kRu
+xzl
 nGT
 csz
 jjz
@@ -45611,7 +45678,7 @@ tsD
 tsD
 ihG
 wIY
-tsD
+xeO
 tsD
 ulV
 wIY
@@ -46370,7 +46437,7 @@ iCG
 tHw
 tHw
 iCG
-tHw
+oPe
 tHw
 esd
 esd
@@ -46608,7 +46675,7 @@ mxa
 mxa
 mxa
 bou
-qwE
+qCF
 qwE
 qwE
 sMi
@@ -47611,10 +47678,10 @@ bou
 eyI
 mtJ
 viz
-eyI
+tTw
 fWG
 eyI
-ldg
+eyI
 eyI
 eyI
 eyI
@@ -47859,7 +47926,7 @@ xYK
 jOK
 fWG
 fWG
-fWG
+wlh
 kwg
 fWG
 lsy
@@ -50401,7 +50468,7 @@ fWG
 fWG
 xek
 wuC
-fWG
+wlh
 azg
 wuC
 wuC
@@ -51941,7 +52008,7 @@ gLj
 sTU
 bou
 bou
-jsX
+dAz
 wuC
 wuC
 azg
@@ -56564,7 +56631,7 @@ gJM
 eyI
 dTC
 fWG
-fWG
+wEd
 fWG
 fWG
 fWG
@@ -57370,7 +57437,7 @@ fWG
 fWG
 fWG
 fWG
-fWG
+wlh
 fWG
 fWG
 fWG
@@ -58931,7 +58998,7 @@ jTS
 jTS
 oOG
 xjT
-eyI
+ldg
 cpS
 cqZ
 pcr
@@ -60471,7 +60538,7 @@ bVH
 bVH
 cpS
 ogr
-ogr
+kTH
 ang
 cpS
 cqZ
@@ -65365,7 +65432,7 @@ sVA
 cqZ
 rRI
 rRI
-rRI
+adZ
 rRI
 cqZ
 cqZ
