@@ -44,6 +44,27 @@
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				SEND_SOUND(M, s)
 
+/proc/emergency_meeting(area/button_zone)
+	var/announcement
+
+	announcement += "<h1 class='alert'>Captain Alert</h1>"
+	///If the announcer overrides alert messages, use that message.
+	announcement += "<br><span class='alert'>An Emergency Meeting Has Been Called!</span><br>"
+	announcement += "<br>"
+
+	var/s = sound('sound/misc/emergency_meeting.ogg',)
+	for(var/mob/M in GLOB.player_list)
+		if(!isnewplayer(M))
+			to_chat(M, announcement)
+			SEND_SOUND(M, s)
+			M.overlay_fullscreen("emergency_meeting", /atom/movable/screen/fullscreen/emergency_meeting, 2)
+			addtimer(CALLBACK(M, /mob/.proc/clear_fullscreen_after_animate, "emergency_meeting"), 30, TIMER_CLIENT_TIME)
+			if (is_station_level(M.z))
+				for (var/turf/T in get_area_turfs(button_zone))
+					if (isopenturf(T))
+						M.forceMove(T)
+						break
+
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
 		title = "Classified [command_name()] Update"

@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(communications)
 
 	var/silicon_message_cooldown
 	var/nonsilicon_message_cooldown
+	var/emergency_meeting_cooldown
 
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && silicon_message_cooldown > world.time)
@@ -27,6 +28,19 @@ SUBSYSTEM_DEF(communications)
 		nonsilicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
+
+/datum/controller/subsystem/communications/proc/can_make_meeting(mob/living/user)
+	if(emergency_meeting_cooldown > world.time)
+		. = FALSE
+	else
+		. = TRUE
+
+/datum/controller/subsystem/communications/proc/emergency_meeting(mob/living/user)
+	if(!can_make_meeting(user))
+		return FALSE
+	emergency_meeting(get_area(user))
+	emergency_meeting_cooldown = world.time + 5 MINUTES
+	message_admins("[ADMIN_LOOKUPFLW(user)] has called an emergency meeting.")
 
 /datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)

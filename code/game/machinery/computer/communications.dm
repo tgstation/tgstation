@@ -292,6 +292,10 @@
 				return
 			post_status("alert", picture)
 			playsound(src, "terminal_type", 50, FALSE)
+		if ("sus")
+			if (!authenticated(usr))
+				return
+			
 		if ("toggleAuthentication")
 			// Log out if we're logged in
 			if (authorize_name)
@@ -519,6 +523,16 @@
 		return
 
 	return length(CONFIG_GET(keyed_list/cross_server)) > 0
+
+/obj/machinery/computer/communications/proc/emergency_meeting(mob/living/user)
+	var/is_ai = issilicon(user)
+	if (is_ai)
+		return
+	if(!SScommunications.can_make_meeting(user))
+		to_chat(user, "<span class='alert'>Emergency meeting button cooling down. Please stand by.</span>")
+		return
+	SScommunications.emergency_meeting(user)
+	deadchat_broadcast(" called an emergency meeting from <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = issilicon(user)
