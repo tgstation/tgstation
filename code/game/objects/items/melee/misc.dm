@@ -157,6 +157,8 @@
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
+	var/toxin_type = /datum/reagent/toxin
+
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -164,7 +166,7 @@
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
-		H.reagents.add_reagent(/datum/reagent/toxin, 4)
+		H.reagents.add_reagent(toxin_type, 4)
 
 /obj/item/melee/beesword/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

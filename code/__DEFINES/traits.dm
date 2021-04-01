@@ -586,6 +586,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Self-explainatory.
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_COMPONENT_TRAIT "mood_component"
+/// All bots will be friendly to you
+#define TRAIT_ROBOTIC_FRIEND "robotic friend"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

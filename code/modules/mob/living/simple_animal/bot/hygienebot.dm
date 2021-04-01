@@ -127,8 +127,9 @@
 				if(target.loc == loc && isturf(target.loc)) //LADIES AND GENTLEMAN WE GOTEM PREPARE TO DUMP
 					start_washing()
 					if(mad)
-						speak("Well about fucking time you degenerate.", "Fucking finally.", "Thank god, you finally stopped.")
-						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1)
+						if(!HAS_TRAIT(target, TRAIT_ROBOTIC_FRIEND)) //We don't speak shit about our friends
+							speak("Well about fucking time you degenerate.", "Fucking finally.", "Thank god, you finally stopped.")
+							playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1)
 						mad = FALSE
 					mode = BOT_SHOWERSTANCE
 				else
@@ -138,7 +139,7 @@
 						back_to_idle()
 						return
 					walk_to(src, target,0, currentspeed)
-					if(mad && prob(min(frustration * 2, 60)))
+					if(mad && prob(min(frustration * 2, 60)) && !HAS_TRAIT(target, TRAIT_ROBOTIC_FRIEND))
 						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1)
 						speak(pick("Get back here you foul smelling fucker.", "STOP RUNNING OR I WILL CUT YOUR ARTERIES!", "Just fucking let me clean you you arsehole!", "STOP. RUNNING.", "Either you stop running or I will fucking drag you out of an airlock.", "I just want to fucking clean you you troglodyte.", "If you don't come back here I'll put a green cloud around you cunt."))
 					if((get_dist(src, target)) >= olddist)

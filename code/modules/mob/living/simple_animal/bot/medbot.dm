@@ -416,7 +416,7 @@
 	if(C.suiciding)
 		return FALSE //Kevorkian school of robotic medical assistants.
 
-	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
+	if(emagged == 2 && !HAS_TRAIT(C, TRAIT_ROBOTIC_FRIEND)) //Everyone needs our medicine. (Our medicine is toxins) //But not if we're friendly to them
 		return TRUE
 
 	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,tag)) //the early medbot gets the worm (or in this case the patient)

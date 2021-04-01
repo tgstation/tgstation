@@ -253,6 +253,14 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
+/datum/action/item_action/recall_beesword
+	name = "Recall Your Sword"
+
+/datum/action/item_action/recall_beesword/Trigger()
+	var/obj/item/clothing/suit/hooded/bee_costume/buzzon/suit = target
+	if(istype(suit))
+		suit.recall_sword()
+
 /datum/action/item_action/toggle_welding_screen
 	name = "Toggle Welding Screen"
 
@@ -675,7 +683,7 @@
 	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
-	
+
 /datum/action/item_action/bhop/brocket
 	name = "Activate Rocket Boots"
 	desc = "Activates the boot's rocket propulsion system, allowing the user to hurl themselves great distances."

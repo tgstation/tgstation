@@ -153,6 +153,9 @@
 		if(!istype(C))
 			return
 
+		if(HAS_TRAIT(C, TRAIT_ROBOTIC_FRIEND))
+			return
+
 		if(!(C.job in stolen_valor))
 			stolen_valor += C.job
 		update_titles()
@@ -207,7 +210,7 @@
 		if(isopenturf(loc))
 
 			for(var/mob/living/carbon/victim in loc)
-				if(victim != target)
+				if(victim != target && !HAS_TRAIT(victim, TRAIT_ROBOTIC_FRIEND))
 					UnarmedAttack(victim) // Acid spray
 
 			if(prob(15)) // Wets floors and spawns foam randomly
@@ -343,6 +346,8 @@
 		if(istype(A, /mob/living/carbon))
 			var/mob/living/carbon/victim = A
 			if(victim.stat == DEAD)//cleanbots always finish the job
+				return
+			if(HAS_TRAIT(victim, TRAIT_ROBOTIC_FRIEND))
 				return
 
 			victim.visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [victim]!</span>", "<span class='userdanger'>[src] sprays you with hydrofluoric acid!</span>")

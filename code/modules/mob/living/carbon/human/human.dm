@@ -391,6 +391,9 @@
 		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material on [p_their()] [the_part.name].</span>")
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_FRIEND)) //Nope
+		return -10
+
 	if(judgement_criteria & JUDGE_EMAGGED)
 		return 10 //Everyone is a criminal!
 

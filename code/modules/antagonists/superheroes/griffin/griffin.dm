@@ -1,0 +1,31 @@
+/datum/outfit/superhero/griffin
+	name = "Griffin"
+	uniform = /obj/item/clothing/under/costume/griffin
+	suit = /obj/item/clothing/suit/toggle/owlwings/griffinwings/griffin
+	shoes = /obj/item/clothing/shoes/griffin
+	ears = /obj/item/radio/headset
+	gloves = /obj/item/clothing/gloves/color/white/griffin
+	head = /obj/item/clothing/head/griffin/griffin
+	back = /obj/item/storage/backpack
+	glasses = /obj/item/clothing/glasses/sunglasses
+	mask = /obj/item/clothing/mask/gas
+	belt = /obj/item/storage/belt/utility/griffon
+	r_pocket = /obj/item/grenade/smokebomb
+	l_pocket = /obj/item/restraints/handcuffs/cable
+	implants = list(/obj/item/implant/freedom)
+
+/datum/outfit/superhero/griffin/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+	. = ..()
+	if(!H.mind)
+		return
+	H.mind.AddSpell(/obj/effect/proc_holder/spell/pointed/griffin_convert)
+
+/datum/outfit/superhero/griffin/space
+	name = "Griffin (Operation Starshine)"
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/tank/jetpack/oxygen/harness/griffin
+	internals_slot = ITEM_SLOT_SUITSTORE
+
+/datum/outfit/superhero/griffin/space/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+	. = ..()
+	H.dna.add_mutation(SPACEMUT) //He gets space adapt instead of a hardsuit

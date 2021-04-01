@@ -105,7 +105,7 @@
 
 	if(require_twohands) //Don't let the item fall to the ground and cause bugs if it's actually being equipped on another slot.
 		unwield(user, FALSE, FALSE)
-	if(wielded)
+	else if(wielded)
 		unwield(user)
 	if(source == offhand_item && !QDELETED(source))
 		qdel(source)

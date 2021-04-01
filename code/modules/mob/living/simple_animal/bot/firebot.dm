@@ -165,7 +165,7 @@
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))
 		var/mob/living/M = target
-		if(M.on_fire || (emagged == 2 && !M.on_fire))
+		if(M.on_fire || (emagged == 2 && !M.on_fire && !HAS_TRAIT(M, TRAIT_ROBOTIC_FRIEND)))
 			return TRUE
 
 	else if(isturf(target))

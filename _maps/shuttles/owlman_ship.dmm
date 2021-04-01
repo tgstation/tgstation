@@ -1,0 +1,56 @@
+"a" = (/turf/template_noop,/area/space)
+"b" = (/obj/machinery/light/small,/obj/item/radio/intercom{pixel_y = -29},/obj/effect/turf_decal/siding/blue{dir = 6},/turf/open/floor/mineral/titanium/blue,/area/space)
+"d" = (/obj/effect/turf_decal/siding/blue/end{dir = 1},/obj/machinery/computer/shuttle{name = "Owl Man shuttle console"; possible_destinations = "owlship_home;owlship_custom;syndicate_nw"; shuttleId = "owlship"},/turf/open/floor/mineral/titanium/blue,/area/space)
+"e" = (/obj/structure/table/reinforced,/turf/open/floor/mineral/plastitanium,/area/space)
+"f" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/space)
+"h" = (/obj/machinery/door/airlock/external{id_tag = "owlman_airlock"; name = "OwlSkip Shuttle External Airlock"},/obj/effect/mapping_helpers/airlock/cyclelink_helper,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/mapping_helpers/airlock/cutaiwire,/obj/effect/mapping_helpers/airlock/locked,/obj/structure/cable,/turf/open/floor/plating,/area/space)
+"j" = (/obj/effect/turf_decal/siding/blue/end,/turf/open/floor/mineral/titanium/blue,/area/space)
+"k" = (/turf/closed/wall/mineral/titanium,/area/space)
+"l" = (/obj/machinery/door/airlock/command/glass{name = "OwlSkip Shuttle Bridge"},/obj/effect/mapping_helpers/airlock/cutaiwire,/turf/open/floor/mineral/plastitanium,/area/space)
+"m" = (/obj/effect/turf_decal/siding/blue,/turf/open/floor/mineral/titanium/blue,/area/space)
+"n" = (/obj/machinery/computer/camera_advanced/shuttle_docker{jumpto_ports = list("owlship_home" = 1, "owlship_custom", "syndicate_nw" = 1); shuttleId = "owlship"; shuttlePortId = "owlship_custom"},/turf/open/floor/mineral/plastitanium,/area/space)
+"t" = (/obj/effect/turf_decal/siding/blue{dir = 4},/obj/effect/turf_decal/siding/blue{dir = 8},/turf/open/floor/mineral/titanium/blue,/area/space)
+"u" = (/obj/structure/shuttle/engine/heater,/turf/closed/wall/mineral/titanium,/area/space)
+"v" = (/obj/effect/turf_decal/siding/yellow/end{dir = 4},/turf/open/floor/mineral/titanium/yellow,/area/space)
+"w" = (/turf/closed/wall/mineral/titanium/nodiagonal,/area/space)
+"x" = (/obj/effect/turf_decal/siding/blue/end{dir = 1},/turf/open/floor/mineral/titanium/blue,/area/space)
+"y" = (/obj/machinery/light/small,/obj/structure/chair/comfy/shuttle{dir = 1},/obj/effect/turf_decal/siding/blue{dir = 9},/turf/open/floor/mineral/titanium/blue,/area/space)
+"A" = (/obj/structure/cable,/obj/effect/turf_decal/bot,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/machinery/power/smes{charge = 5e+006},/turf/open/floor/plating,/area/space)
+"B" = (/obj/effect/turf_decal/siding/purple/end{dir = 8},/turf/open/floor/mineral/titanium/purple,/area/space)
+"C" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table/reinforced,/turf/open/floor/mineral/plastitanium,/area/space)
+"D" = (/obj/effect/spawner/structure/window/shuttle,/turf/open/floor/plating,/area/space)
+"E" = (/obj/machinery/airalarm{pixel_y = 24},/obj/effect/turf_decal/siding/yellow/end{dir = 8},/turf/open/floor/mineral/titanium/yellow,/area/space)
+"F" = (/obj/machinery/door/airlock/command/glass{name = "OwlSkip Crew Quarters"},/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/space)
+"G" = (/obj/machinery/status_display/evac,/turf/closed/wall/mineral/titanium/nodiagonal,/area/space)
+"H" = (/obj/effect/turf_decal/siding/blue{dir = 8},/obj/effect/turf_decal/siding/blue{dir = 4},/turf/open/floor/mineral/titanium/blue,/area/space)
+"I" = (/obj/effect/turf_decal/siding/yellow/end{dir = 8},/turf/open/floor/mineral/titanium/yellow,/area/space)
+"J" = (/obj/machinery/airalarm{pixel_y = 24},/obj/effect/turf_decal/siding/yellow/end{dir = 4},/turf/open/floor/mineral/titanium/yellow,/area/space)
+"K" = (/obj/machinery/button/door{id = "owlman_airlock"; name = "External Bolt Control"; normaldoorcontrol = 1; pixel_x = 4; pixel_y = -24; specialfunctions = 4},/turf/closed/wall/mineral/titanium/nodiagonal,/area/space)
+"L" = (/obj/machinery/light/small,/obj/effect/turf_decal/siding/blue{dir = 10},/turf/open/floor/mineral/titanium/blue,/area/space)
+"N" = (/obj/effect/turf_decal/siding/purple/end{dir = 4},/obj/structure/cable,/obj/machinery/power/apc/highcap{dir = 4; locked = 0; name = "OwlSkip Shuttle APC"; pixel_y = -26},/turf/open/floor/mineral/titanium/purple,/area/space)
+"O" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/computer/camera_advanced,/turf/open/floor/mineral/plastitanium,/area/space)
+"Q" = (/obj/effect/turf_decal/siding/purple/end{dir = 4},/turf/open/floor/mineral/titanium/purple,/area/space)
+"R" = (/obj/machinery/airalarm{dir = 8; pixel_x = 22},/obj/structure/table/reinforced,/turf/open/floor/mineral/plastitanium,/area/space)
+"T" = (/obj/machinery/light/small,/obj/structure/chair/comfy/shuttle{dir = 1},/obj/effect/turf_decal/siding/blue{dir = 5},/turf/open/floor/mineral/titanium/blue,/area/space)
+"U" = (/turf/open/floor/mineral/plastitanium,/area/space)
+"V" = (/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/space)
+"W" = (/obj/structure/chair/comfy/shuttle{dir = 1},/obj/effect/turf_decal/siding/blue/corner{dir = 4},/obj/effect/turf_decal/siding/blue/corner{dir = 1},/turf/open/floor/mineral/titanium/blue,/area/space)
+"X" = (/obj/structure/cable,/obj/machinery/power/terminal,/obj/effect/turf_decal/siding/purple/end{dir = 8},/turf/open/floor/mineral/titanium/purple,/area/space)
+"Y" = (/obj/structure/sign/warning/vacuum/external{pixel_x = 32},/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/light/small{dir = 8},/obj/structure/cable,/turf/open/floor/plating,/area/space)
+"Z" = (/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 1},/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/mapping_helpers/airlock/cutaiwire,/obj/effect/mapping_helpers/airlock/locked,/obj/docking_port/mobile{dwidth = 3; height = 10; id = "owlship_home"; name = "owl man ship"; port_direction = 2; width = 7},/obj/machinery/door/airlock/external{id_tag = "owlman_airlock"; name = "OwlSkip Shuttle External Airlock"},/obj/structure/cable,/turf/open/floor/plating,/area/space)
+
+(1,1,1) = {"
+aaaDDDDDaaa
+aaDDOdnDDaa
+aaDeyWTeDaa
+aawCLmbRwaa
+akwwGlwwwka
+kwIJwUwEvwk
+DxUUwUUUUxD
+DtUVFVUUUHD
+DjUVwVVVUjD
+kwBNKVwXQwk
+akwwwhwAwka
+aakuwYwukaa
+aaafwZwfaaa
+"}
