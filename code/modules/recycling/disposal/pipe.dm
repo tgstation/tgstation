@@ -13,6 +13,7 @@
 	layer = DISPOSAL_PIPE_LAYER // slightly lower than wires and other pipes
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	damage_deflection = 10
+	isometric_mode = ISOMETRIC_FLATTEN
 	var/dpdir = NONE // bitmask of pipe directions
 	var/initialize_dirs = NONE // bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
 	var/flip_type // If set, the pipe is flippable and becomes this type when flipped

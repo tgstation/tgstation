@@ -10,6 +10,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility     = INVISIBILITY_LIGHTING
 	vis_flags = VIS_HIDE
+	isometric_mode = ISOMETRIC_FLATTEN
 
 	var/needs_update = FALSE
 	var/turf/myturf

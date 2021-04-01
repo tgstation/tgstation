@@ -7,6 +7,7 @@ All the important duct code:
 	name = "fluid duct"
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
+	isometric_mode = ISOMETRIC_FLATTEN
 
 	///bitfield with the directions we're connected in
 	var/connects

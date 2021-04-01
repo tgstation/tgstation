@@ -10,6 +10,7 @@
 	layer = HIGH_OBJ_LAYER
 	density = FALSE
 	max_integrity = 80
+	isometric_mode = ISOMETRIC_FLATTEN
 	var/obj/machinery/porta_turret/parent_turret = null
 
 /obj/machinery/porta_turret_cover/Destroy()

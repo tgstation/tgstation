@@ -281,6 +281,7 @@
 	icon_state = "rail"
 	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
+	isometric_mode = ISOMETRIC_FLATTEN
 	deconstructible = TRUE
 
 /obj/structure/fluff/tram_rail/floor

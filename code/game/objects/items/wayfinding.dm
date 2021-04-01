@@ -13,6 +13,7 @@
 	payment_department = ACCOUNT_CIV
 	light_power = 0.5
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	isometric_mode = ISOMETRIC_WALLMOUNTED
 	///List of user-specific cooldowns to prevent pinpointer spam.
 	var/list/user_spawn_cooldowns = list()
 	///List of user-specific cooldowns to prevent message spam.

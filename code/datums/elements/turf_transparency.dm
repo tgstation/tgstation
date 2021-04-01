@@ -19,6 +19,7 @@
 
 	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
 
+	our_turf.transform = 0
 
 	update_multiz(our_turf, TRUE, TRUE)
 

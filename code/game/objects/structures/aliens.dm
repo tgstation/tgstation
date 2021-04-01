@@ -88,6 +88,7 @@
 	resintype = "wall"
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
@@ -108,6 +109,7 @@
 	resintype = "membrane"
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
+	isometric_mode = ISOMETRIC_BLOCKIFY
 
 /obj/structure/alien/resin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -139,6 +141,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WEEDS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WEEDS, SMOOTH_GROUP_WALLS)
+	isometric_mode = ISOMETRIC_FLATTEN
 	var/last_expand = 0 //last world.time this weed expanded
 	var/growth_cooldown_low = 150
 	var/growth_cooldown_high = 200

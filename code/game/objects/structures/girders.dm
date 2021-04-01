@@ -4,6 +4,7 @@
 	desc = "A large structural assembly made out of metal; It requires a layer of iron before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
+	isometric_mode = ISOMETRIC_BLOCKIFY
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it

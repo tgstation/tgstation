@@ -125,6 +125,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	ComponentInitialize()
 
+	if(isometric_mode == ISOMETRIC_FLATTEN)
+		flatify()
+	if(isometric_mode == ISOMETRIC_BLOCKIFY)
+		blockify()
+
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
@@ -153,7 +158,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
 	..()
-	
+
 	vis_contents.Cut()
 
 /turf/attack_hand(mob/user, list/modifiers)

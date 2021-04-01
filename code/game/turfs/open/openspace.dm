@@ -11,6 +11,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	//I don't know why the others are aligned but I shall do the same.
 	vis_flags = VIS_INHERIT_ID
+	isometric_mode = ISOMETRIC_FLATTEN
 
 /turf/open/openspace
 	name = "open space"

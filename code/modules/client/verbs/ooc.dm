@@ -436,3 +436,17 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set hidden = TRUE
 
 	init_verbs()
+
+/client/verb/dir_left()
+	set name = "Change Perspective Left"
+	set desc = "Changes your perspective to the left."
+	set category = "OOC"
+
+	dir = turn(dir, -90)
+
+/client/verb/dir_right()
+	set name = "Change Perspective Right"
+	set desc = "Changes your perspective to the right."
+	set category = "OOC"
+
+	dir = turn(dir, 90)

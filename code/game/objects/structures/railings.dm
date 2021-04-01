@@ -5,6 +5,7 @@
 	icon_state = "railing"
 	density = TRUE
 	anchored = TRUE
+	isometric_mode = ISOMETRIC_FLATTEN
 
 	var/climbable = TRUE
 	///Initial direction of the railing.
