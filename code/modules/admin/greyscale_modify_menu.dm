@@ -47,10 +47,10 @@
 	switch(action)
 		if("recolor")
 			var/index = text2num(params["color_index"])
-			split_colors[index] = params["new_color"]
+			split_colors[index] = lowertext(params["new_color"])
 			refresh_preview()
 		if("recolor_from_string")
-			ReadColorsFromString(params["color_string"])
+			ReadColorsFromString(lowertext(params["color_string"]))
 			refresh_preview()
 		if("pick_color")
 			var/group = params["color_index"]
@@ -68,7 +68,7 @@
 			target.greyscale_colors = split_colors.Join()
 			target.update_appearance()
 		if("refresh_file")
-			//target.greyscale_icon = file("[target.greyscale_icon]")
+			SSgreyscale.RefreshConfigsFromFile()
 			refresh_preview()
 
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)

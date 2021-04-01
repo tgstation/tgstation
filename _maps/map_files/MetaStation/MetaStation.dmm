@@ -11238,6 +11238,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/machinery/portable_atmospherics/canister/tier_1,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "aZk" = (
@@ -11245,6 +11246,7 @@
 	icon_state = "L10"
 	},
 /obj/structure/cable,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "aZl" = (
@@ -11554,6 +11556,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "baT" = (
@@ -29355,6 +29358,7 @@
 	icon_state = "L8"
 	},
 /obj/structure/cable,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "djC" = (
