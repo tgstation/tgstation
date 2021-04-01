@@ -68,8 +68,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
 		for(var/turf/shuttle_turf as anything in shuttle_area)
-			for(var/item in shuttle_turf.GetAllContents())
-				if((is_type_in_typecache(item, GLOB.blacklisted_cargo_types) && !istype(item, /obj/docking_port)) || SSeigenstates.eigen_id[item]) //SSeigenstates is if it is linked to another object - block it
+			for(var/atom/item in shuttle_turf.GetAllContents())
+				if((is_type_in_typecache(item, GLOB.blacklisted_cargo_types) || HAS_TRAIT(item, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(item, /obj/docking_port))
 					return FALSE
 	return TRUE
 
