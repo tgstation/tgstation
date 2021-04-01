@@ -205,7 +205,7 @@
 #undef RAW_ADDRESS
 
 /client/proc/cmd_give_sdql_spell(mob/target in GLOB.mob_list)
-	set category = "Admin.Fun"
+	set category = "Admin.Debug"
 	set name = "Give SDQL spell"
 
 
