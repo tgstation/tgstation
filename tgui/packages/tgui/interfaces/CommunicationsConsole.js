@@ -413,6 +413,12 @@ const PageMain = (props, context) => {
             onClick={() => act("makePriorityAnnouncement")}
           />}
 
+          {!!canMakeAnnouncement && <Button
+            icon="bullhorn"
+            content="Call Emergency Meeting"
+            onClick={() => act("emergency_meeting")}
+          />}
+
           {!!canToggleEmergencyAccess && <Button.Confirm
             icon="id-card-o"
             content={`${emergencyAccess ? "Disable" : "Enable"} Emergency Maintenance Access`}

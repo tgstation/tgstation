@@ -161,6 +161,10 @@
 			if (!message_index)
 				return
 			LAZYREMOVE(messages, LAZYACCESS(messages, message_index))
+		if ("emergency_meeting")
+			if (!authenticated_as_silicon_or_captain(usr))
+				return
+			emergency_meeting(usr)
 		if ("makePriorityAnnouncement")
 			if (!authenticated_as_silicon_or_captain(usr))
 				return
@@ -291,11 +295,7 @@
 			if (!(picture in approved_status_pictures))
 				return
 			post_status("alert", picture)
-			playsound(src, "terminal_type", 50, FALSE)
-		if ("sus")
-			if (!authenticated(usr))
-				return
-			
+			playsound(src, "terminal_type", 50, FALSE)			
 		if ("toggleAuthentication")
 			// Log out if we're logged in
 			if (authorize_name)
@@ -526,10 +526,10 @@
 
 /obj/machinery/computer/communications/proc/emergency_meeting(mob/living/user)
 	var/is_ai = issilicon(user)
-	if (is_ai)
+	if (is_ai) //AI sus
 		return
 	if(!SScommunications.can_make_meeting(user))
-		to_chat(user, "<span class='alert'>Emergency meeting button cooling down. Please stand by.</span>")
+		to_chat(user, "<span class='alert'>The emergency meeting button is cooling down. Please stand by.</span>")
 		return
 	SScommunications.emergency_meeting(user)
 	deadchat_broadcast(" called an emergency meeting from <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
