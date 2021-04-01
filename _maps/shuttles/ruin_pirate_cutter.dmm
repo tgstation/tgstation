@@ -29,14 +29,14 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "bH" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/caravan/pirate)
 "de" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -72,7 +72,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "fh" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -102,7 +102,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "fU" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -116,7 +116,7 @@
 /turf/open/floor/iron,
 /area/shuttle/caravan/pirate)
 "hI" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
@@ -129,7 +129,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "hZ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -143,7 +143,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "iF" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -214,7 +214,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/pirate)
 "kl" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/iron/white/side{
@@ -234,7 +234,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "kY" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /obj/machinery/meter,
@@ -262,7 +262,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "mr" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -295,7 +295,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/caravan/pirate)
 "na" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/iron/white/side{
@@ -306,7 +306,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
 	},
 /turf/open/floor/iron/white/side{
@@ -467,7 +467,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "sr" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
@@ -481,7 +481,7 @@
 /turf/open/floor/iron,
 /area/shuttle/caravan/pirate)
 "th" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -513,7 +513,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/caravan/pirate)
 "un" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
@@ -526,7 +526,7 @@
 /turf/open/floor/iron,
 /area/shuttle/caravan/pirate)
 "vd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -547,7 +547,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "wL" = (
@@ -559,7 +559,7 @@
 	pixel_y = 25;
 	specialfunctions = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/iron/white/side{
@@ -579,7 +579,7 @@
 /turf/open/floor/iron,
 /area/shuttle/caravan/pirate)
 "wZ" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -609,7 +609,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "yu" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -643,7 +643,7 @@
 	pixel_y = -25;
 	specialfunctions = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
@@ -668,7 +668,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Av" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -713,7 +713,7 @@
 	name = "Pirate Cutter APC";
 	pixel_x = -25
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
 	pixel_x = 24
@@ -792,7 +792,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
 /obj/effect/turf_decal/tile/red,
@@ -818,7 +818,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/pirate)
 "HO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -919,7 +919,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/pirate)
 "Rq" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/iron/white/side{
@@ -937,7 +937,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "RC" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
@@ -968,7 +968,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Sk" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -978,7 +978,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "SF" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/side{
@@ -986,7 +986,7 @@
 	},
 /area/shuttle/caravan/pirate)
 "SR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
 /obj/machinery/firealarm{
@@ -1040,13 +1040,13 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "Yw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "Zo" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating,

@@ -355,7 +355,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "hq" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
 	mouse_opacity = 0;
 	resistance_flags = 64
@@ -617,7 +617,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
 	mouse_opacity = 0;
 	resistance_flags = 64
@@ -1176,7 +1176,7 @@
 /area/ctf)
 "xh" = (
 /obj/effect/decal/cleanable/oil,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
 	mouse_opacity = 0;
 	resistance_flags = 64
@@ -1513,7 +1513,7 @@
 /area/ctf)
 "Cq" = (
 /obj/structure/barricade/security/ctf,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
 	mouse_opacity = 0;
 	resistance_flags = 64
@@ -1599,7 +1599,7 @@
 "Dx" = (
 /obj/effect/decal/cleanable/oil,
 /obj/structure/barricade/security/ctf,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
 	mouse_opacity = 0;
 	resistance_flags = 64
@@ -2118,7 +2118,7 @@
 /turf/open/floor/iron/dark,
 /area/ctf)
 "NH" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
 	mouse_opacity = 0;
 	resistance_flags = 64
@@ -2224,7 +2224,7 @@
 /obj/structure/barricade/sandbags{
 	resistance_flags = 64
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
 	mouse_opacity = 0;
 	resistance_flags = 64
@@ -2280,7 +2280,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/shreds,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
 	mouse_opacity = 0;
 	resistance_flags = 64

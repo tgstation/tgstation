@@ -1,4 +1,4 @@
-//3-Way Manifold
+/* //3-Way Manifold
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
@@ -19,18 +19,18 @@
 	var/static/list/mutable_appearance/center_cache = list()
 
 /* We use New() instead of Initialize() because these values are used in update_icon()
- * in the mapping subsystem init before Initialize() is called in the atoms subsystem init.
+ * in the mapping subsystem i/*  */nit before Initialize() is called in the atoms subsystem init.
  * This is true for the other manifolds (the 4 ways and the heat exchanges) too.
  */
-/obj/machinery/atmospherics/pipe/manifold/New()
+/obj/machinery/atmospherics/pipe/smart/manifold4w/New()
 	icon_state = ""
 	return ..()
 
-/obj/machinery/atmospherics/pipe/manifold/SetInitDirections()
+/obj/machinery/atmospherics/pipe/smart/manifold4w/SetInitDirections()
 	initialize_directions = ALL_CARDINALS
 	initialize_directions &= ~dir
 
-/obj/machinery/atmospherics/pipe/manifold/update_overlays()
+/obj/machinery/atmospherics/pipe/smart/manifold4w/update_overlays()
 	. = ..()
 	var/mutable_appearance/center = center_cache["[piping_layer]"]
 	if(!center)
@@ -44,3 +44,4 @@
 		if(nodes[i])
 			. += getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i]))
 	update_layer()
+ */

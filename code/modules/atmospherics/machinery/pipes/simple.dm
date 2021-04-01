@@ -1,4 +1,4 @@
-// Simple Pipe
+/* // Simple Pipe
 // The regular pipe you see everywhere, including bent ones.
 
 /obj/machinery/atmospherics/pipe/simple
@@ -17,7 +17,7 @@
 	construction_type = /obj/item/pipe/binary/bendable
 	pipe_state = "simple"
 
-/obj/machinery/atmospherics/pipe/simple/SetInitDirections()
+/obj/machinery/atmospherics/pipe/smart/manifold4w/SetInitDirections()
 	if(ISDIAGONALDIR(dir))
 		initialize_directions = dir
 		return
@@ -27,6 +27,7 @@
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
-/obj/machinery/atmospherics/pipe/simple/update_icon_state()
+/obj/machinery/atmospherics/pipe/smart/manifold4w/update_icon_state()
 	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
 	return ..()
+ */
