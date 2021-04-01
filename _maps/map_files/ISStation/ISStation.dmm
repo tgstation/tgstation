@@ -4501,6 +4501,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/openspace,
 /area/engineering/main)
+"Ip" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 9;
+	height = 25;
+	id = "emergency_home";
+	name = "MetaStation emergency evac bay";
+	width = 29
+	},
+/turf/open/space/basic,
+/area/space)
 "Ix" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
@@ -61100,7 +61111,7 @@ Zz
 Zz
 Zz
 Zz
-Zz
+Ip
 Zz
 Zz
 Zz
