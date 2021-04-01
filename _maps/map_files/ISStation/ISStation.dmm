@@ -105,6 +105,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
 	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/central)
 "bs" = (
@@ -138,6 +139,21 @@
 	},
 /turf/open/floor/engine/airless,
 /area/space/nearstation)
+"bG" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/iron/showroomfloor,
+/area/security/brig)
 "bH" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -375,6 +391,7 @@
 /turf/open/floor/pod/dark,
 /area/security/brig)
 "dE" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/glass/reinforced,
 /area/command/bridge)
 "dJ" = (
@@ -681,6 +698,16 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/command/bridge)
+"gC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron/showroomfloor,
+/area/medical/medbay/central)
 "gF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -701,6 +728,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/security/brig)
+"gK" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/showroomfloor,
+/area/engineering/atmos)
 "gR" = (
 /obj/machinery/power/solar{
 	id = "forestarboard";
@@ -718,6 +754,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/cargo/storage)
+"gW" = (
+/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/event_spawn,
+/turf/open/openspace,
+/area/engineering/main)
 "hb" = (
 /obj/effect/turf_decal/siding/wideplating/light{
 	dir = 5
@@ -794,6 +835,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/security/brig)
+"hG" = (
+/turf/open/openspace,
+/area/engineering/main)
 "hH" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -876,7 +920,6 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/engineering/main)
 "ik" = (
@@ -1009,6 +1052,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/engineering/atmos)
 "jw" = (
@@ -1028,6 +1072,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/science/xenobiology)
 "jB" = (
@@ -1320,6 +1365,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/hallway/secondary/service)
 "mx" = (
@@ -1490,6 +1536,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
 	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/cargo/storage)
 "nC" = (
@@ -1650,6 +1697,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/ai_monitored/command/storage/eva)
 "oM" = (
@@ -2053,7 +2101,6 @@
 /area/science/xenobiology)
 "rV" = (
 /obj/structure/railing/corner,
-/obj/structure/lattice/catwalk,
 /obj/machinery/firealarm/directional/north,
 /obj/structure/sign/poster/random{
 	pixel_x = 32
@@ -2607,6 +2654,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/security/brig)
 "vG" = (
@@ -2629,6 +2677,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/engineering/main)
 "vL" = (
@@ -2966,6 +3015,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/engineering/atmos)
 "yJ" = (
@@ -2986,6 +3036,7 @@
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/solars)
 "yR" = (
@@ -3004,6 +3055,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/command/bridge)
 "zg" = (
@@ -3037,8 +3089,17 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/engineering/main)
+"zq" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible/layer1{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/solars)
 "zv" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -3295,6 +3356,16 @@
 	},
 /turf/open/floor/iron/freezer/airless,
 /area/space/nearstation)
+"Bp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron/showroomfloor,
+/area/engineering/main)
 "Bq" = (
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/simple/general/visible/layer1{
@@ -3461,6 +3532,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/engineering/main)
+"Ct" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/landmark/blobstart,
+/turf/open/floor/iron/showroomfloor,
+/area/hallway/secondary/service)
 "Cw" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -3725,6 +3806,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/cargo/storage)
 "Ei" = (
@@ -3909,7 +3991,6 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/obj/structure/lattice/catwalk,
 /obj/machinery/light/cold{
 	dir = 8
 	},
@@ -3925,6 +4006,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/blobstart,
 /turf/open/floor/iron/showroomfloor,
 /area/engineering/atmos)
 "Fo" = (
@@ -4016,6 +4098,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/hallway/secondary/service)
 "Gf" = (
@@ -4080,6 +4163,16 @@
 	},
 /turf/open/floor/engine/airless,
 /area/space/nearstation)
+"Hk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/showroomfloor,
+/area/engineering/main)
 "Hl" = (
 /obj/structure/closet/crate/freezer{
 	anchored = 1;
@@ -4479,6 +4572,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/command/bridge)
 "JY" = (
@@ -4587,6 +4681,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/hallway/secondary/service)
 "KF" = (
@@ -4806,7 +4901,7 @@
 /turf/open/floor/plating,
 /area/space/nearstation)
 "Ma" = (
-/obj/structure/lattice/catwalk,
+/obj/effect/landmark/event_spawn,
 /turf/open/openspace,
 /area/engineering/main)
 "Mf" = (
@@ -5510,7 +5605,6 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/engineering/main)
 "RI" = (
@@ -5542,6 +5636,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/openspace,
 /area/science/research)
 "RZ" = (
@@ -5606,7 +5701,6 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/engineering/main)
 "Ss" = (
@@ -5878,15 +5972,29 @@
 /obj/effect/landmark/start/librarian,
 /turf/open/floor/iron/showroomfloor,
 /area/hallway/secondary/service)
+"UJ" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/showroomfloor,
+/area/cargo/storage)
 "UL" = (
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/showroomfloor,
 /area/hallway/secondary/service)
+"UQ" = (
+/obj/effect/landmark/start/cargo_technician,
+/obj/effect/landmark/event_spawn,
+/turf/open/openspace,
+/area/cargo/storage)
 "UT" = (
 /obj/machinery/atmospherics/components/binary/pump/layer4,
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/ai_monitored/command/storage/eva)
 "UV" = (
@@ -5980,6 +6088,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/engineering/main)
 "VY" = (
@@ -5999,6 +6108,14 @@
 /obj/structure/ladder,
 /turf/open/floor/pod/dark,
 /area/cargo/storage)
+"Wf" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/showroomfloor,
+/area/science/xenobiology)
 "Wk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -6078,7 +6195,6 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /obj/structure/sign/poster/random{
 	pixel_x = -32
 	},
@@ -6322,6 +6438,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/central)
 "Zr" = (
@@ -38917,7 +39034,7 @@ Zz
 Zz
 eB
 Ur
-nH
+gK
 jM
 nH
 AC
@@ -38927,7 +39044,7 @@ cM
 EU
 vs
 Wc
-vs
+UJ
 zJ
 cM
 Zz
@@ -102434,7 +102551,7 @@ fL
 vA
 nZ
 JI
-WB
+bG
 dB
 dB
 vA
@@ -104170,7 +104287,7 @@ dY
 Gv
 VX
 Yl
-MO
+Hk
 Yl
 MO
 NR
@@ -104218,7 +104335,7 @@ ad
 vG
 ad
 Zo
-Zo
+gC
 Jx
 Jx
 Wk
@@ -104229,7 +104346,7 @@ WJ
 nj
 iM
 fh
-qI
+Ct
 qI
 UG
 qI
@@ -104440,7 +104557,7 @@ md
 aZ
 Ma
 Lt
-Ma
+hG
 Xt
 Dp
 he
@@ -104685,7 +104802,7 @@ vr
 vI
 ku
 ce
-ku
+Bp
 jq
 gF
 IN
@@ -107573,7 +107690,7 @@ fL
 fL
 Nq
 ul
-jy
+Wf
 uQ
 pu
 Nu
@@ -167182,7 +167299,7 @@ fL
 fL
 fL
 Kz
-pT
+zq
 Kz
 je
 zO
@@ -169999,7 +170116,7 @@ uV
 Fy
 sg
 Dc
-sg
+UQ
 wl
 OE
 Yy
@@ -170232,7 +170349,7 @@ QQ
 YB
 wu
 fC
-CF
+gW
 Nc
 wu
 bC
