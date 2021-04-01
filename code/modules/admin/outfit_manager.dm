@@ -9,14 +9,12 @@
 
 #define OUTFITOTRON "Outfit-O-Tron 9000"
 /datum/outfit_manager
-	var/client/holder
+	var/client/user
 
 	var/dummy_key
-	var/datum/outfit/drip = /datum/outfit/job/miner/equipped/hardsuit
 
 /datum/outfit_manager/New(user)
-	holder = CLIENT_FROM_VAR(user)
-	drip = new drip
+	src.user = CLIENT_FROM_VAR(user)
 
 /datum/outfit_manager/ui_state(mob/user)
 	return GLOB.admin_state
@@ -26,9 +24,9 @@
 	qdel(src)
 
 /datum/outfit_manager/proc/init_dummy()
-	dummy_key = "outfit_manager_[holder]"
+	dummy_key = "outfit_manager_[user]"
 	var/mob/living/carbon/human/dummy/dummy = generate_or_wait_for_human_dummy(dummy_key)
-	var/mob/living/carbon/carbon_target = holder.mob
+	var/mob/living/carbon/carbon_target = user.mob
 	if(istype(carbon_target))
 		carbon_target.dna.transfer_identity(dummy)
 		dummy.updateappearance()
@@ -55,15 +53,10 @@
 		outfits += list(entry(O))
 	return outfits
 
-/datum/outfit_manager/ui_data(mob/user)
+/datum/outfit_manager/ui_data()
 	var/list/data = list()
 
-
 	data["outfits"] = get_outfits()
-
-	var/datum/preferences/prefs = holder.prefs
-	var/icon/dummysprite = get_flat_human_icon(null, prefs = prefs, dummy_key = dummy_key, showDirs = list(SOUTH), outfit_override = drip)
-	data["dummy64"] = icon2base64(dummysprite)
 
 	return data
 
@@ -72,14 +65,27 @@
 		return
 	. = TRUE
 
-	//var/datum/outfit/target_outfit = locate(params["ref"])
+	var/datum/outfit/target_outfit = locate(params["outfit"])
 	switch(action)
+		if("new")
+			user.open_outfit_editor(new /datum/outfit)
+		if("load")
+			user.holder.load_outfit(user.mob)
+		if("copy")
+			var/datum/outfit/outfit = tgui_input_list(user, "Pick an outfit to copy from", OUTFITOTRON, subtypesof(/datum/outfit))
+			if(ispath(outfit))
+				user.open_outfit_editor(new outfit)
+
+	if(!istype(target_outfit))
+		return
+	switch(action) //wow we're switching through action again this is horrible optimization smh
 		if("preview")
 			pass()
 		if("edit")
-			pass()
-		if("load")
-			pass()
-
+			user.open_outfit_editor(target_outfit)
+		if("save")
+			user.holder.save_outfit(target_outfit)
+		if("delete")
+			user.holder.delete_outfit(target_outfit)
 
 #undef OUTFITOTRON

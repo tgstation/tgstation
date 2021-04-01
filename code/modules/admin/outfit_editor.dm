@@ -4,7 +4,10 @@
 
 	if(!check_rights(R_DEBUG))
 		return
-	var/datum/outfit_editor/ui = new(usr)
+	open_outfit_editor(/datum/outfit/job/miner/equipped/hardsuit)
+
+/client/proc/open_outfit_editor(datum/outfit/target)
+	var/datum/outfit_editor/ui = new(usr, target)
 	ui.ui_interact(usr)
 
 #define OUTFITOTRON "Outfit-O-Tron 9000"
@@ -12,11 +15,17 @@
 	var/client/holder
 
 	var/dummy_key
-	var/datum/outfit/drip = /datum/outfit/job/miner/equipped/hardsuit
+	var/datum/outfit/drip
 
-/datum/outfit_editor/New(user)
+/datum/outfit_editor/New(user, datum/outfit/target)
 	holder = CLIENT_FROM_VAR(user)
-	drip = new drip
+
+	if(ispath(target))
+		drip = new target
+	else if(istype(target))
+		drip = target
+	else
+		drip = new /datum/outfit
 
 /datum/outfit_editor/ui_state(mob/user)
 	return GLOB.admin_state
