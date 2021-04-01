@@ -224,7 +224,6 @@
 
 /turf/open/floor/carpet/lone
 	icon_state = "carpetsymbol"
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN)
 	smoothing_flags = NONE
 
 /turf/open/floor/carpet/lone/star
