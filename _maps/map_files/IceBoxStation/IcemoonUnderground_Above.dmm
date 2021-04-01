@@ -3411,7 +3411,7 @@
 /turf/open/floor/grass,
 /area/service/hydroponics)
 "uk" = (
-/obj/machinery/atmospherics/pipe/manifold{
+/obj/machinery/atmospherics/pipe/smart/manifold4w{
 	dir = 8
 	},
 /turf/open/floor/iron/freezer,

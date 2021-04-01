@@ -2088,7 +2088,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "ex" = (
-/obj/machinery/atmospherics/pipe/manifold{
+/obj/machinery/atmospherics/pipe/smart/manifold4w{
 	dir = 4
 	},
 /obj/structure/cable,

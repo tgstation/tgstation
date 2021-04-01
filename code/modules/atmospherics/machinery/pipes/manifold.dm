@@ -1,6 +1,6 @@
 /* //3-Way Manifold
 
-/obj/machinery/atmospherics/pipe/manifold
+/obj/machinery/atmospherics/pipe/smart/manifold4w
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
 	icon_state = "manifold-3"
 
