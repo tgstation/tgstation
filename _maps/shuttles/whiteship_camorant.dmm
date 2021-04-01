@@ -1798,25 +1798,6 @@
 "Yq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
-/obj/item/trash/plate{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/trash/plate{
-	pixel_x = -6
-	},
-/obj/item/trash/plate{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/trash/plate{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/trash/plate{
-	pixel_x = -6;
-	pixel_y = 6
-	},
 /obj/item/kitchen/fork{
 	pixel_x = 12;
 	pixel_y = 3
@@ -1830,6 +1811,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/item/reagent_containers/glass/beaker/sulphuric,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "YL" = (
