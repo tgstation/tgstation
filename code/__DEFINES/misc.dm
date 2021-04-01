@@ -551,3 +551,10 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SKILLCHIP_CATEGORY_GENERAL "general"
 #define SKILLCHIP_CATEGORY_JOB "job"
 #define SKILLCHIP_CATEGORY_FIREMAN_CARRYING "fireman carrying"
+
+#define SET_TIMELEFT (1<<0) | (1<<1)
+#define MULTIPLY_TIMELEFT (1<<2) | (1<<3)
+#define ADD_TIMELEFT (1<<4) | (1<<5)
+
+#define TIMELEFT_ABSOLUTE (1<<6)
+#define TIMELEFT_KEEP_PROGRESS (1<<7)

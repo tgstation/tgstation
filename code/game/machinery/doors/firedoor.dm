@@ -97,6 +97,9 @@
 	else
 		number_of_people_trying_to_open++
 
+		var/starting_health = user.health
+		var/starting_time = REALTIMEOFDAY
+
 		///we dont want people with only one hand to have the same visible_message as people with two hands
 		var/hand_string = "hands"
 		if(iscarbon(user))
@@ -104,7 +107,7 @@
 			var/obj/item/bodypart/right_arm = user_as_carbon.get_bodypart(BODY_ZONE_R_ARM)
 			var/obj/item/bodypart/left_arm = user_as_carbon.get_bodypart(BODY_ZONE_L_ARM)
 
-			if(!right_arm || right_arm.bodypart_disabled)
+			if(!right_arm || right_arm.bodypart_disabled)//this is assuming that you have at least one hand since... this proc is called attack_hand
 				hand_string = "hand"
 			if(!left_arm || left_arm.bodypart_disabled)
 				hand_string = "hand"
@@ -115,7 +118,7 @@
 			user.visible_message("<span class='notice'>[user] tries to open \the [src] with their [hand_string], struggling greatly to open the heavy door by themselves.</span>", \
 				"<span class='notice'> You try with all your strength to pry open \the [src] with your [hand_string], barely moving it!</span>")
 		else if (number_of_people_trying_to_open == 2)
-			user.visible_message("<span class='notice'>[user] joins another in trying to open \the [src] with their [hand_string].</span>", \
+			user.visible_message("<span class='notice'>[user.name] joins another in trying to open \the [src] with their [hand_string].</span>", \
 				"<span class='notice'> You join another in trying to pry open \the [src] with your [hand_string]!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] joins the others in trying to open \the [src] with their [hand_string]!</span>", \
@@ -125,18 +128,32 @@
 		var/datum/callback/burning_callback = CALLBACK(src, .proc/burn_arms, user)
 
 		//players can team up to open it faster, but only up to a point
-		var/true_opening_time = TOOLLESS_OPEN_DURATION_SOLO / max((min(3, number_of_people_trying_to_open) * 0.5), 1)
+		var/true_opening_time = TOOLLESS_OPEN_DURATION_SOLO / max((min(3, number_of_people_trying_to_open) * 0.75), 1) //20 seconds -> 13.333 -> 8.88
 		//note that this only makes the do_after of the last one faster, find a way to show a unified do_after for all people opening it
 
-		//var/datum/callback/timer_callback = CALLBACK(src, .proc/adjust_do_after_timer)
-		//do_after_dynamic(user, true_opening_time, src, extra_checks = burning_callback, dynamic_timer_change = timer_callback, timer_flags = COORDINATE_TIMELEFT)
-		if(do_after(user, true_opening_time, src, extra_checks = burning_callback))
+		var/datum/callback/timer_callback = CALLBACK(src, .proc/adjust_do_after_timer)
+		var/old_move_force = user.move_force
+		user.move_force = MOVE_FORCE_STRONG
+		//do_after_dynamic(user, true_opening_time, src, extra_checks = burning_callback, dynamic_timer_change = timer_callback)
+		if(do_after_dynamic(user, true_opening_time, src, extra_checks = burning_callback, dynamic_timer_change = timer_callback)) //do_after(user, true_opening_time, src, extra_checks = burning_callback))
 			user.visible_message("<span class='notice'>[user] opens \the [src] with their [hand_string].</span>", \
 				"<span class='notice'>You pry open \the [src] with your [hand_string]!</span>")
-
+			log_game("[key_name(user)] has successfully opened a firelock with their bare hands, starting at [starting_health] health and ending at [user.health].")
 			open()
+		else if(user.stat != CONSCIOUS)
+			var/stat_string = "fallen into soft crit"
+			switch(user.stat)
+				if(UNCONSCIOUS)
+					stat_string = "fallen unconscious"
+				if(HARD_CRIT)
+					stat_string = "fallen into hard crit"
+				if(DEAD)
+					stat_string = "died"
+
+			log_game("[key_name(user)] has failed to open a firelock with their bare hands because they have [stat_string]. they were trying to open the door for [(REALTIMEOFDAY - starting_time) / 10] seconds")
 
 		number_of_people_trying_to_open = max(0, --number_of_people_trying_to_open)
+		user.move_resist = old_move_force
 
 /obj/machinery/door/firedoor/attack_paw(mob/living/user, list/modifiers)
 	. = ..()
@@ -146,11 +163,6 @@
 ///deals burn damage to the user depending on whether theyre resistant to heat and how hot the door is, used as a callback in do_after
 /obj/machinery/door/firedoor/proc/burn_arms(mob/living/user)
 	. = TRUE //we dont want to interrupt the do_after
-
-	if(!iscarbon(user))//i dont want to deal with simplemobs so they get off scot free
-		return
-
-	var/mob/living/carbon/user_as_carbon = user
 
 	var/datum/gas_mixture/loc_air = loc.return_air()
 	var/max_temperature_of_adjacent_tiles = loc_air.temperature
@@ -164,13 +176,21 @@
 		return
 
 	var/heat_protected = FALSE
-	if(HAS_TRAIT(user_as_carbon, TRAIT_RESISTHEAT) || HAS_TRAIT(user_as_carbon, TRAIT_RESISTHEATHANDS))
+	if(HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 		heat_protected = TRUE
-	else if(user_as_carbon.gloves)
+
+	if(!iscarbon(user))//TODOKYLER: clean this up
+		if(!heat_protected)
+			user.adjustFireLoss(0.2, forced = TRUE)
+		return
+
+	var/mob/living/carbon/user_as_carbon = user
+
+	if(user_as_carbon.gloves)
 		var/obj/item/clothing/gloves/gloves_of_user = user_as_carbon.gloves
 
 		if(gloves_of_user.max_heat_protection_temperature)
-			heat_protected = (gloves_of_user.max_heat_protection_temperature >= max_temperature_of_adjacent_tiles)
+			heat_protected = heat_protected ? TRUE : (gloves_of_user.max_heat_protection_temperature >= max_temperature_of_adjacent_tiles)
 
 	if(!heat_protected)
 		var/obj/item/bodypart/right_arm = user_as_carbon.get_bodypart(BODY_ZONE_R_ARM)
@@ -180,12 +200,17 @@
 			playsound(user_as_carbon, 'sound/effects/wounds/sizzle1.ogg', 70)
 
 		if(right_arm && right_arm.status == BODYPART_ORGANIC && !right_arm.is_pseudopart)
-			right_arm.receive_damage(0, 0.2)
+			right_arm.receive_damage(0, rand(0.1, 0.2))
 		if(left_arm && left_arm.status == BODYPART_ORGANIC && !left_arm.is_pseudopart)
-			left_arm.receive_damage(0, 0.2)
+			left_arm.receive_damage(0, rand(0.1, 0.2))
 
-/obj/machinery/door/firedoor/proc/adjust_do_after_timer()
-	. = list(20, SET_MIN)
+///used in a callback given to do_after_dynamic to adjust the timer based on how many people are trying to open it barehanded
+/obj/machinery/door/firedoor/proc/adjust_do_after_timer(old_delay, multiplicative_action_slowdown)
+	if(old_delay == (TOOLLESS_OPEN_DURATION_SOLO / max((min(3, number_of_people_trying_to_open) * 0.5), 1)) * multiplicative_action_slowdown)
+		return null
+	else
+		message_admins("adjust_do_after_timer with [old_delay] old delay is now returning [TOOLLESS_OPEN_DURATION_SOLO / max((min(3, number_of_people_trying_to_open) * 0.5), 1)] as a new delay")
+		return (TOOLLESS_OPEN_DURATION_SOLO / max((min(3, number_of_people_trying_to_open) * 0.5), 1)) * multiplicative_action_slowdown
 
 /obj/machinery/door/firedoor/proc/decrement_bare_hand_openers(datum/source)
 	SIGNAL_HANDLER
@@ -238,7 +263,10 @@
 	if(density)
 		if(number_of_people_trying_to_open)
 			user.visible_message("<span class='notice'>[user] easily opens \the [src] with his crowbar.</span>")
+			log_game("[key_name(user)] used a crowbar to open a firedoor when [number_of_people_trying_to_open] people were trying to open it with their hands")
 			number_of_people_trying_to_open = 0
+		else
+			log_game("[key_name(user)] opened a firelock with a crowbar, like a coward")
 		open()
 	else
 		close()

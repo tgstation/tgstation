@@ -336,9 +336,9 @@ GLOBAL_LIST_EMPTY(species_list)
  * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
  * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
  * dynamic_timer_change returns when invoked either a list or a number used according to dynamic_type
- * dynamic_flags
+ * TODOKYLER: docs here after i decide what it does
  */
-/proc/do_after_dynamic(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, datum/callback/dynamic_timer_change, dynamic_flags = SET_TIMELEFT(SET_MAX))
+/proc/do_after_dynamic(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, datum/callback/dynamic_timer_change, dynamic_flags = SET_TIMELEFT)
 	if(!user)
 		return FALSE
 	var/atom/target_loc = null
@@ -369,13 +369,26 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
+	var/progbar_fake_startime = starttime
 
 	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
-		var/list/timer_change = dynamic_timer_change.Invoke(endtime - world.time) //returns list(new time left, SET_MIN or SET_MAX)
+		if(dynamic_timer_change)
+			var/new_delay = dynamic_timer_change.Invoke(delay, user.cached_multiplicative_actions_slowdown) //returns new delay if needed
+			if(new_delay)
+				var/current_progress = ((world.time - starttime)) / delay
+				var/new_timeleft = (1 - current_progress) * new_delay
+				var/new_endtime = new_timeleft + starttime
+				endtime = new_endtime
+				delay = new_delay
+
+				progbar.goal = delay
+				progbar_fake_startime = world.time - (new_timeleft / current_progress) //TODOKYLER: this messes up the progbar visual if it changes from starttime
+
+
 		if(!QDELETED(progbar))
-			progbar.update(world.time - starttime)
+			progbar.update(world.time - progbar_fake_startime)
 
 		if(drifting && !user.inertia_dir)
 			drifting = FALSE
