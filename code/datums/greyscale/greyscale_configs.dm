@@ -1,5 +1,5 @@
 /datum/greyscale_config/canister
-	icon_file = 'icons/obj/atmospherics/canisters/default.dmi'
+	icon_file = 'icons/obj/atmospherics/canisters.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_default.json'
 
 /datum/greyscale_config/canister/base

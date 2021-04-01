@@ -85,3 +85,7 @@ And that's all you need to make it usable by other code:
 ```
 
 More configurations can be found in [code/datums/greyscale/greyscale_configs.dm](./greyscale_configs.dm)
+
+## Debugging
+
+If you're making a new greyscale sprite you sometimes want to be able to see how layers got generated or maybe you're just tweaking some colors. Rather than rebooting the server with every change there is a greyscale modification menu that can be found in the vv dropdown menu for the greyscale object. Here you can change colors and preview the results.
