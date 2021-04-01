@@ -1,19 +1,19 @@
-#define COMMUNICATION_COOLDOWN 300
-#define COMMUNICATION_COOLDOWN_AI 300
+#define COMMUNICATION_COOLDOWN (30 SECONDS)
+#define COMMUNICATION_COOLDOWN_AI (30 SECONDS)
 #define COMMUNICATION_COOLDOWN_MEETING (5 MINUTES)
 
 SUBSYSTEM_DEF(communications)
 	name = "Communications"
 	flags = SS_NO_INIT | SS_NO_FIRE
 
-	var/silicon_message_cooldown
-	var/nonsilicon_message_cooldown
-	var/emergency_meeting_cooldown
+	COOLDOWN_DECLARE(silicon_message_cooldown)
+	COOLDOWN_DECLARE(nonsilicon_message_cooldown)
+	COOLDOWN_DECLARE(emergency_meeting_cooldown)
 
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
-	if(is_silicon && silicon_message_cooldown > world.time)
+	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
 		. = FALSE
-	else if(!is_silicon && nonsilicon_message_cooldown > world.time)
+	else if(!is_silicon && COOLDOWN_FINISHED(src, nonsilicon_message_cooldown))
 		. = FALSE
 	else
 		. = TRUE
@@ -23,10 +23,10 @@ SUBSYSTEM_DEF(communications)
 		return FALSE
 	if(is_silicon)
 		minor_announce(html_decode(input),"[user.name] Announces:")
-		silicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
+		COOLDOWN_START(src, silicon_message_cooldown, COMMUNICATION_COOLDOWN_AI)
 	else
 		priority_announce(html_decode(user.treat_message(input)), null, 'sound/misc/announce.ogg', "Captain", has_important_message = TRUE)
-		nonsilicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN
+		COOLDOWN_START(src, nonsilicon_message_cooldown, COMMUNICATION_COOLDOWN)
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
 
@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(communications)
 /datum/controller/subsystem/communications/proc/can_make_emergency_meeting(mob/living/user)
 	if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		return FALSE
-	else if(emergency_meeting_cooldown > world.time)
+	else if(COOLDOWN_FINISHED(src, emergency_meeting_cooldown))
 		return FALSE
 	else
 		return TRUE
@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(communications)
 	if(!can_make_emergency_meeting(user))
 		return FALSE
 	call_emergency_meeting(user, get_area(user))
-	emergency_meeting_cooldown = world.time + COMMUNICATION_COOLDOWN_MEETING
+	COOLDOWN_START(src, emergency_meeting_cooldown, COMMUNICATION_COOLDOWN_MEETING)
 	message_admins("[ADMIN_LOOKUPFLW(user)] has called an emergency meeting.")
 
 /datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
