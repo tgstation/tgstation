@@ -17,6 +17,9 @@
 
 	var/static/list/mutable_appearance/center_cache = list()
 
+/* We use New() instead of Initialize() because these values are used in update_icon()
+ * in the mapping subsystem init before Initialize() is called in the atoms subsystem init.
+ */
 /obj/machinery/atmospherics/pipe/color_adapter/New()
 	icon_state = ""
 	return ..()

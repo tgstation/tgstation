@@ -452,7 +452,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						P.update()
 						P.add_fingerprint(usr)
 						P.setPipingLayer(piping_layer)
-						if(findtext("[queued_p_type]", "/obj/machinery/atmospherics") && !findtext("[queued_p_type]", "color_adapter"))
+						if(ispath(queued_p_type, /obj/machinery/atmospherics) && !ispath(queued_p_type, /obj/machinery/atmospherics/pipe/color_adapter))
 							P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 						if(mode & WRENCH_MODE)
 							P.wrench_act(user, src)

@@ -15,6 +15,9 @@
 	var/static/list/mutable_appearance/center_cache = list()
 	var/mutable_appearance/pipe_appearance
 
+/* We use New() instead of Initialize() because these values are used in update_icon()
+ * in the mapping subsystem init before Initialize() is called in the atoms subsystem init.
+ */
 /obj/machinery/atmospherics/pipe/smart/New()
 	icon_state = ""
 	connections = new/list(dir2text(NORTH) = FALSE, dir2text(SOUTH) = FALSE , dir2text(EAST) = FALSE , dir2text(WEST) = FALSE)
@@ -33,11 +36,11 @@
 	connections = list(dir2text(NORTH) = FALSE, dir2text(SOUTH) = FALSE , dir2text(EAST) = FALSE , dir2text(WEST) = FALSE)
 	var/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
 	for(var/direction in connections)
-		var/turf/T = get_step(src,  text2dir(direction))
-		if(!T)
+		var/turf/turf = get_step(src, text2dir(direction))
+		if(!turf)
 			return
-		for(var/machine_type in T.contents)
-			if(!is_type_in_typecache(machine_type,valid_connectors))
+		for(var/machine_type in turf.contents)
+			if(!is_type_in_typecache(machine_type, valid_connectors))
 				continue
 			var/obj/machinery/atmospherics/machine = machine_type
 
@@ -48,36 +51,37 @@
 
 	switch(connection_num)
 		if(0)
-			center = mutable_appearance('icons/obj/atmospherics/pipes/simple.dmi', "pipe00-3")
+			center = mutable_appearance('icons/obj/atmospherics/pipes/manifold.dmi', "manifold4w_center")
+			dir = NORTH
 		if(1)
 			for(var/direction in connections)
-				if(connections[direction] != TRUE)
+				if(!connections[direction])
 					continue
 				center = mutable_appearance('icons/obj/atmospherics/pipes/simple.dmi', "pipe00-3")
-				src.dir = text2dir(direction)
+				dir = text2dir(direction)
 		if(2)
 			for(var/direction in connections)
-				if(connections[direction] != TRUE)
+				if(!connections[direction])
 					continue
 				//Detects straight pipes connected from east to west , north to south etc.
 				if(connections[dir2text(angle2dir(dir2angle(text2dir(direction))+180))] == TRUE)
 					center = mutable_appearance('icons/obj/atmospherics/pipes/simple.dmi', "pipe00-3")
-					src.dir = text2dir(direction)
+					dir = text2dir(direction)
 					break
 
 				for(var/direction2 in connections - direction)
-					if(connections[direction2] != TRUE)
+					if(!connections[direction2])
 						continue
 					center = mutable_appearance('icons/obj/atmospherics/pipes/simple.dmi', "pipe00-3")
-					src.dir = text2dir(dir2text(text2dir(direction)+text2dir(direction2)))
+					dir = text2dir(dir2text(text2dir(direction)+text2dir(direction2)))
 		if(3)
 			for(var/direction in connections)
-				if(connections[direction] == FALSE)
+				if(!connections[direction])
 					center = mutable_appearance('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_center")
-					src.dir = text2dir(direction)
+					dir = text2dir(direction)
 		if(4)
 			center = mutable_appearance('icons/obj/atmospherics/pipes/manifold.dmi', "manifold4w_center")
-			src.dir = dir2text(NORTH)
+			dir = NORTH
 	return center
 
 /obj/machinery/atmospherics/pipe/smart/update_overlays()

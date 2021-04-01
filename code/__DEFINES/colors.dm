@@ -12,6 +12,7 @@
 #define COLOR_SILVER "#C0C0C0"
 #define COLOR_GRAY "#808080"
 #define COLOR_FLOORTILE_GRAY "#8D8B8B"
+#define COLOR_DARK "#454545"
 #define COLOR_ALMOST_BLACK "#333333"
 #define COLOR_BLACK "#000000"
 #define COLOR_HALF_TRANSPARENT_BLACK    "#0000007A"
@@ -46,6 +47,7 @@
 #define COLOR_STRONG_BLUE "#1919c8"
 #define COLOR_BRIGHT_BLUE "#2CB2E8"
 #define COLOR_MODERATE_BLUE "#555CC2"
+#define COLOR_AMETHYST "#822bff"
 #define COLOR_BLUE_LIGHT "#33CCFF"
 #define COLOR_NAVY "#000080"
 #define COLOR_BLUE_GRAY "#75A2BB"
@@ -167,3 +169,34 @@
 #define LIGHT_COLOR_TUNGSTEN   "#FAE1AF"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN    "#F0FAFA"
+
+///Color of pipes, moved here from atmospherics.dm due to the use of defines that are unreachable there
+GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
+	"amethyst" = COLOR_AMETHYST, //supplymain
+	"blue" = COLOR_BLUE,
+	"brown" = COLOR_BROWN,
+	"cyan" = COLOR_CYAN,
+	"dark" = COLOR_DARK,
+	"green" = COLOR_VIBRANT_LIME,
+	"grey" = COLOR_VERY_LIGHT_GRAY,
+	"orange" = COLOR_TAN_ORANGE,
+	"purple" = COLOR_PURPLE,
+	"red" = COLOR_RED,
+	"violet" = COLOR_STRONG_VIOLET,
+	"yellow" = COLOR_YELLOW
+)))
+
+GLOBAL_LIST_INIT(pipe_colors_ordered, sortList(list(
+	COLOR_AMETHYST = -6,
+	COLOR_BLUE = -5,
+	COLOR_BROWN = -4,
+	COLOR_CYAN = -3,
+	COLOR_DARK = -2,
+	COLOR_VIBRANT_LIME = -1,
+	COLOR_VERY_LIGHT_GRAY = 0,
+	COLOR_TAN_ORANGE = 1,
+	COLOR_PURPLE = 2,
+	COLOR_RED = 3,
+	COLOR_STRONG_VIOLET = 4,
+	COLOR_YELLOW = 5
+)))

@@ -492,36 +492,6 @@
 ///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
 #define VENTCRAWL_CAN_SEE	(1<<2)
 
-GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
-		"amethyst" = rgb(130,43,255), //supplymain
-		"blue" = rgb(0,0,255),
-		"brown" = rgb(178,100,56),
-		"cyan" = rgb(0,255,249),
-		"dark" = rgb(69,69,69),
-		"green" = rgb(30,255,0),
-		"grey" = rgb(254,254,254),
-		"orange" = rgb(255,129,25),
-		"purple" = rgb(128,0,182),
-		"red" = rgb(255,0,0),
-		"violet" = rgb(64,0,128),
-		"yellow" = rgb(255,198,0)
-)))
-
-GLOBAL_LIST_INIT(pipe_colors_ordered, sortList(list(
-		rgb(130,43,255) = -6,
-		rgb(0,0,255) = -5,
-		rgb(178,100,56) = -4,
-		rgb(0,255,249) = -3,
-		rgb(69,69,69) = -2,
-		rgb(30,255,0) = -1,
-		rgb(254,254,254) = 0,
-		rgb(255,129,25) = 1,
-		rgb(128,0,182) = 2,
-		rgb(255,0,0) = 3,
-		rgb(64,0,128) = 4,
-		rgb(255,198,0) = 5
-)))
-
 //Helpers
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
 	if(T.dir & (NORTH|SOUTH)) { \
