@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Poison moth wings don't have body-shaped gaps in them that show up when dismembered any more."

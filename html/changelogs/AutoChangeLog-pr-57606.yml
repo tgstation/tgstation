@@ -1,7 +1,0 @@
-author: "LordVollkorn"
-delete-after: True
-changes: 
-  - rscadd: "Chemical toxins have been adjusted to the new pH-system."
-  - balance: "Even if you don't pay attention to pH-values, you can still make relatively decent toxins in small-medium batches."
-  - rscadd: "Four new minor impurities have been added."
-  - bugfix: "Seiver has been tweaked so pure Seiver is much easier to make now."

@@ -1,5 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes: 
-  - imageadd: "Re-sprites the lightning orb powerup"
-  - bugfix: "The lightning orb HUD icon now displays after picking up a lightning orb"
