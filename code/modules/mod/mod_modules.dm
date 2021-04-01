@@ -280,17 +280,6 @@
 	cooldown_time = 5 SECONDS
 	var/bumpoff = TRUE
 	var/stealth_alpha = 50
-	var/datum/effect_system/spark_spread/spark_system
-
-/obj/item/mod/module/stealth/Initialize()
-	. = ..()
-	spark_system = new
-	spark_system.set_up(2,1,src)
-	spark_system.attach(src)
-
-/obj/item/mod/module/stealth/Destroy()
-	QDEL_NULL(spark_system)
-	return ..()
 
 /obj/item/mod/module/stealth/on_activation()
 	. = ..()
@@ -316,7 +305,7 @@
 	SIGNAL_HANDLER
 
 	to_chat(mod.wearer, "<span class='warning'>[src] gets discharged from contact!</span>")
-	spark_system.start()
+	do_sparks(2, TRUE, src)
 	drain_power(use_power_cost)
 	on_deactivation()
 
@@ -494,18 +483,18 @@
 
 /obj/projectile/tether
 	name = "tether"
-	icon_state = "hook"
+	icon_state = "tether"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
 	damage = 0
 	nodamage = TRUE
-	hitsound = 'sound/effects/splat.ogg'
+	hitsound = 'sound/weapons/batonextend.ogg'
 	range = 10
 	var/line
 
 /obj/projectile/tether/fire(setAngle)
 	if(firer)
-		line = firer.Beam(src, icon_state = "chain")
+		line = firer.Beam(src, icon_state = "line")
 	..()
 
 /obj/projectile/tether/on_hit(atom/target)
