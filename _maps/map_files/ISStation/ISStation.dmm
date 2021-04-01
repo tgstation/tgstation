@@ -3048,7 +3048,7 @@
 	},
 /obj/docking_port/stationary{
 	dwidth = 5;
-	height = 8;
+	height = 7;
 	id = "supply_home";
 	name = "Cargo Bay";
 	width = 11
