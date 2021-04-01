@@ -1,10 +1,15 @@
 /datum/greyscale_modify_menu
 	var/atom/target
+	var/client/user
+
 	var/list/split_colors
+
 	var/icon/preview // Eventualy this can be displayed in the ui
+	var/list/sprite_data
 
 /datum/greyscale_modify_menu/New(atom/target, client/user)
 	src.target = target
+	src.user = user
 
 	ReadColorsFromString(target.greyscale_colors)
 
@@ -38,6 +43,7 @@
 			"value" = split_colors[i]
 		))
 
+	data["sprites"] = sprite_data
 	return data
 
 /datum/greyscale_modify_menu/ui_act(action, params)
@@ -64,7 +70,6 @@
 				split_colors[group] = new_color
 				refresh_preview()
 		if("apply")
-			refresh_preview()
 			target.greyscale_colors = split_colors.Join()
 			target.update_appearance()
 		if("refresh_file")
@@ -78,4 +83,15 @@
 		split_colors += "#[raw_colors[i]]"
 
 /datum/greyscale_modify_menu/proc/refresh_preview()
-	preview = SSgreyscale.GetColoredIconByType(target.greyscale_config, split_colors)
+	var/list/data = SSgreyscale.configurations["[target.greyscale_config]"].GenerateDebug(split_colors)
+	preview = data["icon"]
+
+	sprite_data = list()
+	//sprite_data["finished"] = list("ref"=REF(preview), "sprite"=icon2html(preview, user, sourceonly=TRUE))
+	sprite_data["finished"] = list("result"=icon2base64(preview))
+
+	var/list/steps = list()
+	sprite_data["steps"] = steps
+	for(var/step in data["steps"])
+		//steps += list(list("ref"=REF(step), "sprite"=icon2html(step, user, sourceonly=TRUE)))
+		steps += list(list("layer"=icon2html(data["steps"][step], user, sourceonly=TRUE), "result"=icon2html(step, user, sourceonly=TRUE)))

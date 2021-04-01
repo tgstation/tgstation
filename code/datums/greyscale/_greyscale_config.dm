@@ -102,16 +102,35 @@
 	return new_icon
 
 /// Internal recursive proc to handle nested layer groups
-/datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group)
-	var/icon/new_icon
+/datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
+	var/icon/new_icon = new('icons/obj/atmospherics/canisters/default.dmi', "none")
 	for(var/datum/greyscale_layer/layer as anything in group)
 		var/icon/layer_icon
 		if(islist(layer))
-			layer_icon = GenerateLayerGroup(colors, layer)
+			layer_icon = GenerateLayerGroup(colors, layer, render_steps)
+			layer = layer[1] // When there are multiple layers in a group like this we use the first one's blend mode
 		else
-			layer_icon = layer.Generate(colors)
+			layer_icon = layer.Generate(colors, render_steps)
+
 		if(!new_icon)
 			new_icon = layer_icon
-			continue
-		new_icon.Blend(layer_icon, layer.blend_mode)
+		else
+			new_icon.Blend(layer_icon, layer.blend_mode)
+
+		// These are so we can see the result of every step of the process in the preview ui
+		if(render_steps)
+			var/icon/new_icon_copy = new(new_icon)
+			var/icon/layer_icon_copy = new(layer_icon)
+			render_steps[layer_icon_copy] = icon(new_icon_copy)
 	return new_icon
+
+/datum/greyscale_config/proc/GenerateDebug(list/colors)
+	if(length(colors) != expected_colors)
+		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
+
+	var/list/output = list()
+	var/list/debug_steps = list()
+	output["steps"] = debug_steps
+
+	output["icon"] = GenerateLayerGroup(colors, layers, debug_steps)
+	return output

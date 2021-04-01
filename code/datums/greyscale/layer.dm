@@ -18,11 +18,11 @@
 
 /// Used to actualy create the layer using the given colors
 /// Do not override, use InternalGenerate instead
-/datum/greyscale_layer/proc/Generate(list/colors)
+/datum/greyscale_layer/proc/Generate(list/colors, list/render_steps)
 	var/list/processed_colors = list()
 	for(var/i in color_ids)
 		processed_colors += colors[i]
-	return InternalGenerate(processed_colors)
+	return InternalGenerate(processed_colors, render_steps)
 
 /datum/greyscale_layer/proc/InternalGenerate(list/colors)
 
@@ -42,7 +42,7 @@
 	if(length(color_ids) > 1)
 		CRASH("Icon state layers can not have more than one color id")
 
-/datum/greyscale_layer/icon_state/InternalGenerate(list/colors)
+/datum/greyscale_layer/icon_state/InternalGenerate(list/colors, list/render_steps)
 	. = ..()
 	var/icon/new_icon = icon(icon)
 	if(length(colors))
@@ -60,5 +60,10 @@
 	if(!reference_config)
 		CRASH("An unknown greyscale configuration was given to a reference layer: [json_data["reference_type"]]")
 
-/datum/greyscale_layer/reference/InternalGenerate(list/colors)
+/datum/greyscale_layer/reference/InternalGenerate(list/colors, list/render_steps)
+	if(render_steps)
+		// We're debugging
+		var/list/debug_data = reference_config.GenerateDebug(colors)
+		render_steps += debug_data["steps"]
+		return debug_data["icon"]
 	return reference_config.Generate(colors)
