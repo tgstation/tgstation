@@ -54,6 +54,13 @@
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE (BREATH_VOLUME/CELL_VOLUME)
 
+//Defines for N2O and Healium euphoria moodlets
+#define EUPHORIA_INACTIVE 0
+#define EUPHORIA_ACTIVE 1
+#define EUPHORIA_LAST_FLAG 2
+
+#define MIASMA_CORPSE_MOLES 0.02
+#define MIASMA_GIBS_MOLES 0.005
 
 //EXCITED GROUPS
 /**
@@ -473,7 +480,30 @@
 /// north/south east/west doesn't matter, auto normalize on build.
 #define PIPING_CARDINAL_AUTONORMALIZE (1<<3)
 
-//HELPERS
+// Ventcrawling bitflags, handled in var/vent_movement
+///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
+#define VENTCRAWL_ALLOWED	(1<<0)
+///Allows mobs to enter or leave from atmospheric machines. On for passive, unary, and scrubber vents.
+#define VENTCRAWL_ENTRANCE_ALLOWED (1<<1)
+///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
+#define VENTCRAWL_CAN_SEE	(1<<2)
+
+GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
+		"amethyst" = rgb(130,43,255), //supplymain
+		"blue" = rgb(0,0,255),
+		"brown" = rgb(178,100,56),
+		"cyan" = rgb(0,255,249),
+		"dark" = rgb(69,69,69),
+		"green" = rgb(30,255,0),
+		"grey" = rgb(255,255,255),
+		"orange" = rgb(255,129,25),
+		"purple" = rgb(128,0,182),
+		"red" = rgb(255,0,0),
+		"violet" = rgb(64,0,128),
+		"yellow" = rgb(255,198,0)
+)))
+
+//Helpers
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
 	if(T.dir & (NORTH|SOUTH)) { \
 		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
@@ -507,9 +537,7 @@
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
-#define NORMAL_TURF 1
-#define MAKE_ACTIVE 2
-#define KILL_EXCITED 3
+
 #ifdef TESTING
 GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T, state) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = state}
@@ -517,38 +545,13 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T, state) SSadjacent_air.queue[T] = state
 #endif
 
+//Adjacent turf related defines, they dictate what to do with a turf once it's been recalculated
+//Used as "state" in CALCULATE_ADJACENT_TURFS
+#define NORMAL_TURF 1
+#define MAKE_ACTIVE 2
+#define KILL_EXCITED 3
+
 //If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
 #define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
 //Use this to see if a turf is fully blocked or not, think windows or firelocks. Fails with 1x1 non full tile windows, but it's not worth the cost.
 #define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
-
-GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
-		"amethyst" = rgb(130,43,255), //supplymain
-		"blue" = rgb(0,0,255),
-		"brown" = rgb(178,100,56),
-		"cyan" = rgb(0,255,249),
-		"dark" = rgb(69,69,69),
-		"green" = rgb(30,255,0),
-		"grey" = rgb(255,255,255),
-		"orange" = rgb(255,129,25),
-		"purple" = rgb(128,0,182),
-		"red" = rgb(255,0,0),
-		"violet" = rgb(64,0,128),
-		"yellow" = rgb(255,198,0)
-)))
-
-#define MIASMA_CORPSE_MOLES 0.02
-#define MIASMA_GIBS_MOLES 0.005
-
-//Defines for N2O and Healium euphoria moodlets
-#define EUPHORIA_INACTIVE 0
-#define EUPHORIA_ACTIVE 1
-#define EUPHORIA_LAST_FLAG 2
-
-// Ventcrawling bitflags, handled in var/vent_movement
-///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
-#define VENTCRAWL_ALLOWED	(1<<0)
-///Allows mobs to enter or leave from atmospheric machines. On for passive, unary, and scrubber vents.
-#define VENTCRAWL_ENTRANCE_ALLOWED (1<<1)
-///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
-#define VENTCRAWL_CAN_SEE	(1<<2)

@@ -213,7 +213,7 @@
 /mob/living/carbon/proc/assign_bodypart_ownership()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		BP.original_owner = src
+		BP.original_owner = WEAKREF(src)
 
 /mob/living/carbon/proc/update_body_parts()
 	//CHECK FOR UPDATE

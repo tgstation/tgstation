@@ -26,6 +26,10 @@
 	if(hide)
 		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
+/obj/machinery/atmospherics/pipe/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>[src] is on layer [piping_layer].</span>"
+
 /obj/machinery/atmospherics/pipe/nullifyNode(i)
 	var/obj/machinery/atmospherics/oldN = nodes[i]
 	..()

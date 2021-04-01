@@ -43,6 +43,16 @@
 
 /mob/living/simple_animal/pet/Destroy()
 	QDEL_NULL(pcollar)
+	QDEL_NULL(access_card)
+	return ..()
+
+/mob/living/simple_animal/pet/gib()
+	if(pcollar)
+		pcollar.forceMove(drop_location())
+		pcollar = null
+	if(access_card)
+		access_card.forceMove(drop_location())
+		access_card = null
 	return ..()
 
 /mob/living/simple_animal/pet/revive(full_heal = FALSE, admin_revive = FALSE)
@@ -53,16 +63,10 @@
 		regenerate_icons()
 
 /mob/living/simple_animal/pet/death(gibbed)
-	..(gibbed)
+	. = ..()
 	if(collar_type)
 		collar_type = "[initial(collar_type)]_dead"
 	regenerate_icons()
-
-/mob/living/simple_animal/pet/gib()
-	if(pcollar)
-		pcollar.forceMove(drop_location())
-		pcollar = null
-	..()
 
 /mob/living/simple_animal/pet/regenerate_icons()
 	cut_overlays()
