@@ -273,6 +273,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	COOLDOWN_START(src, destructive_scan_cooldown, RCD_DESTRUCTIVE_SCAN_COOLDOWN)
 
+	playsound(src, 'sound/items/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
+
 	var/turf/source_turf = get_turf(src)
 	for (var/turf/open/surrounding_turf in RANGE_TURFS(RCD_DESTRUCTIVE_SCAN_RANGE, source_turf))
 		var/rcd_memory = surrounding_turf.rcd_memory
