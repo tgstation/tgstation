@@ -44,14 +44,20 @@
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				SEND_SOUND(M, s)
 
+/**
+ * Summon the crew for an emergency meeting
+ *
+ * Teleports the crew to a specified area, and tells everyone (via an announcement) who called the meeting. Should only be used during april fools!
+ * Arguments:
+ * * user - Mob who called the meeting
+ * * button_zone - Area where the meeting was called and where everyone will get teleported to
+ */
 /proc/call_emergency_meeting(mob/living/user, area/button_zone)
-	if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
-		return
 	var/announcement
 
 	announcement += "<h1 class='alert'>Captain Alert</h1>"
-	///If the announcer overrides alert messages, use that message.
-	announcement += "<br><span class='alert'>[user] Has Called An Emergency Meeting!</span><br>"
+	//If the announcer overrides alert messages, use that message.
+	announcement += "<br><span class='alert'>[user] has called an Emergency Meeting!</span><br>"
 	announcement += "<br>"
 
 	var/s = sound('sound/misc/emergency_meeting.ogg')
@@ -62,7 +68,14 @@
 			M.overlay_fullscreen("emergency_meeting", /atom/movable/screen/fullscreen/emergency_meeting, 1)
 			addtimer(CALLBACK(M, /mob/.proc/clear_fullscreen, "emergency_meeting"), 30)
 			if (is_station_level(M.z))
-				M.forceMove(pick(get_area_turfs(button_zone)))
+				var/turf/target
+				var/list/turf_list = get_area_turfs(button_zone)
+				while (!target && turf_list.len)
+					target = pick_n_take(turf_list)
+					if (isclosedturf(target))
+						target = null
+						continue
+					M.forceMove(target)
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
