@@ -11,7 +11,72 @@
 	//transform = matrix(0.5, 0.5, 0, -0.25, 0.25, 0)
 	transform = matrix(1, 1, 0, -0.5, 0.5, 0)
 
+
+////WALLMOUNTS//// -things that should be flat, but on a wall. (it's blockify but no top)
+
+///only call this on things with at least some pixel_x or pixel_y
+/atom/proc/wallmountify()
+
+	var/skip_right = FALSE
+	var/skip_left = FALSE
+
+	//i bet math could do this but i lack many skills
+	if(pixel_y > 0)
+		pixel_y = 64
+	else if(pixel_y < 0)
+		pixel_y = -64
+	else
+		skip_left = TRUE // dont draw left side
+	if(pixel_x > 0)
+		pixel_x = 64
+	else if(pixel_x < 0)
+		pixel_x = -64
+	else
+		skip_right = TRUE // dont draw right side
+
+	if(skip_left && skip_right) //for things with no pixel_x we just add both
+		var/mutable_appearance/right_side
+		right_side = new(src)
+		right_side.transform =  matrix(0, 1, 16, -1, 0.5, 8)
+		right_side.appearance_flags |= RESET_TRANSFORM
+		overlays += right_side
+		transform = matrix(1, 0, -16, -0.5, 1, 8)
+	if(skip_left)
+		transform = matrix(0, 1, 16, -1, 0.5, 8)
+	if(skip_right)
+		transform = matrix(1, 0, -16, -0.5, 1, 8)
+
+////TABLES//// -yeah only really for tables man. does some super cool stuff though read this proc
+/atom/proc/tableify()
+
+	//table icon but chopped to be only the table legs
+	var/icon/table_legs = icon(icon, icon_state)
+	table_legs.DrawBox(null,1,8,64,64)
+
+	//table icon but chopped to be only the center
+	var/icon/table_top = icon(icon, icon_state)
+	table_top.DrawBox(null,1,(8),1,1)
+
+	var/mutable_appearance/left_side
+	left_side = new(table_legs)
+	left_side.transform = matrix(1, 0, -16, -0.5, 1, 8)
+	left_side.appearance_flags |= RESET_TRANSFORM
+	var/mutable_appearance/right_side
+	right_side = new(table_legs)
+	var/matrix/right_side_matrix = matrix()
+	right_side_matrix.Turn(-90)
+	right_side_matrix.Multiply(matrix(0, 1, 16, -1, 0.5, 4))
+	right_side.transform = right_side_matrix
+	right_side.appearance_flags |= RESET_TRANSFORM
+
+	overlays += left_side
+	overlays += right_side
+
+	transform = matrix(1, 1, 0, -0.5, 0.5, 8) //top side, how high up the table is
+
+
 ////BLOCKS//// -things that should look 3d
+
 #define NORTH_JUNCTION NORTH //(1<<0)
 #define SOUTH_JUNCTION SOUTH //(1<<1)
 #define EAST_JUNCTION EAST  //(1<<2)

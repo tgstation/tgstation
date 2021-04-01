@@ -22,6 +22,7 @@
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = TABLE_LAYER
+	isometric_mode = ISOMETRIC_TABLE
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/buildstack = /obj/item/stack/sheet/iron
@@ -35,7 +36,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_TABLES)
 	canSmoothWith = list(SMOOTH_GROUP_TABLES)
-	isometric_mode = ISOMETRIC_FLATTEN
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
