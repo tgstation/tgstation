@@ -14,6 +14,7 @@
 	pipe_state = "adapter_center"
 
 	paintable = FALSE
+	hide = FALSE
 
 	var/static/list/mutable_appearance/center_cache = list()
 

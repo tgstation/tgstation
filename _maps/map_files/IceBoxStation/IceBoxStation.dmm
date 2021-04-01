@@ -12366,9 +12366,6 @@
 "bfQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
-	dir = 6
-	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "bfS" = (
@@ -17457,7 +17454,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "bzq" = (
-/obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
 /turf/closed/wall,
 /area/maintenance/disposal/incinerator)
 "bzr" = (
@@ -18908,9 +18905,7 @@
 	dir = 1;
 	pixel_y = -30
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/hidden,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "bEJ" = (
@@ -18930,18 +18925,14 @@
 	pixel_x = 6;
 	pixel_y = -24
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/bridge_pipe/purple/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/hidden,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "bEL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/hidden,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "bEM" = (
@@ -18972,9 +18963,8 @@
 /turf/closed/wall,
 /area/maintenance/disposal/incinerator)
 "bEY" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/color_adapter,
+/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -30420,7 +30410,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "fyc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible{
+/obj/machinery/atmospherics/pipe/color_adapter{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
@@ -36762,7 +36752,7 @@
 	},
 /area/hallway/secondary/entry)
 "jVh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/color_adapter,
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "jVl" = (
@@ -37559,10 +37549,10 @@
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "kwx" = (
-/obj/machinery/atmospherics/pipe/layer_manifold{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/science/mixing)
 "kwy" = (
@@ -40101,6 +40091,13 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/service/bar)
+"mkC" = (
+/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/color_adapter,
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "mkI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 6
@@ -42299,10 +42296,10 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "nIF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/color_adapter,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "nIQ" = (
@@ -43803,8 +43800,8 @@
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "oVN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/color_adapter,
+/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
@@ -48212,12 +48209,12 @@
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
 "rTy" = (
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4
-	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -50006,10 +50003,10 @@
 /area/medical/morgue)
 "tjI" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/color_adapter,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "tjW" = (
@@ -56107,6 +56104,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/genetics)
+"xlf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/hidden,
+/turf/open/floor/iron,
+/area/maintenance/disposal/incinerator)
 "xmh" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
@@ -92384,7 +92386,7 @@ rnH
 pjs
 iAS
 fyc
-bPf
+mkC
 pjs
 lXm
 pjs
@@ -95225,7 +95227,7 @@ byO
 cjr
 cjr
 cjr
-cjr
+xlf
 bEY
 bJM
 bJP
