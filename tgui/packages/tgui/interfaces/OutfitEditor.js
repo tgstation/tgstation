@@ -98,6 +98,7 @@ const OutfitSlot = (props, context) => {
         <Box
           as="img"
           src={`data:image/jpeg;base64,${currItem?.sprite}`}
+          title={currItem?.desc}
           height="32px"
           style={{
             '-ms-interpolation-mode': 'nearest-neighbor',

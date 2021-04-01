@@ -12,7 +12,6 @@
 	var/client/holder
 
 	var/dummy_key
-	var/static/list/allitems
 	var/datum/outfit/drip = /datum/outfit/job/miner/equipped/hardsuit
 
 /datum/outfit_editor/New(user)
@@ -50,6 +49,7 @@
 		return list(
 			"path" = item,
 			"name" = initial(item.name),
+			"desc" = initial(item.desc),
 			"sprite" = icon2base64(icon(initial(item.icon), initial(item.icon_state))) //at this point initializing the item is probably faster tbh
 			)
 
