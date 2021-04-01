@@ -121,9 +121,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(T)
 		T.multiz_turf_new(src, UP)
 
-	if (mapload)
-		turf_flags |= MAPLOAD_INTIIALIZED_TURF
-
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
 

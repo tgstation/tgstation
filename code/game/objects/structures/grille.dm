@@ -61,13 +61,10 @@
 				delay = 4 SECONDS
 				cost = 12
 
-			var/turf/grille_turf = get_turf(src)
-
-			if (grille_turf?.rcd_memory == RCD_MEMORY_WINDOWGRILLE)
-				cost /= RCD_MEMORY_COST_BUFF
-				delay /= RCD_MEMORY_SPEED_BUFF
-
-			return list("mode" = RCD_WINDOWGRILLE, "delay" = delay, "cost" = cost)
+			return rcd_result_with_memory(
+				list("mode" = RCD_WINDOWGRILLE, "delay" = delay, "cost" = cost),
+				get_turf(src), RCD_MEMORY_WINDOWGRILLE,
+			)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)

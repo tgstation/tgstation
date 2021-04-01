@@ -84,8 +84,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// If a turf cant be jaunted through.
 #define NOJAUNT (1<<0)
 #define UNUSED_RESERVATION_TURF (1<<1)
-/// This turf was initialized on mapload
-#define MAPLOAD_INTIIALIZED_TURF (1<<2)
 /// Blocks lava rivers being generated on the turf.
 #define NO_LAVA_GEN (1<<3)
 /// Blocks ruins spawning on the turf.
