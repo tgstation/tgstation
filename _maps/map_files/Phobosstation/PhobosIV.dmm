@@ -6151,6 +6151,9 @@
 "gLj" = (
 /obj/machinery/porta_turret/ai,
 /obj/structure/cable,
+/obj/machinery/camera/autoname{
+	dir = 1
+	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "gLW" = (
@@ -11659,6 +11662,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/camera/autoname{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/command/corporate_showroom)
 "mUg" = (
@@ -14604,6 +14610,9 @@
 /obj/structure/table/glass,
 /obj/machinery/recharger,
 /obj/machinery/airalarm/directional/south,
+/obj/machinery/camera/autoname{
+	dir = 1
+	},
 /turf/open/floor/glass,
 /area/command/bridge)
 "pTr" = (
@@ -17341,6 +17350,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/camera/autoname{
+	dir = 1
+	},
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
@@ -18906,6 +18918,9 @@
 /obj/machinery/nuclearbomb/selfdestruct,
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/camera/autoname{
+	dir = 1
 	},
 /turf/open/floor/circuit/green{
 	luminosity = 2
