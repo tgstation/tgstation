@@ -1,5 +1,6 @@
 #define COMMUNICATION_COOLDOWN 300
 #define COMMUNICATION_COOLDOWN_AI 300
+#define COMMUNICATION_COOLDOWN_MEETING (5 MINUTES)
 
 SUBSYSTEM_DEF(communications)
 	name = "Communications"
@@ -39,11 +40,11 @@ SUBSYSTEM_DEF(communications)
  */
 /datum/controller/subsystem/communications/proc/can_make_emergency_meeting(mob/living/user)
 	if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
-		. = FALSE
+		return FALSE
 	else if(emergency_meeting_cooldown > world.time)
-		. = FALSE
+		return FALSE
 	else
-		. = TRUE
+		return TRUE
 
 /**
  * Call an emergency meeting
@@ -58,7 +59,7 @@ SUBSYSTEM_DEF(communications)
 	if(!can_make_emergency_meeting(user))
 		return FALSE
 	call_emergency_meeting(user, get_area(user))
-	emergency_meeting_cooldown = world.time + 5 MINUTES
+	emergency_meeting_cooldown = world.time + COMMUNICATION_COOLDOWN_MEETING
 	message_admins("[ADMIN_LOOKUPFLW(user)] has called an emergency meeting.")
 
 /datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)

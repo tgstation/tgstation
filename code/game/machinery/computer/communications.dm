@@ -297,7 +297,7 @@
 			if (!(picture in approved_status_pictures))
 				return
 			post_status("alert", picture)
-			playsound(src, "terminal_type", 50, FALSE)			
+			playsound(src, "terminal_type", 50, FALSE)
 		if ("toggleAuthentication")
 			// Log out if we're logged in
 			if (authorize_name)

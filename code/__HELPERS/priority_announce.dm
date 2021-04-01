@@ -60,22 +60,23 @@
 	announcement += "<br><span class='alert'>[user] has called an Emergency Meeting!</span><br>"
 	announcement += "<br>"
 
-	var/s = sound('sound/misc/emergency_meeting.ogg')
-	for(var/mob/M in GLOB.mob_list) //Gotta make sure the whole crew's here!
-		if(!isnewplayer(M))
-			to_chat(M, announcement)
-			SEND_SOUND(M, s)
-			M.overlay_fullscreen("emergency_meeting", /atom/movable/screen/fullscreen/emergency_meeting, 1)
-			addtimer(CALLBACK(M, /mob/.proc/clear_fullscreen, "emergency_meeting"), 30)
-			if (is_station_level(M.z))
-				var/turf/target
-				var/list/turf_list = get_area_turfs(button_zone)
-				while (!target && turf_list.len)
-					target = pick_n_take(turf_list)
-					if (isclosedturf(target))
-						target = null
-						continue
-					M.forceMove(target)
+	var/meeting_sound = sound('sound/misc/emergency_meeting.ogg')
+	for(var/mob/mob_to_teleport in GLOB.mob_list) //Gotta make sure the whole crew's here!
+		if(isnewplayer(mob_to_teleport))
+			return
+		to_chat(mob_to_teleport, announcement)
+		SEND_SOUND(mob_to_teleport, meeting_sound) //no preferences here, you must hear the funny sound
+		mob_to_teleport.overlay_fullscreen("emergency_meeting", /atom/movable/screen/fullscreen/emergency_meeting, 1)
+		addtimer(CALLBACK(mob_to_teleport, /mob/.proc/clear_fullscreen, "emergency_meeting"), 3 SECONDS)
+		if (is_station_level(mob_to_teleport.z))
+			var/turf/target
+			var/list/turf_list = get_area_turfs(button_zone)
+			while (!target && turf_list.len)
+				target = pick_n_take(turf_list)
+				if (isclosedturf(target))
+					target = null
+					continue
+				mob_to_teleport.forceMove(target)
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
