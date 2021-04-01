@@ -311,3 +311,13 @@
 	name = "bbq sauce pack"
 	originalname = "bbq sauce"
 	list_reagents = list(/datum/reagent/consumable/bbqsauce = 10)
+
+/obj/item/reagent_containers/food/condiment/moth_milk
+	name = "Moth Milk"
+	desc = "A carton filled with milk... from moths?!"
+	icon_state = "moth_milks"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/moth_milk = 50)
+	fill_icon_thresholds = null

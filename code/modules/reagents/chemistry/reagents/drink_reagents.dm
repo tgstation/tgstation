@@ -1026,3 +1026,33 @@
 		M.drowsyness += 1 * REM * delta_time
 	return ..()
 
+
+/datum/reagent/consumable/mothmilk
+	name = "Moth Milk"
+	description = "Whoever thought that milking moths is a good idea was totally wrong. Is it even milk?"
+	color = "#F0E9DA" // rgb: 240, 233, 218
+	taste_desc = "salty and oily substance" //...are you sure that it's not just moth cum?
+	glass_name = "milk?"
+	glass_desc = "It's looking pretty odd, are you sure that it's safe to drink?"
+	ph = 6.5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/mothmilk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(!ismoth(M))
+		if(M.disgust < 80)
+			M.adjust_disgust(10 * REM * delta_time)
+		return TRUE
+	. = ..()
+
+/datum/reagent/consumable/mothmilk/expose_obj(obj/exposed_obj, reac_volume)
+	. = ..()
+	if(istype(exposed_obj, /obj/item/food))
+		var/obj/item/food/food = exposed_obj
+		food.foodtypes += CLOTH
+		food.visible_message("<span class='warning'>[food] sizzles and suddenly it's surface starts to look like it's made from some kind of... cloth?</span>")
+		return
+
+	var/datum/component/edible/edible = exposed_obj.GetComponent(/datum/component/edible)
+	if(edible && istype(edible))
+		edible.foodtypes += CLOTH
+		exposed_obj.visible_message("<span class='warning'>[exposed_obj] sizzles and suddenly it's surface starts to look like it's made from some kind of... cloth?</span>")
