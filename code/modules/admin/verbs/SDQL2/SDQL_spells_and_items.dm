@@ -212,7 +212,6 @@
 	var/datum/give_sdql_spell/ui = new(usr, target)
 	ui.ui_interact(usr)
 
-GLOBAL_LIST_EMPTY(saved_sdql_spells)
 
 /datum/give_sdql_spell
     var/client/user
@@ -280,7 +279,6 @@ GLOBAL_LIST_EMPTY(saved_sdql_spells)
     data["hand_icon"] = hand_icon_base64
     data["overlay_icon"] = overlay_icon_base64
     data["mouse_icon"] = mouse_icon_base64
-    data["saved_spell_count"] = GLOB.saved_sdql_spells.len
     data["alert"] = alert
     alert = ""
     return data
@@ -368,7 +366,7 @@ GLOBAL_LIST_EMPTY(saved_sdql_spells)
 #define LIST_VAR_FLAGS_TYPED 1
 #define LIST_VAR_FLAGS_NAMED 2
 
-/datum/give_sdql_spell/ui_act(action, params)
+/datum/give_sdql_spell/ui_act(action, params, datum/tgui/ui)
     if(..())
         return
     . = TRUE
@@ -447,20 +445,175 @@ GLOBAL_LIST_EMPTY(saved_sdql_spells)
         if("list_variable_change_bool")
             toggle_list_var(params["list"], params["name"])
         if("save")
-            if(saved_vars["name"] in GLOB.saved_sdql_spells)
-                alert = "A spell named \"[saved_vars["name"]]\" already exists!"
-            else
-                GLOB.saved_sdql_spells += list(saved_vars["name"] = list("type" = spell_type, "vars" = saved_vars, "list_vars" = list_vars))
+            var/f = file("data/TempSpellUpload")
+            fdel(f)
+            WRITE_FILE(f, json_encode(list("type" = spell_type, "vars" = saved_vars, "list_vars" = list_vars)))
+            user << ftp(f,"[replacetext_char(saved_vars["name"], " ", "_")].json")
         if("load")
-            var/chosen_spell = input(user, "Which spell would you like to load?", "Add SDQL Spell", null) as null|anything in sortList(GLOB.saved_sdql_spells)
-            if(chosen_spell)
-                spell_type = GLOB.saved_sdql_spells[chosen_spell]["type"]
-                saved_vars = GLOB.saved_sdql_spells[chosen_spell]["vars"]
-                list_vars = GLOB.saved_sdql_spells[chosen_spell]["list_vars"]
+            var/spell_file = input("Pick spell json file:", "File") as null|file
+            if(!spell_file)
+                return
+            var/filedata = file2text(spell_file)
+            var/json = json_decode(filedata)
+            if(!json)
+                alert = "JSON decode error!"
+                return
+            if(load_from_json(json))
                 icon_needs_updating("everything")
+            else
+                alert = "Malformed/Outdated file!"
+                return
         if("confirm")
             give_spell()
+            ui.close()
 
+#define OOF log_world("SDQL spell json load failed at [__FILE__]:[__LINE__].")
+#ifndef OOF
+#define OOF
+#endif
+
+/datum/give_sdql_spell/proc/load_from_json(json)
+    if(!(("type" in json) && ("vars" in json) && ("list_vars" in json)))
+        OOF
+        return FALSE
+    var/temp_type = json["type"]
+    var/datum/D = text2path("/obj/effect/proc_holder/spell/[temp_type]/sdql")
+    if(!ispath(D))
+        OOF
+        return FALSE
+    if(!islist(json["vars"]))
+        OOF
+        return FALSE
+    if(!islist(json["list_vars"]))
+        OOF
+        return FALSE
+    var/list/temp_vars = json["vars"]
+    var/list/temp_list_vars = json["list_vars"]
+    D = new D
+    . = TRUE
+    for(var/V in temp_vars)
+        if(!istext(V))
+            OOF
+            . = FALSE
+            break
+        if(!(V in editable_spell_vars))
+            OOF
+            . = FALSE
+            break
+        if(!(V in D.vars))
+            OOF
+            . = FALSE
+            break
+        if(islist(D.vars[V]))
+            OOF
+            . = FALSE
+            break
+        if(istext(D.vars[V]) || isicon(D.vars[V]) || ispath(D.vars[V]))
+            if(!istext(temp_vars[V]))
+                OOF
+                . = FALSE
+                break
+        if(isnum(D.vars[V]))
+            if(!isnum(temp_vars[V]))
+                OOF
+                . = FALSE
+                break
+    if(.)
+        for(var/V in temp_list_vars)
+            if(!islist(temp_list_vars[V]))
+                OOF
+                . = FALSE
+                break
+            if((V in special_list_vars) && (V in D.vars))
+                var/datum/sample = special_list_vars[V]["type"]
+                sample = new sample
+                for(var/W in temp_list_vars[V])
+                    if(!istext(W))
+                        OOF
+                        . = FALSE
+                        break
+                    if(!islist(temp_list_vars[V][W]))
+                        OOF
+                        . = FALSE
+                        break
+                    if(!(("type" in temp_list_vars[V][W]) && ("value" in temp_list_vars[V][W]) && ("flags" in temp_list_vars[V][W])))
+                        OOF
+                        . = FALSE
+                        break
+                    if(!isnum(temp_list_vars[V][W]["flags"]) || (temp_list_vars[V][W]["flags"] & LIST_VAR_FLAGS_TYPED|LIST_VAR_FLAGS_NAMED) == LIST_VAR_FLAGS_TYPED)
+                        OOF
+                        . = FALSE
+                        break
+                    if(!istext(temp_list_vars[V][W]["type"]))
+                        OOF
+                        . = FALSE
+                        break
+                    if(!(temp_list_vars[V][W]["flags"] & LIST_VAR_FLAGS_TYPED))
+                        if(!isnull(sample.vars[W]))
+                            OOF
+                            . = FALSE
+                            break
+                    else
+                        switch(temp_list_vars[V][W]["type"])
+                            if("list")
+                                if(!islist(sample.vars[W]))
+                                    OOF
+                                    . = FALSE
+                                    break
+                                if(!("[V]/[W]" in temp_list_vars))
+                                    OOF
+                                    . = FALSE
+                                    break
+                            if("num")
+                                if(isnum(temp_list_vars[V][W]["value"]))
+                                    if(!(isnum(sample.vars[W])))
+                                        OOF
+                                        . = FALSE
+                                        break
+                                else
+                                    OOF
+                                    . = FALSE
+                                    break
+                            if("string")
+                                if(istext(temp_list_vars[V][W]["value"]))
+                                    if(!(istext(sample.vars[W]) || isfile(sample.vars[W])))
+                                        OOF
+                                        . = FALSE
+                                        break
+                                else
+                                    OOF
+                                    . = FALSE
+                                    break
+                            if("path")
+                                if(istext(temp_list_vars[V][W]["value"]))
+                                    if(!(ispath(sample.vars[W])))
+                                        OOF
+                                        . = FALSE
+                                        break
+                                else
+                                    OOF
+                                    . = FALSE
+                                    break
+                            if("icon")
+                                if(istext(temp_list_vars[V][W]["value"]))
+                                    if(!(isicon(sample.vars[W])))
+                                        OOF
+                                        . = FALSE
+                                        break
+                                else
+                                    OOF
+                                    . = FALSE
+                                    break
+                qdel(sample)
+                if(!.)
+                    break
+    qdel(D)
+    if(.)
+        spell_type = temp_type
+        saved_vars = temp_vars
+        list_vars = temp_list_vars
+
+#undef OOF
 #undef LIST_VAR_FLAGS_TYPED
 #undef LIST_VAR_FLAGS_NAMED
 
