@@ -21,7 +21,7 @@
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
 	maxHealth = INFINITY
-	layer = GHOST_LAYER
+	plane = GHOST_PLANE
 	healable = FALSE
 	sight = SEE_SELF
 	throwforce = 0
@@ -174,7 +174,7 @@
 //Immunities
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
-	return 1 //Immune to the effects of explosions.
+	return FALSE //Immune to the effects of explosions.
 
 /mob/living/simple_animal/revenant/blob_act(obj/structure/blob/B)
 	return //blah blah blobs aren't in tune with the spirit world, or something.

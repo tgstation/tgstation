@@ -16,6 +16,7 @@
 		if(path in GLOB.fake_reagent_blacklist)
 			continue
 		var/datum/reagent/D = new path()
+		D.mass = rand(10, 800) //This is terrible and should be removed ASAP!
 		GLOB.chemical_reagents_list[path] = D
 
 /proc/build_chemical_reactions_lists()
@@ -155,8 +156,9 @@
  * * added_purity - override to force a purity when added
  * * added_ph - override to force a pH when added
  * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
+ * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = 0, override_base_ph = FALSE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = FALSE, override_base_ph = FALSE, ignore_splitting = FALSE)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -167,13 +169,19 @@
 	if(!glob_reagent)
 		stack_trace("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
-
-	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
 	if(isnull(added_purity)) //Because purity additions can be 0
-		added_purity = D.creation_purity //Usually 1
-
+		added_purity = glob_reagent.creation_purity //Usually 1
 	if(!added_ph)
-		added_ph = D.ph
+		added_ph = glob_reagent.ph
+
+	//Split up the reagent if it's in a mob
+	var/has_split = FALSE
+	if(!ignore_splitting && (flags & REAGENT_HOLDER_ALIVE)) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
+		var/adjusted_vol = process_mob_reagent_purity(glob_reagent, amount, added_purity)
+		if(!adjusted_vol) //If we're inverse or FALSE cancel addition
+			return FALSE
+		amount = adjusted_vol
+		has_split = TRUE
 
 	update_total()
 	var/cached_total = total_volume
@@ -229,6 +237,9 @@
 
 	if(isliving(my_atom))
 		new_reagent.on_mob_add(my_atom, amount) //Must occur before it could posibly run on_mob_delete
+
+	if(has_split) //prevent it from splitting again
+		new_reagent.chemical_flags |= REAGENT_DONOTSPLIT
 
 	update_total()
 	if(reagtemp != cached_temp)
@@ -466,7 +477,7 @@
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
+			R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transfered.
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
 					R.expose_single(reagent, target, methods, part, show_message)
@@ -475,8 +486,7 @@
 				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(reagent.type, transfer_amount)
 			transfer_log[reagent.type] = transfer_amount
-			if(is_type_in_list(target_atom, list(/mob/living/carbon, /obj/item/organ/stomach)))
-				R.process_mob_reagent_purity(reagent.type, transfer_amount * multiplier, reagent.purity)
+
 	else
 		var/to_transfer = amount
 		for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -491,7 +501,7 @@
 				transfer_amount = reagent.volume
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
+			R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transfered.
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
@@ -501,13 +511,10 @@
 				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(reagent.type, transfer_amount)
 			transfer_log[reagent.type] = transfer_amount
-			if(is_type_in_list(target_atom, list(/mob/living/carbon, /obj/item/organ/stomach)))
-				R.process_mob_reagent_purity(reagent.type, transfer_amount * multiplier, reagent.purity)
 
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
 		log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
-
 
 	update_total()
 	R.update_total()
@@ -545,7 +552,7 @@
 			if(current_reagent.intercept_reagents_transfer(holder, cached_amount))//Use input amount instead.
 				break
 			force_stop_reagent_reacting(current_reagent)
-			holder.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, current_reagent.ph, no_react = TRUE)
+			holder.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, current_reagent.ph, no_react = TRUE, ignore_splitting = current_reagent.chemical_flags & REAGENT_DONOTSPLIT)
 			remove_reagent(current_reagent.type, amount, 1)
 			break
 
@@ -578,7 +585,7 @@
 		var/copy_amount = reagent.volume * part
 		if(preserve_data)
 			trans_data = reagent.data
-		R.add_reagent(reagent.type, copy_amount * multiplier, trans_data, added_purity = reagent.purity, added_ph = reagent.ph, no_react = TRUE)
+		R.add_reagent(reagent.type, copy_amount * multiplier, trans_data, added_purity = reagent.purity, added_ph = reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
 
 	//pass over previous ongoing reactions before handle_reactions is called
 	transfer_reactions(R)
@@ -597,7 +604,7 @@
 	var/change = (multiplier - 1) //Get the % change
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		if(change > 0)
-			add_reagent(reagent.type, reagent.volume * change, added_purity = reagent.purity)
+			add_reagent(reagent.type, reagent.volume * change, added_purity = reagent.purity, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
 		else
 			remove_reagent(reagent.type, abs(reagent.volume * change)) //absolute value to prevent a double negative situation (removing -50% would be adding 50%)
 
@@ -725,34 +732,32 @@
 * * reagent - the added reagent datum/object
 * * added_volume - the volume of the reagent that was added (since it can already exist in a mob)
 * * added_purity - the purity of the added volume
+* returns the volume of the current reagent to keep
 */
-/datum/reagents/proc/process_mob_reagent_purity(_reagent, added_volume, added_purity)
-	var/datum/reagent/reagent = has_reagent(_reagent)
+/datum/reagents/proc/process_mob_reagent_purity(datum/reagent/reagent, added_volume, added_purity)
 	if(!reagent)
-		stack_trace("Tried to process reagent purity for [_reagent], but 0 volume was found right after it was added!") //This can happen from smoking, where the volume is 0 after adding?
-		return
-	if (reagent.purity == 1)
-		return
+		stack_trace("Attempted to process a mob's reagent purity for a null reagent!")
+		return FALSE
+	if(added_purity == 1)
+		return added_volume
 	if(reagent.chemical_flags & REAGENT_DONOTSPLIT)
-		return
-	if(reagent.purity < 0)
-		stack_trace("Purity below 0 for chem: [type]!")
-		reagent.purity = 0
+		return added_volume
+	if(added_purity < 0)
+		stack_trace("Purity below 0 for chem on mob splitting: [reagent.type]!")
+		added_purity = 0
 
-	if ((reagent.inverse_chem_val > reagent.purity) && (reagent.inverse_chem))//Turns all of a added reagent into the inverse chem
-		remove_reagent(reagent.type, added_volume, FALSE)
+	if((reagent.inverse_chem_val > added_purity) && (reagent.inverse_chem))//Turns all of a added reagent into the inverse chem
 		add_reagent(reagent.inverse_chem, added_volume, FALSE, added_purity = 1-reagent.creation_purity)
 		var/datum/reagent/inverse_reagent = has_reagent(reagent.inverse_chem)
 		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
 			inverse_reagent.name = reagent.name//Negative effects are hidden
-			if(inverse_reagent.chemical_flags & REAGENT_INVISIBLE)
-				inverse_reagent.chemical_flags |= (REAGENT_INVISIBLE)
-	else if (reagent.impure_chem)
-		var/impureVol = added_volume * (1 - reagent.purity) //turns impure ratio into impure chem
+		return FALSE //prevent addition
+	else if(reagent.impure_chem)
+		var/impure_vol = added_volume * (1 - added_purity) //turns impure ratio into impure chem
+		add_reagent(reagent.impure_chem, impure_vol, FALSE, added_purity = 1-reagent.creation_purity)
 		if(!(reagent.chemical_flags & REAGENT_SPLITRETAINVOL))
-			remove_reagent(reagent.type, impureVol, FALSE)
-		add_reagent(reagent.impure_chem, impureVol, FALSE, added_purity = 1-reagent.creation_purity)
-	reagent.chemical_flags |= REAGENT_DONOTSPLIT
+			return added_volume - impure_vol
+	return added_volume
 
 ///Processes any chems that have the REAGENT_IGNORE_STASIS bitflag ONLY
 /datum/reagents/proc/handle_stasis_chems(mob/living/carbon/owner, delta_time, times_fired)
@@ -906,7 +911,7 @@
 					qdel(equilibrium)
 				else
 					//Adding is done in new(), deletion is in qdel
-					equilibrium.reaction.on_reaction(equilibrium, src, equilibrium.multiplier)
+					equilibrium.reaction.on_reaction(src, equilibrium, equilibrium.multiplier)
 					equilibrium.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO equilibrium.NEW()
 
 	if(LAZYLEN(reaction_list))
@@ -968,6 +973,7 @@
 * * mix_message - the associated mix message of a reaction
 */
 /datum/reagents/proc/end_reaction(datum/equilibrium/equilibrium)
+	equilibrium.reaction.reaction_finish(src, equilibrium, equilibrium.reacted_vol)
 	if(!equilibrium.holder || !equilibrium.reaction) //Somehow I'm getting empty equilibrium. This is here to handle them
 		LAZYREMOVE(reaction_list, equilibrium)
 		qdel(equilibrium)
@@ -976,7 +982,7 @@
 	if(equilibrium.holder != src) //When called from Destroy() eqs are nulled in smoke. This is very strange. This is probably causing it to spam smoke because of the runtime interupting the removal.
 		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[equilibrium.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[equilibrium.holder.my_atom.type]")
 		LAZYREMOVE(reaction_list, equilibrium)
-	equilibrium.reaction.reaction_finish(src, equilibrium.reacted_vol)
+
 	var/reaction_message = equilibrium.reaction.mix_message
 	if(equilibrium.reaction.mix_sound)
 		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
@@ -1134,7 +1140,7 @@
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 
-	selected_reaction.on_reaction(null, src, multiplier)
+	selected_reaction.on_reaction(src, null, multiplier)
 
 ///Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
 ///Presently unused

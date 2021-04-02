@@ -216,26 +216,32 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/depsec
 	name = "department_sec"
 	icon_state = "Security Officer"
+	/// What department this spawner is for
+	var/department
 
 /obj/effect/landmark/start/depsec/New()
 	..()
-	GLOB.department_security_spawns += src
+	LAZYADDASSOCLIST(GLOB.department_security_spawns, department, src)
 
 /obj/effect/landmark/start/depsec/Destroy()
-	GLOB.department_security_spawns -= src
+	LAZYREMOVEASSOC(GLOB.department_security_spawns, department, src)
 	return ..()
 
 /obj/effect/landmark/start/depsec/supply
 	name = "supply_sec"
+	department = SEC_DEPT_SUPPLY
 
 /obj/effect/landmark/start/depsec/medical
 	name = "medical_sec"
+	department = SEC_DEPT_MEDICAL
 
 /obj/effect/landmark/start/depsec/engineering
 	name = "engineering_sec"
+	department = SEC_DEPT_ENGINEERING
 
 /obj/effect/landmark/start/depsec/science
 	name = "science_sec"
+	department = SEC_DEPT_SCIENCE
 
 //Antagonist spawns
 

@@ -45,6 +45,8 @@
 	var/datum/gas_mixture/moderator_internal
 	///Set the filtering type of the waste remove
 	var/filter_type = null
+	///Stores the current fuel mix that the user has selected
+	var/datum/hfr_fuel/selected_fuel
 
 	/**
 	 * Fusion vars
@@ -80,26 +82,6 @@
 	var/heat_limiter_modifier = 0
 	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	var/heat_output = 0
-
-	///Stores the moles of the gases (the ones with m_ are of the moderator mix)
-	var/tritium = 0
-	var/hydrogen = 0
-	var/helium = 0
-
-	var/m_plasma = 0
-	var/m_nitrogen = 0
-	var/m_oxygen = 0
-	var/m_co2 = 0
-	var/m_h2o = 0
-	var/m_n2o = 0
-	var/m_no2 = 0
-	var/m_freon = 0
-	var/m_bz = 0
-	var/m_proto_nitrate = 0
-	var/m_healium = 0
-	var/m_zauker = 0
-	var/m_antinoblium = 0
-	var/m_hypernoblium = 0
 
 	///Check if the user want to remove the waste gases
 	var/waste_remove = FALSE
@@ -164,7 +146,6 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Initialize()
 	. = ..()
 	internal_fusion = new
-	internal_fusion.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium)
 	moderator_internal = new
 
 	radio = new(src)

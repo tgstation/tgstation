@@ -395,6 +395,10 @@
 /datum/proc/_AddComponent(list/raw_args)
 	var/new_type = raw_args[1]
 	var/datum/component/nt = new_type
+
+	if(QDELING(src))
+		CRASH("Attempted to add a new component of type \[[nt]\] to a qdeleting parent of type \[[type]\]!")
+
 	var/dm = initial(nt.dupe_mode)
 	var/dt = initial(nt.dupe_type)
 

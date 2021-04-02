@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Gluttony's blessing will no longer turn you into a morph if you do not receive the entire volume of the reagent contained in the syringe at once. You weren't supposed to be sharing to begin with, you should've taken a lesson from Greed."
