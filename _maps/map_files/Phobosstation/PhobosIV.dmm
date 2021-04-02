@@ -1176,6 +1176,10 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/item/storage/secure/safe/caps_spare{
+	pixel_x = 27;
+	pixel_y = -20
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "bnz" = (
@@ -3531,6 +3535,11 @@
 /obj/machinery/camera/autoname,
 /turf/open/floor/plating/asteroid,
 /area/service/library)
+"dQd" = (
+/obj/structure/table,
+/obj/item/kitchen/knife/plastic,
+/turf/open/floor/mineral/titanium,
+/area/security/prison)
 "dQh" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
@@ -9088,6 +9097,7 @@
 /area/service/hydroponics)
 "jWM" = (
 /obj/structure/table,
+/obj/item/storage/box/monkeycubes,
 /turf/open/floor/mineral/titanium,
 /area/science/research)
 "jWP" = (
@@ -11217,6 +11227,12 @@
 /obj/machinery/computer/atmos_alert,
 /turf/open/floor/plating,
 /area/engineering/atmos)
+"mnc" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/turf/open/floor/mineral/titanium,
+/area/security/prison)
 "mnS" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/grenade/chem_grenade/antiweed,
@@ -14442,6 +14458,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/item/storage/box/monkeycubes,
 /turf/open/floor/mineral/titanium,
 /area/science/research)
 "pEk" = (
@@ -18613,6 +18630,7 @@
 /area/holodeck/rec_center)
 "tYL" = (
 /obj/structure/table,
+/obj/machinery/microwave,
 /turf/open/floor/mineral/titanium,
 /area/security/prison)
 "tYR" = (
@@ -20477,6 +20495,7 @@
 /area/maintenance/solars/starboard/fore)
 "wrh" = (
 /obj/machinery/firealarm/directional/north,
+/obj/item/storage/box/monkeycubes,
 /turf/open/floor/plating/asteroid,
 /area/science/xenobiology)
 "wrk" = (
@@ -21739,6 +21758,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"xIK" = (
+/obj/structure/table,
+/obj/item/storage/fancy/egg_box,
+/turf/open/floor/mineral/titanium,
+/area/security/prison)
 "xIV" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave{
@@ -51555,7 +51579,7 @@ jPg
 rhp
 tlX
 tYL
-tYL
+xIK
 nGZ
 nGZ
 nGZ
@@ -51814,7 +51838,7 @@ suY
 nGZ
 nGZ
 tTz
-tYL
+mnc
 tTz
 nGZ
 tTz
@@ -52071,7 +52095,7 @@ suY
 nGZ
 nGZ
 tTz
-tYL
+dQd
 tTz
 uZX
 nGZ
