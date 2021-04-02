@@ -95,7 +95,12 @@
 			"<span class='notice'>You bang on \the [src].</span>")
 		playsound(loc, 'sound/effects/glassknock.ogg', 10, FALSE, frequency = 32000)
 	else
+		if(user.do_afters)//you get one firelock to open, better pick the right one
+			return
 		number_of_people_trying_to_open++
+
+		//dont want them to be moved by pressure differences when theyre holding onto the firelock with all their strength
+		user.move_resist = MOVE_FORCE_STRONG
 
 		var/starting_health = user.health
 		var/starting_time = REALTIMEOFDAY
@@ -152,6 +157,7 @@
 			log_game("[key_name(user)] has failed to open a firelock with their bare hands [number_of_people_trying_to_open > 1 ? "along with [number_of_people_trying_to_open - 1] others" : ""] because they have [stat_string]. they were trying to open the door for [(REALTIMEOFDAY - starting_time) / 10] seconds")
 
 		number_of_people_trying_to_open = max(0, --number_of_people_trying_to_open)
+		user.move_resist = initial(user.move_resist)
 
 /obj/machinery/door/firedoor/attack_paw(mob/living/user, list/modifiers)
 	. = ..()
