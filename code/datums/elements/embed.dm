@@ -74,6 +74,9 @@
 		return
 
 	var/actual_chance = embed_chance
+	var/penetrative_behaviour = 1 //Keep this above 1, as it is a multiplier for the pen_mod for determining actual embed chance.
+	if(weapon.weak_against_armour)
+		penetrative_behaviour = ARMOR_WEAKENED_MULTIPLIER
 
 	if(throwingdatum?.speed > weapon.throw_speed)
 		actual_chance += (throwingdatum.speed - weapon.throw_speed) * EMBED_CHANCE_SPEED_BONUS
@@ -82,7 +85,7 @@
 		var/armor = max(victim.run_armor_check(hit_zone, BULLET, silent=TRUE), victim.run_armor_check(hit_zone, BOMB, silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
 
 		if(armor) // we only care about armor penetration if there's actually armor to penetrate
-			var/pen_mod = -armor + weapon.armour_penetration // even a little bit of armor can make a big difference for shrapnel with large negative armor pen
+			var/pen_mod = -(armor * penetrative_behaviour) // if our shrapnel is weak into armor, then we restore our armor to the full value.
 			actual_chance += pen_mod // doing the armor pen as a separate calc just in case this ever gets expanded on
 			if(actual_chance <= 0)
 				victim.visible_message("<span class='danger'>[weapon] bounces off [victim]'s armor, unable to embed!</span>", "<span class='notice'>[weapon] bounces off your armor, unable to embed!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
