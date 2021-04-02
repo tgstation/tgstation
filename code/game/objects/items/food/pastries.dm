@@ -373,7 +373,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/moffin_observer = user
-	if(foodtypes & moffin_observer.dna.species.liked_food)
+	if(CLOTH & moffin_observer.dna.species.liked_food)
 		. += "<span class='nicegreen'>Ooh! It's even got bits of clothes on it! Yummy!</span>"
 	else
 		. += "<span class='warning'>I'm not too sure what's on top though...</span>"
