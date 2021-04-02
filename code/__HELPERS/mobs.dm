@@ -335,10 +335,9 @@ GLOBAL_LIST_EMPTY(species_list)
  * Checks that `user` does not move, change hands, get stunned, etc. for the
  * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
  * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
- * dynamic_timer_change returns when invoked either a list or a number used according to dynamic_type
- * TODOKYLER: docs here after i decide what it does
+ * dynamic_timer_change returns when invoked either nothing if it doesnt need to change the length of the timer or the new delay if it does, which we then use to change the endtime and adjust it for how much progress the timer made
  */
-/proc/do_after_dynamic(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, datum/callback/dynamic_timer_change, dynamic_flags = SET_TIMELEFT)
+/proc/do_after_dynamic(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, datum/callback/dynamic_timer_change)
 	if(!user)
 		return FALSE
 	var/atom/target_loc = null
@@ -369,11 +368,12 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
-	var/progbar_fake_startime = starttime
 
 	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
+
+		var/old_and_new_difference = 0
 		if(dynamic_timer_change)
 			var/new_delay = dynamic_timer_change.Invoke(delay, user.cached_multiplicative_actions_slowdown) //returns new delay if needed
 			if(new_delay)
@@ -381,14 +381,14 @@ GLOBAL_LIST_EMPTY(species_list)
 				var/new_timeleft = (1 - current_progress) * new_delay
 				var/new_endtime = new_timeleft + starttime
 				endtime = new_endtime
+
+				old_and_new_difference = delay - new_delay
 				delay = new_delay
 
 				progbar.goal = delay
-				progbar_fake_startime = world.time - (new_timeleft / current_progress) //TODOKYLER: this messes up the progbar visual if it changes from starttime
-
 
 		if(!QDELETED(progbar))
-			progbar.update(world.time - progbar_fake_startime)
+			progbar.update(world.time - starttime + old_and_new_difference) //should compensate for any changes between the old and new time
 
 		if(drifting && !user.inertia_dir)
 			drifting = FALSE
