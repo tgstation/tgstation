@@ -29,22 +29,22 @@
 		ui.set_autoupdate(FALSE)
 
 
-/datum/outfit_manager/proc/entry(datum/outfit/O)
+/datum/outfit_manager/proc/entry(datum/outfit/outfit)
 	var/vv = FALSE
-	var/datum/outfit/varedit/VO = O
-	if(istype(VO))
-		vv = length(VO.vv_values)
+	var/datum/outfit/varedit/varoutfit = outfit
+	if(istype(varoutfit))
+		vv = length(varoutfit.vv_values)
 	return list(
-		"name" = "[O.name] [vv ? "(VV)" : ""]",
-		"ref" = REF(O),
+		"name" = "[outfit.name] [vv ? "(VV)" : ""]",
+		"ref" = REF(outfit),
 		)
 
 /datum/outfit_manager/ui_data(mob/user)
 	var/list/data = list()
 
 	var/list/outfits = list()
-	for(var/datum/outfit/O in GLOB.custom_outfits)
-		outfits += list(entry(O))
+	for(var/datum/outfit/custom_outfit in GLOB.custom_outfits)
+		outfits += list(entry(custom_outfit))
 	data["outfits"] = outfits
 
 	return data

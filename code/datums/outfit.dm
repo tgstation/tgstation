@@ -347,8 +347,9 @@
 	.["implants"] = implants
 	.["accessory"] = accessory
 
-#define OUTFIT_COPY(var) ##var = drip.##var
-/datum/outfit/proc/copy_from(datum/outfit/drip)
+#define OUTFIT_COPY(var) ##var = target.##var
+/// Copy most vars from another outfit to this one
+/datum/outfit/proc/copy_from(datum/outfit/target)
 	OUTFIT_COPY(name)
 	OUTFIT_COPY(uniform)
 	OUTFIT_COPY(suit)

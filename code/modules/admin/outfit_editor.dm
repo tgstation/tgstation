@@ -1,14 +1,7 @@
-/client/proc/triggtest()
-	set category = "Debug.TRIGG IS AT IT AGAIN"
-	set name = "AAAAAA"
-
-	if(!check_rights(R_DEBUG))
-		return
-	open_outfit_editor(/datum/outfit/job/miner/equipped/hardsuit)
-
 /client/proc/open_outfit_editor(datum/outfit/target)
 	var/datum/outfit_editor/ui = new(usr, target)
 	ui.ui_interact(usr)
+
 
 #define OUTFIT_EDITOR_NAME "Outfit-O-Tron 9000"
 /datum/outfit_editor
@@ -23,7 +16,7 @@
 
 	if(ispath(target))
 		drip = new /datum/outfit
-		drip.copy_from(new target) //hacky way to inherit vars but not procs
+		drip.copy_from(new target)
 	else if(istype(target))
 		drip = target
 	else
@@ -51,7 +44,6 @@
 		dummy.updateappearance()
 
 	unset_busy_human_dummy(dummy_key)
-	return
 
 /datum/outfit_editor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
