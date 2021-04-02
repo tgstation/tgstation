@@ -1,0 +1,798 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bH" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/soap/nanotrasen,
+/obj/item/soap/nanotrasen{
+	pixel_y = 6
+	},
+/obj/machinery/light/cold{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"ca" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/storage/firstaid/o2,
+/obj/item/storage/firstaid/toxin{
+	pixel_y = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"ck" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/closed/wall/mineral/titanium/survival,
+/area/shuttle/escape)
+"cq" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 9
+	},
+/obj/item/cardboard_cutout{
+	desc = "They seem to be ignoring you... Typical.";
+	dir = 1;
+	icon_state = "cutout_ntsec";
+	name = "Highly Trained Shuttle Pilot"
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"dZ" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"eh" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"eL" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/airlock/titanium/glass,
+/obj/docking_port/mobile/emergency{
+	dwidth = 11;
+	height = 9;
+	name = "Spare Crewed Starship";
+	width = 25
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"fa" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/target/alien,
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"gg" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"gj" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"iR" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"jc" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/ph_meter,
+/obj/item/ph_paper,
+/obj/item/ph_paper{
+	pixel_x = 4
+	},
+/obj/item/ph_booklet{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/escape)
+"jO" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"kZ" = (
+/obj/machinery/computer/arcade/orion_trail/kobayashi,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"lA" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 10
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"nE" = (
+/obj/machinery/suit_storage_unit/standard_unit{
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/engie
+	},
+/obj/machinery/light/cold{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"nS" = (
+/obj/machinery/door/airlock/titanium/glass,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"op" = (
+/turf/template_noop,
+/area/template_noop)
+"oH" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/corner,
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"pf" = (
+/obj/effect/turf_decal/stripes/red/end,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"qF" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/machinery/light/cold{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"qW" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 5
+	},
+/obj/item/cardboard_cutout{
+	desc = "They seem to be ignoring you... Typical.";
+	dir = 1;
+	icon_state = "cutout_ntsec";
+	name = "Highly Trained Shuttle Pilot"
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"rY" = (
+/obj/machinery/suit_storage_unit/standard_unit{
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/engie
+	},
+/obj/machinery/light/cold{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"tN" = (
+/turf/closed/wall/mineral/titanium/survival,
+/area/shuttle/escape)
+"uB" = (
+/obj/effect/turf_decal/stripes/red/end{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"vf" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/gun_maintenance_supplies,
+/obj/item/grenade/smokebomb,
+/turf/open/floor/pod/light,
+/area/shuttle/escape)
+"vm" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 6
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"vw" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/storage/firstaid/emergency,
+/obj/item/storage/firstaid/emergency{
+	pixel_y = 5
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"vP" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/cold{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"wE" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"wR" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"yx" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/tape{
+	pixel_x = 5
+	},
+/obj/item/taperecorder/empty{
+	pixel_x = -4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"yT" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"zg" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Am" = (
+/obj/effect/turf_decal/stripes/red/end{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"AK" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/brute{
+	pixel_y = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"Cm" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/surgical_processor,
+/obj/item/switchblade{
+	pixel_x = -6
+	},
+/obj/machinery/light/cold{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"CB" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 9
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"Dw" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 5
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"EB" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/cold,
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"Fd" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/cold{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"Fq" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"FK" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/raw_anomaly_core/random,
+/obj/item/raw_anomaly_core/random{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/plant_analyzer{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/escape)
+"Ga" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/tank/internals/oxygen/yellow,
+/obj/item/tank/jetpack/oxygen/harness,
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"Hk" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/machinery/light/cold{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"ID" = (
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"II" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular{
+	pixel_y = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"JN" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"KB" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Le" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/end{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"Lm" = (
+/obj/machinery/computer/communications,
+/turf/closed/wall/mineral/titanium/survival,
+/area/shuttle/escape)
+"MJ" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/storage/lockbox/loyalty,
+/obj/item/wrench/combat,
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"OK" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/papercutter,
+/obj/item/paper_bin/carbon,
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"Rr" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/airlock/titanium/glass,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Rv" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/machinery/light/cold{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"SA" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"Ty" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/sensor_device,
+/obj/item/scanner_wand,
+/turf/open/floor/pod/light,
+/area/shuttle/escape)
+"TL" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"Vy" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/cold{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"VY" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"Wx" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/item/skub,
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"Wz" = (
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"WK" = (
+/obj/effect/turf_decal/stripes/red/corner,
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"Xs" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"Xu" = (
+/obj/structure/closet/emcloset/anchored,
+/obj/machinery/light/cold{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/escape)
+"Yk" = (
+/obj/effect/turf_decal/stripes/red/end{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+op
+op
+op
+op
+op
+op
+SA
+SA
+SA
+SA
+SA
+eL
+SA
+SA
+SA
+KB
+SA
+SA
+SA
+KB
+SA
+SA
+SA
+SA
+SA
+"}
+(2,1,1) = {"
+op
+op
+op
+SA
+KB
+KB
+SA
+vw
+MJ
+SA
+Xu
+Fq
+TL
+SA
+wR
+Am
+jO
+wE
+wR
+Am
+jO
+SA
+tN
+op
+op
+"}
+(3,1,1) = {"
+op
+SA
+KB
+SA
+VY
+VY
+wE
+bH
+Wx
+SA
+SA
+Rr
+wE
+SA
+Vy
+Fq
+jO
+yT
+wR
+JN
+EB
+SA
+tN
+op
+op
+"}
+(4,1,1) = {"
+tN
+ck
+qW
+vP
+vm
+Dw
+KB
+FK
+Ty
+SA
+nE
+Fq
+Ga
+SA
+wR
+oH
+eh
+Hk
+eh
+dZ
+jO
+zg
+gj
+op
+op
+"}
+(5,1,1) = {"
+tN
+kZ
+iR
+Le
+Wz
+ID
+Rr
+gg
+gg
+nS
+eh
+WK
+eh
+nS
+uB
+dZ
+II
+AK
+ca
+oH
+pf
+zg
+gj
+op
+op
+"}
+(6,1,1) = {"
+tN
+Lm
+cq
+Fd
+lA
+CB
+KB
+jc
+vf
+SA
+rY
+Fq
+Ga
+SA
+wR
+oH
+eh
+Rv
+eh
+dZ
+jO
+zg
+gj
+op
+op
+"}
+(7,1,1) = {"
+op
+SA
+KB
+SA
+Xs
+Xs
+wE
+Cm
+fa
+SA
+SA
+Rr
+wE
+SA
+Vy
+Fq
+jO
+yT
+wR
+JN
+EB
+SA
+tN
+op
+op
+"}
+(8,1,1) = {"
+op
+op
+op
+SA
+KB
+KB
+SA
+OK
+yx
+SA
+qF
+Fq
+TL
+SA
+wR
+Yk
+jO
+wE
+wR
+Yk
+jO
+SA
+tN
+op
+op
+"}
+(9,1,1) = {"
+op
+op
+op
+op
+op
+op
+SA
+SA
+SA
+SA
+SA
+Rr
+SA
+SA
+SA
+KB
+SA
+SA
+SA
+KB
+SA
+SA
+SA
+SA
+SA
+"}

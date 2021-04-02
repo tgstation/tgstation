@@ -542,6 +542,13 @@
 	admin_notes = "Go big or go home."
 	credit_cost = CARGO_CRATE_VALUE * 15
 
+/datum/map_template/shuttle/emergency/iss
+	suffix = "iss"
+	name = "ISS Emergency Shuttle"
+	description = "A SpaceX sponsored emergency shuttle. Was not originally one, but the all eternal CEO of SpaceX had to get that extra public relations clout in."
+	admin_notes = "It's just a SpaceX starship, evac shuttle form."
+	credit_cost = CARGO_CRATE_VALUE * 8
+
 /datum/map_template/shuttle/emergency/raven
 	suffix = "raven"
 	name = "CentCom Raven Cruiser"
