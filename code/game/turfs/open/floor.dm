@@ -114,6 +114,20 @@
 /turf/open/floor/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
+// Click on the floor to close airlocks
+/turf/open/floor/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+
+	var/mob/living/living = user
+	if(!living)
+		return
+
+	var/obj/machinery/door/airlock/door = locate() in get_turf(src)
+	if(door && !living.combat_mode)
+		return door.attack_hand(user, modifiers) //forward the click to the airlock
+
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
 	if(!istype(T))
