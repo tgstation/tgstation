@@ -21968,9 +21968,6 @@
 	},
 /obj/structure/chair/sofa/left,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/skeleton/alive{
-	name = "Carmen Mirda's Remains"
-	},
 /turf/open/floor/iron,
 /area/service/bar)
 "xSW" = (
