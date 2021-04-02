@@ -3413,7 +3413,7 @@
 "dMg" = (
 /obj/machinery/door/airlock/survival_pod/glass{
 	name = "RD Office";
-	req_access_txt = "56"
+	req_access_txt = "30"
 	},
 /turf/open/floor/pod,
 /area/command/heads_quarters/rd)
