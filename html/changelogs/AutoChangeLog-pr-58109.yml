@@ -1,0 +1,5 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - rscadd: "Recently-fired revolvers can now be used to ignite cigars like a fucking badass."
+  - rscadd: "Cauteries can now be used to ignite cigars like a very irresponsible doctor."
