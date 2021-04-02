@@ -38,7 +38,7 @@
 		center_cache["[piping_layer]"] = center
 	. += center
 
-	layer = 2.45 //to stay above all sorts of pipes
+	layer = 2.55 //to stay above all sorts of pipes
 
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
