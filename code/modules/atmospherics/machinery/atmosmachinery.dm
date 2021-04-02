@@ -379,7 +379,7 @@
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(can_unwrench)
-			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src)
+			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
 			stored.setPipingLayer(piping_layer)
 			if(!disassembled)
 				stored.obj_integrity = stored.max_integrity * 0.5
@@ -415,6 +415,12 @@
 		PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
 		if(trinary == TRUE && (piping_layer == 1 || piping_layer == 5))
 			PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
+
+/obj/machinery/atmospherics/proc/pipe_overlay(set_icon, set_state, direction, color = COLOR_VERY_LIGHT_GRAY, piping_layer = 3, set_layer = PIPE_VISIBLE_LEVEL)
+	var/image/pipe_overlay
+	pipe_overlay = . = image(icon = set_icon, icon_state = set_state, layer = set_layer, dir = direction)
+	pipe_overlay.color = color
+	PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
 
 /obj/machinery/atmospherics/on_construction(obj_color, set_layer)
 	if(can_unwrench)

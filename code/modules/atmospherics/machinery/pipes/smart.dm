@@ -34,7 +34,7 @@
 	var/mutable_appearance/center
 	connection_num = 0
 	connections = list(dir2text(NORTH) = FALSE, dir2text(SOUTH) = FALSE , dir2text(EAST) = FALSE , dir2text(WEST) = FALSE)
-	var/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
+	var/static/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
 	for(var/direction in connections)
 		var/turf/turf = get_step(src, text2dir(direction))
 		if(!turf)
@@ -98,9 +98,7 @@
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
 		if(nodes[i])
-			var/image/pipe = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "pipe-[piping_layer]", get_dir(src, nodes[i]))
-			pipe.layer = layer + 0.01
-			. += pipe
+			. += pipe_overlay('icons/obj/atmospherics/pipes/manifold.dmi', "pipe-[piping_layer]", get_dir(src, nodes[i]), set_layer = (layer + 0.01))
 
 
 //mapping helpers

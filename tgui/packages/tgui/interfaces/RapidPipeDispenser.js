@@ -22,17 +22,17 @@ const ICON_BY_CATEGORY_NAME = {
 
 const PAINT_COLORS = {
   grey: '#bbbbbb',
-  amethyst: '#a365ff',
-  blue: '#4466ff',
-  brown: '#b26438',
-  cyan: '#48eae8',
-  dark: '#808080',
-  green: '#1edd00',
-  orange: '#ffa030',
-  purple: '#b535ea',
-  red: '#ff3333',
-  violet: '#6e00f6',
-  yellow: '#ffce26',
+  amethyst: '#822bff',
+  blue: '#0000ff',
+  brown: '#ba9f6d',
+  cyan: '#00ffff',
+  dark: '#454545',
+  green: '#00ff00',
+  orange: '#ff7b00',
+  purple: '#800080',
+  red: '#ff0000',
+  violet: '#6927c5',
+  yellow: '#ffff00',
 };
 
 const TOOLS = [

@@ -22,6 +22,7 @@ Buildable meters
 	var/RPD_type
 	/// Whether it can be painted
 	var/paintable = FALSE
+	var/pipe_color
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
@@ -41,11 +42,12 @@ Buildable meters
 	//Flipping handled manually due to custom handling for trinary pipes
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
-/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from)
+/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color)
 	if(make_from)
 		make_from_existing(make_from)
 	else
 		pipe_type = _pipe_type
+		pipe_color = device_color
 		setDir(_dir)
 
 	update()
@@ -59,6 +61,7 @@ Buildable meters
 	add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
 	pipe_type = make_from.type
 	paintable = make_from.paintable
+	pipe_color = make_from.pipe_color
 
 /obj/item/pipe/trinary/flippable/make_from_existing(obj/machinery/atmospherics/components/trinary/make_from)
 	..()
@@ -155,7 +158,7 @@ Buildable meters
 
 	var/obj/machinery/atmospherics/A = new pipe_type(loc)
 	build_pipe(A)
-	A.on_construction(color, piping_layer)
+	A.on_construction(pipe_color, piping_layer)
 	transfer_fingerprints_to(A)
 
 	W.play_tool_sound(src)

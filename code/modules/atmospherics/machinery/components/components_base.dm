@@ -101,7 +101,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/on_construction()
-	..()
+	. = ..()
 	update_parents()
 
 /obj/machinery/atmospherics/components/get_rebuild_targets()

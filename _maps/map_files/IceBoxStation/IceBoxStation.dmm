@@ -18967,6 +18967,7 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
 	dir = 4
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "bFj" = (
