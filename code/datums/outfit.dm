@@ -347,6 +347,34 @@
 	.["implants"] = implants
 	.["accessory"] = accessory
 
+#define OUTFIT_COPY(var) ##var = drip.##var
+/datum/outfit/proc/copy_from(datum/outfit/drip)
+	OUTFIT_COPY(name)
+	OUTFIT_COPY(uniform)
+	OUTFIT_COPY(suit)
+	OUTFIT_COPY(toggle_helmet)
+	OUTFIT_COPY(back)
+	OUTFIT_COPY(belt)
+	OUTFIT_COPY(gloves)
+	OUTFIT_COPY(shoes)
+	OUTFIT_COPY(head)
+	OUTFIT_COPY(mask)
+	OUTFIT_COPY(neck)
+	OUTFIT_COPY(ears)
+	OUTFIT_COPY(glasses)
+	OUTFIT_COPY(id)
+	OUTFIT_COPY(l_pocket)
+	OUTFIT_COPY(r_pocket)
+	OUTFIT_COPY(suit_store)
+	OUTFIT_COPY(r_hand)
+	OUTFIT_COPY(l_hand)
+	OUTFIT_COPY(internals_slot)
+	OUTFIT_COPY(backpack_contents)
+	OUTFIT_COPY(box)
+	OUTFIT_COPY(implants)
+	OUTFIT_COPY(accessory)
+#undef OUTFIT_COPY
+
 /// Prompt the passed in mob client to download this outfit as a json blob
 /datum/outfit/proc/save_to_file(mob/admin)
 	var/stored_data = get_json_data()

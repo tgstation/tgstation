@@ -65,7 +65,6 @@
 		return
 	. = TRUE
 
-	var/datum/outfit/target_outfit = locate(params["outfit"])
 	switch(action)
 		if("new")
 			user.open_outfit_editor(new /datum/outfit)
@@ -76,6 +75,7 @@
 			if(ispath(outfit))
 				user.open_outfit_editor(new outfit)
 
+	var/datum/outfit/target_outfit = locate(params["outfit"])
 	if(!istype(target_outfit))
 		return
 	switch(action) //wow we're switching through action again this is horrible optimization smh

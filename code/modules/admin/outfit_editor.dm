@@ -21,11 +21,13 @@
 	holder = CLIENT_FROM_VAR(user)
 
 	if(ispath(target))
-		drip = new target
+		drip = new /datum/outfit
+		drip.copy_from(new target) //hacky way to inherit vars but not procs
 	else if(istype(target))
-		drip = target
+		drip = target //edit the outfit in place for now
 	else
 		drip = new /datum/outfit
+		drip.name = "New Outfit"
 
 /datum/outfit_editor/ui_state(mob/user)
 	return GLOB.admin_state
@@ -102,7 +104,12 @@
 
 /datum/outfit_editor/proc/set_item(slot, obj/item/choice)
 	if(!ispath(choice))
+		alert(holder, "Invalid item", OUTFITOTRON, "oh no")
 		return
+	if(initial(choice.icon_state) == null) //hacky check copied from experimentor code
+		var/msg = "Warning: This item's icon_state is null, indicating it is very probably not actually a usable item."
+		if(alert(holder, msg, OUTFITOTRON, "Use it anyway", "Cancel") != "Use it anyway")
+			return
 	if(drip.vars.Find(slot))
 		drip.vars[slot] = choice
 
@@ -167,13 +174,6 @@
 
 	if(!choice)
 		return
-	if(!ispath(choice, /obj/item))
-		alert(usr, "Invalid item", OUTFITOTRON, "oh no")
-		return
-	if(initial(choice.icon_state) == null) //hacky check copied from experimentor code
-		var/msg = "Warning: This item's icon_state is null, indicating it is very probably not actually a usable item."
-		if(alert(usr, msg, OUTFITOTRON, "Use it anyway", "Cancel") != "Use it anyway")
-			return
 
 	set_item(slot, choice)
 

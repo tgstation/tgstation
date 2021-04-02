@@ -37,9 +37,19 @@ export const OutfitManager = (props, context) => {
             {outfits?.map(outfit => (
               <Stack.Item key={outfit.ref}>
                 <Stack>
-                  <Stack.Item grow={1}>
+                  <Stack.Item grow={1} shrink={1}
+                    style={{
+                      'overflow': 'hidden',
+                      'white-space': 'nowrap',
+                      'text-overflow': 'ellipsis',
+                    }}>
                     <Button
                       fluid
+                      style={{
+                        'overflow': 'hidden',
+                        'white-space': 'nowrap',
+                        'text-overflow': 'ellipsis',
+                      }}
                       content={outfit.name}
                       onClick={() => act("preview", { outfit: outfit.ref })} />
                   </Stack.Item>
