@@ -1,4 +1,0 @@
-author: "bobbahbrown"
-delete-after: True
-changes: 
-  - server: "Fixed missing dependency for libssl1.1 in PreCompile.sh"
