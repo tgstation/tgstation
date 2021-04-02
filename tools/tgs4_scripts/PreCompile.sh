@@ -64,6 +64,9 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-un
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
+# get dependencies for extools
+apt-get install -y cmake build-essential gcc-multilib g++-multilib cmake
+
 # update extools
 if [ ! -d "extools" ]; then
 	echo "Cloning extools..."
@@ -79,6 +82,7 @@ echo "Deploying extools..."
 git checkout "$EXTOOLS_VERSION"
 if [ -d "build" ]; then
 	rm -R build
+fi
 mkdir build
 cd build
 cmake ..
