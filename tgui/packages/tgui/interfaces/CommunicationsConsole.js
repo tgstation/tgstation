@@ -299,7 +299,6 @@ const PageMain = (props, context) => {
   const {
     alertLevel,
     alertLevelTick,
-    aprilFools,
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
@@ -412,12 +411,6 @@ const PageMain = (props, context) => {
             icon="bullhorn"
             content="Make Priority Announcement"
             onClick={() => act("makePriorityAnnouncement")}
-          />}
-
-          {!!aprilFools && !!canMakeAnnouncement && <Button
-            icon="bullhorn"
-            content="Call Emergency Meeting"
-            onClick={() => act("emergency_meeting")}
           />}
 
           {!!canToggleEmergencyAccess && <Button.Confirm

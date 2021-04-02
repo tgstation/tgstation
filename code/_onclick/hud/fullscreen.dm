@@ -82,11 +82,6 @@
 	severity = 0
 	. = ..()
 
-/atom/movable/screen/fullscreen/emergency_meeting
-	icon_state = "emergency_meeting"
-	layer = CURSE_LAYER
-	plane = SPLASHSCREEN_PLANE
-
 /atom/movable/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
 	layer = UI_DAMAGE_LAYER
