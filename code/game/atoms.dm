@@ -132,8 +132,6 @@
 	var/greyscale_config
 	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
 	var/greyscale_colors
-	///Internal: The current applied greyscale as of the last update_icon call
-	var/greyscale_filter
 
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
