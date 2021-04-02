@@ -429,7 +429,7 @@
 					qdel(sample)
 					qdel(supersample)
 				else
-					if(!"new_var" in list_vars[params["list"]])
+					if(!("new_var" in list_vars[params["list"]]))
 						list_vars[params["list"]] += list("new_var" = list("type" = "num", "value" = 0, "flags" = 0))
 					else
 						alert = "Rename or remove [params["list"]]/new_var before attempting to add another variable to this list!"
@@ -581,7 +581,6 @@
 		saved_vars = temp_vars
 		list_vars = temp_list_vars
 
-#undef OOF
 #undef LIST_VAR_FLAGS_TYPED
 #undef LIST_VAR_FLAGS_NAMED
 
@@ -701,7 +700,8 @@
 	if(list_var == new_name)
 		return
 	if(list_name in list_vars)
-		var/ind = list_vars[list_name].Find(list_var)
+		var/list/L = list_vars[list_name]
+		var/ind = L.Find(list_var)
 		if(ind)
 			if(new_name in list_vars[list_name])
 				alert = "There is already a variable named [new_name] in [list_name]!"
@@ -725,11 +725,13 @@
 
 /datum/give_sdql_spell/proc/remove_list_var(list_name, list_var)
 	if(list_name in list_vars)
-		var/ind = list_vars[list_name].Find(list_var)
+		var/list/L = list_vars[list_name]
+		var/ind = L.Find(list_var)
 		if(ind)
 			if(list_vars[list_name][list_var]["type"] == "list")
 				purge_list_var("[list_name]/[list_var]")
-			list_vars[list_name].Cut(ind, ind+1)
+			L.Cut(ind, ind+1)
+			list_vars[list_name] = L
 
 /datum/give_sdql_spell/proc/purge_list_var(list_name)
 	var/ind = list_vars.Find(list_name)
@@ -740,7 +742,7 @@
 		list_vars.Cut(ind, ind+1)
 
 /datum/give_sdql_spell/proc/generate_list_var(list_name)
-	if(!list_name in list_vars)
+	if(!(list_name in list_vars))
 		return null
 	var/list/ret = list()
 	for(var/V in list_vars[list_name])
