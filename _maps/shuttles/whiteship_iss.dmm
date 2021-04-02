@@ -1,0 +1,1181 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 1
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"ae" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned)
+"af" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/abandoned)
+"ag" = (
+/obj/machinery/light/cold{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"ah" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/maintenance_carpet,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"ai" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/machinery/light/cold{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"aj" = (
+/obj/machinery/button/door{
+	id = "whiteship_port";
+	name = "Port Blast Door Control";
+	pixel_x = 24;
+	pixel_y = 5
+	},
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"ak" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/machinery/light/cold{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"al" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/power/rtg/advanced{
+	power_gen = 50000
+	},
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"an" = (
+/obj/effect/turf_decal/box/white/corners,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/three_course_meal,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"ao" = (
+/obj/effect/turf_decal/box/white/corners,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"aq" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"ar" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/maintenance_carpet,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"as" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"at" = (
+/obj/effect/turf_decal/box/white/corners,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/memeorgans,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"au" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/light/cold{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"av" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 6
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"aw" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 10
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"ay" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"az" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/cold{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"aA" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	pixel_x = -7
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 6
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"aB" = (
+/obj/machinery/computer/shuttle/white_ship/bridge{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/shuttle/abandoned)
+"aC" = (
+/turf/closed/wall/mineral/titanium/survival,
+/area/shuttle/abandoned)
+"aD" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"aE" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/airlock/shuttle/glass,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned)
+"aG" = (
+/obj/effect/turf_decal/stripes/red/corner,
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"aH" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/end{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"aI" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	pixel_x = 5
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"aJ" = (
+/obj/machinery/computer/arcade/orion_trail/kobayashi{
+	name = "Starship Main Control Computer"
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned)
+"aK" = (
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/shuttle/abandoned)
+"aL" = (
+/turf/template_noop,
+/area/template_noop)
+"aM" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"aN" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"aO" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"aP" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 5
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"aQ" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 9
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"aT" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/corner,
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"aU" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/cold,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"aV" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	pixel_x = -7
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 5
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"aW" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	dir = 8;
+	pixel_x = -12;
+	x_offset = -2;
+	y_offset = -8
+	},
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/shuttle/abandoned)
+"aX" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/maintenance_carpet,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"aY" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"aZ" = (
+/obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
+/obj/machinery/light/cold,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"ba" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/three_course_meal,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"bb" = (
+/obj/machinery/button/door{
+	id = "whiteship_starboard";
+	name = "Starboard Blast Door Control";
+	pixel_x = 24;
+	pixel_y = -5
+	},
+/obj/effect/turf_decal/box/white/corners,
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"bj" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"bm" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/corner,
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"by" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/stripes/red/corner,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"bA" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"bD" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/memeorgans,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"cl" = (
+/obj/machinery/door/poddoor{
+	id = "whiteship_port"
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"cv" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"cw" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/maintenance_carpet,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"cy" = (
+/obj/effect/turf_decal/stripes/red/end{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"cD" = (
+/obj/structure/fluff/empty_cryostasis_sleeper,
+/obj/machinery/light/cold{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"cE" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/memeorgans,
+/obj/effect/spawner/lootdrop/memeorgans,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"cH" = (
+/obj/machinery/portable_atmospherics/canister/proto/default,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"cJ" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"cK" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"cN" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/airlock/shuttle/glass,
+/obj/docking_port/mobile{
+	callTime = 250;
+	can_move_docking_ports = 1;
+	dir = 2;
+	dwidth = 16;
+	height = 9;
+	id = "whiteship";
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Salvage Ship";
+	port_direction = 8;
+	preferred_direction = 4;
+	width = 31
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned)
+"cP" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"cS" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"da" = (
+/obj/vehicle/sealed/mecha/working/ripley/mk2,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"db" = (
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"dc" = (
+/obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"dd" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/white/corners,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"di" = (
+/obj/effect/turf_decal/stripes/red/end{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"dj" = (
+/obj/effect/turf_decal/stripes/red/end{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"dk" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line,
+/obj/structure/cable,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"dl" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line,
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"dm" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"dn" = (
+/obj/effect/turf_decal/stripes/red/end{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"do" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"dp" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"dr" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"ds" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"dv" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"dx" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"dz" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/light/cold,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"dE" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned)
+"dH" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/power/rtg/advanced{
+	power_gen = 50000
+	},
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"dJ" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"dK" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/seed_vault,
+/obj/effect/spawner/lootdrop/seed_vault,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"dL" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"dM" = (
+/obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"dN" = (
+/obj/machinery/portable_atmospherics/canister/proto/default/oxygen,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"dQ" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"dT" = (
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"dU" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/three_course_meal,
+/obj/effect/spawner/lootdrop/three_course_meal,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"dW" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/power/rtg/advanced{
+	power_gen = 50000
+	},
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"dX" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"dY" = (
+/obj/effect/turf_decal/stripes/red/end,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"dZ" = (
+/obj/machinery/portable_atmospherics/canister/proto/default,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"ea" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/machinery/light/cold,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"eb" = (
+/obj/structure/closet/emcloset/anchored,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"ec" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/machinery/light/small/red{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"ed" = (
+/obj/structure/fluff/empty_cryostasis_sleeper,
+/obj/machinery/light/cold,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"ef" = (
+/obj/structure/fluff/empty_cryostasis_sleeper,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"eg" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/lizardboots,
+/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/lootdrop/gloves,
+/obj/machinery/light/cold,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"ei" = (
+/obj/machinery/door/poddoor{
+	id = "whiteship_starboard"
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"ej" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned)
+"el" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 1
+	},
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/seed_vault,
+/obj/effect/spawner/lootdrop/seed_vault,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"em" = (
+/obj/effect/turf_decal/box/white/corners{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"hv" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"nT" = (
+/turf/open/floor/pod/dark,
+/area/shuttle/abandoned)
+"wM" = (
+/obj/structure/closet/crate/freezer{
+	anchored = 1;
+	name = "secured storage crate"
+	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned)
+"Io" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/airlock/shuttle/glass,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned)
+
+(1,1,1) = {"
+ej
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+ej
+"}
+(2,1,1) = {"
+ej
+af
+af
+ay
+ay
+ay
+af
+af
+ej
+"}
+(3,1,1) = {"
+ej
+dW
+al
+dp
+dp
+dp
+dH
+dW
+ej
+"}
+(4,1,1) = {"
+ej
+ac
+dQ
+ar
+dj
+el
+dN
+dX
+ej
+"}
+(5,1,1) = {"
+ej
+ag
+cH
+ao
+dk
+dr
+dJ
+aZ
+ej
+"}
+(6,1,1) = {"
+cl
+cw
+dT
+by
+bj
+ds
+dK
+nT
+ei
+"}
+(7,1,1) = {"
+cl
+dZ
+wM
+dv
+aD
+dv
+dJ
+ba
+ei
+"}
+(8,1,1) = {"
+cl
+ah
+ao
+dv
+da
+dv
+dL
+an
+ei
+"}
+(9,1,1) = {"
+cl
+cy
+cJ
+cP
+db
+aT
+cJ
+dY
+ei
+"}
+(10,1,1) = {"
+cl
+em
+cS
+dv
+dc
+dv
+em
+bA
+ei
+"}
+(11,1,1) = {"
+cl
+nT
+wM
+dv
+dd
+dv
+aX
+nT
+ei
+"}
+(12,1,1) = {"
+cl
+hv
+dM
+as
+bm
+aM
+dJ
+dZ
+ei
+"}
+(13,1,1) = {"
+ej
+ai
+cK
+cS
+dk
+aN
+dM
+ea
+ej
+"}
+(14,1,1) = {"
+ej
+aj
+bD
+at
+di
+aO
+dN
+bb
+ej
+"}
+(15,1,1) = {"
+ej
+ej
+ej
+ej
+aE
+ej
+ej
+ej
+ej
+"}
+(16,1,1) = {"
+ej
+eb
+ej
+dx
+dj
+dx
+ej
+eb
+ej
+"}
+(17,1,1) = {"
+cN
+dT
+Io
+dT
+dk
+dT
+Io
+dT
+Io
+"}
+(18,1,1) = {"
+ej
+ec
+ej
+au
+di
+dz
+ej
+ec
+ej
+"}
+(19,1,1) = {"
+ej
+ej
+ej
+ej
+aE
+ej
+ej
+ej
+ej
+"}
+(20,1,1) = {"
+ej
+cD
+nT
+ej
+dj
+ej
+dQ
+ed
+ej
+"}
+(21,1,1) = {"
+cv
+cE
+dT
+dE
+dk
+dE
+dT
+nT
+cv
+"}
+(22,1,1) = {"
+ej
+ej
+ej
+ej
+dl
+ej
+ej
+ej
+ej
+"}
+(23,1,1) = {"
+cv
+ef
+dT
+dE
+dm
+dE
+dT
+ef
+cv
+"}
+(24,1,1) = {"
+ej
+ak
+nT
+ej
+dn
+ej
+dU
+eg
+ej
+"}
+(25,1,1) = {"
+ae
+ej
+ej
+ej
+Io
+ej
+ej
+ej
+ae
+"}
+(26,1,1) = {"
+aL
+cv
+aq
+av
+do
+aP
+aY
+cv
+aL
+"}
+(27,1,1) = {"
+aL
+cv
+aq
+aw
+aG
+aQ
+aY
+cv
+aL
+"}
+(28,1,1) = {"
+aL
+ae
+ej
+az
+aH
+aU
+ej
+ae
+aL
+"}
+(29,1,1) = {"
+aL
+aL
+cv
+aA
+aI
+aV
+cv
+aL
+aL
+"}
+(30,1,1) = {"
+aL
+aL
+ae
+aB
+aJ
+aW
+ae
+aL
+aL
+"}
+(31,1,1) = {"
+aL
+aL
+aL
+aC
+aK
+aC
+aL
+aL
+aL
+"}

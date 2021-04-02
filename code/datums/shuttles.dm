@@ -515,6 +515,10 @@
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
 
+/datum/map_template/shuttle/whiteship/iss
+	suffix = "whiteship_iss"
+	name = "SpaceX Interstellar Starship"
+
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
 	name = "supply shuttle (Kilo)"
@@ -537,6 +541,13 @@
 	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
 	admin_notes = "Go big or go home."
 	credit_cost = CARGO_CRATE_VALUE * 15
+
+/datum/map_template/shuttle/emergency/iss
+	suffix = "iss"
+	name = "ISS Emergency Shuttle"
+	description = "A SpaceX sponsored emergency shuttle. Was not originally one, but the all eternal CEO of SpaceX had to get that extra public relations clout in."
+	admin_notes = "It's just a SpaceX starship, evac shuttle form."
+	credit_cost = CARGO_CRATE_VALUE * 8
 
 /datum/map_template/shuttle/emergency/raven
 	suffix = "raven"
@@ -598,6 +609,14 @@
 	suffix = "kilo"
 	name = "mining shuttle (Kilo)"
 
+/datum/map_template/shuttle/mining/iss
+	suffix = "iss"
+	name = "mining shuttle (ISS)"
+
+/datum/map_template/shuttle/cargo/iss
+	suffix = "iss"
+	name = "cargo ferry (ISS)"
+
 /datum/map_template/shuttle/mining/large
 	suffix = "large"
 	name = "mining shuttle (Large)"
@@ -649,6 +668,10 @@
 /datum/map_template/shuttle/escape_pod/large
 	suffix = "large"
 	name = "escape pod (Large)"
+
+/datum/map_template/shuttle/escape_pod/soyuz
+	suffix = "soyuz"
+	name = "escape pod (Soyuz)"
 
 /datum/map_template/shuttle/assault_pod/default
 	suffix = "default"
