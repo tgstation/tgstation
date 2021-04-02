@@ -84,8 +84,8 @@
 		if("edit")
 			user.open_outfit_editor(target_outfit)
 		if("save")
-			user.holder.save_outfit(target_outfit)
+			user.holder.save_outfit(user.mob, target_outfit)
 		if("delete")
-			user.holder.delete_outfit(target_outfit)
+			user.holder.delete_outfit(user.mob, target_outfit)
 
 #undef OUTFITOTRON

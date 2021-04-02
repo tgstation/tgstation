@@ -23,13 +23,13 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 /datum/admins/proc/save_outfit(mob/admin,datum/outfit/O)
 	O.save_to_file(admin)
-	outfit_manager(admin)
+	SStgui.update_user_uis(admin)
 
 /datum/admins/proc/delete_outfit(mob/admin,datum/outfit/O)
 	GLOB.custom_outfits -= O
 	qdel(O)
 	to_chat(admin,"<span class='notice'>Outfit deleted.</span>", confidential = TRUE)
-	outfit_manager(admin)
+	SStgui.update_user_uis(admin)
 
 /datum/admins/proc/load_outfit(mob/admin)
 	var/outfit_file = input("Pick outfit json file:", "File") as null|file
@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		to_chat(admin,"<span class='warning'>Malformed/Outdated file.</span>", confidential = TRUE)
 		return
 	GLOB.custom_outfits += O
-	outfit_manager(admin)
+	SStgui.update_user_uis(admin)
 
 /datum/admins/proc/create_outfit(mob/admin)
 	var/list/uniforms = typesof(/obj/item/clothing/under)

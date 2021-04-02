@@ -30,9 +30,9 @@ export const OutfitEditor = (props, context) => {
             <>
               {outfit.name}
               <Button
+                ml={0.5}
                 icon="pencil-alt"
-                tooltip="Rename this outfit"
-                tooltipPosition="left"
+                title="Rename this outfit"
                 onClick={() => act("rename", {})} />
             </>
           }

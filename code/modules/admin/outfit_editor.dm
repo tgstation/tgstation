@@ -99,8 +99,13 @@
 			if(drip.vars.Find(slot))
 				drip.vars[slot] = null
 
+		if("rename")
+			var/newname = stripped_input(holder, "What do you want to name this outfit?", OUTFITOTRON)
+			if(newname)
+				drip.name = newname
 		if("save")
 			GLOB.custom_outfits |= (drip)
+			SStgui.update_user_uis(holder.mob)
 
 /datum/outfit_editor/proc/set_item(slot, obj/item/choice)
 	if(!ispath(choice))

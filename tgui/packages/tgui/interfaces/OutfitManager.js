@@ -1,5 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Box, Stack } from '../components';
+import { useBackend } from '../backend';
+import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const OutfitManager = (props, context) => {
@@ -10,9 +10,11 @@ export const OutfitManager = (props, context) => {
     <Window
       width={300}
       height={300}>
-      <Window.Content scrollable>
+      <Window.Content>
 
-        <Section fill
+        <Section
+          fill
+          scrollable
           title="Custom Outfit Manager"
           buttons={
             <>
