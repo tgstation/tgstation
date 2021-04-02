@@ -8,8 +8,13 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "shader",
-			"blend_mode": "subtract"
+			"icon_state": "add_shader",
+			"blend_mode": "add"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "multi_shader",
+			"blend_mode": "multiply"
 		}
 	]
 }
