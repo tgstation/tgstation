@@ -467,25 +467,16 @@
             give_spell()
             ui.close()
 
-#define OOF log_world("SDQL spell json load failed at [__FILE__]:[__LINE__].")
-#ifndef OOF
-#define OOF
-#endif
-
 /datum/give_sdql_spell/proc/load_from_json(json)
     if(!(("type" in json) && ("vars" in json) && ("list_vars" in json)))
-        OOF
         return FALSE
     var/temp_type = json["type"]
     var/datum/D = text2path("/obj/effect/proc_holder/spell/[temp_type]/sdql")
     if(!ispath(D))
-        OOF
         return FALSE
     if(!islist(json["vars"]))
-        OOF
         return FALSE
     if(!islist(json["list_vars"]))
-        OOF
         return FALSE
     var/list/temp_vars = json["vars"]
     var/list/temp_list_vars = json["list_vars"]
@@ -493,35 +484,28 @@
     . = TRUE
     for(var/V in temp_vars)
         if(!istext(V))
-            OOF
             . = FALSE
             break
         if(!(V in editable_spell_vars))
-            OOF
             . = FALSE
             break
         if(!(V in D.vars))
-            OOF
             . = FALSE
             break
         if(islist(D.vars[V]))
-            OOF
             . = FALSE
             break
         if(istext(D.vars[V]) || isicon(D.vars[V]) || ispath(D.vars[V]))
             if(!istext(temp_vars[V]))
-                OOF
                 . = FALSE
                 break
         if(isnum(D.vars[V]))
             if(!isnum(temp_vars[V]))
-                OOF
                 . = FALSE
                 break
     if(.)
         for(var/V in temp_list_vars)
             if(!islist(temp_list_vars[V]))
-                OOF
                 . = FALSE
                 break
             if((V in special_list_vars) && (V in D.vars))
@@ -529,79 +513,63 @@
                 sample = new sample
                 for(var/W in temp_list_vars[V])
                     if(!istext(W))
-                        OOF
                         . = FALSE
                         break
                     if(!islist(temp_list_vars[V][W]))
-                        OOF
                         . = FALSE
                         break
                     if(!(("type" in temp_list_vars[V][W]) && ("value" in temp_list_vars[V][W]) && ("flags" in temp_list_vars[V][W])))
-                        OOF
                         . = FALSE
                         break
                     if(!isnum(temp_list_vars[V][W]["flags"]) || (temp_list_vars[V][W]["flags"] & LIST_VAR_FLAGS_TYPED|LIST_VAR_FLAGS_NAMED) == LIST_VAR_FLAGS_TYPED)
-                        OOF
                         . = FALSE
                         break
                     if(!istext(temp_list_vars[V][W]["type"]))
-                        OOF
                         . = FALSE
                         break
                     if(!(temp_list_vars[V][W]["flags"] & LIST_VAR_FLAGS_TYPED))
                         if(!isnull(sample.vars[W]))
-                            OOF
                             . = FALSE
                             break
                     else
                         switch(temp_list_vars[V][W]["type"])
                             if("list")
                                 if(!islist(sample.vars[W]))
-                                    OOF
                                     . = FALSE
                                     break
                                 if(!("[V]/[W]" in temp_list_vars))
-                                    OOF
                                     . = FALSE
                                     break
                             if("num")
                                 if(isnum(temp_list_vars[V][W]["value"]))
                                     if(!(isnum(sample.vars[W])))
-                                        OOF
                                         . = FALSE
                                         break
                                 else
-                                    OOF
                                     . = FALSE
                                     break
                             if("string")
                                 if(istext(temp_list_vars[V][W]["value"]))
                                     if(!(istext(sample.vars[W]) || isfile(sample.vars[W])))
-                                        OOF
                                         . = FALSE
                                         break
                                 else
-                                    OOF
                                     . = FALSE
                                     break
                             if("path")
                                 if(istext(temp_list_vars[V][W]["value"]))
                                     if(!(ispath(sample.vars[W])))
-                                        OOF
                                         . = FALSE
                                         break
                                 else
-                                    OOF
                                     . = FALSE
                                     break
                             if("icon")
                                 if(istext(temp_list_vars[V][W]["value"]))
                                     if(!(isicon(sample.vars[W])))
-                                        OOF
                                         . = FALSE
                                         break
                                 else
-                                    OOF
                                     . = FALSE
                                     break
                 qdel(sample)
