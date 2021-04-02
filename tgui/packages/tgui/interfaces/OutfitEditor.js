@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 
 export const OutfitEditor = (props, context) => {
   const { act, data } = useBackend(context);
-  const { outfit } = data;
+  const { outfit, saveable } = data;
 
   return (
     <Window
@@ -39,8 +39,10 @@ export const OutfitEditor = (props, context) => {
           buttons={
             <Button
               icon="save"
-              tooltip="Save this outfit"
+              disabled={!saveable}
+              tooltip={!!saveable && "Save this outfit to the custom outfit list"}
               tooltipPosition="left"
+              title={!saveable && "This outfit is already on the custom outfit list. Any changes made here will be immediately applied."}
               onClick={() => act("save", {})}
             />
           }>

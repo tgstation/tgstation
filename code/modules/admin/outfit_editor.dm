@@ -77,6 +77,7 @@
 	var/list/data = list()
 
 	data["outfit"] = serialize_outfit()
+	data["saveable"] = !GLOB.custom_outfits.Find(drip)
 
 	var/datum/preferences/prefs = holder.prefs
 	var/icon/dummysprite = get_flat_human_icon(null, prefs = prefs, dummy_key = dummy_key, showDirs = list(SOUTH), outfit_override = drip)
