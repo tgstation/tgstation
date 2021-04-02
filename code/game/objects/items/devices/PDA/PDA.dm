@@ -31,6 +31,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	light_power = 0.6
 	light_color = "#FFCC66"
 	light_on = FALSE
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
 
 	//Main variables
 	var/owner = null // String name of owner

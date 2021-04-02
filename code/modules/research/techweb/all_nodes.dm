@@ -82,6 +82,15 @@
 	required_experiments = list(/datum/experiment/scanning/points/slime/easy)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000) //Big discount to reinforce doing it.
 
+/datum/techweb_node/xenoorgan_biotech
+	id = "xenoorgan_bio"
+	display_name = "Xeno-organ Biology"
+	description = "Plasmaman, Ethereals, Lizardpeople... What makes our non-human crewmembers tick?"
+	prereq_ids = list("adv_biotech")
+	design_ids = list("limbdesign_felinid", "limbdesign_lizard", "limbdesign_plasmaman", "limbdesign_ethereal")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6500)
+	discount_experiments = list(/datum/experiment/scanning/random/cytology/easy = 1000, /datum/experiment/scanning/points/slime/expert = 5000)
+
 /datum/techweb_node/bio_process
 	id = "bio_process"
 	display_name = "Biological Processing"
@@ -210,6 +219,7 @@
 	prereq_ids = list("bluespace_travel", "practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "bluespacebodybag", "triphasic_scanning", "quantum_keycard", "wormholeprojector", "swapper", "bluespace_electrolite")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	discount_experiments = list(/datum/experiment/exploration_scan/random/condition)
 
 /datum/techweb_node/advanced_bluespace
 	id = "bluespace_storage"
@@ -284,6 +294,14 @@
 	description = "Machines using actual neural networks to simulate human lives."
 	prereq_ids = list("neural_programming", "robotics")
 	design_ids = list("mmi_posi")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/exodrone_tech
+	id = "exodrone"
+	display_name = "Exploration Drone Research"
+	description = "Technology for exploring far away locations."
+	prereq_ids = list("robotics")
+	design_ids = list("exodrone_console","exoscanner_console","exoscanner","exodrone_launcher")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/neural_programming

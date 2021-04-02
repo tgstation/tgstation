@@ -45,7 +45,7 @@ fi
 dpkg --add-architecture i386
 apt-get update
 #apt-get upgrade -y
-apt-get install -y lib32z1 pkg-config libssl-dev:i386 libssl-dev
+apt-get install -y lib32z1 pkg-config libssl-dev:i386 libssl-dev libssl1.1:i386
 #update rust-g
 if [ ! -d "rust-g" ]; then
 	echo "Cloning rust-g..."

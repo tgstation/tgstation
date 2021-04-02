@@ -5,7 +5,6 @@ SUBSYSTEM_DEF(profiler)
 	init_order = INIT_ORDER_PROFILER
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	wait = 3000
-	flags = SS_NO_TICK_CHECK
 	var/fetch_cost = 0
 	var/write_cost = 0
 

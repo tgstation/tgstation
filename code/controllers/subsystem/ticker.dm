@@ -388,6 +388,11 @@ SUBSYSTEM_DEF(ticker)
 
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
+	GLOB.security_officer_distribution = decide_security_officer_departments(
+		shuffle(GLOB.new_player_list),
+		shuffle(GLOB.available_depts),
+	)
+
 	var/captainless = TRUE
 
 	var/highest_rank = length(SSjob.chain_of_command) + 1
@@ -436,6 +441,31 @@ SUBSYSTEM_DEF(ticker)
 			if(new_player_human)
 				to_chat(new_player_mob, "<span class='notice'>Captainship not forced on anyone.</span>")
 			CHECK_TICK
+
+/datum/controller/subsystem/ticker/proc/decide_security_officer_departments(
+	list/new_players,
+	list/departments,
+)
+	var/list/officer_mobs = list()
+	var/list/officer_preferences = list()
+
+	for (var/mob/dead/new_player/new_player_mob as anything in new_players)
+		var/mob/living/carbon/human/character = new_player_mob.new_character
+		if (istype(character) && character.mind?.assigned_role == "Security Officer")
+			officer_mobs += character
+
+			var/datum/client_interface/client = GET_CLIENT(new_player_mob)
+			var/preference = client?.prefs?.prefered_security_department || SEC_DEPT_NONE
+			officer_preferences += preference
+
+	var/distribution = get_officer_departments(officer_preferences, departments)
+
+	var/list/output = list()
+
+	for (var/index in 1 to officer_mobs.len)
+		output[REF(officer_mobs[index])] = distribution[index]
+
+	return output
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()

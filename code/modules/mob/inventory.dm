@@ -162,7 +162,6 @@
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
 	I.forceMove(src)
 	held_items[hand_index] = I
-	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 	I.equipped(src, ITEM_SLOT_HANDS)
 	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers and circle hands could be moved from hand to hand then delete, which meant you'd have a null in your hand until you cleared it (say, by dropping it)
@@ -392,11 +391,7 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M, check_hand = TRUE)
-	if(check_hand && src != M.get_active_held_item())
-		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
-		return FALSE
-
+/obj/item/proc/equip_to_best_slot(mob/M)
 	if(M.equip_to_appropriate_slot(src))
 		M.update_inv_hands()
 		return TRUE
@@ -424,8 +419,15 @@
 	set hidden = TRUE
 
 	var/obj/item/I = get_active_held_item()
-	if (I)
-		I.equip_to_best_slot(src)
+	if(!I)
+		to_chat(src, "<span class='warning'>You are not holding anything to equip!</span>")
+		return
+	if (temporarilyRemoveItemFromInventory(I) && !QDELETED(I))
+		if(I.equip_to_best_slot(src))
+			return
+		if(put_in_active_hand(I))
+			return
+		I.forceMove(drop_location())
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()

@@ -243,10 +243,6 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	//turfs and overlay objects are taken out of the spawned list
 	//objects get resistance flags added to them
 	for (var/atom/atoms in spawned)
-		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis))
-			spawned -= atoms
-			continue
-
 		RegisterSignal(atoms, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
 		atoms.flags_1 |= HOLOGRAM_1
 
