@@ -10,11 +10,12 @@
 	var/datum/outfit_editor/ui = new(usr, target)
 	ui.ui_interact(usr)
 
-#define OUTFITOTRON "Outfit-O-Tron 9000"
+#define OUTFIT_EDITOR_NAME "Outfit-O-Tron 9000"
 /datum/outfit_editor
 	var/client/holder
 
 	var/dummy_key
+
 	var/datum/outfit/drip
 
 /datum/outfit_editor/New(user, datum/outfit/target)
@@ -24,13 +25,18 @@
 		drip = new /datum/outfit
 		drip.copy_from(new target) //hacky way to inherit vars but not procs
 	else if(istype(target))
-		drip = target //edit the outfit in place for now
+		drip = target
 	else
 		drip = new /datum/outfit
 		drip.name = "New Outfit"
 
 /datum/outfit_editor/ui_state(mob/user)
 	return GLOB.admin_state
+
+/datum/outfit_editor/ui_status(mob/user, datum/ui_state/state)
+	if(QDELETED(drip))
+		return UI_CLOSE
+	return ..()
 
 /datum/outfit_editor/ui_close(mob/user)
 	clear_human_dummy(dummy_key)
@@ -50,7 +56,7 @@
 /datum/outfit_editor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "OutfitEditor", OUTFITOTRON)
+		ui = new(user, src, "OutfitEditor", OUTFIT_EDITOR_NAME)
 		ui.open()
 		ui.set_autoupdate(FALSE)
 
@@ -85,6 +91,7 @@
 
 	return data
 
+
 /datum/outfit_editor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
@@ -101,24 +108,26 @@
 				drip.vars[slot] = null
 
 		if("rename")
-			var/newname = stripped_input(holder, "What do you want to name this outfit?", OUTFITOTRON)
+			var/newname = stripped_input(holder, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME)
 			if(newname)
 				drip.name = newname
 		if("save")
 			GLOB.custom_outfits |= (drip)
 			SStgui.update_user_uis(holder.mob)
 
+
 /datum/outfit_editor/proc/set_item(slot, obj/item/choice)
+	if(!choice)
+		return
 	if(!ispath(choice))
-		alert(holder, "Invalid item", OUTFITOTRON, "oh no")
+		alert(holder, "Invalid item", OUTFIT_EDITOR_NAME, "oh no")
 		return
 	if(initial(choice.icon_state) == null) //hacky check copied from experimentor code
 		var/msg = "Warning: This item's icon_state is null, indicating it is very probably not actually a usable item."
-		if(alert(holder, msg, OUTFITOTRON, "Use it anyway", "Cancel") != "Use it anyway")
+		if(alert(holder, msg, OUTFIT_EDITOR_NAME, "Use it anyway", "Cancel") != "Use it anyway")
 			return
 	if(drip.vars.Find(slot))
 		drip.vars[slot] = choice
-
 
 //this proc will try to give a good selection of items that the user can choose from
 //it does *not* give a selection of all items that can fit in a slot because lag;
@@ -172,8 +181,7 @@
 			choose_any_item(slot)
 
 	if(length(options))
-		set_item(slot, tgui_input_list(holder, "Choose an item", OUTFITOTRON, options))
-
+		set_item(slot, tgui_input_list(holder, "Choose an item", OUTFIT_EDITOR_NAME, options))
 
 /datum/outfit_editor/proc/choose_any_item(slot)
 	var/obj/item/choice = pick_closest_path(FALSE)
@@ -184,4 +192,4 @@
 	set_item(slot, choice)
 
 
-#undef OUTFITOTRON
+#undef OUTFIT_EDITOR_NAME
