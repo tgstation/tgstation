@@ -563,3 +563,6 @@ RATCAP 64
 
 ## Maximum fine for a citation
 MAXFINE 2000
+
+## Uncomment to enable SDQL spells
+#SDQL_SPELLS

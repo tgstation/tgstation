@@ -131,6 +131,8 @@
 #define RAW_ADDRESS(x) copytext("\ref[x]",2,-1)
 
 /proc/process_spell_query(query_text, list/targets, mob/user, source)
+	if(!CONFIG_GET(flag/sdql_spells))
+		return
 	if(!length(query_text))
 		return
 	var/message_query = query_text
@@ -207,10 +209,11 @@
 /client/proc/cmd_give_sdql_spell(mob/target in GLOB.mob_list)
 	set category = "Admin.Debug"
 	set name = "Give SDQL spell"
-
-
-	var/datum/give_sdql_spell/ui = new(usr, target)
-	ui.ui_interact(usr)
+	if(CONFIG_GET(flag/sdql_spells))
+		var/datum/give_sdql_spell/ui = new(usr, target)
+		ui.ui_interact(usr)
+	else
+		to_chat(usr, "<span class='warning'>SDQL spells are disabled.</span>")
 
 
 /datum/give_sdql_spell
@@ -244,6 +247,10 @@
 	var/mouse_icon_base64
 
 /datum/give_sdql_spell/New(_user, target)
+	if(!CONFIG_GET(flag/sdql_spells))
+		to_chat(_user, "<span class='warning'>SDQL spells are disabled.</span>")
+		qdel(src)
+		return
 	user = CLIENT_FROM_VAR(_user)
 
 	if(!isliving(target))
