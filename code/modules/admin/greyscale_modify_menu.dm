@@ -4,7 +4,6 @@
 
 	var/list/split_colors
 
-	var/icon/preview // Eventualy this can be displayed in the ui
 	var/list/sprite_data
 
 /datum/greyscale_modify_menu/New(atom/target, client/user)
@@ -84,12 +83,8 @@
 
 /datum/greyscale_modify_menu/proc/refresh_preview()
 	var/list/data = SSgreyscale.configurations["[target.greyscale_config]"].GenerateDebug(split_colors)
-	preview = data["icon"]
 
 	sprite_data = list()
-	//sprite_data["finished"] = list("ref"=REF(preview), "sprite"=icon2html(preview, user, sourceonly=TRUE))
-	sprite_data["finished"] = list("result"=icon2base64(preview))
-
 	var/list/steps = list()
 	sprite_data["steps"] = steps
 	for(var/step in data["steps"])
