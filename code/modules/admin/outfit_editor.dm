@@ -106,6 +106,8 @@
 		if("save")
 			GLOB.custom_outfits |= (drip)
 			SStgui.update_user_uis(holder.mob)
+		if("vv")
+			holder.debug_variables(drip)
 
 
 /datum/outfit_editor/proc/set_item(slot, obj/item/choice)
@@ -127,7 +129,16 @@
 //also stuff that fits in the belt and back slots are scattered pretty much all over the place
 /datum/outfit_editor/proc/choose_item(slot)
 	var/list/options = list()
-
+	/*
+	Still missing UI support for:
+	- toggle_helmet
+	- internals_slot
+	- backpack_contents
+	- box
+	- implants
+	- accessory
+	- skillchips (serialization for these too)
+	*/
 	switch(slot)
 		if("head")
 			options = typesof(/obj/item/clothing/head)

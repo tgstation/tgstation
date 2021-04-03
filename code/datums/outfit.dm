@@ -347,34 +347,32 @@
 	.["implants"] = implants
 	.["accessory"] = accessory
 
-#define OUTFIT_COPY(var) ##var = target.##var
 /// Copy most vars from another outfit to this one
 /datum/outfit/proc/copy_from(datum/outfit/target)
-	OUTFIT_COPY(name)
-	OUTFIT_COPY(uniform)
-	OUTFIT_COPY(suit)
-	OUTFIT_COPY(toggle_helmet)
-	OUTFIT_COPY(back)
-	OUTFIT_COPY(belt)
-	OUTFIT_COPY(gloves)
-	OUTFIT_COPY(shoes)
-	OUTFIT_COPY(head)
-	OUTFIT_COPY(mask)
-	OUTFIT_COPY(neck)
-	OUTFIT_COPY(ears)
-	OUTFIT_COPY(glasses)
-	OUTFIT_COPY(id)
-	OUTFIT_COPY(l_pocket)
-	OUTFIT_COPY(r_pocket)
-	OUTFIT_COPY(suit_store)
-	OUTFIT_COPY(r_hand)
-	OUTFIT_COPY(l_hand)
-	OUTFIT_COPY(internals_slot)
-	OUTFIT_COPY(backpack_contents)
-	OUTFIT_COPY(box)
-	OUTFIT_COPY(implants)
-	OUTFIT_COPY(accessory)
-#undef OUTFIT_COPY
+	name = target.name
+	uniform = target.uniform
+	suit = target.suit
+	toggle_helmet = target.toggle_helmet
+	back = target.back
+	belt = target.belt
+	gloves = target.gloves
+	shoes = target.shoes
+	head = target.head
+	mask = target.mask
+	neck = target.neck
+	ears = target.ears
+	glasses = target.glasses
+	id = target.id
+	l_pocket = target.l_pocket
+	r_pocket = target.r_pocket
+	suit_store = target.suit_store
+	r_hand = target.r_hand
+	l_hand = target.l_hand
+	internals_slot = target.internals_slot
+	backpack_contents = target.backpack_contents
+	box = target.box
+	implants = target.implants
+	accessory = target.accessory
 
 /// Prompt the passed in mob client to download this outfit as a json blob
 /datum/outfit/proc/save_to_file(mob/admin)

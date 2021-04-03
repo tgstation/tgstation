@@ -31,20 +31,29 @@ export const OutfitEditor = (props, context) => {
               {outfit.name}
               <Button
                 ml={0.5}
+                color="transparent"
                 icon="pencil-alt"
                 title="Rename this outfit"
                 onClick={() => act("rename", {})} />
             </>
           }
           buttons={
-            <Button
-              icon="save"
-              disabled={!saveable}
-              tooltip={!!saveable && "Save this outfit to the custom outfit list"}
-              tooltipPosition="left"
-              title={!saveable && "This outfit is already on the custom outfit list. Any changes made here will be immediately applied."}
-              onClick={() => act("save", {})}
-            />
+            <>
+              <Button
+                icon="code"
+                tooltip="Edit this outfit on a VV window"
+                tooltipPosition="left"
+                onClick={() => act("vv", {})}
+              />
+              <Button
+                icon="save"
+                disabled={!saveable}
+                tooltip={!!saveable && "Save this outfit to the custom outfit list"}
+                tooltipPosition="left"
+                title={!saveable && "This outfit is already on the custom outfit list. Any changes made here will be immediately applied."}
+                onClick={() => act("save", {})}
+              />
+            </>
           }>
 
           <Box textAlign="center">
