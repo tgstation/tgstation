@@ -18,6 +18,7 @@
 
 /datum/greyscale_modify_menu/Destroy()
 	target = null
+	user = null
 	return ..()
 
 /datum/greyscale_modify_menu/ui_state(mob/user)
