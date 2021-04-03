@@ -100,10 +100,14 @@
 		number_of_people_trying_to_open++
 
 		//dont want them to be moved by pressure differences when theyre holding onto the firelock with all their strength
-		user.move_resist = MOVE_FORCE_STRONG
+		user.move_resist = MOVE_FORCE_VERY_STRONG
 
+		//starting stats in order to write logs that provide enough data to make kickass fucking graphs later
 		var/starting_health = user.health
 		var/starting_time = REALTIMEOFDAY
+
+		var/datum/gas_mixture/users_air = user.return_air()
+		var/user_loc_starting_temperature = users_air.temperature
 
 		///we dont want people with only one hand to have the same visible_message as people with two hands
 		var/hand_string = "hands"
@@ -141,7 +145,12 @@
 		if(do_after_dynamic(user, true_opening_time, src, extra_checks = burning_callback, dynamic_timer_change = timer_callback))
 			user.visible_message("<span class='notice'>[user] opens \the [src] with their [hand_string].</span>", \
 				"<span class='notice'>You pry open \the [src] with your [hand_string]!</span>")
-			log_game("[key_name(user)] has successfully opened a firelock with their bare hands [number_of_people_trying_to_open > 1 ? "along with [number_of_people_trying_to_open - 1] others" : ""], starting at [starting_health] health and ending at [user.health].")
+
+			log_game("[key_name(user)] has successfully opened a firelock with their bare hands \
+			[number_of_people_trying_to_open > 1 ? "along with [number_of_people_trying_to_open - 1] others" : ""], \
+			starting at [starting_health] health and ending at [user.health], their loc starting at [user_loc_starting_temperature] kelvin \
+			and ending at [users_air.temperature] kelvin.")
+
 			open()
 
 		else if(user.stat != CONSCIOUS)
@@ -154,7 +163,9 @@
 				if(DEAD)
 					stat_string = "died"
 
-			log_game("[key_name(user)] has failed to open a firelock with their bare hands [number_of_people_trying_to_open > 1 ? "along with [number_of_people_trying_to_open - 1] others" : ""] because they have [stat_string]. they were trying to open the door for [(REALTIMEOFDAY - starting_time) / 10] seconds")
+			log_game("[key_name(user)] has failed to open a firelock with their bare hands \
+			[number_of_people_trying_to_open > 1 ? "along with [number_of_people_trying_to_open - 1] others" : ""] because they have [stat_string], they started at [starting_health] health  \
+			they were trying to open the door for [(REALTIMEOFDAY - starting_time) / 10] seconds, their loc starting at [user_loc_starting_temperature] kelvin and ending at [users_air.temperature] kelvin.")
 
 		number_of_people_trying_to_open = max(0, --number_of_people_trying_to_open)
 		user.move_resist = initial(user.move_resist)
@@ -164,12 +175,17 @@
 	if(!user.combat_mode)
 		attack_hand(user, modifiers)
 
-///deals burn damage to the user depending on whether theyre resistant to heat and how hot the door is, used as a callback in do_after
+///deals burn damage to the user depending on whether theyre resistant to heat and how hot the door is, used as a callback in attack_hand's dynamic_do_after
 /obj/machinery/door/firedoor/proc/burn_arms(mob/living/user)
 	. = TRUE //we dont want to interrupt the do_after
 
-	//figure out how "hot" the door is with the temperature of the turf we are on and the user touching us, remember we dont conduct heat
-	var/heat_of_contact_surface = max(return_air(), user.return_air())
+	//figure out how "hot" the door is with the temperature of the turf we are on and the user touching us, remember we dont conduct heat to the other side
+	var/datum/gas_mixture/our_air = return_air()
+	var/our_temperature = our_air.temperature
+	var/datum/gas_mixture/users_air = user.return_air()
+	var/users_temperature = users_air.temperature
+
+	var/heat_of_contact_surface = max(our_temperature, users_temperature)
 
 	if(heat_of_contact_surface < MINIMUM_TEMPERATURE_TO_BURN_ARMS)
 		return
