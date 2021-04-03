@@ -148,10 +148,6 @@ GENE SCANNER
 	if(user.incapacitated())
 		return
 
-	if(user.is_blind())
-		to_chat(user, "<span class='warning'>You realize that your scanner has no accessibility support for the blind!</span>")
-		return
-
 	// the final list of strings to render
 	var/render_list = list()
 
@@ -429,10 +425,6 @@ GENE SCANNER
 	if(user.incapacitated())
 		return
 
-	if(user.is_blind())
-		to_chat(user, "<span class='warning'>You realize that your scanner has no accessibility support for the blind!</span>")
-		return
-
 	if(istype(M) && M.reagents)
 		var/render_list = list()
 		if(M.reagents.reagent_list.len)
@@ -492,10 +484,6 @@ GENE SCANNER
 /// Displays wounds with extended information on their status vs medscanners
 /proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
 	if(!istype(patient) || user.incapacitated())
-		return
-
-	if(user.is_blind())
-		to_chat(user, "<span class='warning'>You realize that your scanner has no accessibility support for the blind!</span>")
 		return
 
 	var/render_list = ""
@@ -588,7 +576,7 @@ GENE SCANNER
 /obj/item/analyzer/attack_self(mob/user)
 	add_fingerprint(user)
 
-	if (user.stat || user.is_blind())
+	if (user.stat)
 		return
 
 	var/turf/location = user.loc
