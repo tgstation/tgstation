@@ -103,7 +103,7 @@
 
 /// Internal recursive proc to handle nested layer groups
 /datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
-	var/icon/new_icon = new('icons/obj/atmospherics/canisters.dmi', "none")
+	var/icon/new_icon
 	for(var/datum/greyscale_layer/layer as anything in group)
 		var/icon/layer_icon
 		if(islist(layer))
