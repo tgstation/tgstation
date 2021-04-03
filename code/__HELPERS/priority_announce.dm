@@ -58,8 +58,8 @@
 	announcement += "<h1 class='alert'>Captain Alert</h1>"
 	announcement += "<br><span class='alert'>[user] has called an Emergency Meeting!</span><br><br>"
 
-	for(var/mob/mob_to_teleport in GLOB.mob_list) //gotta make sure the whole crew's here!
-		if(!mob_to_teleport.client || isnewplayer(mob_to_teleport))
+	for(var/mob/mob_to_teleport in GLOB.player_list) //gotta make sure the whole crew's here!
+		if(isnewplayer(mob_to_teleport) || iscameramob(mob_to_teleport))
 			continue
 		to_chat(mob_to_teleport, announcement)
 		SEND_SOUND(mob_to_teleport, meeting_sound) //no preferences here, you must hear the funny sound
