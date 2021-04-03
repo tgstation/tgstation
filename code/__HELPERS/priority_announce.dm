@@ -60,7 +60,7 @@
 
 	for(var/mob/mob_to_teleport in GLOB.mob_list) //gotta make sure the whole crew's here!
 		if(isnewplayer(mob_to_teleport))
-			return
+			continue
 
 		if (mob_to_teleport.key) //fully immerse the mob in the experience if they're player controlled
 			to_chat(mob_to_teleport, announcement)
