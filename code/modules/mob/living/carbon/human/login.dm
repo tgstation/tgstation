@@ -8,7 +8,7 @@
 		return
 
 	to_chat(src, "<span class='info'>*---------*</span")
-	to_chat(src, "<span class='userdanger'>As you snap back to consciousness, you recall the following...</span")
+	to_chat(src, "<span class='userdanger'>As you snap back to consciousness, you recall people messing with your stuff...</span")
 
 	for(var/i in afk_thefts)
 		var/theft_message = afk_thefts[i][AFK_THEFT_MESSAGE]
@@ -16,4 +16,6 @@
 		to_chat(src, "\t</span class='danger'><b>[theft_message] [DisplayTimeText(time_since)] ago.</b></span>")
 
 	if(LAZYLEN(afk_thefts) >= 9)
-		to_chat(src, "<span class='notice'>There may have been more, but ")
+		to_chat(src, "<span class='warning'>There may have been more, but that's all you can remember...</span>")
+	to_chat(src, "<span class='info'>*---------*</span")
+	LAZYNULL(afk_thefts)
