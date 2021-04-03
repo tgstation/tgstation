@@ -576,8 +576,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 
 /datum/uplink_item/stealthy_weapons/braindamage_gloves
-	name = "Braindamage gloves"
-	desc = "A pair of gloves with nanochip technology woven underneath the fibres. Provides a stealthy manner of inflicting braindamage to people."
+	name = "Brain Damage Gloves"
+	desc = "A pair of gloves with nanochip technology woven between the fibres. Provides a stealthy manner of inflicting brain damage to people."
 	item = /obj/item/clothing/gloves/braindamage
 	cost = 6
 

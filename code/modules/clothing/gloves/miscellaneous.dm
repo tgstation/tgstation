@@ -67,10 +67,10 @@
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
 
 /obj/item/clothing/gloves/braindamage
-	name = "Headpat gloves"
+	name = "\improper Gloves of Love"
 	desc = "Gloves designed for giving exceptionally cute headpats."
-	icon_state = "black"
-	inhand_icon_state = "blackgloves"
+	icon_state = "rainbow"
+	inhand_icon_state = "rainbowgloves"
 	transfer_prints = TRUE
 
 /obj/item/clothing/gloves/braindamage/Touch(atom/A, proximity, mouseparams)
@@ -81,8 +81,6 @@
 	var/mob/living/carbon/carbon_target = A
 	if (check_zone(carbon_user.zone_selected) == BODY_ZONE_HEAD && !carbon_user.combat_mode)
 		carbon_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 150)
-
-
 
 /obj/item/clothing/gloves/color/plasmaman
 	desc = "Covers up those scandalous boney hands."
