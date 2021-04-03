@@ -94,12 +94,6 @@ GLOBAL_LIST_INIT(em_block_color, EM_BLOCK_COLOR)
 /// A globaly cached version of [EM_MASK_MATRIX] for quick access.
 GLOBAL_LIST_INIT(em_mask_matrix, EM_MASK_MATRIX)
 
-/// Produces a mutable appearance glued to the [EMISSIVE_PLANE] dyed to be a mutable appearance.
-/proc/emissive_appearance(icon, icon_state = "", layer = FLOAT_LAYER, alpha = 255, appearance_flags = NONE)
-	var/mutable_appearance/appearance = mutable_appearance(icon, icon_state, layer, EMISSIVE_PLANE, alpha, appearance_flags)
-	appearance.color = GLOB.emissive_color
-	return appearance
-
 /// Returns the red part of a #RRGGBB hex sequence as number
 #define GETREDPART(hexa) hex2num(copytext(hexa, 2, 4))
 
