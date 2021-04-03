@@ -24,6 +24,11 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
+/datum/mood_event/cuteheadpat
+	description = "<span class='nicegreen'>That was such a cute head pat!</span>\n"
+	mood_change = 5
+	timeout = 2 MINUTES
+
 /datum/mood_event/arcade
 	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"
 	mood_change = 3
