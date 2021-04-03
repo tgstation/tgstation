@@ -84,7 +84,6 @@
 
 /atom/movable/screen/fullscreen/emergency_meeting
 	icon_state = "emergency_meeting"
-	show_when_dead = TRUE
 	layer = CURSE_LAYER
 	plane = SPLASHSCREEN_PLANE
 
