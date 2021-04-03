@@ -1,16 +1,6 @@
 import { useBackend } from '../backend';
-import {
-  Box,
-  Stack,
-  Button,
-  Section,
-  NoticeBox,
-  LabeledList,
-  Collapsible,
-} from '../components';
-
+import { Stack, Button, Section, NoticeBox, LabeledList, Collapsible } from '../components';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 export const CryopodConsole = (props, context) => {
   const { data } = useBackend(context);
@@ -45,7 +35,7 @@ const CrewList = (props, context) => {
       ) : (
         <Section height={10} fill scrollable>
           <LabeledList>
-            {frozen_crew.map((person, index) => (
+            {frozen_crew.map((person) => (
               <LabeledList.Item key={person} label={person.name}>
                 {person.job}
               </LabeledList.Item>
@@ -66,7 +56,7 @@ const ItemList = (props, context) => {
       {!frozen_items.length ? (
         <NoticeBox>No stored items!</NoticeBox>
       ) : (
-        <Fragment>
+        <>
           <Section height={11} fill scrollable>
             <LabeledList>
               {frozen_items.map((item) => (
@@ -89,7 +79,7 @@ const ItemList = (props, context) => {
             color="red"
             onClick={() => act('all_items', {})}
           />
-        </Fragment>
+        </>
       )}
     </Collapsible>
   );
