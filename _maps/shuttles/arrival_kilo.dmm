@@ -73,7 +73,6 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light{
-	icon_state = "tube";
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -90,7 +89,6 @@
 	pixel_y = 32
 	},
 /obj/machinery/light{
-	icon_state = "tube";
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,

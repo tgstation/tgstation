@@ -60,6 +60,7 @@
 		petrified_mob.status_flags &= ~GODMODE
 		petrified_mob.forceMove(loc)
 		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
+		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLEED, MAGIC_TRAIT)
 		petrified_mob.take_overall_damage((petrified_mob.health - obj_integrity + 100)) //any new damage the statue incurred is transfered to the mob
 		petrified_mob.faction -= "mimic"
 		petrified_mob = null
@@ -80,18 +81,10 @@
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
 	S.name = "statue of [name]"
-	bleedsuppress = 1
+	ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-	return TRUE
-
-/mob/living/carbon/monkey/petrify(statue_timer)
-	if(!isturf(loc))
-		return FALSE
-	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
-	S.name = "statue of a monkey"
-	S.icon_state = "monkey"
 	return TRUE
 
 /mob/living/simple_animal/pet/dog/corgi/petrify(statue_timer)

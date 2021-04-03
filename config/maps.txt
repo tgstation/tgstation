@@ -20,17 +20,22 @@ map metastation
 	votable
 endmap
 
-map pubbystation
-	votable
-endmap
-
 map deltastation
 	minplayers 50
 	votable
 endmap
 
+map kilostation
+	votable
+endmap
+
 map icebox
 	minplayers 25
+	votable
+endmap
+
+map tramstation
+	minplayers 35
 	votable
 endmap
 

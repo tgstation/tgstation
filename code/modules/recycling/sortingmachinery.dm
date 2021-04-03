@@ -26,14 +26,13 @@
 	return ..()
 
 /obj/structure/big_delivery/contents_explosion(severity, target)
-	for(var/thing in contents)
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += thing
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += thing
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += thing
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += contents
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += contents
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += contents
 
 /obj/structure/big_delivery/examine(mob/user)
 	. = ..()
@@ -107,11 +106,11 @@
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
-		sticker.percent_cut = tagger.percent_cut	//same, but for the percentage taken.
+		sticker.cut_multiplier = tagger.cut_multiplier	//same, but for the percentage taken.
 
 		var/list/wrap_contents = src.GetAllContents()
 		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.percent_cut)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
@@ -130,7 +129,7 @@
 		sticker = stickerA
 		var/list/wrap_contents = src.GetAllContents()
 		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.percent_cut)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
@@ -177,14 +176,13 @@
 	var/obj/item/barcode/sticker
 
 /obj/item/small_delivery/contents_explosion(severity, target)
-	for(var/thing in contents)
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += thing
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += thing
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += thing
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += contents
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += contents
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += contents
 
 /obj/item/small_delivery/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
@@ -290,11 +288,11 @@
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
-		sticker.percent_cut = tagger.percent_cut	//as above, as before.
+		sticker.cut_multiplier = tagger.cut_multiplier	//as above, as before.
 
 		var/list/wrap_contents = src.GetAllContents()
 		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.percent_cut)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
@@ -314,7 +312,7 @@
 		sticker = stickerA
 		var/list/wrap_contents = src.GetAllContents()
 		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.percent_cut)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
@@ -383,7 +381,7 @@
 
 /obj/item/sales_tagger
 	name = "sales tagger"
-	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo. Ctrl-Click to clear the registered account."
+	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "salestagger"
 	worn_icon_state = "salestagger"
@@ -396,13 +394,19 @@
 	var/datum/bank_account/payments_acc = null
 	var/paper_count = 10
 	var/max_paper_count = 20
-	///Details the percentage the scanned account receives off the final sale.
-	var/percent_cut = 20
+	///The person who tagged this will receive the sale value multiplied by this number.
+	var/cut_multiplier = 0.5
+	///Maximum value for cut_multiplier.
+	var/cut_max = 0.5
+	///Minimum value for cut_multiplier.
+	var/cut_min = 0.01
 
 /obj/item/sales_tagger/examine(mob/user)
 	. = ..()
-	. += "[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper."
-	. += "Profit split on sale is currently set to [percent_cut]%."
+	. += "<span class='notice'>[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper.</span>"
+	. += "<span class='notice'>Profit split on sale is currently set to [round(cut_multiplier*100)]%. <b>Alt-click</b> to change.</span>"
+	if(payments_acc)
+		. += "<span class='notice'><b>Ctrl-click</b> to clear the registered account.</span>"
 
 /obj/item/sales_tagger/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -446,7 +450,7 @@
 	to_chat(user, "<span class='notice'>You print a new barcode.</span>")
 	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
 	new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.
-	new_barcode.percent_cut = percent_cut		// Also the registered percent cut.
+	new_barcode.cut_multiplier = cut_multiplier		// Also the registered percent cut.
 	user.put_in_hands(new_barcode)
 
 /obj/item/sales_tagger/CtrlClick(mob/user)
@@ -456,18 +460,18 @@
 
 /obj/item/sales_tagger/AltClick(mob/user)
 	. = ..()
-	var/potential_cut = input("How much would you like to payout to the registered card?","Percentage Profit") as num|null
+	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
 	if(!potential_cut)
-		percent_cut = 50
-	percent_cut = clamp(round(potential_cut, 1), 1, 50)
-	to_chat(user, "<span class='notice'>[percent_cut]% profit will be received if a package with a barcode is sold.</span>")
+		cut_multiplier = initial(cut_multiplier)
+	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
+	to_chat(user, "<span class='notice'>[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold.</span>")
 
 /obj/item/barcode
-	name = "Barcode tag"
+	name = "barcode tag"
 	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "barcode"
 	w_class = WEIGHT_CLASS_TINY
 	///All values inheirited from the sales tagger it came from.
 	var/datum/bank_account/payments_acc = null
-	var/percent_cut = 5
+	var/cut_multiplier = 0.5

@@ -13,6 +13,9 @@
 	var/spawned_loot = FALSE
 	tamperproof = 90
 
+	// Stop people from "diving into" the crate accidentally, and then detonating it.
+	divable = FALSE
+
 /obj/structure/closet/crate/secure/loot/Initialize()
 	. = ..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
@@ -23,7 +26,7 @@
 		digits -= dig  //there are never matching digits in the answer
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
+/obj/structure/closet/crate/secure/loot/attack_hand(mob/user, list/modifiers)
 	if(locked)
 		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text|null
@@ -98,17 +101,11 @@
 			return
 	return ..()
 
-/obj/structure/closet/secure/loot/dive_into(mob/living/user)
-	if(!locked)
-		return ..()
-	to_chat(user, "<span class='notice'>That seems like a stupid idea.</span>")
-	return FALSE
-
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
 		boom(user)
 
-/obj/structure/closet/crate/secure/loot/togglelock(mob/user)
+/obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
 	if(locked)
 		boom(user)
 	else
@@ -224,7 +221,7 @@
 			for(var/i in 1 to 4)
 				new /obj/item/clothing/mask/balaclava(src)
 			new /obj/item/gun/ballistic/shotgun/toy(src)
-			new /obj/item/gun/ballistic/automatic/toy/pistol/unrestricted(src)
+			new /obj/item/gun/ballistic/automatic/pistol/toy(src)
 			new /obj/item/gun/ballistic/automatic/toy/unrestricted(src)
 			new /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted(src)
 			new /obj/item/ammo_box/foambox(src)

@@ -47,7 +47,7 @@
 			unbuckle_mob(M)
 			add_fingerprint(user)
 
-/obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/living/user)
+/obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
 		return
 
@@ -83,8 +83,8 @@
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user)
-	if(user.a_intent != INTENT_HARM)
-		return attack_hand(user)
+/obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+	if(!user.combat_mode)
+		return attack_hand(user, modifiers)
 	else
 		return ..()

@@ -149,7 +149,7 @@
 
 //liquid plasma!!!!!!//
 
-/turf/open/floor/plasteel/dark/snowdin
+/turf/open/floor/iron/dark/snowdin
 	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = 1
 	temperature = 180
@@ -158,7 +158,7 @@
 	name = "liquid plasma"
 	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
 	icon_state = "liquidplasma"
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	baseturfs = /turf/open/lava/plasma
 	slowdown = 2
 
@@ -193,7 +193,7 @@
 			. = 1
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
-				continue	//YOU'RE FLYING OVER IT
+				continue //YOU'RE FLYING OVER IT
 			if("snow" in L.weather_immunities)
 				continue
 
@@ -231,11 +231,10 @@
 						PP.adjustToxLoss(15)
 						PP.adjustFireLoss(25)
 						if(plasma_parts.len)
-							var/obj/item/bodypart/NB = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs for dismember() to use
+							var/obj/item/bodypart/NB = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
 							PP.emote("scream")
-							NB.species_id = "plasmaman"//change the species_id of the limb to that of a plasmaman
-							NB.no_update = TRUE
-							NB.change_bodypart_status()
+							ADD_TRAIT(NB, TRAIT_PLASMABURNT, src)
+							PP.update_body_parts()
 							PP.visible_message("<span class='warning'>[L] screams in pain as [L.p_their()] [NB] melts down to the bone!</span>", \
 											  "<span class='userdanger'>You scream out in pain as your [NB] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!</span>")
 						if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
@@ -250,14 +249,7 @@
 	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0
 
-/obj/vehicle/ridden/lavaboat/plasma
-	name = "plasma boat"
-	desc = "A boat used for traversing the streams of plasma without turning into an icecube."
-	icon_state = "goliath_boat"
-	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	resistance_flags = FREEZE_PROOF
-	can_buckle = TRUE
-///////////	papers
+/////////// papers
 
 
 /obj/item/paper/crumpled/ruins/snowdin/foreshadowing
@@ -603,9 +595,9 @@
 	shoes = /obj/item/clothing/shoes/combat/coldres
 	ears = /obj/item/radio/headset/syndicate/alt
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/chameleon
 	implants = list(/obj/item/implant/exile)
-
+	id_trim = /datum/id_trim/chameleon/operative
 
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE

@@ -146,7 +146,9 @@
 	stop_playing()
 	SSinstruments.on_song_del(src)
 	lines = null
-	using_instrument = null
+	if(using_instrument)
+		using_instrument.songs_using -= src
+		using_instrument = null
 	allowed_instrument_ids = null
 	parent = null
 	return ..()
@@ -263,7 +265,7 @@
  */
 /datum/song/proc/tempodiv_to_delay(tempodiv)
 	if(!tempodiv)
-		tempodiv = 1		// no division by 0. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
+		tempodiv = 1 // no division by 0. some song converters tend to use 0 for when it wants to have no div, for whatever reason.
 	return max(1, round((tempo/tempodiv) / world.tick_lag, 1))
 
 /**

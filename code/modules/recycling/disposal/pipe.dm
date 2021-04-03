@@ -7,15 +7,15 @@
 	anchored = TRUE
 	density = FALSE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	dir = NONE			// dir will contain dominant direction for junction pipes
+	dir = NONE // dir will contain dominant direction for junction pipes
 	max_integrity = 200
 	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 90, ACID = 30)
-	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
+	layer = DISPOSAL_PIPE_LAYER // slightly lower than wires and other pipes
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	damage_deflection = 10
-	var/dpdir = NONE					// bitmask of pipe directions
-	var/initialize_dirs = NONE			// bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
-	var/flip_type						// If set, the pipe is flippable and becomes this type when flipped
+	var/dpdir = NONE // bitmask of pipe directions
+	var/initialize_dirs = NONE // bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
+	var/flip_type // If set, the pipe is flippable and becomes this type when flipped
 	var/obj/structure/disposalconstruct/stored
 
 
@@ -51,7 +51,7 @@
 	if(H)
 		H.active = FALSE
 		expel(H, get_turf(src), 0)
-	QDEL_NULL(stored)
+	stored = null //The qdel is handled in expel()
 	return ..()
 
 /obj/structure/disposalpipe/handle_atom_del(atom/A)
@@ -93,16 +93,16 @@
 	var/eject_range = 5
 	var/turf/open/floor/floorturf
 
-	if(isfloorturf(T)) //intact floor, pop the tile
+	if(isfloorturf(T) && T.intact) //intact floor, pop the tile
 		floorturf = T
 		if(floorturf.floor_tile)
 			new floorturf.floor_tile(T)
-		floorturf.make_plating()
+		floorturf.make_plating(TRUE)
 
-	if(direction)		// direction is specified
+	if(direction) // direction is specified
 		if(isspaceturf(T)) // if ended in space, then range is unlimited
 			target = get_edge_target_turf(T, direction)
-		else						// otherwise limit to 10 tiles
+		else // otherwise limit to 10 tiles
 			target = get_ranged_target_turf(T, direction, 10)
 
 		eject_range = 10
@@ -119,8 +119,7 @@
 // pipe affected by explosion
 /obj/structure/disposalpipe/contents_explosion(severity, target)
 	var/obj/structure/disposalholder/H = locate() in src
-	if(H)
-		H.contents_explosion(severity, target)
+	H?.contents_explosion(severity, target)
 
 
 //welding tool: unfasten and convert to obj/disposalconstruct
@@ -183,11 +182,11 @@
 // if coming in from primary dir, then next is equal chance of other dirs
 /obj/structure/disposalpipe/junction/nextdir(obj/structure/disposalholder/H)
 	var/flipdir = turn(H.dir, 180)
-	if(flipdir != dir)	// came from secondary dir, so exit through primary
+	if(flipdir != dir) // came from secondary dir, so exit through primary
 		return dir
 
-	else	// came from primary, so need to choose a secondary exit
-		var/mask = dpdir & (~dir)	// get a mask of secondary dirs
+	else // came from primary, so need to choose a secondary exit
+		var/mask = dpdir & (~dir) // get a mask of secondary dirs
 
 		// find one secondary dir in mask
 		var/secdir = NONE
@@ -196,9 +195,9 @@
 				secdir = D
 				break
 
-		if(prob(50))	// 50% chance to choose the found secondary dir
+		if(prob(50)) // 50% chance to choose the found secondary dir
 			return secdir
-		else			// or the other one
+		else // or the other one
 			return mask & (~secdir)
 
 /obj/structure/disposalpipe/junction/flip
@@ -215,7 +214,7 @@
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
-	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
+	var/obj/linked // the linked obj/machinery/disposal or obj/disposaloutlet
 
 /obj/structure/disposalpipe/trunk/Initialize()
 	. = ..()
@@ -255,16 +254,16 @@
 // if not entering from disposal bin,
 // transfer to linked object (outlet or bin)
 /obj/structure/disposalpipe/trunk/transfer(obj/structure/disposalholder/H)
-	if(H.dir == DOWN)		// we just entered from a disposer
-		return ..()		// so do base transfer proc
+	if(H.dir == DOWN) // we just entered from a disposer
+		return ..() // so do base transfer proc
 	// otherwise, go to the linked object
 	if(linked)
 		var/obj/structure/disposaloutlet/O = linked
 		if(istype(O))
-			O.expel(H)	// expel at outlet
+			O.expel(H) // expel at outlet
 		else
 			var/obj/machinery/disposal/D = linked
-			D.expel(H)	// expel at disposal
+			D.expel(H) // expel at disposal
 
 	// Returning null without expelling holder makes the holder expell itself
 	return null

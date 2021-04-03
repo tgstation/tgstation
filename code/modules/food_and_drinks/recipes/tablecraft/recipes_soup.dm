@@ -115,15 +115,15 @@
 	subcategory = CAT_SOUP
 
 
-/datum/crafting_recipe/food/milosoup
-	name = "Milo soup"
+/datum/crafting_recipe/food/misosoup
+	name = "Miso soup"
 	reqs = list(
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/soydope = 2,
 		/obj/item/food/tofu = 2
 	)
-	result = /obj/item/food/soup/milo
+	result = /obj/item/food/soup/miso
 	subcategory = CAT_SOUP
 
 /datum/crafting_recipe/food/bloodsoup
@@ -165,7 +165,7 @@
 		/obj/item/food/badrecipe = 1,
 		/obj/item/food/tofu = 1,
 		/obj/item/food/boiledegg = 1,
-		/obj/item/food/cheesewedge = 1,
+		/obj/item/food/cheese = 1,
 	)
 	result = /obj/item/food/soup/mystery
 	subcategory = CAT_SOUP
@@ -255,7 +255,7 @@
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/grown/onion = 1,
-		/obj/item/food/cheesewedge = 1,
+		/obj/item/food/cheese = 1,
 	)
 	result = /obj/item/food/soup/onion
 	subcategory = CAT_SOUP
@@ -304,4 +304,18 @@
 		/obj/item/reagent_containers/glass/bowl = 1
 	)
 	result = /obj/item/food/soup/peasoup
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/indian_curry
+	name = "Indian Chicken Curry"
+	reqs = list(
+		/obj/item/food/meat/slab/chicken = 1,
+		/obj/item/food/grown/onion = 2,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/butter = 1,
+		/obj/item/food/salad/boiledrice = 1,
+		/datum/reagent/consumable/cream = 5
+	)
+	result = /obj/item/food/soup/indian_curry
 	subcategory = CAT_SOUP

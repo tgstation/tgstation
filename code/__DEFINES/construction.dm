@@ -63,9 +63,6 @@
 //windows affected by Nar'Sie turn this color.
 #define NARSIE_WINDOW_COLOUR "#7D1919"
 
-//let's just pretend fulltile windows being children of border windows is fine
-#define FULLTILE_WINDOW_DIR NORTHEAST
-
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The maximum size of a stack object.
@@ -74,42 +71,43 @@
 #define MAXCOIL 30
 
 //tablecrafting defines
-#define CAT_NONE	""
-#define CAT_WEAPONRY	"Weaponry"
-#define CAT_WEAPON	"Weapons"
-#define CAT_AMMO	"Ammunition"
-#define CAT_ROBOT	"Robots"
-#define CAT_MISC	"Misc"
+#define CAT_NONE ""
+#define CAT_WEAPONRY "Weaponry"
+#define CAT_WEAPON "Weapons"
+#define CAT_AMMO "Ammunition"
+#define CAT_ROBOT "Robots"
+#define CAT_MISC "Misc"
 #define CAT_PRIMAL  "Tribal"
-#define CAT_CLOTHING	"Clothing"
-#define CAT_FOOD	"Foods"
-#define CAT_BREAD	"Breads"
-#define CAT_BURGER	"Burgers"
-#define CAT_CAKE	"Cakes"
-#define CAT_EGG	"Egg-Based Food"
-#define CAT_MEAT	"Meats"
-#define CAT_MISCFOOD	"Misc. Food"
-#define CAT_PASTRY	"Pastries"
-#define CAT_PIE	"Pies"
-#define CAT_PIZZA	"Pizzas"
-#define CAT_SALAD	"Salads"
-#define CAT_SANDWICH	"Sandwiches"
-#define CAT_SOUP	"Soups"
-#define CAT_SPAGHETTI	"Spaghettis"
-#define CAT_ICE	"Frozen"
+#define CAT_CLOTHING "Clothing"
+#define CAT_FOOD "Foods"
+#define CAT_BREAD "Breads"
+#define CAT_BURGER "Burgers"
+#define CAT_CAKE "Cakes"
+#define CAT_EGG "Egg-Based Food"
+#define CAT_MEAT "Meats"
+#define CAT_MISCFOOD "Misc. Food"
+#define CAT_PASTRY "Pastries"
+#define CAT_PIE "Pies"
+#define CAT_PIZZA "Pizzas"
+#define CAT_SALAD "Salads"
+#define CAT_SANDWICH "Sandwiches"
+#define CAT_SOUP "Soups"
+#define CAT_SPAGHETTI "Spaghettis"
+#define CAT_ICE "Frozen"
 #define CAT_DRINK "Drinks"
+#define CAT_CHEMISTRY "Chemistry"
 
-// these aren't even used as bitflags so who even knows why they are treated like them
-#define RCD_FLOORWALL (1<<0)
-#define RCD_AIRLOCK (1<<1)
-#define RCD_DECONSTRUCT (1<<2)
-#define RCD_WINDOWGRILLE (1<<3)
-#define RCD_MACHINE (1<<4)
-#define RCD_COMPUTER (1<<5)
-#define RCD_FURNISHING (1<<6)
+//rcd modes
+#define RCD_FLOORWALL 0
+#define RCD_AIRLOCK 1
+#define RCD_DECONSTRUCT 2
+#define RCD_WINDOWGRILLE 3
+#define RCD_MACHINE 4
+#define RCD_COMPUTER 5
+#define RCD_FURNISHING 6
 
 #define RCD_UPGRADE_FRAMES (1<<0)
-#define RCD_UPGRADE_SIMPLE_CIRCUITS	(1<<1)
+#define RCD_UPGRADE_SIMPLE_CIRCUITS (1<<1)
 #define RCD_UPGRADE_SILO_LINK (1<<2)
 #define RCD_UPGRADE_FURNISHING (1<<3)
 

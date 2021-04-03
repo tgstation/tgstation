@@ -402,7 +402,7 @@
 		return
 	var/m1 = "[key_name_admin(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_key] temporarily"]"
 	var/m2 = "[key_name(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_key] temporarily"]"
-	if(use_db || legacy_only)
+	if(use_db && !legacy_only)
 		var/rank_name = D.rank.name
 		var/old_flags
 		var/old_exclude_flags

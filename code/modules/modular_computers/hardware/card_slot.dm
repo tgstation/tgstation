@@ -1,17 +1,31 @@
 /obj/item/computer_hardware/card_slot
-	name = "primary RFID card module"	// \improper breaks the find_hardware_by_name proc
+	name = "primary RFID card module" // \improper breaks the find_hardware_by_name proc
 	desc = "A module allowing this computer to read or write data on ID cards. Necessary for some programs to run properly."
 	power_usage = 10 //W
 	icon_state = "card_mini"
 	w_class = WEIGHT_CLASS_TINY
 	device_type = MC_CARD
 
-	var/obj/item/card/id/stored_card = null
+	var/obj/item/card/id/stored_card
 
-/obj/item/computer_hardware/card_slot/handle_atom_del(atom/A)
+///What happens when the ID card is removed (or deleted) from the module, through try_eject() or not.
+/obj/item/computer_hardware/card_slot/Exited(atom/A, atom/newloc)
 	if(A == stored_card)
-		try_eject(null, TRUE)
-	. = ..()
+		stored_card = null
+		if(holder)
+			if(holder.active_program)
+				holder.active_program.event_idremoved(0)
+			for(var/p in holder.idle_threads)
+				var/datum/computer_file/program/computer_program = p
+				computer_program.event_idremoved(1)
+
+			holder.update_slot_icon()
+
+			if(ishuman(holder.loc))
+				var/mob/living/carbon/human/human_wearer = holder.loc
+				if(human_wearer.wear_id == holder)
+					human_wearer.sec_hud_set_ID()
+	return ..()
 
 /obj/item/computer_hardware/card_slot/Destroy()
 	try_eject(forced = TRUE)
@@ -47,6 +61,11 @@
 
 	if(stored_card)
 		return FALSE
+
+	// item instead of player is checked so telekinesis will still work if the item itself is close
+	if(!in_range(src, I))
+		return FALSE
+
 	if(user)
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
@@ -56,9 +75,13 @@
 	stored_card = I
 	to_chat(user, "<span class='notice'>You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.sec_hud_set_ID()
+
+	var/holder_loc = holder.loc
+	if(ishuman(holder_loc))
+		var/mob/living/carbon/human/human_wearer = holder_loc
+		if(human_wearer.wear_id == holder)
+			human_wearer.sec_hud_set_ID()
+	holder.update_slot_icon()
 
 	return TRUE
 
@@ -68,24 +91,14 @@
 		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
 		return FALSE
 
-	if(user)
+	if(user && !issilicon(user) && in_range(src, user))
 		user.put_in_hands(stored_card)
 	else
 		stored_card.forceMove(drop_location())
-	stored_card = null
 
-	if(holder)
-		if(holder.active_program)
-			holder.active_program.event_idremoved(0)
-
-		for(var/p in holder.idle_threads)
-			var/datum/computer_file/program/computer_program = p
-			computer_program.event_idremoved(1)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		human_user.sec_hud_set_ID()
 	to_chat(user, "<span class='notice'>You remove the card from \the [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+
 	return TRUE
 
 /obj/item/computer_hardware/card_slot/attackby(obj/item/I, mob/living/user)

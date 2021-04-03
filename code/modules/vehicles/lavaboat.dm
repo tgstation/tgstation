@@ -6,25 +6,23 @@
 	desc = "A boat used for traversing lava."
 	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	var/allowed_turf = /turf/open/lava
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	can_buckle = TRUE
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
+	key_type = /obj/item/oar
+	var/allowed_turf = /turf/open/lava
 
 /obj/vehicle/ridden/lavaboat/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.keytype = /obj/item/oar
-	D.allowed_turf_typecache = typecacheof(allowed_turf)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/lavaboat)
 
 /obj/item/oar
 	name = "oar"
+	desc = "Not to be confused with the kind Research hassles you for."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "oar"
 	inhand_icon_state = "oar"
 	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
-	desc = "Not to be confused with the kind Research hassles you for."
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
@@ -42,6 +40,19 @@
 	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
 	time = 50
 	category = CAT_PRIMAL
+
+/obj/vehicle/ridden/lavaboat/plasma
+	name = "plasma boat"
+	desc = "A boat used for traversing the streams of plasma without turning into an icecube."
+	icon_state = "goliath_boat"
+	icon = 'icons/obj/lavaland/dragonboat.dmi'
+	resistance_flags = FREEZE_PROOF
+	can_buckle = TRUE
+
+/datum/crafting_recipe/boat/plasma
+	name = "Polar Bear Hide Boat"
+	result = /obj/vehicle/ridden/lavaboat/plasma
+	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide = 3)
 
 //Dragon Boat
 
@@ -65,7 +76,4 @@
 
 /obj/vehicle/ridden/lavaboat/dragon/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 2), TEXT_SOUTH = list(1, 2), TEXT_EAST = list(1, 2), TEXT_WEST = list( 1, 2)))
-	D.keytype = null
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/lavaboat/dragonboat)

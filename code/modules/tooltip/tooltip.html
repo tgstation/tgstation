@@ -87,10 +87,8 @@
 	<div id="wrap" class="wrap">
 		<div id="content" class="content"></div>
 	</div>
+	<script type="text/javascript" src="jquery.min.js"></script>
 	<script type="text/javascript">
-		function eventOnMouseover() {
-			tooltip.hide();
-		};
 		var tooltip = {
 			'tileSize': 32,
 			'control': '',
@@ -208,18 +206,18 @@
 
 				//alert(mapWidth+' | '+mapHeight+' | '+tilesShown+' | '+realIconSize+' | '+leftOffset+' | '+topOffset+' | '+left+' | '+top+' | '+posX+' | '+posY); //DEBUG
 
-				document.getElementsByTagName("body").className = tooltip.theme;
-				var content = document.getElementById("content");
-				var wrap = document.getElementById("wrap");
+				$('body').attr('class', tooltip.theme);
 
-				content.removeEventListener("onmouseover", eventOnMouseover);
-				content.innerHTML = tooltip.text;
-				wrap.style = ''
-				wrap.style.width = (parseInt(wrap.width,10) + 2) + "px";//Dumb hack to fix a bizarre sizing bug
-				// 11/15/2020 - WarlockD, Note, I have no idea what sizing bug they are talking about here
+				var $content = $('#content'),
+					$wrap 	 = $('#wrap');
+				$wrap.attr('style', '');
+				$content.off('mouseover');
+				$content.html(tooltip.text);
 
-				var docWidth	=  wrap.offsetWidth;
-					docHeight	= wrap.offsetHeight;
+				$wrap.width($wrap.width() + 2); //Dumb hack to fix a bizarre sizing bug
+
+				var docWidth	= $wrap.outerWidth(),
+					docHeight	= $wrap.outerHeight();
 
 				if (posY + docHeight > map.size.y) { //Is the bottom edge below the window? Snap it up if so
 					posY = (posY - docHeight) - realIconSizeY - tooltip.padding;
@@ -228,11 +226,13 @@
 				//Actually size, move and show the tooltip box
 				window.location = 'byond://winset?id='+tooltip.control+';size='+docWidth+'x'+docHeight+';pos='+posX+','+posY+';is-visible=true';
 
-				content.addEventListener("onmouseover", eventOnMouseover);
+				$content.on('mouseover', function() {
+					tooltip.hide();
+				});
 			},
 			update: function(params, client_vw , clien_vh , text, theme, special) {
 				//Assign our global object
-				tooltip.params = JSON.parse(params);
+				tooltip.params = $.parseJSON(params);
 				tooltip.client_view_w = parseInt(client_vw);
 				tooltip.client_view_h = parseInt(clien_vh);
 				tooltip.text = text;

@@ -3,7 +3,7 @@
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	school = "transmutation"
 	charge_type = "recharge"
-	charge_max	= 150
+	charge_max = 150
 	charge_counter = 0
 	clothes_req = FALSE
 	stat_allowed = FALSE
@@ -16,7 +16,7 @@
 	active_msg = "You prepare to curse a target..."
 	deactive_msg = "You dispel the curse..."
 	/// List of mobs which are allowed to be a target of the spell
-	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/carbon/monkey))
+	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human))
 
 /obj/effect/proc_holder/spell/pointed/barnyardcurse/cast(list/targets, mob/user)
 	if(!targets.len)

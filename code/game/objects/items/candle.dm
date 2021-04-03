@@ -1,4 +1,4 @@
-#define CANDLE_LUMINOSITY	2
+#define CANDLE_LUMINOSITY 2
 /obj/item/candle
 	name = "red candle"
 	desc = "In Greek myth, Prometheus stole fire from the Gods and gave it to \
@@ -22,6 +22,7 @@
 
 /obj/item/candle/update_icon_state()
 	icon_state = "candle[(wax > 800) ? ((wax > 1500) ? 1 : 2) : 3][lit ? "_lit" : ""]"
+	return ..()
 
 /obj/item/candle/attackby(obj/item/W, mob/user, params)
 	var/msg = W.ignition_effect(src, user)
@@ -45,13 +46,13 @@
 			usr.visible_message(show_message)
 		set_light(CANDLE_LUMINOSITY)
 		START_PROCESSING(SSobj, src)
-		update_icon()
+		update_appearance()
 
 /obj/item/candle/proc/put_out_candle()
 	if(!lit)
 		return
 	lit = FALSE
-	update_icon()
+	update_appearance()
 	set_light(0)
 	return TRUE
 
@@ -67,7 +68,7 @@
 	if(wax <= 0)
 		new /obj/item/trash/candle(loc)
 		qdel(src)
-	update_icon()
+	update_appearance()
 	open_flame()
 
 /obj/item/candle/attack_self(mob/user)

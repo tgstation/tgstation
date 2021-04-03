@@ -20,6 +20,10 @@
 	ion_trail.auto_process = FALSE
 	ion_trail.set_up(src)
 
+/obj/item/tank/jetpack/Destroy()
+	QDEL_NULL(ion_trail)
+	return ..()
+
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)
 		air_contents.assert_gas(gas_type)
@@ -78,7 +82,7 @@
 		return
 	if(!isturf(user.loc))//You can't use jet in nowhere or from mecha/closet
 		return
-	if(!(user.is_flying() || user.is_floating()) || user.buckled)//You don't want use jet in gravity or while buckled.
+	if(!(user.movement_type & FLOATING) || user.buckled)//You don't want use jet in gravity or while buckled.
 		return
 	if(user.pulledby)//You don't must use jet if someone pull you
 		return

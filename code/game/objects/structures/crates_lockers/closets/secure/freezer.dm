@@ -10,21 +10,20 @@
 	. = ..()
 	recursive_organ_check(src)
 
-/obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = TRUE)
-	if(opened || !can_open(user, force))	//dupe check just so we don't let the organs decay when someone fails to open the locker
+/obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = FALSE)
+	if(opened || !can_open(user, force)) //dupe check just so we don't let the organs decay when someone fails to open the locker
 		return FALSE
 	recursive_organ_check(src)
 	return ..()
 
 /obj/structure/closet/secure_closet/freezer/close(mob/living/user)
-	if(..())	//if we actually closed the locker
+	if(..()) //if we actually closed the locker
 		recursive_organ_check(src)
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
-	if(!jones)
-		jones = TRUE
-	else
-		..()
+	if(jones)
+		return ..()
+	jones = TRUE
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen cabinet"
@@ -64,7 +63,7 @@
 		new /obj/item/food/meat/slab/monkey(src)
 
 /obj/structure/closet/secure_closet/freezer/meat/open
-	req_access = null
+	req_access = list()
 	locked = FALSE
 
 /obj/structure/closet/secure_closet/freezer/gulag_fridge

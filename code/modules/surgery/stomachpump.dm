@@ -7,7 +7,7 @@
 				/datum/surgery_step/stomach_pump,
 				/datum/surgery_step/close)
 
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = TRUE
 	ignore_clothes = FALSE

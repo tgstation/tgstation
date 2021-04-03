@@ -11,6 +11,7 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	mergeable_decal = FALSE
 	beauty = -50
+	clean_type = CLEAN_TYPE_BLOOD
 
 /obj/effect/decal/cleanable/robot_debris/Initialize()
 	. = ..()
@@ -44,7 +45,7 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/robot_debris/ex_act()
-	return
+	return FALSE
 
 /obj/effect/decal/cleanable/robot_debris/limb
 	icon_state = "gibarm"
@@ -67,6 +68,7 @@
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	beauty = -100
+	clean_type = CLEAN_TYPE_BLOOD
 
 /obj/effect/decal/cleanable/oil/Initialize()
 	. = ..()

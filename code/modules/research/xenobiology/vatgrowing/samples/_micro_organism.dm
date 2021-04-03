@@ -63,7 +63,7 @@
 		reagents.remove_reagent(i, REAGENTS_METABOLISM)
 
 	//Handle debuffing growth based on viruses here.
-	for(var/datum/micro_organism/cell_line/virus in biological_sample.micro_organisms)
+	for(var/datum/micro_organism/virus/active_virus in biological_sample.micro_organisms)
 		if(reagents.has_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM))
 			reagents.remove_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM)
 			continue //This virus is stopped, We have antiviral stuff
@@ -99,6 +99,7 @@
 	for(var/created_thing in resulting_atoms)
 		for(var/x in 1 to resulting_atoms[created_thing])
 			var/atom/thing = new created_thing(get_turf(vat))
+			ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")
 			vat.visible_message("<span class='nicegreen'>[thing] pops out of [vat]!</span>")
 
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done

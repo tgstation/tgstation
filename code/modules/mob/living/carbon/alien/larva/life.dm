@@ -1,13 +1,13 @@
 
 
-/mob/living/carbon/alien/larva/Life()
+/mob/living/carbon/alien/larva/Life(delta_time = SSMOBS_DT, times_fired)
 	if (notransform)
 		return
-	if(..() && !IS_IN_STASIS(src)) //not dead and not in stasis
-		// GROW!
-		if(amount_grown < max_grown)
-			amount_grown++
-			update_icons()
+	if(!..() || IS_IN_STASIS(src) || (amount_grown >= max_grown))
+		return // We're dead, in stasis, or already grown.
+	// GROW!
+	amount_grown = min(amount_grown + (0.5 * delta_time), max_grown)
+	update_icons()
 
 
 /mob/living/carbon/alien/larva/update_stat()

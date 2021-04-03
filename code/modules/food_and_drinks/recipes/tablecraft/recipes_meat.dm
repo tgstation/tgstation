@@ -57,7 +57,7 @@
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
 		/obj/item/food/grown/chili = 1,
-		/obj/item/food/carpmeat = 1
+		/obj/item/food/fishmeat/carp = 1
 	)
 	result = /obj/item/food/cubancarp
 	subcategory = CAT_MEAT
@@ -66,7 +66,7 @@
 	name = "Fish and chips"
 	reqs = list(
 		/obj/item/food/fries = 1,
-		/obj/item/food/carpmeat = 1
+		/obj/item/food/fishmeat = 1
 	)
 	result = /obj/item/food/fishandchips
 	subcategory = CAT_MEAT
@@ -76,7 +76,7 @@
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
 		/obj/item/food/bun = 1,
-		/obj/item/food/carpmeat = 1
+		/obj/item/food/fishmeat = 1
 	)
 	result = /obj/item/food/fishfingers
 	subcategory = CAT_MEAT
@@ -86,7 +86,7 @@
 	reqs = list(
 		/obj/item/food/grown/corn = 1,
 		/obj/item/food/grown/peas = 1,
-		/obj/item/food/carpmeat = 1
+		/obj/item/food/fishmeat = 1
 	)
 	result = /obj/item/food/fishfry
 	subcategory = CAT_MEAT
@@ -96,7 +96,7 @@
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/food/spidereggs = 1,
-		/obj/item/food/carpmeat = 1
+		/obj/item/food/fishmeat = 1
 	)
 	result = /obj/item/food/sashimi
 	subcategory = CAT_MEAT
@@ -131,7 +131,7 @@
 		/datum/reagent/consumable/ethanol/manly_dorf = 5,
 		/obj/item/food/meat/steak/bear = 1,
 	)
-	tools = list(/obj/item/lighter)
+	tool_paths = list(/obj/item/lighter)
 	result = /obj/item/food/bearsteak
 	subcategory = CAT_MEAT
 
@@ -156,12 +156,12 @@
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/sausage
-	name = "Sausage"
+	name = "Raw sausage"
 	reqs = list(
-		/obj/item/food/meatball = 1,
-		/obj/item/food/meat/cutlet = 2
+		/obj/item/food/raw_meatball = 1,
+		/obj/item/food/meat/rawcutlet = 2
 	)
-	result = /obj/item/food/sausage
+	result = /obj/item/food/raw_sausage
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/nugget
@@ -196,7 +196,7 @@
 	name = "Rat Kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/reagent_containers/food/snacks/deadmouse = 1
+		/obj/item/food/deadmouse = 1
 	)
 	result = /obj/item/food/kebab/rat
 	subcategory = CAT_MEAT
@@ -205,7 +205,7 @@
 	name = "Double Rat Kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/reagent_containers/food/snacks/deadmouse = 2
+		/obj/item/food/deadmouse = 2
 	)
 	result = /obj/item/food/kebab/rat/double
 	subcategory = CAT_MEAT
@@ -243,7 +243,7 @@
 	reqs = list(
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/grown/tomato = 1,
-		/obj/item/food/cheesewedge = 2,
+		/obj/item/food/cheese = 2,
 		/obj/item/food/spaghetti = 1
 	)
 	result = /obj/item/food/lasagna
@@ -269,4 +269,48 @@
 		/datum/reagent/consumable/corn_starch = 5,
 	)
 	result = /obj/item/food/fried_chicken
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/beef_stroganoff
+	name = "Beef Stroganoff"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/consumable/milk = 5,
+		/datum/reagent/consumable/salt = 5,
+		/datum/reagent/consumable/blackpepper = 5,
+		/obj/item/food/grown/mushroom = 2,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/meat/steak = 1,
+	)
+	result = /obj/item/food/beef_stroganoff
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/beef_wellington
+	name = "Beef Wellington"
+	reqs = list(
+		/obj/item/food/meat/steak = 1,
+		/obj/item/food/grown/mushroom = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/flatdough = 1,
+		/datum/reagent/consumable/cream = 5,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/beef_wellington
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/full_english
+	name = "Full English Breakfast"
+	reqs = list(
+		/obj/item/food/sausage = 1,
+		/obj/item/food/friedegg = 2,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/grown/mushroom = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/canned/beans = 1,
+		/obj/item/food/butteredtoast = 1
+	)
+	result = /obj/item/food/full_english
 	subcategory = CAT_MEAT

@@ -103,13 +103,13 @@
 /datum/brain_trauma/severe/paralysis/on_gain()
 	..()
 	for(var/X in paralysis_traits)
-		ADD_TRAIT(owner, X, "trauma_paralysis")
+		ADD_TRAIT(owner, X, TRAUMA_TRAIT)
 
 
 /datum/brain_trauma/severe/paralysis/on_lose()
 	..()
 	for(var/X in paralysis_traits)
-		REMOVE_TRAIT(owner, X, "trauma_paralysis")
+		REMOVE_TRAIT(owner, X, TRAUMA_TRAIT)
 
 
 /datum/brain_trauma/severe/paralysis/paraplegic
@@ -124,7 +124,7 @@
 	gain_text = "<span class='warning'>You have a constant feeling of drowsiness...</span>"
 	lose_text = "<span class='notice'>You feel awake and aware again.</span>"
 
-/datum/brain_trauma/severe/narcolepsy/on_life()
+/datum/brain_trauma/severe/narcolepsy/on_life(delta_time, times_fired)
 	..()
 	if(owner.IsSleeping())
 		return
@@ -133,10 +133,10 @@
 		sleep_chance += 2
 	if(owner.drowsyness)
 		sleep_chance += 3
-	if(prob(sleep_chance))
+	if(DT_PROB(0.5 * sleep_chance, delta_time))
 		to_chat(owner, "<span class='warning'>You fall asleep.</span>")
 		owner.Sleeping(60)
-	else if(!owner.drowsyness && prob(sleep_chance * 2))
+	else if(!owner.drowsyness && DT_PROB(sleep_chance, delta_time))
 		to_chat(owner, "<span class='warning'>You feel tired...</span>")
 		owner.drowsyness += 10
 
@@ -155,14 +155,14 @@
 	else
 		to_chat(owner, "<span class='notice'>You feel safe, as long as you have people around you.</span>")
 
-/datum/brain_trauma/severe/monophobia/on_life()
+/datum/brain_trauma/severe/monophobia/on_life(delta_time, times_fired)
 	..()
 	if(check_alone())
 		stress = min(stress + 0.5, 100)
-		if(stress > 10 && (prob(5)))
+		if(stress > 10 && DT_PROB(2.5, delta_time))
 			stress_reaction()
 	else
-		stress = max(stress - 4, 0)
+		stress = max(stress - (2 * delta_time), 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
 	if(owner.is_blind())
@@ -227,11 +227,11 @@
 	lose_text = "<span class='notice'>You feel in control of your hands again.</span>"
 
 /datum/brain_trauma/severe/discoordination/on_gain()
-	ADD_TRAIT(owner, TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/discoordination/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_MONKEYLIKE, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/severe/pacifism
@@ -260,9 +260,9 @@
 	..()
 	owner.remove_status_effect(/datum/status_effect/trance)
 
-/datum/brain_trauma/severe/hypnotic_stupor/on_life()
+/datum/brain_trauma/severe/hypnotic_stupor/on_life(delta_time, times_fired)
 	..()
-	if(prob(1) && !owner.has_status_effect(/datum/status_effect/trance))
+	if(DT_PROB(0.5, delta_time) && !owner.has_status_effect(/datum/status_effect/trance))
 		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
 
 /datum/brain_trauma/severe/hypnotic_trigger

@@ -87,6 +87,7 @@ Run `.\bin\tgui.bat` with any of the options listed below.
 doing development on IE8).
 - `bin/tgui --lint` - Show problems with the code.
 - `bin/tgui --fix` - Auto-fix problems with the code.
+- `bin/tgui --test` - Run tests.
 - `bin/tgui --analyze` - Run a bundle analyzer.
 - `bin/tgui --clean` - Clean up project repo.
 - `bin/tgui [webpack options]` - Build the project with custom webpack
@@ -125,6 +126,17 @@ variable, with a full path to BYOND cache.
 ```
 BYOND_CACHE="E:/Libraries/Documents/BYOND/cache"
 ```
+
+**Webpack errors out with some cryptic messages!**
+
+> Example: `No template for dependency: PureExpressionDependency`
+
+Webpack stores its cache on disk since tgui 4.3, and it is very sensitive
+to build configuration. So if you update webpack, or share the same cache
+directory between development and production build, it will start
+hallucinating.
+
+To fix this kind of problem, run `bin/tgui --clean` and try again.
 
 ## Developer Tools
 

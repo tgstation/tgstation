@@ -22,7 +22,7 @@
 
 /datum/element/dryable/proc/finish_drying(atom/source)
 	var/atom/dried_atom = source
-	if(!dry_result)//if the dried type is not set, don't bother creating a whole new item, just re-color it.
+	if(dry_result == dried_atom.type)//if the dried type is the same as our currrent state, don't bother creating a whole new item, just re-color it.
 		var/atom/movable/resulting_atom = dried_atom
 		resulting_atom.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
 		ADD_TRAIT(resulting_atom, TRAIT_DRIED, ELEMENT_TRAIT)
@@ -30,7 +30,7 @@
 		return
 
 	else if(istype(source, /obj/item/stack)) //Check if its a sheet
-		var/obj/item/stack/itemstack
+		var/obj/item/stack/itemstack = dried_atom
 		for(var/i in 1 to itemstack.amount)
 			var/atom/movable/resulting_atom = new dry_result(source.drop_location())
 			ADD_TRAIT(resulting_atom, TRAIT_DRIED, ELEMENT_TRAIT)

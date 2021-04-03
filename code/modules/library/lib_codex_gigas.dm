@@ -1,9 +1,3 @@
-#define PRE_TITLE 1
-#define TITLE 2
-#define SYLLABLE 3
-#define MULTIPLE_SYLLABLE 4
-#define SUFFIX 5
-
 /obj/item/book/codex_gigas
 	name = "\improper Codex Gigas"
 	desc = "A book documenting the nature of devils."

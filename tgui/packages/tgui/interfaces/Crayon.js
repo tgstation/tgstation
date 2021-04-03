@@ -9,8 +9,7 @@ export const Crayon = (props, context) => {
   return (
     <Window
       width={600}
-      height={600}
-      resizable>
+      height={600}>
       <Window.Content scrollable>
         {!!capOrChanges && (
           <Section title="Basic">

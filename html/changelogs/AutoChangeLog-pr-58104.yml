@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "fixes lone carpets smoothing"
+  - imageadd: "adds back star carpets and symbol carpets"

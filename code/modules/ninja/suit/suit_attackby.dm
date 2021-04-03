@@ -11,9 +11,9 @@
 
 	else if(istype(I, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/CELL = I
-		if(CELL.maxcharge > cell.maxcharge && n_gloves?.candrain)
+		if(CELL.maxcharge > cell.maxcharge)
 			to_chat(ninja, "<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>")
-			if (n_gloves?.candrain && do_after(ninja,s_delay, target = src))
+			if (do_after(ninja,s_delay, target = src))
 				ninja.transferItemToLoc(CELL, src)
 				CELL.charge = min(CELL.charge+cell.charge, CELL.maxcharge)
 				var/obj/item/stock_parts/cell/old_cell = cell
@@ -21,7 +21,7 @@
 				ninja.put_in_hands(old_cell)
 				old_cell.add_fingerprint(ninja)
 				old_cell.corrupt()
-				old_cell.update_icon()
+				old_cell.update_appearance()
 				cell = CELL
 				to_chat(ninja, "<span class='notice'>Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%</span>")
 			else

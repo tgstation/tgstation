@@ -1,5 +1,5 @@
 /datum/bounty/item/slime
-	reward = 3000
+	reward = CARGO_CRATE_VALUE * 6
 
 /datum/bounty/item/slime/New()
 	..()

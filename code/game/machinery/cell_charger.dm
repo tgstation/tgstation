@@ -21,7 +21,7 @@
 	. += image(charging.icon, charging.icon_state)
 	. += "ccharger-on"
 	if(!(machine_stat & (BROKEN|NOPOWER)))
-		var/newlevel = 	round(charging.percent() * 4 / 100)
+		var/newlevel = round(charging.percent() * 4 / 100)
 		. += "ccharger-o[newlevel]"
 
 /obj/machinery/cell_charger/examine(mob/user)
@@ -55,7 +55,7 @@
 
 			charging = W
 			user.visible_message("<span class='notice'>[user] inserts a cell into [src].</span>", "<span class='notice'>You insert a cell into [src].</span>")
-			update_icon()
+			update_appearance()
 	else
 		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
 			return
@@ -75,11 +75,11 @@
 	return ..()
 
 /obj/machinery/cell_charger/proc/removecell()
-	charging.update_icon()
+	charging.update_appearance()
 	charging = null
-	update_icon()
+	update_appearance()
 
-/obj/machinery/cell_charger/attack_hand(mob/user)
+/obj/machinery/cell_charger/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -135,4 +135,4 @@
 	charging.give(main_draw)
 	use_power(charge_rate / 100) //use a small bit for the charger itself, but power usage scales up with the part tier
 
-	update_icon()
+	update_appearance()

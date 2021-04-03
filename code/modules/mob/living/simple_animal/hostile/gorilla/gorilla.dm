@@ -32,7 +32,6 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)
-	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
 	faction = list("jungle")
 	robust_searching = TRUE
 	stat_attack = HARD_CRIT
@@ -80,7 +79,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/CanAttack(atom/the_target)
 	var/list/parts = target_bodyparts(target)
-	return ..() && !istype(the_target, /mob/living/carbon/monkey) && (!parts  || parts.len > 3)
+	return ..() && !ismonkey(the_target) && (!parts  || parts.len > 3)
 
 
 /mob/living/simple_animal/hostile/gorilla/CanSmashTurfs(turf/T)

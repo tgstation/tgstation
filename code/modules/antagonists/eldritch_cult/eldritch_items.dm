@@ -103,7 +103,9 @@
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
+
+	var/datum/antagonist/heretic/cultie = user.mind?.has_antag_datum(/datum/antagonist/heretic)
+
 	if(!cultie)
 		return
 	var/list/knowledge = cultie.get_all_knowledge()
@@ -167,7 +169,7 @@
 	name = "ominous hood"
 	icon_state = "eldritch"
 	desc = "A torn, dust-caked hood. Strange eyes line the inside."
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flash_protect = FLASH_PROTECTION_WELDER
 
@@ -212,21 +214,24 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
 	alternative_mode = TRUE
 
-/obj/item/clothing/suit/hooded/cultrobes/void/ToggleHood()
+/obj/item/clothing/suit/hooded/cultrobes/void/RemoveHood()
+	var/mob/living/carbon/carbon_user = loc
+	to_chat(carbon_user,"<span class='notice'>The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!</span>")
+	item_flags &= ~EXAMINE_SKIP
+	return ..()
+
+/obj/item/clothing/suit/hooded/cultrobes/void/MakeHood()
 	if(!iscarbon(loc))
-		return
+		CRASH("[src] attempted to make a hood on a non-carbon thing: [loc]")
+
 	var/mob/living/carbon/carbon_user = loc
 	if(IS_HERETIC(carbon_user) || IS_HERETIC_MONSTER(carbon_user))
 		. = ..()
-		//We need to account for the hood shenanigans, and that way we can make sure items always fit, even if one of the slots is used by the fucking hood.
-		if(suittoggled)
-			to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
-		else
-			to_chat(carbon_user,"<span class='notice'>The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!</span>")
-		item_flags = suittoggled ? EXAMINE_SKIP : ~EXAMINE_SKIP
-	else
-		to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")
+		to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
+		item_flags |= EXAMINE_SKIP
+		return
 
+	to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")
 
 /obj/item/clothing/mask/void_mask
 	name = "Abyssal Mask"
@@ -236,7 +241,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	///Who is wearing this
 	var/mob/living/carbon/human/local_user
 
@@ -284,7 +289,7 @@
 		if(DT_PROB(25,delta_time))
 			human_in_range.Dizzy(5)
 
-/obj/item/melee/rune_knife
+/obj/item/melee/rune_carver
 	name = "Carving Knife"
 	desc = "Cold Steel, pure, perfect, this knife can carve the floor in many ways, but only few can evoke the dangers that lurk beneath reality."
 	icon = 'icons/obj/eldritch.dmi'
@@ -294,7 +299,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	wound_bonus = 20
 	force = 10
-	throwforce = 5
+	throwforce = 20
+	embedding = list(embed_chance=75, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=15)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
@@ -309,40 +315,44 @@
 	///Linked action
 	var/datum/action/innate/rune_shatter/linked_action
 
-/obj/item/melee/rune_knife/examine(mob/user)
+/obj/item/melee/rune_carver/examine(mob/user)
 	. = ..()
 	. += "This item can carve 'Alert carving' - nearly invisible rune that when stepped on gives you a prompt about where someone stood on it and who it was, doesn't get destroyed by being stepped on."
 	. += "This item can carve 'Grasping carving' - when stepped on it causes heavy damage to the legs and stuns for 5 seconds."
 	. += "This item can carve 'Mad carving' - when stepped on it causes dizzyness, jiterryness, temporary blindness, confusion , stuttering and slurring."
 
-/obj/item/melee/rune_knife/Initialize()
+/obj/item/melee/rune_carver/Initialize()
 	. = ..()
 	linked_action = new(src)
 
-/obj/item/melee/rune_knife/pickup(mob/user)
+/obj/item/melee/rune_carver/Destroy()
+	. = ..()
+	QDEL_NULL(linked_action)
+
+/obj/item/melee/rune_carver/pickup(mob/user)
 	. = ..()
 	linked_action.Grant(user, src)
 
-/obj/item/melee/rune_knife/dropped(mob/user, silent)
+/obj/item/melee/rune_carver/dropped(mob/user, silent)
 	. = ..()
 	linked_action.Remove(user, src)
 
-/obj/item/melee/rune_knife/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/melee/rune_carver/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!is_type_in_typecache(target,blacklisted_turfs) && !drawing && proximity_flag)
+	if(isturf(target) && !is_type_in_typecache(target,blacklisted_turfs) && !drawing && proximity_flag)
 		carve_rune(target,user,proximity_flag,click_parameters)
 
 ///Action of carving runes, gives you the ability to click on floor and choose a rune of your need.
-/obj/item/melee/rune_knife/proc/carve_rune(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/melee/rune_carver/proc/carve_rune(atom/target, mob/user, proximity_flag, click_parameters)
 	var/obj/structure/trap/eldritch/elder = locate() in range(1,target)
 	if(elder)
 		to_chat(user,"<span class='notice'>You can't draw runes that close to each other!</span>")
 		return
 
-	for(var/X in current_runes)
-		var/obj/structure/trap/eldritch/eldritch = X
-		if(QDELETED(eldritch) || !eldritch)
-			current_runes -= eldritch
+	for(var/_rune_ref in current_runes)
+		var/datum/weakref/rune_ref = _rune_ref
+		if(!rune_ref.resolve())
+			current_runes -= rune_ref
 
 	if(current_runes.len >= max_rune_amt)
 		to_chat(user,"<span class='notice'>The blade cannot support more runes!</span>")
@@ -369,7 +379,7 @@
 	drawing = FALSE
 	var/obj/structure/trap/eldritch/eldritch = new type(target)
 	eldritch.set_owner(user)
-	current_runes += eldritch
+	current_runes += WEAKREF(eldritch)
 
 /datum/action/innate/rune_shatter
 	name = "Rune break"
@@ -379,17 +389,17 @@
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 	///Reference to the rune knife it is inside of
-	var/obj/item/melee/rune_knife/sword
+	var/obj/item/melee/rune_carver/sword
 
 /datum/action/innate/rune_shatter/Grant(mob/user, obj/object)
 	sword = object
 	return ..()
 
 /datum/action/innate/rune_shatter/Activate()
-	for(var/X in sword.current_runes)
-		var/obj/structure/trap/eldritch/eldritch = X
-		if(!QDELETED(eldritch) && eldritch)
-			qdel(eldritch)
+	for(var/_rune_ref in sword.current_runes)
+		var/datum/weakref/rune_ref = _rune_ref
+		qdel(rune_ref.resolve())
+	sword.current_runes.Cut()
 
 /obj/item/eldritch_potion
 	name = "Brew of Day and Night"

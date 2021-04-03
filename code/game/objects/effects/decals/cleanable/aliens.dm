@@ -9,6 +9,7 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	blood_state = BLOOD_STATE_XENO
 	beauty = -250
+	clean_type = CLEAN_TYPE_BLOOD
 
 /obj/effect/decal/cleanable/xenoblood/Initialize()
 	. = ..()
@@ -53,7 +54,7 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
-	return
+	return FALSE
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/up
 	icon_state = "xgibup1"

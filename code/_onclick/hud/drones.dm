@@ -6,7 +6,7 @@
 	inv_box.name = "internal storage"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suit_storage"
-//	inv_box.icon_full = "template"
+// inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_drone_storage
 	inv_box.slot_id = ITEM_SLOT_DEX_STORAGE
 	inv_box.hud = src
@@ -16,7 +16,7 @@
 	inv_box.name = "head/mask"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
-//	inv_box.icon_full = "template"
+// inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_drone_head
 	inv_box.slot_id = ITEM_SLOT_HEAD
 	inv_box.hud = src
@@ -26,7 +26,7 @@
 		if(inv.slot_id)
 			inv.hud = src
 			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_icon()
+			inv.update_appearance()
 
 
 /datum/hud/dextrous/drone/persistent_inventory_update()

@@ -272,7 +272,7 @@
 	)
 	result = /obj/item/food/donut/jelly/slimejelly/laugh
 
-////////////////////////////////////////////////WAFFLES AND PANCAKES////////////////////////////////////////////////
+////////////////////////////////////////////////WAFFLES////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/waffles
 	time = 15
@@ -311,33 +311,6 @@
 	)
 	result = /obj/item/food/rofflewaffles
 	subcategory = CAT_PASTRY
-
-/datum/crafting_recipe/food/pancakes
-	name = "Pancake"
-	reqs = list(
-		/obj/item/food/pastrybase = 1
-	)
-	result = /obj/item/food/pancakes
-	subcategory = CAT_PASTRY
-
-/datum/crafting_recipe/food/bbpancakes
-	name = "Blueberry pancake"
-	reqs = list(
-		/obj/item/food/pastrybase = 1,
-		/obj/item/food/grown/berries = 1
-	)
-	result = /obj/item/food/pancakes/blueberry
-	subcategory = CAT_PASTRY
-
-/datum/crafting_recipe/food/ccpancakes
-	name = "Chocolate chip pancake"
-	reqs = list(
-		/obj/item/food/pastrybase = 1,
-		/obj/item/food/chocolatebar = 1
-	)
-	result = /obj/item/food/pancakes/chocolatechip
-	subcategory = CAT_PASTRY
-
 
 ////////////////////////////////////////////////DONKPOCCKETS////////////////////////////////////////////////
 
@@ -421,7 +394,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/datum/reagent/tranquility = 5
+		/datum/reagent/gondola_mutation_toxin = 5
 	)
 	result = /obj/item/food/donkpocket/gondola
 	subcategory = CAT_PASTRY
@@ -459,16 +432,6 @@
 	result = /obj/item/food/muffin/booberry
 	subcategory = CAT_PASTRY
 
-/datum/crafting_recipe/food/chawanmushi
-	name = "Chawanmushi"
-	reqs = list(
-		/datum/reagent/water = 5,
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/food/boiledegg = 2,
-		/obj/item/food/grown/mushroom/chanterelle = 1
-	)
-	result = /obj/item/food/chawanmushi
-	subcategory = CAT_PASTRY
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
@@ -497,7 +460,7 @@
 	name = "Khachapuri"
 	reqs = list(
 		/datum/reagent/consumable/eggyolk = 5,
-		/obj/item/food/cheesewedge = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/food/khachapuri
@@ -510,7 +473,7 @@
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/food/pastrybase = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/sugarcookie
+	result = /obj/item/food/cookie/sugar
 	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/fortunecookie
@@ -520,7 +483,7 @@
 		/obj/item/food/pastrybase = 1,
 		/obj/item/paper = 1
 	)
-	parts =	list(
+	parts = list(
 		/obj/item/paper = 1
 	)
 	result = /obj/item/food/fortunecookie

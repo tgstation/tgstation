@@ -31,7 +31,7 @@
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
 	var/engraved = FALSE
 
-/obj/structure/plaque/attack_hand(mob/user)
+/obj/structure/plaque/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(. || user.is_blind())
 		return
@@ -60,7 +60,7 @@
 
 /obj/structure/plaque/welder_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return FALSE
 	if(obj_integrity == max_integrity)
 		to_chat(user, "<span class='warning'>This plaque is already in perfect condition.</span>")
@@ -78,7 +78,7 @@
 
 /obj/item/plaque/welder_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return FALSE
 	if(obj_integrity == max_integrity)
 		to_chat(user, "<span class='warning'>This plaque is already in perfect condition.</span>")

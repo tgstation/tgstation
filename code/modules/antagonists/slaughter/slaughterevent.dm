@@ -5,6 +5,7 @@
 	max_occurrences = 1
 	earliest_start = 1 HOURS
 	min_players = 20
+	dynamic_should_hijack = TRUE
 
 
 

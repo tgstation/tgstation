@@ -35,7 +35,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 0
 	screen_loc = "12,1"
-	layer = SPLASHSCREEN_LAYER
+	plane = SPLASHSCREEN_PLANE
 	var/client/parent
 	var/matrix/target
 
@@ -44,7 +44,7 @@
 	icon = I
 	parent = P
 	icon_state = credited
-	maptext = credited
+	maptext = MAPTEXT(credited)
 	maptext_x = world.icon_size + 8
 	maptext_y = (world.icon_size / 2) - 4
 	maptext_width = world.icon_size * 3

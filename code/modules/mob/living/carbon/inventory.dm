@@ -45,7 +45,6 @@
 			if(observe.client)
 				observe.client.screen -= I
 	I.forceMove(src)
-	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
@@ -168,8 +167,8 @@
 	if(istype(receiving, /obj/item/slapper))
 		offer_high_five(receiving)
 		return
-	visible_message("<span class='notice'>[src] is offering [receiving]</span>", \
-					"<span class='notice'>You offer [receiving]</span>", null, 2)
+	visible_message("<span class='notice'>[src] is offering [receiving].</span>", \
+					"<span class='notice'>You offer [receiving].</span>", null, 2)
 	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
 		if(!CanReach(C))
 			continue

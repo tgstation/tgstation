@@ -7,6 +7,10 @@
 	density = FALSE
 	max_integrity = 15
 
+/obj/structure/spider/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
@@ -20,9 +24,11 @@
 				damage_amount *= 0.25
 	. = ..()
 
-/obj/structure/spider/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+/obj/structure/spider/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 300
+
+/obj/structure/spider/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
 	var/genetic = FALSE
@@ -90,18 +96,24 @@
 	pixel_x = base_pixel_x + rand(3,-3)
 	pixel_y = base_pixel_y + rand(3,-3)
 	START_PROCESSING(SSobj, src)
-	. = ..()
-	GLOB.poi_list |= src
-
-/obj/structure/spider/eggcluster/Destroy()
-	. = ..()
-	GLOB.poi_list.Remove(src)
+	AddElement(/datum/element/point_of_interest)
+	return ..()
 
 /obj/structure/spider/eggcluster/process(delta_time)
 	amount_grown += rand(0,1) * delta_time
 	if(amount_grown >= 100 && !ghost_ready)
 		notify_ghosts("[src] is ready to hatch!", null, enter_link="<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source=src, action=NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPIDER)
 		ghost_ready = TRUE
+
+/obj/structure/spider/eggcluster/Topic(href, href_list)
+	. = ..()
+	if(.)
+		return
+	if(href_list["activate"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			ghost.ManualFollow(src)
+			attack_ghost(ghost)
 
 /obj/structure/spider/eggcluster/attack_ghost(mob/user)
 	. = ..()
@@ -119,12 +131,17 @@
 	var/list/spider_list = list()
 	var/list/display_spiders = list()
 	for(var/choice in potentialspawns)
-		var/mob/living/simple_animal/spider = choice
+		var/mob/living/simple_animal/hostile/poison/giant_spider/spider = choice
 		spider_list[initial(spider.name)] = choice
-		var/image/spider_image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
-		display_spiders += list(initial(spider.name) = spider_image)
+
+		var/datum/radial_menu_choice/option = new
+		option.image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
+		option.info = "<span class='boldnotice'>[initial(spider.menu_description)]</span>"
+
+		display_spiders[initial(spider.name)] = option
+
 	sortList(display_spiders)
-	var/chosen_spider = show_radial_menu(user, src, display_spiders, radius = 38, require_near = TRUE)
+	var/chosen_spider = show_radial_menu(user, src, display_spiders, radius = 38)
 	chosen_spider = spider_list[chosen_spider]
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
 		return FALSE

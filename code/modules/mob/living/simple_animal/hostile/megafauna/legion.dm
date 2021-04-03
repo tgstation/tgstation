@@ -28,6 +28,7 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("echoes")
 	armour_penetration = 50
 	melee_damage_lower = 25
@@ -388,7 +389,7 @@
 	muzzle_type = /obj/effect/projectile/tracer/legion
 	impact_type = /obj/effect/projectile/tracer/legion
 	hitscan = TRUE
-	movement_type = UNSTOPPABLE
+	projectile_piercing = ALL
 
 ///Used for the legion turret tracer.
 /obj/effect/projectile/tracer/legion/tracer
