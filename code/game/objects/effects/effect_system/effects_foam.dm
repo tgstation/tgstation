@@ -31,8 +31,8 @@
 	slippery_foam = FALSE
 	var/absorbed_plasma = 0
 
-/obj/effect/particle_effect/foam/firefighting/ComponentInitialize()
-	..()
+/obj/effect/particle_effect/foam/firefighting/Initialize(mapload)
+	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive)
 
 /obj/effect/particle_effect/foam/firefighting/process()
@@ -89,15 +89,12 @@
 /obj/effect/particle_effect/foam/long_life
 	lifetime = 150
 
-/obj/effect/particle_effect/foam/Initialize()
+/obj/effect/particle_effect/foam/Initialize(mapload)
 	. = ..()
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //limited by the size of the reagent holder anyway. Works without instant possibly edit in future
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
-
-/obj/effect/particle_effect/foam/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/effect/particle_effect/foam/ComponentInitialize()
 	. = ..()

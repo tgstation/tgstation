@@ -357,6 +357,7 @@
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()
@@ -371,10 +372,6 @@
 			if(prob(5))
 				break_light_tube(1)
 	addtimer(CALLBACK(src, .proc/update, 0), 1)
-
-/obj/machinery/light/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)

@@ -173,7 +173,7 @@
 /obj/item/radio/mech //this has to go somewhere
 	subspace_transmission = TRUE
 
-/obj/vehicle/sealed/mecha/Initialize()
+/obj/vehicle/sealed/mecha/Initialize(mapload)
 	. = ..()
 	if(enclosed)
 		internal_tank = new (src)
@@ -212,9 +212,7 @@
 	diag_hud_set_mechstat()
 	update_appearance()
 
-/obj/mecha/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
