@@ -137,6 +137,14 @@
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
 
+// defines for AFK theft
+/// How many messages you can remember while logged out before you stop remembering new ones
+#define AFK_THEFT_MAX_MESSAGES 10
+/// The part of the list with the text
+#define AFK_THEFT_MESSAGE 1
+/// The part of the list with the time it happened
+#define AFK_THEFT_TIME 2
+
 //Allowed equipment lists for security vests and hardsuits.
 
 GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(

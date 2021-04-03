@@ -96,11 +96,13 @@
 				"<span class='notice'>[user] tries to put [equipping] on you.</span>",
 				ignored_mobs = user,
 			)
+
 		if(ishuman(source))
 			var/mob/living/carbon/human/victim_human = source
-			if(victim_human.key && !victim_human.client && LAZYLEN(victim_human.afk_thefts) < 10) // the person has a player who isn't currently present, and has less than 10 messages
-				var/list/new_entry = list("[user] tried equipping you with [equipping]", world.time)
-				LAZYADD(victim_human.afk_thefts, new_entry)
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list("[user] tried equipping you with [equipping]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
 
 	to_chat(user, "<span class='notice'>You try to put [equipping] on [source]...</span>")
 
@@ -152,9 +154,10 @@
 
 	if(ishuman(source))
 		var/mob/living/carbon/human/victim_human = source
-		if(victim_human.key && !victim_human.client && LAZYLEN(victim_human.afk_thefts) < 10) // the person has a player who isn't currently present, and has less than 10 messages
-			var/list/new_entry = list("[user] tried unequipping your [item]", world.time)
-			LAZYADD(victim_human.afk_thefts, new_entry)
+		if(victim_human.key && !victim_human.client) // AKA braindead
+			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+				var/list/new_entry = list(list("[user] tried unequipping your [item]", world.time))
+				LAZYADD(victim_human.afk_thefts, new_entry)
 
 	return TRUE
 
