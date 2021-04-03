@@ -263,7 +263,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(!light_mask)
 		return
 	if(!(machine_stat & BROKEN) && powered())
-		. += mutable_appearance(icon, light_mask, 0, EMISSIVE_PLANE)
+		. += emissive_appearance(icon, light_mask)
 
 /obj/machinery/vending/obj_break(damage_flag)
 	. = ..()
