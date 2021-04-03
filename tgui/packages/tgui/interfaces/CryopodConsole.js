@@ -14,9 +14,9 @@ import { logger } from '../logging';
 
 export const CryopodConsole = (props, context) => {
   const { data } = useBackend(context);
-  const { user_name, allow_items } = data;
+  const { account_name, allow_items } = data;
 
-  let welcomeTitle = `Hello, ${user_name || '[REDACTED]'}`;
+  let welcomeTitle = `Hello, ${account_name || '[REDACTED]'}!`;
 
   return (
     <Window resizable title="Cryopod Console" width={400} height={500}>
@@ -41,13 +41,13 @@ const CrewList = (props, context) => {
   return (
     <Collapsible title="Stored Crew">
       {!frozen_crew.length ? (
-        <NoticeBox>No stored crew</NoticeBox>
+        <NoticeBox>No stored crew!</NoticeBox>
       ) : (
         <Section height={10} fill scrollable>
           <LabeledList>
-            {frozen_crew.map((person) => (
-              <LabeledList.Item key={person} label={person}>
-                <Box color="green">STABLE</Box>
+            {frozen_crew.map((person, index) => (
+              <LabeledList.Item key={person} label={person.name}>
+                {person.job}
               </LabeledList.Item>
             ))}
           </LabeledList>

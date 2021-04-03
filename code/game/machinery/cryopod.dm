@@ -36,8 +36,12 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	GLOB.cryopod_computers -= src
 	..()
 
-/obj/machinery/computer/cryopod/attack_ai()
-	attack_hand()
+/obj/machinery/computer/cryopod/update_icon_state()
+	if(machine_stat & (NOPOWER|BROKEN))
+		icon_state = "cellconsole"
+		return ..()
+	icon_state = "cellconsole_1"
+	return ..()
 
 /obj/machinery/computer/cryopod/ui_interact(mob/user, datum/tgui/ui)
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -50,7 +54,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		ui = new(user, src, "CryopodConsole", name)
 		ui.open()
 
-/obj/machinery/computer/cryopod/ui_data()
+/obj/machinery/computer/cryopod/ui_data(mob/user)
 	var/list/data = list()
 	data["allow_items"] = allow_items
 	data["frozen_crew"] = frozen_crew
@@ -58,6 +62,16 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	if(allow_items)
 		data["frozen_items"] = frozen_items
+
+	var/obj/item/card/id/id_card
+	var/datum/bank_account/current_user
+	if(isliving(user))
+		var/mob/living/person = user
+		id_card = person.get_idcard()
+	if(id_card?.registered_account)
+		current_user = id_card.registered_account
+	if(current_user)
+		data["account_name"] = current_user.account_holder
 
 	return data
 
@@ -193,7 +207,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(occupant, "<span class='boldnotice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
-		if(mob_occupant.client) // if they're logged in
+		if(mob_occupant.client || !mob_occupant.key) // Self cryos and SSD
 			despawn_world_time = world.time + (time_till_despawn * 0.1) // This gives them 30 seconds
 		else
 			despawn_world_time = world.time + time_till_despawn
@@ -278,15 +292,20 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 // This function can not be undone; do not call this unless you are sure
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
+	var/list/crew_member = list()
+
+	crew_member["name"] = mob_occupant.real_name
 
 	if(mob_occupant.mind && mob_occupant.mind.assigned_role)
-		//H andle job slot/tater cleanup.
+		// Handle job slot/tater cleanup.
 		var/job = mob_occupant.mind.assigned_role
+		crew_member["job"] = job
 		SSjob.FreeRole(job)
 		if(LAZYLEN(mob_occupant.mind.objectives))
 			mob_occupant.mind.objectives.Cut()
 			mob_occupant.mind.special_role = null
-
+	else
+		crew_member["job"] = "N/A"
 	// Delete them from datacore.
 	var/announce_rank = null
 	for(var/datum/data/record/med_record in GLOB.data_core.medical)
@@ -300,10 +319,9 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			announce_rank = gen_record.fields["rank"]
 			qdel(gen_record)
 
-	// Make an announcement and log the person entering storage.
-	if(control_computer)
-		control_computer.frozen_crew += "[mob_occupant.real_name]"
+	control_computer?.frozen_crew += list(crew_member)
 
+	// Make an announcement and log the person entering storage.
 	if(GLOB.announcement_systems.len)
 		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 		announcer.announce("CRYOSTORAGE", mob_occupant.real_name, announce_rank, list())
