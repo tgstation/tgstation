@@ -49552,10 +49552,18 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "nQS" = (
-/obj/structure/sink{
-	pixel_y = 20
-	},
 /obj/structure/closet/crate/hydroponics,
+/obj/item/paper/guides/jobs/hydroponics,
+/obj/item/seeds/onion,
+/obj/item/seeds/garlic,
+/obj/item/seeds/potato,
+/obj/item/seeds/tomato,
+/obj/item/seeds/carrot,
+/obj/item/seeds/grass,
+/obj/item/seeds/ambrosia,
+/obj/item/seeds/wheat,
+/obj/item/seeds/pumpkin,
+/obj/effect/spawner/lootdrop/prison_contraband,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron,
 /area/security/prison)

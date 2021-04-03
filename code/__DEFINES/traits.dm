@@ -366,6 +366,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.
 #define TRAIT_MAT_TRANSMUTED "transmuted"
 
+///If the item will block the cargo shuttle from flying to centcom
+#define TRAIT_BANNED_FROM_CARGO_SHUTTLE "banned_from_cargo_shuttle"
+
 // item traits
 #define TRAIT_NODROP "nodrop"
 /// cannot be inserted in a storage.
