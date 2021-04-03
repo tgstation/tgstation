@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "emergency meetings now dont call in mobs with no client"
