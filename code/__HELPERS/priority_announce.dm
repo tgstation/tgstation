@@ -62,11 +62,11 @@
 		if(isnewplayer(mob_to_teleport))
 			continue
 
-		//fully immerse the mob in the experience
-		to_chat(mob_to_teleport, announcement)
-		SEND_SOUND(mob_to_teleport, meeting_sound) //no preferences here, you must hear the funny sound
-		mob_to_teleport.overlay_fullscreen("emergency_meeting", /atom/movable/screen/fullscreen/emergency_meeting, 1)
-		addtimer(CALLBACK(mob_to_teleport, /mob/.proc/clear_fullscreen, "emergency_meeting"), 3 SECONDS)
+		if (mob_to_teleport.key) //fully immerse the mob in the experience if they're player controlled
+			to_chat(mob_to_teleport, announcement)
+			SEND_SOUND(mob_to_teleport, meeting_sound) //no preferences here, you must hear the funny sound
+			mob_to_teleport.overlay_fullscreen("emergency_meeting", /atom/movable/screen/fullscreen/emergency_meeting, 1)
+			addtimer(CALLBACK(mob_to_teleport, /mob/.proc/clear_fullscreen, "emergency_meeting"), 3 SECONDS)
 
 		if (is_station_level(mob_to_teleport.z)) //teleport the mob to the crew meeting
 			var/turf/target
