@@ -15,6 +15,8 @@
 /datum/greyscale_layer/New(icon_file, list/json_data)
 	color_ids = json_data["color_ids"]
 	blend_mode = blend_modes[lowertext(json_data["blend_mode"])]
+	if(isnull(blend_mode))
+		CRASH("Greyscale config for [icon_file] is missing a blend mode on a layer.")
 
 /// Used to actualy create the layer using the given colors
 /// Do not override, use InternalGenerate instead
@@ -37,6 +39,9 @@
 
 /datum/greyscale_layer/icon_state/New(icon_file, list/json_data)
 	. = ..()
+	var/icon_state = json_data["icon_state"]
+	if(!(icon_state in icon_states(icon_file)))
+		CRASH("Configured icon state \[[icon_state]\] was not found in [icon_file]. Double check your json configuration.")
 	icon = new(icon_file, json_data["icon_state"])
 
 	if(length(color_ids) > 1)
