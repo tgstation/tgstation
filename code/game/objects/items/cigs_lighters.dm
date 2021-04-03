@@ -279,15 +279,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			return
 	smoketime -= delta_time
 	if(smoketime <= 0)
-		new type_butt(location)
-		if(ismob(loc))
-			to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
-		qdel(src)
-		return
+		go_out(location, loc)
 	open_flame()
 	if((reagents?.total_volume) && (nextdragtime <= world.time))
 		nextdragtime = world.time + dragtime SECONDS
 		handle_reagents()
+
+/obj/item/clothing/mask/cigarette/proc/go_out(turf/location, mob/living/M) //handles cigs putting themselves out after being emptied
+	new type_butt(location)
+	if(ismob(M))
+		to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
+	qdel(src)
+	return
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit)
@@ -542,26 +545,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/clothing/mask/cigarette/pipe/process(delta_time)
-	var/turf/location = get_turf(src)
-	smoketime -= delta_time
-	if(smoketime <= 0)
-		new /obj/effect/decal/cleanable/ash(location)
-		if(ismob(loc))
-			var/mob/living/M = loc
-			to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
-			lit = FALSE
-			icon_state = icon_off
-			inhand_icon_state = icon_off
-			M.update_inv_wear_mask()
-			packeditem = FALSE
-			name = "empty [initial(name)]"
-		STOP_PROCESSING(SSobj, src)
-		return
-	open_flame()
-	if(reagents?.total_volume) // check if it has any reagents at all
-		handle_reagents()
-
+/obj/item/clothing/mask/cigarette/pipe/go_out(turf/location, mob/living/M)
+	new /obj/effect/decal/cleanable/ash(location)
+	if(ismob(M))
+		to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
+		lit = FALSE
+		icon_state = icon_off
+		inhand_icon_state = icon_off
+		M.update_inv_wear_mask()
+		packeditem = FALSE
+		name = "empty [initial(name)]"
+	STOP_PROCESSING(SSobj, src)
+	return
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/food/grown))
