@@ -6583,6 +6583,8 @@
 	desc = "Used to grind things up into raw materials and liquids.";
 	pixel_y = 5
 	},
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "anJ" = (
@@ -68888,12 +68890,8 @@
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
 "wDL" = (
-/obj/structure/table,
 /obj/item/food/mint,
-/obj/item/reagent_containers/food/condiment/enzyme{
-	pixel_y = 5
-	},
-/obj/effect/landmark/event_spawn,
+/obj/machinery/computer/chef_order,
 /turf/open/floor/iron/white,
 /area/service/kitchen)
 "wDZ" = (
