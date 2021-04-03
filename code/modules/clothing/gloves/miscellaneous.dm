@@ -68,7 +68,7 @@
 
 /obj/item/clothing/gloves/braindamage
 	name = "\improper Gloves of Love"
-	desc = "Gloves designed for giving exceptionally cute headpats."
+	desc = "Gloves designed for giving exceptionally cute head pats."
 	icon_state = "rainbow"
 	inhand_icon_state = "rainbowgloves"
 	transfer_prints = TRUE
