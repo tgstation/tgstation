@@ -56,20 +56,20 @@
 
 	switch(action)
 		if("new")
-			user.open_outfit_editor(new /datum/outfit)
+			open_outfit_editor(new /datum/outfit)
 		if("load")
 			user.holder.load_outfit(user.mob)
 		if("copy")
 			var/datum/outfit/outfit = tgui_input_list(user, "Pick an outfit to copy from", "Outfit Manager", subtypesof(/datum/outfit))
 			if(ispath(outfit))
-				user.open_outfit_editor(new outfit)
+				open_outfit_editor(new outfit)
 
 	var/datum/outfit/target_outfit = locate(params["outfit"])
 	if(!istype(target_outfit))
 		return
 	switch(action) //wow we're switching through action again this is horrible optimization smh
 		if("edit")
-			user.open_outfit_editor(target_outfit)
+			open_outfit_editor(target_outfit)
 		if("save")
 			user.holder.save_outfit(user.mob, target_outfit)
 		if("delete")

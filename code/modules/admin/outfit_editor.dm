@@ -1,4 +1,4 @@
-/client/proc/open_outfit_editor(datum/outfit/target)
+/proc/open_outfit_editor(datum/outfit/target)
 	var/datum/outfit_editor/ui = new(usr, target)
 	ui.ui_interact(usr)
 
