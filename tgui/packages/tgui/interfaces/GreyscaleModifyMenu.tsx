@@ -95,7 +95,10 @@ const SingleSprite = (props) => {
 export const GreyscaleModifyMenu = (props, context) => {
   const { act, data } = useBackend<GreyscaleMenuData>(context);
   return (
-    <Window title="Greyscale Modification">
+    <Window
+      title="Greyscale Modification"
+      width={325}
+      height={800}>
       <Window.Content scrollable>
         <ColorDisplay />
         <Button
