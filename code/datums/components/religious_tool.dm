@@ -126,6 +126,8 @@
 	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
 		to_chat(user,"<span class='warning'>You cannot select a sect at this time.</span>")
 		return
+	if(GLOB.religious_sect)
+		return
 	GLOB.religious_sect = new path()
 	for(var/i in GLOB.player_list)
 		if(!isliving(i))
