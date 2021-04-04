@@ -84,11 +84,13 @@ const SingleSprite = (props) => {
   const {
     source,
   } = props;
-  return (<Box
-    as="img"
-    src={source}
-    width="100%"
-  />);
+  return (
+    <Box
+      as="img"
+      src={source}
+      width="100%"
+    />
+  );
 };
 
 export const GreyscaleModifyMenu = (props, context) => {
