@@ -1,8 +1,8 @@
 /* First aid storage
  * Contains:
- *		First Aid Kits
- * 		Pill Bottles
- *		Dice Pack (in a pill bottle)
+ * First Aid Kits
+ * Pill Bottles
+ * Dice Pack (in a pill bottle)
  */
 
 /*
@@ -534,6 +534,7 @@
 	name = "organ transport box"
 	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
 	icon_state = "organbox"
+	base_icon_state = "organbox"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
@@ -574,22 +575,19 @@
 			cool = TRUE
 	if(!cooling && cool)
 		cooling = TRUE
-		update_icon()
+		update_appearance()
 		for(var/C in contents)
 			freeze(C)
 		return
 	if(cooling && !cool)
 		cooling = FALSE
-		update_icon()
+		update_appearance()
 		for(var/C in contents)
 			unfreeze(C)
 
-/obj/item/storage/organbox/update_icon()
-	. = ..()
-	if(cooling)
-		icon_state = "organbox-working"
-	else
-		icon_state = "organbox"
+/obj/item/storage/organbox/update_icon_state()
+	icon_state = "[base_icon_state][cooling ? "-working" : null]"
+	return ..()
 
 ///freezes the organ and loops bodyparts like heads
 /obj/item/storage/organbox/proc/freeze(datum/source, obj/item/I)

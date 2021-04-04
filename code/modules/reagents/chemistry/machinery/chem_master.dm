@@ -11,6 +11,7 @@
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
+	base_icon_state = "mixer"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -64,26 +65,27 @@
 		reagents.maximum_volume += B.reagents.maximum_volume
 
 /obj/machinery/chem_master/ex_act(severity, target)
-	if(severity < 3)
-		..()
+	if(severity >= EXPLODE_LIGHT) // This actually makes the dispenser immune to explosions at least as weak as [EXPLODE_LIGHT]. Don't ask me why the defines are inverted. I don't know.
+		return FALSE
+	return ..()
 
 /obj/machinery/chem_master/contents_explosion(severity, target)
-	..()
-	if(beaker)
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
+	. = ..()
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			if(beaker)
 				SSexplosions.high_mov_atom += beaker
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += beaker
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += beaker
-	if(bottle)
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
+			if(bottle)
 				SSexplosions.high_mov_atom += bottle
-			if(EXPLODE_HEAVY)
+		if(EXPLODE_HEAVY)
+			if(beaker)
+				SSexplosions.med_mov_atom += beaker
+			if(bottle)
 				SSexplosions.med_mov_atom += bottle
-			if(EXPLODE_LIGHT)
+		if(EXPLODE_LIGHT)
+			if(beaker)
+				SSexplosions.low_mov_atom += beaker
+			if(bottle)
 				SSexplosions.low_mov_atom += bottle
 
 /obj/machinery/chem_master/handle_atom_del(atom/A)
@@ -91,15 +93,13 @@
 	if(A == beaker)
 		beaker = null
 		reagents.clear_reagents()
-		update_icon()
+		update_appearance()
 	else if(A == bottle)
 		bottle = null
 
 /obj/machinery/chem_master/update_icon_state()
-	if(beaker)
-		icon_state = "mixer1"
-	else
-		icon_state = "mixer0"
+	icon_state = "[base_icon_state][beaker ? 1 : 0]"
+	return ..()
 
 /obj/machinery/chem_master/update_overlays()
 	. = ..()
@@ -131,7 +131,7 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-		update_icon()
+		update_appearance()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
 			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
@@ -169,7 +169,7 @@
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/machinery/chem_master/on_deconstruction()
@@ -195,7 +195,7 @@
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
 	data["isBeakerLoaded"] = beaker ? 1 : 0
-	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
+	data["beakerCurrentVolume"] = beaker ? round(beaker.reagents.total_volume, 0.01) : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	data["mode"] = mode
 	data["condi"] = condi
@@ -213,13 +213,13 @@
 	var/beaker_contents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beaker_contents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beaker_contents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = round(R.volume, 0.01)))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beaker_contents
 
 	var/buffer_contents[0]
 	if(reagents.total_volume)
 		for(var/datum/reagent/N in reagents.reagent_list)
-			buffer_contents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = N.volume))) // ^
+			buffer_contents.Add(list(list("name" = N.name, "id" = ckey(N.name), "volume" = round(N.volume, 0.01)))) // ^
 	data["bufferContents"] = buffer_contents
 
 	//Calculated at init time as it never changes
@@ -261,9 +261,15 @@
 		if (!beaker)
 			return FALSE
 		if (to_container == "buffer")
+			var/datum/reagent/R = beaker.reagents.get_reagent(reagent)
+			if(!check_reactions(R, beaker.reagents))
+				return FALSE
 			beaker.reagents.trans_id_to(src, reagent, amount)
 			return TRUE
 		if (to_container == "beaker" && mode)
+			var/datum/reagent/R = reagents.get_reagent(reagent)
+			if(!check_reactions(R, reagents))
+				return FALSE
 			reagents.trans_id_to(beaker, reagent, amount)
 			return TRUE
 		return FALSE
@@ -324,7 +330,7 @@
 				"Maximum [vol_each_max] units per item.",
 				"How many units to fill?",
 				vol_each_max))
-		vol_each = clamp(vol_each, 0, vol_each_max)
+		vol_each = round(clamp(vol_each, 0, vol_each_max), 0.01)
 		if(vol_each <= 0)
 			return FALSE
 		// Get item name
@@ -420,7 +426,7 @@
 				state = "Gas"
 			var/const/P = 3 //The number of seconds between life ticks
 			var/T = initial(R.metabolization_rate) * (60 / P)
-			analyze_vars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "addicD" = initial(R.addiction_threshold))
+			analyze_vars = list("name" = initial(R.name), "state" = state, "color" = initial(R.color), "description" = initial(R.description), "metaRate" = T, "overD" = initial(R.overdose_threshold), "pH" = initial(R.ph))
 			screen = "analyze"
 			return TRUE
 
@@ -478,18 +484,18 @@
  * Uses typelist() for styles storage after initialization.
  * For fallback style must provide style with key (const) CONDIMASTER_STYLE_FALLBACK
  * Returns list(
- * 	<key> = list(
- * 		"icon_state" = <bottle icon_state>,
- * 		"name" = <bottle name>,
- * 		"desc" = <bottle desc>,
- * 		?"generate_name" = <if truthy, autogenerates default name from reagents instead of using "name">,
- * 		?"icon_empty" = <icon_state when empty>,
- * 		?"fill_icon_thresholds" = <list of thresholds for reagentfillings, no tresholds if not provided or falsy>,
- * 		?"inhand_icon_state" = <inhand icon_state, falsy - no icon, not provided - whatever is initial (currently "beer")>,
- * 		?"lefthand_file" = <file for inhand icon for left hand, ignored if "inhand_icon_state" not provided>,
- * 		?"righthand_file" = <same as "lefthand_file" but for right hand>,
- * 	),
- * 	..
+ * <key> = list(
+ * "icon_state" = <bottle icon_state>,
+ * "name" = <bottle name>,
+ * "desc" = <bottle desc>,
+ * ?"generate_name" = <if truthy, autogenerates default name from reagents instead of using "name">,
+ * ?"icon_empty" = <icon_state when empty>,
+ * ?"fill_icon_thresholds" = <list of thresholds for reagentfillings, no tresholds if not provided or falsy>,
+ * ?"inhand_icon_state" = <inhand icon_state, falsy - no icon, not provided - whatever is initial (currently "beer")>,
+ * ?"lefthand_file" = <file for inhand icon for left hand, ignored if "inhand_icon_state" not provided>,
+ * ?"righthand_file" = <same as "lefthand_file" but for right hand>,
+ * ),
+ * ..
  * )
  *
  */
@@ -568,6 +574,25 @@
 		if (style["lefthand_file"] || style["righthand_file"])
 			container.lefthand_file = style["lefthand_file"]
 			container.righthand_file = style["righthand_file"]
+
+
+//Checks to see if the target reagent is being created (reacting) and if so prevents transfer
+//Only prevents reactant from being moved so that people can still manlipulate input reagents
+/obj/machinery/chem_master/proc/check_reactions(datum/reagent/reagent, datum/reagents/holder)
+	if(!reagent)
+		return FALSE
+	var/canMove = TRUE
+	for(var/e in holder.reaction_list)
+		var/datum/equilibrium/E = e
+		if(E.reaction.reaction_flags & REACTION_COMPETITIVE)
+			continue
+		for(var/result in E.reaction.required_reagents)
+			var/datum/reagent/R = result
+			if(R == reagent.type)
+				canMove = FALSE
+	if(!canMove)
+		say("Cannot move arrested chemical reaction reagents!")
+	return canMove
 
 /**
  * Machine that allows to identify and separate reagents in fitting container

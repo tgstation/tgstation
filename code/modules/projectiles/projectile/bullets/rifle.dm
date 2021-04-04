@@ -11,14 +11,15 @@
 	icon_state = "gaussphase"
 	damage = 20
 	armour_penetration = 70
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 // 7.62 (Nagant Rifle)
 
 /obj/projectile/bullet/a762
 	name = "7.62 bullet"
 	damage = 60
-	wound_bonus = -35
+	armour_penetration = 10
+	wound_bonus = -45
 	wound_falloff_tile = 0
 
 /obj/projectile/bullet/a762_enchanted

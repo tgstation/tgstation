@@ -3,6 +3,7 @@
 	desc = "Combining man and machine for a better, stronger engineer. Can even resist lava!"
 	name = "\improper Clarke"
 	icon_state = "clarke"
+	base_icon_state = "clarke"
 	max_temperature = 65000
 	max_integrity = 200
 	movedelay = 1.25
@@ -32,12 +33,13 @@
 	if(. && !HAS_TRAIT(H, TRAIT_DIAGNOSTIC_HUD))
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 		hud.add_hud_to(H)
+		ADD_TRAIT(H, TRAIT_DIAGNOSTIC_HUD, VEHICLE_TRAIT)
 
-/obj/vehicle/sealed/mecha/working/clarke/remove_occupant(mob/M)
-	if(isliving(M) && HAS_TRAIT_FROM(M, TRAIT_DIAGNOSTIC_HUD, src))
-		var/mob/living/L = M
+/obj/vehicle/sealed/mecha/working/clarke/remove_occupant(mob/living/carbon/H)
+	if(isliving(H) && HAS_TRAIT_FROM(H, TRAIT_DIAGNOSTIC_HUD, VEHICLE_TRAIT))
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
-		hud.remove_hud_from(L)
+		hud.remove_hud_from(H)
+		REMOVE_TRAIT(H, TRAIT_DIAGNOSTIC_HUD, VEHICLE_TRAIT)
 	return ..()
 
 /obj/vehicle/sealed/mecha/working/clarke/mmi_moved_inside(obj/item/mmi/M, mob/user)

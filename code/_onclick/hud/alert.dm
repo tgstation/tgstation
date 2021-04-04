@@ -21,7 +21,7 @@
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
-			return 0
+			return thealert
 		if(new_master && new_master != thealert.master)
 			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
 
@@ -35,7 +35,7 @@
 				clear_alert(category)
 				return .()
 			else //no need to update
-				return 0
+				return thealert
 	else
 		thealert = new type()
 		thealert.override_alerts = override
@@ -86,6 +86,10 @@
 		client.screen -= alert
 	qdel(alert)
 
+// Proc to check for an alert
+/mob/proc/has_alert(category)
+	return !isnull(alerts[category])
+
 /atom/movable/screen/alert
 	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "default"
@@ -98,8 +102,12 @@
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
 	var/mob/owner //Alert owner
 
+	/// Boolean. If TRUE, the Click() proc will attempt to Click() on the master first if there is a master.
+	var/click_master = TRUE
+
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
+	. = ..()
 	if(!QDELETED(src))
 		openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
@@ -156,7 +164,7 @@
 
 /atom/movable/screen/alert/too_much_n2o
 	name = "Choking (N2O)"
-	desc = "There's semi-toxic sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
 	icon_state = "too_much_n2o"
 
 //End gas alerts
@@ -236,10 +244,10 @@ or something covering your eyes."
 	var/command
 
 /atom/movable/screen/alert/mind_control/Click()
-	var/mob/living/L = usr
-	if(L != owner)
+	. = ..()
+	if(!.)
 		return
-	to_chat(L, "<span class='mind_control'>[command]</span>")
+	to_chat(owner, "<span class='mind_control'>[command]</span>")
 
 /atom/movable/screen/alert/drunk
 	name = "Drunk"
@@ -253,9 +261,13 @@ If you're feeling frisky, examine yourself and click the underlined item to pull
 	icon_state = "embeddedobject"
 
 /atom/movable/screen/alert/embeddedobject/Click()
-	if(isliving(usr) && usr == owner)
-		var/mob/living/carbon/M = usr
-		return M.help_shake_act(M)
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/carbon/carbon_owner = owner
+
+	return carbon_owner.help_shake_act(carbon_owner)
 
 /atom/movable/screen/alert/weightless
 	name = "Weightless"
@@ -281,12 +293,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "fire"
 
 /atom/movable/screen/alert/fire/Click()
-	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist() || L != owner)
+	. = ..()
+	if(!.)
 		return
-	L.changeNext_move(CLICK_CD_RESIST)
-	if(L.mobility_flags & MOBILITY_MOVE)
-		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
+
+	var/mob/living/living_owner = owner
+
+	living_owner.changeNext_move(CLICK_CD_RESIST)
+	if(living_owner.mobility_flags & MOBILITY_MOVE)
+		return living_owner.resist_fire()
 
 /atom/movable/screen/alert/give // information set when the give alert is made
 	icon_state = "default"
@@ -322,6 +337,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/give/Click(location, control, params)
 	. = ..()
+	if(!.)
+		return
+
+	if(!iscarbon(usr))
+		CRASH("User for [src] is of type \[[usr.type]\]. This should never happen.")
+
 	var/mob/living/carbon/C = owner
 	C.take(giver, receiving)
 
@@ -341,6 +362,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/highfive/Click(location, control, params)
 	. = ..()
+	if(!.)
+		return
+
 	var/datum/status_effect/high_fiving/high_five_effect = giver.has_status_effect(STATUS_EFFECT_HIGHFIVE)
 	if(high_five_effect)
 		high_five_effect.we_did_it(owner)
@@ -352,7 +376,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "succumb"
 
 /atom/movable/screen/alert/succumb/Click()
-	if (isobserver(usr))
+	. = ..()
+	if(!.)
 		return
 
 	var/mob/living/living_owner = owner
@@ -528,30 +553,33 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/nocell
 	name = "Missing Power Cell"
 	desc = "Unit has no power cell. No modules available until a power cell is reinstalled. Robotics may provide assistance."
-	icon_state = "nocell"
+	icon_state = "no_cell"
 
 /atom/movable/screen/alert/emptycell
 	name = "Out of Power"
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
 Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
-	icon_state = "emptycell"
+	icon_state = "empty_cell"
 
 /atom/movable/screen/alert/lowcell
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
-	icon_state = "lowcell"
+	icon_state = "low_cell"
 
 //Ethereal
 
-/atom/movable/screen/alert/etherealcharge
+/atom/movable/screen/alert/lowcell/ethereal
 	name = "Low Blood Charge"
-	desc = "Your blood's electric charge is running low, find a source of charge for your blood. Use a recharging station found in robotics or the dormitory bathrooms, or eat some Ethereal-friendly food."
-	icon_state = "etherealcharge"
+	desc = "Your charge is running low, find a source of energy! Use a recharging station, eat some Ethereal-friendly food, or syphon some power from lights, a power cell, or an APC (done by right clicking on combat mode)."
+
+/atom/movable/screen/alert/emptycell/ethereal
+	name = "No Blood Charge"
+	desc = "You are out of juice, find a source of energy! Use a recharging station, eat some Ethereal-friendly food, or syphon some power from lights, a power cell, or an APC (done by right clicking on combat mode)."
 
 /atom/movable/screen/alert/ethereal_overcharge
 	name = "Blood Overcharge"
-	desc = "Your blood's electric charge is becoming dangerously high, find an outlet for your energy. Use Grab Intent on an APC to channel your energy into it."
-	icon_state = "ethereal_overcharge"
+	desc = "Your charge is running dangerously high, find an outlet for your energy! Right click an APC while not in combat mode."
+	icon_state = "cell_overcharge"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /atom/movable/screen/alert/hacked
@@ -582,14 +610,14 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 
 /atom/movable/screen/alert/hackingapc/Click()
-	if(!usr || !usr.client || usr != owner)
+	. = ..()
+	if(!.)
 		return
-	if(!target)
-		return
-	var/mob/living/silicon/ai/AI = usr
-	var/turf/T = get_turf(target)
-	if(T)
-		AI.eyeobj.setLoc(T)
+
+	var/mob/living/silicon/ai/ai_owner = owner
+	var/turf/target_turf = get_turf(target)
+	if(target_turf)
+		ai_owner.eyeobj.setLoc(target_turf)
 
 //MECHS
 
@@ -608,10 +636,11 @@ so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
 /atom/movable/screen/alert/notify_cloning/Click()
-	if(!usr || !usr.client || usr != owner)
+	. = ..()
+	if(!.)
 		return
-	var/mob/dead/observer/G = usr
-	G.reenter_corpse()
+	var/mob/dead/observer/dead_owner = owner
+	dead_owner.reenter_corpse()
 
 /atom/movable/screen/alert/notify_action
 	name = "Body created"
@@ -622,26 +651,27 @@ so as to remain in compliance with the most up-to-date laws."
 	var/action = NOTIFY_JUMP
 
 /atom/movable/screen/alert/notify_action/Click()
-	if(!usr || !usr.client || usr != owner)
+	. = ..()
+	if(!.)
 		return
 	if(!target)
 		return
-	var/mob/dead/observer/G = usr
-	if(!istype(G))
+	var/mob/dead/observer/dead_owner = owner
+	if(!istype(dead_owner))
 		return
 	switch(action)
 		if(NOTIFY_ATTACK)
-			target.attack_ghost(G)
+			target.attack_ghost(dead_owner)
 		if(NOTIFY_JUMP)
-			var/turf/T = get_turf(target)
-			if(T && isturf(T))
-				G.forceMove(T)
+			var/turf/target_turf = get_turf(target)
+			if(target_turf && isturf(target_turf))
+				dead_owner.forceMove(target_turf)
 		if(NOTIFY_ORBIT)
-			G.ManualFollow(target)
+			dead_owner.ManualFollow(target)
 
 //OBJECT-BASED
 
-/atom/movable/screen/alert/restrained/buckled
+/atom/movable/screen/alert/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
 	icon_state = "buckled"
@@ -649,26 +679,39 @@ so as to remain in compliance with the most up-to-date laws."
 /atom/movable/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
+	click_master = FALSE
 
 /atom/movable/screen/alert/restrained/legcuffed
 	name = "Legcuffed"
 	desc = "You're legcuffed, which slows you down considerably. Click the alert to free yourself."
+	click_master = FALSE
 
 /atom/movable/screen/alert/restrained/Click()
-	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist() || L != owner)
+	. = ..()
+	if(!.)
 		return
-	L.changeNext_move(CLICK_CD_RESIST)
-	if((L.mobility_flags & MOBILITY_MOVE) && (L.last_special <= world.time))
-		return L.resist_restraints()
 
-/atom/movable/screen/alert/restrained/buckled/Click()
-	var/mob/living/L = usr
-	if(!istype(L) || !L.can_resist() || L != owner)
+	var/mob/living/living_owner = owner
+
+	if(!living_owner.can_resist())
 		return
-	L.changeNext_move(CLICK_CD_RESIST)
-	if(L.last_special <= world.time)
-		return L.resist_buckle()
+
+	living_owner.changeNext_move(CLICK_CD_RESIST)
+	if((living_owner.mobility_flags & MOBILITY_MOVE) && (living_owner.last_special <= world.time))
+		return living_owner.resist_restraints()
+
+/atom/movable/screen/alert/buckled/Click()
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/living_owner = owner
+
+	if(!living_owner.can_resist())
+		return
+	living_owner.changeNext_move(CLICK_CD_RESIST)
+	if(living_owner.last_special <= world.time)
+		return living_owner.resist_buckle()
 
 /atom/movable/screen/alert/shoes/untied
 	name = "Untied Shoes"
@@ -681,11 +724,17 @@ so as to remain in compliance with the most up-to-date laws."
 	icon_state = "shoealert"
 
 /atom/movable/screen/alert/shoes/Click()
-	var/mob/living/carbon/C = usr
-	if(!istype(C) || !C.can_resist() || C != owner || !C.shoes)
+	. = ..()
+	if(!.)
 		return
-	C.changeNext_move(CLICK_CD_RESIST)
-	C.shoes.handle_tying(C)
+
+	var/mob/living/carbon/carbon_owner = owner
+
+	if(!carbon_owner.can_resist() || !carbon_owner.shoes)
+		return
+
+	carbon_owner.changeNext_move(CLICK_CD_RESIST)
+	carbon_owner.shoes.handle_tying(carbon_owner)
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
@@ -725,15 +774,17 @@ so as to remain in compliance with the most up-to-date laws."
 
 /atom/movable/screen/alert/Click(location, control, params)
 	if(!usr || !usr.client)
-		return
-	var/paramslist = params2list(params)
-	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
-		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
-		return
+		return FALSE
 	if(usr != owner)
-		return
-	if(master)
+		return FALSE
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
+		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
+		return FALSE
+	if(master && click_master)
 		return usr.client.Click(master, location, control, params)
+
+	return TRUE
 
 /atom/movable/screen/alert/Destroy()
 	. = ..()

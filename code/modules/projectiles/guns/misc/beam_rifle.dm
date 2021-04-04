@@ -45,7 +45,7 @@
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
 
-	var/structure_piercing = 2				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled. Probably with the objects in question's Bump() code instead of this but I'll deal with this later.
+	var/structure_piercing = 2 //Amount * 2. For some reason structures aren't respecting this unless you have it doubled. Probably with the objects in question's Bump() code instead of this but I'll deal with this later.
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
@@ -201,7 +201,8 @@
 		if(!istype(curloc))
 			return
 		targloc = get_turf_in_angle(lastangle, curloc, 10)
-	P.preparePixelProjectile(targloc, current_user, current_user.client.mouseParams, 0)
+	var/mouse_modifiers = params2list(current_user.client.mouseParams)
+	P.preparePixelProjectile(targloc, current_user, mouse_modifiers, 0)
 	P.fire(lastangle)
 
 /obj/item/gun/energy/beam_rifle/process()
@@ -215,7 +216,7 @@
 	last_process = world.time
 
 /obj/item/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
-	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
+	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated()) //Doesn't work if you're not holding it!
 		if(automatic_cleanup)
 			stop_aiming()
 			set_user(null)
@@ -300,7 +301,7 @@
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
-		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
+		if(!ismob(target) || user.combat_mode) //melee attack
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
@@ -361,18 +362,18 @@
 
 /obj/item/ammo_casing/energy/beam_rifle/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	. = ..()
-	var/obj/projectile/beam/beam_rifle/hitscan/HS_BB = BB
+	var/obj/projectile/beam/beam_rifle/hitscan/HS_BB = loaded_projectile
 	if(!istype(HS_BB))
 		return
 	HS_BB.impact_direct_damage = projectile_damage
 	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
-	HS_BB.aoe_mob_range = clamp(aoe_mob_range, 0, 15)				//Badmin safety lock
+	HS_BB.aoe_mob_range = clamp(aoe_mob_range, 0, 15) //Badmin safety lock
 	HS_BB.aoe_fire_chance = aoe_fire_chance
 	HS_BB.aoe_fire_range = aoe_fire_range
 	HS_BB.aoe_structure_damage = aoe_structure_damage
-	HS_BB.aoe_structure_range = clamp(aoe_structure_range, 0, 15)	//Badmin safety lock
+	HS_BB.aoe_structure_range = clamp(aoe_structure_range, 0, 15) //Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
@@ -382,7 +383,7 @@
 
 /obj/item/ammo_casing/energy/beam_rifle/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
-	if(!istype(curloc) || !BB)
+	if(!istype(curloc) || !loaded_projectile)
 		return FALSE
 	var/obj/item/gun/energy/beam_rifle/gun = loc
 	if(!targloc && gun)
@@ -390,13 +391,14 @@
 	else if(!targloc)
 		return FALSE
 	var/firing_dir
-	if(BB.firer)
-		firing_dir = BB.firer.dir
-	if(!BB.suppressed && firing_effect_type)
+	if(loaded_projectile.firer)
+		firing_dir = loaded_projectile.firer.dir
+	if(!loaded_projectile.suppressed && firing_effect_type)
 		new firing_effect_type(get_turf(src), firing_dir)
-	BB.preparePixelProjectile(target, user, params, spread)
-	BB.fire(gun? gun.lastangle : null, null)
-	BB = null
+	var/modifiers = params2list(params)
+	loaded_projectile.preparePixelProjectile(target, user, modifiers, spread)
+	loaded_projectile.fire(gun? gun.lastangle : null, null)
+	loaded_projectile = null
 	return TRUE
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
@@ -409,13 +411,13 @@
 	name = "particle beam"
 	icon = null
 	hitsound = 'sound/effects/explosion3.ogg'
-	damage = 0				//Handled manually.
+	damage = 0 //Handled manually.
 	damage_type = BURN
 	flag = ENERGY
 	range = 150
 	jitter = 10
 	var/obj/item/gun/energy/beam_rifle/gun
-	var/structure_pierce_amount = 0				//All set to 0 so the gun can manually set them during firing.
+	var/structure_pierce_amount = 0 //All set to 0 so the gun can manually set them during firing.
 	var/structure_bleed_coeff = 0
 	var/structure_pierce = 0
 	var/do_pierce = TRUE
@@ -436,10 +438,10 @@
 	if(!epicenter)
 		return
 	new /obj/effect/temp_visual/explosion/fast(epicenter)
-	for(var/mob/living/L in range(aoe_mob_range, epicenter))		//handle aoe mob damage
+	for(var/mob/living/L in range(aoe_mob_range, epicenter)) //handle aoe mob damage
 		L.adjustFireLoss(aoe_mob_damage)
 		to_chat(L, "<span class='userdanger'>\The [src] sears you!</span>")
-	for(var/turf/T in range(aoe_fire_range, epicenter))		//handle aoe fire
+	for(var/turf/T in RANGE_TURFS(aoe_fire_range, epicenter)) //handle aoe fire
 		if(prob(aoe_fire_chance))
 			new /obj/effect/hotspot(T)
 	for(var/obj/O in range(aoe_structure_range, epicenter))
@@ -455,12 +457,12 @@
 			else
 				SSexplosions.medturf += A
 		++wall_pierce
-		return PROJECTILE_PIERCE_PHASE			// yeah this gun is a snowflakey piece of garbage
+		return PROJECTILE_PIERCE_PHASE // yeah this gun is a snowflakey piece of garbage
 	if(isobj(A) && (structure_pierce < structure_pierce_amount))
 		++structure_pierce
 		var/obj/O = A
 		O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(A), BURN, ENERGY, FALSE)
-		return PROJECTILE_PIERCE_PHASE			// ditto and this could be refactored to on_hit honestly
+		return PROJECTILE_PIERCE_PHASE // ditto and this could be refactored to on_hit honestly
 	return ..()
 
 /obj/projectile/beam/beam_rifle/proc/get_damage_coeff(atom/target)

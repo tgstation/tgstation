@@ -22,7 +22,7 @@
 				continue
 		path += choice
 
-		if(copytext_char(path, -1) != "/")		//didn't choose a directory, no need to iterate again
+		if(copytext_char(path, -1) != "/") //didn't choose a directory, no need to iterate again
 			break
 	var/extensions
 	for(var/i in valid_extensions)
@@ -36,13 +36,13 @@
 
 	return path
 
-#define FTPDELAY 200	//200 tick delay to discourage spam
-#define ADMIN_FTPDELAY_MODIFIER 0.5		//Admins get to spam files faster since we ~trust~ them!
-/*	This proc is a failsafe to prevent spamming of file requests.
+#define FTPDELAY 200 //200 tick delay to discourage spam
+#define ADMIN_FTPDELAY_MODIFIER 0.5 //Admins get to spam files faster since we ~trust~ them!
+/* This proc is a failsafe to prevent spamming of file requests.
 	It is just a timer that only permits a download every [FTPDELAY] ticks.
 	This can be changed by modifying FTPDELAY's value above.
 
-	PLEASE USE RESPONSIBLY, Some log files can reach sizes of 4MB!	*/
+	PLEASE USE RESPONSIBLY, Some log files can reach sizes of 4MB! */
 /client/proc/file_spam_check()
 	var/time_to_wait = GLOB.fileaccess_timer - world.time
 	if(time_to_wait > 0)

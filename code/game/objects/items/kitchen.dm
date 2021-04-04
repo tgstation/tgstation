@@ -1,19 +1,23 @@
 /* Kitchen tools
  * Contains:
- *		Fork
- *		Kitchen knives
- *		Ritual Knife
- *		Bloodletter
- *		Butcher's cleaver
- *		Combat Knife
- *		Rolling Pins
- *		Plastic Utensils
+ * Fork
+ * Kitchen knives
+ * Ritual Knife
+ * Bloodletter
+ * Butcher's cleaver
+ * Combat Knife
+ * Rolling Pins
+ * Plastic Utensils
  */
 
 /obj/item/kitchen
 	icon = 'icons/obj/kitchen.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+
+/obj/item/kitchen/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_APC_SHOCKING, INNATE_TRAIT)
 
 /obj/item/kitchen/fork
 	name = "fork"
@@ -92,7 +96,7 @@
 	sharpness = SHARP_EDGED
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	item_flags = EYE_STAB
-	var/bayonet = FALSE	//Can this be attached to a gun?
+	var/bayonet = FALSE //Can this be attached to a gun?
 	wound_bonus = -5
 	bare_wound_bonus = 10
 	tool_behaviour = TOOL_KNIFE
@@ -136,11 +140,14 @@
 /obj/item/kitchen/knife/ritual
 	name = "ritual knife"
 	desc = "The unearthly energies that once powered this blade are now dormant."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "render"
-	worn_icon_state = "render"
-	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "bone_blade"
+	inhand_icon_state = "bone_blade"
+	worn_icon_state = "bone_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/kitchen/knife/bloodletter

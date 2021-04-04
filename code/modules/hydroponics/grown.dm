@@ -45,8 +45,9 @@
 
 	make_dryable()
 
-	for(var/datum/plant_gene/trait/T in seed.genes)
-		T.on_new(src, loc)
+	// Go through all traits in their genes and call on_new_plant from them.
+	for(var/datum/plant_gene/trait/trait in seed.genes)
+		trait.on_new_plant(src, loc)
 
 	. = ..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.
 
@@ -64,101 +65,23 @@
 				eatverbs = eatverbs,\
 				bite_consumption = bite_consumption_mod ? 1 + round(max_volume / bite_consumption_mod) : bite_consumption,\
 				microwaved_type = microwaved_type,\
-				junkiness = junkiness,\
-				on_consume = CALLBACK(src, .proc/OnConsume))
-
+				junkiness = junkiness)
 
 /obj/item/food/grown/proc/make_dryable()
 	AddElement(/datum/element/dryable, type)
-
-/obj/item/food/grown/examine(user)
-	. = ..()
-	if(seed)
-		for(var/datum/plant_gene/trait/T in seed.genes)
-			if(T.examine_line)
-				. += T.examine_line
-
-/obj/item/food/grown/attackby(obj/item/O, mob/user, params)
-	..()
-	if (istype(O, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/P_analyzer = O
-		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.\n"
-		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
-			msg += seed.get_analyzer_text()
-		var/reag_txt = ""
-		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
-			msg += "<br><span class='info'>*Plant Reagents*</span>"
-			msg += "<br><span class='info'>Maximum reagent capacity: [reagents.maximum_volume]</span>"
-			var/chem_cap = 0
-			for(var/reagent_id in reagents.reagent_list)
-				var/datum/reagent/R  = reagent_id
-				var/amt = R.volume
-				chem_cap += R.volume
-				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
-			if(chem_cap > 100)
-				msg += "<br><span class='warning'>- Reagent Traits Over 100% Production</span></br>"
-
-		if(reag_txt)
-			msg += "<br><span class='info'>*---------*</span>"
-			msg += reag_txt
-		msg += "<br><span class='info'>*---------*</span>"
-		to_chat(user, msg)
-	else
-		if(seed)
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_attackby(src, O, user)
-
 
 /obj/item/food/grown/MakeLeaveTrash()
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)
 	return
 
-// Various gene procs
-/obj/item/food/grown/attack_self(mob/user)
-	if(seed?.get_gene(/datum/plant_gene/trait/squash))
-		squash(user)
-	..()
+/// Callback proc for bonus behavior for generating trash of grown food. Used by [/datum/element/food_trash].
+/obj/item/food/grown/proc/generate_trash()
+	// If this is some type of grown thing, we pass a seed arg into its Inititalize()
+	if(ispath(trash_type, /obj/item/grown) || ispath(trash_type, /obj/item/food/grown))
+		return new trash_type(src, seed)
 
-/obj/item/food/grown/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!..()) //was it caught by a mob?
-		if(seed)
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_throw_impact(src, hit_atom)
-			if(seed.get_gene(/datum/plant_gene/trait/squash))
-				squash(hit_atom)
-
-/obj/item/food/grown/proc/squash(atom/target)
-	var/turf/T = get_turf(target)
-	forceMove(T)
-	if(ispath(splat_type, /obj/effect/decal/cleanable/food/plant_smudge))
-		if(filling_color)
-			var/obj/O = new splat_type(T)
-			O.color = filling_color
-			O.name = "[name] smudge"
-	else if(splat_type)
-		new splat_type(T)
-
-	visible_message("<span class='warning'>[src] is squashed.</span>","<span class='hear'>You hear a smack.</span>")
-	if(seed)
-		for(var/datum/plant_gene/trait/trait in seed.genes)
-			trait.on_squash(src, target)
-
-	reagents.expose(T)
-	for(var/A in T)
-		reagents.expose(A)
-
-	qdel(src)
-
-/obj/item/food/grown/proc/OnConsume(mob/living/eater, mob/living/feeder)
-	if(iscarbon(usr))
-		if(seed)
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_consume(src, usr)
-
-///Callback for bonus behavior for generating trash of grown food.
-/obj/item/food/grown/proc/generate_trash(atom/location)
-	return new trash_type(location, seed)
+	return new trash_type(src)
 
 /obj/item/food/grown/grind_requirements()
 	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))

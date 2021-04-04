@@ -5,7 +5,7 @@
  */
 
 import { useLocalState } from '../backend';
-import { Button, Section, Tabs } from '../components';
+import { Box, Button, Divider, Section, Tabs } from '../components';
 
 export const meta = {
   title: 'Tabs',
@@ -20,7 +20,6 @@ const TAB_RANGE = [
 ];
 
 const Story = (props, context) => {
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
   const [tabProps, setTabProps] = useLocalState(context, 'tabProps', {});
   return (
     <>
@@ -67,43 +66,59 @@ const Story = (props, context) => {
           })} />
         <Button.Checkbox
           inline
-          content="left aligned"
-          checked={tabProps.leftAligned}
+          content="centered"
+          checked={tabProps.centered}
           onClick={() => setTabProps({
             ...tabProps,
-            leftAligned: !tabProps.leftAligned,
+            centered: !tabProps.centered,
           })} />
       </Section>
       <Section fitted>
-        <Tabs
-          vertical={tabProps.vertical}
-          fluid={tabProps.fluid}
-          textAlign={tabProps.leftAligned && 'left'}>
-          {TAB_RANGE.map((text, i) => (
-            <Tabs.Tab
-              key={i}
-              selected={i === tabIndex}
-              icon={tabProps.icon && 'info-circle'}
-              leftSlot={tabProps.leftSlot && (
-                <Button
-                  circular
-                  compact
-                  color="transparent"
-                  icon="times" />
-              )}
-              rightSlot={tabProps.rightSlot && (
-                <Button
-                  circular
-                  compact
-                  color="transparent"
-                  icon="times" />
-              )}
-              onClick={() => setTabIndex(i)}>
-              {text}
-            </Tabs.Tab>
-          ))}
-        </Tabs>
+        <TabsPrefab />
       </Section>
+      <Section title="Normal section">
+        <TabsPrefab />
+        Some text
+      </Section>
+      <Section>
+        Section-less tabs appear the same as tabs in a fitted section:
+      </Section>
+      <TabsPrefab />
     </>
+  );
+};
+
+const TabsPrefab = (props, context) => {
+  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
+  const [tabProps] = useLocalState(context, 'tabProps', {});
+  return (
+    <Tabs
+      vertical={tabProps.vertical}
+      fluid={tabProps.fluid}
+      textAlign={tabProps.centered && 'center'}>
+      {TAB_RANGE.map((text, i) => (
+        <Tabs.Tab
+          key={i}
+          selected={i === tabIndex}
+          icon={tabProps.icon && 'info-circle'}
+          leftSlot={tabProps.leftSlot && (
+            <Button
+              circular
+              compact
+              color="transparent"
+              icon="times" />
+          )}
+          rightSlot={tabProps.rightSlot && (
+            <Button
+              circular
+              compact
+              color="transparent"
+              icon="times" />
+          )}
+          onClick={() => setTabIndex(i)}>
+          {text}
+        </Tabs.Tab>
+      ))}
+    </Tabs>
   );
 };

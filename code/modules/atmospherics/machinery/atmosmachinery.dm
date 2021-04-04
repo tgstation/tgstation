@@ -12,7 +12,7 @@
 
 /obj/machinery/atmospherics
 	anchored = TRUE
-	move_resist = INFINITY				//Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues. (this imply moving machines with something that can push turfs like a megafauna)
+	move_resist = INFINITY //Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues. (this imply moving machines with something that can push turfs like a megafauna)
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = AREA_USAGE_ENVIRON
@@ -56,11 +56,17 @@
 	///Whether it can be painted
 	var/paintable = FALSE
 
+	///Is the thing being rebuilt by SSair or not. Prevents list bloat
+	var/rebuilding = FALSE
+
+	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes. 
+	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
+
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
-	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
+	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
 		var/mob/living/L = user
-		if(L.ventcrawler)
+		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
 
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
@@ -81,7 +87,7 @@
 		nullifyNode(i)
 
 	SSair.stop_processing_machine(src)
-	SSair.pipenets_needing_rebuilt -= src
+	SSair.rebuild_queue -= src
 
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
@@ -96,9 +102,9 @@
 	return
 
 /**
- * Called by all machines when on_construction() is called, it builds the network for the node
+ * Returns a list of new pipelines that need to be built up
  */
-/obj/machinery/atmospherics/proc/build_network()
+/obj/machinery/atmospherics/proc/get_rebuild_targets()
 	return
 
 /**
@@ -158,7 +164,7 @@
 			if(can_be_node(target, i))
 				nodes[i] = target
 				break
-	update_icon()
+	update_appearance()
 
 /**
  * setter for pipe layers
@@ -169,7 +175,7 @@
  */
 /obj/machinery/atmospherics/proc/setPipingLayer(new_layer)
 	piping_layer = (pipe_flags & PIPING_DEFAULT_LAYER_ONLY) ? PIPING_LAYER_DEFAULT : new_layer
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/update_icon()
 	layer = initial(layer) + piping_layer / 1000
@@ -251,9 +257,9 @@
 	return
 
 /**
- * Called by addMachineryMember() in datum_pipeline.dm, returns the gas_mixture of the network the device is connected to
+ * Called by addMachineryMember() in datum_pipeline.dm, returns a list of gas_mixtures and assigns them into other_airs (by addMachineryMember) to allow pressure redistribution for the machineries.
  */
-/obj/machinery/atmospherics/proc/returnPipenetAir()
+/obj/machinery/atmospherics/proc/returnPipenetAirs()
 	return
 
 /**
@@ -280,7 +286,7 @@
 		var/obj/machinery/atmospherics/pipe/P = reference
 		P.destroy_network()
 	nodes[nodes.Find(reference)] = null
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pipe)) //lets you autodrop
@@ -411,7 +417,7 @@
 	for(var/obj/machinery/atmospherics/A in nodes)
 		A.atmosinit()
 		A.addMember(src)
-	build_network()
+	SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/Entered(atom/movable/AM)
 	if(istype(AM, /mob/living))
@@ -426,6 +432,7 @@
 
 #define VENT_SOUND_DELAY 30
 
+// Handles mob movement inside a pipenet
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
 	direction &= initialize_directions
 	if(!direction || !(direction in GLOB.cardinals)) //cant go this way.
@@ -436,39 +443,28 @@
 
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction, user.ventcrawl_layer)
 	if(target_move)
-		if(target_move.can_crawl_through())
-			if(is_type_in_typecache(target_move, GLOB.ventcrawl_machinery))
-				user.forceMove(target_move.loc) //handle entering and so on.
-				user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.</span>")
-			else
-				var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
-				if(pipenetdiff.len)
-					user.update_pipe_vision(target_move)
-				user.forceMove(target_move)
-				user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
-				if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
-					user.last_played_vent = world.time
-					playsound(src, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
-	else if(is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
-		user.forceMove(loc)
-		user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.</span>")
+		if(target_move.vent_movement & VENTCRAWL_ALLOWED)
+			user.forceMove(target_move)
+			user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
+			var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
+			if(pipenetdiff.len)
+				user.update_pipe_vision()
+			if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
+				user.last_played_vent = world.time
+				playsound(src, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
 
+	//Would be great if this could be implemented when someone alt-clicks the image.
+	if (target_move.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
+		user.handle_ventcrawl(target_move)
 	//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(istype(L) && is_type_in_list(src, GLOB.ventcrawl_machinery))
+	if(!(vent_movement & VENTCRAWL_ALLOWED)) // Early return for machines which does not allow ventcrawling at all.
+		return
+	if(istype(L))
 		L.handle_ventcrawl(src)
 		return
 	..()
-
-/**
- * Getter for vent crawling
- *
- * returns TRUE or FALSE, many devices overrides this (like cryo, or vents)
- * called by relaymove()
- */
-/obj/machinery/atmospherics/proc/can_crawl_through()
-	return TRUE
 
 /**
  * Getter of a list of pipenets

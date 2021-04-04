@@ -1,0 +1,187 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"c" = (
+/obj/item/cardboard_cutout/adaptive{
+	icon_state = "cutout_greytide";
+	name = "White Pawn"
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"d" = (
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"g" = (
+/obj/item/cardboard_cutout/adaptive{
+	icon_state = "cutout_clown";
+	name = "White King"
+	},
+/obj/item/cardboard_cutout/adaptive{
+	icon_state = "cutout_clown";
+	name = "White King"
+	},
+/obj/item/cardboard_cutout/adaptive{
+	icon_state = "cutout_clown";
+	name = "White King"
+	},
+/obj/item/cardboard_cutout/adaptive{
+	icon_state = "cutout_clown";
+	name = "White King"
+	},
+/obj/item/cardboard_cutout/adaptive{
+	icon_state = "cutout_clown";
+	name = "White King"
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"z" = (
+/obj/item/cardboard_cutout/adaptive{
+	color = "#9999BB";
+	icon_state = "cutout_clown";
+	name = "Black King"
+	},
+/obj/item/cardboard_cutout/adaptive{
+	color = "#9999BB";
+	icon_state = "cutout_clown";
+	name = "Black King"
+	},
+/obj/item/cardboard_cutout/adaptive{
+	color = "#9999BB";
+	icon_state = "cutout_clown";
+	name = "Black King"
+	},
+/obj/item/cardboard_cutout/adaptive{
+	color = "#9999BB";
+	icon_state = "cutout_clown";
+	name = "Black King"
+	},
+/obj/item/cardboard_cutout/adaptive{
+	color = "#9999BB";
+	icon_state = "cutout_clown";
+	name = "Black King"
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"J" = (
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/template_noop)
+"M" = (
+/obj/item/cardboard_cutout/adaptive{
+	color = "#9999BB";
+	icon_state = "cutout_greytide";
+	name = "Black Pawn"
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+J
+M
+J
+d
+J
+c
+J
+c
+a
+"}
+(3,1,1) = {"
+a
+M
+J
+M
+J
+d
+J
+c
+J
+a
+"}
+(4,1,1) = {"
+a
+J
+M
+J
+d
+J
+c
+J
+c
+a
+"}
+(5,1,1) = {"
+a
+M
+J
+M
+J
+d
+J
+c
+J
+a
+"}
+(6,1,1) = {"
+a
+J
+M
+J
+d
+J
+c
+J
+c
+a
+"}
+(7,1,1) = {"
+a
+M
+J
+M
+J
+d
+J
+c
+J
+a
+"}
+(8,1,1) = {"
+a
+J
+M
+J
+d
+J
+c
+J
+c
+a
+"}
+(9,1,1) = {"
+z
+M
+J
+M
+J
+d
+J
+c
+J
+g
+"}

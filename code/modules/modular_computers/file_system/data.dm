@@ -1,10 +1,10 @@
 // /data/ files store data in string format.
 // They don't contain other logic for now.
 /datum/computer_file/data
-	var/stored_data = "" 			// Stored data in string format.
+	var/stored_data = "" // Stored data in string format.
 	filetype = "DAT"
 	var/block_size = 250
-	var/do_not_edit = 0				// Whether the user will be reminded that the file probably shouldn't be edited.
+	var/do_not_edit = 0 // Whether the user will be reminded that the file probably shouldn't be edited.
 
 /datum/computer_file/data/clone()
 	var/datum/computer_file/data/temp = ..()

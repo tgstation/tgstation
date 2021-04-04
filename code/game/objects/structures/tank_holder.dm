@@ -37,8 +37,8 @@
 	. = ..()
 	. += "<span class='notice'>It is held together by some <b>screws</b>.</span>"
 
-/obj/structure/tank_holder/attackby(obj/item/W, mob/user, params)
-	if(user.a_intent == INTENT_HARM)
+/obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, params)
+	if(user.combat_mode)
 		return ..()
 	if(!SEND_SIGNAL(W, COMSIG_CONTAINER_TRY_ATTACH, src, user))
 		to_chat(user, "<span class='warning'>[W] does not fit in [src].</span>")
@@ -60,10 +60,10 @@
 		after_detach_tank()
 	qdel(src)
 
-/obj/structure/tank_holder/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/tank_holder/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/tank_holder/attack_hand(mob/user)
+/obj/structure/tank_holder/attack_hand(mob/user, list/modifiers)
 	if(!tank)
 		return ..()
 	if(!Adjacent(user) || issilicon(user))
@@ -80,8 +80,16 @@
 	return ..()
 
 /obj/structure/tank_holder/contents_explosion(severity, target)
-	if(tank)
-		tank.ex_act(severity, target)
+	if(!tank)
+		return
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += tank
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += tank
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += tank
 
 /// Call this after taking the tank from contents in order to update references, icon
 /// and density.

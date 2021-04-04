@@ -33,7 +33,7 @@
 
 /datum/export/large/reagent_dispenser
 	cost = CARGO_CRATE_VALUE * 0.5 // +0-400 depending on amount of reagents left
-	var/contents_cost = 400
+	var/contents_cost = CARGO_CRATE_VALUE * 0.8
 
 /datum/export/large/reagent_dispenser/get_cost(obj/O)
 	var/obj/structure/reagent_dispensers/D = O
@@ -44,7 +44,7 @@
 /datum/export/large/reagent_dispenser/water
 	unit_name = "watertank"
 	export_types = list(/obj/structure/reagent_dispensers/watertank)
-	contents_cost = 200
+	contents_cost = CARGO_CRATE_VALUE * 0.4
 
 /datum/export/large/reagent_dispenser/fuel
 	unit_name = "fueltank"
@@ -109,9 +109,10 @@
 
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
-	var/worth = 10
+	var/worth = cost
 	var/canister_mix = C.air_contents.gases
-	var/list/gases_to_check = list(/datum/gas/bz,
+	var/list/gases_to_check = list(
+								/datum/gas/bz,
 								/datum/gas/stimulum,
 								/datum/gas/hypernoblium,
 								/datum/gas/miasma,
@@ -124,29 +125,17 @@
 								/datum/gas/zauker,
 								/datum/gas/helium,
 								/datum/gas/antinoblium,
-								/datum/gas/halon
-								)
-
-	var/list/gas_prices = list(/datum/gas/bz = 2,
-								/datum/gas/stimulum = 100,
-								/datum/gas/hypernoblium = 5,
-								/datum/gas/miasma = 2,
-								/datum/gas/tritium = 5,
-								/datum/gas/pluoxium = 5,
-								/datum/gas/freon = 15,
-								/datum/gas/hydrogen = 1,
-								/datum/gas/healium = 19,
-								/datum/gas/proto_nitrate = 5,
-								/datum/gas/zauker = 1050,
-								/datum/gas/helium = 6,
-								/datum/gas/antinoblium = 10,
-								/datum/gas/halon = 9
+								/datum/gas/halon,
 								)
 
 	for(var/gasID in gases_to_check)
 		C.air_contents.assert_gas(gasID)
 		if(canister_mix[gasID][MOLES] > 0)
-			worth += round((gas_prices[gasID]/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * canister_mix[gasID][MOLES])))
+			worth += get_gas_value(gasID, canister_mix[gasID][MOLES])
 
 	C.air_contents.garbage_collect()
 	return worth
+
+/datum/export/large/gas_canister/proc/get_gas_value(datum/gas/gasType, moles)
+	var/baseValue = initial(gasType.base_value)
+	return round((baseValue/k_elasticity) * 1 - NUM_E**(-1 * k_elasticity * moles))

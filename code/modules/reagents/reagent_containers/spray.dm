@@ -24,95 +24,112 @@
 	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
-/obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
+/obj/item/reagent_containers/spray/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
+	if(istype(target, /obj/structure/sink) || istype(target, /obj/structure/janitorialcart) || istype(target, /obj/machinery/hydroponics))
 		return
 
-	if((A.is_drainable() && !A.is_refillable()) && get_dist(src,A) <= 1 && can_fill_from_container)
-		if(!A.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[A] is empty.</span>")
+	if((target.is_drainable() && !target.is_refillable()) && (get_dist(src, target) <= 1) && can_fill_from_container)
+		if(!target.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[target] is empty.</span>")
 			return
 
 		if(reagents.holder_full())
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = A.reagents.trans_to(src, 50, transfered_by = user) //transfer 50u , using the spray's transfer amount would take too long to refill
-		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>")
+		var/trans = target.reagents.trans_to(src, 50, transfered_by = user) //transfer 50u , using the spray's transfer amount would take too long to refill
+		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [target].</span>")
 		return
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
 		to_chat(user, "<span class='warning'>Not enough left!</span>")
 		return
 
-	spray(A, user)
+	spray(target, user)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
-	user.newtonian_move(get_dir(A, user))
-
-	var/turf/T = get_turf(src)
-	var/contained = reagents.log_list()
-
-	log_combat(user, T, "sprayed", src, addition="which had [contained]")
-	log_game("[key_name(user)] fired [contained] from \a [src] at [AREACOORD(T)].") //copypasta falling out of my pockets
+	user.newtonian_move(get_dir(target, user))
 	return
 
+/// Handles creating a chem puff that travels towards the target atom, exposing reagents to everything it hits on the way.
+/obj/item/reagent_containers/spray/proc/spray(atom/target, mob/user)
+	var/range = max(min(current_range, get_dist(src, target)), 1)
 
-/obj/item/reagent_containers/spray/proc/spray(atom/A, mob/user)
-	var/range = max(min(current_range, get_dist(src, A)), 1)
-	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
-	D.create_reagents(amount_per_transfer_from_this)
+	var/obj/effect/decal/chempuff/reagent_puff = new /obj/effect/decal/chempuff(get_turf(src))
+
+	reagent_puff.create_reagents(amount_per_transfer_from_this)
 	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
 	if(stream_mode)
-		reagents.trans_to(D, amount_per_transfer_from_this)
+		reagents.trans_to(reagent_puff, amount_per_transfer_from_this)
 		puff_reagent_left = 1
 	else
-		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
-	D.color = mix_color_from_reagents(D.reagents.reagent_list)
+		reagents.trans_to(reagent_puff, amount_per_transfer_from_this, 1/range)
+	reagent_puff.color = mix_color_from_reagents(reagent_puff.reagents.reagent_list)
 	var/wait_step = max(round(2+3/range), 2)
-	do_spray(A, wait_step, D, range, puff_reagent_left, user)
 
-/obj/item/reagent_containers/spray/proc/do_spray(atom/A, wait_step, obj/effect/decal/chempuff/D, range, puff_reagent_left, mob/user)
+	var/puff_reagent_string = reagent_puff.reagents.log_list()
+	var/turf/src_turf = get_turf(src)
+
+	log_combat(user, src_turf, "fired a puff of reagents from", src, addition="with a range of \[[range]\], containing [puff_reagent_string]")
+	log_game("[key_name(user)] fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string] at [AREACOORD(src_turf)].")
+
+	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
+	do_spray(target, wait_step, reagent_puff, range, puff_reagent_left, user)
+
+/// Handles exposing atoms to the reagents contained in a spray's chempuff. Deletes the chempuff when it's completed.
+/obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
 	set waitfor = FALSE
-	var/range_left = range
-	for(var/i=0, i<range, i++)
-		range_left--
-		step_towards(D,A)
+
+	var/puff_reagents_string = reagent_puff.reagents.log_list()
+
+	for(var/travelled_distance in 1 to range)
+		var/has_travelled_max_distance = (travelled_distance == range)
+
+		step_towards(reagent_puff, target)
 		sleep(wait_step)
 
-		for(var/atom/T in get_turf(D))
-			if(T == D || T.invisibility) //we ignore the puff itself and stuff below the floor
+		for(var/atom/turf_atom in get_turf(reagent_puff))
+			if(turf_atom == reagent_puff || turf_atom.invisibility) //we ignore the puff itself and stuff below the floor
 				continue
+
 			if(puff_reagent_left <= 0)
 				break
 
 			if(stream_mode)
-				if(isliving(T))
-					var/mob/living/M = T
-					if(!M.can_inject())
+				if(isliving(turf_atom))
+					var/mob/living/turf_mob = turf_atom
+
+					if(!turf_mob.can_inject())
 						continue
-					if((M.body_position == STANDING_UP) || !range_left)
-						D.reagents.expose(M, VAPOR)
+
+					if((turf_mob.body_position == STANDING_UP) || has_travelled_max_distance)
+						reagent_puff.reagents.expose(turf_mob, VAPOR)
+						log_combat(user, turf_mob, "sprayed", src, addition="which had [puff_reagents_string]")
 						puff_reagent_left -= 1
-						var/contained = D.reagents.log_list() // looks like more copypasta but now the reagents are in a different place fuck you old coder
-						log_combat(user, M,  "sprayed with", src, addition="which had [contained]")
-				else if(!range_left)
-					D.reagents.expose(T, VAPOR)
+				else if(has_travelled_max_distance)
+					reagent_puff.reagents.expose(turf_atom, VAPOR)
+					log_combat(user, turf_atom, "sprayed", src, addition="which had [puff_reagents_string]")
+					puff_reagent_left -= 1
 			else
-				D.reagents.expose(T, VAPOR)
-				if(ismob(T))
+				reagent_puff.reagents.expose(turf_atom, VAPOR)
+				log_combat(user, turf_atom, "sprayed", src, addition="which had [puff_reagents_string]")
+				if(ismob(turf_atom))
 					puff_reagent_left -= 1
 
-		if(puff_reagent_left > 0 && (!stream_mode || !range_left))
-			D.reagents.expose(get_turf(D), VAPOR)
+		if(puff_reagent_left > 0 && (!stream_mode || has_travelled_max_distance))
+			var/turf/puff_turf = get_turf(reagent_puff)
+			reagent_puff.reagents.expose(puff_turf, VAPOR)
+			log_combat(user, puff_turf, "sprayed", src, addition="which had [puff_reagents_string]")
 			puff_reagent_left -= 1
 
-		if(puff_reagent_left <= 0) // we used all the puff so we delete it.
-			qdel(D)
+		// Did we use up all the puff early? Time to delete the puff and return.
+		if(puff_reagent_left <= 0)
+			qdel(reagent_puff)
 			return
-	qdel(D)
+
+	qdel(reagent_puff)
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
 	stream_mode = !stream_mode
@@ -129,6 +146,21 @@
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
+
+	//Cooling method
+	if(istype(I, /obj/item/extinguisher))
+		var/obj/item/extinguisher/extinguisher = I
+		if(extinguisher.safety)
+			return
+		if (extinguisher.reagents.total_volume < 1)
+			to_chat(user, "<span class='warning'>\The [extinguisher] is empty!</span>")
+			return
+		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
+		reagents.expose_temperature(cooling)
+		to_chat(user, "<span class='notice'>You cool the [name] with the [I]!</span>")
+		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+		extinguisher.reagents.remove_all(1)
+
 	return ..()
 
 /obj/item/reagent_containers/spray/verb/empty()
@@ -142,9 +174,10 @@
 	if(isturf(usr.loc) && src.loc == usr)
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.expose(usr.loc)
+		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [reagents.log_list()]")
 		src.reagents.clear_reagents()
 
-/// Handles updating the spreay distance when the reagents change.
+/// Handles updating the spray distance when the reagents change.
 /obj/item/reagent_containers/spray/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	var/total_reagent_weight = 0
@@ -253,7 +286,7 @@
 	var/generate_amount = 5
 	var/generate_type = /datum/reagent/water
 	var/last_generate = 0
-	var/generate_delay = 10	//deciseconds
+	var/generate_delay = 10 //deciseconds
 	can_fill_from_container = FALSE
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/hacked
@@ -263,7 +296,7 @@
 	volume = 3
 	generate_type = /datum/reagent/clf3
 	generate_amount = 1
-	generate_delay = 40		//deciseconds
+	generate_delay = 40 //deciseconds
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/Initialize()
 	. = ..()
@@ -290,7 +323,7 @@
 /obj/item/reagent_containers/spray/chemsprayer
 	name = "chem sprayer"
 	desc = "A utility used to spray large amounts of reagents in a given area."
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "chemsprayer"
 	inhand_icon_state = "chemsprayer"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -340,7 +373,7 @@
 	var/generate_amount = 50
 	var/generate_type = /datum/reagent/space_cleaner
 	var/last_generate = 0
-	var/generate_delay = 10	//deciseconds
+	var/generate_delay = 10 //deciseconds
 
 /obj/item/reagent_containers/spray/chemsprayer/janitor/Initialize()
 	. = ..()

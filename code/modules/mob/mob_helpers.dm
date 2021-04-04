@@ -248,43 +248,11 @@
 	firstname.Find(real_name)
 	return firstname.match
 
-
-/**
- * change a mob's act-intent.
- *
- * Input the intent as a string such as "help" or use "right"/"left
- */
-/mob/verb/a_intent_change(input as text)
-	set name = "a-intent"
-	set hidden = TRUE
-
-	if(!possible_a_intents || !possible_a_intents.len)
-		return
-
-	if(input in possible_a_intents)
-		a_intent = input
-	else
-		var/current_intent = possible_a_intents.Find(a_intent)
-
-		if(!current_intent)
-			// Failsafe. Just in case some badmin was playing with VV.
-			current_intent = 1
-
-		if(input == INTENT_HOTKEY_RIGHT)
-			current_intent += 1
-		if(input == INTENT_HOTKEY_LEFT)
-			current_intent -= 1
-
-		// Handle looping
-		if(current_intent < 1)
-			current_intent = possible_a_intents.len
-		if(current_intent > possible_a_intents.len)
-			current_intent = 1
-
-		a_intent = possible_a_intents[current_intent]
-
-	if(hud_used?.action_intent)
-		hud_used.action_intent.icon_state = "[a_intent]"
+/// Find the last name of a mob from the real name with regex
+/mob/proc/last_name()
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(real_name)
+	return lasttname.match
 
 ///Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name
 /mob/proc/get_realname_string()
@@ -319,8 +287,8 @@
 	return FALSE
 
 
-/mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
-	return 1
+/mob/proc/reagent_check(datum/reagent/R, delta_time, times_fired) // utilized in the species code
+	return TRUE
 
 
 /**
@@ -342,7 +310,7 @@
  * * notify_volume How loud the sound should be to spook the user
  */
 /proc/notify_ghosts(message, ghost_sound = null, enter_link = null, atom/source = null, mutable_appearance/alert_overlay = null, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
-	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
+	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(!notify_suiciders && (O in GLOB.suicided_mob_list))
@@ -395,7 +363,7 @@
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
 /proc/isAdminObserver(mob/user)
-	if(!user)		//Are they a mob? Auto interface updates call this with a null src
+	if(!user) //Are they a mob? Auto interface updates call this with a null src
 		return
 	if(!user.client) // Do they have a client?
 		return
@@ -490,7 +458,7 @@
 			colored_message = "(ASAY) [colored_message]"
 		if(LOG_EMOTE)
 			colored_message = "(EMOTE) [colored_message]"
-	
+
 	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
 	logging[smessage_type] += timestamped_message

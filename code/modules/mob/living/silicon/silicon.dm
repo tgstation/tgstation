@@ -9,7 +9,6 @@
 	see_in_dark = 8
 	bubble_icon = "machine"
 	weather_immunities = list("ash")
-	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	mob_biotypes = MOB_ROBOTIC
 	deathsound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
@@ -44,7 +43,7 @@
 	var/updating = FALSE //portable camera camerachunk update
 
 	var/hack_software = FALSE //Will be able to use hacking actions
-	var/interaction_range = 7			//wireless control range
+	var/interaction_range = 7 //wireless control range
 	var/obj/item/pda/ai/aiPDA
 
 /mob/living/silicon/Initialize()
@@ -82,6 +81,9 @@
 /mob/living/silicon/proc/cancelAlarm()
 	return
 
+/mob/living/silicon/proc/freeCamera()
+	return
+	
 /mob/living/silicon/proc/triggerAlarm()
 	return
 
@@ -161,10 +163,13 @@
 	for(var/key in alarm_types_clear)
 		alarm_types_clear[key] = 0
 
-/mob/living/silicon/can_inject(mob/user, error_msg)
-	if(error_msg)
-		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
+/mob/living/silicon/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
+
+/mob/living/silicon/try_inject(mob/user, target_zone, injection_flags)
+	. = ..()
+	if(!. && (injection_flags & INJECT_TRY_SHOW_ERROR_MESSAGE))
+		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
@@ -350,7 +355,7 @@
 		Autochan += " ([radio.frequency])"
 	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
-	else	//For department channels, if any, given by the internal radio.
+	else //For department channels, if any, given by the internal radio.
 		for(var/key in GLOB.department_radio_keys)
 			if(GLOB.department_radio_keys[key] == Autochan)
 				radiomod = ":" + key
@@ -419,7 +424,7 @@
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE
 
-/mob/living/silicon/handle_high_gravity(gravity)
+/mob/living/silicon/handle_high_gravity(gravity, delta_time, times_fired)
 	return
 
 /mob/living/silicon/rust_heretic_act()

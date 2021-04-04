@@ -1,10 +1,10 @@
 //kills unconscious targets and turns them into blob zombies, produces fragile spores when killed.  Spore produced by factories are sentient.
 /datum/blobstrain/reagent/distributed_neurons
 	name = "Distributed Neurons"
-	description = "will do very low toxin damage and turns unconscious targets into blob zombies."
+	description = "will do medium-low toxin damage and turns unconscious targets into blob zombies."
 	effectdesc = "will also produce fragile spores when killed.  Spores produced by factories are sentient."
-	shortdesc = "will do very low toxin damage and will kill any unconcious targets when attacked.  Spores produced by factories are sentient."
-	analyzerdescdamage = "Does very low toxin damage and kills unconscious humans."
+	shortdesc = "will do medium-low toxin damage and will kill any unconcious targets when attacked.  Spores produced by factories are sentient."
+	analyzerdescdamage = "Does medium-low toxin damage and kills unconscious humans."
 	analyzerdesceffect = "Produces spores when killed.  Spores produced by factories are sentient."
 	color = "#E88D5D"
 	complementary_color = "#823ABB"

@@ -233,7 +233,7 @@
 		DA.glass = TRUE
 	if(heat_proof)
 		DA.heat_proof_finished = TRUE
-	DA.update_icon()
+	DA.update_appearance()
 	DA.update_name()
 	qdel(src)
 
@@ -501,7 +501,7 @@
 	name = "airlock"
 	desc = "It opens and closes."
 	stealthy = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/door/airlock/cult/proc/reveal()
 	icon = initial(icon)
@@ -509,7 +509,7 @@
 	name = initial(name)
 	desc = initial(desc)
 	stealthy = initial(stealthy)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/door/airlock/cult/narsie_act()
 	return

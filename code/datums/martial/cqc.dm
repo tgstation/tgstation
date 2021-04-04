@@ -12,6 +12,7 @@
 	smashes_tables = TRUE
 	var/old_grab_state = null
 	var/restraining = FALSE
+	display_combos = TRUE
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
 	. = ..()
@@ -120,7 +121,7 @@
 	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/A, mob/living/D)
-	if(A.a_intent == INTENT_GRAB && A!=D && can_use(A)) // A!=D prevents grabbing yourself
+	if(A!=D && can_use(A)) // A!=D prevents grabbing yourself
 		add_to_streak("G",D)
 		if(check_streak(A,D)) //if a combo is made no grab upgrade is done
 			return TRUE
@@ -224,10 +225,19 @@
 ///Subtype of CQC. Only used for the chef.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
-	var/list/valid_areas = list(/area/crew_quarters/kitchen)
+	var/list/kitchen_areas
 
-///Prevents use if the cook is not in the kitchen.
-/datum/martial_art/cqc/under_siege/can_use(mob/living/owner) //this is used to make chef CQC only work in kitchen
-	if(!is_type_in_list(get_area(owner), valid_areas))
+/// Refreshes the valid areas from the cook job singleton, otherwise uses the default kitchen area as a fallback option. See also [/datum/job/cook/New].
+/datum/martial_art/cqc/under_siege/proc/refresh_valid_areas()
+	var/datum/job/cook/cook_job = SSjob.GetJobType(/datum/job/cook)
+	if(!istype(cook_job))
+		kitchen_areas = list(/area/service/kitchen)
+		return
+
+	kitchen_areas = cook_job.kitchen_areas.Copy()
+
+/// Limits where the chef's CQC can be used to only whitelisted areas.
+/datum/martial_art/cqc/under_siege/can_use(mob/living/owner)
+	if(!is_type_in_list(get_area(owner), kitchen_areas))
 		return FALSE
 	return ..()

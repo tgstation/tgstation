@@ -12,7 +12,7 @@
 	stat = DEAD
 	hud_possible = list()
 
-	var/mob/living/new_character	//for instant transfer once the round is set up
+	var/mob/living/new_character //for instant transfer once the round is set up
 
 	//Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
 	var/ineligible_for_roles = FALSE
@@ -240,7 +240,7 @@
 		observer.real_name = observer.client.prefs.real_name
 		observer.name = observer.real_name
 		observer.client.init_verbs()
-	observer.update_icon()
+	observer.update_appearance()
 	observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	deadchat_broadcast(" has observed.", "<b>[observer.real_name]</b>", follow_target = observer, turf_target = get_turf(observer), message_type = DEADCHAT_DEATHRATTLE)
 	QDEL_NULL(mind)
@@ -300,7 +300,7 @@
 
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
-		close_spawn_windows()	//In case we get held up
+		close_spawn_windows() //In case we get held up
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
 			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
@@ -315,9 +315,18 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
-	var/equip = SSjob.EquipRank(character, rank, TRUE)
-	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
+	var/mob/living/character = create_character(TRUE) //creates the human and transfers vars and mind
+
+	var/is_captain = FALSE
+	// If we don't have an assigned cap yet, check if this person qualifies for some from of captaincy.
+	if(!SSjob.assigned_captain && ishuman(character) && SSjob.chain_of_command[rank] && !is_banned_from(ckey, list("Captain")))
+		is_captain = TRUE
+	// If we already have a captain, are they a "Captain" rank and are we allowing multiple of them to be assigned?
+	else if(SSjob.always_promote_captain_job && (rank == "Captain"))
+		is_captain = TRUE
+
+	var/equip = SSjob.EquipRank(character, rank, TRUE, is_captain)
+	if(isliving(equip)) //Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
 	var/datum/job/job = SSjob.GetJob(rank)
@@ -335,32 +344,27 @@
 	character.client.init_verbs() // init verbs for the late join
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
-		humanc = character	//Let's retypecast the var to be human,
+		humanc = character //Let's retypecast the var to be human,
 
-	if(humanc)	//These procs all expect humans
+	if(humanc) //These procs all expect humans
 		GLOB.data_core.manifest_inject(humanc)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
 			AnnounceArrival(humanc, rank)
 		AddEmploymentContract(humanc)
-		if(GLOB.highlander)
-			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
-			humanc.make_scottish()
 
 		humanc.increment_scar_slot()
 		humanc.load_persistent_scars()
 
-		if(GLOB.summon_guns_triggered)
-			give_guns(humanc)
-		if(GLOB.summon_magic_triggered)
-			give_magic(humanc)
 		if(GLOB.curse_of_madness_triggered)
 			give_madness(humanc, GLOB.curse_of_madness_triggered)
 
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, humanc, rank)
+
 	GLOB.joined_player_list += character.ckey
 
-	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
+	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc) //Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
 			switch(SSshuttle.emergency.mode)
 				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
@@ -443,23 +447,23 @@
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 
-	if(admin_anon_names)//overrides random name because it achieves the same effect and is an admin enabled event tool
-		client.prefs.random_character()
-		client.prefs.real_name = anonymous_name(src)
-
 	var/is_antag
 	if(mind in GLOB.pre_setup_antags)
 		is_antag = TRUE
 
 	client.prefs.copy_to(H, antagonist = is_antag, is_latejoiner = transfer_after)
 
+	if(admin_anon_names)//overrides random name because it achieves the same effect and is an admin enabled event tool
+		randomize_human(H)
+		H.fully_replace_character_name(null, SSticker.anonymousnames.anonymous_name(H))
+
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)
 			mind.late_joiner = TRUE
-		mind.active = FALSE					//we wish to transfer the key manually
+		mind.active = FALSE //we wish to transfer the key manually
 		mind.original_character_slot_index = client.prefs.default_slot
-		mind.transfer_to(H)					//won't transfer key since the mind is not active
+		mind.transfer_to(H) //won't transfer key since the mind is not active
 		mind.original_character = H
 
 	H.name = real_name
@@ -472,7 +476,7 @@
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character
 	if(.)
-		new_character.key = key		//Manually transfer the key to log them in,
+		new_character.key = key //Manually transfer the key to log them in,
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 		new_character = null
 		qdel(src)

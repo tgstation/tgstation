@@ -148,24 +148,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
 	if(!busy)
-		. += "<span class='notice'><b>Alt-click</b> it to start a wash cycle.</span>"
-
-/obj/machinery/washing_machine/AltClick(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)))
-		return
-	if(busy)
-		return
-	if(state_open)
-		to_chat(user, "<span class='warning'>Close the door first!</span>")
-		return
-	if(bloody_mess)
-		to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
-		return
-	busy = TRUE
-	update_icon()
-	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
-
-	START_PROCESSING(SSfastprocess, src)
+		. += "<span class='notice'><b>Right-click</b> with an empty hand to start a wash cycle.</span>"
 
 /obj/machinery/washing_machine/process(delta_time)
 	if(!busy)
@@ -188,7 +171,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	. = ..()
 	if(!busy && bloody_mess && (clean_types & CLEAN_TYPE_BLOOD))
 		bloody_mess = FALSE
-		update_icon()
+		update_appearance()
 		. = TRUE
 
 /obj/machinery/washing_machine/proc/wash_cycle()
@@ -201,7 +184,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(color_source)
 		qdel(color_source)
 		color_source = null
-	update_icon()
+	update_appearance()
 
 /obj/item/proc/dye_item(dye_color, dye_key_override)
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
@@ -282,26 +265,29 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /obj/machinery/washing_machine/update_icon_state()
 	if(busy)
 		icon_state = "wm_running_[bloody_mess]"
-	else if(bloody_mess)
+		return ..()
+	if(bloody_mess)
 		icon_state = "wm_[state_open]_blood"
-	else
-		var/full = contents.len ? 1 : 0
-		icon_state = "wm_[state_open]_[full]"
+		return ..()
+
+	var/full = contents.len ? 1 : 0
+	icon_state = "wm_[state_open]_[full]"
+	return ..()
 
 /obj/machinery/washing_machine/update_overlays()
 	. = ..()
 	if(panel_open)
 		. += "wm_panel"
 
-/obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
+/obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
 	if(panel_open && !busy && default_unfasten_wrench(user, W))
 		return
 
 	if(default_deconstruction_screwdriver(user, null, null, W))
-		update_icon()
+		update_appearance()
 		return
 
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		if (!state_open)
 			to_chat(user, "<span class='warning'>Open the door first!</span>")
 			return TRUE
@@ -319,12 +305,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			return TRUE
 		if(W.dye_color)
 			color_source = W
-		update_icon()
+		update_appearance()
 
 	else
 		return ..()
 
-/obj/machinery/washing_machine/attack_hand(mob/user)
+/obj/machinery/washing_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -332,24 +318,46 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		to_chat(user, "<span class='warning'>[src] is busy!</span>")
 		return
 
-	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.has_buckled_mobs())
 			return
 		if(state_open)
 			if(istype(L, /mob/living/simple_animal/pet))
 				L.forceMove(src)
-				update_icon()
+				update_appearance()
 		return
 
 	if(!state_open)
 		open_machine()
 	else
 		state_open = FALSE //close the door
-		update_icon()
+		update_appearance()
+
+/obj/machinery/washing_machine/attack_hand_secondary(mob/user, modifiers)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(busy)
+		to_chat(user, "<span class='warning'>[src] is busy!</span>")
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(state_open)
+		to_chat(user, "<span class='warning'>Close the door first!</span>")
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(bloody_mess)
+		to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	busy = TRUE
+	update_appearance()
+	addtimer(CALLBACK(src, .proc/wash_cycle), 20 SECONDS)
+	START_PROCESSING(SSfastprocess, src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/washing_machine/attack_ai_secondary(mob/user, modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(drop_location(), 2)
+	if (!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/iron(drop_location(), 2)
 	qdel(src)
 
 /obj/machinery/washing_machine/open_machine(drop = 1)

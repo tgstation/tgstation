@@ -21,6 +21,8 @@
 	maxHealth = 20
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
+	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	melee_damage_lower = 5
 	melee_damage_upper = 6
 	response_help_continuous = "pets"
@@ -30,7 +32,6 @@
 	response_harm_continuous = "steps on"
 	response_harm_simple = "step on"
 	faction = list("hostile")
-	ventcrawler = VENTCRAWLER_ALWAYS
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
@@ -42,6 +43,7 @@
 /mob/living/simple_animal/hostile/retaliate/poison/snake/Initialize()
 	. = ..()
 	add_cell_sample()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

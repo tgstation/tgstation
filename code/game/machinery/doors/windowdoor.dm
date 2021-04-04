@@ -30,7 +30,7 @@
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	if(set_dir)
 		setDir(set_dir)
-	if(req_access?.len)
+	if(LAZYLEN(req_access))
 		icon_state = "[icon_state]"
 		base_state = icon_state
 	for(var/i in 1 to shards)
@@ -58,10 +58,8 @@
 	return ..()
 
 /obj/machinery/door/window/update_icon_state()
-	if(density)
-		icon_state = base_state
-	else
-		icon_state = "[base_state]open"
+	. = ..()
+	icon_state = "[base_state][density ? null : "open"]"
 
 /obj/machinery/door/window/proc/open_and_close()
 	if(!open())
@@ -260,7 +258,7 @@
 						WA.set_anchored(TRUE)
 						WA.state= "02"
 						WA.setDir(dir)
-						WA.update_icon()
+						WA.update_appearance()
 						WA.created_name = name
 
 						if(obj_flags & EMAGGED)
@@ -287,7 +285,7 @@
 				return
 	return ..()
 
-/obj/machinery/door/window/interact(mob/user)		//for sillycones
+/obj/machinery/door/window/interact(mob/user) //for sillycones
 	try_to_activate_door(user)
 
 /obj/machinery/door/window/try_to_activate_door(mob/user)

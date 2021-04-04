@@ -52,6 +52,7 @@
 					/obj/item/storage/backpack/medic = 4,
 					/obj/item/storage/backpack/satchel/med = 4,
 					/obj/item/clothing/suit/hooded/wintercoat/medical = 4,
+					/obj/item/clothing/suit/hooded/wintercoat/medical/paramedic = 4,
 					/obj/item/clothing/under/rank/medical/paramedic = 4,
 					/obj/item/clothing/under/rank/medical/paramedic/skirt = 4,
 					/obj/item/clothing/under/rank/medical/doctor/nurse = 4,
@@ -148,6 +149,7 @@
 					/obj/item/clothing/under/rank/rnd/roboticist = 2,
 					/obj/item/clothing/under/rank/rnd/roboticist/skirt = 2,
 					/obj/item/clothing/suit/toggle/labcoat/roboticist = 2,
+					/obj/item/clothing/suit/hooded/wintercoat/science/robotics = 3,
 					/obj/item/clothing/shoes/sneakers/black = 2,
 					/obj/item/clothing/gloves/fingerless = 2,
 					/obj/item/clothing/head/soft/black = 2,
@@ -169,6 +171,7 @@
 	products = list(/obj/item/clothing/accessory/pocketprotector = 3,
 					/obj/item/storage/backpack/science = 3,
 					/obj/item/storage/backpack/satchel/tox = 3,
+					/obj/item/storage/backpack/duffelbag/toxins = 3,
 					/obj/item/clothing/head/beret/science = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/science = 3,
 					/obj/item/clothing/under/rank/rnd/scientist = 3,
@@ -190,6 +193,7 @@
 	vend_reply = "Thank you for using the Hydrobe!"
 	products = list(/obj/item/storage/backpack/botany = 2,
 					/obj/item/storage/backpack/satchel/hyd = 2,
+					/obj/item/storage/backpack/duffelbag/hydroponics = 2,
 					/obj/item/clothing/suit/hooded/wintercoat/hydro = 2,
 					/obj/item/clothing/suit/apron = 2,
 					/obj/item/clothing/suit/apron/overalls = 3,
@@ -217,9 +221,12 @@
 					/obj/item/pen/fourcolor = 1,
 					/obj/item/pen/fountain = 2,
 					/obj/item/clothing/accessory/pocketprotector = 2,
-					/obj/item/clothing/under/rank/civilian/curator/skirt = 2,
-					/obj/item/clothing/under/rank/captain/suit/skirt = 2,
-					/obj/item/clothing/under/rank/civilian/head_of_personnel/suit/skirt = 2,
+					/obj/item/clothing/under/rank/civilian/curator = 1,
+					/obj/item/clothing/under/rank/civilian/curator/skirt = 1,
+					/obj/item/clothing/under/rank/captain/suit = 1,
+					/obj/item/clothing/under/rank/captain/suit/skirt = 1,
+					/obj/item/clothing/under/rank/civilian/head_of_personnel/suit = 1,
+					/obj/item/clothing/under/rank/civilian/head_of_personnel/suit/skirt = 1,
 					/obj/item/storage/backpack/satchel/explorer = 1,
 					/obj/item/clothing/glasses/regular = 2,
 					/obj/item/clothing/glasses/regular/jamjar = 1,
@@ -296,6 +303,7 @@
 	products = list(/obj/item/clothing/under/rank/civilian/janitor = 2,
 					/obj/item/cartridge/janitor = 2,
 					/obj/item/clothing/under/rank/civilian/janitor/skirt = 2,
+					/obj/item/clothing/suit/hooded/wintercoat/janitor = 2,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/head/soft/purple = 2,
 					/obj/item/pushbroom = 2,
@@ -396,9 +404,12 @@
 					/obj/item/clothing/under/rank/medical/chemist/skirt = 2,
 					/obj/item/clothing/shoes/sneakers/white = 2,
 					/obj/item/clothing/suit/toggle/labcoat/chemist = 2,
+					/obj/item/clothing/suit/hooded/wintercoat/medical/chemistry = 2,
 					/obj/item/storage/backpack/chemistry = 2,
 					/obj/item/storage/backpack/satchel/chem = 2,
-					/obj/item/storage/bag/chemistry = 2)
+					/obj/item/storage/backpack/duffelbag/chemistry = 2,
+					/obj/item/storage/bag/chemistry = 2,
+					/obj/item/ph_booklet = 3)
 	contraband = list(/obj/item/reagent_containers/spray/syndicate = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 	payment_department = ACCOUNT_MED
@@ -415,8 +426,10 @@
 					/obj/item/clothing/under/rank/rnd/geneticist/skirt = 2,
 					/obj/item/clothing/shoes/sneakers/white = 2,
 					/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
+					/obj/item/clothing/suit/hooded/wintercoat/science/genetics = 2,
 					/obj/item/storage/backpack/genetics = 2,
-					/obj/item/storage/backpack/satchel/gen = 2)
+					/obj/item/storage/backpack/satchel/gen = 2,
+					/obj/item/storage/backpack/duffelbag/genetics = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/gene_wardrobe
@@ -432,9 +445,11 @@
 					/obj/item/clothing/under/rank/medical/virologist/skirt = 2,
 					/obj/item/clothing/shoes/sneakers/white = 2,
 					/obj/item/clothing/suit/toggle/labcoat/virologist = 2,
+					/obj/item/clothing/suit/hooded/wintercoat/medical/viro = 2,
 					/obj/item/clothing/mask/surgical = 2,
 					/obj/item/storage/backpack/virology = 2,
-					/obj/item/storage/backpack/satchel/vir = 2)
+					/obj/item/storage/backpack/satchel/vir = 2,
+					/obj/item/storage/backpack/duffelbag/virology = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 	payment_department = ACCOUNT_MED
 /obj/item/vending_refill/wardrobe/viro_wardrobe

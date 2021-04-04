@@ -28,6 +28,8 @@
 	/// The countdown ghosts see to when the plant will hatch
 	var/obj/effect/countdown/flower_bud/countdown
 
+	var/list/vines = list()
+
 /obj/structure/alien/resin/flower_bud/Initialize()
 	. = ..()
 	countdown = new(src)
@@ -38,11 +40,15 @@
 	anchors += locate(x+2,y-2,z)
 
 	for(var/turf/T in anchors)
-		Beam(T, "vine", maxdistance=5, beam_type=/obj/effect/ebeam/vine)
+		vines += Beam(T, "vine", maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 	finish_time = world.time + growth_time
 	addtimer(CALLBACK(src, .proc/bear_fruit), growth_time)
 	addtimer(CALLBACK(src, .proc/progress_growth), growth_time/4)
 	countdown.start()
+
+/obj/structure/alien/resin/flower_bud/Destroy()
+	QDEL_LIST(vines)
+	return ..()
 
 /**
  * Spawns a venus human trap, then qdels itself.
@@ -92,6 +98,7 @@
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "venus_human_trap"
 	health_doll_icon = "venus_human_trap"
+	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	layer = SPACEVINE_MOB_LAYER
 	health = 50
 	maxHealth = 50
@@ -100,12 +107,14 @@
 	obj_damage = 60
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	del_on_death = TRUE
 	deathmessage = "collapses into bits of plant matter."
 	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'
 	deathsound = 'sound/creatures/venus_trap_death.ogg'
 	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
+	unsuitable_cold_damage = 5
+	unsuitable_heat_damage = 10
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation
@@ -122,7 +131,7 @@
 	/// Whether or not this plant is ghost possessable
 	var/playable_plant = TRUE
 
-/mob/living/simple_animal/hostile/venus_human_trap/Life()
+/mob/living/simple_animal/hostile/venus_human_trap/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	pull_vines()
 
@@ -202,8 +211,8 @@
 		if(istype(B.target, /atom/movable))
 			var/atom/movable/AM = B.target
 			if(!AM.anchored)
-				step(AM,get_dir(AM,src))
-		if(get_dist(src,B.target) == 0)
+				step(AM, get_dir(AM, src))
+		if(get_dist(src, B.target) == 0)
 			qdel(B)
 
 /**

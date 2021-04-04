@@ -73,8 +73,6 @@
 
 	/// What status effect we assign on application
 	var/status_effect_type
-	/// The status effect we're linked to
-	var/datum/status_effect/linked_status_effect
 	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
 	var/datum/surgery/attached_surgery
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
@@ -129,12 +127,13 @@
 			return
 
 	victim = L.owner
+	RegisterSignal(victim, COMSIG_PARENT_QDELETING, .proc/null_victim)
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
 	limb.update_wounds()
 	if(status_effect_type)
-		linked_status_effect = victim.apply_status_effect(status_effect_type, src)
+		victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
 	if(!victim.alerts["wound"]) // only one alert is shared between all of the wounds
 		victim.throw_alert("wound", /atom/movable/screen/alert/status_effect/wound)
@@ -161,6 +160,14 @@
 	if(!demoted)
 		wound_injury(old_wound)
 		second_wind()
+
+/datum/wound/proc/null_victim()
+	SIGNAL_HANDLER
+	victim = null
+
+/datum/wound/proc/source_died()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
@@ -206,7 +213,10 @@
 	if(limb == new_value)
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
 	. = limb
+	if(limb)
+		UnregisterSignal(limb, COMSIG_PARENT_QDELETING)
 	limb = new_value
+	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, .proc/source_died)
 	if(. && disabling)
 		var/obj/item/bodypart/old_limb = .
 		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, src)
@@ -258,8 +268,13 @@
  */
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
 	// first we weed out if we're not dealing with our wound's bodypart, or if it might be an attack
-	if(QDELETED(I) || limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
+	if(!I || limb.body_zone != user.zone_selected)
 		return FALSE
+
+	if(isliving(user))
+		var/mob/living/tendee = user
+		if(I.force && tendee.combat_mode)
+			return FALSE
 
 	var/allowed = FALSE
 
@@ -291,7 +306,7 @@
 	// & such may need to use bone gel but may be wearing a space suit for..... whatever reason a skeleton would wear a space suit for
 	if(ishuman(victim))
 		var/mob/living/carbon/human/victim_human = victim
-		if(!victim_human.can_inject(user, TRUE, ignore_species = TRUE))
+		if(!victim_human.try_inject(user, injection_flags = INJECT_CHECK_IGNORE_SPECIES | INJECT_TRY_SHOW_ERROR_MESSAGE))
 			return TRUE
 
 	// lastly, treat them
@@ -311,7 +326,7 @@
 	return
 
 /// If var/processing is TRUE, this is run on each life tick
-/datum/wound/proc/handle_process()
+/datum/wound/proc/handle_process(delta_time, times_fired)
 	return
 
 /// For use in do_after callback checks
@@ -333,7 +348,7 @@
 	return
 
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
-/datum/wound/proc/on_stasis()
+/datum/wound/proc/on_stasis(delta_time, times_fired)
 	return
 
 /// Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood

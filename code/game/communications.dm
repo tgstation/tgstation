@@ -60,7 +60,7 @@
  *     If receiving object don't know right key, it must ignore encrypted signal in its receive_signal.
  *
  */
-/*	the radio controller is a confusing piece of shit and didnt work
+/* the radio controller is a confusing piece of shit and didnt work
 	so i made radios not use the radio controller.
 */
 GLOBAL_LIST_EMPTY(all_radios)
@@ -103,7 +103,9 @@ GLOBAL_LIST_INIT(radiochannels, list(
 	RADIO_CHANNEL_SERVICE = FREQ_SERVICE,
 	RADIO_CHANNEL_AI_PRIVATE = FREQ_AI_PRIVATE,
 	RADIO_CHANNEL_CTF_RED = FREQ_CTF_RED,
-	RADIO_CHANNEL_CTF_BLUE = FREQ_CTF_BLUE
+	RADIO_CHANNEL_CTF_BLUE = FREQ_CTF_BLUE,
+	RADIO_CHANNEL_CTF_GREEN = FREQ_CTF_GREEN,
+	RADIO_CHANNEL_CTF_YELLOW = FREQ_CTF_YELLOW
 ))
 
 GLOBAL_LIST_INIT(reverseradiochannels, list(
@@ -119,7 +121,9 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"[FREQ_SERVICE]" = RADIO_CHANNEL_SERVICE,
 	"[FREQ_AI_PRIVATE]" = RADIO_CHANNEL_AI_PRIVATE,
 	"[FREQ_CTF_RED]" = RADIO_CHANNEL_CTF_RED,
-	"[FREQ_CTF_BLUE]" = RADIO_CHANNEL_CTF_BLUE
+	"[FREQ_CTF_BLUE]" = RADIO_CHANNEL_CTF_BLUE,
+	"[FREQ_CTF_GREEN]" = RADIO_CHANNEL_CTF_GREEN,
+	"[FREQ_CTF_YELLOW]" = RADIO_CHANNEL_CTF_YELLOW
 ))
 
 /datum/radio_frequency

@@ -11,12 +11,8 @@
 	name = "flesh"
 	item_flags = DROPDEL
 
-/obj/item/clothing/glasses/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/glasses/changeling/attack_hand(mob/user)
+/obj/item/clothing/glasses/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -27,12 +23,8 @@
 	name = "flesh"
 	item_flags = DROPDEL
 
-/obj/item/clothing/under/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/under/changeling/attack_hand(mob/user)
+/obj/item/clothing/under/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -44,12 +36,8 @@
 	allowed = list(/obj/item/changeling)
 	item_flags = DROPDEL
 
-/obj/item/clothing/suit/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/suit/changeling/attack_hand(mob/user)
+/obj/item/clothing/suit/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -61,12 +49,8 @@
 	icon_state = null
 	item_flags = DROPDEL
 
-/obj/item/clothing/head/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/head/changeling/attack_hand(mob/user)
+/obj/item/clothing/head/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -77,12 +61,8 @@
 	name = "flesh"
 	item_flags = DROPDEL
 
-/obj/item/clothing/shoes/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/shoes/changeling/attack_hand(mob/user)
+/obj/item/clothing/shoes/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -93,12 +73,8 @@
 	name = "flesh"
 	item_flags = DROPDEL
 
-/obj/item/clothing/gloves/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/gloves/changeling/attack_hand(mob/user)
+/obj/item/clothing/gloves/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -109,12 +85,8 @@
 	name = "flesh"
 	item_flags = DROPDEL
 
-/obj/item/clothing/mask/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/mask/changeling/attack_hand(mob/user)
+/obj/item/clothing/mask/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
@@ -127,17 +99,39 @@
 	allowed = list(/obj/item/changeling)
 	item_flags = DROPDEL
 
-/obj/item/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/changeling/attack_hand(mob/user)
+/obj/item/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/changeling/id
+	slot_flags = ITEM_SLOT_ID
+	/// Cached flat icon of the ID
+	var/icon/cached_flat_icon
+	/// HUD job icon of the ID
+	var/hud_icon
+
+/obj/item/changeling/id/equipped(mob/user, slot, initial)
+	. = ..()
+	if(hud_icon)
+		var/image/holder = user.hud_list[ID_HUD]
+		var/icon/I = icon(user.icon, user.icon_state, user.dir)
+		holder.pixel_y = I.Height() - world.icon_size
+		holder.icon_state = hud_icon
+
+/**
+ * Returns cached flat icon of the ID, creates one if there is not one already cached
+ */
+/obj/item/changeling/id/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+	return cached_flat_icon
+
+/obj/item/changeling/id/get_examine_string(mob/user, thats = FALSE)
+	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
 
 //Change our DNA to that of somebody we've absorbed.
 /datum/action/changeling/transform/sting_action(mob/living/carbon/human/user)

@@ -4,19 +4,17 @@
  * It's basically an immovable rod launcher.
  */
 /obj/item/gun/blastcannon
-	name = "pipe gun"
-	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole. Small enough to stow in a bag."
+	name = "blast cannon"
+	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
 	icon_state = "empty_blastcannon"
 	inhand_icon_state = "blastcannon_empty"
+	base_icon_state = "blastcannon"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	fire_sound = 'sound/weapons/blastcannon.ogg'
 	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
-	/// The icon state used when this is loaded with a bomb.
-	var/icon_state_loaded = "loaded_blastcannon"
-
 	/// The TTV this contains that will be used to create the projectile
 	var/obj/item/transfer_valve/bomb
 	/// Additional volume added to the gasmixture used to calculate the bombs power.
@@ -39,6 +37,11 @@
 	debug_power = 80
 	bombcheck = FALSE
 
+/obj/item/gun/blastcannon/examine(mob/user)
+	. = ..()
+	if(bomb)
+		. += "<span class='notice'>A bomb is loaded inside.</span>"
+
 /obj/item/gun/blastcannon/Initialize()
 	. = ..()
 	if(!pin)
@@ -55,20 +58,18 @@
 		user.put_in_hands(bomb)
 		user.visible_message("<span class='warning'>[user] detaches [bomb] from [src].</span>")
 		bomb = null
-		name = initial(name)
-		desc = initial(desc)
-	update_icon()
+	update_appearance()
 	return ..()
 
 /obj/item/gun/blastcannon/update_icon_state()
-	. = ..()
-	icon_state = bomb ? icon_state_loaded : initial(icon_state)
+	icon_state = "[bomb ? "loaded" : "empty"]_[base_icon_state]"
+	return ..()
 
 /obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
 	if(!istype(bomb_to_attach))
 		return ..()
 
-	if(!bomb_to_attach.tank_one || !bomb_to_attach.tank_two)
+	if(!bomb_to_attach.ready())
 		to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 		return FALSE
 	if(!user.transferItemToLoc(bomb_to_attach, src))
@@ -77,14 +78,12 @@
 
 	user.visible_message("<span class='warning'>[user] attaches [bomb_to_attach] to [src]!</span>")
 	bomb = bomb_to_attach
-	name = "blast cannon"
-	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave."
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /// Handles the bomb power calculations
 /obj/item/gun/blastcannon/proc/calculate_bomb()
-	if(!istype(bomb) || !istype(bomb.tank_one) || !istype(bomb.tank_two))
+	if(!istype(bomb) || !bomb.ready())
 		return 0
 
 	var/datum/gas_mixture/temp = new(max(reaction_volume_mod, 0))
@@ -99,7 +98,6 @@
 		temp.react(src)
 
 	var/pressure = temp.return_pressure()
-	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
 		return 0
 	return ((pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE)
@@ -112,7 +110,7 @@
 	var/power =  bomb ? calculate_bomb() : debug_power
 	power = min(power, max_power)
 	QDEL_NULL(bomb)
-	update_icon()
+	update_appearance()
 
 	var/heavy = power * 0.25
 	var/medium = power * 0.5
@@ -124,7 +122,8 @@
 	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(starting)] at [ADMIN_VERBOSEJMP(targturf)] ([target.name]) by [ADMIN_LOOKUPFLW(user)] with power [heavy]/[medium]/[light].")
 	log_game("Blast wave fired from [AREACOORD(starting)] at [AREACOORD(targturf)] ([target.name]) by [key_name(user)] with power [heavy]/[medium]/[light].")
 	var/obj/projectile/blastwave/BW = new(loc, heavy, medium, light)
-	BW.preparePixelProjectile(target, get_turf(src), params, 0)
+	var/modifiers = params2list(params)
+	BW.preparePixelProjectile(target, get_turf(src), modifiers, 0)
 	BW.fire()
 	name = initial(name)
 	desc = initial(desc)
@@ -136,7 +135,7 @@
 	damage = 0
 	nodamage = FALSE
 	movement_type = FLYING
-	projectile_phasing = ALL		// just blows up the turfs lmao
+	projectile_phasing = ALL // just blows up the turfs lmao
 	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
 	var/heavyr = 0
 	/// The maximum distance this will inflict [EXPLODE_HEAVY]
@@ -171,4 +170,4 @@
 		return
 
 /obj/projectile/blastwave/ex_act()
-	return
+	return FALSE

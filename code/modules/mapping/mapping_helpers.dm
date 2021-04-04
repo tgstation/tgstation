@@ -174,7 +174,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/no_lava/Initialize()
 	. = ..()
 	var/turf/T = get_turf(src)
-	T.flags_1 |= NO_LAVA_GEN_1
+	T.turf_flags |= NO_LAVA_GEN
 
 //This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/component_injector
@@ -252,7 +252,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			else
 				var/obj/item/organ/O = part
 				O.organ_flags |= ORGAN_FROZEN
-		j.update_icon()
+		j.update_appearance()
 	qdel(src)
 
 
@@ -375,7 +375,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		var/obj/machinery/door/airlock/found_airlock = locate(/obj/machinery/door/airlock) in turf
 		if(note_path)
 			found_airlock.note = note_path
-			found_airlock.update_icon()
+			found_airlock.update_appearance()
 			qdel(src)
 		if(note_info)
 			var/obj/item/paper/paper = new /obj/item/paper(src)
@@ -384,7 +384,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			paper.info = "[note_info]"
 			found_airlock.note = paper
 			paper.forceMove(found_airlock)
-			found_airlock.update_icon()
+			found_airlock.update_appearance()
 			qdel(src)
 		log_mapping("[src] at [x],[y] had no note_path or note_info, cannot place paper note.")
 		qdel(src)
@@ -514,7 +514,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/target_name
 	/// This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
 	var/target_variable = "icon"
-	/// This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi"
+	/// This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
 	var/icon_url
 
 /obj/effect/mapping_helpers/custom_icon/LateInitialize()
@@ -541,17 +541,23 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/custom_icon/proc/fetch_icon(url)
 	var/static/icon_cache = list()
+	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	if(query_in_progress)
+		UNTIL(!query_in_progress)
 	if(icon_cache[url])
 		return icon_cache[url]
 	log_asset("Custom Icon Helper fetching dmi from: [url]")
 	var/datum/http_request/request = new()
 	var/file_name = "tmp/custom_map_icon.dmi"
 	request.prepare(RUSTG_HTTP_METHOD_GET, url , "", "", file_name)
+	query_in_progress = TRUE
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
 	if(response.errored || response.status_code != 200)
-		stack_trace("Failed to fetch mapped custom icon from url [url], code: [response.status_code]")
+		query_in_progress = FALSE
+		CRASH("Failed to fetch mapped custom icon from url [url], code: [response.status_code], error: [response.error]")
 	var/icon/I = new(file_name)
 	icon_cache[url] = I
+	query_in_progress = FALSE
 	return I

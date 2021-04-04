@@ -112,8 +112,8 @@
 	return //jetfuel can't break steel foam...
 
 /turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/tile/plasteel))
-		var/obj/item/stack/tile/plasteel/P = I
+	if(istype(I, /obj/item/stack/tile/iron))
+		var/obj/item/stack/tile/iron/P = I
 		if(P.use(1))
 			var/obj/L = locate(/obj/structure/lattice) in src
 			if(L)
@@ -144,7 +144,7 @@
 	return FALSE
 
 /turf/open/floor/plating/foam/ex_act()
-	..()
+	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)

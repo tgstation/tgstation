@@ -37,8 +37,7 @@
 GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/Destroy()
-	if (action)
-		qdel(action)
+	QDEL_NULL(action)
 	if(ranged_ability_user)
 		remove_ranged_ability()
 	return ..()
@@ -77,7 +76,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(msg)
 		to_chat(ranged_ability_user, msg)
 	active = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/effect/proc_holder/proc/remove_ranged_ability(msg)
 	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
@@ -89,7 +88,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(ranged_ability_user, msg)
 	ranged_ability_user = null
 	active = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
@@ -569,3 +568,53 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	user.visible_message("<span class='warning'>A wreath of gentle light passes over [user]!</span>", "<span class='notice'>You wreath yourself in healing light!</span>")
 	user.adjustBruteLoss(-10)
 	user.adjustFireLoss(-10)
+
+/obj/effect/proc_holder/spell/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("", "---------")
+	if(clothes_req)
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_ROBELESS, "Set Robeless")
+	else
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_ROBELESS, "Unset Robeless")
+
+	if(cult_req)
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_CULT, "Set Cult Robeless")
+	else
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_CULT, "Unset Cult Robeless")
+
+	if(human_req)
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_HUMANONLY, "Unset Require Humanoid Mob")
+	else
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_HUMANONLY, "Set Require Humanoid Mob")
+
+	if(nonabstract_req)
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_NONABSTRACT, "Unset Require Body")
+	else
+		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_NONABSTRACT, "Set Require Body")
+
+/obj/effect/proc_holder/spell/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_SPELL_SET_ROBELESS])
+		clothes_req = FALSE
+		return
+	if(href_list[VV_HK_SPELL_UNSET_ROBELESS])
+		clothes_req = TRUE
+		return
+	if(href_list[VV_HK_SPELL_SET_CULT])
+		cult_req = FALSE
+		return
+	if(href_list[VV_HK_SPELL_UNSET_CULT])
+		cult_req = TRUE
+		return
+	if(href_list[VV_HK_SPELL_UNSET_HUMANONLY])
+		human_req = FALSE
+		return
+	if(href_list[VV_HK_SPELL_SET_HUMANONLY])
+		human_req = TRUE
+		return
+	if(href_list[VV_HK_SPELL_UNSET_NONABSTRACT])
+		nonabstract_req = FALSE
+		return
+	if(href_list[VV_HK_SPELL_SET_NONABSTRACT])
+		nonabstract_req = TRUE
+		return

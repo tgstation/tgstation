@@ -1,3 +1,4 @@
+#define PROCESSOR_SELECT_RECIPE(movable_input) LAZYACCESS(processor_inputs[type], movable_input.type)
 
 /obj/machinery/processor
 	name = "food processor"
@@ -15,6 +16,30 @@
 	var/rating_speed = 1
 	var/rating_amount = 1
 	var/list/processor_contents
+	/*
+	 * Static, nested list. The first layer contains all food processor types.
+	 * The second layer contains input typepaths (key) and the associated food_processor_process datums (assoc) the processor can access.
+	 * This allows for different types of processor to produce different outputs from same input as long as the recipes require different processors.
+	 */
+	var/static/list/processor_inputs
+
+/obj/machinery/processor/Initialize()
+	. = ..()
+	if(processor_inputs)
+		return
+	processor_inputs = list()
+	for(var/datum/food_processor_process/recipe as anything in subtypesof(/datum/food_processor_process))
+		if(!initial(recipe.input))
+			continue
+		recipe = new recipe
+		var/list/typecache = list()
+		var/list/bad_types
+		for(var/bad_type in recipe.blacklist)
+			LAZYADD(bad_types, typesof(bad_type))
+		for(var/input_type in typesof(recipe.input) - bad_types)
+			typecache[input_type] = recipe
+		for(var/machine_type in typesof(recipe.required_machine))
+			LAZYADD(processor_inputs[machine_type], typecache)
 
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -43,14 +68,7 @@
 		qdel(what)
 	LAZYREMOVE(processor_contents, what)
 
-/obj/machinery/processor/proc/select_recipe(X)
-	for (var/type in subtypesof(/datum/food_processor_process) - /datum/food_processor_process/mob)
-		var/datum/food_processor_process/recipe = new type()
-		if (!istype(X, recipe.input) || !istype(src, recipe.required_machine))
-			continue
-		return recipe
-
-/obj/machinery/processor/attackby(obj/item/O, mob/user, params)
+/obj/machinery/processor/attackby(obj/item/O, mob/living/user, params)
 	if(processing)
 		to_chat(user, "<span class='warning'>[src] is in the process of processing!</span>")
 		return TRUE
@@ -72,7 +90,7 @@
 		for(var/obj/S in T.contents)
 			if(!IS_EDIBLE(S))
 				continue
-			var/datum/food_processor_process/P = select_recipe(S)
+			var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(S)
 			if(P)
 				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
 					LAZYADD(processor_contents, S)
@@ -82,25 +100,24 @@
 			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
 		return
 
-	var/datum/food_processor_process/P = select_recipe(O)
+	var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(O)
 	if(P)
 		user.visible_message("<span class='notice'>[user] put [O] into [src].</span>", \
 			"<span class='notice'>You put [O] into [src].</span>")
 		user.transferItemToLoc(O, src, TRUE)
 		LAZYADD(processor_contents, O)
 		return 1
+	else if(!user.combat_mode)
+		to_chat(user, "<span class='warning'>That probably won't blend!</span>")
+		return 1
 	else
-		if(user.a_intent != INTENT_HARM)
-			to_chat(user, "<span class='warning'>That probably won't blend!</span>")
-			return 1
-		else
-			return ..()
+		return ..()
 
 /obj/machinery/processor/interact(mob/user)
 	if(processing)
 		to_chat(user, "<span class='warning'>[src] is in the process of processing!</span>")
 		return TRUE
-	if(user.a_intent == INTENT_GRAB && ismob(user.pulling) && select_recipe(user.pulling))
+	if(ismob(user.pulling) && PROCESSOR_SELECT_RECIPE(user.pulling))
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
@@ -120,17 +137,17 @@
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
 	use_power(500)
 	var/total_time = 0
-	for(var/O in processor_contents)
-		var/datum/food_processor_process/P = select_recipe(O)
-		if (!P)
-			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
+	for(var/atom/movable/movable_input as anything in processor_contents)
+		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(movable_input)
+		if (!recipe)
+			log_admin("DEBUG: [movable_input] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
 			continue
-		total_time += P.time
+		total_time += recipe.time
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
 	sleep(total_time / rating_speed)
 	for(var/atom/movable/O in processor_contents)
-		var/datum/food_processor_process/P = select_recipe(O)
+		var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(O)
 		if (!P)
 			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How do you put it in?")
 			continue
@@ -193,7 +210,7 @@
 				break
 	if(!picked_slime)
 		return
-	var/datum/food_processor_process/P = select_recipe(picked_slime)
+	var/datum/food_processor_process/P = PROCESSOR_SELECT_RECIPE(picked_slime)
 	if (!P)
 		return
 
@@ -215,3 +232,5 @@
 			adjust_item_drop_location(item)
 			SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
 	..()
+
+#undef PROCESSOR_SELECT_RECIPE

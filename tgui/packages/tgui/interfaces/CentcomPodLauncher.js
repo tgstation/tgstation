@@ -22,13 +22,8 @@ export const CentcomPodLauncher = (props, context) => {
   const [compact] = useCompact(context);
   return (
     <Window
-      resizable
-      key={'CPL_' + compact}
-      title={compact
-        ? "Use against Helen Weinstein"
-        : "Supply Pod Menu (Use against Helen Weinstein)"}
-      overflow="hidden"
-      width={compact ? 435 : 730}
+      title="Supply Pod Menu (Use against Helen Weinstein)"
+      width={compact ? 460 : 730}
       height={compact ? 360 : 440}>
       <CentcomPodLauncherContent />
     </Window>

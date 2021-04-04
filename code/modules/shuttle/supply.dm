@@ -67,10 +67,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
-		for(var/trf in shuttle_area)
-			var/turf/T = trf
-			for(var/a in T.GetAllContents())
-				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types) && !istype(a, /obj/docking_port))
+		for(var/turf/shuttle_turf as anything in shuttle_area)
+			for(var/atom/passenger in shuttle_turf.GetAllContents())
+				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
 					return FALSE
 	return TRUE
 
@@ -92,8 +91,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all goody orders grouped
 	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
 	var/list/misc_contents = list() //list of lists of items that each box will contain
-	if(!SSshuttle.shoppinglist.len)
-		return
 
 	var/list/empty_turfs = list()
 	for(var/place in shuttle_areas)
@@ -103,6 +100,21 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				continue
 			empty_turfs += T
 
+	//quickly and greedily handle chef's grocery runs first, there are a few reasons why this isn't attached to the rest of cargo...
+	//but the biggest reason is that the chef requires produce to cook and do their job, and if they are using this system they
+	//already got let down by the botanists. So to open a new chance for cargo to also screw them over any more than is necessary is bad.
+	if(SSshuttle.chef_groceries.len)
+		var/obj/structure/closet/crate/freezer/grocery_crate = new(pick_n_take(empty_turfs))
+		grocery_crate.name = "kitchen produce freezer"
+		investigate_log("Chef's [SSshuttle.chef_groceries.len] sized produce order arrived. Cost was deducted from orderer, not cargo.", INVESTIGATE_CARGO)
+		for(var/datum/orderable_item/item as anything in SSshuttle.chef_groceries)//every order
+			for(var/amt in 1 to SSshuttle.chef_groceries[item])//every order amount
+				new item.item_instance.type(grocery_crate)
+		SSshuttle.chef_groceries.Cut() //This lets the console know it can order another round.
+
+	if(!SSshuttle.shoppinglist.len)
+		return
+
 	var/value = 0
 	var/purchases = 0
 	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
@@ -110,7 +122,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
-		var/price = SO.pack.cost
+		var/price = SO.pack.get_cost()
 		if(SO.applied_coupon)
 			price *= (1 - SO.applied_coupon.discount_pct_off)
 
@@ -138,8 +150,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				LAZYADD(goodies_by_buyer[SO.paying_account], SO)
 			D.bank_card_talk("Cargo order #[SO.id] has shipped. [price] credits have been charged to your bank account.")
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			cargo.adjust_money(price - SO.pack.cost) //Cargo gets the handling fee
-		value += SO.pack.cost
+			cargo.adjust_money(price - SO.pack.get_cost()) //Cargo gets the handling fee
+		value += SO.pack.get_cost()
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
 		QDEL_NULL(SO.applied_coupon)
@@ -147,7 +159,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(!SO.pack.goody) //we handle goody crates below
 			SO.generate(pick_n_take(empty_turfs))
 
-		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
+		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.get_cost()]", "[SO.pack.name]"))
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
 			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")

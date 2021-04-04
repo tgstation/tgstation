@@ -46,7 +46,7 @@
 	if(A == attached_light)
 		set_attached_light(null)
 		update_helmlight()
-		update_icon()
+		update_appearance()
 		QDEL_NULL(alight)
 		qdel(A)
 	return ..()
@@ -230,6 +230,11 @@
 	strip_delay = 80
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/thunderdome/holosuit
+	cold_protection = null
+	heat_protection = null
+	armor = list(MELEE = 10, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+
 /obj/item/clothing/head/helmet/roman
 	name = "\improper Roman helmet"
 	desc = "An ancient helmet made of bronze and leather."
@@ -372,10 +377,10 @@
 	strip_delay = 80
 
 /obj/item/clothing/head/helmet/elder_atmosian
-	name = "Elder Atmosian Helmet"
+	name = "\improper Elder Atmosian Helmet"
 	desc = "A superb helmet made with the toughest and rarest materials available to man."
-	icon_state = "knight_greyscale"
-	inhand_icon_state = "knight_greyscale"
+	icon_state = "h2helmet"
+	inhand_icon_state = "h2helmet"
 	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
@@ -397,7 +402,7 @@
 /obj/item/clothing/head/helmet/monkey_sentience/Initialize()
 	. = ..()
 	light_colors = rand(1,3)
-	update_icon()
+	update_appearance()
 
 /obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
 	. = ..()
@@ -409,11 +414,14 @@
 	. += "<span class='boldnotice'>Ask your CMO if mind magnification is right for you.</span>"
 
 /obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
-	icon_state = "[initial(icon_state)][light_colors][magnification ? "up" : ""]"
+	. = ..()
+	icon_state = "[initial(icon_state)][light_colors][magnification ? "up" : null]"
 
 /obj/item/clothing/head/helmet/monkey_sentience/equipped(mob/user, slot)
 	. = ..()
 	if(slot != ITEM_SLOT_HEAD)
+		return
+	if(istype(user, /mob/living/carbon/human/dummy)) //Prevents ghosts from being polled when the helmet is put on a dummy.
 		return
 	if(!ismonkey(user) || user.ckey)
 		var/mob/living/something = user
@@ -423,17 +431,23 @@
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		say("ERROR: Central Command has temporarily outlawed monkey sentience helmets in this sector. NEAREST LAWFUL SECTOR: 2.537 million light years away.")
+		return
 	magnification = user //this polls ghosts
 	visible_message("<span class='warning'>[src] powers up!</span>")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
 	polling = TRUE
 	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
 	polling = FALSE
+	if(!magnification)
+		return
 	if(!candidates.len)
+		UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 		magnification = null
 		visible_message("<span class='notice'>[src] falls silent and drops on the floor. Maybe you should try again later?</span>")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		user.dropItemToGround(src)
+		return
 	var/mob/picked = pick(candidates)
 	magnification.key = picked.key
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
@@ -465,6 +479,7 @@
 				if(4) //genetic mass susceptibility (gib)
 					magnification.gib()
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
+	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message("<span class='warning'>[src] fizzles and breaks apart!</span>")
@@ -476,6 +491,10 @@
 	if(magnification || polling)
 		qdel(src)//runs disconnect code
 
+/obj/item/clothing/head/helmet/monkey_sentience/proc/make_fall_off()
+	if(magnification)
+		visible_message("<span class='warning'>[src] falls off of [magnification]'s head as it changes shape!</span>")
+		magnification.dropItemToGround(src)
 
 //LightToggle
 
@@ -492,6 +511,7 @@
 			state += "-flight" //etc.
 
 	icon_state = state
+	return ..()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
 	if(istype(action, alight))
@@ -507,7 +527,7 @@
 				return
 			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 			set_attached_light(S)
-			update_icon()
+			update_appearance()
 			update_helmlight()
 			alight = new(src)
 			if(loc == user)
@@ -527,7 +547,7 @@
 		var/obj/item/flashlight/removed_light = set_attached_light(null)
 		update_helmlight()
 		removed_light.update_brightness(user)
-		update_icon()
+		update_appearance()
 		user.update_inv_head()
 		QDEL_NULL(alight)
 		return TRUE
@@ -552,7 +572,7 @@
 
 /obj/item/clothing/head/helmet/proc/update_helmlight()
 	if(attached_light)
-		update_icon()
+		update_appearance()
 
 	for(var/X in actions)
 		var/datum/action/A = X

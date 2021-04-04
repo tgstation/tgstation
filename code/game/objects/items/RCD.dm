@@ -11,7 +11,7 @@ RLD
 
 /obj/item/construction
 	name = "not for ingame use"
-	desc = "A device used to rapidly build and deconstruct. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A device used to rapidly build and deconstruct. Reload with iron, plasteel, glass or compressed matter cartridges."
 	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
@@ -30,8 +30,8 @@ RLD
 	var/matter = 0
 	var/max_matter = 100
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
-	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
-	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
+	var/has_ammobar = FALSE //controls whether or not does update_icon apply ammo indicator overlays
+	var/ammo_sections = 10 //amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	/// Bitflags for upgrades
 	var/upgrade = NONE
 	/// Bitflags for banned upgrades
@@ -53,7 +53,7 @@ RLD
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
 		if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
-			. += "Remote connection has iron in equivalent to [silo_mats.mat_container.get_material_amount(/datum/material/iron)/500] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 metal
+			. += "Remote connection has iron in equivalent to [silo_mats.mat_container.get_material_amount(/datum/material/iron)/500] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -111,7 +111,7 @@ RLD
 		loaded = loadwithsheets(O, user)
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-		update_icon()	//ensures that ammo counters (if present) get updated
+		update_appearance() //ensures that ammo counters (if present) get updated
 	return loaded
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
@@ -145,7 +145,7 @@ RLD
 				to_chat(user, no_ammo_message)
 			return FALSE
 		matter -= amount
-		update_icon()
+		update_appearance()
 		return TRUE
 	else
 		if(silo_mats.on_hold())
@@ -178,7 +178,7 @@ RLD
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 		if(has_ammobar)
-			flick("[icon_state]_empty", src)	//somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
+			flick("[icon_state]_empty", src) //somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
@@ -194,10 +194,19 @@ RLD
 	else
 		return FALSE
 
-/obj/item/construction/proc/check_menu(mob/living/user)
+/**
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The living mob interacting with the menu
+ * * remote_anchor The remote anchor for the menu
+ */
+/obj/item/construction/proc/check_menu(mob/living/user, remote_anchor)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated())
+		return FALSE
+	if(remote_anchor && user.remote_control != remote_anchor)
 		return FALSE
 	return TRUE
 
@@ -214,6 +223,7 @@ RLD
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	var/mode = RCD_FLOORWALL
+	var/construction_mode = RCD_FLOORWALL
 	var/ranged = FALSE
 	var/computer_dir = 1
 	var/airlock_type = /obj/machinery/door/airlock
@@ -347,7 +357,14 @@ RLD
 		if("WEST")
 			computer_dir = 8
 
-/obj/item/construction/rcd/proc/change_airlock_setting(mob/user)
+/**
+ * Customizes RCD's airlock settings based on user's choices
+ *
+ * Arguments:
+ * * user The mob that is choosing airlock settings
+ * * remote_anchor The remote anchor for radial menus. If set, it will also remove proximity restrictions from the menus
+ */
+/obj/item/construction/rcd/proc/change_airlock_setting(mob/user, remote_anchor)
 	if(!user)
 		return
 
@@ -393,15 +410,11 @@ RLD
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	if(!check_menu(user))
-		return
+	var/airlockcat = show_radial_menu(user, remote_anchor || src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-				if(!check_menu(user))
-					return
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
@@ -442,9 +455,7 @@ RLD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-				if(!check_menu(user))
-					return
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock/glass
@@ -563,7 +574,6 @@ RLD
 	..()
 	var/list/choices = list(
 		"Airlock" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlock"),
-		"Deconstruct" = image(icon= 'icons/hud/radial.dmi', icon_state = "delete"),
 		"Grilles & Windows" = image(icon = 'icons/hud/radial.dmi', icon_state = "grillewindow"),
 		"Floors & Walls" = image(icon = 'icons/hud/radial.dmi', icon_state = "wallfloor")
 	)
@@ -580,38 +590,37 @@ RLD
 		choices += list(
 		"Furnishing" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
-	if(mode == RCD_AIRLOCK)
-		choices += list(
-		"Change Access" = image(icon = 'icons/hud/radial.dmi', icon_state = "access"),
-		"Change Airlock Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlocktype")
-		)
-	else if(mode == RCD_WINDOWGRILLE)
-		choices += list(
-		"Change Window Glass" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowtype"),
-		"Change Window Size" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
-		)
-	else if(mode == RCD_FURNISHING)
-		choices += list(
-		"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
-		)
+	switch(construction_mode)
+		if(RCD_AIRLOCK)
+			choices += list(
+			"Change Access" = image(icon = 'icons/hud/radial.dmi', icon_state = "access"),
+			"Change Airlock Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlocktype")
+			)
+		if(RCD_WINDOWGRILLE)
+			choices += list(
+			"Change Window Glass" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowtype"),
+			"Change Window Size" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
+			)
+		if(RCD_FURNISHING)
+			choices += list(
+			"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
+			)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
 		if("Floors & Walls")
-			mode = RCD_FLOORWALL
+			construction_mode = RCD_FLOORWALL
 		if("Airlock")
-			mode = RCD_AIRLOCK
-		if("Deconstruct")
-			mode = RCD_DECONSTRUCT
+			construction_mode = RCD_AIRLOCK
 		if("Grilles & Windows")
-			mode = RCD_WINDOWGRILLE
+			construction_mode = RCD_WINDOWGRILLE
 		if("Machine Frames")
-			mode = RCD_MACHINE
+			construction_mode = RCD_MACHINE
 		if("Furnishing")
-			mode = RCD_FURNISHING
+			construction_mode = RCD_FURNISHING
 		if("Computer Frames")
-			mode = RCD_COMPUTER
+			construction_mode = RCD_COMPUTER
 			change_computer_dir(user)
 			return
 		if("Change Access")
@@ -643,11 +652,18 @@ RLD
 	else
 		return FALSE
 
-/obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
+/obj/item/construction/rcd/pre_attack(atom/A, mob/user, params)
 	. = ..()
-	if(!prox_check(proximity))
-		return
+	mode = construction_mode
 	rcd_create(A, user)
+	return FALSE
+
+/obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
+	. = ..()
+	mode = RCD_DECONSTRUCT
+	rcd_create(target, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
@@ -668,7 +684,7 @@ RLD
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
@@ -712,6 +728,9 @@ RLD
 /obj/item/construction/rcd/loaded
 	matter = 160
 
+/obj/item/construction/rcd/loaded/upgraded
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+
 /obj/item/construction/rcd/combat
 	name = "industrial RCD"
 	icon_state = "ircd"
@@ -719,13 +738,13 @@ RLD
 	max_matter = 500
 	matter = 500
 	canRturf = TRUE
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "rcd"
-	inhand_icon_state = "rcdammo"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "rcdammo"
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -749,7 +768,7 @@ RLD
 
 /obj/item/construction/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
-	desc = "A prototype RCD with ranged capability and extended capacity. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A prototype RCD with ranged capability and extended capacity. Reload with iron, plasteel, glass or compressed matter cartridges."
 	max_matter = 300
 	matter = 300
 	delay_mod = 0.6
@@ -760,11 +779,19 @@ RLD
 
 /obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!range_check(A,user))
-		return
-	if(target_check(A,user))
+	if(range_check(A,user))
+		pre_attack(A, user)
+
+/obj/item/construction/rcd/arcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	if(range_check(target,user))
+		pre_attack_secondary(target, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+
+/obj/item/construction/rcd/arcd/rcd_create(atom/A, mob/user)
+	. = ..()
+	if(.)
 		user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
-	rcd_create(A,user)
 
 
 
@@ -774,7 +801,7 @@ RLD
 
 /obj/item/construction/rld
 	name = "Rapid Lighting Device (RLD)"
-	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
 	worn_icon_state = "RPD"
@@ -807,6 +834,7 @@ RLD
 
 /obj/item/construction/rld/update_icon_state()
 	icon_state = "rld-[round(matter/matter_divisor)]"
+	return ..()
 
 /obj/item/construction/rld/attack_self(mob/user)
 	..()
@@ -931,7 +959,7 @@ RLD
 
 /obj/item/construction/rld/mini
 	name = "mini-rapid-light-device (MRLD)"
-	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -962,6 +990,10 @@ RLD
 	var/list/machinery_data = list("cost" = list())
 	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
 	var/list/plumbing_design_types
+	///Possible layers to pick from
+	var/static/list/layers = list("Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, "Fourth Layer" = FOURTH_DUCT_LAYER)
+	///Current selected layer
+	var/current_layer = "Default Layer"
 
 /obj/item/construction/plumbing/Initialize(mapload)
 	. = ..()
@@ -991,18 +1023,22 @@ RLD
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
 	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/synthesizer = 15,
+	/obj/machinery/plumbing/reaction_chamber = 15,
+	/obj/machinery/plumbing/buffer = 10,
+	/obj/machinery/plumbing/layer_manifold = 5,
+	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line, unless they're probably gonna be needed alot
+	/obj/machinery/plumbing/pill_press = 20,
 	/obj/machinery/plumbing/acclimator = 10,
 	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/disposer = 10,
 	/obj/machinery/plumbing/fermenter = 30,
 	/obj/machinery/plumbing/filter = 5,
 	/obj/machinery/plumbing/grinder_chemical = 30,
-	/obj/machinery/plumbing/pill_press = 20,
 	/obj/machinery/plumbing/liquid_pump = 35,
-	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/synthesizer = 15,
-	/obj/machinery/plumbing/sender = 20
+	/obj/machinery/plumbing/sender = 20,
+	/obj/machinery/iv_drip/plumbing = 20
 )
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
@@ -1017,7 +1053,7 @@ RLD
 				useResource(machinery_data["cost"][blueprint], user)
 				activate()
 				playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-				new blueprint (A, FALSE, FALSE)
+				new blueprint (A, FALSE, layers[current_layer])
 				return TRUE
 
 /obj/item/construction/plumbing/proc/canPlace(turf/T)
@@ -1042,6 +1078,20 @@ RLD
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 	else
 		create_machine(A, user)
+
+/obj/item/construction/plumbing/AltClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+
+	//this is just cycling options through a list
+	var/current_loc = layers.Find(current_layer) + 1
+
+	if(current_loc > layers.len)
+		current_loc = 1
+
+	//We want the key (the define), not the index (the string)
+	current_layer = layers[current_loc]
+	to_chat(user, "<span class='notice'>You switch [src] to [current_layer].</span>")
 
 /obj/item/construction/plumbing/research
 	name = "research plumbing constructor"

@@ -30,14 +30,14 @@
 #define VV_SPECIAL_LIST_NO_EXPAND_THRESHOLD 150
 
 //#define IS_VALID_ASSOC_KEY(V) (istext(V) || ispath(V) || isdatum(V) || islist(V))
-#define IS_VALID_ASSOC_KEY(V) (!isnum(V))		//hhmmm..
+#define IS_VALID_ASSOC_KEY(V) (!isnum(V)) //hhmmm..
 
 //General helpers
 #define VV_HREF_TARGET_INTERNAL(target, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[REF(target)]"
 #define VV_HREF_TARGETREF_INTERNAL(targetref, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[targetref]"
 #define VV_HREF_TARGET(target, href_key, text) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)]'>[text]</a>"
 #define VV_HREF_TARGETREF(targetref, href_key, text) "<a href='[VV_HREF_TARGETREF_INTERNAL(targetref, href_key)]'>[text]</a>"
-#define VV_HREF_TARGET_1V(target, href_key, text, varname) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>"		//for stuff like basic varedits, one variable
+#define VV_HREF_TARGET_1V(target, href_key, text, varname) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>" //for stuff like basic varedits, one variable
 #define VV_HREF_TARGETREF_1V(targetref, href_key, text, varname) "<a href='[VV_HREF_TARGETREF_INTERNAL(targetref, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>"
 
 #define GET_VV_TARGET locate(href_list[VV_HK_TARGET])
@@ -51,7 +51,7 @@
 
 // VV HREF KEYS
 #define VV_HK_TARGET "target"
-#define VV_HK_VARNAME "targetvar"		//name or index of var for 1 variable targetting hrefs.
+#define VV_HK_VARNAME "targetvar" //name or index of var for 1 variable targetting hrefs.
 
 // vv_do_list() keys
 #define VV_HK_LIST_ADD "listadd"
@@ -75,7 +75,6 @@
 #define VV_HK_MARK "mark"
 #define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
-#define VV_HK_VIEW_REFERENCES "viewreferences"
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
@@ -134,3 +133,21 @@
 
 // paintings
 #define VV_HK_REMOVE_PAINTING "remove_painting"
+
+// /obj/effect/proc_holder/spell
+/// Require casting_clothes to cast spell.
+#define VV_HK_SPELL_SET_ROBELESS "spell_set_robeless"
+/// Require cult armor to cast spell.
+#define VV_HK_SPELL_SET_CULT "spell_set_cult"
+/// Require the mob to be ishuman() to cast spell.
+#define VV_HK_SPELL_SET_HUMANONLY "spell_set_humanonly"
+/// Require mob to not be a brain or pAI to cast spell.
+#define VV_HK_SPELL_SET_NONABSTRACT "spell_set_nonabstract"
+/// Spell can now be cast without casting_clothes.
+#define VV_HK_SPELL_UNSET_ROBELESS "spell_unset_robeless"
+/// Spell can now be cast without cult armour.
+#define VV_HK_SPELL_UNSET_CULT "spell_unset_cult"
+/// Any /mob can cast this spell.
+#define VV_HK_SPELL_UNSET_HUMANONLY "spell_unset_humanonly"
+/// Abstract mobs such as brains or pAIs can cast this spell.
+#define VV_HK_SPELL_UNSET_NONABSTRACT "spell_unset_nonabstract"

@@ -42,6 +42,7 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
@@ -142,7 +143,8 @@
 	if(!target)
 		return
 	target.visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
-	for(var/turf/turf in range(9,get_turf(target)))
+	var/turf/targetturf = get_turf(target)
+	for(var/turf/turf as anything in RANGE_TURFS(9,targetturf))
 		if(prob(11))
 			new /obj/effect/temp_visual/target(turf)
 
@@ -227,7 +229,7 @@
 				var/mob/living/L = a
 				if(!QDELETED(L) && L.client)
 					return FALSE
-			return TRUE 
+			return TRUE
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
@@ -244,12 +246,12 @@
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
-	light_range = 10
+	set_light_range(10)
 	SLEEP_CHECK_DEATH(10) // run.
 	mass_fire(20, 15, 3)
 	move_to_delay = initial(move_to_delay)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	light_range = initial(light_range)
+	set_light_range(initial(light_range))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(atom/at = target, meteors = TRUE)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
@@ -276,19 +278,26 @@
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
-/proc/dragon_fire_line(atom/source, list/turfs)
+/proc/dragon_fire_line(atom/source, list/turfs, frozen = FALSE)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
 			break
-		new /obj/effect/hotspot(T)
+		var/obj/effect/hotspot/drake_fire_hotspot = new /obj/effect/hotspot(T)
+		if(frozen)
+			drake_fire_hotspot.add_atom_colour(COLOR_BLUE_LIGHT, FIXED_COLOUR_PRIORITY)
 		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
 		for(var/mob/living/L in T.contents)
 			if(L in hit_list || istype(L, source.type))
 				continue
 			hit_list += L
-			L.adjustFireLoss(20)
-			to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
+			if(!frozen)
+				L.adjustFireLoss(20)
+				to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
+				continue
+			L.adjustFireLoss(10)
+			L.apply_status_effect(/datum/status_effect/ice_block_talisman, 20)
+			to_chat(L, "<span class='userdanger'>You're hit by [source]'s freezing breath!</span>")
 
 		// deals damage to mechs
 		for(var/obj/vehicle/sealed/mecha/M in T.contents)
@@ -393,8 +402,8 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == EXPLODE_LIGHT)
-		return
-	..()
+		return FALSE
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (swooping & SWOOP_INVULNERABLE))

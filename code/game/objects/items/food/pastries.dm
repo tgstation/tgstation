@@ -347,6 +347,7 @@
 	desc = "A delicious and spongy little cake, with berries."
 	tastes = list("muffin" = 3, "berry" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/muffin/booberry
 	name = "booberry muffin"
@@ -356,13 +357,7 @@
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
 
-/obj/item/food/chawanmushi
-	name = "chawanmushi"
-	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
-	icon_state = "chawanmushi"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("custard" = 1)
-	foodtypes = GRAIN | MEAT | VEGETABLES
+
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
@@ -524,7 +519,7 @@
 	name = "\improper Gondola-pocket"
 	desc = "The choice to use real gondola meat in the recipe is controversial, to say the least." //Only a monster would craft this.
 	icon_state = "donkpocketgondola"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/tranquility = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/gondola_mutation_toxin = 5)
 	microwaved_type = /obj/item/food/donkpocket/warm/gondola
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
 	foodtypes = GRAIN
@@ -533,7 +528,7 @@
 	name = "warm Gondola-pocket"
 	desc = "The choice to use real gondola meat in the recipe is controversial, to say the least."
 	icon_state = "donkpocketgondola"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/medicine/omnizine = 2, /datum/reagent/tranquility = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/medicine/omnizine = 2, /datum/reagent/gondola_mutation_toxin = 10)
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
 	foodtypes = GRAIN
 
@@ -612,6 +607,7 @@
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/hotdog/debug
 	eat_time = 0
@@ -624,6 +620,7 @@
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/khachapuri
 	name = "khachapuri"
@@ -711,6 +708,7 @@
 	foodtypes = GRAIN | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/pancakes/raw
 	name = "goopy pancake"
@@ -770,15 +768,22 @@
 
 /obj/item/food/pancakes/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
-/obj/item/food/pancakes/update_icon()
-	if(contents.len)
-		name = "stack of pancakes"
-	else
-		name = initial(name)
+/obj/item/food/pancakes/update_name()
+	name = contents.len ? "stack of pancakes" : initial(name)
+	return ..()
+
+/obj/item/food/pancakes/update_icon(updates=ALL)
+	if(!(updates & UPDATE_OVERLAYS))
+		return ..()
+
+	updates &= ~UPDATE_OVERLAYS
+	. = ..() // Don't update overlays. We're doing that here
+
 	if(contents.len < LAZYLEN(overlays))
-		overlays-=overlays[overlays.len]
+		overlays -= overlays[overlays.len]
+	. |= UPDATE_OVERLAYS
 
 /obj/item/food/pancakes/examine(mob/user)
 	var/ingredients_listed = ""
@@ -831,14 +836,14 @@
 	pancake_visual.pixel_x = rand(-1,1)
 	pancake_visual.pixel_y = 3 * contents.len - 1
 	add_overlay(pancake_visual)
-	update_icon()
+	update_appearance()
 
-/obj/item/food/pancakes/attack(mob/M, mob/user, def_zone, stacked = TRUE)
-	if(user.a_intent == INTENT_HARM || !contents.len || !stacked)
+/obj/item/food/pancakes/attack(mob/M, mob/living/user, params, stacked = TRUE)
+	if(user.combat_mode || !contents.len || !stacked)
 		return ..()
 	var/obj/item/O = contents[contents.len]
-	. = O.attack(M, user, def_zone, FALSE)
-	update_icon()
+	. = O.attack(M, user, params, FALSE)
+	update_appearance()
 
 #undef PANCAKE_MAX_STACK
 
@@ -850,6 +855,42 @@
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	w_class = WEIGHT_CLASS_TINY
+	venue_value = FOOD_PRICE_CHEAP // Pastry base, 3u of sugar and a single. fucking. unit. of. milk. really?
 
+/obj/item/food/icecream
+	name = "waffle cone"
+	desc = "Delicious waffle cone, but no ice cream."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "icecream_cone_waffle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("cream" = 2, "waffle" = 1)
+	bite_consumption = 4
+	foodtypes = DAIRY | SUGAR
+	max_volume = 10 //The max volumes scales up with the number of scoops of ice cream served.
+	/// These two variables are used by the ice cream vat. Latter is the one that shows on the UI.
+	var/list/ingredients = list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar)
+	var/ingredients_text
+	/*
+	 * Assoc list var used to prefill the cone with ice cream.
+	 * Key is the flavour's name (use text defines; see __DEFINES/food.dm or ice_cream_holder.dm),
+	 * assoc is the list of args that is going to be used in [flavour/add_flavour()]. Can as well be null for simple flavours.
+	 */
+	var/list/prefill_flavours
+
+/obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)
+	if(prefill_flavours)
+		src.prefill_flavours = prefill_flavours
+	return ..()
+
+/obj/item/food/icecream/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, filled_name = "ice cream", change_desc = TRUE, prefill_flavours = prefill_flavours)
+
+/obj/item/food/icecream/chocolate
+	name = "chocolate cone"
+	desc = "Delicious chocolate cone, but no ice cream."
+	icon_state = "icecream_cone_chocolate"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/coco = 1)
+	ingredients = list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco)
 
 #undef DONUT_SPRINKLE_CHANCE

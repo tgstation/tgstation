@@ -57,6 +57,9 @@
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
 
+/obj/item/cautery/ignition_effect(atom/A, mob/user)
+	. = "<span class='notice'>[user] touches the end of [src] to \the [A], igniting it with a puff of smoke.</span>"
+
 /obj/item/cautery/augment
 	desc = "A heated element that cauterizes wounds."
 	toolspeed = 0.5
@@ -192,7 +195,7 @@
 
 /obj/item/circular_saw/augment
 	desc = "A small but very fast spinning saw. It rips and tears until it is done."
-	w_class = WEIGHT_CLASS_SMALL	
+	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
 
@@ -212,52 +215,6 @@
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator, null)
 
-
-/obj/item/organ_storage //allows medical cyborgs to manipulate organs without hands
-	name = "organ storage bag"
-	desc = "A container for holding body parts."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "evidenceobj"
-	item_flags = SURGICAL_TOOL
-
-/obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(contents.len)
-		to_chat(user, "<span class='warning'>[src] already has something inside it!</span>")
-		return
-	if(!isorgan(I) && !isbodypart(I))
-		to_chat(user, "<span class='warning'>[src] can only hold body parts!</span>")
-		return
-
-	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>")
-	icon_state = "evidence"
-	var/xx = I.pixel_x
-	var/yy = I.pixel_y
-	I.pixel_x = 0
-	I.pixel_y = 0
-	var/image/img = image("icon"=I, "layer"=FLOAT_LAYER)
-	img.plane = FLOAT_PLANE
-	I.pixel_x = xx
-	I.pixel_y = yy
-	add_overlay(img)
-	add_overlay("evidence")
-	desc = "An organ storage container holding [I]."
-	I.forceMove(src)
-	w_class = I.w_class
-
-/obj/item/organ_storage/attack_self(mob/user)
-	if(contents.len)
-		var/obj/item/I = contents[1]
-		user.visible_message("<span class='notice'>[user] dumps [I] from [src].</span>", "<span class='notice'>You dump [I] from [src].</span>")
-		cut_overlays()
-		I.forceMove(get_turf(src))
-		icon_state = "evidenceobj"
-		desc = "A container for holding body parts."
-	else
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
-	return
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
 	name = "\improper Surgical Processor"
@@ -359,8 +316,8 @@
 	sharpness = SHARP_EDGED
 	custom_premium_price = PAYCHECK_MEDIUM * 14
 
-/obj/item/shears/attack(mob/living/M, mob/user)
-	if(!iscarbon(M) || user.a_intent != INTENT_HELP)
+/obj/item/shears/attack(mob/living/M, mob/living/user)
+	if(!iscarbon(M) || user.combat_mode)
 		return ..()
 
 	if(user.zone_selected == BODY_ZONE_CHEST)
@@ -390,18 +347,16 @@
 			return
 		candidate_name = limb_snip_candidate.name
 
-	var/amputation_speed_mod
+	var/amputation_speed_mod = 1
 
 	patient.visible_message("<span class='danger'>[user] begins to secure [src] around [patient]'s [candidate_name].</span>", "<span class='userdanger'>[user] begins to secure [src] around your [candidate_name]!</span>")
 	playsound(get_turf(patient), 'sound/items/ratchet.ogg', 20, TRUE)
-	if(patient.stat >= UNCONSCIOUS || patient.IsStun()) //Stun is used by paralytics like curare it should not be confused with the more common paralyze.
-		amputation_speed_mod = 0.5
-	else if(patient.jitteriness >= 1)
-		amputation_speed_mod = 1.5
-	else
-		amputation_speed_mod = 1
+	if(patient.stat >= UNCONSCIOUS || HAS_TRAIT(patient, TRAIT_INCAPACITATED)) //if you're incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly line up a snip
+		amputation_speed_mod *= 0.5
+	if(patient.stat != DEAD && patient.jitteriness) //jittering will make it harder to secure the shears, even if you can't otherwise move
+		amputation_speed_mod *= 1.5 //15*0.5*1.5=11.25, so staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to snip their head off, but staminacritting someone who isn't jittering will
 
-	if(do_after(user,  toolspeed * 150 * amputation_speed_mod, target = patient))
+	if(do_after(user,  toolspeed * 15 SECONDS * amputation_speed_mod, target = patient))
 		playsound(get_turf(patient), 'sound/weapons/bladeslice.ogg', 250, TRUE)
 		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN) //OwO
 			tail_snip_candidate.Remove(patient)
