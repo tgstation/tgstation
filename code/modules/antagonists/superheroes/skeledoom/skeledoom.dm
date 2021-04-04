@@ -1,4 +1,4 @@
-/datum/outfit/superhero/skeledoom
+/datum/outfit/superhero/villain/skeledoom
 	name = "SkeleDoom"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/armor/skeledoom
@@ -14,7 +14,7 @@
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
 	implants = list(/obj/item/implant/stealth)
 
-/datum/outfit/superhero/skeledoom/cryo
+/datum/outfit/superhero/villain/skeledoom/cryo
 	name = "SkeleDoom (Operation Cryostung)"
 	suit = /obj/item/clothing/suit/armor/skeledoom/cryo
 	head = /obj/item/clothing/head/beret/black/skeledoom/cryo

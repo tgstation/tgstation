@@ -195,7 +195,7 @@
 
 /obj/item/melee/beesword/buzzon/cryo
 	name = "The Cryostinger"
-	desc = "An advanced swords with built-in frost oil injectors."
+	desc = "An advanced sword with built-in frost oil injectors."
 	icon_state = "buzzon_sword_cryo"
 	inhand_icon_state = "buzzon_cryo"
 	worn_icon_state = "buzzon_cryo"

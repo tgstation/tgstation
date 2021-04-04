@@ -1,4 +1,5 @@
 //The best(actually the worst and the weakest) superhero, Owlman!
+//He is(theoretically) the leader of superhero team, while the BuzzOn actually does all the job for him
 
 /datum/outfit/superhero/owlman
 	name = "Owlman"
@@ -15,7 +16,7 @@
 	r_pocket = /obj/item/restraints/handcuffs/cable
 
 /datum/outfit/superhero/owlman/space
-	name = "Owlman (Operation Starshine)"
+	name = "Owlman (Operation Starbird)"
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/owl
 	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = ITEM_SLOT_SUITSTORE
@@ -24,5 +25,9 @@
 	. = ..()
 	if(!H.mind)
 		return
-	H.mind.AddSpell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long/owlman)
-	H.mind.AddSpell(/obj/effect/proc_holder/spell/targeted/owl_rush)
+
+	var/obj/effect/proc_holder/spell/spell = new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long/owlman
+	H.mind.AddSpell(spell)
+
+	var/obj/effect/proc_holder/spell/spell2 = new /obj/effect/proc_holder/spell/targeted/owl_rush
+	H.mind.AddSpell(spell2)

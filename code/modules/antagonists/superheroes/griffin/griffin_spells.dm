@@ -5,6 +5,7 @@
 	clothes_req = FALSE
 	invocation = "Join the Tide!"
 	invocation_type = INVOCATION_SHOUT
+	clear_invocation = TRUE
 	range = 1
 	action_icon_state = "convert_tider"
 	action_background_icon_state = "bg_default"

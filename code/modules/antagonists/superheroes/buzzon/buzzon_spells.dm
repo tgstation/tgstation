@@ -26,6 +26,7 @@
 	desc = "Activate BBS implant to summon a swarm of bees. Attention: The bees are hostile to everyone."
 	clothes_req = FALSE
 	invocation = "Bees, deploy!"
+	clear_invocation = TRUE
 	summon_amt = 5	//Bees are very, very annoying to deal with so only 5
 	action_icon_state = "bee"
 	cooldown_min = 20 SECONDS

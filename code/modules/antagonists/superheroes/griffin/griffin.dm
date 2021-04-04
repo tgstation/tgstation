@@ -1,4 +1,4 @@
-/datum/outfit/superhero/griffin
+/datum/outfit/superhero/villain/griffin
 	name = "Griffin"
 	uniform = /obj/item/clothing/under/costume/griffin
 	suit = /obj/item/clothing/suit/toggle/owlwings/griffinwings/griffin
@@ -18,10 +18,12 @@
 	. = ..()
 	if(!H.mind)
 		return
-	H.mind.AddSpell(/obj/effect/proc_holder/spell/pointed/griffin_convert)
 
-/datum/outfit/superhero/griffin/space
-	name = "Griffin (Operation Starshine)"
+	var/obj/effect/proc_holder/spell/spell = new /obj/effect/proc_holder/spell/pointed/griffin_convert
+	H.mind.AddSpell(spell)
+
+/datum/outfit/superhero/villain/griffin/space
+	name = "Griffin (Operation Starbird)"
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/tank/jetpack/oxygen/harness/griffin
 	internals_slot = ITEM_SLOT_SUITSTORE

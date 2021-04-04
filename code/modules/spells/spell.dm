@@ -122,6 +122,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_emote_self = null
 	var/invocation_type = "none" //can be none, whisper, emote and shout
+	var/clear_invocation = FALSE //If true, spaces won't be replaced with `
 	var/range = 7 //the range of the spell; outer radius for aoe spells
 	var/message = "" //whatever it says to the guy affected by it
 	var/selection_type = "view" //can be "range" or "view"
@@ -250,12 +251,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 	switch(invocation_type)
 		if(INVOCATION_SHOUT)
-			if(prob(50))//Auto-mute? Fuck that noise
+			if(prob(50) || clear_invocation)//Auto-mute? Fuck that noise
 				user.say(invocation, forced = "spell")
 			else
 				user.say(replacetext(invocation," ","`"), forced = "spell")
 		if(INVOCATION_WHISPER)
-			if(prob(50))
+			if(prob(50) || clear_invocation)
 				user.whisper(invocation)
 			else
 				user.whisper(replacetext(invocation," ","`"))
