@@ -68,7 +68,7 @@
 	price_max = 7000
 	stock_max = 1
 	availability_prob = 10
-	
+
 /datum/blackmarket_item/clothing/rocket_boots
 	name = "Rocket Boots"
 	desc = "We found a pair of jump boots and overclocked the hell out of them. No liability for grevious harm to or with a body."
@@ -78,3 +78,13 @@
 	price_max = 3000
 	stock_max = 1
 	availability_prob = 40
+
+/datum/blackmarket_item/clothing/gloves_love
+	name = "Gloves of Love"
+	desc = "Gloves found in abandoned Syndicate testing facillity. Seem to give pleasant head pats."
+	item = /obj/item/clothing/gloves/love
+
+	price_min = 300
+	price_max = 500
+	stock_max = 1
+	availability_prob = 60

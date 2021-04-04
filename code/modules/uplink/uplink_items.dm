@@ -575,12 +575,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 13
 	surplus = 0
 
-/datum/uplink_item/stealthy_weapons/braindamage_gloves
-	name = "Brain Damage Gloves"
-	desc = "A pair of gloves with nanochip technology woven between the fibres. Provides a stealthy manner of inflicting brain damage to people."
-	item = /obj/item/clothing/gloves/braindamage
-	cost = 6
-
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
 	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
