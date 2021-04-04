@@ -44,9 +44,9 @@
 	set_recipient_reagents_holder(custom_receiver ? custom_receiver : AM.reagents)
 
 	if(start)
-		//timer 0 so it can finish returning initialize, after which we're added to the parent.
-		//Only then can we tell the duct next to us they can connect, because only then is the component really added. this was a fun one
-		addtimer(CALLBACK(src, .proc/enable), 0)
+		//We're registering here because I need to check whether we start active or not, and this is just easier
+		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
+		RegisterSignal(parent, list(COMSIG_COMPONENT_ADDED), .proc/enable)
 
 /datum/component/plumbing/RegisterWithParent()
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
@@ -57,7 +57,7 @@
 
 /datum/component/plumbing/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,COMSIG_OBJ_HIDE, \
-	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_MOVABLE_CHANGE_DUCT_LAYER))
+	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, COMSIG_COMPONENT_ADDED))
 
 /datum/component/plumbing/Destroy()
 	ducts = null
@@ -209,8 +209,8 @@
 					duct.update_appearance()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
-/datum/component/plumbing/proc/enable()
-	if(active)
+/datum/component/plumbing/proc/enable(obj/object, datum/component/component)
+	if(active || (component && component != src))
 		return
 
 	update_dir()
