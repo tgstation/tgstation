@@ -4,26 +4,24 @@ import { Window } from '../layouts';
 
 export const OutfitEditor = (props, context) => {
   const { act, data } = useBackend(context);
-  const { outfit, saveable } = data;
+  const { outfit, saveable, dummy64 } = data;
 
   return (
     <Window
       width={380}
       height={625}>
       <Window.Content>
-
-        <Box
+        <Box // todo: this box is wack and has weird bounding
           opacity={0.5}
           py={3}
           position="absolute"
           as="img"
-          src={`data:image/jpeg;base64,${data.dummy64}`}
+          src={`data:image/jpeg;base64,${dummy64}`}
           height="100%"
           width="100%"
           style={{
             '-ms-interpolation-mode': 'nearest-neighbor',
           }} />
-
         <Section
           fill
           title={
@@ -43,19 +41,16 @@ export const OutfitEditor = (props, context) => {
                 icon="code"
                 tooltip="Edit this outfit on a VV window"
                 tooltipPosition="left"
-                onClick={() => act("vv", {})}
-              />
+                onClick={() => act("vv", {})} />
               <Button
                 icon="save"
                 disabled={!saveable}
                 tooltip={!!saveable && "Save this outfit to the custom outfit list"}
                 tooltipPosition="left"
                 title={!saveable && "This outfit is already on the custom outfit list. Any changes made here will be immediately applied."}
-                onClick={() => act("save", {})}
-              />
+                onClick={() => act("save", {})} />
             </>
           }>
-
           <Box textAlign="center">
             <Stack mb={2}>
               <OutfitSlot name="Headgear" slot="head" />
@@ -87,9 +82,7 @@ export const OutfitEditor = (props, context) => {
               <OutfitSlot name="Right Pocket" slot="r_pocket" />
             </Stack>
           </Box>
-
         </Section>
-
       </Window.Content>
     </Window>
   );
@@ -98,19 +91,18 @@ export const OutfitEditor = (props, context) => {
 const OutfitSlot = (props, context) => {
   const { act, data } = useBackend(context);
   const { name, icon, slot } = props;
-  const currItem = data.outfit[slot];
+  const { outfit } = data;
+  const currItem = outfit[slot];
   return (
     <Stack.Item grow={1} basis={0}>
       <Button fluid height={2}
         icon={icon}
         title="Ctrl-Click to select any item"
+        content={<b>{name}</b>}
         onClick={e => {
           e.ctrlKey
             ?act("ctrlClick", { slot: slot })
-            :act("click", { slot: slot }); }}
-      >
-        <b>{name}</b>
-      </Button>
+            :act("click", { slot: slot }); }} />
       {currItem?.sprite && (
         <Box
           as="img"
