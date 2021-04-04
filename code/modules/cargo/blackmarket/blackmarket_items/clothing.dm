@@ -81,7 +81,7 @@
 
 /datum/blackmarket_item/clothing/gloves_love
 	name = "Gloves of Love"
-	desc = "Gloves found in abandoned Syndicate testing facillity. Seem to give pleasant head pats."
+	desc = "Gloves found in abandoned Syndicate testing facility. Seem to give pleasant head pats."
 	item = /obj/item/clothing/gloves/love
 
 	price_min = 300
