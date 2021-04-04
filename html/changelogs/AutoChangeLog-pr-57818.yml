@@ -1,0 +1,7 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - rscadd: "Canisters will leak when damaged."
+  - rscadd: "Canisters that break while highly pressured will explode."
+  - balance: "Canister base pressure capacity has been reduced by 8%."
+  - balance: "Canisters have a hidden pressure capacity that is up to 20% larger than the base labeled max."
