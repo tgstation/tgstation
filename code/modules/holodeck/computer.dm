@@ -153,6 +153,8 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			var/list/checked = program_cache.Copy()
 			if (obj_flags & EMAGGED)
 				checked |= emag_programs
+				log_game("[key_name(usr)] loaded a restricted Holodeck program: [program_to_load].")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] loaded a restricted Holodeck program: [program_to_load].")
 			var/valid = FALSE //dont tell security about this
 
 			for (var/prog in checked)//checks if program_to_load is any one of the loadable programs, if it isnt then it rejects it
@@ -171,6 +173,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			nerf(obj_flags & EMAGGED,FALSE)
 			obj_flags ^= EMAGGED
 			say("Safeties reset. Restarting...")
+			log_game("[key_name(usr)] disabled Holodeck safeties.")
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)
 /datum/map_template/holodeck/update_blacklist(turf/placement, list/input_blacklist)
