@@ -22490,7 +22490,7 @@
 	can_buckle = 1;
 	debris = list(/obj/singularity = 1);
 	density = 1;
-	desc = An odd device which produces a Gravitational Singularity when destroyed.;
+	desc = "An odd device which produces a Gravitational Singularity when destroyed.";
 	icon_state = "TheSingGen";
 	max_integrity = 200;
 	name = "Gravitational Singularity Generator";
