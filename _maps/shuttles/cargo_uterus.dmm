@@ -7,7 +7,9 @@
 /area/shuttle/supply)
 "n" = (
 /obj/machinery/door/unpowered/shuttle,
-/obj/docking_port/mobile/supply,
+/obj/docking_port/mobile/supply{
+	preferred_direction = 2
+	},
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/supply)
 "H" = (

@@ -494,7 +494,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -647,7 +647,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -2156,7 +2156,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -2576,7 +2576,7 @@
 "dPd" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -3988,7 +3988,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -3998,7 +3998,7 @@
 "fRl" = (
 /obj/effect/turf_decal/tile/red,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -5673,7 +5673,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -6043,7 +6043,7 @@
 /area/service/kitchen)
 "iYa" = (
 /obj/structure/cable,
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -8842,6 +8842,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"ncu" = (
+/obj/machinery/door/airlock/external{
+	name = "External Airlock"
+	},
+/turf/open/floor/plating,
+/area/science/test_area)
 "ncD" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -9664,7 +9670,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -13481,7 +13487,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "tyD" = (
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -13919,7 +13925,7 @@
 "ulR" = (
 /obj/docking_port/stationary{
 	dir = 4;
-	dwidth = 6;
+	dwidth = 5;
 	height = 12;
 	id = "mining_home";
 	name = "mining shuttle bay";
@@ -13927,7 +13933,7 @@
 	width = 11
 	},
 /turf/open/space/basic,
-/area/asteroid/nearstation)
+/area/space)
 "umc" = (
 /obj/structure/cable,
 /obj/machinery/camera/autoname,
@@ -15136,7 +15142,7 @@
 /area/science/mixing)
 "wgF" = (
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -15466,7 +15472,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -15517,6 +15523,9 @@
 /obj/structure/sign/warning/nosmoking/circle,
 /turf/closed/wall,
 /area/medical/medbay)
+"wJi" = (
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/engineering/gravity_generator)
 "wKe" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
@@ -15600,7 +15609,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/light,
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -15816,7 +15825,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/firealarm/directional/south,
-/turf/open/floor/iron/airless/white/corner{
+/turf/open/floor/iron/white/corner{
 	dir = 8
 	},
 /area/hallway/secondary/exit)
@@ -27300,7 +27309,7 @@ oeg
 oeg
 yhz
 seE
-oeg
+wJi
 oeg
 xmk
 kJH
@@ -28328,7 +28337,7 @@ oeg
 oeg
 mrp
 kXP
-oeg
+wJi
 oeg
 dxA
 pKA
@@ -59625,7 +59634,7 @@ upM
 upM
 upM
 upM
-wZl
+ncu
 wZl
 wZl
 wZl
@@ -59885,7 +59894,7 @@ xPG
 nNE
 vUu
 bCO
-wZl
+ncu
 bCO
 pcm
 gsI
@@ -61941,7 +61950,7 @@ xPG
 nNE
 vUu
 bCO
-wZl
+ncu
 bCO
 pcm
 gsI
@@ -62195,7 +62204,7 @@ upM
 upM
 upM
 upM
-wZl
+ncu
 wZl
 wZl
 wZl

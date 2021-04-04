@@ -14,6 +14,9 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
+"q" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
 "w" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/mineral/titanium/tiled/blue,
@@ -48,7 +51,8 @@
 "U" = (
 /obj/machinery/door/unpowered/shuttle,
 /obj/docking_port/mobile/emergency{
-	name = "Uterus emergency shuttle"
+	name = "Uterus emergency shuttle";
+	preferred_direction = 2
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
@@ -102,7 +106,7 @@ J
 J
 J
 a
-a
+q
 "}
 (3,1,1) = {"
 o
@@ -170,7 +174,7 @@ R
 X
 I
 a
-a
+q
 "}
 (7,1,1) = {"
 a
