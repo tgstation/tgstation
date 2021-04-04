@@ -93,24 +93,6 @@
 			carbon_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 200)
 		SEND_SIGNAL(carbon_target, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/cuteheadpat, src)
 
-/*
-/obj/item/clothing/gloves/love/braindamage
-	name = "\improper Gloves of Love"
-	desc = "Gloves designed for giving exceptionally cute head pats."
-	icon_state = "rainbow"
-	inhand_icon_state = "rainbowgloves"
-	transfer_prints = TRUE
-
-/obj/item/clothing/gloves/love/braindamage/Touch(atom/A, proximity, mouseparams)
-	. = ..()
-	var/mob/living/carbon/carbon_user = loc
-	if (!iscarbon(A))
-		return
-	var/mob/living/carbon/carbon_target = A
-	if (check_zone(carbon_user.zone_selected) == BODY_ZONE_HEAD && !carbon_user.combat_mode)
-
-		SEND_SIGNAL(carbon_target, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/cuteheadpat, src)
-*/
 /obj/item/clothing/gloves/color/plasmaman
 	desc = "Covers up those scandalous boney hands."
 	name = "plasma envirogloves"
