@@ -306,7 +306,7 @@
 
 /obj/machinery/door/proc/open()
 	if(!density)
-		return 1
+		return TRUE
 	if(operating)
 		return
 	operating = TRUE
@@ -324,7 +324,7 @@
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/close()
 	if(density)
