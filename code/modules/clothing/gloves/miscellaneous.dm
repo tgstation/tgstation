@@ -79,7 +79,7 @@
 		return
 	obj_flags |= EMAGGED
 	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, "<span class='notice'>You overload the [src]\'s nanochips.</span>")
+	to_chat(user, "<span class='notice'>You overload [src]\'s nanochips.</span>")
 
 
 /obj/item/clothing/gloves/love/Touch(atom/A, proximity, mouseparams)
