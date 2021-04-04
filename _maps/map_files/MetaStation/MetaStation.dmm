@@ -48306,7 +48306,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/maintenance/department/science/xenobiology)
+/area/science/xenobiology)
 "kxJ" = (
 /turf/open/floor/plating,
 /area/security/prison)
@@ -56574,7 +56574,7 @@
 /obj/machinery/holopad,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	sortType = 28
+	sortType = 1
 	},
 /turf/open/floor/iron/white,
 /area/science/cytology)
