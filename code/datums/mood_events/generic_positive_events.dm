@@ -25,7 +25,7 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/cuteheadpat
-	description = "<span class='nicegreen'>That was such a cute head pat!</span>\n"
+	description = "<span class='nicegreen'>Wow! That was an amazing head pat!</span>\n"
 	mood_change = 5
 	timeout = 2 MINUTES
 
