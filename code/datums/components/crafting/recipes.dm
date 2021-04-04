@@ -138,6 +138,7 @@
 	result = /obj/item/tailclub
 	reqs = list(/obj/item/organ/tail/lizard = 1,
 				/obj/item/stack/sheet/iron = 1)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -147,6 +148,7 @@
 	result = /obj/item/melee/chainofcommand/tailwhip
 	reqs = list(/obj/item/organ/tail/lizard = 1,
 				/obj/item/stack/cable_coil = 1)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -1019,14 +1021,6 @@
 	reqs = list(/obj/item/tank/internals/oxygen = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = MAXCOIL)
 	category = CAT_MISC
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
-
-/datum/crafting_recipe/multiduct
-	name = "Multi-layer duct"
-	result = /obj/machinery/duct/multilayered
-	time = 5
-	reqs = list(/obj/item/stack/ducts = 5)
-	category = CAT_MISC
-	tool_behaviors = list(TOOL_WELDER)
 
 /datum/crafting_recipe/rib
 	name = "Collosal Rib"

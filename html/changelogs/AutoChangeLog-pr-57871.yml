@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - admin: "Midround Syndicate Sleeper Agent is now logged and messages admins when triggered."

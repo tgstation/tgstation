@@ -26,6 +26,9 @@
 	var/base_heating = 140
 	var/base_cooling = 170
 	var/obj/item/tank/holding
+	var/use_enviroment_heat = FALSE
+	var/skipping_work = FALSE
+	var/auto_thermal_regulator = FALSE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
@@ -34,20 +37,6 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/getNodeConnects()
 	return list(dir, turn(dir, 180))
-
-/obj/machinery/atmospherics/components/binary/thermomachine/proc/swap_function()
-	cooling = !cooling
-	if(cooling)
-		icon_state_off = "freezer"
-		icon_state_on = "freezer_1"
-		icon_state_open = "freezer-o"
-	else
-		icon_state_off = "heater"
-		icon_state_on = "heater_1"
-		icon_state_open = "heater-o"
-	target_temperature = T20C
-	RefreshParts()
-	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/on_construction(obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
@@ -67,21 +56,25 @@
 	var/calculated_bin_rating
 	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
 		calculated_bin_rating += bin.rating
-	heat_capacity = 5000 * ((calculated_bin_rating - 1) ** 2)
+	heat_capacity = 7500 * ((calculated_bin_rating - 1) ** 2)
 	min_temperature = T20C
 	max_temperature = T20C
-	if(cooling)
-		var/calculated_laser_rating
-		for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-			calculated_laser_rating += laser.rating
-		min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
-	else
-		var/calculated_laser_rating
-		for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-			calculated_laser_rating += laser.rating
-		max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
+	var/calculated_laser_rating
+	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
+		calculated_laser_rating += laser.rating
+	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
+	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
+
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_icon_state()
+	if(cooling)
+		icon_state_off = "freezer"
+		icon_state_on = "freezer_1"
+		icon_state_open = "freezer-o"
+	else
+		icon_state_off = "heater"
+		icon_state_on = "heater_1"
+		icon_state_open = "heater-o"
 	if(panel_open)
 		icon_state = icon_state_open
 		return ..()
@@ -100,12 +93,15 @@
 		. += holding
 	if(showpipe)
 		. += getpipeimage(icon, "scrub_cap", initialize_directions)
+	if(skipping_work && on)
+		var/mutable_appearance/skipping = mutable_appearance(icon, "blinking")
+		. += skipping
 
 /obj/machinery/atmospherics/components/binary/thermomachine/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).</span>"
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Efficiency <b>[(heat_capacity/5000)*100]%</b>.</span>"
+		. += "<span class='notice'>The status display reads: Efficiency <b>[(heat_capacity/7500)*100]%</b>.</span>"
 		. += "<span class='notice'>Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.</span>"
 
 /obj/machinery/atmospherics/components/binary/thermomachine/AltClick(mob/living/user)
@@ -138,6 +134,10 @@
 	var/main_heat_capacity = main_port.heat_capacity()
 	var/thermal_heat_capacity = thermal_exchange_port.heat_capacity()
 	var/temperature_delta = main_port.temperature - target_temperature
+	if(auto_thermal_regulator)
+		cooling = temperature_delta > 0
+	else
+		temperature_delta = cooling ? max(temperature_delta, 0) : min(temperature_delta, 0) //no cheesy strats
 
 	var/motor_heat = 2500
 	if(abs(temperature_delta) < 1.5) //allow the machine to work more finely
@@ -146,35 +146,53 @@
 	var/heat_amount = temperature_delta * (main_heat_capacity * heat_capacity / (main_heat_capacity + heat_capacity))
 	var/efficiency = 1
 	var/temperature_difference = 0
-	if(main_port.total_moles() && thermal_exchange_port.total_moles() && nodes[2])
-		if(cooling)
+	var/skip_tick = TRUE
+	if(!use_enviroment_heat && main_port.total_moles() > 0.01)
+		if(cooling && thermal_exchange_port.total_moles() > 0.01 && nodes[2])
 			thermal_exchange_port.temperature = max(thermal_exchange_port.temperature + heat_amount / thermal_heat_capacity + motor_heat / thermal_heat_capacity, TCMB)
+		else if(cooling && (!thermal_exchange_port.total_moles() || !nodes[2]))
+			skipping_work = skip_tick
+			update_appearance()
+			update_parents()
+			return
 		temperature_difference = thermal_exchange_port.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
-			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0)
+			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0.65)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency)/ main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
-	else if(main_port.total_moles() && enviroment.total_moles() && (!thermal_exchange_port.total_moles() || !nodes[2]))
-		var/enviroment_efficiency = 0
-		if(cooling)
+		skip_tick = FALSE
+	if(use_enviroment_heat && main_port.total_moles() > 0.01)
+		var/enviroment_efficiency = 1
+		if(cooling && enviroment.total_moles() > 0.01)
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
 			if(enviroment.total_moles())
-				enviroment_efficiency = clamp(log(1.55, enviroment.total_moles()) * 0.15, 0, 1)
+				enviroment_efficiency = clamp(log(1.55, enviroment.total_moles()) * 0.15, 0.65, 1)
 			enviroment.temperature = max(enviroment.temperature + heat_amount / enviroment_heat_capacity, TCMB)
 			air_update_turf(FALSE, FALSE)
+		else if(cooling && !enviroment.total_moles())
+			skipping_work = skip_tick
+			update_appearance()
+			update_parents()
+			return
 		temperature_difference = enviroment.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
-			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0)
+			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0.65)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency * enviroment_efficiency) / main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
+		skip_tick = FALSE
+
+	skipping_work = skip_tick
 
 	heat_amount = abs(heat_amount)
-	var/power_usage
+	var/power_usage = 0
 	if(temperature_delta  > 1)
-		power_usage = (heat_amount * 0.35 + idle_power_usage) ** (1.25 - (5e6 * efficiency) / (max(5e6, heat_amount)))
+		power_usage = (heat_amount * 0.35 + idle_power_usage) ** (1.25 - (5e7 * efficiency) / (max(5e7, heat_amount)))
 	else
 		power_usage = idle_power_usage
+	if(power_usage > 1e6)
+		power_usage *= efficiency
 	use_power(power_usage)
+	update_appearance()
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/item, mob/user, params)
@@ -278,6 +296,9 @@
 	data["tank_gas"] = FALSE
 	if(holding && holding.air_contents.total_moles())
 		data["tank_gas"] = TRUE
+	data["use_env_heat"] = use_enviroment_heat
+	data["skipping_work"] = skipping_work
+	data["auto_thermal_regulator"] = auto_thermal_regulator
 	return data
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_act(action, params)
@@ -292,7 +313,7 @@
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("cooling")
-			swap_function()
+			cooling = !cooling
 			investigate_log("was changed to [cooling ? "cooling" : "heating"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("target")
@@ -321,6 +342,12 @@
 			if(holding)
 				replace_tank(usr)
 				. = TRUE
+		if("use_env_heat")
+			use_enviroment_heat = !use_enviroment_heat
+			. = TRUE
+		if("auto_thermal_regulator")
+			auto_thermal_regulator = !auto_thermal_regulator
+			. = TRUE
 
 	update_appearance()
 

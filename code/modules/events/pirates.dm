@@ -192,7 +192,7 @@
 	STOP_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/update_icon_state()
-	icon_state = active ? "dominator-blue" : "dominator"
+	icon_state = active ? "dominator-Blue" : "dominator"
 	return ..()
 
 /obj/machinery/shuttle_scrambler/Destroy()

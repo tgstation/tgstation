@@ -1330,3 +1330,19 @@
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/scanning_module = 4)
+
+/obj/item/circuitboard/machine/exoscanner
+	name = "Exoscanner (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/exoscanner
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 4,
+		/obj/item/stock_parts/scanning_module = 4)
+
+/obj/item/circuitboard/machine/exodrone_launcher
+	name = "Exploration Drone Launcher (Machine Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/exodrone_launcher
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 4,
+		/obj/item/stock_parts/scanning_module = 4)
