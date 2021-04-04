@@ -140,7 +140,7 @@
 		var/datum/callback/timer_callback = CALLBACK(src, .proc/adjust_do_after_timer)
 
 		///players can team up to open it faster, but only up to a point. 20 seconds -> 13.333 -> 8.88
-		var/true_opening_time = TOOLLESS_OPEN_DURATION_SOLO / max((min(3, number_of_people_trying_to_open) * 0.75), 1)
+		var/true_opening_time = TOOLLESS_OPEN_DURATION_SOLO / max(number_of_people_trying_to_open * 0.75, 1)
 
 		if(do_after_dynamic(user, true_opening_time, src, extra_checks = burning_callback, dynamic_timer_change = timer_callback))
 			user.visible_message("<span class='notice'>[user] opens \the [src] with their [hand_string].</span>", \
@@ -221,10 +221,10 @@
 
 ///used in a callback given to do_after_dynamic to adjust the timer based on how many people are trying to open it barehanded
 /obj/machinery/door/firedoor/proc/adjust_do_after_timer(old_delay, multiplicative_action_slowdown)
-	if(old_delay == (TOOLLESS_OPEN_DURATION_SOLO / max((min(3, number_of_people_trying_to_open) * 0.5), 1)) * multiplicative_action_slowdown)
+	if(old_delay == (TOOLLESS_OPEN_DURATION_SOLO / max(number_of_people_trying_to_open * 0.75, 1)) * multiplicative_action_slowdown)
 		return null
 	else
-		return (TOOLLESS_OPEN_DURATION_SOLO / max((min(3, number_of_people_trying_to_open) * 0.5), 1)) * multiplicative_action_slowdown
+		return (TOOLLESS_OPEN_DURATION_SOLO / max(number_of_people_trying_to_open * 0.75, 1)) * multiplicative_action_slowdown
 
 /obj/machinery/door/firedoor/proc/decrement_bare_hand_openers(datum/source)
 	SIGNAL_HANDLER
