@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
 	var/heat_limit = 5000
 	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
-	var/pressure_limit = 50000
+	var/pressure_limit = 46000
 	///Maximum amount of heat that the canister can handle before taking damage
 	var/temperature_resistance = 1000 + T0C
 	///Initial temperature gas mixture
@@ -89,10 +89,15 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
+
 	if(existing_mixture)
 		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
+
+	var/random_quality = rand()
+	pressure_limit = initial(pressure_limit) * (1 + 0.2 * random_quality)
+
 	update_appearance()
 
 /obj/machinery/portable_atmospherics/canister/ComponentInitialize()
@@ -109,7 +114,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "<span class='notice'>This canister is Tier [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit_pressure(pressure_limit, 0)]</b>.</span>"
+		. += "<span class='notice'>This canister is Tier [mode]. A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]</b>.</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
@@ -331,12 +336,12 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/tier_1
 	heat_limit = 5000
-	pressure_limit = 50000
+	pressure_limit = 46000
 	mode = CANISTER_TIER_1
 
 /obj/machinery/portable_atmospherics/canister/tier_2
 	heat_limit = 500000
-	pressure_limit = 5e6
+	pressure_limit = 4600000
 	volume = 3000
 	max_integrity = 300
 	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
@@ -345,7 +350,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/tier_3
 	heat_limit = 1e12
-	pressure_limit = 1e14
+	pressure_limit = 9.2e13
 	volume = 5000
 	max_integrity = 500
 	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
@@ -455,11 +460,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/proc/canister_break()
 	disconnect()
 	var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
+	var/expelled_pressure = expelled_gas?.return_pressure()
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
 	air_update_turf(FALSE, FALSE)
-
 	obj_break()
+
+	if(expelled_pressure > pressure_limit)
+		var/pressure_dif = expelled_pressure - pressure_limit
+		var/max_pressure_difference = 20000
+		var/explosion_range = CEILING(min(pressure_dif, max_pressure_difference) / 1000, 1)
+		explosion(T, 0, 0, explosion_range, 0, smoke = FALSE)
+
 	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
@@ -486,12 +498,30 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		valve_open = !valve_open
 		timing = FALSE
 
-	// Handle gas transfer.
-	if(valve_open)
-		var/turf/T = get_turf(src)
-		var/datum/gas_mixture/target_air = holding ? holding.air_contents : T.return_air()
+	var/turf/location = get_turf(src)
 
-		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
+	var/mix_air = FALSE
+	var/pressure = release_pressure
+	var/gas_mix = holding?.air_contents
+	var/air_update = FALSE
+
+	if(valve_open)
+		mix_air = TRUE
+
+	// When at least 10% of integrity is lost it starts checking for leaking
+	if(obj_integrity < max_integrity * 0.9)
+		var/leak_chance = (1 - obj_integrity / max_integrity) * 100
+		if(prob(leak_chance))
+			mix_air = TRUE
+			pressure = air_contents.return_pressure() / 10
+			gas_mix = location.return_air()
+			air_update = TRUE
+
+	// Handle gas transfer.
+	if(mix_air)
+		var/datum/gas_mixture/target_air = gas_mix || location.return_air()
+
+		if(air_contents.release_gas_to(target_air, pressure) && (!holding || air_update))
 			air_update_turf(FALSE, FALSE)
 
 	var/our_pressure = air_contents.return_pressure()
