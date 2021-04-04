@@ -347,6 +347,12 @@
 	credit_cost = CARGO_CRATE_VALUE * 4
 	description = "A train but in space, choo choo!"
 
+/datum/map_template/shuttle/emergency/uterus
+	suffix = "uterus"
+	name = "Uterus Station Emergency Shuttle"
+	credit_cost = CARGO_CRATE_VALUE * 10
+	description = "A really old shuttle, containing some sleepers for lifeform sustaining."
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
@@ -531,6 +537,10 @@
 	suffix = "pubby"
 	name = "supply shuttle (Pubby)"
 
+/datum/map_template/shuttle/cargo/uterus
+	suffix = "uterus"
+	name = "supply shuttle (Uterus)"
+
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"
 	name = "Delta Station Emergency Shuttle"
@@ -602,6 +612,10 @@
 	suffix = "large"
 	name = "mining shuttle (Large)"
 
+/datum/map_template/shuttle/mining/uterus
+	suffix = "uterus"
+	name = "mining shuttle (Uterus)"
+
 /datum/map_template/shuttle/labour/delta
 	suffix = "delta"
 	name = "labour shuttle (Delta)"
@@ -633,6 +647,10 @@
 /datum/map_template/shuttle/arrival/omega
 	suffix = "omega"
 	name = "arrival shuttle (Omega)"
+
+/datum/map_template/shuttle/arrival/uterus
+	suffix = "uterus"
+	name = "arrival shuttle (Uterus)"
 
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"

@@ -1,0 +1,338 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"e" = (
+/obj/structure/table/wood,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"f" = (
+/obj/structure/table/wood,
+/obj/machinery/button/door{
+	id = "miner";
+	name = "Outer Airlock Blast Door Control"
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"j" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"k" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"l" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"o" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/camera_advanced/shuttle_docker{
+	designate_time = 50;
+	dir = 8;
+	jumpto_ports = list("mining_home;mining_away;landing_zone_dock;mining_public");
+	name = "Mining Shuttle Navigation Computer";
+	shuttleId = "mining";
+	shuttlePortId = "mining_custom";
+	x_offset = 5;
+	y_offset = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"p" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/shuttle/mining)
+"r" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"s" = (
+/obj/machinery/door/poddoor{
+	base_icon_state = "Outer Airlock";
+	id = "miner"
+	},
+/obj/docking_port/mobile{
+	dheight = 6;
+	dir = 4;
+	height = 11;
+	id = "mining";
+	name = "mining shuttle";
+	port_direction = 2;
+	preferred_direction = 4;
+	width = 12
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"t" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/shuttle/mining{
+	circuit = null;
+	dir = 8;
+	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public;mining_custom"
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"u" = (
+/obj/structure/table/wood,
+/obj/item/paper,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"v" = (
+/obj/effect/landmark/start/shaft_miner,
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"B" = (
+/obj/effect/landmark/start/shaft_miner,
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"E" = (
+/obj/machinery/mineral/equipment_vendor,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"I" = (
+/obj/machinery/door/airlock/external{
+	name = "External Airlock"
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"J" = (
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"L" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"M" = (
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"O" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Glass Airlock"
+	},
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"P" = (
+/obj/structure/table/wood,
+/obj/item/pen/survival,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"S" = (
+/obj/structure/bed,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"T" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"W" = (
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/mineral/titanium/tiled/purple,
+/area/shuttle/mining)
+"Z" = (
+/turf/closed/wall/mineral/titanium/survival,
+/area/shuttle/mining)
+
+(1,1,1) = {"
+a
+a
+a
+Z
+Z
+s
+Z
+Z
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+p
+p
+Z
+e
+M
+W
+Z
+p
+p
+a
+a
+"}
+(3,1,1) = {"
+Z
+c
+c
+Z
+f
+M
+W
+Z
+c
+c
+Z
+a
+"}
+(4,1,1) = {"
+Z
+M
+M
+Z
+T
+I
+r
+Z
+v
+u
+Z
+a
+"}
+(5,1,1) = {"
+Z
+W
+M
+Z
+M
+M
+M
+Z
+M
+P
+Z
+a
+"}
+(6,1,1) = {"
+Z
+L
+M
+M
+M
+M
+M
+M
+M
+S
+Z
+l
+"}
+(7,1,1) = {"
+Z
+E
+M
+M
+M
+J
+M
+M
+M
+M
+Z
+l
+"}
+(8,1,1) = {"
+Z
+j
+M
+M
+M
+M
+M
+M
+M
+M
+Z
+l
+"}
+(9,1,1) = {"
+Z
+Z
+Z
+Z
+T
+O
+r
+Z
+Z
+Z
+Z
+a
+"}
+(10,1,1) = {"
+a
+Z
+Z
+M
+M
+M
+M
+M
+Z
+Z
+a
+a
+"}
+(11,1,1) = {"
+a
+l
+Z
+M
+M
+B
+M
+M
+Z
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+l
+Z
+M
+k
+t
+o
+M
+Z
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+l
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+a
+a
+a
+"}

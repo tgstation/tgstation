@@ -1,0 +1,191 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"o" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"p" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
+"w" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
+"I" = (
+/obj/structure/window/reinforced,
+/obj/item/storage/firstaid,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"J" = (
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
+"N" = (
+/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
+"P" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/storage/firstaid,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"R" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"T" = (
+/obj/item/extinguisher,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"U" = (
+/obj/machinery/door/unpowered/shuttle,
+/obj/docking_port/mobile/emergency{
+	name = "Uterus emergency shuttle"
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
+"W" = (
+/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
+"X" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"Z" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+U
+a
+a
+W
+a
+a
+w
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+a
+a
+"}
+(3,1,1) = {"
+o
+J
+J
+Z
+J
+Z
+J
+Z
+J
+Z
+J
+Z
+J
+J
+N
+"}
+(4,1,1) = {"
+o
+J
+J
+Z
+J
+Z
+J
+Z
+J
+Z
+J
+Z
+Z
+p
+N
+"}
+(5,1,1) = {"
+o
+J
+J
+Z
+J
+Z
+J
+Z
+J
+Z
+J
+Z
+J
+J
+N
+"}
+(6,1,1) = {"
+a
+a
+P
+X
+R
+X
+T
+X
+T
+X
+R
+X
+I
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+W
+a
+a
+a
+a
+a
+a
+"}

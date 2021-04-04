@@ -1,0 +1,67 @@
+{
+	"version": 1,
+	"map_name": "UterusStation",
+	"map_path": "map_files/UterusStation",
+	"map_file": "trunkmap.dmm",
+	"shuttles": {
+		"cargo": "cargo_uterus",
+		"ferry": "ferry_base",
+		"whiteship": "whiteship_box",
+		"emergency": "emergency_uterus"
+	},
+	"job_changes": {
+		"prisoner": {
+			"total_positions": 0,
+			"spawn_positions": 0
+		},
+		"psychologist": {
+			"total_positions": 0,
+			"spawn_positions": 0
+		},
+		"paramedic": {
+			"total_positions": 0,
+			"spawn_positions": 0
+		},
+		"cyborg": {
+			"total_positions": 0,
+			"spawn_positions": 0
+		},
+		"cook": {
+			"total_positions": 1,
+			"spawn_positions": 1
+		},
+		"roboticist": {
+			"total_positions": 3,
+			"spawn_positions": 3
+		},
+		"medical_doctor": {
+			"total_positions": 4,
+			"spawn_positions": 4
+		},
+		"scientist": {
+			"total_positions": 3,
+			"spawn_positions": 3
+		},
+
+		"security_officer": {
+			"total_positions": 7,
+			"spawn_positions": 7
+		},
+		"janitor": {
+			"total_positions": 1,
+			"spawn_positions": 1
+		},
+		"botanist": {
+			"total_positions": 3,
+			"spawn_positions": 3
+		},
+		"cargo_technician": {
+			"total_positions": 2,
+			"spawn_positions": 2
+		},
+		"chemist": {
+			"total_positions": 1,
+			"spawn_positions": 1
+		},
+	}
+}
