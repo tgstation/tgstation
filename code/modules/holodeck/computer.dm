@@ -153,8 +153,6 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			var/list/checked = program_cache.Copy()
 			if (obj_flags & EMAGGED)
 				checked |= emag_programs
-				log_game("[key_name(usr)] loaded a restricted Holodeck program: [program_to_load].")
-				message_admins("[ADMIN_LOOKUPFLW(usr)] loaded a restricted Holodeck program: [program_to_load].")
 			var/valid = FALSE //dont tell security about this
 
 			for (var/prog in checked)//checks if program_to_load is any one of the loadable programs, if it isnt then it rejects it
@@ -229,6 +227,10 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 
 	template = SSmapping.holodeck_templates[map_id]
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
+
+	if(template.restricted)
+		log_game("[key_name(usr)] loaded a restricted Holodeck program: [program].")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] loaded a restricted Holodeck program: [program].")
 
 	spawned = template.created_atoms //populate the spawned list with the atoms belonging to the holodeck
 
