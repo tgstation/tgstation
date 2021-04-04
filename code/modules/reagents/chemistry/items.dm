@@ -96,7 +96,7 @@
 * pH meter that will give a detailed or truncated analysis of all the reagents in of an object with a reagents datum attached to it. Only way of detecting purity for now.
 */
 /obj/item/ph_meter
-	name = "Chemistry Analyser"
+	name = "Chemistry Analyzer"
 	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays nothing."
 	icon_state = "pHmeter"
 	icon = 'icons/obj/chemical.dmi'
