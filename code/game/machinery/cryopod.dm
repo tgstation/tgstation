@@ -86,7 +86,6 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	switch(action)
 		if("one_item")
-			var/obj/item/desired_item
 			if(!allowed(user))
 				to_chat(user, "<span class='warning'>Access Denied.</span>")
 				return
@@ -95,17 +94,14 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			if(!params["item"])
 				return
 
-			if(params["item"])
-				desired_item = params["item"]
-
-			if(!(desired_item in frozen_items))
-				to_chat(user, "<span class='notice'>\The [desired_item] is no longer in storage.</span>")
+			var/obj/item/item = frozen_items[text2num(params["item"])]
+			if(!item)
+				to_chat(user, "<span class='notice'>\The [item] is no longer in storage.</span>")
 				return
 
-			visible_message("<span class='notice'>The console beeps happily as it disgorges \the [desired_item].</span>")
-
-			desired_item.forceMove(get_turf(src))
-			frozen_items -= desired_item
+			visible_message("<span class='notice'>The console beeps happily as it disgorges \the [item].</span>")
+			item.forceMove(get_turf(src))
+			frozen_items -= item
 
 		if("all_items")
 			if(!allowed(user))
@@ -340,7 +336,9 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 				else
 					mob_occupant.transferItemToLoc(items, loc, TRUE)
 
-	QDEL_LIST(mob_occupant.GetAllContents())
+	var/list/contents = list()
+	contents = mob_occupant.GetAllContents()
+	QDEL_LIST(contents)
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(TRUE))
@@ -354,7 +352,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	name = initial(name)
 
 /obj/machinery/cryopod/MouseDrop_T(mob/living/target, mob/user)
-	if(!istype(target) || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || !ismob(target) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
+	if(!istype(target) || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || !ismob(target) || isanimal(target) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
 		return
 
 	if(occupant)
@@ -390,7 +388,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			COOLDOWN_START(target.client, cryo_warned, 5 MINUTES)
 			return
 
-	if(!target || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
+	if(!target || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || isanimal(target) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
 		return
 		// rerun the checks in case of shenanigans
 

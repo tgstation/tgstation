@@ -59,15 +59,15 @@ const ItemList = (props, context) => {
         <>
           <Section height={11} fill scrollable>
             <LabeledList>
-              {frozen_items.map((item) => (
+              {frozen_items.map((item, index) => (
                 <LabeledList.Item
                   key={item}
                   label={item.replace(/^\w/, (c) => c.toUpperCase())}
                   buttons={
                     <Button
-                      icon="hand-holding"
+                      icon="arrow-down"
                       content="Drop"
-                      onClick={() => act('one_item', { item })}
+                      onClick={() => act('one_item', { item: index + 1} )}
                     />
                   }
                 />
