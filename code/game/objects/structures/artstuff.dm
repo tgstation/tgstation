@@ -54,9 +54,10 @@
 	var/icon/generated_icon
 
 	// Painting overlay offset when framed
-	var/framed_offset_x = 11
-	var/framed_offset_y = 10
+	var/framed_offset_x = 10
+	var/framed_offset_y = 9
 
+	var/wall_y_offset = 32
 	pixel_x = 10
 	pixel_y = 9
 
@@ -197,8 +198,9 @@
 	height = 19
 	pixel_x = 6
 	pixel_y = 9
-	framed_offset_x = 8
-	framed_offset_y = 9
+	framed_offset_x = 6
+	framed_offset_y = 7
+	wall_y_offset = 30
 
 /obj/item/canvas/twentythree_nineteen
 	icon_state = "23x19"
@@ -206,8 +208,9 @@
 	height = 19
 	pixel_x = 4
 	pixel_y = 10
-	framed_offset_x = 6
-	framed_offset_y = 8
+	framed_offset_x = 4
+	framed_offset_y = 7
+	wall_y_offset = 30
 
 /obj/item/canvas/twentythree_twentythree
 	icon_state = "23x23"
@@ -215,8 +218,9 @@
 	height = 23
 	pixel_x = 5
 	pixel_y = 9
-	framed_offset_x = 5
-	framed_offset_y = 6
+	framed_offset_x = 4
+	framed_offset_y = 7
+	wall_y_offset = 28
 
 /obj/item/canvas/twentyfour_twentyfour
 	name = "ai universal standard canvas"
@@ -227,12 +231,13 @@
 	pixel_x = 2
 	pixel_y = 1
 	framed_offset_x = 4
-	framed_offset_y = 5
+	framed_offset_y = 7
+	wall_y_offset = 28
 
 /obj/item/wallframe/painting
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/painting_frames.dmi'
 	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = NONE
 	icon_state = "frame-empty"
@@ -240,8 +245,8 @@
 
 /obj/structure/sign/painting
 	name = "Painting"
-	desc = "Art or \"Art\"? You decide."
-	icon = 'icons/obj/decals.dmi'
+	desc = "Art or \"Art\"? You decide. Use wirecutters to remove the painting."
+	icon = 'icons/obj/painting_frames.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
 	custom_materials = list(/datum/material/wood = 2000)
@@ -255,11 +260,9 @@
 /obj/structure/sign/painting/Initialize(mapload, dir, building)
 	. = ..()
 	SSpersistence.painting_frames += src
-	if(dir)
-		setDir(dir)
+	AddElement(/datum/element/art, OK_ART)
 	if(building)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -30 : 30)
-		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
+		pixel_y = 32
 
 /obj/structure/sign/painting/Destroy()
 	. = ..()
@@ -292,23 +295,23 @@
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user,obj/item/canvas/new_canvas)
 	if(user.transferItemToLoc(new_canvas,src))
-		current_canvas = new_canvas
-		if(!current_canvas.finalized)
-			current_canvas.finalize(user)
-		to_chat(user,"<span class='notice'>You frame [current_canvas].</span>")
-	update_appearance()
+		C = new_canvas
+		if(!C.finalized)
+			C.finalize(user)
+		pixel_y = C.wall_y_offset
+		to_chat(user,"<span class='notice'>You frame [C].</span>")
+	update_icon()
 
 /obj/structure/sign/painting/proc/try_rename(mob/user)
 	if(current_canvas.painting_name == initial(current_canvas.painting_name))
 		current_canvas.try_rename(user)
 
-/obj/structure/sign/painting/update_name(updates)
-	name = current_canvas ? "painting - [current_canvas.painting_name]" : initial(name)
-	return ..()
-
-/obj/structure/sign/painting/update_desc(updates)
-	desc = current_canvas ? desc_with_canvas : initial(desc)
-	return ..()
+/obj/structure/sign/painting/update_icon_state()
+	. = ..()
+	if(C)
+		icon_state = null
+	else
+		icon_state = "frame-empty"
 
 /obj/structure/sign/painting/update_icon_state()
 	icon_state = "[base_icon_state]-[current_canvas?.generated_icon ? "overlay" : "empty"]"
@@ -316,8 +319,13 @@
 
 /obj/structure/sign/painting/update_overlays()
 	. = ..()
-	if(!current_canvas?.generated_icon)
-		return
+	if(C)
+		var/mutable_appearance/MA = mutable_appearance(C.generated_icon)
+		MA.pixel_x = C.framed_offset_x
+		MA.pixel_y = C.framed_offset_y
+		. += MA
+		var/mutable_appearance/frame = mutable_appearance('icons/obj/painting_frames.dmi',"[C.icon_state]frame")
+		. += frame
 
 	var/mutable_appearance/MA = mutable_appearance(current_canvas.generated_icon)
 	MA.pixel_x = current_canvas.framed_offset_x
