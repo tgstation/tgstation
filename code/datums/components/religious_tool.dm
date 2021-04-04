@@ -92,42 +92,51 @@
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/religious_tool/ui_state(mob/user)
-	if(!iscarbon(user))
-		return UI_CLOSE
-	var/mob/living/carbon/carbon = user
+	if(!iscarbon(usr))
+		return GLOB.never_state
+	var/mob/living/carbon/carbon = usr
 	if(!carbon.is_holding_item_of_type(catalyst_type))
-		return UI_CLOSE
-	return ..() //default state if addditional checks pass
+		return GLOB.never_state
+	return GLOB.default_state
 
 /datum/component/religious_tool/ui_data(mob/user)
 	var/list/data = list()
 	//cannot find global vars, so lets offer options
 	if(!SetGlobalToLocal())
 		data["sects"] = generate_available_sects(user)
+		data["alignment"] = ALIGNMENT_NEUT //neutral theme if you have no sect
 	else
 		data["sects"] = null
-		data["name"] = initial(easy_access_sect.name)
-		data["desc"] = initial(easy_access_sect.desc)
-		data["quote"] = initial(easy_access_sect.quote)
-		data["icon"] = initial(easy_access_sect.tgui_icon)
+		data["name"] = easy_access_sect.name
+		data["desc"] = easy_access_sect.desc
+		data["quote"] = easy_access_sect.quote
+		data["alignment"] = easy_access_sect.alignment
+		data["icon"] = easy_access_sect.tgui_icon
+		data["favordesc"] = easy_access_sect.tool_examine(user)
+		data["favor"] = easy_access_sect.favor
+		data["deity"] = GLOB.deity
 		data["rites"] = generate_available_rites()
+		data["wanted"] = generate_sacrifice_list()
 
-
+	var/atom/atom_parent = parent
+	data["toolname"] = atom_parent.name
 	data["can_select_sect"] = (operation_flags & RELIGION_TOOL_SECTSELECT)
 	data["can_invoke_rite"] = (operation_flags & RELIGION_TOOL_INVOKE)
 	data["can_sacrifice_item"] = (operation_flags & RELIGION_TOOL_SACRIFICE)
+	return data
 
 /datum/component/religious_tool/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	switch(action)
 		if("sect_select")
-			var/path = params["path"]
-			select_sect(usr, path)
+			select_sect(usr, params["path"])
+		if("perform_rite")
+			perform_rite(usr, params["path"])
 		else
 			to_chat(world, action)
 
 
-/// Select the sect, called async from [/datum/component/religious_tool/proc/AttemptActions]
+/// Select the sect, called from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/select_sect(mob/living/user, path)
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
@@ -146,7 +155,7 @@
 	easy_access_sect = GLOB.religious_sect
 	after_sect_select_cb.Invoke()
 
-/// Perform the rite, called async from [/datum/component/religious_tool/proc/AttemptActions]
+/// Perform the rite, called from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/perform_rite(mob/living/user, path)
 	if(user.mind.holy_role == HOLY_ROLE_DEACON)
 		to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
@@ -181,6 +190,7 @@
 		var/datum/religion_sect/not_a_real_instance_rs = path
 		sect["name"] = initial(not_a_real_instance_rs.name)
 		sect["desc"] = initial(not_a_real_instance_rs.desc)
+		sect["alignment"] = initial(not_a_real_instance_rs.alignment)
 		sect["quote"] = initial(not_a_real_instance_rs.quote)
 		sect["icon"] = initial(not_a_real_instance_rs.tgui_icon)
 		sect["path"] = path
@@ -198,10 +208,25 @@
 		var/datum/religion_rites/rite_type = path
 		rite["name"] = initial(rite_type.name)
 		rite["desc"] = initial(rite_type.desc)
-		rite["favor"] = initial(rite_type.favor_cost)
+		var/cost = initial(rite_type.favor_cost)
+		rite["favor"] = cost
+		rite["can_cast"] = cost > easy_access_sect.favor
 		rite["path"] = path
 		rites_to_pick += list(rite)
 	return rites_to_pick
+
+/**
+ * Generates an english list (so string) of wanted sac items. Returns null if no targets!
+ */
+/datum/component/religious_tool/proc/generate_sacrifice_list()
+	if(!easy_access_sect.desired_items)
+		return //specifically null so the data sends as such
+	var/list/item_names = list()
+	for(var/atom/sac_type as anything in easy_access_sect.desired_items)
+		var/append = item_names[sac_type]
+		var/entry = "[initial(sac_type.name)]s [append]"
+		item_names += entry
+	return english_list(item_names)
 
 /**
  * Appends to examine so the user knows it can be used for religious purposes.
@@ -219,16 +244,12 @@
 
 	if(!can_i_see)
 		return
+	examine_list += "<span class='notice'>Use a bible to interact with this.</span>"
 	if(!easy_access_sect)
 		if(operation_flags & RELIGION_TOOL_SECTSELECT)
 			examine_list += "<span class='notice'>This looks like it can be used to select a sect.</span>"
 			return
-
-	examine_list += easy_access_sect.tool_examine(user)
-	if(!easy_access_sect.rites_list)
-		return //if we dont have rites it doesnt do us much good if the object can be used to invoke them!
 	if(operation_flags & RELIGION_TOOL_SACRIFICE)//this can be moved around if things change but usually no rites == no sacrifice
 		examine_list += "<span class='notice'>Desired items can be used on this to increase favor.</span>"
-	if(operation_flags & RELIGION_TOOL_INVOKE)
-		examine_list += "List of available Rites:"
-		examine_list += easy_access_sect.rites_list
+	if(easy_access_sect.rites_list && operation_flags & RELIGION_TOOL_INVOKE)
+		examine_list += "<span class='notice'>You can invoke rites from this.</span>"

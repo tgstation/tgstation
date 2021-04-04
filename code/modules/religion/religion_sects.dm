@@ -28,7 +28,7 @@
 	var/max_favor = 1000
 	/// The default value for an item that can be sacrificed
 	var/default_item_favor = 5
-	/// Turns into 'desired_items_typecache', lists the types that can be sacrificed barring optional features in can_sacrifice()
+	/// Turns into 'desired_items_typecache', and is optionally assoc'd to sacrifice instructions if needed.
 	var/list/desired_items
 	/// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
@@ -71,7 +71,7 @@
 
 /// Returns a description for religious tools
 /datum/religion_sect/proc/tool_examine(mob/living/holy_creature)
-	return "<span class='notice'>The sect currently has [round(favor)] favor with [GLOB.deity].</span>"
+	return "You are currently at [round(favor)] favor with [GLOB.deity]."
 
 /// Adjust Favor by a certain amount. Can provide optional features based on a user. Returns actual amount added/removed
 /datum/religion_sect/proc/adjust_favor(amount = 0, mob/living/chap)
@@ -115,10 +115,12 @@
 		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
+/**** Nanotrasen Approved God ****/
+
 /datum/religion_sect/puritanism
-	name = "Puritanism (Default)"
+	name = "Nanotrasen Approved God"
 	desc = "Your run-of-the-mill sect, there are no benefits or boons associated."
-	quote = "Praise normalcy!"
+	quote = "Nanotrasen Recommends!"
 	tgui_icon = "bible"
 
 /**** Mechanical God ****/
@@ -130,7 +132,7 @@
 	do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
 	tgui_icon = "robot"
 	alignment = ALIGNMENT_NEUT
-	desired_items = list(/obj/item/stock_parts/cell)
+	desired_items = list(/obj/item/stock_parts/cell = "with battery charge")
 	rites_list = list(/datum/religion_rites/synthconversion)
 	altar_icon_state = "convertaltar-blue"
 
@@ -200,7 +202,7 @@
 	tgui_icon = "fire-alt"
 	alignment = ALIGNMENT_NEUT
 	max_favor = 10000
-	desired_items = list(/obj/item/candle)
+	desired_items = list(/obj/item/candle = "already lit")
 	rites_list = list(/datum/religion_rites/fireproof, /datum/religion_rites/burning_sacrifice, /datum/religion_rites/infinite_candle)
 	altar_icon_state = "convertaltar-red"
 
@@ -232,7 +234,7 @@
 	altar_icon_state = "convertaltar-yellow"
 
 /datum/religion_sect/greed/tool_examine(mob/living/holy_creature) //display money policy
-	return "<span class='notice'>In the eyes of [GLOB.deity], your <b>wealth</b> is your favor.</span>"
+	return "In the eyes of [GLOB.deity], your wealth is your favor."
 
 /datum/religion_sect/greed/sect_bless(mob/living/blessed_living, mob/living/chap)
 	var/datum/bank_account/account = chap.get_bank_account()
@@ -328,8 +330,8 @@
 		return FALSE
 	var/datum/mutation/human/burdened/burdenmut = burdened.dna.check_mutation(/datum/mutation/human/burdened)
 	if(burdenmut)
-		return "<span class='notice'>You are at burden level [burdenmut.burden_level]/6.</span>"
-	return "<span class='notice'>You are not burdened.</span>"
+		return "You are at burden level [burdenmut.burden_level]/6."
+	return "You are not burdened."
 
 #define MINIMUM_YUCK_REQUIRED 5
 
@@ -341,7 +343,7 @@
 	altar_icon_state = "convertaltar-maint"
 	alignment = ALIGNMENT_EVIL //while maint is more neutral in my eyes, the flavor of it kinda pertains to rotting and becoming corrupted by the maints
 	rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/adapted_eyes, /datum/religion_rites/adapted_food, /datum/religion_rites/ritual_totem)
-	desired_items = list(/obj/item/reagent_containers)
+	desired_items = list(/obj/item/reagent_containers = "holding organic slurry")
 
 /datum/religion_sect/maintenance/sect_bless(mob/living/blessed_living, mob/living/chap)
 	if(!ishuman(blessed_living))
