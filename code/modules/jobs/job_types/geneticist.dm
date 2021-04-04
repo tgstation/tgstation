@@ -19,13 +19,11 @@
 	display_order = JOB_DISPLAY_ORDER_GENETICIST
 	bounty_types = CIV_JOB_SCI
 
-<<<<<<< HEAD
 	mail_goodies = list(
 		/obj/item/storage/box/monkeycubes = 10
 	)
-=======
+
 	family_heirlooms = list(/obj/item/clothing/under/shorts/purple)
->>>>>>> upstream/master
 
 /datum/outfit/job/geneticist
 	name = "Geneticist"

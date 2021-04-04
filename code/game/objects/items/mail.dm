@@ -48,7 +48,7 @@
 
 /obj/item/mail/Initialize()
 	. = ..()
-
+	AddElement(/datum/element/item_scaling, 0.5, 1)
 	department_colors = list(
 	ACCOUNT_CIV = COLOR_WHITE,
 	ACCOUNT_ENG = COLOR_PALE_ORANGE,
@@ -69,6 +69,7 @@
 	update_icon()
 
 /obj/item/mail/update_icon()
+	. = ..()
 	cut_overlays()
 
 	var/bonus_stamp_offset = 0
@@ -173,7 +174,7 @@
 		/obj/item/paper/pamphlet/gateway = "[initial(name)] for [pick(GLOB.adjectives)] adventurers",
 		/obj/item/paper/pamphlet/violent_video_games = "[initial(name)] for the truth about the arcade centcom doesn't want to hear",
 		/obj/item/paper/fluff/junkmail_redpill = "[initial(name)] for those feeling [pick(GLOB.adjectives)] working at nanotrasen",
-		/obj/effect/decal/cleanable/ash = "[initial(name)] with INCREDIBLY IMPORTANT ARTEFACT- DELIVER TO SCIENCE DIVISION",
+		/obj/effect/decal/cleanable/ash = "[initial(name)] with INCREDIBLY IMPORTANT ARTIFACT- DELIVER TO SCIENCE DIVISION",
 	)
 
 	color = pick(department_colors) //eh, who gives a shit.
@@ -200,6 +201,7 @@
 	icon_state = "mail"
 
 /obj/structure/closet/crate/mail/update_icon_state()
+	. = ..()
 	if(opened)
 		icon_state = "[initial(icon_state)]open"
 	else

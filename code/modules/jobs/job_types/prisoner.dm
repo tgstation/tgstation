@@ -13,14 +13,12 @@
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
 
-<<<<<<< HEAD
 	exclusive_mail_goodies = TRUE
 	mail_goodies = list (
 		/obj/effect/spawner/lootdrop/prison_contraband = 1
 	)
-=======
+
 	family_heirlooms = list(/obj/item/pen/blue)
->>>>>>> upstream/master
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"

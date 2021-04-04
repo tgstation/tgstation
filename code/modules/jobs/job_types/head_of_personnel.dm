@@ -26,18 +26,16 @@
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
 
-<<<<<<< HEAD
 	mail_goodies = list(
-		/obj/item/stack/sheet/bone = 60
+		/obj/item/stack/sheet/bone = 5
 	)
-=======
+
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
 
 /datum/job/head_of_personnel/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
 	if(announce_captaincy)
 		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Due to staffing shortages, newly promoted Acting Captain [H.real_name] on deck!"))
->>>>>>> upstream/master
 
 /datum/outfit/job/hop
 	name = "Head of Personnel"
@@ -61,7 +59,6 @@
 	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
 		undershirt = /datum/sprite_accessory/undershirt/ian
 
-<<<<<<< HEAD
 //only pet worth reviving
 /datum/job/hop/get_mail_goodies(mob/recipient)
 	. = ..()
@@ -69,7 +66,7 @@
 	for(var/mob/living/simple_animal/pet/dog/corgi/ian/staff_pet in GLOB.dead_mob_list)
 		. += list(/datum/reagent/medicine/strange_reagent = 20)
 		break
-=======
+
 /obj/item/paper/fluff/ids_for_dummies
 	name = "Memo: New IDs and You"
 	desc = "It looks like this was left by the last Head of Personnel to man this station. It explains some information about new IDs."
@@ -92,4 +89,3 @@
 <li>Don't forget to set a custom occupation! SecHUDs now interface direct with the ID card's trim and display the trim's job icon even when a custom assignment is set.</li>
 </ol>
 	"}
->>>>>>> upstream/master

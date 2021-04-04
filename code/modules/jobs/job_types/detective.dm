@@ -23,7 +23,6 @@
 
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
 
-<<<<<<< HEAD
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 25,
 		/obj/item/ammo_box/c38 = 25,
@@ -34,9 +33,8 @@
 		/obj/item/ammo_box/c38/trac = 5,
 		/obj/item/storage/belt/holster/detective/full = 1
 	)
-=======
+
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey)
->>>>>>> upstream/master
 
 /datum/outfit/job/detective
 	name = "Detective"

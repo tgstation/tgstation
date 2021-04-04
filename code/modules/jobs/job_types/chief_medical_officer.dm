@@ -26,7 +26,6 @@
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
 	bounty_types = CIV_JOB_MED
 
-<<<<<<< HEAD
 	mail_goodies = list(
 		/obj/item/scalpel/alien = 5,
 		/obj/item/hemostat/alien = 5,
@@ -37,14 +36,12 @@
 		/obj/effect/spawner/lootdrop/organ_spawner = 3,
 		/obj/effect/spawner/lootdrop/memeorgans = 3
 	)
-=======
 	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 
 /datum/job/chief_medical_officer/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
 	if(announce_captaincy)
 		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Due to staffing shortages, newly promoted Acting Captain [H.real_name] on deck!"))
->>>>>>> upstream/master
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"

@@ -19,18 +19,16 @@
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 
-<<<<<<< HEAD
 	mail_goodies = list(
 		/obj/item/assembly/flash/handheld = 30,
 		/obj/item/storage/box/flashes = 5
 	)
-=======
+
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)
 
 /datum/job/roboticist/New()
 	. = ..()
 	family_heirlooms += subtypesof(/obj/item/toy/prize)
->>>>>>> upstream/master
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"

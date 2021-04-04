@@ -24,17 +24,12 @@
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 	departments = DEPARTMENT_COMMAND
 
-<<<<<<< HEAD
+	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
+
 	mail_goodies = list(
 		/obj/item/clothing/mask/cigarette/cigar/havana = 40,
 		/obj/item/storage/fancy/cigarettes/cigars/havana = 10
 	)
-
-/datum/job/captain/get_access()
-	return get_all_accesses()
-=======
-	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
->>>>>>> upstream/master
 
 /datum/job/captain/announce(mob/living/carbon/human/H, announce_captaincy = TRUE)
 	..()

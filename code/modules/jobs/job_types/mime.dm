@@ -20,7 +20,7 @@
 
 	mail_goodies = list(
 		/obj/item/food/baguette = 15,
-		/obj/item/food/cheesewheel = 10,
+		/obj/item/food/cheese/wheel = 10,
 		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 10,
 		/obj/item/paper = 5,
 		/obj/item/book/mimery = 1,

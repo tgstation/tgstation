@@ -26,7 +26,8 @@
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	bounty_types = CIV_JOB_ENG
 
-<<<<<<< HEAD
+	family_heirlooms = list(/obj/item/clothing/head/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+
 	mail_goodies = list(
 		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 15,
 		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 15,
@@ -38,14 +39,11 @@
 		/obj/item/screwdriver/caravan = 3,
 		/obj/item/crowbar/red/caravan = 3
 	)
-=======
-	family_heirlooms = list(/obj/item/clothing/head/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 
 /datum/job/chief_engineer/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
 	if(announce_captaincy)
 		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Due to staffing shortages, newly promoted Acting Captain [H.real_name] on deck!"))
->>>>>>> upstream/master
 
 /datum/outfit/job/ce
 	name = "Chief Engineer"
