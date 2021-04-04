@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - qol: "Thermomachine have full temperature range on both modes, plus new automatic thermal regulator function."
