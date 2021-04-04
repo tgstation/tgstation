@@ -8,10 +8,6 @@
 	base_icon_state = "ticketmachine"
 	desc = "A marvel of bureaucratic engineering encased in an efficient plastic shell. It can be refilled with a hand labeler refill roll and linked to buttons with a multitool."
 	density = FALSE
-	maptext_height = 26
-	maptext_width = 32
-	maptext_x = 7
-	maptext_y = 10
 	layer = HIGH_OBJ_LAYER
 	var/ticket_number = 0 //Increment the ticket number whenever the HOP presses his button
 	var/current_number = 0 //What ticket number are we currently serving?
@@ -121,28 +117,28 @@
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 /obj/machinery/ticket_machine/update_icon()
-	. = ..()
-	handle_maptext()
+	if(machine_stat & (NOPOWER|BROKEN))
+		icon_state = "ticketmachine_off"
+		return
+	else if(ticket_number == max_number)
+		icon_state = "ticketmachine_nopaper"
+	else
+		icon_state = "ticketmachine"
+	cut_overlays()
+	write_number()
 
-/obj/machinery/ticket_machine/update_icon_state()
-	switch(ticket_number) //Gives you an idea of how many tickets are left
-		if(0 to 49)
-			icon_state = "[base_icon_state]_100"
-		if(50 to 99)
-			icon_state = "[base_icon_state]_50"
-		if(100)
-			icon_state = "[base_icon_state]_0"
-	return ..()
+/obj/machinery/ticket_machine/proc/write_number()
+	var/number_string = "[current_number]"
+	var/textLen = length(number_string)
+	var/startX = 12 - (2*textLen)
 
-/obj/machinery/ticket_machine/proc/handle_maptext()
-	switch(ticket_number) //This is here to handle maptext offsets so that the numbers align.
-		if(0 to 9)
-			maptext_x = 13
-		if(10 to 99)
-			maptext_x = 10
-		if(100)
-			maptext_x = 8
-	maptext = MAPTEXT(current_number) //Finally, apply the maptext
+	for(var/i=1; i <= textLen, i++)
+		var/mutable_appearance/number_overlay = mutable_appearance('icons/Font_Minimal.dmi', number_string[i])
+		number_overlay.blend_mode = BLEND_SUBTRACT
+		number_overlay.pixel_x = startX
+		number_overlay.pixel_y = -14
+		add_overlay(number_overlay)
+		startX = startX + 4
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()
