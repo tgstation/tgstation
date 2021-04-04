@@ -370,6 +370,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"bj" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "bk" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Cargo Bay Maintenance";
@@ -5378,6 +5383,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/command/heads_quarters/cmo)
+"ri" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "rj" = (
 /obj/structure/table,
 /obj/machinery/light{
@@ -8682,6 +8694,11 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
+"BC" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "BD" = (
 /turf/open/floor/iron,
 /area/hallway/secondary/construction)
@@ -9825,6 +9842,14 @@
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
+"Fq" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "Fr" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
 /obj/machinery/meter,
@@ -13750,6 +13775,11 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"Sg" = (
+/obj/structure/cable,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "Sh" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock{
@@ -50654,8 +50684,8 @@ iQ
 Gm
 IM
 Cm
-IM
-IM
+NR
+ZR
 IM
 dy
 Qm
@@ -50911,8 +50941,8 @@ Fl
 NH
 cO
 cO
-cO
-cO
+ri
+BC
 cO
 FD
 cO
@@ -51168,8 +51198,8 @@ fJ
 Jy
 Ju
 IM
-IM
-IM
+NR
+ZR
 IM
 nO
 IM
@@ -55528,7 +55558,7 @@ YZ
 SP
 Yx
 Un
-Yx
+bj
 Yx
 ne
 Yx
@@ -55785,7 +55815,7 @@ lG
 ZL
 NV
 NV
-NV
+Sg
 NV
 NV
 NV
@@ -56042,7 +56072,7 @@ lG
 tF
 NV
 en
-nZ
+Fq
 nZ
 nZ
 nZ
