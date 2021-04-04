@@ -3,96 +3,166 @@ import { Box, Button, Collapsible, Dropdown, Input, NumberInput, Section, Stack,
 import { Window } from '../layouts';
 
 const typevars = type => {
-  let ret = [{ name: "name", type: "string", options: null, default: "" },
-    { name: "desc", type: "string", options: null, default: "" },
-    { name: "query", type: "string", options: null, default: "" },
-    { name: "action_icon", type: "string", options: null, default: "" },
-    { name: "action_icon_state", type: "string", options: null, default: "" },
-    { name: "action_background_icon_state", type: "string", options: null, default: "" },
-    { name: "sound", type: "string", options: null, default: "" },
-    { name: "charge_type", type: "string_enum", options: ["recharge", "charges", "holder_var"], default: "recharge" },
-    { name: "charge_max", type: "int", options: null, default: 100 },
-    { name: "still_recharging_message", type: "string", options: null, default: "" },
-    { name: "holder_var_type", type: "string", options: null, default: "" },
-    { name: "holder_var_amount", type: "int", options: null, default: "" },
-    { name: "clothes_req", type: "bool", options: null, default: false },
-    { name: "cult_req", type: "bool", options: null, default: false },
-    { name: "human_req", type: "bool", options: null, default: false },
-    { name: "nonabstract_req", type: "bool", options: null, default: false },
-    { name: "stat_allowed", type: "bool", options: null, default: false },
-    { name: "phase_allowed", type: "bool", options: null, default: false },
-    { name: "antimagic_allowed", type: "bool", options: null, default: false },
-    { name: "invocation_type", type: "string_enum", options: ["none", "whisper", "emote", "shout"], default: "none" },
-    { name: "invocation", type: "string", options: null, default: "" },
-    { name: "invocation_emote_self", type: "string", options: null, default: "" },
-    { name: "selection_type", type: "string_enum", options: ["view", "range"], default: "view" },
-    { name: "range", type: "int", options: null, default: 7 },
-    { name: "message", type: "string", options: null, default: "" },
-    { name: "player_lock", type: "bool", options: null, default: true },
-    { name: "sparks_spread", type: "bool", options: null, default: false },
-    { name: "sparks_amt", type: "int", options: null, default: 0 },
-    { name: "smoke_spread", type: "int_enum", options: ["none", "harmless", "harmful", "sleeping"], default: "none" },
-    { name: "smoke_amt", type: "int", options: null, default: 0 },
-    { name: "centcom_cancast", type: "bool", options: null, default: false }];
+  let ret = [{ name: "name", type: "string",
+      options: null, default_value: "" },
+    { name: "desc", type: "string",
+      options: null, default_value: "" },
+    { name: "query", type: "string",
+      options: null, default_value: "" },
+    { name: "action_icon", type: "string",
+      options: null, default_value: "" },
+    { name: "action_icon_state", type: "string",
+      options: null, default_value: "" },
+    { name: "action_background_icon_state", type: "string",
+      options: null, default_value: "" },
+    { name: "sound", type: "string",
+      options: null, default_value: "" },
+    { name: "charge_type", type: "string_enum",
+      options: ["recharge", "charges", "holder_var"], default_value: "recharge" },
+    { name: "charge_max", type: "int",
+      options: null, default_value: 100 },
+    { name: "still_recharging_message", type: "string",
+      options: null, default_value: "" },
+    { name: "holder_var_type", type: "string",
+      options: null, default_value: "" },
+    { name: "holder_var_amount", type: "int",
+      options: null, default_value: "" },
+    { name: "clothes_req", type: "bool",
+      options: null, default_value: false },
+    { name: "cult_req", type: "bool",
+      options: null, default_value: false },
+    { name: "human_req", type: "bool",
+      options: null, default_value: false },
+    { name: "nonabstract_req", type: "bool",
+      options: null, default_value: false },
+    { name: "stat_allowed", type: "bool",
+      options: null, default_value: false },
+    { name: "phase_allowed", type: "bool",
+      options: null, default_value: false },
+    { name: "antimagic_allowed", type: "bool",
+      options: null, default_value: false },
+    { name: "invocation_type", type: "string_enum",
+      options: ["none", "whisper", "emote", "shout"], default_value: "none" },
+    { name: "invocation", type: "string",
+      options: null, default_value: "" },
+    { name: "invocation_emote_self", type: "string",
+      options: null, default_value: "" },
+    { name: "selection_type", type: "string_enum",
+      options: ["view", "range"], default_value: "view" },
+    { name: "range", type: "int",
+      options: null, default_value: 7 },
+    { name: "message", type: "string",
+      options: null, default_value: "" },
+    { name: "player_lock", type: "bool",
+      options: null, default_value: true },
+    { name: "sparks_spread", type: "bool",
+      options: null, default_value: false },
+    { name: "sparks_amt", type: "int",
+      options: null, default_value: 0 },
+    { name: "smoke_spread", type: "int_enum",
+      options: ["none", "harmless", "harmful", "sleeping"], default_value: "none" },
+    { name: "smoke_amt", type: "int",
+      options: null, default_value: 0 },
+    { name: "centcom_cancast", type: "bool",
+      options: null, default_value: false }];
   switch (type) {
     case "targeted":
-      ret.push({ name: "overlay", type: "bool", options: null, default: false },
-        { name: "overlay_icon", type: "string", options: null, default: "" },
-        { name: "overlay_icon_state", type: "string", options: null, default: "" },
-        { name: "overlay_lifespan", type: "int", options: null, default: 0 },
-        { name: "max_targets", type: "int", options: null, default: false },
-        { name: "target_ignore_prev", type: "bool", options: null, default: true },
-        { name: "include_user", type: "bool", options: null, default: false },
-        { name: "random_target", type: "bool", options: null, default: false },
-        { name: "random_target_priority", type: "int_enum", options: ["closest", "random"], default: "closest" });
+      ret.push({ name: "overlay", type: "bool",
+          options: null, default_value: false },
+        { name: "overlay_icon", type: "string",
+          options: null, default_value: "" },
+        { name: "overlay_icon_state", type: "string",
+          options: null, default_value: "" },
+        { name: "overlay_lifespan", type: "int",
+          options: null, default_value: 0 },
+        { name: "max_targets", type: "int",
+          options: null, default_value: false },
+        { name: "target_ignore_prev", type: "bool",
+          options: null, default_value: true },
+        { name: "include_user", type: "bool",
+          options: null, default_value: false },
+        { name: "random_target", type: "bool",
+          options: null, default_value: false },
+        { name: "random_target_priority", type: "int_enum",
+          options: ["closest", "random"], default_value: "closest" });
       break;
     case "aoe_turf":
       ret = ret.filter(variable => variable.name !== "selection_type");
-      ret.push({ name: "inner_radius", type: "int", options: null, default: -1 },
-        { name: "overlay", type: "bool", options: null, default: false },
-        { name: "overlay_icon", type: "string", options: null, default: "" },
-        { name: "overlay_icon_state", type: "string", options: null, default: "" },
-        { name: "overlay_lifespan", type: "int", options: null, default: 0 });
+      ret.push({ name: "inner_radius", type: "int",
+        options: null, default_value: -1 },
+        { name: "overlay", type: "bool",
+          options: null, default_value: false },
+        { name: "overlay_icon", type: "string",
+          options: null, default_value: "" },
+        { name: "overlay_icon_state", type: "string",
+          options: null, default_value: "" },
+        { name: "overlay_lifespan", type: "int",
+          options: null, default_value: 0 });
       break;
     case "self":
       ret = ret.filter(variable => variable.name !== "range" && variable.name !== "selection_type");
       break;
     case "aimed":
-      ret.push({ name: "base_icon_state", type: "string", options: null, default: "" },
-        { name: "ranged_mousepointer", type: "string", options: null, default: "" },
-        { name: "deactive_msg", type: "string", options: null, default: "" },
-        { name: "active_msg", type: "string", options: null, default: "" },
-        { name: "projectile_amount", type: "int", options: null, default: 1 },
-        { name: "projectiles_per_fire", type: "int", options: null, default: 1 },
-        { name: "projectile_var_overrides", type: "list", options: null, default: [] });
+      ret.push({ name: "base_icon_state", type: "string",
+        options: null, default_value: "" },
+        { name: "ranged_mousepointer", type: "string",
+          options: null, default_value: "" },
+        { name: "deactive_msg", type: "string",
+          options: null, default_value: "" },
+        { name: "active_msg", type: "string",
+          options: null, default_value: "" },
+        { name: "projectile_amount", type: "int",
+          options: null, default_value: 1 },
+        { name: "projectiles_per_fire", type: "int",
+          options: null, default_value: 1 },
+        { name: "projectile_var_overrides", type: "list",
+          options: null, default_value: [] });
       break;
     case "cone":
     case "cone/staggered":
-      ret = ret.filter(variable => variable.name !== "range" && variable.name !== "selection_type");
-      ret.push({ name: "cone_level", type: "int", options: null, default: 3 },
-        { name: "respect_density", type: "bool", options: null, default: false });
+      ret = ret.filter(variable => variable.name !== "range"
+        && variable.name !== "selection_type");
+      ret.push({ name: "cone_level", type: "int",
+        options: null, default_value: 3 },
+        { name: "respect_density", type: "bool",
+          options: null, default_value: false });
       break;
     case "pointed":
-      ret.push({ name: "overlay", type: "bool", options: null, default: false },
-        { name: "overlay_icon", type: "string", options: null, default: "" },
-        { name: "overlay_icon_state", type: "string", options: null, default: "" },
-        { name: "overlay_lifespan", type: "int", options: null, default: 0 },
-        { name: "ranged_mousepointer", type: "string", options: null, default: "" },
-        { name: "deactive_msg", type: "string", options: null, default: "" },
-        { name: "active_msg", type: "string", options: null, default: "" },
-        { name: "self_castable", type: "bool", options: null, default: false },
-        { name: "aim_assist", type: "bool", options: null, default: true });
+      ret.push({ name: "overlay", type: "bool",
+        options: null, default_value: false },
+        { name: "overlay_icon", type: "string",
+          options: null, default_value: "" },
+        { name: "overlay_icon_state", type: "string",
+          options: null, default_value: "" },
+        { name: "overlay_lifespan", type: "int",
+          options: null, default_value: 0 },
+        { name: "ranged_mousepointer", type: "string",
+          options: null, default_value: "" },
+        { name: "deactive_msg", type: "string",
+          options: null, default_value: "" },
+        { name: "active_msg", type: "string",
+          options: null, default_value: "" },
+        { name: "self_castable", type: "bool",
+          options: null, default_value: false },
+        { name: "aim_assist", type: "bool",
+          options: null, default_value: true });
       break;
     case "targeted/touch":
-      ret = ret.filter(variable => variable.name !== "range" && variable.name !== "invocation_type" && variable.name !== "selection_type");
-      ret.push({ name: "drawmessage", type: "string", options: null, default: "" },
-        { name: "dropmessage", type: "string", options: null, default: "" },
-        { name: "hand_var_overrides", type: "list", options: null, default: [] });
+      ret = ret.filter(variable => variable.name !== "range"
+        && variable.name !== "invocation_type"
+        && variable.name !== "selection_type");
+      ret.push({ name: "drawmessage", type: "string",
+          options: null, default_value: "" },
+        { name: "dropmessage", type: "string",
+          options: null, default_value: "" },
+        { name: "hand_var_overrides", type: "list",
+          options: null, default_value: [] });
       break;
     default:
       return [];
   }
-  ret.push({ name: "scratchpad", type: "list", options: null, default: [] });
+  ret.push({ name: "scratchpad", type: "list",
+    options: null, default_value: [] });
   return (ret);
 };
 
@@ -101,7 +171,6 @@ export const SDQLSpellMenu = (props, context) => {
   const {
     type,
     types,
-    saved_spell_count,
     alert,
   } = data;
 
@@ -155,38 +224,34 @@ export const SDQLSpellMenu = (props, context) => {
             <SDQLSpellIcons />
           </Stack.Item>
         </Stack>
-      </Window.Content>    
+      </Window.Content>
     </Window>
   );
 };
 
-const var_condition = (entry, context) => {
-  const { data } = useBackend(context);
-  const {
-    saved_vars,
-  } = data;
+const varCondition = (entry, saved_vars) => {
   switch (entry.name) {
     case "charge_max":
-      return (Object.prototype.hasOwnProperty.call(saved_vars, "charge_type") && saved_vars["charge_type"]) !== "holder_var";
+      return saved_vars["charge_type"] !== "holder_var";
     case "holder_var_type":
     case "holder_var_amount":
-      return (Object.prototype.hasOwnProperty.call(saved_vars, "charge_type") && saved_vars["charge_type"]) === "holder_var";
+      return saved_vars["charge_type"] === "holder_var";
     case "human_req":
-      return (Object.prototype.hasOwnProperty.call(saved_vars, "clothes_req") && !saved_vars["clothes_req"]);
+      return !saved_vars["clothes_req"];
     case "invocation":
-      return (Object.prototype.hasOwnProperty.call(saved_vars, "invocation_type") && saved_vars["invocation_type"]) !== "none";
+      return saved_vars["invocation_type"] !== "none";
     case "invocation_emote_self":
-      return (Object.prototype.hasOwnProperty.call(saved_vars, "invocation_type") && saved_vars["invocation_type"]) === "emote";
+      return saved_vars["invocation_type"] === "emote";
     case "overlay_icon":
     case "overlay_icon_state":
     case "overlay_lifespan":
-      return (Object.prototype.hasOwnProperty.call(saved_vars, "overlay") && saved_vars["overlay"]);
+      return !!saved_vars["overlay"];
     case "sparks_amt":
-      return (Object.prototype.hasOwnProperty.call(saved_vars, "sparks_spread") && saved_vars["sparks_spread"]);
+      return !!saved_vars["sparks_spread"];
     case "smoke_amt":
-      return (Object.prototype.hasOwnProperty.call(saved_vars, "smoke_spread") && saved_vars["smoke_spread"]);
+      return !!saved_vars["smoke_spread"];
     case "random_target_priority":
-      return (Object.prototype.hasOwnProperty.call(saved_vars, "random_target") && saved_vars["random_target"]);
+      return !!saved_vars["random_target"];
     default:
       return true;
   }
@@ -199,27 +264,29 @@ const WrapInTooltip = (props, context) => {
     type,
     tooltips,
   } = data;
-  const tip = tooltips[entry.name]?.replace("$type", tooltips[(entry.name+"_"+type) || "Something went wrong."]);
-  return (tip ? (
+  const tip = tooltips[entry.name]?.replace("$type",
+    tooltips[(entry.name + "_" + type)]);
+  return (/*tip ? (
     <Tooltip
       position="bottom"
       content={tip}>
       {props.children}
     </Tooltip>
-  ) : props.children);
+  ) : */props.children); //Uncomment this block when tooltips are unfucked.
 };
 
 const SDQLSpellOptions = (props, context) => {
   const { data } = useBackend(context);
   const {
     type,
+    saved_vars,
   } = data;
 
   const vars = typevars(type);
 
   return (
     <Section fill scrollable>
-      {vars.filter(entry => var_condition(entry, context)).map(entry => (
+      {vars.filter(entry => varCondition(entry, saved_vars)).map(entry => (
         <Stack key={entry.name} mb="6px">
           <Stack.Item>
             <WrapInTooltip entry={entry}>
@@ -245,54 +312,54 @@ const SDQLSpellOption = (props, context) => {
   const {
     entry,
   } = props;
-  switch (entry.type) {
+  const {
+    name,
+    type,
+    options,
+    default_value,
+  } = entry;
+  switch (type) {
     case "string":
       return (
         <Input
           width="100%"
           fluid
-          value={(Object.prototype.hasOwnProperty.call(saved_vars, entry.name) 
-            && saved_vars[entry.name]) ?? entry.default}
-          onChange={(e, value) => act('variable', { name: entry.name, value: value })} />
+          value={saved_vars[name] ?? default_value}
+          onChange={(e, value) => act('variable',
+            { name, value })} />
       );
     case "int":
       return (
         <NumberInput
-          value={(Object.prototype.hasOwnProperty.call(saved_vars, entry.name) 
-            && saved_vars[entry.name]) ?? entry.default}
-          onChange={(e, value) => act('variable', { name: entry.name, value: value })} />
+          value={saved_vars[name] ?? default_value}
+          onChange={(e, value) => act('variable',
+            { name, value })} />
       );
     case "bool":
       return (
         <Button.Checkbox
-          checked={
-            (Object.prototype.hasOwnProperty.call(saved_vars, entry.name) 
-            && saved_vars[entry.name]) ?? entry.default
-          }
-          onClick={() => act('bool_variable', { name: entry.name })} />
+          checked={saved_vars[name] ?? default_value}
+          onClick={() => act('bool_variable',{ name })} />
       );
     case "string_enum":
       return (
         <Dropdown
-          options={entry.options}
-          displayText={
-            (Object.prototype.hasOwnProperty.call(saved_vars, entry.name) 
-            && saved_vars[entry.name]) ?? entry.default
-          }
-          onSelected={value => act('variable', { name: entry.name, value: value })} />
+          options={options}
+          displayText={saved_vars[name] ?? default_value}
+          onSelected={value => act('variable',
+            { name, value })} />
       );
     case "int_enum":
       return (
         <Dropdown
-          options={entry.options}
-          displayText={entry.options[
-            (Object.prototype.hasOwnProperty.call(saved_vars, entry.name) 
-            && saved_vars[entry.name])] ?? entry.default}
-          onSelected={value => act('variable', { name: entry.name, value: entry.options.indexOf(value) })} />
+          options={options}
+          displayText={options[saved_vars[name]] ?? default_value}
+          onSelected={value => act('variable',
+            { name, value: options.indexOf(value) })} />
       );
     case "list":
       return (
-        <SDQLSpellListEntry list={entry.name} />
+        <SDQLSpellListEntry list={name} />
       );
   }
 };
@@ -307,33 +374,40 @@ const SDQLSpellListEntry = (props, context) => {
   } = props;
   return (
     <Collapsible>
-      {Object.prototype.hasOwnProperty.call(list_vars, list) 
-        && Object.entries(list_vars[list]).map(entry => (
-          <Stack key={entry[0]} fill mb="6px">
+      {Object.entries(list_vars[list]).map(([name, { type, value, flags }]) => (
+          <Stack key={name} fill mb="6px">
             <Stack.Item grow>
-              {((entry[1].flags & 2) === 0) ? (
+              {((flags & 2) === 0) ? (
                 <Input
-                  value={entry[0]}
-                  onChange={(e, value) => act('list_variable_rename', { list: list, name: entry[0], new_name: value })} />)
+                  value={name}
+                  onChange={(e, value) =>
+                    act('list_variable_rename',
+                    { list, name, new_name: value })} />)
                 : (
                   <Box inline bold color="label" mr="6px">
-                    {entry[0]}:
+                    {name}:
                   </Box>)}
             </Stack.Item>
             <Stack.Item>
-              {((entry[1].flags & 1) === 0) && (
+              {((flags & 1) === 0) && (
                 <Dropdown
-                  options={["num", "bool", "string", "path", "list"]}
-                  displayText={entry[1].type}
-                  onSelected={value => act('list_variable_change_type', { list: list, name: entry[0], value: value })} />)}
+                  options={["num", "bool", "string", "path", "icon", "list"]}
+                  displayText={type}
+                  onSelected={value => act('list_variable_change_type',
+                    { list, name, value })} />)}
             </Stack.Item>
             <Stack.Item shrink basis="100%">
-              <SDQLSpellListVar list={list} entry={entry} />
+              <SDQLSpellListVar
+                list={list}
+                name={name}
+                type={type}
+                value={value} />
               <Button
                 icon="minus-circle"
                 color="red"
                 title="remove"
-                onClick={() => act('list_variable_remove', { list: list, name: entry[0] })} />
+                onClick={() => act('list_variable_remove',
+                  { list, name })} />
             </Stack.Item>
           </Stack>
         ))}
@@ -341,7 +415,7 @@ const SDQLSpellListEntry = (props, context) => {
         icon="plus-circle"
         color="blue"
         title="add variable"
-        onClick={() => act('list_variable_add', { list: list })} />
+        onClick={() => act('list_variable_add', { list })} />
     </Collapsible>
   );
 };
@@ -350,20 +424,24 @@ const SDQLSpellListVar = (props, context) => {
   const { act } = useBackend(context);
   const {
     list,
-    entry,
+    name,
+    type,
+    value,
   } = props;
-  switch (entry[1].type) {
+  switch (type) {
     case "num":
       return (
         <NumberInput
-          value={entry[1].value}
-          onChange={(e, value) => act('list_variable_change_value', { list: list, name: entry[0], value: value })} />
+          value={value}
+          onChange={(e, value) => act('list_variable_change_value',
+            { list, name, value })} />
       );
     case "bool":
       return (
         <Button.Checkbox
-          checked={entry[1].value === 1}
-          onClick={() => act('list_variable_change_bool', { list: list, name: entry[0] })} />
+          checked={value === 1}
+          onClick={() => act('list_variable_change_bool',
+            { list, name })} />
       );
     case "string":
     case "path":
@@ -372,12 +450,13 @@ const SDQLSpellListVar = (props, context) => {
         <Input
           width="75%"
           fluid
-          value={entry[1].value}
-          onChange={(e, value) => act('list_variable_change_value', { list: list, name: entry[0], value: value })} />
+          value={value}
+          onChange={(e, value) => act('list_variable_change_value',
+            { list, name, value })} />
       );
     case "list":
       return (
-        <SDQLSpellListEntry list={list+"/"+entry[0]} />
+        <SDQLSpellListEntry list={list+"/"+name} />
       );
     default:
       return (
@@ -444,20 +523,21 @@ const SDQLSpellIcons = (props, context) => {
               }} />
           </Section>
         )}
-        {(type && vars.some(entry => entry.name === "ranged_mousepointer") && saved_vars["ranged_mousepointer"]) && (
-          <Section title="Mouse Cursor">
-            <Box
-              as="img"
-              height="64px"
-              width="auto"
-              m={0}
-              src={`data:image/jpeg;base64,${mouse_icon}`}
-              style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
-              }} />
-          </Section>
+        {(type && vars.some(entry => entry.name === "ranged_mousepointer")
+          && saved_vars["ranged_mousepointer"]) && (
+            <Section title="Mouse Cursor">
+              <Box
+                as="img"
+                height="64px"
+                width="auto"
+                m={0}
+                src={`data:image/jpeg;base64,${mouse_icon}`}
+                style={{
+                  '-ms-interpolation-mode': 'nearest-neighbor',
+                }} />
+            </Section>
         )}
-        {(type && (Object.prototype.hasOwnProperty.call(saved_vars, "overlay") && saved_vars["overlay"] === 1)) && (
+        {(type && "overlay" in saved_vars && saved_vars["overlay"] === 1) && (
           <Section title="Overlay Icon">
             <Box
               as="img"
