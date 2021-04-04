@@ -103,7 +103,12 @@ const OutfitSlot = (props, context) => {
     <Stack.Item grow={1} basis={0}>
       <Button fluid height={2}
         icon={icon}
-        onClick={() => act("click", { slot: slot })}>
+        title="Ctrl-Click to select any item"
+        onClick={e => {
+          e.ctrlKey
+            ?act("ctrlClick", { slot: slot })
+            :act("click", { slot: slot }); }}
+      >
         <b>{name}</b>
       </Button>
       {currItem?.sprite && (

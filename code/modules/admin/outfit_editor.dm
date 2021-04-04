@@ -93,7 +93,7 @@
 	switch(action)
 		if("click")
 			choose_item(slot)
-		if("shift_click")
+		if("ctrlClick")
 			choose_any_item(slot)
 		if("clear")
 			if(drip.vars.Find(slot))
@@ -122,6 +122,14 @@
 			return
 	if(drip.vars.Find(slot))
 		drip.vars[slot] = choice
+
+/datum/outfit_editor/proc/choose_any_item(slot)
+	var/obj/item/choice = pick_closest_path(FALSE)
+
+	if(!choice)
+		return
+
+	set_item(slot, choice)
 
 //this proc will try to give a good selection of items that the user can choose from
 //it does *not* give a selection of all items that can fit in a slot because lag;
@@ -185,14 +193,6 @@
 
 	if(length(options))
 		set_item(slot, tgui_input_list(holder, "Choose an item", OUTFIT_EDITOR_NAME, options))
-
-/datum/outfit_editor/proc/choose_any_item(slot)
-	var/obj/item/choice = pick_closest_path(FALSE)
-
-	if(!choice)
-		return
-
-	set_item(slot, choice)
 
 
 #undef OUTFIT_EDITOR_NAME
