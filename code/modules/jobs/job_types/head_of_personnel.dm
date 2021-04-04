@@ -27,7 +27,7 @@
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
 
 	mail_goodies = list(
-		/obj/item/card/id/advanced/silver = 10
+		/obj/item/card/id/advanced/silver = 10,
 		/obj/item/stack/sheet/bone = 5
 	)
 

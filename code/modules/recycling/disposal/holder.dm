@@ -41,22 +41,22 @@
 	// now everything inside the disposal gets put into the holder
 	// note AM since can contain mobs or objs
 	for(var/A in D)
-		var/atom/movable/AM = A
-		if(AM == src)
+		var/atom/movable/atom_movable = A
+		if(atom_movable == src)
 			continue
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_DISPOSING, src, D)
-		AM.forceMove(src)
-		if(istype(AM, /obj/structure/big_delivery) && !hasmob)
-			var/obj/structure/big_delivery/T = AM
-			src.destinationTag = T.sortTag
-		else if(istype(AM, /obj/item/small_delivery) && !hasmob)
-			var/obj/item/small_delivery/T = AM
-			src.destinationTag = T.sortTag
-		else if(istype(AM, /obj/item/mail))
-			var/obj/item/mail/T = AM
-			src.destinationTag = T.sortTag
-		else if(istype(AM, /mob/living/silicon/robot))
-			var/obj/item/dest_tagger/borg/tagger = locate() in AM
+		SEND_SIGNAL(atom_movable, COMSIG_MOVABLE_DISPOSING, src, D)
+		atom_movable.forceMove(src)
+		if(istype(atom_movable, /obj/structure/big_delivery) && !hasmob)
+			var/obj/structure/big_delivery/tagged_big = atom_movable
+			src.destinationTag = tagged_big.sortTag
+		else if(istype(atom_movable, /obj/item/small_delivery) && !hasmob)
+			var/obj/item/small_delivery/tagged_small = atom_movable
+			src.destinationTag = tagged_small.sortTag
+		else if(istype(atom_movable, /obj/item/mail))
+			var/obj/item/mail/tagged_mail = atom_movable
+			src.destinationTag = tagged_mail.sortTag
+		else if(istype(atom_movable, /mob/living/silicon/robot))
+			var/obj/item/dest_tagger/borg/tagger = locate() in atom_movable
 			if (tagger)
 				src.destinationTag = tagger.currTag
 

@@ -19,9 +19,9 @@
 	var/mob/recipient
 	/// how many goodies this mail contains
 	var/goodie_count = 1
-	/// Goodies which can be given to anyone. The base weight for cash is 56. for there to be a 50/50 chance of getting a department item, they need 56 weight as well.
+	/// Goodies which can be given to anyone. The base weight for cash is 56. For there to be a 50/50 chance of getting a department item, they need 56 weight as well.
 	var/list/generic_goodies = list(
-		/obj/item/stack/spacecash/c50 = 10
+		/obj/item/stack/spacecash/c50 = 10,
 		/obj/item/stack/spacecash/c100 = 25,
 		/obj/item/stack/spacecash/c200 = 15,
 		/obj/item/stack/spacecash/c500 = 5,
@@ -117,15 +117,15 @@
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	unwrap_contents()
-	for(var/X in contents)
-		var/atom/movable/AM = X
+	for(var/mail_contents in contents)
+		var/atom/movable/AM = mail_contents
 		user.put_in_hands(AM)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
 /obj/item/mail/proc/unwrap_contents()
-	for(var/obj/I in src.GetAllContents())
-		SEND_SIGNAL(I, COMSIG_STRUCTURE_UNWRAPPED)
+	for(var/obj/object in GetAllContents())
+		SEND_SIGNAL(object, COMSIG_STRUCTURE_UNWRAPPED)
 
 /// Accepts a mob to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(mob/new_recipient)
@@ -145,16 +145,16 @@
 			else
 				goodies += job_goodies
 
-	for(var/i = 0, i < goodie_count, i++)
-		var/T = pickweight(goodies)
-		if(ispath(T, /datum/reagent))
-			var/obj/item/reagent_containers/TI = new /obj/item/reagent_containers/glass/bottle(src)
-			TI.reagents.add_reagent(T, TI.volume)
-			TI.name = "[TI.reagents.reagent_list[1].name] bottle"
-			new_recipient.log_message("[key_name(new_recipient)] received reagent container [TI.name] in the mail ([T])", LOG_GAME)
+	for(var/iterator = 0, iterator < goodie_count, iterator++)
+		var/target_good = pickweight(goodies)
+		if(ispath(target_good, /datum/reagent))
+			var/obj/item/reagent_containers/target_container = new /obj/item/reagent_containers/glass/bottle(src)
+			target_container.reagents.add_reagent(target_good, target_container.volume)
+			target_container.name = "[target_container.reagents.reagent_list[1].name] bottle"
+			new_recipient.log_message("[key_name(new_recipient)] received reagent container [target_container.name] in the mail ([target_good])", LOG_GAME)
 		else
-			var/atom/movable/TI = new T(src)
-			new_recipient.log_message("[key_name(new_recipient)] received [TI.name] in the mail ([T])", LOG_GAME)
+			var/atom/movable/target_atom = new target_good(src)
+			new_recipient.log_message("[key_name(new_recipient)] received [target_atom.name] in the mail ([target_good])", LOG_GAME)
 
 	return TRUE
 
@@ -204,7 +204,7 @@
 		icon_state = "[initial(icon_state)]open"
 	else
 		icon_state = "[initial(icon_state)]sealed"
-		for(var/obj/item/mail/M in src)
+		for(var/obj/item/mail/Mail in src)
 			icon_state = initial(icon_state)
 			break
 
@@ -214,21 +214,21 @@
 	for(var/mob/living/carbon/human/alive in GLOB.player_list)
 		if(alive.stat != DEAD)
 			mail_recipients += alive
-	for(var/i in 1 to 22)
-		var/obj/item/mail/NM
+	for(var/iterator in 1 to 22)
+		var/obj/item/mail/New_mail
 		if(prob(70))
-			NM = new /obj/item/mail(src)
+			New_mail = new /obj/item/mail(src)
 		else
-			NM = new /obj/item/mail/envelope(src)
+			New_mail = new /obj/item/mail/envelope(src)
 		var/mob/living/carbon/human/mail_to
 		if(mail_recipients.len)
 			mail_to = pick(mail_recipients)
 		if(prob(50)) //so after 21 passes if everyone's at least gotten something we'll junkmail it up
 			mail_recipients -= mail_to
 		if(mail_to)
-			NM.initialize_for_recipient(mail_to)
+			New_mail.initialize_for_recipient(mail_to)
 		else
-			NM.junk_mail()
+			New_mail.junk_mail()
 
 /// Mailbag.
 /obj/item/storage/bag/mail

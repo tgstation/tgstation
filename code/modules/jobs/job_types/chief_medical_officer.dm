@@ -27,14 +27,14 @@
 	bounty_types = CIV_JOB_MED
 
 	mail_goodies = list(
-		/obj/item/scalpel/alien = 5,
-		/obj/item/hemostat/alien = 5,
-		/obj/item/retractor/alien = 5,
-		/obj/item/circular_saw/alien = 5,
-		/obj/item/surgicaldrill/alien = 5,
-		/obj/item/cautery/alien = 5,
-		/obj/effect/spawner/lootdrop/organ_spawner = 3,
-		/obj/effect/spawner/lootdrop/memeorgans = 3
+		/obj/item/scalpel/alien = 1,
+		/obj/item/hemostat/alien = 1,
+		/obj/item/retractor/alien = 1,
+		/obj/item/circular_saw/alien = 1,
+		/obj/item/surgicaldrill/alien = 1,
+		/obj/item/cautery/alien = 1,
+		/obj/effect/spawner/lootdrop/organ_spawner = 10,
+		/obj/effect/spawner/lootdrop/memeorgans = 4
 	)
 	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 

@@ -243,10 +243,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/list/empty_turfs = list()
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
-		for(var/turf/open/floor/T in shuttle_area)
-			if(T.is_blocked_turf())
+		for(var/turf/open/floor/shuttle_floor in shuttle_area)
+			if(shuttle_floor.is_blocked_turf())
 				continue
-			empty_turfs += T
+			empty_turfs += shuttle_floor
 	var/obj/structure/closet/crate/mail/mailcrate = new(pick(empty_turfs))
 
 	//collect recipients
@@ -256,17 +256,17 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			mail_recipients += alive
 
 	//creates mail for all the mail waiting to arrive, if there's nobody to recieve it it's just junkmail.
-	for(var/i in SSeconomy.mail_waiting)
-		var/obj/item/mail/NM
+	for(var/mail_iterator in SSeconomy.mail_waiting)
+		var/obj/item/mail/new_mail
 		if(prob(70))
-			NM = new /obj/item/mail(mailcrate)
+			new_mail = new /obj/item/mail(mailcrate)
 		else
-			NM = new /obj/item/mail/envelope(mailcrate)
+			new_mail = new /obj/item/mail/envelope(mailcrate)
 		var/mob/living/carbon/human/mail_to = pick(mail_recipients)
 		if(mail_to)
-			NM.initialize_for_recipient(mail_to)
+			new_mail.initialize_for_recipient(mail_to)
 		else
-			NM.junk_mail()
+			new_mail.junk_mail()
 	mailcrate.update_icon()
 	SSeconomy.mail_waiting = 0
 	return mailcrate
