@@ -2,10 +2,12 @@
 
 /obj/structure/plaque/static_plaque
 	engraved = TRUE
+	icon_state = "goldenplaque"
 
 /obj/structure/plaque/static_plaque/atmos
 	name = "\improper FEA Atmospherics Division plaque"
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
+	icon_state = "employeeplaque"
 
 /obj/structure/plaque/static_plaque/thunderdome
 	name = "Thunderdome Plaque"
@@ -14,7 +16,7 @@
 /obj/structure/plaque/static_plaque/golden
 	name = "The Most Robust Men Award for Robustness"
 	desc = "To be Robust is not an action or a way of life, but a mental state. Only those with the force of Will strong enough to act during a crisis, saving friend from foe, are truly Robust. Stay Robust my friends."
-	icon_state = "goldenplaque"
+	icon_state = "employeeplaque"
 
 /obj/structure/plaque/static_plaque/golden/captain
 	name = "The Most Robust Captain Award for Robustness"
