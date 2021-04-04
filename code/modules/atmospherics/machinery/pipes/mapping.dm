@@ -59,6 +59,7 @@
 	HELPER_PARTIAL(/obj/machinery/atmospherics/pipe/layer_manifold/##Type, "manifoldlayer", Color) \
 	HELPER_PARTIAL(/obj/machinery/atmospherics/components/binary/pump/off/##Type, "pump_map", Color) \
 	HELPER_PARTIAL(/obj/machinery/atmospherics/components/binary/pump/on/##Type, "pump_on_map", Color) \
+	HELPER_PARTIAL(/obj/machinery/atmospherics/pipe/multiz/##Type, "adapter", Color) \
 
 #define HELPER_NAMED(Type, Name, Color) \
 	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/pipe/smart/simple/##Type, "pipe11", Name, Color) \
@@ -68,6 +69,7 @@
 	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/pipe/layer_manifold/##Type, "manifoldlayer", Name, Color) \
 	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/components/binary/pump/off/##Type, "pump_map", Name, Color) \
 	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/components/binary/pump/on/##Type, "pump_on_map", Name, Color) \
+	HELPER_PARTIAL_NAMED(/obj/machinery/atmospherics/pipe/multiz/##Type, "adapter", Name, Color) \
 
 HELPER(yellow, COLOR_YELLOW)
 HELPER(general, COLOR_VERY_LIGHT_GRAY)
@@ -87,16 +89,3 @@ HELPER_NAMED(supplymain, "main air supply pipe", COLOR_AMETHYST)
 #undef HELPER
 #undef HELPER_PARTIAL_NAMED
 #undef HELPER_PARTIAL
-
-/obj/machinery/atmospherics/pipe/multiz/layer1
-	piping_layer = 1
-	icon_state = "adapter-1"
-/obj/machinery/atmospherics/pipe/multiz/layer2
-	piping_layer = 2
-	icon_state = "adapter-2"
-/obj/machinery/atmospherics/pipe/multiz/layer4
-	piping_layer = 4
-	icon_state = "adapter-4"
-/obj/machinery/atmospherics/pipe/multiz/layer5
-	piping_layer = 5
-	icon_state = "adapter-5"

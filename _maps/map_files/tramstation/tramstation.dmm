@@ -19832,10 +19832,10 @@
 /turf/closed/wall,
 /area/hallway/secondary/exit/departure_lounge)
 "aXU" = (
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -20600,14 +20600,14 @@
 /turf/open/floor/iron/white,
 /area/science/cytology)
 "bmL" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -21728,13 +21728,13 @@
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "bPp" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -28112,10 +28112,10 @@
 /area/science/test_area)
 "ezW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -30534,10 +30534,10 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "fAb" = (
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 1
 	},
 /turf/closed/wall/r_wall,
@@ -33219,10 +33219,10 @@
 /turf/open/floor/iron,
 /area/cargo/miningdock)
 "gHZ" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -33392,10 +33392,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -37637,8 +37637,6 @@
 	network = list("ss13","Security")
 	},
 /obj/structure/ladder,
-/obj/machinery/atmospherics/pipe/multiz/layer4,
-/obj/machinery/atmospherics/pipe/multiz/layer2,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "iJx" = (
@@ -38048,10 +38046,10 @@
 /obj/structure/cable,
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -47585,6 +47583,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/cargo/miningdock)
+"nht" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/ai_monitored/security/armory)
 "nhF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -50896,9 +50902,9 @@
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "oKp" = (
-/obj/machinery/atmospherics/pipe/multiz/layer4,
 /obj/effect/turf_decal/stripes/end,
-/obj/machinery/atmospherics/pipe/multiz/layer2,
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4,
 /turf/open/floor/plating,
 /area/service/hydroponics)
 "oKI" = (
@@ -51293,14 +51299,14 @@
 /turf/open/floor/iron,
 /area/tcommsat/computer)
 "oTA" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -55676,14 +55682,14 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "qQc" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -58920,10 +58926,10 @@
 /area/science/mixing)
 "smn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -59319,11 +59325,11 @@
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
 "suW" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -59661,8 +59667,8 @@
 /area/mine/explored)
 "sCP" = (
 /obj/structure/ladder,
-/obj/machinery/atmospherics/pipe/multiz/layer4,
-/obj/machinery/atmospherics/pipe/multiz/layer2,
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4,
 /turf/open/floor/plating,
 /area/hallway/primary/tram/left)
 "sCR" = (
@@ -60040,14 +60046,14 @@
 /turf/open/floor/iron,
 /area/commons/lounge)
 "sMl" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -61771,6 +61777,8 @@
 /obj/item/gun/energy/e_gun/dragnet,
 /obj/item/gun/energy/e_gun/dragnet,
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "tti" = (
@@ -62503,13 +62511,13 @@
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "tKm" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -66263,9 +66271,6 @@
 "vsn" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer2{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/maintenance/port/central)
 "vss" = (
@@ -66632,14 +66637,14 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/radshelter/service)
 "vCA" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -67719,14 +67724,14 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "vZN" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -68014,7 +68019,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "whY" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -68022,7 +68027,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -68169,7 +68174,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "wns" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -68178,7 +68183,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -69459,14 +69464,14 @@
 /turf/open/floor/iron,
 /area/maintenance/tram/right)
 "wQh" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -170548,7 +170553,7 @@ eLx
 yfG
 hNf
 ttc
-qan
+nht
 mWu
 eog
 ssX

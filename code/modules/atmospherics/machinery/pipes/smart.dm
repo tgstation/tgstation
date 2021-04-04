@@ -34,7 +34,7 @@
 	var/mutable_appearance/center
 	connection_num = 0
 	connections = NONE
-	var/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
+	var/static/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
 	for(var/direction in GLOB.cardinals)
 		var/turf/turf = get_step(src, direction)
 		if(!turf)
