@@ -17,9 +17,10 @@
 /area/shuttle/mining)
 "f" = (
 /obj/structure/table/wood,
-/obj/machinery/button/door{
+/obj/machinery/computer/pod/old/swf{
+	desc = "A combined blastdoor and mass driver control unit.";
 	id = "miner";
-	name = "Outer Airlock Blast Door Control"
+	name = "\improper Mininx System IV"
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/mining)
@@ -64,8 +65,8 @@
 /area/shuttle/mining)
 "s" = (
 /obj/machinery/door/poddoor{
-	base_icon_state = "Outer Airlock";
-	id = "miner"
+	id = "miner";
+	name = "Outer Airlock"
 	},
 /obj/docking_port/mobile{
 	dheight = 6;

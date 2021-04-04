@@ -17,6 +17,9 @@
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/arrival)
+"t" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/arrival)
 "v" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
@@ -70,9 +73,9 @@
 (1,1,1) = {"
 a
 k
-k
+t
 P
-k
+t
 k
 a
 "}
@@ -104,13 +107,13 @@ k
 k
 "}
 (5,1,1) = {"
-k
+t
 k
 E
 E
 E
 k
-k
+t
 "}
 (6,1,1) = {"
 i
@@ -185,13 +188,13 @@ E
 i
 "}
 (14,1,1) = {"
-k
+t
 k
 E
 E
 E
 k
-k
+t
 "}
 (15,1,1) = {"
 k
