@@ -66,8 +66,8 @@ const PreviewDisplay = (props, context) => {
     <Section title="Preview">
       <Table>
         <Table.Row header>
-          <Table.Cell><Box textAlign="center" bold>Step Layer</Box></Table.Cell>
-          <Table.Cell><Box textAlign="center" bold>Step Result</Box></Table.Cell>
+          <Table.Cell textAlign="center">Step Layer</Table.Cell>
+          <Table.Cell textAlign="center">Step Result</Table.Cell>
         </Table.Row>
         {data.sprites.steps.map(item => (
           <Table.Row key={`${item.result}|${item.layer}`}>
@@ -86,7 +86,6 @@ const SingleSprite = (props) => {
   } = props;
   return (<Box
     as="img"
-    class="icon icon-misc"
     src={source}
     width="100%"
   />);
