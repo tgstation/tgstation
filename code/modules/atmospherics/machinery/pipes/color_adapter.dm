@@ -7,7 +7,7 @@
 
 	dir = SOUTH
 	initialize_directions = NORTH | SOUTH
-	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE | PIPING_ALL_COLORS
+	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE | PIPING_ALL_COLORS | PIPING_BRIDGE
 	device_type = BINARY
 
 	construction_type = /obj/item/pipe/binary

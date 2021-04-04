@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)))
+
 /obj/machinery/atmospherics/pipe/smart
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "pipe11-3"
@@ -10,7 +12,7 @@
 	device_type = QUATERNARY
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "manifold4w"
-	var/connection_num = 0
+	connection_num = 0
 	var/list/connections
 	var/static/list/mutable_appearance/center_cache = list()
 	var/mutable_appearance/pipe_appearance
@@ -20,12 +22,7 @@
  */
 /obj/machinery/atmospherics/pipe/smart/Initialize()
 	icon_state = ""
-	connections = new/list(dir2text(NORTH) = FALSE, dir2text(SOUTH) = FALSE , dir2text(EAST) = FALSE , dir2text(WEST) = FALSE)
 	. = ..()
-
-/obj/machinery/atmospherics/pipe/smart/Initialize()
-	. = ..()
-	update_appearance()
 
 /obj/machinery/atmospherics/pipe/smart/SetInitDirections()
 	initialize_directions = ALL_CARDINALS
@@ -34,16 +31,11 @@
 	var/mutable_appearance/center
 	connection_num = 0
 	connections = NONE
-	var/static/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
 	for(var/direction in GLOB.cardinals)
 		var/turf/turf = get_step(src, direction)
 		if(!turf)
 			continue
-		for(var/machine_type in turf.contents)
-			if(!is_type_in_typecache(machine_type, valid_connectors))
-				continue
-			var/obj/machinery/atmospherics/machine = machine_type
-
+		for(var/obj/machinery/atmospherics/machine in turf)
 			if(connection_check(machine, piping_layer))
 				connections |= direction
 				connection_num++

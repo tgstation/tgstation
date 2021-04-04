@@ -131,6 +131,15 @@ Buildable meters
 /obj/item/pipe/attack_self(mob/user)
 	setDir(turn(dir,-90))
 
+/obj/item/pipe/proc/check_ninety_degree_dir(obj/machinery/atmospherics/machine)
+	if(ISDIAGONALDIR(machine.dir))
+		return FALSE
+	if(EWCOMPONENT(machine.dir) && EWCOMPONENT(dir))
+		return FALSE
+	if(NSCOMPONENT(machine.dir) && NSCOMPONENT(dir))
+		return FALSE
+	return TRUE
+
 /obj/item/pipe/wrench_act(mob/living/user, obj/item/wrench/W)
 	. = ..()
 	if(!isturf(loc))
@@ -140,12 +149,26 @@ Buildable meters
 
 	var/obj/machinery/atmospherics/fakeA = pipe_type
 	var/flags = initial(fakeA.pipe_flags)
+	var/pipe_count = 0
+	for(var/obj/machinery/atmospherics/M in loc)
+		if(M.piping_layer != piping_layer)
+			continue
+		pipe_count += 1
 	for(var/obj/machinery/atmospherics/M in loc)
 		if((M.pipe_flags & flags & PIPING_ONE_PER_TURF)) //Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
 			to_chat(user, "<span class='warning'>Something is hogging the tile!</span>")
 			return TRUE
 
-		if(flags & PIPING_BRIDGE && !(M.pipe_flags & PIPING_BRIDGE)) //continue if we are placing a bridge pipe over a normal pipe only (prevent duplicates)
+		if(pipe_count == 1 && istype(M, /obj/machinery/atmospherics/pipe/smart) && pipe_type == /obj/machinery/atmospherics/pipe/smart && M.pipe_color != pipe_color && M.connection_num < 3)
+			if((M.dir & EAST|WEST || M.dir & SOUTH|NORTH) && !ISDIAGONALDIR(M.dir))
+				pipe_type = /obj/machinery/atmospherics/pipe/bridge_pipe
+				if(EWCOMPONENT(M.dir))
+					dir = NORTH
+				if(NSCOMPONENT(M.dir))
+					dir = EAST
+				continue
+
+		if(flags & PIPING_BRIDGE && !(M.pipe_flags & PIPING_BRIDGE) && check_ninety_degree_dir(M)) //continue if we are placing a bridge pipe over a normal pipe only (prevent duplicates)
 			continue
 
 		if((M.piping_layer != piping_layer) && !((M.pipe_flags | flags) & PIPING_ALL_LAYER)) //don't continue if either pipe goes across all layers

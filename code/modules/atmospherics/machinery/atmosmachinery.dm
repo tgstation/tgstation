@@ -62,6 +62,9 @@
 	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
 
+	///Store the smart pipes connections, used for pipe construction
+	var/connection_num = 0
+
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
 	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
