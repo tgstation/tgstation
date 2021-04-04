@@ -20,6 +20,7 @@
 
 	mail_goodies = list(
 		/obj/item/reagent_containers/food/drinks/bottle/holywater = 30,
+		/obj/item/toy/plush/awakenedplushie = 10
 		/obj/item/grenade/chem_grenade/holy = 5
 	)
 

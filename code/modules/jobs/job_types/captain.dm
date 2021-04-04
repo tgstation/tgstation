@@ -27,8 +27,9 @@
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
 
 	mail_goodies = list(
-		/obj/item/clothing/mask/cigarette/cigar/havana = 40,
-		/obj/item/storage/fancy/cigarettes/cigars/havana = 10
+		/obj/item/clothing/mask/cigarette/cigar/havana = 20,
+		/obj/item/storage/fancy/cigarettes/cigars/havana = 15,
+		/obj/item/reagent_containers/food/drinks/bottle/champagne = 10
 	)
 
 /datum/job/captain/announce(mob/living/carbon/human/H, announce_captaincy = TRUE)

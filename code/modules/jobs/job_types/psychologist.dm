@@ -21,8 +21,9 @@
 	family_heirlooms = list(/obj/item/storage/pill_bottle)
 
 	mail_goodies =  list(
-		/obj/item/gun/syringe = 5,
-		/obj/item/gun/syringe/rapidsyringe = 1
+		/obj/item/storage/pill_bottle/mannitol = 30,
+		/obj/item/storage/pill_bottle/happy = 5,
+		/obj/item/gun/syringe = 1
 	)
 
 /datum/outfit/job/psychologist

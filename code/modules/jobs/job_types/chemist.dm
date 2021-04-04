@@ -24,7 +24,9 @@
 	family_heirlooms = list(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet)
 
 	mail_goodies = list(
-		/datum/reagent/exotic_stabilizer = 5
+		/datum/reagent/flash_powder = 15,
+		/datum/reagent/exotic_stabilizer = 5,
+		/datum/reagent/toxin/leadacetate = 5
 	)
 
 /datum/outfit/job/chemist

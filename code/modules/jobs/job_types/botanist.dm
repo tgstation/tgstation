@@ -22,9 +22,9 @@
 		/datum/reagent/toxin/mutagen = 20,
 		/datum/reagent/saltpetre = 20,
 		/datum/reagent/diethylamine = 20,
-		/obj/item/gun/energy/floragun = 15,
+		/obj/item/gun/energy/floragun = 10,
 		// These are 5 rare seeds, so use sparingly.
-		/obj/effect/spawner/lootdrop/space/rareseed = 15
+		/obj/effect/spawner/lootdrop/space/rareseed = 5
 	)
 
 /datum/outfit/job/botanist

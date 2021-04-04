@@ -21,6 +21,7 @@
 
 	mail_goodies = list(
 		/obj/item/assembly/flash/handheld = 30,
+		/obj/item/stack/sheet/iron{amount = 10} = 15,
 		/obj/item/storage/box/flashes = 5
 	)
 
