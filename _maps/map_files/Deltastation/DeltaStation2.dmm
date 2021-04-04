@@ -6963,6 +6963,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aGP" = (
@@ -6987,7 +6988,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
+	dir = 6
+	},
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -87229,6 +87232,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
+"pon" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "poo" = (
 /obj/effect/landmark/start/station_engineer,
 /obj/structure/cable,
@@ -134824,7 +134833,7 @@ aad
 aaa
 lKR
 aFr
-aMv
+pon
 aIn
 aPy
 aFr
@@ -135080,7 +135089,7 @@ aaa
 ajr
 aad
 lKR
-aFr
+aMv
 aGO
 aIo
 aJG
@@ -135338,7 +135347,7 @@ ajr
 aad
 lKR
 aFr
-aMv
+pon
 aIp
 aPy
 aFr
