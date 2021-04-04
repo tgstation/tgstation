@@ -507,6 +507,13 @@
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
+#define TOTAL_MOLES_SPECIFIC(cached_gases, gas_id, out_var)\
+	out_var = 0;\
+	for(var/total_moles_id in cached_gases){\
+		if(total_moles_id == gas_id){\
+			out_var += cached_gases[total_moles_id][MOLES];\
+		}\
+	}
 #define NORMAL_TURF 1
 #define MAKE_ACTIVE 2
 #define KILL_EXCITED 3

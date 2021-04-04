@@ -144,4 +144,4 @@
 	return TRUE
 
 /obj/structure/disposalholder/ex_act(severity, target)
-	return
+	return FALSE

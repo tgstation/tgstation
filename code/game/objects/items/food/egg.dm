@@ -142,6 +142,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
 	foodtypes = MEAT | BREAKFAST | GRAIN
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/chawanmushi
 	name = "chawanmushi"

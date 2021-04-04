@@ -89,6 +89,7 @@
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
+	turf_loc_check = FALSE
 
 	dryname = "rotting gibs"
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
@@ -100,12 +101,15 @@
 	if(mapload) //Don't rot at roundstart for the love of god
 		return
 
+/obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
+	return FALSE //Never fail to place us
+
 /obj/effect/decal/cleanable/blood/gibs/dry()
 	. = ..()
 	AddComponent(/datum/component/rot/gibs)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/L)
 	if(isliving(L) && has_gravity(loc))
