@@ -198,16 +198,12 @@
  * * direction - the direction we are checking against
  * * prompted_layer - the piping_layer we are inside
  */
-/obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer, connect_all = FALSE, color_piping)
+/obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer)
 	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
-		if(target.initialize_directions & get_dir(target,src))
-			if(connect_all)
-				if(target.pipe_color != GLOB.pipe_paint_colors[color_piping] || target.piping_layer != prompted_layer)
-					continue
-				else
-					return target
-			if(connection_check(target, prompted_layer))
-				return target
+		if(!(target.initialize_directions & get_dir(target,src)))
+			continue
+		if(connection_check(target, prompted_layer))
+			return target
 
 /**
  * Check the connection between two nodes
@@ -224,7 +220,7 @@
 	return FALSE
 
 /**
- * check if the piping layer are the same on both sides
+ * check if the piping layer and color are the same on both sides (grey can connect to all colors)
  * returns TRUE or FALSE if the connection is possible or not
  * Arguments:
  * * obj/machinery/atmospherics/target - the machinery we want to connect to
@@ -233,10 +229,31 @@
 /obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, given_layer)
 	if(isnull(given_layer))
 		given_layer = piping_layer
-	if(
-		((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER)) && target.loc != loc \
-		&& (target.pipe_color == pipe_color || target.pipe_flags & PIPING_ALL_COLORS || pipe_flags & PIPING_ALL_COLORS || target.pipe_color == COLOR_VERY_LIGHT_GRAY || pipe_color == COLOR_VERY_LIGHT_GRAY)
-	)
+	if(check_connectable_layer(target, given_layer) && target.loc != loc && check_connectable_color(target))
+		return TRUE
+	return FALSE
+
+/**
+ * check if the piping layer are the same on both sides or one of them has the PIPING_ALL_LAYER flag
+ * returns TRUE if one of the parameters is TRUE
+ * called by isConnectable()
+ * Arguments:
+ * * obj/machinery/atmospherics/target - the machinery we want to connect to
+ * * given_layer - the piping_layer we are connecting to
+ */
+/obj/machinery/atmospherics/proc/check_connectable_layer(obj/machinery/atmospherics/target, given_layer)
+	if(target.piping_layer == given_layer || (target.pipe_flags | pipe_flags) & PIPING_ALL_LAYER)
+		return TRUE
+	return FALSE
+
+/**
+ * check if the color are the same on both sides or if one of the pipes are grey or have the PIPING_ALL_COLORS flag
+ * returns TRUE if one of the parameters is TRUE
+ * Arguments:
+ * * obj/machinery/atmospherics/target - the machinery we want to connect to
+ */
+/obj/machinery/atmospherics/proc/check_connectable_color(obj/machinery/atmospherics/target)
+	if(target.pipe_color == pipe_color || ((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) || target.pipe_color == COLOR_VERY_LIGHT_GRAY || pipe_color == COLOR_VERY_LIGHT_GRAY)
 		return TRUE
 	return FALSE
 

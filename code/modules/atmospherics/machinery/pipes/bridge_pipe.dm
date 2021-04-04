@@ -15,12 +15,9 @@
 
 	var/static/list/mutable_appearance/center_cache = list()
 
-/* We use New() instead of Initialize() because these values are used in update_icon()
- * in the mapping subsystem init before Initialize() is called in the atoms subsystem init.
- */
-/obj/machinery/atmospherics/pipe/bridge_pipe/New()
+/obj/machinery/atmospherics/pipe/bridge_pipe/Initialize()
 	icon_state = ""
-	return ..()
+	. = ..()
 
 /obj/machinery/atmospherics/pipe/bridge_pipe/SetInitDirections()
 	switch(dir)
@@ -38,12 +35,13 @@
 		center_cache["[piping_layer]"] = center
 	. += center
 
-	layer = 2.55 //to stay above all sorts of pipes
+	layer = HIGH_PIPE_LAYER //to stay above all sorts of pipes
 
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
-		if(nodes[i])
-			var/image/pipe = getpipeimage(icon, "pipe", get_dir(src, nodes[i]))
-			PIPING_LAYER_SHIFT(pipe, piping_layer)
-			pipe.layer = layer + 0.01
-			. += pipe
+		if(!nodes[i])
+			continue
+		var/image/pipe = getpipeimage(icon, "pipe", get_dir(src, nodes[i]))
+		PIPING_LAYER_SHIFT(pipe, piping_layer)
+		pipe.layer = layer + 0.01
+		. += pipe

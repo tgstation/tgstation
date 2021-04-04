@@ -18,12 +18,9 @@
 
 	var/static/list/mutable_appearance/center_cache = list()
 
-/* We use New() instead of Initialize() because these values are used in update_icon()
- * in the mapping subsystem init before Initialize() is called in the atoms subsystem init.
- */
-/obj/machinery/atmospherics/pipe/color_adapter/New()
+/obj/machinery/atmospherics/pipe/color_adapter/Initialize()
 	icon_state = ""
-	return ..()
+	. = ..()
 
 /obj/machinery/atmospherics/pipe/color_adapter/SetInitDirections()
 	switch(dir)
@@ -45,11 +42,12 @@
 
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
-		if(nodes[i])
-			var/image/pipe = getpipeimage(icon, "pipe", get_dir(src, nodes[i]), nodes[i].pipe_color)
-			PIPING_LAYER_SHIFT(pipe, piping_layer)
-			pipe.layer = layer + 0.01
-			. += pipe
+		if(!nodes[i])
+			continue
+		var/image/pipe = getpipeimage(icon, "pipe", get_dir(src, nodes[i]), nodes[i].pipe_color)
+		PIPING_LAYER_SHIFT(pipe, piping_layer)
+		pipe.layer = layer + 0.01
+		. += pipe
 
 /obj/machinery/atmospherics/pipe/color_adapter/layer1
 	icon_state = "adapter_map-1"

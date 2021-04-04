@@ -30886,13 +30886,10 @@
 /turf/open/floor/plating,
 /area/cargo/storage)
 "dJb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/iron,
 /area/science/mixing)
 "dJh" = (
@@ -33855,12 +33852,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/binary/pump,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
-	dir = 4
-	},
 /obj/structure/sign/warning/gasmask{
 	pixel_x = 32
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "eTE" = (
@@ -53842,9 +53837,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
 "mVt" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "mVy" = (
@@ -54669,6 +54662,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"njL" = (
+/obj/structure/sign/warning/fire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/turf/closed/wall/r_wall,
+/area/science/mixing/chamber)
 "njV" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
@@ -54698,7 +54697,6 @@
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "nkG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -54706,6 +54704,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron,
 /area/science/mixing)
 "nkS" = (
@@ -55448,8 +55447,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "nDc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/structure/sign/warning/fire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "nDf" = (
@@ -71099,7 +71097,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "tLs" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "tLz" = (
@@ -114154,7 +114152,7 @@ jmX
 xNF
 dJb
 gAo
-tLs
+nDc
 laD
 nDc
 hnc
@@ -114670,7 +114668,7 @@ vEB
 nXE
 tLs
 eTx
-nDc
+njL
 qkq
 fmA
 nOc
