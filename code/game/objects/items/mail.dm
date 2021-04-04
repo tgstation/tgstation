@@ -19,14 +19,13 @@
 	var/mob/recipient
 	/// how many goodies this mail contains
 	var/goodie_count = 1
-	/// goodies which can be given to anyone.
-	/// the base weight for cash is 56. for there to be a 50/50 chance of getting a department item, they need 56 weight as well.
+	/// Goodies which can be given to anyone. The base weight for cash is 56. for there to be a 50/50 chance of getting a department item, they need 56 weight as well.
 	var/list/generic_goodies = list(
-		/obj/item/stack/spacecash/c100 = 30,
-		/obj/item/stack/spacecash/c200 = 20,
-		/obj/item/stack/spacecash/c500 = 10,
-		/obj/item/stack/spacecash/c1000 = 5,
-		/obj/item/stack/spacecash/c10000 = 1
+		/obj/item/stack/spacecash/c50 = 10
+		/obj/item/stack/spacecash/c100 = 25,
+		/obj/item/stack/spacecash/c200 = 15,
+		/obj/item/stack/spacecash/c500 = 5,
+		/obj/item/stack/spacecash/c1000 = 1,
 	)
 	// Overlays (pure fluff)
 	var/postmarked = TRUE
@@ -49,15 +48,16 @@
 /obj/item/mail/Initialize()
 	. = ..()
 	AddElement(/datum/element/item_scaling, 0.5, 1)
-	department_colors = list(
-	ACCOUNT_CIV = COLOR_WHITE,
-	ACCOUNT_ENG = COLOR_PALE_ORANGE,
-	ACCOUNT_SCI = COLOR_PALE_PURPLE_GRAY,
-	ACCOUNT_MED = COLOR_PALE_BLUE_GRAY,
-	ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
-	ACCOUNT_CAR = COLOR_BEIGE,
-	ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
-	)
+	if(!department_colors.len)
+		department_colors = list(
+		ACCOUNT_CIV = COLOR_WHITE,
+		ACCOUNT_ENG = COLOR_PALE_ORANGE,
+		ACCOUNT_SCI = COLOR_PALE_PURPLE_GRAY,
+		ACCOUNT_MED = COLOR_PALE_BLUE_GRAY,
+		ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
+		ACCOUNT_CAR = COLOR_BEIGE,
+		ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
+		)
 
 	// Icons
 	// Add some random stamps.
@@ -153,10 +153,8 @@
 			TI.name = "[TI.reagents.reagent_list[1].name] bottle"
 			new_recipient.log_message("[key_name(new_recipient)] received reagent container [TI.name] in the mail ([T])", LOG_GAME)
 		else
-		//if(ispath(T, /obj))
 			var/atom/movable/TI = new T(src)
 			new_recipient.log_message("[key_name(new_recipient)] received [TI.name] in the mail ([T])", LOG_GAME)
-			//CRASH("[key_name(new_recipient)] received an unexpected type in the mail ([T])")
 
 	return TRUE
 
