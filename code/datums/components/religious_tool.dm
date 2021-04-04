@@ -44,7 +44,8 @@
 	if(!GLOB.religious_sect)
 		return FALSE
 	easy_access_sect = GLOB.religious_sect
-	after_sect_select_cb.Invoke()
+	if(after_sect_select_cb)
+		after_sect_select_cb.Invoke()
 	return TRUE
 
 
@@ -56,24 +57,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(the_item, catalyst_type))
-		ui_interact(user)
-
-	/*
-
-	/**********Sect Selection**********/
-	if(!SetGlobalToLocal())
-		if(!(operation_flags & RELIGION_TOOL_SECTSELECT))
-			return
-		//At this point you're intentionally trying to select a sect.
-		INVOKE_ASYNC(src, .proc/select_sect, user)
-		return COMPONENT_NO_AFTERATTACK
-
-	/**********Rite Invocation**********/
-	else if(istype(the_item, catalyst_type))
-		if(!(operation_flags & RELIGION_TOOL_INVOKE))
-			return
-		INVOKE_ASYNC(src, .proc/perform_rite, user)
-		return (force_catalyst_afterattack ? NONE : COMPONENT_NO_AFTERATTACK)
+		INVOKE_ASYNC(src, /datum.proc/ui_interact, user) //asynchronous to avoid sleeping in a signal
 
 	/**********Sacrificing**********/
 	else if(operation_flags & RELIGION_TOOL_SACRIFICE)
@@ -81,8 +65,6 @@
 			return
 		easy_access_sect.on_sacrifice(the_item,user)
 		return COMPONENT_NO_AFTERATTACK
-
-	*/
 
 /datum/component/religious_tool/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -223,7 +205,7 @@
 		return //specifically null so the data sends as such
 	var/list/item_names = list()
 	for(var/atom/sac_type as anything in easy_access_sect.desired_items)
-		var/append = item_names[sac_type]
+		var/append = easy_access_sect.desired_items[sac_type]
 		var/entry = "[initial(sac_type.name)]s [append]"
 		item_names += entry
 	return english_list(item_names)

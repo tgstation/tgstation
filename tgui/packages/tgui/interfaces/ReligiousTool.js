@@ -1,6 +1,6 @@
 import { capitalize } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, BlockQuote, Box, Button, Collapsible, Icon, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
+import { AnimatedNumber, BlockQuote, Box, Button, Collapsible, Dimmer, Icon, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const ALIGNMENT2COLOR = {
@@ -94,9 +94,9 @@ const SectTab = (props, context) => {
           <Stack.Item>
             <Section mx={3} mt={-1} title="Wanted Sacrifices">
               {!wanted && (
-                "None!"
+                deity + " doesn't want any sacrifices."
               ) || (
-                capitalize(wanted)
+                deity + " wishes for " + wanted + "."
               )}
             </Section>
           </Stack.Item>
@@ -157,36 +157,61 @@ const RiteTab = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     rites,
+    deity,
+    icon,
     alignment,
     favor,
   } = data;
   return (
-    <Stack vertical>
-      {rites.map(rite => (
-        <Stack.Item key={rite}>
-          <Section
-            title={rite.name}
-            buttons={(
-              <Button
-                fontColor="white"
-                iconColor={ALIGNMENT2COLOR[alignment]}
-                disabled={favor < rite.favor}
-                color="transparent"
-                icon="arrow-right">
-                Invoke
-              </Button>
-            )} >
-            <Box
-              color={favor < rite.favor ? "red" : "grey"}
-              mb={0.5}>
-              <Icon name="star" color={ALIGNMENT2COLOR[alignment]} /> Costs {rite.favor} favor.
-            </Box>
-            <BlockQuote>
-              {rite.desc}
-            </BlockQuote>
-          </Section>
-        </Stack.Item>
-      ))}
-    </Stack>
+    <>
+      {!rites.length && (
+        <Section fill >
+          <Dimmer>
+            <Stack vertical>
+              <Stack.Item textAlign="center">
+                <Icon
+                  color={ALIGNMENT2COLOR[alignment]}
+                  name={icon}
+                  size={10}
+                />
+              </Stack.Item>
+              <Stack.Item fontSize="18px" color={ALIGNMENT2COLOR[alignment]}>
+                {deity} does not have any invocations.
+              </Stack.Item>
+            </Stack>
+          </Dimmer>
+        </Section>
+      )}
+      <Stack vertical>
+        {rites.map(rite => (
+          <Stack.Item key={rite}>
+            <Section
+              title={rite.name}
+              buttons={(
+                <Button
+                  fontColor="white"
+                  iconColor={ALIGNMENT2COLOR[alignment]}
+                  disabled={favor < rite.favor}
+                  color="transparent"
+                  icon="arrow-right"
+                  onClick={() => act('perform_rite', {
+                    path: rite.path,
+                  })} >
+                  Invoke
+                </Button>
+              )} >
+              <Box
+                color={favor < rite.favor ? "red" : "grey"}
+                mb={0.5}>
+                <Icon name="star" color={ALIGNMENT2COLOR[alignment]} /> Costs {rite.favor} favor.
+              </Box>
+              <BlockQuote>
+                {rite.desc}
+              </BlockQuote>
+            </Section>
+          </Stack.Item>
+        ))}
+      </Stack>
+    </>
   );
 };

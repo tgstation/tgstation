@@ -94,15 +94,11 @@
 			else
 				to_chat(owner, "<span class='warning'>The weight on your shoulders feels lighter. You have lost some universal truths.</span>")
 				dna.remove_mutation(TK)
-				dna.remove_mutation(GLOWY)
 				dna.remove_mutation(MINDREAD)
-				owner.remove_filter("burden_rays")
 		if(6)
 			to_chat(owner, "<span class='notice'>You have finally broken yourself enough to understand [GLOB.deity]. It's all so clear to you.</span>")
 			dna.add_mutation(TK)
-			dna.add_mutation(GLOWY)
 			dna.add_mutation(MINDREAD)
-			owner.add_filter("burden_rays", 10, list("type" = "rays", "size" = 35, "color" = "#6c6eff"))
 
 /// Signal to decrease burden_level (see update_burden proc) if an organ is added
 /datum/mutation/human/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)
@@ -191,6 +187,3 @@
 
 	if(istype(trauma_removed, /datum/brain_trauma/severe))
 		update_burden(FALSE)
-
-#undef FIRST_TRUTH_REWARD
-#undef SECOND_TRUTH_REWARD
