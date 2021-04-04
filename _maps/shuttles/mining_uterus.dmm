@@ -19,13 +19,13 @@
 /obj/structure/table/wood,
 /obj/machinery/computer/pod/old/swf{
 	desc = "A combined blastdoor and mass driver control unit.";
-	id = "miner";
+	id = "mining_minerblastdoors";
 	name = "\improper Mininx System IV"
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/mining)
 "j" = (
-/obj/structure/closet/crate,
+/obj/structure/closet/secure_closet/miner,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/mining)
 "k" = (
@@ -36,17 +36,17 @@
 "l" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/mining)
 "o" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/camera_advanced/shuttle_docker{
 	designate_time = 50;
 	dir = 8;
-	jumpto_ports = list("mining_home;mining_away;landing_zone_dock;mining_public");
+	jumpto_ports = list("mining_home" = 1, "mining_away" = 1, "landing_zone_dock" = 1, "mining_public" = 1);
 	name = "Mining Shuttle Navigation Computer";
 	shuttleId = "mining";
 	shuttlePortId = "mining_custom";
-	x_offset = 5;
+	x_offset = 3;
 	y_offset = 1
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
@@ -55,7 +55,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/mining)
 "r" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -65,19 +65,20 @@
 /area/shuttle/mining)
 "s" = (
 /obj/machinery/door/poddoor{
-	id = "miner";
+	id = "minerblastdoors";
 	name = "Outer Airlock"
 	},
 /obj/docking_port/mobile{
-	dheight = 6;
 	dir = 4;
-	height = 11;
+	dwidth = 5;
+	height = 13;
 	id = "mining";
 	name = "mining shuttle";
 	port_direction = 2;
 	preferred_direction = 4;
 	width = 12
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/mining)
 "t" = (
@@ -85,7 +86,7 @@
 /obj/machinery/computer/shuttle/mining{
 	circuit = null;
 	dir = 8;
-	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public;mining_custom"
+	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public;whiteship_lavaland;mining_custom"
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/mining)
@@ -95,12 +96,10 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/mining)
 "v" = (
-/obj/effect/landmark/start/shaft_miner,
 /obj/structure/chair,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/mining)
 "B" = (
-/obj/effect/landmark/start/shaft_miner,
 /obj/structure/chair{
 	dir = 4
 	},
@@ -147,10 +146,6 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/shuttle/mining)
-"W" = (
-/obj/structure/closet/secure_closet/miner,
-/turf/open/floor/mineral/titanium/tiled/purple,
-/area/shuttle/mining)
 "Z" = (
 /turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/mining)
@@ -176,7 +171,7 @@ p
 Z
 e
 M
-W
+M
 Z
 p
 p
@@ -190,7 +185,7 @@ c
 Z
 f
 M
-W
+M
 Z
 c
 c
@@ -213,7 +208,7 @@ a
 "}
 (5,1,1) = {"
 Z
-W
+M
 M
 Z
 M
