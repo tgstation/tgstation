@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "The dark gygax now appears as a dark gygax, and not a gygax."
+  - bugfix: "The nukie uplink is no longer deceptive about what equipment you get on a dark gygax."
