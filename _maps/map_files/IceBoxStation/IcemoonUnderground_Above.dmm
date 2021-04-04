@@ -2301,7 +2301,7 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "jM" = (
-/obj/machinery/atmospherics/pipe/multiz/layer4{
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	color = "#0000ff";
 	dir = 4;
 	name = "Supply multi deck pipe adapter"
@@ -5231,7 +5231,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "Mv" = (
-/obj/machinery/atmospherics/pipe/multiz/layer2{
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	color = "#ff0000";
 	dir = 4;
 	name = "Scrubbers multi deck pipe adapter"
