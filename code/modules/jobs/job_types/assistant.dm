@@ -24,7 +24,7 @@ Assistant
 	mail_goodies = list(
 		/obj/effect/spawner/lootdrop/donkpockets = 10,
 		/obj/item/clothing/mask/gas = 10,
-		/obj/item/clothing/gloves/color/fyellow = 7
+		/obj/item/clothing/gloves/color/fyellow = 7,
 		/obj/item/choice_beacon/music = 5,
 		/obj/item/clothing/gloves/color/yellow/sprayon = 3
 	)
