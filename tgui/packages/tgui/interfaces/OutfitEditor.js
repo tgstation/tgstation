@@ -38,6 +38,11 @@ export const OutfitEditor = (props, context) => {
           buttons={
             <>
               <Button
+                color="transparent"
+                icon="info"
+                // tooltips are wack with a lot of text; forced to use title
+                title="Ctrl-click a button to select any item instead of what will probably fit in that slot." />
+              <Button
                 icon="code"
                 tooltip="Edit this outfit on a VV window"
                 tooltipPosition="left"
@@ -53,23 +58,23 @@ export const OutfitEditor = (props, context) => {
           }>
           <Box textAlign="center">
             <Stack mb={2}>
-              <OutfitSlot name="Headgear" slot="head" />
-              <OutfitSlot name="Glasses" slot="glasses" />
-              <OutfitSlot name="Ears" slot="ears" />
+              <OutfitSlot name="Headgear" icon="hard-hat" slot="head" />
+              <OutfitSlot name="Glasses" icon="glasses" slot="glasses" />
+              <OutfitSlot name="Ears" icon="headphones-alt" slot="ears" />
             </Stack>
             <Stack mb={2}>
-              <OutfitSlot name="Neck" slot="neck" />
-              <OutfitSlot name="Mask" slot="mask" />
+              <OutfitSlot name="Neck" icon="stethoscope" slot="neck" />
+              <OutfitSlot name="Mask" icon="theater-masks" slot="mask" />
             </Stack>
             <Stack mb={2}>
-              <OutfitSlot name="Uniform" slot="uniform" />
-              <OutfitSlot name="Suit" slot="suit" />
-              <OutfitSlot name="Gloves" slot="gloves" />
+              <OutfitSlot name="Uniform" icon="tshirt" slot="uniform" />
+              <OutfitSlot name="Suit" icon="user-tie" slot="suit" />
+              <OutfitSlot name="Gloves" icon="mitten" slot="gloves" />
             </Stack>
             <Stack mb={2}>
               <OutfitSlot name="Suit Storage" slot="suit_store" />
               <OutfitSlot name="Back" slot="back" />
-              <OutfitSlot name="ID" slot="id" />
+              <OutfitSlot name="ID" icon="id-card-o" slot="id" />
             </Stack>
             <Stack mb={2}>
               <OutfitSlot name="Belt" slot="belt" />
@@ -100,7 +105,7 @@ const OutfitSlot = (props, context) => {
         title="Ctrl-Click to select any item"
         content={<b>{name}</b>}
         onClick={e => {
-          e.ctrlKey
+          e.ctrlKey // todo: intuitive way to clear items
             ?act("ctrlClick", { slot: slot })
             :act("click", { slot: slot }); }} />
       {currItem?.sprite && (
