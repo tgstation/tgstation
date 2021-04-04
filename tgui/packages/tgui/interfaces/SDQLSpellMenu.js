@@ -6,117 +6,118 @@ const typevars = type => {
   let ret = [{ name: "name", type: "string",
       options: null, default_value: "" },
     { name: "desc", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "query", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "action_icon", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "action_icon_state", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "action_background_icon_state", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "sound", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "charge_type", type: "string_enum",
-      options: ["recharge", "charges", "holder_var"], default_value: "recharge" },
+    options: ["recharge", "charges", "holder_var"], default_value: "recharge" },
     { name: "charge_max", type: "int",
-      options: null, default_value: 100 },
+    options: null, default_value: 100 },
     { name: "still_recharging_message", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "holder_var_type", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "holder_var_amount", type: "int",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "clothes_req", type: "bool",
-      options: null, default_value: false },
+    options: null, default_value: false },
     { name: "cult_req", type: "bool",
-      options: null, default_value: false },
+    options: null, default_value: false },
     { name: "human_req", type: "bool",
-      options: null, default_value: false },
+    options: null, default_value: false },
     { name: "nonabstract_req", type: "bool",
-      options: null, default_value: false },
+    options: null, default_value: false },
     { name: "stat_allowed", type: "bool",
-      options: null, default_value: false },
+    options: null, default_value: false },
     { name: "phase_allowed", type: "bool",
-      options: null, default_value: false },
+    options: null, default_value: false },
     { name: "antimagic_allowed", type: "bool",
-      options: null, default_value: false },
+    options: null, default_value: false },
     { name: "invocation_type", type: "string_enum",
-      options: ["none", "whisper", "emote", "shout"], default_value: "none" },
+    options: ["none", "whisper", "emote", "shout"], default_value: "none" },
     { name: "invocation", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "invocation_emote_self", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "selection_type", type: "string_enum",
-      options: ["view", "range"], default_value: "view" },
+    options: ["view", "range"], default_value: "view" },
     { name: "range", type: "int",
-      options: null, default_value: 7 },
+    options: null, default_value: 7 },
     { name: "message", type: "string",
-      options: null, default_value: "" },
+    options: null, default_value: "" },
     { name: "player_lock", type: "bool",
-      options: null, default_value: true },
+    options: null, default_value: true },
     { name: "sparks_spread", type: "bool",
-      options: null, default_value: false },
+    options: null, default_value: false },
     { name: "sparks_amt", type: "int",
-      options: null, default_value: 0 },
+    options: null, default_value: 0 },
     { name: "smoke_spread", type: "int_enum",
-      options: ["none", "harmless", "harmful", "sleeping"], default_value: "none" },
+    options: ["none", "harmless", "harmful", "sleeping"], default_value: "none" },
     { name: "smoke_amt", type: "int",
-      options: null, default_value: 0 },
+    options: null, default_value: 0 },
     { name: "centcom_cancast", type: "bool",
-      options: null, default_value: false }];
+    options: null, default_value: false }];
   switch (type) {
     case "targeted":
       ret.push({ name: "overlay", type: "bool",
-          options: null, default_value: false },
+        options: null, default_value: false },
         { name: "overlay_icon", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "overlay_icon_state", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "overlay_lifespan", type: "int",
-          options: null, default_value: 0 },
+        options: null, default_value: 0 },
         { name: "max_targets", type: "int",
-          options: null, default_value: false },
+        options: null, default_value: false },
         { name: "target_ignore_prev", type: "bool",
-          options: null, default_value: true },
+        options: null, default_value: true },
         { name: "include_user", type: "bool",
-          options: null, default_value: false },
+        options: null, default_value: false },
         { name: "random_target", type: "bool",
-          options: null, default_value: false },
+        options: null, default_value: false },
         { name: "random_target_priority", type: "int_enum",
-          options: ["closest", "random"], default_value: "closest" });
+        options: ["closest", "random"], default_value: "closest" });
       break;
     case "aoe_turf":
       ret = ret.filter(variable => variable.name !== "selection_type");
       ret.push({ name: "inner_radius", type: "int",
         options: null, default_value: -1 },
         { name: "overlay", type: "bool",
-          options: null, default_value: false },
+        options: null, default_value: false },
         { name: "overlay_icon", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "overlay_icon_state", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "overlay_lifespan", type: "int",
-          options: null, default_value: 0 });
+        options: null, default_value: 0 });
       break;
     case "self":
-      ret = ret.filter(variable => variable.name !== "range" && variable.name !== "selection_type");
+      ret = ret.filter(variable => variable.name !== "range"
+        && variable.name !== "selection_type");
       break;
     case "aimed":
       ret.push({ name: "base_icon_state", type: "string",
         options: null, default_value: "" },
         { name: "ranged_mousepointer", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "deactive_msg", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "active_msg", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "projectile_amount", type: "int",
-          options: null, default_value: 1 },
+        options: null, default_value: 1 },
         { name: "projectiles_per_fire", type: "int",
-          options: null, default_value: 1 },
+        options: null, default_value: 1 },
         { name: "projectile_var_overrides", type: "list",
-          options: null, default_value: [] });
+        options: null, default_value: [] });
       break;
     case "cone":
     case "cone/staggered":
@@ -125,38 +126,38 @@ const typevars = type => {
       ret.push({ name: "cone_level", type: "int",
         options: null, default_value: 3 },
         { name: "respect_density", type: "bool",
-          options: null, default_value: false });
+        options: null, default_value: false });
       break;
     case "pointed":
       ret.push({ name: "overlay", type: "bool",
         options: null, default_value: false },
         { name: "overlay_icon", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "overlay_icon_state", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "overlay_lifespan", type: "int",
-          options: null, default_value: 0 },
+        options: null, default_value: 0 },
         { name: "ranged_mousepointer", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "deactive_msg", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "active_msg", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "self_castable", type: "bool",
-          options: null, default_value: false },
+        options: null, default_value: false },
         { name: "aim_assist", type: "bool",
-          options: null, default_value: true });
+        options: null, default_value: true });
       break;
     case "targeted/touch":
       ret = ret.filter(variable => variable.name !== "range"
         && variable.name !== "invocation_type"
         && variable.name !== "selection_type");
       ret.push({ name: "drawmessage", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "dropmessage", type: "string",
-          options: null, default_value: "" },
+        options: null, default_value: "" },
         { name: "hand_var_overrides", type: "list",
-          options: null, default_value: [] });
+        options: null, default_value: [] });
       break;
     default:
       return [];
@@ -266,13 +267,13 @@ const WrapInTooltip = (props, context) => {
   } = data;
   const tip = tooltips[entry.name]?.replace("$type",
     tooltips[(entry.name + "_" + type)]);
-  return (/*tip ? (
+  return (/* tip ? (
     <Tooltip
       position="bottom"
       content={tip}>
       {props.children}
     </Tooltip>
-  ) : */props.children); //Uncomment this block when tooltips are unfucked.
+  ) : */props.children); // Uncomment this block when tooltips are unfucked.
 };
 
 const SDQLSpellOptions = (props, context) => {
@@ -339,7 +340,7 @@ const SDQLSpellOption = (props, context) => {
       return (
         <Button.Checkbox
           checked={saved_vars[name] ?? default_value}
-          onClick={() => act('bool_variable',{ name })} />
+          onClick={() => act('bool_variable', { name })} />
       );
     case "string_enum":
       return (
@@ -375,42 +376,42 @@ const SDQLSpellListEntry = (props, context) => {
   return (
     <Collapsible>
       {Object.entries(list_vars[list]).map(([name, { type, value, flags }]) => (
-          <Stack key={name} fill mb="6px">
-            <Stack.Item grow>
-              {((flags & 2) === 0) ? (
-                <Input
-                  value={name}
-                  onChange={(e, value) =>
-                    act('list_variable_rename',
-                    { list, name, new_name: value })} />)
-                : (
-                  <Box inline bold color="label" mr="6px">
-                    {name}:
-                  </Box>)}
-            </Stack.Item>
-            <Stack.Item>
-              {((flags & 1) === 0) && (
-                <Dropdown
-                  options={["num", "bool", "string", "path", "icon", "list"]}
-                  displayText={type}
-                  onSelected={value => act('list_variable_change_type',
-                    { list, name, value })} />)}
-            </Stack.Item>
-            <Stack.Item shrink basis="100%">
-              <SDQLSpellListVar
-                list={list}
-                name={name}
-                type={type}
-                value={value} />
-              <Button
-                icon="minus-circle"
-                color="red"
-                title="remove"
-                onClick={() => act('list_variable_remove',
-                  { list, name })} />
-            </Stack.Item>
-          </Stack>
-        ))}
+        <Stack key={name} fill mb="6px">
+          <Stack.Item grow>
+            {((flags & 2) === 0) ? (
+              <Input
+                value={name}
+                onChange={(e, value) =>
+                  act('list_variable_rename',
+                  { list, name, new_name: value })} />)
+              : (
+                <Box inline bold color="label" mr="6px">
+                  {name}:
+                </Box>)}
+          </Stack.Item>
+          <Stack.Item>
+            {((flags & 1) === 0) && (
+              <Dropdown
+                options={["num", "bool", "string", "path", "icon", "list"]}
+                displayText={type}
+                onSelected={value => act('list_variable_change_type',
+                  { list, name, value })} />)}
+          </Stack.Item>
+          <Stack.Item shrink basis="100%">
+            <SDQLSpellListVar
+              list={list}
+              name={name}
+              type={type}
+              value={value} />
+            <Button
+              icon="minus-circle"
+              color="red"
+              title="remove"
+              onClick={() => act('list_variable_remove',
+                { list, name })} />
+          </Stack.Item>
+        </Stack>
+      ))}
       <Button
         icon="plus-circle"
         color="blue"
@@ -525,17 +526,17 @@ const SDQLSpellIcons = (props, context) => {
         )}
         {(type && vars.some(entry => entry.name === "ranged_mousepointer")
           && saved_vars["ranged_mousepointer"]) && (
-            <Section title="Mouse Cursor">
-              <Box
-                as="img"
-                height="64px"
-                width="auto"
-                m={0}
-                src={`data:image/jpeg;base64,${mouse_icon}`}
-                style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                }} />
-            </Section>
+          <Section title="Mouse Cursor">
+            <Box
+              as="img"
+              height="64px"
+              width="auto"
+              m={0}
+              src={`data:image/jpeg;base64,${mouse_icon}`}
+              style={{
+                '-ms-interpolation-mode': 'nearest-neighbor',
+              }} />
+          </Section>
         )}
         {(type && "overlay" in saved_vars && saved_vars["overlay"] === 1) && (
           <Section title="Overlay Icon">
