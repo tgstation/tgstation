@@ -1,0 +1,4 @@
+author: "willox"
+delete-after: True
+changes: 
+  - bugfix: "Stat panel no longer captures input (potentially causing keys to get stuck down)"
