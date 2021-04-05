@@ -12351,6 +12351,7 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "ncD" = (
@@ -12914,10 +12915,13 @@
 /turf/open/floor/iron,
 /area/engineering/atmospherics_engine)
 "nIp" = (
-/obj/structure/sign/warning/securearea{
-	name = "\improper VACUUM AREA sign"
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
 	},
-/turf/closed/wall,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
 /area/science/mixing)
 "nII" = (
 /obj/structure/cable,
@@ -69098,7 +69102,7 @@ uDB
 vMS
 jWy
 fGC
-qDc
+nIp
 xPG
 xPG
 xPG
@@ -69611,7 +69615,7 @@ tjG
 uDB
 mQb
 cKl
-nIp
+mQb
 grc
 tjG
 xPG
