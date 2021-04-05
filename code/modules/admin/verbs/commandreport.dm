@@ -1,10 +1,13 @@
+/// The default command report announcement sound.
 #define DEFAULT_ANNOUNCEMENT_SOUND "default_announcement"
 
+/// Preset central command names to chose from for centcom reports.
 #define CENTCOM_PRESET "Central Command"
 #define SYNDICATE_PRESET "The Syndicate"
 #define WIZARD_PRESET "The Wizard Federation"
 #define CUSTOM_PRESET "Custom Command Name"
 
+/// Verb to change the global command name.
 /client/proc/cmd_change_command_name()
 	set category = "Admin.Events"
 	set name = "Change Command Name"
@@ -19,6 +22,7 @@
 	message_admins("[key_name_admin(src)] has changed Central Command's name to [input]")
 	log_admin("[key_name(src)] has changed the Central Command name to: [input]")
 
+/// Verb to open the create command report window and send command reports.
 /client/proc/cmd_admin_create_centcom_report()
 	set category = "Admin.Events"
 	set name = "Create Command Report"
@@ -114,7 +118,11 @@
 
 	return
 
-/// Send the announcement and report with all of our variables.
+/*
+ * The actual proc that sends the priority announcement and reports
+ *
+ * Uses the variables set by the user on our datum as the arguments for the report.
+ */
 /datum/command_report_menu/proc/send_announcement()
 	/// Our current command name to swap back to after sending the report.
 	var/original_command_name = command_name()

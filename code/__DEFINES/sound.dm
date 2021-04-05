@@ -112,6 +112,7 @@
 #define ANNOUNCER_SHUTTLERECALLED "announcer_shuttlerecalled"
 #define ANNOUNCER_SPANOMALIES "announcer_spanomalies"
 
+/// Global list of all of our announcer keys.
 GLOBAL_LIST_INIT(announcer_keys, list(
 	ANNOUNCER_AIMALF,
 	ANNOUNCER_ALIENS,
