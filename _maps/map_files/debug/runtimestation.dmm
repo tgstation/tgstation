@@ -2214,6 +2214,11 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"mE" = (
+/obj/structure/cable,
+/obj/machinery/chem_mass_spec,
+/turf/open/floor/iron,
+/area/medical/chemistry)
 "nn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -7637,7 +7642,7 @@ aj
 bP
 Ce
 JF
-cj
+mE
 oV
 bE
 bE

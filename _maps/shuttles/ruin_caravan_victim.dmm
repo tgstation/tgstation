@@ -552,7 +552,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/trash/plate{
+/obj/item/plate{
 	pixel_x = -5;
 	pixel_y = -3
 	},

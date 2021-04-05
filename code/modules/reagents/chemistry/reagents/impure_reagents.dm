@@ -11,6 +11,7 @@
 	ph = 3
 	impure_chem = null
 	inverse_chem = null
+	inverse_chem_val = 0
 	failed_chem = null
 	metabolization_rate = 0.1 * REM //default impurity is 0.75, so we get 25% converted. Default metabolisation rate is 0.4, so we're 4 times slower.
 	var/liver_damage = 0.5
@@ -53,6 +54,28 @@
 	color = "#270d03"
 	glass_price = DRINK_PRICE_HIGH
 
+// Unique
+
+/datum/reagent/impurity/eigenswap
+	name = "Eigenswap"
+	description = "This reagent is known to swap the handedness of a patient."
+	ph = 3.3
+	chemical_flags = REAGENT_DONOTSPLIT
+
+/datum/reagent/impurity/eigenswap/on_mob_life(mob/living/carbon/carbon_mob)
+	. = ..()
+	if(!prob(creation_purity * 100))
+		return
+	var/list/cached_hand_items = carbon_mob.held_items
+	var/index = 1
+	for(var/thing in cached_hand_items)
+		index++
+		if(index > length(cached_hand_items))//If we're past the end of the list, go back to start
+			index = 1
+		if(!thing)
+			continue
+		carbon_mob.put_in_hand(thing, index, forced = TRUE, ignore_anim = TRUE)
+		playsound(carbon_mob, 'sound/effects/phasein.ogg', 20, TRUE)
 /*
 * Freezes the player in a block of ice, 1s = 1u
 * Will be removed when the required reagent is removed too
@@ -68,7 +91,7 @@
 	color = "#03dbfc"
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	ph = 14
-	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS
+	chemical_flags = REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS | REAGENT_DONOTSPLIT
 	metabolization_rate = 1 * REM
 	///The cube we're stasis'd in
 	var/obj/structure/ice_stasis/cube

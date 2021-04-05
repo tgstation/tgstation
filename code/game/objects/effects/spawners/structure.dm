@@ -25,6 +25,13 @@ again.
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/fulltile)
 	dir = SOUTH
 
+/obj/effect/spawner/structure/window/Initialize()
+	. = ..()
+
+	if (is_station_level(z))
+		var/turf/current_turf = get_turf(src)
+		current_turf.rcd_memory = RCD_MEMORY_WINDOWGRILLE
+
 /obj/effect/spawner/structure/window/hollow
 	name = "hollow window spawner"
 	icon_state = "hwindow_spawner_full"

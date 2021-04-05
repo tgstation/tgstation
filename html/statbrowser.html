@@ -288,53 +288,6 @@ if (!String.prototype.trim) {
   }, 0, 'test');
 }())
 
-// Browser passthrough code ---------------------------------------------------
-if (window.location) {
-	var anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
-	document[addEventListenerKey]("keydown", function(e) {
-		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
-			return;
-		if(e.defaultPrevented)
-			return; // do e.preventDefault() to prevent this behavior.
-		if(e.which) {
-			if(!anti_spam[e.which]) {
-				anti_spam[e.which] = true;
-				var key = String.fromCharCode(e.which);
-				var x = event.x || event.clientX;
-				var y = event.y || event.clientY;
-				if(x || y ) // if either of these exist this is happening after a click
-					return;
-				window.location.href = "byond://winset?command=keyDown " + e.key;
-			}
-		}
-	});
-	document[addEventListenerKey]("keyup", function(e) {
-		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
-			return;
-		if(e.defaultPrevented)
-			return;
-		if(e.which) {
-			anti_spam[e.which] = false;
-			var key = String.fromCharCode(e.which);
-			var x = event.x || event.clientX;
-			var y = event.y || event.clientY;
-			if( x || y ) // if either of these exist this is happening after a click
-				return;
-
-			window.location.href = "byond://winset?command=keyUp " + e.key;
-		}
-	});
-}
-/* document.addEventListener("mousedown", function(e){
- var shiftPressed=0;
- var evt = e?e:window.event;
- shiftPressed=evt.shiftKey;
-  if (shiftPressed) {
-   return false;
-  }
- return true;
-}); */
-
 // Status panel implementation ------------------------------------------------
 var status_tab_parts = ["Loading..."];
 var current_tab = null;
@@ -1137,9 +1090,14 @@ function set_style_sheet(sheet) {
 	head.appendChild(sheetElement);
 }
 
-document[addEventListenerKey]("click", function(e) {
-	window.location.href = "byond://winset?map.focus=true";
-});
+function restoreFocus() {
+	setTimeout(function() {
+		window.location.href = "byond://winset?map.focus=true";
+	}, 0);
+}
+
+document[addEventListenerKey]("mouseup", restoreFocus);
+document[addEventListenerKey]("keyup", restoreFocus);
 
 if(!current_tab) {
 	addPermanentTab("Status");

@@ -772,7 +772,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/cat_man)
 "ch" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
 	dir = 4
 	},
 /turf/open/floor/plating,

@@ -4,8 +4,8 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	impure_chem = null //Very few of these have impure effects, they're all baked in by creation_purity
 	inverse_chem = null //Some of these use inverse chems - we're just defining them all to null here to avoid repetition, eventually this will be moved up to parent
-	creation_purity = REAGENT_STANDARD_PUIRTY//All sources by default are 0.75 - reactions are primed to resolve to roughly the same with no intervention for these.
-	purity = REAGENT_STANDARD_PUIRTY
+	creation_purity = REAGENT_STANDARD_PURITY//All sources by default are 0.75 - reactions are primed to resolve to roughly the same with no intervention for these.
+	purity = REAGENT_STANDARD_PURITY
 	inverse_chem_val = 0
 	inverse_chem = null
 	failed_chem = /datum/reagent/impurity/healing/medicine_failure
