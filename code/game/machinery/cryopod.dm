@@ -311,7 +311,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		if(sec_record.fields["name"] == mob_occupant.real_name)
 			qdel(sec_record)
 	for(var/datum/data/record/gen_record in GLOB.data_core.general)
-		if((gen_record.fields["name"] == mob_occupant.real_name))
+		if(gen_record.fields["name"] == mob_occupant.real_name)
 			announce_rank = gen_record.fields["rank"]
 			qdel(gen_record)
 
