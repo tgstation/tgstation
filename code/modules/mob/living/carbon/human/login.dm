@@ -11,7 +11,7 @@
 
 	for(var/list/iter_theft as anything in afk_thefts)
 		if(!islist(iter_theft) || LAZYLEN(iter_theft) != AFK_THEFT_TIME)
-			stack_trace("[src] ([ckey]) returned to their body and had a null/malformed afk_theft entry.")
+			stack_trace("[src] ([ckey]) returned to their body and had a null/malformed afk_theft entry. Contents: [json_encode(iter_theft)]")
 			continue
 
 		var/thief_name = iter_theft[AFK_THEFT_NAME]
