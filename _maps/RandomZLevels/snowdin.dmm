@@ -7217,7 +7217,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qy" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7225,14 +7225,14 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qz" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible{
 	dir = 10
 	},
 /obj/structure/cable,
@@ -7441,7 +7441,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -14826,7 +14826,7 @@
 /area/awaymission/snowdin/post/cavern1)
 "Xh" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/engineering)
 "Xu" = (

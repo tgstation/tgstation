@@ -12181,9 +12181,9 @@
 /turf/open/floor/engine/cult,
 /area/service/library)
 "aPr" = (
-/obj/structure/grille,
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "aPt" = (
@@ -22891,10 +22891,10 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "eyE" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/visible{
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/engineering/main)
 "ezd" = (
@@ -24415,11 +24415,11 @@
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
 "fhh" = (
-/obj/structure/grille,
 /obj/machinery/meter{
 	name = "Mixed Air Tank In"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "fhm" = (
@@ -29686,7 +29686,7 @@
 	name = "Air Tank Access";
 	req_access_txt = "5"
 	},
-/obj/machinery/atmospherics/pipe/layer_manifold/visible{
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -40364,6 +40364,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"lxU" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "lxY" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
@@ -65164,14 +65172,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"vvZ" = (
-/obj/structure/grille,
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "vwc" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -68528,11 +68528,13 @@
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "wFA" = (
-/obj/structure/grille,
 /obj/machinery/meter{
 	name = "Mixed Air Tank Out"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible{
+	dir = 4
+	},
+/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "wFF" = (
@@ -106659,7 +106661,7 @@ wbD
 uKH
 gfg
 bNm
-aPr
+lxU
 hEH
 mzN
 hMd
@@ -107687,7 +107689,7 @@ tOt
 iFE
 gfg
 bNm
-aPr
+lxU
 qih
 aSh
 nGf
@@ -109723,21 +109725,21 @@ iVs
 nyZ
 aJo
 one
-vvZ
+lxU
 ntZ
-vvZ
+aPr
 iCR
-vvZ
+lxU
 ntZ
-vvZ
+aPr
 iCR
-vvZ
+lxU
 ntZ
-vvZ
+aPr
 iCR
-vvZ
+lxU
 ntZ
-vvZ
+aPr
 one
 dGP
 aza

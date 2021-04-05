@@ -80,10 +80,10 @@ HELPER(purple, COLOR_PURPLE)
 HELPER(dark, COLOR_DARK)
 HELPER(brown, COLOR_BROWN)
 HELPER(violet, COLOR_STRONG_VIOLET)
+HELPER(pink, COLOR_LIGHT_PINK)
 
 HELPER_NAMED(scrubbers, "scrubbers pipe", COLOR_RED)
 HELPER_NAMED(supply, "air supply pipe", COLOR_BLUE)
-HELPER_NAMED(supplymain, "main air supply pipe", COLOR_AMETHYST)
 
 #undef HELPER_NAMED
 #undef HELPER

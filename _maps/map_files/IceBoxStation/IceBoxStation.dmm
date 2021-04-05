@@ -2047,7 +2047,7 @@
 "ahY" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -2257,7 +2257,7 @@
 /turf/open/floor/iron/white,
 /area/security/brig)
 "aiP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
@@ -2276,7 +2276,7 @@
 /area/security/brig)
 "aiR" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -2472,7 +2472,7 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "ajw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -2595,7 +2595,7 @@
 /area/security/brig)
 "ajK" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -4059,7 +4059,7 @@
 	},
 /area/maintenance/port/aft)
 "anj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -4072,7 +4072,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anl" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -4236,7 +4236,7 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "anJ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anK" = (
@@ -4466,7 +4466,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aok" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -5240,14 +5240,14 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "aqL" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqM" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -8244,7 +8244,7 @@
 /area/security/checkpoint/auxiliary)
 "aFJ" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -30221,11 +30221,11 @@
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "frz" = (
-/obj/structure/grille,
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
 	dir = 4
 	},
+/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "fsg" = (
@@ -30867,6 +30867,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/commons/dorms)
+"fRc" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "fRg" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -34140,9 +34148,9 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/command/nuke_storage)
 "hZh" = (
-/obj/structure/grille,
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "hZk" = (
@@ -42877,11 +42885,11 @@
 	},
 /area/science/research)
 "ohp" = (
-/obj/structure/grille,
 /obj/machinery/meter{
 	name = "Mixed Air Tank In"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "ohu" = (
@@ -53398,7 +53406,7 @@
 "vvZ" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supplymain/hidden{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/pink/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -53909,11 +53917,11 @@
 /turf/open/floor/iron,
 /area/security/office)
 "vLT" = (
-/obj/structure/grille,
 /obj/machinery/meter{
 	name = "Mixed Air Tank Out"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "vLX" = (
@@ -56049,7 +56057,6 @@
 /turf/open/floor/iron/dark,
 /area/commons/storage/mining)
 "xjR" = (
-/obj/machinery/pipedispenser,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -90601,7 +90608,7 @@ dpn
 sAE
 nqb
 kgD
-hZh
+fRc
 rBd
 joZ
 joZ
@@ -91629,7 +91636,7 @@ daz
 jZW
 nqb
 hTw
-hZh
+fRc
 vfP
 eeh
 eeh
@@ -93411,15 +93418,15 @@ snb
 riF
 frz
 ccm
-frz
+fRc
 riF
 frz
 ccm
-frz
+fRc
 riF
 frz
 ccm
-frz
+fRc
 riF
 frz
 ccm

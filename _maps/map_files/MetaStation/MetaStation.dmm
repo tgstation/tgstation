@@ -25432,7 +25432,6 @@
 /turf/open/floor/iron/dark,
 /area/security/office)
 "eRR" = (
-/obj/machinery/pipedispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -55745,7 +55744,7 @@
 "ppq" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/orange/visible,
 /turf/open/space,
 /area/space/nearstation)
 "ppt" = (

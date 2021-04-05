@@ -75454,11 +75454,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port)
-"oYc" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/pipedispenser,
-/turf/open/floor/iron/dark,
-/area/engineering/atmos)
 "oYg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -121604,7 +121599,7 @@ iVw
 aPQ
 cQV
 gAi
-oYc
+xJT
 uCw
 dqC
 wIL

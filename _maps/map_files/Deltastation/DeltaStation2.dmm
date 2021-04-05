@@ -38236,7 +38236,6 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/construction)
 "dnP" = (
-/obj/machinery/pipedispenser,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -54059,7 +54058,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/layer_manifold/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible,
 /turf/open/floor/iron,
 /area/engineering/main)
 "epB" = (
@@ -64245,10 +64244,8 @@
 /area/engineering/main)
 "hMo" = (
 /obj/machinery/power/supermatter_crystal/engine,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer2{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer4,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "hML" = (
@@ -70406,7 +70403,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer4,
 /turf/open/floor/iron,
 /area/engineering/main)
 "jOS" = (
@@ -75965,12 +75962,8 @@
 	name = "Supermatter Chamber";
 	req_one_access_txt = "10;24"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer4{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer4,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "lKQ" = (
@@ -77155,13 +77148,6 @@
 	},
 /obj/machinery/atmospherics/pipe/color_adapter{
 	dir = 4
-	},
-/turf/open/floor/iron,
-/area/engineering/atmos)
-"meN" = (
-/obj/machinery/pipedispenser,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -81510,7 +81496,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/layer_manifold/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/green/visible,
 /turf/open/floor/iron,
 /area/engineering/main)
 "nAU" = (
@@ -85982,12 +85968,8 @@
 /turf/open/floor/iron/dark/corner,
 /area/engineering/storage_shared)
 "oUh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer2{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer4{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer4,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "oUo" = (
@@ -92925,7 +92907,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
 /turf/open/floor/iron,
 /area/engineering/main)
 "rjn" = (
@@ -98241,12 +98223,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer2{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer4{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer4,
 /turf/open/floor/iron,
 /area/engineering/main)
 "sZX" = (
@@ -104000,13 +103978,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/hallway/primary/central/aft)
-"uQb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer2{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "uQf" = (
 /obj/machinery/door/window/brigdoor{
 	name = "Creature Pen";
@@ -110047,12 +110018,8 @@
 	name = "Supermatter Chamber";
 	req_one_access_txt = "10;24"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible/layer4{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer4,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "wSb" = (
@@ -135658,7 +135625,7 @@ kUb
 wSj
 qzf
 rgQ
-uQb
+oUh
 wrL
 tLP
 lYR
@@ -139987,7 +139954,7 @@ goO
 utn
 aDL
 wAZ
-meN
+kPE
 jLK
 xxP
 uYz
