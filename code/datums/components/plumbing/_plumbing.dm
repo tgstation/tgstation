@@ -212,6 +212,7 @@
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable(obj/object, datum/component/component)
 	if(active || (component && component != src))
+		UnregisterSignal(parent, list(COMSIG_COMPONENT_ADDED))
 		return
 
 	update_dir()
