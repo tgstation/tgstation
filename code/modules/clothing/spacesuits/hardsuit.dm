@@ -828,8 +828,7 @@
 	inhand_icon_state = "ert_green"
 	hardsuit_type = "ert_green"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/green
-	shield_state = "shield-green"
-	shield_on = "shield-green"
+	shield_icon = "shield-green"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
 	name = "yellow shielded hardsuit"
@@ -837,8 +836,7 @@
 	inhand_icon_state = "ert_engineer"
 	hardsuit_type = "ert_engineer"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/yellow
-	shield_state = "shield-yellow"
-	shield_on = "shield-yellow"
+	shield_icon = "shield-yellow"
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
