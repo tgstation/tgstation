@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Stripping/equipping things to a conscious braindead person (AKA a human owned by a disconnected player) will now give them a message with your visible name and roughly how long ago you touched their stuff when they login again. Touching someone's pockets or adjusting their gear other than equipping/unequipping is not logged. After 5 minutes, you'll have forgotten both their name and exactly how long ago past those 5 minutes it happened."
