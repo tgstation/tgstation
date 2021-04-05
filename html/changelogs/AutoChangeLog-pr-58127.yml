@@ -1,0 +1,4 @@
+author: "BootlegBow"
+delete-after: True
+changes: 
+  - bugfix: "gives tram a chef produce console"
