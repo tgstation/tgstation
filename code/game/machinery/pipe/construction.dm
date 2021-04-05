@@ -160,7 +160,7 @@ Buildable meters
 			to_chat(user, "<span class='warning'>Something is hogging the tile!</span>")
 			return TRUE
 
-		if(pipe_count == 1 && istype(machine, /obj/machinery/atmospherics/pipe/smart) && pipe_type == /obj/machinery/atmospherics/pipe/smart && lowertext(machine.pipe_color) != lowertext(pipe_color) && machine.connection_num < 3)
+		if(pipe_count == 1 && istype(machine, /obj/machinery/atmospherics/pipe/smart) && ispath(pipe_type, /obj/machinery/atmospherics/pipe/smart) && lowertext(machine.pipe_color) != lowertext(pipe_color) && machine.connection_num < 3)
 			var/direction = machine.dir
 			if((direction & EAST|WEST || direction & SOUTH|NORTH) && !ISDIAGONALDIR(direction))
 				pipe_type = /obj/machinery/atmospherics/pipe/bridge_pipe
