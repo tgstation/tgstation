@@ -376,7 +376,7 @@
 	if(moffin_observer.dna.species.liked_food & CLOTH)
 		. += "<span class='nicegreen'>Ooh! It's even got bits of clothes on it! Yummy!</span>"
 	else
-		. += "<span class='warning'>I'm not too sure what's on top though...</span>"
+		. += "<span class='warning'>You're not too sure what's on top though...</span>"
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
