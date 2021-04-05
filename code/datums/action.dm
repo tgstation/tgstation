@@ -257,9 +257,12 @@
 	name = "Recall Your Sword"
 
 /datum/action/item_action/recall_beesword/Trigger()
-	var/obj/item/clothing/suit/hooded/bee_costume/buzzon/suit = target
-	if(istype(suit))
+	if(istype(target, /obj/item/clothing/suit/hooded/bee_costume/buzzon))
+		var/obj/item/clothing/suit/hooded/bee_costume/buzzon/suit = target
 		suit.recall_sword()
+	else if(istype(target, /obj/item/clothing/suit/space/hardsuit/syndi/buzzon))
+		var/obj/item/clothing/suit/space/hardsuit/syndi/buzzon/hardsuit = target
+		hardsuit.recall_sword()
 
 /datum/action/item_action/toggle_welding_screen
 	name = "Toggle Welding Screen"

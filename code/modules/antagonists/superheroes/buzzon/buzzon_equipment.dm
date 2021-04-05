@@ -7,7 +7,7 @@
 	worn_icon_state = "buzz"
 	inhand_icon_state = "ygloves"
 
-	armor = list(MELEE = 20, BULLET = 15, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
 
 	tackle_stam_cost = 5 //Very light and fast tackles. However, if you fly into a wall or an enemy, well, you're fucked.
 	base_knockdown = 0.2 SECONDS
@@ -27,7 +27,7 @@
 	icon_state = "buzz"
 	worn_icon_state = "buzz"
 
-	armor = list(MELEE = 20, BULLET = 15, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
 
 /obj/item/clothing/shoes/sneakers/buzzon/cryo
 	icon_state = "buzz_cryo"
@@ -38,7 +38,7 @@
 	desc = "A complex cybernetic suit with black and yellow stripes. All hail the Queen!"
 	icon_state = "bee_full"
 
-	armor = list(MELEE = 20, BULLET = 15, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	clothing_flags = THICKMATERIAL
 
@@ -87,7 +87,7 @@
 	body_parts_covered = HEAD
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
-	armor = list(MELEE = 20, BULLET = 15, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
 
 /obj/item/clothing/head/hooded/bee_hood/full/cryo
 	icon_state = "bee_full_cryo"
@@ -202,3 +202,55 @@
 	force = 3 //A bit lower because we have better toxin
 
 	toxin_type = /datum/reagent/consumable/frostoil
+
+//The Bee Hardsuit
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/buzzon
+	name = "bee hardsuit helmet"
+	desc = "A dual-mode advanced helmet equipped with HUD that looks like a bee's head. It is in travel mode."
+	alt_desc = "A dual-mode advanced helmet equipped with HUD that looks like a bee's head. It is in combat mode."
+	icon_state = "hardsuit1-bee"
+	inhand_icon_state = "s_helmet"
+	hardsuit_type = "bee"
+	visor_flags_inv = 0
+	visor_flags = 0
+	on = FALSE
+
+	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+
+/obj/item/clothing/suit/space/hardsuit/syndi/buzzon
+	name = "bee hardsuit"
+	desc = "A dual-mode advanced bee hardsuit equipped with high-tech gadgets. It is in travel mode."
+	alt_desc = "A dual-mode advanced beehardsuit equipped with high-tech gadgets. It is in combat mode."
+	icon_state = "hardsuit1-bee"
+	inhand_icon_state = "s_suit"
+	hardsuit_type = "bee"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/buzzon
+
+	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+
+	var/obj/item/melee/beesword/buzzon/linked_sword
+	var/sword_cooldown = 0
+
+/obj/item/clothing/suit/space/hardsuit/syndi/buzzon/proc/recall_sword()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/owner = loc
+	if(locate(/obj/item/melee/beesword/buzzon) in owner.contents)
+		linked_sword = locate() in owner.contents
+		to_chat(owner, "<span class='notice'>You successfully link [linked_sword] to your [src].</span>")
+		return
+
+	if(owner == linked_sword.loc || sword_cooldown > world.time)
+		return
+
+	var/sword_location = get_turf(linked_sword)
+	var/owner_location = get_turf(owner)
+	if(get_dist(owner_location, sword_location) > 10)
+		to_chat(owner,"<span class='warning'>[linked_sword] is too far away!</span>")
+	else
+		sword_cooldown = world.time + 20
+		if(isliving(linked_sword.loc))
+			var/mob/living/current_owner = linked_sword.loc
+			current_owner.dropItemToGround(linked_sword)
+			current_owner.visible_message("<span class='warning'>[linked_sword]'s small rocket engine suddenly activates and rips it out of your hand!</span>")
+		linked_sword.throw_at(owner, 10, 2)

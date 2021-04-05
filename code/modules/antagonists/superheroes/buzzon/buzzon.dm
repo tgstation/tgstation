@@ -14,8 +14,12 @@
 /datum/outfit/superhero/buzzon/post_equip(mob/living/carbon/human/H)
 	. = ..()
 	var/obj/item/clothing/suit/hooded/bee_costume/buzzon/suit = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-	suit.ToggleHood()
-	suit.recall_sword()
+	if(istype(suit))
+		suit.ToggleHood()
+		suit.recall_sword()
+	else if(istype(H.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/space/hardsuit/syndi/buzzon))
+		var/obj/item/clothing/suit/space/hardsuit/syndi/buzzon/hardsuit = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		hardsuit.recall_sword()
 
 /datum/outfit/superhero/buzzon/cryo
 	name = "BuzzOn (Operation Cryostung)"
@@ -26,3 +30,10 @@
 	back = /obj/item/melee/beesword/buzzon/cryo
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/blue
 	implants = list(/obj/item/implant/spell/specified_type/bees/cryo)
+
+/datum/outfit/superhero/buzzon
+	name = "BuzzOn (Operation Starbird)"
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi/buzzon
+	suit_store = /obj/item/tank/internals/oxygen
+	mask = /obj/item/clothing/mask/gas
+	internals_slot = ITEM_SLOT_SUITSTORE

@@ -14,6 +14,7 @@
 	belt = /obj/item/storage/belt/champion/owlman
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/pumpup
 	r_pocket = /obj/item/restraints/handcuffs/cable
+	id = /obj/item/card/id/advanced/gold/captains_spare
 
 /datum/outfit/superhero/owlman/space
 	name = "Owlman (Operation Starbird)"
