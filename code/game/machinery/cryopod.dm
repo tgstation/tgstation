@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 				to_chat(user, "<span class='notice'>\The [item] is no longer in storage.</span>")
 				return
 
-			visible_message("<span class='notice'>The console beeps happily as it disgorges \the [item].</span>")
+			visible_message("<span class='notice'>[src] beeps happily as it disgorges [item].</span>")
 			item.forceMove(get_turf(src))
 			frozen_items -= item
 
