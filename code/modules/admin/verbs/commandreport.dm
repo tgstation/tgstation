@@ -1,5 +1,10 @@
 #define DEFAULT_ANNOUNCEMENT_SOUND "default_announcement"
 
+#define CENTCOM_PRESET "Central Command"
+#define SYNDICATE_PRESET "The Syndicate"
+#define WIZARD_PRESET "The Wizard Federation"
+#define CUSTOM_PRESET "Custom Command Name"
+
 /client/proc/cmd_change_command_name()
 	set category = "Admin.Events"
 	set name = "Change Command Name"
@@ -27,20 +32,23 @@
 
 /// Datum for holding the TGUI window for command reports.
 /datum/command_report_menu
-	/// The name of central command.
-	var/command_name
+	/// The mob using the UI.
+	var/mob/ui_user
+	/// The name of central command that will accompany our report
+	var/command_name = CENTCOM_PRESET
+	/// Whether we are using a custom name instead of a preset.
+	var/custom_name
 	/// The actual contents of the report we're going to send.
 	var/command_report_content
 	/// Whether the report's contents are announced.
-	var/announce_contents = FALSE
+	var/announce_contents = TRUE
 	/// The sound that's going to accompany our message.
 	var/played_sound = DEFAULT_ANNOUNCEMENT_SOUND
-	/// The mob using the UI.
-	var/mob/ui_user
+	/// A static list of preset names that can be chosen.
+	var/static/list/preset_names = list(CENTCOM_PRESET, SYNDICATE_PRESET, WIZARD_PRESET, CUSTOM_PRESET)
 
 /datum/command_report_menu/New(mob/user)
 	ui_user = user
-	command_name = command_name()
 
 /datum/command_report_menu/ui_state(mob/user)
 	return GLOB.admin_state
@@ -56,18 +64,19 @@
 
 /datum/command_report_menu/ui_data(mob/user)
 	var/list/data = list()
-	// The command name the user sets
 	data["command_name"] = command_name
-	// The command name set globally
-	data["global_command_name"] = command_name()
+	data["custom_name"] = custom_name
 	data["command_report_content"] = command_report_content
 	data["announce_contents"] = announce_contents
 	data["played_sound"] = played_sound
+
 	return data
 
 /datum/command_report_menu/ui_static_data(mob/user)
 	var/list/data = list()
+	data["command_name_presets"] = preset_names
 	data["announcer_sounds"] = list(DEFAULT_ANNOUNCEMENT_SOUND) + GLOB.announcer_keys
+
 	return data
 
 /datum/command_report_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -77,6 +86,11 @@
 
 	switch(action)
 		if("update_command_name")
+			if(params["updated_name"] == CUSTOM_PRESET)
+				custom_name = TRUE
+			else if (params["updated_name"] in preset_names)
+				custom_name = FALSE
+
 			command_name = params["updated_name"]
 			. = TRUE
 		if("update_report_contents")
@@ -106,16 +120,24 @@
 	var/original_command_name = command_name()
 	change_command_name(command_name)
 
+	/// The sound we're going to play on report.
+	var/report_sound = played_sound
 	if(played_sound == DEFAULT_ANNOUNCEMENT_SOUND)
-		played_sound = SSstation.announcer.get_rand_report_sound()
+		report_sound = SSstation.announcer.get_rand_report_sound()
 
 	if(announce_contents)
-		priority_announce(command_report_content, null, played_sound, has_important_message = TRUE)
+		priority_announce(command_report_content, null, report_sound, has_important_message = TRUE)
 	print_command_report(command_report_content, "[announce_contents ? "Classified " : ""][command_name] Update", !announce_contents)
 
 	change_command_name(original_command_name)
 
-	log_admin("[key_name(ui_user)] has created a command report: [command_report_content], send from [command_name]")
-	message_admins("[key_name_admin(ui_user)] has created a command report from [command_name].")
+	log_admin("[key_name(ui_user)] has created a command report: \"[command_report_content]\", sent from \"[command_name]\" with the sound \"[played_sound]\".")
+	message_admins("[key_name_admin(ui_user)] has created a command report, sent from \"[command_name]\" with the sound \"[played_sound]\"")
+
 
 #undef DEFAULT_ANNOUNCEMENT_SOUND
+
+#undef CENTCOM_PRESET
+#undef SYNDICATE_PRESET
+#undef WIZARD_PRESET
+#undef CUSTOM_PRESET
