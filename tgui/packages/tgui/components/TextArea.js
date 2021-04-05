@@ -10,6 +10,7 @@
 import { classes, canRender } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
+import { KEY_ESCAPE } from 'common/keycodes';
 
 
 const toInputValue = value => {
@@ -83,6 +84,12 @@ export class TextArea extends Component {
     this.handleKeyDown = e => {
       const { editing } = this.state;
       const { onKeyDown } = this.props;
+      if (e.keyCode === KEY_ESCAPE) {
+        this.setEditing(false);
+        e.target.value = toInputValue(this.props.value);
+        e.target.blur();
+        return;
+      }
       if (!editing) {
         this.setEditing(true);
       }
@@ -90,12 +97,12 @@ export class TextArea extends Component {
         const keyCode = e.keyCode || e.which;
         if (keyCode === 9) {
           e.preventDefault();
-          const s = e.target.selectionStart;
-          e.target.value
-          = e.target.value.substring(0, e.target.selectionStart)
-            + "\t"
-            + e.target.value.substring(e.target.selectionEnd);
-          e.target.selectionEnd = s +1;
+          const { value, selectionStart, selectionEnd } = e.target;
+          e.target.value = (
+            value.substring(0, selectionStart) + "\t"
+              + value.substring(selectionEnd)
+          );
+          e.target.selectionEnd = selectionStart + 1;
         }
       }
       if (onKeyDown) {
