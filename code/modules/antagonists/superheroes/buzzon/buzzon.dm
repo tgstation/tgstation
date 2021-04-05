@@ -44,3 +44,9 @@
 	shoes = /obj/item/clothing/shoes/sneakers/buzzon
 	ears = /obj/item/radio/headset
 	implants = list(/obj/item/implant/spell/specified_type/bees)
+
+/obj/machinery/suit_storage_unit/superhero/buzzon
+	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi/buzzon
+	helmet_type = null
+	mask_type = /obj/item/clothing/mask/gas
+	storage_type = /obj/item/tank/internals/oxygen

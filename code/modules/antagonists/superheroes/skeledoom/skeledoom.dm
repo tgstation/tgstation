@@ -35,3 +35,9 @@
 	ears = /obj/item/radio/headset
 	gloves = /obj/item/clothing/gloves/color/white/skeleton
 	implants = list(/obj/item/implant/stealth)
+
+/obj/machinery/suit_storage_unit/superhero/skeledoom
+	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi/skeledoom
+	helmet_type = null
+	mask_type = /obj/item/clothing/mask/gas/skeleton
+	storage_type = /obj/item/tank/internals/oxygen

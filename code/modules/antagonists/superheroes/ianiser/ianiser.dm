@@ -33,7 +33,7 @@
 	gloves = /obj/item/clothing/gloves/color/white
 	back = /obj/item/storage/backpack
 
-/datum/outfit/superhero/ianiser/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+/datum/outfit/superhero/ianiser_nude/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	. = ..()
 	H.dna.add_mutation(INSULATED)
 	H.dna.add_mutation(SHOCKTOUCH)
