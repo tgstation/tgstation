@@ -519,15 +519,14 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/exile
 	name = "exile"
-	explanation_text = "Stay alive off station. Do not go to centcom."
+	explanation_text = "Stay alive off station. Do not go to CentCom."
 
 /datum/objective/exile/check_completion()
 	var/list/owners = get_owners()
 	for(var/datum/mind/mind as anything in owners)
-		if(!considered_alive(mind)) //dead
+		if(!considered_alive(mind))
 			return FALSE
-		var/mob/living/alive_current = mind.current
-		if(SSmapping.level_has_any_trait(alive_current.z, list(ZTRAIT_STATION, ZTRAIT_CENTCOM))) //went to centcom or ended round on station
+		if(SSmapping.level_has_any_trait(mind.current.z, list(ZTRAIT_STATION, ZTRAIT_CENTCOM))) //went to centcom or ended round on station
 			return FALSE
 	return TRUE
 

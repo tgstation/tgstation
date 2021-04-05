@@ -7,15 +7,15 @@
 
 /datum/antagonist/enemy_of_the_state/proc/forge_objectives()
 
-	var/datum/objective/exile/choice_1 = new
-	choice_1.owner = owner
-	choice_1.objective_name = "Choice"
-	objectives += choice_1
+	var/datum/objective/exile/exile_choice = new
+	exile_choice.owner = owner
+	exile_choice.objective_name = "Choice"
+	objectives += exile_choice
 
-	var/datum/objective/hijack/choice_2 = new
-	choice_2.owner = owner
-	choice_2.objective_name = "Choice"
-	objectives += choice_2
+	var/datum/objective/hijack/hijack_choice = new
+	hijack_choice.owner = owner
+	hijack_choice.objective_name = "Choice"
+	objectives += hijack_choice
 
 /datum/antagonist/enemy_of_the_state/on_gain()
 	forge_objectives()
