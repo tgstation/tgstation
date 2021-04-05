@@ -117,8 +117,10 @@
 #define COMSIG_ATOM_UPDATE_OVERLAYS "atom_update_overlays"
 ///from base of [/atom/update_icon]: (signalOut, did_anything)
 #define COMSIG_ATOM_UPDATED_ICON "atom_updated_icon"
-///from base of atom/Entered(): (atom/movable/entering, /atom)
+///from base of atom/Entered(): (atom/movable/entering, /atom/oldLoc)
 #define COMSIG_ATOM_ENTERED "atom_entered"
+/// Sent from the atom that just Entered src. From base of atom/Entered(): (/atom/entered_atom, /atom/oldLoc)
+#define COMSIG_ATOM_ENTERING "atom_entering"
 ///from base of atom/Exit(): (/atom/movable/exiting, /atom/newloc)
 #define COMSIG_ATOM_EXIT "atom_exit"
 	#define COMPONENT_ATOM_BLOCK_EXIT (1<<0)
@@ -228,11 +230,11 @@
 #define COMSIG_REAGENTS_ADD_REAGENT "reagents_add_reagent"
 ///from base of [/datum/reagents/proc/del_reagent]: (/datum/reagent)
 #define COMSIG_REAGENTS_DEL_REAGENT "reagents_del_reagent"
-///from base of [/datum/reagents/proc/clear_reagents]: ()
-#define COMSIG_REAGENTS_REM_REAGENT "reagents_rem_reagent"
-///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
-#define COMSIG_REAGENTS_CLEAR_REAGENTS "reagents_clear_reagents"
 ///from base of [/datum/reagents/proc/remove_reagent]: (/datum/reagent, amount)
+#define COMSIG_REAGENTS_REM_REAGENT "reagents_rem_reagent"
+///from base of [/datum/reagents/proc/clear_reagents]: ()
+#define COMSIG_REAGENTS_CLEAR_REAGENTS "reagents_clear_reagents"
+///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
 #define COMSIG_REAGENTS_TEMP_CHANGE "reagents_temp_change"
 ///from base of [/datum/reagents/proc/handle_reactions]: (num_reactions)
 #define COMSIG_REAGENTS_REACTED "reagents_reacted"
@@ -308,6 +310,9 @@
 ///from base of atom/AltClick(): (/mob)
 #define COMSIG_CLICK_ALT "alt_click"
 	#define COMPONENT_CANCEL_CLICK_ALT (1<<0)
+///from base of atom/alt_click_secondary(): (/mob)
+#define COMSIG_CLICK_ALT_SECONDARY "alt_click_secondary"
+	#define COMPONENT_CANCEL_CLICK_ALT_SECONDARY (1<<0)
 ///from base of atom/CtrlShiftClick(/mob)
 #define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"
 ///from base of atom/MouseDrop(): (/atom/over, /mob/user)
@@ -339,6 +344,8 @@
 #define COMSIG_TURF_MULTIZ_NEW "turf_multiz_new"
 ///from base of turf/proc/onShuttleMove(): (turf/new_turf)
 #define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
+///from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
+#define COMSIG_TURF_EXPOSE "turf_expose"
 
 // /atom/movable signals
 
@@ -356,6 +363,15 @@
 	#define COMPONENT_MOVABLE_BLOCK_UNCROSS (1<<0)
 ///from base of atom/movable/Uncrossed(): (/atom/movable)
 #define COMSIG_MOVABLE_UNCROSSED "movable_uncrossed"
+///from base of atom/movable/Cross(): (/atom/movable)
+#define COMSIG_MOVABLE_CROSS_OVER "movable_cross_am"
+///from base of atom/movable/Crossed(): (/atom/movable)
+#define COMSIG_MOVABLE_CROSSED_OVER "movable_crossed_am"
+///from base of atom/movable/Uncross(): (/atom/movable)
+#define COMSIG_MOVABLE_UNCROSS_OVER "movable_uncross_am"
+	#define COMPONENT_MOVABLE_BLOCK_UNCROSS_OVER (1<<0)
+///from base of atom/movable/Uncrossed(): (/atom/movable)
+#define COMSIG_MOVABLE_UNCROSSED_OVER "movable_uncross_am"
 ///from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_BUMP "movable_bump"
 ///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
@@ -431,6 +447,21 @@
 ///from base of mob/AltClickOn(): (atom/A)
 #define COMSIG_MOB_ALTCLICKON "mob_altclickon"
 	#define COMSIG_MOB_CANCEL_CLICKON (1<<0)
+///from base of mob/alt_click_on_secodary(): (atom/A)
+#define COMSIG_MOB_ALTCLICKON_SECONDARY "mob_altclickon_secondary"
+/// From base of /mob/living/simple_animal/bot/proc/bot_step()
+#define COMSIG_MOB_BOT_PRE_STEP "mob_bot_pre_step"
+	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
+	#define COMPONENT_MOB_BOT_BLOCK_PRE_STEP COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+/// From base of /mob/living/simple_animal/bot/proc/bot_step()
+#define COMSIG_MOB_BOT_STEP "mob_bot_step"
+
+/// From base of /client/Move()
+#define COMSIG_MOB_CLIENT_PRE_MOVE "mob_client_pre_move"
+	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
+	#define COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+/// From base of /client/Move()
+#define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 
 ///from base of obj/allowed(mob/M): (/obj) returns bool, if TRUE the mob has id access to the obj
 #define COMSIG_MOB_ALLOWED "mob_allowed"
@@ -509,10 +540,18 @@
 
 ///sent from borg recharge stations: (amount, repairs)
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
-///sent when a mob/login() finishes: (client)
-#define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"
 ///sent from borg mobs to itself, for tools to catch an upcoming destroy() due to safe decon (rather than detonation)
 #define COMSIG_BORG_SAFE_DECONSTRUCT "borg_safe_decon"
+
+///sent when a mob/login() finishes: (client)
+#define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"
+//from base of client/MouseDown(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEDOWN "client_mousedown"
+//from base of client/MouseUp(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEUP "client_mouseup"
+	#define COMPONENT_CLIENT_MOUSEUP_INTERCEPT (1<<0)
+//from base of client/MouseUp(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"
 
 //ALL OF THESE DO NOT TAKE INTO ACCOUNT WHETHER AMOUNT IS 0 OR LOWER AND ARE SENT REGARDLESS!
 
@@ -703,6 +742,16 @@
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
+///Closets
+///From base of [/obj/structure/closet/proc/insert]: (atom/movable/inserted)
+#define COMSIG_CLOSET_INSERT "closet_insert"
+	///used to interrupt insertion
+	#define COMPONENT_CLOSET_INSERT_INTERRUPT (1<<0)
+
+///Eigenstasium
+///From base of [/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom]: (var/target)
+#define COMSIG_EIGENSTATE_ACTIVATE "eigenstate_activate"
+
 // /obj signals for economy
 ///called when the payment component tries to charge an account.
 #define COMSIG_OBJ_ATTEMPT_CHARGE "obj_attempt_simple_charge"
@@ -817,6 +866,8 @@
 #define COMSIG_HUMAN_DISARM_HIT "human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
+///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
+#define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
 
 // /datum/species signals
 
@@ -1044,8 +1095,6 @@
 ///from monkey CtrlClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"
 
-//from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
-#define COMSIG_TURF_EXPOSE "turf_expose"
 
 // /datum/component/container_item
 /// (atom/container, mob/user) - returns bool
@@ -1112,3 +1161,27 @@
 
 ///from /obj/item/assembly/proc/pulsed()
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
+
+/// Exoprobe adventure finished: (result) result is ADVENTURE_RESULT_??? values
+#define COMSIG_ADVENTURE_FINISHED "adventure_done"
+
+/// Sent on initial adventure qualities generation from /datum/adventure/proc/initialize_qualities(): (list/quality_list)
+#define COMSIG_ADVENTURE_QUALITY_INIT "adventure_quality_init"
+
+/// Sent on adventure node delay start: (delay_time, delay_message)
+#define COMSIG_ADVENTURE_DELAY_START "adventure_delay_start"
+/// Sent on adventure delay finish: ()
+#define COMSIG_ADVENTURE_DELAY_END "adventure_delay_end"
+
+/// Exoprobe status changed : ()
+#define COMSIG_EXODRONE_STATUS_CHANGED "exodrone_status_changed"
+
+// Scanner controller signals
+/// Sent on begingging of new scan : (datum/exoscan/new_scan)
+#define COMSIG_EXOSCAN_STARTED "exoscan_started"
+/// Sent on successful finish of exoscan: (datum/exoscan/finished_scan)
+#define COMSIG_EXOSCAN_FINISHED "exoscan_finished"
+
+// Exosca signals
+/// Sent on exoscan failure/manual interruption: ()
+#define COMSIG_EXOSCAN_INTERRUPTED "exoscan_interrupted"

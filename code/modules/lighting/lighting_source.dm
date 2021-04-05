@@ -58,6 +58,10 @@
 	if (needs_update)
 		SSlighting.sources_queue -= src
 
+	top_atom = null
+	source_atom = null
+	source_turf = null
+	pixel_turf = null
 	. = ..()
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.

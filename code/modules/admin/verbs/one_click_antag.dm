@@ -12,7 +12,6 @@
 
 
 /datum/admins/proc/one_click_antag()
-
 	var/dat = {"
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=traitors'>Make Traitors</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=changelings'>Make Changelings</a><br>
@@ -24,6 +23,7 @@
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=nerd'>Make N.E.R.D. (Requires Ghost)</a><br>
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
@@ -46,7 +46,7 @@
 	return !is_banned_from(applicant.ckey, list(targetrole, ROLE_SYNDICATE))
 
 
-/datum/admins/proc/makeTraitors()
+/datum/admins/proc/makeTraitors(maxCount = 3)
 	var/datum/game_mode/traitor/temp = new
 
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -65,7 +65,7 @@
 					candidates += applicant
 
 	if(candidates.len)
-		var/numTraitors = min(candidates.len, 3)
+		var/numTraitors = min(candidates.len, maxCount)
 
 		for(var/i = 0, i<numTraitors, i++)
 			H = pick(candidates)
@@ -78,7 +78,7 @@
 	return FALSE
 
 
-/datum/admins/proc/makeChangelings()
+/datum/admins/proc/makeChangelings(maxCount = 3)
 
 	var/datum/game_mode/changeling/temp = new
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -97,7 +97,7 @@
 					candidates += applicant
 
 	if(candidates.len)
-		var/numChangelings = min(candidates.len, 3)
+		var/numChangelings = min(candidates.len, maxCount)
 
 		for(var/i = 0, i<numChangelings, i++)
 			H = pick(candidates)
@@ -108,7 +108,7 @@
 
 	return FALSE
 
-/datum/admins/proc/makeRevs()
+/datum/admins/proc/makeRevs(maxCount = 3)
 
 	var/datum/game_mode/revolution/temp = new
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -127,7 +127,7 @@
 					candidates += applicant
 
 	if(candidates.len)
-		var/numRevs = min(candidates.len, 3)
+		var/numRevs = min(candidates.len, maxCount)
 
 		for(var/i = 0, i<numRevs, i++)
 			H = pick(candidates)
@@ -148,7 +148,7 @@
 	return TRUE
 
 
-/datum/admins/proc/makeCult()
+/datum/admins/proc/makeCult(maxCount = 4)
 	var/datum/game_mode/cult/temp = new
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		temp.restricted_jobs += temp.protected_jobs
@@ -166,7 +166,7 @@
 					candidates += applicant
 
 	if(candidates.len)
-		var/numCultists = min(candidates.len, 4)
+		var/numCultists = min(candidates.len, maxCount)
 
 		for(var/i = 0, i<numCultists, i++)
 			H = pick(candidates)
@@ -179,14 +179,14 @@
 
 
 
-/datum/admins/proc/makeNukeTeam()
+/datum/admins/proc/makeNukeTeam(maxCount = 5)
 	var/datum/game_mode/nuclear/temp = new
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a nuke team being sent in?", ROLE_OPERATIVE, temp)
 	var/list/mob/dead/observer/chosen = list()
 	var/mob/dead/observer/theghost = null
 
 	if(candidates.len)
-		var/numagents = 5
+		var/numagents = maxCount
 		var/agentcount = 0
 
 		for(var/i = 0, i<numagents,i++)
@@ -455,10 +455,37 @@
 //Abductors
 /datum/admins/proc/makeAbductorTeam()
 	new /datum/round_event/ghost_role/abductor
-	return 1
+	return TRUE
 
 /datum/admins/proc/makeRevenant()
 	new /datum/round_event/ghost_role/revenant(TRUE, TRUE)
-	return 1
+	return TRUE
+
+/datum/admins/proc/makeNerd()
+	var/spawnpoint = pick(GLOB.blobstart)
+	var/list/mob/dead/observer/candidates
+	var/mob/dead/observer/chosen_candidate
+	var/mob/living/simple_animal/drone/nerd
+	var/teamsize
+
+	teamsize = input(usr, "How many drones?", "N.E.R.D. team size", 2) as num|null
+
+	if(teamsize <= 0)
+		return FALSE
+
+	candidates = pollGhostCandidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
+
+	if(length(candidates) == 0)
+		return FALSE
+
+	while(length(candidates) && teamsize)
+		chosen_candidate = pick(candidates)
+		candidates -= chosen_candidate
+		nerd = new /mob/living/simple_animal/drone(spawnpoint)
+		nerd.key = chosen_candidate.key
+		log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
+		teamsize--
+
+	return TRUE
 
 #undef ERT_EXPERIENCED_LEADER_CHOOSE_TOP

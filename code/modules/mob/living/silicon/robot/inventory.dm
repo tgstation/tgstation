@@ -66,7 +66,6 @@
 	held_items[module_num] = item_module
 	item_module.equipped(src, ITEM_SLOT_HANDS)
 	item_module.mouse_opacity = initial(item_module.mouse_opacity)
-	item_module.layer = ABOVE_HUD_LAYER
 	item_module.plane = ABOVE_HUD_PLANE
 	item_module.forceMove(src)
 

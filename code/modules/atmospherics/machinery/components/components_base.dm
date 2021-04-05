@@ -31,6 +31,10 @@
 	if(hide)
 		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
 
+/obj/machinery/atmospherics/components/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>[src] is on layer [piping_layer].</span>"
+
 // Iconnery
 
 /**

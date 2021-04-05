@@ -15,12 +15,8 @@
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
 
-/*
-* Enables debug messages for every single reaction step. This is 1 message per 0.5s for a SINGLE reaction. Useful for tracking down bugs/asking me for help in the main reaction handiler (equilibrium.dm).
-*
-* * Requires TESTING to be defined to work.
-*/
-//#define REAGENTS_TESTING
+///Used for doing dry runs of the reference finder, to test for feature completeness
+//#define REFERENCE_TRACKING_DEBUG
 
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
@@ -29,6 +25,13 @@
 #endif //ifdef GC_FAILURE_HARD_LOOKUP
 
 #endif //ifdef REFERENCE_TRACKING
+
+/*
+* Enables debug messages for every single reaction step. This is 1 message per 0.5s for a SINGLE reaction. Useful for tracking down bugs/asking me for help in the main reaction handiler (equilibrium.dm).
+*
+* * Requires TESTING to be defined to work.
+*/
+//#define REAGENTS_TESTING
 
 #define VISUALIZE_ACTIVE_TURFS //Highlights atmos active turfs in green
 #define TRACK_MAX_SHARE //Allows max share tracking, for use in the atmos debugging ui
@@ -72,6 +75,24 @@
 #define TESTING
 #endif
 
+#if defined(UNIT_TESTS)
+//Hard del testing defines
+#define REFERENCE_TRACKING
+#define REFERENCE_TRACKING_DEBUG
+#define FIND_REF_NO_CHECK_TICK
+#endif
+
+#ifdef TGS
+// TGS performs its own build of dm.exe, but includes a prepended TGS define.
+#define CBT
+#endif
+
 // A reasonable number of maximum overlays an object needs
 // If you think you need more, rethink it
 #define MAX_ATOM_OVERLAYS 100
+
+#if !defined(CBT) && !defined(SPACEMAN_DMM)
+#warn "Building with Dream Maker is no longer supported and may result in errors."
+#warn "In order to build, run BUILD.bat in the root directory."
+#warn "Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build."
+#endif

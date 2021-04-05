@@ -21,7 +21,7 @@
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = GRAIN | DAIRY
+	disliked_food = GRAIN | DAIRY | CLOTH
 	liked_food = GROSS | MEAT
 	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
@@ -101,6 +101,12 @@
 		// organ.Insert will qdel any existing organs in the same slot, so
 		// we don't need to manage that.
 		new_tail.Insert(C, TRUE, FALSE)
+
+/datum/species/lizard/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
+	var/tail = pick(GLOB.tails_list_lizard)
+	human_mob.dna.features["tail_lizard"] = tail
+	mutant_bodyparts["tail_lizard"] = tail
+	human_mob.update_body()
 
 /*
 Lizard subspecies: ASHWALKERS

@@ -44,9 +44,8 @@ if ! ( [ -x "$has_git" ] && [ -x "$has_grep" ] && [ -f "/usr/lib/i386-linux-gnu/
 fi
 dpkg --add-architecture i386
 apt-get update
-#apt-get upgrade -y
-apt-get install -y lib32z1 pkg-config libssl-dev:i386 libssl-dev
-#update rust-g
+apt-get install -y lib32z1 pkg-config libssl-dev:i386 libssl-dev libssl1.1:i386
+# update rust-g
 if [ ! -d "rust-g" ]; then
 	echo "Cloning rust-g..."
 	git clone https://github.com/tgstation/rust-g
@@ -65,8 +64,34 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-un
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
+# get dependencies for extools
+apt-get install -y cmake build-essential gcc-multilib g++-multilib cmake wget
+
+# update extools
+if [ ! -d "extools" ]; then
+	echo "Cloning extools..."
+	git clone https://github.com/MCHSL/extools
+	cd extools/byond-extools
+else
+	echo "Fetching extools..."
+	cd extools/byond-extools
+	git fetch
+fi
+
+echo "Deploying extools..."
+git checkout "$EXTOOLS_VERSION"
+if [ -d "build" ]; then
+	rm -R build
+fi
+mkdir build
+cd build
+cmake ..
+make
+mv libbyond-extools.so "$1/libbyond-extools.so"
+cd ../../..
+
 # compile tgui
 echo "Compiling tgui..."
 cd "$1"
 chmod +x tools/bootstrap/node  # Workaround for https://github.com/tgstation/tgstation-server/issues/1167
-env TG_BOOTSTRAP_CACHE="$original_dir" TG_BOOTSTRAP_NODE_LINUX=1 TG_BUILD_TGS_MODE=1 tools/bootstrap/node tools/build/build.js
+env TG_BOOTSTRAP_CACHE="$original_dir" TG_BOOTSTRAP_NODE_LINUX=1 CBT_BUILD_MODE="TGS" tools/bootstrap/node tools/build/build.js

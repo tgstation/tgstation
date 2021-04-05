@@ -36,6 +36,12 @@
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
 		return
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && !module_active)
+		var/secondary_result = A.attack_robot_secondary(src, modifiers)
+		if(secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
+			return
+		else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
+			CRASH("attack_robot_secondary did not return a SECONDARY_ATTACK_* define.")
 
 	if(next_move >= world.time)
 		return
@@ -170,3 +176,13 @@
 /atom/proc/attack_robot(mob/user)
 	attack_ai(user)
 	return
+
+/**
+ * What happens when the cyborg without active module holds right-click on an item. Returns a SECONDARY_ATTACK_* value.
+ *
+ * Arguments:
+ * * user The mob holding the right click
+ * * modifiers The list of the custom click modifiers
+ */
+/atom/proc/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_ai_secondary(user, modifiers)

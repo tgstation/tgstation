@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/custom_names = list()
 	var/preferred_ai_core_display = "Blue"
-	var/prefered_security_department = SEC_DEPT_RANDOM
+	var/prefered_security_department = SEC_DEPT_NONE
 
 	//Quirk list
 	var/list/all_quirks = list()
@@ -146,6 +146,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/persistent_scars = TRUE
 	///If we want to broadcast deadchat connect/disconnect messages
 	var/broadcast_login_logout = TRUE
+	///What outfit typepaths we've favorited in the SelectEquipment menu
+	var/list/favorite_outfits = list()
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -645,7 +647,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Set screentip mode:</b> <a href='?_src_=prefs;preference=screentipmode'>[screentip_pref ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Screentip color:</b><span style='border: 1px solid #161616; background-color: [screentip_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=screentipcolor'>Change</a><BR>"
 			dat += "<b>Item Hover Outlines:</b> <a href='?_src_=prefs;preference=itemoutline_pref'>[itemoutline_pref ? "Enabled" : "Disabled"]</a><br>"
-			
+
 
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
