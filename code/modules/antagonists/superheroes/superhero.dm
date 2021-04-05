@@ -1,3 +1,11 @@
+/datum/outfit/superhero
+	name = "Default Superhero Outfit"
+	uniform = /obj/item/clothing/under/color/white
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	back = /obj/item/storage/backpack
+	ears = /obj/item/radio/headset
+	id = /obj/item/card/id/advanced
+
 /datum/antagonist/superhero
 	name = "Superhero"
 	job_rank = ROLE_SUPERHERO

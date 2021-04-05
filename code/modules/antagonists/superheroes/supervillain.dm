@@ -1,3 +1,9 @@
+/datum/outfit/superhero/villain
+	name = "Default Supervillain Outfit"
+	uniform = /obj/item/clothing/under/color/black
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	id_trim = /datum/id_trim/chameleon/operative
+
 /datum/antagonist/supervillain
 	name = "Supervillain"
 	job_rank = ROLE_SUPERVILLAIN
