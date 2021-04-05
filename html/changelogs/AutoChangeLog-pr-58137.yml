@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - refactor: "Attempting to right click with an empty hand on someone who is either restrained or both unarmed and not in combat mode while you are targeting the mouth zone will no longer result in you slapping them in the face instead of shoving them."
+  - refactor: "Using the dedicated slapper item (from the *slap emote) on someone while you are targeting either the mouth zone or the head zone will now result in you slapping them in the face instead of just generically slapping them."
