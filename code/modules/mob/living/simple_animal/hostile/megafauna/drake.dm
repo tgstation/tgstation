@@ -401,7 +401,7 @@
 		arena_escape_enrage()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
-	if(severity == EXPLODE_LIGHT)
+	if(severity <= EXPLODE_LIGHT)
 		return FALSE
 	return ..()
 

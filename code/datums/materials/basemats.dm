@@ -120,7 +120,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, amount=1)
-		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
+		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, 0, amount / 1250)
 
 /datum/material/plasma/on_removed(atom/source, amount, material_flags)
 	. = ..()

@@ -97,22 +97,21 @@
 	return TRUE
 
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
-	if((!bomb && bombcheck) || (!target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
+	if((!bomb && bombcheck) || !target || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
 
-	cached_firer = WEAKREF(user)
 	cached_target = WEAKREF(target)
 	cached_modifiers = params
-
-	if(!bomb)
-		fire_debug(target, user, flag, params)
-		return
-
-	if(bomb.valve_open)
+	if(bomb?.valve_open)
 		user.visible_message(
 			"<span class='danger'>[user] points [src] at [target]!</span>",
 			"<span class='danger'>You point [src] at [target]!</span>"
 		)
+		return
+
+	cached_firer = WEAKREF(user)
+	if(!bomb)
+		fire_debug(target, user, flag, params)
 		return
 
 	playsound(src, dry_fire_sound, 30, TRUE) // *click
@@ -134,7 +133,7 @@
  * Arguments:
  * - [blastwave_data][/list]: A list containing all of the data for the blastwave.
  */
-/obj/item/gun/blastcannon/proc/channel_blastwave(atom/source, atom/origin, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke, list/arguments)
+/obj/item/gun/blastcannon/proc/channel_blastwave(atom/source, atom/origin, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, list/arguments)
 	. = COMSIG_CANCEL_EXPLOSION
 	var/heavy = devastation_range
 	var/medium = heavy_impact_range

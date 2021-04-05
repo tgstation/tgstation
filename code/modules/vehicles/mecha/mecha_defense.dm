@@ -120,12 +120,12 @@
 /obj/vehicle/sealed/mecha/ex_act(severity, target)
 	log_message("Affected by explosion of severity: [severity].", LOG_MECHA, color="red")
 	if(prob(deflect_chance))
-		severity++
+		severity--
 		log_message("Armor saved, changing severity to [severity]", LOG_MECHA)
 	return ..()
 
 /obj/vehicle/sealed/mecha/contents_explosion(severity, target)
-	severity++
+	severity--
 
 	switch(severity)
 		if(EXPLODE_DEVASTATE)

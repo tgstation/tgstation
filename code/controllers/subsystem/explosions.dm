@@ -153,12 +153,12 @@ SUBSYSTEM_DEF(explosions)
 		A.color = null
 		A.maptext = ""
 
-/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = TRUE, ignorecap = TRUE, flame_range = 0, silent = FALSE, smoke = TRUE)
+/proc/dyn_explosion(turf/epicenter, power, flame_range = 0, flash_range = null, adminlog = TRUE, ignorecap = TRUE, silent = FALSE, smoke = TRUE)
 	if(!power)
 		return
 	var/range = 0
 	range = round((2 * power)**GLOB.DYN_EX_SCALE)
-	explosion(epicenter, round(range * 0.25), round(range * 0.5), round(range), flash_range*range, adminlog, ignorecap, flame_range*range, silent, smoke)
+	explosion(epicenter, devastation_range = round(range * 0.25), heavy_impact_range = round(range * 0.5), light_impact_range = round(range), flame_range = flame_range*range, flash_range = flash_range*range, adminlog = adminlog, ignorecap = ignorecap, silent = silent, smoke = smoke)
 
 // Using default dyn_ex scale:
 // 100 explosion power is a (5, 10, 20) explosion.
@@ -184,8 +184,9 @@ SUBSYSTEM_DEF(explosions)
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
  */
-/proc/explosion(atom/origin, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
+/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE)
 	. = SSexplosions.explode(arglist(args))
+
 
 /**
  * Makes a given atom explode. Now on the explosions subsystem!
@@ -202,15 +203,15 @@ SUBSYSTEM_DEF(explosions)
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
  */
-/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
-	var/list/arguments = list("origin" = origin, "devastation_range" = devastation_range, "heavy_impact_range" = heavy_impact_range, "light_impact_range" = light_impact_range, "flash_range" = flash_range, "adminlog" = adminlog, "ignorecap" = ignorecap, "flame_range" = flame_range, "silent" = silent, "smoke" = smoke)
+/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE)
+	var/list/arguments = list(EXARG_KEY_ORIGIN = origin, EXARG_KEY_DEV_RANGE = devastation_range, EXARG_KEY_HEAVY_RANGE = heavy_impact_range, EXARG_KEY_LIGHT_RANGE = light_impact_range, EXARG_KEY_FLAME_RANGE = flame_range, EXARG_KEY_FLASH_RANGE = flash_range, EXARG_KEY_ADMIN_LOG = adminlog, EXARG_KEY_IGNORE_CAP = ignorecap, EXARG_KEY_SILENT = silent, EXARG_KEY_SMOKE = smoke)
 	var/atom/location = isturf(origin) ? origin : origin.loc
-	if(SEND_SIGNAL(origin, COMSIG_ATOM_EXPLODE, arguments["devastation_range"], arguments["heavy_impact_range"], arguments["light_impact_range"], arguments["flash_range"], arguments["adminlog"], arguments["ignorecap"], arguments["flame_range"], arguments["silent"], arguments["smoke"], arguments) & COMSIG_CANCEL_EXPLOSION)
-		return
+	if(SEND_SIGNAL(origin, COMSIG_ATOM_EXPLODE, arguments[EXARG_KEY_DEV_RANGE], arguments[EXARG_KEY_HEAVY_RANGE], arguments[EXARG_KEY_LIGHT_RANGE], arguments[EXARG_KEY_FLAME_RANGE], arguments[EXARG_KEY_FLASH_RANGE], arguments[EXARG_KEY_ADMIN_LOG], arguments[EXARG_KEY_IGNORE_CAP], arguments[EXARG_KEY_SILENT], arguments[EXARG_KEY_SMOKE], arguments) & COMSIG_CANCEL_EXPLOSION)
+		return // Signals are incompatible with `arglist(...)` so we can't actually use that for these. Additionally,
 
 	while(location)
 		var/next_loc = location.loc
-		if(SEND_SIGNAL(location, COMSIG_ATOM_INTERNAL_EXPLOSION, arguments["origin"], arguments["devastation_range"], arguments["heavy_impact_range"], arguments["light_impact_range"], arguments["flash_range"], arguments["adminlog"], arguments["ignorecap"], arguments["flame_range"], arguments["silent"], arguments["smoke"], arguments) & COMSIG_CANCEL_EXPLOSION)
+		if(SEND_SIGNAL(location, COMSIG_ATOM_INTERNAL_EXPLOSION, arguments[EXARG_KEY_ORIGIN], arguments[EXARG_KEY_DEV_RANGE], arguments[EXARG_KEY_HEAVY_RANGE], arguments[EXARG_KEY_LIGHT_RANGE], arguments[EXARG_KEY_FLAME_RANGE], arguments[EXARG_KEY_FLASH_RANGE], arguments[EXARG_KEY_ADMIN_LOG], arguments[EXARG_KEY_IGNORE_CAP], arguments[EXARG_KEY_SILENT], arguments[EXARG_KEY_SMOKE], arguments) & COMSIG_CANCEL_EXPLOSION)
 			return
 		if(isturf(location))
 			break
@@ -220,10 +221,10 @@ SUBSYSTEM_DEF(explosions)
 		return
 
 	var/area/epicenter_area = get_area(location)
-	if(SEND_SIGNAL(epicenter_area, COMSIG_AREA_INTERNAL_EXPLOSION, arguments["origin"], arguments["devastation_range"], arguments["heavy_impact_range"], arguments["light_impact_range"], arguments["flash_range"], arguments["adminlog"], arguments["ignorecap"], arguments["flame_range"], arguments["silent"], arguments["smoke"], arguments) & COMSIG_CANCEL_EXPLOSION)
+	if(SEND_SIGNAL(epicenter_area, COMSIG_AREA_INTERNAL_EXPLOSION, arguments[EXARG_KEY_ORIGIN], arguments[EXARG_KEY_DEV_RANGE], arguments[EXARG_KEY_HEAVY_RANGE], arguments[EXARG_KEY_LIGHT_RANGE], arguments[EXARG_KEY_FLAME_RANGE], arguments[EXARG_KEY_FLASH_RANGE], arguments[EXARG_KEY_ADMIN_LOG], arguments[EXARG_KEY_IGNORE_CAP], arguments[EXARG_KEY_SILENT], arguments[EXARG_KEY_SMOKE], arguments) & COMSIG_CANCEL_EXPLOSION)
 		return
 
-	propagate_blastwave(location, arguments["devastation_range"], arguments["heavy_impact_range"], arguments["light_impact_range"], arguments["flash_range"], arguments["adminlog"], arguments["ignorecap"], arguments["flame_range"], arguments["silent"], arguments["smoke"])
+	propagate_blastwave(location, arguments[EXARG_KEY_DEV_RANGE], arguments[EXARG_KEY_HEAVY_RANGE], arguments[EXARG_KEY_LIGHT_RANGE], arguments[EXARG_KEY_FLAME_RANGE], arguments[EXARG_KEY_FLASH_RANGE], arguments[EXARG_KEY_ADMIN_LOG], arguments[EXARG_KEY_IGNORE_CAP], arguments[EXARG_KEY_SILENT], arguments[EXARG_KEY_SMOKE])
 
 
 /**
@@ -246,7 +247,7 @@ SUBSYSTEM_DEF(explosions)
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
  */
-/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return

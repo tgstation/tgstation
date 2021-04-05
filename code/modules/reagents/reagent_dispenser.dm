@@ -87,7 +87,7 @@
 	reagent_id = /datum/reagent/fuel
 
 /obj/structure/reagent_dispensers/fueltank/boom()
-	explosion(src, 0, 1, 5, flame_range = 5)
+	explosion(src, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
@@ -139,7 +139,7 @@
 	tank_volume = 5000
 
 /obj/structure/reagent_dispensers/fueltank/large/boom()
-	explosion(src, 1, 2, 7, flame_range = 12)
+	explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/peppertank
@@ -193,7 +193,7 @@
 	reagent_id = /datum/reagent/consumable/ethanol/beer
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
-	explosion(src, 0, 3, 5, 7, 10)
+	explosion(src, devastation_range = 0, heavy_impact_range = 3, light_impact_range = 5, flash_range = 7, flame_range = 10)
 	if(!QDELETED(src))
 		qdel(src)
 

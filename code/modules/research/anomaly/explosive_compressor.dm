@@ -177,7 +177,7 @@
 /**
  * Checks whether an internal explosion was sufficient to compress the core.
  */
-/obj/machinery/research/explosive_compressor/proc/check_test(atom/source, atom/origin, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke, list/arguments)
+/obj/machinery/research/explosive_compressor/proc/check_test(atom/source, atom/origin, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, list/arguments)
 	. = COMSIG_CANCEL_EXPLOSION
 	if(!inserted_core)
 		test_status = "ERROR: No core present during detonation."

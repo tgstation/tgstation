@@ -1,14 +1,21 @@
 ///Component specifically for explosion sensetive things, currently only applies to heat based explosions but can later perhaps be used for things that are dangerous to handle carelessly like nitroglycerin.
 /datum/component/explodable
+	/// The devastation range of the resulting explosion.
 	var/devastation_range = 0
+	/// The heavy impact range of the resulting explosion.
 	var/heavy_impact_range = 0
+	/// The light impact range of the resulting explosion.
 	var/light_impact_range = 2
+	/// The flame range of the resulting explosion.
+	var/flame_range = 0
+	/// The flash range of the resulting explosion.
 	var/flash_range = 3
-	var/equipped_slot //For items, lets us determine where things should be hit.
-	///wheter we always delete. useful for nukes turned plasma and such, so they don't default delete and can survive
+	/// For items, lets us determine where things should be hit.
+	var/equipped_slot
+	/// Whether we always delete. Useful for nukes turned plasma and such, so they don't default delete and can survive
 	var/always_delete
 
-/datum/component/explodable/Initialize(devastation_range_override, heavy_impact_range_override, light_impact_range_override, flash_range_override, _always_delete = TRUE)
+/datum/component/explodable/Initialize(devastation_range_override, heavy_impact_range_override, light_impact_range_override, flame_range_override, flash_range_override, _always_delete = TRUE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -31,6 +38,8 @@
 		heavy_impact_range = heavy_impact_range_override
 	if(light_impact_range_override)
 		light_impact_range = light_impact_range_override
+	if(flame_range_override)
+		flame_range = flame_range_override
 	if(flash_range_override)
 		flash_range = flash_range_override
 	always_delete = _always_delete
@@ -123,7 +132,7 @@
 	var/log = TRUE
 	if(light_impact_range < 1)
 		log = FALSE
-	explosion(A, devastation_range, heavy_impact_range, light_impact_range, flash_range, log) //epic explosion time
+	explosion(A, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, log) //epic explosion time
 	if(always_delete)
 		qdel(A)
 

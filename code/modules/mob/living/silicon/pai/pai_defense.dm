@@ -28,7 +28,7 @@
 
 
 /mob/living/silicon/pai/ex_act(severity, target)
-	take_holo_damage(severity * 50)
+	take_holo_damage(50 * severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE) //RIP
 			qdel(card)

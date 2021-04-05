@@ -308,7 +308,7 @@
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 
-		explosion(src, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		explosion(src, devastation_range = round(range*0.25), heavy_impact_range = round(range*0.5), light_impact_range = round(range), flash_range = round(range*1.5))
 	return ..()
 
 /obj/item/tank/rad_act(strength)
