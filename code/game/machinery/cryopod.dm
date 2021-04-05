@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	// 3 minutes-ish safe period before being despawned.
 	var/time_till_despawn = 3 MINUTES // This is reduced to 30 seconds if a player manually enters cryo
-	var/despawn_world_time = null          // Used to keep track of the safe period.
+	var/despawn_world_time = null // Used to keep track of the safe period.
 
 	var/obj/machinery/computer/cryopod/control_computer
 	COOLDOWN_DECLARE(last_no_computer_message)
