@@ -55,6 +55,7 @@ export const CommandReport = (props, context) => {
             <Section title="Set report text:" textAlign="center">
               <TextArea
                 height="200px"
+                mb={1}
                 value={command_report_content}
                 onChange={(e, value) => act("update_report_contents", {
                   updated_contents: value,
