@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 				return
 			if(!allow_items) return
 
-			visible_message("<span class='notice'>The console beeps happily as it disgorges the desired objects.</span>")
+			visible_message("<span class='notice'>[src] beeps happily as it disgorges the desired objects.</span>")
 
 			for(var/obj/item/item in frozen_items)
 				item.forceMove(get_turf(src))
