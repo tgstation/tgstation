@@ -63,7 +63,7 @@
 #define CHEMICAL_MAXIMUM_TEMPERATURE 99999
 
 ///The default purity of all non reacted reagents
-#define REAGENT_STANDARD_PUIRTY 0.75
+#define REAGENT_STANDARD_PURITY 0.75
 
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
@@ -111,11 +111,11 @@
 #define MAX_ADDICTION_POINTS 1000
 
 ///Addiction start/ends
-#define WITHDRAWAL_STAGE1_START_CYCLE 15
-#define WITHDRAWAL_STAGE1_END_CYCLE 70
-#define WITHDRAWAL_STAGE2_START_CYCLE 71
-#define WITHDRAWAL_STAGE2_END_CYCLE 130
-#define WITHDRAWAL_STAGE3_START_CYCLE 131
+#define WITHDRAWAL_STAGE1_START_CYCLE 1
+#define WITHDRAWAL_STAGE1_END_CYCLE 60
+#define WITHDRAWAL_STAGE2_START_CYCLE 61
+#define WITHDRAWAL_STAGE2_END_CYCLE 120
+#define WITHDRAWAL_STAGE3_START_CYCLE 121
 
 ///reagent tags - used to look up reagents for specific effects. Feel free to add to but comment it
 /// This reagent does brute effects (BOTH damaging and healing)

@@ -493,9 +493,9 @@
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = 0)
+/obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = 0, custom_deconstruct = FALSE)
 	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_CROWBAR
-	if(.)
+	if(. && !custom_deconstruct)
 		I.play_tool_sound(src, 50)
 		deconstruct(TRUE)
 

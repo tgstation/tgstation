@@ -54,7 +54,7 @@ function task-dev-server {
 function task-lint {
   yarn run tsc
   Write-Output "tgui: type check passed"
-  yarn run eslint packages --ext ".js,.jsx,.ts,.tsx,.cjs,.mjs" @Args
+  yarn run eslint packages --ext ".js,.cjs,.ts,.tsx" @Args
   Write-Output "tgui: eslint check passed"
 }
 
@@ -72,8 +72,9 @@ function task-clean {
   Remove-Quiet -Recurse -Force ".yarn\cache"
   Remove-Quiet -Recurse -Force ".yarn\unplugged"
   Remove-Quiet -Recurse -Force ".yarn\webpack"
-  Remove-Quiet -Recurse -Force ".yarn\build-state.yml"
-  Remove-Quiet -Recurse -Force ".yarn\install-state.gz"
+  Remove-Quiet -Force ".yarn\build-state.yml"
+  Remove-Quiet -Force ".yarn\install-state.gz"
+  Remove-Quiet -Force ".yarn\install-target"
   Remove-Quiet -Force ".pnp.js"
   ## NPM artifacts
   Get-ChildItem -Path "." -Include "node_modules" -Recurse -File:$false | Remove-Item -Recurse -Force

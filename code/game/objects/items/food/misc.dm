@@ -116,7 +116,7 @@
 	name = "space fries"
 	desc = "AKA: French Fries, Freedom Fries, etc."
 	icon_state = "fries"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtypes = VEGETABLES | GRAIN | FRIED
@@ -144,7 +144,7 @@
 	name = "soy dope"
 	desc = "Dope from a soy."
 	icon_state = "soydope"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1)
 	tastes = list("soy" = 1)
 	foodtypes = VEGETABLES
@@ -154,7 +154,7 @@
 	name = "cheesy fries"
 	desc = "Fries. Covered in cheese. Duh."
 	icon_state = "cheesyfries"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | GRAIN | DAIRY
@@ -185,7 +185,7 @@
 	name = "carrot fries"
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/oculine = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtypes = VEGETABLES
@@ -210,7 +210,7 @@
 	desc = "It is only wafer thin."
 	icon_state = "mint"
 	bite_consumption = 1
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/toxin/minttoxin = 2)
 	foodtypes = TOXIC | SUGAR
 	w_class = WEIGHT_CLASS_TINY
@@ -283,7 +283,7 @@
 	name = "eggplant parmigiana"
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("eggplant" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
@@ -344,7 +344,7 @@
 	name = "yaki imo"
 	desc = "Made with roasted sweet potatoes!"
 	icon_state = "yakiimo"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("sweet potato" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR
@@ -354,7 +354,7 @@
 	name = "roast parsnip"
 	desc = "Sweet and crunchy."
 	icon_state = "roastparsnip"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("parsnip" = 1)
 	foodtypes = VEGETABLES
@@ -516,19 +516,7 @@
 	throwforce = 0
 
 /obj/item/food/chewable/lollipop/cyborg
-	var/spamchecking = TRUE
-
-/obj/item/food/chewable/lollipop/cyborg/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
-
-/obj/item/food/chewable/lollipop/cyborg/equipped(mob/living/user, slot)
-	. = ..(user, slot)
-	spamchecking = FALSE
-
-/obj/item/food/chewable/lollipop/cyborg/proc/spamcheck()
-	if(spamchecking)
-		qdel(src)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/psicodine = 2) //psicodine instead of omnizine, because the latter was making coders freak out
 
 /obj/item/food/chewable/bubblegum
 	name = "bubblegum"
@@ -609,21 +597,6 @@
 /obj/item/food/chewable/gumball/Initialize()
 	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-
-/obj/item/food/chewable/gumball/cyborg
-	var/spamchecking = TRUE
-
-/obj/item/food/chewable/gumball/cyborg/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
-
-/obj/item/food/chewable/gumball/cyborg/equipped(mob/living/user, slot)
-	. = ..(user, slot)
-	spamchecking = FALSE
-
-/obj/item/food/chewable/gumball/cyborg/proc/spamcheck()
-	if(spamchecking)
-		qdel(src)
 
 /obj/item/food/taco
 	name = "classic taco"

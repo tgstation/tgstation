@@ -222,9 +222,12 @@
 		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
-///Carpet variant for mapping aid, functionally the same as parent after smoothing.
 /turf/open/floor/carpet/lone
-	icon_state = "carpet-0"
+	icon_state = "carpetsymbol"
+	smoothing_flags = NONE
+
+/turf/open/floor/carpet/lone/star
+	icon_state = "carpetstar"
 
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'

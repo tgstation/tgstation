@@ -426,11 +426,6 @@
 				client.eye = loc
 		return 1
 
-/// Show the mob's inventory to another mob
-/mob/proc/show_inv(mob/user)
-	return
-
-
 /**
  * Examine a mob
  *
@@ -775,12 +770,6 @@
 			else
 				user.stripPanelEquip(what,src,slot)
 
-		if(user.machine == src)
-			if(Adjacent(user))
-				show_inv(user)
-			else
-				user << browse(null,"window=mob[REF(src)]")
-
 // The src mob is trying to strip an item from someone
 // Defined in living.dm
 /mob/proc/stripPanelUnequip(obj/item/what, mob/who)
@@ -804,28 +793,6 @@
 		return
 	if(isAI(M))
 		return
-/**
- * Handle the result of a click drag onto this mob
- *
- * For mobs this just shows the inventory
- */
-/mob/MouseDrop_T(atom/dropping, atom/user)
-	. = ..()
-
-	// Our mouse drop has already been handled by something else. Most likely buckling code.
-	// Since it has already been handled, we don't need to show inventory.
-	if(.)
-		return
-
-	if(ismob(dropping) && src == user && dropping != user)
-		var/mob/M = dropping
-		var/mob/U = user
-		if(iscyborg(U))
-			var/mob/living/silicon/robot/cyborg = U
-			if(cyborg.combat_mode)
-				M.show_inv(cyborg)
-		else
-			M.show_inv(U)
 
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
