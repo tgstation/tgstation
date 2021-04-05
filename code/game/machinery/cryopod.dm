@@ -356,7 +356,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		return
 
 	if(occupant)
-		to_chat(user, "<span class='boldnotice'>The cryo pod is already occupied!</span>")
+		to_chat(user, "<span class='boldnotice'>[src] is already occupied!</span>")
 		return
 
 	if(target.stat == DEAD)
