@@ -233,7 +233,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		if(mob_occupant.stat == DEAD)
 			open_machine()
 
-		if(!(world.time > despawn_world_time))
+		if(world.time <= despawn_world_time)
 			return
 
 		if(!mob_occupant.client && mob_occupant.stat < 2) // Occupant is living and has no client.
