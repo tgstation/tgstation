@@ -22034,9 +22034,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "xbW" = (
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 6
-	},
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
 	dir = 8
 	},
