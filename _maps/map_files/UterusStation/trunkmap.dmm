@@ -1156,6 +1156,10 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/service/library)
+"bon" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/closed/wall/r_wall,
+/area/ai_monitored/command/storage/eva)
 "boR" = (
 /turf/closed/wall,
 /area/service/hydroponics)
@@ -3631,7 +3635,7 @@
 	},
 /obj/machinery/door/window/eastright{
 	name = "Medbay";
-	req_access_txt = "5;29"
+	req_one_access_txt = "5"
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay)
@@ -4154,7 +4158,7 @@
 /obj/item/pen,
 /obj/machinery/door/window/southleft{
 	name = "Medbay";
-	req_access_txt = "5"
+	req_one_access_txt = "5"
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay)
@@ -5950,7 +5954,7 @@
 	},
 /obj/machinery/door/window/westleft{
 	name = "Medbay";
-	req_access_txt = "5;29"
+	req_access_txt = "5"
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay)
@@ -54669,7 +54673,7 @@ xPG
 mQo
 dNz
 whM
-fuQ
+bon
 llt
 twd
 eUY

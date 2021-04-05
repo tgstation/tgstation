@@ -32,7 +32,9 @@
 		},
 		"roboticist": {
 			"total_positions": 3,
-			"spawn_positions": 3
+			"spawn_positions": 3,
+			"additional_access": [5],
+			"additional_minimal_access": [5]
 		},
 		"medical_doctor": {
 			"total_positions": 4,
@@ -51,6 +53,10 @@
 			"total_positions": 1,
 			"spawn_positions": 1
 		},
+		"lawyer": {
+			"total_positions": 1,
+			"spawn_positions": 1
+		},
 		"botanist": {
 			"total_positions": 3,
 			"spawn_positions": 3
@@ -66,6 +72,14 @@
 		"shaft_miner": {
 			"total_positions": 1,
 			"spawn_positions": 1
+		},
+		"atmospheric_technician": {
+			"total_positions": 4,
+			"spawn_positions": 4
+		},
+		"geneticist": {
+			"additional_access": [5],
+			"additional_minimal_access": [5]
 		}
 	}
 }

@@ -18,7 +18,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "w" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "I" = (
@@ -49,11 +49,14 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "U" = (
-/obj/machinery/door/unpowered/shuttle,
 /obj/docking_port/mobile/emergency{
+	dwidth = 5;
+	height = 7;
 	name = "Uterus emergency shuttle";
-	preferred_direction = 2
+	preferred_direction = 2;
+	width = 15
 	},
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "W" = (

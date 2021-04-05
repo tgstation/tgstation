@@ -6,17 +6,17 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/supply)
 "n" = (
-/obj/machinery/door/unpowered/shuttle,
 /obj/docking_port/mobile/supply{
 	preferred_direction = 2
 	},
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/supply)
 "H" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "Z" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/supply)
 

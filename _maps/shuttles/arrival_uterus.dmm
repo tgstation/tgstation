@@ -7,7 +7,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/arrival)
 "i" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/arrival)
 "k" = (
