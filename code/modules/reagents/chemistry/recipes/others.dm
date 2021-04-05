@@ -715,6 +715,19 @@
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/silver(location)
 
+/datum/chemical_reaction/bone_gel
+	required_reagents = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
+	required_temp = 630
+	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+	mix_message = "The solution clarifies, leaving an ashy gel."
+
+/datum/chemical_reaction/bone_gel/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to created_volume)
+		new /obj/item/stack/medical/bone_gel(location)
+
 ////Ice and water
 
 /datum/chemical_reaction/ice

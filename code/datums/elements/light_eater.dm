@@ -69,7 +69,7 @@
 	SEND_SIGNAL(commisary, COMSIG_LIGHT_EATER_QUEUE, ., devourer)
 	for(var/nom in commisary.light_sources)
 		var/datum/light_source/morsel = nom
-		. += morsel.source_atom
+		.[morsel.source_atom] = TRUE
 
 /**
  * Consumes the light on the target, permanently rendering it incapable of producing light

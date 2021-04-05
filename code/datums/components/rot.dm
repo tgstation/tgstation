@@ -119,7 +119,7 @@
 	if(world.time - start_time < start_delay)
 		return
 
-	if(!prob(strength * 8))
+	if(!prob(strength * 3))
 		return
 
 	//We're running just under the "worst disease", since we don't want these to be too strong

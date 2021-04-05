@@ -13,6 +13,6 @@
 
 	for(var/turf/T in view(range,src))
 		T.AddElement(/datum/element/forced_gravity, forced_value)
-		addtimer(CALLBACK(T, /datum/.proc/_RemoveElement, list(forced_value)), duration)
+		addtimer(CALLBACK(T, /datum/.proc/_RemoveElement, list(/datum/element/forced_gravity,forced_value)), duration)
 
 	qdel(src)

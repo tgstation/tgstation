@@ -67,9 +67,14 @@ export const ThermoMachine = (props, context) => {
                 selected={data.use_env_heat}
                 onClick={() => act('use_env_heat')} />
             </LabeledList.Item>
-            <LabeledList.Item label="Setting">
+            <LabeledList.Item label="Thermal setting">
+              <Button
+                content={data.auto_thermal_regulator ? 'Auto' : 'Off'}
+                selected={data.auto_thermal_regulator}
+                onClick={() => act('auto_thermal_regulator')} />
               <Button
                 content={data.cooling ? 'Cooling' : 'Heating'}
+                disabled={data.auto_thermal_regulator}
                 selected={data.cooling}
                 onClick={() => act('cooling')} />
             </LabeledList.Item>
