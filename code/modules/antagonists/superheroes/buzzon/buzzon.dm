@@ -37,3 +37,10 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	mask = /obj/item/clothing/mask/gas
 	internals_slot = ITEM_SLOT_SUITSTORE
+
+/datum/outfit/superhero/buzzon_nude
+	name = "BuzzOn (Nude)"
+	uniform = /obj/item/clothing/under/color/yellow
+	shoes = /obj/item/clothing/shoes/sneakers/buzzon
+	ears = /obj/item/radio/headset
+	implants = list(/obj/item/implant/spell/specified_type/bees)

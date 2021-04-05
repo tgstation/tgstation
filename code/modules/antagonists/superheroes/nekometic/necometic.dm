@@ -8,3 +8,10 @@
 	gloves = /obj/item/clothing/gloves/combat/nekometic
 	head = /obj/item/clothing/head/kitty
 	belt = /obj/item/katana
+
+/datum/outfit/superhero/villain/nekometic_nude
+	name = "Nekometic (Nude)"
+	uniform = /obj/item/clothing/under/costume/schoolgirl
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	ears = /obj/item/radio/headset
+	head = /obj/item/clothing/head/kitty

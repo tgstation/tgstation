@@ -32,3 +32,23 @@
 
 	var/obj/effect/proc_holder/spell/spell2 = new /obj/effect/proc_holder/spell/targeted/owl_rush
 	H.mind.AddSpell(spell2)
+
+/datum/outfit/superhero/owlman_nude
+	name = "Owlman (Nude)"
+	uniform = /obj/item/clothing/under/costume/owl
+	shoes = /obj/item/clothing/shoes/sneakers/brown
+	ears = /obj/item/radio/headset
+	gloves = /obj/item/clothing/gloves/color/yellow
+	back = /obj/item/storage/backpack
+	id = /obj/item/card/id/advanced/gold/captains_spare
+
+/datum/outfit/superhero/owlman_nude/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+	. = ..()
+	if(!H.mind)
+		return
+
+	var/obj/effect/proc_holder/spell/spell = new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long/owlman
+	H.mind.AddSpell(spell)
+
+	var/obj/effect/proc_holder/spell/spell2 = new /obj/effect/proc_holder/spell/targeted/owl_rush
+	H.mind.AddSpell(spell2)

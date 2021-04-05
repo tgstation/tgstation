@@ -27,3 +27,11 @@
 	head = null
 	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = ITEM_SLOT_SUITSTORE
+
+/datum/outfit/superhero/villain/skeledoom_nude
+	name = "SkeleDoom (Nude)"
+	uniform = /obj/item/clothing/under/syndicate
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	ears = /obj/item/radio/headset
+	gloves = /obj/item/clothing/gloves/color/white/skeleton
+	implants = list(/obj/item/implant/stealth)
