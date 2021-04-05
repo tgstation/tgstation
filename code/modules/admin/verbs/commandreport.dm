@@ -1,3 +1,4 @@
+#define DEFAULT_ANNOUNCEMENT_SOUND "default_announcement"
 
 /client/proc/cmd_change_command_name()
 	set category = "Admin.Events"
@@ -33,14 +34,13 @@
 	/// Whether the report's contents are announced.
 	var/announce_contents = FALSE
 	/// The sound that's going to accompany our message.
-	var/played_sound
-
+	var/played_sound = DEFAULT_ANNOUNCEMENT_SOUND
+	/// The mob using the UI.
 	var/mob/ui_user
 
 /datum/command_report_menu/New(mob/user)
 	ui_user = user
 	command_name = command_name()
-	played_sound = SSstation.announcer.get_rand_report_sound()
 
 /datum/command_report_menu/ui_state(mob/user)
 	return GLOB.admin_state
@@ -62,7 +62,12 @@
 	data["global_command_name"] = command_name()
 	data["command_report_content"] = command_report_content
 	data["announce_contents"] = announce_contents
+	data["played_sound"] = played_sound
+	return data
 
+/datum/command_report_menu/ui_static_data(mob/user)
+	var/list/data = list()
+	data["announcer_sounds"] = list(DEFAULT_ANNOUNCEMENT_SOUND) + GLOB.announcer_keys
 	return data
 
 /datum/command_report_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -77,6 +82,9 @@
 		if("update_report_contents")
 			command_report_content = params["updated_contents"]
 			. = TRUE
+		if("set_report_sound")
+			played_sound = params["picked_sound"]
+			. = TRUE
 		if("toggle_announce")
 			announce_contents = !announce_contents
 			. = TRUE
@@ -87,19 +95,27 @@
 			if(!command_report_content)
 				to_chat(ui_user, "<span class='danger'>You can't send a report with no contents.</span>")
 				return
-
 			send_announcement()
-
+			. = TRUE
 
 	return
 
-
+/// Send the announcement and report with all of our variables.
 /datum/command_report_menu/proc/send_announcement()
+	/// Our current command name to swap back to after sending the report.
+	var/original_command_name = command_name()
+	change_command_name(command_name)
+
+	if(played_sound == DEFAULT_ANNOUNCEMENT_SOUND)
+		played_sound = SSstation.announcer.get_rand_report_sound()
+
 	if(announce_contents)
-		priority_announce(command_report_content, "[command_name] Update", played_sound, has_important_message = TRUE)
+		priority_announce(command_report_content, null, played_sound, has_important_message = TRUE)
 	print_command_report(command_report_content, "[announce_contents ? "Classified " : ""][command_name] Update", !announce_contents)
+
+	change_command_name(original_command_name)
 
 	log_admin("[key_name(ui_user)] has created a command report: [command_report_content], send from [command_name]")
 	message_admins("[key_name_admin(ui_user)] has created a command report from [command_name].")
 
-	ui_close(ui_user)
+#undef DEFAULT_ANNOUNCEMENT_SOUND

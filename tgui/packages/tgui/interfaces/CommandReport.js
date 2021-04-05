@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Input, TextArea, Section, Flex } from '../components';
+import { Box, Button, Dropdown, Flex, Input, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 
 export const CommandReport = (props, context) => {
@@ -9,19 +9,15 @@ export const CommandReport = (props, context) => {
     global_command_name,
     command_report_content,
     announce_contents,
+    played_sound,
+    announcer_sounds = [],
   } = data;
   return (
     <Window
       title="Create Command Report"
       width={325}
-      height={400}>
+      height={450}>
       <Section>
-        <Flex mb={1}>
-          <Box textAlign="center">
-            Input a name for central command.
-            Command's name is currently: {global_command_name}.
-          </Box>
-        </Flex>
         <Flex grow={1}>
           <Input
             value={command_name}
@@ -42,6 +38,18 @@ export const CommandReport = (props, context) => {
             onClick={() => act("update_command_name", {
               updated_name: "The Syndicate"
             })} />
+        </Flex>
+      </Section>
+      <Section>
+        <Flex direction="column" textAlign="center">
+            Set announcement sound:
+            <Dropdown
+              width="100%"
+              displayText={played_sound}
+              options={announcer_sounds}
+              onSelected={value => act('set_report_sound', {
+                picked_sound: value,
+              })} />
         </Flex>
       </Section>
       <Section>
@@ -69,8 +77,7 @@ export const CommandReport = (props, context) => {
             height="20px"
             color="good"
             content="Submit Command Report"
-            onClick={() => act("submit_report")}
-            />
+            onClick={() => act("submit_report")} />
         </Flex>
       </Section>
     </Window>
