@@ -538,12 +538,6 @@ GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
 
-#define TOTAL_MOLES_SPECIFIC(cached_gases, gas_id, out_var)\
-	out_var = 0;\
-	if(cached_gases[gas_id]){\
-		out_var = cached_gases[gas_id][MOLES];\
-	}
-
 #ifdef TESTING
 GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T, state) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = state}

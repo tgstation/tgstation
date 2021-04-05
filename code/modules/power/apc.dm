@@ -401,19 +401,19 @@
 	if((machine_stat & (BROKEN|MAINT)) || update_state)
 		return
 
-	SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, EMISSIVE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, EMISSIVE_PLANE, dir)
+	. += mutable_appearance(icon, "apcox-[locked]", layer, plane)
+	. += mutable_appearance(icon, "apcox-[locked]", layer, EMISSIVE_PLANE)
+	. += mutable_appearance(icon, "apco3-[charging]", layer, plane)
+	. += mutable_appearance(icon, "apco3-[charging]", layer, EMISSIVE_PLANE)
 	if(!operating)
 		return
 
-	SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, EMISSIVE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, EMISSIVE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, EMISSIVE_PLANE, dir)
+	. += mutable_appearance(icon, "apco0-[equipment]", layer, plane)
+	. += mutable_appearance(icon, "apco0-[equipment]", layer, EMISSIVE_PLANE)
+	. += mutable_appearance(icon, "apco1-[lighting]", layer, plane)
+	. += mutable_appearance(icon, "apco1-[lighting]", layer, EMISSIVE_PLANE)
+	. += mutable_appearance(icon, "apco2-[environ]", layer, plane)
+	. += mutable_appearance(icon, "apco2-[environ]", layer, EMISSIVE_PLANE)
 
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()

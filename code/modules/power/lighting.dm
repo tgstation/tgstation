@@ -407,12 +407,12 @@
 
 	var/area/A = get_area(src)
 	if(emergency_mode || (A?.fire))
-		SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
+		. += mutable_appearance(overlayicon, "[base_state]_emergency", layer, plane)
 		return
 	if(nightshift_enabled)
-		SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
+		. += mutable_appearance(overlayicon, "[base_state]_nightshift", layer, plane)
 		return
-	SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
+	. += mutable_appearance(overlayicon, base_state, layer, plane)
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
