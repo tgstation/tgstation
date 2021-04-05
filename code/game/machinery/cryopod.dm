@@ -367,7 +367,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		if(iscyborg(target))
 			to_chat(user, "<span class='danger'>You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] online.</span>")
 		else
-			to_chat(user, "<span class='danger'>You can't put [target] into [src]. [target.p_theyre()] conscious.</span>")
+			to_chat(user, "<span class='danger'>You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] conscious.</span>")
 		return
 	else if(target.client)
 		if(alert(target,"Would you like to enter cryosleep?",,"Yes","No") == "No")
