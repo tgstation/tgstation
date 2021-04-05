@@ -59,6 +59,20 @@
 
 	id_trim = /datum/id_trim/job/captain
 
+/datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	SSmapping.HACK_LoadMapConfig()
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!length(job_changes))
+		return
+	var/list/captain_changes = job_changes["captain"]
+	if(!length(captain_changes))
+		return
+	var/planet_charter = captain_changes["planet_charter"]
+	if(!planet_charter)
+		return
+	backpack_contents = list(/obj/item/melee/classic_baton/telescopic = 1, /obj/item/station_charter/flag = 1)
+
 /datum/outfit/job/captain/hardsuit
 	name = "Captain (Hardsuit)"
 
