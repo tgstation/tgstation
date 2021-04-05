@@ -22490,6 +22490,7 @@
 /obj/structure/destructible{
 	anchored = 1;
 	break_message = "<span class='danger'>The device breaks, unleashing a powerful black hole!</span>";
+	break_sound = 'sound/effects/supermatter.ogg';
 	buckle_lying = 0;
 	buckle_requires_restraints = 1;
 	can_buckle = 1;
