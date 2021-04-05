@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Normal kisses will no longer trigger a shielded hardsuit's shields"
