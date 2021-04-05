@@ -251,7 +251,7 @@
 
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		if(carbon_user.num_hands <= 0)
+		if(carbon_user.usable_hands <= 0)
 			return FALSE
 
 	// In buckling even possible in the first place?
