@@ -654,7 +654,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// eyes
 		if(!(NOEYESPRITES in species_traits))
 			var/obj/item/organ/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
-			var/mutable_appearance/eye_overlay
+			var/mutable_appearance/no_eyeslay
+			var/list/eye_overlays
+			var/obscured = species_human.check_obscured_slots(TRUE) //eyes that shine in the dark shouldn't show when you have glasses
 			var/add_pixel_x = 0
 			var/add_pixel_y = 0
 			//cut any possible vis overlays
@@ -664,20 +666,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				add_pixel_x = species_human.dna.species.offset_features[OFFSET_FACE][1]
 				add_pixel_y = species_human.dna.species.offset_features[OFFSET_FACE][2]
 			if(!eye_organ)
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
-				eye_overlay.pixel_x += add_pixel_x
-				eye_overlay.pixel_y += add_pixel_y
-				standing += eye_overlay
-			if(!eye_overlay) //we are NOT eyeless so we need eyes, basically is what this is saying
-				if(eye_organ.overlay_ignore_lighting)
-					// viscontents overlays to bypass dorkness- icon is over the lighting layer
-					var/obscured = species_human.check_obscured_slots(TRUE) //because of which we cannot apply this icon if we shouldn't see it
-					if(!(obscured & ITEM_SLOT_EYES))
-						body_vis_overlays += SSvis_overlays.add_vis_overlay(species_human, 'icons/mob/human_face.dmi', eye_organ.eye_icon_state, species_human.layer, species_human.plane, eye_organ.dir, 255, NONE, FALSE, add_pixel_x, add_pixel_y)
-						body_vis_overlays += SSvis_overlays.add_vis_overlay(species_human, 'icons/mob/human_face.dmi', eye_organ.eye_icon_state, EMISSIVE_UNBLOCKABLE_LAYER, EMISSIVE_UNBLOCKABLE_PLANE, eye_organ.dir, 255, NONE, FALSE, add_pixel_x, add_pixel_y)
+				no_eyeslay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				no_eyeslay.pixel_x += add_pixel_x
+				no_eyeslay.pixel_y += add_pixel_y
+				standing += no_eyeslay
+			if(!no_eyeslay)//we need eyes
+				if(eye_organ.overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
+					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, layer, plane)
+					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, layer, EMISSIVE_PLANE)
 				else
-					// normal system for eyes
-					eye_overlay = mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
+					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
+				for(var/mutable_appearance/eye_overlay as anything in eye_overlays)
 					eye_overlay.pixel_x += add_pixel_x
 					eye_overlay.pixel_y += add_pixel_y
 					if((EYECOLOR in species_traits) && eye_organ)

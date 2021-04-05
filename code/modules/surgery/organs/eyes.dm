@@ -461,7 +461,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	eye_color = "f00"
 	icon_state = "adapted_eyes"
-	eye_icon_state = "eyes_glow_red"
+	eye_icon_state = "eyes_glow"
 	overlay_ignore_lighting = TRUE
 	var/obj/item/flashlight/eyelight/adapted/adapt_light
 
