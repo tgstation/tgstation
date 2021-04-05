@@ -256,7 +256,7 @@
  * * obj/machinery/atmospherics/target - the machinery we want to connect to
  */
 /obj/machinery/atmospherics/proc/check_connectable_color(obj/machinery/atmospherics/target)
-	if(target.pipe_color == pipe_color || ((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) || target.pipe_color == COLOR_VERY_LIGHT_GRAY || pipe_color == COLOR_VERY_LIGHT_GRAY)
+	if(lowertext(target.pipe_color) == lowertext(pipe_color) || ((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) || lowertext(target.pipe_color) == lowertext(COLOR_VERY_LIGHT_GRAY) || lowertext(pipe_color == COLOR_VERY_LIGHT_GRAY))
 		return TRUE
 	return FALSE
 
@@ -438,9 +438,10 @@
 
 /obj/machinery/atmospherics/proc/pipe_overlay(set_icon, set_state, direction, color = COLOR_VERY_LIGHT_GRAY, piping_layer = 3, set_layer = PIPE_VISIBLE_LEVEL)
 	var/image/pipe_overlay
-	pipe_overlay = . = image(icon = set_icon, icon_state = set_state, layer = set_layer, dir = direction)
+	pipe_overlay = image(icon = set_icon, icon_state = set_state, layer = set_layer, dir = direction)
 	pipe_overlay.color = color
 	PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
+	return pipe_overlay
 
 /obj/machinery/atmospherics/on_construction(obj_color, set_layer)
 	if(can_unwrench)

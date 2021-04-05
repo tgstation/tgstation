@@ -140,7 +140,7 @@ Buildable meters
 		return FALSE
 	return TRUE
 
-/obj/item/pipe/wrench_act(mob/living/user, obj/item/wrench/W)
+/obj/item/pipe/wrench_act(mob/living/user, obj/item/wrench/wrench)
 	. = ..()
 	if(!isturf(loc))
 		return TRUE
@@ -150,41 +150,42 @@ Buildable meters
 	var/obj/machinery/atmospherics/fakeA = pipe_type
 	var/flags = initial(fakeA.pipe_flags)
 	var/pipe_count = 0
-	for(var/obj/machinery/atmospherics/M in loc)
-		if(M.piping_layer != piping_layer)
+	for(var/obj/machinery/atmospherics/machine in loc)
+		if(machine.piping_layer != piping_layer)
 			continue
 		pipe_count += 1
-	for(var/obj/machinery/atmospherics/M in loc)
-		if((M.pipe_flags & flags & PIPING_ONE_PER_TURF)) //Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
+	for(var/obj/machinery/atmospherics/machine in loc)
+		if((machine.pipe_flags & flags & PIPING_ONE_PER_TURF)) //Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
 			to_chat(user, "<span class='warning'>Something is hogging the tile!</span>")
 			return TRUE
 
-		if(pipe_count == 1 && istype(M, /obj/machinery/atmospherics/pipe/smart) && pipe_type == /obj/machinery/atmospherics/pipe/smart && M.pipe_color != pipe_color && M.connection_num < 3)
-			if((M.dir & EAST|WEST || M.dir & SOUTH|NORTH) && !ISDIAGONALDIR(M.dir))
+		if(pipe_count == 1 && istype(machine, /obj/machinery/atmospherics/pipe/smart) && pipe_type == /obj/machinery/atmospherics/pipe/smart && lowertext(machine.pipe_color) != lowertext(pipe_color) && machine.connection_num < 3)
+			var/direction = machine.dir
+			if((direction & EAST|WEST || direction & SOUTH|NORTH) && !ISDIAGONALDIR(direction))
 				pipe_type = /obj/machinery/atmospherics/pipe/bridge_pipe
-				if(EWCOMPONENT(M.dir))
+				if(EWCOMPONENT(direction))
 					dir = NORTH
-				if(NSCOMPONENT(M.dir))
+				if(NSCOMPONENT(direction))
 					dir = EAST
 				continue
 
-		if(flags & PIPING_BRIDGE && !(M.pipe_flags & PIPING_BRIDGE) && check_ninety_degree_dir(M)) //continue if we are placing a bridge pipe over a normal pipe only (prevent duplicates)
+		if(flags & PIPING_BRIDGE && !(machine.pipe_flags & PIPING_BRIDGE) && check_ninety_degree_dir(machine)) //continue if we are placing a bridge pipe over a normal pipe only (prevent duplicates)
 			continue
 
-		if((M.piping_layer != piping_layer) && !((M.pipe_flags | flags) & PIPING_ALL_LAYER)) //don't continue if either pipe goes across all layers
+		if((machine.piping_layer != piping_layer) && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER)) //don't continue if either pipe goes across all layers
 			continue
 
-		if(M.GetInitDirections() & SSair.get_init_dirs(pipe_type, fixed_dir())) // matches at least one direction on either type of pipe
+		if(machine.GetInitDirections() & SSair.get_init_dirs(pipe_type, fixed_dir())) // matches at least one direction on either type of pipe
 			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
 			return TRUE
 	// no conflicts found
 
-	var/obj/machinery/atmospherics/A = new pipe_type(loc)
-	build_pipe(A)
-	A.on_construction(pipe_color, piping_layer)
-	transfer_fingerprints_to(A)
+	var/obj/machinery/atmospherics/built_machine = new pipe_type(loc)
+	build_pipe(built_machine)
+	built_machine.on_construction(pipe_color, piping_layer)
+	transfer_fingerprints_to(built_machine)
 
-	W.play_tool_sound(src)
+	wrench.play_tool_sound(src)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \

@@ -1,17 +1,17 @@
 ///All colors available to pipes and atmos components
 GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
-	"amethyst" = COLOR_AMETHYST, //supplymain
+	"grey" = COLOR_VERY_LIGHT_GRAY,
 	"blue" = COLOR_BLUE,
-	"brown" = COLOR_BROWN,
+	"red" = COLOR_RED,
+	"green" = COLOR_VIBRANT_LIME,
+	"orange" = COLOR_TAN_ORANGE,
 	"cyan" = COLOR_CYAN,
 	"dark" = COLOR_DARK,
-	"green" = COLOR_VIBRANT_LIME,
-	"grey" = COLOR_VERY_LIGHT_GRAY,
-	"orange" = COLOR_TAN_ORANGE,
+	"yellow" = COLOR_YELLOW,
+	"brown" = COLOR_BROWN,
+	"pink" = COLOR_LIGHT_PINK,
 	"purple" = COLOR_PURPLE,
-	"red" = COLOR_RED,
-	"violet" = COLOR_STRONG_VIOLET,
-	"yellow" = COLOR_YELLOW
+	"violet" = COLOR_STRONG_VIOLET
 )))
 
 ///List that sorts the colors and is used for setting up the pipes layer so that they overlap correctly

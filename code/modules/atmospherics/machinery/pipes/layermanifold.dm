@@ -53,6 +53,8 @@
 	if(!A)
 		return
 
+	. = list()
+
 	if(istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
 		for(var/i in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
 			. += get_attached_image(get_dir(src, A), i, COLOR_VERY_LIGHT_GRAY)
