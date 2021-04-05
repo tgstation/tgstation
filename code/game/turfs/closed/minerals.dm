@@ -180,11 +180,11 @@
 		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40, /obj/item/stack/ore/titanium = 11,
 		/turf/closed/mineral/gibtonite = 4, /obj/item/stack/ore/bluespace_crystal = 1)
 		//Currently, Adamantine won't spawn as it has no uses. -Durandan
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-		mineralSpawnChanceList[/obj/item/stack/ore/bananium] = 3
 	var/mineralChance = 13
 
 /turf/closed/mineral/random/Initialize()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		mineralSpawnChanceList[/obj/item/stack/ore/bananium] = 3
 
 	mineralSpawnChanceList = typelist("mineralSpawnChanceList", mineralSpawnChanceList)
 
