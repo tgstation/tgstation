@@ -32,6 +32,9 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
+		if(suiciding)
+			to_chat(src, "<span class='warning'>You're already trying to commit suicide!</span>")
+			return
 		set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)

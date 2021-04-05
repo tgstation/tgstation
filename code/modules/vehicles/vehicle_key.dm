@@ -57,8 +57,6 @@
 
 /obj/item/key/proc/manual_suicide(mob/living/user)
 	if(user)
-		if(!user.suiciding)
-			user.suiciding = TRUE
 		user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 		user.visible_message("<span class='suicide'>[user] forgot [user.p_they()] isn't actually a janicart! That's a paddlin'!</span>")
 		if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_LEGENDARY) //Janny janny janny janny janny
