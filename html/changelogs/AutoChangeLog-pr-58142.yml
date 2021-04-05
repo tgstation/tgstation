@@ -1,4 +1,0 @@
-author: "Swept"
-delete-after: True
-changes: 
-  - bugfix: "stray pixel on vanilla cake slice"
