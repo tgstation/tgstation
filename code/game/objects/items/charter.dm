@@ -146,7 +146,6 @@
 	. = ..()
 
 /obj/item/station_charter/revolution/rename_station(designation, uname, ureal_name, ukey)
-	. = ..()
 	set_station_name(designation)
 	minor_announce("Head Revolutionary [ureal_name] has declared the station's new name as [station_name()]!", "Revolution Banner", 0)
 	log_game("[ukey] has renamed the station as [station_name()].")
