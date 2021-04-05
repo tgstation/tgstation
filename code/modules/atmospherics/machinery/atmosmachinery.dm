@@ -315,7 +315,6 @@
 		P.destroy_network()
 	nodes[nodes.Find(reference)] = null
 	update_appearance()
-	reference.update_appearance()
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pipe)) //lets you autodrop
@@ -436,6 +435,7 @@
 		if(trinary == TRUE && (piping_layer == 1 || piping_layer == 5))
 			PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
 
+///Similar to getpipeimage(); will create an image from the set_icon and set_state; mostly used to create overlays for connections.
 /obj/machinery/atmospherics/proc/pipe_overlay(set_icon, set_state, direction, color = COLOR_VERY_LIGHT_GRAY, piping_layer = 3, set_layer = PIPE_VISIBLE_LEVEL)
 	var/image/pipe_overlay
 	pipe_overlay = image(icon = set_icon, icon_state = set_state, layer = set_layer, dir = direction)

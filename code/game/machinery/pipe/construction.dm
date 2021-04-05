@@ -131,6 +131,7 @@ Buildable meters
 /obj/item/pipe/attack_self(mob/user)
 	setDir(turn(dir,-90))
 
+///Check if the pipe on the turf and our to be placed binary pipe are perpendicular to each other
 /obj/item/pipe/proc/check_ninety_degree_dir(obj/machinery/atmospherics/machine)
 	if(ISDIAGONALDIR(machine.dir))
 		return FALSE
