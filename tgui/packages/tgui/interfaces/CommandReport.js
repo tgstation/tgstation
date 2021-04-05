@@ -54,7 +54,6 @@ export const CommandReport = (props, context) => {
           <Stack.Item grow={1}>
             <Section title="Set report text:" textAlign="center">
               <TextArea
-                width="100%"
                 height="200px"
                 value={command_report_content}
                 onChange={(e, value) => act("update_report_contents", {
@@ -64,7 +63,6 @@ export const CommandReport = (props, context) => {
                 <Stack.Item>
                   <Button.Checkbox
                     fluid
-                    height="20px"
                     checked={announce_contents}
                     onClick={() => act("toggle_announce")}>
                     Announce Contents
@@ -74,7 +72,6 @@ export const CommandReport = (props, context) => {
                   <Button.Confirm
                     fluid
                     icon="check"
-                    height="20px"
                     color="good"
                     textAlign="center"
                     content="Submit Report"
