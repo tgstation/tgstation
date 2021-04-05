@@ -5,8 +5,8 @@
  */
 
 /**
- * This is the proc you use whenever you want to have pathfinding more complex than "try stepping towards the thing"
- * If no path was found, returns an empty list, which is important for bots like medibots who expect an empty list rather than nothing
+ * This is the proc you use whenever you want to have pathfinding more complex than "try stepping towards the thing".
+ * If no path was found, returns an empty list, which is important for bots like medibots who expect an empty list rather than nothing.
  *
  * Arguments:
  * * caller: The movable atom that's trying to find the path
