@@ -53,7 +53,7 @@
 
 /datum/component/shielded/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_dropped)
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/lost_wearer)
 	RegisterSignal(parent, COMSIG_ITEM_HIT_REACT, .proc/on_hit_react)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/check_recharge_rune)
 
@@ -76,35 +76,26 @@
 	current_charges++
 	if(wearer && current_charges == 1)
 		wearer.update_appearance(UPDATE_ICON)
-	playsound(item_parent.loc, 'sound/magic/charge.ogg', 50, TRUE)
+	playsound(item_parent, 'sound/magic/charge.ogg', 50, TRUE)
 	if(current_charges == max_charges)
-		playsound(item_parent.loc, 'sound/machines/ding.ogg', 50, TRUE)
+		playsound(item_parent, 'sound/machines/ding.ogg', 50, TRUE)
 
 /// Check if we've been equipped to a valid slot to shield
 /datum/component/shielded/proc/on_equipped(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
 	if(slot == ITEM_SLOT_HANDS && !shield_inhand)
-		on_dropped(source, user)
+		lost_wearer(source, user)
 		return
 
 	wearer = user
 	RegisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
-	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, .proc/on_wearer_qdel)
+	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, .proc/lost_wearer)
 	if(current_charges)
 		wearer.update_appearance(UPDATE_ICON)
 
-/// When dropped, forget about whoever we were worn by
-/datum/component/shielded/proc/on_dropped(datum/source, mob/user)
-	SIGNAL_HANDLER
-
-	if(wearer)
-		UnregisterSignal(wearer, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_PARENT_QDELETING))
-		wearer.update_appearance(UPDATE_ICON)
-		wearer = null
-
-/// Panic button if the wearer is qdel'd
-/datum/component/shielded/proc/on_wearer_qdel(datum/source)
+/// Either we've been dropped or our wearer has been QDEL'd. Either way, they're no longer our problem
+/datum/component/shielded/proc/lost_wearer(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	if(wearer)
@@ -116,7 +107,7 @@
 /datum/component/shielded/proc/on_update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	overlays += mutable_appearance(shield_icon_file, (current_charges > 0 ? shield_icon : "broken"), MOB_LAYER + 0.01)
+	overlays += mutable_appearance(shield_icon_file, (current_charges > 0 ? shield_icon : "broken"), MOB_SHIELD_LAYER)
 
 /**
  * This proc fires when we're hit, and is responsible for checking if we're charged, then deducting one + returning that we're blocking if so.
@@ -149,9 +140,7 @@
 
 /// Default on_hit proc, since cult robes are stupid and have different descriptions/sparks
 /datum/component/shielded/proc/default_run_hit_callback(mob/living/owner, attack_text, current_charges)
-	var/datum/effect_system/spark_spread/s = new
-	s.set_up(2, 1, owner)
-	s.start()
+	do_sparks(2, TRUE, owner)
 	owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!<span>")
 	if(current_charges <= 0)
 		owner.visible_message("<span class='warning'>[owner]'s shield overloads!</span>")
