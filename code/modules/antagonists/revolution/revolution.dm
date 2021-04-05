@@ -396,8 +396,12 @@
 		for (var/_rev_head_mind in ex_revs)
 			var/datum/mind/rev_head_mind = _rev_head_mind
 			var/mob/living/carbon/rev_head_body = rev_head_mind.current
-			if(istype(rev_head_body) && rev_head_body.stat == DEAD)
+			if(!istype(rev_head_body))
+				continue
+			if(rev_head_body.stat == DEAD)
 				rev_head_body.makeUncloneable()
+			else
+				rev_head_mind.add_antag_datum(/datum/antagonist/enemy_of_the_state)
 
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
