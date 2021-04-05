@@ -89,6 +89,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			if(!allowed(user))
 				to_chat(user, "<span class='warning'>Access Denied.</span>")
 				return
+
 			if(!allow_items) return
 
 			if(!params["item"])
@@ -107,6 +108,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			if(!allowed(user))
 				to_chat(user, "<span class='warning'>Access Denied.</span>")
 				return
+
 			if(!allow_items) return
 
 			visible_message("<span class='notice'>[src] beeps happily as it disgorges the desired objects.</span>")
@@ -132,6 +134,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	// 3 minutes-ish safe period before being despawned.
 	var/time_till_despawn = 3 MINUTES // This is reduced to 30 seconds if a player manually enters cryo
+	var/fast_despawn = 30 SECONDS
 	var/despawn_world_time = null // Used to keep track of the safe period.
 
 	var/obj/machinery/computer/cryopod/control_computer
@@ -204,7 +207,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(occupant, "<span class='boldnotice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
 		if(mob_occupant.client || !mob_occupant.key) // Self cryos and SSD
-			despawn_world_time = world.time + (time_till_despawn * 0.1) // This gives them 30 seconds
+			despawn_world_time = world.time + (fast_despawn) // This gives them 30 seconds
 		else
 			despawn_world_time = world.time + time_till_despawn
 	icon_state = "cryopod"
@@ -304,16 +307,16 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		crew_member["job"] = "N/A"
 	// Delete them from datacore.
 	var/announce_rank = null
-	for(var/datum/data/record/med_record in GLOB.data_core.medical)
-		if(med_record.fields["name"] == mob_occupant.real_name)
-			qdel(med_record)
-	for(var/datum/data/record/sec_record in GLOB.data_core.security)
-		if(sec_record.fields["name"] == mob_occupant.real_name)
-			qdel(sec_record)
-	for(var/datum/data/record/gen_record in GLOB.data_core.general)
-		if(gen_record.fields["name"] == mob_occupant.real_name)
-			announce_rank = gen_record.fields["rank"]
-			qdel(gen_record)
+	for(var/datum/data/record/medical_record in GLOB.data_core.medical)
+		if(medical_record.fields["name"] == mob_occupant.real_name)
+			qdel(medical_record)
+	for(var/datum/data/record/security_record in GLOB.data_core.security)
+		if(security_record.fields["name"] == mob_occupant.real_name)
+			qdel(security_record)
+	for(var/datum/data/record/general_record in GLOB.data_core.general)
+		if(general_record.fields["name"] == mob_occupant.real_name)
+			announce_rank = general_record.fields["rank"]
+			qdel(general_record)
 
 	control_computer?.frozen_crew += list(crew_member)
 
@@ -324,20 +327,19 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		visible_message("<span class='notice'>[src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
 
 
-	for(var/obj/item/items in mob_occupant.GetAllContents())
-		if(items.loc.loc && (items.loc.loc == loc || items.loc.loc == control_computer))
+	for(var/obj/item/item in mob_occupant.GetAllContents())
+		if(item.loc.loc && (item.loc.loc == loc || item.loc.loc == control_computer))
 			continue // means we already moved whatever this thing was in
 			// I'm a professional, okay
 		for(var/preserved in preserve_items)
-			if(istype(items, preserved))
+			if(istype(item, preserved))
 				if(control_computer && control_computer.allow_items)
-					control_computer.frozen_items += items
-					mob_occupant.transferItemToLoc(items, control_computer, TRUE)
+					control_computer.frozen_items += item
+					mob_occupant.transferItemToLoc(item, control_computer, TRUE)
 				else
-					mob_occupant.transferItemToLoc(items, loc, TRUE)
+					mob_occupant.transferItemToLoc(item, loc, TRUE)
 
-	var/list/contents = list()
-	contents = mob_occupant.GetAllContents()
+	var/list/contents = mob_occupant.GetAllContents()
 	QDEL_LIST(contents)
 
 	// Ghost and delete the mob.
@@ -352,7 +354,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	name = initial(name)
 
 /obj/machinery/cryopod/MouseDrop_T(mob/living/target, mob/user)
-	if(!istype(target) || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || !ismob(target) || isanimal(target) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
+	if(!istype(target) || !can_interact(user) || !target.Adjacent(user) || !ismob(target) || isanimal(target) || !istype(user.loc, /turf) || target.buckled)
 		return
 
 	if(occupant)
@@ -378,7 +380,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	if(target == user && COOLDOWN_FINISHED(target.client, cryo_warned))
 		var/caught = FALSE
 		var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
-		if(target.mind.assigned_role in GLOB.command_positions)
+		var/datum/job/target_job = SSjob.GetJob(target.mind.assigned_role)
+		if(target_job.req_admin_notify)
 			alert("You're a Head of Staff![generic_plsnoleave_message]")
 			caught = TRUE
 		if(antag)
@@ -388,7 +391,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			COOLDOWN_START(target.client, cryo_warned, 5 MINUTES)
 			return
 
-	if(!target || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || isanimal(target) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
+	if(!istype(target) || !can_interact(user) || !target.Adjacent(user) || !ismob(target) || isanimal(target) || !istype(user.loc, /turf) || target.buckled)
 		return
 		// rerun the checks in case of shenanigans
 
@@ -404,8 +407,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	to_chat(target, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")
 	name = "[name] ([occupant.name])"
-	log_admin("<span class='notice'>[key_name(target)] entered a stasis pod.</span>")
-	message_admins("[key_name_admin(target)] entered a stasis pod. (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+	log_admin("[key_name(target)] entered a stasis pod.")
+	message_admins("[key_name_admin(target)] entered a stasis pod. [ADMIN_JMP(src)]")
 	add_fingerprint(target)
 
 // Attacks/effects.
