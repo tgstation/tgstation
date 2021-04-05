@@ -20,3 +20,10 @@
 	head = /obj/item/clothing/head/beret/black/skeledoom/cryo
 	belt = /obj/item/storage/belt/bee_hunter/full/cryo
 	shoes = /obj/item/clothing/shoes/winterboots/ice_boots
+
+/datum/outfit/superhero/villain/skeledoom/space
+	name = "SkeleDoom (Operation Spacebird)"
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi/skeledoom
+	head = null
+	suit_store = /obj/item/tank/internals/oxygen
+	internals_slot = ITEM_SLOT_SUITSTORE

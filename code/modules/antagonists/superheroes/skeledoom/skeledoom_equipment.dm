@@ -40,6 +40,33 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
+//Hardsuit
+
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/skeledoom
+	name = "skeleton hardsuit helmet"
+	desc = "A dual-mode advanced helmet with a skeleton print. It is in travel mode."
+	alt_desc = "A dual-mode advanced helmet with a skeleton print. It is in combat mode."
+	icon_state = "hardsuit1-skeleton"
+	inhand_icon_state = "s_helmet"
+	hardsuit_type = "skeleton"
+	visor_flags_inv = 0
+	visor_flags = 0
+	on = FALSE
+
+	armor = list(MELEE = 40, BULLET = 45, LASER = 25, ENERGY = 25, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+
+/obj/item/clothing/suit/space/hardsuit/syndi/skeledoom
+	name = "skeleton hardsuit"
+	desc = "A dual-mode advanced  hardsuit with a skeleton print. It is in travel mode."
+	alt_desc = "A dual-mode advanced hardsuit with a skeleton print. It is in combat mode."
+	icon_state = "hardsuit1-skeleton"
+	inhand_icon_state = "s_suit"
+	hardsuit_type = "skeleton"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/skeledoom
+
+	armor = list(MELEE = 40, BULLET = 45, LASER = 25, ENERGY = 25, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+
+
 /obj/item/gun/ballistic/automatic/sniper_rifle/skeledoom
 	name = "modified sniper rifle"
 	desc = "A modified .50 sniper rifle with a dna-locked pin and a suppressor. It has \"This is my gun, fuck off.\" written on the grip."
