@@ -305,7 +305,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	// Delete them from datacore.
 	var/announce_rank = null
 	for(var/datum/data/record/med_record in GLOB.data_core.medical)
-		if((med_record.fields["name"] == mob_occupant.real_name))
+		if(med_record.fields["name"] == mob_occupant.real_name)
 			qdel(med_record)
 	for(var/datum/data/record/sec_record in GLOB.data_core.security)
 		if((sec_record.fields["name"] == mob_occupant.real_name))
