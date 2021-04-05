@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 
 	for(var/obj/item/items in mob_occupant.GetAllContents())
-		if(items.loc.loc && (( items.loc.loc == loc ) || (items.loc.loc == control_computer)))
+		if(items.loc.loc && (items.loc.loc == loc || items.loc.loc == control_computer))
 			continue // means we already moved whatever this thing was in
 			// I'm a professional, okay
 		for(var/preserved in preserve_items)
