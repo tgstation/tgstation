@@ -382,7 +382,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			alert("You're a Head of Staff![generic_plsnoleave_message]")
 			caught = TRUE
 		if(antag)
-			alert("You're a [antag.name]![generic_plsnoleave_message]")
+			alert("You're \a [antag.name]![generic_plsnoleave_message]")
 			caught = TRUE
 		if(caught)
 			COOLDOWN_START(target.client, cryo_warned, 5 MINUTES)
