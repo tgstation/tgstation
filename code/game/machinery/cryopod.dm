@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 			var/obj/item/item = frozen_items[text2num(params["item"])]
 			if(!item)
-				to_chat(user, "<span class='notice'>\The [item] is no longer in storage.</span>")
+				to_chat(user, "<span class='notice'>[item] is no longer in storage.</span>")
 				return
 
 			visible_message("<span class='notice'>[src] beeps happily as it disgorges [item].</span>")
