@@ -72,7 +72,6 @@
 	icon_state = "rainbow"
 	inhand_icon_state = "rainbowgloves"
 	transfer_prints = TRUE
-	var/bought_in_uplink = FALSE
 
 /obj/item/clothing/gloves/love/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -80,7 +79,6 @@
 	obj_flags |= EMAGGED
 	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	to_chat(user, "<span class='notice'>You overload [src]\'s nanochips.</span>")
-
 
 /obj/item/clothing/gloves/love/Touch(atom/A, proximity, mouseparams)
 	. = ..()
