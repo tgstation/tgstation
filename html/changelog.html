@@ -51,6 +51,45 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">06 April 2021</h2>
+			<h3 class="author">ATHATH updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Clicking on a table with a fireman carried person while not in combat mode will no longer cause you to attempt to hurt them.</li>
+				<li class="refactor">Attempting to right click with an empty hand on someone who is either restrained or both unarmed and not in combat mode while you are targeting the mouth zone will no longer result in you slapping them in the face instead of shoving them.</li>
+				<li class="refactor">Using the dedicated slapper item (from the *slap emote) on someone while you are targeting either the mouth zone or the head zone will now result in you slapping them in the face instead of just generically slapping them.</li>
+			</ul>
+			<h3 class="author">ArcaneDefence updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Chefs can now cook moffins! Yaaay moffins! Check the pastries subsection of the crafting menu to make some! Cutting up gauze and bedsheets can get you started!</li>
+			</ul>
+			<h3 class="author">BootlegBow updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">gives tram a chef produce console</li>
+			</ul>
+			<h3 class="author">Ryll/Shaps updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Normal kisses will no longer trigger a shielded hardsuit's shields</li>
+				<li class="bugfix">Stop me if you've heard this one before: Simple bots should no longer randomly fail to respond to summons even when a path is available</li>
+				<li class="rscadd">Stripping/equipping things to a conscious braindead person (AKA a human owned by a disconnected player) will now give them a message with your visible name and roughly how long ago you touched their stuff when they login again. Touching someone's pockets or adjusting their gear other than equipping/unequipping is not logged. After 5 minutes, you'll have forgotten both their name and exactly how long ago past those 5 minutes it happened.</li>
+			</ul>
+			<h3 class="author">SweptWasTaken updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Better bucket inhand</li>
+				<li class="imageadd">Omega soap inhand</li>
+			</ul>
+			<h3 class="author">TheVekter updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">Added proper logging for Holodeck misuse</li>
+			</ul>
+			<h3 class="author">vincentiusvin updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Crowbarring a firelock is changed a bit. Left clicking will let you open a firedoor and hold it in place! It will close again when you move away, though. Old behaviour is still there, you just need to right-click it.</li>
+			</ul>
+			<h3 class="author">willox updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Stat panel no longer captures input (potentially causing keys to get stuck down)</li>
+			</ul>
+
 			<h2 class="date">05 April 2021</h2>
 			<h3 class="author">Ghilker updated:</h3>
 			<ul class="changes bgimages16">
@@ -3284,70 +3323,6 @@
 				<li class="bugfix">is_blocked_turf no longer fails to do anything</li>
 				<li class="bugfix">admin spawned holy nades work</li>
 				<li class="bugfix">holy explosion is more efficient at doing whats supposed to do</li>
-			</ul>
-
-			<h2 class="date">02 February 2021</h2>
-			<h3 class="author">AdipemDragon updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">Cooks have become better at baking breads.</li>
-				<li class="bugfix">Spiderbread slice is now visually distinct from the Xenobread one.</li>
-			</ul>
-			<h3 class="author">ArcaneDefence updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Plasmemes and ethereals will no longer have their head or torso disappear after being augmented with a robotic replacement.</li>
-			</ul>
-			<h3 class="author">Fikou updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">handfeeding dead simplemobs no longer runtimes</li>
-			</ul>
-			<h3 class="author">Gamer025 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Wendigo will no longer runtimes when screaming</li>
-				<li class="bugfix">Wendigo will no longer runtime when it tries to teleport but has no location to teleport to</li>
-			</ul>
-			<h3 class="author">Kylerace updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">holodeck doesnt absentmindedly forget to clear previous programs anymore when hit with the free lag hammer</li>
-			</ul>
-			<h3 class="author">MTandi updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Nanite programs based on triggers don't ignore rules now</li>
-				<li class="rscadd">Added a button to select how multiple rules applied in a single Nanite program (AND, OR logic)</li>
-			</ul>
-			<h3 class="author">Nari Harimoto updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixed thermomachines still working even without power, apc off, in space etc...</li>
-				<li class="bugfix">fixed the rod duplication bug using reinforced floors and disposals. disposal ejections now properly break floor reinforcement, dropping you just 1 rod.</li>
-			</ul>
-			<h3 class="author">Son-of-Space updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The Pubbystation Monastery is now available as an emergency shuttle.</li>
-			</ul>
-			<h3 class="author">Tlaltecuhtli updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">when u choose a sac target as heretic it ll also tell the job of the sac</li>
-			</ul>
-			<h3 class="author">Useroth updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">scaling coefficients for security and antagonists in the game_options.txt will now respect being disabled by being set to 0, instead of having 1 as their minimal possible value</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">The chef's CQC (close quarters cooking) ability is now imparted by a skillchip in their brain, similar to Station Engineer's skillchip for wire colours.</li>
-			</ul>
-			<h3 class="author">esainane updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Space Heaters can now heat or cool to their full stated ranges, rather than being clamped to a minimum of 2.7°C.</li>
-				<li class="bugfix">Research points produced by BZ formation are now properly rate limited to a sane level.</li>
-			</ul>
-			<h3 class="author">necromanceranne updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes a runtime with crates climbable element.</li>
-			</ul>
-			<h3 class="author">vincentiusvin updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">tritium and h2 now uses burned_fuel for o2 consumption.</li>
-				<li class="code_imp">moved the burned_fuel amount around so its tidier.</li>
 			</ul>
 		</div>
 
