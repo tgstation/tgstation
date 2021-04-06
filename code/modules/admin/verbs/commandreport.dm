@@ -96,16 +96,12 @@
 				custom_name = FALSE
 
 			command_name = params["updated_name"]
-			. = TRUE
 		if("update_report_contents")
 			command_report_content = params["updated_contents"]
-			. = TRUE
 		if("set_report_sound")
 			played_sound = params["picked_sound"]
-			. = TRUE
 		if("toggle_announce")
 			announce_contents = !announce_contents
-			. = TRUE
 		if("submit_report")
 			if(!command_name)
 				to_chat(ui_user, "<span class='danger'>You can't send a report with no command name.</span>")
@@ -114,9 +110,8 @@
 				to_chat(ui_user, "<span class='danger'>You can't send a report with no contents.</span>")
 				return
 			send_announcement()
-			. = TRUE
 
-	return
+	return TRUE
 
 /*
  * The actual proc that sends the priority announcement and reports

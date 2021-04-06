@@ -17,7 +17,7 @@ export const CommandReport = (props, context) => {
     <Window
       title="Create Command Report"
       width={325}
-      height={500}>
+      height={525}>
       <Window.Content>
         <Stack vertical={1}>
           <Stack.Item>
@@ -60,7 +60,7 @@ export const CommandReport = (props, context) => {
                 onChange={(e, value) => act("update_report_contents", {
                   updated_contents: value,
                 })} />
-              <Stack>
+              <Stack vertical={1}>
                 <Stack.Item>
                   <Button.Checkbox
                     fluid
