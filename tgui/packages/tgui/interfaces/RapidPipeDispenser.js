@@ -20,21 +20,6 @@ const ICON_BY_CATEGORY_NAME = {
   'Station Equipment': 'microchip',
 };
 
-const PAINT_COLORS = {
-  grey: '#bbbbbb',
-  amethyst: '#a365ff',
-  blue: '#4466ff',
-  brown: '#b26438',
-  cyan: '#48eae8',
-  dark: '#808080',
-  green: '#1edd00',
-  orange: '#ffa030',
-  purple: '#b535ea',
-  red: '#ff3333',
-  violet: '#6e00f6',
-  yellow: '#ffce26',
-};
-
 const TOOLS = [
   {
     name: 'Dispense',
@@ -47,10 +32,6 @@ const TOOLS = [
   {
     name: 'Destroy',
     bitmask: 4,
-  },
-  {
-    name: 'Paint',
-    bitmask: 8,
   },
 ];
 
@@ -106,15 +87,15 @@ export const RapidPipeDispenser = (props, context) => {
               <Box
                 inline
                 width="64px"
-                color={PAINT_COLORS[selected_color]}>
+                color={data.paint_colors[selected_color]}>
                 {selected_color}
               </Box>
-              {Object.keys(PAINT_COLORS)
+              {Object.keys(data.paint_colors)
                 .map(colorName => (
                   <ColorBox
                     key={colorName}
                     ml={1}
-                    color={PAINT_COLORS[colorName]}
+                    color={data.paint_colors[colorName]}
                     onClick={() => act('color', {
                       paint_color: colorName,
                     })} />
