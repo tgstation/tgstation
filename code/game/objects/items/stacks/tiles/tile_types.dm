@@ -132,6 +132,24 @@
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/wood
 
+/obj/item/stack/tile/wood/wood_large
+	name = "large wooden plank floor tile"
+	singular_name = "large wooden plank floor tile"
+	icon_state = "tile-wood_large"
+	turf_type = /turf/open/floor/wood/wood_large
+
+/obj/item/stack/tile/wood/wood_tiled
+	name = "tiled wooden plank floor tile"
+	singular_name = "tiled wooden plank floor tile"
+	icon_state = "tile-wood_tile"
+	turf_type = /turf/open/floor/wood/wood_tiled
+
+/obj/item/stack/tile/wood/wood_diagonal
+	name = "diagonal wooden plank floor tile"
+	singular_name = "diagonal wooden plank floor tile"
+	icon_state = "tile-wood_diagonal"
+	turf_type = /turf/open/floor/wood/wood_diagonal
+
 //Basalt
 /obj/item/stack/tile/basalt
 	name = "basalt tile"
@@ -285,6 +303,15 @@
 
 /obj/item/stack/tile/carpet/donk/thirty
 	amount = 30
+
+/obj/item/stack/tile/carpet/arcade/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/arcade/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/arcade/fifty
+	amount = 50
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
@@ -450,3 +477,9 @@
 	turf_type = /turf/open/floor/bronze
 	mats_per_unit = list(/datum/material/bronze=500)
 	merge_type = /obj/item/stack/tile/bronze
+
+/obj/item/stack/tile/carpet/arcade
+	name = "arcade carpet"
+	icon_state = "tile-carpet-arcade"
+	turf_type = /turf/open/floor/carpet/arcade
+	tableVariant = null

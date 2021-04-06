@@ -1571,6 +1571,13 @@
 					/obj/item/stack/tile/carpet/royalblack/fifty)
 	crate_name = "exotic carpet crate"
 
+/datum/supply_pack/service/carpet/arcade
+	name = "Arcade Carpet Single-Pack"
+	desc = "Fifty retro-looking arcade carpets. Perfect for your gaming room."
+	cost = CARGO_CRATE_VALUE
+	contains = list(/obj/item/stack/tile/carpet/arcade/fifty)
+	crate_name = "arcade carpet crate"
+
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
 	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs."

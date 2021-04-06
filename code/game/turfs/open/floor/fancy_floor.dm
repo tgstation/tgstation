@@ -68,6 +68,24 @@
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/wood/wood_large
+	desc = "Stylish dark wood."
+	icon_state = "large_wood"
+	floor_tile = /obj/item/stack/tile/wood/wood_large
+	broken_states = list("large_wood-broken", "large_wood-broken2", "large_wood-broken3")
+
+/turf/open/floor/wood/wood_tiled
+	desc = "Stylish dark wood."
+	icon_state = "wood_tile"
+	floor_tile = /obj/item/stack/tile/wood/wood_tiled
+	broken_states = list("wood_tile-broken", "wood_tile-broken2", "wood_tile-broken3")
+
+/turf/open/floor/wood/wood_diagonal
+	desc = "Stylish dark wood."
+	icon_state = "diagonal_wood"
+	floor_tile = /obj/item/stack/tile/wood/wood_diagonal
+	broken_states = list("diagonal_wood-broken", "diagonal_wood-broken2", "diagonal_wood-broken3")
+
 /turf/open/floor/grass
 	name = "grass patch"
 	desc = "You can't tell if this is real grass or just cheap plastic imitation."
@@ -414,3 +432,11 @@
 	underlay_appearance.icon_state = SPACE_ICON_STATE
 	underlay_appearance.plane = PLANE_SPACE
 	return TRUE
+
+/turf/open/floor/carpet/arcade
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "arcade"
+	floor_tile = /obj/item/stack/tile/carpet/arcade
+	smoothing_flags = null
+	smoothing_groups = list()
+	canSmoothWith = list()
