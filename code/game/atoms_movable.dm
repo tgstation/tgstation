@@ -399,8 +399,8 @@
 		if(i == src) // Multi tile objects
 			continue
 		var/atom/movable/thing = i
-		SEND_SIGNAL(thing, COMSIG_MOVABLE_CROSSED, src, null)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED_OVER, thing, null)
+		SEND_SIGNAL(thing, COMSIG_MOVABLE_CROSSED, src)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED_OVER, thing)
 
 ////////////////////////////////////////
 
@@ -527,10 +527,7 @@
 
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
 /atom/movable/Crossed(atom/movable/AM, oldloc)
-	SHOULD_CALL_PARENT(TRUE)
-	. = ..()
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
-	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, src)
+	CRASH("atom/movable/Crossed() was called!")
 
 /**
  * `Uncross()` is a default BYOND proc that is called when something is *going*
@@ -651,7 +648,6 @@
 			for(var/atom/movable/AM in destination)
 				if(AM == src)
 					continue
-				//AM.Crossed(src, oldloc)
 				SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED, src, oldloc)
 				SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED_OVER, AM, oldloc)
 
