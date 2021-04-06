@@ -1,0 +1,5 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Suicidal ethereals are less likely to fail to kill themselves from unexpected revivals trapping them"
+  - rscdel: "You can no longer attempt to commit suicide multiple times at once."
