@@ -156,7 +156,10 @@
 /area/maintenance/disposal/incinerator)
 "aaX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/atmos_control/incinerator,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/computer/atmos_control/incinerator{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "aaZ" = (
@@ -51991,6 +51994,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
+/obj/structure/closet/radiation,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "oed" = (
@@ -52035,6 +52039,7 @@
 "oeB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/layer_manifold/general,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "oeE" = (
@@ -121535,7 +121540,7 @@ bYr
 muv
 nuA
 mKO
-aeD
+aaX
 aeD
 apX
 amV
@@ -121791,7 +121796,7 @@ qUk
 apc
 qYi
 nuA
-aaX
+xOg
 adk
 afQ
 afQ
