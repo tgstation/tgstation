@@ -67,10 +67,19 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
-		for(var/turf/shuttle_turf as anything in shuttle_area)
+		to_chat(world, "ITERATION LEVEL: AREAS")
+		to_chat(world, shuttle_area.name)
+		for(var/turf/shuttle_turf in shuttle_area)
+			to_chat(world, "ITERATION LEVEL: TURFS")
+			to_chat(world, shuttle_turf.x + shuttle_turf.y)
 			for(var/atom/passenger in shuttle_turf.GetAllContents())
+				to_chat(world, "ITERATION LEVEL: PASSENGERS")
+				to_chat(world, passenger.name)
 				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
+					to_chat(world, "ILLEGAL CARGO: " + passenger.name)
+					to_chat(world, "SHIPMENT REJECTED BY ORDER OF check_blacklist()")
 					return FALSE
+	to_chat(world, "SHIPMENT APPROVED BY ORDER OF check_blacklist()")
 	return TRUE
 
 /obj/docking_port/mobile/supply/request(obj/docking_port/stationary/S)
