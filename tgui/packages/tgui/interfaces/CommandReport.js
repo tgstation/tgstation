@@ -19,7 +19,7 @@ export const CommandReport = (props, context) => {
       width={325}
       height={525}>
       <Window.Content>
-        <Stack vertical={1}>
+        <Stack vertical>
           <Stack.Item>
             <Section title="Set Central Command name:" textAlign="center">
               <Dropdown
@@ -51,7 +51,7 @@ export const CommandReport = (props, context) => {
                 })} />
             </Section>
           </Stack.Item>
-          <Stack.Item grow={1}>
+          <Stack.Item>
             <Section title="Set report text:" textAlign="center">
               <TextArea
                 height="200px"
@@ -60,7 +60,7 @@ export const CommandReport = (props, context) => {
                 onChange={(e, value) => act("update_report_contents", {
                   updated_contents: value,
                 })} />
-              <Stack vertical={1}>
+              <Stack vertical>
                 <Stack.Item>
                   <Button.Checkbox
                     fluid
@@ -69,7 +69,7 @@ export const CommandReport = (props, context) => {
                     Announce Contents
                   </Button.Checkbox>
                 </Stack.Item>
-                <Stack.Item grow={1}>
+                <Stack.Item>
                   <Button.Confirm
                     fluid
                     icon="check"
