@@ -21,6 +21,7 @@
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/machinery/field/containment/Destroy()
 	FG1.fields -= src
@@ -65,8 +66,8 @@
 	else
 		return ..()
 
-/obj/machinery/field/containment/Crossed(atom/movable/AM)
-	. = ..()
+/obj/machinery/field/containment/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		shock(AM)
 

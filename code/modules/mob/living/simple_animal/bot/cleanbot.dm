@@ -113,6 +113,7 @@
 
 	prefixes = list(command, security, engineering)
 	suffixes = list(research, medical, legal)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
 	if(weapon)
@@ -144,8 +145,8 @@
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
-/mob/living/simple_animal/bot/cleanbot/Crossed(atom/movable/AM)
-	. = ..()
+/mob/living/simple_animal/bot/cleanbot/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 
 	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	if(weapon && has_gravity() && ismob(AM))

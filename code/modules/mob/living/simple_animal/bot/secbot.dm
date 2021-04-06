@@ -87,6 +87,7 @@
 	//SECHUD
 	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	secsensor.add_hud_to(src)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /mob/living/simple_animal/bot/secbot/Destroy()
 	QDEL_NULL(weapon)
@@ -497,14 +498,14 @@ Auto Patrol: []"},
 		target = user
 		mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/secbot/Crossed(atom/movable/AM)
+/mob/living/simple_animal/bot/secbot/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(has_gravity() && ismob(AM) && target)
 		var/mob/living/carbon/C = AM
 		if(!istype(C) || !C || in_range(src, target))
 			return
 		knockOver(C)
 		return
-	..()
 
 /obj/machinery/bot_core/secbot
 	req_access = list(ACCESS_SECURITY)

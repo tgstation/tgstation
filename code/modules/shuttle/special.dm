@@ -194,7 +194,12 @@
 	max_integrity = 1000
 	var/boot_dir = 1
 
-/obj/structure/table/wood/bar/Crossed(atom/movable/AM)
+/obj/structure/table/wood/bar/Initialize(mapload, _buildstack)
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
+/obj/structure/table/wood/bar/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	var/mob/living/M = AM
 	if(istype(M) && !M.incorporeal_move && !is_barstaff(M))
 		// No climbing on the bar please
@@ -202,8 +207,6 @@
 		M.Paralyze(40)
 		M.throw_at(throwtarget, 5, 1)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
-	else
-		return ..()
 
 /obj/structure/table/wood/bar/proc/is_barstaff(mob/living/user)
 	. = FALSE

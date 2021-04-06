@@ -12,6 +12,7 @@
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
 	if(anchored)
@@ -31,8 +32,8 @@
 	if(move_dir == eat_dir)
 		return TRUE
 
-/obj/machinery/plumbing/grinder_chemical/Crossed(atom/movable/AM)
-	. = ..()
+/obj/machinery/plumbing/grinder_chemical/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	grind(AM)
 
 /obj/machinery/plumbing/grinder_chemical/proc/grind(atom/AM)

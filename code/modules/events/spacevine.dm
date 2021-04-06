@@ -334,6 +334,7 @@
 /obj/structure/spacevine/Initialize()
 	. = ..()
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/structure/spacevine/ComponentInitialize()
 	. = ..()
@@ -398,8 +399,8 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/spacevine/Crossed(atom/movable/AM)
-	. = ..()
+/obj/structure/spacevine/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(!isliving(AM))
 		return
 	for(var/datum/spacevine_mutation/SM in mutations)

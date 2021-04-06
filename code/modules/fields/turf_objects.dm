@@ -13,6 +13,7 @@
 /obj/effect/abstract/proximity_checker/advanced/Initialize(mapload, _monitor)
 	if(_monitor)
 		parent = _monitor
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 	return ..()
 
 /obj/effect/abstract/proximity_checker/advanced/center
@@ -28,8 +29,8 @@
 	if(parent)
 		return parent.field_turf_canpass(AM, src, target)
 
-/obj/effect/abstract/proximity_checker/advanced/field_turf/Crossed(atom/movable/AM)
-	. = ..()
+/obj/effect/abstract/proximity_checker/advanced/field_turf/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(parent)
 		return parent.field_turf_crossed(AM, src)
 	return TRUE
@@ -48,13 +49,17 @@
 	name = "energy field edge"
 	desc = "Edgy description here."
 
+/obj/effect/abstract/proximity_checker/advanced/field_edge/Initialize(mapload, _monitor)
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
 /obj/effect/abstract/proximity_checker/advanced/field_edge/CanAllowThrough(atom/movable/AM, turf/target)
 	. = ..()
 	if(parent)
 		return parent.field_edge_canpass(AM, src, target)
 
-/obj/effect/abstract/proximity_checker/advanced/field_edge/Crossed(atom/movable/AM)
-	. = ..()
+/obj/effect/abstract/proximity_checker/advanced/field_edge/on_crossed(datum/source, atom/movable/AM) //TODOKYLER: this wont work
+	SIGNAL_HANDLER
 	if(parent)
 		return parent.field_edge_crossed(AM, src)
 	return TRUE

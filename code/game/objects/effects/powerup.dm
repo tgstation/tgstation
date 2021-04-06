@@ -19,9 +19,10 @@
 	..()
 	if(lifetime)
 		QDEL_IN(src, lifetime)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
-/obj/effect/powerup/Crossed(atom/movable/movable_atom)
-	. = ..()
+/obj/effect/powerup/proc/on_crossed(datum/source, atom/movable/movable_atom)
+	SIGNAL_HANDLER
 	trigger(movable_atom)
 
 /obj/effect/powerup/Bump(atom/bumped_atom)

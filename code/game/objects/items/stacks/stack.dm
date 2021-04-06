@@ -77,6 +77,7 @@
 					recipes += temp
 	update_weight()
 	update_appearance()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -437,10 +438,10 @@
 	S.add(transfer)
 	return transfer
 
-/obj/item/stack/Crossed(atom/movable/crossing)
+/obj/item/stack/proc/on_crossed(datum/source, atom/movable/crossing)
+	SIGNAL_HANDLER
 	if(!crossing.throwing && can_merge(crossing))
 		merge(crossing)
-	. = ..()
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting))

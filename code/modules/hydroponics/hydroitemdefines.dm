@@ -410,8 +410,12 @@
 	flags_1 = NONE
 	resistance_flags = FLAMMABLE
 
-/obj/item/cultivator/rake/Crossed(atom/movable/AM)
+/obj/item/cultivator/rake/Initialize()
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
+/obj/item/cultivator/rake/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM

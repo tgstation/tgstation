@@ -9,6 +9,9 @@
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
+/obj/item/assembly/mousetrap/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/item/assembly/mousetrap/examine(mob/user)
 	. = ..()
@@ -107,7 +110,8 @@
 	return ..()
 
 
-/obj/item/assembly/mousetrap/Crossed(atom/movable/AM as mob|obj)
+/obj/item/assembly/mousetrap/proc/on_crossed(datum/source, atom/movable/AM as mob|obj)
+	SIGNAL_HANDLER
 	if(armed)
 		if(ismob(AM))
 			var/mob/MM = AM

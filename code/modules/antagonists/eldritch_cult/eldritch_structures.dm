@@ -112,7 +112,12 @@
 	/// Reference to trap owner mob
 	var/mob/owner
 
-/obj/structure/trap/eldritch/Crossed(atom/movable/AM)
+/obj/structure/trap/eldritch/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
+/obj/structure/trap/eldritch/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(!isliving(AM))
 		return ..()
 	var/mob/living/living_mob = AM

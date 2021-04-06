@@ -42,6 +42,7 @@
 	add_cell_sample()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /mob/living/simple_animal/mouse/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
@@ -75,15 +76,15 @@
 	if(.)
 		SSmobs.cheeserats += src
 
-/mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
-	if( ishuman(AM) )
+/mob/living/simple_animal/mouse/proc/on_crossed(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
+	if(ishuman(AM))
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeak!</span>")
 	if(istype(AM, /obj/item/food/cheese/royal))
 		evolve()
 		qdel(AM)
-	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
 	if(prob(chew_probability))

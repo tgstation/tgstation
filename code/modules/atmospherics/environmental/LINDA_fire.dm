@@ -72,6 +72,7 @@
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(FALSE, FALSE)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
@@ -213,8 +214,8 @@
 		T.active_hotspot = null
 	return ..()
 
-/obj/effect/hotspot/Crossed(atom/movable/AM, oldLoc)
-	..()
+/obj/effect/hotspot/proc/on_crossed(datum/source, atom/movable/AM, oldLoc)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM
 		L.fire_act(temperature, volume)

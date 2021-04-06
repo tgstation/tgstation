@@ -32,6 +32,10 @@
 
 	var/attached = 0
 
+/obj/item/clothing/mask/facehugger/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
 /obj/item/clothing/mask/facehugger/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive)
@@ -95,8 +99,8 @@
 	. = ..()
 	Attach(M)
 
-/obj/item/clothing/mask/facehugger/Crossed(atom/target)
-	. = ..()
+/obj/item/clothing/mask/facehugger/proc/on_crossed(datum/source, atom/target)
+	SIGNAL_HANDLER
 	HasProximity(target)
 
 /obj/item/clothing/mask/facehugger/on_found(mob/finder)

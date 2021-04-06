@@ -56,6 +56,7 @@
 	. = ..()
 	wires = new /datum/wires/scanner_gate(src)
 	set_scanline("passive")
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/machinery/scanner_gate/Destroy()
 	qdel(wires)
@@ -69,8 +70,8 @@
 	else
 		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
 
-/obj/machinery/scanner_gate/Crossed(atom/movable/AM)
-	. = ..()
+/obj/machinery/scanner_gate/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	auto_scan(AM)
 
 /obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)

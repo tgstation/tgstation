@@ -174,6 +174,10 @@
 	. = ..()
 	StartBurning()
 
+/obj/structure/bonfire/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
 /obj/structure/bonfire/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/R = W
@@ -248,8 +252,8 @@
 /obj/structure/bonfire/fire_act(exposed_temperature, exposed_volume)
 	StartBurning()
 
-/obj/structure/bonfire/Crossed(atom/movable/AM)
-	. = ..()
+/obj/structure/bonfire/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(burning & !grill)
 		Burn()
 

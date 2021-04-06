@@ -18,6 +18,7 @@
 	. = ..()
 	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS
 	AddComponent(/datum/component/simple_rotation, rotation_flags)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/item/assembly_holder/IsAssemblyHolder()
 	return TRUE
@@ -70,12 +71,14 @@
 		right.add_overlay("[right_overlay]_l")
 	. += right
 
-/obj/item/assembly_holder/Crossed(atom/movable/AM as mob|obj)
-	. = ..()
+/obj/item/assembly_holder/proc/on_crossed(datum/source, atom/movable/AM as mob|obj)
+	SIGNAL_HANDLER
 	if(a_left)
-		a_left.Crossed(AM)
+		SEND_SIGNAL(a_left, COMSIG_MOVABLE_CROSSED, AM)
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, a_left)
 	if(a_right)
-		a_right.Crossed(AM)
+		SEND_SIGNAL(a_right, COMSIG_MOVABLE_CROSSED, AM)
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, a_right)
 
 /obj/item/assembly_holder/on_found(mob/finder)
 	if(a_left)

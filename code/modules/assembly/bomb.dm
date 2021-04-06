@@ -13,6 +13,10 @@
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
 
+/obj/item/onetankbomb/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
 /obj/item/onetankbomb/IsSpecialAssembly()
 	return TRUE
 
@@ -81,8 +85,8 @@
 
 //Assembly / attached device memes
 
-/obj/item/onetankbomb/Crossed(atom/movable/AM as mob|obj) //for mousetraps
-	. = ..()
+/obj/item/onetankbomb/proc/on_crossed(datum/source, atom/movable/AM as mob|obj) //for mousetraps
+	SIGNAL_HANDLER
 	if(bombassembly)
 		bombassembly.Crossed(AM)
 

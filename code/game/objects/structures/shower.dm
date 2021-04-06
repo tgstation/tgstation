@@ -40,6 +40,7 @@
 	reagents.add_reagent(reagent_id, reagent_capacity)
 	soundloop = new(list(src), FALSE)
 	AddComponent(/datum/component/plumbing/simple_demand)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
@@ -133,8 +134,8 @@
 		qdel(mist)
 
 
-/obj/machinery/shower/Crossed(atom/movable/AM)
-	..()
+/obj/machinery/shower/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(on && reagents.total_volume)
 		wash_atom(AM)
 
