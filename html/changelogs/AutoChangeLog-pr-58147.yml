@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Clicking on a table with a fireman carried person while not in combat mode will no longer cause you to attempt to hurt them."
