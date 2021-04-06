@@ -79,7 +79,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/obj/item/card/id/id_card = human_user.get_idcard(TRUE)
-		data["AccountBalance"] = id_card?.registered_account ? id_card.registered_account.account_balance : 0
+		data["AccountBalance"] = id_card?.registered_account?.account_balance || 0
 		data["CanUnbolt"] = (id_card == my_card)
 	else
 		data["AccountBalance"] = 0
