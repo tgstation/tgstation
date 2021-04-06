@@ -101,6 +101,14 @@
 	list_reagents = list(/datum/reagent/consumable/enzyme = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/enzyme/examine(mob/user)
+	. = ..()
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cheesewheel]
+	var/milk_required = recipe.required_reagents[/datum/reagent/consumable/milk]
+	var/enzyme_required = recipe.required_catalysts[/datum/reagent/consumable/enzyme]
+	. += "<span class='notice'>[milk_required] milk, [enzyme_required] enzyme and you got cheese.</span>"
+	. += "<span class='warning'>Remember, the enzyme isn't used up, so return it to the bottle, dingus!</span>"
+
 /obj/item/reagent_containers/food/condiment/sugar
 	name = "sugar sack"
 	desc = "Tasty spacey sugar!"
@@ -110,6 +118,14 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	list_reagents = list(/datum/reagent/consumable/sugar = 50)
 	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/food/condiment/sugar/examine(mob/user)
+	. = ..()
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter]
+	var/flour_required = recipe.required_reagents[/datum/reagent/consumable/flour]
+	var/eggyolk_required = recipe.required_reagents[/datum/reagent/consumable/eggyolk]
+	var/sugar_required = recipe.required_reagents[/datum/reagent/consumable/sugar]
+	. += "<span class='notice'>[flour_required] flour, [eggyolk_required] egg yolk (or soy milk), [sugar_required] sugar makes cake dough. You can make pie dough from it.</span>"
 
 /obj/item/reagent_containers/food/condiment/saltshaker //Separate from above since it's a small shaker rather then
 	name = "salt shaker" // a large one.
@@ -167,6 +183,14 @@
 	list_reagents = list(/datum/reagent/consumable/milk = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/milk/examine(mob/user)
+	. = ..()
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cheesewheel]
+	var/milk_required = recipe.required_reagents[/datum/reagent/consumable/milk]
+	var/enzyme_required = recipe.required_catalysts[/datum/reagent/consumable/enzyme]
+	. += "<span class='notice'>[milk_required] milk, [enzyme_required] enzyme and you got cheese.</span>"
+	. += "<span class='warning'>Remember, the enzyme isn't used up, so return it to the bottle, dingus!</span>"
+
 /obj/item/reagent_containers/food/condiment/flour
 	name = "flour sack"
 	desc = "A big bag of flour. Good for baking!"
@@ -176,6 +200,19 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	list_reagents = list(/datum/reagent/consumable/flour = 30)
 	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/food/condiment/flour/examine(mob/user)
+	. = ..()
+	var/datum/chemical_reaction/recipe_dough = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/dough]
+	var/datum/chemical_reaction/recipe_cakebatter = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter]
+	var/dough_flour_required = recipe_dough.required_reagents[/datum/reagent/consumable/flour]
+	var/dough_water_required = recipe_dough.required_reagents[/datum/reagent/water]
+	var/cakebatter_flour_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/flour]
+	var/cakebatter_eggyolk_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/eggyolk]
+	var/cakebatter_sugar_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/sugar]
+	. += "<b><i>You retreat inward and recall the teachings of... Making Dough...</i></b>"
+	. += "<span class='notice'>[dough_flour_required] flour, [dough_water_required] water makes normal dough. You can make flat dough from it.</span>"
+	. += "<span class='notice'>[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg yolk (or soy milk), [cakebatter_sugar_required] sugar makes cake dough. You can make pie dough from it.</span>"
 
 /obj/item/reagent_containers/food/condiment/soymilk
 	name = "soy milk"

@@ -92,7 +92,7 @@
 	/// Linked paystand.
 	var/obj/machinery/paystand/my_store
 	/// Registered owner's age.
-	var/registered_age = 13
+	var/registered_age = 30
 
 	/// The job name registered on the card (for example: Assistant).
 	var/assignment
