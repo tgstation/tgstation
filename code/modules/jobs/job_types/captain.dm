@@ -68,10 +68,19 @@
 	var/list/captain_changes = job_changes["captain"]
 	if(!length(captain_changes))
 		return
-	var/planet_charter = captain_changes["planet_charter"]
-	if(!planet_charter)
+	var/special_charter = captain_changes["special_charter"]
+	if(!special_charter)
 		return
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic = 1, /obj/item/station_charter/flag = 1)
+	backpack_contents = list(/obj/item/melee/classic_baton/telescopic = 1) //removes normal charter
+	switch(special_charter)
+		if(CAPTAIN_MOON_CHARTER)
+			l_hand = /obj/item/station_charter/banner/moon
+		if(CAPTAIN_ASTEROID_CHARTER)
+			l_hand = /obj/item/station_charter/banner/asteroid
+		if(CAPTAIN_PLANET_CHARTER)
+			l_hand = /obj/item/station_charter/banner
+		else
+			stack_trace("WARNING: this map file's JSON has an incorrect \"special_charter\" value for the captain job! (special_charter = [special_charter])")
 
 /datum/outfit/job/captain/hardsuit
 	name = "Captain (Hardsuit)"

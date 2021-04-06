@@ -121,3 +121,11 @@ require only minor tweaks.
 #define BIOME_LOWMEDIUM_HUMIDITY "lowmedium_humidity"
 #define BIOME_HIGHMEDIUM_HUMIDITY "highmedium_humidity"
 #define BIOME_HIGH_HUMIDITY "high_humidity"
+
+///Captain charter defines, decides what kind of charter the cap spawns with on what map. no json setting = default station charter
+///cap names the moon
+#define CAPTAIN_MOON_CHARTER 1
+///cap names the asteroid
+#define CAPTAIN_ASTEROID_CHARTER 2
+///cap names the planet (unused, planned for planetstation)
+#define CAPTAIN_PLANET_CHARTER 3
