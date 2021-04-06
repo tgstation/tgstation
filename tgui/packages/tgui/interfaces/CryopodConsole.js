@@ -6,7 +6,7 @@ export const CryopodConsole = (props, context) => {
   const { data } = useBackend(context);
   const { account_name, allow_items } = data;
 
-  let welcomeTitle = `Hello, ${account_name || '[REDACTED]'}!`;
+  const welcomeTitle = `Hello, ${account_name || '[REDACTED]'}!`;
 
   return (
     <Window resizable title="Cryopod Console" width={400} height={500}>
