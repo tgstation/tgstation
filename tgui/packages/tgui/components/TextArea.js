@@ -7,18 +7,11 @@
  */
 
 
-import { classes, canRender } from 'common/react';
+import { classes} from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
+import { toInputValue } from './Input';
 import { KEY_ESCAPE } from 'common/keycodes';
-
-
-const toInputValue = value => {
-  if (!canRender(value)) {
-    return '';
-  }
-  return value;
-};
 
 export class TextArea extends Component {
   constructor(props, context) {
