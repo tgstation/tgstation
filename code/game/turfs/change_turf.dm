@@ -132,6 +132,16 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
 
+	#if MIN_COMPILER_VERSION >= 514
+	#warn Please replace the loop below this warning with an `as anything` loop.
+	#endif
+
+	for (var/_content_of_turf in contents)
+		// `as anything` doesn't play well on 513 with special lists such as contents.
+		// When the minimum version is raised to 514, upgrade this to `as anything`.
+		var/atom/content_of_turf = _content_of_turf
+		SEND_SIGNAL(content_of_turf, COMSIG_MOVABLE_TURF_CHANGED, src)
+
 	return W
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags) //Resist the temptation to make this default to keeping air.

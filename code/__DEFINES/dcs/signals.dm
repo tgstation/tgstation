@@ -404,6 +404,9 @@
 	/* #define HEARING_RADIO_FREQ 5
 	#define HEARING_SPANS 6
 	#define HEARING_MESSAGE_MODE 7 */
+/// Fired after the turf of this movable changes through ChangeTurf. (turf/old_turf)
+/// This is not fired when the movable simply moves.
+#define COMSIG_MOVABLE_TURF_CHANGED "movable_turf_changed"
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"

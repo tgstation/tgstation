@@ -1,7 +1,3 @@
-// MOTHBLOCKS TODO: Hook to ChangeTurf (change transferring_comps to use proc paths)
-// MOTHBLOCKS TODO: Shuttle moving tiles too?
-// MOTHBLOCKS TODO: Unit test all this
-
 /// This element hooks a signal onto the loc the current object is on.
 /// When the object moves, it will unhook the signal and rehook it to the new object.
 /datum/element/connect_loc
@@ -19,6 +15,7 @@
 	src.connections = connections
 
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(target, COMSIG_MOVABLE_TURF_CHANGED, .proc/on_turf_changed)
 	update_signals(target)
 
 /datum/element/connect_loc/Detach(datum/source, force)
@@ -31,6 +28,8 @@
 
 	if (!isnull(movable_source.loc))
 		unregister_signals(source, movable_source.loc)
+
+	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_TURF_CHANGED))
 
 /datum/element/connect_loc/proc/update_signals(atom/movable/target)
 	if (isnull(target.loc))
@@ -49,4 +48,10 @@
 	if (!isnull(old_loc))
 		unregister_signals(source, old_loc)
 
+	update_signals(source)
+
+/datum/element/connect_loc/proc/on_turf_changed(atom/movable/source, turf/old_turf)
+	SIGNAL_HANDLER
+
+	unregister_signals(source, old_turf)
 	update_signals(source)

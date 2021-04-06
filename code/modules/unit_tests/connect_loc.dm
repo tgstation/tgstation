@@ -1,6 +1,6 @@
 #define COMSIG_MOCK_SIGNAL "mock_signal"
 
-/// Test that the connect_loc component handles basic movement cases
+/// Test that the connect_loc element handles basic movement cases
 /datum/unit_test/connect_loc_basic
 
 /datum/unit_test/connect_loc_basic/Run()
@@ -19,6 +19,31 @@
 	current_turf = get_turf(watcher)
 	SEND_SIGNAL(current_turf, COMSIG_MOCK_SIGNAL)
 	TEST_ASSERT_EQUAL(watcher.times_called, 2, "Mock signal was fired after turf move, but it wasn't picked up")
+
+/// Test that the connect_loc element handles turf changes
+/datum/unit_test/connect_loc_change_turf
+	var/old_turf_type
+
+TEST_FOCUS(/datum/unit_test/connect_loc_change_turf)
+
+/datum/unit_test/connect_loc_change_turf/Run()
+	var/obj/item/watches_mock_calls/watcher = allocate(/obj/item/watches_mock_calls, run_loc_floor_bottom_left)
+
+	var/turf/current_turf = get_turf(watcher)
+	old_turf_type = current_turf.type
+
+	SEND_SIGNAL(current_turf, COMSIG_MOCK_SIGNAL)
+	TEST_ASSERT_EQUAL(watcher.times_called, 1, "After firing mock signal, connect_loc didn't send it")
+
+	current_turf.ChangeTurf(/turf/closed/wall)
+
+	current_turf = get_turf(watcher)
+	SEND_SIGNAL(current_turf, COMSIG_MOCK_SIGNAL)
+	TEST_ASSERT_EQUAL(watcher.times_called, 2, "After changing turf, connect_loc didn't reconnect it")
+
+/datum/unit_test/connect_loc_change_turf/Destroy()
+	. = ..()
+	run_loc_floor_bottom_left.ChangeTurf(old_turf_type)
 
 /obj/item/watches_mock_calls
 	var/times_called
