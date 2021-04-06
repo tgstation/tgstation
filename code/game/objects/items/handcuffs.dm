@@ -228,7 +228,7 @@
 /obj/item/restraints/legcuffs/beartrap/Initialize()
 	. = ..()
 	update_appearance()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/spring_trap)
 
 /obj/item/restraints/legcuffs/beartrap/update_icon_state()
 	icon_state = "[initial(icon_state)][armed]"
@@ -252,7 +252,7 @@
 	update_appearance()
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
-/obj/item/restraints/legcuffs/beartrap/proc/on_crossed(datum/source, AM as mob|obj)
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
 	if(armed && isturf(loc))
 		if(isliving(AM))
@@ -308,7 +308,7 @@
 		qdel(src)
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
-	Crossed(user) //honk
+	spring_trap(null, user)
 	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
@@ -374,9 +374,9 @@
 /obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
-		B.Crossed(hit_atom)
+		B.spring_trap(null, hit_atom)
 		qdel(src)
-	..()
+	. = ..()
 
 /obj/item/restraints/legcuffs/bola/gonbola
 	name = "gonbola"
