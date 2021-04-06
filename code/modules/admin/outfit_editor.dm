@@ -120,6 +120,7 @@
 		var/msg = "Warning: This item's icon_state is null, indicating it is very probably not actually a usable item."
 		if(alert(holder, msg, OUTFIT_EDITOR_NAME, "Use it anyway", "Cancel") != "Use it anyway")
 			return
+
 	if(drip.vars.Find(slot))
 		drip.vars[slot] = choice
 
@@ -172,6 +173,9 @@
 			if(suit)
 				suit = new suit //initial() doesn't like lists
 				options = suit.allowed
+			if(!options.len) //nothing will happen, but don't let the user think it's broken
+				to_chat(holder, "<span class='warning'>No options available for the current suit.</span>")
+
 		if("belt")
 			options = typesof(/obj/item/storage/belt)
 		if("id")

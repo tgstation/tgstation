@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Section, Box, Stack } from '../components';
+import { Button, Section, Box, Stack, Icon } from '../components';
 import { Window } from '../layouts';
 
 export const OutfitEditor = (props, context) => {
@@ -11,14 +11,14 @@ export const OutfitEditor = (props, context) => {
       width={380}
       height={625}>
       <Window.Content>
-        <Box // todo: this box is wack and has weird bounding
+        <Box
+          as="img"
+          fillPositionedParent
+          width="100%"
+          height="100%"
           opacity={0.5}
           py={3}
-          position="absolute"
-          as="img"
           src={`data:image/jpeg;base64,${dummy64}`}
-          height="100%"
-          width="100%"
           style={{
             '-ms-interpolation-mode': 'nearest-neighbor',
           }} />
@@ -41,7 +41,7 @@ export const OutfitEditor = (props, context) => {
                 color="transparent"
                 icon="info"
                 // tooltips are wack with a lot of text; forced to use title
-                title="Ctrl-click a button to select any item instead of what will probably fit in that slot." />
+                title="Ctrl-click a button to select *any* item instead of what will probably fit in that slot." />
               <Button
                 icon="code"
                 tooltip="Edit this outfit on a VV window"
@@ -101,25 +101,23 @@ const OutfitSlot = (props, context) => {
   return (
     <Stack.Item grow={1} basis={0}>
       <Button fluid height={2}
+        bold
         icon={icon}
-        title="Ctrl-Click to select any item"
-        content={<b>{name}</b>}
-        onClick={e => {
-          e.ctrlKey // todo: intuitive way to clear items
-            ?act("ctrlClick", { slot: slot })
-            :act("click", { slot: slot }); }} />
-      {currItem?.sprite && (
-        <Box
-          as="img"
-          src={`data:image/jpeg;base64,${currItem?.sprite}`}
-          title={currItem?.desc}
-          height="32px"
-          style={{
-            '-ms-interpolation-mode': 'nearest-neighbor',
-          }} />
-      )||(
-        <Box height="32px" />
-      )}
+        // todo: intuitive way to clear items
+        onClick={e => act(e.ctrlKey ? "ctrlClick" : "click", { slot })} >
+        {name}
+      </Button>
+      <Box height="32px">
+        {currItem?.sprite && (
+          <Box
+            as="img"
+            src={`data:image/jpeg;base64,${currItem?.sprite}`}
+            title={currItem?.desc}
+            style={{
+              '-ms-interpolation-mode': 'nearest-neighbor',
+            }} />
+        )}
+      </Box>
       <Box
         color="label"
         style={{
