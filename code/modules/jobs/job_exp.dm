@@ -172,8 +172,7 @@ GLOBAL_PROTECT(exp_to_update)
 	else
 		return
 
-
-	if(holder && !holder.deadmined)
+	if(holder && !holder.deadmined && holder.check_for_rights(R_BAN))
 		play_records[EXP_TYPE_ADMIN] = minutes
 
 	for(var/jtype in play_records)
