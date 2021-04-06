@@ -47,7 +47,7 @@
 		return ..()
 	visible_message("<span class='danger'>[src] makes a hard landing on [T] but remains unharmed from the fall.</span>", \
 					"<span class='userdanger'>You brace for the fall. You make a hard landing on [T] but remain unharmed.</span>")
-	Knockdown(levels * 50)
+	Knockdown(levels * 40)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
