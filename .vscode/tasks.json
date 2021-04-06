@@ -21,6 +21,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
+			"dependsOn": "dm: reparse",
 			"label": "Build All"
 		},
 		{
@@ -44,6 +45,11 @@
 			],
 			"group": "build",
 			"label": "tgui: build"
+		},
+		{
+			"command": "${command:dreammaker.reparse}",
+			"group": "build",
+			"label": "dm: reparse"
 		}
 	]
 }

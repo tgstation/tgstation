@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Fixed not being able to turn on internals when stripping someone if it was on their back."

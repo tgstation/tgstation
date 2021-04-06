@@ -52,6 +52,7 @@
 #define LOW_OBJ_LAYER 2.5
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.54
+#define HIGH_PIPE_LAYER 2.55
 #define HIGH_SIGIL_LAYER 2.56
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
@@ -78,6 +79,7 @@
 #define BELOW_MOB_LAYER 3.7
 #define LYING_MOB_LAYER 3.8
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define
+#define MOB_SHIELD_LAYER 4.01
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
 #define EDGED_TURF_LAYER 4.3

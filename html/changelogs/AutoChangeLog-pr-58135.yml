@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - server: "TGS4 precompile script now installs youtube-dl if it is missing from the host on Linux platforms"

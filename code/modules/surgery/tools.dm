@@ -57,6 +57,9 @@
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
 
+/obj/item/cautery/ignition_effect(atom/A, mob/user)
+	. = "<span class='notice'>[user] touches the end of [src] to \the [A], igniting it with a puff of smoke.</span>"
+
 /obj/item/cautery/augment
 	desc = "A heated element that cauterizes wounds."
 	toolspeed = 0.5
