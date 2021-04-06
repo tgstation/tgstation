@@ -69,7 +69,7 @@ Bonus
 		M.add_body_temperature_change(FEVER_CHANGE, 6 * power * A.stage)
 	else
 		// Get the max amount of change allowed before going over heat damage limit, then cap the maximum allowed temperature change from a safe fever to 5 under the heat damage limit
-		var/change_limit = BODYTEMP_HEAT_DAMAGE_LIMIT - 5 - M.get_body_temp_normal(apply_change=FALSE)
+		var/change_limit = max(M.get_body_temp_heat_damage_limit() - 5 - M.get_body_temp_normal(apply_change=FALSE), 0)
 		M.add_body_temperature_change(FEVER_CHANGE, min(6 * power * A.stage, change_limit))
 
 /// Update the body temp change based on the new stage

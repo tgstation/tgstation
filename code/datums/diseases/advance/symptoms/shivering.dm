@@ -68,7 +68,7 @@ Bonus
 		M.add_body_temperature_change(SHIVERING_CHANGE, -6 * power * A.stage)
 	else
 		// Get the max amount of change allowed before going under cold damage limit, then cap the maximum allowed temperature change from safe shivering to 5 over the cold damage limit
-		var/change_limit = BODYTEMP_COLD_DAMAGE_LIMIT + 5 - M.get_body_temp_normal(apply_change=FALSE)
+		var/change_limit = min(M.get_body_temp_cold_damage_limit() + 5 - M.get_body_temp_normal(apply_change=FALSE), 0)
 		M.add_body_temperature_change(SHIVERING_CHANGE, max(-6 * power * A.stage, change_limit))
 
 /// Update the body temp change based on the new stage
