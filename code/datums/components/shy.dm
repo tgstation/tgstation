@@ -32,9 +32,10 @@
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/bashful_click)
 	RegisterSignal(parent, COMSIG_LIVING_TRY_PULL, .proc/bashful_pull)
 	RegisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), .proc/bashful_unarmed)
+	RegisterSignal(parent, COMSIG_CAN_STRIP, .proc/bashful_nightclub)
 
 /datum/component/shy/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_LIVING_TRY_PULL, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK))
+	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_LIVING_TRY_PULL, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_CAN_STRIP))
 
 /datum/component/shy/PostTransfer()
 	if(!ismob(parent))
@@ -80,6 +81,9 @@
 
 /datum/component/shy/proc/bashful_unarmed(datum/source, atom/target, proximity, modifiers)
 	return bashful(target) && COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/component/shy/proc/bashful_nightclub(datum/source, atom/target, obj/item/equipping)
+	return bashful(target) && COMPONENT_CANT_STRIP
 
 #undef SHY_COMPONENT_CACHE_TIME
 
