@@ -71,7 +71,7 @@
 	data["IsAnchored"] = anchored
 	data["BetAmount"] = chosen_bet_amount
 	data["BetType"] = chosen_bet_type
-	data["HouseBalance"] = my_card?.registered_account ? my_card?.registered_account.account_balance : 0
+	data["HouseBalance"] = my_card?.registered_account?.account_balance || 0
 	data["LastSpin"] = last_spin
 	data["Spinning"] = playing
 
