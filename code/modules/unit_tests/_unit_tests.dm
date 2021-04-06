@@ -48,6 +48,7 @@
 #include "chain_pull_through_space.dm"
 #include "combat.dm"
 #include "component_tests.dm"
+#include "connect_loc.dm"
 #include "confusion.dm"
 #include "crayons.dm"
 #include "designs.dm"

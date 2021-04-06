@@ -531,15 +531,6 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, src)
 
-/atom/movable/Uncross(atom/movable/AM, atom/newloc)
-	. = ..()
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSS, AM) & COMPONENT_MOVABLE_BLOCK_UNCROSS)
-		return FALSE
-	if(SEND_SIGNAL(AM, COMSIG_MOVABLE_UNCROSS_OVER, src) & COMPONENT_MOVABLE_BLOCK_UNCROSS_OVER)
-		return FALSE
-	if(isturf(newloc) && !CheckExit(AM, newloc))
-		return FALSE
-
 /atom/movable/Uncrossed(atom/movable/AM)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
 	SEND_SIGNAL(AM, COMSIG_MOVABLE_UNCROSSED_OVER, src)
