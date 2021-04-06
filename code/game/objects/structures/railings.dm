@@ -108,6 +108,7 @@
 
 // Corner railings don't block anything, so they don't create the element.
 /obj/structure/railing/corner/init_connect_loc_element()
+	return
 
 /obj/structure/railing/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
