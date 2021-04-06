@@ -7,7 +7,7 @@ const ALIGNMENT2COLOR = {
   "good": "yellow",
   "neutral": "white",
   "evil": "red",
-}
+};
 
 export const ReligiousTool = (props, context) => {
   const { act, data } = useBackend(context);
@@ -72,44 +72,42 @@ const SectTab = (props, context) => {
     alignment,
   } = data;
   return (
-    <>
-      <Section fill>
-        <Stack fill vertical fontSize="15px" textAlign="center">
-          <Stack.Item mt={2} fontSize="32px">
-            <Icon name={icon} color={ALIGNMENT2COLOR[alignment]} />
-            {" " + name + " "}
-            <Icon name={icon} color={ALIGNMENT2COLOR[alignment]} />
-          </Stack.Item>
-          <Stack.Item grow mb={2} color="grey">
-            {"\""+quote+"\""}
-          </Stack.Item>
-          <Stack.Item color={favor === 0 ? "white" : "green"}>
-            {favordesc}
-          </Stack.Item>
-          <Stack.Item mb={2} textAlign="left">
-            <BlockQuote>
-              {desc}
-            </BlockQuote>
-          </Stack.Item>
-          <Stack.Item>
-            <Section mx={3} mt={-1} title="Wanted Sacrifices">
-              {!wanted && (
-                deity + " doesn't want any sacrifices."
-              ) || (
-                deity + " wishes for " + wanted + "."
-              )}
-            </Section>
-          </Stack.Item>
-        </Stack>
-      </Section>
-    </>
+    <Section fill>
+      <Stack fill vertical fontSize="15px" textAlign="center">
+        <Stack.Item mt={2} fontSize="32px">
+          <Icon name={icon} color={ALIGNMENT2COLOR[alignment]} />
+          {" " + name + " "}
+          <Icon name={icon} color={ALIGNMENT2COLOR[alignment]} />
+        </Stack.Item>
+        <Stack.Item grow mb={2} color="grey">
+          {"\""+quote+"\""}
+        </Stack.Item>
+        <Stack.Item color={favor === 0 ? "white" : "green"}>
+          {favordesc}
+        </Stack.Item>
+        <Stack.Item mb={2} textAlign="left">
+          <BlockQuote>
+            {desc}
+          </BlockQuote>
+        </Stack.Item>
+        <Stack.Item>
+          <Section mx={3} mt={-1} title="Wanted Sacrifices">
+            {!wanted && (
+              deity + " doesn't want any sacrifices."
+            ) || (
+              deity + " wishes for " + wanted + "."
+            )}
+          </Section>
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
 const SectSelectTab = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    sects
+    sects,
   } = data;
   return (
     <Section fill title="Sect Select" scrollable>
@@ -120,7 +118,9 @@ const SectSelectTab = (props, context) => {
               title={(
                 <Stack mt={-3.3} ml={3}>
                   <Stack.Item>
-                    <Icon name={sect.icon} color={ALIGNMENT2COLOR[sect.alignment]} />
+                    <Icon
+                      name={sect.icon}
+                      color={ALIGNMENT2COLOR[sect.alignment]} />
                   </Stack.Item>
                   <Stack.Item grow>
                     {sect.name}
@@ -132,7 +132,7 @@ const SectSelectTab = (props, context) => {
               )}
               color="transparent">
               <Stack.Item key={sect} >
-                {sect.desc}<br/>
+                {sect.desc}<br />
                 <Button
                   mt={0.25}
                   textAlign="center"
