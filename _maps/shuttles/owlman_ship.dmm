@@ -4,8 +4,8 @@
 "d" = (/obj/effect/turf_decal/siding/blue,/turf/open/floor/mineral/titanium/blue,/area/space)
 "e" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/computer/camera_advanced,/turf/open/floor/mineral/plastitanium,/area/space)
 "f" = (/obj/effect/turf_decal/siding/blue/end{dir = 1},/obj/machinery/computer/shuttle{name = "Owl Man shuttle console"; possible_destinations = "owlship_home;owlship_custom;syndicate_nw"; shuttleId = "owlship"},/turf/open/floor/mineral/titanium/blue,/area/space)
-"g" = (/obj/effect/turf_decal/siding/yellow/end{dir = 1},/obj/structure/closet/syndicate{name = "equipment closet"},/obj/item/clothing/gloves/tackler/combat/insulated/buzzon/cryo,/obj/item/clothing/glasses/hud/security/sunglasses/blue,/obj/item/melee/beesword/buzzon/cryo,/obj/item/clothing/shoes/sneakers/buzzon/cryo,/obj/item/grenade/spawnergrenade/buzzkill/non_toxic,/obj/item/restraints/handcuffs,/obj/item/clothing/under/color/blue,/obj/item/clothing/suit/hooded/bee_costume/buzzon/cryo,/turf/open/floor/mineral/titanium/yellow,/area/space)
-"h" = (/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 1},/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/mapping_helpers/airlock/cutaiwire,/obj/effect/mapping_helpers/airlock/locked,/obj/docking_port/mobile{dwidth = 3; height = 13; id = "owlship_home"; name = "owl man ship"; port_direction = 2; width = 11},/obj/machinery/door/airlock/external{id_tag = "owlman_airlock"; name = "OwlSkip Shuttle External Airlock"},/obj/structure/cable,/turf/open/floor/plating,/area/space)
+"g" = (/obj/effect/turf_decal/siding/yellow/end{dir = 1},/obj/structure/closet/syndicate{name = "equipment closet"},/obj/item/clothing/gloves/tackler/combat/insulated/buzzon/cryo,/obj/item/clothing/glasses/hud/security/sunglasses/blue,/obj/item/melee/beesword/buzzon/cryo,/obj/item/clothing/shoes/sneakers/buzzon/cryo,/obj/item/grenade/spawnergrenade/buzzkill/non_toxic,/obj/item/restraints/handcuffs,/obj/item/clothing/under/color/blue,/obj/item/clothing/suit/hooded/bee_costume/buzzon/cryo,/obj/item/reagent_containers/hypospray/medipen/beepen,/obj/item/reagent_containers/hypospray/medipen/beepen,/obj/item/reagent_containers/hypospray/medipen/beepen,/turf/open/floor/mineral/titanium/yellow,/area/space)
+"h" = (/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 1},/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/mapping_helpers/airlock/cutaiwire,/obj/effect/mapping_helpers/airlock/locked,/obj/docking_port/mobile{dwidth = 3; height = 13; id = "owlship_home"; name = "owl man ship"; port_direction = 2; width = 11},/obj/machinery/door/airlock/external{id_tag = "owlman_airlock"; name = "OwlSkip Shuttle External Airlock"},/obj/structure/cable,/obj/structure/fans/tiny,/turf/open/floor/plating,/area/space)
 "i" = (/obj/structure/table/reinforced,/obj/item/storage/fancy/donut_box,/turf/open/floor/mineral/plastitanium,/area/space)
 "j" = (/obj/effect/turf_decal/siding/purple/end,/obj/effect/mob_spawn/human/superhero/ianiser,/turf/open/floor/mineral/titanium/purple,/area/space)
 "k" = (/turf/closed/wall/mineral/titanium,/area/space)
@@ -16,16 +16,15 @@
 "r" = (/obj/structure/cable,/obj/machinery/power/terminal,/turf/open/floor/mineral/plastitanium,/area/space)
 "t" = (/obj/effect/turf_decal/siding/purple/end{dir = 1},/obj/structure/closet/syndicate{name = "equipment closet"},/obj/item/clothing/under/color/white,/obj/item/clothing/shoes/sneakers/brown,/obj/item/clothing/gloves/color/white,/obj/item/clothing/suit/hooded/ian_costume/ianiser,/obj/item/storage/backpack,/turf/open/floor/mineral/titanium/purple,/area/space)
 "u" = (/obj/structure/chair/comfy/shuttle{dir = 1},/obj/effect/turf_decal/siding/blue/corner{dir = 4},/obj/effect/turf_decal/siding/blue/corner{dir = 1},/turf/open/floor/mineral/titanium/blue,/area/space)
-"v" = (/obj/machinery/door/airlock/external{id_tag = "owlman_airlock"; name = "OwlSkip Shuttle External Airlock"},/obj/effect/mapping_helpers/airlock/cyclelink_helper,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/mapping_helpers/airlock/cutaiwire,/obj/effect/mapping_helpers/airlock/locked,/obj/structure/cable,/turf/open/floor/plating,/area/space)
+"v" = (/obj/machinery/door/airlock/external{id_tag = "owlman_airlock"; name = "OwlSkip Shuttle External Airlock"},/obj/effect/mapping_helpers/airlock/cyclelink_helper,/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/mapping_helpers/airlock/cutaiwire,/obj/effect/mapping_helpers/airlock/locked,/obj/structure/cable,/obj/structure/fans/tiny,/turf/open/floor/plating,/area/space)
 "w" = (/turf/closed/wall/mineral/titanium/nodiagonal,/area/space)
 "x" = (/obj/effect/turf_decal/siding/yellow/end,/obj/machinery/suit_storage_unit/superhero/buzzon,/turf/open/floor/mineral/titanium/yellow,/area/space)
 "y" = (/obj/machinery/status_display/evac,/turf/closed/wall/mineral/titanium/nodiagonal,/area/space)
 "z" = (/obj/effect/turf_decal/siding/blue/end{dir = 1},/obj/structure/closet/syndicate{name = "equipment closet"},/obj/item/clothing/mask/gas/owl_mask,/obj/item/restraints/handcuffs/cable,/obj/item/restraints/handcuffs/cable,/obj/item/restraints/handcuffs/cable,/obj/item/reagent_containers/hypospray/medipen/pumpup,/obj/item/reagent_containers/hypospray/medipen/pumpup,/obj/item/reagent_containers/hypospray/medipen/pumpup,/obj/item/storage/belt/champion/owlman,/turf/open/floor/mineral/titanium/blue,/area/space)
 "A" = (/obj/machinery/light/small,/obj/structure/chair/comfy/shuttle{dir = 1},/obj/effect/turf_decal/siding/blue{dir = 5},/turf/open/floor/mineral/titanium/blue,/area/space)
 "B" = (/obj/structure/table/reinforced,/turf/open/floor/mineral/plastitanium,/area/space)
-"C" = (/obj/machinery/airalarm{pixel_y = 24},/obj/effect/turf_decal/siding/yellow/end{dir = 4},/obj/structure/closet/syndicate{name = "equipment closet"},/obj/item/clothing/glasses/hud/security/sunglasses,/obj/item/clothing/gloves/tackler/combat/insulated/buzzon,/obj/item/melee/beesword/buzzon,/obj/item/clothing/shoes/sneakers/buzzon,/obj/item/grenade/spawnergrenade/buzzkill/non_toxic,/obj/item/restraints/handcuffs,/obj/item/clothing/under/color/yellow,/obj/item/clothing/suit/hooded/bee_costume/buzzon,/turf/open/floor/mineral/titanium/yellow,/area/space)
+"C" = (/obj/machinery/airalarm{pixel_y = 24},/obj/effect/turf_decal/siding/yellow/end{dir = 4},/obj/structure/closet/syndicate{name = "equipment closet"},/obj/item/clothing/glasses/hud/security/sunglasses,/obj/item/clothing/gloves/tackler/combat/insulated/buzzon,/obj/item/melee/beesword/buzzon,/obj/item/clothing/shoes/sneakers/buzzon,/obj/item/grenade/spawnergrenade/buzzkill/non_toxic,/obj/item/restraints/handcuffs,/obj/item/clothing/under/color/yellow,/obj/item/clothing/suit/hooded/bee_costume/buzzon,/obj/item/reagent_containers/hypospray/medipen/beepen,/obj/item/reagent_containers/hypospray/medipen/beepen,/obj/item/reagent_containers/hypospray/medipen/beepen,/turf/open/floor/mineral/titanium/yellow,/area/space)
 "D" = (/obj/effect/spawner/structure/window/shuttle,/turf/open/floor/plating,/area/space)
-"E" = (/obj/structure/cable,/obj/structure/chair/comfy/shuttle{dir = 1},/turf/open/floor/mineral/plastitanium,/area/space)
 "F" = (/obj/machinery/button/door{id = "owlman_airlock"; name = "External Bolt Control"; normaldoorcontrol = 1; pixel_x = 4; pixel_y = -24; specialfunctions = 4},/turf/closed/wall/mineral/titanium/nodiagonal,/area/space)
 "G" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table/reinforced,/turf/open/floor/mineral/plastitanium,/area/space)
 "H" = (/obj/structure/table/reinforced,/obj/item/storage/box/donkpockets,/turf/open/floor/mineral/plastitanium,/area/space)
@@ -58,7 +57,7 @@ kwJCwUbRKwk
 DLUUwUTTTMD
 DYUVZVSSUzD
 wwUVwViBUcD
-DtUVFVEEUgD
+DtUVFVVVUgD
 DjUVwvwrUxD
 kwBNwqwXBwk
 awwwwhwwwwa
