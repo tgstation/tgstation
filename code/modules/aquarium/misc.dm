@@ -92,7 +92,7 @@
 
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
-	desc = "Everything you need to build your own aquarium (Raw materials sold separately)."
+	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
 	icon = 'icons/obj/aquarium.dmi'
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
