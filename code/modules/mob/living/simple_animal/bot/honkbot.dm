@@ -46,6 +46,7 @@
 	var/datum/id_trim/job/clown_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/clown]
 	access_card.add_access(clown_trim.access + clown_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /mob/living/simple_animal/bot/honkbot/proc/limiting_spam_false() //used for addtimer
 	limiting_spam = FALSE
@@ -350,7 +351,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		target = user
 		mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/honkbot/Crossed(atom/movable/AM)
+/mob/living/simple_animal/bot/honkbot/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(ismob(AM) && (on)) //only if its online
 		if(prob(30)) //you're far more likely to trip on a honkbot
 			var/mob/living/carbon/C = AM
@@ -369,7 +371,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 				speak("Honk!")
 			sensor_blink()
 			return
-	..()
 
 /obj/machinery/bot_core/honkbot
 	req_one_access = list(ACCESS_THEATRE, ACCESS_ROBOTICS)

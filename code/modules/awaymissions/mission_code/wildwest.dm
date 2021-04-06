@@ -126,8 +126,12 @@
 	icon_state = "blobpod"
 	var/triggered = 0
 
-/obj/effect/meatgrinder/Crossed(atom/movable/AM)
+/obj/effect/meatgrinder/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
+/obj/effect/meatgrinder/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	Bumped(AM)
 
 /obj/effect/meatgrinder/Bumped(atom/movable/AM)

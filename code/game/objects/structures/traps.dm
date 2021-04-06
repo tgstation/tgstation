@@ -60,8 +60,8 @@
 	else
 		animate(src, alpha = initial(alpha), time = time_between_triggers)
 
-/obj/structure/trap/Crossed(atom/movable/AM)
-	. = ..()
+/obj/structure/trap/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(last_trigger + time_between_triggers > world.time)
 		return
 	// Don't want the traps triggered by sparks, ghosts or projectiles.
@@ -108,8 +108,10 @@
 	. = ..()
 	time_between_triggers = 10
 	flare_message = "<span class='warning'>[src] snaps shut!</span>"
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
 
-/obj/structure/trap/stun/hunter/Crossed(atom/movable/AM)
+/obj/structure/trap/stun/hunter/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!L.mind?.has_antag_datum(/datum/antagonist/fugitive))

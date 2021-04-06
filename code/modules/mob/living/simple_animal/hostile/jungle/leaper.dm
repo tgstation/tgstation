@@ -82,6 +82,7 @@
 /obj/structure/leaper_bubble/Initialize()
 	. = ..()
 	QDEL_IN(src, 100)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/structure/leaper_bubble/ComponentInitialize()
 	. = ..()
@@ -93,7 +94,8 @@
 	playsound(src,'sound/effects/snap.ogg',50, TRUE, -1)
 	return ..()
 
-/obj/structure/leaper_bubble/Crossed(atom/movable/AM)
+/obj/structure/leaper_bubble/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/jungle/leaper))
@@ -106,7 +108,6 @@
 				var/mob/living/simple_animal/A = L
 				A.adjustHealth(25)
 			qdel(src)
-	return ..()
 
 /datum/reagent/toxin/leaper_venom
 	name = "Leaper venom"

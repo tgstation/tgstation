@@ -31,7 +31,7 @@
 
 	RegisterSignal(target, COMSIG_MOVABLE_CROSSED, .proc/Crossed)
 
-/datum/element/caltrop/proc/Crossed(atom/caltrop, atom/movable/AM)
+/datum/element/caltrop/proc/Crossed(datum/source, atom/caltrop, atom/movable/AM)
 	SIGNAL_HANDLER
 
 	if(!prob(probability))

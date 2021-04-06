@@ -35,6 +35,7 @@
 	. = ..()
 	update_appearance(UPDATE_ICON)
 	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
@@ -98,9 +99,9 @@
 	if(move_dir == eat_dir)
 		return TRUE
 
-/obj/machinery/recycler/Crossed(atom/movable/AM)
+/obj/machinery/recycler/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	eat(AM)
-	. = ..()
 
 /obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))

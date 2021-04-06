@@ -16,6 +16,10 @@
 	var/valve_open = FALSE
 	var/toggle = TRUE
 
+/obj/item/transfer_valve/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
 
@@ -71,10 +75,11 @@
 	if(attached_device)
 		attached_device.on_found(finder)
 
-/obj/item/transfer_valve/Crossed(atom/movable/AM as mob|obj)
-	. = ..()
+/obj/item/transfer_valve/proc/on_crossed(datum/source, atom/movable/AM as mob|obj)
+	SIGNAL_HANDLER
 	if(attached_device)
-		attached_device.Crossed(AM)
+		SEND_SIGNAL(attached_device, COMSIG_MOVABLE_CROSSED, AM)
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, attached_device)
 
 //Triggers mousetraps
 /obj/item/transfer_valve/attack_hand(mob/user, list/modifiers)

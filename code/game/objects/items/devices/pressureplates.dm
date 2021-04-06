@@ -32,9 +32,10 @@
 
 	AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
 	RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/ToggleActive)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
-/obj/item/pressure_plate/Crossed(atom/movable/AM)
-	. = ..()
+/obj/item/pressure_plate/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(!can_trigger || !active)
 		return
 	if(trigger_item && !istype(AM, specific_item))

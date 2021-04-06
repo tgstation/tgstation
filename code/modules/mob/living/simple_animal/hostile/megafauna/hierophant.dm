@@ -656,6 +656,7 @@ Difficulty: Hard
 		var/turf/closed/mineral/M = loc
 		M.gets_drilled(caster)
 	INVOKE_ASYNC(src, .proc/blast)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/effect/temp_visual/hierophant/blast/damaging/proc/blast()
 	var/turf/T = get_turf(src)
@@ -668,8 +669,8 @@ Difficulty: Hard
 	sleep(1.3) //slightly forgiving; the burst animation is 1.5 deciseconds
 	bursting = FALSE //we no longer damage crossers
 
-/obj/effect/temp_visual/hierophant/blast/damaging/Crossed(atom/movable/AM)
-	..()
+/obj/effect/temp_visual/hierophant/blast/damaging/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(bursting)
 		do_damage(get_turf(src))
 

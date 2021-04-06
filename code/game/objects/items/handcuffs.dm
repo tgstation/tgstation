@@ -228,6 +228,7 @@
 /obj/item/restraints/legcuffs/beartrap/Initialize()
 	. = ..()
 	update_appearance()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/item/restraints/legcuffs/beartrap/update_icon_state()
 	icon_state = "[initial(icon_state)][armed]"
@@ -251,7 +252,8 @@
 	update_appearance()
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
-/obj/item/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
+/obj/item/restraints/legcuffs/beartrap/proc/on_crossed(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
 	if(armed && isturf(loc))
 		if(isliving(AM))
 			var/mob/living/L = AM
@@ -286,7 +288,6 @@
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
 				L.apply_damage(trap_damage, BRUTE, def_zone)
-	..()
 
 /obj/item/restraints/legcuffs/beartrap/energy
 	name = "energy snare"

@@ -49,9 +49,8 @@
 		user.forceMove(get_turf(src))
 		return TRUE
 
-/obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = 0)
-	if(force_stop)
-		return ..()
+/obj/effect/portal/proc/on_crossed(datum/source, atom/movable/AM, oldloc)
+	SIGNAL_HANDLER
 	if(isobserver(AM))
 		return ..()
 	if(linked && (get_turf(oldloc) == get_turf(linked)))

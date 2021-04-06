@@ -107,12 +107,12 @@
 	else
 		stack_trace("proximity_checker created without host")
 		return INITIALIZE_HINT_QDEL
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/effect/abstract/proximity_checker/Destroy()
 	monitor = null
 	return ..()
 
-/obj/effect/abstract/proximity_checker/Crossed(atom/movable/AM)
-	set waitfor = FALSE
-	. = ..()
+/obj/effect/abstract/proximity_checker/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	monitor?.hasprox_receiver?.HasProximity(AM)

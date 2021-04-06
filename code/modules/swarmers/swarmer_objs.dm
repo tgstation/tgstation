@@ -130,7 +130,12 @@
 	max_integrity = 10
 	density = FALSE
 
-/obj/structure/swarmer/trap/Crossed(atom/movable/AM)
+/obj/structure/swarmer/trap/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
+/obj/structure/swarmer/trap/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/living_crosser = AM
 		if(!istype(living_crosser, /mob/living/simple_animal/hostile/swarmer))
@@ -139,7 +144,6 @@
 			if(iscyborg(living_crosser))
 				living_crosser.Paralyze(100)
 			qdel(src)
-	return ..()
 
 /obj/structure/swarmer/blockade
 	name = "swarmer blockade"

@@ -43,8 +43,10 @@
 		icon_dead = "rare_frog_dead"
 		butcher_results = list(/obj/item/food/nugget = 5)
 
-/mob/living/simple_animal/hostile/retaliate/frog/Crossed(AM as mob|obj)
-	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
+/mob/living/simple_animal/hostile/retaliate/frog/proc/on_crossed(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)

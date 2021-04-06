@@ -363,13 +363,13 @@
 #define COMSIG_MOVABLE_MOVED "movable_moved"
 ///from base of atom/movable/Cross(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS "movable_cross"
-///from base of atom/movable/Crossed(): (/atom/movable)
+///from base of atom/movable/proc/on_crossed(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"
 ///from base of atom/movable/Uncrossed(): (/atom/movable)
 #define COMSIG_MOVABLE_UNCROSSED "movable_uncrossed"
 ///from base of atom/movable/Cross(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS_OVER "movable_cross_am"
-///from base of atom/movable/Crossed(): (/atom/movable)
+///from base of atom/movable/proc/on_crossed(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSSED_OVER "movable_crossed_am"
 ///from base of atom/movable/Uncrossed(): (/atom/movable)
 #define COMSIG_MOVABLE_UNCROSSED_OVER "movable_uncross_am"

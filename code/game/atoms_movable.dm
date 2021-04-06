@@ -399,7 +399,8 @@
 		if(i == src) // Multi tile objects
 			continue
 		var/atom/movable/thing = i
-		thing.Crossed(src)
+		SEND_SIGNAL(thing, COMSIG_MOVABLE_CROSSED, src, null)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED_OVER, thing, null)
 
 ////////////////////////////////////////
 
@@ -650,7 +651,9 @@
 			for(var/atom/movable/AM in destination)
 				if(AM == src)
 					continue
-				AM.Crossed(src, oldloc)
+				//AM.Crossed(src, oldloc)
+				SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED, src, oldloc)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED_OVER, AM, oldloc)
 
 		Moved(oldloc, NONE, TRUE)
 		. = TRUE

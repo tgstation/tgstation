@@ -171,6 +171,7 @@
 	decayedRange = range
 	if(embedding)
 		updateEmbedding()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/projectile/proc/Range()
 	range--
@@ -545,8 +546,8 @@
 /**
  * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
  */
-/obj/projectile/Crossed(atom/movable/AM)
-	. = ..()
+/obj/projectile/proc/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	scan_crossed_hit(AM)
 
 /**

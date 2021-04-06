@@ -279,9 +279,12 @@
 	light_color = COLOR_SOFT_RED
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/myowner = null
 
-
-/obj/structure/legionnaire_bonfire/Crossed(atom/movable/mover)
+/obj/structure/legionnaire_bonfire/Initialize()
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
+/obj/structure/legionnaire_bonfire/proc/on_crossed(datum/source, atom/movable/mover)
+	SIGNAL_HANDLER
 	if(isobj(mover))
 		var/obj/object = mover
 		object.fire_act(1000, 500)

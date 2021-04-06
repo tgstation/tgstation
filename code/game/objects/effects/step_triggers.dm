@@ -7,11 +7,15 @@
 	invisibility = INVISIBILITY_ABSTRACT // nope cant see this shit
 	anchored = TRUE
 
+/obj/effect/step_trigger/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
 
-/obj/effect/step_trigger/Crossed(H as mob|obj)
-	..()
+/obj/effect/step_trigger/proc/on_crossed(datum/source, H as mob|obj)
+	SIGNAL_HANDLER
 	if(!H)
 		return
 	if(isobserver(H) && !affect_ghosts)

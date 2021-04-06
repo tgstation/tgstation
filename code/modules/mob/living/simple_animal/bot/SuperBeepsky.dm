@@ -24,8 +24,9 @@
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE)
 	return BULLET_ACT_BLOCK
 
-/mob/living/simple_animal/bot/secbot/grievous/Crossed(atom/movable/AM)
-	..()
+/mob/living/simple_animal/bot/secbot/grievous/on_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+	. = ..()
 	if(ismob(AM) && AM == target)
 		visible_message("<span class='warning'>[src] flails his swords and cuts [AM]!</span>")
 		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
@@ -34,6 +35,7 @@
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()
 	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
 
 /mob/living/simple_animal/bot/secbot/grievous/Destroy()
 	QDEL_NULL(weapon)
