@@ -59,18 +59,21 @@
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."
 	icon_state = "scrubsblue"
+	inhand_icon_state = "inhand_scrubsblue"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/medical/doctor/green
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in dark green."
 	icon_state = "scrubsgreen"
+	inhand_icon_state = "inhand_scrubsgreen"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/medical/doctor/purple
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
 	icon_state = "scrubspurple"
+	inhand_icon_state = "inhand_scrubspurple"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/medical/doctor/skirt
