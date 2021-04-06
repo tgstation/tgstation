@@ -978,3 +978,8 @@
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		program.force_full_update()
+
+/mob/living/silicon/robot/get_exp_list(minutes)
+	. = ..()
+
+	.[EXP_TYPE_JOB_CYBORG] = minutes

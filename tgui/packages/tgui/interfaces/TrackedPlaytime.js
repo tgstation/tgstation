@@ -55,6 +55,7 @@ export const TrackedPlaytime = (props, context) => {
     isAdmin,
     livingTime,
     ghostTime,
+    adminTime,
   } = data;
   return (
     <Window
@@ -71,7 +72,11 @@ export const TrackedPlaytime = (props, context) => {
           <Box>
             <Section title="Total">
               <PlaytimeSection
-                playtimes={{
+                playtimes={adminTime ? {
+                  "Ghost": ghostTime,
+                  "Living": livingTime,
+                  "Admin": adminTime,
+                } : {
                   "Ghost": ghostTime,
                   "Living": livingTime,
                 }}
