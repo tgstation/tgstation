@@ -2420,6 +2420,7 @@
 "aiy" = (
 /obj/structure/table/wood,
 /obj/item/storage/pill_bottle/dice,
+/obj/item/pen/fourcolor,
 /turf/open/floor/iron/grimy,
 /area/service/library)
 "aiz" = (
@@ -8410,10 +8411,25 @@
 /turf/open/floor/iron,
 /area/commons/storage/tools)
 "aAd" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
+/obj/structure/closet/crate{
+	name = "Stations and Syndicate Starter Bundle"
+	},
+/obj/item/toy/figure/assistant,
+/obj/item/toy/figure/assistant,
+/obj/item/toy/figure/syndie,
+/obj/item/toy/figure/syndie,
+/obj/item/toy/figure/wizard,
+/obj/item/toy/figure/borg,
+/obj/item/toy/figure/botanist,
+/obj/item/toy/figure/chef,
+/obj/item/toy/figure/curator,
+/obj/item/folder/blue,
+/obj/item/folder/red,
+/obj/item/folder/red,
+/obj/item/folder/blue,
 /turf/open/floor/wood,
 /area/service/library)
 "aAg" = (
@@ -27345,6 +27361,24 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
+"grW" = (
+/obj/structure/table/wood,
+/obj/item/toy/figure/wizard{
+	pixel_y = -3
+	},
+/obj/item/toy/figure/hos{
+	pixel_y = 15
+	},
+/obj/item/toy/figure/secofficer{
+	pixel_x = -9;
+	pixel_y = 15
+	},
+/obj/item/toy/figure/secofficer{
+	pixel_x = 9;
+	pixel_y = 15
+	},
+/turf/open/floor/iron/grimy,
+/area/service/library)
 "gsa" = (
 /obj/machinery/exodrone_launcher,
 /turf/open/floor/plating,
@@ -88650,7 +88684,7 @@ hlW
 aMr
 unq
 aiy
-aSJ
+grW
 aMr
 fHH
 aRQ
