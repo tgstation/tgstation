@@ -72,12 +72,12 @@ export const OutfitEditor = (props, context) => {
               <OutfitSlot name="Gloves" icon="mitten" slot="gloves" />
             </Stack>
             <Stack mb={2}>
-              <OutfitSlot name="Suit Storage" slot="suit_store" />
-              <OutfitSlot name="Back" slot="back" />
+              <OutfitSlot name="Suit Storage" icon="briefcase-medical" slot="suit_store" />
+              <OutfitSlot name="Back" icon="shopping-bag" slot="back" />
               <OutfitSlot name="ID" icon="id-card-o" slot="id" />
             </Stack>
             <Stack mb={2}>
-              <OutfitSlot name="Belt" slot="belt" />
+              <OutfitSlot name="Belt" icon="band-aid" slot="belt" />
               <OutfitSlot name="Left Hand" slot="l_hand" />
               <OutfitSlot name="Right Hand" slot="r_hand" />
             </Stack>
