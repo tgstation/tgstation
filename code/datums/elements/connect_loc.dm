@@ -46,8 +46,7 @@
 		RegisterSignal(target.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, override = TRUE)
 
 /datum/element/connect_loc/proc/unregister_signals(atom/movable/target, atom/old_loc)
-	if (!isnull(old_loc))
-		LAZYREMOVEASSOC(targets, target.loc, target)
+	LAZYREMOVEASSOC(targets, target.loc, target)
 
 	for (var/signal in connections)
 		target.UnregisterSignal(old_loc, signal)
