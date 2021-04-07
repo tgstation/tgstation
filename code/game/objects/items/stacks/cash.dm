@@ -36,8 +36,7 @@
 
 /obj/item/stack/spacecash/update_icon_state()
 	. = ..()
-	var/cash_value = get_item_credit_value()
-	switch(cash_value)
+	switch(amount)
 		if(1)
 			icon_state = initial(icon_state)
 		if(2 to 9)
