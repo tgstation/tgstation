@@ -7,7 +7,7 @@
  */
 
 
-import { classes} from 'common/react';
+import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
 import { toInputValue } from './Input';
