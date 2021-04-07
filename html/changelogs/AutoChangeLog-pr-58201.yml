@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - bugfix: "Preflight checks have been reenabled on your cargo shuttle, forbidden goods can no longer be shipped to CentComm for sale."
