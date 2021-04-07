@@ -616,7 +616,7 @@
 
 /obj/item/toy/plush/rouny
 	name = "runner plushie"
-	desc = "A plushie depicting a xenomorph runner. Much cuddlier than the real thing."
+	desc = "A plushie depicting a xenomorph runner, made to commemorate the centenary of the Battle of LV-426. Much cuddlier than the real thing."
 	icon_state = "rouny"
 	inhand_icon_state = "rouny"
 	attack_verb_continuous = list("slashes", "bites", "charges")
