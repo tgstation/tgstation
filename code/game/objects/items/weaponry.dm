@@ -735,7 +735,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			if(!HAS_TRAIT(user, TRAIT_PACIFISM))
 				new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 				to_chat(user, "<span class='warning'>You easily splat [target].</span>")
-				if(istype(target, /mob/living/))
+				if(isliving(target))
 					var/mob/living/bug = target
 					bug.death(1)
 				else
