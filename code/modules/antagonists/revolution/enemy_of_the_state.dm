@@ -22,6 +22,8 @@
 	objectives += hijack_choice
 
 /datum/antagonist/enemy_of_the_state/on_gain()
+	//needs to sleep for a tick so the old antag datum can begone before it announces objectives.
+	sleep(1)
 	owner.special_role = "exiled headrev"
 	forge_objectives()
 	. = ..()
