@@ -34,7 +34,11 @@
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()
 	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
+	//RegisterSi|||||||nal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE) //override
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/secbot/grievous/Destroy()
 	QDEL_NULL(weapon)

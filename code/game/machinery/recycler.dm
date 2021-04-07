@@ -35,7 +35,10 @@
 	. = ..()
 	update_appearance(UPDATE_ICON)
 	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0

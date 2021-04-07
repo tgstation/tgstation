@@ -122,7 +122,10 @@
 
 /obj/item/pressure_plate/hologrid/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/undertile, tile_overlay = tile_overlay) //we remove use_anchor here, so it ALWAYS stays anchored
 
 /obj/item/pressure_plate/hologrid/examine(mob/user)

@@ -42,7 +42,10 @@
 	add_cell_sample()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/mouse/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)

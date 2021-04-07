@@ -670,6 +670,7 @@
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
 
+			SEND_SIGNAL(destination, COMSIG_MOVABLE_CROSSED, src, oldloc) //TODOKYLER: remove this entire for loop
 			for(var/atom/movable/AM in destination)
 				if(AM == src)
 					continue

@@ -82,7 +82,10 @@
 /obj/structure/leaper_bubble/Initialize()
 	. = ..()
 	QDEL_IN(src, 100)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/leaper_bubble/ComponentInitialize()
 	. = ..()

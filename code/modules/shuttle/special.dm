@@ -196,7 +196,10 @@
 
 /obj/structure/table/wood/bar/Initialize(mapload, _buildstack)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/table/wood/bar/proc/on_crossed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

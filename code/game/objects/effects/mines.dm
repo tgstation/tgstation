@@ -18,7 +18,10 @@
 		armed = FALSE
 		icon_state = "uglymine-inactive"
 		addtimer(CALLBACK(src, .proc/now_armed), arm_delay)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/mine/examine(mob/user)
 	. = ..()

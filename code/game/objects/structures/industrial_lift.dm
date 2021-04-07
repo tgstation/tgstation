@@ -161,18 +161,17 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/AddItemOnLift)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/AddItemOnLift,
+		COMSIG_ATOM_CREATED = .proc/AddItemOnLift,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 	RegisterSignal(src, COMSIG_MOVABLE_UNCROSSED, .proc/UncrossedRemoveItemFromLift)
 	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
 
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
-
-/obj/structure/industrial_lift/Move(atom/newloc, direct)
-	UnregisterSignal(loc, COMSIG_ATOM_CREATED)
-	. = ..()
-	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/AddItemOnLift)//For atoms created on platform
 
 /obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/potential_rider)
 	SIGNAL_HANDLER

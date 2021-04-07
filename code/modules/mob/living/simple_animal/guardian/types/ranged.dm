@@ -112,7 +112,10 @@
 
 /obj/effect/snare/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/snare/proc/on_crossed(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
