@@ -24040,11 +24040,11 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Plasma to Pure"
 	},
+/obj/machinery/atmospherics/pipe/color_adapter,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "ewt" = (
@@ -52634,6 +52634,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/cafeteria)
+"opQ" = (
+/obj/machinery/atmospherics/components/trinary/mixer{
+	dir = 1;
+	name = "plasma mixer"
+	},
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "oqa" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -126449,7 +126456,7 @@ wfP
 anN
 anN
 kSp
-anN
+opQ
 anN
 anN
 anN
