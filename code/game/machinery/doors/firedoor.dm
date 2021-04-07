@@ -241,6 +241,7 @@
 	SIGNAL_HANDLER
 
 	if(get_dir(leaving.loc, new_location) == dir && density)
+		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/machinery/door/firedoor/border_only/CanAtmosPass(turf/T)

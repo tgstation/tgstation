@@ -104,6 +104,7 @@
 	if (leaving.move_force >= MOVE_FORCE_EXTREMELY_STRONG)
 		return
 
+	leaving.Bump(src)
 	return COMPONENT_ATOM_BLOCK_EXIT
 
 // Corner railings don't block anything, so they don't create the element.

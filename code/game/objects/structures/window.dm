@@ -133,8 +133,8 @@
 		return
 
 	if(get_dir(leaving.loc, new_location) == dir && density)
+		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
-
 
 /obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)

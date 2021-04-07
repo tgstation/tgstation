@@ -145,6 +145,7 @@
 		return
 
 	if(get_dir(loc, new_location) == dir && density)
+		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/machinery/door/window/open(forced=FALSE)

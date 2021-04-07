@@ -65,6 +65,7 @@
 
 	if(!isobserver(leaving) && isTerminator() && (get_dir(src, new_location) == dir))
 		INVOKE_ASYNC(src, .proc/stair_ascend, leaving)
+		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/stairs/Cross(atom/movable/AM)

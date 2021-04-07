@@ -81,6 +81,7 @@
 		return
 
 	if (get_dir(loc, new_location) == dir && density)
+		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, params)
