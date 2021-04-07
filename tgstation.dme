@@ -497,6 +497,7 @@
 #include "code\datums\components\hot_ice.dm"
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\infective.dm"
+#include "code\datums\components\itempicky.dm"
 #include "code\datums\components\jousting.dm"
 #include "code\datums\components\knockback.dm"
 #include "code\datums\components\knockoff.dm"

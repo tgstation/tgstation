@@ -133,6 +133,13 @@
 	var/list/drone_machinery_whitelist_recursive = list(	/obj/machinery/atmospherics, /obj/machinery/autolathe, /obj/machinery/cell_charger, /obj/machinery/disposal, \
 															/obj/machinery/drone_dispenser, /obj/machinery/light, /obj/machinery/pipedispenser, /obj/machinery/recharger, \
 															/obj/machinery/rnd/production)
+	/// whitelisted drone items, direct
+	var/list/drone_item_whitelist_flat
+	/// whitelisted drone items, recursive/includes descendants
+	var/list/drone_item_whitelist_recursive = list(	/obj/item/airlock_painter, /obj/item/conveyor_switch_construct, /obj/item/electronics, /obj/item/light, \
+													/obj/item/pipe_meter, /obj/item/stack/cable_coil, /obj/item/stack/circuit_stack, /obj/item/stack/conveyor, \
+													/obj/item/stack/pipe_cleaner_coil, /obj/item/stack/rods, /obj/item/stack/sheet, /obj/item/stack/tile, \
+													/obj/item/stock_parts, /obj/item/toner )
 
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
@@ -331,14 +338,17 @@
 /mob/living/simple_animal/drone/proc/shy_update()
 	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
 	var/list/drone_good_machines = make_associative(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive)
+	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 		LoadComponent(/datum/component/shy, typecacheof(/mob/living/simple_animal/drone), 4, "Your laws prevent this action near %TARGET.", TRUE)
 		LoadComponent(/datum/component/shy_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 		LoadComponent(/datum/component/technointrovert, drone_good_machines, "Using %TARGET could break your laws.")
+		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
-		var/list/qdel_components = list(GetComponent(/datum/component/shy), GetComponent(/datum/component/shy_room), GetComponent(/datum/component/technointrovert))
+		var/list/qdel_components = list(	GetComponent(/datum/component/shy), GetComponent(/datum/component/shy_room), \
+											GetComponent(/datum/component/technointrovert), GetComponent(/datum/component/itempicky))
 		for(var/component in qdel_components)
 			qdel(component)
 
