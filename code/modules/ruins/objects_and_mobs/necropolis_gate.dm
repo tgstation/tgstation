@@ -260,7 +260,10 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/stone_tile/Initialize(mapload)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/stone_tile/Destroy(force)
 	if(force || fallen)

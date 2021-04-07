@@ -11,7 +11,10 @@
 
 /obj/item/assembly/mousetrap/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/assembly/mousetrap/examine(mob/user)
 	. = ..()

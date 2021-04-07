@@ -130,9 +130,12 @@
 	max_integrity = 10
 	density = FALSE
 
-/obj/structure/swarmer/trap/Initialize(mapload)
+/obj/structure/swarmer/trap/Initialize(mapload)//TODOKYLER: its all fucked fix it
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/swarmer/trap/proc/on_crossed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

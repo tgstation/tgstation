@@ -46,7 +46,10 @@
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
 	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/hygienebot/explode()
 	walk_to(src,0)

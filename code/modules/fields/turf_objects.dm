@@ -13,8 +13,13 @@
 /obj/effect/abstract/proximity_checker/advanced/Initialize(mapload, _monitor)
 	if(_monitor)
 		parent = _monitor
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
-	return ..()
+	. = ..()
+	UnregisterSignal(src, COMSIG_MOVABLE_CROSSED)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 
 /obj/effect/abstract/proximity_checker/advanced/center
 	name = "field anchor"
@@ -44,9 +49,13 @@
 	name = "energy field edge"
 	desc = "Edgy description here."
 
-/obj/effect/abstract/proximity_checker/advanced/field_edge/Initialize(mapload, _monitor)
+/obj/effect/abstract/proximity_checker/advanced/field_edge/Initialize(mapload, _monitor)//TODOKYLER: this wont work, detach then reattach?
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
+	UnregisterSignal(src, COMSIG_MOVABLE_CROSSED)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/abstract/proximity_checker/advanced/field_edge/CanAllowThrough(atom/movable/AM, turf/target)
 	. = ..()

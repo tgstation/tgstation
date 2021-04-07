@@ -34,7 +34,10 @@
 
 /obj/item/clothing/mask/facehugger/Initialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/clothing/mask/facehugger/ComponentInitialize()
 	. = ..()

@@ -107,7 +107,10 @@
 	else
 		stack_trace("proximity_checker created without host")
 		return INITIALIZE_HINT_QDEL
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/abstract/proximity_checker/Destroy()
 	monitor = null

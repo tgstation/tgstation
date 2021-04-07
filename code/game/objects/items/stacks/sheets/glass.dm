@@ -292,7 +292,10 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/shard/Destroy()
 	. = ..()

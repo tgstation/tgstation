@@ -108,7 +108,10 @@
 	. = ..()
 	time_between_triggers = 10
 	flare_message = "<span class='warning'>[src] snaps shut!</span>"
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/trap/stun/hunter/on_crossed(datum/source, atom/movable/AM)
 	if(isliving(AM))

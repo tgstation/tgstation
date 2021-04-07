@@ -19,7 +19,10 @@
 	..()
 	if(lifetime)
 		QDEL_IN(src, lifetime)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/powerup/proc/on_crossed(datum/source, atom/movable/movable_atom)
 	SIGNAL_HANDLER
