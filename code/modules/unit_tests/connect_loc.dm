@@ -24,8 +24,6 @@
 /datum/unit_test/connect_loc_change_turf
 	var/old_turf_type
 
-TEST_FOCUS(/datum/unit_test/connect_loc_change_turf)
-
 /datum/unit_test/connect_loc_change_turf/Run()
 	var/obj/item/watches_mock_calls/watcher = allocate(/obj/item/watches_mock_calls, run_loc_floor_bottom_left)
 
