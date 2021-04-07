@@ -29,6 +29,7 @@
 		message = friend.message
 
 /datum/component/technointrovert/proc/is_in_friend_group(datum/source, obj/machinery/machine)
+	SIGNAL_HANDLER
 	if(!is_type_in_typecache(machine, whitelist))
 		to_chat(source, "<span class='warning'>[replacetext(message, "%TARGET", machine)]</span>")
 		return COMPONENT_CANT_USE_MACHINE

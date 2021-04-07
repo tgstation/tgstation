@@ -29,6 +29,7 @@
 		message = friend.message
 
 /datum/component/itempicky/proc/particularly(datum/source, obj/item/pickingup)
+	SIGNAL_HANDLER
 	if(!is_type_in_typecache(pickingup, whitelist))
 		to_chat(source, "<span class='warning'>[replacetext(message, "%TARGET", pickingup)]</span>")
 		return COMPONENT_CANT_USE_MACHINE

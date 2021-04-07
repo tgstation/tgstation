@@ -45,14 +45,18 @@
 		return TRUE
 
 /datum/component/shy_room/proc/frightened_click(datum/source, atom/A, params)
+	SIGNAL_HANDLER
 	return frightened(A) && COMSIG_MOB_CANCEL_CLICKON
 
 /datum/component/shy_room/proc/frightened_pull(datum/source, atom/movable/AM, force)
+	SIGNAL_HANDLER
 	return frightened(AM) && COMSIG_LIVING_CANCEL_PULL
 
 /datum/component/shy_room/proc/frightened_unarmed(datum/source, atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
 	return frightened(target) && COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/shy_room/proc/frightened_nightclub(datum/source, atom/target, obj/item/equipping)
+	SIGNAL_HANDLER
 	return frightened(target) && COMPONENT_CANT_STRIP
 

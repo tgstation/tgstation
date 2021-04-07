@@ -74,15 +74,19 @@
 
 
 /datum/component/shy/proc/bashful_click(datum/source, atom/A, params)
+	SIGNAL_HANDLER
 	return bashful(A) && COMSIG_MOB_CANCEL_CLICKON
 
 /datum/component/shy/proc/bashful_pull(datum/source, atom/movable/AM, force)
+	SIGNAL_HANDLER
 	return bashful(AM) && COMSIG_LIVING_CANCEL_PULL
 
 /datum/component/shy/proc/bashful_unarmed(datum/source, atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
 	return bashful(target) && COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/shy/proc/bashful_nightclub(datum/source, atom/target, obj/item/equipping)
+	SIGNAL_HANDLER
 	return bashful(target) && COMPONENT_CANT_STRIP
 
 #undef SHY_COMPONENT_CACHE_TIME
