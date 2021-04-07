@@ -204,6 +204,10 @@
 	if(target == src)
 		return FALSE
 
+	// Check if the target to buckle isn't INSIDE OF A WALL
+	if(!isopenturf(get_turf(loc)))
+		return FALSE
+
 	// Check if this atom can have things buckled to it.
 	if(!can_buckle && !force)
 		return FALSE
