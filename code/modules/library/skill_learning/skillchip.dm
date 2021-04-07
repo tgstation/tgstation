@@ -14,7 +14,7 @@
 	/// Skill description shown on UI
 	var/skill_description
 	/// Category string. Used alongside SKILLCHIP_RESTRICTED_CATEGORIES flag to make a chip incompatible with chips from another category.
-	var/chip_category = "general"
+	var/chip_category = SKILLCHIP_CATEGORY_GENERAL
 	/// List of any incompatible categories.
 	var/list/incompatibility_list
 	/// Fontawesome icon show on UI, list of possible icons https://fontawesome.com/icons?d=gallery&m=free
