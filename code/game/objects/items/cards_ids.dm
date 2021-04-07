@@ -1232,4 +1232,5 @@
 	desc = "A card used to identify members of the green team for CTF"
 	icon_state = "ctf_green"
 
+#undef INTERN_THRESHOLD_FALLBACK_HOURS
 #undef ID_ICON_BORDERS
