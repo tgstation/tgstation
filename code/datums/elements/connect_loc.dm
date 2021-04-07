@@ -7,7 +7,7 @@
 	/// An assoc list of signal -> procpath to register to the loc this object is on.
 	var/list/connections
 
-	/// A list of everything with this element so that it can be tracked during ChangeTurf.
+	/// An assoc list of locs that are being occupied and a list of targets that occupy them.
 	var/list/targets
 
 /datum/element/connect_loc/Attach(datum/target, list/connections)
@@ -16,9 +16,6 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.connections = connections
-
-	LAZYADD(targets, target)
-
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	update_signals(target)
 
@@ -39,6 +36,8 @@
 	if (isnull(target.loc))
 		return
 
+	LAZYADDASSOCLIST(targets, target.loc, target)
+
 	for (var/signal in connections)
 		target.RegisterSignal(target.loc, signal, connections[signal])
 
@@ -47,15 +46,13 @@
 		RegisterSignal(target.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, override = TRUE)
 
 /datum/element/connect_loc/proc/unregister_signals(atom/movable/target, atom/old_loc)
+	if (!isnull(old_loc))
+		LAZYREMOVEASSOC(targets, target.loc, target)
+
 	for (var/signal in connections)
 		target.UnregisterSignal(old_loc, signal)
 
-	if (isturf(old_loc))
-		// Only unregister this signal once no other target needs it.
-		for (var/atom/movable/on_old_location in old_loc)
-			if (on_old_location in targets && on_old_location != target)
-				return
-
+	if (isturf(old_loc) && !(target.loc in targets))
 		UnregisterSignal(old_loc, COMSIG_TURF_CHANGE)
 
 /datum/element/connect_loc/proc/on_moved(atom/movable/source, atom/old_loc)
@@ -78,7 +75,9 @@
 	post_change_callbacks += CALLBACK(src, .proc/post_turf_change)
 
 /datum/element/connect_loc/proc/post_turf_change(turf/new_turf, turf/old_turf)
-	for (var/atom/movable/target as anything in targets)
+	SHOULD_NOT_SLEEP(TRUE)
+
+	for (var/atom/movable/target as anything in targets[new_turf])
 		if (target.loc != new_turf)
 			continue
 
