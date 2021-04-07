@@ -111,7 +111,6 @@
 	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
 
 /obj/structure/trap/stun/hunter/on_crossed(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!L.mind?.has_antag_datum(/datum/antagonist/fugitive))

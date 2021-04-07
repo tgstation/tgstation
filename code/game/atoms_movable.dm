@@ -525,7 +525,7 @@
 	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSS_OVER, src)
 	return CanPass(AM, AM.loc, TRUE)
 
-//oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
+///default byond proc that is deprecated for us in lieu of signals. do not call
 /atom/movable/Crossed(atom/movable/AM, oldloc)
 	CRASH("atom/movable/Crossed() was called!")
 

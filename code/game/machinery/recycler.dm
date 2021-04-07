@@ -101,7 +101,7 @@
 
 /obj/machinery/recycler/proc/on_crossed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	eat(AM)
+	INVOKE_ASYNC(src, .proc/eat, AM)
 
 /obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))

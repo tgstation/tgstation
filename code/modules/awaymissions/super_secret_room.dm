@@ -134,11 +134,13 @@
 	SIGNAL_HANDLER
 	if(!ismob(AM))
 		return
-	var/mob/M = AM
-	if(M.put_in_hands(src))
-		if(src != M.get_active_held_item())
-			M.swap_hand()
-		equip_to_best_slot(M)
+	INVOKE_ASYNC(src, .proc/put_in_crossers_hands, AM)
+
+/obj/item/rupee/proc/put_in_crossers_hands(mob/crosser)
+	if(crosser.put_in_hands(src))
+		if(src != crosser.get_active_held_item())
+			crosser.swap_hand()
+		equip_to_best_slot(crosser)
 
 /obj/item/rupee/equipped(mob/user, slot)
 	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, TRUE, -1)

@@ -117,7 +117,6 @@
 	RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /obj/structure/trap/eldritch/on_crossed(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
 	if(!isliving(AM))
 		return ..()
 	var/mob/living/living_mob = AM

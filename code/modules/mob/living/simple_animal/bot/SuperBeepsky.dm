@@ -25,12 +25,11 @@
 	return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/bot/secbot/grievous/on_crossed(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
 	. = ..()
 	if(ismob(AM) && AM == target)
 		visible_message("<span class='warning'>[src] flails his swords and cuts [AM]!</span>")
 		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
-		stun_attack(AM)
+		INVOKE_ASYNC(src, .proc/stun_attack, AM)
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()

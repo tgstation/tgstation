@@ -263,7 +263,6 @@
 				if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
 					close_trap()
 					ridden_vehicle.visible_message("<span class='danger'>[ridden_vehicle] triggers \the [src].</span>")
-					return ..()
 
 			if(L.movement_type & (FLYING|FLOATING)) //don't close the trap if they're flying/floating over it.
 				snap = FALSE

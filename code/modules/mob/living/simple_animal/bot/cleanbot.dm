@@ -158,7 +158,7 @@
 			stolen_valor += C.job
 		update_titles()
 
-		weapon.attack(C, src)
+		INVOKE_ASYNC(weapon, /obj/item.proc/attack, C, src)
 		C.Knockdown(20)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/living/user, params)
