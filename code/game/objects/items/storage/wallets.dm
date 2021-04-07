@@ -148,6 +148,14 @@
 	else
 		return ..()
 
+/obj/item/storage/wallet/equipped(mob/user, slot)
+	. = ..()
+	for(var/card in contents)
+		var/obj/item/card/id/id_card = card
+		if(!istype(id_card))
+			continue
+		id_card.equipped(user, slot)
+
 /obj/item/storage/wallet/random
 	icon_state = "random_wallet"
 

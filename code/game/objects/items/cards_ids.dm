@@ -4,6 +4,9 @@
  */
 #define ID_ICON_BORDERS 1, 9, 32, 24
 
+/// Fallback time if none of the config entries are set for USE_LOW_LIVING_HOUR_INTERN
+#define INTERN_THRESHOLD_FALLBACK_HOURS 15
+
 /* Cards
  * Contains:
  * DATA CARD
@@ -105,6 +108,9 @@
 
 	/// List of wildcard slot names as keys with lists of wildcard data as values.
 	var/list/wildcard_slots = list()
+
+	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
+	var/is_intern = FALSE
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -618,8 +624,11 @@
 
 /// Updates the name based on the card's vars and state.
 /obj/item/card/id/proc/update_label()
-	var/blank = !registered_name
-	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	var/name_string = registered_name ? "[registered_name]'s ID Card" : initial(name)
+	var/intern_string = is_intern ? " (Intern)" : ""
+	var/assignment_string = assignment ? " ([assignment])" : ""
+
+	name = "[name_string][intern_string][assignment_string]"
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
@@ -715,6 +724,28 @@
 	var/trim_state_override
 	/// If this is set, will manually override the trim's assignmment for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_assignment_override
+
+/obj/item/card/id/advanced/equipped(mob/user, slot)
+	. = ..()
+	if(!user.client)
+		return
+	if(!CONFIG_GET(flag/use_exp_tracking))
+		return
+	if(!CONFIG_GET(flag/use_low_living_hour_intern))
+		return
+	if(!SSdbcore.Connect())
+		return
+
+	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) * 60) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) * 60) || INTERN_THRESHOLD_FALLBACK_HOURS * 60
+	var/playtime = user.client.get_exp_living(pure_numeric = TRUE)
+
+	if(intern_threshold >= playtime)
+		is_intern = TRUE
+		update_label()
+		return
+
+	is_intern = FALSE
+	update_label()
 
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()

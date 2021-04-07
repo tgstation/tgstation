@@ -118,6 +118,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else
 		inserted_item = new /obj/item/pen(src)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+
 	update_appearance()
 
 /obj/item/pda/equipped(mob/user, slot)
@@ -142,6 +143,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 					font_index = MODE_MONO
 					font_mode = FONT_MONO
 			equipped = TRUE
+
+	// If the PDA contains an ID, assume the ID has been equipped too.
+	if(id)
+		id.equipped(user, slot)
 
 /obj/item/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
