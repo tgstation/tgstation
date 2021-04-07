@@ -737,7 +737,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 				to_chat(user, "<span class='warning'>You easily splat [target].</span>")
 				if(isliving(target))
 					var/mob/living/bug = target
-					bug.death(1)
+					bug.gib()
 				else
 					qdel(target)
 
