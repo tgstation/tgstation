@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "One headrev is tasked with renaming the station when revolutions are successful"
