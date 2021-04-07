@@ -11,7 +11,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN //Intentionally no allow_silicon flag
-	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE
+	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE | PIPING_BRIDGE
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "mvalve"
 	///Type of valve (manual or digital), used to set the icon of the component in update_icon_nopipes()

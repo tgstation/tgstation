@@ -249,6 +249,11 @@
 	if(!Adjacent(user) || !Adjacent(target) || !isturf(user.loc) || user.incapacitated() || target.anchored)
 		return FALSE
 
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.usable_hands <= 0)
+			return FALSE
+
 	// In buckling even possible in the first place?
 	if(!is_buckle_possible(target, FALSE, check_loc))
 		return FALSE

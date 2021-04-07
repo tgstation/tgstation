@@ -11,6 +11,8 @@
 	else if(istext(var_value))
 		if(findtext(var_value, "\n"))
 			. = VV_MESSAGE
+		else if(findtext(var_value, GLOB.is_color))
+			. = VV_COLOR
 		else
 			. = VV_TEXT
 
@@ -54,6 +56,7 @@
 				VV_TEXT,
 				VV_MESSAGE,
 				VV_ICON,
+				VV_COLOR,
 				VV_ATOM_REFERENCE,
 				VV_DATUM_REFERENCE,
 				VV_MOB_REFERENCE,
@@ -269,3 +272,9 @@
 			while(!D)
 			.["type"] = D.type
 			.["value"] = D
+
+		if(VV_COLOR)
+			.["value"] = input("Enter new color:", "Color", current_value) as color|null
+			if(.["value"] == null)
+				.["class"] = null
+				return
