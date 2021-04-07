@@ -78,8 +78,6 @@
 	post_change_callbacks += CALLBACK(src, .proc/post_turf_change)
 
 /datum/element/connect_loc/proc/post_turf_change(turf/new_turf, turf/old_turf)
-	SHOULD_NOT_SLEEP(TRUE)
-
 	for (var/atom/movable/target as anything in targets)
 		if (target.loc != new_turf)
 			continue

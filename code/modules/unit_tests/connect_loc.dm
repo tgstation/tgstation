@@ -40,8 +40,8 @@
 	TEST_ASSERT_EQUAL(watcher.times_called, 2, "After changing turf, connect_loc didn't reconnect it")
 
 /datum/unit_test/connect_loc_change_turf/Destroy()
-	. = ..()
 	run_loc_floor_bottom_left.ChangeTurf(old_turf_type)
+	return ..()
 
 /obj/item/watches_mock_calls
 	var/times_called
