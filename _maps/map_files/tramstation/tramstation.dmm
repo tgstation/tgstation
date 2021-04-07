@@ -8430,6 +8430,9 @@
 /obj/item/folder/red,
 /obj/item/folder/red,
 /obj/item/folder/blue,
+/obj/item/clothing/head/wizard/fake,
+/obj/item/clothing/suit/wizrobe/fake,
+/obj/item/staff,
 /turf/open/floor/wood,
 /area/service/library)
 "aAg" = (
