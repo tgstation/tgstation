@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - bugfix: "Pacifists are no longer able to kill bugs with flyswatters. Bugs have feelings too!"
