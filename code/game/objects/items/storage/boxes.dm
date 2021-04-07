@@ -1288,29 +1288,6 @@
 	new/obj/item/skillchip/job/engineer(src)
 	new/obj/item/skillchip/job/engineer(src)
 
-/obj/item/storage/box/skillchips/quick
-	name = "box of Ant Hauler skill chips"
-	desc = "Contains Ant Hauler skill chips."
-
-/obj/item/storage/box/skillchips/quick/PopulateContents()
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-	new/obj/item/skillchip/quickcarry(src)
-
-/obj/item/storage/box/skillchips/quicker
-	name = "box of RES-Q skill chips"
-	desc = "Contains RES-Q skill chips."
-
-/obj/item/storage/box/skillchips/quicker/PopulateContents()
-	new/obj/item/skillchip/quickercarry(src)
-	new/obj/item/skillchip/quickercarry(src)
-	new/obj/item/skillchip/quickercarry(src)
-	new/obj/item/skillchip/quickercarry(src)
-
 /obj/item/storage/box/swab
 	name = "box of microbiological swabs"
 	desc = "Contains a number of sterile swabs for collecting microbiological samples."
