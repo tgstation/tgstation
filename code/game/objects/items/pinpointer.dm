@@ -166,6 +166,7 @@
 	name = "proximity crew pinpointer"
 	desc = "A handheld tracking device that displays its proximity to crew suit sensors."
 	icon_state = "pinpointer_crewprox"
+	worn_icon_state = "pinpointer_prox"
 	custom_price = PAYCHECK_MEDIUM * 3
 
 /obj/item/pinpointer/crew/prox/get_direction_icon(here, there)
