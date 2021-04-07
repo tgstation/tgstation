@@ -625,10 +625,17 @@
 /// Updates the name based on the card's vars and state.
 /obj/item/card/id/proc/update_label()
 	var/name_string = registered_name ? "[registered_name]'s ID Card" : initial(name)
-	var/intern_string = is_intern ? " (Intern)" : ""
-	var/assignment_string = assignment ? " ([assignment])" : ""
+	var/assignment_string
 
-	name = "[name_string][intern_string][assignment_string]"
+	if(is_intern)
+		if(assignment)
+			assignment_string = (assignment in SSjob.head_of_staff_jobs) ? " ([assignment]-in-Training)" : "(Intern [assignment])"
+		else
+			assignment_string = " (Intern)"
+	else
+		assignment_string = " ([assignment])"
+
+	name = "[name_string][assignment_string]"
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
@@ -725,9 +732,20 @@
 	/// If this is set, will manually override the trim's assignmment for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_assignment_override
 
-/obj/item/card/id/advanced/equipped(mob/user, slot)
+/obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
-	if(!user.client)
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
+
+/obj/item/card/id/advanced/Destroy()
+	UnregisterSignal(src, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
+
+	return ..()
+
+/obj/item/card/id/advanced/proc/update_intern_status(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	if(!user?.client)
 		return
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		return
@@ -739,9 +757,20 @@
 	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) * 60) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) * 60) || INTERN_THRESHOLD_FALLBACK_HOURS * 60
 	var/playtime = user.client.get_exp_living(pure_numeric = TRUE)
 
-	if(intern_threshold >= playtime)
+	if((intern_threshold >= playtime) && (user.mind?.assigned_role in SSjob.station_jobs))
 		is_intern = TRUE
 		update_label()
+		return
+
+	if(!is_intern)
+		return
+
+	is_intern = FALSE
+	update_label()
+
+/obj/item/card/id/advanced/proc/remove_intern_status(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if(!is_intern)
 		return
 
 	is_intern = FALSE

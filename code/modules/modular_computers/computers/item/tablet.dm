@@ -58,10 +58,22 @@
 /obj/item/modular_computer/tablet/equipped(mob/user, slot)
 	. = ..()
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	card_slot?.stored_card?.equipped(user, slot)
+	if(card_slot?.stored_card)
+		SEND_SIGNAL(card_slot.stored_card, COMSIG_ITEM_EQUIPPED, user)
 
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	card_slot2?.stored_card?.equipped(user, slot)
+	if(card_slot2?.stored_card)
+		SEND_SIGNAL(card_slot2.stored_card, COMSIG_ITEM_EQUIPPED, user)
+
+/obj/item/modular_computer/tablet/dropped(mob/user, silent = FALSE)
+	. = ..()
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(card_slot?.stored_card)
+		SEND_SIGNAL(card_slot.stored_card, COMSIG_ITEM_DROPPED, user)
+
+	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+	if(card_slot2?.stored_card)
+		SEND_SIGNAL(card_slot2.stored_card, COMSIG_ITEM_DROPPED, user)
 
 /// Borg Built-in tablet interface
 /obj/item/modular_computer/tablet/integrated
