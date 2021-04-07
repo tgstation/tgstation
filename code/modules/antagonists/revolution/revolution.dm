@@ -12,6 +12,8 @@
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "rev"
 	var/datum/team/revolution/rev_team
+	///when this antagonist is being de-antagged, this is why
+	var/deconversion_reason
 
 	/// What message should the player receive when they are being demoted, and the revolution has won?
 	var/victory_message = "The revolution has overpowered the command staff! Viva la revolution! Execute any head of staff and security should you find them alive."
@@ -234,6 +236,8 @@
 
 	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
+			if(deconversion_reason == DECONVERTER_STATION_WIN)
+				return //don't show deconversion messages, you're still an antagonist (just a new one)
 			owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
 			to_chat(owner, "<span class ='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
 		else
@@ -251,10 +255,13 @@
 	if(iscarbon(owner.current) && deconverter != DECONVERTER_REVS_WIN)
 		var/mob/living/carbon/C = owner.current
 		C.Unconscious(100)
+	deconversion_reason = deconverter
 	owner.remove_antag_datum(type)
 
-/datum/antagonist/rev/head/remove_revolutionary(borged,deconverter)
+/datum/antagonist/rev/head/remove_revolutionary(borged, deconverter)
 	if(borged || deconverter == DECONVERTER_STATION_WIN || deconverter == DECONVERTER_REVS_WIN)
+		if(owner.current.stat != DEAD && deconverter == DECONVERTER_STATION_WIN)
+			owner.add_antag_datum(/datum/antagonist/enemy_of_the_state)
 		. = ..()
 
 /datum/antagonist/rev/head/equip_rev()
@@ -279,21 +286,6 @@
 		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new()
 		S.Insert(C)
 		to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
-
-/// "Enemy of the Revolutionary", given to heads and security when the revolution wins
-/datum/antagonist/revolution_enemy
-	name = "Enemy of the Revolution"
-	show_in_antagpanel = FALSE
-
-/datum/antagonist/revolution_enemy/on_gain()
-	owner.special_role = "revolution enemy"
-
-	var/datum/objective/survive/survive = new /datum/objective/survive
-	survive.owner = owner
-	survive.explanation_text = "The station has been overrun by revolutionaries, stay alive until the end."
-	objectives += survive
-
-	return ..()
 
 /datum/team/revolution
 	name = "Revolution"
@@ -396,12 +388,8 @@
 		for (var/_rev_head_mind in ex_revs)
 			var/datum/mind/rev_head_mind = _rev_head_mind
 			var/mob/living/carbon/rev_head_body = rev_head_mind.current
-			if(!istype(rev_head_body))
-				continue
-			if(rev_head_body.stat == DEAD)
+			if(istype(rev_head_body) && rev_head_body.stat == DEAD)
 				rev_head_body.makeUncloneable()
-			else
-				rev_head_mind.add_antag_datum(/datum/antagonist/enemy_of_the_state)
 
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
@@ -418,7 +406,7 @@
 
 			var/mob/living/carbon/target_body = mind.current
 
-			mind.add_antag_datum(/datum/antagonist/revolution_enemy)
+			mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
 
 			if (!istype(target_body))
 				continue

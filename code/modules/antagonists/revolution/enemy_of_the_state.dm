@@ -1,6 +1,10 @@
 
+/**
+ * When the station wins, any remaining living headrevs become Enemies of the State, a small solo antagonist.
+ * They either have the choice to fuck off and do their own thing, or try and regain their honor with a hijack.
+ */
 /datum/antagonist/enemy_of_the_state
-	name = "enemy of the state"
+	name = "Enemy of the State"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	hijack_speed = 2 //not like they have much to do
@@ -18,6 +22,7 @@
 	objectives += hijack_choice
 
 /datum/antagonist/enemy_of_the_state/on_gain()
+	owner.special_role = "exiled headrev"
 	forge_objectives()
 	. = ..()
 
