@@ -8,7 +8,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
-	worn_icon_state = "electronic"
+	worn_icon_state = "pinpointer"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
@@ -89,6 +89,7 @@
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
+	worn_icon_state = "pinpointer_crew"
 	custom_price = PAYCHECK_MEDIUM * 4
 	custom_premium_price = PAYCHECK_MEDIUM * 6
 	var/has_owner = FALSE
@@ -217,6 +218,7 @@
 	name = "fugitive pinpointer"
 	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."
 	icon_state = "pinpointer_hunter"
+	worn_icon_state = "pinpointer_black"
 	icon_suffix = "_hunter"
 	var/obj/shuttleport
 
