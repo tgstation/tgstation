@@ -105,8 +105,12 @@
 			var/mob/living/L = M.pulledby
 			L.reset_pull_offsets(M, TRUE)
 
-	if(!check_loc && M.loc != loc)
-		M.forceMove(loc)
+	if (!M.Move(loc))
+		if (!check_loc && M.loc != loc && src.density)
+			M.forceMove(loc)
+		else
+			return FALSE
+
 
 	if(anchored)
 		ADD_TRAIT(M, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
@@ -205,7 +209,7 @@
 		return FALSE
 
 	// Check if the target to buckle isn't INSIDE OF A WALL
-	if(!isopenturf(get_turf(loc)))
+	if(!isopenturf(loc))
 		return FALSE
 
 	// Check if this atom can have things buckled to it.
