@@ -255,20 +255,23 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(alive.stat != DEAD)
 			mail_recipients += alive
 
-	//creates mail for all the mail waiting to arrive, if there's nobody to recieve it it's just junkmail.
-	for(var/mail_iterator in SSeconomy.mail_waiting)
+	//Creates mail for all the mail waiting to arrive, if there's nobody to recieve it it's just junkmail.
+	for(var/mail_iterator in 1 to SSeconomy.mail_waiting)
 		var/obj/item/mail/new_mail
 		if(prob(70))
 			new_mail = new /obj/item/mail(mailcrate)
 		else
 			new_mail = new /obj/item/mail/envelope(mailcrate)
-		var/mob/living/carbon/human/mail_to = pick(mail_recipients)
-		if(mail_to)
+		var/mob/living/carbon/human/mail_to
+		if(mail_recipients.len)
+			mail_to = pick(mail_recipients)
 			new_mail.initialize_for_recipient(mail_to)
+			mail_recipients -= mail_to
 		else
 			new_mail.junk_mail()
+		if(new_mail)
+			SSeconomy.mail_waiting += 1
 	mailcrate.update_icon()
-	SSeconomy.mail_waiting = 0
 	return mailcrate
 
 #undef GOODY_FREE_SHIPPING_MAX

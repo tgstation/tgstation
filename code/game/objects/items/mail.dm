@@ -48,7 +48,7 @@
 /obj/item/mail/Initialize()
 	. = ..()
 	AddElement(/datum/element/item_scaling, 0.5, 1)
-	if(!department_colors.len)
+	if(!department_colors?.len)
 		department_colors = list(
 		ACCOUNT_CIV = COLOR_WHITE,
 		ACCOUNT_ENG = COLOR_PALE_ORANGE,
@@ -202,11 +202,11 @@
 	. = ..()
 	if(opened)
 		icon_state = "[initial(icon_state)]open"
-	else
-		icon_state = "[initial(icon_state)]sealed"
 		for(var/obj/item/mail/Mail in src)
 			icon_state = initial(icon_state)
 			break
+	else
+		icon_state = "[initial(icon_state)]sealed"
 
 /obj/structure/closet/crate/mail/full/Initialize()
 	. = ..()
