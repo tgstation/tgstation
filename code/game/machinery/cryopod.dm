@@ -382,7 +382,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
 		var/datum/job/target_job = SSjob.GetJob(target.mind.assigned_role)
 		if(target_job.req_admin_notify)
-			alert("You're a Head of Staff![generic_plsnoleave_message]")
+			alert("You're an important role![generic_plsnoleave_message]")
 			caught = TRUE
 		if(antag)
 			alert("You're \a [antag.name]![generic_plsnoleave_message]")
