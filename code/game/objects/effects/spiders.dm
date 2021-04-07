@@ -75,6 +75,102 @@
 	else if(istype(mover, /obj/projectile))
 		return prob(30)
 
+/obj/structure/spider/webwall // MAKE THE NEST GREAT AGAIN !!!
+	name = "web wall"
+	desc = "A bunch of webs strings weaved together to prevent air changes."
+	icon = 'icons/effects/effects.dmi'
+	anchored = TRUE
+	opacity = FALSE
+	density = FALSE
+	max_integrity = 80
+	CanAtmosPass = ATMOS_PASS_NO
+
+/obj/structure/spider/webwall/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/spider/webwall/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
+
+/obj/structure/spider/webwall/Move()
+	var/turf/T = loc
+	. = ..()
+	move_update_air(T)
+
+/obj/structure/spider/webwall/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
+/obj/structure/spider/webwall/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
+		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/structure/spider/webwall/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == MELEE)
+		switch(damage_type)
+			if(BURN)
+				damage_amount *= 2
+			if(BRUTE)
+				damage_amount *= 0.55
+	. = ..()
+
+/obj/structure/spider/webwall/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 500
+
+/obj/structure/spider/webwall/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(15, BURN, 0, 0)
+
+/obj/structure/spider/webwall
+	var/genetic = FALSE
+	icon_state = "webwall"
+
+/obj/structure/spider/webwall/Initialize()
+	if(prob(50))
+		icon_state = "webwall2"
+	. = ..()
+
+/obj/structure/spider/webwall/BlockSuperconductivity()
+	return 1
+
+obj/structure/spider/webwall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(genetic)
+		return
+	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
+		if(prob(50))
+			to_chat(mover, "<span class='danger'>You need to take time to cross \the [src] without making a breach.</span>")
+			return FALSE
+	else if(isliving(mover))
+		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/poison/giant_spider))
+			return TRUE
+		if(prob(80))
+			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
+			return FALSE
+	else if(istype(mover, /obj/projectile))
+		return prob(50)
+
+/obj/structure/spider/webwall/genetic //for the spider genes in genetics
+	genetic = TRUE
+	var/mob/living/allowed_mob
+
+/obj/structure/spider/webwall/genetic/Initialize(mapload, allowedmob)
+	allowed_mob = allowedmob
+	. = ..()
+
+/obj/structure/spider/webwall/genetic/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..() //this is the normal spider web return aka a spider would make this TRUE
+	if(mover == allowed_mob)
+		return TRUE
+	else if(isliving(mover)) //we change the spider to not be able to go through here
+		if(mover.pulledby == allowed_mob)
+			return TRUE
+		if(prob(70))
+			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
+			return FALSE
+	else if(istype(mover, /obj/projectile))
+		return prob(40)
+
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
 	desc = "They seem to pulse slightly with an inner life."

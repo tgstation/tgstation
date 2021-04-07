@@ -79,6 +79,8 @@
 	var/web_speed = 1
 	///The web laying ability
 	var/datum/action/innate/spider/lay_web/lay_web
+	///The web wall laying ability
+	var/datum/action/innate/spider/lay_webwall/lay_webwall
 	///The message that the mother spider left for this spider when the egg was layed.
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
@@ -88,6 +90,11 @@
 	. = ..()
 	lay_web = new
 	lay_web.Grant(src)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
+	. = ..()
+	lay_webwall = new
+	lay_webwall.Grant(src)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()
@@ -383,6 +390,43 @@
 		if(do_after(spider, 40 * spider.web_speed, target = spider_turf))
 			if(spider.is_busy && spider.loc == spider_turf)
 				new /obj/structure/spider/stickyweb(spider_turf)
+		spider.is_busy = FALSE
+		spider.stop_automated_movement = FALSE
+	else
+		to_chat(spider, "<span class='warning'>You're already doing something else!</span>")
+
+/datum/action/innate/spider/lay_webwall
+	name = "Spin Web Wall"
+	desc = "Spin a web wall to protect the eggs from bad air."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "lay_webwall"
+
+/datum/action/innate/spider/lay_webwall/Activate()
+	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider))
+		return
+	var/mob/living/simple_animal/hostile/poison/giant_spider/spider = owner
+
+	if(!isturf(spider.loc))
+		return
+	var/turf/spider_turf = get_turf(spider)
+
+	var/obj/structure/spider/stickyweb/web = locate() in spider_turf
+	if(web)
+		to_chat(spider, "<span class='warning'>There's already a web here!</span>")
+		return
+
+	var/obj/structure/spider/webwall/webwall = locate() in spider_turf
+	if(webwall)
+		to_chat(spider, "<span class='warning'>There's already a web here!</span>")
+		return
+
+	if(!spider.is_busy)
+		spider.is_busy = TRUE
+		spider.visible_message("<span class='notice'>[spider] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
+		spider.stop_automated_movement = TRUE
+		if(do_after(spider, 100 * spider.web_speed, target = spider_turf))
+			if(spider.is_busy && spider.loc == spider_turf)
+				new /obj/structure/spider/webwall(spider_turf)
 		spider.is_busy = FALSE
 		spider.stop_automated_movement = FALSE
 	else
