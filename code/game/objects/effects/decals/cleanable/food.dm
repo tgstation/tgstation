@@ -43,7 +43,6 @@
 		to_chat(AM, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
 
 /obj/effect/decal/cleanable/food/salt/on_crossed(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
 	. = ..()
 	if(!isliving(AM))
 		return

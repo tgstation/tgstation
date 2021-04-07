@@ -72,7 +72,7 @@
 
 /obj/machinery/scanner_gate/proc/on_crossed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	auto_scan(AM)
+	INVOKE_ASYNC(src, .proc/auto_scan, AM)
 
 /obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)
 	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM) & (!panel_open))

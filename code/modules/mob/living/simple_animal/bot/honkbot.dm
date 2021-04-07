@@ -368,7 +368,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			C.Paralyze(10)
 			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
 			if(!client)
-				speak("Honk!")
+				INVOKE_ASYNC(src, /mob/living/simple_animal/bot/proc/speak, "Honk!")
 			sensor_blink()
 			return
 

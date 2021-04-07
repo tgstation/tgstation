@@ -280,7 +280,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	switch(fall_on_cross)
 		if(COLLAPSE_ON_CROSS, DESTROY_ON_CROSS)
 			if((I && I.w_class >= WEIGHT_CLASS_BULKY) || (L && !(L.movement_type & FLYING) && L.mob_size >= MOB_SIZE_HUMAN)) //too heavy! too big! aaah!
-				collapse()
+				INVOKE_ASYNC(src, .proc/collapse)
 		if(UNIQUE_EFFECT)
 			crossed_effect(AM)
 

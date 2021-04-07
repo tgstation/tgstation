@@ -441,7 +441,7 @@
 /obj/item/stack/proc/on_crossed(datum/source, atom/movable/crossing)
 	SIGNAL_HANDLER
 	if(!crossing.throwing && can_merge(crossing))
-		merge(crossing)
+		INVOKE_ASYNC(src, .proc/merge, crossing)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting))

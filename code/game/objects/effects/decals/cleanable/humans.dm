@@ -113,7 +113,6 @@
 	return FALSE
 
 /obj/effect/decal/cleanable/blood/gibs/on_crossed(datum/source, atom/movable/L)
-	SIGNAL_HANDLER
 	if(isliving(L) && has_gravity(loc))
 		playsound(loc, 'sound/effects/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 20 : 50, TRUE)
 	. = ..()
