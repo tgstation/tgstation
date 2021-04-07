@@ -1,0 +1,4 @@
+author: "John Willard"
+delete-after: True
+changes: 
+  - bugfix: "Shaft Miners can now enter Cargo on IceBox, and Cargo techs can no longer enter the QM's office through maintenance."
