@@ -15428,7 +15428,7 @@
 	},
 /obj/machinery/door/airlock/engineering{
 	name = "Power Access Hatch";
-	req_access_txt = "11"
+	req_access_txt = "47"
 	},
 /turf/open/floor/plating,
 /area/science/research)
@@ -15741,7 +15741,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 5
 	},
-/obj/machinery/navbeacon/wayfinding/aiupload,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/command/bridge)
@@ -21703,10 +21702,6 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "ebm" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Power Access Hatch";
-	req_one_access_txt = "11"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
@@ -21720,6 +21715,10 @@
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
+	},
+/obj/machinery/door/airlock/highsecurity{
+	name = "AI Upload Access";
+	req_access_txt = "16"
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
@@ -23317,7 +23316,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/engineering{
 	name = "Power Access Hatch";
-	req_access_txt = "11"
+	req_access_txt = "35"
 	},
 /turf/open/floor/plating,
 /area/service/hydroponics)
@@ -31211,6 +31210,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/navbeacon/wayfinding/aiupload,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "hPc" = (
@@ -33442,6 +33442,11 @@
 	pixel_x = -5;
 	pixel_y = 1
 	},
+/obj/item/storage/box/syringes,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper{
+	pixel_y = -5
+	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "iMV" = (
@@ -35647,8 +35652,8 @@
 "jKb" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance";
-	req_access_txt = null;
-	req_one_access_txt = "11, 1"
+	req_access_txt = "12";
+	req_one_access_txt = null
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -43917,7 +43922,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering{
 	name = "Power Access Hatch";
-	req_access_txt = "11"
+	req_access_txt = "50"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -45405,7 +45410,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry";
-	req_access_txt = "69"
+	req_access_txt = "33"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/disposalpipe/segment,
@@ -46988,7 +46993,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry";
-	req_access_txt = "69"
+	req_access_txt = "33"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -50305,6 +50310,11 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/inspector,
+/obj/item/inspector{
+	pixel_x = -5;
+	pixel_y = 12
+	},
 /turf/open/floor/iron,
 /area/security/office)
 "pCI" = (
@@ -63659,6 +63669,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/folder/documents,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "uQm" = (
