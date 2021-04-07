@@ -1,0 +1,4 @@
+author: "willox"
+delete-after: True
+changes: 
+  - bugfix: "pop-up boxes created by clicking a verb in the stat panel get focused (again)"
