@@ -130,9 +130,9 @@
 	/// whitelisted drone machines, direct
 	var/list/drone_machinery_whitelist_flat
 	/// whitelisted drone machines, recursive/includes descendants
-	var/list/drone_machinery_whitelist_recursive = list(/obj/machinery/atmospherics, /obj/machinery/autolathe, /obj/machinery/cell_charger, \
-	/obj/machinery/disposal, /obj/machinery/drone_dispenser, /obj/machinery/light, /obj/machinery/pipedispenser, /obj/machinery/recharger, \
-	/obj/machinery/rnd/production)
+	var/list/drone_machinery_whitelist_recursive = list(	/obj/machinery/atmospherics, /obj/machinery/autolathe, /obj/machinery/cell_charger, /obj/machinery/disposal, \
+															/obj/machinery/drone_dispenser, /obj/machinery/light, /obj/machinery/pipedispenser, /obj/machinery/recharger, \
+															/obj/machinery/rnd/production)
 
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
