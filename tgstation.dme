@@ -546,6 +546,7 @@
 #include "code\datums\components\surgery_initiator.dm"
 #include "code\datums\components\swabbing.dm"
 #include "code\datums\components\swarming.dm"
+#include "code\datums\components\technointrovert.dm"
 #include "code\datums\components\tackle.dm"
 #include "code\datums\components\tactical.dm"
 #include "code\datums\components\tether.dm"
