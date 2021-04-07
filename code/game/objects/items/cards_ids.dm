@@ -629,7 +629,7 @@
 
 	if(is_intern)
 		if(assignment)
-			assignment_string = (assignment in SSjob.head_of_staff_jobs) ? " ([assignment]-in-Training)" : "(Intern [assignment])"
+			assignment_string = (assignment in SSjob.head_of_staff_jobs) ? " ([assignment]-in-Training)" : " (Intern [assignment])"
 		else
 			assignment_string = " (Intern)"
 	else
@@ -770,6 +770,7 @@
 
 /obj/item/card/id/advanced/proc/remove_intern_status(datum/source, mob/user)
 	SIGNAL_HANDLER
+
 	if(!is_intern)
 		return
 
