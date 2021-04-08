@@ -140,32 +140,19 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	var/obj/machinery/computer/cryopod/control_computer
 	COOLDOWN_DECLARE(last_no_computer_message)
 
-	// These items are preserved when the process() despawn proc occurs.
+	// A few outlier items to be preserved on despawn_occupant()
 	var/static/list/preserve_items = list(
-		/obj/item/hand_tele,
-		/obj/item/card/id/advanced/gold/captains_spare,
-		/obj/item/aicard,
-		/obj/item/mmi,
-		/obj/item/paicard,
-		/obj/item/gun,
-		/obj/item/pinpointer,
 		/obj/item/clothing/shoes/magboots,
-		/obj/item/areaeditor/blueprints,
-		/obj/item/clothing/head/helmet/space,
-		/obj/item/clothing/suit/space,
-		/obj/item/clothing/suit/armor,
-		/obj/item/defibrillator/compact,
-		/obj/item/reagent_containers/hypospray/cmo,
 		/obj/item/clothing/accessory/medal/gold/captain,
 		/obj/item/clothing/gloves/krav_maga,
-		/obj/item/nullrod,
-		/obj/item/tank/jetpack,
-		/obj/item/documents,
-		/obj/item/nuke_core_container
+
 	)
 	// These items will NOT be preserved
 	var/static/list/do_not_preserve_items = list (
 		/obj/item/mmi/posibrain
+		/obj/item/clothing
+		/obj/item/tools
+		/obj/item/pinpointer/wayfinding
 	)
 
 /obj/machinery/cryopod/Initialize()
@@ -281,7 +268,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 					objectivestoupdate += objective.team.objectives
 					for(var/datum/objective/update_objective in objectivestoupdate)
 						if(update_objective.target != old_target || !istype(update_objective,objective.type))
-							return
+							continue
 						update_objective.target = objective.target
 						update_objective.update_explanation_text()
 						to_chat(objective.owner.current, "<BR><span class='userdanger'>You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!</span>")
@@ -331,13 +318,16 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		if(item.loc.loc && (item.loc.loc == loc || item.loc.loc == control_computer))
 			continue // means we already moved whatever this thing was in
 			// I'm a professional, okay
-		for(var/preserved in preserve_items)
-			if(istype(item, preserved))
-				if(control_computer && control_computer.allow_items)
-					control_computer.frozen_items += item
-					mob_occupant.transferItemToLoc(item, control_computer, TRUE)
-				else
-					mob_occupant.transferItemToLoc(item, loc, TRUE)
+
+		// If the item isn't something we'd want
+		if(item in do_not_preserve_items && !(item in preserve_items))
+			continue
+
+		if(control_computer && control_computer.allow_items)
+			control_computer.frozen_items += item
+			mob_occupant.transferItemToLoc(item, control_computer, TRUE)
+		else
+			mob_occupant.transferItemToLoc(item, loc, TRUE)
 
 	var/list/contents = mob_occupant.GetAllContents()
 	QDEL_LIST(contents)
