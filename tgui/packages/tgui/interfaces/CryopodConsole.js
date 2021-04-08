@@ -51,6 +51,14 @@ const ItemList = (props, context) => {
   const { act, data } = useBackend(context);
   const { frozen_items } = data;
 
+  const replaceItemName = (item) => {
+    let itemName = item.toString();
+    if (itemName.startsWith('the')) {
+      itemName = itemName.slice(4, itemName.length);
+    }
+    return itemName.replace(/^\w/, (c) => c.toUpperCase());
+  };
+
   return (
     <Collapsible title="Stored Items">
       {!frozen_items.length ? (
@@ -62,11 +70,12 @@ const ItemList = (props, context) => {
               {frozen_items.map((item, index) => (
                 <LabeledList.Item
                   key={item}
-                  label={item.replace(/^\w/, (c) => c.toUpperCase())}
+                  label={replaceItemName(item)}
                   buttons={
                     <Button
                       icon="arrow-down"
                       content="Drop"
+                      mr={1}
                       onClick={() => act('one_item', { item: index + 1 })}
                     />
                   }
