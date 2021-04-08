@@ -142,7 +142,11 @@
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
-	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
+
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/onCrossed,
+	)
+	parent.AddElement(/datum/element/connect_loc, loc_connections)
 
 /datum/component/butchering/recycler/proc/onCrossed(datum/source, mob/living/L)
 	SIGNAL_HANDLER

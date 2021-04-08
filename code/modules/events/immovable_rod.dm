@@ -83,7 +83,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	AddElement(/datum/element/point_of_interest)
 
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, .proc/on_crossed_over_movable)
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, .proc/on_entering_atom)
 
 	if(special_target)
@@ -92,7 +91,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/Destroy(force)
-	UnregisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, COMSIG_ATOM_ENTERING)
+	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
 	RemoveElement(/datum/element/point_of_interest)
 	SSaugury.unregister_doom(src)
 
@@ -129,6 +128,11 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		Bump(atom_entered)
 
 /obj/effect/immovablerod/Moved()
+
+	for(var/atom/movable/to_bump in loc)
+		if((to_bump != src) && !QDELETED(to_bump) && (to_bump.density || isliving(to_bump)))
+			Bump(to_bump)
+
 	// If we have a special target, we should definitely make an effort to go find them.
 	if(special_target)
 		var/turf/target_turf = get_turf(special_target)

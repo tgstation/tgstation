@@ -78,10 +78,8 @@
 	SIGNAL_HANDLER
 	if(a_left)
 		SEND_SIGNAL(a_left, COMSIG_MOVABLE_CROSSED, AM)
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, a_left)
 	if(a_right)
 		SEND_SIGNAL(a_right, COMSIG_MOVABLE_CROSSED, AM)
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, a_right)
 
 /obj/item/assembly_holder/on_found(mob/finder)
 	if(a_left)

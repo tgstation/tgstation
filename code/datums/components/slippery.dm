@@ -22,7 +22,11 @@
 	src.lube_flags = lube_flags
 	src.callback = callback
 	src.slot_whitelist = slot_whitelist
-	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/Slip)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/Slip,
+	)
+	parent.AddElement(/datum/element/connect_loc, loc_connections)
+	//TODOKYLER: deal with components AND REMOVE ELEMENT IN DETACH
 	if(isitem(parent))
 		holder = parent
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
@@ -57,7 +61,10 @@
 
 	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
 		holder = equipper
-		RegisterSignal(holder, COMSIG_MOVABLE_CROSSED, .proc/Slip_on_wearer)
+		var/static/list/loc_connections = list(
+			COMSIG_MOVABLE_CROSSED = .proc/Slip_on_wearer,
+		)
+		holder.AddElement(/datum/element/connect_loc, loc_connections)
 		RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
 
 /*
@@ -83,8 +90,8 @@
 /datum/component/slippery/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	holder.RemoveElement(/datum/element/connect_loc)
 	holder = null
-	UnregisterSignal(user, COMSIG_MOVABLE_CROSSED)
 
 /*
  * The slip proc, but for equipped items.
