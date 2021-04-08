@@ -21,6 +21,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/item/storage/photo_album/photo_albums
 	var/list/obj/structure/sign/painting/painting_frames = list()
 	var/list/paintings = list()
+	var/list/custom_outfits = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadPoly()
@@ -33,6 +34,7 @@ SUBSYSTEM_DEF(persistence)
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
 	LoadPaintings()
+	LoadCustomOutfits()
 
 	GLOB.explorer_drone_adventures = load_adventures()
 	return ..()
@@ -183,6 +185,7 @@ SUBSYSTEM_DEF(persistence)
 	SaveRandomizedRecipes()
 	SavePaintings()
 	SaveScars()
+	SaveCustomOutfits()
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/photo_albums.json")
@@ -411,3 +414,25 @@ SUBSYSTEM_DEF(persistence)
 			original_human.save_persistent_scars(TRUE)
 		else
 			original_human.save_persistent_scars()
+
+/datum/controller/subsystem/persistence/proc/LoadCustomOutfits()
+	for(var/filename in flist("data/custom outfits/"))
+		var/path = "data/custom outfits/[filename]"
+		var/file = file(path)
+		if(!isfile(file))
+			return
+		var/outfit_json = json_decode(file2text(file))
+		if(!outfit_json)
+			return //json_decode usually throws runtimes instead of returning null but you never know
+
+		var/outfittype = text2path(outfit_json["outfit_type"])
+		if(!ispath(outfittype, /datum/outfit))
+			return
+		var/datum/outfit/outfit = new outfittype
+		if(!outfit.load_from(outfit_json))
+			return
+		GLOB.custom_outfits += outfit
+
+/datum/controller/subsystem/persistence/proc/SaveCustomOutfits()
+	for(var/datum/outfit/outfit in GLOB.custom_outfits)
+		outfit.save_outfit()

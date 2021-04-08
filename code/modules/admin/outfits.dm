@@ -1,14 +1,24 @@
 GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 
-/datum/admins/proc/save_outfit(mob/admin,datum/outfit/O)
+/datum/outfit/proc/save_outfit()
+	var/path = "data/custom outfits/[sanitize_filename(src.name)].json"
+	var/file = file(path)
+
+	var/outfit_data = get_json_data()
+	var/json = json_encode(outfit_data)
+
+	WRITE_FILE(file, json)
+
+
+/datum/admins/proc/save_outfit(mob/admin, datum/outfit/O)
 	O.save_to_file(admin)
 	SStgui.update_user_uis(admin)
 
-/datum/admins/proc/delete_outfit(mob/admin,datum/outfit/O)
+/datum/admins/proc/delete_outfit(mob/admin, datum/outfit/O)
 	GLOB.custom_outfits -= O
 	qdel(O)
-	to_chat(admin,"<span class='notice'>Outfit deleted.</span>", confidential = TRUE)
+	to_chat(admin,"<span class='notice'>Outfit deleted.</span>")
 	SStgui.update_user_uis(admin)
 
 /datum/admins/proc/load_outfit(mob/admin)
@@ -18,15 +28,15 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/filedata = file2text(outfit_file)
 	var/json = json_decode(filedata)
 	if(!json)
-		to_chat(admin,"<span class='warning'>JSON decode error.</span>", confidential = TRUE)
+		to_chat(admin,"<span class='warning'>JSON decode error.</span>")
 		return
 	var/otype = text2path(json["outfit_type"])
 	if(!ispath(otype,/datum/outfit))
-		to_chat(admin,"<span class='warning'>Malformed/Outdated file.</span>", confidential = TRUE)
+		to_chat(admin,"<span class='warning'>Malformed/Outdated file.</span>")
 		return
 	var/datum/outfit/O = new otype
 	if(!O.load_from(json))
-		to_chat(admin,"<span class='warning'>Malformed/Outdated file.</span>", confidential = TRUE)
+		to_chat(admin,"<span class='warning'>Malformed/Outdated file.</span>")
 		return
 	GLOB.custom_outfits += O
 	SStgui.update_user_uis(admin)

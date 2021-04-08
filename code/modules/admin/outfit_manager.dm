@@ -26,7 +26,7 @@
 	if(!ui)
 		ui = new(user, src, "OutfitManager", "Outfit Manager")
 		ui.open()
-		ui.set_autoupdate(FALSE)
+		//ui.set_autoupdate(FALSE)
 
 
 /datum/outfit_manager/proc/entry(datum/outfit/outfit)
