@@ -77,13 +77,13 @@ export const OutfitEditor = (props, context) => {
             </Stack>
             <Stack mb={2}>
               <OutfitSlot name="Belt" icon="band-aid" slot="belt" />
-              <OutfitSlot name="Left Hand" slot="l_hand" />
-              <OutfitSlot name="Right Hand" slot="r_hand" />
+              <OutfitSlot name="Left Hand" icon="hand-paper" slot="l_hand" />
+              <OutfitSlot name="Right Hand" icon="hand-paper" slot="r_hand" />
             </Stack>
             <Stack mb={2}>
               <OutfitSlot name="Shoes" icon="socks" slot="shoes" />
-              <OutfitSlot name="Left Pocket" slot="l_pocket" />
-              <OutfitSlot name="Right Pocket" slot="r_pocket" />
+              <OutfitSlot name="Left Pocket" icon="envelope-open-o" iconRot={180} slot="l_pocket" />
+              <OutfitSlot name="Right Pocket" icon="envelope-open-o" iconRot={180} slot="r_pocket" />
             </Stack>
           </Box>
         </Section>
@@ -94,17 +94,16 @@ export const OutfitEditor = (props, context) => {
 
 const OutfitSlot = (props, context) => {
   const { act, data } = useBackend(context);
-  const { name, icon, slot } = props;
+  const { name, icon, iconRot, slot } = props;
   const { outfit } = data;
   const currItem = outfit[slot];
   return (
     <Stack.Item grow={1} basis={0}>
       <Button fluid height={2}
         bold
-        icon={icon}
         // todo: intuitive way to clear items
         onClick={e => act(e.ctrlKey ? "ctrlClick" : "click", { slot })} >
-        {name}
+        {<Icon name={icon} rotation={iconRot} />}{name}
       </Button>
       <Box height="32px">
         {currItem?.sprite && (
