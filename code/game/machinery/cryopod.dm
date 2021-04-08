@@ -283,12 +283,6 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 						update_objective.owner.announce_objectives()
 				qdel(objective)
 
-/obj/machinery/cryopod/proc/should_preserve_item(obj/item/item)
-	for(var/datum/theft_objective/theft_objective in control_computer.theft_cache)
-		if(istype(item, theft_objective.typepath) && theft_objective.check_special_completion(item))
-			return TRUE
-	return FALSE
-
 // This function can not be undone; do not call this unless you are sure
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
