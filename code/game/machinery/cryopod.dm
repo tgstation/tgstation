@@ -144,14 +144,13 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	var/static/list/preserve_items = list(
 		/obj/item/clothing/shoes/magboots,
 		/obj/item/clothing/accessory/medal/gold/captain,
-		/obj/item/clothing/gloves/krav_maga,
-
+		/obj/item/clothing/gloves/krav_maga
 	)
+
 	// These items will NOT be preserved
-	var/static/list/do_not_preserve_items = list (
-		/obj/item/mmi/posibrain
-		/obj/item/clothing
-		/obj/item/tools
+	var/static/list/do_not_preserve_items = list(
+		/obj/item/mmi/posibrain,
+		/obj/item/clothing,
 		/obj/item/pinpointer/wayfinding
 	)
 
