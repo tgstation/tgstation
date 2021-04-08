@@ -15,6 +15,8 @@ const PlaytimeSection = props => {
   return (
     <Table>
       {sortedPlaytimes.map(([jobName, playtime]) => {
+        if(!playtime)
+          return
         const ratio = playtime / mostPlayed;
         return (
           <Table.Row key={jobName}>
@@ -72,13 +74,10 @@ export const TrackedPlaytime = (props, context) => {
           <Box>
             <Section title="Total">
               <PlaytimeSection
-                playtimes={adminTime ? {
+                playtimes={{
                   "Ghost": ghostTime,
                   "Living": livingTime,
                   "Admin": adminTime,
-                } : {
-                  "Ghost": ghostTime,
-                  "Living": livingTime,
                 }}
               />
             </Section>
