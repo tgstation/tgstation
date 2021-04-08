@@ -1,4 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - rscadd: "Crowbarring a firelock is changed a bit. Left clicking will let you open a firedoor and hold it in place! It will close again when you move away, though. Old behaviour is still there, you just need to right-click it."

@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - qol: "adds assembly activation, voting and pull request messages to the info chat tab, adds a warning chat class to the bomb activation message"
