@@ -19,7 +19,7 @@
 	health_doll_icon = "Fugu0"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_to_delay = 5
+	move_to_delay = 2
 	friendly_verb_continuous = "floats near"
 	friendly_verb_simple = "float near"
 	speak_emote = list("puffs")
@@ -112,19 +112,19 @@
 	if(!wumbo)
 		return
 	walk(src, 0)
-	wumbo = 0
+	wumbo = FALSE
 	icon_state = "Fugu0"
-	obj_damage = 0
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	harm_intent_damage = 5
-	throw_message = "is avoided by the"
-	retreat_distance = 9
-	minimum_distance = 9
+	obj_damage = initial(obj_damage)
+	melee_damage_lower = initial(melee_damage_lower)
+	melee_damage_upper = initial(melee_damage_upper)
+	harm_intent_damage = initial(harm_intent_damage)
+	throw_message = initial(throw_message)
+	retreat_distance = initial(retreat_distance)
+	minimum_distance = initial(minimum_distance)
 	move_to_delay = 2
 	inflate_cooldown = reinflation_time
-	environment_smash = ENVIRONMENT_SMASH_NONE
-	mob_size = MOB_SIZE_SMALL
+	environment_smash = initial(environment_smash)
+	mob_size = initial(mob_size)
 	set_varspeed(0)
 
 /mob/living/simple_animal/hostile/asteroid/fugu/death(gibbed)
