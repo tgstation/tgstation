@@ -92,7 +92,6 @@
 	if(!isliving(user))
 		return
 	var/mob/living/living_user = user
-	message_admins("[living_user]")
 	if(living_user.combat_mode)
 		living_user.changeNext_move(CLICK_CD_MELEE)
 		living_user.visible_message("<span class='notice'>[living_user] bangs on [src].</span>", \
@@ -113,7 +112,7 @@
 		var/user_loc_starting_temperature = users_air.temperature
 
 		///used so that we can log everyone's stats once when the do_after finishes
-		var/list/user_stat_list = list("user" = living_user, "starting_temp" = user_loc_starting_temperature, "starting_health" = starting_health)
+		var/list/user_stat_list = list(list("user" = living_user, "starting temperature" = user_loc_starting_temperature, "starting health" = starting_health, "starting time" = starting_time))
 		people_trying_to_open += user_stat_list
 		RegisterSignal(living_user, COMSIG_PARENT_PREQDELETED, .proc/remove_from_opening_list)
 
@@ -129,53 +128,48 @@
 			if(!left_arm || left_arm.bodypart_disabled)
 				hand_string = "hand"
 
+		var/user_their_pronoun = user.p_their()
+		if(ishuman(user))
+			var/mob/living/carbon/human/human_user = user
+			user_their_pronoun = human_user.p_their()
+
 		//we want to acknowledge that several people are trying to open the same firelock to encourage them to do it
 		//also to signal to people doing it by themselves that its faster with help
 		if(length(people_trying_to_open) == 1)
-			user.visible_message("<span class='notice'>[living_user] tries to open [src] with [carbon_user.p_their()] [hand_string], struggling greatly to open the heavy door by themselves.</span>", \
+			user.visible_message("<span class='notice'>[living_user] tries to open [src] with [user_their_pronoun] [hand_string], struggling greatly to open the heavy door by themselves.</span>", \
 				"<span class='notice'>You try with all your strength to pry open [src] with your [hand_string], barely moving [p_them()]!</span>")
 		else if (length(people_trying_to_open) == 2)
-			user.visible_message("<span class='notice'>[living_user] joins [people_trying_to_open[1].name] in trying to open [src] with [carbon_user.p_their()] [hand_string].</span>", \
+			user.visible_message("<span class='notice'>[living_user] joins [people_trying_to_open[1].name] in trying to open [src] with [user_their_pronoun] [hand_string].</span>", \
 				"<span class='notice'>You join [people_trying_to_open[1].name] in trying to pry open [src] with your [hand_string]!</span>")
 		else
-			user.visible_message("<span class='notice'>[living_user] joins the others in trying to open [src] with [carbon_user.p_their()] [hand_string]!</span>", \
+			user.visible_message("<span class='notice'>[living_user] joins the others in trying to open [src] with [user_their_pronoun] [hand_string]!</span>", \
 				"<span class='notice'>You join the others in trying to pry open [src] with your [hand_string]!</span>")
 
-		//burn arms in the do_after callback so that its applied continuosly instead of at the start and/or end
-		//var/datum/callback/burning_callback = CALLBACK(src, .proc/burn_arms, user)
+		//stops the do_after if the firelock is open
+		var/datum/callback/is_closed_callback = CALLBACK(src, .proc/is_closed)
 
-		//this callback adjusts the timer of the do_after_dynamic for each user if the number of people trying to open the door changes
+		//this callback adjusts the timer of the do_after_dynamic for each user if the number of people trying to open the firelock changes
 		var/datum/callback/timer_callback = CALLBACK(src, .proc/adjust_do_after_timer)
 
 		///players can team up to open it faster. 20 seconds -> 13.333 -> 8.88 ... -> 2
 		var/true_opening_time = max(TOOLLESS_OPEN_DURATION_SOLO / max(length(people_trying_to_open) * 0.75, 1), 2 SECONDS)
+		//TODOKYLER: double and triple check whether the teaming up thing would actually work
 
-		START_PROCESSING(SSfastprocess, src)//burns the hands of everyone trying to open the door if its hot enough and they dont have protection
+		START_PROCESSING(SSmachines, src)//burns the arms of everyone trying to open the firelock if its hot enough and they dont have protection
 
-		if(do_after_dynamic(user, true_opening_time, src, dynamic_timer_change = timer_callback))
+		if(do_after_dynamic(user, true_opening_time, src, extra_checks = is_closed_callback, dynamic_timer_change = timer_callback))
 			user.visible_message("<span class='notice'>[living_user] opens [src] with [user.p_their()] [hand_string].</span>", \
-				"<span class='notice'>You pry open [src] with your [hand_string]!</span>")
+				self_message = "<span class='notice'>You pry open [src] with your [hand_string]!</span>")
+
+			barehanded_open_log(TRUE, user)
 
 			open()
 
-			barehanded_open_log(success = TRUE)
+		else //user failed to open it
+			barehanded_open_log(FALSE, user)
 
-		else if(user.stat != CONSCIOUS)
-			var/stat_string = "fallen into soft crit"
-			switch(user.stat)
-				if(UNCONSCIOUS)
-					stat_string = "fallen unconscious"
-				if(HARD_CRIT)
-					stat_string = "fallen into hard crit"
-				if(DEAD)
-					stat_string = "died"
-
-			log_game("[key_name(user)] has failed to open a firelock with their bare hands \
-			[length(people_trying_to_open) > 1 ? "along with [length(people_trying_to_open) - 1] others" : ""] because they have [stat_string], they started at [starting_health] health  \
-			they were trying to open the door for [(REALTIMEOFDAY - starting_time) / 10] seconds, their loc starting at [user_loc_starting_temperature] kelvin and ending at [users_air.temperature] kelvin.")
-
-			people_trying_to_open -= user
-
+		people_trying_to_open -= user_stat_list
+		UnregisterSignal(user, COMSIG_PARENT_PREQDELETED)
 		user.move_resist = initial(user.move_resist)
 
 /obj/machinery/door/firedoor/attack_paw(mob/living/user, list/modifiers)
@@ -183,23 +177,87 @@
 	if(!user.combat_mode)
 		attack_hand(user, modifiers)//TODOKYLER: what im doing probably messes with xenomorphs opening doors, double check that
 
-/obj/machinery/door/firedoor/barehanded_open_log(success)
-	if(!density)//no logging if we're open, because that means we're not the first person to succeed opening this firelock in the dynamic_do_after
-		var/all_users_string
-		var/all_temperatures_string
-		var/all_health_string
-		for(var/list/user_list as anything in people_trying_to_open)
-			var/temp_user = user_list["user"]
-			var/temp_temperature = user_list["temperature"]
-			var/temp_health = user_list["health"]
-			all_users_string += "[key_name(temp_user)]"
-		log_game("[key_name(user)] has successfully opened a firelock with [living_user.p_their()] bare hands \
-		[length(people_trying_to_open) > 1 ? "along with [length(people_trying_to_open) - 1] others" : ""], \
-		starting at [starting_health] health and ending at [user.health], their loc starting at [user_loc_starting_temperature] kelvin \
-		and ending at [users_air.temperature] kelvin.") //TODOKYLER: move this to blackbox logging
+/**
+ * deals with logging either when failing or succeeding to open a firelock without a crowbar.
+ * everyone trying to open it are logged individually, regardless of whether theres more than one trying to do so
+ * * success - whether or not the user opened it successfully
+ * * user - the person who either succeeded or failed in opening it, returns if not specified
+ */
+/obj/machinery/door/firedoor/proc/barehanded_open_log(success, mob/living/user)
+	if(QDELETED(user) || !isliving(user))
+		return
+
+	var/list/user_stat_list
+
+	var/user_opening_duration
+
+	var/end_temperature_of_user
+
+	var/user_damage_taken
+
+	var/user_has_internals = "false"
+
+	for(var/list/user_list as anything in people_trying_to_open)
+		if(user_list["user"] == user)
+			user_stat_list = user_list
+			break
+
+	if(!user_stat_list)
+		return
+
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.internal)
+			user_has_internals = "true"
+	user_opening_duration = (REALTIMEOFDAY - user_stat_list["starting time"]) / 10
+
+	user_damage_taken = user.health - user_stat_list["starting health"]
+
+	var/datum/gas_mixture/user_environment = user.return_air()
+	end_temperature_of_user = user_environment.temperature
+
+	if(success || (!density && user.stat == CONSCIOUS)) //if we're open and the user is conscious, then no matter what we're called with its a success
+		SSblackbox.record_feedback("associative", "barehand firelock opens", 1, \
+		list( \
+		"user" = key_name(user), \
+		"starting temperature" = user_stat_list["starting temperature"], \
+		"ending temperature" = end_temperature_of_user, \
+		"user damage taken" = user_damage_taken, \
+		"size of group trying to open" = length(people_trying_to_open), \
+		"user has internals on" = user_has_internals \
+		))
+
+	else
+		var/failure_health_state_string = "conscious"
+		switch(user.stat)
+			if(CONSCIOUS)
+				failure_health_state_string = "conscious"
+			if(SOFT_CRIT)
+				failure_health_state_string = "soft crit"
+			if(UNCONSCIOUS)
+				failure_health_state_string = "unconscious"
+			if(HARD_CRIT)
+				failure_health_state_string = "hard crit"
+			if(DEAD)
+				failure_health_state_string = "dead"
+
+		SSblackbox.record_feedback("associative", "barehand firelock failures", 1, \
+		list( \
+		"user" = key_name(user), \
+		"starting temperature" = user_stat_list["starting temperature"], \
+		"ending temperature" = end_temperature_of_user, \
+		"user attempt duration" = user_opening_duration, \
+		"user damage taken" = user_damage_taken, \
+		"user stat" = failure_health_state_string, \
+		"size of group trying to open" = length(people_trying_to_open), \
+		"user has internals on" = user_has_internals \
+		))
+
 
 ///deals burn damage to the user depending on whether theyre resistant to heat and how hot the door is
 /obj/machinery/door/firedoor/process(delta_time)
+	if(!length(people_trying_to_open))
+		return PROCESS_KILL
 	for(var/list/user_stat_list as anything in people_trying_to_open)
 		var/mob/living/user = user_stat_list["user"]
 		if(QDELETED(user))
@@ -243,12 +301,20 @@
 			if(left_arm && left_arm.status == BODYPART_ORGANIC && !left_arm.is_pseudopart)
 				left_arm.receive_damage(0, TOOLLESS_BURN_DAMAGE_PER_SECOND)
 
+//TODOKYLER: somehow this gets done in < 20 seconds
 ///used in a callback given to do_after_dynamic to adjust the timer based on how many people are trying to open it barehanded
 /obj/machinery/door/firedoor/proc/adjust_do_after_timer(old_delay, multiplicative_action_slowdown)
 	if(old_delay == (max(TOOLLESS_OPEN_DURATION_SOLO / max(length(people_trying_to_open) * 0.75, 1), 2 SECONDS)) * multiplicative_action_slowdown)
 		return null
 	else
 		return (max(TOOLLESS_OPEN_DURATION_SOLO / max(length(people_trying_to_open) * 0.75, 1), 2 SECONDS)) * multiplicative_action_slowdown
+
+///used as a callback in dynamic do_after, returns FALSE if the firelock is opened, stopping the do_after
+/obj/machinery/door/firedoor/proc/is_closed()
+	if(density)
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/door/firedoor/proc/remove_from_opening_list(datum/source, mob/living/to_remove)
 	SIGNAL_HANDLER
@@ -304,10 +370,10 @@
 	if(density)
 		if(length(people_trying_to_open))
 			user.visible_message("<span class='notice'>[user] easily opens [src] with his crowbar.</span>")
-			log_game("[key_name(user)] used a crowbar to open a firedoor when [length(people_trying_to_open)] people were trying to open it with their hands")
-			length(people_trying_to_open) = 0
+			SSblackbox.record_feedback("tally","firedoor crowbar opens", 1, "with barehanded openers")
+			people_trying_to_open = list()
 		else
-			log_game("[key_name(user)] opened a firelock with a crowbar, like a coward")
+			SSblackbox.record_feedback("tally", "firedoor crowbar opens", 1, "without barehanded openers")
 		open()
 	else
 		close()

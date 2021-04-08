@@ -377,6 +377,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(dynamic_timer_change)
 			var/new_delay = dynamic_timer_change.Invoke(delay, user.cached_multiplicative_actions_slowdown) //returns new delay if needed
 			if(new_delay)
+
 				var/current_progress = ((world.time - starttime)) / delay
 				var/new_timeleft = (1 - current_progress) * new_delay
 				var/new_endtime = new_timeleft + starttime
@@ -384,7 +385,6 @@ GLOBAL_LIST_EMPTY(species_list)
 
 				old_and_new_difference = delay - new_delay
 				delay = new_delay
-
 				progbar.goal = delay
 
 		if(!QDELETED(progbar))
