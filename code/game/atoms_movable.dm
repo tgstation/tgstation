@@ -395,12 +395,7 @@
 	if(oldarea != newarea)
 		newarea.Entered(src, oldloc)
 
-	for(var/i in loc)
-		if(i == src) // Multi tile objects
-			continue
-		var/atom/movable/thing = i
-		SEND_SIGNAL(thing, COMSIG_MOVABLE_CROSSED, src)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED_OVER, thing)
+	SEND_SIGNAL(loc, COMSIG_MOVABLE_CROSSED, src)
 
 ////////////////////////////////////////
 
@@ -555,8 +550,12 @@
 	CRASH("Uncross() should not be being called, please read the doc-comment for it for why.")
 
 /atom/movable/Uncrossed(atom/movable/AM)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	CRASH("/atom/movable/Uncrossed() was called")
+	/* TODOKYLER: remove
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
 	SEND_SIGNAL(AM, COMSIG_MOVABLE_UNCROSSED_OVER, src)
+	*/
 
 /atom/movable/Bump(atom/A)
 	if(!A)
@@ -646,12 +645,7 @@
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
 
-			SEND_SIGNAL(destination, COMSIG_MOVABLE_CROSSED, src, oldloc) //TODOKYLER: remove this entire for loop
-			for(var/atom/movable/AM in destination)
-				if(AM == src)
-					continue
-				SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED, src, oldloc)
-				SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED_OVER, AM, oldloc)
+			SEND_SIGNAL(destination, COMSIG_MOVABLE_CROSSED, src, oldloc)
 
 		Moved(oldloc, NONE, TRUE)
 		. = TRUE

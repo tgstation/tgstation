@@ -14,10 +14,15 @@
 
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/try_infect_crossed,
+	)
+	parent.AddElement(/datum/element/connect_loc, loc_connections)
+
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/try_infect_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/try_infect_collide)
-	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/try_infect_crossed)
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, .proc/try_infect_impact_zone)
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, .proc/try_infect_attack_zone)
@@ -52,6 +57,7 @@
 
 	. = NONE
 	if(clean_types & required_clean_types)
+		parent.RemoveElement(/datum/element/connect_loc)
 		qdel(src)
 		return COMPONENT_CLEANED
 

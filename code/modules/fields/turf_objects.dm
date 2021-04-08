@@ -29,6 +29,13 @@
 	name = "energy field"
 	desc = "Get off my turf!"
 
+/obj/effect/abstract/proximity_checker/advanced/field_turf/Initialize(mapload, _monitor)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_UNCROSSED = .proc/on_uncrossed,
+	)
+	parent.AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/effect/abstract/proximity_checker/advanced/field_turf/CanAllowThrough(atom/movable/AM, turf/target)
 	. = ..()
 	if(parent)
@@ -40,7 +47,8 @@
 		return parent.field_turf_crossed(AM, src)
 	return TRUE
 
-/obj/effect/abstract/proximity_checker/advanced/field_turf/Uncrossed(atom/movable/AM)
+/obj/effect/abstract/proximity_checker/advanced/field_turf/proc/on_uncrossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(parent)
 		return parent.field_turf_uncrossed(AM, src)
 	return TRUE
@@ -54,6 +62,7 @@
 	UnregisterSignal(src, COMSIG_MOVABLE_CROSSED)
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_MOVABLE_UNCROSSED = .proc/on_uncrossed,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -68,7 +77,8 @@
 		return parent.field_edge_crossed(AM, src)
 	return TRUE
 
-/obj/effect/abstract/proximity_checker/advanced/field_edge/Uncrossed(atom/movable/AM)
+/obj/effect/abstract/proximity_checker/advanced/field_edge/proc/on_uncrossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(parent)
 		return parent.field_edge_uncrossed(AM, src)
 	return TRUE

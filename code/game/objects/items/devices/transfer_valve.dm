@@ -82,7 +82,6 @@
 	SIGNAL_HANDLER
 	if(attached_device)
 		SEND_SIGNAL(attached_device, COMSIG_MOVABLE_CROSSED, AM)
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, attached_device)
 
 //Triggers mousetraps
 /obj/item/transfer_valve/attack_hand(mob/user, list/modifiers)

@@ -30,7 +30,11 @@
 	RegisterSignal(parent, list(COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_HAND), .proc/rot_react_touch)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/rot_hit_react)
 	if(ismovable(parent))
-		RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_MOVABLE_BUMP), .proc/rot_react)
+		var/static/list/loc_connections = list(
+			COMSIG_MOVABLE_CROSSED = .proc/rot_react,
+		)
+		parent.AddElement(/datum/element/connect_loc, loc_connections)
+		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/rot_react)
 	if(isliving(parent))
 		RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/react_to_revive) //mobs stop this when they come to life
 		RegisterSignal(parent, COMSIG_LIVING_GET_PULLED, .proc/rot_react_touch)

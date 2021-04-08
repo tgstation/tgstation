@@ -119,3 +119,4 @@
 /obj/effect/abstract/proximity_checker/proc/on_crossed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	monitor?.hasprox_receiver?.HasProximity(AM)
+//TODOKYLER: figure the child of on_crossed out, this only registers for this version (i think)
