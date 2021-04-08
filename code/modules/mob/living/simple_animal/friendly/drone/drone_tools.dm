@@ -42,19 +42,30 @@
 	desc = "A crowbar built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "crowbar_cyborg"
+	inhand_icon_state = "crowbar"
 
 /obj/item/screwdriver/drone
 	name = "built-in screwdriver"
 	desc = "A screwdriver built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "screwdriver_cyborg"
+	inhand_icon_state = "screwdriver"
 	random_color = FALSE
+
+
+/obj/item/screwdriver/drone/worn_overlays(isinhands = FALSE, icon_file)
+	. = list()
+	if(isinhands)
+		var/mutable_appearance/M = mutable_appearance(icon_file, "screwdriver_head")
+		M.appearance_flags = RESET_COLOR
+		. += M
 
 /obj/item/wrench/drone
 	name = "built-in wrench"
 	desc = "A wrench built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wrench_cyborg"
+	inhand_icon_state = "wrench"
 
 /obj/item/weldingtool/drone
 	name = "built-in welding tool"
@@ -67,5 +78,6 @@
 	desc = "Wirecutters built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wirecutters_cyborg"
+	inhand_icon_state = "cutters"
 	random_color = FALSE
 
