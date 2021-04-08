@@ -196,46 +196,25 @@ const taskDm = (...injectedDefines) => new Task('dm')
   });
 
 // Frontend
-let tasksToRun = [];
+let tasksToRun = [
+  taskYarn,
+  taskTgfont,
+  taskTgui,
+];
 switch (BUILD_MODE) {
   case STANDARD_BUILD:
-    tasksToRun = [
-      taskYarn,
-      taskTgfont,
-      taskTgui,
-      taskDm('CBT'),
-    ]
+    tasksToRun.push(taskDm('CBT'));
     break;
   case TGS_BUILD:
-    tasksToRun = [
-      taskYarn,
-      taskTgfont,
-      taskTgui,
-      taskPrependDefines('TGS'),
-    ]
+    tasksToRun.push(taskPrependDefines('TGS'));
     break;
   case ALL_MAPS_BUILD:
-    tasksToRun = [
-      taskYarn,
-      taskTgfont,
-      taskTgui,
-      taskDm('CBT','CIBUILDING','CITESTING','ALL_MAPS')
-    ];
+    tasksToRun.push(taskDm('CBT','CIBUILDING','CITESTING','ALL_MAPS'));
     break;
   case TEST_RUN_BUILD:
-    tasksToRun = [
-      taskYarn,
-      taskTgfont,
-      taskTgui,
-      taskDm('CBT','CIBUILDING')
-    ];
+    tasksToRun.push(taskDm('CBT','CIBUILDING'));
     break;
   case NO_DM_BUILD:
-    tasksToRun = [
-      taskYarn,
-      taskTgfont,
-      taskTgui
-    ];
     break;
   default:
     console.error(`Unknown build mode : ${BUILD_MODE}`)
