@@ -143,8 +143,8 @@
 			user.visible_message("<span class='notice'>[living_user] tries to open [src] with [user_their_pronoun] [hand_string], struggling greatly to open the heavy door by themselves.</span>", \
 				"<span class='notice'>You try with all your strength to pry open [src] with your [hand_string], barely moving [p_them()]!</span>")
 		else if (length(people_trying_to_open) == 2)
-			user.visible_message("<span class='notice'>[living_user] joins [people_trying_to_open[1].name] in trying to open [src] with [user_their_pronoun] [hand_string].</span>", \
-				"<span class='notice'>You join [people_trying_to_open[1].name] in trying to pry open [src] with your [hand_string]!</span>")
+			user.visible_message("<span class='notice'>[living_user] joins [people_trying_to_open[1]] in trying to open [src] with [user_their_pronoun] [hand_string].</span>", \
+				"<span class='notice'>You join [people_trying_to_open[1]] in trying to pry open [src] with your [hand_string]!</span>")
 		else
 			user.visible_message("<span class='notice'>[living_user] joins the others in trying to open [src] with [user_their_pronoun] [hand_string]!</span>", \
 				"<span class='notice'>You join the others in trying to pry open [src] with your [hand_string]!</span>")
@@ -391,16 +391,6 @@
 	else
 		close()
 
-/// A simple toggle for firedoors between on and off
-/obj/machinery/door/firedoor/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
-	if(welded || operating)
-		return
-
-	if(density)
-		open()
-	else
-		close()
-
 /obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
 	SIGNAL_HANDLER
 
@@ -420,7 +410,17 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
-	
+
+/// A simple toggle for firedoors between on and off
+/obj/machinery/door/firedoor/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
+	if(welded || operating)
+		return
+
+	if(density)
+		open()
+	else
+		close()
+
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
 	if(welded || operating || machine_stat & NOPOWER)
@@ -700,5 +700,3 @@
 #undef TOOLLESS_BURN_DAMAGE_PER_SECOND
 #undef TOOLLESS_OPEN_DURATION_SOLO
 #undef MINIMUM_TEMPERATURE_TO_BURN_ARMS
-#undef CONSTRUCTION_PANEL_OPEN
-#undef CONSTRUCTION_NO_CIRCUIT
