@@ -137,10 +137,10 @@
 	var/list/drone_item_whitelist_flat = list(	/obj/item/crowbar/drone, /obj/item/screwdriver/drone, /obj/item/wrench/drone, \
 												/obj/item/weldingtool/drone, /obj/item/wirecutters/drone )
 	/// whitelisted drone items, recursive/includes descendants
-	var/list/drone_item_whitelist_recursive = list(	/obj/item/airlock_painter, /obj/item/conveyor_switch_construct, /obj/item/electronics, /obj/item/light, \
-													/obj/item/pipe_meter, /obj/item/stack/cable_coil, /obj/item/stack/circuit_stack, /obj/item/stack/conveyor, \
-													/obj/item/stack/pipe_cleaner_coil, /obj/item/stack/rods, /obj/item/stack/sheet, /obj/item/stack/tile, \
-													/obj/item/stock_parts, /obj/item/toner, /obj/item/clothing/head, /obj/item/clothing/mask )
+	var/list/drone_item_whitelist_recursive = list(	/obj/item/airlock_painter, /obj/item/circuitboard, /obj/item/conveyor_switch_construct, /obj/item/electronics, \
+													/obj/item/light, /obj/item/pipe_meter, /obj/item/stack/cable_coil, /obj/item/stack/circuit_stack, \
+													/obj/item/stack/conveyor, /obj/item/stack/pipe_cleaner_coil, /obj/item/stack/rods, /obj/item/stack/sheet, \
+													/obj/item/stack/tile, /obj/item/stock_parts, /obj/item/toner, /obj/item/clothing/head, /obj/item/clothing/mask )
 
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
