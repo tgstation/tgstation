@@ -8,7 +8,7 @@
 	var/list/connections
 
 	/// An assoc list of locs that are being occupied and a list of targets that occupy them.
-	var/list/targets
+	var/list/targets = list()
 
 /datum/element/connect_loc/Attach(datum/target, list/connections)
 	. = ..()
@@ -30,23 +30,20 @@
 	if (!isnull(movable_source.loc))
 		unregister_signals(source, movable_source.loc)
 
-	LAZYREMOVE(targets, source)
-
 /datum/element/connect_loc/proc/update_signals(atom/movable/target)
 	if (isnull(target.loc))
 		return
 
-	LAZYADDASSOCLIST(targets, target.loc, target)
+	LAZYSET(targets[target.loc], target, TRUE)
 
 	for (var/signal in connections)
 		target.RegisterSignal(target.loc, signal, connections[signal])
 
-	if (isturf(target.loc))
-		// override is fine, it just means multiple `connect_loc`s are on the same turf.
-		RegisterSignal(target.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, override = TRUE)
+	if (isturf(target.loc) && length(targets[target.loc]) == 1)
+		RegisterSignal(target.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change)
 
 /datum/element/connect_loc/proc/unregister_signals(atom/movable/target, atom/old_loc)
-	LAZYREMOVEASSOC(targets, target.loc, target)
+	LAZYREMOVE(targets[target.loc], target)
 
 	for (var/signal in connections)
 		target.UnregisterSignal(old_loc, signal)
