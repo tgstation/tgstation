@@ -10,14 +10,17 @@ const sortByPlaytime = sortBy(([_, playtime]) => -playtime);
 
 const PlaytimeSection = props => {
   const { playtimes } = props;
-  const sortedPlaytimes = sortByPlaytime(Object.entries(playtimes));
-  const mostPlayed = sortedPlaytimes[0][1];
+  const sortedPlaytimes = sortByPlaytime(Object.entries(playtimes))
+    .map(([jobName, playtime]) => {
+      if (playtime === 0) {
+        return;
+      }
+      return { [jobName]: playtime };
+    });
+  const mostPlayed = sortedPlaytimes[0][1] || 1;
   return (
     <Table>
       {sortedPlaytimes.map(([jobName, playtime]) => {
-        if (!playtime) {
-          return;
-        }
         const ratio = playtime / mostPlayed;
         return (
           <Table.Row key={jobName}>
@@ -36,7 +39,7 @@ const PlaytimeSection = props => {
                     {(playtime / 60).toLocaleString(undefined, {
                       "minimumFractionDigits": 1,
                       "maximumFractionDigits": 1,
-                    })}h
+                    })}
                   </Flex.Item>
                 </Flex>
               </ProgressBar>
