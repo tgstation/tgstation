@@ -30,7 +30,7 @@
 	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/structure/windoor_assembly/Initialize(loc, set_dir)
-	..()
+	. = ..()
 	if(set_dir)
 		setDir(set_dir)
 	air_update_turf(TRUE, TRUE)
@@ -81,6 +81,7 @@
 		return
 
 	if (get_dir(loc, new_location) == dir && density)
+		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, params)
