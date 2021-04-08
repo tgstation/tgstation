@@ -77,5 +77,4 @@
 	SHOULD_NOT_SLEEP(TRUE)
 
 	for (var/atom/movable/target as anything in targets[new_turf])
-		unregister_signals(target, old_turf)
 		update_signals(target)
