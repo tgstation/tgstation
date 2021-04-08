@@ -68,7 +68,7 @@
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>[src] is on layer [piping_layer].</span>"
-	. += "<span class='notice'>[src] is of [GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[pipe_color]]] color"
+	. += "<span class='notice'>[src] is of [GLOB.pipe_color_name[pipe_color]] color"
 	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
