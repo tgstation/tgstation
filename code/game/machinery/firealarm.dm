@@ -78,9 +78,9 @@
 
 	. += "fire_overlay"
 	if(is_station_level(z))
-		. += "fire_[GLOB.security_level]"
-		. += mutable_appearance(icon, "fire_[GLOB.security_level]", layer, plane)
-		. += mutable_appearance(icon, "fire_[GLOB.security_level]", layer, EMISSIVE_PLANE)
+		. += "fire_[SSsecurity_level.current_level]"
+		. += mutable_appearance(icon, "fire_[SSsecurity_level.current_level]", layer, plane)
+		. += mutable_appearance(icon, "fire_[SSsecurity_level.current_level]", layer, EMISSIVE_PLANE)
 	else
 		. += "fire_[SEC_LEVEL_GREEN]"
 		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]", layer, plane)

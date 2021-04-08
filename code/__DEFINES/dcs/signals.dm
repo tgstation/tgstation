@@ -34,13 +34,14 @@
 	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
 /// a person somewhere has thrown something : (mob/living/carbon/carbon_thrower, target)
 #define COMSIG_GLOB_CARBON_THROW_THING	"!throw_thing"
-/// security level has changed : (new_level)
-#define COMSIG_GLOB_SECURITY_LEVEL_CHANGED "!security_level_changed"
 
 /// signals from globally accessible objects
 
 ///from SSsun when the sun changes position : (azimuth)
 #define COMSIG_SUN_MOVED "sun_moved"
+
+///from SSsecurity_level when the security level changes : (new_level)
+#define COMSIG_SECURITY_LEVEL_CHANGED "security_level_changed"
 
 //////////////////////////////////////////////////////////////////
 

@@ -47,7 +47,7 @@
 /obj/machinery/door/examine(mob/user)
 	. = ..()
 	if(red_alert_access)
-		if(GLOB.security_level >= SEC_LEVEL_RED)
+		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
 			. += "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>"
 		else
 			. += "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>"
@@ -57,7 +57,7 @@
 		. += "<span class='notice'>It has labels indicating that it has an emergency mechanism to open it with <b>just your hands</b> if there's no power.</span>"
 
 /obj/machinery/door/check_access_list(list/access_list)
-	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
+	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
 		return TRUE
 	return ..()
 
