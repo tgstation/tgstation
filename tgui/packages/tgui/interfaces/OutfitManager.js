@@ -53,13 +53,6 @@ export const OutfitManager = (props, context) => {
                         'text-overflow': 'ellipsis',
                       }}
                       content={outfit.name}
-                      onClick={() => act("preview", { outfit: outfit.ref })} />
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Button
-                      icon="pencil-alt"
-                      tooltip="Edit this outfit"
-                      tooltipPosition="left"
                       onClick={() => act("edit", { outfit: outfit.ref })} />
                   </Stack.Item>
                   <Stack.Item ml={0.5}>

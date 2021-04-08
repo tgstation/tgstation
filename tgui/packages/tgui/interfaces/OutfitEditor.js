@@ -48,12 +48,11 @@ export const OutfitEditor = (props, context) => {
                 tooltipPosition="left"
                 onClick={() => act("vv", {})} />
               <Button
-                icon="save"
-                disabled={!saveable}
-                tooltip={!!saveable && "Save this outfit to the custom outfit list"}
+                color={!saveable && "bad"}
+                icon={saveable?"save":"trash-alt"}
+                tooltip={saveable?"Save this outfit to the custom outfit list":"Remove this outfit from the custom outfit list"}
                 tooltipPosition="left"
-                title={!saveable && "This outfit is already on the custom outfit list. Any changes made here will be immediately applied."}
-                onClick={() => act("save", {})} />
+                onClick={() => act(saveable?"save":"delete", {})} />
             </>
           }>
           <Box textAlign="center">

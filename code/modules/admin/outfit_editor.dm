@@ -104,7 +104,10 @@
 			if(newname)
 				drip.name = newname
 		if("save")
-			GLOB.custom_outfits |= (drip)
+			GLOB.custom_outfits |= drip
+			SStgui.update_user_uis(holder.mob)
+		if("delete")
+			GLOB.custom_outfits -= drip
 			SStgui.update_user_uis(holder.mob)
 		if("vv")
 			holder.debug_variables(drip)
