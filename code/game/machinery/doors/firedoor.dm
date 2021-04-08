@@ -228,15 +228,26 @@
 	opacity = TRUE
 	density = TRUE
 
+/obj/machinery/door/firedoor/border_only/Initialize()
+	. = ..()
+
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXIT = .proc/on_exit,
+	)
+
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(!(get_dir(loc, target) == dir)) //Make sure looking at appropriate border
 		return TRUE
 
-/obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(get_dir(loc, target) == dir)
-		return !density
-	return TRUE
+/obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+
+	if(get_dir(leaving.loc, new_location) == dir && density)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/machinery/door/firedoor/border_only/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)

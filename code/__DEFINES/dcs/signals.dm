@@ -296,7 +296,9 @@
 
 // /turf signals
 
-///from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/transferring_comps)
+/// from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/post_change_callbacks).
+/// `post_change_callbacks` is a list that signal handlers can mutate to append `/datum/callback` objects.
+/// They will be called with the new turf after the turf has changed.
 #define COMSIG_TURF_CHANGE "turf_change"
 ///from base of atom/has_gravity(): (atom/asker, list/forced_gravities)
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"
@@ -316,11 +318,14 @@
 #define COMSIG_MOVABLE_CROSS "movable_cross"
 ///from base of atom/movable/Crossed(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"
-///from base of atom/movable/Uncross(): (/atom/movable)
-#define COMSIG_MOVABLE_UNCROSS "movable_uncross"
-	#define COMPONENT_MOVABLE_BLOCK_UNCROSS (1<<0)
 ///from base of atom/movable/Uncrossed(): (/atom/movable)
 #define COMSIG_MOVABLE_UNCROSSED "movable_uncrossed"
+///from base of atom/movable/Cross(): (/atom/movable)
+#define COMSIG_MOVABLE_CROSS_OVER "movable_cross_am"
+///from base of atom/movable/Crossed(): (/atom/movable)
+#define COMSIG_MOVABLE_CROSSED_OVER "movable_crossed_am"
+///from base of atom/movable/Uncrossed(): (/atom/movable)
+#define COMSIG_MOVABLE_UNCROSSED_OVER "movable_uncross_am"
 ///from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_BUMP "movable_bump"
 ///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)

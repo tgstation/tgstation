@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FLYING (1<<1)
 #define VENTCRAWLING (1<<2)
 #define FLOATING (1<<3)
-/// When moving, will Cross()/Uncross() everything, but won't stop or Bump() anything.
+/// When moving, will Cross() everything, but won't stop or Bump() anything.
 #define PHASING (1<<4)
 
 //Fire and Acid stuff, for resistance_flags
