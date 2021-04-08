@@ -1,16 +1,6 @@
 GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 
-/datum/outfit/proc/save_outfit()
-	var/path = "data/custom outfits/[sanitize_filename(src.name)].json"
-	var/file = file(path)
-
-	var/outfit_data = get_json_data()
-	var/json = json_encode(outfit_data)
-
-	WRITE_FILE(file, json)
-
-
 /datum/admins/proc/save_outfit(mob/admin, datum/outfit/O)
 	O.save_to_file(admin)
 	SStgui.update_user_uis(admin)

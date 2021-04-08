@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(persistence)
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
 	LoadPaintings()
-	LoadCustomOutfits()
+	load_custom_outfits()
 
 	GLOB.explorer_drone_adventures = load_adventures()
 	return ..()
@@ -185,7 +185,7 @@ SUBSYSTEM_DEF(persistence)
 	SaveRandomizedRecipes()
 	SavePaintings()
 	SaveScars()
-	SaveCustomOutfits()
+	save_custom_outfits()
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/photo_albums.json")
@@ -415,24 +415,31 @@ SUBSYSTEM_DEF(persistence)
 		else
 			original_human.save_persistent_scars()
 
-/datum/controller/subsystem/persistence/proc/LoadCustomOutfits()
-	for(var/filename in flist("data/custom outfits/"))
-		var/path = "data/custom outfits/[filename]"
-		var/file = file(path)
-		if(!isfile(file))
-			return
-		var/outfit_json = json_decode(file2text(file))
-		if(!outfit_json)
-			return //json_decode usually throws runtimes instead of returning null but you never know
 
-		var/outfittype = text2path(outfit_json["outfit_type"])
+/datum/controller/subsystem/persistence/proc/load_custom_outfits()
+	var/file = file("data/custom_outfits.json")
+	var/list/outfits_json = json_decode(file2text(file))
+	if(!islist(outfits_json))
+		return
+
+	for(var/outfit_data in outfits_json)
+		if(!islist(outfit_data))
+			continue
+
+		var/outfittype = text2path(outfit_data["outfit_type"])
 		if(!ispath(outfittype, /datum/outfit))
 			return
 		var/datum/outfit/outfit = new outfittype
-		if(!outfit.load_from(outfit_json))
+		if(!outfit.load_from(outfit_data))
 			return
 		GLOB.custom_outfits += outfit
 
-/datum/controller/subsystem/persistence/proc/SaveCustomOutfits()
+/datum/controller/subsystem/persistence/proc/save_custom_outfits()
+	var/file = file("data/custom_outfits.json")
+	fdel(file)
+
+	var/list/data = list()
 	for(var/datum/outfit/outfit in GLOB.custom_outfits)
-		outfit.save_outfit()
+		data += list(outfit.get_json_data())
+
+	WRITE_FILE(file, json_encode(json))
