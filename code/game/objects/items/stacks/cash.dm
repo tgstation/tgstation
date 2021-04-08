@@ -2,7 +2,7 @@
 	name = "space cash"
 	singular_name = "bill"
 	icon = 'icons/obj/economy.dmi'
-	icon_state = "spacecash"
+	icon_state = "spacecash1"
 	amount = 1
 	max_amount = INFINITY
 	throwforce = 0
