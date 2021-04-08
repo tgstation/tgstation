@@ -54,7 +54,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!wumbo && inflate_cooldown != 0)
-		inflate_cooldown = max(inflate_cooldown - (delta_time * 5), 0)
+		//1 delta time = 0.5 seconds
+		inflate_cooldown = max(inflate_cooldown - (delta_time * 0.5 SECONDS), 0)
 	if(target && AIStatus == AI_ON)
 		Inflate()
 	..()
