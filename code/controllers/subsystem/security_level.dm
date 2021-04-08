@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(security_level)
 	name = "Security Level"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_SECURITY_LEVEL
 	/// Currently set security level
 	var/current_level = SEC_LEVEL_GREEN
 
