@@ -1,11 +1,10 @@
 /**
  * @file
  * @copyright 2020 Aleksej Komarov
- * @author Original Aleksej Komarov
- * @author Changes Warlockd (https://github.com/warlockd)
+ * @author Aleksej Komarov
+ * @author Warlockd (https://github.com/warlockd)
  * @license MIT
  */
-
 
 import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
