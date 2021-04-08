@@ -296,7 +296,7 @@
 	for(var/areaname in our_sort)
 		if (areaname == home.name)
 			var/list/alarm = our_sort[areaname]
-			var/list/sources = alarm[3]
+			var/list/sources = alarm[2]
 			if (!(source in sources))
 				sources += source
 			return TRUE
