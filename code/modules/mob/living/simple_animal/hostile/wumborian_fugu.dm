@@ -1,4 +1,12 @@
-//A fragile mob that becomes temporarily invincible and large to attack
+/**
+ * # Wumborian Fugu
+ *
+ * A strange alien creature capable of increasing its mass when threatened, giving it unmatched defensive capabilities with decent offensive capabilities.
+ *
+ * A mining mob currently unavailable outside of xenobiology, the wumborian fugu grows in size to take on attackers, an ability which renders it immune to all damage while it is in effect.
+ * It will eventually deflate after growing, however, opening it up to attack while its power is on cooldown.  Killing the fugu grants access to its gland, which can be used to supersize most simplemobs
+ * and give them a sizeable buff.
+ */
 /mob/living/simple_animal/hostile/asteroid/fugu
 	name = "wumborian fugu"
 	desc = "The wumborian fugu rapidly increases its body mass in order to ward off its prey. Great care should be taken to avoid it while it's in this state as it is nearly invincible, but it cannot maintain its form forever."
@@ -34,25 +42,21 @@
 	mob_size = MOB_SIZE_SMALL
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = HOSTILE_SPAWN
-	var/wumbo = 0
-	var/inflate_cooldown = 0
-	var/datum/action/innate/fugu/expand/E
 	loot = list(/obj/item/fugu_gland{layer = ABOVE_MOB_LAYER})
-
-/mob/living/simple_animal/hostile/asteroid/fugu/Initialize()
-	. = ..()
-	E = new
-	E.Grant(src)
-
-/mob/living/simple_animal/hostile/asteroid/fugu/Destroy()
-	QDEL_NULL(E)
-	return ..()
+	///Whether or not the fugu is currently enlarged.
+	var/wumbo = FALSE
+	///The cooldown for the fugu's growth ability.
+	var/inflate_cooldown = 0
+	///How long the fugu's buffed form lasts.
+	var/inflate_time = 10 SECONDS
+	///How long it takes for the fugu to be able to grow again after shrinking.
+	var/reinflation_time = 8 SECONDS
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life(delta_time = SSMOBS_DT, times_fired)
-	if(!wumbo)
-		inflate_cooldown = max((inflate_cooldown - (0.5 * delta_time)), 0)
+	if(!wumbo && inflate_cooldown != 0)
+		inflate_cooldown = max(inflate_cooldown - (delta_time * 5), 0)
 	if(target && AIStatus == AI_ON)
-		E.Activate()
+		Inflate()
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/fugu/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -62,65 +66,80 @@
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Aggro()
 	..()
-	E.Activate()
+	Inflate()
 
-/datum/action/innate/fugu
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
-	background_icon_state = "bg_fugu"
+/mob/living/simple_animal/hostile/asteroid/fugu/ranged_secondary_attack(atom/target, modifiers)
+	Inflate()
 
-/datum/action/innate/fugu/expand
-	name = "Inflate"
-	desc = "Temporarily increases your size, and makes you significantly more dangerous and tough! Do not bully the fugu!"
-	button_icon_state = "expand"
-
-/datum/action/innate/fugu/expand/Activate()
-	var/mob/living/simple_animal/hostile/asteroid/fugu/F = owner
-	if(F.wumbo)
-		to_chat(F, "<span class='warning'>YOU'RE ALREADY WUMBO!</span>")
-		return
-	if(F.inflate_cooldown)
-		to_chat(F, "<span class='warning'>You need time to gather your strength!</span>")
-		return
-	if(F.buffed)
-		to_chat(F, "<span class='warning'>Something is interfering with your growth!</span>")
-		return
-	F.wumbo = 1
-	F.icon_state = "Fugu1"
-	F.obj_damage = 60
-	F.melee_damage_lower = 15
-	F.melee_damage_upper = 20
-	F.harm_intent_damage = 0
-	F.throw_message = "is absorbed by the girth of the"
-	F.retreat_distance = null
-	F.minimum_distance = 1
-	F.move_to_delay = 6
-	F.environment_smash = ENVIRONMENT_SMASH_WALLS
-	F.mob_size = MOB_SIZE_LARGE
-	F.speed = 1
-	addtimer(CALLBACK(F, /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate), 100)
-
-/mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
+/**
+ * Inflates the fugu, making it invulnerable to attack and buffing its offensive and destructive capabilities.
+ *
+ * If the fugu is capable of going wumbo, it will do so.  This gives it invulnerability to damage, high object damage,
+ * and offensive AI as opposed to its default evasive manuvers.  The fugu will deflate after 10 seconds.
+ */
+/mob/living/simple_animal/hostile/asteroid/fugu/proc/Inflate()
 	if(wumbo)
-		walk(src, 0)
-		wumbo = 0
-		icon_state = "Fugu0"
-		obj_damage = 0
-		melee_damage_lower = 0
-		melee_damage_upper = 0
-		harm_intent_damage = 5
-		throw_message = "is avoided by the"
-		retreat_distance = 9
-		minimum_distance = 9
-		move_to_delay = 2
-		inflate_cooldown = 4
-		environment_smash = ENVIRONMENT_SMASH_NONE
-		mob_size = MOB_SIZE_SMALL
-		speed = 0
+		to_chat(src, "<span class='warning'>YOU'RE ALREADY WUMBO!</span>")
+		return
+	if(inflate_cooldown)
+		to_chat(src, "<span class='warning'>You need time to gather your strength!</span>")
+		return
+	if(buffed)
+		to_chat(src, "<span class='warning'>Something is interfering with your growth!</span>")
+		return
+	wumbo = TRUE
+	icon_state = "Fugu1"
+	obj_damage = 60
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	harm_intent_damage = 0
+	throw_message = "is absorbed by the girth of the"
+	retreat_distance = null
+	minimum_distance = 1
+	move_to_delay = 6
+	environment_smash = ENVIRONMENT_SMASH_WALLS
+	mob_size = MOB_SIZE_LARGE
+	set_varspeed(1)
+	addtimer(CALLBACK(src, /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate), inflate_time)
+
+/**
+ * Deflates the fugu, resetting it to default state.
+ *
+ * Deflating the fugu undoes all the buffs inflating gives it, setting it back to normal.
+ * This proc also sets the cooldown for the ability, which is by default 4 seconds.
+ */
+/mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
+	if(!wumbo)
+		return
+	walk(src, 0)
+	wumbo = 0
+	icon_state = "Fugu0"
+	obj_damage = 0
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	harm_intent_damage = 5
+	throw_message = "is avoided by the"
+	retreat_distance = 9
+	minimum_distance = 9
+	move_to_delay = 2
+	inflate_cooldown = reinflation_time
+	environment_smash = ENVIRONMENT_SMASH_NONE
+	mob_size = MOB_SIZE_SMALL
+	set_varspeed(0)
 
 /mob/living/simple_animal/hostile/asteroid/fugu/death(gibbed)
 	Deflate()
 	..(gibbed)
 
+/**
+ * # Fugu Gland
+ *
+ * A gland dropped by the wumborian fugu when killed.  Using it on a simplemob increases the mob's size, health, and strength.
+ *
+ * An item used to buff simplemobs by increasing their size, attack damage, and health.  It also gives them the ability to smash rwalls.
+ * Buffing a simplemob in this manner renders it unable to be buffed again by any means.  Some mobs are notably immune to being affected
+ * by the gland for balance concerns.
+ */
 /obj/item/fugu_gland
 	name = "wumborian fugu gland"
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
@@ -129,21 +148,23 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
+	///A list of all the mob types unable to use this item.
 	var/list/banned_mobs
 
 /obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(proximity_flag && isanimal(target))
-		var/mob/living/simple_animal/A = target
-		if(A.buffed || (A.type in banned_mobs) || A.stat)
-			to_chat(user, "<span class='warning'>Something's interfering with [src]'s effects. It's no use.</span>")
-			return
-		A.buffed++
-		A.maxHealth *= 1.5
-		A.health = min(A.maxHealth,A.health*1.5)
-		A.melee_damage_lower = max((A.melee_damage_lower * 2), 10)
-		A.melee_damage_upper = max((A.melee_damage_upper * 2), 10)
-		A.transform *= 2
-		A.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES | ENVIRONMENT_SMASH_RWALLS
-		to_chat(user, "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>")
-		qdel(src)
+	if(!proximity_flag || !isanimal(target))
+		return
+	var/mob/living/simple_animal/animal_target = target
+	if(animal_target.buffed || (animal_target.type in banned_mobs) || animal_target.stat)
+		to_chat(user, "<span class='warning'>Something's interfering with [src]'s effects. It's no use.</span>")
+		return
+	animal_target.buffed++
+	animal_target.maxHealth *= 1.5
+	animal_target.health = min(animal_target.maxHealth, animal_target.health*1.5)
+	animal_target.melee_damage_lower = max((animal_target.melee_damage_lower * 2), 10)
+	animal_target.melee_damage_upper = max((animal_target.melee_damage_upper * 2), 10)
+	animal_target.transform *= 2
+	animal_target.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES | ENVIRONMENT_SMASH_RWALLS
+	to_chat(user, "<span class='info'>You increase the size of [animal_target], giving it a surge of strength!</span>")
+	qdel(src)
