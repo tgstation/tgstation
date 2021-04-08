@@ -619,10 +619,7 @@
 
 	if(obj_flags & EMAGGED)
 		return
-	if(new_level >= SEC_LEVEL_RED)
-		locked = FALSE
-	else
-		locked = TRUE
+	locked = new_level < SEC_LEVEL_RED
 
 /obj/docking_port/stationary/random
 	name = "escape pod"

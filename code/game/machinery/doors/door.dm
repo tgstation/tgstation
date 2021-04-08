@@ -108,7 +108,7 @@
 		return
 	if(!red_alert_access)
 		return
-	visible_message("<span class='notice'>[src] whirrs as it automatically lifts access requirements!</span>")
+	audible_message("<span class='notice'>[src] whirrs as [p_they()] automatically lifts access requirements!</span>")
 	playsound(src, 'sound/machines/boltsup.ogg', 50, TRUE)
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
