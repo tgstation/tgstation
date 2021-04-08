@@ -326,13 +326,13 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		if(item.loc.loc && (item.loc.loc == loc || item.loc.loc == control_computer))
 			continue // means we already moved whatever this thing was in
 			// I'm a professional, okay
-	for(var/preserved in preserve_items)
-		if(istype(item, preserved))
-			if(control_computer && control_computer.allow_items)
-				control_computer.frozen_items += item
-				mob_occupant.transferItemToLoc(item, control_computer, TRUE)
-			else
-				mob_occupant.transferItemToLoc(item, loc, TRUE)
+		for(var/preserved in preserve_items)
+			if(istype(item, preserved))
+				if(control_computer && control_computer.allow_items)
+					control_computer.frozen_items += item
+					mob_occupant.transferItemToLoc(item, control_computer, TRUE)
+				else
+					mob_occupant.transferItemToLoc(item, loc, TRUE)
 
 	var/list/contents = mob_occupant.GetAllContents()
 	QDEL_LIST(contents)
