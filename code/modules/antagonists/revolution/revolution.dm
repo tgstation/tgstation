@@ -383,13 +383,28 @@
 	SSshuttle.clearHostileEnvironment(src)
 	save_members()
 
+	var/charter_given = FALSE
+
 	// Remove everyone as a revolutionary
 	for (var/_rev_mind in members)
 		var/datum/mind/rev_mind = _rev_mind
 		if (rev_mind.has_antag_datum(/datum/antagonist/rev))
 			var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
 			rev_antag.remove_revolutionary(FALSE, . == STATION_VICTORY ? DECONVERTER_STATION_WIN : DECONVERTER_REVS_WIN)
-			LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former [(rev_mind in ex_headrevs) ? "head revolutionary" : "revolutionary"]</span>")
+			if(!(rev_mind in ex_headrevs))
+				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former revolutionary</span>")
+			else
+				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
+				if(!charter_given && rev_mind.current && rev_mind.current.stat == CONSCIOUS)
+					charter_given = TRUE
+					var/obj/structure/closet/supplypod/bluespacepod/syndicate/pod = new()
+					pod.explosionSize = list(0,0,0,0)
+					new /obj/item/station_charter/revolution(pod)
+					var/turf/landing_location = get_turf(rev_mind.current)
+					new /obj/effect/pod_landingzone(landing_location, pod)
+					to_chat(rev_mind.current, "<span class='hear'>You hear something crackle in your ears for a moment before a voice speaks. \
+						\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
+						<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\"</span>")
 
 	if (. == STATION_VICTORY)
 		// If the revolution was quelled, make rev heads unable to be revived through pods

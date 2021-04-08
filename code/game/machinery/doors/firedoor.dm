@@ -29,6 +29,7 @@
 	var/list/affecting_areas
 	///the list of people trying to open this firelock without any tools
 	var/list/people_trying_to_open = list()
+	var/being_held_open = FALSE
 
 /obj/machinery/door/firedoor/Initialize()
 	. = ..()
@@ -39,7 +40,10 @@
 	if(!density)
 		. += "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>"
 	else if(!welded)
-		. += "<span class='notice'>It is closed, but could be <i>pried</i> open. Deconstruction would require it to be <b>welded</b> shut.</span>"
+		. += "<span class='notice'>It is closed, but could be <b>pried</b> open.</span>"
+		. += "<span class='notice'>Hold the door open by prying it with <i>left-click</i> and standing next to it.</span>"
+		. += "<span class='notice'>Prying by <i>right-clicking</i> the door will simply open it.</span>"
+		. += "<span class='notice'>Deconstruction would require it to be <b>welded</b> shut.</span>"
 	else if(boltslocked)
 		. += "<span class='notice'>It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.</span>"
 	else
@@ -363,11 +367,13 @@
 		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
 		update_appearance()
 
-/obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
+/// We check for adjacency when using the primary attack.
+/obj/machinery/door/firedoor/try_to_crowbar(obj/item/acting_object, mob/user)
 	if(welded || operating)
 		return
 
 	if(density)
+		being_held_open = TRUE
 		if(length(people_trying_to_open))
 			user.visible_message("<span class='notice'>[user] easily opens [src] with his crowbar.</span>")
 			SSblackbox.record_feedback("tally","firedoor crowbar opens", 1, "with barehanded openers")
@@ -375,9 +381,46 @@
 		else
 			SSblackbox.record_feedback("tally", "firedoor crowbar opens", 1, "without barehanded openers")
 		open()
+		if(QDELETED(user))
+			being_held_open = FALSE
+			return
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
+		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
+		RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/handle_held_open_adjacency)
+		handle_held_open_adjacency(user)
 	else
 		close()
 
+/// A simple toggle for firedoors between on and off
+/obj/machinery/door/firedoor/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
+	if(welded || operating)
+		return
+
+	if(density)
+		open()
+	else
+		close()
+
+/obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
+	SIGNAL_HANDLER
+
+	//Handle qdeletion here
+	if(QDELETED(user))
+		being_held_open = FALSE
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
+		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+		return
+
+	var/mob/living/living_user = user
+	if(Adjacent(user) && isliving(user) && (living_user.body_position == STANDING_UP))
+		return
+	being_held_open = FALSE
+	INVOKE_ASYNC(src, .proc/close)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+	
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
 	if(welded || operating || machine_stat & NOPOWER)
@@ -462,15 +505,26 @@
 	opacity = TRUE
 	density = TRUE
 
+/obj/machinery/door/firedoor/border_only/Initialize()
+	. = ..()
+
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXIT = .proc/on_exit,
+	)
+
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(!(get_dir(loc, target) == dir)) //Make sure looking at appropriate border
 		return TRUE
 
-/obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(get_dir(loc, target) == dir)
-		return !density
-	return TRUE
+/obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+
+	if(get_dir(leaving.loc, new_location) == dir && density)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/machinery/door/firedoor/border_only/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)

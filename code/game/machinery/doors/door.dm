@@ -219,7 +219,12 @@
 /obj/machinery/door/proc/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
 	return
 
-/obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
+
+/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user)
+	return
+
+/// Called when the user right-clicks on the door with a crowbar.
+/obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
@@ -246,7 +251,7 @@
 		if(istype(weapon, /obj/item/crowbar))
 			var/obj/item/crowbar/crowbar = weapon
 			forced_open = crowbar.force_opens
-		try_to_crowbar(weapon, user, forced_open)
+		try_to_crowbar_secondary(weapon, user, forced_open)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

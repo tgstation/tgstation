@@ -98,7 +98,7 @@
 	. = ..()
 	update_layer()
 
-/obj/machinery/atmospherics/pipe/proc/update_node_icon()
+/obj/machinery/atmospherics/proc/update_node_icon()
 	for(var/i in 1 to device_type)
 		if(nodes[i])
 			var/obj/machinery/atmospherics/N = nodes[i]

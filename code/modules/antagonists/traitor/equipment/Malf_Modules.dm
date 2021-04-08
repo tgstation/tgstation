@@ -14,11 +14,13 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/syndicatebomb/empty,
 		/obj/machinery/syndicatebomb/self_destruct,
 		/obj/machinery/syndicatebomb/training,
-		/obj/machinery/atmospherics/pipe/simple,
 		/obj/machinery/atmospherics/pipe/layer_manifold,
-		/obj/machinery/atmospherics/pipe/manifold,
-		/obj/machinery/atmospherics/pipe/manifold4w,
 		/obj/machinery/atmospherics/pipe/multiz,
+		/obj/machinery/atmospherics/pipe/smart,
+		/obj/machinery/atmospherics/pipe/smart/manifold, //mapped one
+		/obj/machinery/atmospherics/pipe/smart/manifold4w, //mapped one
+		/obj/machinery/atmospherics/pipe/color_adapter,
+		/obj/machinery/atmospherics/pipe/bridge_pipe,
 		/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 		/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
