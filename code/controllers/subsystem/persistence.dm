@@ -418,13 +418,14 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/load_custom_outfits()
 	var/file = file("data/custom_outfits.json")
-	if(!isfile(file))
+	if(!fexists(file))
 		return
-	var/list/outfits_json = json_decode(file2text(file))
-	if(!islist(outfits_json))
+	var/outfits_json = file2text(file)
+	var/list/outfits = json_decode(outfits_json)
+	if(!islist(outfits))
 		return
 
-	for(var/outfit_data in outfits_json)
+	for(var/outfit_data in outfits)
 		if(!islist(outfit_data))
 			continue
 
