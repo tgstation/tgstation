@@ -19,6 +19,7 @@
 	STR.max_combined_w_class = 40
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_items = 5
+	STR.rustle_sound = FALSE
 	STR.set_holdable(drone_builtins)
 
 
