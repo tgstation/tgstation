@@ -588,6 +588,10 @@
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
 
+/obj/machinery/computer/shuttle/pod/Initialize(mapload)
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_SECURITY_LEVEL_CHANGED, .proc/check_lock)
+
 /obj/machinery/computer/shuttle/pod/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
@@ -602,6 +606,22 @@
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	possible_destinations += ";[port.id]_lavaland"
+
+/**
+ * Signal handler for checking if we should lock or unlock escape pods accordingly to a newly set security level
+ *
+ * Arguments:
+ * * new_level The new security level that is in effect
+ */
+/obj/machinery/computer/shuttle/pod/proc/check_lock(new_level)
+	SIGNAL_HANDLER
+
+	if(obj_flags & EMAGGED)
+		return
+	if(new_level >= SEC_LEVEL_RED)
+		locked = FALSE
+	else
+		locked = TRUE
 
 /obj/docking_port/stationary/random
 	name = "escape pod"

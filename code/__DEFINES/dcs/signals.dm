@@ -34,6 +34,8 @@
 	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
 /// a person somewhere has thrown something : (mob/living/carbon/carbon_thrower, target)
 #define COMSIG_GLOB_CARBON_THROW_THING	"!throw_thing"
+/// security level has changed : (new_level)
+#define COMSIG_GLOB_SECURITY_LEVEL_CHANGED "!security_level_changed"
 
 /// signals from globally accessible objects
 
