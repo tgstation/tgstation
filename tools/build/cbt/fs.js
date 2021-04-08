@@ -132,5 +132,4 @@ module.exports = {
   compareFiles,
   stat,
   resolveGlob,
-  compareFiles,
 };
