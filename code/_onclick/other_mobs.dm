@@ -1,3 +1,13 @@
+/// Checks for RIGHT_CLICK in modifiers and runs attack_hand_secondary if so. Returns TRUE if normal chain blocked
+/mob/living/proc/right_click_attack(atom/A, list/modifiers)
+	if (LAZYACCESS(modifiers, RIGHT_CLICK))
+		var/secondary_result = A.attack_hand_secondary(src, modifiers)
+
+		if (secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
+			return TRUE
+		else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
+			CRASH("attack_hand_secondary did not return a SECONDARY_ATTACK_* define.")
+
 /*
 	Humans:
 	Adds an exception for gloves, to allow special glove types like the ninja ones.
@@ -32,15 +42,10 @@
 	if(dna?.species?.spec_unarmedattack(src, A, modifiers)) //Because species like monkeys dont use attack hand
 		return
 
-	if (LAZYACCESS(modifiers, RIGHT_CLICK))
-		var/secondary_result = A.attack_hand_secondary(src, modifiers)
+	if(!right_click_attack(A, modifiers))
+		A.attack_hand(src, modifiers)
 
-		if (secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
-			return
-		else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
-			CRASH("attack_hand_secondary did not return a SECONDARY_ATTACK_* define.")
 
-	A.attack_hand(src, modifiers)
 
 /// Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.
 /atom/proc/attack_hand(mob/user, list/modifiers)
@@ -176,10 +181,12 @@
 */
 /mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	UNARMED_ATTACK_COMMON
-	A.attack_drone(src)
+	A.attack_drone(src, modifiers)
 
-/atom/proc/attack_drone(mob/living/simple_animal/drone/user)
-	attack_hand(user) //defaults to attack_hand. Override it when you don't want drones to do same stuff as humans.
+/// Defaults to attack_hand or attack_hand_secondary. Override it when you don't want drones to do same stuff as humans.
+/atom/proc/attack_drone(mob/living/simple_animal/drone/user, list/modifiers)
+	if(!user.right_click_attack(src, modifiers))
+		attack_hand(user, modifiers)
 
 
 /*
