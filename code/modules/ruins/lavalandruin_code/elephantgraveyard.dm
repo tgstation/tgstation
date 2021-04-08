@@ -110,7 +110,8 @@
 	new /obj/effect/decal/cleanable/oil(loc)
 
 //***Grave mounds.
-/obj/structure/closet/crate/grave // has no items inside unless you use the filled subtype
+/// has no items inside unless you use the filled subtype
+/obj/structure/closet/crate/grave
 	name = "burial mound"
 	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
 	icon = 'icons/obj/crates.dmi'
