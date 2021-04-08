@@ -48,7 +48,7 @@
 	if (isnull(tracked.loc))
 		return
 
-	LAZYADDASSOCLIST(targets, target.loc, target)
+	LAZYSET(targets[target.loc], target, TRUE)
 
 	for (var/signal in connections)
 		listener.RegisterSignal(tracked.loc, signal, connections[signal])
