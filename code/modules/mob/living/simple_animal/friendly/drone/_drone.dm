@@ -95,7 +95,7 @@
 	/// Headwear slot
 	var/obj/item/head
 	/// Default [/mob/living/simple_animal/drone/var/internal_storage] item
-	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/drone
+	var/obj/item/default_storage = /obj/item/storage/drone_tools
 	/// Default [/mob/living/simple_animal/drone/var/head] item
 	var/obj/item/default_hatmask
 	/**
@@ -134,7 +134,8 @@
 															/obj/machinery/drone_dispenser, /obj/machinery/light, /obj/machinery/pipedispenser, /obj/machinery/recharger, \
 															/obj/machinery/rnd/production)
 	/// whitelisted drone items, direct
-	var/list/drone_item_whitelist_flat
+	var/list/drone_item_whitelist_flat = list(	/obj/item/crowbar/drone, /obj/item/screwdriver/drone, /obj/item/wrench/drone, \
+												/obj/item/weldingtool/drone, /obj/item/wirecutters/drone )
 	/// whitelisted drone items, recursive/includes descendants
 	var/list/drone_item_whitelist_recursive = list(	/obj/item/airlock_painter, /obj/item/conveyor_switch_construct, /obj/item/electronics, /obj/item/light, \
 													/obj/item/pipe_meter, /obj/item/stack/cable_coil, /obj/item/stack/circuit_stack, /obj/item/stack/conveyor, \
