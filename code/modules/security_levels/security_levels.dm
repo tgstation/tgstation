@@ -26,10 +26,6 @@
 						SSshuttle.emergency.modTimer(4)
 					else
 						SSshuttle.emergency.modTimer(2)
-				SSsecurity_level.set_level(SEC_LEVEL_GREEN)
-				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(is_station_level(FA.z))
-						FA.update_appearance()
 			if(SEC_LEVEL_BLUE)
 				if(SSsecurity_level.current_level < SEC_LEVEL_BLUE)
 					minor_announce(CONFIG_GET(string/alert_blue_upto), "Attention! Security level elevated to blue:",1)
@@ -39,10 +35,6 @@
 					minor_announce(CONFIG_GET(string/alert_blue_downto), "Attention! Security level lowered to blue:")
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						SSshuttle.emergency.modTimer(2)
-				SSsecurity_level.set_level(SEC_LEVEL_BLUE)
-				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(is_station_level(FA.z))
-						FA.update_appearance()
 			if(SEC_LEVEL_RED)
 				if(SSsecurity_level.current_level < SEC_LEVEL_RED)
 					minor_announce(CONFIG_GET(string/alert_red_upto), "Attention! Code red!",1)
@@ -53,11 +45,6 @@
 							SSshuttle.emergency.modTimer(0.5)
 				else
 					minor_announce(CONFIG_GET(string/alert_red_downto), "Attention! Code red!")
-				SSsecurity_level.set_level(SEC_LEVEL_RED)
-
-				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(is_station_level(FA.z))
-						FA.update_appearance()
 			if(SEC_LEVEL_DELTA)
 				minor_announce(CONFIG_GET(string/alert_delta), "Attention! Delta security level reached!",1)
 				if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
@@ -65,19 +52,8 @@
 						SSshuttle.emergency.modTimer(0.25)
 					else if(SSsecurity_level.current_level == SEC_LEVEL_BLUE)
 						SSshuttle.emergency.modTimer(0.5)
-				SSsecurity_level.set_level(SEC_LEVEL_DELTA)
-				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(is_station_level(FA.z))
-						FA.update_appearance()
-		if(level >= SEC_LEVEL_RED)
-			for(var/obj/machinery/door/D in GLOB.machines)
-				if(D.red_alert_access)
-					D.visible_message("<span class='notice'>[D] whirrs as it automatically lifts access requirements!</span>")
-					playsound(D, 'sound/machines/boltsup.ogg', 50, TRUE)
-		SSblackbox.record_feedback("tally", "security_level_changes", 1, get_security_level())
-		SSnightshift.check_nightshift()
-	else
-		return
+
+		SSsecurity_level.set_level(level)
 
 /proc/get_security_level()
 	switch(SSsecurity_level.current_level)
