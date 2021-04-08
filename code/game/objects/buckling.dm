@@ -105,12 +105,13 @@
 			var/mob/living/L = M.pulledby
 			L.reset_pull_offsets(M, TRUE)
 
-	if (!M.Move(loc))
+	if (CanPass(M, loc))
+		M.Move(loc)
+	else
 		if (!check_loc && M.loc != loc && src.density)
 			M.forceMove(loc)
 		else
 			return FALSE
-
 
 	if(anchored)
 		ADD_TRAIT(M, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
