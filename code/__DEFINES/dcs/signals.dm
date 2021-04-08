@@ -336,7 +336,7 @@
 
 /// from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/post_change_callbacks).
 /// `post_change_callbacks` is a list that signal handlers can mutate to append `/datum/callback` objects.
-/// They will be called with the new turf and the old turf after the turf has changed.
+/// They will be called with the new turf after the turf has changed.
 #define COMSIG_TURF_CHANGE "turf_change"
 ///from base of atom/has_gravity(): (atom/asker, list/forced_gravities)
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"

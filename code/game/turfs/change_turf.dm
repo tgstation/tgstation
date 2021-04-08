@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/turf/W = new path(src)
 
 	for(var/datum/callback/callback as anything in post_change_callbacks)
-		callback.InvokeAsync(W, src)
+		callback.InvokeAsync(W)
 
 	if(new_baseturfs)
 		W.baseturfs = baseturfs_string_list(new_baseturfs, W)
