@@ -418,6 +418,8 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/load_custom_outfits()
 	var/file = file("data/custom_outfits.json")
+	if(!isfile(file))
+		return
 	var/list/outfits_json = json_decode(file2text(file))
 	if(!islist(outfits_json))
 		return
@@ -428,10 +430,10 @@ SUBSYSTEM_DEF(persistence)
 
 		var/outfittype = text2path(outfit_data["outfit_type"])
 		if(!ispath(outfittype, /datum/outfit))
-			return
+			continue
 		var/datum/outfit/outfit = new outfittype
 		if(!outfit.load_from(outfit_data))
-			return
+			continue
 		GLOB.custom_outfits += outfit
 
 /datum/controller/subsystem/persistence/proc/save_custom_outfits()
