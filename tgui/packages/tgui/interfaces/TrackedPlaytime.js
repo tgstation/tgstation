@@ -15,8 +15,9 @@ const PlaytimeSection = props => {
   return (
     <Table>
       {sortedPlaytimes.map(([jobName, playtime]) => {
-        if(!playtime)
-          return
+        if (!playtime) {
+          return;
+        }
         const ratio = playtime / mostPlayed;
         return (
           <Table.Row key={jobName}>
