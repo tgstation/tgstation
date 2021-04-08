@@ -40,7 +40,7 @@
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "dpvent_cap", dir, piping_layer = piping_layer)
+		var/image/cap = getpipeimage(icon, "dpvent_cap", dir, pipe_color, piping_layer = piping_layer)
 		add_overlay(cap)
 
 	if(!on || !is_operational)
@@ -51,6 +51,11 @@
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/process_atmos()
 	if(!on)
 		return
+
+	var/turf/location = get_turf(loc)
+	if(isclosedturf(location))
+		return
+
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
 

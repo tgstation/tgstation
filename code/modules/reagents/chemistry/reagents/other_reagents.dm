@@ -105,6 +105,12 @@
 	ph = 7.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/bone_dust
+	name = "bone dust"
+	color = "#dbcdcb"
+	description = "Ground up bones, gross!"
+	taste_description = "the most disgusting grain in existence"
+
 /datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
@@ -737,7 +743,8 @@
 
 /datum/reagent/gluttonytoxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
-	exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
+	if(reac_volume >= 1)//This prevents microdosing from infecting masses of people
+		exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"

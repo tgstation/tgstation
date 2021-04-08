@@ -51,7 +51,6 @@
 	var/failed_last_breath = FALSE
 
 	var/co2overloadtime = null
-	var/temperature_resistance = T0C+75
 	var/obj/item/food/meat/slab/type_of_meat = /obj/item/food/meat/slab
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs

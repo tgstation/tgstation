@@ -38,6 +38,7 @@
 
 		var/obj/projectile/A = new projectile(get_turf(src))
 		var/modifiers = params2list(params)
+		A.firer = chassis
 		A.preparePixelProjectile(target, source, modifiers, spread)
 
 		A.fire()

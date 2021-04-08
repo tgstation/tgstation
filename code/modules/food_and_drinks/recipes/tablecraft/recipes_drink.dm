@@ -10,6 +10,7 @@
 		/obj/item/organ/tail/lizard = 1,
 		/datum/reagent/consumable/ethanol = 100
 	)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	result = /obj/item/reagent_containers/food/drinks/bottle/lizardwine
 	category = CAT_DRINK
 

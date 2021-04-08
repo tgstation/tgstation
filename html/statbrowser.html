@@ -288,53 +288,6 @@ if (!String.prototype.trim) {
   }, 0, 'test');
 }())
 
-// Browser passthrough code ---------------------------------------------------
-if (window.location) {
-	var anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
-	document[addEventListenerKey]("keydown", function(e) {
-		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
-			return;
-		if(e.defaultPrevented)
-			return; // do e.preventDefault() to prevent this behavior.
-		if(e.which) {
-			if(!anti_spam[e.which]) {
-				anti_spam[e.which] = true;
-				var key = String.fromCharCode(e.which);
-				var x = event.x || event.clientX;
-				var y = event.y || event.clientY;
-				if(x || y ) // if either of these exist this is happening after a click
-					return;
-				window.location.href = "byond://winset?command=keyDown " + e.key;
-			}
-		}
-	});
-	document[addEventListenerKey]("keyup", function(e) {
-		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
-			return;
-		if(e.defaultPrevented)
-			return;
-		if(e.which) {
-			anti_spam[e.which] = false;
-			var key = String.fromCharCode(e.which);
-			var x = event.x || event.clientX;
-			var y = event.y || event.clientY;
-			if( x || y ) // if either of these exist this is happening after a click
-				return;
-
-			window.location.href = "byond://winset?command=keyUp " + e.key;
-		}
-	});
-}
-/* document.addEventListener("mousedown", function(e){
- var shiftPressed=0;
- var evt = e?e:window.event;
- shiftPressed=evt.shiftKey;
-  if (shiftPressed) {
-   return false;
-  }
- return true;
-}); */
-
 // Status panel implementation ------------------------------------------------
 var status_tab_parts = ["Loading..."];
 var current_tab = null;
@@ -356,6 +309,15 @@ var menu = document.querySelector('#menu');
 var under_menu = document.querySelector('#under_menu');
 var statcontentdiv = document.querySelector('#statcontent');
 var storedimages = [];
+
+// Any BYOND commands that could result in the client's focus changing go through this
+// to ensure that when we relinquish our focus, we don't do it after the result of
+// a command has already taken focus for itself.
+function send_byond_focus_command(url) {
+	setTimeout(function() {
+		window.location.href = url;
+	}, 0);
+}
 
 function createStatusTab(name) {
 	if (name.indexOf(".") != -1)
@@ -1065,6 +1027,12 @@ function draw_spells(cat) {
 	document.getElementById("statcontent").appendChild(table);
 }
 
+function make_verb_onclick(command) {
+	return function() {
+		send_byond_focus_command("byond://winset?command=" + command);
+	};
+}
+
 function draw_verbs(cat){
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("div");
@@ -1086,7 +1054,8 @@ function draw_verbs(cat){
 			}
 
 			var a = document.createElement("a");
-			a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
+			a.href = "#"
+			a.onclick = make_verb_onclick(command.replace(/\s/g, "-"));
 			a.className = "grid-item";
 			var t = document.createElement("span");
 			t[textContentKey] = command;
@@ -1137,9 +1106,12 @@ function set_style_sheet(sheet) {
 	head.appendChild(sheetElement);
 }
 
-document[addEventListenerKey]("click", function(e) {
-	window.location.href = "byond://winset?map.focus=true";
-});
+function restoreFocus() {
+	send_byond_focus_command("byond://winset?map.focus=true")
+}
+
+document[addEventListenerKey]("mouseup", restoreFocus);
+document[addEventListenerKey]("keyup", restoreFocus);
 
 if(!current_tab) {
 	addPermanentTab("Status");
