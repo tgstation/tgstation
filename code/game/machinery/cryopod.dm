@@ -211,7 +211,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		if(world.time <= despawn_world_time)
 			return
 
-		if(!mob_occupant.client && mob_occupant.stat < 2) // Occupant is living and has no client.
+		if(!mob_occupant.client && mob_occupant.stat <= SOFT_CRIT) // Occupant is living and has no client.
 			if(!control_computer)
 				find_control_computer(urgent = TRUE) // better hope you found it this time
 
