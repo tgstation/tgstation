@@ -6,12 +6,12 @@
 	/// Message presented when
 	var/message = "That %TARGET is strange! Let's avoid it."
 
-/datum/component/technointrovert/Initialize(_whitelist, _message)
+/datum/component/technointrovert/Initialize(whitelist, message)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	whitelist = _whitelist
-	if(_message)
-		message = _message
+	src.whitelist = whitelist
+	if(message)
+		src.message = message
 
 /datum/component/technointrovert/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_TRY_USE_MACHINE, .proc/is_in_whitelist)
