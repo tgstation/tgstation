@@ -14,10 +14,10 @@
 		message = _message
 
 /datum/component/technointrovert/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_CAN_USE_MACHINE, .proc/is_in_friend_group)
+	RegisterSignal(parent, COMSIG_TRY_USE_MACHINE, .proc/is_in_friend_group)
 
 /datum/component/technointrovert/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_CAN_USE_MACHINE)
+	UnregisterSignal(parent, COMSIG_TRY_USE_MACHINE)
 
 /datum/component/technointrovert/PostTransfer()
 	if(!ismob(parent))

@@ -18,11 +18,11 @@
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/frightened_click)
 	RegisterSignal(parent, COMSIG_LIVING_TRY_PULL, .proc/frightened_pull)
 	RegisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), .proc/frightened_unarmed)
-	RegisterSignal(parent, COMSIG_CAN_STRIP, .proc/frightened_nightclub)
+	RegisterSignal(parent, COMSIG_TRY_STRIP, .proc/frightened_nightclub)
 
 
 /datum/component/shy_in_room/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_LIVING_TRY_PULL, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_CAN_STRIP))
+	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_LIVING_TRY_PULL, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_TRY_STRIP))
 
 /datum/component/shy_in_room/PostTransfer()
 	if(!ismob(parent))

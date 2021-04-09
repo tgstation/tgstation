@@ -584,7 +584,7 @@
 
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 ///also from /mob/living/stripPanel(Un)equip)() and /datum/strippable_item/alternate_action()
-#define COMSIG_CAN_STRIP "living_can_strip"
+#define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
 
 ///From /datum/component/creamed/Initialize()
@@ -682,7 +682,7 @@
 #define COMSIG_ARCADE_PRIZEVEND "arcade_prizevend"
 
 ///from /obj/machinery/can_interact(mob/user): Called on user when attempting to interact with a machine (obj/machinery/machine)
-#define COMSIG_CAN_USE_MACHINE "can_use_machine"
+#define COMSIG_TRY_USE_MACHINE "try_use_machine"
 	#define COMPONENT_CANT_USE_MACHINE (1<<0)
 
 ///from obj/machinery/iv_drip/IV_attach(target, usr) : (attachee)
