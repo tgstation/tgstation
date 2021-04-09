@@ -1,18 +1,18 @@
-/proc/open_outfit_editor(datum/outfit/target)
+
+/client/proc/open_outfit_editor(datum/outfit/target)
 	var/datum/outfit_editor/ui = new(usr, target)
 	ui.ui_interact(usr)
 
-
 #define OUTFIT_EDITOR_NAME "Outfit-O-Tron 9000"
 /datum/outfit_editor
-	var/client/holder
+	var/client/owner
 
 	var/dummy_key
 
 	var/datum/outfit/drip
 
 /datum/outfit_editor/New(user, datum/outfit/target)
-	holder = CLIENT_FROM_VAR(user)
+	owner = CLIENT_FROM_VAR(user)
 
 	if(ispath(target))
 		drip = new /datum/outfit
@@ -36,9 +36,9 @@
 	qdel(src)
 
 /datum/outfit_editor/proc/init_dummy()
-	dummy_key = "outfit_editor_[holder]"
+	dummy_key = "outfit_editor_[owner]"
 	var/mob/living/carbon/human/dummy/dummy = generate_or_wait_for_human_dummy(dummy_key)
-	var/mob/living/carbon/carbon_target = holder.mob
+	var/mob/living/carbon/carbon_target = owner.mob
 	if(istype(carbon_target))
 		carbon_target.dna.transfer_identity(dummy)
 		dummy.updateappearance()
@@ -77,7 +77,7 @@
 	data["outfit"] = serialize_outfit()
 	data["saveable"] = !GLOB.custom_outfits.Find(drip)
 
-	var/datum/preferences/prefs = holder.prefs
+	var/datum/preferences/prefs = owner.prefs
 	var/icon/dummysprite = get_flat_human_icon(null, prefs = prefs, dummy_key = dummy_key, showDirs = list(SOUTH), outfit_override = drip)
 	data["dummy64"] = icon2base64(dummysprite)
 
@@ -100,28 +100,28 @@
 				drip.vars[slot] = null
 
 		if("rename")
-			var/newname = stripped_input(holder, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME)
+			var/newname = stripped_input(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME)
 			if(newname)
 				drip.name = newname
 		if("save")
 			GLOB.custom_outfits |= drip
-			SStgui.update_user_uis(holder.mob)
+			SStgui.update_user_uis(owner.mob)
 		if("delete")
 			GLOB.custom_outfits -= drip
-			SStgui.update_user_uis(holder.mob)
+			SStgui.update_user_uis(owner.mob)
 		if("vv")
-			holder.debug_variables(drip)
+			owner.debug_variables(drip)
 
 
 /datum/outfit_editor/proc/set_item(slot, obj/item/choice)
 	if(!choice)
 		return
 	if(!ispath(choice))
-		alert(holder, "Invalid item", OUTFIT_EDITOR_NAME, "oh no")
+		alert(owner, "Invalid item", OUTFIT_EDITOR_NAME, "oh no")
 		return
 	if(initial(choice.icon_state) == null) //hacky check copied from experimentor code
 		var/msg = "Warning: This item's icon_state is null, indicating it is very probably not actually a usable item."
-		if(alert(holder, msg, OUTFIT_EDITOR_NAME, "Use it anyway", "Cancel") != "Use it anyway")
+		if(alert(owner, msg, OUTFIT_EDITOR_NAME, "Use it anyway", "Cancel") != "Use it anyway")
 			return
 
 	if(drip.vars.Find(slot))
@@ -168,7 +168,7 @@
 				suit = new suit //initial() doesn't like lists
 				options = suit.allowed
 			if(!options.len) //nothing will happen, but don't let the user think it's broken
-				to_chat(holder, "<span class='warning'>No options available for the current suit.</span>")
+				to_chat(owner, "<span class='warning'>No options available for the current suit.</span>")
 
 		if("belt")
 			options = typesof(/obj/item/storage/belt)
@@ -190,7 +190,7 @@
 			choose_any_item(slot)
 
 	if(length(options))
-		set_item(slot, tgui_input_list(holder, "Choose an item", OUTFIT_EDITOR_NAME, options))
+		set_item(slot, tgui_input_list(owner, "Choose an item", OUTFIT_EDITOR_NAME, options))
 
 
 #undef OUTFIT_EDITOR_NAME

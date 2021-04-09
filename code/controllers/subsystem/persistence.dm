@@ -21,7 +21,6 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/item/storage/photo_album/photo_albums
 	var/list/obj/structure/sign/painting/painting_frames = list()
 	var/list/paintings = list()
-	var/list/custom_outfits = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadPoly()

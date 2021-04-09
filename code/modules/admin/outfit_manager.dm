@@ -1,6 +1,5 @@
 /client/proc/outfit_manager()
-	//set category = "Debug"
-	set category = "Debug.TRIGG IS AT IT AGAIN"
+	set category = "Debug"
 	set name = "Outfit Manager"
 
 	if(!check_rights(R_DEBUG))
@@ -10,10 +9,10 @@
 
 
 /datum/outfit_manager
-	var/client/user
+	var/client/owner
 
 /datum/outfit_manager/New(user)
-	src.user = CLIENT_FROM_VAR(user)
+	owner = CLIENT_FROM_VAR(user)
 
 /datum/outfit_manager/ui_state(mob/user)
 	return GLOB.admin_state
@@ -55,21 +54,21 @@
 
 	switch(action)
 		if("new")
-			open_outfit_editor(new /datum/outfit)
+			owner.open_outfit_editor(new /datum/outfit)
 		if("load")
-			user.holder.load_outfit(user.mob)
+			owner.holder.load_outfit(owner.mob)
 		if("copy")
-			var/datum/outfit/outfit = tgui_input_list(user, "Pick an outfit to copy from", "Outfit Manager", subtypesof(/datum/outfit))
+			var/datum/outfit/outfit = tgui_input_list(owner, "Pick an outfit to copy from", "Outfit Manager", subtypesof(/datum/outfit))
 			if(ispath(outfit))
-				open_outfit_editor(new outfit)
+				owner.open_outfit_editor(new outfit)
 
 	var/datum/outfit/target_outfit = locate(params["outfit"])
 	if(!istype(target_outfit))
 		return
 	switch(action) //wow we're switching through action again this is horrible optimization smh
 		if("edit")
-			open_outfit_editor(target_outfit)
+			owner.open_outfit_editor(target_outfit)
 		if("save")
-			user.holder.save_outfit(user.mob, target_outfit)
+			owner.holder.save_outfit(owner.mob, target_outfit)
 		if("delete")
-			user.holder.delete_outfit(user.mob, target_outfit)
+			owner.holder.delete_outfit(owner.mob, target_outfit)
