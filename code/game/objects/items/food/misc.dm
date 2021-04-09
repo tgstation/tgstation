@@ -254,7 +254,7 @@
 
 /obj/item/food/spiderlollipop/Initialize()
 	. = ..()
-	AddComponent(/datum/component/chewable)
+	AddElement(/datum/element/chewable)
 
 /obj/item/food/chococoin
 	name = "chocolate coin"
@@ -467,7 +467,7 @@
 	. = ..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
-	AddComponent(/datum/component/chewable)
+	AddElement(/datum/element/chewable)
 
 /obj/item/food/lollipop/proc/change_head_color(C)
 	headcolor = C
@@ -494,12 +494,12 @@
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
 
-	/// How long the bubblegum can be chewed for
-	var/lifetime = 15 MINUTES
+	/// The amount to metabolize per second
+	var/metabolization_amount = REAGENTS_METABOLISM / 2
 
 /obj/item/food/bubblegum/Initialize()
 	. = ..()
-	AddComponent(/datum/component/chewable, lifetime = lifetime)
+	AddElement(/datum/element/chewable, metabolization_amount = metabolization_amount)
 
 /obj/item/food/bubblegum/nicotine
 	name = "nicotine gum"
@@ -520,7 +520,7 @@
 	color = "#913D3D"
 	food_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
-	lifetime = 6 MINUTES
+	metabolization_amount = REAGENTS_METABOLISM
 
 /obj/item/food/bubblegum/bubblegum/process()
 	. = ..()
@@ -570,7 +570,7 @@
 /obj/item/food/gumball/Initialize()
 	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	AddComponent(/datum/component/chewable)
+	AddElement(/datum/element/chewable)
 
 /obj/item/food/taco
 	name = "classic taco"
