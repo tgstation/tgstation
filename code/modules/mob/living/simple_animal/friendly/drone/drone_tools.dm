@@ -1,4 +1,3 @@
-
 /obj/item/storage/drone_tools
 	name = "built-in tools"
 	desc = "Access your built-in tools."
@@ -59,9 +58,9 @@
 /obj/item/screwdriver/drone/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
 	if(isinhands)
-		var/mutable_appearance/M = mutable_appearance(icon_file, "screwdriver_head")
-		M.appearance_flags = RESET_COLOR
-		. += M
+		var/mutable_appearance/head = mutable_appearance(icon_file, "screwdriver_head")
+		head.appearance_flags = RESET_COLOR
+		. += head
 
 /obj/item/wrench/drone
 	name = "built-in wrench"
