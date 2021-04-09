@@ -16,7 +16,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.connections = connections
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved, TRUE)
 	update_signals(target)
 
 /datum/element/connect_loc/Detach(datum/source, force)
@@ -37,15 +37,13 @@
 	LAZYSET(targets[target.loc], target, TRUE)
 
 	for (var/signal in connections)
-		target.RegisterSignal(target.loc, signal, connections[signal])
+		target.RegisterSignal(target.loc, signal, connections[signal], TRUE)
 
 	if (isturf(target.loc) && length(targets[target.loc]) == 1)
-		RegisterSignal(target.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change)
+		RegisterSignal(target.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, TRUE)
 
 /datum/element/connect_loc/proc/unregister_signals(atom/movable/target, atom/old_loc)
-	targets[old_loc] -= target
-	if (length(targets[old_loc]) == 0)
-		targets -= old_loc
+	LAZYREMOVE(targets[old_loc], target)
 
 	for (var/signal in connections)
 		target.UnregisterSignal(old_loc, signal)

@@ -17,10 +17,6 @@
 /obj/item/assembly_holder/ComponentInitialize()
 	. = ..()
 	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 	AddComponent(/datum/component/simple_rotation, rotation_flags)
 
 /obj/item/assembly_holder/IsAssemblyHolder()
@@ -73,13 +69,6 @@
 	for(var/right_overlay in a_right.attached_overlays)
 		right.add_overlay("[right_overlay]_l")
 	. += right
-
-/obj/item/assembly_holder/proc/on_crossed(datum/source, atom/movable/AM as mob|obj)//TODOKYLER: probably remove?
-	SIGNAL_HANDLER
-	if(a_left)
-		SEND_SIGNAL(loc, COMSIG_MOVABLE_CROSSED, AM)
-	if(a_right)
-		SEND_SIGNAL(loc, COMSIG_MOVABLE_CROSSED, AM)
 
 /obj/item/assembly_holder/on_found(mob/finder)
 	if(a_left)
