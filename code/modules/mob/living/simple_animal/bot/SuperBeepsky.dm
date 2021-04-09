@@ -34,11 +34,6 @@
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()
 	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
-	//RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE) //TODOKYLER: this is supposed to override the old way of doing it
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/secbot/grievous/Destroy()
 	QDEL_NULL(weapon)
