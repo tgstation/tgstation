@@ -106,6 +106,12 @@
 	if(holder.body_position == LYING_DOWN && !holder.buckled)
 		Slip(source, AM)
 
+/datum/component/slippery/UnregisterFromParent()
+	. = ..()
+	if(holder)
+		holder.RemoveElement(/datum/element/connect_loc)
+	parent.RemoveElement(/datum/element/connect_loc)
+
 /// Used for making the clown PDA only slip if the clown is wearing his shoes and the elusive banana-skin belt
 /datum/component/slippery/clowning
 

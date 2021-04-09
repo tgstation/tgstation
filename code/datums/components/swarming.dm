@@ -10,8 +10,11 @@
 	offset_x = rand(-max_x, max_x)
 	offset_y = rand(-max_y, max_y)
 
-	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/join_swarm)
-	RegisterSignal(parent, COMSIG_MOVABLE_UNCROSSED, .proc/leave_swarm)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_UNCROSSED = .proc/leave_swarm,
+		COMSIG_MOVABLE_CROSSED = .proc/join_swarm
+	)
+	parent.AddElement(/datum/element/connect_loc, loc_connections)
 
 /datum/component/swarming/Destroy()
 	for(var/other in swarm_members)
@@ -20,6 +23,7 @@
 		if(!other_swarm.swarm_members.len)
 			other_swarm.unswarm()
 	swarm_members = null
+	parent.RemoveElement(/datum/element/connect_loc)
 	return ..()
 
 /datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)

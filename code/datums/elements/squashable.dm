@@ -25,10 +25,14 @@
 	if(!src.on_squash_callback && squash_callback)
 		on_squash_callback = CALLBACK(target, squash_callback)
 
-	RegisterSignal(target, COMSIG_MOVABLE_CROSSED, .proc/OnCrossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/OnCrossed,
+	)
+	target.AddElement(/datum/element/connect_loc, loc_connections)
 
 /datum/element/squashable/Detach(mob/living/target)
-	UnregisterSignal(target, COMSIG_MOVABLE_CROSSED)
+	. = ..()
+	target.RemoveElement(/datum/element/connect_loc)
 
 ///Handles the squashing of the mob
 /datum/element/squashable/proc/OnCrossed(mob/living/target, atom/movable/crossing_movable)

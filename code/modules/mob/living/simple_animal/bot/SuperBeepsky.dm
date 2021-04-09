@@ -34,7 +34,7 @@
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()
 	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
-	//RegisterSi|||||||nal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE) //override
+	//RegisterSignal(src, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE) //TODOKYLER: this is supposed to override the old way of doing it
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
 	)

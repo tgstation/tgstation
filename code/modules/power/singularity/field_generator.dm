@@ -317,7 +317,8 @@ no power level overlay is currently in the overlays list.
 			fields += CF
 			G.fields += CF
 			for(var/mob/living/L in T)
-				SEND_SIGNAL(CF, COMSIG_MOVABLE_CROSSED, L)
+				var/turf/living_loc = get_turf(CF)
+				SEND_SIGNAL(living_loc, COMSIG_MOVABLE_CROSSED, L)
 
 	connected_gens |= G
 	G.connected_gens |= src

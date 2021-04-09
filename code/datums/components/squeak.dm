@@ -27,7 +27,10 @@
 	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
 	if(ismovable(parent))
 		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT, COMSIG_PROJECTILE_BEFORE_FIRE), .proc/play_squeak)
-		RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/play_squeak_crossed)
+		var/static/list/loc_connections = list(
+			COMSIG_MOVABLE_CROSSED = .proc/play_squeak_crossed,
+		)
+		parent.AddElement(/datum/element/connect_loc, loc_connections)
 		RegisterSignal(parent, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react)
 		if(isitem(parent))
 			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/play_squeak)
@@ -101,14 +104,18 @@
 	SIGNAL_HANDLER
 
 	holder = equipper
-	RegisterSignal(holder, COMSIG_MOVABLE_CROSSED, .proc/play_squeak_crossed)
 	RegisterSignal(holder, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, TRUE)
 	RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/play_squeak_crossed,
+	)
+	holder.AddElement(/datum/element/connect_loc, loc_connections)
 
 /datum/component/squeak/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(user, COMSIG_MOVABLE_CROSSED)
+	//TODOKYLER: what if there are multiple things that want to add connect_loc to a mob (or anything really) do so?
+	user.RemoveElement(/datum/element/connect_loc)
 	UnregisterSignal(user, COMSIG_MOVABLE_DISPOSING)
 	holder = null
 

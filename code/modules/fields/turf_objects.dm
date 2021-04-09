@@ -14,11 +14,12 @@
 	if(_monitor)
 		parent = _monitor
 	. = ..()
-	UnregisterSignal(src, COMSIG_MOVABLE_CROSSED)
+	RemoveElement(/datum/element/connect_loc)
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	//TODOKYLER: wtf is this shit deal with this mess
 
 
 /obj/effect/abstract/proximity_checker/advanced/center
@@ -31,10 +32,11 @@
 
 /obj/effect/abstract/proximity_checker/advanced/field_turf/Initialize(mapload, _monitor)
 	. = ..()
+	RemoveElement(/datum/element/connect_loc)
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_UNCROSSED = .proc/on_uncrossed,
 	)
-	parent.AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/abstract/proximity_checker/advanced/field_turf/CanAllowThrough(atom/movable/AM, turf/target)
 	. = ..()
@@ -59,7 +61,7 @@
 
 /obj/effect/abstract/proximity_checker/advanced/field_edge/Initialize(mapload, _monitor)//TODOKYLER: this wont work, detach then reattach?
 	. = ..()
-	UnregisterSignal(src, COMSIG_MOVABLE_CROSSED)
+	RemoveElement(/datum/element/connect_loc) //TODOKYLER: this is fucking disgusting, do not forget this
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
 		COMSIG_MOVABLE_UNCROSSED = .proc/on_uncrossed,
