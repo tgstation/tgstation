@@ -24,7 +24,7 @@
 	src.items = items
 	src.should_strip_proc_path = should_strip_proc_path
 
-/datum/element/strippable/Detach(datum/source, force)
+/datum/element/strippable/Detach(datum/source)
 	. = ..()
 
 	UnregisterSignal(source, COMSIG_MOUSEDROP_ONTO)
