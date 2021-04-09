@@ -259,11 +259,14 @@
 	owner.remove_antag_datum(type)
 
 /datum/antagonist/rev/head/remove_revolutionary(borged, deconverter)
+	var/re_antag = FALSE
+	var/datum/mind/old_owner = owner //owner gets nulled when rev antag removed
 	if(borged || deconverter == DECONVERTER_STATION_WIN || deconverter == DECONVERTER_REVS_WIN)
 		if(owner.current.stat != DEAD && deconverter == DECONVERTER_STATION_WIN)
-			owner.add_antag_datum(/datum/antagonist/enemy_of_the_state)
+			re_antag = TRUE
 		. = ..()
-
+		if(re_antag)
+			old_owner.add_antag_datum(/datum/antagonist/enemy_of_the_state) //needs to be post ..() so old antag status is cleaned up
 /datum/antagonist/rev/head/equip_rev()
 	var/mob/living/carbon/C = owner.current
 	if(!ishuman(C))
