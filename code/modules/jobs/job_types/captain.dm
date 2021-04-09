@@ -71,7 +71,7 @@
 	var/special_charter = captain_changes["special_charter"]
 	if(!special_charter)
 		return
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic = 1) //removes normal charter
+	backpack_contents.Remove(/obj/item/station_charter)
 	switch(special_charter)
 		if(CAPTAIN_MOON_CHARTER)
 			l_hand = /obj/item/station_charter/banner/moon

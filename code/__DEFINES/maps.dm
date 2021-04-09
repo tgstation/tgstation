@@ -124,8 +124,8 @@ require only minor tweaks.
 
 ///Captain charter defines, decides what kind of charter the cap spawns with on what map. no json setting = default station charter
 ///cap names the moon
-#define CAPTAIN_MOON_CHARTER 1
+#define CAPTAIN_MOON_CHARTER "moon"
 ///cap names the asteroid
-#define CAPTAIN_ASTEROID_CHARTER 2
+#define CAPTAIN_ASTEROID_CHARTER "asteroid"
 ///cap names the planet (unused, planned for planetstation)
-#define CAPTAIN_PLANET_CHARTER 3
+#define CAPTAIN_PLANET_CHARTER "planet"

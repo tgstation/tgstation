@@ -54,7 +54,7 @@
 			"additional_cqc_areas": ["/area/service/kitchen/diner"]
 		},
 		"captain": {
-			"special_charter": 1
+			"special_charter": "moon"
 		}
 	}
 }
