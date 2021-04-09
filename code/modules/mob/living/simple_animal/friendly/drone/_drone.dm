@@ -360,8 +360,8 @@
 		if(cleared)
 			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
-/mob/living/simple_animal/drone/proc/set_shy(newShy)
-	shy = newShy
+/mob/living/simple_animal/drone/proc/set_shy(new_shy)
+	shy = new_shy
 	shy_update()
 
 /mob/living/simple_animal/drone/proc/shy_update()
