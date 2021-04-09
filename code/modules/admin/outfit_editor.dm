@@ -141,16 +141,7 @@
 //also stuff that fits in the belt and back slots are scattered pretty much all over the place
 /datum/outfit_editor/proc/choose_item(slot)
 	var/list/options = list()
-	/*
-	Still missing UI support for:
-	- toggle_helmet
-	- internals_slot
-	- backpack_contents
-	- box
-	- implants
-	- accessory
-	- skillchips (serialization for these too)
-	*/
+
 	switch(slot)
 		if("head")
 			options = typesof(/obj/item/clothing/head)

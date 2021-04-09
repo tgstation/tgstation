@@ -9,7 +9,7 @@ export const OutfitEditor = (props, context) => {
   return (
     <Window
       width={380}
-      height={625}>
+      height={600}>
       <Window.Content>
         <Box
           as="img"
@@ -25,35 +25,42 @@ export const OutfitEditor = (props, context) => {
         <Section
           fill
           title={
-            <>
-              {outfit.name}
-              <Button
-                ml={0.5}
-                color="transparent"
-                icon="pencil-alt"
-                title="Rename this outfit"
-                onClick={() => act("rename", {})} />
-            </>
-          }
-          buttons={
-            <>
-              <Button
-                color="transparent"
-                icon="info"
-                // tooltips are wack with a lot of text; forced to use title
-                title="Ctrl-click a button to select *any* item instead of what will probably fit in that slot." />
-              <Button
-                icon="code"
-                tooltip="Edit this outfit on a VV window"
-                tooltipPosition="left"
-                onClick={() => act("vv", {})} />
-              <Button
-                color={!saveable && "bad"}
-                icon={saveable?"save":"trash-alt"}
-                tooltip={saveable?"Save this outfit to the custom outfit list":"Remove this outfit from the custom outfit list"}
-                tooltipPosition="left"
-                onClick={() => act(saveable?"save":"delete", {})} />
-            </>
+            <Stack>
+              <Stack.Item grow={1}
+                style={{
+                  'overflow': 'hidden',
+                  'white-space': 'nowrap',
+                  'text-overflow': 'ellipsis',
+                }}>
+                <Button
+                  ml={0.5}
+                  color="transparent"
+                  icon="pencil-alt"
+                  title="Rename this outfit"
+                  onClick={() => act("rename", {})} />
+                {outfit.name}
+              </Stack.Item>
+              <Stack.Item align="end" shrink={0}>
+                <Button
+                  color="transparent"
+                  icon="info"
+                  tooltip="Ctrl-click a button to select *any* item instead of what will probably fit in that slot.\nAlt-click to clear the item."
+                  tooltipPosition="bottom-left" />
+                <Button
+                  icon="code"
+                  tooltip="Edit this outfit on a VV window"
+                  tooltipPosition="bottom-left"
+                  onClick={() => act("vv", {})} />
+                <Button
+                  color={!saveable && "bad"}
+                  icon={saveable ? "save" : "trash-alt"}
+                  tooltip={saveable
+                    ? "Save this outfit to the custom outfit list"
+                    : "Remove this outfit from the custom outfit list"}
+                  tooltipPosition="bottom-left"
+                  onClick={() => act(saveable ? "save" : "delete", {})} />
+              </Stack.Item>
+            </Stack>
           }>
           <Box textAlign="center">
             <Stack mb={2}>
@@ -107,13 +114,21 @@ const OutfitSlot = (props, context) => {
       </Button>
       <Box height="32px">
         {currItem?.sprite && (
-          <Box
-            as="img"
-            src={`data:image/jpeg;base64,${currItem?.sprite}`}
-            title={currItem?.desc}
-            style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-            }} />
+          <>
+            <Box
+              as="img"
+              src={`data:image/jpeg;base64,${currItem?.sprite}`}
+              title={currItem?.desc}
+              style={{
+                '-ms-interpolation-mode': 'nearest-neighbor',
+              }} />
+            <Icon
+              position="absolute"
+              name="times"
+              color="label"
+              style={{ cursor: 'pointer' }}
+              onClick={() => act("clear", { slot })} />
+          </>
         )}
       </Box>
       <Box
@@ -124,7 +139,7 @@ const OutfitSlot = (props, context) => {
           'text-overflow': 'ellipsis',
         }}
         title={currItem?.path}>
-        {currItem?.name||"Empty"}
+        {currItem?.name || "Empty"}
       </Box>
     </Stack.Item>
   );
