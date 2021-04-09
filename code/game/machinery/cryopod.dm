@@ -59,7 +59,6 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	data["allow_items"] = allow_items
 	data["frozen_crew"] = frozen_crew
 	data["frozen_items"] = list()
-	data["possible_items"] = GLOB.possible_items
 
 	if(allow_items)
 		data["frozen_items"] = frozen_items
