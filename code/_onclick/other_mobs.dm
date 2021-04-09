@@ -1,12 +1,13 @@
 /// Checks for RIGHT_CLICK in modifiers and runs attack_hand_secondary if so. Returns TRUE if normal chain blocked
-/mob/living/proc/right_click_attack(atom/A, list/modifiers)
-	if (LAZYACCESS(modifiers, RIGHT_CLICK))
-		var/secondary_result = A.attack_hand_secondary(src, modifiers)
+/mob/living/proc/right_click_attack_chain(atom/A, list/modifiers)
+	if (!LAZYACCESS(modifiers, RIGHT_CLICK))
+		return
+	var/secondary_result = A.attack_hand_secondary(src, modifiers)
 
-		if (secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
-			return TRUE
-		else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
-			CRASH("attack_hand_secondary did not return a SECONDARY_ATTACK_* define.")
+	if (secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
+		return TRUE
+	else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
+		CRASH("attack_hand_secondary did not return a SECONDARY_ATTACK_* define.")
 
 /*
 	Humans:
@@ -42,7 +43,7 @@
 	if(dna?.species?.spec_unarmedattack(src, A, modifiers)) //Because species like monkeys dont use attack hand
 		return
 
-	if(!right_click_attack(A, modifiers))
+	if(!right_click_attack_chain(A, modifiers))
 		A.attack_hand(src, modifiers)
 
 
@@ -120,14 +121,13 @@
 	Animals & All Unspecified
 */
 
-// A common early return for all UnarmedAttacks
-#define UNARMED_ATTACK_COMMON \
-	if(	HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || \
-		SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, A, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN) \
-		return;
+// If the UnarmedAttack chain is blocked
+#define LIVING_UNARMED_ATTACK_BLOCKED (HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) \
+		|| SEND_SIGNAL(src, COMSIG_LIVING_UNARMED_ATTACK, A, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 
 /mob/living/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	UNARMED_ATTACK_COMMON
+	if(LIVING_UNARMED_ATTACK_BLOCKED)
+		return
 	A.attack_animal(src, modifiers)
 
 /atom/proc/attack_animal(mob/user, list/modifiers)
@@ -145,7 +145,8 @@
 	Defaults to same as monkey in most places
 */
 /mob/living/carbon/alien/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	UNARMED_ATTACK_COMMON
+	if(LIVING_UNARMED_ATTACK_BLOCKED)
+		return
 	A.attack_alien(src, modifiers)
 
 /atom/proc/attack_alien(mob/living/carbon/alien/user, list/modifiers)
@@ -155,7 +156,8 @@
 
 // Babby aliens
 /mob/living/carbon/alien/larva/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	UNARMED_ATTACK_COMMON
+	if(LIVING_UNARMED_ATTACK_BLOCKED)
+		return
 	A.attack_larva(src)
 
 /atom/proc/attack_larva(mob/user)
@@ -167,7 +169,8 @@
 	Nothing happening here
 */
 /mob/living/simple_animal/slime/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	UNARMED_ATTACK_COMMON
+	if(LIVING_UNARMED_ATTACK_BLOCKED)
+		return
 	if(isturf(A))
 		return ..()
 	A.attack_slime(src)
@@ -180,12 +183,13 @@
 	Drones
 */
 /mob/living/simple_animal/drone/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	UNARMED_ATTACK_COMMON
+	if(LIVING_UNARMED_ATTACK_BLOCKED)
+		return
 	A.attack_drone(src, modifiers)
 
 /// Defaults to attack_hand or attack_hand_secondary. Override it when you don't want drones to do same stuff as humans.
 /atom/proc/attack_drone(mob/living/simple_animal/drone/user, list/modifiers)
-	if(!user.right_click_attack(src, modifiers))
+	if(!user.right_click_attack_chain(src, modifiers))
 		attack_hand(user, modifiers)
 
 
@@ -210,7 +214,8 @@
 */
 
 /mob/living/simple_animal/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	UNARMED_ATTACK_COMMON
+	if(LIVING_UNARMED_ATTACK_BLOCKED)
+		return
 	if(dextrous && (isitem(A) || !combat_mode))
 		A.attack_hand(src, modifiers)
 		update_inv_hands()
@@ -223,14 +228,15 @@
 */
 
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	UNARMED_ATTACK_COMMON
+	if(LIVING_UNARMED_ATTACK_BLOCKED)
+		return
 	target = A
 	if(dextrous && (isitem(A) || !combat_mode))
 		..()
 	else
 		AttackingTarget(A)
 
-#undef UNARMED_ATTACK_COMMON
+#undef LIVING_UNARMED_ATTACK_BLOCKED
 
 /*
 	New Players:
