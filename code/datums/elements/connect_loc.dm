@@ -1,7 +1,7 @@
 /// This element hooks a signal onto the loc the current object is on.
 /// When the object moves, it will unhook the signal and rehook it to the new object.
 /datum/element/connect_loc
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH | ELEMENT_COMPLEX_DETACH
 	id_arg_index = 3
 
 	/// An assoc list of signal -> procpath to register to the loc this object is on.
@@ -27,7 +27,7 @@
 	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	update_signals(listener, tracked)
 
-/datum/element/connect_loc/Detach(datum/listener, atom/movable/tracked)
+/datum/element/connect_loc/Detach(datum/listener, atom/movable/tracked, list/connections)
 	. = ..()
 
 	if(!tracked)
