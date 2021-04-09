@@ -583,9 +583,13 @@
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
 
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
-///also from /mob/living/stripPanel(Un)equip)() and /datum/strippable_item/alternate_action()
+///also from /mob/living/stripPanel(Un)equip)()
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
+
+///Called on user, from base of /datum/strippable_item/alternate_action() (atom/target)
+#define COMSIG_TRY_ALT_ACTION "try_alt_action"
+	#define COMPONENT_CANT_ALT_ACTION (1<<0)
 
 ///From /datum/component/creamed/Initialize()
 #define COMSIG_MOB_CREAMED "mob_creamed"

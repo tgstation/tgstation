@@ -183,7 +183,7 @@
 /// `has_alternate_action` needs to be TRUE.
 /datum/strippable_item/proc/alternate_action(atom/source, mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(user, COMSIG_TRY_STRIP, source) & COMPONENT_CANT_STRIP)
+	if(SEND_SIGNAL(user, COMSIG_TRY_ALT_ACTION, source) & COMPONENT_CANT_ALT_ACTION)
 		return TRUE
 
 /// Returns whether or not this item should show.

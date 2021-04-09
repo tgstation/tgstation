@@ -19,10 +19,18 @@
 	RegisterSignal(parent, COMSIG_LIVING_TRY_PULL, .proc/frightened_pull)
 	RegisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), .proc/frightened_unarmed)
 	RegisterSignal(parent, COMSIG_TRY_STRIP, .proc/frightened_nightclub)
+	RegisterSignal(parent, COMSIG_TRY_ALT_ACTION, .proc/frightened_rambo)
 
 
 /datum/component/shy_in_room/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_LIVING_TRY_PULL, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_TRY_STRIP))
+	UnregisterSignal(parent, list(
+		COMSIG_MOB_CLICKON,
+		COMSIG_LIVING_TRY_PULL,
+		COMSIG_LIVING_UNARMED_ATTACK,
+		COMSIG_HUMAN_EARLY_UNARMED_ATTACK,
+		COMSIG_TRY_STRIP,
+		COMSIG_TRY_ALT_ACTION,
+	))
 
 /datum/component/shy_in_room/PostTransfer()
 	if(!ismob(parent))
@@ -59,4 +67,8 @@
 /datum/component/shy_in_room/proc/frightened_nightclub(datum/source, atom/target, obj/item/equipping)
 	SIGNAL_HANDLER
 	return frightened(target) && COMPONENT_CANT_STRIP
+
+/datum/component/shy_in_room/proc/frightened_rambo(datum/source, atom/target)
+	SIGNAL_HANDLER
+	return frightened(target) && COMPONENT_CANT_ALT_ACTION
 
