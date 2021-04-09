@@ -124,9 +124,9 @@
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
 	/// blacklisted drone areas, direct
-	var/list/drone_area_blacklist_flat = list(/area/engineering/atmos, /area/engineering/atmospherics_engine, /area/engineering/supermatter)
+	var/list/drone_area_blacklist_flat = list(/area/engineering/atmos, /area/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
-	var/list/drone_area_blacklist_recursive
+	var/list/drone_area_blacklist_recursive = list(/area/engineering/supermatter)
 	/// whitelisted drone machines, direct
 	var/list/drone_machinery_whitelist_flat
 	/// whitelisted drone machines, recursive/includes descendants
