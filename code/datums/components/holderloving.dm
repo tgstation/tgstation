@@ -1,9 +1,22 @@
-/// Prevents items from leaving their storage or whoever is holding their storage (does not need to have a storage component)
+/** Holder Loving Component
+ *
+ * This component is assigned to an [/obj/item], and also keeps track of a [holder].
+ * The [parent] is 'bound' to [holder]. [parent] will be kept either directly
+ * inside [holder], or in the inventory of a [/mob] that is itself holding [holder].
+ *
+ * If [parent] is placed in a [loc] that is not [holder] or [holder].[loc]
+ * (if it's a mob), it is placed back inside [holder].
+ *
+ * This is intended for items that are a 'part' of another item.
+ *
+ * It can also delete [parent] when [holder] is deleted.
+ *
+ */
 /datum/component/holderloving
 	can_transfer = TRUE
-	/// Item that is kept track of
+	/// Item that parent is bound to
 	var/obj/item/holder
-	/// If we delete our parent when the holder gets deleted
+	/// If parent is deleted when the holder gets deleted
 	var/del_parent_with_holder = FALSE
 
 /datum/component/holderloving/Initialize(holder, del_parent_with_holder)
