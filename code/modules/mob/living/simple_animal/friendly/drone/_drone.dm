@@ -369,13 +369,13 @@
 	var/list/drone_good_machines = make_associative(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive)
 	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
 	if(shy)
-		ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
+		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		LoadComponent(/datum/component/shy, typecacheof(/mob/living/simple_animal/drone), 4, "Your laws prevent this action near %TARGET.", TRUE)
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 		LoadComponent(/datum/component/technointrovert, drone_good_machines, "Using %TARGET could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
 	else
-		REMOVE_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		var/list/qdel_components = list(
 			GetComponent(/datum/component/shy),
 			GetComponent(/datum/component/shy_in_room),

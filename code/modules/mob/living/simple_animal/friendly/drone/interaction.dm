@@ -153,7 +153,6 @@
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
 		set_shy(FALSE)
-		REMOVE_TRAIT(src, TRAIT_PACIFISM, SPECIES_TRAIT)
 		mind.special_role = "hacked drone"
 		REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 		speed = 1 //gotta go slow
