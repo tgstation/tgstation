@@ -416,6 +416,7 @@
 	projectile_type = /obj/projectile/hook
 	caliber = CALIBER_HOOK
 	icon_state = "hook"
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/projectile/hook
 	name = "hook"
