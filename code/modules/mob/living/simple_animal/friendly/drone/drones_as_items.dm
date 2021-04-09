@@ -35,17 +35,18 @@
 	AddElement(/datum/element/point_of_interest)
 
 /obj/effect/mob_spawn/drone/allow_spawn(mob/user)
-	var/client/C = user.client
+	var/client/user_client = user.client
 	var/mob/living/simple_animal/drone/drone_type = mob_type
-	if(initial(drone_type.shy) && C && CONFIG_GET(flag/use_exp_restrictions_other))
-		var/required_role = CONFIG_GET(string/drone_required_role)
-		var/required_playtime = CONFIG_GET(number/drone_role_playtime) * 60
-		if(required_playtime <= 0)
-			return ..()
-		var/current_playtime = C.calc_exp_type(required_role)
-		if (current_playtime < required_playtime)
-			var/minutes_left = required_playtime - current_playtime
-			var/playtime_left = DisplayTimeText(minutes_left MINUTES)
-			to_chat(user, "<span class='danger'>You need to play [playtime_left] more as [required_role] to spawn as a Maintenance Drone!</span>")
-			return FALSE
+	if(!(initial(drone_type.shy) && user_client && CONFIG_GET(flag/use_exp_restrictions_other)))
+		return
+	var/required_role = CONFIG_GET(string/drone_required_role)
+	var/required_playtime = CONFIG_GET(number/drone_role_playtime) * 60
+	if(required_playtime <= 0)
+		return ..()
+	var/current_playtime = user_client?.calc_exp_type(required_role)
+	if (current_playtime < required_playtime)
+		var/minutes_left = required_playtime - current_playtime
+		var/playtime_left = DisplayTimeText(minutes_left * (1 MINUTES))
+		to_chat(user, "<span class='danger'>You need to play [playtime_left] more as [required_role] to spawn as a Maintenance Drone!</span>")
+		return FALSE
 	return ..()
