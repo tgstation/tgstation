@@ -59,6 +59,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	data["allow_items"] = allow_items
 	data["frozen_crew"] = frozen_crew
 	data["frozen_items"] = list()
+	data["possible_items"] = GLOB.possible_items
 
 	if(allow_items)
 		data["frozen_items"] = frozen_items
@@ -140,14 +141,14 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	var/obj/machinery/computer/cryopod/control_computer
 	COOLDOWN_DECLARE(last_no_computer_message)
 
-	// These items are preserved when the process() despawn proc occurs.
+	// Items not (always) listed as steal objectives are preserved when the process() despawn proc occurs.
 	var/static/list/preserve_items = list(
 		/obj/item/hand_tele,
 		/obj/item/card/id/advanced/gold/captains_spare,
 		/obj/item/aicard,
 		/obj/item/paicard,
 		/obj/item/gun,
-		/obj/item/pinpointer,
+		/obj/item/disk/nuclear,
 		/obj/item/clothing/shoes/magboots,
 		/obj/item/areaeditor/blueprints,
 		/obj/item/clothing/head/helmet/space,
@@ -283,6 +284,15 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 						update_objective.owner.announce_objectives()
 				qdel(objective)
 
+/obj/machinery/cryopod/proc/should_preserve_item(obj/item/item)
+	for(var/possible_item in GLOB.possible_items)
+		if(istype(item, possible_item))
+			return TRUE
+	for(var/preserved in preserve_items)
+		if(istype(item, preserved))
+			return TRUE
+	return FALSE
+
 // This function can not be undone; do not call this unless you are sure
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
@@ -326,13 +336,15 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		if(item.loc.loc && (item.loc.loc == loc || item.loc.loc == control_computer))
 			continue // means we already moved whatever this thing was in
 			// I'm a professional, okay
-		for(var/preserved in preserve_items)
-			if(istype(item, preserved))
-				if(control_computer && control_computer.allow_items)
-					control_computer.frozen_items += item
-					mob_occupant.transferItemToLoc(item, control_computer, TRUE)
-				else
-					mob_occupant.transferItemToLoc(item, loc, TRUE)
+
+		if(!should_preserve_item(item))
+			continue
+
+		if(control_computer && control_computer.allow_items)
+			control_computer.frozen_items += item
+			mob_occupant.transferItemToLoc(item, control_computer, TRUE)
+		else
+			mob_occupant.transferItemToLoc(item, loc, TRUE)
 
 	var/list/contents = mob_occupant.GetAllContents()
 	QDEL_LIST(contents)

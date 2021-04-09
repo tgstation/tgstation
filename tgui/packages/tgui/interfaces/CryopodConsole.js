@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 
 export const CryopodConsole = (props, context) => {
   const { data } = useBackend(context);
-  const { account_name, allow_items } = data;
+  const { account_name, allow_items, possible_items } = data;
 
   const welcomeTitle = `Hello, ${account_name || '[REDACTED]'}!`;
 
