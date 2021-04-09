@@ -195,7 +195,7 @@
 	semi_auto = TRUE
 	flags_1 = CONDUCT_1
 	force = 18 //it has a hook on it
-	sharpness = SHARP_EDGED //it does in fact, have a hook on it
+	sharpness = SHARP_POINTY //it does in fact, have a hook on it
 	attack_verb_continuous = list("slashes", "hooks", "stabs")
 	attack_verb_simple = list("slash", "hook", "stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
