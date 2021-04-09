@@ -42,7 +42,7 @@ have ways of interacting with a specific mob and control it.
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/on_Crossed,
 	)
-	new_pawn.AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, src, new_pawn, loc_connections)
 	movement_delay = living_pawn.cached_multiplicative_slowdown
 	return ..() //Run parent at end
 
