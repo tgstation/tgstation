@@ -10807,8 +10807,8 @@
 /area/hallway/secondary/entry)
 "aXM" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Cargo Bay Warehouse Maintenance";
-	req_access_txt = "31"
+	name = "Quartermaster Office Maintenance";
+	req_access_txt = "41"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -18490,9 +18490,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
@@ -40199,7 +40196,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
-	req_one_access_txt = "31,48"
+	req_one_access_txt = "31;48"
 	},
 /obj/machinery/navbeacon/wayfinding,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{

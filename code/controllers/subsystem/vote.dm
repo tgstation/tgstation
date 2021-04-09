@@ -109,7 +109,7 @@ SUBSYSTEM_DEF(vote)
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
 	remove_action_buttons()
-	to_chat(world, "\n<font color='purple'>[text]</font>")
+	to_chat(world, "\n<span class='infoplain'><font color='purple'>[text]</font></span>")
 	return .
 
 /datum/controller/subsystem/vote/proc/result()
@@ -220,7 +220,7 @@ SUBSYSTEM_DEF(vote)
 			text += "\n[question]"
 		log_vote(text)
 		var/vp = CONFIG_GET(number/vote_period)
-		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
+		to_chat(world, "\n<span class='infoplain'><font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font></span>")
 		time_remaining = round(vp/10)
 		for(var/c in GLOB.clients)
 			var/client/C = c
