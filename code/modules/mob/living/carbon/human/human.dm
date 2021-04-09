@@ -923,15 +923,15 @@
 	var/skills_space = "" //cobby told me to do this
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay = 3 SECONDS
-		skills_space = " expertly"
+		skills_space = " very quickly"
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
 		carrydelay = 4 SECONDS
 		skills_space = " quickly"
 
-	visible_message("<span class='notice'>[src] starts[skills_space] lifting [target] onto [p_their()] back..</span>",
+	visible_message("<span class='notice'>[src] starts[skills_space] lifting [target] onto [p_their()] back...</span>",
 	//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
-	"<span class='notice'>[carrydelay < 3.5 SECONDS ? "Using your gloves' nanochips, you" : "You"][skills_space] start to lift [target] onto your back[carrydelay == 4 SECONDS ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
-	//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
+	"<span class='notice'>You[skills_space] start to lift [target] onto your back...</span>")
+	//You ( /quickly/expertly) start to lift Grey Tider onto your back...
 	if(!do_after(src, carrydelay, target))
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!</span>")
 		return
