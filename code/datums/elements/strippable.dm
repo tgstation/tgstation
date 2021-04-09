@@ -181,10 +181,12 @@
 
 /// Performs an alternative action on this strippable_item.
 /// `has_alternate_action` needs to be TRUE.
+/// Returns FALSE if blocked by signal, TRUE otherwise.
 /datum/strippable_item/proc/alternate_action(atom/source, mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(user, COMSIG_TRY_ALT_ACTION, source) & COMPONENT_CANT_ALT_ACTION)
-		return TRUE
+		return FALSE
+	return TRUE
 
 /// Returns whether or not this item should show.
 /datum/strippable_item/proc/should_show(atom/source, mob/user)
