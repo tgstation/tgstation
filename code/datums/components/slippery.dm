@@ -14,6 +14,15 @@
 	var/mob/living/holder
 	/// Whitelist of item slots the parent can be equipped in that make the holder slippery. If null or empty, it will always make the holder slippery.
 	var/list/slot_whitelist
+	///what we give to connect_loc by default, makes slippable mobs moving over us slip
+	var/static/list/default_connections = list(
+			COMSIG_MOVABLE_CROSSED = .proc/Slip,
+		)
+
+	///what we give to connect_loc if we're an item and get equipped by a mob. makes slippable mobs moving over our holder slip
+	var/static/list/holder_connections = list(
+			COMSIG_MOVABLE_CROSSED = .proc/Slip_on_wearer,
+		)
 
 /datum/component/slippery/Initialize(knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
 	src.knockdown_time = max(knockdown, 0)
@@ -22,11 +31,9 @@
 	src.lube_flags = lube_flags
 	src.callback = callback
 	src.slot_whitelist = slot_whitelist
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/Slip,
-	)
-	parent.AddElement(/datum/element/connect_loc, loc_connections)
-	//TODOKYLER: deal with components AND REMOVE ELEMENT IN DETACH
+
+	parent.AddElement(/datum/element/connect_loc, default_connections)
+	//TODOKYLER: all removes of connect_loc NEED the arguments creating it specified!
 	if(isitem(parent))
 		holder = parent
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
@@ -61,10 +68,7 @@
 
 	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
 		holder = equipper
-		var/static/list/loc_connections = list(
-			COMSIG_MOVABLE_CROSSED = .proc/Slip_on_wearer,
-		)
-		holder.AddElement(/datum/element/connect_loc, loc_connections)
+		holder.AddElement(/datum/element/connect_loc, holder_connections)
 		RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
 
 /*
@@ -90,7 +94,7 @@
 /datum/component/slippery/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	holder.RemoveElement(/datum/element/connect_loc)
+	holder.RemoveElement(/datum/element/connect_loc, holder_connections)
 	holder = null
 
 /*
@@ -106,11 +110,11 @@
 	if(holder.body_position == LYING_DOWN && !holder.buckled)
 		Slip(source, AM)
 
-/datum/component/slippery/UnregisterFromParent()
+/datum/component/slippery/UnregisterFromParent() //TODOKYLER: all removes of connect_loc need to specify the arguments that created it!
 	. = ..()
 	if(holder)
-		holder.RemoveElement(/datum/element/connect_loc)
-	parent.RemoveElement(/datum/element/connect_loc)
+		holder.RemoveElement(/datum/element/connect_loc, holder_connections)
+	parent.RemoveElement(/datum/element/connect_loc, default_connections)
 
 /// Used for making the clown PDA only slip if the clown is wearing his shoes and the elusive banana-skin belt
 /datum/component/slippery/clowning

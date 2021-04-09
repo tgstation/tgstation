@@ -14,13 +14,6 @@
 	if(_monitor)
 		parent = _monitor
 	. = ..()
-	RemoveElement(/datum/element/connect_loc)
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-	//TODOKYLER: wtf is this shit deal with this mess
-
 
 /obj/effect/abstract/proximity_checker/advanced/center
 	name = "field anchor"
@@ -29,14 +22,6 @@
 /obj/effect/abstract/proximity_checker/advanced/field_turf
 	name = "energy field"
 	desc = "Get off my turf!"
-
-/obj/effect/abstract/proximity_checker/advanced/field_turf/Initialize(mapload, _monitor)
-	. = ..()
-	RemoveElement(/datum/element/connect_loc)
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_UNCROSSED = .proc/on_uncrossed,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/abstract/proximity_checker/advanced/field_turf/CanAllowThrough(atom/movable/AM, turf/target)
 	. = ..()
@@ -49,8 +34,8 @@
 		return parent.field_turf_crossed(AM, src)
 	return TRUE
 
-/obj/effect/abstract/proximity_checker/advanced/field_turf/proc/on_uncrossed(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
+/obj/effect/abstract/proximity_checker/advanced/field_turf/on_uncrossed(datum/source, atom/movable/AM)
+	. = ..()
 	if(parent)
 		return parent.field_turf_uncrossed(AM, src)
 	return TRUE
@@ -58,15 +43,6 @@
 /obj/effect/abstract/proximity_checker/advanced/field_edge
 	name = "energy field edge"
 	desc = "Edgy description here."
-
-/obj/effect/abstract/proximity_checker/advanced/field_edge/Initialize(mapload, _monitor)//TODOKYLER: this wont work, detach then reattach?
-	. = ..()
-	RemoveElement(/datum/element/connect_loc) //TODOKYLER: this is fucking disgusting, do not forget this
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
-		COMSIG_MOVABLE_UNCROSSED = .proc/on_uncrossed,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/abstract/proximity_checker/advanced/field_edge/CanAllowThrough(atom/movable/AM, turf/target)
 	. = ..()
@@ -79,7 +55,7 @@
 		return parent.field_edge_crossed(AM, src)
 	return TRUE
 
-/obj/effect/abstract/proximity_checker/advanced/field_edge/proc/on_uncrossed(datum/source, atom/movable/AM)
+/obj/effect/abstract/proximity_checker/advanced/field_edge/on_uncrossed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(parent)
 		return parent.field_edge_uncrossed(AM, src)
