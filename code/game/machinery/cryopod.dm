@@ -142,25 +142,19 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	// Items not (always) listed as steal objectives are preserved when the process() despawn proc occurs.
 	var/static/list/preserve_items = list(
-		/obj/item/hand_tele,
 		/obj/item/card/id/advanced/gold/captains_spare,
 		/obj/item/aicard,
 		/obj/item/paicard,
 		/obj/item/gun,
 		/obj/item/disk/nuclear,
 		/obj/item/clothing/shoes/magboots,
-		/obj/item/areaeditor/blueprints,
 		/obj/item/clothing/head/helmet/space,
 		/obj/item/clothing/suit/space,
 		/obj/item/clothing/suit/armor,
 		/obj/item/defibrillator/compact,
-		/obj/item/reagent_containers/hypospray/cmo,
-		/obj/item/clothing/accessory/medal/gold/captain,
 		/obj/item/clothing/gloves/krav_maga,
 		/obj/item/nullrod,
 		/obj/item/tank/jetpack,
-		/obj/item/documents,
-		/obj/item/nuke_core_container
 	)
 
 /obj/machinery/cryopod/Initialize()
@@ -284,8 +278,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 				qdel(objective)
 
 /obj/machinery/cryopod/proc/should_preserve_item(obj/item/item)
-	for(var/possible_item in GLOB.possible_items)
-		if(istype(item, possible_item))
+	for(var/datum/objective_item/steal/possible_item in GLOB.possible_items)
+		if(istype(item, possible_item.targetitem))
 			return TRUE
 	for(var/preserved in preserve_items)
 		if(istype(item, preserved))
