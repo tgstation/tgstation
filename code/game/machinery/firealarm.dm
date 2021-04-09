@@ -134,7 +134,7 @@
 		update_appearance()
 	alarm()
 
-/obj/machinery/firealarm/atmos_end(datum/gas_mixture/air, exposed_temperature)
+/obj/machinery/firealarm/atmos_end()
 	if(!detecting)
 		return
 	if(triggered)
