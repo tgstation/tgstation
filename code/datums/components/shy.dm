@@ -12,7 +12,7 @@
 	/// Are you shy around a dead body?
 	var/dead_shy = FALSE
 	/// Invalidate last_result at this time
-	var/result_expires = 0
+	COOLDOWN_DECLARE(result_cooldown)
 	/// What was our last result?
 	var/last_result = FALSE
 
@@ -59,7 +59,7 @@
 	if(A in owner.DirectAccess())
 		return
 
-	if(result_expires > world.time)
+	if(!COOLDOWN_FINISHED(src, result_cooldown))
 		return last_result
 
 	var/list/strangers = view(shy_range, get_turf(owner))
@@ -72,7 +72,7 @@
 				break
 
 	last_result = result
-	result_expires = world.time + SHY_COMPONENT_CACHE_TIME
+	COOLDOWN_START(src, result_cooldown, SHY_COMPONENT_CACHE_TIME)
 	return result
 
 
