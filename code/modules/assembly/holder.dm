@@ -74,12 +74,12 @@
 		right.add_overlay("[right_overlay]_l")
 	. += right
 
-/obj/item/assembly_holder/proc/on_crossed(datum/source, atom/movable/AM as mob|obj)
+/obj/item/assembly_holder/proc/on_crossed(datum/source, atom/movable/AM as mob|obj)//TODOKYLER: probably remove?
 	SIGNAL_HANDLER
 	if(a_left)
-		SEND_SIGNAL(a_left, COMSIG_MOVABLE_CROSSED, AM)
+		SEND_SIGNAL(loc, COMSIG_MOVABLE_CROSSED, AM)
 	if(a_right)
-		SEND_SIGNAL(a_right, COMSIG_MOVABLE_CROSSED, AM)
+		SEND_SIGNAL(loc, COMSIG_MOVABLE_CROSSED, AM)
 
 /obj/item/assembly_holder/on_found(mob/finder)
 	if(a_left)

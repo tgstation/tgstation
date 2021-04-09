@@ -106,6 +106,7 @@
 
 	parent.RemoveElement(/datum/element/bsa_blocker)
 	parent.RemoveElement(/datum/element/forced_gravity)
+	parent.RemoveElement(/datum/element/connect_loc)
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
@@ -115,7 +116,6 @@
 		COMSIG_ATOM_BSA_BEAM,
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
-		COMSIG_MOVABLE_CROSSED,
 		COMSIG_MOVABLE_PRE_MOVE,
 		COMSIG_PARENT_ATTACKBY,
 	))

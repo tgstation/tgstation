@@ -379,17 +379,15 @@
 	var/atom/oldloc = loc
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
+
+	if(oldloc)
+		SEND_SIGNAL(oldloc, COMSIG_MOVABLE_UNCROSSED, src)
+
 	loc = newloc
 	. = TRUE
 	oldloc.Exited(src, newloc)
 	if(oldarea != newarea)
 		oldarea.Exited(src, newloc)
-
-	for(var/i in oldloc)
-		if(i == src) // Multi tile objects
-			continue
-		var/atom/movable/thing = i
-		thing.Uncrossed(src)
 
 	newloc.Entered(src, oldloc)
 	if(oldarea != newarea)
@@ -630,11 +628,10 @@
 
 		if(!same_loc)
 			if(oldloc)
+				SEND_SIGNAL(oldloc, COMSIG_MOVABLE_UNCROSSED)
 				oldloc.Exited(src, destination)
 				if(old_area && old_area != destarea)
 					old_area.Exited(src, destination)
-			for(var/atom/movable/AM in oldloc)
-				AM.Uncrossed(src)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)
@@ -644,6 +641,7 @@
 			destination.Entered(src, oldloc)
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
+
 
 			SEND_SIGNAL(destination, COMSIG_MOVABLE_CROSSED, src, oldloc)
 

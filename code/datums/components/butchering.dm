@@ -158,3 +158,7 @@
 		return
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
 		Butcher(parent, L)
+
+/datum/component/butchering/recycler/UnregisterFromParent()
+	. = ..()
+	parent.RemoveElement(/datum/element/connect_loc)

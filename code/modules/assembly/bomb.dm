@@ -92,6 +92,7 @@
 	SIGNAL_HANDLER
 	if(bombassembly)
 		SEND_SIGNAL(bombassembly, COMSIG_MOVABLE_CROSSED, AM)
+		//TODOKYLER: dumb, bombassembly should register to us with the element
 
 /obj/item/onetankbomb/on_found(mob/finder) //for mousetraps
 	if(bombassembly)

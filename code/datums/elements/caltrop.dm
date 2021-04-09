@@ -29,7 +29,14 @@
 	src.probability = probability
 	src.flags = flags
 
-	RegisterSignal(target, COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+	target.AddElement(/datum/element/connect_loc, loc_connections)
+
+/datum/element/caltrop/Detach(datum/source, force)
+	. = ..()
+	source.RemoveElement(/datum/element/connect_loc)
 
 /datum/element/caltrop/proc/on_crossed(atom/caltrop, atom/movable/AM)
 	SIGNAL_HANDLER

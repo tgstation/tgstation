@@ -82,6 +82,7 @@
 	SIGNAL_HANDLER
 	if(attached_device)
 		SEND_SIGNAL(attached_device, COMSIG_MOVABLE_CROSSED, AM)
+		//TODOKYLER: this is dumb, anything that cares about crossed should register to this with connect_loc for any relevant procs, everything like this must go
 
 //Triggers mousetraps
 /obj/item/transfer_valve/attack_hand(mob/user, list/modifiers)

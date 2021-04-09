@@ -131,6 +131,10 @@
 	rand_disease.name = "Unknown"
 	react_to.ContactContractDisease(rand_disease, target_zone)
 
+/datum/component/rot/UnregisterFromParent()
+	. = ..()
+	parent.RemoveElement(/datum/element/connect_loc)
+
 #undef REAGENT_BLOCKER
 #undef TEMPERATURE_BLOCKER
 #undef HUSK_BLOCKER
