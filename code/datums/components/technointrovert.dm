@@ -14,7 +14,7 @@
 		message = _message
 
 /datum/component/technointrovert/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_TRY_USE_MACHINE, .proc/is_in_friend_group)
+	RegisterSignal(parent, COMSIG_TRY_USE_MACHINE, .proc/is_in_whitelist)
 
 /datum/component/technointrovert/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_TRY_USE_MACHINE)
@@ -28,7 +28,7 @@
 		whitelist = friend.whitelist
 		message = friend.message
 
-/datum/component/technointrovert/proc/is_in_friend_group(datum/source, obj/machinery/machine)
+/datum/component/technointrovert/proc/is_in_whitelist(datum/source, obj/machinery/machine)
 	SIGNAL_HANDLER
 	if(!is_type_in_typecache(machine, whitelist))
 		to_chat(source, "<span class='warning'>[replacetext(message, "%TARGET", machine)]</span>")

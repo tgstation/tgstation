@@ -51,6 +51,6 @@
 
 /datum/component/holderloving/proc/check_my_loc(datum/source)
 	SIGNAL_HANDLER
-	var/obj/item/Iparent = parent
-	if(!check_valid_loc(Iparent.loc))
-		Iparent.forceMove(holder)
+	var/obj/item/item_parent = parent
+	if(!check_valid_loc(item_parent.loc))
+		item_parent.forceMove(holder)

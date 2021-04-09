@@ -15,11 +15,11 @@
 		src.message = message
 
 /datum/component/shy_in_room/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/frightened_click)
-	RegisterSignal(parent, COMSIG_LIVING_TRY_PULL, .proc/frightened_pull)
-	RegisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), .proc/frightened_unarmed)
-	RegisterSignal(parent, COMSIG_TRY_STRIP, .proc/frightened_nightclub)
-	RegisterSignal(parent, COMSIG_TRY_ALT_ACTION, .proc/frightened_rambo)
+	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/on_clickon)
+	RegisterSignal(parent, COMSIG_LIVING_TRY_PULL, .proc/on_try_pull)
+	RegisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), .proc/on_unarmed_attack)
+	RegisterSignal(parent, COMSIG_TRY_STRIP, .proc/on_try_strip)
+	RegisterSignal(parent, COMSIG_TRY_ALT_ACTION, .proc/on_try_alt_action)
 
 
 /datum/component/shy_in_room/UnregisterFromParent()
@@ -42,7 +42,7 @@
 		message = friend.message
 
 /// Returns TRUE or FALSE if you are in a blacklisted area
-/datum/component/shy_in_room/proc/frightened(atom/A)
+/datum/component/shy_in_room/proc/is_shy(atom/A)
 	var/mob/owner = parent
 	if(!length(blacklist) || (A in owner.DirectAccess()))
 		return
@@ -52,23 +52,23 @@
 		to_chat(owner, "<span class='warning'>[replacetext(message, "%ROOM", room)]</span>")
 		return TRUE
 
-/datum/component/shy_in_room/proc/frightened_click(datum/source, atom/A, params)
+/datum/component/shy_in_room/proc/on_clickon(datum/source, atom/A, params)
 	SIGNAL_HANDLER
-	return frightened(A) && COMSIG_MOB_CANCEL_CLICKON
+	return is_shy(A) && COMSIG_MOB_CANCEL_CLICKON
 
-/datum/component/shy_in_room/proc/frightened_pull(datum/source, atom/movable/AM, force)
+/datum/component/shy_in_room/proc/on_try_pull(datum/source, atom/movable/AM, force)
 	SIGNAL_HANDLER
-	return frightened(AM) && COMSIG_LIVING_CANCEL_PULL
+	return is_shy(AM) && COMSIG_LIVING_CANCEL_PULL
 
-/datum/component/shy_in_room/proc/frightened_unarmed(datum/source, atom/target, proximity, modifiers)
+/datum/component/shy_in_room/proc/on_unarmed_attack(datum/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
-	return frightened(target) && COMPONENT_CANCEL_ATTACK_CHAIN
+	return is_shy(target) && COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/component/shy_in_room/proc/frightened_nightclub(datum/source, atom/target, obj/item/equipping)
+/datum/component/shy_in_room/proc/on_try_strip(datum/source, atom/target, obj/item/equipping)
 	SIGNAL_HANDLER
-	return frightened(target) && COMPONENT_CANT_STRIP
+	return is_shy(target) && COMPONENT_CANT_STRIP
 
-/datum/component/shy_in_room/proc/frightened_rambo(datum/source, atom/target)
+/datum/component/shy_in_room/proc/on_try_alt_action(datum/source, atom/target)
 	SIGNAL_HANDLER
-	return frightened(target) && COMPONENT_CANT_ALT_ACTION
+	return is_shy(target) && COMPONENT_CANT_ALT_ACTION
 
