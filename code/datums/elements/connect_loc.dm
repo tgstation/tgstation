@@ -30,6 +30,12 @@
 /datum/element/connect_loc/Detach(datum/listener, atom/movable/tracked)
 	. = ..()
 
+	if(!tracked)
+		tracked = listener
+
+	if(!istype(tracked))
+		return
+
 	if (!isnull(tracked.loc))
 		unregister_signals(listener, tracked, tracked.loc)
 
