@@ -15,13 +15,21 @@
 /datum/component/holderloving/RegisterWithParent()
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/check_my_loc)
 	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/holder_deleting)
-	RegisterSignal(parent, list(	COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED, \
-									COMSIG_STORAGE_ENTERED, COMSIG_STORAGE_EXITED ), .proc/check_my_loc)
+	RegisterSignal(parent, list(
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_STORAGE_ENTERED,
+		COMSIG_STORAGE_EXITED,
+	), .proc/check_my_loc)
 
 /datum/component/holderloving/UnregisterFromParent()
 	UnregisterSignal(holder, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
-	UnregisterSignal(	parent, list(	COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED, \
-										COMSIG_STORAGE_ENTERED, COMSIG_STORAGE_EXITED ))
+	UnregisterSignal(parent, list(
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_STORAGE_ENTERED,
+		COMSIG_STORAGE_EXITED,
+	))
 
 /datum/component/holderloving/PostTransfer()
 	if(!isitem(parent))
