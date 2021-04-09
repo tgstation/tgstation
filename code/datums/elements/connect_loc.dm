@@ -48,8 +48,6 @@
 	if (isnull(tracked.loc))
 		return
 
-	LAZYSET(targets[target.loc], target, TRUE)
-
 	for (var/signal in connections)
 		listener.RegisterSignal(tracked.loc, signal, connections[signal])
 
