@@ -106,13 +106,9 @@
 	inhand_icon_state = "banner"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	desc = "A cunning device used to claim ownership of planets."
+	desc = "A cunning device used to claim ownership of celestial bodies."
 	w_class = WEIGHT_CLASS_HUGE
 	force = 15
-
-/obj/item/station_charter/banner/Initialize()
-	. = ..()
-	desc = "A cunning device used to claim ownership of [name_type]s."
 
 /obj/item/station_charter/banner/rename_station(designation, uname, ureal_name, ukey)
 	set_station_name(designation)
@@ -123,11 +119,5 @@
 	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE
-
-/obj/item/station_charter/banner/moon
-	name_type = "moon"
-
-/obj/item/station_charter/banner/asteroid
-	name_type = "asteroid"
 
 #undef STATION_RENAME_TIME_LIMIT
