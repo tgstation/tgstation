@@ -140,23 +140,6 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	var/obj/machinery/computer/cryopod/control_computer
 	COOLDOWN_DECLARE(last_no_computer_message)
 
-	// Items not (always) listed as steal objectives are preserved when the process() despawn proc occurs.
-	var/static/list/preserve_items = list(
-		/obj/item/card/id/advanced/gold/captains_spare,
-		/obj/item/aicard,
-		/obj/item/paicard,
-		/obj/item/gun,
-		/obj/item/disk/nuclear,
-		/obj/item/clothing/shoes/magboots,
-		/obj/item/clothing/head/helmet/space,
-		/obj/item/clothing/suit/space,
-		/obj/item/clothing/suit/armor,
-		/obj/item/defibrillator/compact,
-		/obj/item/clothing/gloves/krav_maga,
-		/obj/item/nullrod,
-		/obj/item/tank/jetpack,
-	)
-
 /obj/machinery/cryopod/Initialize()
 	..()
 	return INITIALIZE_HINT_LATELOAD //Gotta populate the cryopod computer GLOB first
@@ -277,15 +260,6 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 						update_objective.owner.announce_objectives()
 				qdel(objective)
 
-/obj/machinery/cryopod/proc/should_preserve_item(obj/item/item)
-	for(var/datum/objective_item/steal/possible_item in GLOB.possible_items)
-		if(istype(item, possible_item.targetitem))
-			return TRUE
-	for(var/preserved in preserve_items)
-		if(istype(item, preserved))
-			return TRUE
-	return FALSE
-
 // This function can not be undone; do not call this unless you are sure
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
@@ -330,8 +304,9 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			continue // means we already moved whatever this thing was in
 			// I'm a professional, okay
 
-		if(!should_preserve_item(item))
-			continue
+		for(var/datum/objective_item/steal/possible_item in GLOB.possible_items)
+			if(!istype(item, possible_item.targetitem))
+				continue
 
 		if(control_computer && control_computer.allow_items)
 			control_computer.frozen_items += item

@@ -9,7 +9,7 @@ export const CryopodConsole = (props, context) => {
   const welcomeTitle = `Hello, ${account_name || '[REDACTED]'}!`;
 
   return (
-    <Window resizable title="Cryopod Console" width={400} height={500}>
+    <Window resizable title="Cryopod Console" width={400} height={480}>
       <Window.Content>
         <Stack vertical>
           <Section title={welcomeTitle}>
@@ -65,7 +65,7 @@ const ItemList = (props, context) => {
         <NoticeBox>No stored items!</NoticeBox>
       ) : (
         <>
-          <Section height={11} fill scrollable>
+          <Section height={12} fill scrollable>
             <LabeledList>
               {frozen_items.map((item, index) => (
                 <LabeledList.Item
