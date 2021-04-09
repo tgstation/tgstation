@@ -148,22 +148,6 @@
 	else
 		return ..()
 
-/obj/item/storage/wallet/equipped(mob/user, slot)
-	. = ..()
-	for(var/card in contents)
-		var/obj/item/card/id/id_card = card
-		if(!istype(id_card))
-			continue
-		SEND_SIGNAL(id_card, COMSIG_ITEM_EQUIPPED, user)
-
-/obj/item/storage/wallet/dropped(mob/user, silent = FALSE)
-	. = ..()
-	for(var/card in contents)
-		var/obj/item/card/id/id_card = card
-		if(!istype(id_card))
-			continue
-		SEND_SIGNAL(id_card, COMSIG_ITEM_DROPPED, user)
-
 /obj/item/storage/wallet/random
 	icon_state = "random_wallet"
 

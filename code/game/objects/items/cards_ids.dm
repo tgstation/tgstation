@@ -777,6 +777,43 @@
 	is_intern = FALSE
 	update_label()
 
+/obj/item/card/id/advanced/proc/on_holding_card_slot_moved(obj/item/computer_hardware/card_slot/source, atom/old_loc, dir, forced)
+	if(istype(old_loc, /obj/item/modular_computer/tablet))
+		UnregisterSignal(old_loc, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
+
+	if(istype(source.loc, /obj/item/modular_computer/tablet))
+		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+		RegisterSignal(source.loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
+
+/obj/item/card/id/advanced/Moved(atom/OldLoc, Dir)
+	. = ..()
+
+	if(istype(OldLoc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
+		UnregisterSignal(OldLoc, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
+
+	if(istype(OldLoc, /obj/item/computer_hardware/card_slot))
+		var/obj/item/computer_hardware/card_slot/slot = OldLoc
+
+		UnregisterSignal(OldLoc, COMSIG_MOVABLE_MOVED)
+
+		if(istype(slot.holder, /obj/item/modular_computer/tablet))
+			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
+			UnregisterSignal(slot_holder, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
+
+	if(istype(loc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
+		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+		RegisterSignal(loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
+
+	if(istype(loc, /obj/item/computer_hardware/card_slot))
+		var/obj/item/computer_hardware/card_slot/slot = loc
+
+		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_holding_card_slot_moved)
+
+		if(istype(slot.holder, /obj/item/modular_computer/tablet))
+			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
+			RegisterSignal(slot_holder, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+			RegisterSignal(slot_holder, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
+
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()
 

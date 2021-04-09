@@ -144,14 +144,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 					font_mode = FONT_MONO
 			equipped = TRUE
 
-	if(id)
-		SEND_SIGNAL(id, COMSIG_ITEM_EQUIPPED, user)
-
-/obj/item/pda/dropped(mob/user, silent = FALSE)
-	. = ..()
-	if(id)
-		SEND_SIGNAL(id, COMSIG_ITEM_DROPPED, user)
-
 /obj/item/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
 

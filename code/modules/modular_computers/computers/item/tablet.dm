@@ -55,26 +55,6 @@
 	to_chat(user, "<span class='notice'>You swipe \the [src]. It's screen briefly shows a message reading \"MEMORY CODE INJECTION DETECTED AND SUCCESSFULLY QUARANTINED\".</span>")
 	return FALSE
 
-/obj/item/modular_computer/tablet/equipped(mob/user, slot)
-	. = ..()
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(card_slot?.stored_card)
-		SEND_SIGNAL(card_slot.stored_card, COMSIG_ITEM_EQUIPPED, user)
-
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	if(card_slot2?.stored_card)
-		SEND_SIGNAL(card_slot2.stored_card, COMSIG_ITEM_EQUIPPED, user)
-
-/obj/item/modular_computer/tablet/dropped(mob/user, silent = FALSE)
-	. = ..()
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(card_slot?.stored_card)
-		SEND_SIGNAL(card_slot.stored_card, COMSIG_ITEM_DROPPED, user)
-
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	if(card_slot2?.stored_card)
-		SEND_SIGNAL(card_slot2.stored_card, COMSIG_ITEM_DROPPED, user)
-
 /// Borg Built-in tablet interface
 /obj/item/modular_computer/tablet/integrated
 	name = "modular interface"
