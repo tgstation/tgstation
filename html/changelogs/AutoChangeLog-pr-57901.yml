@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "Add a better way to build the HFR with special deployable boxes, set them up in the right position (check the image on each box, it'll tell you where that box should be in a 3x3 grid.. or just examine the box)"
