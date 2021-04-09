@@ -181,12 +181,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
-"aN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/engine/airless,
-/area/icemoon/surface/outdoors)
 "aO" = (
 /turf/closed/wall/r_wall/rust,
 /area/icemoon/surface/outdoors)
@@ -1651,7 +1645,7 @@ aj
 aj
 cx
 cP
-aN
+tH
 dl
 dx
 ae
