@@ -1,7 +1,7 @@
 
 /obj/item/storage/drone_tools
 	name = "built-in tools"
-	desc = "Access your built in tools"
+	desc = "Access your built-in tools."
 	icon = 'icons/hud/screen_drone.dmi'
 	icon_state = "tool_storage"
 	item_flags = ABSTRACT
@@ -13,14 +13,19 @@
 
 /obj/item/storage/drone_tools/ComponentInitialize()
 	. = ..()
-	var/static/list/drone_builtins = list(	/obj/item/crowbar/drone, /obj/item/screwdriver/drone, /obj/item/wrench/drone, \
-											/obj/item/weldingtool/drone, /obj/item/wirecutters/drone)
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 40
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_items = 5
-	STR.rustle_sound = FALSE
-	STR.set_holdable(drone_builtins)
+	var/static/list/drone_builtins = list(
+		/obj/item/crowbar/drone,
+		/obj/item/screwdriver/drone,
+		/obj/item/wrench/drone,
+		/obj/item/weldingtool/drone,
+		/obj/item/wirecutters/drone,
+	)
+	var/datum/component/storage/storage_component = GetComponent(/datum/component/storage)
+	storage_component.max_combined_w_class = 40
+	storage_component.max_w_class = WEIGHT_CLASS_NORMAL
+	storage_component.max_items = 5
+	storage_component.rustle_sound = FALSE
+	storage_component.set_holdable(drone_builtins)
 
 
 /obj/item/storage/drone_tools/PopulateContents()
@@ -31,12 +36,9 @@
 	builtintools += new /obj/item/weldingtool/drone(src)
 	builtintools += new /obj/item/wirecutters/drone(src)
 
-	for(var/_tool in builtintools)
-		var/obj/item/tool = _tool
+	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src, TRUE)
 
-
-///// DRONE TOOLS //////
 
 /obj/item/crowbar/drone
 	name = "built-in crowbar"
