@@ -38,7 +38,7 @@
 	var/client/user_client = user.client
 	var/mob/living/simple_animal/drone/drone_type = mob_type
 	if(!(initial(drone_type.shy) && user_client && CONFIG_GET(flag/use_exp_restrictions_other)))
-		return
+		return ..()
 	var/required_role = CONFIG_GET(string/drone_required_role)
 	var/required_playtime = CONFIG_GET(number/drone_role_playtime) * 60
 	if(required_playtime <= 0)
