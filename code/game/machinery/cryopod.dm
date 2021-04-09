@@ -260,6 +260,12 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 						update_objective.owner.announce_objectives()
 				qdel(objective)
 
+/obj/machinery/cryopod/proc/should_preserve_item(obj/item/item)
+	for(var/datum/objective_item/steal/possible_item in GLOB.possible_items)
+			if(istype(item, possible_item.targetitem))
+				return TRUE
+	return FALSE
+
 // This function can not be undone; do not call this unless you are sure
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
@@ -304,9 +310,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			continue // means we already moved whatever this thing was in
 			// I'm a professional, okay
 
-		for(var/datum/objective_item/steal/possible_item in GLOB.possible_items)
-			if(!istype(item, possible_item.targetitem))
-				continue
+		if(!should_preserve_item(item))
+			continue
 
 		if(control_computer && control_computer.allow_items)
 			control_computer.frozen_items += item
