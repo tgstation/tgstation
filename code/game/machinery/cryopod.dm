@@ -262,8 +262,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 /obj/machinery/cryopod/proc/should_preserve_item(obj/item/item)
 	for(var/datum/objective_item/steal/possible_item in GLOB.possible_items)
-			if(istype(item, possible_item.targetitem))
-				return TRUE
+		if(istype(item, possible_item.targetitem))
+			return TRUE
 	return FALSE
 
 // This function can not be undone; do not call this unless you are sure
