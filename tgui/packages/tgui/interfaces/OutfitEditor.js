@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Section, Box, Stack, Icon } from '../components';
+import { Box, Button, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const OutfitEditor = (props, context) => {
@@ -44,7 +44,7 @@ export const OutfitEditor = (props, context) => {
                 <Button
                   color="transparent"
                   icon="info"
-                  tooltip="Ctrl-click a button to select *any* item instead of what will probably fit in that slot.\nAlt-click to clear the item."
+                  tooltip="Ctrl-click a button to select *any* item instead of what will probably fit in that slot."
                   tooltipPosition="bottom-left" />
                 <Button
                   icon="code"
