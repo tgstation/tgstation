@@ -16,17 +16,16 @@
 	/// What was our last result?
 	var/last_result = FALSE
 
-/// _shy_range, _whitelist, _message, dead_shy map to vars
-/datum/component/shy/Initialize(_whitelist, _shy_range, _message, _dead_shy)
+/datum/component/shy/Initialize(whitelist, shy_range, message, dead_shy)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	whitelist = _whitelist
-	if(_shy_range)
-		shy_range = _shy_range
-	if(_message)
-		message = _message
-	if(_dead_shy)
-		dead_shy = _dead_shy
+	src.whitelist = whitelist
+	if(shy_range)
+		src.shy_range = shy_range
+	if(message)
+		src.message = message
+	if(dead_shy)
+		src.dead_shy = dead_shy
 
 /datum/component/shy/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/bashful_click)

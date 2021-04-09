@@ -6,12 +6,12 @@
 	/// Message shown if you try to pick up an item not in the whitelist
 	var/message = "You don't like %TARGET, why would you hold it?"
 
-/datum/component/itempicky/Initialize(_whitelist, _message)
+/datum/component/itempicky/Initialize(whitelist, message)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	whitelist = _whitelist
-	if(_message)
-		message = _message
+	src.whitelist = whitelist
+	if(message)
+		src.message = message
 
 /datum/component/itempicky/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND, .proc/particularly)

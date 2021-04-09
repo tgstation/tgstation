@@ -6,11 +6,11 @@
 	/// If we delete our parent when the holder gets deleted
 	var/del_parent_with_holder = FALSE
 
-/datum/component/holderloving/Initialize(_holder, _del_parent_with_holder)
-	if(!isitem(parent) || !_holder)
+/datum/component/holderloving/Initialize(holder, del_parent_with_holder)
+	if(!isitem(parent) || !holder)
 		return COMPONENT_INCOMPATIBLE
-	holder = _holder
-	del_parent_with_holder = (_del_parent_with_holder || FALSE)
+	src.holder = holder
+	src.del_parent_with_holder = (del_parent_with_holder || FALSE)
 
 /datum/component/holderloving/RegisterWithParent()
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/check_my_loc)

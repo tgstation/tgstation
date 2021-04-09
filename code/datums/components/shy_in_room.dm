@@ -7,12 +7,12 @@
 	var/message = "%ROOM is too creepy to do that!"
 
 /// _blacklist, and _message map to vars
-/datum/component/shy_in_room/Initialize(_blacklist, _message)
+/datum/component/shy_in_room/Initialize(blacklist, message)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	blacklist = _blacklist
-	if(_message)
-		message = _message
+	src.blacklist = blacklist
+	if(message)
+		src.message = message
 
 /datum/component/shy_in_room/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/frightened_click)
