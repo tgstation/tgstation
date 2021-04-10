@@ -82,6 +82,12 @@
 	severity = 0
 	. = ..()
 
+/atom/movable/screen/fullscreen/emergency_meeting
+	icon_state = "emergency_meeting"
+	show_when_dead = TRUE
+	layer = CURSE_LAYER
+	plane = SPLASHSCREEN_PLANE
+
 /atom/movable/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
 	layer = UI_DAMAGE_LAYER
@@ -149,7 +155,7 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 	plane = SPLASHSCREEN_PLANE
-	layer = SPLASHSCREEN_LAYER - 1
+	layer = CINEMATIC_LAYER
 	color = "#000000"
 	show_when_dead = TRUE
 
@@ -176,6 +182,5 @@
 /atom/movable/screen/fullscreen/see_through_darkness
 	icon_state = "nightvision"
 	plane = LIGHTING_PLANE
-	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE

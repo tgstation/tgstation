@@ -97,6 +97,13 @@
 				ignored_mobs = user,
 			)
 
+		if(ishuman(source))
+			var/mob/living/carbon/human/victim_human = source
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
+
 	to_chat(user, "<span class='notice'>You try to put [equipping] on [source]...</span>")
 
 	var/log = "[key_name(source)] is having [equipping] put on them by [key_name(user)]"
@@ -144,6 +151,13 @@
 	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(src)]", LOG_ATTACK, color="red")
 	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 	item.add_fingerprint(src)
+
+	if(ishuman(source))
+		var/mob/living/carbon/human/victim_human = source
+		if(victim_human.key && !victim_human.client) // AKA braindead
+			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+				var/list/new_entry = list(list(user.name, "tried unequipping your [item.name]", world.time))
+				LAZYADD(victim_human.afk_thefts, new_entry)
 
 	return TRUE
 
@@ -463,19 +477,18 @@
 /datum/strip_menu/ui_host(mob/user)
 	return owner
 
+/datum/strip_menu/ui_state(mob/user)
+	return GLOB.always_state
+
 /datum/strip_menu/ui_status(mob/user, datum/ui_state/state)
-	. = ..()
-
-	if (isliving(user))
-		var/mob/living/living_user = user
-
-		if (
-			. == UI_UPDATE \
-			&& user.stat == CONSCIOUS \
-			&& living_user.body_position == LYING_DOWN \
-			&& user.Adjacent(owner)
-		)
-			return UI_INTERACTIVE
+	return min(
+		ui_status_only_living(user, owner),
+		ui_status_user_is_adjacent(user, owner),
+		max(
+			ui_status_user_is_conscious_and_lying_down(user),
+			ui_status_user_is_abled(user, owner),
+		),
+	)
 
 /// Creates an assoc list of keys to /datum/strippable_item
 /proc/create_strippable_list(types)
