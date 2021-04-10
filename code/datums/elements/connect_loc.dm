@@ -55,7 +55,7 @@
 		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change)
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
-	targets[old_loc] -= target
+	targets[old_loc] -= tracked
 	if (length(targets[old_loc]) == 0)
 		targets -= old_loc
 
