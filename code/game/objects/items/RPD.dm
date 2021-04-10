@@ -217,7 +217,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
-	var/pipe_path
 	var/list/init_directions = list(list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE))
 
 /obj/item/pipe_dispenser/Initialize()
@@ -342,10 +341,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if(p_init_dir & direction)
 			init_directions[dir2text(direction)] = TRUE
 	data["init_directions"] = init_directions
-	var/is_pipe_smart = FALSE
-	if(istype(pipe_path, /obj/machinery/atmospherics/pipe/smart))
-		is_pipe_smart = TRUE
-	data["smart_pipe"] = is_pipe_smart
 	return data
 
 /obj/item/pipe_dispenser/ui_act(action, params)
@@ -409,7 +404,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = recipe.id
-	pipe_path = recipe.id
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
 

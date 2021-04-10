@@ -577,16 +577,13 @@ GLOBAL_LIST_EMPTY(colored_images)
 		CHECK_TICK
 
 
-/datum/controller/subsystem/air/proc/get_init_dirs(type, dir)
-	if(!pipe_init_dirs_cache[type])
-		pipe_init_dirs_cache[type] = list()
+/datum/controller/subsystem/air/proc/get_init_dirs(type, dir, init_dir)
 
-	if(!pipe_init_dirs_cache[type]["[dir]"])
-		var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir)
-		pipe_init_dirs_cache[type]["[dir]"] = temp.GetInitDirections()
-		qdel(temp)
+	var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir, init_dir)
+	var/got_dir = temp.GetInitDirections()
+	qdel(temp)
 
-	return pipe_init_dirs_cache[type]["[dir]"]
+	return got_dir
 
 /datum/controller/subsystem/air/proc/generate_atmos()
 	atmos_gen = list()

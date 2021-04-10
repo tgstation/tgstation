@@ -218,7 +218,7 @@
  * * given_layer - the piping_layer we are checking
  */
 /obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	if(isConnectable(target, given_layer) && target.isConnectable(src, given_layer) && (target.initialize_directions & get_dir(target,src)))
+	if(isConnectable(target, given_layer) && target.isConnectable(src, given_layer) && (initialize_directions & get_dir(src, target)) && (target.initialize_directions & get_dir(target,src)))
 		return TRUE
 	return FALSE
 

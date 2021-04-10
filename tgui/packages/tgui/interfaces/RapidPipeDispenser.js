@@ -121,16 +121,16 @@ const LayerSection = (props, context) => {
           ))}
         </Stack>
       )}
-      <Box width="108px">
+      <Box width="120px">
         {previews.map(preview => (
           <Button
-            ml={2}
+            ml={0}
             key={preview.dir}
             title={preview.dir_name}
             selected={preview.selected}
             style={{
-              width: '48px',
-              height: '48px',
+              width: '40px',
+              height: '40px',
               padding: 0,
             }}
             onClick={() => act('setdir', {
@@ -143,7 +143,7 @@ const LayerSection = (props, context) => {
                 preview.dir + '-' + preview.icon_state,
               ])}
               style={{
-                transform: 'scale(1.5) translate(17%, 17%)',
+                transform: 'scale(1.5) translate(9.5%, 9.5%)',
               }} />
           </Button>
         ))}
@@ -231,7 +231,6 @@ const SmartPipeBlockSection = (props, context) => {
           <Stack fill>
             <Stack.Item>
               <Button icon="arrow-left"
-                disabled={!!data.smart_pipe}
                 selected={init_directions["west"]}
                 onClick={() => act('init_dir_setting', {
                   dir_flag: "west",
@@ -239,13 +238,11 @@ const SmartPipeBlockSection = (props, context) => {
             </Stack.Item>
             <Stack.Item grow>
               <Button icon="circle"
-                disabled={!!data.smart_pipe}
                 onClick={() => act('init_reset', {
                 })}/>
             </Stack.Item>
             <Stack.Item>
               <Button icon="arrow-right"
-                disabled={!!data.smart_pipe}
                 selected={init_directions["east"]}
                 onClick={() => act('init_dir_setting', {
                   dir_flag: "east",
@@ -255,7 +252,6 @@ const SmartPipeBlockSection = (props, context) => {
         </Stack.Item>
         <Stack.Item grow>
           <Button iconRotation={90} icon="arrow-right"
-            disabled={!!data.smart_pipe}
             selected={init_directions["south"]}
             onClick={() => act('init_dir_setting', {
               dir_flag: "south",
@@ -273,8 +269,8 @@ export const RapidPipeDispenser = (props, context) => {
   } = data;
   return (
     <Window
-      width={425}
-      height={450}>
+      width={450}
+      height={575}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>

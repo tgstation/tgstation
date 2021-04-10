@@ -43,7 +43,7 @@ Buildable meters
 	//Flipping handled manually due to custom handling for trinary pipes
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
-/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir)
+/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = 0)
 	if(make_from)
 		make_from_existing(make_from)
 	else
@@ -179,7 +179,7 @@ Buildable meters
 		if((machine.piping_layer != piping_layer) && !((machine.pipe_flags | flags) & PIPING_ALL_LAYER)) //don't continue if either pipe goes across all layers
 			continue
 
-		if(machine.GetInitDirections() & SSair.get_init_dirs(pipe_type, fixed_dir())) // matches at least one direction on either type of pipe
+		if(machine.GetInitDirections() & SSair.get_init_dirs(pipe_type, fixed_dir(), p_init_dir)) // matches at least one direction on either type of pipe
 			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
 			return TRUE
 	// no conflicts found
