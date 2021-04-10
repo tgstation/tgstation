@@ -2,6 +2,15 @@ import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Dropdown, Input, NumberInput, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
+/**
+ * Gets a list of objects that encode the parameters for the variables relevant
+ * to the passed spell type.
+ * @param {*} type The type of the spell.
+ * @returns A list of objects. Each object contains the name of the variable,
+ * the variable's data type,
+ * what options are valid (if the variable is an enum),
+ * and what the variable's default value should be.
+ */
 const typevars = type => {
   let ret = [{ name: "name", type: "string",
     options: null, default_value: "" },
@@ -230,6 +239,15 @@ export const SDQLSpellMenu = (props, context) => {
   );
 };
 
+/**
+ * Used to determine whether or not to show a UI element corresponding to a
+ * variable.
+ * @param {*} entry An object, from the list of objects returned by typevars(),
+ * corresponding to the variable to be shown or hidden.
+ * @param {*} saved_vars The list of currently stored variable values.
+ * @returns Whether or not to show the UI element corresponding to the variable
+ * represented by the passed entry.
+ */
 const varCondition = (entry, saved_vars) => {
   switch (entry.name) {
     case "charge_max":
@@ -258,6 +276,17 @@ const varCondition = (entry, saved_vars) => {
   }
 };
 
+/**
+ * A React component that wraps its contents in a tooltip object,
+ * if one exists for the variable described by the object passed through the
+ * entry property.
+ *
+ * @param {*} entry An object, from the list of objects returned by typevars(),
+ * corresponding to the variable whose tooltip is to be shown.
+ *
+ * @todo Uncomment the actual tooltip wrapper when mothblocks fixes his PR
+ * porting tooltips to popper.js
+ */
 const WrapInTooltip = (props, context) => {
   const { data } = useBackend(context);
   const { entry } = props;
@@ -276,6 +305,10 @@ const WrapInTooltip = (props, context) => {
   ) : */props.children); // Uncomment this block when tooltips are unfucked.
 };
 
+/**
+ * A React component that contains a list of the meaningfully-editable variables
+ * of the spell being edited.
+ */
 const SDQLSpellOptions = (props, context) => {
   const { data } = useBackend(context);
   const {
@@ -297,7 +330,7 @@ const SDQLSpellOptions = (props, context) => {
             </WrapInTooltip>
           </Stack.Item>
           <Stack.Item shrink basis="100%">
-            <SDQLSpellOption entry={entry} />
+            <SDQLSpellInput entry={entry} />
           </Stack.Item>
         </Stack>
       ))}
@@ -305,7 +338,13 @@ const SDQLSpellOptions = (props, context) => {
   );
 };
 
-const SDQLSpellOption = (props, context) => {
+/**
+ * A React component that contains the appropriate input element for the
+ * variable described by the object passed through the entry property.
+ * @param {*} entry An object, from the list of objects returned by typevars(),
+ * corresponding to the variable to provide an input element for.
+ */
+const SDQLSpellInput = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     saved_vars,
@@ -365,6 +404,11 @@ const SDQLSpellOption = (props, context) => {
   }
 };
 
+/**
+ * A React component containing the appropriate input fields for editing a list
+ * variable.
+ * @param {string} list The name of the list to show variables for.
+ */
 const SDQLSpellListEntry = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -378,27 +422,33 @@ const SDQLSpellListEntry = (props, context) => {
       {Object.entries(list_vars[list]).map(([name, { type, value, flags }]) => (
         <Stack key={name} fill mb="6px">
           <Stack.Item grow>
-            {((flags & 2) === 0) ? (
-              <Input
-                value={name}
-                onChange={(e, value) =>
-                  act('list_variable_rename',
-                    { list, name, new_name: value })} />)
-              : (
-                <Box inline bold color="label" mr="6px">
-                  {name}:
-                </Box>)}
+            {/* If the variable can be renamed, return an input with which
+            to do so; otherwise, return a box with the name of the variable. */
+              ((flags & 2) === 0) ? (
+                <Input
+                  value={name}
+                  onChange={(e, value) =>
+                    act('list_variable_rename',
+                      { list, name, new_name: value })} />)
+                : (
+                  <Box inline bold color="label" mr="6px">
+                    {name}:
+                  </Box>)
+            }
           </Stack.Item>
           <Stack.Item>
-            {((flags & 1) === 0) && (
-              <Dropdown
-                options={["num", "bool", "string", "path", "icon", "list"]}
-                displayText={type}
-                onSelected={value => act('list_variable_change_type',
-                  { list, name, value })} />)}
+            {/* If the variable can be any type, return a dropdown that
+            can change its type; otherwise, return nothing. */
+              ((flags & 1) === 0) && (
+                <Dropdown
+                  options={["num", "bool", "string", "path", "icon", "list"]}
+                  displayText={type}
+                  onSelected={value => act('list_variable_change_type',
+                    { list, name, value })} />)
+            }
           </Stack.Item>
           <Stack.Item shrink basis="100%">
-            <SDQLSpellListVar
+            <SDQLSpellListVarInput
               list={list}
               name={name}
               type={type}
@@ -421,7 +471,15 @@ const SDQLSpellListEntry = (props, context) => {
   );
 };
 
-const SDQLSpellListVar = (props, context) => {
+/**
+ * A React component that contains the appropriate input element for the
+ * variable of a given name and type within a list.
+ * @param {*} list The name of the list containing the variable
+ * @param {*} name The name of the variable
+ * @param {*} type The type of the variable
+ * @param {*} value The current value of the variable
+ */
+const SDQLSpellListVarInput = (props, context) => {
   const { act } = useBackend(context);
   const {
     list,
