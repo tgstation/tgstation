@@ -182,7 +182,7 @@
 				ty--
 			DT = locate(tx, ty, destination_z)
 
-		var/atom/movable/pulling = A.pulling
+		var/atom/movable/pulling = A.pulling //TODOKYLER: this allows A (usually prox_sensors) to move twice without calling the moved signal!
 		var/atom/movable/puller = A
 		A.forceMove(DT)
 

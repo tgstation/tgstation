@@ -32,8 +32,9 @@
 	src.callback = callback
 	src.slot_whitelist = slot_whitelist
 
-	parent.AddElement(/datum/element/connect_loc, default_connections)
-	//TODOKYLER: all removes of connect_loc NEED the arguments creating it specified!
+	if(ismovable(parent))
+		AddElement(/datum/element/connect_loc, parent, default_connections)
+
 	if(isitem(parent))
 		holder = parent
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
@@ -68,7 +69,7 @@
 
 	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
 		holder = equipper
-		holder.AddElement(/datum/element/connect_loc, holder_connections)
+		AddElement(/datum/element/connect_loc, holder, holder_connections)
 		RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
 
 /*
@@ -94,7 +95,7 @@
 /datum/component/slippery/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	holder.RemoveElement(/datum/element/connect_loc, holder_connections)
+	RemoveElement(/datum/element/connect_loc, holder, holder_connections)
 	holder = null
 
 /*
@@ -113,8 +114,8 @@
 /datum/component/slippery/UnregisterFromParent() //TODOKYLER: all removes of connect_loc need to specify the arguments that created it!
 	. = ..()
 	if(holder)
-		holder.RemoveElement(/datum/element/connect_loc, holder_connections)
-	parent.RemoveElement(/datum/element/connect_loc, default_connections)
+		RemoveElement(/datum/element/connect_loc, holder, holder_connections)
+	RemoveElement(/datum/element/connect_loc, parent, default_connections)
 
 /// Used for making the clown PDA only slip if the clown is wearing his shoes and the elusive banana-skin belt
 /datum/component/slippery/clowning

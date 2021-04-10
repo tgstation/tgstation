@@ -130,7 +130,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/carbon/M)
 	. = ..()

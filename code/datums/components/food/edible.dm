@@ -72,7 +72,7 @@ Behavior that's still missing from this component that original food items had t
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/onCrossed,
 	)
-	parent.AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
@@ -138,7 +138,6 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/Destroy(force, silent)
 	QDEL_NULL(after_eat)
 	QDEL_NULL(on_consume)
-	parent.RemoveElement(/datum/element/connect_loc)
 	return ..()
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)

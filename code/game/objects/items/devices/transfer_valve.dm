@@ -16,13 +16,6 @@
 	var/valve_open = FALSE
 	var/toggle = TRUE
 
-/obj/item/transfer_valve/Initialize()
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
 
@@ -57,6 +50,7 @@
 			return
 		attached_device = A
 		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
+		A.on_attach()
 		A.holder = src
 		A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 		log_bomber(user, "attached a [item.name] to a ttv -", src, null, FALSE)
@@ -77,12 +71,6 @@
 /obj/item/transfer_valve/on_found(mob/finder)
 	if(attached_device)
 		attached_device.on_found(finder)
-
-/obj/item/transfer_valve/proc/on_crossed(datum/source, atom/movable/AM as mob|obj)
-	SIGNAL_HANDLER
-	if(attached_device)
-		SEND_SIGNAL(attached_device, COMSIG_MOVABLE_CROSSED, AM)
-		//TODOKYLER: this is dumb, anything that cares about crossed should register to this with connect_loc for any relevant procs, everything like this must go
 
 //Triggers mousetraps
 /obj/item/transfer_valve/attack_hand(mob/user, list/modifiers)

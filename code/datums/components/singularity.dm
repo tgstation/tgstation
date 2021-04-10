@@ -85,7 +85,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/consume,
 	)
-	parent.AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
 
@@ -106,7 +106,6 @@
 
 	parent.RemoveElement(/datum/element/bsa_blocker)
 	parent.RemoveElement(/datum/element/forced_gravity)
-	parent.RemoveElement(/datum/element/connect_loc)
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,

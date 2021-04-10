@@ -19,6 +19,11 @@
 	///Miscelanous caltrop flags; shoe bypassing, walking interaction, silence
 	var/flags
 
+	///we set the connect_loc element to listen to this signal from target
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+
 /datum/element/caltrop/Attach(datum/target, min_damage = 0, max_damage = 0, probability = 100, flags = NONE)
 	. = ..()
 	if(!isatom(target))
@@ -29,14 +34,11 @@
 	src.probability = probability
 	src.flags = flags
 
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
-	)
-	target.AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, target, loc_connections)
 
 /datum/element/caltrop/Detach(datum/source, force)
 	. = ..()
-	source.RemoveElement(/datum/element/connect_loc)
+	RemoveElement(/datum/element/connect_loc, source, loc_connections)
 
 /datum/element/caltrop/proc/on_crossed(atom/caltrop, atom/movable/AM)
 	SIGNAL_HANDLER
