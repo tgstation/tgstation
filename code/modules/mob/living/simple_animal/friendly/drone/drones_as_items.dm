@@ -37,7 +37,7 @@
 /obj/effect/mob_spawn/drone/allow_spawn(mob/user)
 	var/client/user_client = user.client
 	var/mob/living/simple_animal/drone/drone_type = mob_type
-	if(!(initial(drone_type.shy) && user_client && CONFIG_GET(flag/use_exp_restrictions_other)))
+	if(!initial(drone_type.shy) || isnull(user_client) || !CONFIG_GET(flag/use_exp_restrictions_other))
 		return ..()
 	var/required_role = CONFIG_GET(string/drone_required_role)
 	var/required_playtime = CONFIG_GET(number/drone_role_playtime) * 60
