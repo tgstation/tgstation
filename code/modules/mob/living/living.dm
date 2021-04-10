@@ -1782,3 +1782,4 @@
 
 	// Reset overeat duration.
 	overeatduration = 0
+

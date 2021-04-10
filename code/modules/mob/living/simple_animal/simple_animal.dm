@@ -159,6 +159,7 @@
 	/// A string for an emote used when pet_bonus == true for the mob being pet.
 	var/pet_bonus_emote = ""
 
+	mob_speech_sounds = list()
 
 /mob/living/simple_animal/Initialize()
 	. = ..()

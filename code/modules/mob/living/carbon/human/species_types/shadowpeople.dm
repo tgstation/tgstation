@@ -14,6 +14,11 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision
 	species_language_holder = /datum/language_holder/shadowpeople
 
+	species_speech_sounds = list('sound/voice/species/shadow1.ogg' = 70, \
+								'sound/voice/species/shadow2.ogg' = 60)
+	species_speech_sounds_ask = list('sound/voice/species/shadow_ask.ogg' = 80)
+	species_speech_sounds_exclaim = list('sound/voice/species/shadow_exclaim.ogg' = 80)
+
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/turf/T = H.loc

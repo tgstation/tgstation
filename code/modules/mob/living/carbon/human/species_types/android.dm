@@ -11,6 +11,9 @@
 	species_language_holder = /datum/language_holder/synthetic
 	limbs_id = "synth"
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	species_speech_sounds = list('sound/voice/species/radio_ai.ogg' = 100)
+	species_speech_sounds_ask = list()
+	species_speech_sounds_exclaim = list()
 
 /datum/species/android/on_species_gain(mob/living/carbon/C)
 	. = ..()

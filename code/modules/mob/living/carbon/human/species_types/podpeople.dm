@@ -18,6 +18,11 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
 
+	species_speech_sounds = list('sound/voice/species/pod.ogg' = 70,
+                'sound/voice/species/pod2.ogg' = 60)
+	species_speech_sounds_ask = list()
+	species_speech_sounds_exclaim = list()
+
 /datum/species/pod/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
 		return

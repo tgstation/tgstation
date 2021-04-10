@@ -30,6 +30,12 @@
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
+	species_speech_sounds = list('sound/voice/species/lizard_1.ogg' = 80, \
+						'sound/voice/species/lizard_2.ogg' = 80, \
+						'sound/voice/species/lizard_3.ogg' = 80)
+	species_speech_sounds_ask = list()
+	species_speech_sounds_exclaim = list()
+
 /// Lizards are cold blooded and do not stabilize body temperature naturally
 /datum/species/lizard/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	return

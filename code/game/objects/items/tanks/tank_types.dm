@@ -15,6 +15,7 @@
 	name = "oxygen tank"
 	desc = "A tank of oxygen, this one is blue."
 	icon_state = "oxygen"
+	tank_holder_icon_state = "holder_oxygen"
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
@@ -29,11 +30,13 @@
 	desc = "A tank of oxygen, this one is yellow."
 	icon_state = "oxygen_f"
 	dog_fashion = null
+	tank_holder_icon_state = "holder_oxygen_f"
 
 /obj/item/tank/internals/oxygen/red
 	desc = "A tank of oxygen, this one is red."
 	icon_state = "oxygen_fr"
 	dog_fashion = null
+	tank_holder_icon_state = "holder_oxygen_fr"
 
 /obj/item/tank/internals/oxygen/empty/populate_gas()
 	return
@@ -46,6 +49,7 @@
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	inhand_icon_state = "an_tank"
+	tank_holder_icon_state = "holder_oxygen_anesthetic"
 	force = 10
 
 /obj/item/tank/internals/anesthetic/populate_gas()
@@ -62,6 +66,7 @@
 	icon_state = "plasma"
 	worn_icon_state = "plasmatank"
 	flags_1 = CONDUCT_1
+	tank_holder_icon_state = null
 	slot_flags = null	//they have no straps!
 	force = 8
 
@@ -101,6 +106,7 @@
 	inhand_icon_state = "plasmaman_tank"
 	force = 10
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	tank_holder_icon_state = null
 
 /obj/item/tank/internals/plasmaman/populate_gas()
 	air_contents.assert_gas(/datum/gas/plasma)
@@ -120,6 +126,7 @@
 	force = 5
 	volume = 24	//enough so they need to refill but not that often to be a chore
 	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
+	tank_holder_icon_state = null
 
 /obj/item/tank/internals/plasmaman/belt/full/populate_gas()
 	air_contents.assert_gas(/datum/gas/plasma)
@@ -145,7 +152,7 @@
 	force = 4
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
-
+	tank_holder_icon_state = "holder_emergency"
 
 /obj/item/tank/internals/emergency_oxygen/populate_gas()
 	air_contents.assert_gas(/datum/gas/oxygen)
@@ -161,6 +168,7 @@
 	worn_icon_state = "emergency_engi"
 	worn_icon = null
 	volume = 6 // should last 24 minutes if full
+	tank_holder_icon_state = "holder_emergency_engi"
 
 /obj/item/tank/internals/emergency_oxygen/engi/empty/populate_gas()
 	return
@@ -169,6 +177,7 @@
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
 	volume = 24
+	tank_holder_icon_state = "holder_emergency_engi"
 
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return

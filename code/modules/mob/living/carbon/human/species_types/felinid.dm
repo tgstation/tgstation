@@ -15,6 +15,12 @@
 	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
 	payday_modifier = 0.75
 
+	species_speech_sounds = list('sound/voice/species/cat.ogg' = 50)
+	species_speech_sounds_ask = list('sound/voice/species/cat_ask.ogg' = 70)
+	species_speech_sounds_exclaim = list('sound/voice/species/cat_exclaim1.ogg' = 75, \
+									'sound/voice/species/cat_exclaim2.ogg' = 75, \
+									'sound/voice/species/cat_exclaim3.ogg' = 75)
+
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/felinid/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)

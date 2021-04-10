@@ -111,9 +111,20 @@
 
 	// Calculate target color if not already present
 	if (!target.chat_color || target.chat_color_name != target.name)
-		target.chat_color = colorize_string(target.name)
-		target.chat_color_darkened = colorize_string(target.name, 0.85, 0.85)
-		target.chat_color_name = target.name
+		// NON-MODULE CHANGE
+		var/mob/mob_target = target
+		if(istype(mob_target) && mob_target.client && mob_target.client.prefs.runechat_color != "aaa")
+			var/temp_hsv = RGBtoHSV(mob_target.client.prefs.runechat_color)
+			if(ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]) // If you sneak past the darkness check reset your color
+				mob_target.client.prefs.runechat_color = "aaa"
+			mob_target.chat_color = "#[mob_target.client.prefs.runechat_color]"
+			mob_target.chat_color_darkened = "#[mob_target.client.prefs.runechat_color]"
+			mob_target.chat_color_name = mob_target.name
+		// NON-MODULE CHANGE END
+		else
+			target.chat_color = colorize_string(target.name)
+			target.chat_color_darkened = colorize_string(target.name, 0.85, 0.85)
+			target.chat_color_name = target.name
 
 	// Get rid of any URL schemes that might cause BYOND to automatically wrap something in an anchor tag
 	var/static/regex/url_scheme = new(@"[A-Za-z][A-Za-z0-9+-\.]*:\/\/", "g")

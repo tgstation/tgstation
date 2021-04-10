@@ -21,6 +21,12 @@
 	has_innate_wings = TRUE
 	payday_modifier = 0.75
 
+	species_speech_sounds = list('sound/voice/species/moff_1.ogg' = 80, \
+						'sound/voice/species/moff_2.ogg' = 80, \
+						'sound/voice/species/moff_3.ogg' = 80)
+	species_speech_sounds_ask = list()
+	species_speech_sounds_exclaim = list()
+
 /datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
 	. = ..()
 	if(ishuman(C))

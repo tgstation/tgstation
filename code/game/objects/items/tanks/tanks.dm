@@ -20,6 +20,7 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
+	var/tank_holder_icon_state = "holder_generic"
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -73,6 +74,12 @@
 
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
+
+/obj/item/tank/ComponentInitialize()
+	. = ..()
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src

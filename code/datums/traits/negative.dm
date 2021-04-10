@@ -303,7 +303,7 @@
 	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
 	hardcore_value = 3
 
-/datum/quirk/nearsighted //t. errorage 
+/datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
 	value = -1
@@ -752,3 +752,13 @@
 #undef LOCATION_RPOCKET
 #undef LOCATION_BACKPACK
 #undef LOCATION_HANDS
+
+/datum/quirk/unholy
+	name = "Dead Man Walking"
+	desc = "You have an extremely adverse reaction to holy figures."
+	value = -1
+	mob_trait = TRAIT_UNHOLY
+
+/datum/quirk/unholy/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.AddElement(/datum/element/unholy)

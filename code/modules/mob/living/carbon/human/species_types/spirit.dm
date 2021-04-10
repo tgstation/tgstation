@@ -18,6 +18,9 @@
 	payday_modifier = 1
 	limbs_id = "spirit"
 	changesource_flags = MIRROR_BADMIN | WABBAJACK
+	species_speech_sounds = list('sound/voice/species/huff.ogg' = 120)
+	species_speech_sounds_exclaim = list('sound/voice/species/huff_ask.ogg' = 120)
+	species_speech_sounds_ask = list('sound/voice/species/huff_exclaim.ogg' = 120)
 
 // /datum/species/spirit/qualifies_for_rank(rank, list/features)
 // 	return TRUE	//Pure humans are always allowed in all roles.

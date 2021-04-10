@@ -142,6 +142,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/security_records = ""
 	var/medical_records = ""
 	var/exploitable_info = ""
+	var/runechat_color = "aaa"
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -572,6 +573,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</center>"
 
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
+			dat += "<h2>Misc. Character Settings</h2>"
+			dat += "<b>Runechat Text Color: &nbsp;</b>"
+			dat += "<span style='border: 1px solid #161616; background-color: #[runechat_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=rune_chat_text;task=input'>Change</a><BR>"
+			dat += "<i>Set your color to <font color = #aaaaaa>#aaaaaa</font> to have a randomized color on spawn.</i>"
 			dat += 	"<h2>Records</h2>"
 			dat += 	"<a href='?_src_=prefs;preference=general_records;task=input'><b>General</b></a><br>"
 			if(length(general_records) <= 40)
@@ -1332,6 +1337,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
 						hair_color = sanitize_hexcolor(new_hair)
+
+				if("rune_chat_text")
+					var/new_chatcolor = input(user, "Choose your runechat color:", "Character Preference",runechat_color) as color|null
+					if(new_chatcolor)
+						var/temp_hsv = RGBtoHSV(new_chatcolor)
+						if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // running runechat by the same brightness sanitization that mutant colors choose
+							runechat_color = sanitize_hexcolor(new_chatcolor)
+						else
+							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("general_records")
 					var/msg = input(usr, "Set your general records", "General Records", general_records) as message|null

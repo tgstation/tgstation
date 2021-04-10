@@ -149,3 +149,13 @@
 	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
 	var/icon/head_icon = 'icons/mob/pets_held.dmi'//what it looks like on your head
 	var/held_state = ""//icon state for the above
+
+	/// Assoc list of [sounds that play on speech for this mob] to [volume].
+	var/mob_speech_sounds = list('sound/voice/species/speak_1.ogg' = 120, \
+								'sound/voice/species/speak_2.ogg' = 120, \
+								'sound/voice/species/speak_3.ogg' = 120, \
+								'sound/voice/species/speak_4.ogg' = 120)
+	/// Assoc list of [sounds that play on radio message] to [volume].
+	var/mob_radio_sounds = list('sound/voice/species/radio.ogg' = 75, \
+								'sound/voice/species/radio_2.ogg' = 75)
+
