@@ -80,7 +80,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /** Sets the amount of materials per unit for this stack.
  *

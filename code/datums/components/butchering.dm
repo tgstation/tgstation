@@ -146,7 +146,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/onCrossed,
 	)
-	parent.AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
 /datum/component/butchering/recycler/proc/onCrossed(datum/source, mob/living/L)
 	SIGNAL_HANDLER
@@ -158,7 +158,3 @@
 		return
 	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
 		Butcher(parent, L)
-
-/datum/component/butchering/recycler/UnregisterFromParent()
-	. = ..()
-	parent.RemoveElement(/datum/element/connect_loc)

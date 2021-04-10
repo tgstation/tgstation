@@ -43,6 +43,7 @@
 	else
 		a_right = A
 	A.holder_movement()
+	A.on_attach()
 
 /obj/item/assembly_holder/update_appearance(updates=ALL)
 	. = ..()

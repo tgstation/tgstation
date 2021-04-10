@@ -15,10 +15,10 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/static/list/loc_connections = list(
+	var/static/list/disease_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/try_infect_crossed,
 	)
-	parent.AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, parent, disease_connections)
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/try_infect_buckle)
@@ -57,7 +57,6 @@
 
 	. = NONE
 	if(clean_types & required_clean_types)
-		parent.RemoveElement(/datum/element/connect_loc)
 		qdel(src)
 		return COMPONENT_CLEANED
 

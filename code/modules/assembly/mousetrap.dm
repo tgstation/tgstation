@@ -9,12 +9,17 @@
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
+	///if we are attached to an assembly holder, we attach a connect_loc element to ourselves that listens to this from the holder
+	var/static/list/holder_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+
 /obj/item/assembly/mousetrap/Initialize()
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/item/assembly/mousetrap/examine(mob/user)
 	. = ..()
@@ -39,6 +44,14 @@
 /obj/item/assembly/mousetrap/update_icon(updates=ALL)
 	. = ..()
 	holder?.update_icon(updates)
+
+/obj/item/assembly/mousetrap/on_attach()
+	. = ..()
+	AddElement(/datum/element/connect_loc, holder, holder_connections)
+
+/obj/item/assembly/mousetrap/on_detach()
+	. = ..()
+	RemoveElement(/datum/element/connect_loc, holder, holder_connections)
 
 /obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)

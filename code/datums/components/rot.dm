@@ -33,7 +33,7 @@
 		var/static/list/loc_connections = list(
 			COMSIG_MOVABLE_CROSSED = .proc/rot_react,
 		)
-		parent.AddElement(/datum/element/connect_loc, loc_connections)
+		AddElement(/datum/element/connect_loc, parent, loc_connections)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/rot_react)
 	if(isliving(parent))
 		RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/react_to_revive) //mobs stop this when they come to life
@@ -130,10 +130,6 @@
 	var/datum/disease/advance/random/rand_disease = new(rand(5 * strength), rand(strength * 7))
 	rand_disease.name = "Unknown"
 	react_to.ContactContractDisease(rand_disease, target_zone)
-
-/datum/component/rot/UnregisterFromParent()
-	. = ..()
-	parent.RemoveElement(/datum/element/connect_loc)
 
 #undef REAGENT_BLOCKER
 #undef TEMPERATURE_BLOCKER

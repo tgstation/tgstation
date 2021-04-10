@@ -11,6 +11,10 @@
 	///Special callback to call on squash instead, for things like hauberoach
 	var/datum/callback/on_squash_callback
 
+	///the signals we give to the connect_loc element that listens to target
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/OnCrossed,
+	)
 
 /datum/element/squashable/Attach(mob/living/target, squash_chance, squash_damage, squash_flags, squash_callback)
 	. = ..()
@@ -25,14 +29,12 @@
 	if(!src.on_squash_callback && squash_callback)
 		on_squash_callback = CALLBACK(target, squash_callback)
 
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/OnCrossed,
-	)
-	target.AddElement(/datum/element/connect_loc, loc_connections)
+
+	AddElement(/datum/element/connect_loc, target, loc_connections)
 
 /datum/element/squashable/Detach(mob/living/target)
 	. = ..()
-	target.RemoveElement(/datum/element/connect_loc)
+	RemoveElement(/datum/element/connect_loc, target, loc_connections)
 
 ///Handles the squashing of the mob
 /datum/element/squashable/proc/OnCrossed(mob/living/target, atom/movable/crossing_movable)
