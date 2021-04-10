@@ -134,10 +134,18 @@
 /area/ctf)
 "fj" = (
 /obj/structure/table/abductor,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
 /turf/open/floor/plating/abductor2,
 /area/ctf)
 "fl" = (
 /obj/structure/table/abductor,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
 /turf/open/floor/plating/abductor,
 /area/ctf)
 "fS" = (
@@ -247,6 +255,10 @@
 "mb" = (
 /obj/effect/mob_spawn/human/abductor,
 /obj/structure/table/optable/abductor,
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
 /turf/open/floor/plating/abductor2,
 /area/space/nearstation)
 "me" = (
@@ -477,6 +489,10 @@
 /turf/open/floor/iron,
 /area/ctf)
 "zx" = (
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
 /turf/open/floor/plating/abductor2,
 /area/space/nearstation)
 "zF" = (
@@ -576,6 +592,10 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ctf)
 "Gx" = (
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
+	},
 /turf/open/floor/plating/abductor,
 /area/space/nearstation)
 "GF" = (

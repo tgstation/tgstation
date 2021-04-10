@@ -1,6 +1,7 @@
 #define VV_NUM "Number"
 #define VV_TEXT "Text"
 #define VV_MESSAGE "Mutiline Text"
+#define VV_COLOR "Color"
 #define VV_ICON "Icon"
 #define VV_ATOM_REFERENCE "Atom Reference"
 #define VV_DATUM_REFERENCE "Datum Reference"
@@ -78,6 +79,7 @@
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
+#define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
 #define VV_HK_ADD_REAGENT "addreagent"
 #define VV_HK_TRIGGER_EMP "empulse"
 #define VV_HK_TRIGGER_EXPLOSION "explode"

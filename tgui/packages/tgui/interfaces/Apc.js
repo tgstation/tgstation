@@ -111,7 +111,7 @@ const ApcContent = (props, context) => {
             color={chargingStatus.color}
             buttons={(
               <Button
-                icon={data.chargeMode ? 'sync' : 'close'}
+                icon={data.chargeMode ? 'sync' : 'times'}
                 content={data.chargeMode ? 'Auto' : 'Off'}
                 disabled={locked}
                 onClick={() => act('charge')} />

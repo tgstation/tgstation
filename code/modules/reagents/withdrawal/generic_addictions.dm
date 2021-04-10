@@ -231,6 +231,9 @@
 	addiction_relief_treshold = MIN_NICOTINE_ADDICTION_REAGENT_AMOUNT //much less because your intake is probably from ciggies
 	withdrawal_stage_messages = list("Feel like having a smoke...", "Getting antsy. Really need a smoke now.", "I can't take it! Need a smoke NOW!")
 
+	medium_withdrawal_moodlet = /datum/mood_event/nicotine_withdrawal_moderate
+	severe_withdrawal_moodlet = /datum/mood_event/nicotine_withdrawal_severe
+
 /datum/addiction/nicotine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	affected_carbon.Jitter(5 * delta_time)
@@ -238,13 +241,11 @@
 /datum/addiction/nicotine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	affected_carbon.Jitter(10 * delta_time)
-	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "nicotine_withdrawal_moderate", /datum/mood_event/nicotine_withdrawal_moderate)
 	if(DT_PROB(10, delta_time))
 		affected_carbon.emote("cough")
 
 /datum/addiction/nicotine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	affected_carbon.Jitter(15 * delta_time)
-	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "nicotine_withdrawal_severe", /datum/mood_event/nicotine_withdrawal_severe)
 	if(DT_PROB(15, delta_time))
 		affected_carbon.emote("cough")
