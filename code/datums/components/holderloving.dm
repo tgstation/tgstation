@@ -26,7 +26,8 @@
 	if(!isitem(parent) || !holder)
 		return COMPONENT_INCOMPATIBLE
 	src.holder = holder
-	src.del_parent_with_holder = (del_parent_with_holder || FALSE)
+	if(del_parent_with_holder)
+		src.del_parent_with_holder = del_parent_with_holder
 
 /datum/component/holderloving/RegisterWithParent()
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/check_my_loc)
