@@ -1,21 +1,11 @@
 import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  Collapsible,
-  Dropdown,
-  Input,
-  NumberInput,
-  Section,
-  Stack,
-  Tooltip,
-} from '../components';
+import { Box, Button, Collapsible, Dropdown, Input, NumberInput, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 /**
  * Gets a list of objects that encode the parameters for the variables relevant
  * to the passed spell type.
- * @param {*} type The type of the spell.
+ * @param type The type of the spell.
  * @returns A list of objects. Each object contains the name of the variable,
  * the variable's data type,
  * what options are valid (if the variable is an enum),
@@ -425,9 +415,9 @@ export const SDQLSpellMenu = (props, context) => {
 /**
  * Used to determine whether or not to show a UI element corresponding to a
  * variable.
- * @param {*} entry An object, from the list of objects returned by typevars(),
+ * @param entry An object, from the list of objects returned by typevars(),
  * corresponding to the variable to be shown or hidden.
- * @param {*} saved_vars The list of currently stored variable values.
+ * @param saved_vars The list of currently stored variable values.
  * @returns Whether or not to show the UI element corresponding to the variable
  * represented by the passed entry.
  */
@@ -464,27 +454,26 @@ const varCondition = (entry, saved_vars) => {
  * if one exists for the variable described by the object passed through the
  * entry property.
  *
- * @param {*} entry An object, from the list of objects returned by typevars(),
+ * @param entry An object, from the list of objects returned by typevars(),
  * corresponding to the variable whose tooltip is to be shown.
- *
- * @todo Uncomment the actual tooltip wrapper when mothblocks fixes his PR
- * porting tooltips to popper.js
  */
 const WrapInTooltip = (props, context) => {
   const { data } = useBackend(context);
-  const { entry } = props;
+  const { entry, children } = props;
   const { type, tooltips } = data;
   const tip = tooltips[entry.name]?.replace(
     '$type',
     tooltips[entry.name + '_' + type]
   );
-  return (/* tip ? (
-    <Tooltip
-      position="bottom"
-      content={tip}>
-      {props.children}
-    </Tooltip>
-  ) : */ props.children); // Uncomment this block when tooltips are unfucked.
+  // TODO: Uncomment this block when tooltips no longer suck.
+  // if (tip) {
+  //   return (
+  //     <Tooltip position="bottom" content={tip}>
+  //       {children}
+  //     </Tooltip>
+  //   )
+  // }
+  return children;
 };
 
 /**
@@ -522,7 +511,7 @@ const SDQLSpellOptions = (props, context) => {
 /**
  * A React component that contains the appropriate input element for the
  * variable described by the object passed through the entry property.
- * @param {*} entry An object, from the list of objects returned by typevars(),
+ * @param entry An object, from the list of objects returned by typevars(),
  * corresponding to the variable to provide an input element for.
  */
 const SDQLSpellInput = (props, context) => {
@@ -591,8 +580,7 @@ const SDQLSpellListEntry = (props, context) => {
         <Stack key={name} fill mb="6px">
           <Stack.Item grow>
             {
-              /* If the variable can be renamed, return an input with which
-            to do so; otherwise, return a box with the name of the variable. */
+              // Can be renamed?
               (flags & 2) === 0 ? (
                 <Input
                   value={name}
@@ -608,8 +596,7 @@ const SDQLSpellListEntry = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             {
-              /* If the variable can be any type, return a dropdown that
-            can change its type; otherwise, return nothing. */
+              // Can type be changed?
               (flags & 1) === 0 && (
                 <Dropdown
                   options={['num', 'bool', 'string', 'path', 'icon', 'list']}
@@ -649,10 +636,10 @@ const SDQLSpellListEntry = (props, context) => {
 /**
  * A React component that contains the appropriate input element for the
  * variable of a given name and type within a list.
- * @param {*} list The name of the list containing the variable
- * @param {*} name The name of the variable
- * @param {*} type The type of the variable
- * @param {*} value The current value of the variable
+ * @param list The name of the list containing the variable
+ * @param name The name of the variable
+ * @param type The type of the variable
+ * @param value The current value of the variable
  */
 const SDQLSpellListVarInput = (props, context) => {
   const { act } = useBackend(context);
