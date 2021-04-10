@@ -2,7 +2,7 @@
 	name = "Camera Failure"
 	typepath = /datum/round_event/camera_failure
 	weight = 75
-	max_occurrences = 20
+	max_occurrences = 15
 	alert_observers = FALSE
 
 /datum/round_event/camera_failure

@@ -28,6 +28,17 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
+/mob/living/simple_animal/pet/fox/attackby(obj/item/O, mob/user)
+	if(istype(O, /obj/item/britevidence/ribbon))
+		to_chat(user, "<span class='notice'>You carefully tie the ribbon to [name].</span>")
+		qdel(O)
+		icon_state = "foxribbon"
+		icon_living = "foxribbon"
+		icon_dead = "foxribbon_dead"
+		return 1
+	else
+		return ..()
+
 //Captain fox
 /mob/living/simple_animal/pet/fox/renault
 	name = "Renault"

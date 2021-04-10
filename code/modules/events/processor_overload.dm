@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/processor_overload
 	weight = 15
 	min_players = 20
+	max_occurrences = 1
 
 /datum/round_event/processor_overload
 	announceWhen	= 1

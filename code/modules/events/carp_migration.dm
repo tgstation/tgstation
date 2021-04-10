@@ -4,7 +4,7 @@
 	weight = 15
 	min_players = 2
 	earliest_start = 10 MINUTES
-	max_occurrences = 6
+	max_occurrences = 5
 
 /datum/round_event/carp_migration
 	announceWhen	= 3
@@ -28,7 +28,7 @@
 			fishannounce(fish) //Prefer to announce the megacarps over the regular fishies
 	fishannounce(fish)
 
-/datum/round_event/carp_migration/proc/fishannounce(atom/fish)	
+/datum/round_event/carp_migration/proc/fishannounce(atom/fish)
 	if (!hasAnnounced)
 		announce_to_ghosts(fish) //Only anounce the first fish
 		hasAnnounced = TRUE
