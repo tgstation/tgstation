@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - refactor: "Added security level subsystem."
+  - bugfix: "Escape pods will now re-lock again properly if security level drops below red."
