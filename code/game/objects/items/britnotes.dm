@@ -227,6 +227,9 @@
 		to_chat(user, "<span class='notice'>You carefully tie the ribbon to the flower's stem.</span>")
 		qdel(O)
 		icon_state = "flower_ribbon"
+		return 1
+	else
+		return ..()
 
 /obj/item/britevidence/ribbon
 	name = "blue ribbon"

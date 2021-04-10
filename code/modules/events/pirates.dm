@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/pirates
 	weight = 8
 	max_occurrences = 1
-	min_players = 10
+	min_players = 20
 	earliest_start = 30 MINUTES
 	gamemode_blacklist = list("nuclear")
 

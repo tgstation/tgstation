@@ -2,6 +2,7 @@
 	name = "Mice Migration"
 	typepath = /datum/round_event/mice_migration
 	weight = 10
+	max_occurrences = 5
 
 /datum/round_event/mice_migration
 	var/minimum_mice = 5

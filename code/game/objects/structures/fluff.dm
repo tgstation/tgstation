@@ -224,6 +224,23 @@
 	dir = NORTH
 	pixel_y = 25
 
+/obj/structure/fluff/vent/north/palace
+	desc = "An old wall vent. You see something behind it, but it's too far for you to grab with your bare hands. Maybe something longer...?"
+	var/soap_present = TRUE
+
+/obj/structure/fluff/vent/north/palace/attackby(obj/item/O, mob/user)
+	if(istype(O, /obj/item/crowbar) && soap_present)
+		if(do_after(user, 25, TRUE))
+			to_chat(user, "<span class='notice'>You carefully use the crowbar to drag the object close enough to grab.</span>")
+			desc = "An old wall vent."
+			new /obj/item/soap/homemade/palace(loc)
+			soap_present = FALSE
+			return 1
+		else
+			to_chat(user, "<span class='notice'>You fumble with the crowbar, failing to retrieve the object.</span>")
+	else
+		return ..()
+
 /obj/structure/fluff/vent/south
 	dir = SOUTH
 	pixel_y = -25

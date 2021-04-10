@@ -1,8 +1,8 @@
 /datum/round_event_control/meteor_wave/oreo
 	name = "Meteor Wave: Oreo"
 	typepath = /datum/round_event/meteor_wave/oreo
-	weight = 7
-	min_players = 30
+	weight = 100
+	min_players = 5
 	max_occurrences = 1
 	earliest_start = 900 MINUTES
 

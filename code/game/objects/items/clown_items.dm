@@ -63,6 +63,9 @@
 	icon_state = "soapgibs"
 	cleanspeed = 30 // faster to reward chemists for going to the effort
 
+/obj/item/soap/homemade/palace
+	desc = "Someone crudely carved something onto the bottom... 'sHScM3_bqXc'"
+
 /obj/item/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
 	icon_state = "soapdeluxe"

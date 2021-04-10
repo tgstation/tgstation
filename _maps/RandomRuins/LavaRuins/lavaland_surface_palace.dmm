@@ -3,7 +3,6 @@
 "f" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 10},/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
 "h" = (/obj/structure/toilet{desc = "Unsurprisingly, it's broken."; dir = 8},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/powered/mindpalace)
 "i" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors/explored)
-"j" = (/obj/item/soap/homemade{desc = "Someone crudely carved something onto the bottom... 'sHScM3_bqXc'"; name = "old soap"},/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
 "k" = (/obj/machinery/flasher{pixel_x = -24},/obj/machinery/button/door{id = "palacelk"; name = "Door Lock"; normaldoorcontrol = 1; pixel_y = 24; specialfunctions = 4},/turf/open/floor/plating,/area/ruin/powered/mindpalace)
 "l" = (/turf/closed/wall/r_wall/rust,/area/ruin/powered/mindpalace)
 "m" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 6},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/powered/mindpalace)
@@ -25,7 +24,7 @@
 "Q" = (/obj/machinery/light/small/broken,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
 "R" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors/explored)
 "T" = (/turf/open/floor/plating{icon_state = "platingdmg1"},/area/ruin/powered/mindpalace)
-"U" = (/obj/structure/fluff/vent/north{desc = "An old wall vent. The slats look large enough to slip something through."},/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
+"U" = (/obj/structure/fluff/vent/north/palace,/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
 "V" = (/obj/machinery/light/small/broken{dir = 1},/obj/structure/chair/stool,/obj/structure/fluff/mannequin,/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/powered/mindpalace)
 "W" = (/obj/item/wallframe/intercom{pixel_y = 26},/turf/open/floor/plating,/area/ruin/powered/mindpalace)
 "X" = (/obj/machinery/light/small/built,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
@@ -34,8 +33,8 @@
 
 (1,1,1) = {"
 aaaaiiiiiaaaaaa
-aaaiilEEiiiaiaa
-aaiiiEjliiiiiaa
+aaaiiiiiiiiaiaa
+aaiiiiiiiiiiiaa
 aiilEEEEEEEliia
 aiiEJIUVWswEiia
 aiiEsAqvKGTEiia
