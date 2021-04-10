@@ -323,8 +323,8 @@
 			quirk_holder.put_in_hands(I)
 
 /datum/quirk/poor_aim
-	name = "Stormtrooper Aim"
-	desc = "You've never hit anything you were aiming for in your life."
+	name = "Poor Aim"
+	desc = "You're terrible with guns and can't line up a straight shot to save your life. Dual-wielding is right out. You also close your eyes when you shoot."
 	value = -4
 	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
