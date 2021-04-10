@@ -89,5 +89,4 @@
 	var/list/steps = list()
 	sprite_data["steps"] = steps
 	for(var/step in data["steps"])
-		//steps += list(list("ref"=REF(step), "sprite"=icon2html(step, user, sourceonly=TRUE)))
 		steps += list(list("layer"=icon2html(data["steps"][step], user, sourceonly=TRUE), "result"=icon2html(step, user, sourceonly=TRUE)))
