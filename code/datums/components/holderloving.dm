@@ -14,7 +14,10 @@
  */
 /datum/component/holderloving
 	can_transfer = TRUE
-	/// Item that parent is bound to
+	/** Item that parent is bound to.
+	 * We try to keep parent either directly in holder, or in holder's loc if loc is a mob,
+	 * and warp parent into holder if they go anywhere else.
+	 */
 	var/obj/item/holder
 	/// If parent is deleted when the holder gets deleted
 	var/del_parent_with_holder = FALSE
