@@ -5,6 +5,7 @@
 #define MODE_TRAY "t-ray"
 #define MODE_RAD "radiation"
 #define MODE_SHUTTLE "shuttle"
+#define MODE_PIPE_CONNECTABLE "connectable"
 
 /obj/item/clothing/glasses/meson/engine
 	name = "engineering scanner goggles"
@@ -52,6 +53,9 @@
 			lighting_alpha = null
 			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
 
+		if(MODE_PIPE_CONNECTABLE)
+			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
+
 		if(MODE_RAD)
 			change_glass_color(user, /datum/client_colour/glass_colour/lightgreen)
 
@@ -87,6 +91,8 @@
 			show_rads()
 		if(MODE_SHUTTLE)
 			show_shuttle()
+		if(MODE_PIPE_CONNECTABLE)
+			show_connections()
 
 /obj/item/clothing/glasses/meson/engine/proc/show_rads()
 	var/mob/living/carbon/human/user = loc
@@ -130,6 +136,20 @@
 				pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
 			flick_overlay(pic, list(user.client), 8)
 
+/obj/item/clothing/glasses/meson/engine/proc/show_connections()
+	var/mob/living/carbon/human/user = loc
+	var/list/connection_images = list()
+	for(var/obj/machinery/atmospherics/pipe/smart/smart in orange(range, user))
+		for(var/direction in GLOB.cardinals)
+			var/image/connection
+			if(!(smart.GetInitDirections() & direction))
+				continue
+			connection = new('icons/obj/atmospherics/pipes/simple.dmi', get_turf(smart), "connection_overlay")
+			connection.dir = direction
+			connection_images += connection
+	if(connection_images.len)
+		flick_overlay(connection_images, list(user.client), 1.5 SECONDS)
+
 /obj/item/clothing/glasses/meson/engine/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
 	return ..()
@@ -141,7 +161,7 @@
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
 
-	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_NONE)
+	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_PIPE_CONNECTABLE, MODE_PIPE_CONNECTABLE = MODE_NONE)
 
 /obj/item/clothing/glasses/meson/engine/shuttle
 	name = "shuttle region scanner"

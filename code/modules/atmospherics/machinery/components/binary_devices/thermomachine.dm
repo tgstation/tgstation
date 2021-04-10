@@ -33,6 +33,7 @@
 	var/use_enviroment_heat = FALSE
 	var/skipping_work = FALSE
 	var/auto_thermal_regulator = FALSE
+	var/color_index = 1
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
@@ -270,6 +271,11 @@
 	if(panel_open && item.tool_behaviour == TOOL_WRENCH && !check_pipe_on_turf())
 		if(default_unfasten_wrench(user, item))
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL && !anchored)
+		color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
+		pipe_color = GLOB.pipe_paint_colors[color_index]
+		visible_message("<span class='notice'>You set [src] pipe color to [GLOB.pipe_color_name[pipe_color]].")
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/check_pipe_on_turf()
