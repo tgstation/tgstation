@@ -23,8 +23,6 @@
 		/obj/item/food/pie/cream = 50,
 		/obj/item/clothing/shoes/clown_shoes/combat = 10,
 		/obj/item/reagent_containers/spray/waterflower/lube = 20, // lube
-		/obj/item/melee/transforming/energy/sword/bananium = 1,
-		/obj/item/shield/energy/bananium = 1,
 		/obj/item/reagent_containers/spray/waterflower/superlube = 1 // Superlube, good lord.
 	)
 

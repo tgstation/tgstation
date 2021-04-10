@@ -20,9 +20,9 @@
 
 	mail_goodies = list(
 		/obj/item/pizzabox = 10,
-		/obj/item/stack/sheet/mineral/gold{amount = 2} = 5,
-		/obj/item/stack/sheet/mineral/uranium{amount = 1} = 4,
-		/obj/item/stack/sheet/mineral/diamond{amount = 1} = 3,
+		/obj/item/stack/sheet/mineral/gold = 5,
+		/obj/item/stack/sheet/mineral/uranium = 4,
+		/obj/item/stack/sheet/mineral/diamond = 3,
 		/obj/item/gun/ballistic/rifle/boltaction = 1
 	)
 

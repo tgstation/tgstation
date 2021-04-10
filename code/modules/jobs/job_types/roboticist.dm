@@ -20,9 +20,9 @@
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
 
 	mail_goodies = list(
-		/obj/item/assembly/flash/handheld = 30,
-		/obj/item/stack/sheet/iron{amount = 10} = 15,
-		/obj/item/storage/box/flashes = 5
+		/obj/item/storage/box/flashes = 20,
+		/obj/item/stack/sheet/iron/twenty = 15,
+		/obj/item/modular_computer/tablet/preset/advanced = 5
 	)
 
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)

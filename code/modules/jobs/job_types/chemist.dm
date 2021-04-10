@@ -26,7 +26,8 @@
 	mail_goodies = list(
 		/datum/reagent/flash_powder = 15,
 		/datum/reagent/exotic_stabilizer = 5,
-		/datum/reagent/toxin/leadacetate = 5
+		/datum/reagent/toxin/leadacetate = 5,
+		/obj/item/paper/secretrecipe = 1
 	)
 
 /datum/outfit/job/chemist

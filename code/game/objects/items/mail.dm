@@ -28,11 +28,17 @@
 		/obj/item/stack/spacecash/c1000 = 1,
 	)
 	// Overlays (pure fluff)
+	/// Does the letter have the postmark overlay?
 	var/postmarked = TRUE
+	/// Does the letter have a stamp overlay?
 	var/stamped = TRUE
+	/// List of all stamp overlays on the letter.
 	var/list/stamps = list()
+	/// Maximum number of stamps on the letter.
 	var/stamp_max = 1
+	/// Physical offset of stamps on the object. X direction.
 	var/stamp_offset_x = 0
+	/// Physical offset of stamps on the object. Y direction.
 	var/stamp_offset_y = 2
 
 	///mail will have the color of the department the recipient is in.
@@ -171,8 +177,8 @@
 	var/list/junk_names = list(
 		/obj/item/paper/pamphlet/gateway = "[initial(name)] for [pick(GLOB.adjectives)] adventurers",
 		/obj/item/paper/pamphlet/violent_video_games = "[initial(name)] for the truth about the arcade centcom doesn't want to hear",
-		/obj/item/paper/fluff/junkmail_redpill = "[initial(name)] for those feeling [pick(GLOB.adjectives)] working at nanotrasen",
-		/obj/effect/decal/cleanable/ash = "[initial(name)] with INCREDIBLY IMPORTANT ARTIFACT- DELIVER TO SCIENCE DIVISION",
+		/obj/item/paper/fluff/junkmail_redpill = "[initial(name)] for those feeling [pick(GLOB.adjectives)] working at Nanotrasen",
+		/obj/effect/decal/cleanable/ash = "[initial(name)] with INCREDIBLY IMPORTANT ARTIFACT- DELIVER TO SCIENCE DIVISION. HANDLE WITH CARE.",
 	)
 
 	color = pick(department_colors) //eh, who gives a shit.
@@ -194,9 +200,8 @@
 
 /// Crate for mail that automatically generates a lot of mail. Usually only normal mail, but on lowpop it may end up just being junk.
 /obj/structure/closet/crate/mail/full
-	name = "mail crate"
-	desc = "A certified post crate from CentCom."
-	icon_state = "mail"
+	name = "brimming mail crate"
+	desc = "A certified post crate from CentCom. Looks stuffed to the gills."
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
@@ -247,7 +252,9 @@
 	STR.max_items = 21
 	STR.display_numerical_stacking = FALSE
 	STR.set_holdable(list(
-		/obj/item/mail
+		/obj/item/mail,
+		/obj/item/small_delivery,
+		/obj/item/paper
 	))
 
 /obj/item/paper/fluff/junkmail_redpill
@@ -256,7 +263,11 @@
 
 /obj/item/paper/fluff/junkmail_redpill/Initialize()
 	. = ..()
-	info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]'"
+	var/code = random_nukecode()
+	for(var/obj/machinery/nuclearbomb/selfdestruct/self_destruct in GLOB.nuke_list)
+		self_destruct.r_code = code
+	message_admins("Through junkmail, the self-destruct code was set to \"[code]\".")
+	info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[code[rand(1,5)]][code[rand(1,5)]]...'"
 
 /obj/item/paper/fluff/junkmail_generic
 	name = "important document"
