@@ -376,14 +376,10 @@
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		var/list/qdel_components = list(
-			GetComponent(/datum/component/shy),
-			GetComponent(/datum/component/shy_in_room),
-			GetComponent(/datum/component/technointrovert),
-			GetComponent(/datum/component/itempicky),
-		)
-		for(var/component in qdel_components)
-			qdel(component)
+		qdel(GetComponent(/datum/component/shy))
+		qdel(GetComponent(/datum/component/shy_in_room))
+		qdel(GetComponent(/datum/component/technointrovert))
+		qdel(GetComponent(/datum/component/itempicky))
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
