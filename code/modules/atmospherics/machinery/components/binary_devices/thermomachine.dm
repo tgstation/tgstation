@@ -33,6 +33,7 @@
 	var/use_enviroment_heat = FALSE
 	var/skipping_work = FALSE
 	var/auto_thermal_regulator = FALSE
+	var/color_index = 1
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
@@ -200,7 +201,7 @@
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/item, mob/user, params)
-	if(!on && !holding)
+	if(!on && !holding && item.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!anchored)
 			to_chat(user, "<span class='notice'>Anchor [src] first!</span>")
 			return
@@ -220,7 +221,13 @@
 		investigate_log("had its internal [holding] swapped with [tank] by [key_name(user)].", INVESTIGATE_ATMOS)
 		replace_tank(user, tank)
 		update_appearance()
+		return
 
+	if(!anchored && item.tool_behaviour == TOOL_MULTITOOL)
+		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
+		to_chat(user, "<span class='notice'>You change the circuitboard to layer [piping_layer].</span>")
+		update_appearance()
+		return
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
@@ -270,6 +277,12 @@
 	if(panel_open && item.tool_behaviour == TOOL_WRENCH && !check_pipe_on_turf())
 		if(default_unfasten_wrench(user, item))
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL && !anchored)
+		color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
+		pipe_color = GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]]
+		visible_message("<span class='notice'>You set [src] pipe color to [GLOB.pipe_color_name[pipe_color]].")
+		update_appearance()
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/check_pipe_on_turf()
@@ -280,14 +293,6 @@
 			visible_message("<span class='warning'>A pipe is hogging the ports, remove the obstruction or change the machine piping layer.</span>")
 			return TRUE
 	return FALSE
-
-/obj/machinery/atmospherics/components/binary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
-	if(!istype(multitool))
-		return
-	if(panel_open && !anchored)
-		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
-		to_chat(user, "<span class='notice'>You change the circuitboard to layer [piping_layer].</span>")
-		update_appearance()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/replace_tank(mob/living/user, obj/item/tank/new_tank)
 	if(!user)
