@@ -482,6 +482,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Abandoned Theatre"
 	icon_state = "abandoned_theatre"
 
+/area/crew_quarters/cryopod
+	name = "Cryogenic Sleepers"
+	icon_state = "green"
+
 /area/library
 	name = "Library"
 	icon_state = "library"

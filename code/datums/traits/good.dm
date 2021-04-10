@@ -264,7 +264,7 @@
 
 /datum/quirk/no_appendix
 	name = "Appendicitis Survivor"
-	desc = "You had a run in with appendicitis in the past and no longer have an appendix."
+	desc = "You had a run-in with appendicitis in the past and no longer have an appendix."
 	value = 1
 	gain_text = "<span class='notice'>You no longerhave an appendix.</span>"
 	lose_text = "<span class='notice'>You miss your appendix.</span>"
