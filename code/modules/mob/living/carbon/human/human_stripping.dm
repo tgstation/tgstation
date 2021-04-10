@@ -112,8 +112,9 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	return get_strippable_alternate_action_internals(get_item(source), source)
 
 /datum/strippable_item/mob_item_slot/suit_storage/alternate_action(atom/source, mob/user)
-	if (..())
-		strippable_alternate_action_internals(get_item(source), source, user)
+	if (!..())
+		return
+	strippable_alternate_action_internals(get_item(source), source, user)
 
 /datum/strippable_item/mob_item_slot/id
 	key = STRIPPABLE_ITEM_ID
@@ -127,8 +128,9 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	return get_strippable_alternate_action_internals(get_item(source), source)
 
 /datum/strippable_item/mob_item_slot/belt/alternate_action(atom/source, mob/user)
-	if (..())
-		strippable_alternate_action_internals(get_item(source), source, user)
+	if (!..())
+		return
+	strippable_alternate_action_internals(get_item(source), source, user)
 
 /datum/strippable_item/mob_item_slot/pocket
 	/// Which pocket we're referencing. Used for visible text.
