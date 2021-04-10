@@ -1,5 +1,0 @@
-author: "EricZilla"
-delete-after: True
-changes: 
-  - imageadd: "Added new Gene Sequence Analyzer Sprite"
-  - imageadd: "Added new Hydroponics Analyzer Sprite"
