@@ -579,11 +579,18 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 /datum/controller/subsystem/air/proc/get_init_dirs(type, dir, init_dir)
 
-	var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir, init_dir)
-	var/got_dir = temp.GetInitDirections()
-	qdel(temp)
+	if(!pipe_init_dirs_cache[type])
+		pipe_init_dirs_cache[type] = list()
 
-	return got_dir
+	if(!pipe_init_dirs_cache[type]["[init_dir]"])
+		pipe_init_dirs_cache[type]["[init_dir]"] = list()
+
+	if(!pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"])
+		var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir, init_dir)
+		pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"] = temp.GetInitDirections()
+		qdel(temp)
+
+	return pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"]
 
 /datum/controller/subsystem/air/proc/generate_atmos()
 	atmos_gen = list()
