@@ -241,9 +241,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'> <i>Alt-click</i> will change the piping layer. </span>"
+	. += "<span class='notice'> <i>Alt+click</i> will change the piping layer. </span>"
 	if (mode_allowed & UNWRENCH_MODE)
-		. += "<span class='notice'> <i>Ctrl-click</i> will toggle the unwrench mode. </span>"
+		. += "<span class='notice'> <i>Ctrl+click</i> will toggle the unwrench mode. </span>"
 
 /obj/item/pipe_dispenser/dropped(mob/user, silent)
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
