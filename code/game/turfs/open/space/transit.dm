@@ -80,7 +80,7 @@
 	. = ..()
 	update_appearance()
 	for(var/atom/movable/AM in src)
-		throw_atom(AM)
+		add_timer(CALLBACK(src, .proc/throw_atom, AM), 1)
 
 /turf/open/space/transit/update_icon()
 	. = ..()

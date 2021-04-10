@@ -56,7 +56,6 @@
 	return TRUE
 
 /obj/effect/abstract/proximity_checker/advanced/field_edge/on_uncrossed(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
 	if(parent)
 		return parent.field_edge_uncrossed(AM, src)
 	return TRUE
