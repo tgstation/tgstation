@@ -24,8 +24,11 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	icon_state = ""
 	. = ..()
 
-/obj/machinery/atmospherics/pipe/smart/SetInitDirections()
-	initialize_directions = ALL_CARDINALS
+/obj/machinery/atmospherics/pipe/smart/SetInitDirections(init_dir)
+	if(init_dir)
+		initialize_directions =	init_dir
+	else
+		initialize_directions = ALL_CARDINALS
 
 /obj/machinery/atmospherics/pipe/smart/proc/check_connections()
 	var/mutable_appearance/center

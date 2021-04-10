@@ -197,6 +197,7 @@ const PipeTypeSection = (props, context) => {
 
 const SmartPipeBlockSection = (props, context) => {
   const { act, data } = useBackend(context);
+  const init_directions = data.init_directions || [];
   const {
     category: rootCategoryIndex,
   } = data;
@@ -212,29 +213,53 @@ const SmartPipeBlockSection = (props, context) => {
                 tooltipPosition="right"
                 tooltip={multiline`
                 This is a panel for blocking certain connection
-                directions. The button in the center resets to
+                directions for the smart pipes.
+                The button in the center resets to
                 default (all directions can connect)`} />
             </Stack.Item>
             <Stack.Item>
-              <Button iconRotation={-90} color="green" icon="arrow-right" />
+              <Button iconRotation={-90} icon="arrow-right"
+                disabled={!!data.smart_pipe}
+                selected={init_directions["north"]}
+                onClick={() => act('init_dir_setting', {
+                  dir_flag: "north",
+                })}/>
             </Stack.Item>
           </Stack>
         </Stack.Item>
         <Stack.Item basis={1.5}>
           <Stack fill>
             <Stack.Item>
-              <Button color="green" icon="arrow-left" />
+              <Button icon="arrow-left"
+                disabled={!!data.smart_pipe}
+                selected={init_directions["west"]}
+                onClick={() => act('init_dir_setting', {
+                  dir_flag: "west",
+                })}/>
             </Stack.Item>
             <Stack.Item grow>
-              <Button icon="circle" />
+              <Button icon="circle"
+                disabled={!!data.smart_pipe}
+                onClick={() => act('init_reset', {
+                })}/>
             </Stack.Item>
             <Stack.Item>
-              <Button color="green" icon="arrow-right" />
+              <Button icon="arrow-right"
+                disabled={!!data.smart_pipe}
+                selected={init_directions["east"]}
+                onClick={() => act('init_dir_setting', {
+                  dir_flag: "east",
+                })}/>
             </Stack.Item>
           </Stack>
         </Stack.Item>
         <Stack.Item grow>
-          <Button iconRotation={90} color="green" icon="arrow-right" />
+          <Button iconRotation={90} icon="arrow-right"
+            disabled={!!data.smart_pipe}
+            selected={init_directions["south"]}
+            onClick={() => act('init_dir_setting', {
+              dir_flag: "south",
+            })}/>
         </Stack.Item>
       </Stack>
     </Section>

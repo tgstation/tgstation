@@ -199,6 +199,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
 	var/p_dir = NORTH
+	var/p_init_dir = ALL_CARDINALS
 	var/p_flipped = FALSE
 	var/paint_color = "grey"
 	var/atmos_build_speed = 5 //deciseconds (500ms)
@@ -216,6 +217,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
+	var/pipe_path
+	var/list/init_directions = list(list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE))
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -334,6 +337,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers))
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
+	init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
+	for(var/direction in GLOB.cardinals)
+		if(p_init_dir & direction)
+			init_directions[dir2text(direction)] = TRUE
+	data["init_directions"] = init_directions
+	var/is_pipe_smart = FALSE
+	if(istype(pipe_path, /obj/machinery/atmospherics/pipe/smart))
+		is_pipe_smart = TRUE
+	data["smart_pipe"] = is_pipe_smart
 	return data
 
 /obj/item/pipe_dispenser/ui_act(action, params)
@@ -380,6 +392,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				mode &= ~n
 			else
 				mode |= n
+		if("init_dir_setting")
+			p_init_dir ^= text2dir(params["dir_flag"])
+		if("init_reset")
+			p_init_dir = ALL_CARDINALS
 	if(playeffect)
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
@@ -393,6 +409,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = recipe.id
+	pipe_path = recipe.id
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
 
@@ -446,19 +463,23 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						activate()
 						var/obj/machinery/atmospherics/path = queued_p_type
 						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
-						var/obj/item/pipe/P = new pipe_item_type(get_turf(attack_target), queued_p_type, queued_p_dir, null, GLOB.pipe_paint_colors[paint_color])
+						var/obj/item/pipe/pipe_type
+						if(ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart))
+							pipe_type = new pipe_item_type(get_turf(attack_target), queued_p_type, queued_p_dir, null, GLOB.pipe_paint_colors[paint_color], p_init_dir)
+						else
+							pipe_type = new pipe_item_type(get_turf(attack_target), queued_p_type, queued_p_dir, null, GLOB.pipe_paint_colors[paint_color])
 
-						if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
-							var/obj/item/pipe/trinary/flippable/F = P
+						if(queued_p_flipped && istype(pipe_type, /obj/item/pipe/trinary/flippable))
+							var/obj/item/pipe/trinary/flippable/F = pipe_type
 							F.flipped = queued_p_flipped
 
-						P.update()
-						P.add_fingerprint(usr)
-						P.setPipingLayer(piping_layer)
+						pipe_type.update()
+						pipe_type.add_fingerprint(usr)
+						pipe_type.setPipingLayer(piping_layer)
 						if(ispath(queued_p_type, /obj/machinery/atmospherics) && !ispath(queued_p_type, /obj/machinery/atmospherics/pipe/color_adapter))
-							P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+							pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 						if(mode & WRENCH_MODE)
-							P.wrench_act(user, src)
+							pipe_type.wrench_act(user, src)
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)

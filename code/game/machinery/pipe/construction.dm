@@ -23,6 +23,7 @@ Buildable meters
 	/// Whether it can be painted
 	var/paintable = FALSE
 	var/pipe_color
+	var/p_init_dir = 0
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
@@ -42,10 +43,11 @@ Buildable meters
 	//Flipping handled manually due to custom handling for trinary pipes
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
-/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color)
+/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir)
 	if(make_from)
 		make_from_existing(make_from)
 	else
+		p_init_dir = device_init_dir
 		pipe_type = _pipe_type
 		pipe_color = device_color
 		setDir(_dir)
@@ -56,6 +58,7 @@ Buildable meters
 	return ..()
 
 /obj/item/pipe/proc/make_from_existing(obj/machinery/atmospherics/make_from)
+	p_init_dir = make_from.initialize_directions
 	setDir(make_from.dir)
 	pipename = make_from.name
 	add_atom_colour(make_from.color, FIXED_COLOUR_PRIORITY)
@@ -181,7 +184,7 @@ Buildable meters
 			return TRUE
 	// no conflicts found
 
-	var/obj/machinery/atmospherics/built_machine = new pipe_type(loc)
+	var/obj/machinery/atmospherics/built_machine = new pipe_type(loc, , , p_init_dir)
 	build_pipe(built_machine)
 	built_machine.on_construction(pipe_color, piping_layer)
 	transfer_fingerprints_to(built_machine)
@@ -196,7 +199,7 @@ Buildable meters
 
 /obj/item/pipe/proc/build_pipe(obj/machinery/atmospherics/A)
 	A.setDir(fixed_dir())
-	A.SetInitDirections()
+	A.SetInitDirections(p_init_dir)
 
 	if(pipename)
 		A.name = pipename
