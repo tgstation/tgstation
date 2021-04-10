@@ -1,0 +1,5 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - balance: "Adjusts Mannitol,Neurine,Ephephrine,Prohol,Oculine and Inacusate to have their own reaction profiles, purity and impurity effects"
+  - qol: "Improves the debug reaction tester so that reaction vars can be live edited to make reaction tweaking/creation less of a pain."
