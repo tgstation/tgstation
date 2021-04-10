@@ -100,12 +100,9 @@
 
 /mob/living/simple_animal/hostile/carp/death(gibbed)
 	. = ..()
-	if(!random_color)
+	if(!random_color || gibbed)
 		return
-	if(gibbed)
-		greyscale_config = null
-	else
-		greyscale_config = /datum/greyscale_config/carp/dead
+	greyscale_config = /datum/greyscale_config/carp/dead
 	update_icon()
 
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
@@ -293,6 +290,6 @@
 	. = ..()
 	if(!disky || stat == DEAD)
 		return
-	. += icon(icon, "disk_overlay")
+	. += mutable_appearance(icon, "disk_overlay", ABOVE_MOB_LAYER)
 
 #undef REGENERATION_DELAY
