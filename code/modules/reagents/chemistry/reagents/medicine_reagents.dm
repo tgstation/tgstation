@@ -517,7 +517,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	ph = 12
-	purity = REAGENT_STANDARD_PUIRTY
+	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 4) //1.6 per 2 seconds
 	inverse_chem = /datum/reagent/inverse/corazargh
@@ -624,7 +624,7 @@
 	color = "#404040" //oculine is dark grey, inacusiate is light grey
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "dull toxin"
-	purity = REAGENT_STANDARD_PUIRTY
+	purity = REAGENT_STANDARD_PURITY
 	ph = 10
 	impure_chem = null
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -634,10 +634,42 @@
 	var/delta_light
 
 /datum/reagent/medicine/oculine/on_mob_add(mob/living/owner)
-	delta_light = creation_purity*20
-	owner.lighting_alpha -= delta_light
-	owner.see_in_dark += 3
-	..()
+	if(!iscarbon(owner))
+		return
+	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
+	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		return
+	improve_eyesight(owner, eyes)
+
+/datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/owner, obj/item/organ/eyes/eyes)
+	delta_light = creation_purity*30
+	if(eyes.lighting_alpha)
+		eyes.lighting_alpha -= delta_light
+	else
+		eyes.lighting_alpha = 255 - delta_light
+	eyes.see_in_dark += 3
+	owner.update_sight()
+
+/datum/reagent/medicine/oculine/proc/restore_eyesight(mob/living/carbon/owner, obj/item/organ/eyes/eyes)
+	eyes.lighting_alpha += delta_light
+	eyes.see_in_dark -= 3
+	owner.update_sight()
+
+/datum/reagent/medicine/oculine/proc/on_gained_organ(mob/owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
+	if(!istype(organ, /obj/item/organ/eyes))
+		return
+	var/obj/item/organ/eyes/eyes = organ
+	improve_eyesight(owner, eyes)
+
+/datum/reagent/medicine/oculine/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
+	if(!istype(organ, /obj/item/organ/eyes))
+		return
+	var/obj/item/organ/eyes/eyes = organ
+	restore_eyesight(prev_owner, eyes)
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.adjust_blindness(-2 * REM * delta_time * normalise_creation_purity())
@@ -662,8 +694,10 @@
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_delete(mob/living/owner)
-	owner.lighting_alpha += delta_light
-	owner.see_in_dark -= 3
+	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		return
+	restore_eyesight(owner, eyes)
 	..()
 
 /datum/reagent/medicine/inacusiate
@@ -671,7 +705,7 @@
 	description = "Rapidly repairs damage to the patient's ears to cure deafness, assuming the source of said deafness isn't from genetic mutations, chronic deafness, or a total defecit of ears." //by "chronic" deafness, we mean people with the "deaf" quirk
 	color = "#606060" // ditto
 	ph = 2
-	purity = REAGENT_STANDARD_PUIRTY
+	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	impure_chem = /datum/reagent/impurity/inacusiate
 	inverse_chem_val = 0.3
@@ -836,7 +870,7 @@
 	ph = 10.4
 	overdose_threshold = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	purity = REAGENT_STANDARD_PUIRTY
+	purity = REAGENT_STANDARD_PURITY
 	impure_chem = /datum/reagent/impurity/mannitol
 	inverse_chem_val = 0.45
 	impure_chem = /datum/reagent/impurity/mannitol
@@ -876,7 +910,7 @@
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
 	color = "#C0C0C0" //ditto
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
-	purity = REAGENT_STANDARD_PUIRTY
+	purity = REAGENT_STANDARD_PURITY
 	impure_chem = /datum/reagent/inverse/neurine //if people get grumpy, delete this line
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/neurine
@@ -933,7 +967,7 @@
 	color = "#00B4C8"
 	taste_description = "raw egg"
 	ph = 4
-	purity = REAGENT_STANDARD_PUIRTY
+	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val 	= 0.35
 	inverse_chem		= /datum/reagent/inverse/antihol
