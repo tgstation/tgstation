@@ -329,7 +329,7 @@
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(user)
 		if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
-			target = pick(orange(2, target))
+			bonus_spread += 45
 		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, user, target, params, zone_override)
 
 	SEND_SIGNAL(src, COMSIG_GUN_FIRED, user, target, params, zone_override)
