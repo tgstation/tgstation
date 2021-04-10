@@ -322,19 +322,25 @@
 	w_class = WEIGHT_CLASS_HUGE
 	force = 5
 	slot_flags = ITEM_SLOT_BACK
-	block_chance = 50
-	var/shield_icon = "shield-red"
+	var/user_shield_icon = "shield-red"
 
-/obj/item/nullrod/staff/worn_overlays(isinhands)
-	. = list()
-	if(isinhands)
-		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)
+/obj/item/nullrod/staff/Initialize()
+	. = ..()
+	AddComponent(/datum/component/shielded, max_charges = 1, recharge_start_delay = 10 SECONDS, shield_icon = user_shield_icon, shield_inhand = TRUE, run_hit_callback = CALLBACK(src, .proc/shield_damaged))
+
+/obj/item/nullrod/staff/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
+	wearer.visible_message("<span class='danger'>[wearer]'s [src] neutralizes [attack_text] in a burst of sparks!</span>")
+	do_sparks(2, TRUE, wearer)
+	if(!wearer.mind?.holy_role && iscarbon(wearer))
+		var/mob/living/carbon/carbon_wearer = wearer
+		carbon_wearer.visible_message("<span class='danger'>[carbon_wearer] gets knocked down from the blow!</span>")
+		carbon_wearer.Knockdown(3 SECONDS)
 
 /obj/item/nullrod/staff/blue
 	name = "blue holy staff"
 	icon_state = "godstaff-blue"
 	inhand_icon_state = "godstaff-blue"
-	shield_icon = "shield-old"
+	user_shield_icon = "shield-old"
 
 /obj/item/nullrod/claymore
 	icon_state = "claymore_gold"
