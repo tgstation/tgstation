@@ -526,11 +526,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	. = ..()
 	if(!gold_ratio)
 		// Calculate the amount of gold that goldschlager is made from
-		var/datum/chemical_reaction/drink/goldschlager/goldschlager_reaction = new
+		var/datum/chemical_reaction/drink/goldschlager/goldschlager_reaction = GLOB.chemical_reactions_list[/datum/chemical_reaction/drink/goldschlager]
 		var/vodka_amount = goldschlager_reaction.required_reagents[/datum/reagent/consumable/ethanol/vodka]
 		var/gold_amount = goldschlager_reaction.required_reagents[/datum/reagent/gold]
 		gold_ratio = gold_amount / (gold_amount + vodka_amount)
-		qdel(goldschlager_reaction)
 
 /datum/reagent/consumable/ethanol/goldschlager/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	// Reset quality each time, since the bottle can be shared
