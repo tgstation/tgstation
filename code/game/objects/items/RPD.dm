@@ -10,6 +10,7 @@ RPD
 #define BUILD_MODE (1<<0)
 #define WRENCH_MODE (1<<1)
 #define DESTROY_MODE (1<<2)
+#define UNWRENCH_MODE (1<<3)
 
 
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
@@ -213,7 +214,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_atmos
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
-	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
+	var/mode = BUILD_MODE | WRENCH_MODE | DESTROY_MODE
+	/// Var used for controlling RPD modes, modified by upgrades.
+	var/mode_allowed = BUILD_MODE | WRENCH_MODE | DESTROY_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
 
@@ -238,14 +241,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/examine(mob/user)
 	. = ..()
-	. += "You can scroll your mouse wheel to change the piping layer."
-
-/obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
-	. = ..()
-	if(slot == ITEM_SLOT_HANDS)
-		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, .proc/mouse_wheeled)
-	else
-		UnregisterSignal(user,COMSIG_MOUSE_SCROLL_ON)
+	. += "<span class='notice'> <i>Alt-click</i> will change the piping layer. </span>"
+	if (mode_allowed & UNWRENCH_MODE)
+		. += "<span class='notice'> <i>Ctrl-click</i> will toggle the unwrench mode. </span>"
 
 /obj/item/pipe_dispenser/dropped(mob/user, silent)
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
@@ -255,14 +253,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
 	return ..()
 
-/obj/item/pipe_dispenser/attack_self(mob/user)
-	ui_interact(user)
-
-/obj/item/pipe_dispenser/pre_attack(atom/target, mob/user, params)
-	if(istype(target, /obj/item/rpd_upgrade/unwrench))
-		install_upgrade(target, user)
+/obj/item/pipe_dispenser/attack_self(mob/user, list/modifiers)
+	if (LAZYACCESS(modifiers, ALT_CLICK))
+		AltClick(user)
 		return TRUE
-	return ..()
+	if (LAZYACCESS(modifiers, CTRL_CLICK))
+		CtrlClick(user)
+		return TRUE
+	else
+		ui_interact(user)
 
 /obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rpd_upgrade))
@@ -279,12 +278,18 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
  * * user - mob that use upgrade on RPD
  */
 /obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_up, mob/user)
-	if(rpd_up.upgrade_flags& upgrade_flags)
+	if(rpd_up.upgrade_flags & upgrade_flags)
 		to_chat(user, "<span class='warning'>[src] has already installed this upgrade!</span>")
 		return
 	upgrade_flags |= rpd_up.upgrade_flags
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rpd_up)
+	check_upgrade()
+
+///This proc checks for RPD upgrades using the upgrade_flags bitfield.
+/obj/item/pipe_dispenser/proc/check_upgrade()
+	if (upgrade_flags | RPD_UPGRADE_UNWRENCH)
+		mode_allowed |= UNWRENCH_MODE
 
 /obj/item/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
@@ -315,7 +320,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
 		"selected_color" = paint_color,
-		"mode" = mode
+		"mode" = mode,
+		"mode_allowed" = mode_allowed
 	)
 
 	var/list/recipes
@@ -385,11 +391,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
-/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
-	if(!ISADVANCEDTOOLUSER(user) || istype(A, /turf/open/space/transit))
+/// This proc interfaces with upgrades and also the pipe manipulation process
+/obj/item/pipe_dispenser/pre_attack(atom/attack_target, mob/user)
+	if(!ISADVANCEDTOOLUSER(user) || istype(attack_target, /turf/open/space/transit))
 		return ..()
 
-	var/atom/attack_target = A
+	if(istype(attack_target, /obj/item/rpd_upgrade/unwrench))
+		install_upgrade(attack_target, user)
+		return ..()
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = recipe.id
@@ -397,10 +406,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_flipped = p_flipped
 
 	//Unwrench pipe before we build one over/paint it, but only if we're not already running a do_after on it already to prevent a potential runtime.
-	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
+	if((mode & UNWRENCH_MODE) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
 		attack_target = attack_target.wrench_act(user, src)
 		if(!isatom(attack_target))
-			CRASH("When attempting to call [A.type].wrench_act(), received the following non-atom return value: [attack_target]")
+			CRASH("When attempting to call [attack_target.type].wrench_act(), received the following non-atom return value: [attack_target]")
 
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
@@ -520,27 +529,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 
-/obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
-	SIGNAL_HANDLER
-	if(source.incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
-		return
-
-	if(delta_y > 0)
-		piping_layer = min(PIPING_LAYER_MAX, piping_layer + 1)
-	else if(delta_y < 0)
-		piping_layer = max(PIPING_LAYER_MIN, piping_layer - 1)
-	else
-		return
-	to_chat(source, "<span class='notice'>You set the layer to [piping_layer].</span>")
-
-#undef ATMOS_CATEGORY
-#undef DISPOSALS_CATEGORY
-#undef TRANSIT_CATEGORY
-
-#undef BUILD_MODE
-#undef DESTROY_MODE
-#undef WRENCH_MODE
-
 /obj/item/rpd_upgrade
 	name = "RPD advanced design disk"
 	desc = "It seems to be empty."
@@ -552,3 +540,37 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/rpd_upgrade/unwrench
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
 	upgrade_flags = RPD_UPGRADE_UNWRENCH
+
+/// AltClick switches layers.
+/obj/item/pipe_dispenser/AltClick(mob/user)
+	. = ..()
+	piping_layer = piping_layer < 5 ? piping_layer + 1 : 1
+	SStgui.update_uis(src)
+	to_chat(user, "<span class='notice'>You set the layer to [piping_layer].</span>")
+
+/// CtrlClick toggles the unwrench mode on and off. Returned early if we aren't allowed to (upgrade isn't installed).
+/obj/item/pipe_dispenser/CtrlClick(mob/user)
+	. = ..()
+	if (!(mode_allowed & UNWRENCH_MODE))
+		return
+	
+	var/activation_message
+	
+	if(mode & UNWRENCH_MODE)
+		mode ^= UNWRENCH_MODE
+		activation_message =  "deactivated"
+	else
+		mode |= UNWRENCH_MODE
+		activation_message =  "activated"
+
+	SStgui.update_uis(src)
+	to_chat(user, "<span class='notice'>You [activation_message] the unwrench mode.</span>")
+
+#undef ATMOS_CATEGORY
+#undef DISPOSALS_CATEGORY
+#undef TRANSIT_CATEGORY
+
+#undef BUILD_MODE
+#undef DESTROY_MODE
+#undef WRENCH_MODE
+#undef UNWRENCH_MODE

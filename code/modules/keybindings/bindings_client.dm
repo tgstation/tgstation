@@ -67,6 +67,11 @@
 			else
 				full_key = _key
 	var/keycount = 0
+
+	// Snowflake case for activate_inhand. This allows combos like Alt+Click to be replicated by Alt+Z
+	if ("activate_inhand" in prefs.key_bindings[_key])
+		full_key = _key
+
 	for(var/kb_name in prefs.key_bindings[full_key])
 		keycount++
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]

@@ -33,6 +33,10 @@ const TOOLS = [
     name: 'Destroy',
     bitmask: 4,
   },
+  {
+    name: 'Unwrench',
+    bitmask: 8,
+  },
 ];
 
 export const RapidPipeDispenser = (props, context) => {
@@ -43,6 +47,7 @@ export const RapidPipeDispenser = (props, context) => {
     selected_color,
     piping_layer,
     mode,
+    mode_allowed,
   } = data;
   const previews = data.preview_rows.flatMap(row => row.previews);
   const [
@@ -76,6 +81,7 @@ export const RapidPipeDispenser = (props, context) => {
                 <Button.Checkbox
                   key={tool.bitmask}
                   checked={mode & tool.bitmask}
+                  disabled={!(mode_allowed & tool.bitmask)}
                   content={tool.name}
                   onClick={() => act('mode', {
                     mode: tool.bitmask,

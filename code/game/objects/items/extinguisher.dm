@@ -61,10 +61,15 @@
 	cooling_power = 1.5
 	power = 3
 
-/obj/item/extinguisher/crafted/attack_self(mob/user)
-	safety = !safety
-	icon_state = "[sprite_name][!safety]"
-	to_chat(user, "[safety ? "You remove the straw and put it on the side of the cool canister" : "You insert the straw, readying it for use"].")
+/// Overrides the parent for some flavor text.
+/obj/item/extinguisher/crafted/attack_self(mob/user, modifiers)
+	if (LAZYACCESS(modifiers, ALT_CLICK))
+		AltClick(user)
+		return TRUE
+	else	
+		safety = !safety
+		icon_state = "[sprite_name][!safety]"
+		to_chat(user, "[safety ? "You remove the straw and put it on the side of the cool canister" : "You insert the straw, readying it for use"].")
 
 /obj/item/extinguisher/proc/refill()
 	if(!chem)
@@ -105,11 +110,16 @@
 		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... [src] is empty!</span>")
 		return SHAME
 
-/obj/item/extinguisher/attack_self(mob/user)
-	safety = !safety
-	src.icon_state = "[sprite_name][!safety]"
-	to_chat(user, "The safety is [safety ? "on" : "off"].")
-	return
+/// Attack_self toggles safety on and off.
+/obj/item/extinguisher/attack_self(mob/user, modifiers)
+	if (LAZYACCESS(modifiers, ALT_CLICK))
+		AltClick(user)
+		return TRUE
+	else
+		safety = !safety
+		src.icon_state = "[sprite_name][!safety]"
+		to_chat(user, "The safety is [safety ? "on" : "off"].")
+		return
 
 /obj/item/extinguisher/attack(mob/M, mob/living/user)
 	if(!user.combat_mode && !safety) //If we're on help intent and going to spray people, don't bash them.

@@ -625,9 +625,11 @@
 /**
  * Verb to activate the object in your held hand
  *
- * Calls attack self on the item and updates the inventory hud for hands
+ * Calls attack self on the item and updates the inventory hud for hands.
+ * Changes the params into a modifier list, 
+ * will only take effect for items triggered using activate_inhand hotkey.
  */
-/mob/verb/mode()
+/mob/verb/mode(params as text)
 	set name = "Activate Held Object"
 	set category = "Object"
 	set src = usr
@@ -640,7 +642,7 @@
 
 	var/obj/item/I = get_active_held_item()
 	if(I)
-		I.attack_self(src)
+		I.attack_self(src, params2list(params))
 		update_inv_hands()
 		return
 

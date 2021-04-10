@@ -62,7 +62,16 @@
 
 	return afterattack(target, user, TRUE, params)
 
-/// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
+/** 
+ * Called when the item is in the active hand and clicked. 
+ * Alternately, there is an 'activate held object' hotkey that you can hit on pagedown or z (default).
+ *
+ * Modifiers will be using regular mouse click params if it isn't a hotkey.
+ * Modifiers will pass detections of alt, ctrl, and shift modifiers if 
+ * the activate held object hotkey is pressed.
+ *
+ * Implement these alt, shift, and ctrl functionalities on an item-to-item basis.
+*/
 /obj/item/proc/attack_self(mob/user, modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE

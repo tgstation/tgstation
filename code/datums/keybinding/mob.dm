@@ -47,7 +47,16 @@
 	if(.)
 		return
 	var/mob/M = user.mob
-	M.mode()
+	// We check for additional modifiers if the activate_inhand hotkey is pressed.
+	var/list/modifiers = list()
+	if(user.keys_held["Alt"])
+		modifiers["alt"] = TRUE
+	if(user.keys_held["Ctrl"])
+		modifiers["ctrl"] = TRUE
+	if(user.keys_held["Shift"])
+		modifiers["shift"] = TRUE
+	var/params = list2params(modifiers)
+	M.mode(params)
 	return TRUE
 
 /datum/keybinding/mob/drop_item
