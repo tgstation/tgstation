@@ -339,6 +339,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["feature_moth_wings"], features["moth_wings"])
 	READ_FILE(S["feature_moth_markings"], features["moth_markings"])
 	READ_FILE(S["persistent_scars"] , persistent_scars)
+	READ_FILE(S["runechat_color"] , runechat_color)
 	READ_FILE(S["security_records"]			, security_records)
 	READ_FILE(S["medical_records"]			, medical_records)
 	READ_FILE(S["general_records"]			, general_records)
@@ -433,6 +434,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["moth_wings"] 	= sanitize_inlist(features["moth_wings"], GLOB.moth_wings_list, "Plain")
 	features["moth_markings"] 	= sanitize_inlist(features["moth_markings"], GLOB.moth_markings_list, "None")
 
+	runechat_color = sanitize_hexcolor(runechat_color)
 	persistent_scars = sanitize_integer(persistent_scars)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
@@ -491,6 +493,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_moth_wings"]			, features["moth_wings"])
 	WRITE_FILE(S["feature_moth_markings"]		, features["moth_markings"])
 	WRITE_FILE(S["persistent_scars"]			, persistent_scars)
+	WRITE_FILE(S["runechat_color"] , runechat_color)
 	WRITE_FILE(S["general_records"]			, general_records)
 	WRITE_FILE(S["security_records"]			, security_records)
 	WRITE_FILE(S["medical_records"]			, medical_records)

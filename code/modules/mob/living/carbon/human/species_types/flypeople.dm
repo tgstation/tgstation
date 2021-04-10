@@ -21,6 +21,11 @@
 	mutantappendix = /obj/item/organ/appendix/fly
 	mutant_organs = list(/obj/item/organ/fly, /obj/item/organ/fly/groin)
 
+	species_speech_sounds = list('sound/voice/species/fly.ogg' = 80, \
+								'sound/voice/species/fly2.ogg' = 80)
+	species_speech_sounds_ask = list('sound/voice/species/fly_ask.ogg' = 80)
+	species_speech_sounds_exclaim = list('sound/voice/species/fly_exclaim.ogg' = 80)
+
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == /datum/reagent/toxin/pestkiller)
 		H.adjustToxLoss(3)

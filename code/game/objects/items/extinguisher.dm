@@ -26,6 +26,8 @@
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = FALSE //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
+	/// Icon state when inside a tank holder
+	var/tank_holder_icon_state = "holder_extinguisher"
 
 /obj/item/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -52,6 +54,11 @@
 	. = ..()
 	refill()
 
+/obj/item/extinguisher/ComponentInitialize()
+	. = ..()
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"
 	desc = "Used to stop thermonuclear fires from spreading inside your engine."
@@ -62,6 +69,7 @@
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
+	tank_holder_icon_state = "holder_foam_extinguisher"
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))

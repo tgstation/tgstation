@@ -6408,6 +6408,11 @@
 	dir = 5
 	},
 /area/crew_quarters/heads/hor)
+"cWE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/tank_holder/oxygen,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "cWF" = (
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
@@ -11612,6 +11617,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"eWV" = (
+/obj/structure/chair/comfy/beige{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "eXp" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Port Quarter Solar Access";
@@ -18653,6 +18664,10 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
+"hRT" = (
+/obj/structure/tank_holder/oxygen,
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/fore)
 "hRZ" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
@@ -21244,6 +21259,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
+"iYI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/tank_holder/emergency_oxygen,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "iYO" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -21644,6 +21664,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "jgu" = (
@@ -25793,9 +25814,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "kRl" = (
-/obj/machinery/computer/card{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -25808,6 +25826,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/modular_computer/console/preset/id{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/bridge)
 "kRq" = (
@@ -26149,11 +26170,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "kXU" = (
-/obj/machinery/computer/card,
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/machinery/button/ticket_machine{
 	pixel_y = 24
 	},
+/obj/machinery/modular_computer/console/preset/id,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "kXY" = (
@@ -34612,7 +34633,7 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "otA" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -36358,6 +36379,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "pdZ" = (
@@ -37266,6 +37288,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/sequence_scanner,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
 "pun" = (
@@ -38519,6 +38542,7 @@
 "pTp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/tank_holder/oxygen,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "pTy" = (
@@ -41343,6 +41367,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "rhQ" = (
@@ -47256,6 +47281,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/structure/tank_holder/oxygen,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "tEk" = (
@@ -49339,6 +49365,10 @@
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
+"utM" = (
+/obj/structure/tank_holder/emergency_oxygen,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "utR" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
@@ -71920,7 +71950,7 @@ qbq
 cVf
 bXz
 cVf
-qPX
+utM
 pgt
 cVf
 qbq
@@ -72197,7 +72227,7 @@ ssW
 ssW
 pES
 csf
-qEK
+iYI
 pvJ
 twY
 pES
@@ -82024,7 +82054,7 @@ qbq
 iSg
 iSg
 pyJ
-qEK
+cWE
 xue
 uqr
 rgW
@@ -95576,7 +95606,7 @@ kiq
 paR
 ftm
 ftm
-ftm
+eWV
 nyh
 aJj
 ssW
@@ -99576,7 +99606,7 @@ wHH
 wHH
 miJ
 hEL
-dME
+hRT
 xst
 xst
 xst

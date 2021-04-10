@@ -167,6 +167,22 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/_DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
 
+	/// Assoc list of [sounds that play on speech for mobs of this species] to [volume].
+	var/species_speech_sounds = list('sound/voice/species/speak_1.ogg' = 120, \
+									'sound/voice/species/speak_2.ogg' = 120, \
+									'sound/voice/species/speak_3.ogg' = 120, \
+									'sound/voice/species/speak_4.ogg' = 120)
+	/// Assoc list of [sounds that play on question for mobs of this species] to [volume].
+	var/species_speech_sounds_ask = list('sound/voice/species/speak_1_ask.ogg' = 120, \
+										'sound/voice/species/speak_2_ask.ogg' = 120, \
+										'sound/voice/species/speak_3_ask.ogg' = 120, \
+										'sound/voice/species/speak_4_ask.ogg' = 120)
+	/// Assoc list of [sounds that play on exclamation for mobs of this species] to [volume].
+	var/species_speech_sounds_exclaim = list('sound/voice/species/speak_1_exclaim.ogg' = 120, \
+											'sound/voice/species/speak_2_exclaim.ogg' = 120, \
+											'sound/voice/species/speak_3_exclaim.ogg' = 120, \
+											'sound/voice/species/speak_4_exclaim.ogg' = 120)
+
 ///////////
 // PROCS //
 ///////////

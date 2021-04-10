@@ -41,6 +41,9 @@
 	var/drain_time = 0 //used to keep ethereals from spam draining power sources
 	var/obj/effect/dummy/lighting_obj/ethereal_light
 
+	species_speech_sounds = list('sound/voice/species/etheral.ogg' = 35)
+	species_speech_sounds_ask = list('sound/voice/species/etheral_ask.ogg' = 60)
+	species_speech_sounds_exclaim = list('sound/voice/species/etheral_exclaim.ogg' = 60)
 
 /datum/species/ethereal/Destroy(force)
 	if(ethereal_light)

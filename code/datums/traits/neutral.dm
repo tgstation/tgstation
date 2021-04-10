@@ -320,7 +320,7 @@
 // The default parent quirk shows up in the quirk list because it adds all subtypes of quirks.
 // So it's just "average height" Screw it..
 /datum/quirk/size_change
-	name = "Size D - Average Height"
+	name = "Size B - Average Height"
 	desc = "You are average. (0% size change - this quirk does nothing.)"
 	value = 0
 	gain_text = "<span class='notice'>You feel average.</span>"
@@ -358,7 +358,7 @@
 
 // Large
 /datum/quirk/size_change/large
-	name = "Size C - Large"
+	name = "Size A - Large"
 	desc = "You're large and in charge. (10% larger)"
 	gain_text = "<span class='notice'>You feel taller.</span>"
 	lose_text = "<span class='notice'>You feel shorter.</span>"
@@ -368,7 +368,7 @@
 
 // Short
 /datum/quirk/size_change/short
-	name = "Size E - Small"
+	name = "Size C - Small"
 	desc = "You're pretty small. (10% smaller)"
 	gain_text = "<span class='notice'>You feel shorter.</span>"
 	lose_text = "<span class='notice'>You feel taller.</span>"
