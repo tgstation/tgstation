@@ -1,0 +1,41 @@
+@use '../colors.scss';
+
+$department_map: (
+  'Command': colors.$yellow,
+  'Security': colors.$red,
+  'Engineering': colors.$orange,
+  'Medical': colors.$teal,
+  'Science': colors.$purple,
+  'Supply': colors.$brown,
+  'Service': colors.$green,
+  'Silicon': colors.$pink
+);
+
+.CrewManifest {
+  @each $department-name, $color-value in $department_map {
+    &--#{$department-name} {
+      .Section {
+        &__title {
+          border-color: $color-value;
+        }
+        &__titleText {
+          color: $color-value;
+        }
+      }
+    }
+  }
+
+  &__Cell {
+    padding: 3px 0;
+
+    &--Captain {
+      color: colors.$yellow;
+      padding: 3px 8px;
+    }
+
+    &--Command {
+      color: colors.$yellow;
+      padding: 3px 9px;
+    }
+  }
+}
