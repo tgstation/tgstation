@@ -164,17 +164,17 @@
 
 /datum/eldritch_knowledge/final/rust_final/proc/on_move(mob/mover)
 	SIGNAL_HANDLER
-	var/istype_check = istype(get_turf(mover),/turf/open/floor/plating/rust)
+	var/mover_on_rust = istype(get_turf(mover),/turf/open/floor/plating/rust)
 
 	//We check if we are currently standing on a rust tile, but the immunities are not active, if so apply immunities, set immunities_active to TRUE
-	if(istype_check && !immunities_active)
+	if(mover_on_rust && !immunities_active)
 		for(var/trait in conditional_immunities)
 			ADD_TRAIT(mover,trait,type)
 		immunities_active = TRUE
 		return
 
 	//We check if we are NOT standing on a rust tile, if so we check if immunities are active, if immunities are active then we de-apply them and set immunities to FALSE
-	if(!istype_check && immunities_active)
+	if(!mover_on_rust && immunities_active)
 		for(var/trait in conditional_immunities)
 			REMOVE_TRAIT(mover,trait,type)
 		immunities_active = FALSE
