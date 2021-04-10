@@ -647,7 +647,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		user.do_attack_animation(M)
 		M.visible_message("<span class='warning'>[user] gently taps [M]'s knee with [src].</span>", \
 			"<span class='userdanger'>[user] taps your knee with [src].</span>")
-		playsound(D, 'sound/weapons/punchmiss.ogg', 20, TRUE, -1)
+		playsound(M, 'sound/weapons/punchmiss.ogg', 20, TRUE, -1)
 		if(B) //do they have a brain?
 			var/BH = B.damage
 			if(!BH || BH < BRAIN_DAMAGE_MILD) //a healthy brain produces a normal reaction
