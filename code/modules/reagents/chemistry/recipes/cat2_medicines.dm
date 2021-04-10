@@ -178,7 +178,7 @@
 	thermic_constant = 15
 	H_ion_release = -1
 	rate_up_lim = 50
-	purity_min = 0.4
+	purity_min = 0.25
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OXY
 
