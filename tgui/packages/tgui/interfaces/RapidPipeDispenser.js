@@ -223,7 +223,7 @@ const SmartPipeBlockSection = (props, context) => {
                 selected={init_directions["north"]}
                 onClick={() => act('init_dir_setting', {
                   dir_flag: "north",
-                })}/>
+                })} />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -234,19 +234,19 @@ const SmartPipeBlockSection = (props, context) => {
                 selected={init_directions["west"]}
                 onClick={() => act('init_dir_setting', {
                   dir_flag: "west",
-                })}/>
+                })} />
             </Stack.Item>
             <Stack.Item grow>
               <Button icon="circle"
                 onClick={() => act('init_reset', {
-                })}/>
+                })} />
             </Stack.Item>
             <Stack.Item>
               <Button icon="arrow-right"
                 selected={init_directions["east"]}
                 onClick={() => act('init_dir_setting', {
                   dir_flag: "east",
-                })}/>
+                })} />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -255,7 +255,7 @@ const SmartPipeBlockSection = (props, context) => {
             selected={init_directions["south"]}
             onClick={() => act('init_dir_setting', {
               dir_flag: "south",
-            })}/>
+            })} />
         </Stack.Item>
       </Stack>
     </Section>
