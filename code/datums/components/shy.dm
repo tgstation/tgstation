@@ -54,11 +54,11 @@
 		message = friend.message
 
 /// Returns TRUE or FALSE if you are within shy_range tiles from a /mob/living
-/datum/component/shy/proc/is_shy(atom/A)
+/datum/component/shy/proc/is_shy(atom/target)
 	var/result = FALSE
 	var/mob/owner = parent
 
-	if(A in owner.DirectAccess())
+	if(target in owner.DirectAccess())
 		return
 
 	if(!COOLDOWN_FINISHED(src, result_cooldown))
@@ -79,13 +79,13 @@
 
 
 
-/datum/component/shy/proc/on_clickon(datum/source, atom/A, params)
+/datum/component/shy/proc/on_clickon(datum/source, atom/target, params)
 	SIGNAL_HANDLER
-	return is_shy(A) && COMSIG_MOB_CANCEL_CLICKON
+	return is_shy(target) && COMSIG_MOB_CANCEL_CLICKON
 
-/datum/component/shy/proc/on_try_pull(datum/source, atom/movable/AM, force)
+/datum/component/shy/proc/on_try_pull(datum/source, atom/movable/target, force)
 	SIGNAL_HANDLER
-	return is_shy(AM) && COMSIG_LIVING_CANCEL_PULL
+	return is_shy(target) && COMSIG_LIVING_CANCEL_PULL
 
 /datum/component/shy/proc/on_unarmed_attack(datum/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER

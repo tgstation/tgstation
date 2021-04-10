@@ -42,9 +42,9 @@
 		message = friend.message
 
 /// Returns TRUE or FALSE if you are in a blacklisted area
-/datum/component/shy_in_room/proc/is_shy(atom/A)
+/datum/component/shy_in_room/proc/is_shy(atom/target)
 	var/mob/owner = parent
-	if(!length(blacklist) || (A in owner.DirectAccess()))
+	if(!length(blacklist) || (target in owner.DirectAccess()))
 		return
 
 	var/area/room = get_area(owner)
@@ -52,13 +52,13 @@
 		to_chat(owner, "<span class='warning'>[replacetext(message, "%ROOM", room)]</span>")
 		return TRUE
 
-/datum/component/shy_in_room/proc/on_clickon(datum/source, atom/A, params)
+/datum/component/shy_in_room/proc/on_clickon(datum/source, atom/target, params)
 	SIGNAL_HANDLER
-	return is_shy(A) && COMSIG_MOB_CANCEL_CLICKON
+	return is_shy(target) && COMSIG_MOB_CANCEL_CLICKON
 
-/datum/component/shy_in_room/proc/on_try_pull(datum/source, atom/movable/AM, force)
+/datum/component/shy_in_room/proc/on_try_pull(datum/source, atom/movable/target, force)
 	SIGNAL_HANDLER
-	return is_shy(AM) && COMSIG_LIVING_CANCEL_PULL
+	return is_shy(target) && COMSIG_LIVING_CANCEL_PULL
 
 /datum/component/shy_in_room/proc/on_unarmed_attack(datum/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
