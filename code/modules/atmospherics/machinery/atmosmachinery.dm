@@ -65,8 +65,13 @@
 	///Store the smart pipes connections, used for pipe construction
 	var/connection_num = 0
 
+/obj/machinery/atmospherics/LateInitialize()
+	. = ..()
+	name = "[GLOB.pipe_color_name[pipe_color]] [name]"
+
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
+	. += "<span class='notice'>[src] is on layer [piping_layer].</span>"
 	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
