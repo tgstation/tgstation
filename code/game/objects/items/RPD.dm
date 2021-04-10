@@ -406,7 +406,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_flipped = p_flipped
 
 	//Unwrench pipe before we build one over/paint it, but only if we're not already running a do_after on it already to prevent a potential runtime.
-	if((mode & UNWRENCH_MODE) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
+	if((mode & UNWRENCH_MODE) && (mode_allowed & UNWRENCH_MODE) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
 		attack_target = attack_target.wrench_act(user, src)
 		if(!isatom(attack_target))
 			CRASH("When attempting to call [attack_target.type].wrench_act(), received the following non-atom return value: [attack_target]")
