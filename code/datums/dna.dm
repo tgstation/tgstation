@@ -436,6 +436,7 @@
 	for(var/datum/mutation/human/HM in mutations)
 		if(HM.type == A)
 			return HM
+	return FALSE
 
 /datum/dna/proc/check_block_string(mutation)
 	if((LAZYLEN(mutation_index) > DNA_MUTATION_BLOCKS) || !(mutation in mutation_index))

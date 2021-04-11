@@ -593,12 +593,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE)
 	while(length(speech_options) || !speech_option)
 		var/potential_option = pick_n_take(speech_options)
-		if(carbon.dna.get_mutation(potential_option))
-			speech_options -= potential_option
-			continue
-		if(carbon.dna.activate_mutation(potential_option))
-			speech_option = potential_option
+		if(!potential_option)
 			return
+		if(carbon.dna.get_mutation(potential_option))
+			continue
+		carbon.dna.add_mutation(potential_option)
+		speech_option = potential_option
+		return
 
 /datum/reagent/impurity/mannitol/on_mob_delete(mob/living/owner)
 	. = ..()
