@@ -16,6 +16,16 @@
 			return
 	..()
 
+/obj/item/clothing/mask/muzzle/breath // Must be under /mask/muzzle/ because the speech obstruction is tied to /mask/muzzle rather than being a cloting flag. *sigh
+	name = "surgery mask"
+	desc = "To silence those pesky patients before putting them under."
+	icon_state = "breathmuzzle"
+	inhand_icon_state = "breathmuzzle"
+	clothing_flags = MASKINTERNALS
+	gas_transfer_coefficient = 0.1
+	permeability_coefficient = 0.01
+	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a gag
+
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
