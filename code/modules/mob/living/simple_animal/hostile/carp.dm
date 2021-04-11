@@ -49,7 +49,7 @@
 	var/rarechance = 1
 	/// List of usual carp colors
 	var/static/list/carp_colors = list(
-		"lightpurple" = "#c3b9f1",
+		"lightpurple" = "#aba2ff",
 		"lightpink" = "#da77a8",
 		"green" = "#70ff25",
 		"grape" = "#df0afb",
@@ -59,7 +59,7 @@
 		"teal" = "#20e28e",
 		"lightblue" = "#4d88cc",
 		"rusty" = "#dd5f34",
-		"beige" = "#bbaeaf",
+		"lightred" = "#fd6767",
 		"yellow" = "#f3ca4a",
 		"blue" = "#09bae1",
 		"palegreen" = "#7ef099",
