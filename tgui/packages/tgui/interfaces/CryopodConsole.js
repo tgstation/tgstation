@@ -9,7 +9,7 @@ export const CryopodConsole = (props, context) => {
   const welcomeTitle = `Hello, ${account_name || '[REDACTED]'}!`;
 
   return (
-    <Window resizable title="Cryopod Console" width={400} height={480}>
+    <Window title="Cryopod Console" width={400} height={480}>
       <Window.Content>
         <Stack vertical>
           <Section title={welcomeTitle}>
