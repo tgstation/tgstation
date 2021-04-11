@@ -22,7 +22,7 @@ jobs:
     - name: Copy configuration
       run: cp ./.github/gbp.toml ./gbp-balances/.github/gbp.toml
     - name: GBP action
-      uses: Mothblocks/gbp-action@collate-changes
+      uses: tgstation/gbp-action@master
       with:
         branch: "gbp-balances"
         directory: ./gbp-balances
