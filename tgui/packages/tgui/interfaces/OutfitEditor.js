@@ -5,7 +5,6 @@ import { Window } from '../layouts';
 export const OutfitEditor = (props, context) => {
   const { act, data } = useBackend(context);
   const { outfit, saveable, dummy64 } = data;
-
   return (
     <Window
       width={380}
@@ -50,7 +49,7 @@ export const OutfitEditor = (props, context) => {
                   icon="code"
                   tooltip="Edit this outfit on a VV window"
                   tooltipPosition="bottom-left"
-                  onClick={() => act("vv", {})} />
+                  onClick={() => act("vv")} />
                 <Button
                   color={!saveable && "bad"}
                   icon={saveable ? "save" : "trash-alt"}
@@ -58,7 +57,7 @@ export const OutfitEditor = (props, context) => {
                     ? "Save this outfit to the custom outfit list"
                     : "Remove this outfit from the custom outfit list"}
                   tooltipPosition="bottom-left"
-                  onClick={() => act(saveable ? "save" : "delete", {})} />
+                  onClick={() => act(saveable ? "save" : "delete")} />
               </Stack.Item>
             </Stack>
           }>
@@ -110,7 +109,8 @@ const OutfitSlot = (props, context) => {
         bold
         // todo: intuitive way to clear items
         onClick={e => act(e.ctrlKey ? "ctrlClick" : "click", { slot })} >
-        {<Icon name={icon} rotation={iconRot} />}{name}
+        <Icon name={icon} rotation={iconRot} />
+        {name}
       </Button>
       <Box height="32px">
         {currItem?.sprite && (
