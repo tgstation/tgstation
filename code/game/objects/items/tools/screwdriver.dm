@@ -3,7 +3,7 @@
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "screwdriver_map"
-	inhand_icon_state = "screwdriver"
+	inhand_icon_state = "screwdriver_head"
 	worn_icon_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -26,7 +26,7 @@
 	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
 	item_flags = EYE_STAB
 	sharpness = SHARP_POINTY
-	/// If the item uses random coloring
+	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
 	var/static/list/screwdriver_colors = list(
@@ -56,17 +56,15 @@
 /obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
 	if(isinhands && random_color)
-		var/mutable_appearance/M = mutable_appearance(icon_file, "screwdriver_head")
-		M.appearance_flags = RESET_COLOR
-		. += M
+		switch(icon_file)
+			if('icons/mob/inhands/equipment/tools_lefthand.dmi')
+				. += mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_left, greyscale_colors))
+			if('icons/mob/inhands/equipment/tools_righthand.dmi')
+				. += mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_right, greyscale_colors))
 
 /obj/item/screwdriver/get_belt_overlay()
 	if(random_color)
-		var/mutable_appearance/body = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver")
-		var/mutable_appearance/head = mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_head")
-		body.color = color
-		head.add_overlay(body)
-		return head
+		return mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
 	else
 		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
 

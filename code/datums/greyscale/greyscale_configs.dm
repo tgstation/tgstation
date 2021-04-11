@@ -24,3 +24,15 @@
 /datum/greyscale_config/screwdriver
 	icon_file = 'icons/obj/tools.dmi'
 	json_config = 'code/datums/greyscale/json_configs/screwdriver.json'
+
+/datum/greyscale_config/screwdriver_inhand_left
+	icon_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/screwdriver_inhand.json'
+
+/datum/greyscale_config/screwdriver_inhand_right
+	icon_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/screwdriver_inhand.json'
+
+/datum/greyscale_config/screwdriver_belt
+	icon_file = 'icons/obj/clothing/belt_overlays.dmi'
+	json_config = 'code/datums/greyscale/json_configs/screwdriver_belt.json'
