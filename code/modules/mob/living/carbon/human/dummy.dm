@@ -45,6 +45,25 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 	D.in_use = TRUE
 	return D
 
+/proc/generate_dummy_lookalike(slotkey, mob/target)
+	if(!istype(target))
+		return generate_or_wait_for_human_dummy(slotkey)
+
+	var/mob/living/carbon/human/dummy/copycat = generate_or_wait_for_human_dummy(slotkey)
+
+	//copy prefs (underwear, hair color, etc)
+	var/datum/preferences/prefs = target.client?.prefs
+	if(istype(prefs))
+		prefs.copy_to(copycat, icon_updates = TRUE, roundstart_checks = FALSE)
+
+	//copy dna features (species and name mostly)
+	if(istype(target, /mob/living/carbon))
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.dna.transfer_identity(copycat)
+
+	copycat.updateappearance()
+	return copycat
+
 /proc/unset_busy_human_dummy(slotkey)
 	if(!slotkey)
 		return
