@@ -29,7 +29,7 @@ export const CommandReport = (props, context) => {
                 onSelected={value => act('update_command_name', {
                   updated_name: value,
                 })} />
-              { !!custom_name && (
+              {!!custom_name && (
                 <Input
                   width="100%"
                   mt={1}
@@ -37,7 +37,8 @@ export const CommandReport = (props, context) => {
                   placeholder={command_name}
                   onChange={(e, value) => act("update_command_name", {
                     updated_name: value,
-                  })} />)}
+                  })} />
+              )}
             </Section>
           </Stack.Item>
           <Stack.Item>
