@@ -243,9 +243,11 @@
 			var/destination = params["destination"]
 			var/list/payload = list()
 
-			var/network_name = CONFIG_GET(string/cross_comms_network)
-			if (network_name)
-				payload["network"] = network_name
+			//Pretty sure this is for cross-server comms, don't have it here so don't need it
+
+			//var/network_name = CONFIG_GET(string/cross_comms_network)
+			//if (network_name)
+			//	payload["network"] = network_name
 
 			send2otherserver(station_name(), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
 			minor_announce(message, title = "Outgoing message to allied station")
