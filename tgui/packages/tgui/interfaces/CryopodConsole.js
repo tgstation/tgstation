@@ -86,7 +86,7 @@ const ItemList = (props, context) => {
           <Button
             content="Drop All Items"
             color="red"
-            onClick={() => act('all_items', {})}
+            onClick={() => act('all_items')}
           />
         </>
       )}
