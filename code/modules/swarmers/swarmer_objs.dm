@@ -130,7 +130,7 @@
 	max_integrity = 10
 	density = FALSE
 
-/obj/structure/swarmer/trap/Initialize(mapload)//TODOKYLER: its all fucked fix it
+/obj/structure/swarmer/trap/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
