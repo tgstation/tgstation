@@ -50,10 +50,12 @@ function task-dev-server {
   yarn node "packages/tgui-dev-server/index.esm.js" @Args
 }
 
-## Run a linter through all packages
-function task-lint {
+function task-typecheck {
   yarn run tsc
   Write-Output "tgui: type check passed"
+}
+
+function task-lint {
   yarn run eslint packages --ext ".js,.cjs,.ts,.tsx" @Args
   Write-Output "tgui: eslint check passed"
 }
@@ -101,6 +103,7 @@ if ($Args.Length -gt 0) {
   if ($Args[0] -eq "--lint") {
     $Rest = $Args | Select-Object -Skip 1
     task-install
+    task-typecheck
     task-lint @Rest
     exit 0
   }
@@ -108,6 +111,7 @@ if ($Args.Length -gt 0) {
   if ($Args[0] -eq "--lint-harder") {
     $Rest = $Args | Select-Object -Skip 1
     task-install
+    task-typecheck
     task-lint -c ".eslintrc-harder.yml" @Rest
     exit 0
   }
@@ -115,6 +119,7 @@ if ($Args.Length -gt 0) {
   if ($Args[0] -eq "--fix") {
     $Rest = $Args | Select-Object -Skip 1
     task-install
+    task-typecheck
     task-lint --fix @Rest
     exit 0
   }
@@ -137,6 +142,7 @@ if ($Args.Length -gt 0) {
 ## Make a production webpack build
 if ($Args.Length -eq 0) {
   task-install
+  task-typecheck
   task-webpack --mode=production
   exit 0
 }

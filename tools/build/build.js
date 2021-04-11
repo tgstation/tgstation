@@ -101,9 +101,10 @@ const taskTgui = new Task('tgui')
   .provides('tgui/public/tgui-common.bundle.js')
   .provides('tgui/public/tgui-panel.bundle.css')
   .provides('tgui/public/tgui-panel.bundle.js')
-  .build(async () => {
-    await yarn(['run', 'webpack-cli', '--mode=production']);
-  });
+  .build(() => Promise.all([
+    yarn(['run', 'tsc']).then(() => console.log('tgui: type check passed')),
+    yarn(['run', 'webpack-cli', '--mode=production']),
+  ]));
 
 /**
  * Prepends the defines to the .dme.
@@ -209,10 +210,10 @@ switch (BUILD_MODE) {
     tasksToRun.push(taskPrependDefines('TGS'));
     break;
   case ALL_MAPS_BUILD:
-    tasksToRun.push(taskDm('CBT','CIBUILDING','CITESTING','ALL_MAPS'));
+    tasksToRun.push(taskDm('CBT', 'CIBUILDING', 'CITESTING', 'ALL_MAPS'));
     break;
   case TEST_RUN_BUILD:
-    tasksToRun.push(taskDm('CBT','CIBUILDING'));
+    tasksToRun.push(taskDm('CBT', 'CIBUILDING'));
     break;
   case NO_DM_BUILD:
     break;
