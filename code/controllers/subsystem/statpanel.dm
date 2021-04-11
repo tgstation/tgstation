@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(statpanels)
 		if(!target.holder)
 			target << output("", "statbrowser:remove_admin_tabs")
 		else
-			target << output("[target.prefs.toggles & SPLIT_ADMIN_TABS ? TRUE : FALSE]", "statbrowser:update_split_admin_tabs")
+			target << output("[!!(target.prefs.toggles & SPLIT_ADMIN_TABS)]", "statbrowser:update_split_admin_tabs")
 			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
 				target << output("[url_encode(target.holder.href_token)]", "statbrowser:add_admin_tabs")
 			if(target.stat_tab == "MC")
