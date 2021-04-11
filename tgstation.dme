@@ -1495,6 +1495,8 @@
 #include "code\modules\admin\holder2.dm"
 #include "code\modules\admin\ipintel.dm"
 #include "code\modules\admin\IsBanned.dm"
+#include "code\modules\admin\outfit_editor.dm"
+#include "code\modules\admin\outfit_manager.dm"
 #include "code\modules\admin\outfits.dm"
 #include "code\modules\admin\permissionedit.dm"
 #include "code\modules\admin\player_panel.dm"
