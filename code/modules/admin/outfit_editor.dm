@@ -37,12 +37,7 @@
 
 /datum/outfit_editor/proc/init_dummy()
 	dummy_key = "outfit_editor_[owner]"
-	var/mob/living/carbon/human/dummy/dummy = generate_or_wait_for_human_dummy(dummy_key)
-	var/mob/living/carbon/carbon_target = owner.mob
-	if(istype(carbon_target))
-		carbon_target.dna.transfer_identity(dummy)
-		dummy.updateappearance()
-
+	generate_dummy_lookalike(owner.mob)
 	unset_busy_human_dummy(dummy_key)
 
 /datum/outfit_editor/ui_interact(mob/user, datum/tgui/ui)
