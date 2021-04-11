@@ -5,13 +5,12 @@ import { Window } from '../layouts';
 export const OutfitManager = (props, context) => {
   const { act, data } = useBackend(context);
   const { outfits } = data;
-
   return (
     <Window
+      title="Outfit Manager"
       width={300}
       height={300}>
       <Window.Content>
-
         <Section
           fill
           scrollable
@@ -34,7 +33,7 @@ export const OutfitManager = (props, context) => {
                 tooltipPosition="left"
                 onClick={() => act("new")} />
             </>
-          } >
+          }>
           <Stack vertical>
             {outfits?.map(outfit => (
               <Stack.Item key={outfit.ref}>
@@ -75,7 +74,6 @@ export const OutfitManager = (props, context) => {
             ))}
           </Stack>
         </Section>
-
       </Window.Content>
     </Window>
   );
