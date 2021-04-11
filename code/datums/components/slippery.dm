@@ -36,7 +36,6 @@
 		AddElement(/datum/element/connect_loc, parent, default_connections)
 
 	if(isitem(parent))
-		holder = parent
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else
