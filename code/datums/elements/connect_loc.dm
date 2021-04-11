@@ -54,8 +54,10 @@
 	if (!existing && isturf(tracked.loc))
 		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, TRUE)
 
-/datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
-	LAZYREMOVE(targets[old_loc], tracked)
+/datum/element/connect_loc/proc/unregister_signals(atom/movable/target, atom/old_loc)
+	targets[old_loc] -= target
+	if (length(targets[old_loc]) == 0)
+		targets -= old_loc
 
 	// Yes this is after the above because we use null as a key when objects are in nullspace
 	if(isnull(old_loc))

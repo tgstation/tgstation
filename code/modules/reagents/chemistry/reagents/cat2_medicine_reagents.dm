@@ -8,7 +8,6 @@
 	purity = REAGENT_STANDARD_PURITY
 	inverse_chem_val = 0
 	inverse_chem = null
-	failed_chem = /datum/reagent/impurity/healing/medicine_failure
 	chemical_flags = REAGENT_SPLITRETAINVOL
 
 /******BRUTE******/
@@ -245,7 +244,7 @@
 	color = "#FF6464"
 	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 	ph = 5.6
-	inverse_chem_val = 0.4
+	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/healing/convermol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 

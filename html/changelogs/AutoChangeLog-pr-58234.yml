@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Motorised wheelchairs should now drop all their components when deconstruted or destroyed."
