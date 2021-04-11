@@ -54,8 +54,8 @@
 	if (!existing && isturf(tracked.loc))
 		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, TRUE)
 
-/datum/element/connect_loc/proc/unregister_signals(atom/movable/target, atom/old_loc)
-	targets[old_loc] -= target
+/datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
+	targets[old_loc] -= tracked
 	if (length(targets[old_loc]) == 0)
 		targets -= old_loc
 

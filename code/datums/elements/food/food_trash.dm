@@ -22,7 +22,6 @@
 		RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/open_trash)
 	if(flags & FOOD_TRASH_POPABLE)
 		RegisterSignal(target, COMSIG_FOOD_CROSSED, .proc/food_crossed)
-		//TODOKYLER: wtf is FOOD_CROSSED? can i ignore it
 	RegisterSignal(target, COMSIG_ITEM_ON_GRIND, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_ON_JUICE, .proc/generate_trash)
 	RegisterSignal(target, COMSIG_ITEM_ON_COMPOSTED, .proc/generate_trash)

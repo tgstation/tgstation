@@ -13,13 +13,6 @@
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
 
-/obj/item/onetankbomb/Initialize()
-	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
-	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
-
 /obj/item/onetankbomb/IsSpecialAssembly()
 	return TRUE
 
@@ -85,14 +78,6 @@
 		bombtank.ignite() //if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
 		bombtank.release()
-
-//Assembly / attached device memes
-
-/obj/item/onetankbomb/proc/on_crossed(datum/source, atom/movable/AM as mob|obj) //for mousetraps
-	SIGNAL_HANDLER
-	if(bombassembly)
-		SEND_SIGNAL(bombassembly, COMSIG_MOVABLE_CROSSED, AM)
-		//TODOKYLER: dumb, bombassembly should register to us with the element
 
 /obj/item/onetankbomb/on_found(mob/finder) //for mousetraps
 	if(bombassembly)

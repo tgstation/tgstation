@@ -111,7 +111,7 @@
 		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
 		COMSIG_MOVABLE_UNCROSSED = .proc/on_uncrossed,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections) //TODOKYLER: lots of runtimes here, maybe move to
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/effect/abstract/proximity_checker/proc/on_uncrossed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

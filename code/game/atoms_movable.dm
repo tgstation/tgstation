@@ -550,10 +550,6 @@
 /atom/movable/Uncrossed(atom/movable/AM)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	CRASH("/atom/movable/Uncrossed() was called")
-	/* TODOKYLER: remove
-	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
-	SEND_SIGNAL(AM, COMSIG_MOVABLE_UNCROSSED_OVER, src)
-	*/
 
 /atom/movable/Bump(atom/A)
 	if(!A)
