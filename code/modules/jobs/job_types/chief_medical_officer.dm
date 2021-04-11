@@ -28,13 +28,8 @@
 
 	mail_goodies = list(
 		/obj/effect/spawner/lootdrop/organ_spawner = 10,
-		/obj/effect/spawner/lootdrop/memeorgans = 4,
-		/obj/item/scalpel/alien = 1,
-		/obj/item/hemostat/alien = 1,
-		/obj/item/retractor/alien = 1,
-		/obj/item/circular_saw/alien = 1,
-		/obj/item/surgicaldrill/alien = 1,
-		/obj/item/cautery/alien = 1
+		/obj/effect/spawner/lootdrop/memeorgans = 8,
+		/obj/effect/spawner/lootdrop/space/fancytool/medicalonly = 3
 	)
 	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 

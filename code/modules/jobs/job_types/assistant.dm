@@ -26,7 +26,7 @@ Assistant
 		/obj/item/clothing/mask/gas = 10,
 		/obj/item/clothing/gloves/color/fyellow = 7,
 		/obj/item/choice_beacon/music = 5,
-		/obj/item/clothing/gloves/color/yellow/sprayon = 3,
+		/obj/item/toy/sprayoncan = 3,
 		/obj/item/crowbar/large = 1
 	)
 
