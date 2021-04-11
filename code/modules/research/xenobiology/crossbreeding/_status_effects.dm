@@ -530,6 +530,7 @@
 		if(sheets.len > 0)
 			var/obj/item/stack/sheet/S = pick(sheets)
 			S.amount++
+			S.update_custom_materials()
 			to_chat(owner, "<span class='notice'>[linked_extract] adds a layer of slime to [S], which metamorphosizes into another sheet of material!</span>")
 	return ..()
 

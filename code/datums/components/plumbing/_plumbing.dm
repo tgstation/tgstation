@@ -42,25 +42,28 @@
 	reagents = AM.reagents
 	turn_connects = _turn_connects
 
-	if(custom_receiver)
-		recipient_reagents_holder = custom_receiver
-	else
-		recipient_reagents_holder = AM.reagents
+	set_recipient_reagents_holder(custom_receiver ? custom_receiver : AM.reagents)
 
+	if(start)
+		//We're registering here because I need to check whether we start active or not, and this is just easier
+		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
+		RegisterSignal(parent, list(COMSIG_COMPONENT_ADDED), .proc/enable)
+
+/datum/component/plumbing/RegisterWithParent()
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
 	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
 	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays) //called by lateinit on startup
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), .proc/change_ducting_layer)
 
-	if(start)
-		//timer 0 so it can finish returning initialize, after which we're added to the parent.
-		//Only then can we tell the duct next to us they can connect, because only then is the component really added. this was a fun one
-		addtimer(CALLBACK(src, .proc/enable), 0)
+/datum/component/plumbing/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,COMSIG_OBJ_HIDE, \
+	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, COMSIG_COMPONENT_ADDED))
 
 /datum/component/plumbing/Destroy()
 	ducts = null
 	reagents = null
+	set_recipient_reagents_holder(null) //null is there so it's obvious we're setting this to nothing
 	return ..()
 
 /datum/component/plumbing/process()
@@ -207,8 +210,9 @@
 					duct.update_appearance()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
-/datum/component/plumbing/proc/enable()
-	if(active)
+/datum/component/plumbing/proc/enable(obj/object, datum/component/component)
+	if(active || (component && component != src))
+		UnregisterSignal(parent, list(COMSIG_COMPONENT_ADDED))
 		return
 
 	update_dir()
@@ -307,6 +311,15 @@
 	if(active)
 		disable()
 		enable()
+
+/datum/component/plumbing/proc/set_recipient_reagents_holder(datum/reagents/receiver)
+	if(recipient_reagents_holder)
+		UnregisterSignal(recipient_reagents_holder, list(COMSIG_PARENT_QDELETING)) //stop tracking whoever we were tracking
+	if(receiver)
+		RegisterSignal(receiver, list(COMSIG_PARENT_QDELETING), .proc/set_recipient_reagents_holder) //so on deletion it calls this proc again, but with no value to set
+
+	recipient_reagents_holder = receiver
+
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand

@@ -598,13 +598,13 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bP" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bQ" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
