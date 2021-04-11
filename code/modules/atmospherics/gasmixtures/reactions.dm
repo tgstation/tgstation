@@ -8,12 +8,10 @@ tritfire = -2
 halon_o2removal = -1
 nitrous_decomp = 0
 water_vapor = 1
-nitrium_decomp = 21
 pluox_formation = 2
 nitrium_formation = 3
 bzformation = 4
 freonformation = 5
-stimformation = 6
 nobliumformation = 7
 zauker_decomp = 8
 healium_formation = 9
@@ -21,8 +19,7 @@ proto_nitrate_formation = 10
 zauker_formation = 11
 halon_formation = 12
 proto_nitrate_response = 13 - 18
-fusion = 19
-metallic_hydrogen = 20
+nitrium_decomp = 20
 nobiliumsuppression = INFINITY
 */
 
@@ -420,7 +417,7 @@ nobiliumsuppression = INFINITY
 		return REACTING
 
 /datum/gas_reaction/nitrium_decomposition //The decomposition of nitrium. Exothermic. Requires oxygen as catalyst.
-	priority = 21
+	priority = 20
 	name = "Nitrium Decomposition"
 	id = "nitrium_decomp"
 
