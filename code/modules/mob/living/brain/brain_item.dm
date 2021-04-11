@@ -384,6 +384,7 @@
 	actual_trauma.brain = src
 	if(owner)
 		actual_trauma.owner = owner
+		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
 		actual_trauma.on_gain()
 	if(resilience)
 		actual_trauma.resilience = resilience

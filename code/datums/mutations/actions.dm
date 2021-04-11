@@ -117,7 +117,7 @@
 /obj/effect/proc_holder/spell/aimed/firebreath
 	name = "Fire Breath"
 	desc = "You can breathe fire at a target."
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 600
 	clothes_req = FALSE
 	range = 20
@@ -176,7 +176,7 @@
 /obj/effect/proc_holder/spell/self/void
 	name = "Convoke Void" //magic the gathering joke here
 	desc = "A rare genome that attracts odd forces not usually observed. May sometimes pull you in randomly."
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	clothes_req = FALSE
 	charge_max = 600
 	invocation = "DOOOOOOOOOOOOOOOOOOOOM!!!"
