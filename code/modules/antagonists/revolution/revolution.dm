@@ -231,13 +231,10 @@
 		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you.</span>")
 
 /datum/antagonist/rev/head/farewell()
-	if (announce_victorious())
+	if (announce_victorious() || deconversion_reason == DECONVERTER_STATION_WIN)
 		return
-
 	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
-			if(deconversion_reason == DECONVERTER_STATION_WIN)
-				return //don't show deconversion messages, you're still an antagonist (just a new one)
 			owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
 			to_chat(owner, "<span class ='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
 		else
