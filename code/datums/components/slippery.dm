@@ -111,7 +111,7 @@
 	if(holder.body_position == LYING_DOWN && !holder.buckled)
 		Slip(source, AM)
 
-/datum/component/slippery/UnregisterFromParent() //TODOKYLER: all removes of connect_loc need to specify the arguments that created it!
+/datum/component/slippery/UnregisterFromParent()
 	. = ..()
 	if(holder)
 		RemoveElement(/datum/element/connect_loc, holder, holder_connections)

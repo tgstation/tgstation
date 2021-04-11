@@ -159,7 +159,7 @@
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
 /turf/open/space/Entered(atom/movable/A)
-	..()
+	. = ..()
 	if ((!(A) || src != A.loc))
 		return
 
@@ -184,7 +184,8 @@
 
 		var/atom/movable/pulling = A.pulling //TODOKYLER: this allows A (usually prox_sensors) to move twice without calling the moved signal!
 		var/atom/movable/puller = A
-		A.forceMove(DT)
+		addtimer(CALLBACK(A, /atom/movable.proc/forceMove, DT), 1)
+		//A.forceMove(DT)
 
 		while (pulling != null)
 			var/next_pulling = pulling.pulling

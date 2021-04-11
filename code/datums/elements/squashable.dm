@@ -11,11 +11,6 @@
 	///Special callback to call on squash instead, for things like hauberoach
 	var/datum/callback/on_squash_callback
 
-	///the signals we give to the connect_loc element that listens to target
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/OnCrossed,
-	)
-
 /datum/element/squashable/Attach(mob/living/target, squash_chance, squash_damage, squash_flags, squash_callback)
 	. = ..()
 	if(!istype(target))
@@ -30,11 +25,14 @@
 		on_squash_callback = CALLBACK(target, squash_callback)
 
 
-	AddElement(/datum/element/connect_loc, target, loc_connections)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/re_register_crossed)
+	RegisterSignal(target.loc, COMSIG_MOVABLE_CROSSED, .proc/OnCrossed, TRUE)
+	//override = TRUE because there could be multiple objects with the same squashable element instance in the same loc
 
-/datum/element/squashable/Detach(mob/living/target)
-	. = ..()
-	RemoveElement(/datum/element/connect_loc, target, loc_connections)
+/datum/element/squashable/proc/re_register_crossed(mob/living/target, atom/oldloc, dir, forced)
+	SIGNAL_HANDLER
+	UnregisterSignal(oldloc, COMSIG_MOVABLE_CROSSED)
+	RegisterSignal(target.loc, COMSIG_MOVABLE_CROSSED, .proc/OnCrossed, TRUE)
 
 ///Handles the squashing of the mob
 /datum/element/squashable/proc/OnCrossed(mob/living/target, atom/movable/crossing_movable)
