@@ -18,6 +18,7 @@
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
+	component_volume = 400
 	///Pressure that the pump will reach when on
 	var/target_pressure = ONE_ATMOSPHERE
 	///Frequency for radio signaling

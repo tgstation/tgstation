@@ -14,6 +14,8 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
+	component_volume = 600
+
 /obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
@@ -70,7 +72,7 @@
 		//No need to transfer if target is already full!
 		return
 
-	var/transfer_ratio = transfer_rate / air1.volume
+	var/transfer_ratio = transfer_rate / MAX_TRANSFER_RATE
 
 	//Actually transfer the gas
 

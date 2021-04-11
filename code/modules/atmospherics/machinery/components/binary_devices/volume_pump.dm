@@ -18,6 +18,7 @@
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
+	component_volume = 400
 	///Transfer rate of the component in L/s
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked
@@ -70,7 +71,7 @@
 		return
 
 
-	var/transfer_ratio = transfer_rate / air1.volume
+	var/transfer_ratio = transfer_rate / MAX_TRANSFER_RATE
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 

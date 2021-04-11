@@ -18,6 +18,8 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 
+	component_volume = 600
+
 	var/pump_direction = RELEASING
 
 	var/pressure_checks = EXT_BOUND

@@ -14,6 +14,8 @@
 	///Stores the component gas mixture
 	var/list/datum/gas_mixture/airs
 
+	var/component_volume = 200
+
 /obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
 	airs = new(device_type)
@@ -22,7 +24,7 @@
 
 	for(var/i in 1 to device_type)
 		var/datum/gas_mixture/A = new
-		A.volume = 200
+		A.volume = component_volume
 		airs[i] = A
 
 /obj/machinery/atmospherics/components/Initialize()
