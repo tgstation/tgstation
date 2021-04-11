@@ -1,3 +1,4 @@
+import { classes } from 'common/react';
 import { useBackend } from "../backend";
 import { Icon, Section, Table, Tooltip } from "../components";
 import { Window } from "../layouts";
@@ -32,7 +33,10 @@ export const CrewManifest = (props, context) => {
                     {crewMember.name}
                   </Table.Cell>
                   <Table.Cell
-                    className="CrewManifest__Cell CrewManifest__Icons"
+                    className={classes([
+                      "CrewManifest__Cell",
+                      "CrewManifest__Icons",
+                    ])}
                     collapsing
                   >
                     {positions[dept].exceptions.includes(crewMember.rank) && (
@@ -45,10 +49,10 @@ export const CrewManifest = (props, context) => {
                     )}
                     {crewMember.rank === "Captain" && (
                       <Icon
-                        className={
-                          "CrewManifest__Icon"
-                          + " CrewManifest__Icon--Command"
-                        }
+                        className={classes([
+                          "CrewManifest__Icon",
+                          "CrewManifest__Icon--Command",
+                        ])}
                         name="star"
                       >
                         <Tooltip
@@ -59,10 +63,11 @@ export const CrewManifest = (props, context) => {
                     )}
                     {commandJobs.includes(crewMember.rank) && (
                       <Icon
-                        className={
-                          "CrewManifest__Icon CrewManifest__Icon--Command"
-                          + " CrewManifest__Icon--Chevron"
-                        }
+                        className={classes([
+                          "CrewManifest__Icon",
+                          "CrewManifest__Icon--Command",
+                          "CrewManifest__Icon--Chevron",
+                        ])}
                         name="chevron-up"
                       >
                         <Tooltip
@@ -73,7 +78,10 @@ export const CrewManifest = (props, context) => {
                     )}
                   </Table.Cell>
                   <Table.Cell
-                    className={"CrewManifest__Cell CrewManifest__Cell--Rank"}
+                    className={classes([
+                      "CrewManifest__Cell",
+                      "CrewManifest__Cell--Rank",
+                    ])}
                     collapsing
                   >
                     {crewMember.rank}
