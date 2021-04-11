@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - refactor: "TGUI Create-Command-Report window"
+  - admin: "Admins can now set an announcement sound to accompany their command reports."
+  - bugfix: "The 'anime' announcement line now functions properly again. This is not related to the above changelog line whatsoever."

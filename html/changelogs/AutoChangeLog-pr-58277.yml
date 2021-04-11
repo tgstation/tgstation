@@ -1,0 +1,4 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - bugfix: "Material stacks now properly update their material amounts when a stabilized metal extract adds a sheet to them."

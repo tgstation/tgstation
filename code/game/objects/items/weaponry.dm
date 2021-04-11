@@ -732,13 +732,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
-			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
-			to_chat(user, "<span class='warning'>You easily splat the [target].</span>")
-			if(istype(target, /mob/living/))
-				var/mob/living/bug = target
-				bug.death(1)
-			else
-				qdel(target)
+			if(!HAS_TRAIT(user, TRAIT_PACIFISM))
+				new /obj/effect/decal/cleanable/insectguts(target.drop_location())
+				to_chat(user, "<span class='warning'>You easily splat [target].</span>")
+				if(isliving(target))
+					var/mob/living/bug = target
+					bug.gib()
+				else
+					qdel(target)
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))

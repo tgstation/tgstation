@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Blind crewmembers can now use stethoscopes to diagnose faulty hearts/breathing! Deaf crewmembers, on the other hand, are no longer able to."

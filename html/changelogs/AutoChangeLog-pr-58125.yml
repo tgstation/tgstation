@@ -1,0 +1,5 @@
+author: "Trigg"
+delete-after: True
+changes: 
+  - admin: "Admins just got a new TGUI Outfit Manager to mess around and make events with!"
+  - admin: "Custom Outfits are now persistent and saved server-side, but can still be locally saved and loaded."
