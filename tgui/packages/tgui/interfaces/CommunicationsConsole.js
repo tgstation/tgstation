@@ -268,7 +268,6 @@ const PageMain = (props, context) => {
     canBuyShuttles,
     canMakeAnnouncement,
     canMessageAssociates,
-    canRecallShuttles,
     canRequestNuke,
     canSendToSectors,
     canSetAlertLevel,
@@ -307,14 +306,8 @@ const PageMain = (props, context) => {
               icon="space-shuttle"
               content="Recall Emergency Shuttle"
               color="bad"
-              disabled={!canRecallShuttles || !shuttleRecallable}
-              tooltip={(
-                canRecallShuttles && (
-                  !shuttleRecallable && "It's too late for the emergency shuttle to be recalled."
-                ) || (
-                  "You do not have permission to recall the emergency shuttle."
-                )
-              )}
+              disabled={!shuttleRecallable}
+              tooltip={!shuttleRecallable && "It's too late for the emergency shuttle to be recalled."}
               tooltipPosition="bottom-right"
               onClick={() => act("recallShuttle")}
             />
@@ -516,30 +509,26 @@ const PageMain = (props, context) => {
         && sectors.length > 0
         && (
           <Section title="Allied Sectors">
-            <Flex
-              direction="column">
+            <Flex>
               {
                 sectors.map(sectorName => (
-                  <Flex.Item key={sectorName}>
-                    <Button
-                      content={
-                        `Send a message to station in ${sectorName} sector`
-                      }
-                      disabled={!importantActionReady}
-                      onClick={() => setMessagingSector(sectorName)}
-                    />
-                  </Flex.Item>
+                  <Button
+                    content={
+                      `Send a message to station in ${sectorName} sector`
+                    }
+                    disabled={!importantActionReady}
+                    key={sectorName}
+                    onClick={() => setMessagingSector(sectorName)}
+                  />
                 ))
               }
 
               {sectors.length > 2 && (
-                <Flex.Item>
-                  <Button
-                    content="Send a message to all allied stations"
-                    disabled={!importantActionReady}
-                    onClick={() => setMessagingSector("all")}
-                  />
-                </Flex.Item>
+                <Button
+                  content="Send a message to all allied stations"
+                  disabled={!importantActionReady}
+                  onClick={() => setMessagingSector("all")}
+                />
               )}
             </Flex>
           </Section>
