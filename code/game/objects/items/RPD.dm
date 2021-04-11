@@ -267,13 +267,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
 	if(!istype(target, /obj/machinery/atmospherics))
 		return ..()
-
 	if(target.pipe_color)
 		paint_color = GLOB.pipe_color_name[target.pipe_color]
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 	return ..()
-
 
 /obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rpd_upgrade))
