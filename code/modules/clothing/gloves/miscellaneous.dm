@@ -116,7 +116,6 @@
 	icon_state = "atmosplasma"
 	inhand_icon_state = "atmosplasma"
 
-
 /obj/item/clothing/gloves/color/plasmaman/explorer
 	name = "explorer envirogloves"
 	icon_state = "explorerplasma"
