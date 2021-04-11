@@ -31,6 +31,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	light_power = 0.6
 	light_color = "#FFCC66"
 	light_on = FALSE
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
 
 	//Main variables
 	var/owner = null // String name of owner
@@ -797,7 +798,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
 		else
 			playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-		audible_message("[icon2html(src, hearers(src))] *[ttone]*", null, 3)
+		audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *[ttone]*</span>", null, 3)
 	//Search for holder of the PDA.
 	var/mob/living/L = null
 	if(loc && isliving(loc))

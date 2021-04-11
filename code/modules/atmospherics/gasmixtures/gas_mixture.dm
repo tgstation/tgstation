@@ -5,15 +5,16 @@ This prevents race conditions that arise based on the order of tile processing.
 */
 #define MINIMUM_HEAT_CAPACITY 0.0003
 #define MINIMUM_MOLE_COUNT 0.01
-#define MOLAR_ACCURACY  1E-7
+#define MOLAR_ACCURACY  1E-4
 /**
  *I feel the need to document what happens here. Basically this is used
- *catch most rounding errors, however its previous value made it so that
- *once gases got hot enough, most procedures wouldn't occur due to the fact that the mole
- *counts would get rounded away. Thus, we lowered it a few orders of magnitude
- *Edit: As far as I know this might have a bug caused by round(). When it has a second arg it will round up.
- *So for instance round(0.5, 1) == 1. Trouble is I haven't found any instances of it causing a bug,
- *and any attempts to fix it just killed atmos. I leave this to a greater man then I
+ *catch rounding errors, and make gas go away in small portions.
+ *People have raised it to higher levels in the past, do not do this. Consider this number a soft limit
+ *If you're making gasmixtures that have unexpected behavior related to this value, you're doing something wrong.
+ *
+ *On an unrelated note this may cause a bug that creates negative gas, related to round(). When it has a second arg it will round up.
+ *So for instance round(0.5, 1) == 1. I've hardcoded a fix for this into share, by forcing the garbage collect.
+ *Any other attempts to fix it just killed atmos. I leave this to a greater man then I
  */
 #define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
@@ -105,7 +106,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/total_moles()
 	var/cached_gases = gases
 	TOTAL_MOLES(cached_gases, .)
-
+	
 /// Checks to see if gas amount exists in mixture.
 /// Do NOT use this in code where performance matters!
 /// It's better to batch calls to garbage_collect(), especially in places where you're checking many gastypes
@@ -177,13 +178,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	amount = min(amount, sum) //Can not take more air than tile has!
 	if(amount <= 0)
 		return null
+	var/ratio = amount / sum
 	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
-		removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
+		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
 
@@ -511,7 +513,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 **/
 
 /// Pumps gas from src to output_air. Amount depends on target_pressure
-/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure)
+/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure, specific_gas = null)
 	var/output_starting_pressure = output_air.return_pressure()
 
 	if((target_pressure - output_starting_pressure) < 0.01)
@@ -524,6 +526,10 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
+		if(specific_gas)
+			var/datum/gas_mixture/removed = remove_specific(specific_gas, transfer_moles)
+			output_air.merge(removed)
+			return TRUE
 		var/datum/gas_mixture/removed = remove(transfer_moles)
 		output_air.merge(removed)
 		return TRUE

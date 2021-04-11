@@ -30,6 +30,10 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	COOLDOWN_DECLARE(movement_cooldown)
 	///Delay between movements. This is on the controller so we can keep the movement datum singleton
 	var/movement_delay = 0.1 SECONDS
+	///A list for the path we're currently following, if we're using JPS pathing
+	var/list/movement_path
+	///Cooldown for JPS movement, how often we're allowed to try making a new path
+	COOLDOWN_DECLARE(repath_cooldown)
 
 /datum/ai_controller/New(atom/new_pawn)
 	ai_movement = SSai_movement.movement_types[ai_movement]
@@ -105,21 +109,26 @@ have ways of interacting with a specific atom and control it. They posses a blac
 		if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
 			continue
 
+		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
+		// Then pick the max of this and the delta_time passed to ai_controller.process()
+		// Action cooldowns cannot happen faster than delta_time, so delta_time should be the value used in this scenario.
+		var/action_delta_time = max(current_behavior.action_cooldown * 0.1, delta_time)
+
 		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT && current_movement_target) //Might need to move closer
 			if(current_behavior.required_distance >= get_dist(pawn, current_movement_target)) ///Are we close enough to engage?
 				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.else
 					ai_movement.stop_moving_towards(src)
-				current_behavior.perform(delta_time, src)
+				current_behavior.perform(action_delta_time, src)
 				return
 
 			else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
 				ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
 
 			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
-				current_behavior.perform(delta_time, src)
+				current_behavior.perform(action_delta_time, src)
 				return
 		else //No movement required
-			current_behavior.perform(delta_time, src)
+			current_behavior.perform(action_delta_time, src)
 			return
 
 
@@ -160,3 +169,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
+
+/// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant
+/datum/ai_controller/proc/get_access()
+	return

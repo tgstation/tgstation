@@ -42,6 +42,10 @@
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
 #define NANITE_COMPILER  (1<<7) //Prints nanite disks
+/// Protolathes for offstation roles. More limited tech tree.
+#define AWAY_LATHE (1<<8)
+/// Imprinters for offstation roles. More limited tech tree.
+#define AWAY_IMPRINTER (1<<9)
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
@@ -146,3 +150,43 @@
 #define MASSDRIVER_CHAPEL "chapelgun"
 #define MASSDRIVER_DISPOSALS "trash"
 #define MASSDRIVER_SHACK "shack"
+
+//orion game states
+#define ORION_STATUS_START 0
+#define ORION_STATUS_INSTRUCTIONS 1
+#define ORION_STATUS_NORMAL 2
+#define ORION_STATUS_GAMEOVER 3
+#define ORION_STATUS_MARKET 4
+
+//orion delays (how many turns an action costs)
+#define ORION_SHORT_DELAY 2
+#define ORION_LONG_DELAY 6
+
+//starting orion crew count
+#define ORION_STARTING_CREW_COUNT 4
+
+//orion food to fuel / fuel to food conversion rate
+#define ORION_TRADE_RATE 5
+
+//and whether you want fuel or food
+#define ORION_I_WANT_FUEL 1
+#define ORION_I_WANT_FOOD 2
+
+//orion price of buying pioneer
+#define ORION_BUY_CREW_PRICE 10
+
+//...and selling one (its less because having less pioneers is actually not that bad)
+#define ORION_SELL_CREW_PRICE 7
+
+//defining the magic numbers sent by tgui
+#define ORION_BUY_ENGINE_PARTS 1
+#define ORION_BUY_ELECTRONICS 2
+#define ORION_BUY_HULL_PARTS 3
+
+//orion gaming record (basically how worried it is that you're a deranged gunk gamer)
+//game gives up on trying to help you
+#define ORION_GAMER_GIVE_UP -2
+//game spawns a pamphlet, post report
+#define ORION_GAMER_PAMPHLET -1
+//game begins to have a chance to warn sec and med
+#define ORION_GAMER_REPORT_THRESHOLD 2

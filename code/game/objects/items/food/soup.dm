@@ -149,13 +149,13 @@
 	tastes = list("tomato" = 1, "squirming" = 1)
 	foodtypes = MEAT | GROSS
 
-/obj/item/food/soup/milo
-	name = "milosoup"
+/obj/item/food/soup/miso
+	name = "misosoup"
 	desc = "The universes best soup! Yum!!!"
-	icon_state = "milosoup"
+	icon_state = "misosoup"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("milo" = 1) // wtf is milo //i don't know either but hey i guess japanese tourists will order it
-	foodtypes = VEGETABLES
+	tastes = list("miso" = 1)
+	foodtypes = VEGETABLES | BREAKFAST
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/mushroom
@@ -206,6 +206,7 @@
 	max_volume = 100
 	tastes = list("tomato" = 1, "carrot" = 1)
 	foodtypes = VEGETABLES
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/sweetpotato
 	name = "sweet potato soup"
@@ -269,3 +270,12 @@
 	food_reagents = list (/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/oculine = 2)
 	tastes = list("creamy peas"= 2, "parsnip" = 1)
 	foodtypes = VEGETABLES
+
+/obj/item/food/soup/indian_curry
+	name = "indian chicken curry"
+	desc = "A mild, creamy curry from the old subcontinent. Liked by the Space-British, because it reminds them of the Raj."
+	icon_state = "indian_curry"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("chicken" = 2, "creamy curry" = 4, "earthy heat" = 1)
+	foodtypes = VEGETABLES | MEAT | DAIRY
+	venue_value = FOOD_PRICE_NORMAL

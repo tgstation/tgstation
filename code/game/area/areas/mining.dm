@@ -16,7 +16,7 @@
 	outdoors = TRUE
 	flags_1 = NONE
 	ambience_index = AMBIENCE_MINING
-	area_flags = VALID_TERRITORY | UNIQUE_AREA | NO_ALERTS
+	area_flags = VALID_TERRITORY | UNIQUE_AREA | NO_ALERTS | CULT_PERMITTED
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	min_ambience_cooldown = 70 SECONDS
 	max_ambience_cooldown = 220 SECONDS

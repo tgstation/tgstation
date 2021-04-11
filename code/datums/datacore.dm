@@ -152,7 +152,7 @@
 	)
 	var/list/departments = list(
 		"Command" = GLOB.command_positions,
-		"Security" = GLOB.security_positions,
+		"Security" = GLOB.security_positions + GLOB.security_sub_positions,
 		"Engineering" = GLOB.engineering_positions,
 		"Medical" = GLOB.medical_positions,
 		"Science" = GLOB.science_positions,
@@ -169,12 +169,18 @@
 			if(rank in jobs)
 				if(!manifest_out[department])
 					manifest_out[department] = list()
-				manifest_out[department] += list(list(
-					"name" = name,
-					"rank" = rank
-				))
+				// Append to beginning of list if captain or department head
+				if (rank == "Captain" || (department != "Command" && (rank in GLOB.command_positions)))
+					manifest_out[department] = list(list(
+						"name" = name,
+						"rank" = rank
+					)) + manifest_out[department]
+				else
+					manifest_out[department] += list(list(
+						"name" = name,
+						"rank" = rank
+					))
 				has_department = TRUE
-				break
 		if(!has_department)
 			if(!manifest_out["Misc"])
 				manifest_out["Misc"] = list()

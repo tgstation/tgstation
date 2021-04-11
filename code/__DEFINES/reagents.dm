@@ -13,6 +13,8 @@
 #define AMOUNT_VISIBLE (1<<6) // For non-transparent containers that still have the general amount of reagents in them visible.
 #define NO_REACT (1<<7) // Applied to a reagent holder, the contents will not react with each other.
 #define REAGENT_HOLDER_INSTANT_REACT (1<<8)  // Applied to a reagent holder, all of the reactions in the reagents datum will be instant. Meant to be used for things like smoke effects where reactions aren't meant to occur
+///If the holder is "alive" (i.e. mobs and organs) - If this flag is applied to a holder it will cause reagents to split upon addition to the object
+#define REAGENT_HOLDER_ALIVE (1<<9)
 
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER (REFILLABLE | DRAINABLE | TRANSPARENT)
@@ -45,6 +47,9 @@
 
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
 
+/// the default temperature at which chemicals are added to reagent holders at
+#define DEFAULT_REAGENT_TEMPERATURE 300
+
 //Used in holder.dm/equlibrium.dm to set values and volume limits
 ///stops floating point errors causing issues with checking reagent amounts
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001
@@ -54,9 +59,11 @@
 #define CHEMICAL_VOLUME_ROUNDING 0.01
 ///Default pH for reagents datum
 #define CHEMICAL_NORMAL_PH 7.000
+///The maximum temperature a reagent holder can attain
+#define CHEMICAL_MAXIMUM_TEMPERATURE 99999
 
 ///The default purity of all non reacted reagents
-#define REAGENT_STANDARD_PUIRTY 0.75
+#define REAGENT_STANDARD_PURITY 0.75
 
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
@@ -69,8 +76,10 @@
 #define REAGENT_SNEAKYNAME (1<<3)
 ///Retains initial volume of chem when splitting for purity effects
 #define REAGENT_SPLITRETAINVOL (1<<4)
-//Lets a given reagent be synthesized important for random reagents and things like the odysseus syringe gun(Replaces the old can_synth variable)
+///Lets a given reagent be synthesized important for random reagents and things like the odysseus syringe gun(Replaces the old can_synth variable)
 #define REAGENT_CAN_BE_SYNTHESIZED (1<<5)
+///Allows a reagent to work on a mob regardless of stasis
+#define REAGENT_IGNORE_STASIS (1<<6)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
@@ -97,6 +106,8 @@
 
 ///Minimum requirement for addiction buzz to be met
 #define MIN_ADDICTION_REAGENT_AMOUNT 2
+///Nicotine requires much less in your system to be happy
+#define MIN_NICOTINE_ADDICTION_REAGENT_AMOUNT 0.1
 #define MAX_ADDICTION_POINTS 1000
 
 ///Addiction start/ends

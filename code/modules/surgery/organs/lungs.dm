@@ -21,7 +21,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
 	//Breath damage
-	//These numbers are roughly equivilant to molar count at room temperature, they scale up and down with temp tho
+	//These thresholds are checked against what amounts to total_mix_pressure * (gas_type_mols/total_mols)
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_oxygen_max = 0

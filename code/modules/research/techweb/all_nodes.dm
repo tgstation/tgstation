@@ -9,7 +9,7 @@
 	description = "NT default research technologies."
 	// Default research tech, prevents bricking
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "basic_electrolite", "c-reader", "desttagger", "salestagger", "handlabel", "packagewrap",
-					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab", "restaurant_portal",
+					"destructive_analyzer", "circuit_imprinter", "circuit_imprinter_offstation", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab", "restaurant_portal",
 					"paystand", "space_heater", "bucket", "sec_rshot", "sec_beanbag_slug", "sec_Islug", "sec_dart", "sec_38", "rglass", "plasteel", "experi_scanner", "destructive_scanner", "doppler_array",
 					"plastitanium", "plasmaglass", "plasmareinforcedglass", "titaniumglass", "plastitaniumglass", "plastic_knife", "plastic_fork", "plastic_spoon", "conveyor_belt", "conveyor_switch")
 
@@ -48,7 +48,7 @@
 	starting_node = TRUE
 	display_name = "Basic Tools"
 	description = "Basic mechanical, electronic, surgical and botanical tools."
-	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "decal_painter",
+	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "cable_coil", "welding_tool", "welding_helmet", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "decal_painter",
 					"cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "secateurs", "mop", "pushbroom", "plunger", "spraycan", "swab", "petri_dish", "normtrash")
 
 /datum/techweb_node/basic_medical
@@ -81,6 +81,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	required_experiments = list(/datum/experiment/scanning/points/slime/easy)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000) //Big discount to reinforce doing it.
+
+/datum/techweb_node/xenoorgan_biotech
+	id = "xenoorgan_bio"
+	display_name = "Xeno-organ Biology"
+	description = "Plasmaman, Ethereals, Lizardpeople... What makes our non-human crewmembers tick?"
+	prereq_ids = list("adv_biotech")
+	design_ids = list("limbdesign_felinid", "limbdesign_lizard", "limbdesign_plasmaman", "limbdesign_ethereal")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6500)
+	discount_experiments = list(/datum/experiment/scanning/random/cytology/easy = 1000, /datum/experiment/scanning/points/slime/expert = 5000)
 
 /datum/techweb_node/bio_process
 	id = "bio_process"
@@ -210,6 +219,7 @@
 	prereq_ids = list("bluespace_travel", "practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "bluespacebodybag", "triphasic_scanning", "quantum_keycard", "wormholeprojector", "swapper", "bluespace_electrolite")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	discount_experiments = list(/datum/experiment/exploration_scan/random/condition)
 
 /datum/techweb_node/advanced_bluespace
 	id = "bluespace_storage"
@@ -286,6 +296,14 @@
 	design_ids = list("mmi_posi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/exodrone_tech
+	id = "exodrone"
+	display_name = "Exploration Drone Research"
+	description = "Technology for exploring far away locations."
+	prereq_ids = list("robotics")
+	design_ids = list("exodrone_console","exoscanner_console","exoscanner","exodrone_launcher")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 /datum/techweb_node/neural_programming
 	id = "neural_programming"
 	display_name = "Neural Programming"
@@ -334,7 +352,7 @@
 	display_name = "Electromagnetic Theory"
 	description = "Study into usage of frequencies in the electromagnetic spectrum."
 	prereq_ids = list("base")
-	design_ids = list("holosign", "holosignsec", "holosignengi", "holosignatmos", "inducer", "tray_goggles", "holopad", "vendatray")
+	design_ids = list("holosign", "holosignsec", "holosignengi", "holosignatmos", "holosignrestaurant", "holosignbar", "inducer", "tray_goggles", "holopad", "vendatray")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/emp_adv

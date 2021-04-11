@@ -93,7 +93,7 @@
 	..();\
 	if(!(flags_1 & INITIALIZED_1)) {\
 		args[1] = TRUE;\
-		SSatoms.InitAtom(src, args);\
+		SSatoms.InitAtom(src, FALSE, args);\
 	}\
 }
 
@@ -110,6 +110,7 @@
 #define INIT_ORDER_INPUT 85
 #define INIT_ORDER_SOUNDS 83
 #define INIT_ORDER_INSTRUMENTS 82
+#define INIT_ORDER_GREYSCALE 81
 #define INIT_ORDER_VIS 80
 #define INIT_ORDER_ACHIEVEMENTS 77
 #define INIT_ORDER_RESEARCH 75
@@ -242,11 +243,14 @@
 #define SSAIR_ATMOSMACHINERY 2
 #define SSAIR_ACTIVETURFS 3
 #define SSAIR_HOTSPOTS 4
-#define SSAIR_EXCITEDCLEANUP 5
-#define SSAIR_EXCITEDGROUPS 6
-#define SSAIR_HIGHPRESSURE 7
-#define SSAIR_SUPERCONDUCTIVITY 8
-#define SSAIR_PROCESS_ATOMS 9
+#define SSAIR_EXCITEDGROUPS 5
+#define SSAIR_HIGHPRESSURE 6
+#define SSAIR_SUPERCONDUCTIVITY 7
+#define SSAIR_PROCESS_ATOMS 8
+
+//Pipeline rebuild helper defines, these suck but it'll do for now
+#define SSAIR_REBUILD_PIPELINE 1
+#define SSAIR_REBUILD_QUEUE 2
 
 // Explosion Subsystem subtasks
 #define SSEXPLOSIONS_MOVABLES 1

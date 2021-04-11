@@ -17,8 +17,8 @@
 	var/icon_wielded = FALSE /// The icon that will be used when wielded
 	var/obj/item/offhand/offhand_item = null /// Reference to the offhand created for the item
 	var/sharpened_increase = 0 /// The amount of increase recived from sharpening the item
-
 /**
+
  * Two Handed component
  *
  * vars:
@@ -103,8 +103,8 @@
 /datum/component/two_handed/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(require_twohands)
-		unwield(user, show_message=TRUE)
+	if(require_twohands) //Don't let the item fall to the ground and cause bugs if it's actually being equipped on another slot.
+		unwield(user, FALSE, FALSE)
 	if(wielded)
 		unwield(user)
 	if(source == offhand_item && !QDELETED(source))
@@ -152,6 +152,7 @@
 	if(SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, user) & COMPONENT_TWOHANDED_BLOCK_WIELD)
 		return // blocked wield from item
 	wielded = TRUE
+	ADD_TRAIT(parent,TRAIT_WIELDED,src)
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
 
 	// update item stats and name
@@ -188,8 +189,9 @@
  * vars:
  * * user The mob/living/carbon that is unwielding the item
  * * show_message (option) show a message to chat on unwield
+ * * can_drop (option) whether 'dropItemToGround' can be called or not.
  */
-/datum/component/two_handed/proc/unwield(mob/living/carbon/user, show_message=TRUE)
+/datum/component/two_handed/proc/unwield(mob/living/carbon/user, show_message=TRUE, can_drop = TRUE)
 	if(!wielded)
 		return
 
@@ -197,6 +199,7 @@
 	wielded = FALSE
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
+	REMOVE_TRAIT(parent,TRAIT_WIELDED,src)
 
 	// update item stats
 	var/obj/item/parent_item = parent
@@ -224,7 +227,7 @@
 			user.update_inv_hands()
 
 		// if the item requires two handed drop the item on unwield
-		if(require_twohands)
+		if(require_twohands && can_drop)
 			user.dropItemToGround(parent, force=TRUE)
 
 		// Show message if requested

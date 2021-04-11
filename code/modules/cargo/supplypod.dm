@@ -64,6 +64,9 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 
+/obj/structure/closet/supplypod/bluespacepod/syndicate
+	style = STYLE_SYNDICATE
+
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
 	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
@@ -188,7 +191,7 @@
 		..()
 
 /obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
-	return
+	return FALSE
 
 /obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return

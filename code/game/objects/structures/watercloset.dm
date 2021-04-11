@@ -84,6 +84,8 @@
 
 /obj/structure/toilet/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
+		for(var/obj/toilet_item in contents)
+			toilet_item.forceMove(drop_location())
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 		else
@@ -127,8 +129,7 @@
 		var/obj/item/reagent_containers/RG = I
 		RG.reagents.add_reagent(/datum/reagent/water, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		to_chat(user, "<span class='notice'>You fill [RG] from [src]. Gross.</span>")
-	else
-		return ..()
+	. = ..()
 
 /obj/structure/toilet/secret
 	var/obj/item/secret

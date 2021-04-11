@@ -15,12 +15,13 @@
 	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	attack_verb = "slash"
+	attack_effect = ATTACK_EFFECT_CLAW
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = GRAIN | DAIRY
+	disliked_food = GRAIN | DAIRY | CLOTH
 	liked_food = GROSS | MEAT
 	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
@@ -100,6 +101,12 @@
 		// organ.Insert will qdel any existing organs in the same slot, so
 		// we don't need to manage that.
 		new_tail.Insert(C, TRUE, FALSE)
+
+/datum/species/lizard/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
+	var/tail = pick(GLOB.tails_list_lizard)
+	human_mob.dna.features["tail_lizard"] = tail
+	mutant_bodyparts["tail_lizard"] = tail
+	human_mob.update_body()
 
 /*
 Lizard subspecies: ASHWALKERS
