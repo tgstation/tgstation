@@ -1,7 +1,7 @@
 /datum/station_trait/carp_infestation
 	name = "Carp infestation"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 0
+	weight = 5
 	show_in_report = TRUE
 	report_message = "Dangerous fauna is present in the area of this station."
 	trait_to_give = STATION_TRAIT_CARP_INFESTATION
@@ -9,7 +9,7 @@
 /datum/station_trait/distant_supply_lines
 	name = "Distant supply lines"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 0
+	weight = 3
 	show_in_report = TRUE
 	report_message = "Due to the distance to our normal supply lines, cargo orders are more expensive."
 	blacklist = list(/datum/station_trait/strong_supply_lines)
@@ -20,7 +20,7 @@
 /datum/station_trait/late_arrivals
 	name = "Late Arrivals"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 0
+	weight = 2
 	show_in_report = TRUE
 	report_message = "Sorry for that, we didn't expect to fly into that vomiting goose while bringing you to your new station."
 	trait_to_give = STATION_TRAIT_LATE_ARRIVALS
@@ -29,7 +29,7 @@
 /datum/station_trait/random_spawns
 	name = "Drive-by landing"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 0
+	weight = 2
 	show_in_report = TRUE
 	report_message = "Sorry for that, we missed your station by a few miles, so we just launched you towards your station in pods. Hope you don't mind!"
 	trait_to_give = STATION_TRAIT_RANDOM_ARRIVALS
@@ -38,7 +38,7 @@
 /datum/station_trait/hangover
 	name = "Hangover"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 10
+	weight = 99999
 	show_in_report = TRUE
 	report_message = "Ohh....Man....That mandatory office party from last shift...God that was awesome..I woke up in some random toilet 3 sectors away..."
 	trait_to_give = STATION_TRAIT_HANGOVER
@@ -61,7 +61,7 @@
 /datum/station_trait/blackout
 	name = "Blackout"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 0
+	weight = 3
 	show_in_report = TRUE
 	report_message = "Station lights seem to be damaged, be safe when starting your shift today."
 
@@ -75,7 +75,7 @@
 /datum/station_trait/empty_maint
 	name = "Cleaned out maintenance"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 0
+	weight = 5
 	show_in_report = TRUE
 	report_message = "Our workers cleaned out most of the junk in the maintenace areas."
 	blacklist = list(/datum/station_trait/filled_maint)
@@ -85,7 +85,7 @@
 /datum/station_trait/overflow_job_bureaucracy
 	name = "Overflow bureaucracy mistake"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 0
+	weight = 5
 	show_in_report = TRUE
 	var/list/jobs_to_use = list("Clown", "Bartender", "Cook", "Botanist", "Cargo Technician", "Mime", "Janitor", "Prisoner")
 	var/chosen_job
@@ -105,7 +105,7 @@
 /datum/station_trait/slow_shuttle
 	name = "Slow Shuttle"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 0
+	weight = 5
 	show_in_report = TRUE
 	report_message = "Due to distance to our supply station, the cargo shuttle will have a slower flight time to your cargo department."
 	blacklist = list(/datum/station_trait/quick_shuttle)
@@ -117,7 +117,7 @@
 /datum/station_trait/bot_languages
 	name = "Bot Language Matrix Malfunction"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 0
+	weight = 3
 	show_in_report = TRUE
 	report_message = "Your station's friendly bots have had their language matrix fried due to an event, resulting in some strange and unfamiliar speech patterns."
 
