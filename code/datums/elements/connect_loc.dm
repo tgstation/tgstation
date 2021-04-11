@@ -24,7 +24,7 @@
 
 	src.connections = connections
 
-	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved, TRUE)
 	update_signals(listener, tracked)
 
 /datum/element/connect_loc/Detach(datum/listener, atom/movable/tracked, list/connections)
@@ -49,10 +49,10 @@
 		return
 
 	for (var/signal in connections)
-		listener.RegisterSignal(tracked.loc, signal, connections[signal])
+		listener.RegisterSignal(tracked.loc, signal, connections[signal], TRUE)
 
 	if (!existing && isturf(tracked.loc))
-		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change)
+		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, TRUE)
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
 	targets[old_loc] -= tracked
