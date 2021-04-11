@@ -33,7 +33,7 @@
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
 	set waitfor = FALSE
-	if(!AM || istype(AM, /obj/docking_port))
+	if(!AM || istype(AM, /obj/docking_port))// || istype(AM, /obj/effect/abstract)
 		return
 	if(AM.loc != src) // Multi-tile objects are "in" multiple locs but its loc is it's true placement.
 		return // Don't move multi tile objects if their origin isn't in transit
@@ -69,7 +69,7 @@
 			_y = min
 
 	var/turf/T = locate(_x, _y, _z)
-	AM.forceMove(T)
+	addtimer(CALLBACK(AM, /atom/movable.proc/forceMove, T), 1)
 
 
 /turf/open/space/transit/CanBuildHere()
@@ -80,7 +80,7 @@
 	. = ..()
 	update_appearance()
 	for(var/atom/movable/AM in src)
-		add_timer(CALLBACK(src, .proc/throw_atom, AM), 1)
+		throw_atom(AM)
 
 /turf/open/space/transit/update_icon()
 	. = ..()

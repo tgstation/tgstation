@@ -19,11 +19,6 @@
 	///Miscelanous caltrop flags; shoe bypassing, walking interaction, silence
 	var/flags
 
-	///we set the connect_loc element to listen to this signal from target
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
-	)
-
 /datum/element/caltrop/Attach(datum/target, min_damage = 0, max_damage = 0, probability = 100, flags = NONE)
 	. = ..()
 	if(!isatom(target))
@@ -34,11 +29,18 @@
 	src.probability = probability
 	src.flags = flags
 
-	AddElement(/datum/element/connect_loc, target, loc_connections)
+	if(ismovable(target))
+		var/atom/movable/movable_target = target
+		RegisterSignal(movable_target, COMSIG_MOVABLE_MOVED, .proc/re_register_crossed)
+		RegisterSignal(movable_target.loc, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
+		//override = TRUE because there could be multiple objects with the same caltrop element instance registering to the same loc
+	else
+		RegisterSignal(get_turf(target), COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
 
-/datum/element/caltrop/Detach(datum/source, force)
-	. = ..()
-	RemoveElement(/datum/element/connect_loc, source, loc_connections)
+/datum/element/caltrop/proc/re_register_crossed(atom/movable/target, atom/oldloc, dir, forced)
+	SIGNAL_HANDLER
+	UnregisterSignal(oldloc, COMSIG_MOVABLE_CROSSED)
+	RegisterSignal(target.loc, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
 
 /datum/element/caltrop/proc/on_crossed(atom/caltrop, atom/movable/AM)
 	SIGNAL_HANDLER
