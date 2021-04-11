@@ -1,0 +1,4 @@
+author: "Celotajs"
+delete-after: True
+changes: 
+  - bugfix: "Prevented departments from having negative or undefined open positions in the crew manifest"
