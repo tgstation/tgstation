@@ -112,21 +112,21 @@
 	speak = list()
 
 /mob/living/simple_animal/chicken/rabbit/normal/chungus
-	icon_state = "b_rabbit"
-	icon_living = "b_rabbit"
-	icon_dead = "b_rabbit_dead"
-	icon_prefix = "b_rabbit"
+	icon_state = "b_rabbit_white"
+	icon_living = "b_rabbit_white"
+	icon_dead = "b_rabbit_white_dead"
 	minbodytemp = 0
 	eggsleft = 0
 	egg_type = null
 	name = "Big Chungus"
+	gender = FEMALE
 	speak_emote = list("sniffles","twitches")
 	emote_hear = list("hops.")
 	emote_see = list("hops around","bounces up and down")
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
 	feedMessages = list("It nibbles happily.","It noms happily.")
 	food_type = /obj/item/reagent_containers/food/snacks/grown/carrot
-	desc = "He's a meme of fat Bugs Bunny."
+	desc = "If laughter is the best medicine, then no wonder the psychologist has the funniest bunny around!"
 
 /*Cabin's forest. Removed in the new cabin map since it was buggy and I prefer manual placement.*/
 /datum/map_generator/snowy
