@@ -2,12 +2,6 @@
 	"layers": [
 		{
 			"type": "icon_state",
-			"icon_state": "base",
-			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
-		},
-		{
-			"type": "icon_state",
 			"icon_state": "disk_mouth",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]

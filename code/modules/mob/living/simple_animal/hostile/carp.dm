@@ -80,7 +80,12 @@
 /mob/living/simple_animal/hostile/carp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/// Randomizes carp color
+/**
+ * Randomly assigns a color to a carp from either a common or rare color variants lists
+ *
+ * Arguments:
+ * * rare The chance of the carp receiving color from the rare color variant list
+ */
 /mob/living/simple_animal/hostile/carp/proc/carp_randomify(rarechance)
 	var/our_color
 	if(prob(rarechance))
@@ -233,6 +238,8 @@
 	pet_bonus_emote = "bloops happily!"
 	/// Keeping track of the nuke disk for the functionality of storing it.
 	var/obj/item/disk/nuclear/disky
+	/// Location of the file storing disk overlays
+	var/icon/disk_overlay_file = 'icons/mob/carp.dmi'
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize()
 	. = ..()
@@ -261,9 +268,8 @@
 			return
 		potential_disky.forceMove(src)
 		disky = potential_disky
-		greyscale_config = /datum/greyscale_config/carp/cayenne
-		update_icon()
 		to_chat(src, "<span class='nicegreen'>YES!! You manage to pick up [disky]. (Click anywhere to place it back down.)</span>")
+		update_icon()
 		if(!disky.fake)
 			client.give_award(/datum/award/achievement/misc/cayenne_disk, src)
 		return
@@ -272,7 +278,6 @@
 			to_chat(src, "<span class='notice'>You place [disky] on [attacked_target]</span>")
 			disky.forceMove(attacked_target.drop_location())
 			disky = null
-			greyscale_config = /datum/greyscale_config/carp
 			update_icon()
 		else
 			disky.melee_attack_chain(src, attacked_target)
@@ -283,13 +288,13 @@
 	. = ..()
 	if(AM == disky)
 		disky = null
-		greyscale_config = /datum/greyscale_config/carp
 		update_icon()
 
 /mob/living/simple_animal/hostile/carp/cayenne/update_overlays()
 	. = ..()
 	if(!disky || stat == DEAD)
 		return
-	. += mutable_appearance(icon, "disk_overlay", ABOVE_MOB_LAYER)
+	. += mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors))
+	. += mutable_appearance(disk_overlay_file, "disk_overlay")
 
 #undef REGENERATION_DELAY

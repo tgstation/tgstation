@@ -23,10 +23,10 @@
 
 /datum/greyscale_config/carp
 	icon_file = 'icons/mob/carp.dmi'
-	json_config = 'code/datums/greyscale/json_configs/carp_default.json'
+	json_config = 'code/datums/greyscale/json_configs/carp.json'
 
 /datum/greyscale_config/carp/dead
 	json_config = 'code/datums/greyscale/json_configs/carp_dead.json'
 
-/datum/greyscale_config/carp/cayenne
-	json_config = 'code/datums/greyscale/json_configs/carp_cayenne.json'
+/datum/greyscale_config/carp/disk_mouth
+	json_config = 'code/datums/greyscale/json_configs/carp_disk_mouth.json'
