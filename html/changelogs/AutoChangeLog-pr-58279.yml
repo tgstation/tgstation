@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "Tweaks converoli's threshold to not overlap with it's failure threshold"

@@ -1,4 +1,0 @@
-author: "Celotajs"
-delete-after: True
-changes: 
-  - refactor: "The crew manifest has now been converted to TGUI for lobby, ghost, AI and pAI players."
