@@ -60,11 +60,6 @@
 
 	..()
 
-/mob/living/simple_animal/bot/hygienebot/Cross(atom/movable/AM)
-	. = ..()
-	if(washing)
-		do_wash(AM)
-
 /mob/living/simple_animal/bot/hygienebot/proc/on_crossed(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(washing)

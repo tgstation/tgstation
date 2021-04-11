@@ -24,7 +24,7 @@
 
 	src.connections = connections
 
-	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved, TRUE)
+	RegisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE, .proc/on_moved, TRUE)
 	update_signals(listener, tracked)
 
 /datum/element/connect_loc/Detach(datum/listener, atom/movable/tracked, list/connections)
@@ -39,7 +39,7 @@
 	if (!isnull(tracked.loc))
 		unregister_signals(listener, tracked, tracked.loc)
 
-	UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE)
 
 /datum/element/connect_loc/proc/update_signals(datum/listener, atom/movable/tracked)
 	var/existing = length(targets[tracked.loc])
