@@ -224,6 +224,8 @@
 	latetoggle()
 
 /obj/machinery/door/firedoor/close()
+	if(check_holofan())
+		return
 	. = ..()
 	latetoggle()
 
@@ -253,6 +255,14 @@
 		if(FIREDOOR_CLOSED)
 			nextstate = null
 			close()
+
+/obj/machinery/door/firedoor/proc/check_holofan()
+	var/turf/loc = get_turf(src)
+	for(var/obj/structure/holosign/barrier/atmos/holo in loc.contents)
+		if(!holo)
+			continue
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
