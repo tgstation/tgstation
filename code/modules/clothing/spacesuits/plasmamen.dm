@@ -234,10 +234,13 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
 	name = "chief engineer's plasma envirosuit helmet"
-	desc = "A special containment helmet designed for the Chief Engineer, the usual purple stripes being replaced by the chief's green."
+	desc = "A special containment helmet designed for the Chief Engineer, the usual purple stripes being replaced by the chief's green. Shines with a high polish." // Added the same polish line that the CE hardsuit has
 	icon_state = "ce_envirohelm"
 	inhand_icon_state = "ce_envirohelm"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 10, FIRE = 100, ACID = 75)
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT // Same protection as the CE's Hardsuit helmet
+
 
 /obj/item/clothing/head/helmet/space/plasmaman/cargo
 	name = "cargo plasma envirosuit helmet"
