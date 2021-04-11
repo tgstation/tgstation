@@ -20,3 +20,7 @@
 /datum/greyscale_config/prototype_canister
 	icon_file = 'icons/obj/atmospherics/prototype_canister.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_proto.json'
+
+/datum/greyscale_config/screwdriver
+	icon_file = 'icons/obj/tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/screwdriver.json'

@@ -26,15 +26,17 @@
 	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
 	item_flags = EYE_STAB
 	sharpness = SHARP_POINTY
-	var/random_color = TRUE //if the screwdriver uses random coloring
+	/// If the item uses random coloring
+	var/random_color = TRUE
+	/// List of possible random colors
 	var/static/list/screwdriver_colors = list(
-		"blue" = rgb(24, 97, 213),
-		"red" = rgb(255, 0, 0),
-		"pink" = rgb(213, 24, 141),
-		"brown" = rgb(160, 82, 18),
-		"green" = rgb(14, 127, 27),
-		"cyan" = rgb(24, 162, 213),
-		"yellow" = rgb(255, 165, 0)
+		"blue" = "#1861d5",
+		"red" = "#ff0000"
+		"pink" = "#d5188d",
+		"brown" = "#a05212",
+		"green" = "#0e7f1b",
+		"cyan" = "#18a2d5",
+		"yellow" = "#ffa500"
 	)
 
 /obj/item/screwdriver/suicide_act(mob/user)
@@ -43,21 +45,13 @@
 
 /obj/item/screwdriver/Initialize()
 	. = ..()
-	if(random_color) //random colors!
-		icon_state = "screwdriver"
+	if(random_color)
+		greyscale_config = /datum/greyscale_config/screwdriver
 		var/our_color = pick(screwdriver_colors)
-		add_atom_colour(screwdriver_colors[our_color], FIXED_COLOUR_PRIORITY)
-		update_appearance()
+		greyscale_colors = screwdriver_colors[our_color]
+		update_icon()
 	if(prob(75))
 		pixel_y = rand(0, 16)
-
-/obj/item/screwdriver/update_overlays()
-	. = ..()
-	if(!random_color) //icon override
-		return
-	var/mutable_appearance/base_overlay = mutable_appearance(icon, "screwdriver_screwybits")
-	base_overlay.appearance_flags = RESET_COLOR
-	. += base_overlay
 
 /obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
