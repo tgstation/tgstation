@@ -474,6 +474,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 	STR.set_holdable(list(/obj/item/food/burger/bigmac))
+	STR.max_combined_w_class = 30
 
 /*
  * Oreos
@@ -492,3 +493,4 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/oreo))
+	STR.max_combined_w_class = 40
