@@ -1543,6 +1543,7 @@
 #include "code\modules\admin\verbs\borgpanel.dm"
 #include "code\modules\admin\verbs\BrokenInhands.dm"
 #include "code\modules\admin\verbs\cinematic.dm"
+#include "code\modules\admin\verbs\commandreport.dm"
 #include "code\modules\admin\verbs\deadsay.dm"
 #include "code\modules\admin\verbs\debug.dm"
 #include "code\modules\admin\verbs\diagnostics.dm"
