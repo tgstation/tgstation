@@ -180,7 +180,7 @@
 
 /obj/structure/fluff/lightbulb
 	name = "red lightbulb"
-	desc = "Its warm light calms your nerves."
+	desc = "Its warm light and soft buzzing calms your nerves."
 	icon = 'icons/effects/bulb.dmi'
 	icon_state = "bulb"
 	layer = MOB_LAYER

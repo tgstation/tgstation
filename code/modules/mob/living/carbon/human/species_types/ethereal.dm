@@ -12,7 +12,7 @@
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
-	payday_modifier = 0.75
+	payday_modifier = 1
 	attack_type = BURN //burn bish
 	damage_overlay_type = "" //We are too cool for regular damage overlays
 	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR, HAIR, HAS_FLESH, HAS_BONE) // i mean i guess they have blood so they can have wounds too
@@ -41,9 +41,9 @@
 	var/drain_time = 0 //used to keep ethereals from spam draining power sources
 	var/obj/effect/dummy/lighting_obj/ethereal_light
 
-	species_speech_sounds = list('sound/voice/species/etheral.ogg' = 35)
-	species_speech_sounds_ask = list('sound/voice/species/etheral_ask.ogg' = 60)
-	species_speech_sounds_exclaim = list('sound/voice/species/etheral_exclaim.ogg' = 60)
+	species_speech_sounds = list('sound/voice/species/etheral.ogg' = 20)
+	species_speech_sounds_ask = list('sound/voice/species/etheral_ask.ogg' = 55)
+	species_speech_sounds_exclaim = list('sound/voice/species/etheral_exclaim.ogg' = 55)
 
 /datum/species/ethereal/Destroy(force)
 	if(ethereal_light)
