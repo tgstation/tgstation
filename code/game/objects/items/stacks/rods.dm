@@ -9,9 +9,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	))
 
 /obj/item/stack/rods
-	name = "metal rod"
+	name = "iron rod"
 	desc = "Some rods. Can be used for building or something."
-	singular_name = "metal rod"
+	singular_name = "iron rod"
 	icon_state = "rods"
 	inhand_icon_state = "rods"
 	flags_1 = CONDUCT_1
@@ -25,26 +25,27 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	attack_verb_continuous = list("hits", "bludgeons", "whacks")
 	attack_verb_simple = list("hit", "bludgeon", "whack")
 	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	embedding = list()
+	embedding = list(embed_chance = 50)
 	novariants = TRUE
 	matter_amount = 2
 	cost = 250
-	source = /datum/robot_energy_storage/metal
+	source = /datum/robot_energy_storage/iron
 	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")//it looks like theyre ur mum
 	return BRUTELOSS
 
-/obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
+/obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()
 	. += GLOB.rod_recipes
 
 /obj/item/stack/rods/update_icon_state()
+	. = ..()
 	var/amount = get_amount()
 	if(amount <= 5)
 		icon_state = "rods-[amount]"
@@ -58,9 +59,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 			return
 
 		if(W.use_tool(src, user, 0, volume=40))
-			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			user.visible_message("<span class='notice'>[user.name] shaped [src] into metal with [W].</span>", \
-				"<span class='notice'>You shape [src] into metal with [W].</span>", \
+			var/obj/item/stack/sheet/iron/new_item = new(usr.loc)
+			user.visible_message("<span class='notice'>[user.name] shaped [src] into iron sheets with [W].</span>", \
+				"<span class='notice'>You shape [src] into iron sheets with [W].</span>", \
 				"<span class='hear'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
@@ -86,7 +87,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/lava
 	name = "heat resistant rod"
-	desc = "Treated, specialized metal rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
+	desc = "Treated, specialized iron rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
 	singular_name = "heat resistant rod"
 	icon_state = "rods"
 	inhand_icon_state = "rods"

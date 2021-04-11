@@ -1,7 +1,6 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { pureComponentHooks } from 'common/react';
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Flex, Icon, Table, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -13,8 +12,7 @@ export const ApcControl = (props, context) => {
     <Window
       title="APC Controller"
       width={550}
-      height={500}
-      resizable>
+      height={500}>
       {data.authenticated === 1 && (
         <ApcLoggedIn />
       )}
@@ -48,7 +46,7 @@ const ApcLoggedIn = (props, context) => {
     setTabIndex,
   ] = useLocalState(context, 'tab-index', 1);
   return (
-    <Fragment>
+    <>
       <Tabs>
         <Tabs.Tab
           selected={tabIndex === 1}
@@ -74,14 +72,14 @@ const ApcLoggedIn = (props, context) => {
         </Dimmer>
       )}
       {tabIndex === 1 && (
-        <Fragment>
+        <>
           <ControlPanel />
           <Box fillPositionedParent top="53px">
             <Window.Content scrollable>
               <ApcControlScene />
             </Window.Content>
           </Box>
-        </Fragment>
+        </>
       )}
       {tabIndex === 2 && (
         <Box fillPositionedParent top="20px">
@@ -90,7 +88,7 @@ const ApcLoggedIn = (props, context) => {
           </Window.Content>
         </Box>
       )}
-    </Fragment>
+    </>
   );
 };
 
@@ -128,7 +126,7 @@ const ControlPanel = (props, context) => {
       <Flex.Item grow={1} />
       <Flex.Item>
         {emagged === 1 && (
-          <Fragment>
+          <>
             <Button
               color={logging === 1 ? 'bad' : 'good'}
               content={logging === 1 ? 'Stop Logging' : 'Restore Logging'}
@@ -138,7 +136,7 @@ const ControlPanel = (props, context) => {
               content="Reset Console"
               onClick={() => act('restore-console')}
             />
-          </Fragment>
+          </>
         )}
         <Button
           color="bad"

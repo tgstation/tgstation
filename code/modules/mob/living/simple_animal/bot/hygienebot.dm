@@ -4,6 +4,7 @@
 	desc = "A flying cleaning robot, he'll chase down people who can't shower properly!"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "hygienebot"
+	base_icon_state = "hygienebot"
 	density = FALSE
 	anchored = FALSE
 	health = 100
@@ -15,7 +16,7 @@
 	bot_core_type = /obj/machinery/bot_core/hygienebot
 	window_id = "autoclean"
 	window_name = "Automatic Crew Cleaner X2"
-	pass_flags = PASSMOB | PASSFLAPS
+	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
 	path_image_color = "#993299"
 	allow_pai = FALSE
 	layer = ABOVE_MOB_LAYER
@@ -39,10 +40,12 @@
 
 /mob/living/simple_animal/bot/hygienebot/Initialize()
 	. = ..()
-	update_icon()
-	var/datum/job/janitor/J = new/datum/job/janitor
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	update_appearance(UPDATE_ICON)
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
+	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
 
 /mob/living/simple_animal/bot/hygienebot/explode()
 	walk_to(src,0)
@@ -65,22 +68,16 @@
 
 /mob/living/simple_animal/bot/hygienebot/update_icon_state()
 	. = ..()
-	if(on)
-		icon_state = "hygienebot-on"
-	else
-		icon_state = "hygienebot"
+	icon_state = "[base_icon_state][on ? "-on" : null]"
 
 
 /mob/living/simple_animal/bot/hygienebot/update_overlays()
 	. = ..()
 	if(on)
-		var/mutable_appearance/fire_overlay = mutable_appearance(icon, "hygienebot-flame")
-		. +=fire_overlay
-
+		. += mutable_appearance(icon, "hygienebot-flame")
 
 	if(washing)
-		var/mutable_appearance/water_overlay = mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
-		. += water_overlay
+		. += mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
 
 
 /mob/living/simple_animal/bot/hygienebot/turn_off()
@@ -107,13 +104,13 @@
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 	switch(mode)
-		if(BOT_IDLE)		// idle
+		if(BOT_IDLE) // idle
 			walk_to(src,0)
-			look_for_lowhygiene()	// see if any disgusting fucks are in range
-			if(!mode && auto_patrol)	// still idle, and set to patrol
-				mode = BOT_START_PATROL	// switch to patrol mode
+			look_for_lowhygiene() // see if any disgusting fucks are in range
+			if(!mode && auto_patrol) // still idle, and set to patrol
+				mode = BOT_START_PATROL // switch to patrol mode
 
-		if(BOT_HUNT)		// hunting for stinkman
+		if(BOT_HUNT) // hunting for stinkman
 			if(emagged) //lol fuck em up
 				currentspeed = 3.5
 				start_washing()
@@ -203,11 +200,11 @@
 
 /mob/living/simple_animal/bot/hygienebot/proc/start_washing()
 	washing = TRUE
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/hygienebot/proc/stop_washing()
 	washing = FALSE
-	update_icon()
+	update_appearance()
 
 
 
@@ -224,7 +221,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		dat += {"<BR> Auto Patrol: ["<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>"]"}
 
-	return	dat.Join("")
+	return dat.Join("")
 
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
 	if((emagged == 2) && L.stat != DEAD)

@@ -5,7 +5,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
@@ -56,12 +56,12 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	mob.log_talk(raw_msg, LOG_OOC)
 
 	var/keyname = key
-	if(prefs.hearted)
-		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
-		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
+	if(prefs.hearted)
+		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
+		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -339,7 +339,14 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set category = "OOC"
 	set desc = "View the last round end report you've seen"
 
-	SSticker.show_roundend_report(src, TRUE)
+	SSticker.show_roundend_report(src, report_type = PERSONAL_LAST_ROUND)
+
+/client/proc/show_servers_last_roundend_report()
+	set name = "Server's Last Round"
+	set category = "OOC"
+	set desc = "View the last round end report from this server"
+
+	SSticker.show_roundend_report(src, report_type = SERVER_LAST_ROUND)
 
 /client/verb/fit_viewport()
 	set name = "Fit Viewport"

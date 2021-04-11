@@ -35,11 +35,11 @@
 			cleaner.mind.adjust_experience(/datum/skill/cleaning, total_experience_gain)
 		A.wash(CLEAN_SCRUB)
 
-	reagents.expose(A, TOUCH, 10)	//Needed for proper floor wetting.
+	reagents.expose(A, TOUCH, 10) //Needed for proper floor wetting.
 	var/val2remove = 1
 	if(cleaner?.mind)
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER),0.1)
-	reagents.remove_any(val2remove)			//reaction() doesn't use up the reagents
+	reagents.remove_any(val2remove) //reaction() doesn't use up the reagents
 
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
@@ -77,7 +77,7 @@
 	if(insertable)
 		J.put_in_cart(src, user)
 		J.mymop=src
-		J.update_icon()
+		J.update_appearance()
 	else
 		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
 		return

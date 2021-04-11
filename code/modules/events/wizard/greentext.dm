@@ -56,8 +56,8 @@
 	if(user in color_altered_mobs)
 		to_chat(user, "<span class='warning'>A sudden wave of failure washes over you...</span>")
 		user.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY) //ya blew it
-	last_holder 	= null
-	new_holder 		= null
+	last_holder = null
+	new_holder = null
 	STOP_PROCESSING(SSobj, src)
 	..()
 

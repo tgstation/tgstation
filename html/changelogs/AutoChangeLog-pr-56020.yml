@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Fixed being able to ignore some caltrops through walking."

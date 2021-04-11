@@ -23,9 +23,9 @@ GLOBAL_LIST_INIT(pipe_cleaner_colors, list(
 
 /* Cable directions (d1 and d2)
  * 9   1   5
- *	\ | /
+ * \ | /
  * 8 - 0 - 4
- *	/ | \
+ * / | \
  * 10  2   6
 
 If d1 = 0 and d2 = 0, there's no pipe_cleaner
@@ -81,23 +81,23 @@ By design, d1 is the smallest direction and d2 is the highest
 	d2 = text2num(copytext(icon_state, dash + length(icon_state[dash])))
 
 	if(d1)
-		stored = new/obj/item/stack/pipe_cleaner_coil(null, 2, color)
+		stored = new/obj/item/stack/pipe_cleaner_coil(null, 2, null, null, null, color)
 	else
-		stored = new/obj/item/stack/pipe_cleaner_coil(null, 1, color)
+		stored = new/obj/item/stack/pipe_cleaner_coil(null, 1, null, null, null, color)
 
 	color = param_color || color
 	if(!color)
 		var/list/pipe_cleaner_colors = GLOB.pipe_cleaner_colors
 		var/random_color = pick(pipe_cleaner_colors)
 		color = pipe_cleaner_colors[random_color]
-	update_icon()
+	update_appearance()
 
-/obj/structure/pipe_cleaner/Destroy()					// called when a pipe_cleaner is deleted
+/obj/structure/pipe_cleaner/Destroy() // called when a pipe_cleaner is deleted
 	//If we have a stored item at this point, lets just delete it, since that should be
 	//handled by deconstruction
 	if(stored)
 		QDEL_NULL(stored)
-	return ..()									// then go ahead and delete the pipe_cleaner
+	return ..() // then go ahead and delete the pipe_cleaner
 
 /obj/structure/pipe_cleaner/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -113,8 +113,12 @@ By design, d1 is the smallest direction and d2 is the highest
 // General procedures
 ///////////////////////////////////
 
-/obj/structure/pipe_cleaner/update_icon()
+/obj/structure/pipe_cleaner/update_icon_state()
 	icon_state = "[d1]-[d2]"
+	return ..()
+
+/obj/structure/pipe_cleaner/update_icon()
+	. = ..()
 	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
 // Items usable on a pipe_cleaner :
@@ -152,7 +156,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/pipe_cleaner/proc/update_stored(length = 1, colorC = COLOR_RED)
 	stored.amount = length
 	stored.color = colorC
-	stored.update_icon()
+	stored.update_appearance()
 
 /obj/structure/pipe_cleaner/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
@@ -210,7 +214,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(!selected_color)
 		return
 	color = pipe_cleaner_colors[selected_color]
-	update_icon()
+	update_appearance()
 
 /**
  * Checks if we are allowed to interact with a radial menu
@@ -234,10 +238,11 @@ By design, d1 is the smallest direction and d2 is the highest
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/pipe_cleaner_coil/Initialize(mapload, new_amount = null, param_color = null)
+/obj/item/stack/pipe_cleaner_coil/Initialize(mapload, new_amount = null, list/mat_override=null, mat_amt=1, param_color = null)
 	. = ..()
 
-	color = param_color || color
+	if(param_color)
+		color = param_color
 	if(!color)
 		var/list/pipe_cleaner_colors = GLOB.pipe_cleaner_colors
 		var/random_color = pick(pipe_cleaner_colors)
@@ -245,25 +250,32 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
-	update_icon()
+	update_appearance()
 
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
 
-/obj/item/stack/pipe_cleaner_coil/update_icon()
-	icon_state = "[initial(inhand_icon_state)][amount < 3 ? amount : ""]"
+/obj/item/stack/pipe_cleaner_coil/update_name()
+	. = ..()
 	name = "pipe cleaner [amount < 3 ? "piece" : "coil"]"
+
+/obj/item/stack/pipe_cleaner_coil/update_icon_state()
+	. = ..()
+	icon_state = "[initial(inhand_icon_state)][amount < 3 ? amount : ""]"
+
+/obj/item/stack/pipe_cleaner_coil/update_icon()
+	. = ..()
 	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/stack/pipe_cleaner_coil/attack_hand(mob/user)
+/obj/item/stack/pipe_cleaner_coil/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	var/obj/item/stack/pipe_cleaner_coil/new_pipe_cleaner = ..()
 	if(istype(new_pipe_cleaner))
 		new_pipe_cleaner.color = color
-		new_pipe_cleaner.update_icon()
+		new_pipe_cleaner.update_appearance()
 
 //add pipe_cleaners to the stack
 /obj/item/stack/pipe_cleaner_coil/proc/give(extra)
@@ -271,7 +283,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		amount = max_amount
 	else
 		amount += extra
-	update_icon()
+	update_appearance()
 
 ///////////////////////////////////////////////
 // Cable laying procedures
@@ -318,7 +330,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	C.d1 = 0 //it's a O-X node pipe_cleaner
 	C.d2 = dirn
 	C.add_fingerprint(user)
-	C.update_icon()
+	C.update_appearance()
 
 	use(1)
 
@@ -333,10 +345,10 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/turf/T = C.loc
 
-	if(!isturf(T))		// sanity check
+	if(!isturf(T)) // sanity check
 		return
 
-	if(get_dist(C, user) > 1)		// make sure it's close enough
+	if(get_dist(C, user) > 1) // make sure it's close enough
 		to_chat(user, "<span class='warning'>You can't lay pipe cleaner at a place that far away!</span>")
 		return
 
@@ -351,7 +363,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	// one end of the clicked pipe_cleaner is pointing towards us and no direction was supplied
 	if((C.d1 == dirn || C.d2 == dirn) && !forceddir)
-		if(!U.can_have_cabling())						//checking if it's a plating or catwalk
+		if(!U.can_have_cabling()) //checking if it's a plating or catwalk
 			if (showerror)
 				to_chat(user, "<span class='warning'>You can only lay pipe cleaners on catwalks and plating!</span>")
 			return
@@ -359,9 +371,9 @@ By design, d1 is the smallest direction and d2 is the highest
 			// pipe_cleaner is pointing at us, we're standing on an open tile
 			// so create a stub pointing at the clicked pipe_cleaner on our tile
 
-			var/fdirn = turn(dirn, 180)		// the opposite direction
+			var/fdirn = turn(dirn, 180) // the opposite direction
 
-			for(var/obj/structure/pipe_cleaner/LC in U)		// check to make sure there's not a pipe_cleaner there already
+			for(var/obj/structure/pipe_cleaner/LC in U) // check to make sure there's not a pipe_cleaner there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)
 					if (showerror)
 						to_chat(user, "<span class='warning'>There's already a pipe cleaner at that position!</span>")
@@ -372,7 +384,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			NC.d1 = 0
 			NC.d2 = fdirn
 			NC.add_fingerprint(user)
-			NC.update_icon()
+			NC.update_appearance()
 
 			use(1)
 
@@ -381,26 +393,26 @@ By design, d1 is the smallest direction and d2 is the highest
 	// exisiting pipe_cleaner doesn't point at our position or we have a supplied direction, so see if it's a stub
 	else if(C.d1 == 0)
 							// if so, make it a full pipe_cleaner pointing from it's old direction to our dirn
-		var/nd1 = C.d2	// these will be the new directions
+		var/nd1 = C.d2 // these will be the new directions
 		var/nd2 = dirn
 
 
-		if(nd1 > nd2)		// swap directions to match icons/states
+		if(nd1 > nd2) // swap directions to match icons/states
 			nd1 = dirn
 			nd2 = C.d2
 
 
-		for(var/obj/structure/pipe_cleaner/LC in T)		// check to make sure there's no matching pipe_cleaner
-			if(LC == C)			// skip the pipe_cleaner we're interacting with
+		for(var/obj/structure/pipe_cleaner/LC in T) // check to make sure there's no matching pipe_cleaner
+			if(LC == C) // skip the pipe_cleaner we're interacting with
 				continue
-			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no pipe_cleaner matches either direction
+			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) ) // make sure no pipe_cleaner matches either direction
 				if (showerror)
 					to_chat(user, "<span class='warning'>There's already a pipe cleaner at that position!</span>")
 
 				return
 
 
-		C.update_icon()
+		C.update_appearance()
 
 		C.d1 = nd1
 		C.d2 = nd2
@@ -409,7 +421,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		C.update_stored(2, color)
 
 		C.add_fingerprint(user)
-		C.update_icon()
+		C.update_appearance()
 
 		use(1)
 
@@ -459,7 +471,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	. = ..()
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
-	update_icon()
+	update_appearance()
 
 /obj/item/stack/pipe_cleaner_coil/cut/red
 	color = COLOR_RED

@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 /turf/proc/copyTurf(turf/T)
 	if(T.type != type)
 		var/obj/O
-		if(underlays.len)	//we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
+		if(underlays.len) //we have underlays, which implies some sort of transparency, so we want to a snapshot of the previous turf as an underlay
 			O = new()
 			O.underlays.Add(T)
 		T.ChangeTurf(type)
@@ -81,40 +81,34 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_lighting_object = lighting_object
 	var/old_corners = corners
 	var/old_directional_opacity = directional_opacity
+	var/old_rcd_memory = rcd_memory
 
-	var/old_exl = explosion_level
-	var/old_exi = explosion_id
 	var/old_bp = blueprint_data
 	blueprint_data = null
 
 	var/list/old_baseturfs = baseturfs
 	var/old_type = type
 
-	var/list/transferring_comps = list()
-	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, transferring_comps)
-	for(var/i in transferring_comps)
-		var/datum/component/comp = i
-		comp.RemoveComponent()
+	var/list/post_change_callbacks = list()
+	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, post_change_callbacks)
 
 	changing_turf = TRUE
-	qdel(src)	//Just get the side effects and call Destroy
+	qdel(src) //Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
-	for(var/i in transferring_comps)
-		W.TakeComponent(i)
+	for(var/datum/callback/callback as anything in post_change_callbacks)
+		callback.InvokeAsync(W)
 
 	if(new_baseturfs)
 		W.baseturfs = baseturfs_string_list(new_baseturfs, W)
 	else
 		W.baseturfs = baseturfs_string_list(old_baseturfs, W) //Just to be safe
 
-	W.explosion_id = old_exi
-	W.explosion_level = old_exl
-
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
 		W.AfterChange(flags, old_type)
 
 	W.blueprint_data = old_bp
+	W.rcd_memory = old_rcd_memory
 
 	if(SSlighting.initialized)
 		lighting_object = old_lighting_object
@@ -165,7 +159,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			flags |= CHANGETURF_RECALC_ADJACENT
 		return ..()
 
-// Take off the top layer turf and replace it with the next baseturf down
+/// Take off the top layer turf and replace it with the next baseturf down
 /turf/proc/ScrapeAway(amount=1, flags)
 	if(!amount)
 		return

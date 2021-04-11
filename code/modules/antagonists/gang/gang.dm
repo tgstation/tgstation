@@ -411,7 +411,7 @@
 	free_clothes = list(/obj/item/clothing/mask/bandana/gold,
 						/obj/item/clothing/under/color/yellow,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective = "Orders from up high. We need to up our drug operation. Ensure that at least 25% of the station is addicted to meth."
+	gang_objective = "Orders from up high. We need to up our drug operation. Ensure that at least 25% of the station is addicted to stimulants."
 	antag_hud_name = "Vagos"
 
 /datum/antagonist/gang/vagos/check_gang_objective()
@@ -423,9 +423,8 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			people_on_station++
-			for(var/R in H.reagents.addiction_list)
-				if(istype(R, /datum/reagent/drug/methamphetamine))
-					people_on_crack++
+			if(H.mind.active_addictions[/datum/addiction/stimulants])
+				people_on_crack++
 	if(0.25*people_on_station > people_on_crack)
 		return FALSE
 	return TRUE
@@ -545,6 +544,6 @@
 		return FALSE // didnt pass the bar check, no point in continuing to loop
 	var/obj/machinery/ore_silo/S = GLOB.ore_silo_default
 	var/datum/component/material_container/mat_container = S.GetComponent(/datum/component/material_container)
-	if(mat_container.materials[SSmaterials.GetMaterialRef(/datum/material/gold)] >= 2000) // if theres at least 1 bar of gold left in the silo, they've failed to heist all of it
+	if(mat_container.materials[GET_MATERIAL_REF(/datum/material/gold)] >= 2000) // if theres at least 1 bar of gold left in the silo, they've failed to heist all of it
 		return FALSE
 	return TRUE

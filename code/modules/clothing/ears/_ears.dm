@@ -12,6 +12,7 @@
 	desc = "Protects your hearing from loud noises, and quiet ones as well."
 	icon_state = "earmuffs"
 	inhand_icon_state = "earmuffs"
+	clothing_traits = list(TRAIT_DEAF)
 	strip_delay = 15
 	equip_delay_other = 25
 	resistance_flags = FLAMMABLE
@@ -21,12 +22,3 @@
 	. = ..()
 	AddElement(/datum/element/earhealing)
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
-
-/obj/item/clothing/ears/earmuffs/equipped(mob/user, slot)
-	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_EARS)
-		ADD_TRAIT(user, TRAIT_DEAF, CLOTHING_TRAIT)
-
-/obj/item/clothing/ears/earmuffs/dropped(mob/user)
-	. = ..()
-	REMOVE_TRAIT(user, TRAIT_DEAF, CLOTHING_TRAIT)

@@ -196,9 +196,9 @@
 
 		if("robot")
 			var/robot = pick(200;/mob/living/silicon/robot,
-							/mob/living/silicon/robot/modules/syndicate,
-							/mob/living/silicon/robot/modules/syndicate/medical,
-							/mob/living/silicon/robot/modules/syndicate/saboteur,
+							/mob/living/silicon/robot/model/syndicate,
+							/mob/living/silicon/robot/model/syndicate/medical,
+							/mob/living/silicon/robot/model/syndicate/saboteur,
 							200;/mob/living/simple_animal/drone/polymorphed)
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
@@ -208,7 +208,7 @@
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.lawupdate = FALSE
 				Robot.connected_ai = null
-				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+				Robot.mmi.transfer_identity(M) //Does not transfer key/client.
 				Robot.clear_inherent_laws(0)
 				Robot.clear_zeroth_law(0)
 
@@ -272,7 +272,7 @@
 				if(chooseable_races.len)
 					new_mob.set_species(pick(chooseable_races))
 
-			var/datum/preferences/A = new()	//Randomize appearance for the human
+			var/datum/preferences/A = new() //Randomize appearance for the human
 			A.copy_to(new_mob, icon_updates=0)
 
 			var/mob/living/carbon/human/H = new_mob
@@ -290,7 +290,7 @@
 
 	M.log_message("became [new_mob.real_name]", LOG_ATTACK, color="orange")
 
-	new_mob.a_intent = INTENT_HARM
+	new_mob.set_combat_mode(TRUE)
 
 	M.wabbajack_act(new_mob)
 
@@ -406,7 +406,7 @@
 	. = ..()
 	if(isliving(A) && locker_suck)
 		var/mob/living/M = A
-		if(M.anti_magic_check())			// no this doesn't check if ..() returned to phase through do I care no it's magic ain't gotta explain shit
+		if(M.anti_magic_check()) // no this doesn't check if ..() returned to phase through do I care no it's magic ain't gotta explain shit
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 		if(!locker_temp_instance.insertion_allowed(M))
@@ -421,7 +421,7 @@
 		for(var/atom/movable/AM in contents)
 			locker_temp_instance.insert(AM)
 		locker_temp_instance.welded = weld
-		locker_temp_instance.update_icon()
+		locker_temp_instance.update_appearance()
 	created = TRUE
 	return ..()
 
@@ -460,7 +460,7 @@
 ///Give it the lesser magic icon and tell it to delete itself
 /obj/structure/closet/decay/proc/unmagify()
 	icon_state = weakened_icon
-	update_icon()
+	update_appearance()
 
 	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
 
@@ -551,7 +551,7 @@
 		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
 			spell.charge_counter = spell.charge_max
 			spell.recharging = FALSE
-			spell.update_icon()
+			spell.update_appearance()
 
 /obj/projectile/magic/wipe
 	name = "bolt of possession"
@@ -616,7 +616,7 @@
 
 /obj/projectile/magic/aoe/lightning
 	name = "lightning bolt"
-	icon_state = "tesla_projectile"	//Better sprites are REALLY needed and appreciated!~
+	icon_state = "tesla_projectile" //Better sprites are REALLY needed and appreciated!~
 	damage = 15
 	damage_type = BURN
 	nodamage = FALSE

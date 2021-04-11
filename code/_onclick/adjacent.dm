@@ -41,8 +41,8 @@
 
 	// Diagonal case
 	var/in_dir = get_dir(T0,src) // eg. northwest (1+8) = 9 (00001001)
-	var/d1 = in_dir&3		     // eg. north	  (1+8)&3 (0000 0011) = 1 (0000 0001)
-	var/d2 = in_dir&12			 // eg. west	  (1+8)&12 (0000 1100) = 8 (0000 1000)
+	var/d1 = in_dir&3      // eg. north   (1+8)&3 (0000 0011) = 1 (0000 0001)
+	var/d2 = in_dir&12  // eg. west   (1+8)&12 (0000 1100) = 8 (0000 1000)
 
 	for(var/d in list(d1,d2))
 		if(!T0.ClickCross(d, border_only = 1, target_atom = target, mover = mover))
@@ -99,7 +99,7 @@
 
 		if( O.flags_1&ON_BORDER_1) // windows are on border, check them first
 			if( O.dir & target_dir || O.dir & (O.dir-1) ) // full tile windows are just diagonals mechanically
-				return FALSE								  //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
+				return FALSE   //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
 		else if( !border_only ) // dense, not on border, cannot pass over
 			return FALSE
 	return TRUE

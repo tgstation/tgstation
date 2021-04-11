@@ -1,6 +1,6 @@
 // tgstation-server DMAPI
 
-#define TGS_DMAPI_VERSION "5.2.9"
+#define TGS_DMAPI_VERSION "6.0.3"
 
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 
@@ -67,7 +67,7 @@
 #define TGS_EVENT_REPO_CHECKOUT 1
 /// When the repository performs a fetch operation. No parameters
 #define TGS_EVENT_REPO_FETCH 2
-/// When the repository merges a pull request. Parameters: PR Number, PR Sha, (Nullable) Comment made by TGS user
+/// When the repository test merges. Parameters: PR Number, PR Sha, (Nullable) Comment made by TGS user
 #define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
 /// Before the repository makes a sychronize operation. Parameters: Absolute repostiory path
 #define TGS_EVENT_REPO_PRE_SYNCHRONIZE 4
@@ -95,8 +95,13 @@
 #define TGS_EVENT_WATCHDOG_SHUTDOWN 15
 /// Before the watchdog detaches for a TGS update/restart. No parameters.
 #define TGS_EVENT_WATCHDOG_DETACH 16
-// We don't actually implement this value as the DMAPI can never receive it
+// We don't actually implement these 4 events as the DMAPI can never receive them.
 // #define TGS_EVENT_WATCHDOG_LAUNCH 17
+// #define TGS_EVENT_WATCHDOG_CRASH 18
+// #define TGS_EVENT_WORLD_END_PROCESS 19
+// #define TGS_EVENT_WORLD_REBOOT 20
+/// Watchdog event when TgsInitializationComplete() is called. No parameters.
+#define TGS_EVENT_WORLD_PRIME 21
 
 // OTHER ENUMS
 
@@ -130,7 +135,6 @@
  *
  * This may use [/world/var/sleep_offline] to make this happen so ensure no changes are made to it while this call is running.
  * Afterwards, consider explicitly setting it to what you want to avoid this BYOND bug: http://www.byond.com/forum/post/2575184
- * Before this point, note that any static files or directories may be in use by another server. Your code should account for this.
  * This function should not be called before ..() in [/world/proc/New].
  */
 /world/proc/TgsInitializationComplete()
@@ -140,7 +144,7 @@
 #define TGS_TOPIC var/tgs_topic_return = TgsTopic(args[1]); if(tgs_topic_return) return tgs_topic_return
 
 /**
- * Call this at the beginning of [world/proc/Reboot].
+ * Call this as late as possible in [world/proc/Reboot].
  */
 /world/proc/TgsReboot()
 	return
@@ -152,6 +156,8 @@
 /datum/tgs_revision_information
 	/// Full SHA of the commit.
 	var/commit
+	/// ISO 8601 timestamp of when the commit was created
+	var/timestamp
 	/// Full sha of last known remote commit. This may be null if the TGS repository is not currently tracking a remote branch.
 	var/origin_commit
 
@@ -190,21 +196,19 @@
 
 /// Represents a merge of a GitHub pull request.
 /datum/tgs_revision_information/test_merge
-	/// The pull request number.
+	/// The test merge number.
 	var/number
-	/// The pull request title when it was merged.
+	/// The test merge source's title when it was merged.
 	var/title
-	/// The pull request body when it was merged.
+	/// The test merge source's body when it was merged.
 	var/body
-	/// The GitHub username of the pull request's author.
+	/// The Username of the test merge source's author.
 	var/author
-	/// An http URL to the pull request.
+	/// An http URL to the test merge source.
 	var/url
-	/// The SHA of the pull request when that was merged.
-	var/pull_request_commit
-	/// ISO 8601 timestamp of when the pull request was merged.
-	var/time_merged
-	/// (Nullable) Comment left by the TGS user who initiated the merge..
+	/// The SHA of the test merge when that was merged.
+	var/head_commit
+	/// Optional comment left by the TGS user who initiated the merge.
 	var/comment
 
 /// Represents a connected chat channel.
@@ -263,11 +267,11 @@
 // API FUNCTIONS
 
 /// Returns the maximum supported [/datum/tgs_version] of the DMAPI.
-/world/proc/TgsMaximumAPIVersion()
+/world/proc/TgsMaximumApiVersion()
 	return
 
 /// Returns the minimum supported [/datum/tgs_version] of the DMAPI.
-/world/proc/TgsMinimumAPIVersion()
+/world/proc/TgsMinimumApiVersion()
 	return
 
 /**

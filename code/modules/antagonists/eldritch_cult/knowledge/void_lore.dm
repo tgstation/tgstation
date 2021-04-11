@@ -105,7 +105,7 @@
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/spell/void_phase,/datum/eldritch_knowledge/summon/raw_prophet)
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/shard,/obj/item/paper)
-	result_atoms = list(/obj/item/melee/rune_knife)
+	result_atoms = list(/obj/item/melee/rune_carver)
 
 /datum/eldritch_knowledge/crucible
 	name = "Mawed Crucible"
@@ -166,7 +166,7 @@
 	H.physiology.burn_mod *= 0.5
 	ADD_TRAIT(H, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
 	H.client?.give_award(/datum/award/achievement/misc/void_ascension, H)
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [H.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
+	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [H.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
 
 	sound_loop = new(list(user),TRUE,TRUE)
 	return ..()

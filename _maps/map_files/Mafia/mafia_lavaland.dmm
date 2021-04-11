@@ -64,7 +64,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "o" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
@@ -76,7 +76,7 @@
 	name = "miner equipment locker"
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
@@ -100,27 +100,27 @@
 	name = "miner equipment locker"
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "s" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "t" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "u" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "v" = (
 /obj/mafia_game_board,
@@ -133,20 +133,20 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "x" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "y" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "z" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -158,20 +158,20 @@
 	name = "miner equipment locker"
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "A" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "B" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "C" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -180,7 +180,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "D" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -189,7 +189,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "E" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -198,20 +198,20 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "F" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "G" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "H" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -223,7 +223,7 @@
 	name = "miner equipment locker"
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "I" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -235,7 +235,7 @@
 	name = "miner equipment locker"
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "J" = (
 /obj/effect/landmark/mafia,
@@ -245,7 +245,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "K" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
@@ -257,27 +257,27 @@
 	name = "miner equipment locker"
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "L" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "M" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "N" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "O" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
@@ -286,18 +286,18 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "P" = (
 /obj/effect/turf_decal/trimline/brown/filled/end,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "Q" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "R" = (
 /obj/effect/baseturf_helper/asteroid,
@@ -312,33 +312,33 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "S" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "T" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "U" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "V" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "W" = (
 /obj/effect/turf_decal/tile/red{
@@ -347,7 +347,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "X" = (
 /obj/effect/turf_decal/tile/red{
@@ -356,7 +356,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "Y" = (
 /turf/closed/indestructible/reinforced,

@@ -149,6 +149,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
+#define issentientdisease(A) (istype(A, /mob/camera/disease))
+
 #define iscameramob(A) (istype(A, /mob/camera))
 
 #define isaicamera(A) (istype(A, /mob/camera/ai_eye))
@@ -194,6 +196,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isgun(A) (istype(A, /obj/item/gun))
 
+#define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
 
@@ -214,6 +218,8 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 #define is_glass_sheet(O) (is_type_in_typecache(O, GLOB.glass_sheet_types))
 
 #define iseffect(O) (istype(O, /obj/effect))
+
+#define isholoeffect(O) (istype(O, /obj/effect/holodeck_effect))
 
 #define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
 

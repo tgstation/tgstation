@@ -14,7 +14,7 @@
 					/obj/item/healthanalyzer/wound = 4,
 					/obj/item/stack/medical/ointment = 2,
 					/obj/item/stack/medical/suture = 2,
-					/obj/item/stack/medical/bone_gel = 4)
+					/obj/item/stack/medical/bone_gel/four = 4)
 	contraband = list(/obj/item/storage/box/gum/happiness = 3,
 						/obj/item/storage/box/hug/medical = 1)
 	premium = list(/obj/item/reagent_containers/hypospray/medipen = 3,
@@ -24,8 +24,6 @@
 					/obj/item/storage/firstaid/advanced = 2,
 					/obj/item/shears = 1,
 					/obj/item/storage/organbox = 1)
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
-	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/medical
 	default_price = PAYCHECK_EASY
 	extra_price = PAYCHECK_COMMAND

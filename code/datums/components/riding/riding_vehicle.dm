@@ -65,7 +65,7 @@
 	var/turf/next = get_step(movable_parent, direction)
 	var/turf/current = get_turf(movable_parent)
 	if(!istype(next) || !istype(current))
-		return	//not happening.
+		return //not happening.
 	if(!turf_check(next, current))
 		to_chat(user, "<span class='warning'>\The [movable_parent] can not go onto [next]!</span>")
 		return

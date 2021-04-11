@@ -1,17 +1,17 @@
 /* Station-Collision(sc) away mission map specific stuff
  *
  * Notes:
- *		Feel free to use parts of this map, or even all of it for your own project. Just include me in the credits :)
+ * Feel free to use parts of this map, or even all of it for your own project. Just include me in the credits :)
  *
- *		Some of this code unnecessary, but the intent is to add a little bit of everything to serve as examples
- *		for anyone who wants to make their own stuff.
+ * Some of this code unnecessary, but the intent is to add a little bit of everything to serve as examples
+ * for anyone who wants to make their own stuff.
  *
  * Contains:
- *		Landmarks
- *		Guns
- *		Safe code hints
- *		Captain's safe
- *		Modified Nar'Sie
+ * Landmarks
+ * Guns
+ * Safe code hints
+ * Captain's safe
+ * Modified Nar'Sie
  */
 
 

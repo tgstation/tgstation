@@ -47,6 +47,10 @@
 	inhand_icon_state = "mansus"
 	catchphrase = "R'CH T'H TR'TH"
 
+/obj/item/melee/touch_attack/mansus_fist/ignition_effect(atom/A, mob/user)
+	. = "<span class='notice'>[user] effortlessly snaps [user.p_their()] fingers near [A], igniting it with eldritch energies. Fucking badass!</span>"
+	qdel(src)
+
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 
 	if(!proximity_flag || target == user)
@@ -457,7 +461,7 @@
 	. = ..()
 	if(!has_fire_ring)
 		return
-	for(var/turf/T in range(1,current_user))
+	for(var/turf/T in RANGE_TURFS(1,current_user))
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700, 250 * delta_time, 1)
 		for(var/mob/living/livies in T.contents - current_user)
@@ -630,7 +634,7 @@
 	pixel_y = rand(-6,6)
 	pixel_x = rand(-6,6)
 	icon_state = "small_rune_[rand(12)]"
-	update_icon()
+	update_appearance()
 
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	name = "Entropic Plume"

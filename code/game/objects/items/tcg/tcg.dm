@@ -26,9 +26,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
-	zoom_out()
-	RegisterSignal(src, COMSIG_STORAGE_ENTERED, .proc/zoom_in)
-	RegisterSignal(src, COMSIG_STORAGE_EXITED, .proc/zoom_out)
+	AddElement(/datum/element/item_scaling, 0.3, 1)
 	//If they are passed as null let's replace them with the vars on the card. this also means we can allow for map loaded ccards
 	if(!datum_series)
 		datum_series = series
@@ -75,7 +73,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
-/obj/item/tcgcard/attack_hand(mob/user)
+/obj/item/tcgcard/attack_hand(mob/user, list/modifiers)
 	if(!isturf(loc))
 		return ..()
 	var/list/choices = GLOB.tcgcard_radial_choices
@@ -102,26 +100,30 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	. = ..()
 	flip_card(user)
 
-/obj/item/tcgcard/equipped(mob/user, slot, initial)
-	. = ..()
-	zoom_in()
-
-/obj/item/tcgcard/dropped(mob/user, silent)
-	. = ..()
-	zoom_out()
-
-/obj/item/tcgcard/update_icon_state()
+/obj/item/tcgcard/update_name(updates)
 	. = ..()
 	if(!flipped)
 		var/datum/card/template = extract_datum()
 		name = template.name
-		desc = "<i>[template.desc]</i>"
-		icon_state = template.icon_state
-
 	else
 		name = "Trading Card"
+
+/obj/item/tcgcard/update_desc(updates)
+	. = ..()
+	if(!flipped)
+		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		desc = "<i>[template.desc]</i>"
+	else
 		desc = "It's the back of a trading card... no peeking!"
+
+/obj/item/tcgcard/update_icon_state()
+	if(flipped)
 		icon_state = "cardback"
+		return ..()
+
+	var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+	icon_state = template.icon_state
+	return ..()
 
 /obj/item/tcgcard/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/tcgcard))
@@ -129,9 +131,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		var/obj/item/tcgcard_deck/new_deck = new /obj/item/tcgcard_deck(drop_location())
 		new_deck.flipped = flipped
 		user.transferItemToLoc(second_card, new_deck)//Start a new pile with both cards, in the order of card placement.
-		second_card.zoom_in()
 		user.transferItemToLoc(src, new_deck)
-		zoom_in()
 		new_deck.update_icon_state()
 		user.put_in_hands(new_deck)
 	if(istype(I, /obj/item/tcgcard_deck))
@@ -141,9 +141,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			return
 		user.transferItemToLoc(src, old_deck)
 		flipped = old_deck.flipped
-		zoom_in()
-		old_deck.update_icon()
-		update_icon()
+		old_deck.update_appearance()
+		update_appearance()
 	return ..()
 
 /obj/item/tcgcard/proc/check_menu(mob/living/user)
@@ -161,18 +160,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		ntransform.TurnTo(UNTAPPED_ANGLE , TAPPED_ANGLE)
 	tapped = !tapped
 	animate(src, transform = ntransform, time = 2, easing = (EASE_IN|EASE_OUT))
-
-/**
- * Transforms the card's sprite to look like a small, paper card. Use when outside of inventory
- */
-/obj/item/tcgcard/proc/zoom_in()
-	transform = matrix()
-
-/**
- * Transforms the card's sprite to look like a large, detailed, illustrated paper card. Use when inside of inventory/storage.
- */
-/obj/item/tcgcard/proc/zoom_out()
-	transform = matrix(0.3,0,0,0,0.3,0)
 
 /obj/item/tcgcard/proc/flip_card(mob/user)
 	to_chat(user, "<span_class='notice'>You turn the card over.</span>")
@@ -196,6 +183,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	desc = "A stack of TCG cards."
 	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "deck_up"
+	base_icon_state = "deck"
 	obj_flags = UNIQUE_RENAME
 	var/flipped = FALSE
 	var/static/radial_draw = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw")
@@ -207,23 +195,26 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	LoadComponent(/datum/component/storage/concrete/tcg)
 
 /obj/item/tcgcard_deck/update_icon_state()
-	. = ..()
-	if(flipped)
-		switch(contents.len)
-			if(1 to 10)
-				icon_state = "deck_tcg_low"
-			if(11 to 20)
-				icon_state = "deck_tcg_half"
-			if(21 to INFINITY)
-				icon_state = "deck_tcg_full"
-	else
-		icon_state = "deck_up"
+	if(!flipped)
+		icon_state = "[base_icon_state]_up"
+		return ..()
+
+	switch(contents.len)
+		if(1 to 10)
+			icon_state = "[icon_state]_tcg_low"
+		if(11 to 20)
+			icon_state = "[icon_state]_tcg_half"
+		if(21 to INFINITY)
+			icon_state = "[icon_state]_tcg_full"
+		else
+			icon_state = "[base_icon_state]_tcg"
+	return ..()
 
 /obj/item/tcgcard_deck/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>\The [src] has [contents.len] cards inside.</span>"
 
-/obj/item/tcgcard_deck/attack_hand(mob/user)
+/obj/item/tcgcard_deck/attack_hand(mob/user, list/modifiers)
 	var/list/choices = list(
 		"Draw" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw"),
 		"Shuffle" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle"),
@@ -249,7 +240,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	for(var/card in 1 to contents.len)
 		var/obj/item/tcgcard/stored_card = contents[card]
 		stored_card.forceMove(drop_location())
-		stored_card.zoom_out()
 	. = ..()
 
 /obj/item/tcgcard_deck/proc/check_menu(mob/living/user)
@@ -268,7 +258,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		var/obj/item/tcgcard/new_card = I
 		new_card.flipped = flipped
 		new_card.forceMove(src)
-		new_card.zoom_in()
 
 
 /obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)
@@ -290,7 +279,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	if(contents.len <= 1)
 		var/obj/item/tcgcard/final_card = contents[1]
 		user.transferItemToLoc(final_card, drop_location())
-		final_card.zoom_out()
 		qdel(src)
 
 
@@ -320,7 +308,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	//Now flip the cards to their opposite positions.
 	for(var/a in 1 to contents.len)
 		var/obj/item/tcgcard/nu_card = contents[a]
-		nu_card.zoom_in()
 		nu_card.flipped = flipped
 		nu_card.update_icon_state()
 	update_icon_state()
@@ -377,9 +364,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/cardpack/Initialize()
 	. = ..()
-	zoom_out()
-	RegisterSignal(src, COMSIG_STORAGE_ENTERED, .proc/zoom_in)
-	RegisterSignal(src, COMSIG_STORAGE_EXITED, .proc/zoom_out)
+	AddElement(/datum/element/item_scaling, 0.4, 1)
 	//Pass by refrance moment
 	//This lets us only have one rarity table per pack, badmins beware
 	if(GLOB.cached_rarity_table[type])
@@ -390,20 +375,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		guar_rarity = GLOB.cached_guar_rarity[type]
 	else
 		GLOB.cached_guar_rarity[type] = guar_rarity
-
-/obj/item/cardpack/equipped(mob/user, slot, initial)
-	. = ..()
-	zoom_in()
-
-/obj/item/cardpack/dropped(mob/user, silent)
-	. = ..()
-	zoom_out()
-
-/obj/item/cardpack/proc/zoom_in()
-	transform = matrix()
-
-/obj/item/cardpack/proc/zoom_out()
-	transform = matrix(0.4,0,0,0,0.4,0)
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
@@ -430,15 +401,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/coin/thunderdome/Initialize()
 	. = ..()
-	transform = matrix(0.4,0,0,0,0.4,0)
-
-/obj/item/coin/thunderdome/equipped(mob/user, slot, initial)
-	. = ..()
-	transform = matrix()
-
-/obj/item/coin/thunderdome/dropped(mob/user, silent)
-	. = ..()
-	transform = matrix(0.4,0,0,0,0.4,0)
+	AddElement(/datum/element/item_scaling, 0.4, 1)
 
 /obj/item/storage/card_binder
 	name = "card binder"

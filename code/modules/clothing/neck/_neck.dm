@@ -20,7 +20,7 @@
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bluetie"
-	inhand_icon_state = ""	//no inhands
+	inhand_icon_state = "" //no inhands
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_EASY
 
@@ -55,31 +55,34 @@
 	user.visible_message("<span class='suicide'>[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!</span>")
 	return OXYLOSS
 
-/obj/item/clothing/neck/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
-	if(ishuman(M) && isliving(user))
-		if(user.a_intent == INTENT_HELP)
-			var/body_part = parse_zone(user.zone_selected)
+/obj/item/clothing/neck/stethoscope/attack(mob/living/M, mob/living/user)
+	if(!ishuman(M) || !isliving(user))
+		return ..()
+	if(user.combat_mode)
+		return
 
-			var/heart_strength = "<span class='danger'>no</span>"
-			var/lung_strength = "<span class='danger'>no</span>"
+	var/mob/living/carbon/carbon_patient = M
+	var/body_part = parse_zone(user.zone_selected)
 
-			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
-			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
+	var/heart_strength = "<span class='danger'>no</span>"
+	var/lung_strength = "<span class='danger'>no</span>"
 
-			if(!(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH))))
-				if(heart && istype(heart))
-					heart_strength = "<span class='danger'>an unstable</span>"
-					if(heart.beating)
-						heart_strength = "a healthy"
-				if(lungs && istype(lungs))
-					lung_strength = "<span class='danger'>strained</span>"
-					if(!(M.failed_last_breath || M.losebreath))
-						lung_strength = "healthy"
+	var/obj/item/organ/heart/heart = carbon_patient.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/lungs/lungs = carbon_patient.getorganslot(ORGAN_SLOT_LUNGS)
 
-			var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
-			user.visible_message("<span class='notice'>[user] places [src] against [M]'s [body_part] and listens attentively.</span>", "<span class='notice'>You place [src] against [M]'s [body_part]. [diagnosis]</span>")
-			return
-	return ..(M,user)
+	if(carbon_patient.stat != DEAD && !(HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)))
+		if(istype(heart))
+			heart_strength = (heart.beating ? "a healthy" : "<span class='danger'>an unstable</span>")
+		if(istype(lungs))
+			lung_strength = ((carbon_patient.failed_last_breath || carbon_patient.losebreath) ? "<span class='danger'>strained</span>" : "healthy")
+
+	user.visible_message("<span class='notice'>[user] places [src] against [carbon_patient]'s [body_part] and listens attentively.</span>", ignored_mobs = user)
+
+	var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration" : "You faintly hear [heart_strength] pulse")
+	if(!user.can_hear())
+		diagnosis = "Fat load of good it does you though, since you can't hear"
+
+	to_chat(user, "<span class='notice'>You place [src] against [carbon_patient]'s [body_part]. [diagnosis].</span>")
 
 ///////////
 //SCARVES//
@@ -173,8 +176,8 @@
 	icon_state = "petcollar"
 	var/tagname = null
 
-/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
-	if(ishuman(M))
+/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	if(!ismonkey(M))
 		return FALSE
 	return ..()
 

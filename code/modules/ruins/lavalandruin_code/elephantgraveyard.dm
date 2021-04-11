@@ -40,6 +40,9 @@
 	slowdown = 0.5
 	floor_variance = 30
 
+/turf/open/floor/plating/asteroid/basalt/wasteland/setup_broken_states()
+	return list("wasteland")
+
 /turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
 	.=..()
 	if(prob(floor_variance))
@@ -64,7 +67,7 @@
 		new /obj/item/stack/sheet/bone(src, 1)
 
 //***Oil well puddles.
-/obj/structure/sink/oil_well	//You're not going to enjoy bathing in this...
+/obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
 	name = "oil well"
 	desc = "A bubbling pool of oil. This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
 	icon = 'icons/obj/watercloset.dmi'
@@ -76,12 +79,12 @@
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
 
-/obj/structure/sink/oil_well/attack_hand(mob/M)
+/obj/structure/sink/oil_well/attack_hand(mob/user, list/modifiers)
 	flick("puddle-oil-splash",src)
-	reagents.expose(M, TOUCH, 20) //Covers target in 20u of oil.
-	to_chat(M, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")
+	reagents.expose(user, TOUCH, 20) //Covers target in 20u of oil.
+	to_chat(user, "<span class='notice'>You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water.</span>")
 
-/obj/structure/sink/oil_well/attackby(obj/item/O, mob/user, params)
+/obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
 	flick("puddle-oil-splash",src)
 	if(O.tool_behaviour == TOOL_SHOVEL && !(flags_1&NODECONSTRUCT_1)) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
@@ -97,7 +100,7 @@
 				return TRUE
 			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
 			return FALSE
-	if(user.a_intent != INTENT_HARM)
+	if(!user.combat_mode)
 		to_chat(user, "<span class='notice'>You won't have any luck getting \the [O] out if you drop it in the oil.</span>")
 		return 1
 	else
@@ -107,6 +110,7 @@
 	new /obj/effect/decal/cleanable/oil(loc)
 
 //***Grave mounds.
+/// has no items inside unless you use the filled subtype
 /obj/structure/closet/crate/grave
 	name = "burial mound"
 	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
@@ -125,7 +129,7 @@
 	var/lead_tomb = FALSE
 	var/first_open = FALSE
 
-/obj/structure/closet/crate/grave/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
+/obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
 	new /obj/effect/decal/remains/human/grave(src)
 	switch(rand(1,8))
@@ -141,7 +145,7 @@
 			new /obj/item/storage/book/bible/booze(src)
 		if(5)
 			new /obj/item/clothing/neck/stethoscope(src)
-			new	/obj/item/scalpel(src)
+			new /obj/item/scalpel(src)
 			new /obj/item/hemostat(src)
 
 		if(6)
@@ -158,7 +162,7 @@
 		to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
 
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
-	if(user.a_intent == INTENT_HELP) //checks to attempt to dig the grave, must be done on help intent only.
+	if(!user.combat_mode) //checks to attempt to dig the grave, must be done with combat mode off only.
 		if(!opened)
 			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, "<span class='notice'>You start start to dig open \the [src]  with \the [S]...</span>")
@@ -166,7 +170,7 @@
 					opened = TRUE
 					locked = TRUE
 					dump_contents()
-					update_icon()
+					update_appearance()
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
 					if(lead_tomb == TRUE && first_open == TRUE)
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
@@ -181,7 +185,7 @@
 			to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
 			return 1
 
-	else if((user.a_intent != INTENT_HELP) && opened) //checks to attempt to remove the grave entirely.
+	else if((user.combat_mode) && opened) //checks to attempt to remove the grave entirely.
 		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 			to_chat(user, "<span class='notice'>You start to remove \the [src]  with \the [S].</span>")
 			if (do_after(user,15, target = src))
@@ -194,11 +198,11 @@
 /obj/structure/closet/crate/grave/bust_open()
 	..()
 	opened = TRUE
-	update_icon()
+	update_appearance()
 	dump_contents()
 	return
 
-/obj/structure/closet/crate/grave/lead_researcher
+/obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
 	desc = "Even in a place filled to the brim with graves, this one shows a level of preperation and planning that fills you with dread."
 	icon = 'icons/obj/crates.dmi'
@@ -206,7 +210,7 @@
 	lead_tomb = TRUE
 	first_open = TRUE
 
-/obj/structure/closet/crate/grave/lead_researcher/PopulateContents()  //ADVANCED GRAVEROBBING
+/obj/structure/closet/crate/grave/filled/lead_researcher/PopulateContents()  //ADVANCED GRAVEROBBING
 	..()
 	new /obj/effect/decal/cleanable/blood/gibs/old(src)
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)

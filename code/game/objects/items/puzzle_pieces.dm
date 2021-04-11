@@ -1,6 +1,6 @@
 //**************
 //*****Keys*******************
-//**************		**  **
+//************** **  **
 /obj/item/keycard
 	name = "security keycard"
 	desc = "This feels like it belongs to a door."
@@ -55,7 +55,7 @@
 	return
 
 /obj/machinery/door/keycard/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/machinery/door/keycard/try_to_activate_door(mob/user)
 	add_fingerprint(user)

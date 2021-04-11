@@ -6,12 +6,17 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 
 /datum/material
+	/// What the material is referred to as IC.
 	var/name = "material"
+	/// A short description of the material. Not used anywhere, yet...
 	var/desc = "its..stuff."
+	/// What the material is indexed by in the SSmaterials.materials list. Defaults to the type of the material.
+	var/id
+
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
 	var/color
 	///Base alpha of the material, is used for greyscale icons.
-	var/alpha
+	var/alpha = 255
 	///Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
@@ -39,12 +44,21 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///What type of shard the material will shatter to
 	var/obj/item/shard_type
 
-/datum/material/New()
-	. = ..()
+/** Handles initializing the material.
+ *
+ * Arugments:
+ * - _id: The ID the material should use. Overrides the existing ID.
+ */
+/datum/material/proc/Initialize(_id, ...)
+	if(_id)
+		id = _id
+	else if(isnull(id))
+		id = type
+
 	if(texture_layer_icon_state)
 		cached_texture_filter_icon = icon('icons/materials/composite.dmi', texture_layer_icon_state)
 
-
+	return TRUE
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
@@ -63,7 +77,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.name = "[name] [source.name]"
 
 	if(beauty_modifier)
-		source.AddComponent(/datum/component/beauty, beauty_modifier * amount)
+		source.AddElement(/datum/element/beauty, beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -131,8 +145,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = initial(source.name)
 
-	if(beauty_modifier) //component/beauty/InheritComponent() will handle the removal.
-		source.AddComponent(/datum/component/beauty, -beauty_modifier * amount)
+	if(beauty_modifier)
+		source.RemoveElement(/datum/element/beauty, beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, amount, material_flags)
@@ -149,11 +163,11 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.throwforce = initial(o.throwforce)
 
 /datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
-	if(alpha)
-		RemoveElement(/datum/element/turf_z_transparency, FALSE)
+	if(alpha < 255)
+		T.RemoveElement(/datum/element/turf_z_transparency, FALSE)
 
 /**
- *	This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
+ * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
  * Arguments
  * * M - person consuming the mat
  * * S - (optional) item the mat is contained in (NOT the item with the mat itself)

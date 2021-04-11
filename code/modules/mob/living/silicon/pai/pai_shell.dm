@@ -128,7 +128,7 @@
 		set_light(0)
 		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
 
-/mob/living/silicon/pai/mob_try_pickup(mob/living/user)
+/mob/living/silicon/pai/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!possible_chassis[chassis])
 		to_chat(user, "<span class='warning'>[src]'s current form isn't able to be carried!</span>")
 		return FALSE

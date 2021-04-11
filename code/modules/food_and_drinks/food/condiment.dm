@@ -1,8 +1,8 @@
 
 ///////////////////////////////////////////////Condiments
 //Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
-//	leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
-//	to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
+// leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
+// to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
 
 //Food items that aren't eaten normally and leave an empty container behind.
 /obj/item/reagent_containers/food/condiment
@@ -25,14 +25,16 @@
 
 /obj/item/reagent_containers/food/condiment/update_icon_state()
 	. = ..()
-	if (reagents.reagent_list.len)
-		if (icon_preempty)
+	if(reagents.reagent_list.len)
+		if(icon_preempty)
 			icon_state = icon_preempty
 			icon_preempty = null
-	else
-		if (icon_empty && !icon_preempty)
-			icon_preempty = icon_state
-			icon_state = icon_empty
+		return ..()
+
+	if(icon_empty && !icon_preempty)
+		icon_preempty = icon_state
+		icon_state = icon_empty
+	return ..()
 
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")
@@ -99,6 +101,14 @@
 	list_reagents = list(/datum/reagent/consumable/enzyme = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/enzyme/examine(mob/user)
+	. = ..()
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cheesewheel]
+	var/milk_required = recipe.required_reagents[/datum/reagent/consumable/milk]
+	var/enzyme_required = recipe.required_catalysts[/datum/reagent/consumable/enzyme]
+	. += "<span class='notice'>[milk_required] milk, [enzyme_required] enzyme and you got cheese.</span>"
+	. += "<span class='warning'>Remember, the enzyme isn't used up, so return it to the bottle, dingus!</span>"
+
 /obj/item/reagent_containers/food/condiment/sugar
 	name = "sugar sack"
 	desc = "Tasty spacey sugar!"
@@ -109,8 +119,16 @@
 	list_reagents = list(/datum/reagent/consumable/sugar = 50)
 	fill_icon_thresholds = null
 
-/obj/item/reagent_containers/food/condiment/saltshaker		//Separate from above since it's a small shaker rather then
-	name = "salt shaker"											//	a large one.
+/obj/item/reagent_containers/food/condiment/sugar/examine(mob/user)
+	. = ..()
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter]
+	var/flour_required = recipe.required_reagents[/datum/reagent/consumable/flour]
+	var/eggyolk_required = recipe.required_reagents[/datum/reagent/consumable/eggyolk]
+	var/sugar_required = recipe.required_reagents[/datum/reagent/consumable/sugar]
+	. += "<span class='notice'>[flour_required] flour, [eggyolk_required] egg yolk (or soy milk), [sugar_required] sugar makes cake dough. You can make pie dough from it.</span>"
+
+/obj/item/reagent_containers/food/condiment/saltshaker //Separate from above since it's a small shaker rather then
+	name = "salt shaker" // a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
 	icon_empty = "emptyshaker"
@@ -165,6 +183,14 @@
 	list_reagents = list(/datum/reagent/consumable/milk = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/milk/examine(mob/user)
+	. = ..()
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cheesewheel]
+	var/milk_required = recipe.required_reagents[/datum/reagent/consumable/milk]
+	var/enzyme_required = recipe.required_catalysts[/datum/reagent/consumable/enzyme]
+	. += "<span class='notice'>[milk_required] milk, [enzyme_required] enzyme and you got cheese.</span>"
+	. += "<span class='warning'>Remember, the enzyme isn't used up, so return it to the bottle, dingus!</span>"
+
 /obj/item/reagent_containers/food/condiment/flour
 	name = "flour sack"
 	desc = "A big bag of flour. Good for baking!"
@@ -174,6 +200,19 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	list_reagents = list(/datum/reagent/consumable/flour = 30)
 	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/food/condiment/flour/examine(mob/user)
+	. = ..()
+	var/datum/chemical_reaction/recipe_dough = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/dough]
+	var/datum/chemical_reaction/recipe_cakebatter = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter]
+	var/dough_flour_required = recipe_dough.required_reagents[/datum/reagent/consumable/flour]
+	var/dough_water_required = recipe_dough.required_reagents[/datum/reagent/water]
+	var/cakebatter_flour_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/flour]
+	var/cakebatter_eggyolk_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/eggyolk]
+	var/cakebatter_sugar_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/sugar]
+	. += "<b><i>You retreat inward and recall the teachings of... Making Dough...</i></b>"
+	. += "<span class='notice'>[dough_flour_required] flour, [dough_water_required] water makes normal dough. You can make flat dough from it.</span>"
+	. += "<span class='notice'>[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg yolk (or soy milk), [cakebatter_sugar_required] sugar makes cake dough. You can make pie dough from it.</span>"
 
 /obj/item/reagent_containers/food/condiment/soymilk
 	name = "soy milk"
@@ -243,6 +282,7 @@
 	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, .proc/on_reagent_del, TRUE)
 
 /obj/item/reagent_containers/food/condiment/pack/update_icon()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/item/reagent_containers/food/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.

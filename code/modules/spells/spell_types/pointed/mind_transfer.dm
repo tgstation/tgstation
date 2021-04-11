@@ -50,7 +50,7 @@
 
 	ghost.mind.transfer_to(user)
 	if(ghost.key)
-		user.key = ghost.key	//have to transfer the key since the mind was not active
+		user.key = ghost.key //have to transfer the key since the mind was not active
 	qdel(ghost)
 	//MIND TRANSFER END
 

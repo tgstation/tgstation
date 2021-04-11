@@ -20,13 +20,19 @@
 	. = ..()
 	grill_loop = new(list(src), FALSE)
 
+/obj/machinery/grill/Destroy()
+	QDEL_NULL(grill_loop)
+	return ..()
+
 /obj/machinery/grill/update_icon_state()
 	if(grilled_item)
 		icon_state = "grill"
-	else if(grill_fuel > 0)
+		return ..()
+	if(grill_fuel > 0)
 		icon_state = "grill_on"
-	else
-		icon_state = "grill_open"
+		return ..()
+	icon_state = "grill_open"
+	return ..()
 
 /obj/machinery/grill/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/sheet/mineral/coal) || istype(I, /obj/item/stack/sheet/mineral/wood))
@@ -38,7 +44,7 @@
 		else
 			grill_fuel += (50 * stackamount)
 		S.use(stackamount)
-		update_icon()
+		update_appearance()
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, "<span class='warning'>You don't feel it would be wise to grill [I]...</span>")
@@ -48,7 +54,7 @@
 			grill_fuel += (20 * (I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy)))
 			to_chat(user, "<span class='notice'>You pour the Monkey Energy in [src].</span>")
 			I.reagents.remove_reagent(/datum/reagent/consumable/monkey_energy, I.reagents.get_reagent_amount(/datum/reagent/consumable/monkey_energy))
-			update_icon()
+			update_appearance()
 			return
 	else if(IS_EDIBLE(I))
 		if(HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
@@ -64,7 +70,7 @@
 			RegisterSignal(grilled_item, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
 			ADD_TRAIT(grilled_item, TRAIT_FOOD_GRILLED, "boomers")
 			to_chat(user, "<span class='notice'>You put the [grilled_item] on [src].</span>")
-			update_icon()
+			update_appearance()
 			grill_loop.start()
 			return
 
@@ -72,7 +78,7 @@
 
 /obj/machinery/grill/process(delta_time)
 	..()
-	update_icon()
+	update_appearance()
 	if(grill_fuel <= 0)
 		return
 	else
@@ -111,18 +117,18 @@
 /obj/machinery/grill/deconstruct(disassembled = TRUE)
 	finish_grill()
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 5)
+		new /obj/item/stack/sheet/iron(loc, 5)
 		new /obj/item/stack/rods(loc, 5)
 	..()
 
 /obj/machinery/grill/attack_ai(mob/user)
 	return
 
-/obj/machinery/grill/attack_hand(mob/user)
+/obj/machinery/grill/attack_hand(mob/user, list/modifiers)
 	if(grilled_item)
 		to_chat(user, "<span class='notice'>You take out [grilled_item] from [src].</span>")
 		grilled_item.forceMove(drop_location())
-		update_icon()
+		update_appearance()
 		return
 	return ..()
 

@@ -12,6 +12,8 @@
 		var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
 
 		item_blacklist[target] = TRUE
+		if(istype(controller, /datum/ai_controller/monkey)) //What the fuck
+			controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, /datum/ai_controller/monkey/proc/target_del)
 
 	controller.blackboard[BB_MONKEY_PICKUPTARGET] = null
 
@@ -20,6 +22,10 @@
 
 	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
 	var/best_force = controller.blackboard[BB_MONKEY_BEST_FORCE_FOUND]
+
+	if(!isturf(living_pawn.loc))
+		finish_action(controller, FALSE)
+		return
 
 	if(!target)
 		finish_action(controller, FALSE)
@@ -31,6 +37,7 @@
 
 	// Strong weapon
 	else if(target.force > best_force)
+		living_pawn.drop_all_held_items()
 		living_pawn.put_in_hands(target)
 		controller.blackboard[BB_MONKEY_BEST_FORCE_FOUND] = target.force
 		finish_action(controller, TRUE)
@@ -59,12 +66,13 @@
 	required_distance = 0
 
 /datum/ai_behavior/monkey_equip/ground/perform(delta_time, datum/ai_controller/controller)
+	. = ..()
 	equip_item(controller)
 
 /datum/ai_behavior/monkey_equip/pickpocket
 
 /datum/ai_behavior/monkey_equip/pickpocket/perform(delta_time, datum/ai_controller/controller)
-
+	. = ..()
 	if(controller.blackboard[BB_MONKEY_PICKPOCKETING]) //We are pickpocketing, don't do ANYTHING!!!!
 		return
 	INVOKE_ASYNC(src, .proc/attempt_pickpocket, controller)
@@ -76,7 +84,7 @@
 
 	var/mob/living/living_pawn = controller.pawn
 
-	victim.visible_message("<span class='warning'>[living_pawn] starts trying to take [target] from [controller.current_movement_target]!</span>", "<span class='danger'>[living_pawn] tries to take [target]!</span>")
+	victim.visible_message("<span class='warning'>[living_pawn] starts trying to take [target] from [victim]!</span>", "<span class='danger'>[living_pawn] tries to take [target]!</span>")
 
 	controller.blackboard[BB_MONKEY_PICKPOCKETING] = TRUE
 
@@ -137,7 +145,7 @@
 	if(!target || target.stat != CONSCIOUS)
 		finish_action(controller, TRUE) //Target == owned
 
-	if(living_pawn.Adjacent(target) && isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn))	// if right next to perp
+	if(living_pawn.Adjacent(target) && isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn)) // if right next to perp
 		// check if target has a weapon
 		var/obj/item/W
 		for(var/obj/item/I in target.held_items)
@@ -147,11 +155,9 @@
 
 		// if the target has a weapon, chance to disarm them
 		if(W && DT_PROB(MONKEY_ATTACK_DISARM_PROB, delta_time))
-			living_pawn.a_intent = INTENT_DISARM
-			monkey_attack(controller, target, delta_time)
+			monkey_attack(controller, target, delta_time, TRUE)
 		else
-			living_pawn.a_intent = INTENT_HARM
-			monkey_attack(controller, target, delta_time)
+			monkey_attack(controller, target, delta_time, FALSE)
 
 
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded)
@@ -161,7 +167,7 @@
 	controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = null
 
 /// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
-/datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, delta_time)
+/datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, delta_time, disarm)
 
 	var/mob/living/living_pawn = controller.pawn
 
@@ -174,11 +180,13 @@
 
 	living_pawn.face_atom(target)
 
+	living_pawn.set_combat_mode(TRUE)
+
 	// attack with weapon if we have one
 	if(weapon)
 		weapon.melee_attack_chain(living_pawn, target)
 	else
-		living_pawn.UnarmedAttack(target)
+		living_pawn.UnarmedAttack(target, null, disarm ? list("right" = TRUE) : null) //Fake a right click if we're disarming
 	// no de-aggro
 	if(controller.blackboard[BB_MONKEY_AGRESSIVE])
 		return
@@ -215,7 +223,6 @@
 
 	if(target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(target.pulledby, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
-			living_pawn.a_intent = INTENT_GRAB
 			target.grabbedby(living_pawn)
 		return //Do the rest next turn
 

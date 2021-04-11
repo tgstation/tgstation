@@ -1,5 +1,0 @@
-author: "interestingusernam3"
-delete-after: True
-changes: 
-  - code_imp: "Whetstones will now become worn when at 0 uses instead of being either used or not used. All currently existing whetstones start at 1 use."
-  - admin: "It is now possible to make a whetstone able to be used multiple times via var editing"

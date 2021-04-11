@@ -55,6 +55,10 @@
 	name = "Pirate Shuttle"
 	requires_power = TRUE
 
+/area/shuttle/pirate/flying_dutchman
+	name = "Flying Dutchman"
+	requires_power = FALSE
+
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////
 
 /area/shuttle/hunter
@@ -102,19 +106,19 @@
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"
-	area_flags = BLOBS_ALLOWED
+	area_flags = NONE
 
 /area/shuttle/pod_2
 	name = "Escape Pod Two"
-	area_flags = BLOBS_ALLOWED
+	area_flags = NONE
 
 /area/shuttle/pod_3
 	name = "Escape Pod Three"
-	area_flags = BLOBS_ALLOWED
+	area_flags = NONE
 
 /area/shuttle/pod_4
 	name = "Escape Pod Four"
-	area_flags = BLOBS_ALLOWED
+	area_flags = NONE
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
@@ -136,7 +140,8 @@
 	name = "Emergency Shuttle"
 	area_flags = BLOBS_ALLOWED
 	area_limited_icon_smoothing = /area/shuttle/escape
-	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
+	flags_1 = CAN_BE_DIRTY_1
+	area_flags = NO_ALERTS | CULT_PERMITTED
 
 /area/shuttle/escape/backup
 	name = "Backup Emergency Shuttle"

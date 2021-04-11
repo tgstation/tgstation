@@ -171,16 +171,23 @@
 	cost = 10
 	requirements = list(50,40,30,20,10,10,10,10,10,10)
 	repeatable = TRUE
-	flags = TRAITOR_RULESET
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
 	var/antag_count = mode.current_players[CURRENT_LIVING_ANTAGS].len
 	var/max_traitors = round(player_count / 10) + 1
-	if ((antag_count < max_traitors) && prob(mode.threat_level))//adding traitors if the antag population is getting low
-		return ..()
-	else
+
+	// adding traitors if the antag population is getting low
+	var/too_little_antags = antag_count < max_traitors
+	if (!too_little_antags)
+		log_game("DYNAMIC: Too many living antags compared to living players ([antag_count] living antags, [player_count] living players, [max_traitors] max traitors)")
 		return FALSE
+
+	if (!prob(mode.threat_level))
+		log_game("DYNAMIC: Random chance to roll autotraitor failed, it was a [mode.threat_level]% chance.")
+		return FALSE
+
+	return ..()
 
 /datum/dynamic_ruleset/midround/autotraitor/trim_candidates()
 	..()
@@ -203,6 +210,8 @@
 	living_players -= M
 	var/datum/antagonist/traitor/newTraitor = new
 	M.mind.add_antag_datum(newTraitor)
+	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
+	log_game("DYNAMIC: [key_name(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	return TRUE
 
 //////////////////////////////////////////////
@@ -221,10 +230,10 @@
 	weight = 1
 	cost = 25
 	requirements = list(101,101,101,101,101,80,50,30,10,10)
-	flags = HIGHLANDER_RULESET
+	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/families)
 	minimum_players = 36
-	antag_cap = list(6,6,6,6,6,6,6,6,6,6)
+	antag_cap = 6
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
 
@@ -277,7 +286,7 @@
 //////////////////////////////////////////////
 //                                          //
 //         Malfunctioning AI                //
-//                              		    //
+//     //
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/midround/malf
@@ -315,7 +324,7 @@
 	M.mind.special_role = antag_flag
 	M.mind.add_antag_datum(AI)
 	if(prob(ion_announce))
-		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/ai/ionstorm.ogg')
+		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", ANNOUNCER_IONSTORM)
 		if(prob(removeDontImproveChance))
 			M.replace_random_law(generate_ion_law(), list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
 		else
@@ -337,7 +346,7 @@
 	required_candidates = 1
 	weight = 1
 	cost = 20
-	requirements = list(90,90,70,40,30,20,10,10,10,10)
+	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
@@ -371,7 +380,7 @@
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
-	flags = HIGHLANDER_RULESET
+	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)

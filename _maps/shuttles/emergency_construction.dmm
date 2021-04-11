@@ -136,11 +136,11 @@
 /area/shuttle/escape)
 "m" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal/fifty{
+/obj/item/stack/sheet/iron/fifty{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/metal/fifty{
+/obj/item/stack/sheet/iron/fifty{
 	pixel_x = -2;
 	pixel_y = -2
 	},

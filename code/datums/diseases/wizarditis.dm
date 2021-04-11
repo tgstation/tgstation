@@ -23,30 +23,30 @@ TARCOL MINTI ZHERI - forcewall
 STI KALY - blind
 */
 
-/datum/disease/wizarditis/stage_act()
+/datum/disease/wizarditis/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if(prob(0.5))
+			if(DT_PROB(0.25, delta_time))
 				affected_mob.say(pick("You shall not pass!", "Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!"), forced = "wizarditis")
-			if(prob(0.5))
+			if(DT_PROB(0.25, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel [pick("that you don't have enough mana", "that the winds of magic are gone", "an urge to summon familiar")].</span>")
 		if(3)
-			if(prob(0.5))
+			if(DT_PROB(0.25, delta_time))
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!", "STI KALY!", "TARCOL MINTI ZHERI!"), forced = "wizarditis")
-			if(prob(0.5))
+			if(DT_PROB(0.25, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel [pick("the magic bubbling in your veins","that this location gives you a +1 to INT","an urge to summon familiar")].</span>")
 		if(4)
-			if(prob(1))
+			if(DT_PROB(0.5, delta_time))
 				affected_mob.say(pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!"), forced = "wizarditis")
 				return
-			if(prob(0.5))
+			if(DT_PROB(0.25, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel [pick("the tidal wave of raw power building inside","that this location gives you a +2 to INT and +1 to WIS","an urge to teleport")].</span>")
 				spawn_wizard_clothes(50)
-			if(prob(0.01))
+			if(DT_PROB(0.005, delta_time))
 				teleport()
 
 

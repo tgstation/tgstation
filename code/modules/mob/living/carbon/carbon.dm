@@ -1,6 +1,6 @@
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
-	create_reagents(1000)
+	create_reagents(1000, REAGENT_HOLDER_ALIVE)
 	assign_bodypart_ownership()
 	update_body_parts() //to update the carbon's new bodyparts appearance
 
@@ -8,8 +8,7 @@
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 	GLOB.carbon_list += src
-	if(!mapload)  //I don't want no gas leaks on my space ruin you hear?
-		RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
+	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -43,10 +42,10 @@
 		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
-			H.update_icon()
+			H.update_appearance()
 		H = hud_used.hand_slots["[held_index]"]
 		if(H)
-			H.update_icon()
+			H.update_appearance()
 
 
 /mob/living/carbon/activate_hand(selhand) //l/r OR 1-held_items.len
@@ -65,14 +64,15 @@
 	else
 		mode() // Activate held item
 
-/mob/living/carbon/attackby(obj/item/I, mob/user, params)
+/mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
 	for(var/datum/surgery/S in surgeries)
 		if(body_position == LYING_DOWN || !S.lying_required)
-			if((S.self_operable || user != src) && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
-				if(S.next_step(user,user.a_intent))
+			var/list/modifiers = params2list(params)
+			if((S.self_operable || user != src) && !user.combat_mode)
+				if(S.next_step(user, modifiers))
 					return 1
 
-	if(!all_wounds || !(user.a_intent == INTENT_HELP || user == src))
+	if(!all_wounds || !(!user.combat_mode || user == src))
 		return ..()
 
 	for(var/i in shuffle(all_wounds))
@@ -118,30 +118,33 @@
 /mob/living/carbon/proc/toggle_throw_mode()
 	if(stat)
 		return
-	if(in_throw_mode)
-		throw_mode_off()
+	if(throw_mode)
+		throw_mode_off(THROW_MODE_TOGGLE)
 	else
-		throw_mode_on()
+		throw_mode_on(THROW_MODE_TOGGLE)
 
 
-/mob/living/carbon/proc/throw_mode_off()
-	in_throw_mode = FALSE
+/mob/living/carbon/proc/throw_mode_off(method)
+	if(throw_mode > method) //A toggle doesnt affect a hold
+		return
+	throw_mode = THROW_MODE_DISABLED
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
 
 
-/mob/living/carbon/proc/throw_mode_on()
-	in_throw_mode = TRUE
+/mob/living/carbon/proc/throw_mode_on(mode = THROW_MODE_TOGGLE)
+	throw_mode = mode
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
 
 /mob/proc/throw_item(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CARBON_THROW_THING, src, target)
 	return
 
 /mob/living/carbon/throw_item(atom/target)
 	. = ..()
-	throw_mode_off()
+	throw_mode_off(THROW_MODE_TOGGLE)
 	if(!target || !isturf(loc))
 		return
 	if(istype(target, /atom/movable/screen))
@@ -188,70 +191,8 @@
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
 
-
-/mob/living/carbon/show_inv(mob/user)
-	user.set_machine(src)
-	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
-	var/obscured = check_obscured_slots()
-	var/list/dat = list()
-
-	dat += "<table>"
-	for(var/i in 1 to held_items.len)
-		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<tr><td><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a></td></tr>"
-	dat += "<tr><td>&nbsp;</td></tr>"
-
-	dat += "<tr><td><B>Back:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_BACK]'>[(back && !(back.item_flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A>"
-	if(has_breathable_mask && istype(back, /obj/item/tank))
-		dat += "&nbsp;<A href='?src=[REF(src)];internal=[ITEM_SLOT_BACK]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
-
-	dat += "</td></tr><tr><td>&nbsp;</td></tr>"
-
-	dat += "<tr><td><B>Head:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_HEAD]'>[(head && !(head.item_flags & ABSTRACT)) ? head : "<font color=grey>Empty</font>"]</A></td></tr>"
-
-	if(obscured & ITEM_SLOT_MASK)
-		dat += "<tr><td><font color=grey><B>Mask:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
-	else
-		dat += "<tr><td><B>Mask:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_MASK]'>[(wear_mask && !(wear_mask.item_flags & ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
-
-	dat += "<tr><td><B>Neck:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_NECK]'>[(wear_neck && !(wear_neck.item_flags & ABSTRACT)) ? wear_neck : "<font color=grey>Empty</font>"]</A></td></tr>"
-
-	if(handcuffed)
-		dat += "<tr><td><B>Handcuffed:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_HANDCUFFED]'>Remove</A></td></tr>"
-	if(legcuffed)
-		dat += "<tr><td><B>Legcuffed:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_LEGCUFFED]'>Remove</A></td></tr>"
-
-	dat += {"</table>
-	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
-	"}
-
-	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)
-	popup.set_content(dat.Join())
-	popup.open()
-
 /mob/living/carbon/Topic(href, href_list)
 	..()
-	//strip panel
-	if(href_list["internal"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
-		var/slot = text2num(href_list["internal"])
-		var/obj/item/ITEM = get_item_by_slot(slot)
-		if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.clothing_flags & MASKINTERNALS))
-			visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
-							"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on your [ITEM.name].</span>", null, null, usr)
-			to_chat(usr, "<span class='notice'>You try to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name]...</span>")
-			if(do_mob(usr, src, POCKET_STRIP_DELAY))
-				if(internal)
-					internal = null
-					update_internals_hud_icon(0)
-				else if(ITEM && istype(ITEM, /obj/item/tank))
-					if((wear_mask && (wear_mask.clothing_flags & MASKINTERNALS)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-						internal = ITEM
-						update_internals_hud_icon(1)
-
-				visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
-								"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on your [ITEM.name].</span>", null, null, usr)
-				to_chat(usr, "<span class='notice'>You [internal ? "open" : "close"] the valve on [src]'s [ITEM.name].</span>")
-
 	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
 		if(!L)
@@ -454,7 +395,7 @@
 	. = ..()
 	. += add_abilities_to_panel()
 
-/mob/living/carbon/attack_ui(slot)
+/mob/living/carbon/attack_ui(slot, params)
 	if(!has_hand_for_held_index(active_hand_index))
 		return 0
 	return ..()
@@ -556,13 +497,13 @@
 /mob/living/carbon/updatehealth()
 	if(status_flags & GODMODE)
 		return
-	var/total_burn	= 0
-	var/total_brute	= 0
+	var/total_burn = 0
+	var/total_brute = 0
 	var/total_stamina = 0
-	for(var/X in bodyparts)	//hardcoded to streamline things a bit
+	for(var/X in bodyparts) //hardcoded to streamline things a bit
 		var/obj/item/bodypart/BP = X
-		total_brute	+= (BP.brute_dam * BP.body_damage_coeff)
-		total_burn	+= (BP.burn_dam * BP.body_damage_coeff)
+		total_brute += (BP.brute_dam * BP.body_damage_coeff)
+		total_burn += (BP.burn_dam * BP.body_damage_coeff)
 		total_stamina += (BP.stamina_dam * BP.stam_damage_coeff)
 	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION))
 	staminaloss = round(total_stamina, DAMAGE_PRECISION)
@@ -861,8 +802,9 @@
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
 		reagents.clear_reagents()
-		for(var/addi in reagents.addiction_list)
-			reagents.remove_addiction(addi)
+	if(mind)
+		for(var/addiction_type in subtypesof(/datum/addiction))
+			mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
@@ -881,8 +823,6 @@
 		for(var/obj/item/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
 		update_handcuffed()
-		if(reagents)
-			reagents.addiction_list = list()
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 
@@ -1323,5 +1263,13 @@
 
 	return ..()
 
+
+/mob/living/carbon/get_attack_type()
+	var/datum/species/species = dna?.species
+	if (species)
+		return species.attack_type
+	return ..()
+
+
 /mob/living/carbon/proc/attach_rot(mapload)
-	AddComponent(/datum/component/rot/corpse)
+	AddComponent(/datum/component/rot, 6 MINUTES, 1)

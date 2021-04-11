@@ -3,7 +3,7 @@
 	desc = "It measures something."
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
 	icon_state = "meterX"
-	layer = GAS_PUMP_LAYER
+	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -144,7 +144,7 @@
 		deconstruct()
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
-//	why are you yelling?
+// why are you yelling?
 /obj/machinery/meter/turf
 
 /obj/machinery/meter/turf/reattach_to_layer()

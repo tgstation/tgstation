@@ -8,16 +8,17 @@
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/clown
+	plasmaman_outfit = /datum/outfit/plasmaman/clown
 
-	access = list(ACCESS_THEATRE)
-	minimal_access = list(ACCESS_THEATRE)
 	paycheck = PAYCHECK_MINIMAL
 	paycheck_department = ACCOUNT_SRV
 
 	liver_traits = list(TRAIT_COMEDY_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CLOWN
+	departments = DEPARTMENT_SERVICE
 
+	family_heirlooms = list(/obj/item/bikehorn/golden)
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
 	. = ..()
@@ -49,6 +50,13 @@
 	box = /obj/item/storage/box/hug/survival
 
 	chameleon_extras = /obj/item/stamp/clown
+
+	id_trim = /datum/id_trim/job/clown
+
+/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
+		backpack_contents[/obj/item/stack/sheet/mineral/bananium/five] = 1
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

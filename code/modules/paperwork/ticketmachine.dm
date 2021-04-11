@@ -5,6 +5,7 @@
 	name = "ticket machine"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "ticketmachine"
+	base_icon_state = "ticketmachine"
 	desc = "A marvel of bureaucratic engineering encased in an efficient plastic shell. It can be refilled with a hand labeler refill roll and linked to buttons with a multitool."
 	density = FALSE
 	maptext_height = 26
@@ -41,11 +42,11 @@
 			ticket.audible_message("<span class='notice'>\the [ticket] disperses!</span>")
 			qdel(ticket)
 		tickets.Cut()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/ticket_machine/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/ticket_machine/proc/increment()
 	if(current_number > ticket_number)
@@ -59,7 +60,7 @@
 		say("Now serving ticket #[current_number]!")
 		if(!(obj_flags & EMAGGED) && tickets[current_number])
 			tickets[current_number].audible_message("<span class='notice'>\the [tickets[current_number]] vibrates!</span>")
-		update_icon() //Update our icon here rather than when they take a ticket to show the current ticket number being served
+		update_appearance() //Update our icon here rather than when they take a ticket to show the current ticket number being served
 
 /obj/machinery/button/ticket_machine
 	name = "increment ticket counter"
@@ -81,15 +82,15 @@
 		if(M.buffer && !istype(M.buffer, /obj/machinery/ticket_machine))
 			return
 		var/obj/item/assembly/control/ticket_machine/controller = device
-		controller.linked = M.buffer
+		controller.linked = WEAKREF(M.buffer)
 		id = null
 		controller.id = null
-		to_chat(user, "<span class='warning'>You've linked [src] to [controller.linked].</span>")
+		to_chat(user, "<span class='warning'>You've linked [src] to [M.buffer].</span>")
 
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
 	desc = "A remote controller for the HoP's ticket machine."
-	var/obj/machinery/ticket_machine/linked //To whom are we linked?
+	var/datum/weakref/linked //To whom are we linked?
 
 /obj/item/assembly/control/ticket_machine/Initialize()
 	..()
@@ -101,7 +102,7 @@
 /obj/item/assembly/control/ticket_machine/proc/find_machine() //Locate the one to which we're linked
 	for(var/obj/machinery/ticket_machine/ticketsplease in GLOB.machines)
 		if(ticketsplease.id == id)
-			linked = ticketsplease
+			linked = WEAKREF(ticketsplease)
 	if(linked)
 		return TRUE
 	else
@@ -112,19 +113,26 @@
 		return
 	if(!linked)
 		return
+	var/obj/machinery/ticket_machine/machine = linked.resolve()
+	if(!machine)
+		return
 	cooldown = TRUE
-	linked.increment()
+	machine.increment()
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 /obj/machinery/ticket_machine/update_icon()
+	. = ..()
+	handle_maptext()
+
+/obj/machinery/ticket_machine/update_icon_state()
 	switch(ticket_number) //Gives you an idea of how many tickets are left
 		if(0 to 49)
-			icon_state = "ticketmachine_100"
+			icon_state = "[base_icon_state]_100"
 		if(50 to 99)
-			icon_state = "ticketmachine_50"
+			icon_state = "[base_icon_state]_50"
 		if(100)
-			icon_state = "ticketmachine_0"
-	handle_maptext()
+			icon_state = "[base_icon_state]_0"
+	return ..()
 
 /obj/machinery/ticket_machine/proc/handle_maptext()
 	switch(ticket_number) //This is here to handle maptext offsets so that the numbers align.
@@ -154,13 +162,13 @@
 					qdel(ticket)
 				tickets.Cut()
 			max_number = initial(max_number)
-			update_icon()
+			update_appearance()
 			return
 
 /obj/machinery/ticket_machine/proc/reset_cooldown()
 	ready = TRUE
 
-/obj/machinery/ticket_machine/attack_hand(mob/living/carbon/user)
+/obj/machinery/ticket_machine/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
 	if(!ready)
 		to_chat(user,"<span class='warning'>You press the button, but nothing happens...</span>")
@@ -208,7 +216,7 @@
 	var/obj/machinery/ticket_machine/source
 	var/ticket_number
 
-/obj/item/ticket_machine_ticket/attack_hand(mob/user)
+/obj/item/ticket_machine_ticket/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	maptext = saved_maptext //For some reason, storage code removes all maptext off objs, this stops its number from being wiped off when taken out of storage.
 
@@ -220,7 +228,7 @@
 
 /obj/item/paper/extinguish()
 	..()
-	update_icon()
+	update_appearance()
 
 /obj/item/ticket_machine_ticket/Destroy()
 	if(owner && source)

@@ -382,6 +382,14 @@ em {
   color: #3434fd;
 }
 
+.greenteamradio {
+  color: #34fd34;
+}
+
+.yellowteamradio {
+  color: #fdfd34;
+}
+
 .yell {
   font-weight: bold;
 }
@@ -666,6 +674,11 @@ em {
   font-family: "Courier New", cursive, sans-serif;
 }
 
+.tape_recorder {
+  color: #FF0000;
+  font-family: "Courier New", cursive, sans-serif;
+}
+
 .command_headset {
   font-weight: bold;
   font-size: 160%;
@@ -767,6 +780,10 @@ em {
 .icon {
   height: 1em;
   width: auto;
+}
+
+.bigicon {
+  font-size: 2.5em;
 }
 
 .memo {

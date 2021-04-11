@@ -1,7 +1,7 @@
 /* Beds... get your mind out of the gutter, they're for sleeping!
  * Contains:
- * 		Beds
- *		Roller beds
+ * Beds
+ * Roller beds
  */
 
 /*
@@ -18,7 +18,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 2
 	var/bolts = TRUE
 
@@ -33,8 +33,8 @@
 			new buildstacktype(loc,buildstackamount)
 	..()
 
-/obj/structure/bed/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/bed/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/structure/bed/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))

@@ -166,9 +166,10 @@
 
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
-	begin_day = 1
-	end_day = 5
-	begin_month = APRIL
+	begin_month = MARCH
+	begin_day = 31
+	end_month = APRIL
+	end_day = 2
 
 /datum/holiday/april_fools/celebrate()
 	SSjob.set_overflow_role("Clown")
@@ -253,7 +254,7 @@
 	return pick("Ayy","Truth","Tsoukalos","Mulder","Scully") //Yes it is!
 
 /datum/holiday/usa
-	name = "Independence Day"
+	name = "US Independence Day"
 	begin_day = 4
 	begin_month = JULY
 

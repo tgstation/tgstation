@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	icon_living = "magicbase"
 	icon_dead = "magicbase"
 	speed = 0
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	stop_automated_movement = 1
 	is_flying_animal = TRUE // Immunity to chasms and landmines, etc.
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -125,6 +125,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			attack_verb_continuous = "bites"
 			attack_verb_simple = "bite"
 			attack_sound = 'sound/weapons/bite.ogg'
+			attack_vis_effect = ATTACK_EFFECT_BITE
 			recolorentiresprite = TRUE
 	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isn't gone for some reason
 		cooloverlay = mutable_appearance(icon, theme)
@@ -169,7 +170,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	visible_message("<span class='notice'>Your new name <span class='name'>[new_name]</span> anchors itself in your mind.</span>")
 	fully_replace_character_name(null, new_name)
 
-/mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
+/mob/living/simple_animal/hostile/guardian/Life(delta_time = SSMOBS_DT, times_fired) //Dies if the summoner dies
 	. = ..()
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
@@ -269,12 +270,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
-			return
-		if(2)
+			return TRUE
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(60)
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/hostile/guardian/gib()
@@ -304,7 +305,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	I.screen_loc = null // will get moved if inventory is visible
 	I.forceMove(src)
 	I.equipped(src, slot)
-	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
@@ -327,7 +327,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		hands_overlays += r_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			r_hand.layer = ABOVE_HUD_LAYER
 			r_hand.plane = ABOVE_HUD_PLANE
 			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
@@ -336,7 +335,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		hands_overlays +=  l_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			l_hand.layer = ABOVE_HUD_LAYER
 			l_hand.plane = ABOVE_HUD_PLANE
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand

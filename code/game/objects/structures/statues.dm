@@ -19,7 +19,7 @@
 /obj/structure/statue/Initialize()
 	. = ..()
 	AddElement(art_type, impressiveness)
-	AddComponent(/datum/component/beauty, impressiveness * 75)
+	AddElement(/datum/element/beauty, impressiveness * 75)
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate), CALLBACK(src, .proc/can_be_rotated), null)
 
 /obj/structure/statue/proc/can_be_rotated(mob/user)
@@ -52,7 +52,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/amount_mod = disassembled ? 0 : -2
 		for(var/mat in custom_materials)
-			var/datum/material/custom_material = SSmaterials.GetMaterialRef(mat)
+			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
 			var/amount = max(0,round(custom_materials[mat]/MINERAL_MATERIAL_AMOUNT) + amount_mod)
 			if(amount > 0)
 				new custom_material.sheet_type(drop_location(),amount)
@@ -458,10 +458,11 @@ Moving interrupts
 
 /obj/structure/carving_block/update_overlays()
 	. = ..()
-	if(target_appearance_with_filters)
-		//We're only keeping one instance here that changes in the middle so we have to clone it to avoid managed overlay issues
-		var/mutable_appearance/clone = new(target_appearance_with_filters)
-		. += clone
+	if(!target_appearance_with_filters)
+		return
+	//We're only keeping one instance here that changes in the middle so we have to clone it to avoid managed overlay issues
+	var/mutable_appearance/clone = new(target_appearance_with_filters)
+	. += clone
 
 /obj/structure/carving_block/proc/is_viable_target(atom/movable/target)
 	//Only things on turfs
@@ -508,7 +509,7 @@ Moving interrupts
 			remove_filter("partial_uncover")
 			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
 			target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
-	update_icon()
+	update_appearance()
 
 
 /// Returns a list of preset statues carvable from this block depending on the custom materials
@@ -520,7 +521,7 @@ Moving interrupts
 		var/list/carving_cost = statue_costs[statue_path]
 		var/enough_materials = TRUE
 		for(var/required_material in carving_cost)
-			if(!custom_materials[required_material] || custom_materials[required_material] < carving_cost[required_material])
+			if(!has_material_type(required_material, TRUE, carving_cost[required_material]))
 				enough_materials = FALSE
 				break
 		if(enough_materials)
@@ -550,6 +551,8 @@ Moving interrupts
 	return ..()
 
 /obj/structure/statue/custom/proc/set_visuals(model_appearance)
+	if(content_ma)
+		QDEL_NULL(content_ma)
 	content_ma = new
 	content_ma.appearance = model_appearance
 	content_ma.pixel_x = 0
@@ -557,7 +560,7 @@ Moving interrupts
 	content_ma.alpha = 255
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
-	update_icon()
+	update_appearance()
 
 /obj/structure/statue/custom/update_overlays()
 	. = ..()

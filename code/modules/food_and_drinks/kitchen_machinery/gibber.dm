@@ -40,19 +40,20 @@
 
 /obj/machinery/gibber/update_overlays()
 	. = ..()
-	if (dirty)
+	if(dirty)
 		. +="grbloody"
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if (!occupant)
+	if(!occupant)
 		. += "grjam"
-	else if (operating)
+		return
+	if(operating)
 		. += "gruse"
-	else
-		. += "gridle"
+		return
+	. += "gridle"
 
-/obj/machinery/gibber/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/machinery/gibber/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/machinery/gibber/container_resist_act(mob/living/user)
 	go_out()
@@ -60,7 +61,7 @@
 /obj/machinery/gibber/relaymove(mob/living/user, direction)
 	go_out()
 
-/obj/machinery/gibber/attack_hand(mob/user)
+/obj/machinery/gibber/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -74,7 +75,7 @@
 		to_chat(user, "<span class='warning'>[src] cannot be used unless bolted to the ground!</span>")
 		return
 
-	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
 			to_chat(user, "<span class='warning'>This item is not suitable for the gibber!</span>")
@@ -99,7 +100,7 @@
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
 				C.forceMove(src)
 				set_occupant(C)
-				update_icon()
+				update_appearance()
 	else
 		startgibbing(user)
 
@@ -131,7 +132,7 @@
 
 /obj/machinery/gibber/proc/go_out()
 	dump_inventory_contents()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/gibber/proc/startgibbing(mob/user)
 	if(operating)
@@ -139,11 +140,12 @@
 	if(!occupant)
 		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
 		return
+
 	use_power(1000)
 	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
-	update_icon()
+	update_appearance()
 
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
@@ -174,12 +176,14 @@
 		gibtype = C.gib_type
 		if(isalien(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
+
 	var/occupant_volume
 	if(occupant?.reagents)
 		occupant_volume = occupant.reagents.total_volume
 	for (var/i=1 to meat_produced)
 		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
+		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * MINERAL_MATERIAL_AMOUNT))
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
@@ -218,7 +222,7 @@
 
 	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE
-	update_icon()
+	update_appearance()
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber

@@ -18,12 +18,12 @@
 	var/health = MAX_LIVING_HEALTH
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
-	var/bruteloss = 0	///Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
-	var/oxyloss = 0		///Oxygen depravation damage (no air in lungs)
-	var/toxloss = 0		///Toxic damage caused by being poisoned or radiated
-	var/fireloss = 0	///Burn damage caused by being way too hot, too cold or burnt.
-	var/cloneloss = 0	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
-	var/staminaloss = 0		///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
+	var/bruteloss = 0 ///Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
+	var/oxyloss = 0 ///Oxygen depravation damage (no air in lungs)
+	var/toxloss = 0 ///Toxic damage caused by being poisoned or radiated
+	var/fireloss = 0 ///Burn damage caused by being way too hot, too cold or burnt.
+	var/cloneloss = 0 ///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
+	var/staminaloss = 0 ///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT /// when the mob goes from "normal" to crit
 	///When the mob enters hard critical state and is fully incapacitated.
 	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
@@ -64,7 +64,9 @@
 
 	var/list/roundstart_quirks = list()
 
-	var/list/surgeries = list()	///a list of surgery datums. generally empty, they're added when the player wants them.
+	var/list/surgeries = list() ///a list of surgery datums. generally empty, they're added when the player wants them.
+	///Mob specific surgery speed modifier
+	var/mob_surgery_speed_mod = 1
 
 	var/now_pushing = null //! Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 
@@ -75,7 +77,6 @@
 	var/on_fire = FALSE ///The "Are we on fire?" var
 	var/fire_stacks = 0 ///Tracks how many stacks of fire we have on, max is usually 20
 
-	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
 	var/mob_size = MOB_SIZE_HUMAN
@@ -133,11 +134,11 @@
 
 	var/list/implants = null
 
-	var/last_words	///used for database logging
+	var/last_words ///used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()
 
-	var/can_be_held = FALSE	//whether this can be picked up and held.
+	var/can_be_held = FALSE //whether this can be picked up and held.
 	var/worn_slot_flags = NONE //if it can be held, can it be equipped to any slots? (think pAI's on head)
 
 	var/radiation = 0 ///If the mob is irradiated.
@@ -158,6 +159,9 @@
 	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
 	var/icon/head_icon = 'icons/mob/pets_held.dmi'//what it looks like on your head
 	var/held_state = ""//icon state for the above
+
+	///If combat mode is on or not
+	var/combat_mode = FALSE
 
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE

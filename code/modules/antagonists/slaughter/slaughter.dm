@@ -18,10 +18,11 @@
 	icon_living = "imp"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speed = 1
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_CLAW
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 250 //Weak to cold
 	maxbodytemp = INFINITY
@@ -40,7 +41,7 @@
 	deathmessage = "screams in agony as it sublimates into a sulfurous smoke."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	var/playstyle_string = "<span class='big bold'>You are an imp,</span><B> a mischievous creature from hell. You are the lowest rank on the hellish totem pole \
-							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion. However, you are incapable	\
+							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion. However, you are incapable \
 							of intentionally harming a fellow devil.</B>"
 
 /datum/antagonist/imp
@@ -112,6 +113,11 @@
 /mob/living/simple_animal/hostile/imp/slaughter/CtrlShiftClickOn(atom/A)
 	if(!isliving(A))
 		return ..()
+
+	if(!Adjacent(A))
+		to_chat(src, "<span class='warning'>You are too far away to use your slam attack on [A]!</span>")
+		return
+
 	if(slam_cooldown + slam_cooldown_time > world.time)
 		to_chat(src, "<span class='warning'>Your slam ability is still on cooldown!</span>")
 		return
@@ -126,7 +132,7 @@
 	slam_cooldown = world.time
 	log_combat(src, victim, "slaughter slammed")
 
-/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/A, proximity)
+/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A))
@@ -205,6 +211,7 @@
 	attack_verb_simple = "wildly tickle"
 
 	attack_sound = 'sound/items/bikehorn.ogg'
+	attack_vis_effect = null
 	feast_sound = 'sound/spookoween/scary_horn2.ogg'
 	deathsound = 'sound/misc/sadtrombone.ogg'
 
@@ -242,11 +249,11 @@
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			death()
-		if(2)
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(60)
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/proc/release_friends()
@@ -259,21 +266,37 @@
 		if(!M)
 			continue
 
+		// Unregister the signal first, otherwise it'll trigger the "ling revived inside us" code
+		UnregisterSignal(M, COMSIG_MOB_STATCHANGE)
+
 		M.forceMove(T)
 		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
 			M.grab_ghost(force = TRUE)
 			playsound(T, feast_sound, 50, TRUE, -1)
-			to_chat(M, "<span class='clown'>You leave [src]'s warm embrace,	and feel ready to take on the world.</span>")
+			to_chat(M, "<span class='clown'>You leave [src]'s warm embrace, and feel ready to take on the world.</span>")
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/bloodcrawl_swallow(mob/living/victim)
-	if(consumed_mobs)
-		// Keep their corpse so rescue is possible
-		consumed_mobs += victim
-	else
-		// Be safe and just eject the corpse
-		victim.forceMove(get_turf(victim))
-		victim.exit_blood_effect()
-		victim.visible_message("<span class='warning'>[victim] falls out of the air, covered in blood, looking highly confused. And dead.</span>")
+	// Keep their corpse so rescue is possible
+	consumed_mobs += victim
+	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, .proc/on_victim_statchange)
+
+/* Handle signal from a consumed mob changing stat.
+ *
+ * A signal handler for if one of the laughter demon's consumed mobs has
+ * changed stat. If they're no longer dead (because they were dead when
+ * swallowed), eject them so they can't rip their way out from the inside.
+ */
+/mob/living/simple_animal/hostile/imp/slaughter/laughter/proc/on_victim_statchange(mob/living/victim, new_stat)
+	SIGNAL_HANDLER
+
+	if(new_stat == DEAD)
+		return
+	// Someone we've eaten has spontaneously revived; maybe nanites, maybe a changeling
+	victim.forceMove(get_turf(src))
+	victim.exit_blood_effect()
+	victim.visible_message("<span class='warning'>[victim] falls out of the air, covered in blood, with a confused look on their face.</span>")
+	consumed_mobs -= victim
+	UnregisterSignal(victim, COMSIG_MOB_STATCHANGE)
 
 /mob/living/simple_animal/hostile/imp/slaughter/engine_demon
 	name = "engine demon"

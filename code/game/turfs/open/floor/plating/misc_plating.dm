@@ -16,6 +16,9 @@
 	base_icon_state = "alienpod1"
 	tiled_dirt = FALSE
 
+/turf/open/floor/plating/abductor/setup_broken_states()
+	return list("alienpod1")
+
 /turf/open/floor/plating/abductor/Initialize()
 	. = ..()
 	icon_state = "alienpod[rand(1,9)]"
@@ -137,12 +140,18 @@
 	base_icon_state = "sand"
 	baseturfs = /turf/open/floor/plating/beach/sand
 
+/turf/open/floor/plating/beach/sand/setup_broken_states()
+	return list("sand")
+
 /turf/open/floor/plating/beach/coastline_t
 	name = "coastline"
 	desc = "Tide's high tonight. Charge your batons."
 	icon_state = "sandwater_t"
 	base_icon_state = "sandwater_t"
 	baseturfs = /turf/open/floor/plating/beach/coastline_t
+
+/turf/open/floor/plating/beach/sand/coastline_t/setup_broken_states()
+	return list("sandwater_t")
 
 /turf/open/floor/plating/beach/coastline_b //need to make this water subtype.
 	name = "coastline"
@@ -153,6 +162,9 @@
 	barefootstep = FOOTSTEP_LAVA
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
+
+/turf/open/floor/plating/beach/sand/coastline_b/setup_broken_states()
+	return list("sandwater_b")
 
 /turf/open/floor/plating/beach/water
 	gender = PLURAL
@@ -166,20 +178,29 @@
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
 
+/turf/open/floor/plating/beach/water/setup_broken_states()
+	return list("water")
+
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 	icon_state = "sandwater_inner"
 	baseturfs = /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 
+/turf/open/floor/plating/beach/water/coastline_t/sandwater_inner/setup_broken_states()
+	return list("sandwater_inner")
+
 /turf/open/floor/plating/ironsand
 	gender = PLURAL
 	name = "iron sand"
-	desc = "Like sand, but more <i>metal</i>."
+	desc = "Like sand, but more <i>iron</i>."
 	icon_state = "ironsand1"
 	base_icon_state = "ironsand1"
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/plating/ironsand/setup_broken_states()
+	return list("ironsand1")
 
 /turf/open/floor/plating/ironsand/Initialize()
 	. = ..()
@@ -233,6 +254,9 @@
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
 
+/turf/open/floor/plating/ice/icemoon/no_planet_atmos
+	planetary_atmos = FALSE
+
 /turf/open/floor/plating/snowed
 	name = "snowed-over plating"
 	desc = "A section of heated plating, helps keep the snow from stacking up too high."
@@ -249,7 +273,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/snowed/cavern
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 
 /turf/open/floor/plating/snowed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
@@ -275,7 +299,6 @@
 	icon_state = "grass0"
 	base_icon_state = "grass"
 	baseturfs = /turf/open/floor/plating/sandy_dirt
-	broken_states = list("damaged")
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
@@ -286,6 +309,9 @@
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_FLOOR_GRASS)
 	layer = HIGH_TURF_LAYER
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'
+
+/turf/open/floor/plating/grass/setup_broken_states()
+	return list("damaged")
 
 /turf/open/floor/plating/grass/Initialize()
 	. = ..()
@@ -304,10 +330,17 @@
 	desc = "Upon closer examination, it's still dirt."
 	icon_state = "sand"
 	base_icon_state = "sand"
-	broken_states = list("sand_damaged")
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+
+/turf/open/floor/plating/sandy_dirt/setup_broken_states()
+	return list("sand_damaged")
+
+/turf/open/floor/plating/lavaland_atmos
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

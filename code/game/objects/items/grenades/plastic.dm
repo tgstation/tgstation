@@ -97,7 +97,7 @@
 
 		notify_ghosts("[user] has planted \a [src] on [target] with a [det_time] second fuse!", source = target, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Explosive Planted")
 
-		moveToNullspace()	//Yep
+		moveToNullspace() //Yep
 
 		if(istype(AM, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
 			var/obj/item/I = AM

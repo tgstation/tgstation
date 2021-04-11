@@ -20,11 +20,8 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 120
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	actions_types = list(/datum/action/item_action/toggle_glove)
 	///Whether or not we're currently draining something
 	var/draining = FALSE
-	///Whether or not we can currently drain something
-	var/candrain = FALSE
 	///Minimum amount of power we can drain in a single drain action
 	var/mindrain = 200
 	///Maximum amount of power we can drain in a single drain action
@@ -35,11 +32,11 @@
 	var/door_hack_counter = 0
 
 
-/obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
-	if(!candrain || draining)
+/obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity,modifiers)
+	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || draining)
 		return FALSE
 	if(!ishuman(loc))
-		return FALSE	//Only works while worn
+		return FALSE //Only works while worn
 
 	var/mob/living/carbon/human/wearer = loc
 
@@ -64,15 +61,7 @@
 		else
 			to_chat(wearer, "<span class='danger'>\The [A] has run dry of energy, you must find another source!</span>")
 	else
-		. = FALSE	//as to not cancel attack_hand()
+		. = FALSE //as to not cancel attack_hand()
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
-	. = ..()
-	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, NINJA_SUIT_TRAIT))
-		. += "[p_their(TRUE)] energy drain mechanism is <B>[candrain?"active":"inactive"]</B>."
-
-/obj/item/clothing/gloves/space_ninja/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/toggle_glove))
-		toggledrain()
-		return TRUE
-	return FALSE
+	. = ..() + "[p_their(TRUE)] energy drain mechanism is activated by touching objects in a disarming manner."

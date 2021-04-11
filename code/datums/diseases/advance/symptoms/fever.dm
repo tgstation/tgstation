@@ -36,16 +36,18 @@ Bonus
 	)
 
 /datum/symptom/fever/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["resistance"] >= 5) //dangerous fever
+	if(A.totalResistance() >= 5) //dangerous fever
 		power = 1.5
 		unsafe = TRUE
-	if(A.properties["resistance"] >= 10)
+	if(A.totalResistance() >= 10)
 		power = 2.5
 
 /datum/symptom/fever/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	if(!unsafe || A.stage < 4)

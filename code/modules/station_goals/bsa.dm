@@ -63,7 +63,7 @@
 
 /obj/machinery/bsa/middle
 	name = "Bluespace Artillery Fusor"
-	desc = "Contents classified by Nanotrasen Naval Command. Needs to be linked with the other BSA parts using multitool."
+	desc = "Contents classified by Nanotrasen Naval Command. Needs to be linked with the other BSA parts using a multitool."
 	icon_state = "fuel_chamber"
 	var/obj/machinery/bsa/back/back
 	var/obj/machinery/bsa/front/front
@@ -227,7 +227,7 @@
 	var/obj/machinery/parent
 
 /obj/structure/filler/ex_act()
-	return
+	return FALSE
 
 /obj/machinery/computer/bsa_control
 	name = "bluespace artillery control"
@@ -275,7 +275,7 @@
 		if("recalibrate")
 			calibrate(usr)
 			. = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/computer/bsa_control/proc/calibrate(mob/user)
 	if(!GLOB.bsa_unlock)

@@ -11,7 +11,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/food/carpmeat = 2)
+	butcher_results = list(/obj/item/food/fishmeat/carp = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -34,6 +34,7 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("gnashes")
 
 	//Space carp aren't affected by cold.
@@ -44,7 +45,6 @@
 	is_flying_animal = TRUE
 	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
-
 	var/random_color = TRUE //if the carp uses random coloring
 	var/rarechance = 1 //chance for rare color variant
 	var/snack_distance = 0
@@ -72,9 +72,8 @@
 /mob/living/simple_animal/hostile/carp/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	carp_randomify(rarechance)
-	update_icons()
 	add_cell_sample()
+	carp_randomify(rarechance)
 
 /mob/living/simple_animal/hostile/carp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -88,23 +87,28 @@
 		else
 			our_color = pick(carp_colors)
 			add_atom_colour(carp_colors[our_color], FIXED_COLOUR_PRIORITY)
-		add_carp_overlay()
+	regenerate_icons()
 
-/mob/living/simple_animal/hostile/carp/proc/add_carp_overlay()
+/mob/living/simple_animal/hostile/carp/death(gibbed)
+	. = ..()
+	cut_overlays()
+	if(!random_color || gibbed)
+		return
+	regenerate_icons()
+
+/mob/living/simple_animal/hostile/carp/revive(full_heal = FALSE, admin_revive = FALSE)
+	. = ..()
+	if(.)
+		regenerate_icons()
+
+/mob/living/simple_animal/hostile/carp/regenerate_icons()
+	cut_overlays()
 	if(!random_color)
 		return
-	cut_overlays()
-	var/mutable_appearance/base_overlay = mutable_appearance(icon, "base_mouth")
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, stat == DEAD ? "base_dead_mouth" : "base_mouth")
 	base_overlay.appearance_flags = RESET_COLOR
 	add_overlay(base_overlay)
-
-/mob/living/simple_animal/hostile/carp/proc/add_dead_carp_overlay()
-	if(!random_color)
-		return
-	cut_overlays()
-	var/mutable_appearance/base_dead_overlay = mutable_appearance(icon, "base_dead_mouth")
-	base_dead_overlay.appearance_flags = RESET_COLOR
-	add_overlay(base_dead_overlay)
+	..()
 
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
 	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in view(1, src)
@@ -116,32 +120,10 @@
 		adjustBruteLoss(5)
 		qdel(tasty_plastic)
 
-/mob/living/simple_animal/hostile/carp/Life()
+/mob/living/simple_animal/hostile/carp/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == CONSCIOUS)
 		chomp_plastic()
-
-/mob/living/simple_animal/hostile/carp/death(gibbed)
-	. = ..()
-	cut_overlays()
-	if(!random_color || gibbed)
-		return
-	add_dead_carp_overlay()
-
-/mob/living/simple_animal/hostile/carp/revive(full_heal = FALSE, admin_revive = FALSE)
-	. = ..()
-	if(.)
-		regenerate_icons()
-
-/mob/living/simple_animal/hostile/carp/regenerate_icons()
-	cut_overlays()
-	if(!random_color)
-		return
-	if(stat != DEAD)
-		add_carp_overlay()
-	else
-		add_dead_carp_overlay()
-	..()
 
 /mob/living/simple_animal/hostile/carp/tamed()
 	. = ..()
@@ -214,10 +196,31 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 
-/mob/living/simple_animal/hostile/carp/megacarp/Life()
+/mob/living/simple_animal/hostile/carp/megacarp/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(regen_cooldown < world.time)
-		heal_overall_damage(4)
+		heal_overall_damage(2 * delta_time)
+
+/mob/living/simple_animal/hostile/carp/lia
+	name = "Lia"
+	real_name = "Lia"
+	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
+	gender = FEMALE
+	speak_emote = list("squeaks")
+	gold_core_spawnable = NO_SPAWN
+	faction = list("neutral")
+	health = 200
+	icon_dead = "magicarp_dead"
+	icon_gib = "magicarp_gib"
+	icon_living = "magicarp"
+	icon_state = "magicarp"
+	maxHealth = 200
+	random_color = FALSE
+	food_type = list()
+	tame_chance = 0
+	bonus_tame_chance = 0
+	pet_bonus = TRUE
+	pet_bonus_emote = "bloops happily!"
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
@@ -233,18 +236,66 @@
 	bonus_tame_chance = 0
 	pet_bonus = TRUE
 	pet_bonus_emote = "bloops happily!"
+	/// Keeping track of the nuke disk for the functionality of storing it.
+	var/obj/item/disk/nuclear/disky
 
-/mob/living/simple_animal/hostile/carp/cayenne/lia
-	name = "Lia"
-	real_name = "Lia"
-	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
-	faction = list("neutral")
-	health = 200
-	icon_dead = "magicarp_dead"
-	icon_gib = "magicarp_gib"
-	icon_living = "magicarp"
-	icon_state = "magicarp"
-	maxHealth = 200
-	random_color = FALSE
+/mob/living/simple_animal/hostile/carp/cayenne/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
+	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART
+
+/mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
+	if(disky)
+		disky.forceMove(drop_location())
+		disky = null
+	return ..()
+
+/mob/living/simple_animal/hostile/carp/cayenne/Destroy(force)
+	QDEL_NULL(disky)
+	return ..()
+
+/mob/living/simple_animal/hostile/carp/cayenne/examine(mob/user)
+	. = ..()
+	if(disky)
+		. += "<span class='notice'>Wait... is that [disky] in [p_their()] mouth?</span>"
+
+/mob/living/simple_animal/hostile/carp/cayenne/AttackingTarget(atom/attacked_target)
+	if(istype(attacked_target, /obj/item/disk/nuclear))
+		var/obj/item/disk/nuclear/potential_disky = attacked_target
+		if(potential_disky.anchored)
+			return
+		potential_disky.forceMove(src)
+		disky = potential_disky
+		to_chat(src, "<span class='nicegreen'>YES!! You manage to pick up [disky]. (Click anywhere to place it back down.)</span>")
+		regenerate_icons()
+		if(!disky.fake)
+			client.give_award(/datum/award/achievement/misc/cayenne_disk, src)
+		return
+	if(disky)
+		if(isopenturf(attacked_target))
+			to_chat(src, "<span class='notice'>You place [disky] on [attacked_target]</span>")
+			disky.forceMove(attacked_target.drop_location())
+			disky = null
+			regenerate_icons()
+		else
+			disky.melee_attack_chain(src, attacked_target)
+		return
+	return ..()
+
+/mob/living/simple_animal/hostile/carp/cayenne/Exited(atom/movable/AM, atom/newLoc)
+	. = ..()
+	if(AM == disky)
+		disky = null
+		regenerate_icons()
+
+/mob/living/simple_animal/hostile/carp/cayenne/regenerate_icons()
+	. = ..()
+	if(!disky || stat == DEAD)
+		return
+	cut_overlays()
+	add_overlay("disk_mouth")
+	var/mutable_appearance/disk_overlay = mutable_appearance(icon, "disk_overlay")
+	disk_overlay.appearance_flags = RESET_COLOR
+	add_overlay(disk_overlay)
 
 #undef REGENERATION_DELAY

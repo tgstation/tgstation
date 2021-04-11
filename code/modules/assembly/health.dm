@@ -27,7 +27,7 @@
 	else
 		scanning = FALSE
 		STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 	return secured
 
 /obj/item/assembly/health/AltClick(mob/living/user)
@@ -53,7 +53,7 @@
 		health_scan = M.health
 		if(health_scan <= alarm_health)
 			pulse()
-			audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+			audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>")
 			playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 			toggle_scan()
 		return

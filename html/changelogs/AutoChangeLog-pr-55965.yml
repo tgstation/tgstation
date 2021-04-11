@@ -1,4 +1,0 @@
-author: "MrStonedOne, TiviPlus"
-delete-after: True
-changes: 
-  - refactor: "the MC will yield more to byond lag, reducing percieved lag"

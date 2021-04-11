@@ -3,23 +3,23 @@ SUBSYSTEM_DEF(events)
 	init_order = INIT_ORDER_EVENTS
 	runlevels = RUNLEVEL_GAME
 
-	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
-	var/list/running = list()	//list of all existing /datum/round_event
+	var/list/control = list() //list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
+	var/list/running = list() //list of all existing /datum/round_event
 	var/list/currentrun = list()
 
-	var/scheduled = 0			//The next world.time that a naturally occuring random event can be selected.
-	var/frequency_lower = 1800	//3 minutes lower bound.
-	var/frequency_upper = 6000	//10 minutes upper bound. Basically an event will happen every 3 to 10 minutes.
+	var/scheduled = 0 //The next world.time that a naturally occuring random event can be selected.
+	var/frequency_lower = 1800 //3 minutes lower bound.
+	var/frequency_upper = 6000 //10 minutes upper bound. Basically an event will happen every 3 to 10 minutes.
 
-	var/list/holidays			//List of all holidays occuring today or null if no holidays
+	var/list/holidays //List of all holidays occuring today or null if no holidays
 	var/wizardmode = FALSE
 
 /datum/controller/subsystem/events/Initialize(time, zlevel)
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
-			continue				//don't want this one! leave it for the garbage collector
-		control += E				//add it to the list of all events (controls)
+			continue //don't want this one! leave it for the garbage collector
+		control += E //add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
 	return ..()
@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(events)
 
 //selects a random event based on whether it can occur and it's 'weight'(probability)
 /datum/controller/subsystem/events/proc/spawnEvent()
-	set waitfor = FALSE	//for the admin prompt
+	set waitfor = FALSE //for the admin prompt
 	if(!CONFIG_GET(flag/allow_random_events))
 		return
 
@@ -67,22 +67,22 @@ SUBSYSTEM_DEF(events)
 	for(var/datum/round_event_control/E in control)
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
-		if(E.weight < 0)						//for round-start events etc.
+		if(E.weight < 0) //for round-start events etc.
 			var/res = TriggerEvent(E)
 			if(res == EVENT_INTERRUPTED)
-				continue	//like it never happened
+				continue //like it never happened
 			if(res == EVENT_CANT_RUN)
 				return
 		sum_of_weights += E.weight
 
-	sum_of_weights = rand(0,sum_of_weights)	//reusing this variable. It now represents the 'weight' we want to select
+	sum_of_weights = rand(0,sum_of_weights) //reusing this variable. It now represents the 'weight' we want to select
 
 	for(var/datum/round_event_control/E in control)
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
 		sum_of_weights -= E.weight
 
-		if(sum_of_weights <= 0)				//we've hit our goal
+		if(sum_of_weights <= 0) //we've hit our goal
 			if(TriggerEvent(E))
 				return
 
@@ -108,18 +108,18 @@ SUBSYSTEM_DEF(events)
 	holder.forceEvent()
 
 /datum/admins/proc/forceEvent()
-	var/dat 	= ""
-	var/normal 	= ""
-	var/magic 	= ""
+	var/dat = ""
+	var/normal = ""
+	var/magic = ""
 	var/holiday = ""
 	for(var/datum/round_event_control/E in SSevents.control)
 		dat = "<BR><A href='?src=[REF(src)];[HrefToken()];forceevent=[REF(E)]'>[E]</A>"
 		if(E.holidayID)
-			holiday	+= dat
+			holiday += dat
 		else if(E.wizardevent)
-			magic 	+= dat
+			magic += dat
 		else
-			normal 	+= dat
+			normal += dat
 
 	dat = normal + "<BR>" + magic + "<BR>" + holiday
 
@@ -152,12 +152,12 @@ SUBSYSTEM_DEF(events)
 //sets up the holidays and holidays list
 /datum/controller/subsystem/events/proc/getHoliday()
 	if(!CONFIG_GET(flag/allow_holidays))
-		return		// Holiday stuff was not enabled in the config!
+		return // Holiday stuff was not enabled in the config!
 
 	var/YYYY = text2num(time2text(world.timeofday, "YYYY")) // get the current year
-	var/MM = text2num(time2text(world.timeofday, "MM")) 	// get the current month
-	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
-	var/DDD = time2text(world.timeofday, "DDD")	// get the current weekday
+	var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
+	var/DD = text2num(time2text(world.timeofday, "DD")) // get the current day
+	var/DDD = time2text(world.timeofday, "DDD") // get the current weekday
 
 	for(var/H in subtypesof(/datum/holiday))
 		var/datum/holiday/holiday = new H()

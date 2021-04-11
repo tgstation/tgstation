@@ -23,6 +23,7 @@
 	icon_dead = "syndicate_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	speed = 0
@@ -36,10 +37,10 @@
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 15
+	unsuitable_atmos_damage = 7.5
 	faction = list(ROLE_SYNDICATE)
 	check_friendly_fire = 1
 	status_flags = CANPUSH
@@ -81,6 +82,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	status_flags = 0
 	var/projectile_deflect_chance = 0
 
@@ -288,7 +290,7 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE | PASSMOB
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	mob_biotypes = MOB_ROBOTIC
 	health = 25
 	maxHealth = 25
@@ -302,6 +304,7 @@
 	attack_verb_continuous = "cuts"
 	attack_verb_simple = "cut"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list(ROLE_SYNDICATE)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0

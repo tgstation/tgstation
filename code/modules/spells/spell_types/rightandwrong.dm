@@ -1,4 +1,8 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
+//and corresponding datum controller for them
+
+GLOBAL_DATUM(summon_guns, /datum/summon_guns_controller)
+GLOBAL_DATUM(summon_magic, /datum/summon_magic_controller)
 
 // 1 in 50 chance of getting something really special.
 #define SPECIALIST_MAGIC_PROB 2
@@ -69,7 +73,6 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/door,
 	/obj/item/scrying,
-	/obj/item/voodoo,
 	/obj/item/warpwhistle,
 	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
 	/obj/item/immortality_talisman,
@@ -94,12 +97,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/scrying,
 	/obj/item/spellbook,
 	/obj/item/storage/belt/wands/full,
-	/obj/item/voodoo,
 	/obj/item/warpwhistle))
-
-// If true, it's the probability of triggering "survivor" antag.
-GLOBAL_VAR_INIT(summon_guns_triggered, FALSE)
-GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 /proc/give_guns(mob/living/carbon/human/H)
 	if(H.stat == DEAD || !(H.client))
@@ -107,8 +105,8 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	if(H.mind)
 		if(iswizard(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
 			return
-
-	if(prob(GLOB.summon_guns_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
+	var/datum/summon_guns_controller/controller = GLOB.summon_guns
+	if(prob(controller.survivor_probability) && !(H.mind.has_antag_datum(/datum/antagonist)))
 		SSticker.mode.traitors += H.mind
 
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
@@ -130,8 +128,10 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	if(H.mind)
 		if(iswizard(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
 			return
-
-	if(prob(GLOB.summon_magic_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
+	if(!GLOB.summon_magic)
+		return
+	var/datum/summon_magic_controller/controller = GLOB.summon_magic
+	if(prob(controller.survivor_probability) && !(H.mind.has_antag_datum(/datum/antagonist)))
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/magic)
 		H.log_message("was made into a survivalist, and trusts no one!</font>", LOG_ATTACK, color="red")
 
@@ -158,30 +158,21 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		log_game("[key_name(user)] summoned [summon_type]!")
 
 	if(summon_type == SUMMON_MAGIC)
-		GLOB.summon_magic_triggered = survivor_probability
+		GLOB.summon_magic = new /datum/summon_magic_controller(survivor_probability)
 	else if(summon_type == SUMMON_GUNS)
-		GLOB.summon_guns_triggered = survivor_probability
+		GLOB.summon_guns = new /datum/summon_guns_controller(survivor_probability)
 	else
 		CRASH("Bad summon_type given: [summon_type]")
 
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		var/turf/T = get_turf(H)
-		if(T && is_away_level(T.z))
-			continue
-		if(summon_type == SUMMON_MAGIC)
-			give_magic(H)
-		else
-			give_guns(H)
-
 /proc/summonevents()
 	if(!SSevents.wizardmode)
-		SSevents.frequency_lower = 600									//1 minute lower bound
-		SSevents.frequency_upper = 3000									//5 minutes upper bound
+		SSevents.frequency_lower = 600 //1 minute lower bound
+		SSevents.frequency_upper = 3000 //5 minutes upper bound
 		SSevents.toggleWizardmode()
 		SSevents.reschedule()
 
-	else 																//Speed it up
-		SSevents.frequency_upper -= 600	//The upper bound falls a minute each time, making the AVERAGE time between events lessen
+	else //Speed it up
+		SSevents.frequency_upper -= 600 //The upper bound falls a minute each time, making the AVERAGE time between events lessen
 		if(SSevents.frequency_upper < SSevents.frequency_lower) //Sanity
 			SSevents.frequency_upper = SSevents.frequency_lower
 
@@ -190,3 +181,60 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		log_game("Summon Events was increased!")
 
 #undef SPECIALIST_MAGIC_PROB
+
+/**
+ * The magic controller handles the summon magic event.
+ * It is first created when summon magic event is triggered, and it can be referenced from GLOB.summon_magic
+ */
+/datum/summon_magic_controller
+	///chances someone who is given magic will be an antagonist
+	var/survivor_probability = 0
+
+/datum/summon_magic_controller/New(survivor_probability)
+	. = ..()
+	src.survivor_probability = survivor_probability
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/magic_up_new_crew)
+
+	for(var/mob/living/carbon/human/unarmed_human in GLOB.player_list)
+		var/turf/turf_check = get_turf(unarmed_human)
+		if(turf_check && is_away_level(turf_check.z))
+			continue
+		give_magic(unarmed_human)
+
+/datum/summon_magic_controller/Destroy(force, ...)
+	. = ..()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+
+///signal proc to give magic to new crewmembers
+/proc/magic_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(GLOB.summon_magic, .proc/give_magic, new_crewmember)
+
+/**
+ * The guns controller handles the summon guns event.
+ * It is first created when summon guns event is triggered, and it can be referenced from GLOB.summon_guns
+ */
+/datum/summon_guns_controller
+	///chances someone who is given guns will be an antagonist
+	var/survivor_probability = 0
+
+/datum/summon_guns_controller/New(survivor_probability)
+	. = ..()
+	src.survivor_probability = survivor_probability
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/arm_up_new_crew)
+
+	for(var/mob/living/carbon/human/unarmed_human in GLOB.player_list)
+		var/turf/turf_check = get_turf(unarmed_human)
+		if(turf_check && is_away_level(turf_check.z))
+			continue
+		give_guns(unarmed_human)
+
+/datum/summon_guns_controller/Destroy(force, ...)
+	. = ..()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+
+///signal proc to give guns to new crewmembers
+/proc/arm_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(GLOB.summon_guns, .proc/give_guns, new_crewmember)
+

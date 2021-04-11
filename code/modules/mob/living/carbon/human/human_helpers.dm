@@ -47,12 +47,12 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
-	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
+	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) ) //Wearing a mask which hides our face, use id-name if possible
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
-		return if_no_face		//Likewise for hats
+		return if_no_face //Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
-	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
+	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name ) //disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -74,7 +74,7 @@
 		if(card_slot?.stored_card)
 			. = card_slot.stored_card.registered_name
 	if(!.)
-		. = if_no_id	//to prevent null-names making the mob unclickable
+		. = if_no_id //to prevent null-names making the mob unclickable
 	return
 
 /mob/living/carbon/human/get_idcard(hand_first = TRUE)
@@ -84,14 +84,12 @@
 	//Check inventory slots
 	return (wear_id?.GetID() || belt?.GetID())
 
-/mob/living/carbon/human/reagent_check(datum/reagent/R)
-	return dna.species.handle_chemicals(R,src)
+/mob/living/carbon/human/reagent_check(datum/reagent/R, delta_time, times_fired)
+	return dna.species.handle_chemicals(R, src, delta_time, times_fired)
 	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
 
 
 /mob/living/carbon/human/can_track(mob/living/user)
-	if(wear_id && istype(wear_id.GetID(), /obj/item/card/id/syndicate))
-		return 0
 	if(istype(head, /obj/item/clothing/head))
 		var/obj/item/clothing/head/hat = head
 		if(hat.blockTracking)
@@ -227,11 +225,9 @@
 	var/t_He = p_they(TRUE)
 	var/t_his = p_their()
 	var/t_is = p_are()
-	if(key || !getorgan(/obj/item/organ/brain))
-		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>" //Default death message
-	//The death mob has a brain and no client/player that is assigned to the mob
-	if(!ghost?.can_reenter_corpse)  //And there is no ghost that could reenter the body
-		//There is no way this mob can in any normal way get a player, so they lost the will to live
-		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has lost the will to live...</span>"
-	//This mob has a ghost linked that could still reenter the body, so the soul only departed
-	return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed, but the link is not yet fully broken...</span>"
+	//This checks to see if the body is revivable
+	if(key || !getorgan(/obj/item/organ/brain) || ghost?.can_reenter_corpse)
+		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
+	else
+		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...</span>"
+

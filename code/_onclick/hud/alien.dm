@@ -50,11 +50,11 @@
 	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/act_intent/alien()
-	using.icon_state = mymob.a_intent
-	using.hud = src
-	static_inventory += using
-	action_intent = using
+	action_intent = new /atom/movable/screen/combattoggle/flashy()
+	action_intent.hud = src
+	action_intent.icon = ui_style
+	action_intent.screen_loc = ui_combat_toggle
+	static_inventory += action_intent
 
 	if(isalienhunter(mymob))
 		var/mob/living/carbon/alien/humanoid/hunter/H = mymob
@@ -87,7 +87,7 @@
 
 	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = ui_style
-	pull_icon.update_icon()
+	pull_icon.update_appearance()
 	pull_icon.screen_loc = ui_above_movement
 	pull_icon.hud = src
 	static_inventory += pull_icon
@@ -109,14 +109,14 @@
 
 	zone_select = new /atom/movable/screen/zone_sel/alien()
 	zone_select.hud = src
-	zone_select.update_icon()
+	zone_select.update_appearance()
 	static_inventory += zone_select
 
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src
 			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_icon()
+			inv.update_appearance()
 
 /datum/hud/alien/persistent_inventory_update()
 	if(!mymob)

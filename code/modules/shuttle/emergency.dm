@@ -24,7 +24,7 @@
 	var/hijack_stage_time = 5 SECONDS
 	var/hijack_stage_cooldown = 5 SECONDS
 	var/hijack_flight_time_increase = 30 SECONDS
-	var/hijack_completion_flight_time_set = 10 SECONDS	//How long in deciseconds to set shuttle's timer after hijack is done.
+	var/hijack_completion_flight_time_set = 10 SECONDS //How long in deciseconds to set shuttle's timer after hijack is done.
 	var/hijack_hacking = FALSE
 	var/hijack_announce = TRUE
 
@@ -189,7 +189,7 @@
 		if(shuttle.hijack_status == HIJACKED)
 			shuttle.setTimer(hijack_completion_flight_time_set)
 		else
-			shuttle.setTimer(shuttle.timeLeft(1) + hijack_flight_time_increase)		//give the guy more time to hijack if it's already in flight.
+			shuttle.setTimer(shuttle.timeLeft(1) + hijack_flight_time_increase) //give the guy more time to hijack if it's already in flight.
 	return shuttle.hijack_status
 
 /obj/machinery/computer/emergency_shuttle/AltClick(user)
@@ -253,7 +253,7 @@
 	if(!IS_DOCKED)
 		return
 
-	if((obj_flags & EMAGGED) || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
+	if((obj_flags & EMAGGED) || ENGINES_STARTED) //SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
 		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
 		return
 
@@ -343,7 +343,7 @@
 	else
 		SSshuttle.emergencyLastCallLoc = null
 
-	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.adminEmergencyNoRecall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]", null, 'sound/ai/shuttlecalled.ogg', "Priority")
+	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.adminEmergencyNoRecall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]", null, ANNOUNCER_SHUTTLECALLED, "Priority")
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
@@ -358,7 +358,7 @@
 		SSshuttle.emergencyLastCallLoc = signalOrigin
 	else
 		SSshuttle.emergencyLastCallLoc = null
-	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlerecalled.ogg', "Priority")
+	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, ANNOUNCER_SHUTTLERECALLED, "Priority")
 
 	SSticker.emergency_reason = null
 
@@ -388,7 +388,7 @@
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
 					//Non-antag present. Can't hijack.
-					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/red/brig))
+					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/iron/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/red/brig))
 						return FALSE
 					//Antag present, doesn't stop but let's see if we actually want to hijack
 					var/prevent = FALSE
@@ -447,7 +447,7 @@
 				mode = SHUTTLE_DOCKED
 				setTimer(SSshuttle.emergencyDockTime)
 				send2adminchat("Server", "The Emergency Shuttle has docked with the station.")
-				priority_announce("[SSshuttle.emergency] has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/ai/shuttledock.ogg', "Priority")
+				priority_announce("[SSshuttle.emergency] has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, ANNOUNCER_SHUTTLEDOCK, "Priority")
 				ShuttleDBStuff()
 
 
@@ -568,7 +568,7 @@
 	var/obj/machinery/computer/shuttle/C = getControlConsole()
 	if(!istype(C, /obj/machinery/computer/shuttle/pod))
 		return ..()
-	if(GLOB.security_level >= SEC_LEVEL_RED || (C && (C.obj_flags & EMAGGED)))
+	if(SSsecurity_level.current_level >= SEC_LEVEL_RED || (C && (C.obj_flags & EMAGGED)))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
@@ -588,6 +588,10 @@
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
 
+/obj/machinery/computer/shuttle/pod/Initialize(mapload)
+	. = ..()
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_lock)
+
 /obj/machinery/computer/shuttle/pod/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
@@ -596,11 +600,26 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	locked = FALSE
 	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	possible_destinations += ";[port.id]_lavaland"
+
+/**
+ * Signal handler for checking if we should lock or unlock escape pods accordingly to a newly set security level
+ *
+ * Arguments:
+ * * source The datum source of the signal
+ * * new_level The new security level that is in effect
+ */
+/obj/machinery/computer/shuttle/pod/proc/check_lock(datum/source, new_level)
+	SIGNAL_HANDLER
+
+	if(obj_flags & EMAGGED)
+		return
+	locked = new_level < SEC_LEVEL_RED
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
@@ -680,7 +699,7 @@
 	if (can_interact(user))
 		return ..()
 
-/obj/item/storage/pod/attack_hand(mob/user)
+/obj/item/storage/pod/attack_hand(mob/user, list/modifiers)
 	if (can_interact(user))
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, user)
 	return TRUE
@@ -697,7 +716,7 @@
 /obj/item/storage/pod/can_interact(mob/user)
 	if(!..())
 		return FALSE
-	if(GLOB.security_level >= SEC_LEVEL_RED || unlocked)
+	if(SSsecurity_level.current_level >= SEC_LEVEL_RED || unlocked)
 		return TRUE
 	to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
 

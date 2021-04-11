@@ -68,11 +68,11 @@
 		char = color[i]
 		i += length(char)
 		switch(text2ascii(char))
-			if(48 to 57)		//numbers 0 to 9
+			if(48 to 57) //numbers 0 to 9
 				. += char
-			if(97 to 102)		//letters a to f
+			if(97 to 102) //letters a to f
 				. += char
-			if(65 to 70)		//letters A to F
+			if(65 to 70) //letters A to F
 				char = lowertext(char)
 				. += char
 			else
@@ -95,5 +95,4 @@
 
 /// Makes sure the input color is text with a # at the start followed by 6 hexadecimal characters. Examples: "#ff1234", "#A38321", COLOR_GREEN_GRAY
 /proc/sanitize_ooccolor(color)
-	var/static/regex/color_regex = regex(@"^#[0-9a-fA-F]{6}$")
-	return findtext(color, color_regex) ? color : GLOB.normal_ooc_colour
+	return findtext(color, GLOB.is_color) ? color : GLOB.normal_ooc_colour
