@@ -452,6 +452,17 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(usr, "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Radio Chatter", "[prefs.chat_toggles & CHAT_RADIO ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/toggle_split_admin_tabs()
+	set name = "Toggle Splitting Admin Tabs"
+	set category = "Preferences.Admin"
+	set desc = "Toggle the admin tab being split into separate tabs instead of being merged into one"
+	if(!holder)
+		return
+	prefs.toggles ^= SPLIT_ADMIN_TABS
+	prefs.save_preferences()
+	to_chat(src, "Admin tab splitting has now been [(prefs.toggles & SPLIT_ADMIN_TABS) ? "enabled" : "disabled"].")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Splitting Admin Tabs", "[prefs.toggles & SPLIT_ADMIN_TABS ? "Enabled" : "Disabled"]"))
+
 /client/proc/deadchat()
 	set name = "Show/Hide Deadchat"
 	set category = "Preferences.Admin"
