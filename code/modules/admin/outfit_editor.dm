@@ -59,8 +59,9 @@
 			"path" = item,
 			"name" = initial(item.name),
 			"desc" = initial(item.desc),
-			"sprite" = icon2base64(icon(initial(item.icon), initial(item.icon_state))) //at this point initializing the item is probably faster tbh
-			)
+			// at this point initializing the item is probably faster tbh
+			"sprite" = icon2base64(icon(initial(item.icon), initial(item.icon_state))),
+		)
 
 	return data
 
@@ -78,7 +79,11 @@
 	data["saveable"] = !GLOB.custom_outfits.Find(drip)
 
 	var/datum/preferences/prefs = owner.prefs
-	var/icon/dummysprite = get_flat_human_icon(null, prefs = prefs, dummy_key = dummy_key, showDirs = list(SOUTH), outfit_override = drip)
+	var/icon/dummysprite = get_flat_human_icon(null,
+		prefs = prefs,
+		dummy_key = dummy_key,
+		showDirs = list(SOUTH),
+		outfit_override = drip)
 	data["dummy64"] = icon2base64(dummysprite)
 
 	return data
