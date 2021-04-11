@@ -137,7 +137,6 @@ if ($Args.Length -gt 0) {
 ## Make a production webpack build
 if ($Args.Length -eq 0) {
   task-install
-  task-lint
   task-webpack --mode=production
   exit 0
 }

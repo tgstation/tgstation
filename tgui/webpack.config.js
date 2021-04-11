@@ -7,6 +7,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
+const EslintPlugin = require('eslint-webpack-plugin');
 const { createBabelConfig } = require('./babel.config.js');
 
 const createStats = verbose => ({
@@ -49,7 +50,7 @@ module.exports = (env = {}, argv) => {
       chunkLoadTimeout: 15000,
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
+      extensions: ['.js', '.cjs', '.ts', '.tsx'],
       alias: {},
     },
     module: {
@@ -150,6 +151,15 @@ module.exports = (env = {}, argv) => {
             comments: false,
           },
         },
+      }),
+    ];
+    config.plugins = [
+      ...config.plugins,
+      new EslintPlugin({
+        extensions: ['.js', '.cjs', '.ts', '.tsx'],
+        files: ['packages'],
+        threads: true,
+        fix: true,
       }),
     ];
   }

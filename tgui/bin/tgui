@@ -197,7 +197,6 @@ fi
 ## Make a production webpack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
-  task-lint --fix
   task-webpack --mode=production
   exit 0
 fi
