@@ -79,7 +79,6 @@
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
-#define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
 #define VV_HK_ADD_REAGENT "addreagent"
 #define VV_HK_TRIGGER_EMP "empulse"
 #define VV_HK_TRIGGER_EXPLOSION "explode"
