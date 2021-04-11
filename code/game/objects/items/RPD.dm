@@ -239,6 +239,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/examine(mob/user)
 	. = ..()
 	. += "You can scroll your mouse wheel to change the piping layer."
+	. += "You can right click a pipe to set the RPD to its color."
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
@@ -266,11 +267,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
 	if(!istype(target, /obj/machinery/atmospherics))
-		return ..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.pipe_color)
 		paint_color = GLOB.pipe_color_name[target.pipe_color]
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return ..()
+		to_chat(user, "<span class='notice'>You change the color setting of the RPD to [paint_color].</span>")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rpd_upgrade))
