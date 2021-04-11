@@ -170,8 +170,9 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/head/helmet/space/freedom, /obj/item/clothing/suit/space/freedom
 		)),
 
-		"guns" = typecacheof(list(/obj/item/gun, /obj/item/ammo_casing/, /obj/machinery/porta_turret, /obj/machinery/power/emitter,
-			/obj/item/storage/belt/bandolier, /obj/item/storage/belt/holster, /obj/item/ammo_box,
+		"guns" = typecacheof(list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/syringe, /obj/item/gun/chem,
+			/obj/item/gun/blastcannon, /obj/item/gun/grenadelauncher, /obj/machinery/porta_turret, /obj/machinery/power/emitter,
+			/obj/item/ammo_casing, /obj/item/storage/belt/bandolier, /obj/item/storage/belt/holster, /obj/item/ammo_box,
 			/obj/item/mecha_ammo, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic, /obj/item/mecha_parts/mecha_equipment/weapon/energy
 		)),
 
