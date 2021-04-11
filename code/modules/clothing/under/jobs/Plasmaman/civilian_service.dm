@@ -114,6 +114,9 @@
 	desc = "An orange envirosuit identifying and protecting a criminal plasmaman."
 	icon_state = "prisoner_envirosuit"
 	inhand_icon_state = "prisoner_envirosuit"
+	has_sensor = LOCKED_SENSORS
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/plasmaman/clown/Extinguish(mob/living/carbon/human/H)
 	if(!istype(H))
