@@ -380,14 +380,16 @@
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
 
-	if(oldloc)
-		SEND_SIGNAL(oldloc, COMSIG_MOVABLE_UNCROSSED, src)
-
 	loc = newloc
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldloc)
+
 	. = TRUE
 	oldloc.Exited(src, newloc)
 	if(oldarea != newarea)
 		oldarea.Exited(src, newloc)
+
+	if(oldloc)
+		SEND_SIGNAL(oldloc, COMSIG_MOVABLE_UNCROSSED, src)
 
 	newloc.Entered(src, oldloc)
 	if(oldarea != newarea)
@@ -645,6 +647,7 @@
 
 		loc = destination
 		moving_diagonally = 0
+		SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldloc)
 
 		if(!same_loc)
 			if(oldloc)
