@@ -23,9 +23,8 @@
 /datum/outfit_manager/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "OutfitManager", "Outfit Manager")
+		ui = new(user, src, "OutfitManager")
 		ui.open()
-
 
 /datum/outfit_manager/proc/entry(datum/outfit/outfit)
 	var/vv = FALSE
@@ -35,7 +34,7 @@
 	return list(
 		"name" = "[outfit.name] [vv ? "(VV)" : ""]",
 		"ref" = REF(outfit),
-		)
+	)
 
 /datum/outfit_manager/ui_data(mob/user)
 	var/list/data = list()
