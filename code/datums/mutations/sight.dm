@@ -42,12 +42,27 @@
 	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
 	time_coeff = 2
 	instability = 25
+	synchronizer_coeff = 1
+	power_coeff = 1
+	energy_coeff = 1
 	power = /obj/effect/proc_holder/spell/self/thermal_vision_activate
+
+
+/datum/mutation/human/thermal/modify()
+	if(!power)
+		return FALSE
+	var/obj/effect/proc_holder/spell/self/thermal_vision_activate/Modified_power = power
+	Modified_power.eye_damage = 10 * GET_MUTATION_SYNCHRONIZER(src)
+	Modified_power.thermal_duration = 10 * GET_MUTATION_POWER(src)
+	Modified_power.charge_max = 25 * GET_MUTATION_ENERGY(src) SECONDS
+
 
 /obj/effect/proc_holder/spell/self/thermal_vision_activate
 	name = "Activate Thermal Vision"
 	desc = "You can see thermal signatures, at the cost of your eyesight."
-	charge_max = 20 SECONDS
+	charge_max = 25 SECONDS
+	var/eye_damage = 10
+	var/thermal_duration = 10
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "augmented_eyesight"
@@ -62,7 +77,7 @@
 	user.update_sight()
 	to_chat(user, text("You focus your eyes intensely, as your vision becomes filled with heat signatures."))
 
-	addtimer(CALLBACK(src, .proc/thermal_vision_deactivate), 10 SECONDS)
+	addtimer(CALLBACK(src, .proc/thermal_vision_deactivate), thermal_duration SECONDS)
 
 /obj/effect/proc_holder/spell/self/thermal_vision_activate/proc/thermal_vision_deactivate(mob/user = usr)
 
@@ -78,7 +93,7 @@
 	if(!istype(user_mob))
 		return
 
-	user_mob.adjustOrganLoss(ORGAN_SLOT_EYES, 10)
+	user_mob.adjustOrganLoss(ORGAN_SLOT_EYES, eye_damage)
 
 ///X-ray Vision lets you see through walls.
 /datum/mutation/human/thermal/x_ray
