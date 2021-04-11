@@ -222,7 +222,6 @@
 	icon_state = "engineer_envirohelm"
 	inhand_icon_state = "engineer_envirohelm"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 10, FIRE = 100, ACID = 75)
-	resistance_flags = FIRE_PROOF // Same protection as the Engineering Hardsuit helmet
 
 /obj/item/clothing/head/helmet/space/plasmaman/atmospherics
 	name = "atmospherics plasma envirosuit helmet"
