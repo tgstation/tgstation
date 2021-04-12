@@ -311,7 +311,6 @@
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
 	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
-	item_flags = EYE_STAB
 	sharpness = SHARP_POINTY
 
 	/// Block we're currently carving in
@@ -320,6 +319,10 @@
 	var/mob/living/tracked_user
 	/// Currently sculpting
 	var/sculpting = FALSE
+
+/obj/item/chisel/Initialize()
+	. = ..()
+	AddElement(/datum/element/eyestab)
 
 /obj/item/chisel/Destroy()
 	prepared_block = null

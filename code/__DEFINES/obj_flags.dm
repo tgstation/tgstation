@@ -32,7 +32,6 @@
 #define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
 #define IN_STORAGE (1<<11) //is this item in the storage item, such as backpack? used for tooltips
 #define SURGICAL_TOOL (1<<12) //Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
-#define EYE_STAB (1<<13) // Item can be used to eyestab
 #define HAND_ITEM (1<<14) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
 #define EXAMINE_SKIP (1<<15) // Makes the Examine proc not read out this item.
 #define XENOMORPH_HOLDABLE (1<<16) // A Xenomorph can hold this item.
