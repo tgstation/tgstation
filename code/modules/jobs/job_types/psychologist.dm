@@ -1,10 +1,10 @@
 /datum/job/psychologist
 	title = "Psychologist"
-	department_head = list("Head of Personnel","Chief Medical Officer")
+	department_head = list("Head of Service","Chief Medical Officer")
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel and the chief medical officer"
+	supervisors = "the head of service and the chief medical officer"
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/psychologist
