@@ -592,5 +592,5 @@
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/cream = 3)
 
 /datum/chemical_reaction/naenaecream
-	results = list(/datum/reagent/consumable/naenaecream = 10)
+	results = list(/datum/reagent/consumable/naenaecream = 8)
 	required_reagents = list(/datum/reagent/consumable/whipcream = 4, /datum/reagent/consumable/ethanol/neurotoxin = 8, /datum/reagent/drug/krokodil = 1) //Krokodil was literally the only way to make this even close to balanced.
