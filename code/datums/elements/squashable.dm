@@ -1,7 +1,5 @@
 ///This element allows something to be when crossed, for example for cockroaches.
-/datum/element/squashable
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+/datum/component/squashable
 	///Chance on crossed to be squashed
 	var/squash_chance = 50
 	///How much brute is applied when mob is squashed
@@ -11,10 +9,10 @@
 	///Special callback to call on squash instead, for things like hauberoach
 	var/datum/callback/on_squash_callback
 
-/datum/element/squashable/Attach(mob/living/target, squash_chance, squash_damage, squash_flags, squash_callback)
+/datum/component/squashable/Initialize(squash_chance, squash_damage, squash_flags, squash_callback)
 	. = ..()
-	if(!istype(target))
-		return ELEMENT_INCOMPATIBLE
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
 	if(squash_chance)
 		src.squash_chance = squash_chance
 	if(squash_damage)
@@ -22,50 +20,46 @@
 	if(squash_flags)
 		src.squash_flags = squash_flags
 	if(!src.on_squash_callback && squash_callback)
-		on_squash_callback = CALLBACK(target, squash_callback)
+		on_squash_callback = CALLBACK(parent, squash_callback)
 
-
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/re_register_crossed)
-	RegisterSignal(target.loc, COMSIG_MOVABLE_CROSSED, .proc/OnCrossed, TRUE)
-	//override = TRUE because there could be multiple objects with the same squashable element instance in the same loc
-
-/datum/element/squashable/proc/re_register_crossed(mob/living/target, atom/oldloc, dir, forced)
-	SIGNAL_HANDLER
-	UnregisterSignal(oldloc, COMSIG_MOVABLE_CROSSED)
-	RegisterSignal(target.loc, COMSIG_MOVABLE_CROSSED, .proc/OnCrossed, TRUE)
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/OnCrossed,
+	)
+	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
 ///Handles the squashing of the mob
-/datum/element/squashable/proc/OnCrossed(mob/living/target, atom/movable/crossing_movable)
+/datum/component/squashable/proc/OnCrossed(turf/source_turf, atom/movable/crossing_movable)
 	SIGNAL_HANDLER
 
+	var/mob/living/parent_as_living = parent
 
-	if(squash_flags & SQUASHED_SHOULD_BE_DOWN && target.body_position != LYING_DOWN)
+	if(squash_flags & SQUASHED_SHOULD_BE_DOWN && parent_as_living.body_position != LYING_DOWN)
 		return
 
 	var/should_squash = prob(squash_chance)
 
 	if(should_squash && on_squash_callback)
-		if(on_squash_callback.Invoke(target, crossing_movable))
+		if(on_squash_callback.Invoke(parent_as_living, crossing_movable))
 			return //Everything worked, we're done!
 	if(isliving(crossing_movable))
 		var/mob/living/crossing_mob = crossing_movable
 		if(crossing_mob.mob_size > MOB_SIZE_SMALL && !(crossing_mob.movement_type & FLYING))
 			if(HAS_TRAIT(crossing_mob, TRAIT_PACIFISM))
-				crossing_mob.visible_message("<span class='notice'>[crossing_mob] carefully steps over [target].</span>", "<span class='notice'>You carefully step over [target] to avoid hurting it.</span>")
+				crossing_mob.visible_message("<span class='notice'>[crossing_mob] carefully steps over [parent_as_living].</span>", "<span class='notice'>You carefully step over [parent_as_living] to avoid hurting it.</span>")
 				return
 			if(should_squash)
-				crossing_mob.visible_message("<span class='notice'>[crossing_mob] squashed [target].</span>", "<span class='notice'>You squashed [target].</span>")
-				Squish(target)
+				crossing_mob.visible_message("<span class='notice'>[crossing_mob] squashed [parent_as_living].</span>", "<span class='notice'>You squashed [parent_as_living].</span>")
+				Squish(parent_as_living)
 			else
-				target.visible_message("<span class='notice'>[target] avoids getting crushed.</span>")
+				parent_as_living.visible_message("<span class='notice'>[parent_as_living] avoids getting crushed.</span>")
 	else if(isstructure(crossing_movable))
 		if(should_squash)
-			crossing_movable.visible_message("<span class='notice'>[target] is crushed under [crossing_movable].</span>")
-			Squish(target)
+			crossing_movable.visible_message("<span class='notice'>[parent_as_living] is crushed under [crossing_movable].</span>")
+			Squish(parent_as_living)
 		else
-			target.visible_message("<span class='notice'>[target] avoids getting crushed.</span>")
+			parent_as_living.visible_message("<span class='notice'>[parent_as_living] avoids getting crushed.</span>")
 
-/datum/element/squashable/proc/Squish(mob/living/target)
+/datum/component/squashable/proc/Squish(mob/living/target)
 	if(squash_flags & SQUASHED_SHOULD_BE_GIBBED)
 		target.gib()
 	else
