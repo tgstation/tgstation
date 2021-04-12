@@ -65,12 +65,12 @@
 	face_atom(user)
 
 /**
-  * Checks if the user is ok to use the radial
-  *
-  * Checks if the user is not a mob or is incapacitated or not adjacent to the source of the radial, in those cases returns FALSE, otherwise returns TRUE
-  * Arguments:
-  * * user - The mob checking the menu
-  */
+ * Checks if the user is ok to use the radial
+ *
+ * Checks if the user is not a mob or is incapacitated or not adjacent to the source of the radial, in those cases returns FALSE, otherwise returns TRUE
+ * Arguments:
+ * * user - The mob checking the menu
+ */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
@@ -79,12 +79,12 @@
 	return TRUE
 
 /**
-  * Tries to call sell_item on one of the user's held items, if fail gives a chat message
-  *
-  * Gets both items in the user's hands, and then tries to call sell_item on them, if both fail, he gives a chat message
-  * Arguments:
-  * * user - The mob trying to sell something
-  */
+ * Tries to call sell_item on one of the user's held items, if fail gives a chat message
+ *
+ * Gets both items in the user's hands, and then tries to call sell_item on them, if both fail, he gives a chat message
+ * Arguments:
+ * * user - The mob trying to sell something
+ */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/try_sell(mob/user)
 	var/obj/item/activehanditem = user.get_active_held_item()
 	var/obj/item/inactivehanditem = user.get_inactive_held_item()
@@ -96,10 +96,10 @@
 	say(pick(lore))
 
 /**
-  * Generates a radial of the items the NPC sells and lets the user try to buy one
-  * Arguments:
-  * * user - The mob trying to buy something
-  */
+ * Generates a radial of the items the NPC sells and lets the user try to buy one
+ * Arguments:
+ * * user - The mob trying to buy something
+ */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/buy_item(mob/user)
 	if(!LAZYLEN(products))
 		return
@@ -120,11 +120,11 @@
 
 
 /**
-  * Tries to buy an item from the trader
+ * Tries to buy an item from the trader
   * Arguments:
-  * * user - The mob trying to buy something
-  * * item_to_buy - Item that is being bought
-  */
+ * * user - The mob trying to buy something
+ * * item_to_buy - Item that is being bought
+ */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/try_buy(mob/user, item_to_buy)
 	var/cost = products[item_to_buy]
 	to_chat(user, "<span class='notice'>It will cost you [cost] to buy this item. Are you sure you want to buy it?</span>")
@@ -148,11 +148,11 @@
 	say(buyphrase)
 
 /**
-  * Checks if an item is in the list of wanted items and if it is after a Yes/No radial returns generate_cash with the value of the item for the NPC
-  * Arguments:
-  * * user - The mob trying to sell something
-  * * selling - The item being sold
-  */
+ * Checks if an item is in the list of wanted items and if it is after a Yes/No radial returns generate_cash with the value of the item for the NPC
+ * Arguments:
+ * * user - The mob trying to sell something
+ * * selling - The item being sold
+ */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/sell_item(mob/user, selling)
 	var/obj/item/sellitem = selling
 	var/progressive_type = ""
@@ -192,11 +192,11 @@
 	return TRUE
 
 /**
-  * Creates a holochip the value set by the proc and puts it in the user's hands
-  * Arguments:
-  * * value - The amount of cash that will be on the holochip
-  * * user - The mob we put the holochip in hands of
-  */
+ * Creates a holochip the value set by the proc and puts it in the user's hands
+ * Arguments:
+ * * value - The amount of cash that will be on the holochip
+ * * user - The mob we put the holochip in hands of
+ */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/generate_cash(value, mob/user)
 	var/obj/item/holochip/chip = new /obj/item/holochip(src, value)
 	user.put_in_hands(chip)
