@@ -276,7 +276,6 @@
 	color = "#F6B6A9" // rgb: 223, 215, 175
 	taste_description = "awestruck dancers"
 	glass_icon_state  = "glass_naenae"
-	boozepwr = 15
 	glass_name = "glass of nae nae cream"
 	glass_desc = "Now watch me..."
 	overdose_threshold = 50
