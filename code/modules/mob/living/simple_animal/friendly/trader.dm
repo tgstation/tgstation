@@ -18,6 +18,8 @@
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
 	wander = FALSE
 	ranged = TRUE
+	combat_mode = TRUE
+	move_resist = MOVE_FORCE_STRONG
 	///Sound used when item sold/bought
 	var/sell_sound = 'sound/effects/cashregister.ogg'
 	///Phrases used when you talk to the NPC
