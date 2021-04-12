@@ -41,8 +41,7 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/moving_mob = user.mob
-	moving_mob.up()
+	user.mob.up()
 	return TRUE
 
 /datum/keybinding/movement/zlevel_downwards
@@ -56,6 +55,5 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/moving_mob = user.mob
-	moving_mob.down()
+	user.mob.down()
 	return TRUE
