@@ -1,7 +1,7 @@
 /**
-  * # Vending NPC
+  * # Trader
   *
-  * A vendor that has some dialogue options with radials, allows for selling items and is immune to regular vendor stuff like tipping, using power or being deconstructed
+  * A mob that has some dialogue options with radials, allows for selling items and buying em'
   *
   */
 
