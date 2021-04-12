@@ -268,6 +268,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			execute_crewmember(gamer, params["who"])
 		//Spaceport specific interactions
 		if("buycrew") //buy a crewmember
+			if(gameStatus != ORION_STATUS_MARKET)
+				return
 			if(!spaceport_raided && food >= 10 && fuel >= 10)
 				if(params["odd"])
 					//find some silly crewmember name
@@ -278,17 +280,25 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 				food -= ORION_BUY_CREW_PRICE
 				killed_crew-- // I mean not really but you know
 		if("sellcrew") //sell a crewmember
+			if(gameStatus != ORION_STATUS_MARKET)
+				return
 			if(!spaceport_raided && settlers.len > 1)
 				remove_crewmember()
 				fuel += ORION_SELL_CREW_PRICE
 				food += ORION_SELL_CREW_PRICE
 		if("leave_spaceport")
+			if(gameStatus != ORION_STATUS_MARKET) //Can't leave a place you aren't in
+				return
 			gameStatus = ORION_STATUS_NORMAL
 			spaceport_raided = FALSE
 		if("raid_spaceport")
+			if(gameStatus != ORION_STATUS_MARKET)
+				return
 			spaceport_raided = TRUE
 			encounter_event(/datum/orion_event/space_port_raid, gamer, gamer_skill, gamer_skill_level, gamer_skill_rands)
 		if("buyparts")
+			if(gameStatus != ORION_STATUS_MARKET)
+				return
 			if(!spaceport_raided && fuel > ORION_TRADE_RATE)
 				switch(params["part"])
 					if(ORION_BUY_ENGINE_PARTS)
@@ -299,6 +309,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 						electronics++
 				fuel -= ORION_TRADE_RATE
 		if("trade")
+			if(gameStatus != ORION_STATUS_MARKET)
+				return
 			if(!spaceport_raided)
 				switch(params["what"])
 					if(ORION_I_WANT_FUEL)
