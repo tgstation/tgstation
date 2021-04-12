@@ -9186,6 +9186,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/effect/turf_decal/vg_decals/radiation/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "dWe" = (
@@ -26157,6 +26158,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/effect/turf_decal/vg_decals/radiation/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "kVA" = (
