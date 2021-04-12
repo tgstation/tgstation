@@ -111,7 +111,7 @@
 
 /obj/item/clothing/under/plasmaman/prisoner
 	name = "prisoner envirosuit"
-	desc = "An orange envirosuit identifying and protecting a criminal plasmaman."
+	desc = "An orange envirosuit identifying and protecting a criminal plasmaman. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "prisoner_envirosuit"
 	inhand_icon_state = "prisoner_envirosuit"
 	has_sensor = LOCKED_SENSORS
