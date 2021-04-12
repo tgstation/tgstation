@@ -212,7 +212,7 @@
  * * user - The mob we put the holochip in hands of
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/generate_cash(value, mob/user)
-	var/obj/item/holochip/chip = new /obj/item/holochip(src, value)
+	var/obj/item/holochip/chip = new /obj/item/holochip(get_turf(user), value)
 	user.put_in_hands(chip)
 
 /mob/living/simple_animal/hostile/retaliate/trader/mrbones
