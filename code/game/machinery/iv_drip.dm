@@ -16,15 +16,14 @@
 	///whether we feed slower
 	var/dripfeed = FALSE
 	///Internal beaker
-	var/obj/item/reagent_containers/beaker
+	var/obj/beaker
 	///Set false to block beaker use and instead use an internal reagent holder
 	var/use_internal_storage = FALSE
 	///Typecache of containers we accept
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
 									/obj/item/reagent_containers/glass,
-									/obj/item/reagent_containers/chem_pack,
-									/obj/item/food))
+									/obj/item/reagent_containers/chem_pack))
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
@@ -102,9 +101,9 @@
 	if(use_internal_storage)
 		return ..()
 	
-	if(is_type_in_typecache(W, drip_containers))
+	if(is_type_in_typecache(W, drip_containers) || IS_EDIBLE(W))
 		if(beaker)
-			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
+			to_chat(user, "<span class='warning'>[beaker] is already loaded on the IV drip!</span>")
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
