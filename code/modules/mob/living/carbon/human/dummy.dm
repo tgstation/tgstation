@@ -51,12 +51,6 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 	var/mob/living/carbon/human/dummy/copycat = generate_or_wait_for_human_dummy(slotkey)
 
-	//even if target isn't a carbon, if they have a client we can make the
-	//dummy look like what their human would look like based on their prefs
-	var/datum/preferences/prefs = target?.client?.prefs
-	if(istype(prefs))
-		prefs.copy_to(copycat, icon_updates=TRUE, roundstart_checks=FALSE, character_setup=TRUE)
-
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.dna.transfer_identity(copycat, transfer_SE = TRUE)
@@ -65,8 +59,13 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 			var/mob/living/carbon/human/human_target = target
 			human_target.copy_clothing_prefs(copycat)
 
-		//updating appearance if target isn't a carbon will reset the appearance given above by prefs
 		copycat.updateappearance(icon_update=TRUE, mutcolor_update=TRUE, mutations_overlay_update=TRUE)
+	else
+		//even if target isn't a carbon, if they have a client we can make the
+		//dummy look like what their human would look like based on their prefs
+		var/datum/preferences/prefs = target?.client?.prefs
+		if(istype(prefs))
+			prefs.copy_to(copycat, icon_updates=TRUE, roundstart_checks=FALSE, character_setup=TRUE)
 
 	return copycat
 
