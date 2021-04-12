@@ -135,13 +135,13 @@
 
 /**
  * Tries to buy an item from the trader
-  * Arguments:
+ * Arguments:
  * * user - The mob trying to buy something
  * * item_to_buy - Item that is being bought
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/try_buy(mob/user, item_to_buy)
 	var/cost = products[item_to_buy]
-	to_chat(user, "<span class='notice'>It will cost you [cost] to buy this item. Are you sure you want to buy it?</span>")
+	to_chat(user, "<span class='notice'>It will cost you [cost] credits to buy this item. Are you sure you want to buy it?</span>")
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
@@ -238,6 +238,5 @@
 				"The ride never ends!",
 				"I'd really like a refreshing carton of milk!",
 				"I'm willing to play big prices for BONES! Need materials to make merch, eh?",
-				"It's a beautiful day outside. Birds are singing, Flowers are blooming...On days like these, kids like you...Should be buying my wares!"
-				
+				"It's a beautiful day outside. Birds are singing, Flowers are blooming... On days like these, kids like you... Should be buying my wares!"
 				)
