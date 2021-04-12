@@ -111,6 +111,9 @@
 			new_bible = pick("Toolbox Manifesto","iGlove Assistants")
 		if("weeaboo","kawaii")
 			new_bible = pick("Fanfiction Compendium","Japanese for Dummies","The Manganomicon","Establishing Your O.T.P")
+		else
+			if(new_bible == DEFAULT_BIBLE)
+				new_bible = "The Holy Book of [new_religion]"
 
 	B.name = new_bible
 
