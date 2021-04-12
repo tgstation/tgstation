@@ -374,21 +374,34 @@
  *
  * Empowers and depowers Space Dragon after a successful rift charge.
  * Empowered, Space Dragon regains all his health and becomes temporarily faster for 30 seconds, along with being tinted red.
- * Depowered simply resets him back to his default state.
- * Arguments:
- * * is_empowered - Whether or not we're adding the buff or removing the buff
- * * is_permanent - Only applies if is_empowered is true, whether or not the buff should be removed after a time.
  */
-/mob/living/simple_animal/hostile/space_dragon/proc/rift_empower(is_empowered, is_permanent)
-	if(is_empowered)
-		fully_heal()
-		add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
-		add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
-		if(!is_permanent)
-			addtimer(CALLBACK(src, .proc/rift_empower, FALSE, FALSE), 300)
-	else
-		remove_filter("anger_glow")
-		remove_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
+/mob/living/simple_animal/hostile/space_dragon/proc/rift_empower(is_permanent)
+	fully_heal()
+	add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
+	addtimer(CALLBACK(src, .proc/rift_depower), 30 SECONDS)
+
+/**
+ * Gives Space Dragon their the rift speed buff permanantly.
+ *
+ * Gives Space Dragon the enraged speed buff from charging rifts permanantly.
+ * Only happens in circumstances where Space Dragon completes their objective.
+ */
+/mob/living/simple_animal/hostile/space_dragon/proc/permanant_empower()
+	fully_heal()
+	add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
+
+/**
+ * Removes Space Dragon's rift speed buff.
+ *
+ * Removes Space Dragon's speed buff from charging a rift.  This is only called
+ * in rift_empower, which uses a timer to call this after 30 seconds.  Also
+ * removes the red glow from Space Dragon which is synonymous with the speed buff.
+ */
+/mob/living/simple_animal/hostile/space_dragon/proc/rift_depower()
+	remove_filter("anger_glow")
+	remove_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 
 /**
  * Destroys all of Space Dragon's current rifts.
@@ -457,7 +470,7 @@
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/victory()
 	objective_complete = TRUE
-	rift_empower(TRUE, TRUE)
+	permanant_empower()
 	var/datum/antagonist/space_dragon/S = mind.has_antag_datum(/datum/antagonist/space_dragon)
 	if(S)
 		var/datum/objective/summon_carp/main_objective = locate() in S.objectives
@@ -631,7 +644,7 @@
 			dragon.rift = new
 			dragon.rift.Grant(dragon)
 			dragon.riftTimer = 0
-			dragon.rift_empower(TRUE, FALSE)
+			dragon.rift_empower()
 		// Early return, nothing to do after this point.
 		return
 
