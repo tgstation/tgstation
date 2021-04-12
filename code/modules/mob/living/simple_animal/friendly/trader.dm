@@ -36,7 +36,7 @@
 	var/sell_sound = 'sound/effects/cashregister.ogg'
 	///Phrases used when you talk to the NPC
 	var/list/lore = list("Hello! I am the test trader.",
-						"Oooooooo~~"
+						"Oooooooo~!"
 						)
 	///Associated list of items the NPC sells with how much they cost.
 	var/list/products = list(/obj/item/food/burger/ghost = 200)
