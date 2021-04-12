@@ -2,6 +2,8 @@
 	name = "Conjure"
 	desc = "This spell conjures objs of the specified types in range."
 
+	school = SCHOOL_CONJURATION
+
 	var/list/summon_type = list() //determines what exactly will be summoned
 	//should be text, like list("/mob/living/simple_animal/bot/ed209")
 
@@ -76,7 +78,7 @@
 	clothes_req = FALSE
 	var/obj/item/item
 	var/item_type = /obj/item/banhammer
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 150
 	cooldown_min = 10
 	var/delete_old = TRUE //TRUE to delete the last summoned object if it's still there, FALSE for infinite item stream weeeee
