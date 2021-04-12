@@ -3,6 +3,7 @@
 	desc = "To stop that awful noise."
 	icon_state = "muzzle"
 	inhand_icon_state = "blindfold"
+	clothing_flags = BLOCKS_SPEECH // I'd recommend a double-check on this flag before it goes live.
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.9
@@ -16,15 +17,24 @@
 			return
 	..()
 
-/obj/item/clothing/mask/muzzle/breath // Must be under /mask/muzzle/ because the speech obstruction is tied to /mask/muzzle rather than being a cloting flag. *sigh
+/obj/item/clothing/mask/breathmuzzle
 	name = "surgery mask"
 	desc = "To silence those pesky patients before putting them under."
 	icon_state = "breathmuzzle"
 	inhand_icon_state = "breathmuzzle"
-	clothing_flags = MASKINTERNALS
+	clothing_flags = MASKINTERNALS | BLOCKS_SPEECH
 	gas_transfer_coefficient = 0.1
 	permeability_coefficient = 0.01
-	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a gag
+	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
+
+/obj/item/clothing/mask/breathmuzzle/attack_paw(mob/user, list/modifiers)
+	/// The breathmuzzle is similar enough to a regular muzzle that similar rules would apply to both.
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(src == carbon_user.wear_mask)
+			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
+			return
+	..()
 
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"

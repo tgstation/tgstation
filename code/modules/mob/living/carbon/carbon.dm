@@ -208,7 +208,11 @@
 	loc.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
 /mob/living/carbon/is_muzzled()
-	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+	/// if this is bad runtime, then I'm sorry. I don't know how to make it both universal and efficient.
+	for (var/obj/item/clothing/clothing in get_equipped_items())
+		if(clothing.clothing_flags & BLOCKS_SPEECH)
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/hallucinating()
 	if(hallucination)
