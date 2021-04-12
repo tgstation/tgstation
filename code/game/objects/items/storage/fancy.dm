@@ -468,6 +468,7 @@
 	icon_state = "bigmacbox"
 	icon_type = "bigmac"
 	spawn_type = /obj/item/food/burger/bigmac
+	var/obj/item/food/burger/bigmac/bigmac
 
 /obj/item/storage/fancy/bigmacbox/ComponentInitialize()
 	. = ..()
@@ -475,6 +476,19 @@
 	STR.max_items = 1
 	STR.set_holdable(list(/obj/item/food/burger/bigmac))
 	STR.max_combined_w_class = 30
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/fancy/bigmacbox/attack_hand(mob/user)
+	if(user.get_inactive_held_item() != src)
+		return ..()
+	if(fancy_open)
+		if(length(contents))
+			var/obj/item/I = contents[1]
+			user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>")
+			user.put_in_hands(I)
+			update_icon()
+		else
+			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 /*
  * Oreos

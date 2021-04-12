@@ -758,20 +758,6 @@
 	if(length(contents))
 		. += "<span class='notice'>Alt-click it to quickly draw the bat.</span>"
 
-//obj/item/storage/belt/baseball/update_overlays()
-//	if(content_overlays)
-//		for(var/obj/item/melee/baseball_bat/K in contents)
-//			. += K.get_belt_overlay()
-//			overlay += K
-//		for(var/obj/item/fireaxe/baseball in contents)
-//			. += exec.get_belt_overlay()
-//		for(var/obj/item/melee/baton/baseball in contents)
-//			. += stunbat.get_belt_overlay()
-//		for(var/obj/item/melee/baseball_bat in contents)
-//			. += basic.get_belt_overlay()
-
-//Wrong overlay, keeping this here just in case I need it
-
 //Wallem
 /obj/item/storage/belt/baseball/update_icon_state()
 //	. = list()
@@ -801,18 +787,6 @@
 	for(var/obj/item/melee/baseball_bat/ablative/MET in contents)
 		worn_icon_state += "-metal"
 
-
-//		worn_icon_state += -B
-//			to_chat(world, "debug -- B.worn_icon_state = [B.worn_icon_state]" )
-//			. += mutable_appearance('icons/mob/clothing/belt.dmi', B.worn_icon_state)
-//		if(locate(/obj/item/melee/baseball_bat) in contents))
-//			. += mutable_appearance('icons/obj/clothing/belts.dmi', "basic")
-//			worn_icon_state += "-basic"
-//		if(locate(/obj/item/melee/baseball_bat/barbed in contents))
-//			. += mutable_appearance('icons/obj/clothing/belts.dmi', "barbed")
-//			worn_icon_state += "-barbed"
-//		if(locate(/obj/item/melee/baseball_bat/bluespace in contents))
-//			worn_icon_state += "-bluespace"
 
 /obj/item/storage/belt/baseball/AltClick(mob/user)
 	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
