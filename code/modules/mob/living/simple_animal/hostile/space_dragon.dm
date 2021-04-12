@@ -576,7 +576,7 @@
 	if(time_charged != max_charge + 1)
 		dragon?.destroy_rifts()
 		if(dragon)
-			to_chat(dragon, "<span class='boldwarning'>A rift has been destroyed!  You have failed, and find yourself weakened.</span>")
+			to_chat(dragon, "<span class='boldwarning'>A rift has been destroyed! You have failed, and find yourself weakened.</span>")
 	return ..()
 
 /obj/structure/carp_rift/process(delta_time)
