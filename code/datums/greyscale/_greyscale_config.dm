@@ -98,7 +98,9 @@
 	var/icon/new_icon = icon_cache[key]
 	if(new_icon)
 		return icon(new_icon)
-	new_icon = icon_cache[key] = GenerateLayerGroup(colors, layers)
+	new_icon = GenerateLayerGroup(colors, layers)
+	new_icon = fcopy_rsc(new_icon)
+	icon_cache[key] = new_icon
 	return icon(new_icon)
 
 /// Internal recursive proc to handle nested layer groups
