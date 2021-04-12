@@ -97,9 +97,9 @@
 	var/key = colors.Join("&")
 	var/icon/new_icon = icon_cache[key]
 	if(new_icon)
-		return new_icon
+		return icon(new_icon)
 	new_icon = icon_cache[key] = GenerateLayerGroup(colors, layers)
-	return new_icon
+	return icon(new_icon)
 
 /// Internal recursive proc to handle nested layer groups
 /datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
