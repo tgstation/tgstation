@@ -253,6 +253,7 @@
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/jackbros
 	name = "jack bros outfit"
@@ -274,6 +275,7 @@
 	icon_state = "DutchUniform"
 	inhand_icon_state = "DutchUniform"
 	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/swagoutfit
 	name = "Swag outfit"
 	desc = "Why don't you go secure some bitches?"
