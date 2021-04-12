@@ -5,6 +5,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/datum/team/team //An alternative to 'owner': a team. Use this when writing new code.
 	var/name = "generic objective" //Name for admin prompts
 	var/explanation_text = "Nothing" //What that person is supposed to do.
+	///name used in printing this objective (Objective #1)
+	var/objective_name = "Objective"
 	var/team_explanation_text //For when there are multiple owners.
 	var/datum/mind/target = null //If they are focused on a particular person.
 	var/target_amount = 0 //If they are focused on a particular number. Steal objectives have their own counter.
@@ -514,6 +516,19 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		if(!istype(mindobj, /mob/living/silicon/robot) && !considered_alive(mindobj, FALSE)) //Shells (and normal borgs for that matter) are considered alive for Malf
 			return FALSE
 		return TRUE
+
+/datum/objective/exile
+	name = "exile"
+	explanation_text = "Stay alive off station. Do not go to CentCom."
+
+/datum/objective/exile/check_completion()
+	var/list/owners = get_owners()
+	for(var/datum/mind/mind as anything in owners)
+		if(!considered_alive(mind))
+			return FALSE
+		if(SSmapping.level_has_any_trait(mind.current.z, list(ZTRAIT_STATION, ZTRAIT_CENTCOM))) //went to centcom or ended round on station
+			return FALSE
+	return TRUE
 
 /datum/objective/martyr
 	name = "martyr"

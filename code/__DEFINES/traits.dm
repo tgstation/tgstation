@@ -283,6 +283,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KISS_OF_DEATH "kiss_of_death"
 /// Used on limbs in the process of turning a human into a plasmaman while in plasma lava
 #define TRAIT_PLASMABURNT "plasma_burnt"
+/// Addictions don't tick down, basically they're permanently addicted
+#define TRAIT_HOPELESSLY_ADDICTED "hopelessly_addicted"
+/// Special examine if eyes are visible
+#define CULT_EYES "cult_eyes"
 /// This mob should never close UI even if it doesn't have a client
 #define TRAIT_PRESERVE_UI_WITHOUT_CLIENT "preserve_ui_without_client"
 
@@ -520,7 +524,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
-#define CULT_EYES "cult_eyes"
 #define TRAIT_SANTA "santa"
 #define SCRYING_ORB "scrying-orb"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"

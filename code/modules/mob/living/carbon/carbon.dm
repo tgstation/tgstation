@@ -1272,4 +1272,4 @@
 
 
 /mob/living/carbon/proc/attach_rot(mapload)
-	AddComponent(/datum/component/rot, 6 MINUTES, 1)
+	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)

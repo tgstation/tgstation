@@ -32,10 +32,6 @@
 	if(hide)
 		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
 
-/obj/machinery/atmospherics/components/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>[src] is on layer [piping_layer].</span>"
-
 // Iconnery
 
 /**
@@ -56,7 +52,8 @@
 
 	underlays.Cut()
 
-	plane = showpipe ? GAME_PLANE : OVER_TILE_PLANE
+	color = null
+	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
 
 	if(!showpipe)
 		return ..()
@@ -67,13 +64,13 @@
 		if(!nodes[i])
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
-		var/image/img = get_pipe_underlay("pipe_intact", get_dir(src, node), node.pipe_color)
+		var/image/img = get_pipe_underlay("pipe_intact", get_dir(src, node), pipe_color)
 		underlays += img
 		connected |= img.dir
 
 	for(var/direction in GLOB.cardinals)
 		if((initialize_directions & direction) && !(connected & direction))
-			underlays += get_pipe_underlay("pipe_exposed", direction)
+			underlays += get_pipe_underlay("pipe_exposed", direction, pipe_color)
 
 	if(!shift_underlay_only)
 		PIPING_LAYER_SHIFT(src, piping_layer)
@@ -101,7 +98,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/on_construction()
-	..()
+	. = ..()
 	update_parents()
 
 /obj/machinery/atmospherics/components/get_rebuild_targets()
@@ -222,3 +219,10 @@
 
 /obj/machinery/atmospherics/components/return_analyzable_air()
 	return airs
+
+/obj/machinery/atmospherics/components/paint(paint_color)
+	if(paintable)
+		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+		pipe_color = paint_color
+		update_node_icon()
+	return paintable

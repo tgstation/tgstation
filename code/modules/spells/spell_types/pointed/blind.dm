@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/pointed/trigger/blind
 	name = "Blind"
 	desc = "This spell temporarily blinds a single target."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 300
 	clothes_req = FALSE
 	invocation = "STI KALY"
