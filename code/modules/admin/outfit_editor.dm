@@ -37,7 +37,7 @@
 
 /datum/outfit_editor/proc/init_dummy()
 	dummy_key = "outfit_editor_[owner]"
-	generate_dummy_lookalike(owner.mob)
+	generate_dummy_lookalike(dummy_key, owner.mob)
 	unset_busy_human_dummy(dummy_key)
 
 /datum/outfit_editor/ui_interact(mob/user, datum/tgui/ui)
@@ -73,9 +73,9 @@
 	data["outfit"] = serialize_outfit()
 	data["saveable"] = !GLOB.custom_outfits.Find(drip)
 
-	var/datum/preferences/prefs = owner.prefs
+	if(!dummy_key)
+		init_dummy()
 	var/icon/dummysprite = get_flat_human_icon(null,
-		prefs = prefs,
 		dummy_key = dummy_key,
 		showDirs = list(SOUTH),
 		outfit_override = drip)
