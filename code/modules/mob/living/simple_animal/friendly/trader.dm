@@ -1,9 +1,9 @@
 /**
-  * # Trader
-  *
-  * A mob that has some dialogue options with radials, allows for selling items and buying em'
-  *
-  */
+ * # Trader
+ *
+ * A mob that has some dialogue options with radials, allows for selling items and buying em'
+ *
+ */
 
 /mob/living/simple_animal/hostile/retaliate/trader
 	name = "Trader"
