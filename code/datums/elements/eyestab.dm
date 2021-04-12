@@ -4,6 +4,7 @@
 /// An element that lets you stab people in the eyes when targeting them
 /datum/element/eyestab
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	id_arg_index = 2
 
 	/// The amount of damage to do per eyestab
 	var/damage = 7
