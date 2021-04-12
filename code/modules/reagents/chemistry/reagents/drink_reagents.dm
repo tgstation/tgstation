@@ -254,7 +254,7 @@
 	taste_description = "thick, sugary milk"
 	glass_icon_state  = "glass_white"
 	glass_name = "glass of whipped cream"
-	glass_desc = "Full of delicious whipped cream!"
+	glass_desc = "A glass of whipped cream. Just barely in a drinkable state."
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 300 // Hyperglycaemic shock. Still got sugar in it!
@@ -281,7 +281,7 @@
 	overdose_threshold = 50
 
 /datum/reagent/consumable/naenaecream/on_mob_life(mob/living/carbon/M)
-	if(prob(25))
+	if(prob(10))
 		M.visible_message("<span class='danger'>[M] nae naes!</span>", "<span class='userdanger'>You can't help yourself but to nae nae!</span>")
 		M.Stun(2)
 	..()
@@ -413,7 +413,7 @@
 	taste_description = "tart black tea"
 	glass_icon_state = "teaglass"
 	glass_name = "black tea"
-	glass_desc = "A warm mug of black tea."
+	glass_desc = "A warm glass of black tea. Shouldn’t you drink this from something else?"
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-2)
@@ -437,9 +437,9 @@
 	glass_desc = "Green Tea served in a traditional Japanese tea cup, just like in your Chinese cartoons!"
 
 /datum/reagent/consumable/greentea/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
-	M.jitteriness = max(0,M.jitteriness-3)
+	M.dizziness = max(0,M.dizziness-1)
+	M.drowsyness = max(0,M.drowsyness-3)
+	M.jitteriness = max(0,M.jitteriness-2)
 	M.AdjustSleeping(-20, FALSE)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1, 0)
@@ -458,9 +458,9 @@
 	glass_desc = "Red Tea served in a traditional Chinese tea cup, just like in your Malaysian movies!"
 
 /datum/reagent/consumable/redtea/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
-	M.jitteriness = max(0,M.jitteriness-3)
+	M.dizziness = max(0,M.dizziness-3)
+	M.drowsyness = max(0,M.drowsyness-2)
+	M.jitteriness = max(0,M.jitteriness-1)
 	M.AdjustSleeping(-20, FALSE)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1, 0)
@@ -481,8 +481,8 @@
 
 /datum/reagent/consumable/chifir/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
-	M.jitteriness = max(0,M.jitteriness-3)
+	M.drowsyness = max(0,M.drowsyness-2)
+	M.jitteriness = max(0,M.jitteriness-2)
 	M.AdjustSleeping(-20, FALSE)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1, 0)
@@ -500,13 +500,13 @@
 	glass_name = "chamomile"
 	glass_desc = "A smooth, herbal tea. Refreshing!"
 
-/datum/reagent/consumable/chifir/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/chamomile/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-2)
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.jitteriness = max(0,M.jitteriness-3)
 	M.AdjustSleeping(-20, FALSE)
 	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1, 0)
+		M.adjustToxLoss(-2, 0)
 	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
 	..()
 	. = 1
