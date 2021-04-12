@@ -99,6 +99,9 @@
 	if(new_icon)
 		return icon(new_icon)
 	new_icon = GenerateLayerGroup(colors, layers)
+	// We read a pixel to force the icon to be fully generated before we let it loose into the world
+	// I hate this
+	new_icon.GetPixel(1, 1)
 	new_icon = fcopy_rsc(new_icon)
 	icon_cache[key] = new_icon
 	return icon(new_icon)
