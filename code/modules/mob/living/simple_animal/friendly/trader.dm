@@ -237,5 +237,7 @@
 	lore = list("Hello, I am Mr. Bones!",
 				"The ride never ends!",
 				"I'd really like a refreshing carton of milk!",
-				"I'm willing to play big prices for BONES! Need materials to make merch, eh?"
+				"I'm willing to play big prices for BONES! Need materials to make merch, eh?",
+				"It's a beautiful day outside. Birds are singing, Flowers are blooming...On days like these, kids like you...Should be buying my wares!"
+				
 				)
