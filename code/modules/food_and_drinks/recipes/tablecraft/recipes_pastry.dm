@@ -489,6 +489,10 @@
 	result = /obj/item/reagent_containers/food/snacks/sugarcookie
 	subcategory = CAT_PASTRY
 
+/datum/crafting_recipe/food/sugarcookie/cringe
+	name = "Cringe cookie"
+	result = /obj/item/reagent_containers/food/snacks/sugarcookie/cringe
+
 /datum/crafting_recipe/food/fortunecookie
 	time = 15
 	name = "Fortune cookie"
