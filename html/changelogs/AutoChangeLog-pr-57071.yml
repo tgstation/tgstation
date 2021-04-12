@@ -1,6 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - rscadd: "Plumbing reaction chambers now have connects for acidic (yellow) and basic (green) buffers! You can set the UI to indicate at what pH the reaction chamber is supposed to insert a buffer into the reaction."
-  - rscadd: "Adds plumbing bufferers. Place a bunch of them next to each other, set a threshold amount with right click and screwdriver them. Once all are above the threshold, only then will they start providing chems. Great for waiting steps and carefully dosing amounts!"
-  - balance: "The reaction chamber no longer pulls specific chems, and instead has a set volume it works towards before being able to react."

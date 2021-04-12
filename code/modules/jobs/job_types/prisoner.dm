@@ -7,9 +7,13 @@
 	supervisors = "the security team"
 	selection_color = "#ffe1c3"
 	paycheck = PAYCHECK_PRISONER
+
 	outfit = /datum/outfit/job/prisoner
+	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
+
+	family_heirlooms = list(/obj/item/pen/blue)
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"

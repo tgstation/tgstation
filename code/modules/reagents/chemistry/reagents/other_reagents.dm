@@ -105,6 +105,12 @@
 	ph = 7.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/bone_dust
+	name = "bone dust"
+	color = "#dbcdcb"
+	description = "Ground up bones, gross!"
+	taste_description = "the most disgusting grain in existence"
+
 /datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
@@ -737,7 +743,8 @@
 
 /datum/reagent/gluttonytoxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
-	exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
+	if(reac_volume >= 1)//This prevents microdosing from infecting masses of people
+		exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -1221,14 +1228,14 @@
 		M.emote("drool")
 	..()
 
-/datum/reagent/nanomachines
+/datum/reagent/cyborg_mutation_nanomachines
 	name = "Nanomachines"
 	description = "Microscopic construction robots."
 	color = "#535E66" // rgb: 83, 94, 102
 	taste_description = "sludge"
 	penetrates_skin = NONE
 
-/datum/reagent/nanomachines/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+/datum/reagent/cyborg_mutation_nanomachines/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		exposed_mob.ForceContractDisease(new /datum/disease/transformation/robot(), FALSE, TRUE)
@@ -2359,15 +2366,14 @@
 		to_chat(M, "You should sit down and take a rest...")
 	..()
 
-/datum/reagent/tranquility
+/datum/reagent/gondola_mutation_toxin
 	name = "Tranquility"
 	description = "A highly mutative liquid of unknown origin."
 	color = "#9A6750" //RGB: 154, 103, 80
 	taste_description = "inner peace"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	penetrates_skin = NONE
 
-/datum/reagent/tranquility/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+/datum/reagent/gondola_mutation_toxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		exposed_mob.ForceContractDisease(new /datum/disease/transformation/gondola(), FALSE, TRUE)

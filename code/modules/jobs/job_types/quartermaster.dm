@@ -9,6 +9,7 @@
 	exp_type_department = EXP_TYPE_SUPPLY // This is so the jobs menu can work properly
 
 	outfit = /datum/outfit/job/quartermaster
+	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_CAR
@@ -23,6 +24,8 @@
 	..()
 	if(announce_captaincy)
 		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Due to extreme staffing shortages, newly promoted Acting Captain [H.real_name] on deck!"))
+
+	family_heirlooms = list(/obj/item/stamp, /obj/item/stamp/denied)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"

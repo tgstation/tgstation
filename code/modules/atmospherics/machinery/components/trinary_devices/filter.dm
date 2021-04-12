@@ -45,14 +45,13 @@
 		if(!(direction & initialize_directions))
 			continue
 
-		var/obj/machinery/atmospherics/node = findConnecting(direction)
-		. += getpipeimage(icon, "cap", direction, node?.pipe_color, piping_layer, TRUE)
+		. += getpipeimage(icon, "cap", direction, pipe_color, piping_layer, TRUE)
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
 	icon_state = "filter_[on_state ? "on" : "off"]-[set_overlay_offset(piping_layer)][flipped ? "_f" : ""]"
 
-/obj/machinery/atmospherics/components/trinary/filter/process_atmos(delta_time)
+/obj/machinery/atmospherics/components/trinary/filter/process_atmos()
 	..()
 	if(!on || !(nodes[1] && nodes[2] && nodes[3]) || !is_operational)
 		return
@@ -71,7 +70,7 @@
 		//No need to transfer if target is already full!
 		return
 
-	var/transfer_ratio = (transfer_rate * delta_time) / air1.volume
+	var/transfer_ratio = transfer_rate / air1.volume
 
 	//Actually transfer the gas
 

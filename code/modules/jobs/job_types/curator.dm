@@ -8,12 +8,15 @@
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/curator
+	plasmaman_outfit = /datum/outfit/plasmaman/curator
 
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CURATOR
 	departments = DEPARTMENT_SERVICE
+
+	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/storage/pill_bottle/dice)
 
 /datum/outfit/job/curator
 	name = "Curator"

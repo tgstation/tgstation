@@ -10,6 +10,7 @@
 	exp_requirements = 60
 
 	outfit = /datum/outfit/job/virologist
+	plasmaman_outfit = /datum/outfit/plasmaman/viro
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
@@ -19,6 +20,8 @@
 	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
 	bounty_types = CIV_JOB_VIRO
 	departments = DEPARTMENT_MEDICAL
+
+	family_heirlooms = list(/obj/item/reagent_containers/syringe)
 
 /datum/outfit/job/virologist
 	name = "Virologist"

@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_ENGINEERING
 
 	outfit = /datum/outfit/job/ce
+	plasmaman_outfit = /datum/outfit/plasmaman/chief_engineer
 	departments = DEPARTMENT_ENGINEERING | DEPARTMENT_COMMAND
 
 	paycheck = PAYCHECK_COMMAND
@@ -24,6 +25,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	bounty_types = CIV_JOB_ENG
+
+	family_heirlooms = list(/obj/item/clothing/head/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 
 /datum/job/chief_engineer/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()

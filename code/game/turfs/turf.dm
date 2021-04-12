@@ -24,8 +24,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
-	var/explosion_level = 0 //for preventing explosion dodging
-	var/explosion_id = 0
 	var/list/explosion_throw_details
 
 	var/requires_activation //add to air processing after initialize?
@@ -60,6 +58,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	///the holodeck can load onto this turf if TRUE
 	var/holodeck_compatible = FALSE
+
+	/// If this turf contained an RCD'able object (or IS one, for walls)
+	/// but is now destroyed, this will preserve the value.
+	/// See __DEFINES/construction.dm for RCD_MEMORY_*.
+	var/rcd_memory
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -118,7 +121,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(T)
 		T.multiz_turf_new(src, UP)
 
-
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
 
@@ -155,6 +157,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
 	..()
+
+	vis_contents.Cut()
 
 /turf/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -321,12 +325,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	for(var/i in contents)
 		if(i == mover)
 			continue
-		var/atom/movable/thing = i
-		if(!thing.Uncross(mover, newloc))
-			if(thing.flags_1 & ON_BORDER_1)
-				mover.Bump(thing)
-			if(!(mover.movement_type & PHASING))
-				return FALSE
 		if(QDELETED(mover))
 			return FALSE //We were deleted.
 
@@ -477,8 +475,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	for(var/thing in contents)
 		var/atom/movable/movable_thing = thing
 		if(QDELETED(movable_thing))
-			continue
-		if(!movable_thing.ex_check(explosion_id))
 			continue
 		switch(severity)
 			if(EXPLODE_DEVASTATE)

@@ -4,6 +4,7 @@
 	icon_state = ""
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
+	rcd_memory = null
 	var/last_event = 0
 	var/active = null
 
@@ -349,7 +350,7 @@
 /turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity)
 	var/obj/item/bombcore/large/bombcore = new(get_turf(src))
 	bombcore.detonate()
-	..()
+	return ..()
 
 /turf/closed/wall/mineral/plastitanium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()

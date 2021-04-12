@@ -41,6 +41,11 @@
 	held_state = "cat2"
 	pet_bonus = TRUE
 	pet_bonus_emote = "purrs!"
+	///In the case 'melee_damage_upper' is somehow raised above 0
+	attack_verb_continuous = "claws"
+	attack_verb_simple = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	attack_vis_effect = ATTACK_EFFECT_CLAW
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 

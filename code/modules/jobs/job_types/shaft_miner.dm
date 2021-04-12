@@ -8,6 +8,7 @@
 	selection_color = "#dcba97"
 
 	outfit = /datum/outfit/job/miner
+	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_CAR
@@ -15,6 +16,8 @@
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 	bounty_types = CIV_JOB_MINE
 	departments = DEPARTMENT_CARGO
+
+	family_heirlooms = list(/obj/item/pickaxe/mini, /obj/item/shovel)
 
 /datum/outfit/job/miner
 	name = "Shaft Miner"

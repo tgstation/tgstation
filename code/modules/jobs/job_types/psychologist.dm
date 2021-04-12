@@ -8,6 +8,7 @@
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/psychologist
+	plasmaman_outfit = /datum/outfit/plasmaman/psychologist
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SRV
@@ -16,6 +17,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_PSYCHOLOGIST
 	departments = DEPARTMENT_SERVICE
+
+	family_heirlooms = list(/obj/item/storage/pill_bottle)
 
 /datum/outfit/job/psychologist
 	name = "Psychologist"

@@ -4,6 +4,7 @@
 	icon_state = "mushroom_color"
 	icon_living = "mushroom_color"
 	icon_dead = "mushroom_dead"
+	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	speak_chance = 0
 	turns_per_move = 1
 	maxHealth = 10
@@ -23,6 +24,7 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	faction = list("mushroom")
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	stat_attack = DEAD

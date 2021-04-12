@@ -175,8 +175,45 @@
 	else
 		to_chat(user, "<span class='notice'>Activate the machine first by using a multitool on the interface.</span>")
 
+/obj/machinery/hypertorus/interface/ui_static_data()
+	var/data = list()
+	data["selected_fuel"] = list(list("name" = "Nothing", "id" = null))
+	for(var/path in GLOB.hfr_fuels_list)
+		var/datum/hfr_fuel/recipe = GLOB.hfr_fuels_list[path]
+		data["selected_fuel"] += list(list("name" = recipe.name, "id" = recipe.id))
+	return data
+
 /obj/machinery/hypertorus/interface/ui_data()
 	var/data = list()
+
+	if(connected_core.selected_fuel)
+		data["selected"] = connected_core.selected_fuel.id
+	else
+		data["selected"] = ""
+
+	var/list/product_gases
+	if(!connected_core.selected_fuel)
+		product_gases = list("Select a fuel mix to see the output")
+	else
+		product_gases = list("The [connected_core.selected_fuel.name] mix will produce the following gases:")
+		for(var/gas_type in connected_core.selected_fuel.secondary_products)
+			var/datum/gas/gas_produced = gas_type
+			product_gases += "-[initial(gas_produced.name)]"
+		var/minimum_temp = connected_core.selected_fuel.negative_temperature_multiplier < 1 ? "Decrease" : "Increase"
+		var/maximum_temp = connected_core.selected_fuel.positive_temperature_multiplier < 1 ? "Decrease" : "Increase"
+		var/energy = connected_core.selected_fuel.energy_concentration_multiplier > 1 ? "Decrease" : "Increase"
+		var/fuel_consumption = connected_core.selected_fuel.fuel_consumption_multiplier > 1 ? "Decrease" : "Increase"
+		var/fuel_production = connected_core.selected_fuel.gas_production_multiplier < 1 ? "Decrease" : "Increase"
+		product_gases += "The fuel mix will"
+		product_gases += "-[minimum_temp] the minimum cooling by a factor of [connected_core.selected_fuel.negative_temperature_multiplier]"
+		product_gases += "-[maximum_temp] the maximum heating by a factor of [connected_core.selected_fuel.positive_temperature_multiplier]"
+		product_gases += "-[energy] the energy output consumption by a factor of [1 / connected_core.selected_fuel.energy_concentration_multiplier]"
+		product_gases += "-[fuel_consumption] the fuel consumption by a factor of [1 / connected_core.selected_fuel.fuel_consumption_multiplier]"
+		product_gases += "-[fuel_production] the gas production by a factor of [connected_core.selected_fuel.gas_production_multiplier]"
+		product_gases += "-Maximum fusion temperature with this mix: [FUSION_MAXIMUM_TEMPERATURE * connected_core.selected_fuel.temperature_change_multiplier] K."
+
+	data["product_gases"] = product_gases.Join("\n")
+
 	//Internal Fusion gases
 	var/list/fusion_gasdata = list()
 	if(connected_core.internal_fusion.total_moles())
@@ -304,6 +341,23 @@
 				filter_name = GLOB.meta_gas_info[gas][META_GAS_NAME]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
+		if("fuel")
+			connected_core.selected_fuel = null
+			var/fuel_mix = "nothing"
+			var/datum/hfr_fuel/fuel = null
+			if(params["mode"] != "")
+				fuel = GLOB.hfr_fuels_list[params["mode"]]
+			if(fuel)
+				connected_core.selected_fuel = fuel
+				fuel_mix = fuel.name
+			if(connected_core.internal_fusion.total_moles())
+				connected_core.dump_gases()
+			connected_core.update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating
+			connected_core.linked_input.update_parents()
+			connected_core.linked_output.update_parents()
+			connected_core.linked_moderator.update_parents()
+			investigate_log("was set to recipe [fuel_mix ? fuel_mix : "null"] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			. = TRUE
 
 /obj/machinery/hypertorus/corner
 	name = "HFR corner"
@@ -313,6 +367,7 @@
 	icon_state_off = "corner_off"
 	icon_state_open = "corner_open"
 	icon_state_active = "corner_active"
+	dir = SOUTHEAST
 
 /obj/item/paper/guides/jobs/atmos/hypertorus
 	name = "paper- 'Quick guide to safe handling of the HFR'"
@@ -338,3 +393,89 @@
 	-In case of a power shortage, the fusion reaction will CONTINUE but the cooling will STOP<BR><BR>\
 	The writer of the quick guide will not be held responsible for misuses and meltdown caused by the use of the guide, \
 	use more advanced guides to understando how the various gases will act as moderators."
+
+/obj/item/hfr_box
+	name = "HFR box"
+	desc = "If you see this, call the police."
+	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon_state = "box"
+	///What kind of box are we handling?
+	var/box_type = "impossible"
+	///What's the path of the machine we making
+	var/part_path
+
+/obj/item/hfr_box/corner
+	name = "HFR box corner"
+	desc = "Place this as the corner of your 3x3 multiblock fusion reactor"
+	icon_state = "box_corner"
+	box_type = "corner"
+	part_path = /obj/machinery/hypertorus/corner
+
+/obj/item/hfr_box/body
+	name = "HFR box body"
+	desc = "Place this on the sides of the core box of your 3x3 multiblock fusion reactor"
+	box_type = "body"
+	icon_state = "box_body"
+
+/obj/item/hfr_box/body/fuel_input
+	name = "HFR box fuel input"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
+
+/obj/item/hfr_box/body/moderator_input
+	name = "HFR box moderator input"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
+
+/obj/item/hfr_box/body/waste_output
+	name = "HFR box waste output"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
+
+/obj/item/hfr_box/body/interface
+	name = "HFR box interface"
+	part_path = /obj/machinery/hypertorus/interface
+
+/obj/item/hfr_box/core
+	name = "HFR box core"
+	desc = "Activate this with a multitool to deploy the full machine after setting up the other boxes"
+	icon_state = "box_core"
+	box_type = "core"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/core
+
+/obj/item/hfr_box/core/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	var/list/parts = list()
+	for(var/obj/item/hfr_box/box in orange(1,src))
+		var/direction = get_dir(src, box)
+		if(box.box_type == "corner")
+			if(ISDIAGONALDIR(direction))
+				box.dir = direction
+				parts |= box
+			continue
+		if(box.box_type == "body")
+			if(direction in GLOB.cardinals)
+				box.dir = DIRFLIP(direction)
+				parts |= box
+			continue
+	if(parts.len == 8)
+		build_reactor(parts)
+	return
+
+/obj/item/hfr_box/core/proc/build_reactor(list/parts)
+	for(var/obj/item/hfr_box/box in parts)
+		if(box.box_type == "corner")
+			var/obj/machinery/hypertorus/corner/corner = new box.part_path(box.loc)
+			corner.dir = box.dir
+			qdel(box)
+			continue
+		if(box.box_type == "body")
+			var/location = get_turf(box)
+			if(box.part_path != /obj/machinery/hypertorus/interface)
+				var/obj/machinery/atmospherics/components/unary/hypertorus/part = new box.part_path(location, TRUE, box.dir)
+				part.dir = box.dir
+			else
+				var/obj/machinery/hypertorus/interface/part = new box.part_path(location)
+				part.dir = box.dir
+			qdel(box)
+			continue
+
+	new/obj/machinery/atmospherics/components/unary/hypertorus/core(loc, TRUE)
+	qdel(src)

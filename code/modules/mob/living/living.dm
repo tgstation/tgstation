@@ -228,10 +228,18 @@
 	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force) //trigger move_crush and/or force_push regardless of if we can push it normally
 		if(force_push(AM, move_force, dir_to_target, push_anchored))
 			push_anchored = TRUE
+	if(ismob(AM))
+		var/mob/mob_to_push = AM
+		var/atom/movable/mob_buckle = mob_to_push.buckled
+		// If we can't pull them because of what they're buckled to, make sure we can push the thing they're buckled to instead.
+		// If neither are true, we're not pushing anymore.
+		if(mob_buckle && (mob_buckle.buckle_prevents_pull || (force < (mob_buckle.move_resist * MOVE_FORCE_PUSH_RATIO))))
+			now_pushing = FALSE
+			return
 	if((AM.anchored && !push_anchored) || (force < (AM.move_resist * MOVE_FORCE_PUSH_RATIO)))
 		now_pushing = FALSE
 		return
-	if (istype(AM, /obj/structure/window))
+	if(istype(AM, /obj/structure/window))
 		var/obj/structure/window/W = AM
 		if(W.fulltile)
 			for(var/obj/structure/window/win in get_step(W, dir_to_target))
@@ -1004,13 +1012,6 @@
 					who.log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red")
 					log_message("[key_name(who)] has been stripped of [what] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 
-	if(Adjacent(who)) //update inventory window
-		who.show_inv(src)
-	else
-		src << browse(null,"window=mob[REF(who)]")
-
-	who.update_equipment_speed_mods() // Updates speed in case stripped speed affecting item
-
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
@@ -1052,11 +1053,6 @@
 						who.equip_to_slot(what, where, TRUE)
 					who.log_message("[key_name(who)] had [what] put on them by [key_name(src)]", LOG_ATTACK, color="red")
 					log_message("[key_name(who)] had [what] put on them by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
-
-		if(Adjacent(who)) //update inventory window
-			who.show_inv(src)
-		else
-			src << browse(null,"window=mob[REF(who)]")
 
 /mob/living/singularity_pull(S, current_size)
 	..()
@@ -1923,24 +1919,19 @@
  * It is also used to process martial art attacks by nonhumans, even against humans
  * Human vs human attacks are handled in species code right now.
  */
-/mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab)
+/mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab = FALSE)
 	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
-		return FALSE
-	if(ishuman(target) && ishuman(src)) //Human vs human are handled in species code
-		return FALSE
+		return MARTIAL_ATTACK_INVALID
 	var/datum/martial_art/style = mind?.martial_art
-	var/attack_result = FALSE
-	if (style)
-		if (is_grab)
-			attack_result = style.grab_act(src, target)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			attack_result = style.disarm_act(src, target)
-		if(combat_mode)
-			if (HAS_TRAIT(src, TRAIT_PACIFISM))
-				return FALSE
-			attack_result = style.harm_act(src, target)
-		else
-			attack_result = style.help_act(src, target)
-
-
-	return attack_result
+	if (!style)
+		return MARTIAL_ATTACK_INVALID
+	// will return boolean below since it's not invalid
+	if (is_grab)
+		return style.grab_act(src, target)
+	if (LAZYACCESS(modifiers, RIGHT_CLICK))
+		return style.disarm_act(src, target)
+	if(combat_mode)
+		if (HAS_TRAIT(src, TRAIT_PACIFISM))
+			return FALSE
+		return style.harm_act(src, target)
+	return style.help_act(src, target)

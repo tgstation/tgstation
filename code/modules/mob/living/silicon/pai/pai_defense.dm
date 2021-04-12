@@ -15,13 +15,13 @@
 	//Ask and you shall receive
 	switch(rand(1, 3))
 		if(1)
-			stuttering = 1
+			stuttering += 30/severity //temporary, clears in a few ticks after silent is over.
 			to_chat(src, "<span class='danger'>Warning: Feedback loop detected in speech module.</span>")
 		if(2)
-			slurring = 1
+			slurring = INFINITY // permanent until speech is fixed through the pAI card UI by someone else.
 			to_chat(src, "<span class='danger'>Warning: Audio synthesizer CPU stuck.</span>")
 		if(3)
-			derpspeech = 1
+			derpspeech = 1 // Ditto.
 			to_chat(src, "<span class='danger'>Warning: Vocabulary databank corrupted.</span>")
 	if(prob(40))
 		mind.language_holder.selected_language = get_random_spoken_language()
@@ -30,13 +30,13 @@
 /mob/living/silicon/pai/ex_act(severity, target)
 	take_holo_damage(severity * 50)
 	switch(severity)
-		if(1) //RIP
+		if(EXPLODE_DEVASTATE) //RIP
 			qdel(card)
 			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			fold_in(force = 1)
 			Paralyze(400)
-		if(3)
+		if(EXPLODE_LIGHT)
 			fold_in(force = 1)
 			Paralyze(200)
 

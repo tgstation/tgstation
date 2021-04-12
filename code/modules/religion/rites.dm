@@ -23,11 +23,15 @@
 	LAZYREMOVE(GLOB.religious_sect.active_rites, src)
 	return ..()
 
+/datum/religion_rites/proc/can_afford(mob/living/user)
+	if(GLOB.religious_sect?.favor < favor_cost)
+		to_chat(user, "<span class='warning'>This rite requires more favor!</span>")
+		return FALSE
+	return TRUE
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
 /datum/religion_rites/proc/perform_rite(mob/living/user, atom/religious_tool)
-	if(GLOB.religious_sect?.favor < favor_cost)
-		to_chat(user, "<span class='warning'>This rite requires more favor!</span>")
+	if(!can_afford(user))
 		return FALSE
 	to_chat(user, "<span class='notice'>You begin to perform the rite of [name]...</span>")
 	if(!ritual_invocations)
@@ -54,19 +58,20 @@
 
 ///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, atom/religious_tool)
+	SHOULD_CALL_PARENT(TRUE)
 	GLOB.religious_sect.on_riteuse(user,religious_tool)
 	return TRUE
 
 
-/*********Technophiles**********/
+/**** Mechanical God ****/
 
 /datum/religion_rites/synthconversion
 	name = "Synthetic Conversion"
 	desc = "Convert a human-esque individual into a (superior) Android."
 	ritual_length = 30 SECONDS
-	ritual_invocations = list("By the inner workings of our god...",
-						"... We call upon you, in the face of adversity...",
-						"... to complete us, removing that which is undesirable...")
+	ritual_invocations = list("By the inner workings of our god ...",
+						"... We call upon you, in the face of adversity ...",
+						"... to complete us, removing that which is undesirable ...")
 	invoke_msg = "... Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
 	favor_cost = 1000
 
@@ -87,6 +92,7 @@
 	return ..()
 
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, atom/religious_tool)
+	..()
 	if(!ismovable(religious_tool))
 		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
 	var/atom/movable/movable_reltool = religious_tool
@@ -104,7 +110,7 @@
 	return TRUE
 
 
-/*********Ever-Burning Candle**********/
+/**** Pyre God ****/
 
 ///apply a bunch of fire immunity effect to clothing
 /datum/religion_rites/fireproof/proc/apply_fireproof(obj/item/clothing/fireproofed)
@@ -114,7 +120,7 @@
 	fireproofed.resistance_flags |= FIRE_PROOF
 
 /datum/religion_rites/fireproof
-	name = "Unmelting Wax"
+	name = "Unmelting Protection"
 	desc = "Grants fire immunity to any piece of clothing."
 	ritual_length = 15 SECONDS
 	ritual_invocations = list("And so to support the holder of the Ever-Burning candle...",
@@ -134,6 +140,7 @@
 	return FALSE
 
 /datum/religion_rites/fireproof/invoke_effect(mob/living/user, atom/religious_tool)
+	..()
 	if(!QDELETED(chosen_clothing) && get_turf(religious_tool) == chosen_clothing.loc) //check if the same clothing is still there
 		if(istype(chosen_clothing,/obj/item/clothing/suit/hooded) || istype(chosen_clothing,/obj/item/clothing/suit/space/hardsuit ))
 			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
@@ -148,14 +155,14 @@
 
 
 /datum/religion_rites/burning_sacrifice
-	name = "Candle Fuel"
+	name = "Burning Offering"
 	desc = "Sacrifice a buckled burning corpse for favor, the more burn damage the corpse has the more favor you will receive."
 	ritual_length = 20 SECONDS
-	ritual_invocations = list("To feed the fire of the one true flame ...",
-	"... to make it burn brighter ...",
-	"... so that it may consume all in its path ...",
-	"... I offer you this pitiful being ...")
-	invoke_msg = "... may it join you in the amalgamation of wax and fire, and become one in the black and white scene. "
+	ritual_invocations = list("Burning body ...",
+	"... cleansed by the flame ...",
+	"... we were all created from fire ...",
+	"... and to it ...")
+	invoke_msg = "... WE RETURN! "
 ///the burning corpse chosen for the sacrifice of the rite
 	var/mob/living/carbon/chosen_sacrifice
 
@@ -183,6 +190,7 @@
 		return ..()
 
 /datum/religion_rites/burning_sacrifice/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
 	if(!(chosen_sacrifice in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
 		to_chat(user, "<span class='warning'>The right sacrifice is no longer on the altar!</span>")
 		chosen_sacrifice = null
@@ -196,8 +204,8 @@
 		chosen_sacrifice = null
 		return FALSE
 	var/favor_gained = 100 + round(chosen_sacrifice.getFireLoss())
-	GLOB.religious_sect?.adjust_favor(favor_gained, user)
-	to_chat(user, "<span class='notice'>[GLOB.deity] absorb the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor.</span>")
+	GLOB.religious_sect.adjust_favor(favor_gained, user)
+	to_chat(user, "<span class='notice'>[GLOB.deity] absorbs the burning corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor.</span>")
 	chosen_sacrifice.dust(force = TRUE)
 	playsound(get_turf(religious_tool), 'sound/effects/supermatter.ogg', 50, TRUE)
 	chosen_sacrifice = null
@@ -209,12 +217,369 @@
 	name = "Immortal Candles"
 	desc = "Creates 5 candles that never run out of wax."
 	ritual_length = 10 SECONDS
-	invoke_msg = "please lend us five of your candles so we may bask in your burning glory."
+	invoke_msg = "Burn bright, little candles, for you will only extinguish along with the universe."
 	favor_cost = 200
 
 /datum/religion_rites/infinite_candle/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
 	var/altar_turf = get_turf(religious_tool)
 	for(var/i in 1 to 5)
 		new /obj/item/candle/infinite(altar_turf)
 	playsound(altar_turf, 'sound/magic/fireball.ogg', 50, TRUE)
 	return TRUE
+
+/*********Greedy God**********/
+
+///all greed rites cost money instead
+/datum/religion_rites/greed
+	ritual_length = 5 SECONDS
+	invoke_msg = "Sorry I was late, I was just making a shitload of money."
+	var/money_cost = 0
+
+/datum/religion_rites/greed/can_afford(mob/living/user)
+	var/datum/bank_account/account = user.get_bank_account()
+	if(!account)
+		to_chat(user, "<span class='warning'>You need a way to pay for the rite!</span>")
+		return FALSE
+	if(account.account_balance < money_cost)
+		to_chat(user, "<span class='warning'>This rite requires more money!</span>")
+		return FALSE
+	return TRUE
+
+/datum/religion_rites/greed/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	var/datum/bank_account/account = user.get_bank_account()
+	if(!account || account.account_balance < money_cost)
+		to_chat(user, "<span class='warning'>This rite requires more money!</span>")
+		return FALSE
+	account.adjust_money(-money_cost)
+	. = ..()
+
+/datum/religion_rites/greed/vendatray
+	name = "Purchase Vend-a-tray"
+	desc = "Summons a Vend-a-tray. You can use it to sell items!"
+	invoke_msg = "I need a vend-a-tray to make some more money!"
+	money_cost = 300
+
+/datum/religion_rites/greed/vendatray/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/altar_turf = get_turf(religious_tool)
+	new /obj/structure/displaycase/forsale(altar_turf)
+	playsound(get_turf(religious_tool), 'sound/effects/cashregister.ogg', 60, TRUE)
+	return TRUE
+
+/datum/religion_rites/greed/custom_vending
+	name = "Purchase Personal Vending Machine"
+	desc = "Summons a custom vending machine. You can use it to sell MANY items!"
+	invoke_msg = "If I get a custom vending machine for my products, I can be RICH!"
+	money_cost = 1000 //quite a step up from vendatray
+
+/datum/religion_rites/greed/custom_vending/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/altar_turf = get_turf(religious_tool)
+	new /obj/machinery/vending/custom/greed(altar_turf)
+	playsound(get_turf(religious_tool), 'sound/effects/cashregister.ogg', 60, TRUE)
+	return TRUE
+
+/*********Honorbound God**********/
+
+///Makes the person holy, but they now also have to follow the honorbound code (CBT). Actually earns favor, convincing others to uphold the code (tm) is not easy
+/datum/religion_rites/deaconize
+	name = "Join Crusade"
+	desc = "Converts someone to your sect. They must be willing, so the first invocation will instead prompt them to join. \
+	They will become honorbound like you, and you will gain a massive favor boost!"
+	ritual_length = 30 SECONDS
+	ritual_invocations = list(
+	"A good, honorable crusade against evil is required.",
+	"We need the righteous ...",
+	"... the unflinching ...",
+	"... and the just.",
+	"Sinners must be silenced ...",)
+	invoke_msg = "... And the code must be upheld!"
+	///the invited crusader
+	var/mob/living/carbon/human/new_crusader
+
+/datum/religion_rites/deaconize/perform_rite(mob/living/user, atom/religious_tool)
+	var/datum/religion_sect/honorbound/sect = GLOB.religious_sect
+	if(!ismovable(religious_tool))
+		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
+		return FALSE
+	var/atom/movable/movable_reltool = religious_tool
+	if(!movable_reltool)
+		return FALSE
+	if(!LAZYLEN(movable_reltool.buckled_mobs))
+		to_chat(user, "<span class='warning'>Nothing is buckled to the altar!</span>")
+		return FALSE
+	for(var/mob/living/carbon/human/possible_crusader in movable_reltool.buckled_mobs)
+		if(possible_crusader.stat != CONSCIOUS)
+			to_chat(user, "<span class='warning'>[possible_crusader] needs to be alive and conscious to join the crusade!</span>")
+			return FALSE
+		if(TRAIT_GENELESS in possible_crusader.dna.species.inherent_traits)
+			to_chat(user, "<span class='warning'>This species disgusts [GLOB.deity]! They would never be allowed to join the crusade!</span>")
+			return FALSE
+		if(possible_crusader in sect.currently_asking)
+			to_chat(user, "<span class='warning'>Wait for them to decide on whether to join or not!</span>")
+			return FALSE
+		if(!(possible_crusader in sect.possible_crusaders))
+			INVOKE_ASYNC(sect, /datum/religion_sect/honorbound.proc/invite_crusader, possible_crusader)
+			to_chat(user, "<span class='notice'>They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again.</span>")
+			return FALSE
+		new_crusader = possible_crusader
+		return ..()
+
+/datum/religion_rites/deaconize/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+	..()
+	var/mob/living/carbon/human/joining_now = new_crusader
+	new_crusader = null
+	if(!(joining_now in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
+		to_chat(user, "<span class='warning'>The new member is no longer on the altar!</span>")
+		return FALSE
+	if(joining_now.stat != CONSCIOUS)
+		to_chat(user, "<span class='warning'>The new member has to stay alive for the rite to work!</span>")
+		return FALSE
+	if(!joining_now.mind)
+		to_chat(user, "<span class='warning'>The new member has no mind!</span>")
+		return FALSE
+	if(joining_now.mind.has_antag_datum(/datum/antagonist/cult))//what the fuck?!
+		to_chat(user, "<span class='warning'>[GLOB.deity] has seen a true, dark evil in [joining_now]'s heart, and they have been smitten!</span>")
+		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
+		joining_now.gib(TRUE)
+		return FALSE
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	if(joining_now in honormut.guilty)
+		honormut.guilty -= joining_now
+	GLOB.religious_sect.adjust_favor(200, user)
+	to_chat(user, "<span class='notice'>[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)</span>")
+	joining_now.mind.holy_role = HOLY_ROLE_DEACON
+	GLOB.religious_sect.on_conversion(joining_now)
+	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
+	return TRUE
+
+///Mostly useless funny rite for forgiving someone, making them innocent once again.
+/datum/religion_rites/forgive
+	name = "Forgive"
+	desc = "Forgives someone, making them no longer considered guilty. A kind gesture, all things considered!"
+	invoke_msg = "You are absolved of sin."
+	var/mob/living/who
+
+/datum/religion_rites/forgive/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
+	if(!ishuman(user))
+		return FALSE
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	if(!honormut)
+		return FALSE
+	if(!honormut.guilty.len)
+		to_chat(user, "<span class='warning'>[GLOB.deity] is holding no grudges to forgive.</span>")
+		return FALSE
+	var/forgiven_choice = input(user, "Choose one of [GLOB.deity]'s guilty to forgive.", "Forgive") as null|anything in honormut.guilty
+	if(!forgiven_choice)
+		return FALSE
+	who = forgiven_choice
+	return ..()
+
+/datum/religion_rites/forgive/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+	..()
+	if(in_range(user, religious_tool))
+		return FALSE
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	if(!honormut) //edge case
+		return FALSE
+	honormut.guilty -= who
+	who = null
+	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
+	return TRUE
+
+/datum/religion_rites/summon_rules
+	name = "Summon Honorbound Rules"
+	desc = "Enscribes a paper with the honorbound rules and regulations."
+	invoke_msg = "Bring forth the holy writ!"
+	///paper to turn into holy writ
+	var/obj/item/paper/writ_target
+
+/datum/religion_rites/summon_rules/perform_rite(mob/living/user, atom/religious_tool)
+	for(var/obj/item/paper/could_writ in get_turf(religious_tool))
+		if(istype(could_writ, /obj/item/paper/holy_writ))
+			continue
+		if(could_writ.info) //blank paper pls
+			continue
+		writ_target = could_writ //PLEASE SIGN MY AUTOGRAPH
+		return ..()
+	to_chat(user, "<span class='warning'>You need to place blank paper on [religious_tool] to do this!</span>")
+	return FALSE
+
+/datum/religion_rites/summon_rules/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/obj/item/paper/autograph = writ_target
+	var/turf/tool_turf = get_turf(religious_tool)
+	writ_target = null
+	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the same food is still there
+		to_chat(user, "<span class='warning'>Your target left the altar!</span>")
+		return FALSE
+	autograph.visible_message("<span class='notice'>words magically form on [autograph]!</span>")
+	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
+	new /obj/item/paper/holy_writ(tool_turf)
+	qdel(autograph)
+	return TRUE
+
+/obj/item/paper/holy_writ
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "scroll"
+	slot_flags = null
+	show_written_words = FALSE
+
+	//info set in here because we need GLOB.deity
+/obj/item/paper/holy_writ/Initialize()
+	add_filter("holy_outline", 9, list("type" = "outline", "color" = "#fdff6c"))
+	name = "[GLOB.deity]'s honorbound rules"
+	info = {"[GLOB.deity]'s honorbound rules:
+	<br>
+	1.) Thou shalt not attack the unready!<br>
+	Those who are not ready for battle should not be wrought low. The evil of this world must lose
+	in a fair battle if you are to conquer them completely.
+	<br>
+	<br>
+	2.) Thou shalt not attack the just!<br>
+	Those who fight for justice and good must not be harmed. Security is uncorruptable and must
+	be respected. Healers are mostly uncorruptable and if you are truly sure Medical has fallen
+	to the scourge of evil, use a declaration of evil.
+	<br>
+	<br>
+	3.) Thou shalt not attack the innocent!<br>
+	There is no honor on a pre-emptive strike, unless they are truly evil vermin.
+	Those who are guilty will either lay a hand on you first, or you may declare their evil.
+	<br>
+	<br>
+	4.) Thou shalt not use profane magicks!<br>
+	You are not a warlock, you are an honorable warrior. There is nothing more corruptive than
+	the vile magicks used by witches, warlocks, and necromancers. There are exceptions to this rule.<br>
+	You may use holy magic, and, if you recruit one, the mime may use holy mimery. Restoration has also
+	been allowed as it is a school focused on the light and mending of this world.
+	"}
+	. = ..()
+
+/*********Maintenance God**********/
+
+/datum/religion_rites/maint_adaptation
+	name = "Maintenance Adaptation"
+	desc = "Begin your metamorphasis into a being more fit for Maintenance."
+	ritual_length = 10 SECONDS
+	ritual_invocations = list("I abandon the world ...",
+	"... to become one with the deep.",
+	"My form will become twisted ...")
+	invoke_msg = "... but my smile I will keep!"
+	favor_cost = 150 //150u of organic slurry
+
+/datum/religion_rites/maint_adaptation/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
+	if(!ishuman(user))
+		return FALSE
+	//uses HAS_TRAIT_FROM because junkies are also hopelessly addicted
+	if(HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
+		to_chat(user, "<span class='warning'>You've already adapted.</b></span>")
+		return FALSE
+	return ..()
+
+/datum/religion_rites/maint_adaptation/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	to_chat(user, "<span class='warning'>You feel your genes rattled and reshaped. <b>You're becoming something new.</b></span>")
+	user.emote("laughs")
+	ADD_TRAIT(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation")
+	//addiction sends some nasty mood effects but we want the maint adaption to be enjoyed like a fine wine
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "maint_adaptation", /datum/mood_event/maintenance_adaptation)
+	if(iscarbon(user))
+		var/mob/living/carbon/vomitorium = user
+		vomitorium.vomit()
+		var/datum/dna/dna = vomitorium.has_dna()
+		dna?.add_mutation(/datum/mutation/human/stimmed) //some fluff mutations
+		dna?.add_mutation(/datum/mutation/human/strong)
+	user.mind.add_addiction_points(/datum/addiction/maintenance_drugs, 1000)//ensure addiction
+
+/datum/religion_rites/adapted_eyes
+	name = "Adapted Eyes"
+	desc = "Only available after maintenance adaptation. Your eyes will adapt as well, becoming useless in the light."
+	ritual_length = 10 SECONDS
+	invoke_msg = "I no longer want to see the light."
+	favor_cost = 300 //300u of organic slurry, i'd consider this a reward of the sect
+
+/datum/religion_rites/adapted_eyes/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
+	if(!ishuman(user))
+		return FALSE
+	if(!HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
+		to_chat(user, "<span class='warning'>You need to adapt to maintenance first.</span>")
+		return FALSE
+	var/obj/item/organ/eyes/night_vision/maintenance_adapted/adapted = user.getorganslot(ORGAN_SLOT_EYES)
+	if(adapted && istype(adapted))
+		to_chat(user, "<span class='warning'>Your eyes are already adapted!</span>")
+		return FALSE
+	return ..()
+
+/datum/religion_rites/adapted_eyes/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+	..()
+	var/obj/item/organ/eyes/oldeyes = user.getorganslot(ORGAN_SLOT_EYES)
+	to_chat(user, "<span class='warning'>You feel your eyes adapt to the darkness!</span>")
+	if(oldeyes)
+		oldeyes.Remove(user, special = TRUE)
+		qdel(oldeyes)//eh
+	var/obj/item/organ/eyes/night_vision/maintenance_adapted/neweyes = new
+	neweyes.Insert(user, special = TRUE)
+
+/datum/religion_rites/adapted_food
+	name = "Moldify"
+	desc = "Once adapted to the Maintenance, you will not be able to eat regular food. This should help."
+	ritual_length = 5 SECONDS
+	invoke_msg = "Moldify!"
+	favor_cost = 5 //5u of organic slurry
+	///the food that will be molded, only one per rite
+	var/obj/item/food/mold_target
+
+/datum/religion_rites/adapted_food/perform_rite(mob/living/user, atom/religious_tool)
+	for(var/obj/item/food/could_mold in get_turf(religious_tool))
+		if(istype(could_mold, /obj/item/food/badrecipe/moldy))
+			continue
+		mold_target = could_mold //moldify this o great one
+		return ..()
+	to_chat(user, "<span class='warning'>You need to place food on [religious_tool] to do this!</span>")
+	return FALSE
+
+/datum/religion_rites/adapted_food/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/obj/item/food/moldify = mold_target
+	mold_target = null
+	if(QDELETED(moldify) || !(get_turf(religious_tool) == moldify.loc)) //check if the same food is still there
+		to_chat(user, "<span class='warning'>Your target left the altar!</span>")
+		return FALSE
+	to_chat(user, "<span class='warning'>[moldify] becomes rancid!</span>")
+	user.emote("laughs")
+	new /obj/item/food/badrecipe/moldy(get_turf(religious_tool))
+	qdel(moldify)
+	return TRUE
+
+/datum/religion_rites/ritual_totem
+	name = "Create Ritual Totem"
+	desc = "Creates a Ritual Totem, a portable tool for performing rites on the go. Requires wood. Can only be picked up by the holy."
+	favor_cost = 100
+	invoke_msg = "Padala!!"
+	///the food that will be molded, only one per rite
+	var/obj/item/stack/sheet/mineral/wood/converted
+
+/datum/religion_rites/ritual_totem/perform_rite(mob/living/user, atom/religious_tool)
+	for(var/obj/item/stack/sheet/mineral/wood/could_totem in get_turf(religious_tool))
+		converted = could_totem //totemify this o great one
+		return ..()
+	to_chat(user, "<span class='warning'>You need at least 1 wood to do this!</span>")
+	return FALSE
+
+/datum/religion_rites/ritual_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/altar_turf = get_turf(religious_tool)
+	var/obj/item/stack/sheet/mineral/wood/padala = converted
+	converted = null
+	if(QDELETED(padala) || !(get_turf(religious_tool) == padala.loc)) //check if the same food is still there
+		to_chat(user, "<span class='warning'>Your target left the altar!</span>")
+		return FALSE
+	to_chat(user, "<span class='warning'>[padala] reshapes into a totem!</span>")
+	if(!padala.use(1))//use one wood
+		return
+	user.emote("laughs")
+	new /obj/item/ritual_totem(altar_turf)
+	return TRUE
+
+

@@ -1,0 +1,5 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - balance: "Skeletons heal more when drinking milk"
+  - bugfix: "fixed reagents not metabolizing properly"

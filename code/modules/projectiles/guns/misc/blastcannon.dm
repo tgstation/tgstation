@@ -69,7 +69,7 @@
 	if(!istype(bomb_to_attach))
 		return ..()
 
-	if(!bomb_to_attach.tank_one || !bomb_to_attach.tank_two)
+	if(!bomb_to_attach.ready())
 		to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 		return FALSE
 	if(!user.transferItemToLoc(bomb_to_attach, src))
@@ -83,7 +83,7 @@
 
 /// Handles the bomb power calculations
 /obj/item/gun/blastcannon/proc/calculate_bomb()
-	if(!istype(bomb) || !istype(bomb.tank_one) || !istype(bomb.tank_two))
+	if(!istype(bomb) || !bomb.ready())
 		return 0
 
 	var/datum/gas_mixture/temp = new(max(reaction_volume_mod, 0))
@@ -98,7 +98,6 @@
 		temp.react(src)
 
 	var/pressure = temp.return_pressure()
-	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
 		return 0
 	return ((pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE)
@@ -123,7 +122,8 @@
 	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(starting)] at [ADMIN_VERBOSEJMP(targturf)] ([target.name]) by [ADMIN_LOOKUPFLW(user)] with power [heavy]/[medium]/[light].")
 	log_game("Blast wave fired from [AREACOORD(starting)] at [AREACOORD(targturf)] ([target.name]) by [key_name(user)] with power [heavy]/[medium]/[light].")
 	var/obj/projectile/blastwave/BW = new(loc, heavy, medium, light)
-	BW.preparePixelProjectile(target, get_turf(src), params, 0)
+	var/modifiers = params2list(params)
+	BW.preparePixelProjectile(target, get_turf(src), modifiers, 0)
 	BW.fire()
 	name = initial(name)
 	desc = initial(desc)
@@ -170,4 +170,4 @@
 		return
 
 /obj/projectile/blastwave/ex_act()
-	return
+	return FALSE

@@ -32,6 +32,8 @@
 	///The size of the reagent container
 	var/reagent_vol = 10
 
+	var/failure_time = 0
+
 /obj/item/organ/Initialize()
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
@@ -59,12 +61,13 @@
 		else
 			qdel(replaced)
 
-	SEND_SIGNAL(M, COMSIG_CARBON_GAIN_ORGAN, src)
+	SEND_SIGNAL(M, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
 	owner = M
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
 	moveToNullspace()
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
@@ -77,6 +80,9 @@
  * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
+
+	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -88,10 +94,13 @@
 		var/datum/action/A = X
 		A.Remove(M)
 
-	SEND_SIGNAL(M, COMSIG_CARBON_LOSE_ORGAN, src)
+	SEND_SIGNAL(M, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
 	START_PROCESSING(SSobj, src)
 
+
+/obj/item/organ/proc/on_owner_examine(datum/source, mob/user, list/examine_list)
+	return
 
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
@@ -106,7 +115,12 @@
 
 /obj/item/organ/proc/on_life(delta_time, times_fired) //repair organ damage if the organ is not failing
 	if(organ_flags & ORGAN_FAILING)
+		handle_failing_organs(delta_time)
 		return
+
+	if(failure_time > 0)
+		failure_time--
+
 	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
 		applyOrganDamage(decay_factor * maxHealth * delta_time)
 		return
@@ -235,6 +249,22 @@
 			ears.Insert(src)
 		ears.setOrganDamage(0)
 
+///Organs don't die instantly, and neither should you when you get fucked up
+/obj/item/organ/proc/handle_failing_organs(delta_time)
+	if(owner.stat == DEAD)
+		return
+
+	failure_time += delta_time
+	organ_failure(delta_time)
+
+/** organ_failure
+ * generic proc for handling dying organs
+ *
+ * Arguments:
+ * delta_time - seconds since last tick
+ */
+/obj/item/organ/proc/organ_failure(delta_time)
+	return
 
 /** get_availability
  * returns whether the species should innately have this organ.

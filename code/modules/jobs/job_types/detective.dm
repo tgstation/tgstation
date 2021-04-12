@@ -12,6 +12,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/detective
+	plasmaman_outfit = /datum/outfit/plasmaman/detective
 	departments = DEPARTMENT_SECURITY
 
 	paycheck = PAYCHECK_MEDIUM
@@ -21,6 +22,8 @@
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
+
+	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey)
 
 /datum/outfit/job/detective
 	name = "Detective"
@@ -55,4 +58,3 @@
 
 	if(visualsOnly)
 		return
-

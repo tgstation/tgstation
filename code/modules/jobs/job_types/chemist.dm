@@ -10,6 +10,7 @@
 	exp_requirements = 60
 
 	outfit = /datum/outfit/job/chemist
+	plasmaman_outfit = /datum/outfit/plasmaman/chemist
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
@@ -19,6 +20,8 @@
 	display_order = JOB_DISPLAY_ORDER_CHEMIST
 	bounty_types = CIV_JOB_CHEM
 	departments = DEPARTMENT_MEDICAL
+
+	family_heirlooms = list(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet)
 
 /datum/outfit/job/chemist
 	name = "Chemist"
@@ -40,4 +43,3 @@
 	chameleon_extras = /obj/item/gun/syringe
 
 	id_trim = /datum/id_trim/job/chemist
-

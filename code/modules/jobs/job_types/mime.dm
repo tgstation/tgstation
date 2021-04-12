@@ -8,12 +8,15 @@
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/mime
+	plasmaman_outfit = /datum/outfit/plasmaman/mime
 
 	paycheck = PAYCHECK_MINIMAL
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_MIME
 	departments = DEPARTMENT_SERVICE
+
+	family_heirlooms = list(/obj/item/food/baguette)
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.apply_pref_name("mime", M.client)

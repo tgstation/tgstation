@@ -1152,7 +1152,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/support/gygax
 	name = "Dark Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-			for hit-and-run style attacks. Features an incendiary carbine, flash bang launcher, teleporter, ion thrusters and a Tesla energy array."
+			for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, ion thrusters and a Tesla energy array."
 	item = /obj/vehicle/sealed/mecha/combat/gygax/dark/loaded
 	cost = 80
 
@@ -1199,15 +1199,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/chameleon
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear) //clown ops are allowed to buy this kit, since it's basically a costume
-
-/datum/uplink_item/stealthy_tools/chameleon_skillchip
-	name = "Chameleon Skillchip"
-	desc = "A highly advanced skillchip that contains data on all available skillchips. \
-			This skillchip only takes up a single skillchip slot in the user's brain. \
-			Comes with a single-use Syndicate autosurgeon for immediate self-application."
-	item = /obj/item/autosurgeon/skillchip/syndicate/chameleon_chip
-	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"

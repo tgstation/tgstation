@@ -9,6 +9,7 @@ Assistant
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
 	outfit = /datum/outfit/job/assistant
+	plasmaman_outfit = /datum/outfit/plasmaman
 	antag_rep = 7
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 	departments = DEPARTMENT_SERVICE
@@ -17,6 +18,8 @@ Assistant
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
+
+	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
 
 /datum/outfit/job/assistant
 	name = "Assistant"

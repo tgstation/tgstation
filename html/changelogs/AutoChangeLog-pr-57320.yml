@@ -1,6 +1,0 @@
-author: "mozi_h"
-delete-after: True
-changes: 
-  - rscadd: "Folders have a snazzy new look. (Check out those colours!)"
-  - qol: "Rapidly pick up paper by clicking on it with a folder. Alt-click to remove an item from a folder."
-  - refactor: "Split and cleaned up folder code."

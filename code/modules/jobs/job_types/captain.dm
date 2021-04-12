@@ -14,6 +14,7 @@
 	exp_type_department = EXP_TYPE_COMMAND
 
 	outfit = /datum/outfit/job/captain
+	plasmaman_outfit = /datum/outfit/plasmaman/captain
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
@@ -22,6 +23,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 	departments = DEPARTMENT_COMMAND
+
+	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
 
 /datum/job/captain/announce(mob/living/carbon/human/H, announce_captaincy = TRUE)
 	..()

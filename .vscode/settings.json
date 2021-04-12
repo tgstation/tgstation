@@ -6,8 +6,11 @@
 	"typescript.tsdk": "./tgui/.yarn/sdks/typescript/lib",
 	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"search.exclude": {
-		"tgui/.yarn": true,
-		"tgui/.pnp.*": true
+		"**/.yarn": true,
+		"**/.pnp.*": true
+	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
 	},
 	"workbench.editorAssociations": [
 		{
@@ -17,5 +20,14 @@
 	],
 	"files.eol": "\n",
 	"gitlens.advanced.blame.customArguments": ["-w"],
-	"tgstationTestExplorer.project.resultsType": "json"
+	"tgstationTestExplorer.project.resultsType": "json",
+	"[javascript]": {
+		"editor.rulers": [80]
+	},
+	"[typescript]": {
+		"editor.rulers": [80]
+	},
+	"[scss]": {
+		"editor.rulers": [80]
+	}
 }

@@ -20,7 +20,7 @@ clamping the Knockback_Force value below. */
 	override_throw_val = throw_amount
 	override_speed_val = speed_amount
 
-/datum/element/selfknockback/Detach(datum/source, force)
+/datum/element/selfknockback/Detach(datum/source)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_PROJECTILE_FIRE))
 

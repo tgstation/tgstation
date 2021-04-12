@@ -10,6 +10,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/engineer
+	plasmaman_outfit = /datum/outfit/plasmaman/engineering
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG
@@ -19,6 +20,8 @@
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
 	bounty_types = CIV_JOB_ENG
 	departments = DEPARTMENT_ENGINEERING
+
+	family_heirlooms = list(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"

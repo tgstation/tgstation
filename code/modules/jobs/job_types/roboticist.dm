@@ -11,12 +11,19 @@
 	bounty_types = CIV_JOB_ROBO
 
 	outfit = /datum/outfit/job/roboticist
+	plasmaman_outfit = /datum/outfit/plasmaman/robotics
 	departments = DEPARTMENT_SCIENCE
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
+
+	family_heirlooms = list(/obj/item/toy/plush/pkplush)
+
+/datum/job/roboticist/New()
+	. = ..()
+	family_heirlooms += subtypesof(/obj/item/toy/prize)
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"

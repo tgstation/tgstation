@@ -8,6 +8,7 @@
 	selection_color = "#ffeef0"
 
 	outfit = /datum/outfit/job/paramedic
+	plasmaman_outfit = /datum/outfit/plasmaman/paramedic
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
@@ -17,6 +18,8 @@
 	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
 	bounty_types = CIV_JOB_MED
 	departments = DEPARTMENT_MEDICAL
+
+	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 
 /datum/outfit/job/paramedic
 	name = "Paramedic"

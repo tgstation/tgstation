@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_MEDICAL
 
 	outfit = /datum/outfit/job/cmo
+	plasmaman_outfit = /datum/outfit/plasmaman/chief_medical_officer
 	departments = DEPARTMENT_MEDICAL | DEPARTMENT_COMMAND
 
 	paycheck = PAYCHECK_COMMAND
@@ -24,6 +25,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
 	bounty_types = CIV_JOB_MED
+
+	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 
 /datum/job/chief_medical_officer/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
@@ -63,4 +66,3 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/medical
 	suit_store = /obj/item/tank/internals/oxygen
 	r_pocket = /obj/item/flashlight/pen/paramedic
-
