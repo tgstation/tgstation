@@ -57,14 +57,16 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 	if(istype(prefs))
 		prefs.copy_to(copycat, icon_updates=TRUE, roundstart_checks=FALSE, character_setup=TRUE)
 
-	//trigg todo: hair and shit still randomized on mobs without client
 	if(istype(target, /mob/living/carbon))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.dna.transfer_identity(copycat, transfer_SE = TRUE)
 
-	if(istype(target, /mob/living/carbon/human))
-		var/mob/living/carbon/human/human_target = target
-		human_target.copy_clothing_prefs(copycat)
+		if(istype(target, /mob/living/carbon/human))
+			var/mob/living/carbon/human/human_target = target
+			human_target.copy_clothing_prefs(copycat)
+
+		//updating appearance if target isn't a carbon will reset the appearance given above by prefs
+		copycat.updateappearance(icon_update=TRUE, mutcolor_update=TRUE, mutations_overlay_update=TRUE)
 
 	return copycat
 
