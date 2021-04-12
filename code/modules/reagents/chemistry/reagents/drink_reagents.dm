@@ -281,8 +281,8 @@
 	overdose_threshold = 50
 
 /datum/reagent/consumable/naenaecream/on_mob_life(mob/living/carbon/M)
-	if(prob(10))
-		M.visible_message("<span class='danger'>[M] nae naes!</span>", "<span class='userdanger'>You can't help yourself but to nae nae!</span>")
+	if(prob(5))
+		M.visible_message("<span class='warning'>nae naes!</span>", visible_message_flags = EMOTE_MESSAGE)
 		M.Stun(2)
 	..()
 
@@ -295,8 +295,10 @@
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 150)
 	if(prob(35))
 		M.adjustStaminaLoss(20)
-		M.drop_all_held_items()
-		to_chat(M, "<span class='notice'>Your hands can't hold anything while you're nae naeing!</span>")
+		var/empty_indexes = M.get_empty_held_indexes()
+		if(!length(empty_indexes) == 2)
+			M.drop_all_held_items()
+			M.visible_message("<span class='warning'>nae naes with extra force!</span>", visible_message_flags = EMOTE_MESSAGE)
 	if(current_cycle > 5)
 		if(prob(35))
 			var/t = picklimb()
@@ -308,7 +310,7 @@
 				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
 					M.set_heartattack(TRUE)
 					if(M.stat == CONSCIOUS)
-						M.visible_message("<span class='userdanger'>[M] holds [M.p_their()] hand above [M.p_their()] head, ready for one last nae nae!</span>")
+						M.visible_message("<span class='userdanger'>holds [M.p_their()] hand above [M.p_their()] head, ready for one last nae nae!</span>", visible_message_flags = EMOTE_MESSAGE)
 						if(HAS_TRAIT(M, TRAIT_NODISMEMBER))
 							return
 						var/list/parts = list()
