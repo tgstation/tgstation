@@ -266,13 +266,4 @@
 	desc = "A suit for those under Her heel. Red really isn't your color."
 	icon_state = "servantsuit"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/handled = FALSE
 
-/obj/item/clothing/under/suit/servant/equipped(mob/user, slot)
-	if(slot != ITEM_SLOT_ICLOTHING)
-		return
-	if(iscarbon(user) && !handled)
-		handled = TRUE
-		ADD_TRAIT(user, TRAIT_HOLY, "suit")
-		to_chat(user, "<span class='notice'>The suit glows with dark energy.</span.?>")
-		user.AddElement(/datum/element/holy_light)

@@ -406,13 +406,3 @@ obj/item/clothing/under/costume/servicesuit
 	resistance_flags = NONE
 	strip_delay = 99180
 	can_be_bloody = FALSE
-	var/handled = FALSE
-
-/obj/item/clothing/under/costume/projection/equipped(mob/user, slot)
-	if(slot != ITEM_SLOT_ICLOTHING)
-		return
-	if(iscarbon(user) && !handled)
-		handled = TRUE
-		ADD_TRAIT(user, TRAIT_HOLY, "suit")
-		to_chat(user, "<span class='notice'>Your skin seems to glitch and contort.</span.?>")
-		user.AddElement(/datum/element/holy_light)

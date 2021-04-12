@@ -406,3 +406,13 @@
 	)
 	H.equip_in_one_of_slots(camera, camera_slots , qdel_on_fail = TRUE)
 	H.regenerate_icons()
+
+/datum/quirk/holy
+	name = "Holy Figure"
+	desc = "You're a diety! Don't let it get to your head."
+	value = 0
+	mob_trait = TRAIT_HOLY
+
+/datum/quirk/holy/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.AddElement(/datum/element/holy_light)
