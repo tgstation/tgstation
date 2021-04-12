@@ -193,11 +193,6 @@
 		to_chat(user, "<span class='notice'>The bandana glows around your neck.</span.?>")
 		user.AddElement(/datum/element/holy_light)
 
-/obj/item/clothing/neck/chefbandana/dropped(mob/user)
-	if(handled)
-		handled = FALSE
-		REMOVE_TRAIT(user, TRAIT_HOLY, "cape")
-		user.RemoveElement(/datum/element/holy_light)
 
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"

@@ -46,12 +46,6 @@
 		to_chat(user, "<span class='notice'>The tie glows around your neck.</span.?>")
 		user.AddElement(/datum/element/holy_light)
 
-/obj/item/clothing/neck/tie/red/guirec/dropped(mob/user)
-	if(handled)
-		handled = FALSE
-		REMOVE_TRAIT(user, TRAIT_HOLY, "cape")
-		user.RemoveElement(/datum/element/holy_light)
-
 /obj/item/clothing/neck/tie/black
 	name = "black tie"
 	icon_state = "blacktie"
