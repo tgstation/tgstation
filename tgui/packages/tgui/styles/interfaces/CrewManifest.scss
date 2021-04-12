@@ -5,6 +5,7 @@ $department_map: (
   'Security': colors.$red,
   'Engineering': colors.$orange,
   'Medical': colors.$teal,
+  'Misc': colors.$white,
   'Science': colors.$purple,
   'Supply': colors.$brown,
   'Service': colors.$green,
@@ -28,14 +29,30 @@ $department_map: (
   &__Cell {
     padding: 3px 0;
 
-    &--Captain {
-      color: colors.$yellow;
-      padding: 3px 8px;
+    &--Rank {
+      color: colors.$label;
+    }
+  }
+
+  &__Icons {
+    padding: 3px 9px;
+    text-align: right;
+  }
+
+  &__Icon {
+    color: colors.$label;
+    position: relative;
+
+    &:not(:last-child) {
+      margin-right: 7px;
+    }
+
+    &--Chevron {
+      padding-right: 2px;
     }
 
     &--Command {
       color: colors.$yellow;
-      padding: 3px 9px;
     }
   }
 }

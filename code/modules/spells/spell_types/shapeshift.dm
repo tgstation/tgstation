@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift
 	name = "Shapechange"
 	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
+	school = SCHOOL_TRANSMUTATION
 	clothes_req = FALSE
 	human_req = FALSE
 	charge_max = 200

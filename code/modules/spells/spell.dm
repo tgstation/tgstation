@@ -100,7 +100,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	density = FALSE
 	opacity = FALSE
 
-	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
+	///checked by some holy sects to punish the caster for casting things that do not align with their sect's alignment - see magic.dm in defines to learn more
+	var/school = SCHOOL_UNSET
 
 	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
 
@@ -316,6 +317,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		recharging = TRUE
 	if(sound)
 		playMagSound()
+	SEND_SIGNAL(user, COMSIG_MOB_CAST_SPELL, src)
 	cast(targets,user=user)
 	after_cast(targets)
 	if(action)
@@ -363,7 +365,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets,mob/user = usr)
-	return
 
 /obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
 	switch(type)
@@ -560,7 +561,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	cooldown_min = 50
 	invocation = "Victus sano!"
 	invocation_type = INVOCATION_WHISPER
-	school = "restoration"
+	school = SCHOOL_RESTORATION
 	sound = 'sound/magic/staff_healing.ogg'
 
 /obj/effect/proc_holder/spell/self/basic_heal/cast(list/targets, mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
