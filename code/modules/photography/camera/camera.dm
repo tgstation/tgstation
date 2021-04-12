@@ -139,12 +139,7 @@
 		return
 
 	on = FALSE
-
-	var/realcooldown = cooldown
-	var/mob/living/carbon/human/H = user
-	if (HAS_TRAIT(H, TRAIT_PHOTOGRAPHER))
-		realcooldown *= 0.5
-	addtimer(CALLBACK(src, .proc/cooldown), realcooldown)
+	addtimer(CALLBACK(src, .proc/cooldown), cooldown)
 
 	icon_state = state_off
 

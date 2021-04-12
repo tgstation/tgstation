@@ -64,7 +64,8 @@
 		"Scalpel" = image(icon = 'icons/obj/surgery.dmi', icon_state = "scalpel"),
 		"Saw" = image(icon = 'icons/obj/surgery.dmi', icon_state = "saw"),
 		"Bonesetter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bone setter"),
-		"Blood Filter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bloodfilter")
+		"Blood Filter" = image(icon = 'icons/obj/surgery.dmi', icon_state = "bloodfilter"),
+		"Knife" = image(icon = 'icons/obj/kitchen.dmi', icon_state = "knife")
 		)
 	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -104,3 +105,5 @@
 			tool_behaviour = TOOL_BONESET
 		if("Blood Filter")
 			tool_behaviour = TOOL_BLOODFILTER
+		if("Knife")
+			tool_behaviour = TOOL_KNIFE

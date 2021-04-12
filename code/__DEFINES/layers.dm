@@ -37,7 +37,7 @@
 #define WIRE_LAYER 2.4
 #define WIRE_BRIDGE_LAYER 2.44
 #define WIRE_TERMINAL_LAYER 2.45
-#define GAS_SCRUBBER_LAYER 2.46 
+#define GAS_SCRUBBER_LAYER 2.46
 #define GAS_PIPE_VISIBLE_LAYER 2.47 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
@@ -126,8 +126,10 @@
 #define CAMERA_STATIC_LAYER 19
 #define CAMERA_STATIC_RENDER_TARGET "CAMERA_STATIC_PLANE"
 
-#define ATMOS_GROUP_PLANE 20
-#define ATMOS_GROUP_LAYER 20
+#define RUNECHAT_PLANE 20
+
+#define ATMOS_GROUP_PLANE 21
+#define ATMOS_GROUP_LAYER 21
 
 //HUD layer defines
 

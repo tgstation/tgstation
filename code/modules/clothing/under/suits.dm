@@ -251,7 +251,7 @@
 /obj/item/clothing/under/suit/redlady/dropped(mob/user)
 	if(handled)
 		handled = FALSE
-		REMOVE_TRAIT(user, TRAIT_HOLY, "cape")
+		REMOVE_TRAIT(user, TRAIT_HOLY, "suit")
 		user.RemoveElement(/datum/element/holy_light)
 
 /obj/item/clothing/under/suit/red/female
@@ -266,3 +266,4 @@
 	desc = "A suit for those under Her heel. Red really isn't your color."
 	icon_state = "servantsuit"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+

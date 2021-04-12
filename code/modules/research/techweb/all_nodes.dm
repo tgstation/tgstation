@@ -49,7 +49,7 @@
 	display_name = "Basic Tools"
 	description = "Basic mechanical, electronic, surgical and botanical tools."
 	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "decal_painter",
-					"cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "secateurs", "mop", "plunger", "spraycan", "swab", "petri_dish")
+					"cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "secateurs", "mop", "pushbroom", "plunger", "spraycan", "swab", "petri_dish")
 
 /datum/techweb_node/basic_medical
 	id = "basic_medical"
@@ -499,7 +499,7 @@
 	display_name = "Advanced Sanitation Technology"
 	description = "Clean things better, faster, stronger, and harder!"
 	prereq_ids = list("adv_engi")
-	design_ids = list("holobarrier_jani", "advmop", "buffer", "blutrash", "light_replacer", "spraybottle", "beartrap")
+	design_ids = list("holobarrier_jani", "advmop", "buffer", "blutrash", "light_replacer", "spraybottle", "beartrap", "paint_remover")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/botany

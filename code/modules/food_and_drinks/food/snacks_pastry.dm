@@ -715,6 +715,17 @@
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
+/obj/item/reagent_containers/food/snacks/sugarcookie/cringe
+	name = "cringe cookie"
+	icon_state = "cringecookie"
+	desc = "Teeming with toxicity, just the way you like it."
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 3, /datum/reagent/toxin = 1)
+	tastes = list("sweetness" = 3, "toxicity" = 1)
+
+/obj/item/reagent_containers/food/snacks/sugarcookie/cringe/Initialize()
+	. = ..()
+	icon_state = "[icon_state][rand(1,9)]"
+
 /obj/item/reagent_containers/food/snacks/chococornet
 	name = "chocolate cornet"
 	desc = "Which side's the head, the fat end or the thin end?"

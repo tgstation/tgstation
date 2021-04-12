@@ -8,6 +8,7 @@
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#bbe291"
+	minimal_player_age = 14
 	outfit = /datum/outfit/job/head_of_service
 
 	access = list(ACCESS_HOSE, ACCESS_HYDROPONICS, ACCESS_MAINT_TUNNELS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE,
