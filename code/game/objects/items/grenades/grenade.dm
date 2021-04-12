@@ -44,6 +44,9 @@
 	sleep(det_time)//so you dont die instantly
 	return BRUTELOSS
 
+/obj/item/grenade/ex_act(severity, target) // Little boom can chain a big boom.
+	detonate()
+
 /obj/item/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		detonate()
