@@ -23,8 +23,7 @@
 		/datum/reagent/saltpetre = 20,
 		/datum/reagent/diethylamine = 20,
 		/obj/item/gun/energy/floragun = 10,
-		// These are strong, rare seeds, so use sparingly.
-		/obj/effect/spawner/lootdrop/space/rareseed = 5,
+		/obj/effect/spawner/lootdrop/space/rareseed = 5,// These are strong, rare seeds, so use sparingly.
 		/obj/item/food/monkeycube/bee = 2
 	)
 
