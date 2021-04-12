@@ -35,7 +35,7 @@
 
 /obj/structure/tank_holder/examine(mob/user)
 	. = ..()
-	. += "It is [anchored ? "wrenched to the floor." : "unsecured. A wrench should fix that."]<br/>"
+	. += "It is [anchored ? "wrenched to the floor." : "The <i>bolts</i> on the bottom are unsecured."]<br/>"
 	if(tank)
 		. += "It is holding one [tank]."
 	else
