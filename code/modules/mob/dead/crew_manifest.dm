@@ -18,14 +18,15 @@
 
 /datum/crew_manifest/ui_data(mob/user)
 	var/list/positions = list(
-		"Command" = 0,
-		"Security" = 0,
-		"Engineering" = 0,
-		"Medical" = 0,
-		"Science" = 0,
-		"Supply" = 0,
-		"Service" = 0,
-		"Silicon" = 0
+		"Command" = list("exceptions" = list(), "open" = 0),
+		"Security" = list("exceptions" = list(), "open" = 0),
+		"Engineering" = list("exceptions" = list(), "open" = 0),
+		"Medical" = list("exceptions" = list(), "open" = 0),
+		"Misc" = list("exceptions" = list(), "open" = 0),
+		"Science" = list("exceptions" = list(), "open" = 0),
+		"Supply" = list("exceptions" = list(), "open" = 0),
+		"Service" = list("exceptions" = list(), "open" = 0),
+		"Silicon" = list("exceptions" = list(), "open" = 0)
 	)
 	var/list/departments = list(
 		list("flag" = DEPARTMENT_COMMAND, "name" = "Command"),
@@ -39,12 +40,18 @@
 	)
 
 	for(var/job in SSjob.occupations)
-		for(var/department in departments)
-			// Check if the job is part of a department using its flag
-			// Will return true for Research Director if the department is Science or Command, for example
-			if(job["departments"] & department["flag"])
-				// Add open positions to current department
-				positions[department["name"]] += (job["total_positions"] - job["current_positions"])
+		// Check if there are additional open positions or if there is no limit
+		if ((job["total_positions"] > 0 && job["total_positions"] > job["current_positions"]) || (job["total_positions"] == -1))
+			for(var/department in departments)
+				// Check if the job is part of a department using its flag
+				// Will return true for Research Director if the department is Science or Command, for example
+				if(job["departments"] & department["flag"])
+					if(job["total_positions"] == -1)
+						// Add job to list of exceptions, meaning it does not have a position limit
+						positions[department["name"]]["exceptions"] += list(job["title"])
+					else
+						// Add open positions to current department
+						positions[department["name"]]["open"] += (job["total_positions"] - job["current_positions"])
 
 	return list(
 		"manifest" = GLOB.data_core.get_manifest(),

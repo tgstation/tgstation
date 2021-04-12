@@ -28869,7 +28869,7 @@
 /turf/open/floor/plating,
 /area/cargo/sorting)
 "enu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/meter,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -36753,7 +36753,7 @@
 	},
 /area/hallway/secondary/entry)
 "jVh" = (
-/obj/machinery/atmospherics/pipe/color_adapter,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "jVl" = (
@@ -43289,6 +43289,10 @@
 "owD" = (
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
+"oxn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/turf/closed/wall/r_wall,
+/area/science/mixing/chamber)
 "oxX" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -43799,7 +43803,7 @@
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "oVN" = (
-/obj/machinery/atmospherics/pipe/color_adapter,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/hidden{
 	dir = 4
 	},
@@ -44140,6 +44144,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"pjE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/science/mixing/chamber)
 "pjX" = (
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
@@ -50752,7 +50763,7 @@
 	pixel_x = 8;
 	pixel_y = -24
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/meter,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
@@ -107545,9 +107556,9 @@ bEs
 cjK
 fVi
 enu
-jVh
+oxn
 usV
-oVN
+pjE
 xyS
 ejA
 bMu
