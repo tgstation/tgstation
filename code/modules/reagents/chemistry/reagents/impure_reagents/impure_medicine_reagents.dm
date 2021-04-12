@@ -631,6 +631,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
 	while(length(traumalist) || !temp_trauma)
 		var/datum/brain_trauma/trauma = pick_n_take(traumalist)
+		if(!trauma)
+			return
 		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
 			temp_trauma = trauma
 			return
