@@ -929,9 +929,7 @@
 		skills_space = " quickly"
 
 	visible_message("<span class='notice'>[src] starts[skills_space] lifting [target] onto [p_their()] back...</span>",
-	//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
-	"<span class='notice'>You[skills_space] start to lift [target] onto your back...</span>")
-	//You ( /quickly/expertly) start to lift Grey Tider onto your back...
+		"<span class='notice'>You[skills_space] start to lift [target] onto your back...</span>")
 	if(!do_after(src, carrydelay, target))
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!</span>")
 		return
