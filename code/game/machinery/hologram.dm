@@ -31,6 +31,7 @@ Possible to do for anyone motivated enough:
 	name = "holopad"
 	desc = "It's a floor-mounted device for projecting holographic images."
 	icon_state = "holopad0"
+	base_icon_state = "holopad"
 	layer = LOW_OBJ_LAYER
 	plane = FLOOR_PLANE
 	flags_1 = HEAR_1
@@ -380,7 +381,7 @@ Possible to do for anyone motivated enough:
 				playsound(src, 'sound/machines/twobeep.ogg', 100) //bring, bring!
 				ringing = TRUE
 
-	update_icon()
+	update_appearance()
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -446,16 +447,15 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		set_light(2)
 	else
 		set_light(0)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/holopad/update_icon_state()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	if(ringing)
-		icon_state = "holopad_ringing"
-	else if(total_users || replay_mode)
-		icon_state = "holopad1"
-	else
-		icon_state = "holopad0"
+		icon_state = "[base_icon_state]_ringing"
+		return ..()
+	icon_state = "[base_icon_state][(total_users || replay_mode) ? 1 : 0]"
+	return ..()
 
 /obj/machinery/holopad/proc/set_holo(mob/living/user, obj/effect/overlay/holo_pad_hologram/h)
 	LAZYSET(masters, user, h)

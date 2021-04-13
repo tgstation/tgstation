@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift
 	name = "Shapechange"
 	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
+	school = SCHOOL_TRANSMUTATION
 	clothes_req = FALSE
 	human_req = FALSE
 	charge_max = 200
@@ -22,7 +23,7 @@
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/secbot/ed209,\
 		/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard,\
-		/mob/living/simple_animal/hostile/construct/juggernaut)
+		/mob/living/simple_animal/hostile/construct/juggernaut/mystic)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	if(src in user.mob_spell_list)
@@ -54,7 +55,7 @@
 		else
 			M = Shapeshift(M)
 		// Are we currently ventcrawling?
-		if(!M.movement_type & (VENTCRAWLING))
+		if(!(M.movement_type & VENTCRAWLING))
 			return
 
 		// Can our new form support ventcrawling?

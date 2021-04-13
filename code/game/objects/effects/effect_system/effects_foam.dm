@@ -330,7 +330,7 @@
 		for(var/obj/machinery/atmospherics/components/unary/U in O)
 			if(!U.welded)
 				U.welded = TRUE
-				U.update_icon()
+				U.update_appearance()
 				U.visible_message("<span class='danger'>[U] sealed shut!</span>")
 		for(var/mob/living/L in O)
 			L.extinguish_mob()

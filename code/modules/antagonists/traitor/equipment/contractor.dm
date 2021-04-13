@@ -188,8 +188,9 @@
 	mask = /obj/item/clothing/mask/cigarette/syndicate
 	shoes = /obj/item/clothing/shoes/chameleon/noslip
 	ears = /obj/item/radio/headset/chameleon
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/chameleon
 	r_hand = /obj/item/storage/toolbox/syndicate
+	id_trim = /datum/id_trim/chameleon/operative
 
 	backpack_contents = list(/obj/item/storage/box/survival, /obj/item/implanter/uplink, /obj/item/clothing/mask/chameleon,
 							/obj/item/storage/fancy/cigarettes/cigpack_syndicate, /obj/item/lighter)
@@ -275,6 +276,7 @@
 	name = "contractor pinpointer"
 	desc = "A handheld tracking device that locks onto certain signals. Ignores suit sensors, but is much less accurate."
 	icon_state = "pinpointer_syndicate"
+	worn_icon_state = "pinpointer_black"
 	minimum_range = 25
 	has_owner = TRUE
 	ignore_suit_sensor_level = TRUE

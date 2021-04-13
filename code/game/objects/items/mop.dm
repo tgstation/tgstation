@@ -77,7 +77,7 @@
 	if(insertable)
 		J.put_in_cart(src, user)
 		J.mymop=src
-		J.update_icon()
+		J.update_appearance()
 	else
 		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
 		return

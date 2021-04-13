@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "When a player is held up at gunpoint, the HUD alert is no longer permanent and will be removed when the player is no longer held up."

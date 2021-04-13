@@ -1,5 +1,3 @@
-#define ENABLE_FLASHING -1
-
 ///Tutorial states
 #define TUT_NO_BUFFER 50
 #define TUT_START 1
@@ -15,6 +13,7 @@
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0b"
+	base_icon_state = "mixer"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -25,7 +24,6 @@
 	var/heater_coefficient = 0.05
 	var/on = FALSE
 	var/dispense_volume = 1
-
 	//The list of active clients using this heater, so that we can update the UI on a reaction_step. I assume there are multiple clients possible.
 	var/list/ui_client_list
 	///If the user has the tutorial enabled
@@ -56,13 +54,11 @@
 	. = ..()
 	if(A == beaker)
 		beaker = null
-		update_icon()
+		update_appearance()
 
 /obj/machinery/chem_heater/update_icon_state()
-	if(beaker)
-		icon_state = "mixer1b"
-	else
-		icon_state = "mixer0b"
+	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
+	return ..()
 
 /obj/machinery/chem_heater/AltClick(mob/living/user)
 	. = ..()
@@ -80,7 +76,7 @@
 	if(new_beaker)
 		beaker = new_beaker
 		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, .proc/on_reaction_step)
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/machinery/chem_heater/RefreshParts()
@@ -108,7 +104,6 @@
 					return
 				if(beaker?.reagents.has_reagent(/datum/reagent/mercury, 10) || beaker?.reagents.has_reagent(/datum/reagent/chlorine, 10))
 					tutorial_state = TUT_HAS_REAGENTS
-
 			if(TUT_HAS_REAGENTS)
 				if(!(beaker?.reagents.has_reagent(/datum/reagent/mercury, 9)) || !(beaker?.reagents.has_reagent(/datum/reagent/chlorine, 9)))
 					tutorial_state = TUT_MISSING
@@ -164,7 +159,7 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-		update_icon()
+		update_appearance()
 		return
 
 	if(beaker)
@@ -176,7 +171,6 @@
 			var/obj/item/reagent_containers/syringe/S = I
 			S.afterattack(beaker, user, 1)
 			return
-
 	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()
@@ -254,7 +248,7 @@
 	data["beakerContents"] = beaker_contents
 
 	var/list/active_reactions = list()
-	var/flashing = 14 //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
+	var/flashing = DISABLE_FLASHING //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
 	for(var/_reaction in beaker?.reagents.reaction_list)
 		var/datum/equilibrium/equilibrium = _reaction
 		if(!length(beaker.reagents.reaction_list))//I'm not sure why when it explodes it causes the gui to fail (it's missing danger (?) )
@@ -276,7 +270,7 @@
 			if(equilibrium.reaction.optimal_ph_min > beaker?.reagents.ph || equilibrium.reaction.optimal_ph_max < beaker?.reagents.ph)
 				flashing = ENABLE_FLASHING
 		if(equilibrium.reaction.is_cold_recipe)
-			if(equilibrium.reaction.overheat_temp > beaker?.reagents.chem_temp)
+			if(equilibrium.reaction.overheat_temp > beaker?.reagents.chem_temp && equilibrium.reaction.overheat_temp != NO_OVERHEAT)
 				danger = TRUE
 				overheat = TRUE
 		else
@@ -363,7 +357,7 @@ To continue set your target temperature to 390K."}
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. You got pretty close to optimal! Feel free to try again if you like by double pressing the help button, but this is a respectable purity."
 					if(0.99 to 1)
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. Your calomel is as pure as they come! You've mastered the basics of chemistry, but there's plenty more challenges on the horizon. Good luck!"
-						user.client?.give_award(/datum/award/achievement/misc/chemistry_tut, user)
+						user.client?.give_award(/datum/award/achievement/jobs/chemistry_tut, user)
 				data["tutorialMessage"] += "\n\nDid you notice that your temperature increased past 390K while reacting too? That's because this reaction is exothermic (heat producing), so for some reactions you might have to adjust your target to compensate. Oh, and you can check your purity by researching and printing off a chemical analyzer at the medlathe (for now)!"
 			if(TUT_MISSING) //Missing
 				data["tutorialMessage"] = "Uh oh, something went wrong. Did you take the beaker out, heat it up too fast, or have other things in the beaker? Try restarting the tutorial by double pressing the help button."
@@ -495,3 +489,12 @@ To continue set your target temperature to 390K."}
 	. = ..()
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
 	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
+
+#undef TUT_NO_BUFFER
+#undef TUT_START
+#undef TUT_HAS_REAGENTS
+#undef TUT_IS_ACTIVE
+#undef TUT_IS_REACTING
+#undef TUT_FAIL
+#undef TUT_COMPLETE
+#undef TUT_MISSING

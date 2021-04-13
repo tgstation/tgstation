@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/summonitem
 	name = "Instant Summons"
 	desc = "This spell can be used to recall a previously marked item to your hand from anywhere in the universe."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 100
 	clothes_req = FALSE
 	invocation = "GAR YOK"
@@ -82,7 +82,7 @@
 						if(istype(item_to_retrieve.loc, /obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
 							var/obj/machinery/portable_atmospherics/P = item_to_retrieve.loc
 							P.disconnect()
-							P.update_icon()
+							P.update_appearance()
 
 						item_to_retrieve = item_to_retrieve.loc
 

@@ -72,7 +72,7 @@
 		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 		to_chat(user, "<span class='notice'>You place [I] on [src].</span>")
 		AddToGrill(I, user)
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
@@ -83,7 +83,7 @@
 		begin_processing()
 	else
 		end_processing()
-	update_icon()
+	update_appearance()
 	update_grill_audio()
 
 
@@ -117,6 +117,11 @@
 	else
 		grill_loop.stop()
 
+/obj/machinery/griddle/wrench_act(mob/living/user, obj/item/I)
+	..()
+	default_unfasten_wrench(user, I, 2 SECONDS)
+	return TRUE
+
 ///Override to prevent storage dumping onto the griddle until I figure out how to navigate the mess that is storage code to allow me to nicely move the dumped objects onto the griddle.
 /obj/machinery/griddle/get_dumping_location(obj/item/storage/source, mob/user)
 	return
@@ -132,8 +137,8 @@
 			visible_message("<span class='danger'>[griddled_item] doesn't seem to be doing too great on the [src]!</span>")
 
 /obj/machinery/griddle/update_icon_state()
-	. = ..()
 	icon_state = "griddle[variant]_[on ? "on" : "off"]"
+	return ..()
 
 /obj/machinery/griddle/stand
 	name = "griddle stand"

@@ -13,10 +13,11 @@
 	. = ..()
 	if(broken)
 		. += "securecrateemag"
-	else if(locked)
+		return
+	if(locked)
 		. += "securecrater"
-	else
-		. += "securecrateg"
+		return
+	. += "securecrateg"
 
 /obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
@@ -116,7 +117,7 @@
 						user.visible_message("<span class='notice'>[user] unlocks [src]'s privacy lock.</span>",
 										"<span class='notice'>You unlock [src]'s privacy lock.</span>")
 						privacy_lock = FALSE
-						update_icon()
+						update_appearance()
 					else if(!silent)
 						to_chat(user, "<span class='notice'>Bank account does not match with buyer!</span>")
 				else if(!silent)

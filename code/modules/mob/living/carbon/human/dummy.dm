@@ -11,7 +11,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	in_use = FALSE
 	return ..()
 
-/mob/living/carbon/human/dummy/Life()
+/mob/living/carbon/human/dummy/Life(delta_time = SSMOBS_DT, times_fired)
 	return
 
 /mob/living/carbon/human/dummy/attach_rot(mapload)
@@ -40,13 +40,26 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 		D = new
 		GLOB.human_dummy_list[slotkey] = D
 		GLOB.dummy_mob_list += D
+	else
+		D.regenerate_icons() //they were cut in wipe_state()
 	D.in_use = TRUE
 	return D
 
-/proc/unset_busy_human_dummy(slotnumber)
-	if(!slotnumber)
+/proc/unset_busy_human_dummy(slotkey)
+	if(!slotkey)
 		return
-	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotnumber]
+	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotkey]
 	if(istype(D))
 		D.wipe_state()
 		D.in_use = FALSE
+
+/proc/clear_human_dummy(slotkey)
+	if(!slotkey)
+		return
+
+	var/mob/living/carbon/human/dummy/dummy = GLOB.human_dummy_list[slotkey]
+
+	GLOB.human_dummy_list -= slotkey
+	if(istype(dummy))
+		GLOB.dummy_mob_list -= dummy
+		qdel(dummy)

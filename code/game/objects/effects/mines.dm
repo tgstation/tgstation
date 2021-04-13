@@ -36,9 +36,10 @@
 	visible_message("<span class='danger'>\The [src] beeps softly, indicating it is now active.<span>", vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/effect/mine/Crossed(atom/movable/AM)
+	. = ..()
+
 	if(triggered || !isturf(loc) || !armed)
 		return
-	. = ..()
 
 	if(AM.movement_type & FLYING)
 		return
@@ -51,6 +52,8 @@
 
 /// When something sets off a mine
 /obj/effect/mine/proc/triggermine(atom/movable/triggerer)
+	if(iseffect(triggerer))
+		return
 	if(triggered) //too busy detonating to detonate again
 		return
 	if(triggerer)
@@ -179,9 +182,7 @@
 	. = ..()
 	if(active)
 		return
-	if(iscarbon(user))
-		var/mob/living/carbon/user_human = user
-		user_human.throw_mode_on()
+
 
 	playsound(src, 'sound/weapons/armbomb.ogg', 70, TRUE)
 	to_chat(user, "<span class='warning'>You arm \the [src], causing it to shake! It will deploy in 3 seconds.</span>")

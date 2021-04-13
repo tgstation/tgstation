@@ -42,6 +42,7 @@
 ///These affect medicines
 /datum/reagent/catalyst_agent/speed/medicine
 	name = "Palladium synthate catalyst"
+	description = "This catalyst reagent will speed up all medicine reactions that it shares a beaker with by a dramatic amount."
 	target_reagent_type = /datum/reagent/medicine
 	modifier = 2
 	ph = 2 //drift towards acidity

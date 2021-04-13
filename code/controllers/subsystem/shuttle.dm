@@ -2,9 +2,9 @@
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
-	wait = 10
+	wait = 1 SECONDS
 	init_order = INIT_ORDER_SHUTTLE
-	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
+	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/list/mobile = list()
@@ -44,9 +44,19 @@ SUBSYSTEM_DEF(shuttle)
 	var/centcom_message = "" //Remarks from CentCom on how well you checked the last order.
 	var/list/discoveredPlants = list() //Typepaths for unusual plants we've already sent CentCom, associated with their potencies
 
+	/// All of the possible supply packs that can be purchased by cargo
 	var/list/supply_packs = list()
+
+	/// Queued supplies to be purchased for the chef
+	var/list/chef_groceries = list()
+
+	/// Queued supply packs to be purchased
 	var/list/shoppinglist = list()
+
+	/// Wishlist items made by crew for cargo to purchase at their leisure
 	var/list/requestlist = list()
+
+	/// A listing of previously delivered supply packs
 	var/list/orderhistory = list()
 
 	var/list/hidden_shuttle_turfs = list() //all turfs hidden from navigation computers associated with a list containing the image hiding them and the type of the turf they are pretending to be
@@ -54,6 +64,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
+	///If the event happens where the crew can purchase shuttle insurance, catastrophe can't run.
+	var/shuttle_insurance = FALSE
 	var/shuttle_purchased = SHUTTLEPURCHASE_PURCHASABLE //If the station has purchased a replacement escape shuttle this round
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
@@ -73,11 +85,22 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 
-	for(var/pack in subtypesof(/datum/supply_pack))
-		var/datum/supply_pack/P = new pack()
-		if(!P.contains)
+	var/list/pack_processing = subtypesof(/datum/supply_pack)
+	while(length(pack_processing))
+		var/datum/supply_pack/pack = pack_processing[length(pack_processing)]
+		pack_processing.len--
+		if(ispath(pack, /datum/supply_pack))
+			pack = new pack
+
+		var/list/generated_packs = pack.generate_supply_packs()
+		if(generated_packs)
+			pack_processing += generated_packs
 			continue
-		supply_packs[P.type] = P
+
+		if(!pack.contains)
+			continue
+
+		supply_packs[pack.id] = pack
 
 	initial_load()
 

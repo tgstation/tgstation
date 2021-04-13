@@ -36,7 +36,7 @@
 	antagonist.greet()
 	RegisterSignal(owner, COMSIG_CARBON_HUG, .proc/on_hug)
 
-/datum/brain_trauma/special/obsessed/on_life()
+/datum/brain_trauma/special/obsessed/on_life(delta_time, times_fired)
 	if(!obsession || obsession.stat == DEAD)
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return
@@ -50,10 +50,10 @@
 		viewing = FALSE
 	if(viewing)
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creeping, obsession.name)
-		total_time_creeping += 20
+		total_time_creeping += delta_time SECONDS
 		time_spent_away = 0
 		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
-			attachedobsessedobj.timer -= 20 //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
+			attachedobsessedobj.timer -= delta_time SECONDS //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
 		out_of_view()
 

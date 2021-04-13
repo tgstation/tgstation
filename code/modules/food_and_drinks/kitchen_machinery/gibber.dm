@@ -40,16 +40,17 @@
 
 /obj/machinery/gibber/update_overlays()
 	. = ..()
-	if (dirty)
+	if(dirty)
 		. +="grbloody"
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if (!occupant)
+	if(!occupant)
 		. += "grjam"
-	else if (operating)
+		return
+	if(operating)
 		. += "gruse"
-	else
-		. += "gridle"
+		return
+	. += "gridle"
 
 /obj/machinery/gibber/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -99,7 +100,7 @@
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
 				C.forceMove(src)
 				set_occupant(C)
-				update_icon()
+				update_appearance()
 	else
 		startgibbing(user)
 
@@ -131,7 +132,7 @@
 
 /obj/machinery/gibber/proc/go_out()
 	dump_inventory_contents()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/gibber/proc/startgibbing(mob/user)
 	if(operating)
@@ -144,7 +145,7 @@
 	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
-	update_icon()
+	update_appearance()
 
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
@@ -221,7 +222,7 @@
 
 	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE
-	update_icon()
+	update_appearance()
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber

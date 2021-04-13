@@ -21,6 +21,8 @@
 	icon_state = "pwig"
 	inhand_icon_state = "pwig"
 
+#define RABBIT_CD_TIME 30 SECONDS
+
 /obj/item/clothing/head/that
 	name = "top-hat"
 	desc = "It's an amish looking hat."
@@ -28,6 +30,37 @@
 	inhand_icon_state = "that"
 	dog_fashion = /datum/dog_fashion/head
 	throwforce = 1
+	/// Cooldown for how often we can pull rabbits out of here
+	COOLDOWN_DECLARE(rabbit_cooldown)
+
+/obj/item/clothing/head/that/attackby(obj/item/hitby_item, mob/user, params)
+	. = ..()
+	if(istype(hitby_item, /obj/item/gun/magic/wand))
+		abracadabra(hitby_item, user)
+
+/obj/item/clothing/head/that/proc/abracadabra(obj/item/hitby_wand, mob/magician)
+	if(!COOLDOWN_FINISHED(src, rabbit_cooldown))
+		to_chat("<span class='warning'>You can't find another rabbit in [src]! Seems another hasn't gotten lost in there yet...</span>")
+		return
+
+	COOLDOWN_START(src, rabbit_cooldown, RABBIT_CD_TIME)
+	playsound(get_turf(src), 'sound/weapons/emitter.ogg', 70)
+	do_smoke(range=1, location=src, smoke_type=/obj/effect/particle_effect/smoke/quick)
+
+	if(prob(10))
+		magician.visible_message("<span class='danger'>[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bu- wait, those are bees!</span>", "<span class='danger'>You tap [src] with your [hitby_wand.name] and pull out... <b>BEES!</b></span>")
+		var/wait_how_many_bees_did_that_guy_pull_out_of_his_hat = rand(4, 8)
+		for(var/b in 1 to wait_how_many_bees_did_that_guy_pull_out_of_his_hat)
+			var/mob/living/simple_animal/hostile/poison/bees/barry = new(get_turf(magician))
+			barry.target = magician
+			if(prob(20))
+				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
+	else
+		magician.visible_message("<span class='notice'>[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bunny! Cute!</span>", "<span class='notice'>You tap [src] with your [hitby_wand.name] and pull out a cute bunny!</span>")
+		var/mob/living/simple_animal/chicken/rabbit/empty/bunbun = new(get_turf(magician))
+		bunbun.mob_try_pickup(magician, instant=TRUE)
+
+#undef RABBIT_CD_TIME
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
@@ -84,7 +117,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/snowman
-	name = "Snowman Head"
+	name = "snowman head"
 	desc = "A ball of white styrofoam. So festive."
 	icon_state = "snowman_h"
 	inhand_icon_state = "snowman_h"
@@ -393,7 +426,7 @@
 
 /obj/item/clothing/head/frenchberet
 	name = "french beret"
-	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage military conflict, for some reason."
+	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage in military conflict, for some reason."
 	icon_state = "beret"
 	dynamic_hair_suffix = ""
 
@@ -474,7 +507,7 @@
 
 /obj/item/clothing/head/coordinator
 	name = "coordinator cap"
-	desc = "A cap for a party ooordinator, stylish!."
+	desc = "A cap for a party coordinator, stylish!."
 	icon_state = "capcap"
 	inhand_icon_state = "that"
 	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
@@ -490,3 +523,12 @@
 	desc = "A gauzy white veil."
 	icon_state = "weddingveil"
 	inhand_icon_state = "weddingveil"
+
+/obj/item/clothing/head/centcom_cap
+	name = "\improper CentCom commander cap"
+	icon_state = "centcom_cap"
+	desc = "Worn by the finest of CentCom commanders. Inside the lining of the cap, lies two faint initials."
+	inhand_icon_state = "that"
+	flags_inv = 0
+	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	strip_delay = (8 SECONDS)

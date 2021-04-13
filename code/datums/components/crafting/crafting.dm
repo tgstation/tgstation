@@ -68,7 +68,9 @@
  */
 /datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/R, list/contents)
 	var/list/item_instances = contents["instances"]
+	var/list/machines = contents["machinery"]
 	contents = contents["other"]
+
 
 	var/list/requirements_list = list()
 
@@ -100,6 +102,10 @@
 		if(contents[requirement_path] < R.chem_catalysts[requirement_path])
 			return FALSE
 
+	for(var/machinery_path in R.machinery)
+		if(!machines[machinery_path])//We don't care for volume with machines, just if one is there or not
+			return FALSE
+
 	return R.check_requirements(a, requirements_list)
 
 /datum/component/personal_crafting/proc/get_environment(atom/a, list/blacklist = null, radius_range = 1)
@@ -119,24 +125,27 @@
 	.["tool_behaviour"] = list()
 	.["other"] = list()
 	.["instances"] = list()
-	for(var/obj/item/I in get_environment(a,blacklist))
-		if(.["instances"][I.type])
-			.["instances"][I.type] += I
-		else
-			.["instances"][I.type] = list(I)
-		if(istype(I, /obj/item/stack))
-			var/obj/item/stack/S = I
-			.["other"][I.type] += S.amount
-		else if(I.tool_behaviour)
-			.["tool_behaviour"] += I.tool_behaviour
-			.["other"][I.type] += 1
-		else
-			if(istype(I, /obj/item/reagent_containers))
-				var/obj/item/reagent_containers/RC = I
-				if(RC.is_drainable())
-					for(var/datum/reagent/A in RC.reagents.reagent_list)
-						.["other"][A.type] += A.volume
-			.["other"][I.type] += 1
+	.["machinery"] = list()
+	for(var/obj/object in get_environment(a, blacklist))
+		if(isitem(object))
+			var/obj/item/item = object
+			LAZYADDASSOCLIST(.["instances"], item.type, item)
+			if(isstack(item))
+				var/obj/item/stack/stack = item
+				.["other"][item.type] += stack.amount
+			else if(item.tool_behaviour)
+				.["tool_behaviour"] += item.tool_behaviour
+				.["other"][item.type] += 1
+			else
+				if(is_reagent_container(item))
+					var/obj/item/reagent_containers/container = item
+					if(container.is_drainable())
+						for(var/datum/reagent/reagent in container.reagents.reagent_list)
+							.["other"][reagent.type] += reagent.volume
+				.["other"][item.type] += 1
+		else if (ismachinery(object))
+			LAZYADDASSOCLIST(.["machinery"], object.type, object)
+
 
 
 /// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
@@ -166,7 +175,7 @@
 		if(present_qualities[required_quality])
 			continue
 		return FALSE
-	
+
 	for(var/required_path in recipe.tool_paths)
 		var/found_this_tool = FALSE
 		for(var/tool_path in available_tools)
@@ -177,7 +186,7 @@
 		if(found_this_tool)
 			continue
 		return FALSE
-	
+
 	return TRUE
 
 
@@ -186,6 +195,10 @@
 	var/send_feedback = 1
 	if(check_contents(a, R, contents))
 		if(check_tools(a, R, contents))
+			if(R.one_per_turf)
+				for(var/content in get_turf(a))
+					if(istype(content, R.result))
+						return ", object already present."
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
 			if(ismob(a) && !do_after(a, R.time, target = a))
 				return "."
@@ -233,17 +246,24 @@
 	. = list()
 	var/data
 	var/amt
+	var/list/requirements = list()
+	if(R.reqs)
+		requirements += R.reqs
+	if(R.machinery)
+		requirements += R.machinery
 	main_loop:
-		for(var/A in R.reqs)
-			amt = R.reqs[A]
+		for(var/path_key in requirements)
+			amt = R.reqs[path_key] || R.machinery[path_key]
+			if(!amt)//since machinery can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
+				continue main_loop
 			surroundings = get_environment(a, R.blacklist)
 			surroundings -= Deletion
-			if(ispath(A, /datum/reagent))
-				var/datum/reagent/RG = new A
+			if(ispath(path_key, /datum/reagent))
+				var/datum/reagent/RG = new path_key
 				var/datum/reagent/RGNT
 				while(amt > 0)
 					var/obj/item/reagent_containers/RC = locate() in surroundings
-					RG = RC.reagents.get_reagent(A)
+					RG = RC.reagents.get_reagent(path_key)
 					if(RG)
 						if(!locate(RG.type) in Deletion)
 							Deletion += new RG.type()
@@ -267,11 +287,11 @@
 						SEND_SIGNAL(RC.reagents, COMSIG_REAGENTS_CRAFTING_PING) // - [] TODO: Make this entire thing less spaghetti
 					else
 						surroundings -= RC
-			else if(ispath(A, /obj/item/stack))
+			else if(ispath(path_key, /obj/item/stack))
 				var/obj/item/stack/S
 				var/obj/item/stack/SD
 				while(amt > 0)
-					S = locate(A) in surroundings
+					S = locate(path_key) in surroundings
 					if(S.amount >= amt)
 						if(!locate(S.type) in Deletion)
 							SD = new S.type()
@@ -292,34 +312,34 @@
 			else
 				var/atom/movable/I
 				while(amt > 0)
-					I = locate(A) in surroundings
+					I = locate(path_key) in surroundings
 					Deletion += I
 					surroundings -= I
 					amt--
 	var/list/partlist = list(R.parts.len)
 	for(var/M in R.parts)
 		partlist[M] = R.parts[M]
-	for(var/A in R.parts)
-		if(istype(A, /datum/reagent))
-			var/datum/reagent/RG = locate(A) in Deletion
-			if(RG.volume > partlist[A])
-				RG.volume = partlist[A]
+	for(var/part in R.parts)
+		if(istype(part, /datum/reagent))
+			var/datum/reagent/RG = locate(part) in Deletion
+			if(RG.volume > partlist[part])
+				RG.volume = partlist[part]
 			. += RG
 			Deletion -= RG
 			continue
-		else if(istype(A, /obj/item/stack))
-			var/obj/item/stack/ST = locate(A) in Deletion
-			if(ST.amount > partlist[A])
-				ST.amount = partlist[A]
+		else if(istype(part, /obj/item/stack))
+			var/obj/item/stack/ST = locate(part) in Deletion
+			if(ST.amount > partlist[part])
+				ST.amount = partlist[part]
 			. += ST
 			Deletion -= ST
 			continue
 		else
-			while(partlist[A] > 0)
-				var/atom/movable/AM = locate(A) in Deletion
+			while(partlist[part] > 0)
+				var/atom/movable/AM = locate(part) in Deletion
 				. += AM
 				Deletion -= AM
-				partlist[A] -= 1
+				partlist[part] -= 1
 	while(Deletion.len)
 		var/DL = Deletion[Deletion.len]
 		Deletion.Cut(Deletion.len)
@@ -423,6 +443,7 @@
 				else
 					result.forceMove(user.drop_location())
 				to_chat(user, "<span class='notice'>[TR.name] constructed.</span>")
+				TR.on_craft_completion(user, result)
 			else
 				to_chat(user, "<span class='warning'>Construction failed[result]</span>")
 			busy = FALSE
@@ -441,26 +462,24 @@
 	var/list/data = list()
 	data["name"] = R.name
 	data["ref"] = "[REF(R)]"
-	var/req_text = ""
-	var/catalyst_text = ""
+	var/list/req_text = list()
+	var/list/tool_list = list()
+	var/list/catalyst_text = list()
 
-	for(var/a in R.reqs)
+	for(var/atom/req_atom as anything in R.reqs)
 		//We just need the name, so cheat-typecast to /atom for speed (even tho Reagents are /datum they DO have a "name" var)
 		//Also these are typepaths so sadly we can't just do "[a]"
-		var/atom/A = a
-		req_text += " [R.reqs[A]] [initial(A.name)],"
+		req_text += "[R.reqs[req_atom]] [initial(req_atom.name)]"
+	for(var/obj/machinery/content as anything in R.machinery)
+		req_text += "[R.reqs[content]] [initial(content.name)]"
 	if(R.additional_req_text)
 		req_text += R.additional_req_text
-	req_text = replacetext(req_text,",","",-1)
-	data["req_text"] = req_text
+	data["req_text"] = req_text.Join(", ")
 
-	for(var/a in R.chem_catalysts)
-		var/atom/A = a //cheat-typecast
-		catalyst_text += " [R.chem_catalysts[A]] [initial(A.name)],"
-	catalyst_text = replacetext(catalyst_text,",","",-1)
-	data["catalyst_text"] = catalyst_text
+	for(var/atom/req_catalyst as anything in R.chem_catalysts)
+		catalyst_text += "[R.chem_catalysts[req_catalyst]] [initial(req_catalyst.name)]"
+	data["catalyst_text"] = catalyst_text.Join(", ")
 
-	var/list/tool_list = list()
 	for(var/required_quality in R.tool_behaviors)
 		tool_list += required_quality
 	for(var/obj/item/required_path as anything in R.tool_paths)
