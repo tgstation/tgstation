@@ -197,7 +197,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	set waitfor = FALSE
 	if(chasing)
 		walk_towards(src, chasing, delay)
-		if(get_turf(src) == target)
+		if(get_turf(src) == chasing)
 			make_debris()
 			meteor_effect()
 			qdel(src)
