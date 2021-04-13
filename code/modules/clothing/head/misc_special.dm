@@ -152,7 +152,15 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	light_range = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
+	light_color = "#fff2bf"
 
+/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
+	name = "carved blumpkin"
+	desc = "A very blue jack o' lantern! Believed to ward off vengeful chemists."
+	icon_state = "hardhat0_blumpkin"
+	inhand_icon_state = "hardhat0_blumpkin"
+	hat_type = "blumpkin"
+	light_color = "#76ff8e"
 /*
  * Kitty ears
  */
