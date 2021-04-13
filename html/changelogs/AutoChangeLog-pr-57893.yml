@@ -1,5 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - imageadd: "Moth eyes now have a unique sprite that reflects on your mob. Take care and cherish them, unless you want to look silly."
-  - bugfix: "Moth cultists can have their red eyes now."

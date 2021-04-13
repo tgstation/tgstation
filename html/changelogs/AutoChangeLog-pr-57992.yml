@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - refactor: "tgui tooltips have been moved to a library that should fix them going off the edges of the screen."
