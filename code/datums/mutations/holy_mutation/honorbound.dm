@@ -184,6 +184,8 @@
  */
 /datum/mutation/human/honorbound/proc/punishment(mob/living/carbon/human/user, school)
 	switch(school)
+		if(SCHOOL_HOLY, SCHOOL_MIME, SCHOOL_RESTORATION)
+			return
 		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN)
 			to_chat(user, "<span class='userdanger'>[GLOB.deity] is enraged by your use of forbidden magic!</span>")
 			lightningbolt(user)
