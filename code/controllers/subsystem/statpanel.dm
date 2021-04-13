@@ -55,7 +55,6 @@ SUBSYSTEM_DEF(statpanels)
 			if(target.stat_tab == "Tickets")
 				var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
 				target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
-			if(target.stat_tab == "Interviews")
 				var/datum/interview_manager/m = GLOB.interviews
 
 				// get open interview count
