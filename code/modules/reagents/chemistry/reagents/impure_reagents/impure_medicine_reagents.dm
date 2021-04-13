@@ -591,17 +591,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!carbon.dna)
 		return
 	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE)
-	while(speech_options || !speech_option)
-		var/potential_option = pick(speech_options)
-		if(carbon.dna.get_mutation(potential_option))
-			speech_options -= potential_option
+	speech_options = shuffle(speech_options)
+	for(var/option in speech_options)
+		if(carbon.dna.get_mutation(option))
 			continue
-		if(carbon.dna.activate_mutation(potential_option))
-			speech_option = potential_option
-			return
-		else
-			speech_options -= potential_option
-
+		carbon.dna.add_mutation(option)
+		speech_option = option
+		return
 
 /datum/reagent/impurity/mannitol/on_mob_delete(mob/living/owner)
 	. = ..()
@@ -631,13 +627,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
 	traumalist -= /datum/brain_trauma/special/obsessed //Sets the owner as an antag - I presume this will lead to problems, so we'll remove it
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
-	while(traumalist || !temp_trauma)
-		var/datum/brain_trauma/trauma = pick(traumalist)
+	traumalist = shuffle(traumalist)
+	for(var/trauma in traumalist)
 		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
 			temp_trauma = trauma
 			return
-		else
-			traumalist -= trauma
 
 /datum/reagent/inverse/neurine/on_mob_delete(mob/living/carbon/owner)
 	.=..()
