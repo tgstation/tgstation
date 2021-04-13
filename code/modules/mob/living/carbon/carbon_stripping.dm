@@ -10,7 +10,9 @@
 	return get_strippable_alternate_action_internals(get_item(source), source)
 
 /datum/strippable_item/mob_item_slot/back/alternate_action(atom/source, mob/user)
-	return strippable_alternate_action_internals(get_item(source), source, user)
+	if(!..())
+		return
+	strippable_alternate_action_internals(get_item(source), source, user)
 
 /datum/strippable_item/mob_item_slot/mask
 	key = STRIPPABLE_ITEM_MASK

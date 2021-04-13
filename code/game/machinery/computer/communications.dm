@@ -140,7 +140,7 @@
 			var/new_sec_level = seclevel2num(params["newSecurityLevel"])
 			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
 				return
-			if (GLOB.security_level == new_sec_level)
+			if (SSsecurity_level.current_level == new_sec_level)
 				return
 
 			set_security_level(new_sec_level)
@@ -529,9 +529,9 @@
 /**
  * Call an emergency meeting
  *
- * Comm Console wrapper for the Communications subsystem wrapper for the call_emergency_meeting world proc. 
- * Checks to make sure the proc can be called, and handles relevant feedback, logging and timing. 
- * See the SScommunications proc definition for more detail, in short, teleports the entire crew to 
+ * Comm Console wrapper for the Communications subsystem wrapper for the call_emergency_meeting world proc.
+ * Checks to make sure the proc can be called, and handles relevant feedback, logging and timing.
+ * See the SScommunications proc definition for more detail, in short, teleports the entire crew to
  * the bridge for a meetup. Should only really happen during april fools.
  * Arguments:
  * * user - Mob who called the meeting

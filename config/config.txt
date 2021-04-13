@@ -74,6 +74,10 @@ ENABLE_LOCALHOST_RANK
 #USE_EXP_RESTRICTIONS_OTHER
 ## Allows admins to bypass job playtime requirements.
 #USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+## Unhash this to have intern tags automatically added to ID cards for station roles depending on the living hours of the player holding them.
+#USE_LOW_LIVING_HOUR_INTERN
+## If USE_LOW_LIVING_HOUR_INTERN is unhashed, players under this number of living hours have [Intern] added to their ID card. If this isn't set, uses USE_EXP_RESTRICTIONS_HEADS_HOURS instead. If that isn't set, it finally defaults to a hardcoded fallback of 15 hours.
+#USE_LOW_LIVING_HOUR_INTERN_HOURS 50
 
 ## log OOC channel
 LOG_OOC

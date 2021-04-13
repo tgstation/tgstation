@@ -516,21 +516,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassgold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	/// Ratio of gold that the goldschlager recipe contains
-	var/static/gold_ratio
-
 	// This drink is really popular with a certain demographic.
 	var/teenage_girl_quality = DRINK_VERYGOOD
-
-/datum/reagent/consumable/ethanol/goldschlager/New()
-	. = ..()
-	if(!gold_ratio)
-		// Calculate the amount of gold that goldschlager is made from
-		var/datum/chemical_reaction/drink/goldschlager/goldschlager_reaction = new
-		var/vodka_amount = goldschlager_reaction.required_reagents[/datum/reagent/consumable/ethanol/vodka]
-		var/gold_amount = goldschlager_reaction.required_reagents[/datum/reagent/gold]
-		gold_ratio = gold_amount / (gold_amount + vodka_amount)
-		qdel(goldschlager_reaction)
 
 /datum/reagent/consumable/ethanol/goldschlager/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	// Reset quality each time, since the bottle can be shared
@@ -548,7 +535,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!(methods & INGEST))
 		return ..()
 
-	var/convert_amount = trans_volume * gold_ratio
+	var/convert_amount = trans_volume * min(GOLDSCHLAGER_GOLD_RATIO, 1)
 	A.reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
 	A.reagents.add_reagent(/datum/reagent/gold, convert_amount)
 	return ..()

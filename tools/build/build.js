@@ -25,6 +25,7 @@ const STANDARD_BUILD = "Standard Build"
 const TGS_BUILD = "TGS Build"
 const ALL_MAPS_BUILD = "CI All Maps Build"
 const TEST_RUN_BUILD = "CI Integration Tests Build"
+const NO_DM_BUILD = "Except DM Build"
 
 let BUILD_MODE = STANDARD_BUILD;
 if (process.env.CBT_BUILD_MODE) {
@@ -37,6 +38,9 @@ if (process.env.CBT_BUILD_MODE) {
       break;
     case "TGS":
       BUILD_MODE = TGS_BUILD
+      break;
+    case "NO_DM":
+      BUILD_MODE = NO_DM_BUILD
       break;
     default:
       BUILD_MODE = process.env.CBT_BUILD_MODE
@@ -192,39 +196,25 @@ const taskDm = (...injectedDefines) => new Task('dm')
   });
 
 // Frontend
-let tasksToRun = [];
+let tasksToRun = [
+  taskYarn,
+  taskTgfont,
+  taskTgui,
+];
 switch (BUILD_MODE) {
   case STANDARD_BUILD:
-    tasksToRun = [
-      taskYarn,
-      taskTgfont,
-      taskTgui,
-      taskDm('CBT'),
-    ]
+    tasksToRun.push(taskDm('CBT'));
     break;
   case TGS_BUILD:
-    tasksToRun = [
-      taskYarn,
-      taskTgfont,
-      taskTgui,
-      taskPrependDefines('TGS'),
-    ]
+    tasksToRun.push(taskPrependDefines('TGS'));
     break;
   case ALL_MAPS_BUILD:
-    tasksToRun = [
-      taskYarn,
-      taskTgfont,
-      taskTgui,
-      taskDm('CBT','CIBUILDING','CITESTING','ALL_MAPS')
-    ];
+    tasksToRun.push(taskDm('CBT','CIBUILDING','CITESTING','ALL_MAPS'));
     break;
   case TEST_RUN_BUILD:
-    tasksToRun = [
-      taskYarn,
-      taskTgfont,
-      taskTgui,
-      taskDm('CBT','CIBUILDING')
-    ];
+    tasksToRun.push(taskDm('CBT','CIBUILDING'));
+    break;
+  case NO_DM_BUILD:
     break;
   default:
     console.error(`Unknown build mode : ${BUILD_MODE}`)

@@ -405,3 +405,11 @@
 	min_val = 0
 
 /datum/config_entry/flag/dynamic_config_enabled
+
+/datum/config_entry/string/drone_required_role
+	config_entry_value = "Silicon"
+
+/datum/config_entry/number/drone_role_playtime
+	config_entry_value = 40
+	min_val = 0
+	integer = FALSE // It is in hours, but just in case one wants to specify minutes.

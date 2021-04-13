@@ -196,6 +196,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
 	var/list/knife_butcher_results
 
+	///List of visual overlays created by handle_body()
+	var/list/body_vis_overlays = list()
+
 ///////////
 // PROCS //
 ///////////
@@ -629,50 +632,67 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * Handles lipstick, having no eyes, eye color, undergarnments like underwear, undershirts, and socks, and body layers.
  * Calls [handle_mutant_bodyparts][/datum/species/proc/handle_mutant_bodyparts]
  * Arguments:
- * * H - Human, whoever we're handling the body for
+ * * species_human - Human, whoever we're handling the body for
  */
-/datum/species/proc/handle_body(mob/living/carbon/human/H)
-	H.remove_overlay(BODY_LAYER)
+/datum/species/proc/handle_body(mob/living/carbon/human/species_human)
+	species_human.remove_overlay(BODY_LAYER)
 
 	var/list/standing = list()
 
-	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
+	var/obj/item/bodypart/head/HD = species_human.get_bodypart(BODY_ZONE_HEAD)
 
-	if(HD && !(HAS_TRAIT(H, TRAIT_HUSK)))
+	if(HD && !(HAS_TRAIT(species_human, TRAIT_HUSK)))
 		// lipstick
-		if(H.lip_style && (LIPS in species_traits))
-			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
-			lip_overlay.color = H.lip_color
-			if(OFFSET_FACE in H.dna.species.offset_features)
-				lip_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-				lip_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+		if(species_human.lip_style && (LIPS in species_traits))
+			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[species_human.lip_style]", -BODY_LAYER)
+			lip_overlay.color = species_human.lip_color
+			if(OFFSET_FACE in species_human.dna.species.offset_features)
+				lip_overlay.pixel_x += species_human.dna.species.offset_features[OFFSET_FACE][1]
+				lip_overlay.pixel_y += species_human.dna.species.offset_features[OFFSET_FACE][2]
 			standing += lip_overlay
 
 		// eyes
 		if(!(NOEYESPRITES in species_traits))
-			var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-			var/mutable_appearance/eye_overlay
-			if(!E)
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
-			else
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)
-			if((EYECOLOR in species_traits) && E)
-				eye_overlay.color = "#" + H.eye_color
-			if(OFFSET_FACE in H.dna.species.offset_features)
-				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-			standing += eye_overlay
+			var/obj/item/organ/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
+			var/mutable_appearance/no_eyeslay
+			var/list/eye_overlays = list()
+			var/obscured = species_human.check_obscured_slots(TRUE) //eyes that shine in the dark shouldn't show when you have glasses
+			var/add_pixel_x = 0
+			var/add_pixel_y = 0
+			//cut any possible vis overlays
+			if(body_vis_overlays.len)
+				SSvis_overlays.remove_vis_overlay(species_human, body_vis_overlays)
+			if(OFFSET_FACE in species_human.dna.species.offset_features)
+				add_pixel_x = species_human.dna.species.offset_features[OFFSET_FACE][1]
+				add_pixel_y = species_human.dna.species.offset_features[OFFSET_FACE][2]
+			if(!eye_organ)
+				no_eyeslay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				no_eyeslay.pixel_x += add_pixel_x
+				no_eyeslay.pixel_y += add_pixel_y
+				standing += no_eyeslay
+			if(!no_eyeslay)//we need eyes
+				if(eye_organ.overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
+					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
+					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER, EMISSIVE_PLANE)
+				else
+					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
+				for(var/mutable_appearance/eye_overlay as anything in eye_overlays)
+					eye_overlay.pixel_x += add_pixel_x
+					eye_overlay.pixel_y += add_pixel_y
+					if((EYECOLOR in species_traits) && eye_organ)
+						eye_overlay.color = "#" + species_human.eye_color
+					standing += eye_overlay
 
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)
-		var/obj/item/bodypart/chest/chest = H.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/r_arm/right_arm = H.get_bodypart(BODY_ZONE_R_ARM)
-		var/obj/item/bodypart/l_arm/left_arm = H.get_bodypart(BODY_ZONE_L_ARM)
-		var/obj/item/bodypart/r_leg/right_leg = H.get_bodypart(BODY_ZONE_R_LEG)
-		var/obj/item/bodypart/l_leg/left_leg = H.get_bodypart(BODY_ZONE_L_LEG)
-		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[H.dna.features["moth_markings"]]
+		var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)
+		var/obj/item/bodypart/r_arm/right_arm = species_human.get_bodypart(BODY_ZONE_R_ARM)
+		var/obj/item/bodypart/l_arm/left_arm = species_human.get_bodypart(BODY_ZONE_L_ARM)
+		var/obj/item/bodypart/r_leg/right_leg = species_human.get_bodypart(BODY_ZONE_R_LEG)
+		var/obj/item/bodypart/l_leg/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
+		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[species_human.dna.features["moth_markings"]]
 
-		if(!HAS_TRAIT(H, TRAIT_HUSK))
+		if(!HAS_TRAIT(species_human, TRAIT_HUSK))
 			if(HD && (HD.status != BODYPART_ROBOTIC))
 				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
 				standing += markings_head_overlay
@@ -699,36 +719,36 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
-		if(H.underwear)
-			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
+		if(species_human.underwear)
+			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
-				if(H.dna.species.sexes && H.body_type == FEMALE && (underwear.gender == MALE))
+				if(species_human.dna.species.sexes && species_human.body_type == FEMALE && (underwear.gender == MALE))
 					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
-					underwear_overlay.color = "#" + H.underwear_color
+					underwear_overlay.color = "#" + species_human.underwear_color
 				standing += underwear_overlay
 
-		if(H.undershirt)
-			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
+		if(species_human.undershirt)
+			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
-				if(H.dna.species.sexes && H.body_type == FEMALE)
+				if(species_human.dna.species.sexes && species_human.body_type == FEMALE)
 					standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 
-		if(H.socks && H.num_legs >= 2 && !(DIGITIGRADE in species_traits))
-			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
+		if(species_human.socks && species_human.num_legs >= 2 && !(DIGITIGRADE in species_traits))
+			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 
 	if(standing.len)
-		H.overlays_standing[BODY_LAYER] = standing
+		species_human.overlays_standing[BODY_LAYER] = standing
 
-	H.apply_overlay(BODY_LAYER)
-	handle_mutant_bodyparts(H)
+	species_human.apply_overlay(BODY_LAYER)
+	handle_mutant_bodyparts(species_human)
 
 /**
  * Handles the mutant bodyparts of a human
