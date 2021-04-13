@@ -20,13 +20,8 @@
 	armor = list(MELEE = 50, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
-	var/datum/crafting_recipe/recipe
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
-
-/obj/machinery/door/poddoor/Initialize()
-	. = ..()
-	recipe = locate(recipe_type) in GLOB.crafting_recipes
 
 /obj/machinery/door/poddoor/attackby(obj/item/W, mob/user, params)
 	. = ..()
@@ -56,6 +51,7 @@
 		else if(W.tool_behaviour == TOOL_WIRECUTTER && deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
 			to_chat(user, "<span class='notice'>You start to remove the internal cables.</span>")
 			if(do_after(user, 10 SECONDS, target = src))
+				var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 				var/amount = recipe.reqs[/obj/item/stack/cable_coil]
 				new /obj/item/stack/cable_coil(loc, amount)
 				deconstruction = BLASTDOOR_NEEDS_WIRES
@@ -67,6 +63,7 @@
 			to_chat(user, "<span class='notice'>You start tearing apart the [src].</span>")
 			playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
 			if(do_after(user, 15 SECONDS, target = src))
+				var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 				var/amount = recipe.reqs[/obj/item/stack/sheet/plasteel]
 				new /obj/item/stack/sheet/plasteel(loc, amount)
 				qdel(src)
