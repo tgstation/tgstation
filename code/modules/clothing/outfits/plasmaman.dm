@@ -202,7 +202,7 @@
 	name = "Chief Engineer Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/chief_engineer
-	gloves = /obj/item/clothing/gloves/color/plasmaman/yellow
+	gloves = /obj/item/clothing/gloves/color/yellow
 	head = /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
 
 /datum/outfit/plasmaman/chief_medical_officer
