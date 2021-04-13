@@ -116,7 +116,7 @@
 
 /datum/asset/simple/irv
 	assets = list(
-		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
+		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/jquery/jquery-ui.custom-core-widgit-mouse-sortable.min.js',
 	)
 
 /datum/asset/group/irv
@@ -127,25 +127,26 @@
 
 /datum/asset/simple/namespaced/changelog
 	assets = list(
-		"88x31.png" = 'html/88x31.png',
-		"bug-minus.png" = 'html/bug-minus.png',
-		"cross-circle.png" = 'html/cross-circle.png',
-		"hard-hat-exclamation.png" = 'html/hard-hat-exclamation.png',
-		"image-minus.png" = 'html/image-minus.png',
-		"image-plus.png" = 'html/image-plus.png',
-		"music-minus.png" = 'html/music-minus.png',
-		"music-plus.png" = 'html/music-plus.png',
-		"tick-circle.png" = 'html/tick-circle.png',
-		"wrench-screwdriver.png" = 'html/wrench-screwdriver.png',
-		"spell-check.png" = 'html/spell-check.png',
-		"burn-exclamation.png" = 'html/burn-exclamation.png',
-		"chevron.png" = 'html/chevron.png',
-		"chevron-expand.png" = 'html/chevron-expand.png',
-		"scales.png" = 'html/scales.png',
-		"coding.png" = 'html/coding.png',
-		"ban.png" = 'html/ban.png',
-		"chrome-wrench.png" = 'html/chrome-wrench.png',
-		"changelog.css" = 'html/changelog.css'
+		"88x31.png" = 'icons/changelog/88x31.png',
+		"bug-minus.png" = 'icons/changelog/bug-minus.png',
+		"cross-circle.png" = 'icons/changelog/cross-circle.png',
+		"hard-hat-exclamation.png" = 'icons/changelog/hard-hat-exclamation.png',
+		"image-minus.png" = 'icons/changelog/image-minus.png',
+		"image-plus.png" = 'icons/changelog/image-plus.png',
+		"music-minus.png" = 'icons/changelog/music-minus.png',
+		"music-plus.png" = 'icons/changelog/music-plus.png',
+		"tick-circle.png" = 'icons/changelog/tick-circle.png',
+		"wrench-screwdriver.png" = 'icons/changelog/wrench-screwdriver.png',
+		"spell-check.png" = 'icons/changelog/spell-check.png',
+		"burn-exclamation.png" = 'icons/changelog/burn-exclamation.png',
+		"chevron.png" = 'icons/changelog/chevron.png',
+		"chevron-expand.png" = 'icons/changelog/chevron-expand.png',
+		"scales.png" = 'icons/changelog/scales.png',
+		"coding.png" = 'icons/changelog/coding.png',
+		"ban.png" = 'icons/changelog/ban.png',
+		"chrome-wrench.png" = 'icons/changelog/chrome-wrench.png',
+		"changelog.css" = 'tgui/packages/html/dist/changelog/changelog.min.css',
+		"changelog.js" = 'tgui/packages/html/dist/changelog/changelog.min.js'
 	)
 	parents = list("changelog.html" = 'html/changelog.html')
 
@@ -153,7 +154,7 @@
 /datum/asset/simple/jquery
 	legacy = TRUE
 	assets = list(
-		"jquery.min.js" = 'html/jquery.min.js',
+		"jquery.min.js" = 'html/jquery/jquery.min.js',
 	)
 
 /datum/asset/simple/namespaced/fontawesome
@@ -191,17 +192,17 @@
 
 /datum/asset/simple/lobby
 	assets = list(
-		"playeroptions.css" = 'html/browser/playeroptions.css'
+		"playeroptions.css" = 'tgui/packages/html/dist/browser/playeroptions.min.css'
 	)
 
 /datum/asset/simple/namespaced/common
-	assets = list("padlock.png" = 'html/padlock.png')
-	parents = list("common.css" = 'html/browser/common.css')
+	assets = list("padlock.png" = 'icons/common/padlock.png')
+	parents = list("common.css" = 'tgui/packages/html/dist/browser/common.min.css')
 
 /datum/asset/simple/permissions
 	assets = list(
-		"search.js" = 'html/admin/search.js',
-		"panels.css" = 'html/admin/panels.css'
+		"search.js" = 'tgui/packages/html/dist/admin/search.min.js',
+		"panels.css" = 'tgui/packages/html/dist/admin/panels.min.css'
 	)
 
 /datum/asset/group/permissions
@@ -212,10 +213,10 @@
 
 /datum/asset/simple/notes
 	assets = list(
-		"high_button.png" = 'html/high_button.png',
-		"medium_button.png" = 'html/medium_button.png',
-		"minor_button.png" = 'html/minor_button.png',
-		"none_button.png" = 'html/none_button.png',
+		"high_button.png" = 'icons/notes/high_button.png',
+		"medium_button.png" = 'icons/notes/medium_button.png',
+		"minor_button.png" = 'icons/notes/minor_button.png',
+		"none_button.png" = 'icons/notes/none_button.png',
 	)
 
 /datum/asset/simple/arcade
@@ -452,19 +453,19 @@
 
 /datum/asset/simple/genetics
 	assets = list(
-		"dna_discovered.gif" = 'html/dna_discovered.gif',
-		"dna_undiscovered.gif" = 'html/dna_undiscovered.gif',
-		"dna_extra.gif" = 'html/dna_extra.gif'
+		"dna_discovered.gif" = 'icons/genetics/dna_discovered.gif',
+		"dna_undiscovered.gif" = 'icons/genetics/dna_undiscovered.gif',
+		"dna_extra.gif" = 'icons/genetics/dna_extra.gif'
 	)
 
 /datum/asset/simple/orbit
 	assets = list(
-		"ghost.png" = 'html/ghost.png'
+		"ghost.png" = 'icons/orbit/ghost.png'
 	)
 
 /datum/asset/simple/vv
 	assets = list(
-		"view_variables.css" = 'html/admin/view_variables.css'
+		"view_variables.css" = 'tgui/packages/html/dist/admin/view_variables.min.css'
 	)
 
 /datum/asset/spritesheet/sheetmaterials
@@ -510,7 +511,7 @@
 
 /datum/asset/simple/safe
 	assets = list(
-		"safe_dial.png" = 'html/safe_dial.png'
+		"safe_dial.png" = 'icons/safe/safe_dial.png'
 	)
 
 /datum/asset/spritesheet/fish

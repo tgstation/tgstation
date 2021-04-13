@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(href_list["reload_tguipanel"])
 		nuke_chat()
 	if(href_list["reload_statbrowser"])
-		src << browse(file('html/statbrowser.html'), "window=statbrowser")
+		init_statbrowser(src)
 	// Log all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
@@ -125,6 +125,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	..() //redirect to hsrc.Topic()
+
+/client/proc/init_statbrowser(src)
+	var/html = file2text('html/statbrowser.html')
+	// Inject minified assets inline
+	var/inline_css = "<style>" + file2text('tgui/packages/html/dist/statbrowser/statbrowser.min.css') + "</style>"
+	var/inline_js = "<script>" + file2text('tgui/packages/html/dist/statbrowser/statbrowser.min.js') + "</script>"
+	html = replacetextEx(html, "<!-- statbrowser:css -->", inline_css)
+	html = replacetextEx(html, "<!-- statbrowser:js -->", inline_js)
+	src << browse(html, "window=statbrowser")
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
@@ -322,7 +331,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		set_macros()
 
 	// Initialize tgui panel
-	src << browse(file('html/statbrowser.html'), "window=statbrowser")
+	init_statbrowser(src)
 	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
 	tgui_panel.initialize()
 

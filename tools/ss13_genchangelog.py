@@ -176,7 +176,7 @@ for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
 targetDir = os.path.dirname(args.targetFile)
 
 with open(args.targetFile.replace('.htm', '.dry.htm') if args.dryRun else args.targetFile, 'w', encoding='utf-8') as changelog:
-    with open(os.path.join(targetDir, 'templates', 'header.html'), 'r', encoding='utf-8') as h:
+    with open(os.path.join(targetDir, 'changelog', 'header.html'), 'r', encoding='utf-8') as h:
         for line in h:
             changelog.write(line)
 
@@ -203,7 +203,7 @@ with open(args.targetFile.replace('.htm', '.dry.htm') if args.dryRun else args.t
         if write_entry:
             changelog.write(entry_htm)
 
-    with open(os.path.join(targetDir, 'templates', 'footer.html'), 'r', encoding='utf-8') as h:
+    with open(os.path.join(targetDir, 'changelog', 'footer.html'), 'r', encoding='utf-8') as h:
         for line in h:
             changelog.write(line)
 

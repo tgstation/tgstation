@@ -80,6 +80,14 @@ const taskYarn = new Task('yarn')
   .provides('tgui/.yarn/install-target')
   .build(() => yarn(['install']));
 
+/** Minifies .css and .js files in html/ */
+const taskHtml = new Task('html')
+  .depends('tgui/packages/html/.yarn/install-target')
+  .depends('tgui/packages/html/**/*.+(js|css)')
+  .depends('tgui/packages/html/package.json')
+  .provides('tgui/packages/html/dist/**/*.min.+(css|js)')
+  .build(() => yarn(['workspace', 'html', 'minify']));
+
 /** Builds svg fonts */
 const taskTgfont = new Task('tgfont')
   .depends('tgui/.yarn/install-target')
@@ -198,6 +206,7 @@ const taskDm = (...injectedDefines) => new Task('dm')
 // Frontend
 let tasksToRun = [
   taskYarn,
+  taskHtml,
   taskTgfont,
   taskTgui,
 ];

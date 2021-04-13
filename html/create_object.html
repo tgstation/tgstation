@@ -14,8 +14,8 @@
       color: #00f;
       font-family: Georgia, Arial, sans-serif;
     }
-    img { 
-      border: 0px; 
+    img {
+      border: 0px;
     }
     p.lic {
       font-size: 6pt;
@@ -30,14 +30,14 @@
 
 		Type <input type="text" name="filter" value="" style="width:280px;height:25"> <input type = "submit" value = "Search" onclick = "updateSearch()" /><br>
 		Offset: <input type="text" name="offset" value="x,y,z" style="width:250px">
-		
+
 		A <input type="radio" name="offset_type" value="absolute">
 		R <input type="radio" name="offset_type" value="relative" checked="checked"><br>
-		
+
 		Number: <input type="text" name="object_count" value="1" style="width:30px">
 		Dir: <input type="text" name="object_dir" value="" style="width:30px">
 		Name: <input type="text" name="object_name" value="" style="width:180px"><br>
-		Where: 
+		Where:
 			<select name='object_where' style="width:320px">
 				<option value='onfloor'>On floor below own mob</option>
 				<option value='frompod'>On floor below own mob, dropped via supply pod</option>
@@ -47,21 +47,21 @@
 		<br><br>
 		<input type="submit" value="spawn">
 		<select name="object_list" id="object_list" size="18" multiple style="width:98%"></select><br>
-		
+
 	</form>
-	
+
 	<script language="JavaScript">
 		var old_search = "";
 		var object_list = document.spawner.object_list;
 		var object_paths = null /* object types */;
 		var objects = object_paths == null ? new Array() : object_paths.split(";");
-		
+
 		document.spawner.filter.focus();
-		
+
 		function populateList(from_list)
 		{
 			object_list.options.length = 0;
-			
+
 			var i;
 			for (i in from_list)
 			{
@@ -71,13 +71,13 @@
 				object_list.options.add(new_option);
 			}
 		}
-		
+
 		function updateSearch()
 		{
 			old_search = document.spawner.filter.value.toLowerCase();
 			if (!old_search)
 				return;
-			
+
 			var filtered = new Array();
 			var i;
 			for (i in objects)
@@ -87,10 +87,10 @@
 				{
 					continue;
 				}
-				
+
 				filtered.push(objects[i]);
 			}
-			
+
 			populateList(filtered);
 		}
 	</script>

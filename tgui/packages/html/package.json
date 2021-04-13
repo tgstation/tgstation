@@ -1,0 +1,16 @@
+{
+  "name": "html",
+  "version": "1.0.0",
+  "description": "/tg/station html folder asset minification",
+  "main": "gulpfile.js",
+  "scripts": {
+    "minify": "gulp"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-terser": "^2.0.1",
+    "readable-stream": "^3.6.0"
+  }
+}
