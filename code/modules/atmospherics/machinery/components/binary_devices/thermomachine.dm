@@ -33,6 +33,8 @@
 	var/use_enviroment_heat = FALSE
 	var/skipping_work = FALSE
 	var/auto_thermal_regulator = FALSE
+	var/safeties = TRUE
+	var/lastwarning
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
@@ -152,13 +154,25 @@
 	var/temperature_difference = 0
 	var/skip_tick = TRUE
 	if(!use_enviroment_heat && main_port.total_moles() > 0.01)
-		if(cooling && thermal_exchange_port.total_moles() > 0.01 && nodes[2])
+		if(cooling && thermal_exchange_port.total_moles() > 0.01 && nodes[2] && (thermal_exchange_port.temperature <= FUSION_MAXIMUM_TEMPERATURE || !safeties))
 			thermal_exchange_port.temperature = max(thermal_exchange_port.temperature + heat_amount / thermal_heat_capacity + motor_heat / thermal_heat_capacity, TCMB)
 		else if(cooling && (!thermal_exchange_port.total_moles() || !nodes[2]))
 			skipping_work = skip_tick
 			update_appearance()
 			update_parents()
 			return
+		if(thermal_exchange_port.temperature > FUSION_MAXIMUM_TEMPERATURE && safeties)
+			on = FALSE
+			visible_message("<span class='warning'>The thermal exchange port's temperature has reached critical levels, shutting down...</span>")
+			update_appearance()
+			return
+		else if(thermal_exchange_port.temperature > FUSION_MAXIMUM_TEMPERATURE && !safeties)
+			if((REALTIMEOFDAY - lastwarning) / 5 >= WARNING_DELAY)
+				lastwarning = REALTIMEOFDAY
+				visible_message("<span class='warning'>The thermal exchange port's temperature has reached critical levels!</span>")
+				if(check_explosion(thermal_exchange_port.temperature))
+					explode()
+					return PROCESS_KILL //we dying anyway, so let's stop processing
 		temperature_difference = thermal_exchange_port.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
@@ -220,6 +234,7 @@
 		investigate_log("had its internal [holding] swapped with [tank] by [key_name(user)].", INVESTIGATE_ATMOS)
 		replace_tank(user, tank)
 		update_appearance()
+		return
 
 	return ..()
 
@@ -300,6 +315,27 @@
 	update_appearance()
 	return TRUE
 
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/check_explosion(temperature)
+	if(temperature < FUSION_MAXIMUM_TEMPERATURE + 2000)
+		return FALSE
+	if(prob(log(100000000, temperature) * 10)) //10% at 1e8
+		return TRUE
+
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/explode()
+	explosion(loc, 0, 0, 3, 3, TRUE)
+	var/datum/gas_mixture/main_port = airs[1]
+	var/datum/gas_mixture/thermal_exchange_port = airs[2]
+	var/datum/gas_mixture/remove_first
+	if(main_port)
+		remove_first = main_port.remove(main_port.total_moles())
+		loc.assume_air(remove_first)
+	var/datum/gas_mixture/remove_second
+	if(thermal_exchange_port)
+		remove_second = thermal_exchange_port.remove(thermal_exchange_port.total_moles())
+		loc.assume_air(remove_second)
+	air_update_turf(FALSE, FALSE)
+	qdel(src)
+
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_status(mob/user)
 	if(interactive)
 		return ..()
@@ -334,6 +370,7 @@
 	data["use_env_heat"] = use_enviroment_heat
 	data["skipping_work"] = skipping_work
 	data["auto_thermal_regulator"] = auto_thermal_regulator
+	data["safeties"] = safeties
 	return data
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_act(action, params)
@@ -382,6 +419,10 @@
 			. = TRUE
 		if("auto_thermal_regulator")
 			auto_thermal_regulator = !auto_thermal_regulator
+			. = TRUE
+		if("safeties")
+			safeties = !safeties
+			investigate_log("[key_name(usr)] turned off the [src] safeties", INVESTIGATE_ATMOS)
 			. = TRUE
 
 	update_appearance()

@@ -48,6 +48,12 @@ export const ThermoMachine = (props, context) => {
               onClick={() => act('power')} />
           )}>
           <LabeledList>
+            <LabeledList.Item label="Safeties">
+              <Button
+                content={data.safeties ? 'Safeties ON' : 'Safeties OFF'}
+                color={data.safeties ? "green" : "red"}
+                onClick={() => act('safeties')} />
+            </LabeledList.Item>
             <LabeledList.Item label="Use tank gas">
               <Button
                 content={data.tank_gas ? 'Push gas' : 'Empty'}
