@@ -1,0 +1,4 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - bugfix: "Fixes mannitol (and possibly neurine) from causing runtimes if no effects can be applied."
