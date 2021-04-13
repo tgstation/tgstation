@@ -21,7 +21,7 @@
 					/obj/item/multitool = 2,
 					/obj/item/weldingtool/hugetank = 2,
 					/obj/item/clothing/head/welding = 2,
-					/obj/item/clothing/gloves/color/yellow = 1)
+					/obj/item/clothing/gloves/color/yellow = 4)
 	refill_canister = /obj/item/vending_refill/youtool
 	default_price = PAYCHECK_ASSISTANT
 	extra_price = PAYCHECK_COMMAND * 1.5
