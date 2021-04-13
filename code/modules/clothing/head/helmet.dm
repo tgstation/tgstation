@@ -391,10 +391,9 @@
 /obj/item/clothing/head/helmet/monkey_sentience
 	name = "monkey mind magnification helmet"
 	desc = "A fragile, circuitry embedded helmet for boosting the intelligence of a monkey to a higher level. You see several warning labels..."
-
 	icon_state = "monkeymind"
 	inhand_icon_state = "monkeymind"
-	strip_delay = 100
+	strip_delay = 120
 	var/mob/living/carbon/human/magnification = null ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please stop))
 	var/polling = FALSE///if the helmet is currently polling for targets (special code for removal)
 	var/light_colors = 1 ///which icon state color this is (red, blue, yellow)
@@ -436,8 +435,11 @@
 	visible_message("<span class='warning'>[src] powers up!</span>")
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
+	INVOKE_ASYNC(src, /obj/item/clothing/head/helmet/monkey_sentience.proc/connect, user)
+
+/obj/item/clothing/head/helmet/monkey_sentience/proc/connect(mob/user)
 	polling = TRUE
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, M = magnification, ignore_category = POLL_IGNORE_SENTIENCE_POTION) //SKYRAT EDIT CHANGE
 	polling = FALSE
 	if(!magnification)
 		return
@@ -456,6 +458,7 @@
 	if(policy)
 		to_chat(magnification, policy)
 	icon_state = "[icon_state]up"
+	REMOVE_TRAIT(magnification, TRAIT_PRIMITIVE, SPECIES_TRAIT) //Monkeys with sentience should be able to use less primitive tools.
 
 /obj/item/clothing/head/helmet/monkey_sentience/Destroy()
 	disconnect()
@@ -464,6 +467,11 @@
 /obj/item/clothing/head/helmet/monkey_sentience/proc/disconnect()
 	if(!magnification) //not put on a viable head
 		return
+	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
+	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+	magnification.dropItemToGround(src)
+	ADD_TRAIT(magnification, TRAIT_PRIMITIVE, SPECIES_TRAIT) //We removed it, now that they're back to being dumb, add the trait again.
 	if(!polling)//put on a viable head, but taken off after polling finished.
 		if(magnification.client)
 			to_chat(magnification, "<span class='userdanger'>You feel your flicker of sentience ripped away from you, as everything becomes dim...</span>")
@@ -478,18 +486,12 @@
 					magnification.gorillize()
 				if(4) //genetic mass susceptibility (gib)
 					magnification.gib()
-	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
-	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	visible_message("<span class='warning'>[src] fizzles and breaks apart!</span>")
 	magnification = null
-	new /obj/effect/decal/cleanable/ash/crematorium(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
+
 
 /obj/item/clothing/head/helmet/monkey_sentience/dropped(mob/user)
 	. = ..()
-	if(magnification || polling)
-		qdel(src)//runs disconnect code
+	disconnect()
 
 /obj/item/clothing/head/helmet/monkey_sentience/proc/make_fall_off()
 	if(magnification)
