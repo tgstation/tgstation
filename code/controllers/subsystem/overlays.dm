@@ -73,8 +73,8 @@ SUBSYSTEM_DEF(overlays)
 
 /proc/iconstate2appearance(icon, iconstate)
 	if (istype(icon, /icon))
-		var/icon/I = icon
-		icon = UNLINT(I.icon) //undocumented var that contains the actual byond icon file reference
+		var/icon/icon_casted = icon
+		icon = UNLINT(icon_casted.icon) //undocumented var that contains the actual byond icon file reference
 	var/static/image/stringbro = new()
 	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches
 	var/list/cached_icon = icon_states_cache[icon]
@@ -96,8 +96,8 @@ SUBSYSTEM_DEF(overlays)
 
 /proc/icon2appearance(icon)
 	if (istype(icon, /icon))
-		var/icon/I = icon
-		icon = UNLINT(I.icon) //undocumented var that contains the actual byond icon file reference
+		var/icon/icon_casted = icon
+		icon = UNLINT(icon_casted.icon) //undocumented var that contains the actual byond icon file reference
 	var/static/image/iconbro = new()
 	var/list/icon_cache = SSoverlays.overlay_icon_cache
 	. = icon_cache[icon]
