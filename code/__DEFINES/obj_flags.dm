@@ -55,6 +55,8 @@
 #define ANTI_TINFOIL_MANEUVER   (1<<12) //Hats with negative effects when worn (i.e the tinfoil hat).
 #define DANGEROUS_OBJECT    (1<<13)     //Clothes that cause a larger notification when placed on a person.
 #define LARGE_WORN_ICON    (1<<14)     //Clothes that use large icons, for applying the proper overlays like blood
+/// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
+#define BLOCKS_SPEECH (1<<15)
 
 /// Flags for the organ_flags var on /obj/item/organ
 
