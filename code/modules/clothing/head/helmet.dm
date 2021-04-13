@@ -461,7 +461,8 @@
 	REMOVE_TRAIT(magnification, TRAIT_PRIMITIVE, SPECIES_TRAIT) //Monkeys with sentience should be able to use less primitive tools.
 
 /obj/item/clothing/head/helmet/monkey_sentience/Destroy()
-	disconnect()
+	if(magnification)
+		magnification = null
 	return ..()
 
 /obj/item/clothing/head/helmet/monkey_sentience/proc/disconnect()
