@@ -9,7 +9,7 @@
 /obj/item/ammo_casing/c46x30mm/ap
 	name = "4.6x30mm armor-piercing bullet casing"
 	desc = "A 4.6x30mm armor-piercing bullet casing."
-	projectile_type = /obj/projectile/bullet/c46x30mm_ap
+	projectile_type = /obj/projectile/bullet/c46x30mm/ap
 
 /obj/item/ammo_casing/c46x30mm/inc
 	name = "4.6x30mm incendiary bullet casing"
@@ -27,7 +27,7 @@
 /obj/item/ammo_casing/c45/ap
 	name = ".45 armor-piercing bullet casing"
 	desc = "A .45 bullet casing."
-	projectile_type = /obj/projectile/bullet/c45_ap
+	projectile_type = /obj/projectile/bullet/c45/ap
 
 /obj/item/ammo_casing/c45/inc
 	name = ".45 incendiary bullet casing"

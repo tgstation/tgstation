@@ -96,6 +96,12 @@
 	starting_amount = 0
 	cooldownTime = 600
 
+/obj/machinery/drone_dispenser/classic
+	name = "classic drone shell dispenser"
+	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a classic drone shell. Does not need to be manually operated."
+	dispense_type = /obj/effect/mob_spawn/drone/classic
+	end_create_message = "dispenses a classic drone shell."
+
 // An example of a custom drone dispenser.
 // This one requires no materials and creates basic hivebots
 /obj/machinery/drone_dispenser/hivebot

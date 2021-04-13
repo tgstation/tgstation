@@ -24,6 +24,13 @@
 	update_ai_detect_hud()
 	setLoc(loc, TRUE)
 
+/mob/camera/ai_eye/examine(mob/user) //Displays a silicon's laws to ghosts
+	. = ..()
+	if(istype(ai) && ai.laws && isobserver(user))
+		. += "<b>[ai] has the following laws:</b>"
+		for(var/law in ai.laws.get_law_list(include_zeroth = TRUE))
+			. += law
+
 /mob/camera/ai_eye/proc/update_ai_detect_hud()
 	var/datum/atom_hud/ai_detector/hud = GLOB.huds[DATA_HUD_AI_DETECT]
 	var/list/old_images = hud_list[AI_DETECT_HUD]
