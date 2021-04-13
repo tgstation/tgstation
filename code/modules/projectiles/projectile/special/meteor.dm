@@ -19,19 +19,21 @@ GLOBAL_LIST_INIT(meteorsB, list(/obj/projectile/meteor/meaty=5, /obj/projectile/
 
 GLOBAL_LIST_INIT(meteorsC, list(/obj/projectile/meteor/dust)) //for space dust event
 
+GLOBAL_LIST_INIT(meteors_stress_test, list(/obj/projectile/meteor/tunguska))
+
 GLOBAL_LIST_EMPTY(meteor_circle)
-GLOBAL_LIST_EMPTY(meteor_targets)
+GLOBAL_LIST_EMPTY(meteor_circle_directions)
 
 
 ///////////////////////////////
 //Meteor spawning global procs
 ///////////////////////////////
 
-/proc/spawn_meteors(number = 10, list/meteortypes)
+/proc/spawn_meteors(number = 10, list/meteortypes, direction)
 	for(var/i in 1 to number)
-		spawn_meteor(meteortypes)
+		spawn_meteor(meteortypes, direction)
 
-/proc/spawn_meteor(list/meteortypes)
+/proc/spawn_meteor(list/meteortypes, direction)
 	if(!GLOB.meteor_circle || (GLOB.meteor_circle && GLOB.meteor_circle.len == 0))
 		message_admins("No meteor circle exists, generating at radius 100")
 		var/turf/center_of_station = SSmapping.get_station_center()
@@ -56,19 +58,25 @@ GLOBAL_LIST_EMPTY(meteor_targets)
 				GLOB.meteor_circle -= T
 				bad_spawns++
 		message_admins("Removed [bad_spawns] bad spawns from the meteor circle. [GLOB.meteor_circle.len] spawn points remain.")
-		GLOB.meteor_targets = SSexplosions.GatherSpiralTurfs(35, SSmapping.get_station_center())
+		GLOB.meteor_circle_directions = list()
+		for(var/dir in GLOB.alldirs)
+			GLOB.meteor_circle_directions[dir2text(dir)] = list()
+		for(var/T in GLOB.meteor_circle)
+			var/direction_found = get_dir(SSmapping.get_station_center(), T)
+			GLOB.meteor_circle_directions[dir2text(direction_found)] += T
 
 	var/turf/pickedstart
 	var/turf/pickedgoal
-	pickedstart = pick_n_take(GLOB.meteor_circle)
-	pickedgoal = pick(GLOB.meteor_targets)
+	if(direction)
+		pickedstart = pick(GLOB.meteor_circle_directions[dir2text(direction)])
+	else
+		pickedstart = pick(GLOB.meteor_circle)
+	pickedgoal = SSmapping.get_station_center()
 	var/Me = pickweight(meteortypes)
 	var/obj/projectile/P = new Me(pickedstart)
-	message_admins("SPAWNING A FUCKING METEOR [P]")
 	P.range = 250
 	P.preparePixelProjectile(pickedgoal, pickedstart)
 	P.fire()
-	message_admins("FIRING THE STUPID METEOR")
 
 /proc/spaceDebrisStartLoc(startSide, Z)
 	var/starty
@@ -115,6 +123,7 @@ GLOBAL_LIST_EMPTY(meteor_targets)
 	damage_type = BRUTE
 	nodamage = TRUE
 	flag = BULLET
+	mouse_opacity = MOUSE_OPACITY_ICON
 	var/hits = 4
 	var/hitpwr = 2 //Level of ex_act to be called on hit.
 	var/dest
@@ -138,7 +147,6 @@ GLOBAL_LIST_EMPTY(meteor_targets)
 	GLOB.meteor_list += src
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
-	message_admins("STUPID FUCKING METEOR [src] CREATED")
 	timerid = QDEL_IN(src, lifetime)
 
 
@@ -193,7 +201,6 @@ GLOBAL_LIST_EMPTY(meteor_targets)
 	if(hits <= 0)
 		make_debris()
 		meteor_effect()
-		message_admins("FUCK, METEOR DIED")
 		qdel(src)
 
 /obj/projectile/meteor/on_range()
@@ -207,11 +214,10 @@ GLOBAL_LIST_EMPTY(meteor_targets)
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 
-		if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
+		if(!isspaceturf(T))
 			get_hit()
 
 /obj/projectile/meteor/Destroy()
-	message_admins("METEOR DELETED, FUCK YOU")
 	if (timerid)
 		deltimer(timerid)
 	GLOB.meteor_list -= src
@@ -349,12 +355,17 @@ GLOBAL_LIST_EMPTY(meteor_targets)
 	name = "tunguska meteor"
 	icon_state = "flaming"
 	desc = "Your life briefly passes before your eyes the moment you lay them on this monstrosity."
-	hits = 7
+	hits = 15
 	hitpwr = 1
+	speed = 2
 	heavy = TRUE
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 50
+
+/obj/projectile/meteor/tunguska/Initialize()
+	..()
+	transform.Scale(4)
 
 /obj/projectile/meteor/tunguska/Move()
 	. = ..()
