@@ -13,6 +13,11 @@
 			ui.close()
 		return
 
+	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
+		if(ui)
+			ui.close()
+		return
+
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!screen_on && !issilicon(user))
 		if(ui)
