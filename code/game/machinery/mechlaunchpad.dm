@@ -54,7 +54,7 @@
  */
 /obj/machinery/mechpad/proc/launch(obj/machinery/mechpad/where)
 	var/turf/reverse_turf = get_turf(where)
-	podspawn_path(list(
+	podspawn(list(
 		"target" = get_turf(src),
 		"path" = /obj/structure/closet/supplypod/mechpod,
 		"style" = STYLE_SEETHROUGH,

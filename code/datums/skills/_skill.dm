@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 	if (LAZYFIND(mind.skills_rewarded, src.type))
 		to_chat(mind.current, "<span class='nicegreen'>It seems the Professional [title] Association won't send me another status symbol.</span>")
 		return
-	podspawn_path(list(
+	podspawn(list(
 		"target" = get_turf(mind.current),
 		"path" = /obj/structure/closet/supplypod/mechpod,
 		"style" = STYLE_BLUESPACE,

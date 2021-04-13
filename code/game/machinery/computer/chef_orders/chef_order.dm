@@ -115,7 +115,7 @@
 			for(var/datum/orderable_item/item as anything in grocery_list)//every order
 				for(var/amt in 1 to grocery_list[item])//every order amount
 					ordered_paths += item.item_instance.type
-			podspawn_path(list(
+			podspawn(list(
 				"target" = get_turf(chef),
 				"style" = STYLE_BLUESPACE,
 				"spawn" = ordered_paths

@@ -718,11 +718,11 @@
 	if(ispath(chosen, /turf))
 		target_turf.ChangeTurf(chosen)
 	else
-		var/obj/structure/closet/supplypod/pod = podspawn_path(list(
+		var/obj/structure/closet/supplypod/pod = podspawn(list(
 			"target" = target_turf,
 			"path" = /obj/structure/closet/supplypod/centcompod,
 		))
-		//we need to set the admin spawn flag for the spawned items so we do it outside of the podspawn_path proc
+		//we need to set the admin spawn flag for the spawned items so we do it outside of the podspawn proc
 		var/atom/A = new chosen(pod)
 		A.flags_1 |= ADMIN_SPAWNED_1
 

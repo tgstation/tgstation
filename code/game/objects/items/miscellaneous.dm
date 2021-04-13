@@ -51,7 +51,7 @@
 		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
 
 /obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
-	podspawn_path(list(
+	podspawn(list(
 		"target" = get_turf(src),
 		"style" = STYLE_BLUESPACE,
 		"spawn" = choice,

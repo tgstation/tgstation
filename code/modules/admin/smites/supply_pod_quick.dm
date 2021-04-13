@@ -34,7 +34,7 @@
 
 /datum/smite/supply_pod_quick/effect(client/user, mob/living/target)
 	. = ..()
-	podspawn_path(list(
+	podspawn(list(
 		"target" = get_turf(target),
 		"path" = /obj/structure/closet/supplypod/centcompod,
 		"style" = STYLE_CENTCOM,

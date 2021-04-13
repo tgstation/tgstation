@@ -397,7 +397,7 @@
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
 				if(!charter_given && rev_mind.current && rev_mind.current.stat == CONSCIOUS)
 					charter_given = TRUE
-					podspawn_path(list(
+					podspawn(list(
 						"target" = get_turf(rev_mind.current),
 						"style" = STYLE_SYNDICATE,
 						"spawn" = /obj/item/station_charter/revolution
