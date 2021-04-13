@@ -13,6 +13,14 @@
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
 
+/obj/item/clothing/gloves/color/yellow/equipped(mob/user, slot)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION)
+
+/obj/item/clothing/gloves/color/yellow/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_CHUNKYFINGERS, GENETIC_MUTATION)
+
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
 	desc = "What is the number one problem facing our station today?"
