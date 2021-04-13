@@ -467,7 +467,7 @@
 /obj/item/clothing/head/helmet/monkey_sentience/proc/disconnect()
 	if(!magnification) //not put on a viable head
 		return
-	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
+	//either used up correctly or taken off before polling finished (punish this by having a chance to gib the monkey?)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 	magnification.dropItemToGround(src)
