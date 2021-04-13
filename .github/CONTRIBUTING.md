@@ -564,7 +564,7 @@ for (var/i in reagents)
 
 * The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
 
-* Do not use icons, or icon_state strings as overlays. Byond (and by nature, our overlay management code) has to convert these to appearances every time they get added or removed from overlays, a costly operation. Instead Use `icon2appearance()` or `icon_state2appearance()`. These are global procs and can be used in static/global variable defines to avoid re-calling them with the same content.
+* Do not use icons, or icon_state strings as overlays. Byond (and by nature, our overlay management code) has to convert these to appearances every time they get added or removed from overlays, a costly operation. Instead, use `icon2appearance()` or `icon_state2appearance()`. These are global procs and can be used in static/global variable defines to avoid re-calling them with the same content.
 
 * Caching things in associated lists that could instead be variables or number indexed lists will use more memory, as associated lists have a 24 bytes per item overhead, and are slower to search compared to static/global variables and lists. Please keep this in mind when designing systems. Its normally better for consumers of such systems to handle their own caching using vars and number indexed lists.
 
