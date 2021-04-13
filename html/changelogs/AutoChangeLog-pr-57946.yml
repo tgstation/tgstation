@@ -1,7 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Teleprods do not remind you to install source when worn on the exosuit storage slot any more."
-  - bugfix: "Pulse rifles when on your back or in exosuit storage slots show up consistently."
-  - bugfix: "Accelerator cannons properly display their charge level when worn and do not become an error sprite when worn n exosuit storage slots."
-  - bugfix: "Double barrel shotguns with alternate skins show up properly when in exosuit storage slots."

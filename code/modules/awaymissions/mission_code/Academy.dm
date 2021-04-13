@@ -370,6 +370,7 @@
 	charge_max = 100
 	clothes_req = 0
 	invocation = "JE VES"
+	school = SCHOOL_CONJURATION
 	invocation_type = INVOCATION_WHISPER
 	range = -1
 	level_max = 0 //cannot be improved

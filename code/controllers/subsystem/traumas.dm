@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(traumas)
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = sortList(list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling", "anime", "insects"))
+						"aliens", "strangers", "birds", "falling", "anime", "insects", "guns"))
 
 	phobia_regexes = list("spiders" = construct_phobia_regex("spiders"),
 		"space" = construct_phobia_regex("space"),
@@ -36,6 +36,7 @@ SUBSYSTEM_DEF(traumas)
 		"anime" = construct_phobia_regex("anime"),
 		"insects" = construct_phobia_regex("insects"),
 		"ocky icky" = construct_phobia_regex("ocky icky"),
+		"guns" = construct_phobia_regex("guns"),
 	)
 
 	phobia_mobs = list("spiders" = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -167,6 +168,12 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/suit/toggle/owlwings, /obj/item/clothing/under/costume/owl, /obj/item/clothing/mask/gas/owl_mask,
 			/obj/item/clothing/under/costume/griffin, /obj/item/clothing/shoes/griffin, /obj/item/clothing/head/griffin,
 			/obj/item/clothing/head/helmet/space/freedom, /obj/item/clothing/suit/space/freedom
+		)),
+
+		"guns" = typecacheof(list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/syringe, /obj/item/gun/chem,
+			/obj/item/gun/blastcannon, /obj/item/gun/grenadelauncher, /obj/machinery/porta_turret, /obj/machinery/power/emitter,
+			/obj/item/ammo_casing, /obj/item/storage/belt/bandolier, /obj/item/storage/belt/holster, /obj/item/ammo_box,
+			/obj/item/mecha_ammo, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic, /obj/item/mecha_parts/mecha_equipment/weapon/energy
 		)),
 
 	"insects" = typecacheof(list(/obj/item/toy/plush/moth, /obj/item/toy/plush/beeplushie, /obj/item/clothing/mask/animal/rat/bee, /obj/item/clothing/suit/hooded/bee_costume, /obj/structure/beebox)),

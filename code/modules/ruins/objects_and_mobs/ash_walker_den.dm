@@ -86,6 +86,7 @@
 	M.real_name = oldname
 	M.underwear = "Nude"
 	M.update_body()
+	M.remove_language(/datum/language/common)
 	oldmind.transfer_to(M)
 	M.mind.grab_ghost()
 	to_chat(M, "<b>You have been pulled back from beyond the grave, with a new body and renewed purpose. Glory to the Necropolis!</b>")

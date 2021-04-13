@@ -2,7 +2,7 @@
 	name = "Ethereal Jaunt"
 	desc = "This spell turns your form ethereal, temporarily making you invisible and able to pass through walls."
 
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 30 SECONDS
 	clothes_req = TRUE
 	invocation = "none"

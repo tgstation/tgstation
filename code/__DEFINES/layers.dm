@@ -21,7 +21,7 @@
 #define GAME_PLANE -4
 #define GAME_PLANE_RENDER_TARGET "GAME_PLANE"
 #define UNDER_FRILL_PLANE -3
-#define UNDER_FRILL_RENDER_TARGET = "UNDER_FRILL_PLANE"
+#define UNDER_FRILL_RENDER_TARGET "UNDER_FRILL_PLANE"
 #define FRILL_PLANE -2
 #define FRILL_PLANE_RENDER_TARGET "FRILL_PLANE"
 #define OVER_FRILL_PLANE -1
@@ -52,6 +52,7 @@
 #define LOW_OBJ_LAYER 2.5
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.54
+#define HIGH_PIPE_LAYER 2.55
 #define HIGH_SIGIL_LAYER 2.56
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
@@ -78,6 +79,7 @@
 #define BELOW_MOB_LAYER 3.7
 #define LYING_MOB_LAYER 3.8
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define
+#define MOB_SHIELD_LAYER 4.01
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
 #define EDGED_TURF_LAYER 4.3
@@ -169,11 +171,10 @@
 #define HUD_RENDER_TARGET "HUD_PLANE"
 #define ABOVE_HUD_PLANE 1100
 #define ABOVE_HUD_RENDER_TARGET "ABOVE_HUD_PLANE"
-///1000 is an unimportant number, it's just to normalize copied layers
-#define RADIAL_LAYER 1000
 
 #define RADIAL_BACKGROUND_LAYER 0
-#define RADIAL_CONTENT_LAYER 1
+///1000 is an unimportant number, it's just to normalize copied layers
+#define RADIAL_CONTENT_LAYER 1000
 
 ///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
 #define SPLASHSCREEN_PLANE 9999

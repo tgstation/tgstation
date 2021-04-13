@@ -24,7 +24,7 @@
 	src.items = items
 	src.should_strip_proc_path = should_strip_proc_path
 
-/datum/element/strippable/Detach(datum/source, force)
+/datum/element/strippable/Detach(datum/source)
 	. = ..()
 
 	UnregisterSignal(source, COMSIG_MOUSEDROP_ONTO)
@@ -74,6 +74,8 @@
 /// This should be used for checking if an item CAN be equipped.
 /// It should not perform the equipping itself.
 /datum/strippable_item/proc/try_equip(atom/source, obj/item/equipping, mob/user)
+	if(SEND_SIGNAL(user, COMSIG_TRY_STRIP, source, equipping) & COMPONENT_CANT_STRIP)
+		return FALSE
 	if (HAS_TRAIT(equipping, TRAIT_NODROP))
 		to_chat(user, "<span class='warning'>You can't put [equipping] on [source], it's stuck to your hand!</span>")
 		return FALSE
@@ -96,6 +98,13 @@
 				"<span class='notice'>[user] tries to put [equipping] on you.</span>",
 				ignored_mobs = user,
 			)
+
+		if(ishuman(source))
+			var/mob/living/carbon/human/victim_human = source
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
 
 	to_chat(user, "<span class='notice'>You try to put [equipping] on [source]...</span>")
 
@@ -121,6 +130,8 @@
 		return FALSE
 
 	if (ismob(source))
+		if(SEND_SIGNAL(user, COMSIG_TRY_STRIP, source, item) & COMPONENT_CANT_STRIP)
+			return FALSE
 		var/mob/mob_source = source
 		if (!item.canStrip(user, mob_source))
 			return FALSE
@@ -145,6 +156,13 @@
 	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
 	item.add_fingerprint(src)
 
+	if(ishuman(source))
+		var/mob/living/carbon/human/victim_human = source
+		if(victim_human.key && !victim_human.client) // AKA braindead
+			if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+				var/list/new_entry = list(list(user.name, "tried unequipping your [item.name]", world.time))
+				LAZYADD(victim_human.afk_thefts, new_entry)
+
 	return TRUE
 
 /// The proc that unequips the item from the source. This should not yield.
@@ -163,7 +181,12 @@
 
 /// Performs an alternative action on this strippable_item.
 /// `has_alternate_action` needs to be TRUE.
+/// Returns FALSE if blocked by signal, TRUE otherwise.
 /datum/strippable_item/proc/alternate_action(atom/source, mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	if(SEND_SIGNAL(user, COMSIG_TRY_ALT_ACTION, source) & COMPONENT_CANT_ALT_ACTION)
+		return FALSE
+	return TRUE
 
 /// Returns whether or not this item should show.
 /datum/strippable_item/proc/should_show(atom/source, mob/user)

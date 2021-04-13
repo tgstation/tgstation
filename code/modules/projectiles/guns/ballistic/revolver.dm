@@ -15,6 +15,12 @@
 	tac_reloads = FALSE
 	var/spin_delay = 10
 	var/recent_spin = 0
+	var/last_fire = 0
+
+/obj/item/gun/ballistic/revolver/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
+	..()
+	last_fire = world.time
+
 
 /obj/item/gun/ballistic/revolver/chamber_round(keep_bullet, spin_cylinder = TRUE, replace_new_round)
 	if(!magazine) //if it mag was qdel'd somehow.
@@ -74,6 +80,10 @@
 	if (current_skin)
 		. += "It can be spun with <b>alt+click</b>"
 
+/obj/item/gun/ballistic/revolver/ignition_effect(atom/A, mob/user)
+	if(last_fire && last_fire + 15 SECONDS > world.time)
+		. = "<span class='notice'>[user] touches the end of [src] to \the [A], using the residual heat to ignite it in a puff of smoke. What a badass.</span>"
+
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper Colt Detective Special"
 	desc = "A classic, if not outdated, law enforcement firearm. Uses .38 Special rounds. \nSome spread rumors that if you loosen the barrel with a wrench, you can \"improve\" it."
@@ -87,7 +97,7 @@
 	can_modify_ammo = TRUE
 	alternative_ammo_misfires = TRUE
 	can_misfire = FALSE
-	misfire_probability = 0 
+	misfire_probability = 0
 	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "detective",

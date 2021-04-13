@@ -31,7 +31,7 @@
 	if(isvehicle(target))
 		RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/check_potion)
 
-/datum/element/ridable/Detach(datum/target, force)
+/datum/element/ridable/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_PARENT_ATTACKBY))
 	return ..()
 

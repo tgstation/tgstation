@@ -43,3 +43,53 @@
 			icon = sect_to_altar.altar_icon
 		if(sect_to_altar.altar_icon_state)
 			icon_state = sect_to_altar.altar_icon_state
+
+/obj/item/ritual_totem
+	name = "ritual totem"
+	desc = "A wooden totem with strange carvings on it."
+	icon_state = "ritual_totem"
+	inhand_icon_state = "sheet-wood"
+	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
+	//made out of a single sheet of wood
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
+	item_flags = NO_PIXEL_RANDOM_DROP
+
+/obj/item/ritual_totem/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, 1, FALSE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire))//one charge of anti_magic
+	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
+
+/obj/item/ritual_totem/proc/block_magic(mob/user, major)
+	if(major)
+		to_chat(user, "<span class='warning'>[src] consumes the magic within itself!</span>")
+
+/obj/item/ritual_totem/proc/expire(mob/user)
+	to_chat(user, "<span class='warning'>[src] quickly decays into rot!</span>")
+	qdel(src)
+	new /obj/effect/decal/cleanable/ash(drop_location())
+
+/obj/item/ritual_totem/can_be_pulled(user, grab_state, force)
+	. = ..()
+	return FALSE //no
+
+/obj/item/ritual_totem/examine(mob/user)
+	. = ..()
+	var/is_holy = user.mind?.holy_role
+	if(is_holy)
+		. += "<span class='notice'>[src] can only be moved by important followers of [GLOB.deity].</span>"
+
+/obj/item/ritual_totem/pickup(mob/taker)
+	var/initial_loc = loc
+	var/holiness = taker.mind?.holy_role
+	var/no_take = FALSE
+	if(holiness == NONE)
+		to_chat(taker, "<span class='warning'>Try as you may, you're seemingly unable to pick [src] up!</span>")
+		no_take = TRUE
+	else if(holiness == HOLY_ROLE_DEACON) //deacons cannot pick them up either
+		no_take = TRUE
+		to_chat(taker, "<span class='warning'>You cannot pick [src] up. It seems you aren't important enough to [GLOB.deity] to do that.</span>")
+	..()
+	if(no_take)
+		taker.dropItemToGround(src)
+		forceMove(initial_loc)

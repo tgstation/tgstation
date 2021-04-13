@@ -563,3 +563,10 @@ RATCAP 64
 
 ## Maximum fine for a citation
 MAXFINE 2000
+
+## Which role is required of playtime to be eligible for Maintenance Drones
+## See code/__DEFINES/preferences.dm for available options, use the string portion without quotes
+#DRONE_REQUIRED_ROLE Silicon
+
+## How many played hours of DRONE_REQUIRED_ROLE required to be a Maintenance Done
+#DRONE_ROLE_PLAYTIME 40

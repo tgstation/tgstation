@@ -15,14 +15,16 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions)
+		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions, pipe_color)
 		add_overlay(cap)
 	icon_state = "passive_vent"
 
 /obj/machinery/atmospherics/components/unary/passive_vent/process_atmos()
-	..()
+	var/turf/location = get_turf(loc)
+	if(isclosedturf(location))
+		return
 
-	var/datum/gas_mixture/external = loc.return_air()
+	var/datum/gas_mixture/external = location.return_air()
 	var/datum/gas_mixture/internal = airs[1]
 
 	if(internal.equalize(external))
