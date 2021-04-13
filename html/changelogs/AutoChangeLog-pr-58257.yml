@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "Allow the pneumatic cannon to be created with the smart pipes fitting"

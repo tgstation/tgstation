@@ -1,9 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes: 
-  - qol: "Space Dragon's gust attack is now tied to right click instead of an ability button"
-  - balance: "Space Dragon has received numerous balance changes, most notably that Space Dragon will stall the shuttle until it loses or completes its objectives"
-  - bugfix: "Fixed numerous bugs with Space Dragon, most notably the rifts not vanishing after Space Dragon's death"
-  - soundadd: "Space Dragon now has a custom roar for dying and winning"
-  - imagedel: "Deleted now unused Space Dragon ability icon"
-  - refactor: "Space Dragon's speed changes are now controlled using movespeed modifiers instead of direct speed adjustments"

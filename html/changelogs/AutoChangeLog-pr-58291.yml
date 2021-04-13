@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Some stuff that applied blurred vision and roatated things on screen wasn't working, let's fix that up shall we?"

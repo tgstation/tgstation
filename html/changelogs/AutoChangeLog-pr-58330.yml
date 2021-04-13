@@ -1,6 +1,0 @@
-author: "Greniza"
-delete-after: True
-changes: 
-  - rscadd: "added non-adjustable mask which allows internals, is sterile, and muzzles a patient or victim, complete with sprites"
-  - imageadd: "replaced standard sterile breathmask in anesthetic closet with above muzzle breathmask"
-  - rscadd: "adds BLOCKS_SPEECH clothing flag and reworked muzzle code and is_muzzled() function be based on flag"

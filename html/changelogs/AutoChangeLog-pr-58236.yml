@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - rscadd: "Added a new config option that makes ID cards picked up by low living hour players automatically flagged with an intern-esque title."
