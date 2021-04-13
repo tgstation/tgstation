@@ -154,7 +154,7 @@
 /obj/machinery/satellite/meteor_shield/process()
 	if(!active)
 		return
-	for(var/obj/effect/meteor/M in GLOB.meteor_list)
+	for(var/obj/projectile/meteor/M in GLOB.meteor_list)
 		if(M.z != z)
 			continue
 		if(get_dist(M,src) > kill_range)

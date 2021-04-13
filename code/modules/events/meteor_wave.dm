@@ -47,7 +47,7 @@
 			kill()
 
 /datum/round_event/meteor_wave/announce(fake)
-	priority_announce("Your station appears to have become the center of gravity in your local section of space. This may result in space debris flying towards your station. Brace for impact!", "Gravitational Anomaly Alert", ANNOUNCER_METEORS)
+	priority_announce("Meteors have been detected on collision course with the station.", "Gravitational Anomaly Alert", ANNOUNCER_METEORS)
 
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))

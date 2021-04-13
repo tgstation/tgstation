@@ -1473,4 +1473,32 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		else //It gets too tedious to use latin prefixes from here.
 			return "[number]-tuple"
 
+/proc/midpoint_circle_algo(x0, y0, radius, z0)
+	var/list/border_turfs = list()
+	var/x = radius
+	var/y = 0
+	var/err = 0
+
+	while (x >= y)
+		border_turfs += locate(x0 + x, y0 + y, z0)
+		border_turfs += locate(x0 + y, y0 + x, z0)
+		border_turfs += locate(x0 - y, y0 + x, z0)
+		border_turfs += locate(x0 - x, y0 + y, z0)
+		border_turfs += locate(x0 - x, y0 - y, z0)
+		border_turfs += locate(x0 - y, y0 - x, z0)
+		border_turfs += locate(x0 + y, y0 - x, z0)
+		border_turfs += locate(x0 + x, y0 - y, z0)
+		if (err <= 0)
+			y += 1
+			err += 2*y + 1
+		if (err > 0)
+			x -= 1
+			err -= 2*x + 1
+	return border_turfs
+
+/turf/proc/test_circle(radius)
+	var/list/border_turfs = midpoint_circle_algo(x, y, radius, z)
+	for(var/turf/T in border_turfs)
+		T.color = rgb(255,0,0)
+
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))

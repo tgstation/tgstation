@@ -294,6 +294,8 @@
 
 /obj/structure/girder/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
+	if(mover.pass_flags & PASSGIRDER)
+		return TRUE
 	if((mover.pass_flags & PASSGRILLE) || istype(mover, /obj/projectile))
 		return prob(girderpasschance)
 
