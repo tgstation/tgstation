@@ -1,3 +1,4 @@
+#define MAX_ICON_CACHE_AMOUNT 1000
 SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER
@@ -71,6 +72,9 @@ SUBSYSTEM_DEF(overlays)
 		count = 0
 
 /proc/iconstate2appearance(icon, iconstate)
+	if (istype(icon, /icon))
+		var/icon/I = icon
+		icon = UNLINT(I.icon) //undocumented var that contains the actual byond icon file reference
 	var/static/image/stringbro = new()
 	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches
 	var/list/cached_icon = icon_states_cache[icon]
@@ -83,11 +87,17 @@ SUBSYSTEM_DEF(overlays)
 	if (!cached_icon) //not using the macro to save an associated lookup
 		cached_icon = list()
 		icon_states_cache[icon] = cached_icon
+		if (length(icon_states_cache) > MAX_ICON_CACHE_AMOUNT)
+			icon_states_cache.Cut(1, MAX_ICON_CACHE_AMOUNT*0.1)
+			
 	var/cached_appearance = stringbro.appearance
 	cached_icon["[iconstate]"] = cached_appearance
 	return cached_appearance
 
 /proc/icon2appearance(icon)
+	if (istype(icon, /icon))
+		var/icon/I = icon
+		icon = UNLINT(I.icon) //undocumented var that contains the actual byond icon file reference
 	var/static/image/iconbro = new()
 	var/list/icon_cache = SSoverlays.overlay_icon_cache
 	. = icon_cache[icon]
@@ -95,6 +105,8 @@ SUBSYSTEM_DEF(overlays)
 		iconbro.icon = icon
 		. = iconbro.appearance
 		icon_cache[icon] = .
+		if (length(icon_cache) > MAX_ICON_CACHE_AMOUNT)
+			icon_cache.Cut(1, MAX_ICON_CACHE_AMOUNT*0.1)
 
 /atom/proc/build_appearance_list(old_overlays)
 	var/static/image/appearance_bro = new()
