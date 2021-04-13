@@ -387,17 +387,17 @@
 /datum/micro_organism/cell_line/netherworld
 	desc = "Aberrant residue"
 	required_reagents = list(//theme here: very odd requirements
-							/datum/reagent/water/hollowwater,//geyser reagent, so plentiful when found
+							/datum/reagent/water/hollowwater, //geyser reagent, so plentiful when found
 							/datum/reagent/consumable/ethanol/wizz_fizz, //EZ bartender drink, like brainless
 							/datum/reagent/yuck) //since the other two are easy to make tons of, this is kind of a limiter
 
-	supplementary_reagents = list( //all of these are just geyser stuff, rated by their rarity
-							/datum/reagent/wittel = 10, //stupid rare
-							/datum/reagent/medicine/omnizine/protozine = 5,
+	supplementary_reagents = list(//all of these chems either are or used to be in the geyser chem pool
+							/datum/reagent/wittel = 3,
+							/datum/reagent/medicine/omnizine/protozine = 3,
 							/datum/reagent/plasma_oxide = 3,
-							/datum/reagent/clf3 = 1)//since this is also chemistry it's worth near nothing
+							/datum/reagent/clf3 = 1) //clf3 can be made just using chem dispenser chems, so it's not worth much
 
-	suppressive_reagents = list(//generics you would regularly put in a vat kill abberant residue
+	suppressive_reagents = list(//generics you would regularly put in a vat kill aberrant residue
 						/datum/reagent/consumable/nutriment/peptides = -6,
 						/datum/reagent/consumable/nutriment/protein = -4,
 						/datum/reagent/consumable/nutriment = -3,
