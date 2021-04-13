@@ -114,13 +114,21 @@
 
 /obj/item/reverse_bear_trap/proc/reset()
 	ticking = FALSE
+	update_overlays()
 	REMOVE_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 	soundloop.stop()
 	soundloop2.stop()
 	STOP_PROCESSING(SSprocessing, src)
 
+/obj/item/reverse_bear_trap/update_overlays()
+	. = ..()
+	if(ticking != TRUE):
+		return
+	. += "rbt_ticking"
+
 /obj/item/reverse_bear_trap/proc/arm() //hulen
 	ticking = TRUE
+	update_overlays()
 	escape_chance = initial(escape_chance) //we keep these vars until re-arm, for tracking purposes
 	time_left = initial(time_left)
 	ADD_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
