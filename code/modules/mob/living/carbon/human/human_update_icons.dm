@@ -528,19 +528,29 @@ generate/load female uniform sprites matching all previously decided variables
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 
-	//Handle held offsets
-	var/mob/M = loc
-	if(istype(M))
-		var/list/L = get_held_offsets()
-		if(L)
-			standing.pixel_x += L["x"] //+= because of center()ing
-			standing.pixel_y += L["y"]
+	//Worn offsets
+	var/list/L = get_worn_offsets(isinhands)
+	standing.pixel_x += L[1]
+	standing.pixel_y += L[2]
 
 	standing.alpha = alpha
 	standing.color = color
 
 	return standing
 
+/// Returns offsets used for equipped item overlays in list(px_offset,py_offset) form.
+/obj/item/proc/get_worn_offsets(isinhands)
+	. = list(0,0) //(px,py)
+	if(isinhands)
+		//Handle held offsets
+		var/mob/M = loc
+		if(istype(M))
+			var/list/L = get_held_offsets()
+			if(L)
+				.[1] = L["x"]
+				.[2] = L["y"]
+	else
+		.[2] = worn_y_offset
 
 /obj/item/proc/get_held_offsets()
 	var/list/L
