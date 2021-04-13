@@ -472,7 +472,6 @@
 	//either used up correctly or taken off before polling finished (punish this by having a chance to gib the monkey?)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-	magnification.dropItemToGround(src)
 	ADD_TRAIT(magnification, TRAIT_PRIMITIVE, SPECIES_TRAIT) //We removed it, now that they're back to being dumb, add the trait again.
 	if(!polling)//put on a viable head, but taken off after polling finished.
 		if(magnification.client)
