@@ -224,6 +224,8 @@
 	latetoggle()
 
 /obj/machinery/door/firedoor/close()
+	if(HAS_TRAIT(loc, TRAIT_FIREDOOR_STOP))
+		return
 	. = ..()
 	latetoggle()
 
