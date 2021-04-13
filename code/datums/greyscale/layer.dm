@@ -71,4 +71,4 @@
 		var/list/debug_data = reference_config.GenerateDebug(colors)
 		render_steps += debug_data["steps"]
 		return debug_data["icon"]
-	return reference_config.Generate(colors)
+	return reference_config.Generate(colors.Join())

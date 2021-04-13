@@ -746,14 +746,7 @@
 /// Checks if this atom uses the GAS system and if so updates the icon
 /atom/proc/update_greyscale()
 	if(greyscale_config && greyscale_colors)
-		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors_list())
-
-/// Gets the list form of the greyscale colors
-/atom/proc/greyscale_colors_list()
-	. = list()
-	var/list/raw_rgb = splittext(greyscale_colors, "#")
-	for(var/i in 2 to length(raw_rgb))
-		. += "#[raw_rgb[i]]"
+		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
 
 /**
  * An atom we are buckled or is contained within us has tried to move
