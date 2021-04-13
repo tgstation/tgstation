@@ -186,7 +186,7 @@
 	rate = 0.15
 
 /datum/plant_gene/reagent/liquidelectricity
-	name = "Liquid Electricity"
+	name = "Enriched Liquid Electricity"
 	reagent_id = /datum/reagent/consumable/liquidelectricity/enriched
 	rate = 0.1
 
