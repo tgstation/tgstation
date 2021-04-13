@@ -134,6 +134,7 @@
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, /obj/item/tank))
+		. = ..()
 		return FALSE
 	if(machine_stat & BROKEN)
 		return FALSE
