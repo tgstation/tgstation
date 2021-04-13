@@ -3,7 +3,7 @@
 	desc = "To stop that awful noise."
 	icon_state = "muzzle"
 	inhand_icon_state = "blindfold"
-	clothing_flags = BLOCKS_SPEECH // I'd recommend a double-check on this flag before it goes live.
+	clothing_flags = BLOCKS_SPEECH
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.9
@@ -28,7 +28,7 @@
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
 
 /obj/item/clothing/mask/breathmuzzle/attack_paw(mob/user, list/modifiers)
-	/// The breathmuzzle is similar enough to a regular muzzle that similar rules would apply to both.
+	// The breathmuzzle is similar enough to a regular muzzle that similar rules would apply to both.
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
 		if(src == carbon_user.wear_mask)
