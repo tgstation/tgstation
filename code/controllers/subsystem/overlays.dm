@@ -1,5 +1,3 @@
-#define MAX_ICON_CACHE_AMOUNT 1000
-#define ICON_CACHE_PURGE_DELTA 0.1
 SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
 	flags = SS_TICKER
@@ -9,12 +7,8 @@ SUBSYSTEM_DEF(overlays)
 
 	var/list/queue
 	var/list/stats
-	var/list/overlay_icon_state_caches
-	var/list/overlay_icon_cache
 
 /datum/controller/subsystem/overlays/PreInit()
-	overlay_icon_state_caches = list()
-	overlay_icon_cache = list()
 	queue = list()
 	stats = list()
 
@@ -72,46 +66,17 @@ SUBSYSTEM_DEF(overlays)
 		queue.Cut(1,count+1)
 		count = 0
 
-//this is its own proc for profiling reasons
-/proc/normalize_icon(icon/icon)
-	return fcopy_rsc(icon)
 
 /proc/iconstate2appearance(icon, iconstate)
-	if (istype(icon, /icon))
-		var/icon/obnoxiouslyDescriptiveAndObviousVariableNameIndicatingThatThisIsATypeCastToIcon = icon //this typecast is no longer needed
-		icon = normalize_icon(obnoxiouslyDescriptiveAndObviousVariableNameIndicatingThatThisIsATypeCastToIcon)
 	var/static/image/stringbro = new()
-	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches
-	var/list/cached_icon = icon_states_cache[icon]
-	if (cached_icon)
-		var/cached_appearance = cached_icon["[iconstate]"]
-		if (cached_appearance)
-			return cached_appearance
 	stringbro.icon = icon
 	stringbro.icon_state = iconstate
-	if (!cached_icon) //not using the macro to save an associated lookup
-		cached_icon = list()
-		icon_states_cache[icon] = cached_icon
-		if (length(icon_states_cache) > MAX_ICON_CACHE_AMOUNT)
-			icon_states_cache.Cut(1, MAX_ICON_CACHE_AMOUNT*ICON_CACHE_PURGE_DELTA)
-			
-	var/cached_appearance = stringbro.appearance
-	cached_icon["[iconstate]"] = cached_appearance
-	return cached_appearance
-
+	return stringbro.appearance
+	
 /proc/icon2appearance(icon)
-	if (istype(icon, /icon))
-		var/icon/obnoxiouslyDescriptiveAndObviousVariableNameIndicatingThatThisIsATypeCastToIcon = icon //this typecast is no longer needed
-		icon = normalize_icon(obnoxiouslyDescriptiveAndObviousVariableNameIndicatingThatThisIsATypeCastToIcon)
 	var/static/image/iconbro = new()
-	var/list/icon_cache = SSoverlays.overlay_icon_cache
-	. = icon_cache[icon]
-	if (!.)
-		iconbro.icon = icon
-		. = iconbro.appearance
-		icon_cache[icon] = .
-		if (length(icon_cache) > MAX_ICON_CACHE_AMOUNT)
-			icon_cache.Cut(1, MAX_ICON_CACHE_AMOUNT*ICON_CACHE_PURGE_DELTA)
+	iconbro.icon = icon
+	return iconbro.appearance
 
 /atom/proc/build_appearance_list(old_overlays)
 	var/static/image/appearance_bro = new()
@@ -224,6 +189,3 @@ SUBSYSTEM_DEF(overlays)
 			overlays |= cached_other
 	else if(cut_old)
 		cut_overlays()
-
-#undef MAX_ICON_CACHE_AMOUNT
-#undef ICON_CACHE_PURGE_DELTA
