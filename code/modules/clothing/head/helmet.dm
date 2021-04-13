@@ -462,6 +462,7 @@
 
 /obj/item/clothing/head/helmet/monkey_sentience/Destroy()
 	if(magnification)
+		ADD_TRAIT(magnification, TRAIT_PRIMITIVE, SPECIES_TRAIT)
 		magnification = null
 	return ..()
 
