@@ -393,7 +393,7 @@
 	desc = "A fragile, circuitry embedded helmet for boosting the intelligence of a monkey to a higher level. You see several warning labels..."
 	icon_state = "monkeymind"
 	inhand_icon_state = "monkeymind"
-	strip_delay = 120
+	strip_delay = 100
 	var/mob/living/carbon/human/magnification = null ///if the helmet is on a valid target (just works like a normal helmet if not (cargo please stop))
 	var/polling = FALSE///if the helmet is currently polling for targets (special code for removal)
 	var/light_colors = 1 ///which icon state color this is (red, blue, yellow)
@@ -487,7 +487,6 @@
 				if(4) //genetic mass susceptibility (gib)
 					magnification.gib()
 	magnification = null
-
 
 /obj/item/clothing/head/helmet/monkey_sentience/dropped(mob/user)
 	. = ..()
