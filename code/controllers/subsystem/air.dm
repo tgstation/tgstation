@@ -30,6 +30,9 @@ SUBSYSTEM_DEF(air)
 	var/list/pipe_init_dirs_cache = list()
 
 	//atmos singletons
+	var/list/sorted_reactions = list()
+	var/list/all_reactions = list()
+	var/list/blocking_reactions = list()
 	var/list/gas_reactions = list()
 	var/list/atmos_gen
 	var/list/planetary = list() //Lets cache static planetary mixes
@@ -76,13 +79,24 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/Initialize(timeofday)
 	map_loading = FALSE
-	gas_reactions = init_gas_reactions()
+	var/list/reaction_output = init_gas_reactions()
+	blocking_reactions = reaction_output[1]
+	gas_reactions = reaction_output[2]
+	all_reactions = reaction_output[3]
+	sorted_reactions = reaction_output[4]
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
 	setup_turf_visuals()
 	return ..()
 
+/datum/controller/subsystem/air/proc/print_priority()
+	var/output_string = ""
+	for(var/gas_id in gas_reactions)
+		for(var/datum/gas_reaction/reaction in gas_reactions[gas_id])
+			output_string += "[gas_id] [reaction.id]: [reaction.priority]\n"
+	message_admins(output_string)
+	return output_string
 
 /datum/controller/subsystem/air/fire(resumed = FALSE)
 	var/timer = TICK_USAGE_REAL
