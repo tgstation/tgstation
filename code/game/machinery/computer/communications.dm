@@ -202,6 +202,8 @@
 			var/datum/map_template/shuttle/shuttle = locate(params["shuttle"]) in shuttles
 			if (!istype(shuttle))
 				return
+			if (!can_purchase_this_shuttle(shuttle))
+				return
 			if (!shuttle.prerequisites_met())
 				to_chat(usr, "<span class='alert'>You have not met the requirements for purchasing this shuttle.</span>")
 				return
@@ -462,8 +464,23 @@
 
 				for (var/shuttle_id in SSmapping.shuttle_templates)
 					var/datum/map_template/shuttle/shuttle_template = SSmapping.shuttle_templates[shuttle_id]
-					if (!shuttle_template.can_be_bought || shuttle_template.credit_cost == INFINITY)
+
+					if (shuttle_template.credit_cost == INFINITY)
 						continue
+
+					if (!can_purchase_this_shuttle(shuttle_template))
+						continue
+
+					var/has_access = FALSE
+
+					for (var/purchase_access in shuttle_template.who_can_purchase)
+						if (purchase_access in authorize_access)
+							has_access = TRUE
+							break
+
+					if (!has_access)
+						continue
+
 					shuttles += list(list(
 						"name" = shuttle_template.name,
 						"description" = shuttle_template.description,
@@ -510,8 +527,19 @@
 /obj/machinery/computer/communications/proc/can_buy_shuttles(mob/user)
 	if (!SSmapping.config.allow_custom_shuttles)
 		return FALSE
-	if (!authenticated_as_non_silicon_captain(user))
+	if (issilicon(user))
 		return FALSE
+
+	var/has_access = FALSE
+
+	for (var/access in SSshuttle.has_purchase_shuttle_access)
+		if (access in authorize_access)
+			has_access = TRUE
+			break
+
+	if (!has_access)
+		return FALSE
+
 	if (SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
 		return "The shuttle is already in transit."
 	if (SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_PURCHASED)
@@ -519,6 +547,18 @@
 	if (SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
 		return "Due to unforseen circumstances, shuttle purchasing is no longer available."
 	return TRUE
+
+/// Returns whether we are authorized to buy this specific shuttle.
+/// Does not handle prerequisite checks, as those should still *show*.
+/obj/machinery/computer/communications/proc/can_purchase_this_shuttle(datum/map_template/shuttle/shuttle_template)
+	if (isnull(shuttle_template.who_can_purchase))
+		return FALSE
+
+	for (var/access in authorize_access)
+		if (access in shuttle_template.who_can_purchase)
+			return TRUE
+
+	return FALSE
 
 /obj/machinery/computer/communications/proc/can_send_messages_to_other_sectors(mob/user)
 	if (!authenticated_as_non_silicon_captain(user))
