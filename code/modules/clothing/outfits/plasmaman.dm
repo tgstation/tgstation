@@ -88,7 +88,7 @@
 	name = "Engineering Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/engineering
-	gloves = /obj/item/clothing/gloves/color/yellow
+	gloves = /obj/item/clothing/gloves/color/plasmaman/engineer
 	head = /obj/item/clothing/head/helmet/space/plasmaman/engineering
 
 /datum/outfit/plasmaman/atmospherics
@@ -202,7 +202,7 @@
 	name = "Chief Engineer Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/chief_engineer
-	gloves = /obj/item/clothing/gloves/color/yellow
+	gloves = /obj/item/clothing/gloves/color/plasmaman/chief_engineer
 	head = /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
 
 /datum/outfit/plasmaman/chief_medical_officer
