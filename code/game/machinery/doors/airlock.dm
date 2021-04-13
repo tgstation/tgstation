@@ -142,11 +142,14 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
-	// Click on the floor to close airlocks
-	RegisterSignal(get_turf(src), COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
-
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, .proc/on_break)
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, .proc/ntnet_receive)
+
+	// Click on the floor to close airlocks
+	var/static/list/connections = list(
+		COMSIG_ATOM_ATTACK_HAND = .proc/on_attack_hand
+	)
+	AddElement(/datum/element/connect_loc, src, connections)
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -745,8 +748,7 @@
 /obj/machinery/door/airlock/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/machinery/door/airlock/proc/on_attack_hand(mob/user, list/modifiers)
-	SIGNAL_HANDLER
+/obj/machinery/door/airlock/proc/on_attack_hand(atom/source, mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
 /obj/machinery/door/airlock/attack_hand(mob/user, list/modifiers)
