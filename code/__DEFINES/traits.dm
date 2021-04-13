@@ -594,6 +594,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Self-explainatory.
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_COMPONENT_TRAIT "mood_component"
+#define DRONE_SHY_TRAIT "drone_shy"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

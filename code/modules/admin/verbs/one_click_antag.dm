@@ -481,7 +481,7 @@
 	while(length(candidates) && teamsize)
 		chosen_candidate = pick(candidates)
 		candidates -= chosen_candidate
-		nerd = new /mob/living/simple_animal/drone(spawnpoint)
+		nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
 		nerd.key = chosen_candidate.key
 		log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
 		teamsize--
