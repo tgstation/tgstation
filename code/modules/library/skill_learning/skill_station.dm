@@ -1,5 +1,5 @@
-#define SKILLCHIP_IMPLANT_TIME 1 MINUTES
-#define SKILLCHIP_REMOVAL_TIME 30 SECONDS
+#define SKILLCHIP_IMPLANT_TIME 15 SECONDS
+#define SKILLCHIP_REMOVAL_TIME 15 SECONDS
 
 /obj/machinery/skill_station
 	name = "\improper Skillsoft station"

@@ -12,7 +12,7 @@
 	name = "Area Conversion"
 	desc = "This spell instantly converts a small area around you."
 
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 5 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
@@ -32,7 +32,7 @@
 	name = "Summon Cult Floor"
 	desc = "This spell constructs a cult floor."
 
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 2 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
@@ -48,7 +48,7 @@
 	name = "Summon Cult Wall"
 	desc = "This spell constructs a cult wall."
 
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 10 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
@@ -65,7 +65,7 @@
 	name = "Greater Construction"
 	desc = "This spell constructs a reinforced metal wall."
 
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 30 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
@@ -78,7 +78,7 @@
 	name = "Summon Soulstone"
 	desc = "This spell reaches into Nar'Sie's realm, summoning one of the legendary fragments across time and space."
 
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 4 MINUTES
 	clothes_req = FALSE
 	invocation = "none"
@@ -106,7 +106,7 @@
 /obj/effect/proc_holder/spell/targeted/forcewall/cult
 	name = "Shield"
 	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 40 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
@@ -122,7 +122,7 @@
 	name = "Phase Shift"
 	desc = "This spell allows you to pass through walls."
 
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 25 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
@@ -151,7 +151,7 @@
 	name = "Lesser Magic Missile"
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 40 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
@@ -169,7 +169,7 @@
 	name = "Paralysing Smoke"
 	desc = "This spell spawns a cloud of paralysing smoke."
 
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 20 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
@@ -189,7 +189,7 @@
 	charge_max = 75 SECONDS
 	range = 5
 	stat_allowed = FALSE
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
@@ -249,7 +249,7 @@
 	charge_max = 1 MINUTES
 	range = 7
 	stat_allowed = FALSE
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"

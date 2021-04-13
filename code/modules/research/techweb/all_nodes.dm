@@ -304,6 +304,14 @@
 	design_ids = list("exodrone_console","exoscanner_console","exoscanner","exodrone_launcher")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/dex_robotics
+	id = "dex_robotics"
+	display_name = "Dexterous Robotics Research"
+	description = "The fine art of opposable thumbs."
+	prereq_ids = list("adv_engi", "adv_robotics", "biotech")
+	design_ids = list("maint_drone")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 /datum/techweb_node/neural_programming
 	id = "neural_programming"
 	display_name = "Neural Programming"
@@ -393,7 +401,7 @@
 /datum/techweb_node/computer_hardware_basic //Modular computers are shitty and nearly useless so until someone makes them actually useful this can be easy to get.
 	id = "computer_hardware_basic"
 	display_name = "Computer Hardware"
-	description = "How computer hardware are made."
+	description = "How computer hardware is made."
 	prereq_ids = list("comptech")
 	design_ids = list("hdd_basic", "hdd_advanced", "hdd_super", "hdd_cluster", "ssd_small", "ssd_micro", "netcard_basic", "netcard_advanced", "netcard_wired",
 	"portadrive_basic", "portadrive_advanced", "portadrive_super", "cardslot", "aislot", "miniprinter", "APClink", "bat_control", "bat_normal", "bat_advanced",

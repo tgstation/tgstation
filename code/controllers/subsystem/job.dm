@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(job)
 
 	/// A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.
 	var/list/station_jobs
+	/// A list of all Head of Staff jobs.
+	var/list/head_of_staff_jobs
 	/// A list of additional jobs that have various icons associated with them including sechud and card trims.
 	var/list/additional_jobs_with_icons
 	/// A list of jobs associed with Centcom and should use the standard NT Centcom icons.
@@ -135,6 +137,14 @@ SUBSYSTEM_DEF(job)
 	JobDebug("AR has failed, Player: [player], Rank: [rank]")
 	return FALSE
 
+/datum/controller/subsystem/job/proc/FreeRole(rank)
+	if(!rank)
+		return
+	JobDebug("Freeing role: [rank]")
+	var/datum/job/job = GetJob(rank)
+	if(!job)
+		return FALSE
+	job.current_positions = max(0, job.current_positions - 1)
 
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level, flag)
 	JobDebug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
@@ -771,6 +781,8 @@ SUBSYSTEM_DEF(job)
 		"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer", \
 		"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychologist", \
 		"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
+
+	head_of_staff_jobs = list("Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Head of Security", "Captain")
 
 	additional_jobs_with_icons = list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", \
 		"Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando", "Security Officer (Engineering)", \

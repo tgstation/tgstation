@@ -872,12 +872,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	popup.open(FALSE)
 	onclose(user, "capturekeypress", src)
 
-/datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
+/datum/preferences/proc/SetChoices(mob/user, limit = 15, widthPerColumn = 295, height = 620)
 	if(!SSjob)
 		return
 
 	//limit - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
-	//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
 	//widthPerColumn - Screen's width for every column.
 	//height - Screen's height.
 
@@ -903,11 +902,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		for(var/datum/job/job in sortList(SSjob.occupations, /proc/cmp_job_display_asc))
 
 			index += 1
-			if((index >= limit) || (job.title in splitJobs))
+			if(index >= limit)
 				width += widthPerColumn
 				if((index < limit) && (lastJob != null))
-					//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
-					//the last job's selection color. Creating a rather nice effect.
+					// Fills the rest of the cells with the last job's selection color.
 					for(var/i = 0, i < (limit - index), i += 1)
 						HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 				HTML += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"

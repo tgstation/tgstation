@@ -115,7 +115,6 @@
 	name = "atmos envirogloves"
 	icon_state = "atmosplasma"
 	inhand_icon_state = "atmosplasma"
-	siemens_coefficient = 0
 
 /obj/item/clothing/gloves/color/plasmaman/explorer
 	name = "explorer envirogloves"

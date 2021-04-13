@@ -423,7 +423,7 @@
 	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/iron = 4,
 				/obj/item/stack/package_wrap = 8,
-				/obj/item/pipe = 2)
+				/obj/item/pipe/quaternary = 2)
 	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
