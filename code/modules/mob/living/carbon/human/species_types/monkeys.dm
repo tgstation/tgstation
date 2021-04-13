@@ -35,6 +35,7 @@
 	gib_anim = "gibbed-m"
 
 	payday_modifier = 1.5
+	var/can_gorrilize = TRUE
 
 
 /datum/species/monkey/random_name(gender,unique,lastname)
@@ -93,7 +94,7 @@
 
 /datum/species/monkey/handle_mutations_and_radiation(mob/living/carbon/human/source, delta_time, times_fired)
 	. = ..()
-	if(source.radiation > RAD_MOB_MUTATE * 2 && DT_PROB(0.25, delta_time))
+	if(can_gorrilize && source.radiation > RAD_MOB_MUTATE * 2 && DT_PROB(0.25, delta_time))
 		source.gorillize()
 		return
 

@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// Default color. If mutant colors are disabled, this is the color that will be used by that race.
 	var/default_color = "#FFF"
 
-	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
+	///Whether or not the race has sexual characteristics (biological genders).
 	var/sexes = TRUE
 
 	///Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.
