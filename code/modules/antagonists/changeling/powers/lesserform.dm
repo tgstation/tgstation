@@ -14,6 +14,6 @@
 	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
 	..()
 
-	user.monkeyize()
+	user.primalize()
 
 	return TRUE

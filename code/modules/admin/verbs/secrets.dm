@@ -452,7 +452,7 @@
 			log_admin("[key_name_admin(holder)] made everyone into monkeys.")
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
-				INVOKE_ASYNC(H, /mob/living/carbon.proc/monkeyize)
+				INVOKE_ASYNC(H, /mob/living/carbon.proc/primalize)
 		if("traitor_all")
 			if(!is_funmin)
 				return

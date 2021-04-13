@@ -169,11 +169,11 @@
 	REMOVE_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
 
 
-//Monified turns you into a monkey.
+//Primal turns you into a lesser form of your species, if your species has that.
 /datum/mutation/human/race
-	name = "Monkified"
-	desc = "A strange genome, believing to be what differentiates monkeys from humans."
-	text_gain_indication = "You feel unusually monkey-like."
+	name = "Primal"
+	desc = "A strange genome, holding a \"genetic memory\" of the primal ancestors of this species. In case of activation, a backward evolution process will trigger."
+	text_gain_indication = "You feel unusually primal."
 	text_lose_indication = "You feel like your old self."
 	quality = NEGATIVE
 	time_coeff = 2
@@ -185,7 +185,7 @@
 		return
 	if(!ismonkey(owner))
 		original_species = owner.dna.species.type
-	. = owner.monkeyize()
+	. = owner.primalize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
 	if(owner && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))

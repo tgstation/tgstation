@@ -1,6 +1,6 @@
 #define TRANSFORMATION_DURATION 22
 
-/mob/living/carbon/proc/monkeyize()
+/mob/living/carbon/proc/primalize()
 	if (notransform || transformation_timer)
 		return
 
@@ -16,20 +16,21 @@
 
 	new /obj/effect/temp_visual/monkeyify(loc)
 
-	transformation_timer = addtimer(CALLBACK(src, .proc/finish_monkeyize), TRANSFORMATION_DURATION, TIMER_UNIQUE)
+	transformation_timer = addtimer(CALLBACK(src, .proc/finish_primalize), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
-/mob/living/carbon/proc/finish_monkeyize()
+/mob/living/carbon/proc/finish_primalize()
+	var/datum/species/new_species = dna.species.primal_variant
 	transformation_timer = null
-	to_chat(src, "<B>You are now a monkey.</B>")
+	to_chat(src, "<B>You are now a [initial(new_species.name)].</B>")
 	notransform = FALSE
 	icon = initial(icon)
 	invisibility = 0
-	set_species(/datum/species/monkey)
+	set_species(new_species)
 	uncuff()
 	return src
 
 //////////////////////////           Humanize               //////////////////////////////
-//Could probably be merged with monkeyize but other transformations got their own procs, too
+//Could probably be merged with primalize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(species = /datum/species/human)
 	if (notransform || transformation_timer)

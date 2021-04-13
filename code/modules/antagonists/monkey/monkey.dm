@@ -101,9 +101,9 @@
 		switch(alert(admin, "Monkeyize?", "Monkeyize", "Yes", "No"))
 			if("Yes")
 				if(admin == H)
-					admin = H.monkeyize()
+					admin = H.primalize()
 				else
-					H.monkeyize()
+					H.primalize()
 			if("No")
 				//nothing
 			else

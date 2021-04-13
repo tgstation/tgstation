@@ -2,12 +2,12 @@
 	name = "Kobold"
 	id = "kobold"
 	say_mod = "shrills"
-	mutant_organs = list(/obj/item/organ/tail/lizard)
-	mutant_bodyparts = list("tail_lizard" = "Smooth")
+	mutant_organs = list(/obj/item/organ/tail/lizard/kobold)
+	mutant_bodyparts = list("tail_kobold" = "Kobold")
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	knife_butcher_results = list(/obj/item/food/meat/slab/human/mutant/lizard = 5, /obj/item/stack/sheet/animalhide/lizard = 1)
-	species_traits = list(MUTCOLORS, HAS_FLESH,HAS_BONE,NO_UNDERWEAR,LIPS,NOEYESPRITES,NOBLOODOVERLAY,NOTRANSSTING, NOAUGMENTS)
+	species_traits = list(MUTCOLORS,HAS_FLESH,HAS_BONE,NO_UNDERWEAR,LIPS,NOEYESPRITES,NOBLOODOVERLAY,NOTRANSSTING, NOAUGMENTS)
 	disliked_food = GRAIN | DAIRY | CLOTH
 	liked_food = GROSS | MEAT
 	limbs_id = "kobold"
@@ -26,8 +26,8 @@
 
 /datum/species/monkey/kobold/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	if(!H.dna.features["tail_lizard"] || H.dna.features["tail_monkey"] == "None")
-		H.dna.features["tail_lizard"] = "Smooth"
+	if(!H.dna.features["tail_kobold"] || H.dna.features["tail_kobold"] == "None")
+		H.dna.features["tail_kobold"] = "Kobold"
 		handle_mutant_bodyparts(H)
 
 /datum/species/monkey/kobold/check_roundstart_eligible()

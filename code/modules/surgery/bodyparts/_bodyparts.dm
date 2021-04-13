@@ -54,7 +54,8 @@
 	var/mutation_color = ""
 	var/no_update = 0
 
-	var/animal_origin = null //for nonhuman bodypart (e.g. monkey)
+	///for nonhuman bodypart (e.g. monkey)
+	var/animal_origin = null
 	var/dismemberable = 1 //whether it can be dismembered with a weapon.
 
 	var/px_x = 0

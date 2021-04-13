@@ -159,6 +159,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///What anim to use for gibbing
 	var/gib_anim = "gibbed-h"
 
+	///when primalized, what species should this transform into?
+	var/primal_variant = /datum/species/monkey
+
 
 	//Do NOT remove by setting to null. use OR make a RESPECTIVE TRAIT (removing stomach? add the NOSTOMACH trait to your species)
 	//why does it work this way? because traits also disable the downsides of not having an organ, removing organs but not having the trait will make your species die
@@ -791,6 +794,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_monkey"
 
+	if("tail_kobold" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "tail_kobold"
 
 	if(mutant_bodyparts["waggingtail_human"])
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -909,13 +915,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.caps_list[H.dna.features["caps"]]
 				if("tail_monkey")
 					S = GLOB.tails_list_monkey[H.dna.features["tail_monkey"]]
+				if("tail_kobold")
+					S = GLOB.tails_list_kobold[H.dna.features["tail_kobold"]]
 			if(!S || S.icon_state == "none")
 				continue
 
 			var/mutable_appearance/accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
-			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "tail_monkey")
+			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "tail_monkey" || bodypart == "tail_kobold")
 				bodypart = "tail"
 			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human")
 				bodypart = "waggingtail"

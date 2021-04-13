@@ -766,9 +766,9 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
 			return
 
-		log_admin("[key_name(usr)] attempting to monkeyize [key_name(H)].")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] attempting to monkeyize [key_name_admin(H)].</span>")
-		H.monkeyize()
+		log_admin("[key_name(usr)] attempting to primalize [key_name(H)].")
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] attempting to primalize [key_name_admin(H)].</span>")
+		H.primalize()
 
 	else if(href_list["humanone"])
 		if(!check_rights(R_SPAWN))

@@ -255,7 +255,7 @@
 		if(5)
 			//Monkeying
 			T.visible_message("<span class='userdanger'>[user] transforms into a monkey!</span>")
-			user.monkeyize()
+			user.primalize()
 		if(6)
 			//Cut speed
 			T.visible_message("<span class='userdanger'>[user] starts moving slower!</span>")
