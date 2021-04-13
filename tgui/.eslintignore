@@ -4,3 +4,4 @@
 /**/*.chunk.*
 /**/*.hot-update.*
 /packages/inferno/**
+/packages/html/**
