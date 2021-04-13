@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 ///////////////////////////////
 
 /proc/spawn_meteors(number = 10, list/meteortypes)
-	for(var/i = 0; i < number; i++)
+	for(var/i in 1 to number)
 		spawn_meteor(meteortypes)
 
 /proc/spawn_meteor(list/meteortypes)
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		var/startSide = pick(GLOB.cardinals)
 		var/startZ = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 		pickedstart = spaceDebrisStartLoc(startSide, startZ)
-		pickedgoal = spaceDebrisFinishLoc(startSide, startZ)
+		pickedgoal = SSmapping.get_station_center()
 		max_i--
 		if(max_i<=0)
 			return
@@ -197,6 +197,10 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	set waitfor = FALSE
 	if(chasing)
 		walk_towards(src, chasing, delay)
+		if(get_turf(src) == target)
+			make_debris()
+			meteor_effect()
+			qdel(src)
 
 /obj/effect/meteor/proc/meteor_effect()
 	if(heavy)
