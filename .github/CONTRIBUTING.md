@@ -564,6 +564,10 @@ for (var/i in reagents)
 
 * The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
 
+* Do not use `/icon`s, or icon_state strings as overlays, use `icon2appearance()` or `icon_state2appearance()`. These are global procs and can be used in variable defines to avoid re-calling them with the same content.
+
+* Caching things in associated lists that could instead be variables or number indexed lists will use more memory, as associated lists have a 24 bytes per item overhead, Please keep this in mind when designing systems. Its normally better for consumers of such systems to handle their own caching using vars and number indexed lists 
+
 #### Enforced not enforced
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
 
