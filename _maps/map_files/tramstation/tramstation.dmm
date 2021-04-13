@@ -21872,11 +21872,6 @@
 /area/maintenance/tram/mid)
 "efY" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/box/lights/mixed,
 /obj/item/stack/cable_coil,
 /obj/item/stock_parts/cell/emproof,
@@ -23863,7 +23858,6 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/t_scanner,
 /obj/item/multitool,
 /obj/effect/turf_decal/trimline/white/filled/line,

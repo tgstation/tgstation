@@ -10,7 +10,6 @@
 	new /obj/item/clothing/under/rank/engineering/chief_engineer/skirt(src)
 	new /obj/item/clothing/head/hardhat/white(src)
 	new /obj/item/clothing/head/hardhat/weldhat/white(src)
-	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/tank/jetpack/suit(src)
 	new /obj/item/cartridge/ce(src)
@@ -37,7 +36,6 @@
 /obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
 	..()
 	var/static/items_inside = list(
-		/obj/item/clothing/gloves/color/yellow = 2,
 		/obj/item/inducer = 2,
 		/obj/item/storage/toolbox/electrical = 3,
 		/obj/item/electronics/apc = 3,

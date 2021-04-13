@@ -20260,9 +20260,6 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/iron{
 	dir = 1
 	},
@@ -69482,7 +69479,6 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/t_scanner,
 /obj/item/multitool,
 /turf/open/floor/iron/dark,

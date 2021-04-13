@@ -18492,7 +18492,6 @@
 /obj/item/wrench,
 /obj/item/weldingtool,
 /obj/item/clothing/head/welding,
-/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "cpv" = (
@@ -44016,7 +44015,6 @@
 /area/cargo/qm)
 "fFv" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/yellow,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -80227,7 +80225,6 @@
 /area/medical/virology)
 "phR" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/airlock_painter,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -87430,7 +87427,6 @@
 /area/hallway/secondary/entry)
 "rbb" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/toolbox/electrical,
 /obj/machinery/light{
 	dir = 8
@@ -101666,7 +101662,6 @@
 /area/service/bar/atrium)
 "uNO" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/toolbox/electrical,
 /obj/item/multitool,
 /obj/machinery/light{

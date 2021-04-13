@@ -115,8 +115,6 @@
 		new /obj/item/stack/cable_coil(src)
 	if(prob(20))
 		new /obj/item/multitool(src)
-	if(prob(5))
-		new /obj/item/clothing/gloves/color/yellow(src)
 	if(prob(40))
 		new /obj/item/clothing/head/hardhat(src)
 

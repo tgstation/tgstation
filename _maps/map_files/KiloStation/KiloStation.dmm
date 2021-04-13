@@ -69751,9 +69751,6 @@
 /area/engineering/main)
 "lNt" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
@@ -87771,7 +87768,6 @@
 /area/medical/chemistry)
 "vHK" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/electronics/apc,
 /obj/item/electronics/airlock{
 	pixel_y = 6

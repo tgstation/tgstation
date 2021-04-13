@@ -34661,12 +34661,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
 /obj/structure/cable,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/stock_parts/cell/emproof{
 	pixel_x = -4;
 	pixel_y = -1
@@ -39127,7 +39122,6 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/t_scanner,
 /obj/item/multitool,
 /turf/open/floor/plating,
