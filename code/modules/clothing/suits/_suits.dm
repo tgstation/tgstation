@@ -11,7 +11,7 @@
 	var/togglename = null
 	var/suittoggled = FALSE
 	limb_integrity = 0 // disabled for most exo-suits
-	equip_time = 1.5 SECONDS
+	equip_delay_self = 1.5 SECONDS
 
 
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)

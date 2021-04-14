@@ -5,7 +5,7 @@
 	slot_flags = ITEM_SLOT_MASK
 	strip_delay = 40
 	equip_delay_other = 40
-	equip_time = 0.6 SECONDS
+	equip_delay_self = 0.6 SECONDS
 	var/modifies_speech = FALSE
 	var/mask_adjusted = FALSE
 	var/adjusted_flags = null

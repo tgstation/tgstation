@@ -332,13 +332,6 @@
 		else if(!disable_warning)
 			to_chat(src, "<span class='warning'>You are unable to equip that!</span>")
 		return FALSE
-
-	if(istype(item, /obj/item/clothing) && !initial)
-		var/obj/item/clothing/piece = item
-		if(piece.slot_flags & slot) //we are trying to wear the clothes
-			if(!do_after(src, piece.equip_time, src))
-				return FALSE
-
 	equip_to_slot(item, slot, initial, redraw_mob) //This proc should not ever fail.
 	return TRUE
 
