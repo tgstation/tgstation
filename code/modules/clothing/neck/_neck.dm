@@ -5,6 +5,7 @@
 	slot_flags = ITEM_SLOT_NECK
 	strip_delay = 40
 	equip_delay_other = 40
+	equip_time = 0.5 SECONDS
 
 /obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
 	. = list()

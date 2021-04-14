@@ -8,6 +8,7 @@
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
 	dynamic_hair_suffix = "+generic"
+	equip_time = 0.5 SECONDS
 
 /obj/item/clothing/head/Initialize()
 	. = ..()

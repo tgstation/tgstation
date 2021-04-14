@@ -62,6 +62,9 @@
 	/// A lazily initiated "food" version of the clothing for moths
 	var/obj/item/food/clothing/moth_snack
 
+	///How long does it take to wear the item
+	var/equip_time = 1 SECONDS
+
 /obj/item/clothing/Initialize()
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
 		actions_types += /datum/action/item_action/toggle_voice_box

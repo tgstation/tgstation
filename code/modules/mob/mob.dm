@@ -323,16 +323,23 @@
  *
  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
  */
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE)
-	if(!istype(W))
+/mob/proc/equip_to_slot_if_possible(obj/item/item, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE)
+	if(!istype(item))
 		return FALSE
-	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
+	if(!item.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
 		if(qdel_on_fail)
-			qdel(W)
+			qdel(item)
 		else if(!disable_warning)
 			to_chat(src, "<span class='warning'>You are unable to equip that!</span>")
 		return FALSE
-	equip_to_slot(W, slot, initial, redraw_mob) //This proc should not ever fail.
+
+	if(istype(item, /obj/item/clothing) && !initial)
+		var/obj/item/clothing/piece = item
+		if(piece.slot_flags & slot) //we are trying to wear the clothes
+			if(!do_after(src, piece.equip_time, src))
+				return FALSE
+
+	equip_to_slot(item, slot, initial, redraw_mob) //This proc should not ever fail.
 	return TRUE
 
 /**
