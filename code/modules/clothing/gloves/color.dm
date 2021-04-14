@@ -14,6 +14,11 @@
 	cut_type = /obj/item/clothing/gloves/cut
 	clothing_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_CLUMSY)
 
+/obj/item/clothing/gloves/color/yellow/chief_engineer
+	desc = "These gloves provide protection against electric shock. They are so thin you can barely feel them."
+	name = "advanced insulated gloves"
+	clothing_traits = list()
+
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
 	desc = "What is the number one problem facing our station today?"
