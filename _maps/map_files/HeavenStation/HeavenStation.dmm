@@ -13528,10 +13528,6 @@
 /area/hallway/primary/starboard)
 "fGY" = (
 /obj/structure/table,
-/obj/item/storage/box/bodybags{
-	pixel_x = 3;
-	pixel_y = 2
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -13542,6 +13538,11 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/item/reagent_containers/glass/bottle/multiver{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/glass/bottle/epinephrine,
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/plasteel/white,
 /area/hallway/primary/port)
 "fHh" = (
@@ -23374,10 +23375,11 @@
 /obj/structure/table/glass,
 /obj/item/storage/box/beakers{
 	pixel_x = 2;
-	pixel_y = 7
+	pixel_y = 9
 	},
 /obj/item/storage/box/syringes{
-	pixel_y = 5
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -32530,6 +32532,10 @@
 /area/medical/medbay/central)
 "nuY" = (
 /obj/structure/table,
+/obj/item/storage/box/bodybags{
+	pixel_x = -4;
+	pixel_y = 12
+	},
 /obj/item/storage/firstaid/regular{
 	pixel_x = 4;
 	pixel_y = 4
@@ -33397,7 +33403,7 @@
 /obj/structure/cable,
 /obj/structure/table/glass,
 /obj/item/reagent_containers/glass/bottle/multiver{
-	pixel_x = 6
+	pixel_x = 8
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/syringe,
@@ -33414,16 +33420,21 @@
 	name = "Pharmacy Desk";
 	req_access_txt = "5"
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
-	pixel_x = -5
-	},
-/obj/item/reagent_containers/glass/bottle/morphine,
 /obj/item/reagent_containers/glass/bottle/toxin{
-	pixel_x = 5;
+	pixel_x = 8;
 	pixel_y = 4
 	},
+/obj/item/reagent_containers/glass/bottle/multiver{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/bottle/morphine{
+	pixel_x = 2;
+	pixel_y = -5
+	},
 /obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 8
+	pixel_x = -5;
+	pixel_y = -5
 	},
 /obj/item/reagent_containers/syringe/epinephrine,
 /obj/effect/turf_decal/tile/yellow{
@@ -33685,10 +33696,18 @@
 /area/library)
 "nXc" = (
 /obj/structure/table/glass,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/healthanalyzer,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/science,
+/obj/item/clothing/gloves/color/latex{
+	pixel_y = 7
+	},
+/obj/item/healthanalyzer{
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/science{
+	pixel_y = -4
+	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
