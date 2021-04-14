@@ -17,6 +17,8 @@
 /obj/item/clothing/gloves/color/yellow/chief_engineer
 	desc = "These gloves provide protection against electric shock. They are so thin you can barely feel them."
 	name = "advanced insulated gloves"
+	icon_state = "ce_insuls"
+	inhand_icon_state = "lgloves"
 	clothing_traits = list()
 
 /obj/item/toy/sprayoncan
