@@ -52,7 +52,7 @@
 	desc = "Used to control the Small Freighter."
 	circuit = /obj/item/circuitboard/computer/caravan/trade1
 	shuttleId = "caravantrade1"
-	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland;caravantrade1_custom;caravantrade1_ambush"
+	possible_destinations = "whiteship_away;derelict_tradepost;whiteship_z4;whiteship_lavaland;caravantrade1_custom;caravantrade1_ambush"
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/caravan/Initialize()
 	. = ..()

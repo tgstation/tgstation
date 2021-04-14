@@ -116,10 +116,6 @@
 
 //Ruin of Derelict Oupost
 
-/area/ruin/space/has_grav/derelictoutpost
-	name = "Derelict Outpost"
-	icon_state = "green"
-
 /area/ruin/space/has_grav/derelictoutpost/cargostorage
 	name = "Derelict Outpost Cargo Storage"
 	icon_state = "storage"
@@ -131,10 +127,6 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage
 	name = "Derelict Outpost Power Storage"
 	icon_state = "engine_smes"
-
-/area/ruin/space/has_grav/derelictoutpost/dockedship
-	name = "Derelict Outpost Docked Ship"
-	icon_state = "red"
 
 //Ruin of turretedoutpost
 
