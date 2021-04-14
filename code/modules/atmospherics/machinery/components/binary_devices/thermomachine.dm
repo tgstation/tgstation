@@ -105,6 +105,8 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/examine(mob/user)
 	. = ..()
+	if(obj_flags & EMAGGED)
+		. += "<span class='notice'>Something seems wrong with [src]'s thermal safeties.</span>"
 	. += "<span class='notice'>The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).</span>"
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Efficiency <b>[(heat_capacity/7500)*100]%</b>.</span>"
@@ -304,6 +306,29 @@
 		to_chat(user, "<span class='notice'>You change the circuitboard to layer [piping_layer].</span>")
 		update_appearance()
 
+/obj/machinery/atmospherics/components/binary/thermomachine/emag_act(mob/user)
+	. = ..()
+	if(!(obj_flags & EMAGGED))
+		if(!do_after(user, 1 SECONDS, src))
+			return
+		var/datum/effect_system/spark_spread/sparks = new
+		sparks.set_up(5, 0, src)
+		sparks.attach(src)
+		sparks.start()
+		obj_flags |= EMAGGED
+		user.visible_message("<span class='warning'>You emag [src], overwriting thermal safety restrictions.</span>")
+		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal safety restrictions.")
+
+/obj/machinery/atmospherics/components/binary/thermomachine/emp_act()
+	. = ..()
+	if(!(obj_flags & EMAGGED))
+		var/datum/effect_system/spark_spread/sparks = new
+		sparks.set_up(5, 0, src)
+		sparks.attach(src)
+		sparks.start()
+		obj_flags |= EMAGGED
+		safeties = FALSE
+
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/replace_tank(mob/living/user, obj/item/tank/new_tank)
 	if(!user)
 		return FALSE
@@ -371,6 +396,8 @@
 	data["skipping_work"] = skipping_work
 	data["auto_thermal_regulator"] = auto_thermal_regulator
 	data["safeties"] = safeties
+	var/hacked = (obj_flags & EMAGGED) ? TRUE : FALSE
+	data["hacked"] = hacked
 	return data
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_act(action, params)

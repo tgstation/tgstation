@@ -52,6 +52,7 @@ export const ThermoMachine = (props, context) => {
               <Button
                 content={data.safeties ? 'Safeties ON' : 'Safeties OFF'}
                 color={data.safeties ? "green" : "red"}
+                disabled={!data.hacked}
                 onClick={() => act('safeties')} />
             </LabeledList.Item>
             <LabeledList.Item label="Use tank gas">
