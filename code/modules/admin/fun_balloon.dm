@@ -32,7 +32,20 @@
 	playsound(get_turf(src), pop_sound_effect, 50, TRUE, -1)
 	qdel(src)
 
+<<<<<<< HEAD
 // ----------- Sentience Balloon
+=======
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
+/obj/effect/fun_balloon/attack_ghost(mob/user)
+	if(!user.client || !user.client.holder || popped)
+		return
+	var/confirmation = tgui_alert(usr, "Pop [src]?","Fun Balloon",list("Yes","No"))
+	if(confirmation == "Yes" && !popped)
+		popped = TRUE
+		effect()
+		pop()
+
+>>>>>>> 4e621772b2 (Replace alert usage with tgui_alert)
 /obj/effect/fun_balloon/sentience
 	name = "sentience fun balloon"
 	desc = "When this pops, things are gonna get more aware around here."
