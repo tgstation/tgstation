@@ -22,8 +22,6 @@
 	tiled_dirt = FALSE
 	///icons for radial menu
 	var/static/list/lighttile_designs
-	///used for light floors that cycle colours
-	var/cycle = FALSE
 
 /turf/open/floor/light/setup_broken_states()
 	return list("light_broken")
@@ -53,58 +51,38 @@
 
 /turf/open/floor/light/Initialize()
 	. = ..()
-	update_appearance()
+	update_icon()
 	if(!length(lighttile_designs))
 		populate_lighttile_designs()
 
 /turf/open/floor/light/break_tile()
 	..()
 	state = pick(LIGHTFLOOR_FLICKER, LIGHTFLOOR_BREAKING, LIGHTFLOOR_BROKEN)/// pick a broken state
-	update_appearance()
+	update_icon()
 
-/turf/open/floor/light/update_appearance(updates)
-	. = ..()
-	if(!on)
-		set_light(0)
-		return
-
-	switch(state)
-		if(LIGHTFLOOR_FINE)
-			set_light_color(currentcolor)
-			set_light(5)
-			light_range = 3
-		if(LIGHTFLOOR_FLICKER)
-			set_light_color(currentcolor)
-			set_light(3)
-			light_range = 2
-		if(LIGHTFLOOR_BREAKING)
-			set_light(1)
-		if(LIGHTFLOOR_BROKEN)
-			set_light(0)
-
-/turf/open/floor/light/update_icon_state()
-	if(!on)
-		icon_state = "light_off"
-		return ..()
-
-	switch(state)
-		if(LIGHTFLOOR_FINE)
-			if(cycle)
-				if(istype(src, /turf/open/floor/light/colour_cycle/dancefloor_a))
-					icon_state = "light_on-dancefloor_A"
-				else if(istype(src, /turf/open/floor/light/colour_cycle/dancefloor_b))
-					icon_state = "light_on-dancefloor_B"
-				else
-					icon_state = "light_on-cycle_all"
-			else
+/turf/open/floor/light/update_icon()
+	..()
+	if(on)
+		switch(state)
+			if(LIGHTFLOOR_FINE)
 				icon_state = "light_on-[LAZYFIND(coloredlights, currentcolor)]"
-		if(LIGHTFLOOR_FLICKER)
-			icon_state = "light_on_flicker-[LAZYFIND(coloredlights, currentcolor)]"
-		if(LIGHTFLOOR_BREAKING)
-			icon_state = "light_on_broken"
-		if(LIGHTFLOOR_BROKEN)
-			icon_state = "light_off"
-	return ..()
+				set_light_color(currentcolor)
+				set_light(5)
+				set_light_range(3)
+			if(LIGHTFLOOR_FLICKER)
+				icon_state = "light_on_flicker-[LAZYFIND(coloredlights, currentcolor)]"
+				set_light_color(currentcolor)
+				set_light(3)
+				set_light_range(2)
+			if(LIGHTFLOOR_BREAKING)
+				icon_state = "light_on_broken"
+				set_light(1)
+			if(LIGHTFLOOR_BROKEN)
+				icon_state = "light_off"
+				set_light(0)
+	else
+		set_light(0)
+		icon_state = "light_off"
 
 /turf/open/floor/light/ChangeTurf(path, new_baseturf, flags)
 	set_light(0)
@@ -112,10 +90,10 @@
 
 /turf/open/floor/light/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(!can_modify_colour && !cycle)
+	if(!can_modify_colour)
 		return
 	on = !on
-	update_appearance()
+	update_icon()
 
 /turf/open/floor/light/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -127,7 +105,7 @@
 	if(!choice)
 		return FALSE
 	currentcolor = choice
-	update_appearance()
+	update_icon()
 
 /turf/open/floor/light/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -140,7 +118,7 @@
 		if(state && user.temporarilyRemoveItemFromInventory(C))
 			qdel(C)
 			state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
-			update_appearance()
+			update_icon()
 			to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
 		else
 			to_chat(user, "<span class='notice'>The light bulb seems fine, no need to replace it.</span>")
@@ -155,24 +133,29 @@
 	if(prob(50))
 		state++
 	currentcolor = pick(coloredlights)
-	update_appearance()
+	update_icon()
 
 //Cycles through all of the colours
 /turf/open/floor/light/colour_cycle
-	name = "dancefloor"
-	desc = "Funky floor."
-	icon_state = "light_on-cycle_all"
+	icon_state = "cycle_all"
 	light_color = LIGHT_COLOR_SLIME_LAMP
 	can_modify_colour = FALSE
-	cycle = TRUE
 
 //Two different "dancefloor" types so that you can have a checkered pattern
 // (also has a longer delay than colour_cycle between cycling colours)
 /turf/open/floor/light/colour_cycle/dancefloor_a
+	name = "dancefloor"
+	desc = "Funky floor."
 	icon_state = "light_on-dancefloor_A"
+	light_color =LIGHT_COLOR_SLIME_LAMP
+	can_modify_colour = FALSE
 
 /turf/open/floor/light/colour_cycle/dancefloor_b
+	name = "dancefloor"
+	desc = "Funky floor."
 	icon_state = "light_on-dancefloor_B"
+	light_color = LIGHT_COLOR_SLIME_LAMP
+	can_modify_colour = FALSE
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu

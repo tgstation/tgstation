@@ -7,7 +7,7 @@
 
 
 /datum/component/riding
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	var/last_move_diagonal = FALSE
 	///tick delay between movements, lower = faster, higher = slower

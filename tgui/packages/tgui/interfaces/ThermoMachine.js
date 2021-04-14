@@ -1,28 +1,16 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, Modal, NumberInput, Section } from '../components';
+import { AnimatedNumber, Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 export const ThermoMachine = (props, context) => {
   const { act, data } = useBackend(context);
-  const pressure_error = !!data.skipping_work && (
-    <Modal>
-      <Box
-        style={{ margin: 'auto' }}
-        width="200px"
-        textAlign="center"
-        minHeight="39px">
-        {"No enviromental pressure or ports not connected/with no gas"}
-      </Box>
-    </Modal>
-  );
   return (
     <Window
       width={300}
-      height={350}>
+      height={250}>
       <Window.Content>
         <Section title="Status">
-          {pressure_error}
           <LabeledList>
             <LabeledList.Item label="Temperature">
               <AnimatedNumber
@@ -48,33 +36,10 @@ export const ThermoMachine = (props, context) => {
               onClick={() => act('power')} />
           )}>
           <LabeledList>
-            <LabeledList.Item label="Use tank gas">
+            <LabeledList.Item label="Setting">
               <Button
-                content={data.tank_gas ? 'Push gas' : 'Empty'}
-                selected={data.tank_gas}
-                disabled={!data.tank_gas}
-                onClick={() => act('pumping')} />
-            </LabeledList.Item>
-            <LabeledList.Item label="Eject tank gas">
-              <Button
-                content={data.holding ? 'Eject tank' : 'Empty'}
-                disabled={!data.holding}
-                onClick={() => act('eject')} />
-            </LabeledList.Item>
-            <LabeledList.Item label="Use enviromental heat">
-              <Button
-                content={data.use_env_heat ? 'On' : 'Off'}
-                selected={data.use_env_heat}
-                onClick={() => act('use_env_heat')} />
-            </LabeledList.Item>
-            <LabeledList.Item label="Thermal setting">
-              <Button
-                content={data.auto_thermal_regulator ? 'Auto' : 'Off'}
-                selected={data.auto_thermal_regulator}
-                onClick={() => act('auto_thermal_regulator')} />
-              <Button
+                icon={data.cooling ? 'cooling' : 'heating'}
                 content={data.cooling ? 'Cooling' : 'Heating'}
-                disabled={data.auto_thermal_regulator}
                 selected={data.cooling}
                 onClick={() => act('cooling')} />
             </LabeledList.Item>

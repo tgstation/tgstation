@@ -10,7 +10,6 @@
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
-#define MEDIUM_RANGE_SOUND_EXTRARANGE -5
 ///default extra range for sounds considered to be quieter
 #define SHORT_RANGE_SOUND_EXTRARANGE -9
 ///The range deducted from sound range for things that are considered silent / sneaky
@@ -99,7 +98,7 @@
 #define ANNOUNCER_ALIENS "announcer_aliens"
 #define ANNOUNCER_ANIMES "announcer_animes"
 #define ANNOUNCER_GRANOMALIES "announcer_granomalies"
-#define ANNOUNCER_INTERCEPT "announcer_intercept"
+#define ANNOUNCER_INTERCEPT "announcer_animes"
 #define ANNOUNCER_IONSTORM "announcer_ionstorm"
 #define ANNOUNCER_METEORS "announcer_meteors"
 #define ANNOUNCER_OUTBREAK5 "announcer_outbreak5"
@@ -111,23 +110,3 @@
 #define ANNOUNCER_SHUTTLEDOCK "announcer_shuttledock"
 #define ANNOUNCER_SHUTTLERECALLED "announcer_shuttlerecalled"
 #define ANNOUNCER_SPANOMALIES "announcer_spanomalies"
-
-/// Global list of all of our announcer keys.
-GLOBAL_LIST_INIT(announcer_keys, list(
-	ANNOUNCER_AIMALF,
-	ANNOUNCER_ALIENS,
-	ANNOUNCER_ANIMES,
-	ANNOUNCER_GRANOMALIES,
-	ANNOUNCER_INTERCEPT,
-	ANNOUNCER_IONSTORM,
-	ANNOUNCER_METEORS,
-	ANNOUNCER_OUTBREAK5,
-	ANNOUNCER_OUTBREAK7,
-	ANNOUNCER_POWEROFF,
-	ANNOUNCER_POWERON,
-	ANNOUNCER_RADIATION,
-	ANNOUNCER_SHUTTLECALLED,
-	ANNOUNCER_SHUTTLEDOCK,
-	ANNOUNCER_SHUTTLERECALLED,
-	ANNOUNCER_SPANOMALIES,
-))

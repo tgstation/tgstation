@@ -1,8 +1,6 @@
 /datum/food_processor_process
 	/// What this recipe takes
 	var/input
-	/// Subtypes of what the recipe takes that it can't actually take.
-	var/list/blacklist
 	/// What this recipe creates
 	var/output
 	/// The amount of time this recipe takes.
@@ -17,19 +15,10 @@
 /datum/food_processor_process/meat
 	input = /obj/item/food/meat/slab
 	output = /obj/item/food/raw_meatball
-	blacklist = list(/obj/item/food/meat/slab/human,
-		/obj/item/food/meat/slab/corgi,
-		/obj/item/food/meat/slab/xeno,
-		/obj/item/food/meat/slab/bear,
-		/obj/item/food/meat/slab/chicken)
 	multiplier = 3
 
 /datum/food_processor_process/cutlet
 	input = /obj/item/food/meat/cutlet/plain
-	blacklist = list(/obj/item/food/meat/cutlet/plain/human,
-		/obj/item/food/meat/cutlet/xeno,
-		/obj/item/food/meat/cutlet/bear,
-		/obj/item/food/meat/cutlet/chicken)
 	output = /obj/item/food/raw_meatball
 
 /datum/food_processor_process/meat/human
@@ -83,7 +72,6 @@
 
 /datum/food_processor_process/potato
 	input = /obj/item/food/grown/potato
-	blacklist = list(/obj/item/food/grown/potato/sweet, /obj/item/food/grown/potato/wedges)
 	output = /obj/item/food/tatortot
 
 /datum/food_processor_process/carrot

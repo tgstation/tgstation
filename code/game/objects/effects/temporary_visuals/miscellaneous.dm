@@ -98,24 +98,18 @@
 
 /obj/effect/temp_visual/dir_setting/wraith
 	name = "shadow"
-	icon = 'icons/mob/cult.dmi'
-	icon_state = "phase_shift2_cult"
-	duration = 0.6 SECONDS
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "phase_shift2"
+	duration = 6
 
 /obj/effect/temp_visual/dir_setting/wraith/angelic
-	icon_state = "phase_shift2_holy"
-
-/obj/effect/temp_visual/dir_setting/wraith/mystic
-	icon_state = "phase_shift2_wizard"
+	icon_state = "phase_shift2_angelic"
 
 /obj/effect/temp_visual/dir_setting/wraith/out
-	icon_state = "phase_shift_cult"
+	icon_state = "phase_shift"
 
 /obj/effect/temp_visual/dir_setting/wraith/out/angelic
-	icon_state = "phase_shift_holy"
-
-/obj/effect/temp_visual/dir_setting/wraith/out/mystic
-	icon_state = "phase_shift_wizard"
+	icon_state = "phase_shift_angelic"
 
 /obj/effect/temp_visual/dir_setting/tailsweep
 	icon_state = "tailsweep"
@@ -312,7 +306,7 @@
 
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
 	duration = 4
@@ -364,10 +358,6 @@
 
 /obj/effect/temp_visual/impact_effect/green_laser
 	icon_state = "impact_laser_green"
-	duration = 4
-
-/obj/effect/temp_visual/impact_effect/yellow_laser
-	icon_state = "impact_laser_yellow"
 	duration = 4
 
 /obj/effect/temp_visual/impact_effect/purple_laser
@@ -490,26 +480,22 @@
 	status = rcd_status
 	delay = rcd_delay
 	if (status == RCD_DECONSTRUCT)
-		addtimer(CALLBACK(src, /atom/.proc/update_appearance), 1.1 SECONDS)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 11)
 		delay -= 11
 		icon_state = "rcd_end_reverse"
 	else
-		update_appearance()
+		update_icon()
 
 /obj/effect/constructing_effect/update_icon_state()
 	icon_state = "rcd"
-	if(delay < 10)
+	if (delay < 10)
 		icon_state += "_shortest"
-		return ..()
-	if (delay < 20)
+	else if (delay < 20)
 		icon_state += "_shorter"
-		return ..()
-	if (delay < 37)
+	else if (delay < 37)
 		icon_state += "_short"
-		return ..()
-	if(status == RCD_DECONSTRUCT)
+	if (status == RCD_DECONSTRUCT)
 		icon_state += "_reverse"
-	return ..()
 
 /obj/effect/constructing_effect/proc/end_animation()
 	if (status == RCD_DECONSTRUCT)

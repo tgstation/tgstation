@@ -15,8 +15,10 @@
 
 
 /obj/item/implantcase/update_icon_state()
-	icon_state = "implantcase-[imp ? imp.implant_color : 0]"
-	return ..()
+	if(imp)
+		icon_state = "implantcase-[imp.implant_color]"
+	else
+		icon_state = "implantcase-0"
 
 
 /obj/item/implantcase/attackby(obj/item/W, mob/user, params)
@@ -41,9 +43,9 @@
 			I.imp.forceMove(src)
 			imp = I.imp
 			I.imp = null
-			update_appearance()
+			update_icon()
 			reagents = imp.reagents
-			I.update_appearance()
+			I.update_icon()
 		else
 			if(imp)
 				if(I.imp)
@@ -52,8 +54,8 @@
 				I.imp = imp
 				imp = null
 				reagents = null
-				update_appearance()
-			I.update_appearance()
+				update_icon()
+			I.update_icon()
 
 	else
 		return ..()
@@ -62,7 +64,7 @@
 	. = ..()
 	if(imp_type)
 		imp = new imp_type(src)
-	update_appearance()
+	update_icon()
 	if(imp)
 		reagents = imp.reagents
 

@@ -109,7 +109,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/highlander/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/claymore/highlander/Destroy()
@@ -124,7 +124,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
-		ADD_TRAIT(H, TRAIT_NOBLEED, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
+		ADD_TRAIT(H, TRAIT_NOBLEED, HIGHLANDER) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)
@@ -488,7 +488,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "angelplasm"
 
 /obj/item/ectoplasm/mystic
-	icon_state = "mysticplasm"
+	icon_state = "revenantEctoplasm"
 
 
 /obj/item/mounted_chainsaw
@@ -543,7 +543,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/statuebust/Initialize()
 	. = ..()
 	AddElement(/datum/element/art, impressiveness)
-	AddElement(/datum/element/beauty, 1000)
+	AddComponent(/datum/component/beauty, 1000)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
@@ -732,14 +732,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
-			if(!HAS_TRAIT(user, TRAIT_PACIFISM))
-				new /obj/effect/decal/cleanable/insectguts(target.drop_location())
-				to_chat(user, "<span class='warning'>You easily splat [target].</span>")
-				if(isliving(target))
-					var/mob/living/bug = target
-					bug.gib()
-				else
-					qdel(target)
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
+			to_chat(user, "<span class='warning'>You easily splat the [target].</span>")
+			if(istype(target, /mob/living/))
+				var/mob/living/bug = target
+				bug.death(1)
+			else
+				qdel(target)
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
@@ -788,7 +787,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 //HF blade
 /obj/item/vibro_weapon
 	icon_state = "hfrequency0"
-	base_icon_state = "hfrequency"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "vibro sword"
@@ -814,7 +812,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/vibro_weapon/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 20, 105)
-	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="hfrequency1")
 
 /// triggered on wield of two handed item
 /obj/item/vibro_weapon/proc/on_wield(obj/item/source, mob/user)
@@ -829,8 +827,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	wielded = FALSE
 
 /obj/item/vibro_weapon/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
+	icon_state = "hfrequency0"
 
 /obj/item/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)

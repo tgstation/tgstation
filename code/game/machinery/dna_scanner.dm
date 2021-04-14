@@ -3,7 +3,6 @@
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "scanner"
-	base_icon_state = "scanner"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
@@ -37,21 +36,20 @@
 /obj/machinery/dna_scannernew/update_icon_state()
 	//no power or maintenance
 	if(machine_stat & (NOPOWER|BROKEN))
-		icon_state = "[base_icon_state][state_open ? "_open" : null]_unpowered"
-		return ..()
+		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"
+		return
 
 	if((machine_stat & MAINT) || panel_open)
-		icon_state = "[base_icon_state][state_open ? "_open" : null]_maintenance"
-		return ..()
+		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_maintenance"
+		return
 
 	//running and someone in there
 	if(occupant)
-		icon_state = "[base_icon_state]_occupied"
-		return ..()
+		icon_state = initial(icon_state)+ "_occupied"
+		return
 
 	//running
-	icon_state = "[base_icon_state][state_open ? "_open" : null]"
-	return ..()
+	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user)
 	if(panel_open)
@@ -127,7 +125,7 @@
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
 
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
-		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
+		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
 	if(default_pry_open(I))

@@ -321,10 +321,6 @@
 	name = "Bounty Pad (Computer Board)"
 	build_path = /obj/machinery/computer/piratepad_control/civilian
 
-/obj/item/circuitboard/computer/tram_controls
-	name = "Tram Controls (Computer Board)"
-	build_path = /obj/machinery/computer/tram_controls
-
 //Medical
 
 /obj/item/circuitboard/computer/crew
@@ -463,11 +459,6 @@
 
 //Service
 
-/obj/item/circuitboard/computer/chef_order
-	name = "Produce Orders Console (Computer Board)"
-	icon_state = "supply"
-	build_path = /obj/machinery/computer/chef_order
-
 //Supply
 
 /obj/item/circuitboard/computer/cargo
@@ -546,11 +537,3 @@
 /obj/item/circuitboard/computer/mining_shuttle/common
 	name = "Lavaland Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/mining/common
-
-/obj/item/circuitboard/computer/exoscanner_console
-	name = "Scanner Array Control Console (Computer Board)"
-	build_path = /obj/machinery/computer/exoscanner_control
-
-/obj/item/circuitboard/computer/exodrone_console
-	name = "Exploration odrone control console (Computer Board)"
-	build_path = /obj/machinery/computer/exodrone_control_console

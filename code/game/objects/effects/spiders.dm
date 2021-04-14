@@ -105,16 +105,6 @@
 		notify_ghosts("[src] is ready to hatch!", null, enter_link="<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source=src, action=NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPIDER)
 		ghost_ready = TRUE
 
-/obj/structure/spider/eggcluster/Topic(href, href_list)
-	. = ..()
-	if(.)
-		return
-	if(href_list["activate"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.ManualFollow(src)
-			attack_ghost(ghost)
-
 /obj/structure/spider/eggcluster/attack_ghost(mob/user)
 	. = ..()
 	if(ghost_ready)
@@ -131,17 +121,12 @@
 	var/list/spider_list = list()
 	var/list/display_spiders = list()
 	for(var/choice in potentialspawns)
-		var/mob/living/simple_animal/hostile/poison/giant_spider/spider = choice
+		var/mob/living/simple_animal/spider = choice
 		spider_list[initial(spider.name)] = choice
-
-		var/datum/radial_menu_choice/option = new
-		option.image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
-		option.info = "<span class='boldnotice'>[initial(spider.menu_description)]</span>"
-
-		display_spiders[initial(spider.name)] = option
-
+		var/image/spider_image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
+		display_spiders += list(initial(spider.name) = spider_image)
 	sortList(display_spiders)
-	var/chosen_spider = show_radial_menu(user, src, display_spiders, radius = 38)
+	var/chosen_spider = show_radial_menu(user, src, display_spiders, radius = 38, require_near = TRUE)
 	chosen_spider = spider_list[chosen_spider]
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
 		return FALSE

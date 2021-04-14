@@ -115,6 +115,7 @@
 	name = "atmos envirogloves"
 	icon_state = "atmosplasma"
 	inhand_icon_state = "atmosplasma"
+	siemens_coefficient = 0
 
 /obj/item/clothing/gloves/color/plasmaman/explorer
 	name = "explorer envirogloves"
@@ -162,6 +163,11 @@
 	icon_state = "ceplasma"
 	inhand_icon_state = "ceplasma"
 	siemens_coefficient = 0
+
+/obj/item/clothing/gloves/color/plasmaman/chief_medical_officer
+	name = "chief medical officer's envirogloves"
+	icon_state = "cmoplasma"
+	inhand_icon_state = "cmoplasma"
 
 /obj/item/clothing/gloves/color/plasmaman/research_director
 	name = "research director's envirogloves"

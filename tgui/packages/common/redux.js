@@ -108,15 +108,15 @@ export const combineReducers = reducersObj => {
  * returns the action type, allowing it to be used in reducer logic that
  * is looking for that action type.
  *
- * @param {string} type The action type to use for created actions.
- * @param {any} prepare (optional) a method that takes any number of arguments
+ * @param type The action type to use for created actions.
+ * @param prepare (optional) a method that takes any number of arguments
  * and returns { payload } or { payload, meta }. If this is given, the
  * resulting action creator will pass it's arguments to this method to
  * calculate payload & meta.
  *
  * @public
  */
-export const createAction = (type, prepare = null) => {
+export const createAction = (type, prepare) => {
   const actionCreator = (...args) => {
     if (!prepare) {
       return { type, payload: args[0] };

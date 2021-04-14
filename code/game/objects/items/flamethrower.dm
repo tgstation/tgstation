@@ -59,7 +59,6 @@
 
 /obj/item/flamethrower/update_icon_state()
 	inhand_icon_state = "flamethrower_[lit]"
-	return ..()
 
 /obj/item/flamethrower/update_overlays()
 	. = ..()
@@ -106,7 +105,7 @@
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER && igniter && !lit)
 		status = !status
 		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
-		update_appearance()
+		update_icon()
 		return
 
 	else if(isigniter(W))
@@ -118,7 +117,7 @@
 		if(!user.transferItemToLoc(W, src))
 			return
 		igniter = I
-		update_appearance()
+		update_icon()
 		return
 
 	else if(istype(W, /obj/item/tank/internals/plasma))
@@ -131,7 +130,7 @@
 		if(!user.transferItemToLoc(W, src))
 			return
 		ptank = W
-		update_appearance()
+		update_icon()
 		return
 
 	else
@@ -151,7 +150,7 @@
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
-		update_appearance()
+		update_icon()
 
 /obj/item/flamethrower/examine(mob/user)
 	. = ..()
@@ -177,7 +176,7 @@
 		playsound(loc, deac_sound, 50, TRUE)
 		STOP_PROCESSING(SSobj,src)
 	set_light_on(lit)
-	update_appearance()
+	update_icon()
 
 /obj/item/flamethrower/CheckParts(list/parts_list)
 	..()
@@ -186,7 +185,7 @@
 	weldtool.status = FALSE
 	igniter.secured = FALSE
 	status = TRUE
-	update_appearance()
+	update_icon()
 
 //Called from turf.dm turf/dblclick
 /obj/item/flamethrower/proc/flame_turf(turflist)
@@ -236,7 +235,7 @@
 		status = TRUE
 		if(create_with_tank)
 			ptank = new /obj/item/tank/internals/plasma/full(src)
-		update_appearance()
+		update_icon()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_refill)
 
 /obj/item/flamethrower/full
@@ -268,4 +267,4 @@
 		ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*ptank.volume/(R_IDEAL_GAS_EQUATION*T20C)
 	else
 		ptank = new /obj/item/tank/internals/plasma/full(src)
-	update_appearance()
+	update_icon()

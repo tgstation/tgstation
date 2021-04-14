@@ -10,7 +10,6 @@ package-lock.json
 !/.yarn/plugins
 !/.yarn/sdks
 !/.yarn/versions
-!/.yarn/lock.yml
 
 ## Build artifacts
 /public/.tmp/**/*

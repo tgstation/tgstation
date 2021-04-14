@@ -6,7 +6,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "conveyor_map"
-	base_icon_state = "conveyor"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	layer = BELOW_OPEN_DOOR_LAYER
@@ -46,7 +45,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(.)
 		operating = TRUE
-		update_appearance()
+		update_icon()
 
 // create a conveyor
 /obj/machinery/conveyor/Initialize(mapload, newdir, newid)
@@ -112,13 +111,15 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update()
 
 /obj/machinery/conveyor/update_icon_state()
-	icon_state = "[base_icon_state][(machine_stat & BROKEN) ? "-broken" : (operating * verted)]"
-	return ..()
+	if(machine_stat & BROKEN)
+		icon_state = "conveyor-broken"
+	else
+		icon_state = "conveyor[operating * verted]"
 
 /obj/machinery/conveyor/proc/update()
 	if(machine_stat & BROKEN || !operable || machine_stat & NOPOWER)
 		operating = FALSE
-		update_appearance()
+		update_icon()
 		return FALSE
 	return TRUE
 
@@ -245,7 +246,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	base_icon_state = "switch"
 	processing_flags = START_PROCESSING_MANUALLY
 
 	var/position = 0 // 0 off, -1 reverse, 1 forward
@@ -259,7 +259,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if (newid)
 		id = newid
-	update_appearance()
+	update_icon()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 	wires = new /datum/wires/conveyor(src)
 
@@ -280,21 +280,25 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // update the icon depending on the position
 
 /obj/machinery/conveyor_switch/update_icon_state()
-	if(position < 0)
-		icon_state = "[base_icon_state]-[invert_icon ? "fwd" : "rev"]"
-		return ..()
-	if(position > 0)
-		icon_state = "[base_icon_state]-[invert_icon ? "rev" : "fwd"]"
-		return ..()
-	icon_state = "[base_icon_state]-off"
-	return ..()
+	if(position<0)
+		if(invert_icon)
+			icon_state = "switch-fwd"
+		else
+			icon_state = "switch-rev"
+	else if(position>0)
+		if(invert_icon)
+			icon_state = "switch-rev"
+		else
+			icon_state = "switch-fwd"
+	else
+		icon_state = "switch-off"
 
 /// Updates all conveyor belts that are linked to this switch, and tells them to start processing.
 /obj/machinery/conveyor_switch/proc/update_linked_conveyors()
 	for(var/obj/machinery/conveyor/C in GLOB.conveyors_by_id[id])
 		C.operating = position
 		C.update_move_direction()
-		C.update_appearance()
+		C.update_icon()
 		if(C.operating)
 			C.begin_processing()
 		else
@@ -306,7 +310,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	for(var/obj/machinery/conveyor_switch/S in GLOB.conveyors_by_id[id])
 		S.invert_icon = invert_icon
 		S.position = position
-		S.update_appearance()
+		S.update_icon()
 		CHECK_TICK
 
 /// Updates the switch's `position` and `last_pos` variable. Useful so that the switch can properly cycle between the forwards, backwards and neutral positions.
@@ -329,7 +333,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor_switch/interact(mob/user)
 	add_fingerprint(user)
 	update_position()
-	update_appearance()
+	update_icon()
 	update_linked_conveyors()
 	update_linked_switches()
 
@@ -357,7 +361,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor_switch/wrench_act(mob/user, obj/item/I)
 	I.play_tool_sound(src, 50)
 	invert_icon = !invert_icon
-	update_appearance()
+	update_icon()
 	to_chat(user, "<span class='notice'>You set conveyor switch to [invert_icon ? "inverted": "normal"] position.</span>")
 	return TRUE
 

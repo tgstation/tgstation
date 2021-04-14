@@ -1,5 +1,5 @@
 //The contant in the rate of reagent transfer on life ticks
-#define STOMACH_METABOLISM_CONSTANT 0.25
+#define STOMACH_METABOLISM_CONSTANT 0.5
 
 /obj/item/organ/stomach
 	name = "stomach"
@@ -27,25 +27,23 @@
 	var/disgust_metabolism = 1
 
 	///The rate that the stomach will transfer reagents to the body
-	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
+	var/metabolism_efficiency = 0.1 // the lowest we should go is 0.05
 
 
 /obj/item/organ/stomach/Initialize()
 	. = ..()
 	//None edible organs do not get a reagent holder by default
 	if(!reagents)
-		create_reagents(reagent_vol, REAGENT_HOLDER_ALIVE)
-	else
-		reagents.flags |= REAGENT_HOLDER_ALIVE
+		create_reagents(reagent_vol)
 
-/obj/item/organ/stomach/on_life(delta_time, times_fired)
+/obj/item/organ/stomach/on_life()
 	. = ..()
 
 	//Manage species digestion
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
-			humi.dna.species.handle_digestion(humi, delta_time, times_fired)
+			humi.dna.species.handle_digestion(humi)
 
 	var/mob/living/carbon/body = owner
 
@@ -55,11 +53,11 @@
 
 		// If the reagent does not metabolize then it will sit in the stomach
 		// This has an effect on items like plastic causing them to take up space in the stomach
-		if(bit.metabolization_rate <= 0)
+		if(!(bit.metabolization_rate > 0))
 			continue
 
 		//Ensure that the the minimum is equal to the metabolization_rate of the reagent if it is higher then the STOMACH_METABOLISM_CONSTANT
-		var/rate_min = max(bit.metabolization_rate, STOMACH_METABOLISM_CONSTANT)
+		var/amount_min = max(bit.metabolization_rate, STOMACH_METABOLISM_CONSTANT)
 		//Do not transfer over more then we have
 		var/amount_max = bit.volume
 
@@ -70,9 +68,9 @@
 			amount_max = max(amount_max - amount_food, 0)
 
 		// Transfer the amount of reagents based on volume with a min amount of 1u
-		var/amount = min((round(metabolism_efficiency * amount_max, 0.05) + rate_min) * delta_time, amount_max)
+		var/amount = min(round(metabolism_efficiency * bit.volume, 0.1) + amount_min, amount_max)
 
-		if(amount <= 0)
+		if(!(amount > 0))
 			continue
 
 		// transfer the reagents over to the body at the rate of the stomach metabolim
@@ -82,7 +80,7 @@
 
 	//Handle disgust
 	if(body)
-		handle_disgust(body, delta_time, times_fired)
+		handle_disgust(body)
 
 	//If the stomach is not damage exit out
 	if(damage < low_threshold)
@@ -105,40 +103,40 @@
 		return
 
 	//The stomach is damage has nutriment but low on theshhold, lo prob of vomit
-	if(DT_PROB(0.0125 * damage * nutri_vol * nutri_vol, delta_time))
+	if(prob(damage * 0.025 * nutri_vol * nutri_vol))
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 		return
 
 	// the change of vomit is now high
-	if(damage > high_threshold && DT_PROB(0.05 * damage * nutri_vol * nutri_vol, delta_time))
+	if(damage > high_threshold && prob(damage * 0.1 * nutri_vol * nutri_vol))
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/get_availability(datum/species/S)
 	return !(NOSTOMACH in S.inherent_traits)
 
-/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H, delta_time, times_fired)
+/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
-		var/pukeprob = 2.5 + (0.025 * H.disgust)
+		var/pukeprob = 5 + 0.05 * H.disgust
 		if(H.disgust >= DISGUST_LEVEL_GROSS)
-			if(DT_PROB(5, delta_time))
+			if(prob(10))
 				H.stuttering += 1
 				H.add_confusion(2)
-			if(DT_PROB(5, delta_time) && !H.stat)
+			if(prob(10) && !H.stat)
 				to_chat(H, "<span class='warning'>You feel kind of iffy...</span>")
 			H.jitteriness = max(H.jitteriness - 3, 0)
 		if(H.disgust >= DISGUST_LEVEL_VERYGROSS)
-			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
+			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
 				H.add_confusion(2.5)
 				H.stuttering += 1
 				H.vomit(10, 0, 1, 0, 1, 0)
 			H.Dizzy(5)
 		if(H.disgust >= DISGUST_LEVEL_DISGUSTED)
-			if(DT_PROB(13, delta_time))
+			if(prob(25))
 				H.blur_eyes(3) //We need to add more shit down here
 
-		H.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
+		H.adjust_disgust(-0.5 * disgust_metabolism)
 	switch(H.disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
 			H.clear_alert("disgust")
@@ -163,32 +161,30 @@
 
 /obj/item/organ/stomach/bone
 	desc = "You have no idea what this strange ball of bones does."
-	metabolism_efficiency = 0.025 //very bad
-	/// How much [BRUTE] damage milk heals every second
-	var/milk_brute_healing = 2.5
-	/// How much [BURN] damage milk heals every second
-	var/milk_burn_healing = 2.5
+	metabolism_efficiency = 0.05 //very bad
+	var/milk_brute_healing = 1.5
+	var/milk_burn_healing = 1.5
 
-/obj/item/organ/stomach/bone/on_life(delta_time, times_fired)
+/obj/item/organ/stomach/bone/on_life()
 	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
 	if(milk)
 		var/mob/living/carbon/body = owner
-		if(milk.volume > 50)
-			reagents.remove_reagent(milk.type, milk.volume - 5)
+		if(milk.volume > 10)
+			reagents.remove_reagent(milk.type, milk.volume - 10)
 			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		body.heal_bodypart_damage(milk_brute_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time, milk_burn_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 
+		body.heal_bodypart_damage(brute = milk_brute_healing, burn = milk_burn_healing)
 		for(var/i in body.all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-		reagents.remove_reagent(milk.type, milk.metabolization_rate * delta_time)
+			iter_wound.on_xadone(2)
+		reagents.remove_reagent(milk.type, milk.metabolization_rate)
 	return ..()
 
 /obj/item/organ/stomach/bone/plasmaman
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
-	metabolism_efficiency = 0.06
+	metabolism_efficiency = 0.12
 	milk_burn_healing = 0
 
 /obj/item/organ/stomach/ethereal
@@ -197,9 +193,9 @@
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
 
-/obj/item/organ/stomach/ethereal/on_life(delta_time, times_fired)
+/obj/item/organ/stomach/ethereal/on_life()
 	..()
-	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
+	adjust_charge(-ETHEREAL_CHARGE_FACTOR)
 
 /obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -230,7 +226,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
-	metabolism_efficiency = 0.35 // not as good at digestion
+	metabolism_efficiency = 0.7 // not as good at digestion
 
 /obj/item/organ/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
@@ -239,7 +235,7 @@
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 2
 	emp_vulnerability = 40
-	metabolism_efficiency = 0.07
+	metabolism_efficiency = 0.14
 
 /obj/item/organ/stomach/cybernetic/tier3
 	name = "upgraded cybernetic stomach"
@@ -248,7 +244,7 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 3
 	emp_vulnerability = 20
-	metabolism_efficiency = 0.1
+	metabolism_efficiency = 0.2
 
 /obj/item/organ/stomach/cybernetic/emp_act(severity)
 	. = ..()

@@ -68,13 +68,6 @@
 	flags_1 |= ALLOW_DARK_PAINTS_1
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
 
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = .proc/on_exit,
-	)
-
-	if (flags_1 & ON_BORDER_1)
-		AddElement(/datum/element/connect_loc, src, loc_connections)
-
 /obj/structure/window/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
@@ -124,18 +117,13 @@
 
 	return TRUE
 
-/obj/structure/window/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
-	SIGNAL_HANDLER
+/obj/structure/window/CheckExit(atom/movable/O, turf/target)
+	if(istype(O) && (O.pass_flags & pass_flags_self))
+		return TRUE
+	if(!fulltile && get_dir(O.loc, target) == dir)
+		return !density
+	return TRUE
 
-	if (istype(leaving) && (leaving.pass_flags & pass_flags_self))
-		return
-
-	if (fulltile)
-		return
-
-	if(get_dir(leaving.loc, new_location) == dir && density)
-		leaving.Bump(src)
-		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -324,26 +312,28 @@
 
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
-	update_appearance()
+	update_icon()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 //merges adjacent full-tile windows into one
 /obj/structure/window/update_overlays()
 	. = ..()
-	if(QDELETED(src) || !fulltile)
-		return
+	if(!QDELETED(src))
+		if(!fulltile)
+			return
 
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
-		QUEUE_SMOOTH(src)
+		var/ratio = obj_integrity / max_integrity
+		ratio = CEILING(ratio*4, 1) * 25
 
-	var/ratio = obj_integrity / max_integrity
-	ratio = CEILING(ratio*4, 1) * 25
-	cut_overlay(crack_overlay)
-	if(ratio > 75)
-		return
-	crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-	. += crack_overlay
+		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+			QUEUE_SMOOTH(src)
+
+		cut_overlay(crack_overlay)
+		if(ratio > 75)
+			return
+		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
+		. += crack_overlay
 
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
@@ -354,7 +344,7 @@
 /obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
 	return null
 
-/obj/structure/window/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+/obj/structure/window/CanAStarPass(ID, to_dir)
 	if(!density)
 		return TRUE
 	if(fulltile || (dir == to_dir))
@@ -775,7 +765,7 @@
 
 /obj/structure/window/paperframe/Initialize()
 	. = ..()
-	update_appearance()
+	update_icon()
 
 /obj/structure/window/paperframe/examine(mob/user)
 	. = ..()
@@ -792,22 +782,22 @@
 	if(.)
 		return
 	if(user.combat_mode)
-		take_damage(4, BRUTE, MELEE, 0)
+		take_damage(4,BRUTE,MELEE, 0)
 		if(!QDELETED(src))
-			update_appearance()
-
-/obj/structure/window/paperframe/update_appearance(updates)
-	. = ..()
-	set_opacity(obj_integrity >= max_integrity)
+			update_icon()
 
 /obj/structure/window/paperframe/update_icon()
-	. = ..()
+	if(obj_integrity < max_integrity)
+		cut_overlay(paper)
+		add_overlay(torn)
+		set_opacity(FALSE)
+	else
+		cut_overlay(torn)
+		add_overlay(paper)
+		set_opacity(TRUE)
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
 
-/obj/structure/window/paperframe/update_overlays()
-	. = ..()
-	. += (obj_integrity < max_integrity) ? torn : paper
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)
 	if(W.get_temperature())
@@ -822,10 +812,10 @@
 			qdel(W)
 			user.visible_message("<span class='notice'>[user] patches some of the holes in \the [src].</span>")
 			if(obj_integrity == max_integrity)
-				update_appearance()
+				update_icon()
 			return
 	..()
-	update_appearance()
+	update_icon()
 
 /obj/structure/window/bronze
 	name = "brass window"

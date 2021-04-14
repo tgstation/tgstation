@@ -25,7 +25,7 @@
 /obj/item/clothing/glasses/meson/engine/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	update_appearance()
+	update_icon()
 
 /obj/item/clothing/glasses/meson/engine/ComponentInitialize()
 	. = ..()
@@ -66,7 +66,7 @@
 		if(H.glasses == src)
 			H.update_sight()
 
-	update_appearance()
+	update_icon()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -108,7 +108,8 @@
 		var/mutable_appearance/MA = new()
 		MA.maptext = MAPTEXT("[strength]k")
 		MA.color = "#04e604"
-		MA.plane = RAD_TEXT_PLANE
+		MA.layer = RAD_TEXT_LAYER
+		MA.plane = GAME_PLANE
 		pic.appearance = MA
 		flick_overlay(pic, list(user.client), 10)
 
@@ -132,7 +133,6 @@
 
 /obj/item/clothing/glasses/meson/engine/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
-	return ..()
 
 /obj/item/clothing/glasses/meson/engine/tray //atmos techs have lived far too long without tray goggles while those damned engineers get their dual-purpose gogles all to themselves
 	name = "optical t-ray scanner"

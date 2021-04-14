@@ -17,7 +17,7 @@
 	if(ispath(active_item))
 		active_item = new active_item(src)
 
-	update_appearance()
+	update_icon()
 	SetSlotFromZone()
 	items_list = contents.Copy()
 
@@ -31,8 +31,10 @@
 			CRASH("Invalid zone for [type]")
 
 /obj/item/organ/cyberimp/arm/update_icon()
-	. = ..()
-	transform = (zone == BODY_ZONE_R_ARM) ? null : matrix(-1, 0, 0, 0, 1, 0)
+	if(zone == BODY_ZONE_R_ARM)
+		transform = null
+	else // Mirroring the icon
+		transform = matrix(-1, 0, 0, 0, 1, 0)
 
 /obj/item/organ/cyberimp/arm/examine(mob/user)
 	. = ..()
@@ -49,7 +51,7 @@
 		zone = BODY_ZONE_R_ARM
 	SetSlotFromZone()
 	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>")
-	update_appearance()
+	update_icon()
 
 /obj/item/organ/cyberimp/arm/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()

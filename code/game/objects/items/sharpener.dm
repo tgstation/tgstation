@@ -60,11 +60,7 @@
 	uses-- //this doesn't cause issues because we check if uses == 0 earlier in this proc
 	if(uses == 0)
 		name = "worn out [name]" //whetstone becomes used whetstone
-	update_appearance()
-
-/obj/item/sharpener/update_name()
-	name = "[!uses ? "worn out " : null][initial(name)]"
-	return ..()
+	update_icon()
 
 /**
 * # Super whetstone

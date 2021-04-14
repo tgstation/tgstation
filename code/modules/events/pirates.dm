@@ -5,7 +5,6 @@
 	max_occurrences = 1
 	min_players = 10
 	earliest_start = 30 MINUTES
-	dynamic_should_hijack = TRUE
 	gamemode_blacklist = list("nuclear")
 
 #define PIRATES_ROGUES "Rogues"
@@ -51,8 +50,8 @@
 		if(PIRATES_ROGUES)
 			ship_template = /datum/map_template/shuttle/pirate/default
 			threat.title = "Sector protection offer"
-			threat.content = "Hey, pal, this is the [ship_name]. Can't help but notice you're rocking a wild and crazy shuttle there with NO INSURANCE! Crazy. What if something happened to it, huh?! We've done a quick evaluation on your rates in this sector and we're offering [payoff] to cover for your shuttle in case of any disaster."
-			threat.possible_answers = list("Purchase Insurance.","Reject Offer.")
+			threat.content = "Greetings from the [ship_name]. Your sector needs protection, how about you pay us [payoff] credits, or else you may be left wide open to an attack."
+			threat.possible_answers = list("We'll pay.","That sounds like a scam.")
 		if(PIRATES_SILVERSCALES)
 			ship_template = /datum/map_template/shuttle/pirate/silverscale
 			threat.title = "Tribute to high society"
@@ -131,7 +130,7 @@
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
 	. = ..()
-	update_appearance()
+	update_icon()
 
 /obj/machinery/shuttle_scrambler/process()
 	if(active)
@@ -162,7 +161,7 @@
 		if(active || !user.canUseTopic(src, BE_CLOSE))
 			return
 		toggle_on(user)
-		update_appearance()
+		update_icon()
 		send_notification()
 	else
 		dump_loot(user)
@@ -192,8 +191,10 @@
 	STOP_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/update_icon_state()
-	icon_state = active ? "dominator-Blue" : "dominator"
-	return ..()
+	if(active)
+		icon_state = "dominator-blue"
+	else
+		icon_state = "dominator"
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()

@@ -10,9 +10,8 @@
 	px_y = 0
 	stam_damage_coeff = 1
 	max_stamina_damage = 120
-	grind_results = null
-	wound_resistance = 10
 	var/obj/item/cavity_item
+	wound_resistance = 10
 
 /obj/item/bodypart/chest/can_dismember(obj/item/I)
 	if(owner.stat < HARD_CRIT || !get_organs())
@@ -125,7 +124,7 @@
 
 	if(owner.hud_used)
 		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_appearance()
+		hand_screen_object?.update_icon()
 
 
 /obj/item/bodypart/l_arm/monkey
@@ -220,7 +219,7 @@
 
 	if(owner.hud_used)
 		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
-		hand_screen_object?.update_appearance()
+		hand_screen_object?.update_icon()
 
 
 /obj/item/bodypart/r_arm/monkey

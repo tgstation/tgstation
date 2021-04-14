@@ -231,10 +231,11 @@
 						PP.adjustToxLoss(15)
 						PP.adjustFireLoss(25)
 						if(plasma_parts.len)
-							var/obj/item/bodypart/NB = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
+							var/obj/item/bodypart/NB = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs for dismember() to use
 							PP.emote("scream")
-							ADD_TRAIT(NB, TRAIT_PLASMABURNT, src)
-							PP.update_body_parts()
+							NB.species_id = "plasmaman"//change the species_id of the limb to that of a plasmaman
+							NB.no_update = TRUE
+							NB.change_bodypart_status()
 							PP.visible_message("<span class='warning'>[L] screams in pain as [L.p_their()] [NB] melts down to the bone!</span>", \
 											  "<span class='userdanger'>You scream out in pain as your [NB] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!</span>")
 						if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
@@ -595,9 +596,9 @@
 	shoes = /obj/item/clothing/shoes/combat/coldres
 	ears = /obj/item/radio/headset/syndicate/alt
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	id = /obj/item/card/id/advanced/chameleon
+	id = /obj/item/card/id/syndicate
 	implants = list(/obj/item/implant/exile)
-	id_trim = /datum/id_trim/chameleon/operative
+
 
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE

@@ -85,8 +85,10 @@
 		GLOB.vending_products[M.equipment_path] = 1
 
 /obj/machinery/mineral/equipment_vendor/update_icon_state()
-	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
-	return ..()
+	if(powered())
+		icon_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]-off"
 
 /obj/machinery/mineral/equipment_vendor/ui_assets(mob/user)
 	return list(
@@ -200,7 +202,7 @@
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
-	if(prob(50 / severity) && severity < EXPLODE_LIGHT)
+	if(prob(50 / severity) && severity < 3)
 		qdel(src)
 
 /****************Golem Point Vendor**************************/
@@ -212,7 +214,7 @@
 /obj/machinery/mineral/equipment_vendor/golem/Initialize()
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
-		new /datum/data/mining_equipment("Extra Id", /obj/item/card/id/advanced/mining, 250),
+		new /datum/data/mining_equipment("Extra Id", /obj/item/card/id/mining, 250),
 		new /datum/data/mining_equipment("Science Goggles", /obj/item/clothing/glasses/science, 250),
 		new /datum/data/mining_equipment("Monkey Cube", /obj/item/food/monkeycube, 300),
 		new /datum/data/mining_equipment("Toolbelt", /obj/item/storage/belt/utility, 350),
@@ -257,6 +259,24 @@
 	..()
 	to_chat(user, "<span class='alert'>There's [points] point\s on the card.</span>")
 
+///Conscript kit
+/obj/item/card/mining_access_card
+	name = "mining access card"
+	desc = "A small card, that when used on any ID, will add mining access."
+	icon_state = "data_1"
+
+/obj/item/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
+	. = ..()
+	if(istype(AM, /obj/item/card/id) && proximity)
+		var/obj/item/card/id/I = AM
+		I.access |= ACCESS_MINING
+		I.access |= ACCESS_MINING_STATION
+		I.access |= ACCESS_MECH_MINING
+		I.access |= ACCESS_MINERAL_STOREROOM
+		I.access |= ACCESS_CARGO
+		to_chat(user, "<span class='notice'>You upgrade [I] with mining access.</span>")
+		qdel(src)
+
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
@@ -270,7 +290,7 @@
 	new /obj/item/clothing/suit/hooded/explorer(src)
 	new /obj/item/encryptionkey/headset_mining(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/card/id/advanced/mining(src)
+	new /obj/item/card/mining_access_card(src)
 	new /obj/item/gun/energy/kinetic_accelerator(src)
 	new /obj/item/kitchen/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)

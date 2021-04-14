@@ -17,11 +17,11 @@
 	if (up)
 		src.up = up
 		up.down = src
-		up.update_appearance()
+		up.update_icon()
 	if (down)
 		src.down = down
 		down.up = src
-		down.update_appearance()
+		down.update_icon()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy(force)
@@ -41,29 +41,35 @@
 			if(crafted == L.crafted)
 				down = L
 				L.up = src  // Don't waste effort looping the other way
-				L.update_appearance()
+				L.update_icon()
 	if (!up)
 		L = locate() in SSmapping.get_turf_above(T)
 		if (L)
 			if(crafted == L.crafted)
 				up = L
 				L.down = src  // Don't waste effort looping the other way
-				L.update_appearance()
+				L.update_icon()
 
-	update_appearance()
+	update_icon()
 
 /obj/structure/ladder/proc/disconnect()
 	if(up && up.down == src)
 		up.down = null
-		up.update_appearance()
+		up.update_icon()
 	if(down && down.up == src)
 		down.up = null
-		down.update_appearance()
+		down.update_icon()
 	up = down = null
 
 /obj/structure/ladder/update_icon_state()
-	icon_state = "ladder[up ? 1 : 0][down ? 1 : 0]"
-	return ..()
+	if(up && down)
+		icon_state = "ladder11"
+	else if(up)
+		icon_state = "ladder10"
+	else if(down)
+		icon_state = "ladder01"
+	else //wtf make your ladders properly assholes
+		icon_state = "ladder00"
 
 /obj/structure/ladder/singularity_pull()
 	if (!(resistance_flags & INDESTRUCTIBLE))
@@ -185,7 +191,7 @@
 /obj/structure/ladder/unbreakable/LateInitialize()
 	// Override the parent to find ladders based on being height-linked
 	if (!id || (up && down))
-		update_appearance()
+		update_icon()
 		return
 
 	for (var/O in GLOB.ladders)
@@ -195,17 +201,17 @@
 		if (!down && L.height == height - 1)
 			down = L
 			L.up = src
-			L.update_appearance()
+			L.update_icon()
 			if (up)
 				break  // break if both our connections are filled
 		else if (!up && L.height == height + 1)
 			up = L
 			L.down = src
-			L.update_appearance()
+			L.update_icon()
 			if (down)
 				break  // break if both our connections are filled
 
-	update_appearance()
+	update_icon()
 
 /obj/structure/ladder/crafted
 	crafted = TRUE

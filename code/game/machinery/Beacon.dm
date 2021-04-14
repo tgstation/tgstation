@@ -22,7 +22,7 @@
 	return ..()
 
 /obj/machinery/bluespace_beacon/process()
-	if(QDELETED(Beacon)) //Don't move it out of nullspace BACK INTO THE GAME for the love of god
+	if(!Beacon)
 		var/turf/T = loc
 		Beacon = new(T)
 		Beacon.invisibility = INVISIBILITY_MAXIMUM

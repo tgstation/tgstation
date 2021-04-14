@@ -70,12 +70,13 @@
 		set_expression("veryhappy", 2 SECONDS) //v happy to be back in the pinpointer business
 		START_PROCESSING(SSmachines, src)
 
-/obj/machinery/pinpointer_dispenser/update_appearance(updates)
-	. = ..()
-	if((machine_stat & BROKEN) || !powered())
+/obj/machinery/pinpointer_dispenser/update_icon_state()
+	if(machine_stat & BROKEN)
 		set_light(0)
-		return
-	set_light(1.4)
+	else if(powered())
+		set_light(1.4)
+	else
+		set_light(0)
 
 /obj/machinery/pinpointer_dispenser/process(delta_time)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -237,7 +238,6 @@
 	name = "wayfinding pinpointer"
 	desc = "A handheld tracking device that points to useful places."
 	icon_state = "pinpointer_way"
-	worn_icon_state = "pinpointer_way"
 	var/owner = null
 	var/list/beacons = list()
 	var/roundstart = FALSE

@@ -36,8 +36,8 @@
 	return ..()
 
 /obj/item/storage/portable_chem_mixer/ex_act(severity, target)
-	if(severity < EXPLODE_LIGHT)
-		return ..()
+	if(severity < 3)
+		..()
 
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
@@ -47,7 +47,7 @@
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
-		update_appearance()
+		update_icon()
 		updateUsrDialog()
 		return
 	return ..()
@@ -70,24 +70,23 @@
 	return
 
 /obj/item/storage/portable_chem_mixer/update_icon_state()
-	if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
+	if (!locked)
 		icon_state = "portablechemicalmixer_open"
-		return ..()
-	if(beaker)
+	else if (beaker)
 		icon_state = "portablechemicalmixer_full"
-		return ..()
-	icon_state = "portablechemicalmixer_empty"
-	return ..()
+	else
+		icon_state = "portablechemicalmixer_empty"
 
 
 /obj/item/storage/portable_chem_mixer/AltClick(mob/living/user)
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-	if(!locked)
+	if (!locked)
 		return ..()
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	update_appearance()
+	update_icon()
 
 /obj/item/storage/portable_chem_mixer/CtrlClick(mob/living/user)
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
@@ -96,7 +95,7 @@
 		update_contents()
 	if (locked)
 		replace_beaker(user)
-	update_appearance()
+	update_icon()
 	playsound(src, 'sound/items/screwdriver2.ogg', 50)
 	return
 
@@ -222,5 +221,5 @@
 			. = TRUE
 		if("eject")
 			replace_beaker(usr)
-			update_appearance()
+			update_icon()
 			. = TRUE

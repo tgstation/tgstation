@@ -3,21 +3,19 @@
 	desc = "You probably shouldn't stick around to see if this is armed."
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "bananiumbomb_base"
-	base_icon_state = "bananiumbomb"
 
 /obj/machinery/nuclearbomb/syndicate/bananium/update_icon_state()
-	. = ..()
 	if(deconstruction_state != NUKESTATE_INTACT)
-		icon_state = "[base_icon_state]_base"
+		icon_state = "bananiumbomb_base"
 		return
-
+	
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
-			icon_state = "[base_icon_state]_base"
+			icon_state = "bananiumbomb_base"
 		if(NUKE_ON_TIMING)
-			icon_state = "[base_icon_state]_timing"
+			icon_state = "bananiumbomb_timing"
 		if(NUKE_ON_EXPLODING)
-			icon_state = "[base_icon_state]_exploding"
+			icon_state = "bananiumbomb_exploding"
 
 /obj/machinery/nuclearbomb/syndicate/bananium/get_cinematic_type(off_station)
 	switch(off_station)

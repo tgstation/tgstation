@@ -33,10 +33,9 @@
 	. = ..()
 	. += "<span class='notice'>The [name] currently has [stored_products.len] stored. There needs to be less than [max_floor_products] on the floor to continue dispensing.</span>"
 
-/obj/machinery/plumbing/pill_press/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/pill_press/Initialize(mapload, bolt)
 	. = ..()
-
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_demand, bolt)
 
 	//expertly copypasted from chemmasters
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)

@@ -77,12 +77,10 @@
 /mob/living/simple_animal/bot/secbot/Initialize()
 	. = ..()
 	weapon = new baton_type()
-	update_appearance(UPDATE_ICON)
-
-	// Doing this hurts my soul, but simplebot access reworks are for another day.
-	var/datum/id_trim/job/det_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/detective]
-	access_card.add_access(det_trim.access + det_trim.wildcard_access)
-	prev_access = access_card.access.Copy()
+	update_icon()
+	var/datum/job/detective/J = new/datum/job/detective
+	access_card.access += J.get_access()
+	prev_access = access_card.access
 
 	//SECHUD
 	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
@@ -92,11 +90,11 @@
 	QDEL_NULL(weapon)
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/update_icon_state()
+/mob/living/simple_animal/bot/secbot/update_icon()
 	if(mode == BOT_HUNT)
 		icon_state = "[initial(icon_state)]-c"
 		return
-	return ..()
+	..()
 
 /mob/living/simple_animal/bot/secbot/turn_off()
 	..()
@@ -232,7 +230,7 @@ Auto Patrol: []"},
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = FALSE
-		update_appearance()
+		update_icon()
 
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
 	if(istype(Proj , /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))
@@ -286,7 +284,7 @@ Auto Patrol: []"},
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 0.2 SECONDS)
+	addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
 	var/threat = 5
 
 	if(harm)
@@ -465,7 +463,7 @@ Auto Patrol: []"},
 		new /obj/item/assembly/prox_sensor(Tsec)
 		var/obj/item/gun/energy/disabler/G = new (Tsec)
 		G.cell.charge = 0
-		G.update_appearance()
+		G.update_icon()
 		if(prob(50))
 			new /obj/item/bodypart/l_leg/robot(Tsec)
 			if(prob(25))

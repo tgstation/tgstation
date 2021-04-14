@@ -58,4 +58,4 @@
 	for(var/i = 1, i <= max_ammo, i++)
 		if(!give_round(new load_type(src)))
 			break
-	update_appearance()
+	update_icon()

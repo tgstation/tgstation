@@ -173,7 +173,7 @@
 		if(DUEL_SETTING_C)
 			setting = DUEL_SETTING_A
 	to_chat(user,"<span class='notice'>You switch [src] setting to [setting] mode.</span>")
-	update_appearance()
+	update_icon()
 
 /obj/item/gun/energy/dueling/update_overlays()
 	. = ..()
@@ -250,13 +250,13 @@
 	. = ..()
 	var/obj/projectile/energy/duel/D = loaded_projectile
 	D.setting = setting
-	D.update_appearance()
+	D.update_icon()
 
 /obj/item/ammo_casing/energy/duel/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	. = ..()
 	var/obj/effect/temp_visual/dueling_chaff/C = new(get_turf(user))
 	C.setting = setting
-	C.update_appearance()
+	C.update_icon()
 
 //Projectile
 
@@ -314,7 +314,6 @@
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
-	base_icon_state = "medalbox"
 
 /obj/item/storage/lockbox/dueling/ComponentInitialize()
 	. = ..()
@@ -324,14 +323,15 @@
 	STR.set_holdable(list(/obj/item/gun/energy/dueling))
 
 /obj/item/storage/lockbox/dueling/update_icon_state()
-	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
-		icon_state = icon_locked
-		return ..()
-	if(broken)
-		icon_state = icon_broken
-		return ..()
-	icon_state = open ? "[base_icon_state]open" : icon_closed
-	return ..()
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
+	if(locked)
+		icon_state = "medalbox+l"
+	else
+		icon_state = "medalbox"
+		if(open)
+			icon_state += "open"
+		if(broken)
+			icon_state += "+b"
 
 /obj/item/storage/lockbox/dueling/PopulateContents()
 	. = ..()

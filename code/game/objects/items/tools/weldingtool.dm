@@ -47,7 +47,7 @@
 	. = ..()
 	create_reagents(max_fuel)
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
-	update_appearance()
+	update_icon()
 
 /obj/item/weldingtool/ComponentInitialize()
 	. = ..()
@@ -59,7 +59,6 @@
 		inhand_icon_state = "[initial(inhand_icon_state)]1"
 	else
 		inhand_icon_state = "[initial(inhand_icon_state)]"
-	return ..()
 
 
 /obj/item/weldingtool/update_overlays()
@@ -77,7 +76,7 @@
 		if(0)
 			force = 3
 			damtype = BRUTE
-			update_appearance()
+			update_icon()
 			if(!can_off_process)
 				STOP_PROCESSING(SSobj, src)
 			return
@@ -88,7 +87,7 @@
 			burned_fuel_for += delta_time
 			if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
 				use(1)
-			update_appearance()
+			update_icon()
 
 	//This is to start fires. process() is only called if the welder is on.
 	open_flame()
@@ -106,7 +105,7 @@
 		flamethrower_rods(I, user)
 	else
 		. = ..()
-	update_appearance()
+	update_icon()
 
 /obj/item/weldingtool/proc/explode()
 	var/turf/T = get_turf(loc)
@@ -148,7 +147,7 @@
 	if(!status && O.is_refillable())
 		reagents.trans_to(O, reagents.total_volume, transfered_by = user)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
-		update_appearance()
+		update_icon()
 
 /obj/item/weldingtool/attack_qdeleted(atom/O, mob/user, proximity)
 	. = ..()
@@ -171,7 +170,7 @@
 		explode()
 	switched_on(user)
 
-	update_appearance()
+	update_icon()
 
 
 // Ah fuck, I can't believe you've done this
@@ -215,7 +214,7 @@
 	if(get_fuel() <= 0 && welding)
 		set_light_on(FALSE)
 		switched_on(user)
-		update_appearance()
+		update_icon()
 		return FALSE
 	return TRUE
 
@@ -232,7 +231,7 @@
 			force = 15
 			damtype = BURN
 			hitsound = 'sound/items/welder.ogg'
-			update_appearance()
+			update_icon()
 			START_PROCESSING(SSobj, src)
 		else
 			to_chat(user, "<span class='warning'>You need more fuel!</span>")
@@ -249,7 +248,7 @@
 	force = 3
 	damtype = BRUTE
 	hitsound = "swing_hit"
-	update_appearance()
+	update_icon()
 
 
 /obj/item/weldingtool/examine(mob/user)

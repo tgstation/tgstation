@@ -10,10 +10,9 @@
 
 /obj/item/stack/arcadeticket/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	update_appearance()
+	update_icon()
 
 /obj/item/stack/arcadeticket/update_icon_state()
-	. = ..()
 	var/amount = get_amount()
 	switch(amount)
 		if(12 to INFINITY)

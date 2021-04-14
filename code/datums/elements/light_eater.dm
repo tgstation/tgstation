@@ -22,7 +22,7 @@
 
 	return ..()
 
-/datum/element/light_eater/Detach(datum/source)
+/datum/element/light_eater/Detach(datum/source, force)
 	UnregisterSignal(source, list(
 		COMSIG_MOVABLE_IMPACT,
 		COMSIG_ITEM_AFTERATTACK,
@@ -69,7 +69,7 @@
 	SEND_SIGNAL(commisary, COMSIG_LIGHT_EATER_QUEUE, ., devourer)
 	for(var/nom in commisary.light_sources)
 		var/datum/light_source/morsel = nom
-		.[morsel.source_atom] = TRUE
+		. += morsel.source_atom
 
 /**
  * Consumes the light on the target, permanently rendering it incapable of producing light

@@ -25,7 +25,7 @@
 
 /obj/structure/etherealball/Initialize()
 	. = ..()
-	update_appearance()
+	update_icon()
 
 /obj/structure/etherealball/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
@@ -49,7 +49,7 @@
 	TurnedOn = FALSE
 	set_light(0)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	update_appearance()
+	update_icon()
 	if(TimerID)
 		deltimer(TimerID)
 
@@ -58,12 +58,11 @@
 	current_color = random_color()
 	set_light(range, power, current_color)
 	add_atom_colour("#[current_color]", FIXED_COLOUR_PRIORITY)
-	update_appearance()
+	update_icon()
 	TimerID = addtimer(CALLBACK(src, .proc/DiscoFever), 5, TIMER_STOPPABLE)  //Call ourselves every 0.5 seconds to change colors
 
 /obj/structure/etherealball/update_icon_state()
 	icon_state = "ethdisco_head_[TurnedOn]"
-	return ..()
 
 /obj/structure/etherealball/update_overlays()
 	. = ..()

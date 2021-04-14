@@ -105,11 +105,8 @@
 			var/mob/living/L = M.pulledby
 			L.reset_pull_offsets(M, TRUE)
 
-	if (CanPass(M, loc))
-		M.Move(loc)
-	else
-		if (!check_loc && M.loc != loc)
-			M.forceMove(loc)
+	if(!check_loc && M.loc != loc)
+		M.forceMove(loc)
 
 	if(anchored)
 		ADD_TRAIT(M, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
@@ -118,7 +115,7 @@
 	M.set_buckled(src)
 	M.setDir(dir)
 	buckled_mobs |= M
-	M.throw_alert("buckled", /atom/movable/screen/alert/buckled)
+	M.throw_alert("buckled", /atom/movable/screen/alert/restrained/buckled)
 	M.set_glide_size(glide_size)
 	post_buckle_mob(M)
 
@@ -207,10 +204,6 @@
 	if(target == src)
 		return FALSE
 
-	// Check if the target to buckle isn't INSIDE OF A WALL
-	if(!isopenturf(loc))
-		return FALSE
-
 	// Check if this atom can have things buckled to it.
 	if(!can_buckle && !force)
 		return FALSE
@@ -255,11 +248,6 @@
 	// Standard adjacency and other checks.
 	if(!Adjacent(user) || !Adjacent(target) || !isturf(user.loc) || user.incapacitated() || target.anchored)
 		return FALSE
-
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(carbon_user.usable_hands <= 0)
-			return FALSE
 
 	// In buckling even possible in the first place?
 	if(!is_buckle_possible(target, FALSE, check_loc))

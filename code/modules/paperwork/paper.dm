@@ -102,12 +102,11 @@
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
 	pixel_y = base_pixel_y + rand(-8, 8)
-	update_appearance()
+	update_icon()
 
 /obj/item/paper/update_icon_state()
 	if(info && show_written_words)
 		icon_state = "[initial(icon_state)]_words"
-	return ..()
 
 /obj/item/paper/verb/rename()
 	set name = "Rename paper"
@@ -124,7 +123,7 @@
 			H.update_damage_hud()
 			return
 	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
-	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))
+	if((loc == usr && usr.stat == CONSCIOUS))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
@@ -161,7 +160,7 @@
 	// .. or if you cannot read
 	if(!user.can_read(src))
 		return UI_CLOSE
-	if(in_contents_of(/obj/machinery/door/airlock) || in_contents_of(/obj/item/clipboard))
+	if(in_contents_of(/obj/machinery/door/airlock))
 		return UI_INTERACTIVE
 	return ..()
 
@@ -198,11 +197,7 @@
 		SStgui.close_uis(src)
 		return
 
-	// Enable picking paper up by clicking on it with the clipboard or folder
-	if(istype(P, /obj/item/clipboard) || istype(P, /obj/item/folder))
-		P.attackby(src, user)
-		return
-	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
 			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
@@ -251,32 +246,27 @@
 	var/list/data = list()
 	data["edit_usr"] = "[user]"
 
-	var/obj/holding = user.get_active_held_item()
-	// Use a clipboard's pen, if applicable
-	if(istype(loc, /obj/item/clipboard))
-		var/obj/item/clipboard/clipboard = loc
-		if(clipboard.pen)
-			holding = clipboard.pen
-	if(istype(holding, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/PEN = holding
+	var/obj/O = user.get_active_held_item()
+	if(istype(O, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/PEN = O
 		data["pen_font"] = CRAYON_FONT
 		data["pen_color"] = PEN.paint_color
 		data["edit_mode"] = MODE_WRITING
 		data["is_crayon"] = TRUE
 		data["stamp_class"] = "FAKE"
 		data["stamp_icon_state"] = "FAKE"
-	else if(istype(holding, /obj/item/pen))
-		var/obj/item/pen/PEN = holding
+	else if(istype(O, /obj/item/pen))
+		var/obj/item/pen/PEN = O
 		data["pen_font"] = PEN.font
 		data["pen_color"] = PEN.colour
 		data["edit_mode"] = MODE_WRITING
 		data["is_crayon"] = FALSE
 		data["stamp_class"] = "FAKE"
 		data["stamp_icon_state"] = "FAKE"
-	else if(istype(holding, /obj/item/stamp))
+	else if(istype(O, /obj/item/stamp))
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
-		data["stamp_icon_state"] = holding.icon_state
-		data["stamp_class"] = sheet.icon_class_name(holding.icon_state)
+		data["stamp_icon_state"] = O.icon_state
+		data["stamp_class"] = sheet.icon_class_name(O.icon_state)
 		data["edit_mode"] = MODE_STAMPING
 		data["pen_font"] = "FAKE"
 		data["pen_color"] = "FAKE"
@@ -348,7 +338,7 @@
 					update_static_data(usr,ui)
 
 
-			update_appearance()
+			update_icon()
 			. = TRUE
 
 /**
@@ -372,6 +362,9 @@
 	icon_state = "scrap"
 	slot_flags = null
 	show_written_words = FALSE
+
+/obj/item/paper/crumpled/update_icon_state()
+	return
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"

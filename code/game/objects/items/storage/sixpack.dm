@@ -15,11 +15,10 @@
 
 /obj/item/storage/cans/update_icon_state()
 	icon_state = "[initial(icon_state)][contents.len]"
-	return ..()
 
 /obj/item/storage/cans/Initialize()
 	. = ..()
-	update_appearance()
+	update_icon()
 
 /obj/item/storage/cans/ComponentInitialize()
 	. = ..()

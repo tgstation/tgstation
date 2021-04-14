@@ -2,7 +2,6 @@
 	name = "cannonballs"
 	desc = "A stack of heavy plasteel cannonballs. Gunnery for the space age!"
 	icon_state = "cannonballs"
-	base_icon_state = "cannonballs"
 	max_amount = 14
 	singular_name = "cannonball"
 	merge_type = /obj/item/stack/cannonball
@@ -16,8 +15,11 @@
 	var/obj/projectile/projectile_type = /obj/projectile/bullet/cannonball
 
 /obj/item/stack/cannonball/update_icon_state()
-	. = ..()
-	icon_state = (amount == 1) ? "[base_icon_state]" : "[base_icon_state]_[min(amount, 14)]"
+	if(amount == 1)
+		icon_state = "[initial(icon_state)]"
+	else
+		icon_state = "[initial(icon_state)]_[min(amount, 14)]"
+
 
 /obj/item/stack/cannonball/fourteen
 	amount = 14

@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/cone
 	name = "Cone of Nothing"
 	desc = "Does nothing in a cone! Wow!"
-	school = SCHOOL_EVOCATION
+	school = "evocation"
 	charge_max = 100
 	clothes_req = FALSE
 	invocation = "FUKAN NOTHAN"

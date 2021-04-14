@@ -9,7 +9,7 @@
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
-	update_appearance()
+	update_icon()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
 
 	if(floorbuffer)
@@ -17,7 +17,8 @@
 
 /obj/vehicle/ridden/janicart/Destroy()
 	if(mybag)
-		QDEL_NULL(mybag)
+		qdel(mybag)
+		mybag = null
 	return ..()
 
 /obj/item/janiupgrade
@@ -40,7 +41,7 @@
 			return
 		to_chat(user, "<span class='notice'>You hook the trashbag onto [src].</span>")
 		mybag = I
-		update_appearance()
+		update_icon()
 	else if(istype(I, /obj/item/janiupgrade))
 		if(floorbuffer)
 			to_chat(user, "<span class='warning'>[src] already has a floor buffer!</span>")
@@ -49,7 +50,7 @@
 		qdel(I)
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
 		AddElement(/datum/element/cleaning)
-		update_appearance()
+		update_icon()
 	else if(mybag)
 		mybag.attackby(I, user)
 	else
@@ -64,12 +65,13 @@
 
 /obj/vehicle/ridden/janicart/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(. || !mybag)
+	if(.)
 		return
-	mybag.forceMove(get_turf(user))
-	user.put_in_hands(mybag)
-	mybag = null
-	update_appearance()
+	else if(mybag)
+		mybag.forceMove(get_turf(user))
+		user.put_in_hands(mybag)
+		mybag = null
+		update_icon()
 
 /obj/vehicle/ridden/janicart/upgraded
 	floorbuffer = TRUE

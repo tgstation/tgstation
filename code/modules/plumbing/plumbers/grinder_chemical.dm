@@ -9,9 +9,9 @@
 
 	var/eat_dir = SOUTH
 
-/obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
 /obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
 	if(anchored)

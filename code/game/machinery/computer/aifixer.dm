@@ -81,7 +81,7 @@
 			var/oldstat = occupier.stat
 			restoring = Fix()
 			if(oldstat != occupier.stat)
-				update_appearance()
+				update_icon()
 
 /obj/machinery/computer/aifixer/update_overlays()
 	. = ..()
@@ -90,15 +90,14 @@
 
 	if(restoring)
 		. += "ai-fixer-on"
-
-	if(!occupier)
+	if (occupier)
+		switch (occupier.stat)
+			if (CONSCIOUS)
+				. += "ai-fixer-full"
+			if (UNCONSCIOUS, HARD_CRIT)
+				. += "ai-fixer-404"
+	else
 		. += "ai-fixer-empty"
-		return
-	switch(occupier.stat)
-		if(CONSCIOUS)
-			. += "ai-fixer-full"
-		if(UNCONSCIOUS, HARD_CRIT)
-			. += "ai-fixer-404"
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())
@@ -115,7 +114,7 @@
 		to_chat(AI, "<span class='alert'>You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.</span>")
 		to_chat(user, "<span class='notice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
-		update_appearance()
+		update_icon()
 
 	else //Uploading AI from terminal to card
 		if(occupier && !restoring)
@@ -124,7 +123,7 @@
 			occupier.forceMove(card)
 			card.AI = occupier
 			occupier = null
-			update_appearance()
+			update_icon()
 		else if (restoring)
 			to_chat(user, "<span class='alert'>ERROR: Reconstruction in progress.</span>")
 		else if (!occupier)

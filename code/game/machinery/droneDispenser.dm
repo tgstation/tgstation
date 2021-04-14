@@ -96,12 +96,6 @@
 	starting_amount = 0
 	cooldownTime = 600
 
-/obj/machinery/drone_dispenser/classic
-	name = "classic drone shell dispenser"
-	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a classic drone shell. Does not need to be manually operated."
-	dispense_type = /obj/effect/mob_spawn/drone/classic
-	end_create_message = "dispenses a classic drone shell."
-
 // An example of a custom drone dispenser.
 // This one requires no materials and creates basic hivebots
 /obj/machinery/drone_dispenser/hivebot
@@ -152,7 +146,7 @@
 				playsound(src, work_sound, 50, TRUE)
 			mode = DRONE_PRODUCTION
 			timer = world.time + production_time
-			update_appearance()
+			update_icon()
 
 		if(DRONE_PRODUCTION)
 			materials.use_materials(using_materials)
@@ -169,7 +163,7 @@
 
 			mode = DRONE_RECHARGING
 			timer = world.time + cooldownTime
-			update_appearance()
+			update_icon()
 
 		if(DRONE_RECHARGING)
 			if(recharge_sound)
@@ -178,7 +172,7 @@
 				visible_message("<span class='notice'>[src] [recharge_message]</span>")
 
 			mode = DRONE_READY
-			update_appearance()
+			update_icon()
 
 /obj/machinery/drone_dispenser/proc/count_shells()
 	. = 0
@@ -189,15 +183,12 @@
 /obj/machinery/drone_dispenser/update_icon_state()
 	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = icon_off
-		return ..()
-	if(mode == DRONE_RECHARGING)
+	else if(mode == DRONE_RECHARGING)
 		icon_state = icon_recharging
-		return ..()
-	if(mode == DRONE_PRODUCTION)
+	else if(mode == DRONE_PRODUCTION)
 		icon_state = icon_creating
-		return ..()
-	icon_state = icon_on
-	return ..()
+	else
+		icon_state = icon_on
 
 /obj/machinery/drone_dispenser/attackby(obj/item/I, mob/living/user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
@@ -227,7 +218,7 @@
 
 		set_machine_stat(machine_stat & ~BROKEN)
 		obj_integrity = max_integrity
-		update_appearance()
+		update_icon()
 	else
 		return ..()
 

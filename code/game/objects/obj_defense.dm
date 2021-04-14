@@ -57,19 +57,18 @@
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
-
-	. = ..() //contents explosion
+	..() //contents explosion
 	if(QDELETED(src))
 		return
 	if(target == src)
 		take_damage(INFINITY, BRUTE, BOMB, 0)
 		return
 	switch(severity)
-		if(EXPLODE_DEVASTATE)
+		if(1)
 			take_damage(INFINITY, BRUTE, BOMB, 0)
-		if(EXPLODE_HEAVY)
+		if(2)
 			take_damage(rand(100, 250), BRUTE, BOMB, 0)
-		if(EXPLODE_LIGHT)
+		if(3)
 			take_damage(rand(10, 90), BRUTE, BOMB, 0)
 
 /obj/bullet_act(obj/projectile/P)
@@ -181,7 +180,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
-		update_appearance()
+		update_icon()
 		return 1
 	return ..()
 
@@ -195,7 +194,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		update_appearance()
+		update_icon()
 		SSfire_burning.processing -= src
 
 ///Called when the obj is hit by a tesla bolt.

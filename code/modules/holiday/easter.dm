@@ -51,10 +51,6 @@
 	layMessage = list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling.")
 	pet_bonus = TRUE
 	pet_bonus_emote = "hops around happily!"
-	can_be_held = TRUE
-
-/mob/living/simple_animal/chicken/rabbit/empty //top hats summon these kinds of rabbits instead of the normal kind
-	eggsleft = 0 //if you want to harvest toys and easter bunny gear from these guys, you're gonna need to feed them carrots first
 
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"
@@ -94,8 +90,7 @@
 	icon_state = "bunnyhead"
 	inhand_icon_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'."
-	slowdown = -0.3
-	clothing_flags = THICKMATERIAL | SNUG_FIT
+	slowdown = -1
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/suit/bunnysuit
@@ -103,8 +98,7 @@
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
 	inhand_icon_state = "bunnysuit"
-	slowdown = -0.3
-	clothing_flags = THICKMATERIAL
+	slowdown = -1
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -172,23 +166,22 @@
 
 //Easter Recipes + food
 /obj/item/food/hotcrossbun
-	name = "hot cross bun"
-	desc = "The cross represents the Assistants that died for your sins."
-	icon_state = "hotcrossbun"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/sugar = 1)
-	foodtypes = SUGAR | GRAIN | BREAKFAST
-	tastes = list("pastry" = 1, "easter" = 1)
 	bite_consumption = 2
+	name = "hot-cross bun"
+	desc = "The Cross represents the Assistants that died for your sins."
+	icon_state = "hotcrossbun"
+	foodtypes = SUGAR | GRAIN
+	tastes = list("easter")
 
 /datum/crafting_recipe/food/hotcrossbun
-	name = "Hot Cross Bun"
+	name = "Hot-Cross Bun"
 	reqs = list(
-		/obj/item/food/breadslice/plain = 1,
+		/obj/item/food/bread/plain = 1,
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/food/hotcrossbun
 
-	subcategory = CAT_BREAD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"

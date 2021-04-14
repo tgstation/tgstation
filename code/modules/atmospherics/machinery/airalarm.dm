@@ -227,14 +227,12 @@
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
 
-	update_appearance()
+	update_icon()
 
 /obj/machinery/airalarm/Destroy()
 	SSradio.remove_object(src, frequency)
 	qdel(wires)
 	wires = null
-	var/area/ourarea = get_area(src)
-	ourarea.atmosalert(FALSE, src)
 	return ..()
 
 /obj/machinery/airalarm/Initialize(mapload)
@@ -453,7 +451,7 @@
 			if(A.atmosalert(FALSE, src))
 				post_alert(0)
 			. = TRUE
-	update_appearance()
+	update_icon()
 
 
 /obj/machinery/airalarm/proc/reset(wire)
@@ -461,7 +459,7 @@
 		if(WIRE_POWER)
 			if(!wires.is_cut(WIRE_POWER))
 				shorted = FALSE
-				update_appearance()
+				update_icon()
 		if(WIRE_AI)
 			if(!wires.is_cut(WIRE_AI))
 				aidisabled = FALSE
@@ -650,11 +648,11 @@
 				icon_state = "alarm_b2"
 			if(0)
 				icon_state = "alarm_b1"
-		return ..()
+		return
 
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
 		icon_state = "alarmp"
-		return ..()
+		return
 
 	var/area/A = get_area(src)
 	switch(max(danger_level, A.atmosalm))
@@ -664,7 +662,6 @@
 			icon_state = "alarm2" //yes, alarm2 is yellow alarm
 		if(2)
 			icon_state = "alarm1"
-	return ..()
 
 /obj/machinery/airalarm/process()
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
@@ -735,7 +732,7 @@
 	if(A.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 
-	update_appearance()
+	update_icon()
 
 /obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
 	switch(buildstage)
@@ -745,13 +742,13 @@
 				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
-				update_appearance()
+				update_icon()
 				return
 			else if(W.tool_behaviour == TOOL_SCREWDRIVER)  // Opening that Air Alarm up.
 				W.play_tool_sound(src)
 				panel_open = !panel_open
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
-				update_appearance()
+				update_icon()
 				return
 			else if(W.GetID())// trying to unlock the interface with an ID card
 				togglelock(user)
@@ -770,7 +767,7 @@
 						new /obj/item/electronics/airalarm( src.loc )
 						playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						buildstage = 0
-						update_appearance()
+						update_icon()
 				return
 
 			if(istype(W, /obj/item/stack/cable_coil))
@@ -791,14 +788,14 @@
 						shorted = 0
 						post_alert(0)
 						buildstage = 2
-						update_appearance()
+						update_icon()
 				return
 		if(0)
 			if(istype(W, /obj/item/electronics/airalarm))
 				if(user.temporarilyRemoveItemFromInventory(W))
 					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
 					buildstage = 1
-					update_appearance()
+					update_icon()
 					qdel(W)
 				return
 
@@ -809,7 +806,7 @@
 				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 				"<span class='notice'>You adapt an air alarm circuit and slot it into the assembly.</span>")
 				buildstage = 1
-				update_appearance()
+				update_icon()
 				return
 
 			if(W.tool_behaviour == TOOL_WRENCH)
@@ -832,7 +829,7 @@
 			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 			"<span class='notice'>You adapt an air alarm circuit and slot it into the assembly.</span>")
 			buildstage = 1
-			update_appearance()
+			update_icon()
 			return TRUE
 	return FALSE
 

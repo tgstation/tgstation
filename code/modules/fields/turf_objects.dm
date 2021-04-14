@@ -34,6 +34,11 @@
 		return parent.field_turf_crossed(AM, src)
 	return TRUE
 
+/obj/effect/abstract/proximity_checker/advanced/field_turf/Uncross(atom/movable/AM)
+	if(parent)
+		return parent.field_turf_uncross(AM, src)
+	return TRUE
+
 /obj/effect/abstract/proximity_checker/advanced/field_turf/Uncrossed(atom/movable/AM)
 	if(parent)
 		return parent.field_turf_uncrossed(AM, src)
@@ -52,6 +57,11 @@
 	. = ..()
 	if(parent)
 		return parent.field_edge_crossed(AM, src)
+	return TRUE
+
+/obj/effect/abstract/proximity_checker/advanced/field_edge/Uncross(atom/movable/AM)
+	if(parent)
+		return parent.field_edge_uncross(AM, src)
 	return TRUE
 
 /obj/effect/abstract/proximity_checker/advanced/field_edge/Uncrossed(atom/movable/AM)

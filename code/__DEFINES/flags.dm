@@ -24,72 +24,62 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // scroll down before changing the numbers on these
 
 /// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define HEAR_1 (1<<0)
+#define HEAR_1 (1<<3)
 /// Is this object currently processing in the atmos object list?
-#define ATMOS_IS_PROCESSING_1 (1<<1)
+#define ATMOS_IS_PROCESSING_1 (1<<4)
 /// conducts electricity (metal etc.)
-#define CONDUCT_1 (1<<2)
+#define CONDUCT_1 (1<<5)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
-#define NODECONSTRUCT_1 (1<<3)
+#define NODECONSTRUCT_1 (1<<7)
 /// atom queued to SSoverlay
-#define OVERLAY_QUEUED_1 (1<<4)
+#define OVERLAY_QUEUED_1 (1<<8)
 /// item has priority to check when entering or leaving
-#define ON_BORDER_1 (1<<5)
+#define ON_BORDER_1 (1<<9)
 ///Whether or not this atom shows screentips when hovered over
-#define NO_SCREENTIPS_1 (1 << 6)
+#define NO_SCREENTIPS_1 (1 << 10)
 /// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-#define PREVENT_CLICK_UNDER_1 (1<<7)
-#define HOLOGRAM_1 (1<<8)
+#define PREVENT_CLICK_UNDER_1 (1<<11)
+#define HOLOGRAM_1 (1<<12)
 /// Prevents mobs from getting chainshocked by teslas and the supermatter
-#define SHOCKED_1 (1<<9)
+#define SHOCKED_1 (1<<13)
 ///Whether /atom/Initialize() has already run for the object
-#define INITIALIZED_1 (1<<10)
+#define INITIALIZED_1 (1<<14)
 /// was this spawned by an admin? used for stat tracking stuff.
-#define ADMIN_SPAWNED_1     (1<<11)
+#define ADMIN_SPAWNED_1     (1<<15)
 /// should not get harmed if this gets caught by an explosion?
-#define PREVENT_CONTENTS_EXPLOSION_1 (1<<12)
+#define PREVENT_CONTENTS_EXPLOSION_1 (1<<16)
 /// should the contents of this atom be acted upon
-#define RAD_PROTECT_CONTENTS_1 (1 << 13)
+#define RAD_PROTECT_CONTENTS_1 (1 << 17)
 /// should this object be allowed to be contaminated
-#define RAD_NO_CONTAMINATE_1 (1 << 14)
+#define RAD_NO_CONTAMINATE_1 (1 << 18)
 /// Should this object be paintable with very dark colors?
-#define ALLOW_DARK_PAINTS_1 (1 << 15)
+#define ALLOW_DARK_PAINTS_1 (1 << 19)
 /// Should this object be unpaintable?
-#define UNPAINTABLE_1 (1 << 16)
+#define UNPAINTABLE_1 (1 << 20)
 /// Is the thing currently spinning?
-#define IS_SPINNING_1 (1 << 17)
-#define IS_ONTOP_1 (1 << 18)
-#define SUPERMATTER_IGNORES_1 (1 << 19)
-/// If a turf can be made dirty at roundstart. This is also used in areas.
-#define CAN_BE_DIRTY_1 (1<<20)
+#define IS_SPINNING_1 (1 << 21)
+#define IS_ONTOP_1 (1 << 22)
+#define SUPERMATTER_IGNORES_1 (1 << 23)
 
-// Update flags for [/atom/proc/update_appearance]
-/// Update the atom's name
-#define UPDATE_NAME (1<<0)
-/// Update the atom's desc
-#define UPDATE_DESC (1<<1)
-/// Update the atom's icon state
-#define UPDATE_ICON_STATE (1<<2)
-/// Update the atom's overlays
-#define UPDATE_OVERLAYS (1<<3)
-/// Update the atom's greyscaling
-#define UPDATE_GREYSCALE (1<<4)
-/// Update the atom's icon
-#define UPDATE_ICON (UPDATE_ICON_STATE|UPDATE_OVERLAYS)
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY (1<<0)
 /// If the thing can reflect matter (bullets/bomb shrapnel)
 #define RICOCHET_HARD (1<<1)
 
-//TURF FLAGS
-/// If a turf cant be jaunted through.
-#define NOJAUNT (1<<0)
-#define UNUSED_RESERVATION_TURF (1<<1)
-/// Blocks lava rivers being generated on the turf.
-#define NO_LAVA_GEN (1<<3)
-/// Blocks ruins spawning on the turf.
-#define NO_RUINS (1<<4)
+//turf-only flags
+#define NOJAUNT_1 (1<<0)
+#define UNUSED_RESERVATION_TURF_1 (1<<1)
+/// If a turf can be made dirty at roundstart. This is also used in areas.
+#define CAN_BE_DIRTY_1 (1<<2)
+/// If blood cultists can draw runes or build structures on this turf
+#define CULT_PERMITTED_1 (1<<3)
+/// Blocks lava rivers being generated on the turf
+#define NO_LAVA_GEN_1 (1<<6)
+/// Blocks ruins spawning on the turf
+#define NO_RUINS_1 (1<<10)
+/// Should this tile be cleaned up and reinserted into an excited group?
+#define EXCITED_CLEANUP_1 (1 << 13)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -118,8 +108,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ABDUCTOR_PROOF (1<<11)
 /// If an area should be hidden from power consoles, power/atmosphere alerts, etc.
 #define NO_ALERTS (1<<12)
-/// If blood cultists can draw runes or build structures on this AREA.
-#define CULT_PERMITTED (1<<13)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -137,14 +125,13 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSMACHINE (1<<7)
 #define PASSSTRUCTURE (1<<8)
 #define PASSFLAPS (1<<9)
-#define PASSDOORS (1<<10)
 
 //Movement Types
 #define GROUND (1<<0)
 #define FLYING (1<<1)
 #define VENTCRAWLING (1<<2)
 #define FLOATING (1<<3)
-/// When moving, will Cross() everything, but won't stop or Bump() anything.
+/// When moving, will Cross()/Uncross() everything, but won't stop or Bump() anything.
 #define PHASING (1<<4)
 
 //Fire and Acid stuff, for resistance_flags
@@ -231,6 +218,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define SKILLCHIP_ALLOWS_MULTIPLE (1<<0)
 // This skillchip is incompatible with other skillchips from the incompatible_category list.
 #define SKILLCHIP_RESTRICTED_CATEGORIES (1<<1)
+// This skillchip is incompatible with the Chameleon skillchip and cannot be copied.
+// If you want to blacklist an abstract path such a /obj/item/skillchip/job then look at the blacklist in /datum/action/item_action/chameleon/change/skillchip
+#define SKILLCHIP_CHAMELEON_INCOMPATIBLE (1<<2)
 
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise

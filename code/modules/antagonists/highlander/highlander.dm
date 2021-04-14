@@ -62,15 +62,17 @@
 	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), ITEM_SLOT_LPOCKET)
 	for(var/obj/item/pinpointer/nuke/P in H)
 		P.attack_self(H)
-	var/obj/item/card/id/advanced/highlander/W = new(H)
+	var/obj/item/card/id/centcom/W = new(H)
+	W.access = get_all_accesses()
+	W.access += get_all_centcom_access()
+	W.assignment = "Highlander"
 	W.registered_name = H.real_name
 	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
 	W.update_label()
-	W.update_icon()
 	H.equip_to_slot_or_del(W, ITEM_SLOT_ID)
 
 	sword = new(H)
-	if(!GLOB.highlander_controller)
+	if(!GLOB.highlander)
 		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
 	sword.pickup(H) //For the stun shielding
 	H.put_in_hands(sword)

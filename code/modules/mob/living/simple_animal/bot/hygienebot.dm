@@ -4,7 +4,6 @@
 	desc = "A flying cleaning robot, he'll chase down people who can't shower properly!"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "hygienebot"
-	base_icon_state = "hygienebot"
 	density = FALSE
 	anchored = FALSE
 	health = 100
@@ -16,7 +15,7 @@
 	bot_core_type = /obj/machinery/bot_core/hygienebot
 	window_id = "autoclean"
 	window_name = "Automatic Crew Cleaner X2"
-	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
+	pass_flags = PASSMOB | PASSFLAPS
 	path_image_color = "#993299"
 	allow_pai = FALSE
 	layer = ABOVE_MOB_LAYER
@@ -40,12 +39,10 @@
 
 /mob/living/simple_animal/bot/hygienebot/Initialize()
 	. = ..()
-	update_appearance(UPDATE_ICON)
-
-	// Doing this hurts my soul, but simplebot access reworks are for another day.
-	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
-	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
-	prev_access = access_card.access.Copy()
+	update_icon()
+	var/datum/job/janitor/J = new/datum/job/janitor
+	access_card.access += J.get_access()
+	prev_access = access_card.access
 
 /mob/living/simple_animal/bot/hygienebot/explode()
 	walk_to(src,0)
@@ -68,16 +65,22 @@
 
 /mob/living/simple_animal/bot/hygienebot/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state][on ? "-on" : null]"
+	if(on)
+		icon_state = "hygienebot-on"
+	else
+		icon_state = "hygienebot"
 
 
 /mob/living/simple_animal/bot/hygienebot/update_overlays()
 	. = ..()
 	if(on)
-		. += mutable_appearance(icon, "hygienebot-flame")
+		var/mutable_appearance/fire_overlay = mutable_appearance(icon, "hygienebot-flame")
+		. +=fire_overlay
+
 
 	if(washing)
-		. += mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
+		var/mutable_appearance/water_overlay = mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
+		. += water_overlay
 
 
 /mob/living/simple_animal/bot/hygienebot/turn_off()
@@ -200,11 +203,11 @@
 
 /mob/living/simple_animal/bot/hygienebot/proc/start_washing()
 	washing = TRUE
-	update_appearance()
+	update_icon()
 
 /mob/living/simple_animal/bot/hygienebot/proc/stop_washing()
 	washing = FALSE
-	update_appearance()
+	update_icon()
 
 
 

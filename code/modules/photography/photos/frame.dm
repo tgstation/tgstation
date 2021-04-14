@@ -16,7 +16,7 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			displayed = I
-			update_appearance()
+			update_icon()
 		else
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 	..()
@@ -31,7 +31,7 @@
 		user.put_in_hands(I)
 		to_chat(user, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
 		displayed = null
-		update_appearance()
+		update_icon()
 	return ..()
 
 /obj/item/wallframe/picture/attack_self(mob/user)
@@ -107,7 +107,7 @@
 		else
 			qdel(framed)
 		framed = P
-		update_appearance()
+		update_icon()
 
 /obj/structure/sign/picture_frame/examine(mob/user)
 	if(in_range(src, user) && framed)
@@ -136,7 +136,7 @@
 			if(!user.transferItemToLoc(P, src))
 				return
 			framed = P
-			update_appearance()
+			update_icon()
 		else
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 
@@ -163,7 +163,7 @@
 		if(contents.len)
 			var/obj/item/I = pick(contents)
 			I.forceMove(F)
-		F.update_appearance()
+		F.update_icon()
 	qdel(src)
 
 

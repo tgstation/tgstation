@@ -37,7 +37,7 @@
 	. = ..()
 	if(defib)
 		. += "<span class='notice'>There is a defib unit hooked up. Alt-click to remove it.</span>"
-		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
+		if(GLOB.security_level >= SEC_LEVEL_RED)
 			. += "<span class='notice'>Due to a security situation, its locking clamps can be toggled by swiping any ID.</span>"
 		else
 			. += "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>"
@@ -95,20 +95,20 @@
 		// Make sure the defib is set before processing begins.
 		defib = I
 		begin_processing()
-		update_appearance()
+		update_icon()
 		return
 	else if(defib && I == defib.paddles)
 		defib.paddles.snap_back()
 		return
 	var/obj/item/card/id = I.GetID()
 	if(id)
-		if(check_access(id) || SSsecurity_level.current_level >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
+		if(check_access(id) || GLOB.security_level >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
 			if(!defib)
 				to_chat(user, "<span class='warning'>You can't engage the clamps on a defibrillator that isn't there.</span>")
 				return
 			clamps_locked = !clamps_locked
 			to_chat(user, "<span class='notice'>Clamps [clamps_locked ? "" : "dis"]engaged.</span>")
-			update_appearance()
+			update_icon()
 		else
 			to_chat(user, "<span class='warning'>Insufficient access.</span>")
 		return
@@ -131,7 +131,7 @@
 	"<span class='notice'>You override the locking clamps on [src]!</span>")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	clamps_locked = FALSE
-	update_appearance()
+	update_icon()
 	return TRUE
 
 /obj/machinery/defibrillator_mount/wrench_act(mob/living/user, obj/item/wrench/W)
@@ -169,7 +169,7 @@
 	// Make sure processing ends before the defib is nulled
 	end_processing()
 	defib = null
-	update_appearance()
+	update_icon()
 
 /obj/machinery/defibrillator_mount/charging
 	name = "PENLITE defibrillator mount"
@@ -200,7 +200,7 @@
 	if(C.charge < C.maxcharge)
 		use_power(50 * delta_time)
 		C.give(40 * delta_time)
-		update_appearance()
+		update_icon()
 
 //wallframe, for attaching the mounts easily
 /obj/item/wallframe/defib_mount

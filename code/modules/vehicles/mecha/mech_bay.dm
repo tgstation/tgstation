@@ -55,17 +55,17 @@
 	if(!recharging_mech)
 		recharging_mech = locate(/obj/vehicle/sealed/mecha) in recharging_turf
 		if(recharging_mech)
-			recharge_console.update_appearance()
+			recharge_console.update_icon()
 	if(recharging_mech && recharging_mech.cell)
 		if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
 			var/delta = min(recharge_power * delta_time, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
 			recharging_mech.give_power(delta)
 			use_power(delta*150)
 		else
-			recharge_console.update_appearance()
+			recharge_console.update_icon()
 		if(recharging_mech.loc != recharging_turf)
 			recharging_mech = null
-			recharge_console.update_appearance()
+			recharge_console.update_icon()
 
 
 /obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user, params)
@@ -103,7 +103,7 @@
 		if("reconnect")
 			reconnect()
 			. = TRUE
-			update_appearance()
+			update_icon()
 
 /obj/machinery/computer/mech_bay_power_console/ui_data(mob/user)
 	var/list/data = list()
@@ -138,11 +138,7 @@
 
 /obj/machinery/computer/mech_bay_power_console/update_overlays()
 	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN))
-		return
-	if(!recharge_port?.recharging_mech?.cell)
-		return
-	if(recharge_port.recharging_mech.cell.charge >= recharge_port.recharging_mech.cell.maxcharge)
+	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge) || machine_stat & (NOPOWER|BROKEN))
 		return
 	. += "recharge_comp_on"
 

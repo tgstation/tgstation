@@ -183,5 +183,7 @@
 	return
 
 /obj/machinery/abductor/experiment/update_icon_state()
-	icon_state = "experiment[state_open ? "-open" : null]"
-	return ..()
+	if(state_open)
+		icon_state = "experiment-open"
+	else
+		icon_state = "experiment"

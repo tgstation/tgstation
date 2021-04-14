@@ -33,17 +33,15 @@ Bonus
 	)
 
 /datum/symptom/dizzy/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStealth() >= 4)
+	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
-	if(A.totalTransmittable() >= 6) //druggy
+	if(A.properties["transmittable"] >= 6) //druggy
 		power = 2
 
 /datum/symptom/dizzy/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)

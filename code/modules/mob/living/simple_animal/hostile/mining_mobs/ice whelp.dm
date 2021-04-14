@@ -23,7 +23,6 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	attack_vis_effect = ATTACK_EFFECT_BITE
 	ranged_message = "breathes fire at"
 	vision_range = 9
 	aggro_vision_range = 9
@@ -46,11 +45,11 @@
 	var/list/burn_turfs = getline(src, target_fire_turf) - get_turf(src)
 	dragon_fire_line(src, burn_turfs, frozen = TRUE)
 
-/mob/living/simple_animal/hostile/asteroid/ice_whelp/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/ice_whelp/Life()
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-0.0125 * maxHealth * delta_time)
+	adjustHealth(-maxHealth*0.025)
 
 /mob/living/simple_animal/hostile/asteroid/ice_whelp/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT

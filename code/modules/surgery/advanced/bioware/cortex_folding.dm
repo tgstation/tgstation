@@ -53,8 +53,8 @@
 
 /datum/bioware/cortex_fold/on_gain()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, EXPERIMENTAL_SURGERY_TRAIT)
+	ADD_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, "cortex_fold")
 
 /datum/bioware/cortex_fold/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, EXPERIMENTAL_SURGERY_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, "cortex_fold")
 	return ..()

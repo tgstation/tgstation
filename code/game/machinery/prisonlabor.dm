@@ -9,18 +9,16 @@
 	var/obj/item/stack/license_plates/empty/current_plate
 	var/pressing = FALSE
 
-/obj/machinery/plate_press/update_icon_state()
+/obj/machinery/plate_press/update_icon()
+	. = ..()
 	if(!is_operational)
 		icon_state = "offline"
-		return ..()
-	if(pressing)
+	else if(pressing)
 		icon_state = "loop"
-		return ..()
-	if(current_plate)
+	else if(current_plate)
 		icon_state = "online_loaded"
-		return ..()
-	icon_state = "online"
-	return ..()
+	else
+		icon_state = "online"
 
 /obj/machinery/plate_press/Destroy()
 	QDEL_NULL(current_plate)
@@ -37,7 +35,7 @@
 		var/obj/item/stack/license_plates/empty/plate = I
 		plate.use(1)
 		current_plate = new plate.type(src, 1) //Spawn a new single sheet in the machine
-		update_appearance()
+		update_icon()
 	else
 		return ..()
 
@@ -50,12 +48,12 @@
 /obj/machinery/plate_press/proc/work_press(mob/living/user)
 
 	pressing = TRUE
-	update_appearance()
+	update_icon()
 	to_chat(user, "<span class='notice'>You start pressing a new license plate!</span>")
 
 	if(!do_after(user, 40, target = src))
 		pressing = FALSE
-		update_appearance()
+		update_icon()
 		return FALSE
 
 	use_power(100)
@@ -63,6 +61,6 @@
 
 	pressing = FALSE
 	QDEL_NULL(current_plate)
-	update_appearance()
+	update_icon()
 
 	new /obj/item/stack/license_plates/filled(drop_location(), 1)

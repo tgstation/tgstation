@@ -30,9 +30,7 @@
 		newPaper.forceMove(src)
 	else
 		internalPaper = new(src)
-	if(internalPaper.icon_state == "cpaper" || internalPaper.icon_state == "cpaper_words")
-		icon_state = "paperplane_carbon" // It's the purple carbon copy. Use the purple paper plane
-	update_appearance()
+	update_icon()
 
 /obj/item/paperplane/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
@@ -58,10 +56,9 @@
 /obj/item/paperplane/update_overlays()
 	. = ..()
 	var/list/stamped = internalPaper.stamped
-	if(!LAZYLEN(stamped))
-		return
-	for(var/S in stamped)
-		. += "paperplane_[S]"
+	if(stamped)
+		for(var/S in stamped)
+			. += "paperplane_[S]"
 
 /obj/item/paperplane/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")
@@ -80,7 +77,7 @@
 
 	else if(istype(P, /obj/item/stamp)) //we don't randomize stamps on a paperplane
 		internalPaper.attackby(P, user) //spoofed attack to update internal paper.
-		update_appearance()
+		update_icon()
 		add_fingerprint(user)
 		return
 
@@ -96,7 +93,7 @@
 		if(C.can_catch_item(TRUE))
 			var/datum/action/innate/origami/origami_action = locate() in C.actions
 			if(origami_action?.active) //if they're a master of origami and have the ability turned on, force throwmode on so they'll automatically catch the plane.
-				C.throw_mode_on(THROW_MODE_TOGGLE)
+				C.throw_mode_on()
 
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return

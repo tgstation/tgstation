@@ -7,7 +7,6 @@
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
-	base_icon_state = "mixer"
 	use_power = TRUE
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
@@ -19,7 +18,7 @@
 
 /obj/machinery/computer/pandemic/Initialize()
 	. = ..()
-	update_appearance()
+	update_icon()
 
 /obj/machinery/computer/pandemic/Destroy()
 	QDEL_NULL(beaker)
@@ -44,7 +43,7 @@
 /obj/machinery/computer/pandemic/handle_atom_del(atom/A)
 	if(A == beaker)
 		beaker = null
-		update_appearance()
+		update_icon()
 	return ..()
 
 /obj/machinery/computer/pandemic/proc/get_by_index(thing, index)
@@ -124,12 +123,14 @@
 
 /obj/machinery/computer/pandemic/proc/reset_replicator_cooldown()
 	wait = FALSE
-	update_appearance()
+	update_icon()
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
 /obj/machinery/computer/pandemic/update_icon_state()
-	icon_state = "[base_icon_state][beaker ? 1 : 0][(machine_stat & BROKEN) ? "_b" : (powered() ? null : "_nopower")]"
-	return ..()
+	if(machine_stat & BROKEN)
+		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
+	else
+		icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
 
 /obj/machinery/computer/pandemic/update_overlays()
 	. = ..()
@@ -140,7 +141,7 @@
 	if(beaker)
 		try_put_in_hand(beaker, usr)
 		beaker = null
-		update_appearance()
+		update_icon()
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -213,7 +214,7 @@
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
 			B.reagents.add_reagent(/datum/reagent/blood, 20, data)
 			wait = TRUE
-			update_appearance()
+			update_icon()
 			var/turf/source_turf = get_turf(src)
 			log_virus("A culture bottle was printed for the virus [A.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
@@ -227,7 +228,7 @@
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 			wait = TRUE
-			update_appearance()
+			update_icon()
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 200)
 			. = TRUE
 
@@ -245,7 +246,7 @@
 
 		beaker = I
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		update_appearance()
+		update_icon()
 	else
 		return ..()
 

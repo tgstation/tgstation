@@ -7,8 +7,7 @@
 	anchored = TRUE
 	density = TRUE
 	move_resist = INFINITY
-	plane = MASSIVE_OBJ_PLANE
-	plane = ABOVE_LIGHTING_PLANE
+	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	appearance_flags = LONG_GLIDE
 
@@ -121,17 +120,17 @@
 
 /obj/singularity/ex_act(severity, target)
 	switch(severity)
-		if(EXPLODE_DEVASTATE)
+		if(1)
 			if(current_size <= STAGE_TWO)
 				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_SINGULO)
 				qdel(src)
 				return
-
-			energy -= round(((energy + 1) / 2), 1)
-		if(EXPLODE_HEAVY)
-			energy -= round(((energy + 1) / 3), 1)
-		if(EXPLODE_LIGHT)
-			energy -= round(((energy + 1) / 4), 1)
+			else
+				energy -= round(((energy+1)/2),1)
+		if(2)
+			energy -= round(((energy+1)/3),1)
+		if(3)
+			energy -= round(((energy+1)/4),1)
 
 /obj/singularity/process(delta_time)
 	if(current_size >= STAGE_TWO)

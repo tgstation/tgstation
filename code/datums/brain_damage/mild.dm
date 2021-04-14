@@ -11,7 +11,7 @@
 	gain_text = "<span class='warning'>You feel your grip on reality slipping...</span>"
 	lose_text = "<span class='notice'>You feel more grounded.</span>"
 
-/datum/brain_trauma/mild/hallucinations/on_life(delta_time, times_fired)
+/datum/brain_trauma/mild/hallucinations/on_life()
 	owner.hallucination = min(owner.hallucination + 10, 50)
 	..()
 
@@ -26,7 +26,7 @@
 	gain_text = "<span class='warning'>Speaking clearly is getting harder.</span>"
 	lose_text = "<span class='notice'>You feel in control of your speech.</span>"
 
-/datum/brain_trauma/mild/stuttering/on_life(delta_time, times_fired)
+/datum/brain_trauma/mild/stuttering/on_life()
 	owner.stuttering = min(owner.stuttering + 5, 25)
 	..()
 
@@ -46,11 +46,11 @@
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "dumb", /datum/mood_event/oblivious)
 	..()
 
-/datum/brain_trauma/mild/dumbness/on_life(delta_time, times_fired)
+/datum/brain_trauma/mild/dumbness/on_life()
 	owner.derpspeech = min(owner.derpspeech + 5, 25)
-	if(DT_PROB(1.5, delta_time))
+	if(prob(3))
 		owner.emote("drool")
-	else if(owner.stat == CONSCIOUS && DT_PROB(1.5, delta_time))
+	else if(owner.stat == CONSCIOUS && prob(3))
 		owner.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"), forced = "brain damage")
 	..()
 
@@ -82,8 +82,8 @@
 	gain_text = "<span class='warning'>Your head hurts!</span>"
 	lose_text = "<span class='notice'>The pressure inside your head starts fading.</span>"
 
-/datum/brain_trauma/mild/concussion/on_life(delta_time, times_fired)
-	if(DT_PROB(2.5, delta_time))
+/datum/brain_trauma/mild/concussion/on_life()
+	if(prob(5))
 		switch(rand(1,11))
 			if(1)
 				owner.vomit()
@@ -114,9 +114,9 @@
 	owner.set_screwyhud(SCREWYHUD_HEALTHY)
 	..()
 
-/datum/brain_trauma/mild/healthy/on_life(delta_time, times_fired)
+/datum/brain_trauma/mild/healthy/on_life()
 	owner.set_screwyhud(SCREWYHUD_HEALTHY) //just in case of hallucinations
-	owner.adjustStaminaLoss(-2.5 * delta_time) //no pain, no fatigue
+	owner.adjustStaminaLoss(-5) //no pain, no fatigue
 	..()
 
 /datum/brain_trauma/mild/healthy/on_lose()
@@ -130,11 +130,11 @@
 	gain_text = "<span class='warning'>Your muscles feel oddly faint.</span>"
 	lose_text = "<span class='notice'>You feel in control of your muscles again.</span>"
 
-/datum/brain_trauma/mild/muscle_weakness/on_life(delta_time, times_fired)
+/datum/brain_trauma/mild/muscle_weakness/on_life()
 	var/fall_chance = 1
 	if(owner.m_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
-	if(DT_PROB(0.5 * fall_chance, delta_time) && owner.body_position == STANDING_UP)
+	if(prob(fall_chance) && owner.body_position == STANDING_UP)
 		to_chat(owner, "<span class='warning'>Your leg gives out!</span>")
 		owner.Paralyze(35)
 
@@ -142,10 +142,10 @@
 		var/drop_chance = 1
 		var/obj/item/I = owner.get_active_held_item()
 		drop_chance += I.w_class
-		if(DT_PROB(0.5 * drop_chance, delta_time) && owner.dropItemToGround(I))
+		if(prob(drop_chance) && owner.dropItemToGround(I))
 			to_chat(owner, "<span class='warning'>You drop [I]!</span>")
 
-	else if(DT_PROB(1.5, delta_time))
+	else if(prob(3))
 		to_chat(owner, "<span class='warning'>You feel a sudden weakness in your muscles!</span>")
 		owner.adjustStaminaLoss(50)
 	..()
@@ -172,8 +172,8 @@
 	gain_text = "<span class='warning'>Your throat itches incessantly...</span>"
 	lose_text = "<span class='notice'>Your throat stops itching.</span>"
 
-/datum/brain_trauma/mild/nervous_cough/on_life(delta_time, times_fired)
-	if(DT_PROB(6, delta_time) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
+/datum/brain_trauma/mild/nervous_cough/on_life()
+	if(prob(12) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
 		if(prob(5))
 			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
 			owner.Immobilize(20)

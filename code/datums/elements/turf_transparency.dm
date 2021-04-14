@@ -22,7 +22,7 @@
 
 	update_multiz(our_turf, TRUE, TRUE)
 
-/datum/element/turf_z_transparency/Detach(datum/source)
+/datum/element/turf_z_transparency/Detach(datum/source, force)
 	. = ..()
 	var/turf/our_turf = source
 	our_turf.vis_contents.len = 0

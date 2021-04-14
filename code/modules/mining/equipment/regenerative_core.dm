@@ -43,7 +43,7 @@
 /obj/item/organ/regenerative_core/proc/preserved(implanted = 0)
 	inert = FALSE
 	preserved = TRUE
-	update_appearance()
+	update_icon()
 	desc = "All that remains of a hivelord. It is preserved, allowing you to use it to heal completely without danger of decay."
 	if(implanted)
 		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "implanted"))
@@ -55,7 +55,7 @@
 	name = "decayed regenerative core"
 	desc = "All that remains of a hivelord. It has decayed, and is completely useless."
 	SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "inert"))
-	update_appearance()
+	update_icon()
 
 /obj/item/organ/regenerative_core/ui_action_click()
 	if(inert)
@@ -64,7 +64,7 @@
 		owner.revive(full_heal = TRUE, admin_revive = FALSE)
 	qdel(src)
 
-/obj/item/organ/regenerative_core/on_life(delta_time, times_fired)
+/obj/item/organ/regenerative_core/on_life()
 	..()
 	if(owner.health <= owner.crit_threshold)
 		ui_action_click()
@@ -118,11 +118,10 @@
 
 /obj/item/organ/regenerative_core/legion/Initialize()
 	. = ..()
-	update_appearance()
+	update_icon()
 
 /obj/item/organ/regenerative_core/update_icon_state()
 	icon_state = inert ? "legion_soul_inert" : "legion_soul"
-	return ..()
 
 /obj/item/organ/regenerative_core/update_overlays()
 	. = ..()

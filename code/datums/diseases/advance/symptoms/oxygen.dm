@@ -33,15 +33,13 @@ Bonus
 	)
 
 /datum/symptom/oxygen/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalResistance() >= 8) //blood regeneration
+	if(A.properties["resistance"] >= 8) //blood regeneration
 		regenerate_blood = TRUE
 
 /datum/symptom/oxygen/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
@@ -56,8 +54,7 @@ Bonus
 	return
 
 /datum/symptom/oxygen/on_stage_change(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return FALSE
 	var/mob/living/carbon/M = A.affected_mob
 	if(A.stage >= 4)
@@ -67,7 +64,6 @@ Bonus
 	return TRUE
 
 /datum/symptom/oxygen/End(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	REMOVE_TRAIT(A.affected_mob, TRAIT_NOBREATH, DISEASE_TRAIT)

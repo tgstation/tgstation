@@ -1,7 +1,7 @@
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
-	icon = 'icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
 	worn_icon_state = "bullet"
 	flags_1 = CONDUCT_1
@@ -44,7 +44,7 @@
 	pixel_x = base_pixel_x + rand(-10, 10)
 	pixel_y = base_pixel_y + rand(-10, 10)
 	setDir(pick(GLOB.alldirs))
-	update_appearance()
+	update_icon()
 
 /obj/item/ammo_casing/Destroy()
 	. = ..()
@@ -54,13 +54,10 @@
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 	QDEL_NULL(loaded_projectile)
 
-/obj/item/ammo_casing/update_icon_state()
-	icon_state = "[initial(icon_state)][loaded_projectile ? "-live" : null]"
-	return ..()
-
-/obj/item/ammo_casing/update_desc()
-	desc = "[initial(desc)][loaded_projectile ? null : " This one is spent."]"
-	return ..()
+/obj/item/ammo_casing/update_icon()
+	. = ..()
+	icon_state = "[initial(icon_state)][loaded_projectile ? "-live" : ""]"
+	desc = "[initial(desc)][loaded_projectile ? "" : " This one is spent."]"
 
 /*
  * On accidental consumption, 'spend' the ammo, and add in some gunpowder
@@ -68,7 +65,7 @@
 /obj/item/ammo_casing/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	if(loaded_projectile)
 		loaded_projectile = null
-		update_appearance()
+		update_icon()
 		victim.reagents?.add_reagent(/datum/reagent/gunpowder, 3)
 		source_item?.reagents?.add_reagent(/datum/reagent/gunpowder, source_item.reagents.total_volume*(2/3))
 
@@ -93,7 +90,7 @@
 				else
 					continue
 			if (boolets > 0)
-				box.update_appearance()
+				box.update_icon()
 				to_chat(user, "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>")
 			else
 				to_chat(user, "<span class='warning'>You fail to collect anything!</span>")
@@ -107,7 +104,7 @@
 /obj/item/ammo_casing/proc/bounce_away(still_warm = FALSE, bounce_delay = 3)
 	if(!heavy_metal)
 		return
-	update_appearance()
+	update_icon()
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)
 	if(still_warm && T?.bullet_sizzle)

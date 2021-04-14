@@ -36,7 +36,7 @@
 /obj/item/gun/syringe/process_chamber()
 	if(chambered && !chambered.loaded_projectile) //we just fired
 		recharge_newshot()
-	update_appearance()
+	update_icon()
 
 /obj/item/gun/syringe/examine(mob/user)
 	. = ..()
@@ -55,7 +55,7 @@
 
 	syringes.Remove(S)
 	to_chat(user, "<span class='notice'>You unload [S] from \the [src].</span>")
-	update_appearance()
+	update_icon()
 
 	return TRUE
 
@@ -70,7 +70,7 @@
 			to_chat(user, "<span class='notice'>You load [A] into \the [src].</span>")
 			syringes += A
 			recharge_newshot()
-			update_appearance()
+			update_icon()
 			playsound(loc, load_sound, 40)
 			return TRUE
 		else

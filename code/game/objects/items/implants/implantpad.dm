@@ -13,7 +13,6 @@
 
 /obj/item/implantpad/update_icon_state()
 	icon_state = "implantpad-[!QDELETED(case)]"
-	return ..()
 
 /obj/item/implantpad/examine(mob/user)
 	. = ..()
@@ -28,7 +27,7 @@
 /obj/item/implantpad/handle_atom_del(atom/A)
 	if(A == case)
 		case = null
-	update_appearance()
+	update_icon()
 	updateSelfDialog()
 	. = ..()
 
@@ -47,7 +46,7 @@
 	case = null
 
 	updateSelfDialog()
-	update_appearance()
+	update_icon()
 
 /obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user, params)
 	if(istype(C, /obj/item/implantcase) && !case)
@@ -55,7 +54,7 @@
 			return
 		case = C
 		updateSelfDialog()
-		update_appearance()
+		update_icon()
 	else
 		return ..()
 

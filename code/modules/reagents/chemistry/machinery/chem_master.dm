@@ -11,7 +11,6 @@
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
-	base_icon_state = "mixer"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -65,27 +64,26 @@
 		reagents.maximum_volume += B.reagents.maximum_volume
 
 /obj/machinery/chem_master/ex_act(severity, target)
-	if(severity >= EXPLODE_LIGHT) // This actually makes the dispenser immune to explosions at least as weak as [EXPLODE_LIGHT]. Don't ask me why the defines are inverted. I don't know.
-		return FALSE
-	return ..()
+	if(severity < 3)
+		..()
 
 /obj/machinery/chem_master/contents_explosion(severity, target)
-	. = ..()
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			if(beaker)
+	..()
+	if(beaker)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
 				SSexplosions.high_mov_atom += beaker
-			if(bottle)
-				SSexplosions.high_mov_atom += bottle
-		if(EXPLODE_HEAVY)
-			if(beaker)
+			if(EXPLODE_HEAVY)
 				SSexplosions.med_mov_atom += beaker
-			if(bottle)
-				SSexplosions.med_mov_atom += bottle
-		if(EXPLODE_LIGHT)
-			if(beaker)
+			if(EXPLODE_LIGHT)
 				SSexplosions.low_mov_atom += beaker
-			if(bottle)
+	if(bottle)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += bottle
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += bottle
+			if(EXPLODE_LIGHT)
 				SSexplosions.low_mov_atom += bottle
 
 /obj/machinery/chem_master/handle_atom_del(atom/A)
@@ -93,13 +91,15 @@
 	if(A == beaker)
 		beaker = null
 		reagents.clear_reagents()
-		update_appearance()
+		update_icon()
 	else if(A == bottle)
 		bottle = null
 
 /obj/machinery/chem_master/update_icon_state()
-	icon_state = "[base_icon_state][beaker ? 1 : 0]"
-	return ..()
+	if(beaker)
+		icon_state = "mixer1"
+	else
+		icon_state = "mixer0"
 
 /obj/machinery/chem_master/update_overlays()
 	. = ..()
@@ -131,7 +131,7 @@
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
-		update_appearance()
+		update_icon()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
 			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
@@ -169,7 +169,7 @@
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	update_appearance()
+	update_icon()
 	return TRUE
 
 /obj/machinery/chem_master/on_deconstruction()

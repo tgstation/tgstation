@@ -49,6 +49,7 @@
 	if((action != "admin_log" || action != "show_admins") && !check_rights(R_ADMIN))
 		return
 	var/datum/round_event/E
+	var/ok = FALSE
 	switch(action)
 		//Generic Buttons anyone can use.
 		if("admin_log")
@@ -448,11 +449,10 @@
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Monkeyize All Humans"))
-			message_admins("[key_name_admin(holder)] made everyone into monkeys.")
-			log_admin("[key_name_admin(holder)] made everyone into monkeys.")
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
 				INVOKE_ASYNC(H, /mob/living/carbon.proc/monkeyize)
+			ok = TRUE
 		if("traitor_all")
 			if(!is_funmin)
 				return
@@ -571,6 +571,8 @@
 		E.processing = TRUE
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
+		if(ok)
+			to_chat(world, text("<B>A secret has been activated by []!</B>", holder.key), confidential = TRUE)
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE

@@ -32,7 +32,7 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
-	update_appearance()
+	update_icon()
 
 /obj/machinery/electrolyzer/Destroy()
 	if(cell)
@@ -56,10 +56,10 @@
 
 /obj/machinery/electrolyzer/update_icon_state()
 	icon_state = "electrolyzer-[on ? "[mode]" : "off"]"
-	return ..()
 
 /obj/machinery/electrolyzer/update_overlays()
 	. = ..()
+
 	if(panel_open)
 		. += "electrolyzer-open"
 
@@ -71,21 +71,21 @@
 
 	if(!cell || cell.charge <= 0)
 		on = FALSE
-		update_appearance()
+		update_icon()
 		return PROCESS_KILL
 
 	var/turf/L = loc
 	if(!istype(L))
 		if(mode != ELECTROLYZER_MODE_STANDBY)
 			mode = ELECTROLYZER_MODE_STANDBY
-			update_appearance()
+			update_icon()
 		return
 
 	var/newMode = on ? ELECTROLYZER_MODE_WORKING : ELECTROLYZER_MODE_STANDBY //change the mode to working if the machine is on
 
 	if(mode != newMode) //check if the mode is set correctly
 		mode = newMode
-		update_appearance()
+		update_icon()
 
 	if(mode == ELECTROLYZER_MODE_STANDBY)
 		return
@@ -140,7 +140,7 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].</span>", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
-		update_appearance()
+		update_icon()
 		return
 	if(default_deconstruction_crowbar(I))
 		return
@@ -173,7 +173,7 @@
 			on = !on
 			mode = ELECTROLYZER_MODE_STANDBY
 			usr.visible_message("<span class='notice'>[usr] switches [on ? "on" : "off"] \the [src].</span>", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
-			update_appearance()
+			update_icon()
 			if (on)
 				START_PROCESSING(SSmachines, src)
 			. = TRUE

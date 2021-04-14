@@ -456,7 +456,6 @@
 	light_system = MOVABLE_LIGHT
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
-	base_icon_state = "glowstick"
 	inhand_icon_state = "glowstick"
 	worn_icon_state = "lightstick"
 	grind_results = list(/datum/reagent/phenol = 15, /datum/reagent/hydrogen = 10, /datum/reagent/oxygen = 5) //Meth-in-a-stick
@@ -480,35 +479,28 @@
 	if(fuel <= 0)
 		turn_off()
 		STOP_PROCESSING(SSobj, src)
-		update_appearance()
+		update_icon()
 
 /obj/item/flashlight/glowstick/proc/turn_off()
 	on = FALSE
-	update_appearance()
+	update_icon()
 
-/obj/item/flashlight/glowstick/update_appearance(updates=ALL)
-	. = ..()
+/obj/item/flashlight/glowstick/update_icon()
+	inhand_icon_state = "glowstick"
+	cut_overlays()
 	if(fuel <= 0)
+		icon_state = "glowstick-empty"
+		cut_overlays()
 		set_light_on(FALSE)
-		return
-	if(on)
+	else if(on)
+		var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
+		glowstick_overlay.color = color
+		add_overlay(glowstick_overlay)
+		inhand_icon_state = "glowstick-on"
 		set_light_on(TRUE)
-		return
-
-/obj/item/flashlight/glowstick/update_icon_state()
-	icon_state = "[base_icon_state][(fuel <= 0) ? "-empty" : ""]"
-	inhand_icon_state = "[base_icon_state][((fuel > 0) && on) ? "-on" : ""]"
-	return ..()
-
-/obj/item/flashlight/glowstick/update_overlays()
-	. = ..()
-	if(fuel <= 0 && !on)
-		return
-
-	var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
-	glowstick_overlay.color = color
-	. += glowstick_overlay
-
+	else
+		icon_state = "glowstick"
+		cut_overlays()
 
 /obj/item/flashlight/glowstick/attack_self(mob/user)
 	if(fuel <= 0)
@@ -617,7 +609,7 @@
 	else
 		set_light(0)
 
-//type and subtypes spawned and used to give some eyes lights,
+
 /obj/item/flashlight/eyelight
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
@@ -627,11 +619,3 @@
 	flags_1 = CONDUCT_1
 	item_flags = DROPDEL
 	actions_types = list()
-
-/obj/item/flashlight/eyelight/adapted
-	name = "adaptedlight"
-	desc = "There is no possible way for a player to see this, so I can safely talk at length about why this exists. Adapted eyes come \
-	with icons that go above the lighting layer so to make sure the red eyes that pierce the darkness are always visible we make the \
-	human emit the smallest amount of light possible. Thanks for reading :)"
-	light_range = 1
-	light_power = 0.07

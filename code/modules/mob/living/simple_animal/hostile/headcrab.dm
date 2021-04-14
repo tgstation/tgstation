@@ -1,4 +1,4 @@
-#define EGG_INCUBATION_TIME 4 MINUTES
+#define EGG_INCUBATION_TIME 120
 
 /mob/living/simple_animal/hostile/headcrab
 	name = "headslug"
@@ -14,7 +14,6 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
-	attack_vis_effect = ATTACK_EFFECT_BITE
 	faction = list("creature")
 	robust_searching = 1
 	stat_attack = DEAD
@@ -58,11 +57,11 @@
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
 	var/datum/mind/origin
-	var/time = 0
+	var/time
 
-/obj/item/organ/body_egg/changeling_egg/egg_process(delta_time, times_fired)
+/obj/item/organ/body_egg/changeling_egg/egg_process()
 	// Changeling eggs grow in dead people
-	time += delta_time
+	time++
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
 		Remove(owner)

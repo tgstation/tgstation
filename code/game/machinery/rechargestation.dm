@@ -18,7 +18,7 @@
 
 /obj/machinery/recharge_station/Initialize()
 	. = ..()
-	update_appearance()
+	update_icon()
 	if(is_operational)
 		begin_processing()
 
@@ -99,11 +99,13 @@
 		add_fingerprint(occupant)
 
 /obj/machinery/recharge_station/update_icon_state()
-	if(!is_operational)
-		icon_state = "borgcharger-u[state_open ? 0 : 1]"
-		return ..()
-	icon_state = "borgcharger[state_open ? 0 : (occupant ? 1 : 2)]"
-	return ..()
+	if(is_operational)
+		if(state_open)
+			icon_state = "borgcharger0"
+		else
+			icon_state = (occupant ? "borgcharger1" : "borgcharger2")
+	else
+		icon_state = (state_open ? "borgcharger-u0" : "borgcharger-u1")
 
 /obj/machinery/recharge_station/proc/process_occupant(delta_time)
 	if(!occupant)

@@ -3,7 +3,6 @@
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_off"
-	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/braintype = "Cyborg"
 	var/obj/item/radio/radio = null //Let's give it a radio.
@@ -34,10 +33,11 @@
 
 /obj/item/mmi/update_icon_state()
 	if(!brain)
-		icon_state = "[base_icon_state]_off"
-		return ..()
-	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/brain/alien) ? "_alien" : null]"
-	return ..()
+		icon_state = "mmi_off"
+	else if(istype(brain, /obj/item/organ/brain/alien))
+		icon_state = "mmi_brain_alien"
+	else
+		icon_state = "mmi_brain"
 
 /obj/item/mmi/update_overlays()
 	. = ..()
@@ -46,8 +46,7 @@
 /obj/item/mmi/proc/add_mmi_overlay()
 	if(brainmob && brainmob.stat != DEAD)
 		. += "mmi_alive"
-		return
-	if(brain)
+	else if(brain)
 		. += "mmi_dead"
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)
@@ -87,7 +86,7 @@
 		brain.organ_flags |= ORGAN_FROZEN
 
 		name = "[initial(name)]: [brainmob.real_name]"
-		update_appearance()
+		update_icon()
 		if(istype(brain, /obj/item/organ/brain/alien))
 			braintype = "Xenoborg" //HISS....Beep.
 		else
@@ -108,7 +107,7 @@
 		to_chat(user, "<span class='notice'>You toggle [src]'s radio system [radio.on==1 ? "on" : "off"].</span>")
 	else
 		eject_brain(user)
-		update_appearance()
+		update_icon()
 		name = initial(name)
 		to_chat(user, "<span class='notice'>You unlock and upend [src], spilling the brain onto the floor.</span>")
 
@@ -150,7 +149,7 @@
 	brain.organ_flags |= ORGAN_FROZEN
 
 	name = "[initial(name)]: [brainmob.real_name]"
-	update_appearance()
+	update_icon()
 	if(istype(brain, /obj/item/organ/brain/alien))
 		braintype = "Xenoborg" //HISS....Beep.
 	else

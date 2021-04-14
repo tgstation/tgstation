@@ -75,7 +75,7 @@
 	return
 
 /obj/effect/anomaly/ex_act(severity, target)
-	if(severity == EXPLODE_DEVASTATE)
+	if(severity == 1)
 		qdel(src)
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
@@ -201,7 +201,7 @@
 
 /obj/effect/anomaly/bluespace
 	name = "bluespace anomaly"
-	icon = 'icons/obj/guns/projectiles.dmi'
+	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
 	density = TRUE
 	aSignal = /obj/item/assembly/signaler/anomaly/bluespace

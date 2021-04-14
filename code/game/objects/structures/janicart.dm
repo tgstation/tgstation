@@ -66,7 +66,7 @@
 		if(!myspray)
 			put_in_cart(I, user)
 			myspray=I
-			update_appearance()
+			update_icon()
 		else
 			to_chat(user, fail_msg)
 	else if(istype(I, /obj/item/lightreplacer))
@@ -79,7 +79,7 @@
 		if(signs < max_signs)
 			put_in_cart(I, user)
 			signs++
-			update_appearance()
+			update_icon()
 		else
 			to_chat(user, "<span class='warning'>[src] can't hold any more signs!</span>")
 	else if(mybag)
@@ -159,7 +159,7 @@
 		else
 			return
 
-	update_appearance()
+	update_icon()
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu

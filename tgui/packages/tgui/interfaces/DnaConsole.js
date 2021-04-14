@@ -1186,7 +1186,6 @@ const GeneticMakeupBuffers = (props, context) => {
   const { data, act } = useBackend(context);
   const {
     diskHasMakeup,
-    geneticMakeupCooldown,
     hasDisk,
     isViableSubject,
     makeupCapacity = 3,
@@ -1236,19 +1235,6 @@ const GeneticMakeupBuffers = (props, context) => {
   }
   return (
     <Section title="Genetic Makeup Buffers">
-      {!!geneticMakeupCooldown && (
-        <Dimmer
-          fontSize="14px"
-          textAlign="center">
-          <Icon
-            mr={1}
-            name="spinner"
-            spin />
-          Genetic makeup transfer ready in...
-          <Box mt={1} />
-          {geneticMakeupCooldown}s
-        </Dimmer>
-      )}
       {elements}
     </Section>
   );

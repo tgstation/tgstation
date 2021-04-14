@@ -157,7 +157,7 @@
 						card.emotion_icon = "extremely-happy"
 					else
 						card.emotion_icon = "[lowertext(newImage)]"
-				card.update_appearance()
+				card.update_icon()
 
 			if("news")
 				newscaster.ui_interact(src)

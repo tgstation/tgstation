@@ -13,7 +13,6 @@
 	icon_state = "seedling"
 	icon_living = "seedling"
 	icon_dead = "seedling_dead"
-	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	maxHealth = 100
 	health = 100
 	melee_damage_lower = 30
@@ -61,7 +60,7 @@
 	name = "beam of solar energy"
 	icon_state = "solar_beam"
 	icon = 'icons/effects/beam.dmi'
-	plane = LIGHTING_PLANE
+	layer = LIGHTING_LAYER
 	duration = 5
 	randomdir = FALSE
 

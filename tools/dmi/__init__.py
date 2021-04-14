@@ -124,6 +124,7 @@ class Dmi:
             if state.name == name:
                 return state
         raise KeyError(name)
+        return self.default_state
 
     def _assemble_comment(self):
         comment = "# BEGIN DMI\n"

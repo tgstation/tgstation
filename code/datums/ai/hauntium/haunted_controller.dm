@@ -1,6 +1,5 @@
 
 /datum/ai_controller/haunted
-	movement_delay = 0.4 SECONDS
 	blackboard = list(BB_TO_HAUNT_LIST = list(),
 	BB_HAUNT_TARGET,
 	BB_HAUNTED_THROW_ATTEMPT_COUNT)
@@ -14,6 +13,9 @@
 /datum/ai_controller/haunted/UnpossessPawn()
 	UnregisterSignal(pawn, COMSIG_ITEM_EQUIPPED)
 	return ..() //Run parent at end
+
+/datum/ai_controller/haunted/able_to_run()
+	return TRUE
 
 /datum/ai_controller/haunted/SelectBehaviors(delta_time)
 	current_behaviors = list()

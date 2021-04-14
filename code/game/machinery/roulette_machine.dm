@@ -71,19 +71,16 @@
 	data["IsAnchored"] = anchored
 	data["BetAmount"] = chosen_bet_amount
 	data["BetType"] = chosen_bet_type
-	data["HouseBalance"] = my_card?.registered_account?.account_balance || 0
+	data["HouseBalance"] = my_card?.registered_account.account_balance
 	data["LastSpin"] = last_spin
 	data["Spinning"] = playing
-
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		var/obj/item/card/id/id_card = human_user.get_idcard(TRUE)
-		data["AccountBalance"] = id_card?.registered_account?.account_balance || 0
-		data["CanUnbolt"] = (id_card == my_card)
+	var/mob/living/carbon/human/H = user
+	var/obj/item/card/id/C = H.get_idcard(TRUE)
+	if(C)
+		data["AccountBalance"] = C.registered_account.account_balance
 	else
 		data["AccountBalance"] = 0
-		data["CanUnbolt"] = FALSE
+	data["CanUnbolt"] = (C == my_card)
 
 	return data
 
@@ -102,7 +99,7 @@
 		if("ChangeBetType")
 			chosen_bet_type = params["type"]
 			. = TRUE
-	update_appearance() // Not applicable to all objects.
+	update_icon() // Not applicable to all objects.
 
 ///Handles setting ownership and the betting itself.
 /obj/machinery/roulette/attackby(obj/item/W, mob/user, params)
@@ -185,7 +182,7 @@
 	my_card.registered_account.transfer_money(player_id.registered_account, bet_amount)
 
 	playing = TRUE
-	update_appearance()
+	update_icon()
 	set_light(0)
 
 	var/rolled_number = rand(0, 36)
@@ -210,7 +207,7 @@
 	audible_message("<span class='notice'>The result is: [result]</span>")
 
 	playing = FALSE
-	update_icon(ALL, potential_payout, color, rolled_number, is_winner)
+	update_icon(potential_payout, color, rolled_number, is_winner)
 	handle_color_light(color)
 
 	if(!is_winner)
@@ -325,18 +322,14 @@
 	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 	return FALSE
 
-/obj/machinery/roulette/update_overlays()
-	. = ..()
+/obj/machinery/roulette/update_icon(payout, color, rolled_number, is_winner = FALSE)
+	cut_overlays()
+
 	if(machine_stat & MAINT)
 		return
 
 	if(playing)
-		. += "random_numbers"
-
-/obj/machinery/roulette/update_icon(updates=ALL, payout, color, rolled_number, is_winner = FALSE)
-	. = ..()
-	if(machine_stat & MAINT)
-		return
+		add_overlay("random_numbers")
 
 	if(!payout || !color || isnull(rolled_number)) //Don't fall for tricks.
 		return

@@ -14,11 +14,11 @@
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.</span>"
 	miner_fluff_string = "<span class='holoparasite'>You encounter... Plasma, the bringer of fire.</span>"
 
-/mob/living/simple_animal/hostile/guardian/fire/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/guardian/fire/Life()
 	. = ..()
 	if(summoner)
 		summoner.extinguish_mob()
-		summoner.adjust_fire_stacks(-10 * delta_time)
+		summoner.adjust_fire_stacks(-20)
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	. = ..()

@@ -19,7 +19,7 @@
 /datum/disease/advance
 	name = "Unknown" // We will always let our Virologist name our disease.
 	desc = "An engineered disease which can contain a multitude of symptoms."
-	form = "Advanced Disease" // Will let med-scanners know that this disease was engineered.
+	form = "Advance Disease" // Will let med-scanners know that this disease was engineered.
 	agent = "advance microbes"
 	max_stages = 5
 	spread_text = "Unknown"
@@ -105,7 +105,7 @@
 
 
 // Randomly pick a symptom to activate.
-/datum/disease/advance/stage_act(delta_time, times_fired)
+/datum/disease/advance/stage_act()
 	. = ..()
 	if(!.)
 		return
@@ -254,8 +254,8 @@
 			SetSpread(DISEASE_SPREAD_BLOOD)
 
 		permeability_mod = max(CEILING(0.4 * properties["transmittable"], 1), 1)
-		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // can be between 5 and 10
-		stage_prob = max(0.5 * properties["stage_rate"], 1)
+		cure_chance = 15 - clamp(properties["resistance"], -5, 5) // can be between 10 and 20
+		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
 	else

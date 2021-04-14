@@ -1,7 +1,6 @@
-root: true
-parser: '@typescript-eslint/parser'
+parser: '@babel/eslint-parser'
 parserOptions:
-  ecmaVersion: 2020
+  ecmaVersion: 2019
   sourceType: module
   ecmaFeatures:
     jsx: true
@@ -9,8 +8,9 @@ env:
   es6: true
   browser: true
   node: true
+globals:
+  Byond: readonly
 plugins:
-  - radar
   - react
 settings:
   react:
@@ -19,6 +19,7 @@ rules:
 
   ## Possible Errors
   ## ----------------------------------------
+
   ## Enforce “for” loop update clause moving the counter in the right
   ## direction.
   # for-direction: error
@@ -278,8 +279,7 @@ rules:
   no-shadow-restricted-names: error
   ## Disallow the use of undeclared variables unless mentioned
   ## in /*global*/ comments
-  ## NOTE: Pointless when TypeScript can check for this
-  # no-undef: error
+  no-undef: error
   ## Disallow initializing variables to undefined
   no-undef-init: error
   ## Disallow the use of undefined as an identifier
@@ -507,7 +507,7 @@ rules:
   ## Require braces around arrow function bodies
   # arrow-body-style: error
   ## Require parentheses around arrow function arguments
-  # arrow-parens: [error, as-needed]
+  arrow-parens: [error, as-needed]
   ## Enforce consistent spacing before and after the arrow in arrow functions
   arrow-spacing: [error, { before: true, after: true }]
   ## Require super() calls in constructors

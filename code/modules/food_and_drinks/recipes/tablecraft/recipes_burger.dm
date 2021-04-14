@@ -17,7 +17,7 @@
 	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/burger
-	name = "Plain Burger"
+	name = "Burger"
 	reqs = list(
 			/obj/item/food/patty/plain = 1,
 			/obj/item/food/bun = 1

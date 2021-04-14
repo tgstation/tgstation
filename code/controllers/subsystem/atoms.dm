@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(atoms)
 
 	///initAtom() adds the atom its creating to this list iff InitializeAtoms() has been given a list to populate as an argument
 	var/list/created_atoms
+	// ^ if this is not null after InitializeAtoms() is done, this list will fill up with every atom in the world initialized afterwards!
 
 	initialized = INITIALIZATION_INSSATOMS
 
@@ -46,13 +47,13 @@ SUBSYSTEM_DEF(atoms)
 		for(var/I in 1 to count)
 			var/atom/A = atoms[I]
 			if(!(A.flags_1 & INITIALIZED_1))
+				InitAtom(A, mapload_arg)
 				CHECK_TICK
-				InitAtom(A, TRUE, mapload_arg)
 	else
 		count = 0
 		for(var/atom/A in world)
 			if(!(A.flags_1 & INITIALIZED_1))
-				InitAtom(A, FALSE, mapload_arg)
+				InitAtom(A, mapload_arg)
 				++count
 				CHECK_TICK
 
@@ -73,7 +74,7 @@ SUBSYSTEM_DEF(atoms)
 		created_atoms = null
 
 /// Init this specific atom
-/datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, list/arguments)
+/datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
 	var/the_type = A.type
 	if(QDELING(A))
 		BadInitializeCalls[the_type] |= BAD_INIT_QDEL_BEFORE
@@ -107,8 +108,9 @@ SUBSYSTEM_DEF(atoms)
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	else
 		SEND_SIGNAL(A,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
-		if(created_atoms && from_template && ispath(the_type, /atom/movable))//we only want to populate the list with movables
-			created_atoms += A.GetAllContents()
+
+	if (created_atoms)
+		created_atoms += A
 
 	return qdeleted || QDELING(A)
 

@@ -95,7 +95,7 @@
 	/// Headwear slot
 	var/obj/item/head
 	/// Default [/mob/living/simple_animal/drone/var/internal_storage] item
-	var/obj/item/default_storage = /obj/item/storage/drone_tools
+	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/drone
 	/// Default [/mob/living/simple_animal/drone/var/head] item
 	var/obj/item/default_hatmask
 	/**
@@ -111,8 +111,6 @@
 	var/visualAppearance = MAINTDRONE
 	/// Hacked state, see [/mob/living/simple_animal/drone/proc/update_drone_hack]
 	var/hacked = FALSE
-	/// If we have laws to minimize bothering others. Enables or disables drone laws enforcement components (use [/mob/living/simple_animal/drone/proc/set_shy] to set)
-	var/shy = TRUE
 	/// Flavor text announced to drones on [/mob/proc/Login]
 	var/flavortext = \
 	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
@@ -123,61 +121,13 @@
 	"<span class='notice'>     - Interacting with non-living beings (dragging bodies, looting bodies, etc.)</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
-	/// blacklisted drone areas, direct
-	var/list/drone_area_blacklist_flat = list(/area/engineering/atmos, /area/engineering/atmospherics_engine)
-	/// blacklisted drone areas, recursive/includes descendants
-	var/list/drone_area_blacklist_recursive = list(/area/engineering/supermatter)
-	/// whitelisted drone machines, direct
-	var/list/drone_machinery_whitelist_flat
-	/// whitelisted drone machines, recursive/includes descendants
-	var/list/drone_machinery_whitelist_recursive = list(
-		/obj/machinery/atmospherics,
-		/obj/machinery/autolathe,
-		/obj/machinery/cell_charger,
-		/obj/machinery/disposal,
-		/obj/machinery/drone_dispenser,
-		/obj/machinery/light,
-		/obj/machinery/pipedispenser,
-		/obj/machinery/recharger,
-		/obj/machinery/rnd/production,
-	)
-	/// whitelisted drone items, direct
-	var/list/drone_item_whitelist_flat = list(
-		/obj/item/crowbar/drone,
-		/obj/item/screwdriver/drone,
-		/obj/item/wrench/drone,
-		/obj/item/weldingtool/drone,
-		/obj/item/wirecutters/drone,
-	)
-	/// whitelisted drone items, recursive/includes descendants
-	var/list/drone_item_whitelist_recursive = list(
-		/obj/item/airlock_painter,
-		/obj/item/circuitboard,
-		/obj/item/conveyor_switch_construct,
-		/obj/item/electronics,
-		/obj/item/light,
-		/obj/item/pipe_meter,
-		/obj/item/stack/cable_coil,
-		/obj/item/stack/circuit_stack,
-		/obj/item/stack/conveyor,
-		/obj/item/stack/pipe_cleaner_coil,
-		/obj/item/stack/rods,
-		/obj/item/stack/sheet,
-		/obj/item/stack/tile,
-		/obj/item/stock_parts,
-		/obj/item/toner,
-		/obj/item/clothing/head,
-		/obj/item/clothing/mask,
-	)
 
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
 	GLOB.drones_list += src
-	access_card = new /obj/item/card/id/advanced/simple_bot(src)
-
-	// Doing this hurts my soul, but simple_animal access reworks are for another day.
-	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]
-	access_card.add_access(cap_trim.access + cap_trim.wildcard_access)
+	access_card = new /obj/item/card/id(src)
+	var/datum/job/captain/C = new /datum/job/captain
+	access_card.access = C.get_access()
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
@@ -187,8 +137,6 @@
 		equip_to_slot_or_del(I, ITEM_SLOT_HEAD)
 
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-
-	shy_update()
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -315,26 +263,20 @@
  * * O - unused argument, see [/mob/living/silicon/robot/triggerAlarm]
  * * alarmsource - [/atom] source of the alarm
  */
-/mob/living/simple_animal/drone/proc/triggerAlarm(class, area/home, cameras, obj/source)
-	if(source.z != z)
+/mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
+	if(alarmsource.z != z)
 		return
-	if(stat == DEAD)
-		return
-	var/list/our_sort = alarms[class]
-	for(var/areaname in our_sort)
-		if (areaname == home.name)
-			var/list/alarm = our_sort[areaname]
-			var/list/sources = alarm[2]
-			if (!(source in sources))
-				sources += source
-			return TRUE
-
-	our_sort[home.name] = list(home, list(source))
-	to_chat(src, "--- [class] alarm detected in [home.name]!")
-
-///This isn't currently needed since drones do jack shit with cameras. I hate this code so much
-/mob/living/simple_animal/drone/proc/freeCamera(area/home, obj/machinery/camera/cam)
-	return
+	if(stat != DEAD)
+		var/list/L = src.alarms[class]
+		for (var/I in L)
+			if (I == A.name)
+				var/list/alarm = L[I]
+				var/list/sources = alarm[2]
+				if (!(alarmsource in sources))
+					sources += alarmsource
+				return
+		L[A.name] = list(A, list(alarmsource))
+		to_chat(src, "--- [class] alarm detected in [A.name]!")
 
 /**
  * Clears alarm and alerts drones
@@ -360,31 +302,7 @@
 		if(cleared)
 			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
-/mob/living/simple_animal/drone/proc/set_shy(new_shy)
-	shy = new_shy
-	shy_update()
-
-/mob/living/simple_animal/drone/proc/shy_update()
-	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
-	var/list/drone_good_machines = make_associative(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive)
-	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
-	if(shy)
-		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		LoadComponent(/datum/component/shy, typecacheof(/mob/living/simple_animal/drone), 4, "Your laws prevent this action near %TARGET.", TRUE)
-		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
-		LoadComponent(/datum/component/technointrovert, drone_good_machines, "Using %TARGET could break your laws.")
-		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
-	else
-		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		qdel(GetComponent(/datum/component/shy))
-		qdel(GetComponent(/datum/component/shy_in_room))
-		qdel(GetComponent(/datum/component/technointrovert))
-		qdel(GetComponent(/datum/component/itempicky))
-
-/mob/living/simple_animal/drone/handle_temperature_damage()
-	return
-
-/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
+/mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(affect_silicon)
 		return ..()
 

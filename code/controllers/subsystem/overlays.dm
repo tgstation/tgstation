@@ -7,8 +7,12 @@ SUBSYSTEM_DEF(overlays)
 
 	var/list/queue
 	var/list/stats
+	var/list/overlay_icon_state_caches
+	var/list/overlay_icon_cache
 
 /datum/controller/subsystem/overlays/PreInit()
+	overlay_icon_state_caches = list()
+	overlay_icon_cache = list()
 	queue = list()
 	stats = list()
 
@@ -28,6 +32,8 @@ SUBSYSTEM_DEF(overlays)
 
 
 /datum/controller/subsystem/overlays/Recover()
+	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
+	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	queue = SSoverlays.queue
 
 
@@ -64,17 +70,31 @@ SUBSYSTEM_DEF(overlays)
 		queue.Cut(1,count+1)
 		count = 0
 
-
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()
+	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches
+	var/list/cached_icon = icon_states_cache[icon]
+	if (cached_icon)
+		var/cached_appearance = cached_icon["[iconstate]"]
+		if (cached_appearance)
+			return cached_appearance
 	stringbro.icon = icon
 	stringbro.icon_state = iconstate
-	return stringbro.appearance
-	
+	if (!cached_icon) //not using the macro to save an associated lookup
+		cached_icon = list()
+		icon_states_cache[icon] = cached_icon
+	var/cached_appearance = stringbro.appearance
+	cached_icon["[iconstate]"] = cached_appearance
+	return cached_appearance
+
 /proc/icon2appearance(icon)
 	var/static/image/iconbro = new()
-	iconbro.icon = icon
-	return iconbro.appearance
+	var/list/icon_cache = SSoverlays.overlay_icon_cache
+	. = icon_cache[icon]
+	if (!.)
+		iconbro.icon = icon
+		. = iconbro.appearance
+		icon_cache[icon] = .
 
 /atom/proc/build_appearance_list(old_overlays)
 	var/static/image/appearance_bro = new()

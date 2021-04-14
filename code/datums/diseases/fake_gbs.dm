@@ -11,26 +11,26 @@
 	severity = DISEASE_SEVERITY_BIOHAZARD
 
 
-/datum/disease/fake_gbs/stage_act(delta_time, times_fired)
+/datum/disease/fake_gbs/stage_act()
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if(DT_PROB(0.5, delta_time))
+			if(prob(1))
 				affected_mob.emote("sneeze")
 		if(3)
-			if(DT_PROB(2.5, delta_time))
+			if(prob(5))
 				affected_mob.emote("cough")
-			else if(DT_PROB(2.5, delta_time))
+			else if(prob(5))
 				affected_mob.emote("gasp")
-			if(DT_PROB(5, delta_time))
+			if(prob(10))
 				to_chat(affected_mob, "<span class='danger'>You're starting to feel very weak...</span>")
 		if(4)
-			if(DT_PROB(5, delta_time))
+			if(prob(10))
 				affected_mob.emote("cough")
 
 		if(5)
-			if(DT_PROB(5, delta_time))
+			if(prob(10))
 				affected_mob.emote("cough")

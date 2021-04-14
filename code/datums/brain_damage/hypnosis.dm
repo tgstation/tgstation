@@ -43,9 +43,9 @@
 	owner.clear_alert("hypnosis")
 	..()
 
-/datum/brain_trauma/hypnosis/on_life(delta_time, times_fired)
+/datum/brain_trauma/hypnosis/on_life()
 	..()
-	if(DT_PROB(1, delta_time))
+	if(prob(2))
 		switch(rand(1,2))
 			if(1)
 				to_chat(owner, "<span class='hypnophrase'><i>...[lowertext(hypnotic_phrase)]...</i></span>")

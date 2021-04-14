@@ -23,7 +23,7 @@
 	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 	RegisterSignal(target, COMSIG_ATOM_BUMPED, .proc/try_speedrun)
 
-/datum/element/climbable/Detach(datum/target)
+/datum/element/climbable/Detach(datum/target, force)
 	UnregisterSignal(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_MOUSEDROPPED_ONTO, COMSIG_ATOM_BUMPED))
 	return ..()
 

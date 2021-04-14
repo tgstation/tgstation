@@ -93,7 +93,7 @@
 		if("toggle")
 			toggled = !toggled
 			update_power()
-			update_appearance()
+			update_icon()
 			log_game("[key_name(operator)] toggled [toggled ? "On" : "Off"] [src] at [AREACOORD(src)].")
 			. = TRUE
 		if("id")

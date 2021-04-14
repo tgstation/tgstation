@@ -6,7 +6,6 @@
 	clothes_req = TRUE
 	invocation = "UN'LTD P'WAH!"
 	invocation_type = INVOCATION_SHOUT
-	school = SCHOOL_EVOCATION
 	range = 7
 	cooldown_min = 30
 	selection_type = "view"

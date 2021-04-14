@@ -81,9 +81,6 @@
 /mob/living/silicon/proc/cancelAlarm()
 	return
 
-/mob/living/silicon/proc/freeCamera()
-	return
-
 /mob/living/silicon/proc/triggerAlarm()
 	return
 
@@ -336,10 +333,9 @@
 		return
 	client.crew_manifest_delay = world.time + (1 SECONDS)
 
-	if(!GLOB.crew_manifest_tgui)
-		GLOB.crew_manifest_tgui = new /datum/crew_manifest(src)
-
-	GLOB.crew_manifest_tgui.ui_interact(src)
+	var/datum/browser/popup = new(src, "airoster", "Crew Manifest", 387, 420)
+	popup.set_content(GLOB.data_core.get_manifest_html())
+	popup.open()
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
 	if(!radio)
@@ -425,7 +421,7 @@
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE
 
-/mob/living/silicon/handle_high_gravity(gravity, delta_time, times_fired)
+/mob/living/silicon/handle_high_gravity(gravity)
 	return
 
 /mob/living/silicon/rust_heretic_act()

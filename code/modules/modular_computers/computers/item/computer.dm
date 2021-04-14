@@ -62,7 +62,7 @@
 	idle_threads = list()
 	if(looping_sound)
 		soundloop = new(list(src), enabled)
-	update_appearance()
+	update_icon()
 
 /obj/item/modular_computer/Destroy()
 	kill_program(forced = TRUE)
@@ -77,23 +77,6 @@
 			qdel(CH)
 	physical = null
 	return ..()
-
-/obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
-	if(active_program?.tap(A, user, params))
-		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
-		addtimer(CALLBACK(src, .proc/play_ping), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return ..()
-
-
-/**
- * Plays a ping sound.
- *
- * Timers runtime if you try to make them call playsound. Yep.
- */
-/obj/item/modular_computer/proc/play_ping()
-	playsound(loc, 'sound/machines/ping.ogg', get_clamped_volume(), FALSE, -1)
 
 /obj/item/modular_computer/AltClick(mob/user)
 	..()
@@ -114,64 +97,14 @@
 
 /obj/item/modular_computer/GetID()
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-
-	var/obj/item/card/id/first_id = card_slot?.GetID()
-	var/obj/item/card/id/second_id = card_slot2?.GetID()
-
-	// We have two IDs, pick the one with the most command accesses, preferring the primary slot.
-	if(first_id && second_id)
-		var/first_id_tally = SSid_access.tally_access(first_id, ACCESS_FLAG_COMMAND)
-		var/second_id_tally = SSid_access.tally_access(second_id, ACCESS_FLAG_COMMAND)
-
-		return (first_id_tally >= second_id_tally) ? first_id : second_id
-
-	// If we don't have both ID slots filled, pick the one that is filled.
-	if(first_id)
-		return first_id
-	if(second_id)
-		return second_id
-
-	// Otherwise, we have no ID at all.
+	if(card_slot)
+		return card_slot.GetID()
 	return ..()
-
-/obj/item/modular_computer/get_id_examine_strings(mob/user)
-	. = ..()
-
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-
-	var/obj/item/card/id/id_card1 = card_slot?.GetID()
-	var/obj/item/card/id/id_card2 = card_slot2?.GetID()
-
-	if(id_card1 || id_card2)
-		if(id_card1 && id_card2)
-			. += "\The [src] is displaying [id_card1] and [id_card2]."
-			var/list/id_icons = list()
-			id_icons += id_card1.get_id_examine_strings(user)
-			id_icons += id_card2.get_id_examine_strings(user)
-			. += id_icons.Join(" ")
-		else if(id_card1)
-			. += "\The [src] is displaying [id_card1]."
-			. += id_card1.get_id_examine_strings(user)
-		else
-			. += "\The [src] is displaying [id_card2]."
-			. += id_card2.get_id_examine_strings(user)
 
 /obj/item/modular_computer/RemoveID()
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-
-	var/removed_id = (card_slot2?.try_eject() || card_slot?.try_eject())
-	if(removed_id)
-		if(ishuman(loc))
-			var/mob/living/carbon/human/human_wearer = loc
-			if(human_wearer.wear_id == src)
-				human_wearer.sec_hud_set_ID()
-		update_slot_icon()
-		return removed_id
-
-	return ..()
+	return (card_slot2?.try_eject() || card_slot?.try_eject()) //Try the secondary one first.
 
 /obj/item/modular_computer/InsertID(obj/item/inserting_item)
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
@@ -184,13 +117,7 @@
 		return FALSE
 
 	if((card_slot?.try_insert(inserting_id)) || (card_slot2?.try_insert(inserting_id)))
-		if(ishuman(loc))
-			var/mob/living/carbon/human/human_wearer = loc
-			if(human_wearer.wear_id == src)
-				human_wearer.sec_hud_set_ID()
-		update_slot_icon()
 		return TRUE
-
 	return FALSE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
@@ -241,16 +168,21 @@
 	. += get_modular_computer_parts_examine(user)
 
 /obj/item/modular_computer/update_icon_state()
-	icon_state = enabled ? icon_state_powered : icon_state_unpowered
-	return ..()
+	if(!enabled)
+		icon_state = icon_state_unpowered
+	else
+		icon_state = icon_state_powered
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
 	if(!display_overlays)
 		return
-
 	if(enabled)
-		. += active_program?.program_icon_state || icon_state_menu
+		if(active_program)
+			. += active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu
+		else
+			. += icon_state_menu
+
 	if(obj_integrity <= integrity_failure * max_integrity)
 		. += "bsod"
 		. += "broken"
@@ -285,7 +217,7 @@
 		if(looping_sound)
 			soundloop.start()
 		enabled = 1
-		update_appearance()
+		update_icon()
 		ui_interact(user)
 		return TRUE
 	else // Unpowered
@@ -421,7 +353,7 @@
 	var/mob/user = usr
 	if(user && istype(user))
 		ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
-	update_appearance()
+	update_icon()
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
@@ -448,7 +380,7 @@
 	if(loud)
 		physical.visible_message("<span class='notice'>\The [src] shuts down.</span>")
 	enabled = 0
-	update_appearance()
+	update_icon()
 
 /**
  * Toggles the computer's flashlight, if it has one.

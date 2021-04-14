@@ -2,7 +2,6 @@
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
 	icon_state = "singularity_hammer0"
-	base_icon_state = "singularity_hammer"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	worn_icon_state = "singularity_hammer"
@@ -27,7 +26,7 @@
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="singularity_hammer1")
 
 ///triggered on wield of two handed item
 /obj/item/singularityhammer/proc/on_wield(obj/item/source, mob/user)
@@ -42,8 +41,8 @@
 	wielded = FALSE
 
 /obj/item/singularityhammer/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
+	. = ..()
+	icon_state = "singularity_hammer0"
 
 /obj/item/singularityhammer/proc/recharge()
 	charged = TRUE
@@ -88,7 +87,6 @@
 	name = "Mjolnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon_state = "mjollnir0"
-	base_icon_state = "mjollnir"
 	worn_icon_state = "mjolnir"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
@@ -107,7 +105,7 @@
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="[base_icon_state]1", attacksound="sparks")
+	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="mjollnir1", attacksound="sparks")
 
 /// triggered on wield of two handed item
 /obj/item/mjollnir/proc/on_wield(obj/item/source, mob/user)
@@ -118,8 +116,7 @@
 	wielded = FALSE
 
 /obj/item/mjollnir/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
+	icon_state = "mjollnir0"
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(1.5 SECONDS)

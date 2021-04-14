@@ -130,12 +130,12 @@
 	close_switchstates()
 	mode = new newmode(src)
 	mode.enter_mode(src)
-	modebutton.update_appearance()
+	modebutton.update_icon()
 
 /datum/buildmode/proc/change_dir(newdir)
 	build_dir = newdir
 	close_dirswitch()
-	dirbutton.update_appearance()
+	dirbutton.update_icon()
 	return 1
 
 /datum/buildmode/proc/InterceptClickOn(mob/user, params, atom/object)

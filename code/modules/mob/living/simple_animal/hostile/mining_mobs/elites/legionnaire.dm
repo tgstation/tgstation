@@ -32,7 +32,6 @@
 	attack_verb_continuous = "slashes its arms at"
 	attack_verb_simple = "slash your arms at"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	attack_vis_effect = ATTACK_EFFECT_SLASH
 	throw_message = "doesn't affect the sturdiness of"
 	speed = 1
 	move_to_delay = 3
@@ -250,7 +249,6 @@
 	attack_verb_continuous = "bites at"
 	attack_verb_simple = "bite at"
 	attack_sound = 'sound/effects/curse1.ogg'
-	attack_vis_effect = ATTACK_EFFECT_BITE
 	throw_message = "simply misses"
 	speed = 0
 	move_to_delay = 2

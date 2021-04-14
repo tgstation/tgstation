@@ -10,7 +10,6 @@
 	icon = 'icons/obj/machines/magic_emitter.dmi'
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
-	base_icon_state = "wabbajack_statue"
 	active = FALSE
 	allow_switch_interact = FALSE
 	var/list/active_tables = list()
@@ -20,11 +19,13 @@
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
-	update_appearance()
+	update_icon()
 
 /obj/machinery/power/emitter/energycannon/magical/update_icon_state()
-	. = ..()
-	icon_state = active ? icon_state_on : initial(icon_state)
+	if(active)
+		icon_state = icon_state_on
+	else
+		icon_state = initial(icon_state)
 
 /obj/machinery/power/emitter/energycannon/magical/process()
 	. = ..()
@@ -38,13 +39,13 @@
 			visible_message("<span class='revenboldnotice'>\
 				[src] closes its eyes.</span>")
 		active = FALSE
-	update_appearance()
+	update_icon()
 
 /obj/machinery/power/emitter/energycannon/magical/attackby(obj/item/W, mob/user, params)
 	return
 
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
-	return FALSE
+	return
 
 /obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
 	return
@@ -144,8 +145,7 @@
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.add_access(list(ACCESS_CENT_BAR))
-	become_area_sensitive(ROUNDSTART_TRAIT)
+	access_card.access |= ACCESS_CENT_BAR
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
 	check_barstaff_godmode()
 
@@ -161,14 +161,11 @@
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
 	. = ..()
-	// Simple bot ID card that can hold all accesses. Someone turn access into a component at some point, please.
-	access_card = new /obj/item/card/id/advanced/simple_bot(src)
-
-	var/datum/id_trim/job/cap_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/captain]
-	access_card.add_access(cap_trim.access + cap_trim.wildcard_access + list(ACCESS_CENT_BAR))
-
+	access_card = new /obj/item/card/id(src)
+	var/datum/job/captain/C = new /datum/job/captain
+	access_card.access = C.get_access()
+	access_card.access |= ACCESS_CENT_BAR
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-	become_area_sensitive(ROUNDSTART_TRAIT)
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
 	check_barstaff_godmode()
 

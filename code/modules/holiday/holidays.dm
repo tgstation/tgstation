@@ -166,10 +166,9 @@
 
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
-	begin_month = MARCH
-	begin_day = 31
-	end_month = APRIL
-	end_day = 2
+	begin_day = 1
+	end_day = 5
+	begin_month = APRIL
 
 /datum/holiday/april_fools/celebrate()
 	SSjob.set_overflow_role("Clown")

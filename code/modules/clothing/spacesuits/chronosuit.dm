@@ -297,6 +297,7 @@
 
 /obj/effect/chronos_cam/check_eye(mob/user)
 	if(user != holder)
+		user.unset_machine()
 		qdel(src)
 
 /obj/effect/chronos_cam/on_unset_machine(mob/user)

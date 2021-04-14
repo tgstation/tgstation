@@ -42,7 +42,6 @@
 	eject()
 	if(wires)
 		QDEL_NULL(wires)
-	QDEL_NULL(soundloop)
 	. = ..()
 
 /obj/machinery/microwave/RefreshParts()
@@ -91,21 +90,16 @@
 /obj/machinery/microwave/update_icon_state()
 	if(broken)
 		icon_state = "mwb"
-		return ..()
-	if(dirty_anim_playing)
+	else if(dirty_anim_playing)
 		icon_state = "mwbloody1"
-		return ..()
-	if(dirty == 100)
+	else if(dirty == 100)
 		icon_state = "mwbloody"
-		return ..()
-	if(operating)
+	else if(operating)
 		icon_state = "mw1"
-		return ..()
-	if(panel_open)
+	else if(panel_open)
 		icon_state = "mw-o"
-		return ..()
-	icon_state = "mw"
-	return ..()
+	else
+		icon_state = "mw"
 
 /obj/machinery/microwave/attackby(obj/item/O, mob/living/user, params)
 	if(operating)
@@ -115,7 +109,7 @@
 
 	if(dirty < 100)
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, O) || default_unfasten_wrench(user, O))
-			update_appearance()
+			update_icon()
 			return
 
 	if(panel_open && is_wire_tool(O))
@@ -133,7 +127,7 @@
 			if(O.use_tool(src, user, 20))
 				user.visible_message("<span class='notice'>[user] fixes \the [src].</span>", "<span class='notice'>You fix \the [src].</span>")
 				broken = 0
-				update_appearance()
+				update_icon()
 				return FALSE //to use some fuel
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
@@ -147,7 +141,7 @@
 			playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
 			user.visible_message("<span class='notice'>[user] cleans \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
-			update_appearance()
+			update_icon()
 		else
 			to_chat(user, "<span class='warning'>You need more space cleaner!</span>")
 		return TRUE
@@ -161,7 +155,7 @@
 		if(do_after(user, cleanspeed, target = src))
 			user.visible_message("<span class='notice'>[user] cleans \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
-			update_appearance()
+			update_icon()
 		return TRUE
 
 	if(dirty == 100) // The microwave is all dirty so can't be used!
@@ -269,7 +263,7 @@
 
 	set_light(1.5)
 	soundloop.start()
-	update_appearance()
+	update_icon()
 
 /obj/machinery/microwave/proc/spark()
 	visible_message("<span class='warning'>Sparks fly around [src]!</span>")
@@ -293,7 +287,7 @@
 	wzhzhzh()
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	dirty_anim_playing = TRUE
-	update_appearance()
+	update_icon()
 	loop(MICROWAVE_MUCK, 4)
 
 /obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2)) // standard wait is 10
@@ -364,7 +358,7 @@
 /obj/machinery/microwave/proc/after_finish_loop()
 	set_light(0)
 	soundloop.stop()
-	update_appearance()
+	update_icon()
 
 #undef MICROWAVE_NORMAL
 #undef MICROWAVE_MUCK

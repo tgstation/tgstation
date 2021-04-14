@@ -32,11 +32,11 @@
 	var/strikes_to_lose_limb = 3
 
 
-/datum/wound/burn/handle_process(delta_time, times_fired)
+/datum/wound/burn/handle_process()
 	. = ..()
 	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
-		victim.adjustToxLoss(0.25 * delta_time)
-		if(DT_PROB(0.5, delta_time))
+		victim.adjustToxLoss(0.5)
+		if(prob(1))
 			victim.visible_message("<span class='danger'>The infection on the remnants of [victim]'s [limb.name] shift and bubble nauseatingly!</span>", "<span class='warning'>You can feel the infection on the remnants of your [limb.name] coursing through your veins!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 
@@ -50,12 +50,12 @@
 			flesh_healing += 0.5
 
 	if(limb.current_gauze)
-		limb.seep_gauze(WOUND_BURN_SANITIZATION_RATE * delta_time)
+		limb.seep_gauze(WOUND_BURN_SANITIZATION_RATE)
 
 	if(flesh_healing > 0) // good bandages multiply the length of flesh healing
 		var/bandage_factor = (limb.current_gauze ? limb.current_gauze.splint_factor : 1)
-		flesh_damage = max(flesh_damage - (0.5 * delta_time), 0)
-		flesh_healing = max(flesh_healing - (0.5 * bandage_factor * delta_time), 0) // good bandages multiply the length of flesh healing
+		flesh_damage = max(0, flesh_damage - 1)
+		flesh_healing = max(0, flesh_healing - bandage_factor)
 
 	// if we have little/no infection, the limb doesn't have much burn damage, and our nutrition is good, heal some flesh
 	if(infestation <= WOUND_INFECTION_MODERATE && (limb.burn_dam < 5) && (victim.nutrition >= NUTRITION_LEVEL_FED))
@@ -70,52 +70,42 @@
 	// sanitization is checked after the clearing check but before the actual ill-effects, because we freeze the effects of infection while we have sanitization
 	if(sanitization > 0)
 		var/bandage_factor = (limb.current_gauze ? limb.current_gauze.splint_factor : 1)
-		infestation = max(infestation - (WOUND_BURN_SANITIZATION_RATE * delta_time), 0)
-		sanitization = max(sanitization - (WOUND_BURN_SANITIZATION_RATE * bandage_factor * delta_time), 0)
+		infestation = max(0, infestation - WOUND_BURN_SANITIZATION_RATE)
+		sanitization = max(0, sanitization - (WOUND_BURN_SANITIZATION_RATE * bandage_factor))
 		return
 
-	infestation += infestation_rate * delta_time
+	infestation += infestation_rate
+
 	switch(infestation)
 		if(0 to WOUND_INFECTION_MODERATE)
 		if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
-			if(DT_PROB(15, delta_time))
+			if(prob(30))
 				victim.adjustToxLoss(0.2)
 				if(prob(6))
 					to_chat(victim, "<span class='warning'>The blisters on your [limb.name] ooze a strange pus...</span>")
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
-			if(!disabling)
-				if(DT_PROB(1, delta_time))
-					to_chat(victim, "<span class='warning'><b>Your [limb.name] completely locks up, as you struggle for control against the infection!</b></span>")
-					set_disabling(TRUE)
-					return
-			else if(DT_PROB(4, delta_time))
+			if(!disabling && prob(2))
+				to_chat(victim, "<span class='warning'><b>Your [limb.name] completely locks up, as you struggle for control against the infection!</b></span>")
+				set_disabling(TRUE)
+			else if(disabling && prob(8))
 				to_chat(victim, "<span class='notice'>You regain sensation in your [limb.name], but it's still in terrible shape!</span>")
 				set_disabling(FALSE)
-				return
-
-			if(DT_PROB(10, delta_time))
+			else if(prob(20))
 				victim.adjustToxLoss(0.5)
-
 		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
-			if(!disabling)
-				if(DT_PROB(1.5, delta_time))
-					to_chat(victim, "<span class='warning'><b>You suddenly lose all sensation of the festering infection in your [limb.name]!</b></span>")
-					set_disabling(TRUE)
-					return
-			else if(DT_PROB(1.5, delta_time))
+			if(!disabling && prob(3))
+				to_chat(victim, "<span class='warning'><b>You suddenly lose all sensation of the festering infection in your [limb.name]!</b></span>")
+				set_disabling(TRUE)
+			else if(disabling && prob(3))
 				to_chat(victim, "<span class='notice'>You can barely feel your [limb.name] again, and you have to strain to retain motor control!</span>")
 				set_disabling(FALSE)
-				return
-
-			if(DT_PROB(2.48, delta_time))
-				if(prob(20))
-					to_chat(victim, "<span class='warning'>You contemplate life without your [limb.name]...</span>")
-					victim.adjustToxLoss(0.75)
-				else
-					victim.adjustToxLoss(1)
-
+			else if(prob(1))
+				to_chat(victim, "<span class='warning'>You contemplate life without your [limb.name]...</span>")
+				victim.adjustToxLoss(0.75)
+			else if(prob(4))
+				victim.adjustToxLoss(1)
 		if(WOUND_INFECTION_SEPTIC to INFINITY)
-			if(DT_PROB(0.5 * infestation, delta_time))
+			if(prob(infestation))
 				switch(strikes_to_lose_limb)
 					if(3 to INFINITY)
 						to_chat(victim, "<span class='deadsay'>The skin on your [limb.name] is literally dripping off, you feel awful!</span>")
@@ -238,16 +228,16 @@
 		uv(I, user)
 
 // people complained about burns not healing on stasis beds, so in addition to checking if it's cured, they also get the special ability to very slowly heal on stasis beds if they have the healing effects stored
-/datum/wound/burn/on_stasis(delta_time, times_fired)
+/datum/wound/burn/on_stasis()
 	. = ..()
 	if(flesh_healing > 0)
-		flesh_damage = max(flesh_damage - (0.1 * delta_time), 0)
+		flesh_damage = max(0, flesh_damage - 0.2)
 	if((flesh_damage <= 0) && (infestation <= 1))
 		to_chat(victim, "<span class='green'>The burns on your [limb.name] have cleared up!</span>")
 		qdel(src)
 		return
 	if(sanitization > 0)
-		infestation = max(infestation - (0.1 * WOUND_BURN_SANITIZATION_RATE * delta_time), 0)
+		infestation = max(0, infestation - WOUND_BURN_SANITIZATION_RATE * 0.2)
 
 /datum/wound/burn/on_synthflesh(amount)
 	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
@@ -296,6 +286,6 @@
 	threshold_penalty = 80
 	status_effect_type = /datum/status_effect/wound/burn/critical
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
-	infestation_rate = 0.075 // appx 4.33 minutes to reach sepsis without any treatment
+	infestation_rate = 0.15 // appx 4.33 minutes to reach sepsis without any treatment
 	flesh_damage = 20
 	scar_keyword = "burncritical"

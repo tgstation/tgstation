@@ -106,19 +106,19 @@
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"
-	area_flags = NONE
+	area_flags = BLOBS_ALLOWED
 
 /area/shuttle/pod_2
 	name = "Escape Pod Two"
-	area_flags = NONE
+	area_flags = BLOBS_ALLOWED
 
 /area/shuttle/pod_3
 	name = "Escape Pod Three"
-	area_flags = NONE
+	area_flags = BLOBS_ALLOWED
 
 /area/shuttle/pod_4
 	name = "Escape Pod Four"
-	area_flags = NONE
+	area_flags = BLOBS_ALLOWED
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
@@ -140,8 +140,7 @@
 	name = "Emergency Shuttle"
 	area_flags = BLOBS_ALLOWED
 	area_limited_icon_smoothing = /area/shuttle/escape
-	flags_1 = CAN_BE_DIRTY_1
-	area_flags = NO_ALERTS | CULT_PERMITTED
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 /area/shuttle/escape/backup
 	name = "Backup Emergency Shuttle"

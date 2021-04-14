@@ -21,7 +21,7 @@
 	else
 		user.changeNext_move(CLICK_CD_RANGE)
 	user.newtonian_move(get_dir(target, user))
-	update_appearance()
+	update_icon()
 	return TRUE
 
 /obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, quiet, zone_override = "", atom/fired_from)
@@ -39,7 +39,6 @@
 	if(isgun(fired_from))
 		var/obj/item/gun/G = fired_from
 		loaded_projectile.damage *= G.projectile_damage_multiplier
-		loaded_projectile.stamina *= G.projectile_damage_multiplier
 
 	if(reagents && loaded_projectile.reagents)
 		reagents.trans_to(loaded_projectile, reagents.total_volume, transfered_by = user) //For chemical darts/bullets
@@ -61,8 +60,7 @@
 		if(target) //if the target is right on our location we'll skip the travelling code in the proj's fire()
 			direct_target = target
 	if(!direct_target)
-		var/modifiers = params2list(params)
-		loaded_projectile.preparePixelProjectile(target, user, modifiers, spread)
+		loaded_projectile.preparePixelProjectile(target, user, params, spread)
 	loaded_projectile.fire(null, direct_target)
 	loaded_projectile = null
 	return TRUE

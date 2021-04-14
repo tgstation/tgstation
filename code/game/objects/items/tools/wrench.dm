@@ -112,7 +112,7 @@
 		toolspeed = 1
 		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] is now active. Woe onto your enemies!</span>")
-	update_appearance()
+	update_icon()
 
 /obj/item/wrench/combat/update_icon_state()
 	if(on)
@@ -121,4 +121,3 @@
 	else
 		icon_state = "[initial(icon_state)]"
 		inhand_icon_state = "[initial(inhand_icon_state)]"
-	return ..()

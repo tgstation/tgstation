@@ -3,10 +3,6 @@
 	var/state
 	var/obj/machinery/embedded_controller/master
 
-/datum/computer/file/embedded_program/Destroy()
-	master = null
-	. = ..()
-
 /datum/computer/file/embedded_program/proc/post_signal(datum/signal/signal, comm_line)
 	if(master)
 		master.post_signal(signal, comm_line)
@@ -28,11 +24,6 @@
 	density = FALSE
 
 	var/on = TRUE
-
-/obj/machinery/embedded_controller/Destroy()
-	if(program)
-		QDEL_NULL(program)
-	. = ..()
 
 /obj/machinery/embedded_controller/ui_interact(mob/user)
 	. = ..()
@@ -66,7 +57,7 @@
 	if(program)
 		program.process(delta_time)
 
-	update_appearance()
+	update_icon()
 	src.updateDialog()
 
 /obj/machinery/embedded_controller/radio

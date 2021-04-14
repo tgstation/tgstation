@@ -26,7 +26,7 @@
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/Detach, override = TRUE)
 
 /// Deactivates the functionality defines by the element on the given datum
-/datum/element/proc/Detach(datum/source, ...)
+/datum/element/proc/Detach(datum/source, force)
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(source, COMSIG_ELEMENT_DETACH, src)
@@ -54,8 +54,4 @@
  */
 /datum/proc/_RemoveElement(list/arguments)
 	var/datum/element/ele = SSdcs.GetElement(arguments)
-	if(ele.element_flags & ELEMENT_COMPLEX_DETACH)
-		arguments[1] = src
-		ele.Detach(arglist(arguments))
-	else
-		ele.Detach(src)
+	ele.Detach(src)

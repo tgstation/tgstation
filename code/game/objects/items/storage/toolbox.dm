@@ -29,7 +29,7 @@
 			latches = "double_latch"
 			if(prob(1))
 				latches = "triple_latch"
-	update_appearance()
+	update_icon()
 
 /obj/item/storage/toolbox/update_overlays()
 	. = ..()
@@ -309,7 +309,7 @@
 			if(/obj/item/storage/toolbox/syndicate)
 				B.toolbox_color = "s"
 		user.put_in_hands(B)
-		B.update_appearance()
+		B.update_icon()
 		to_chat(user, "<span class='notice'>You add the tiles into the empty [name]. They protrude from the top.</span>")
 		qdel(src)
 	else

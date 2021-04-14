@@ -7,15 +7,10 @@
 	organ_flags = NONE
 	beating = TRUE
 	var/true_name = "baseline placebo referencer"
-
-	/// The minimum time between activations
-	var/cooldown_low = 30 SECONDS
-	/// The maximum time between activations
-	var/cooldown_high = 30 SECONDS
-	/// The cooldown for activations
-	COOLDOWN_DECLARE(activation_cooldown)
-	/// The number of remaining uses this gland has.
-	var/uses = 0 // -1 For infinite
+	var/cooldown_low = 300
+	var/cooldown_high = 300
+	var/next_activation = 0
+	var/uses // -1 For infinite
 	var/human_only = FALSE
 	var/active = FALSE
 
@@ -41,7 +36,7 @@
 
 /obj/item/organ/heart/gland/proc/Start()
 	active = 1
-	COOLDOWN_START(src, activation_cooldown, rand(cooldown_low, cooldown_high))
+	next_activation = world.time + rand(cooldown_low,cooldown_high)
 
 /obj/item/organ/heart/gland/proc/update_gland_hud()
 	if(!owner)
@@ -96,7 +91,7 @@
 	hud.add_to_hud(owner)
 	update_gland_hud()
 
-/obj/item/organ/heart/gland/on_life(delta_time, times_fired)
+/obj/item/organ/heart/gland/on_life()
 	if(!beating)
 		// alien glands are immune to stopping.
 		beating = TRUE
@@ -105,10 +100,10 @@
 	if(!ownerCheck())
 		active = FALSE
 		return
-	if(COOLDOWN_FINISHED(src, activation_cooldown))
+	if(next_activation <= world.time)
 		activate()
 		uses--
-		COOLDOWN_START(src, activation_cooldown, rand(cooldown_low, cooldown_high))
+		next_activation  = world.time + rand(cooldown_low,cooldown_high)
 	if(!uses)
 		active = FALSE
 

@@ -58,9 +58,6 @@
 #define HARS /datum/mutation/human/headless
 #define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
 
-#define HONORBOUND /datum/mutation/human/honorbound
-#define BURDENED /datum/mutation/human/burdened
-
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
 
@@ -165,9 +162,9 @@
 
 //organ defines
 #define STANDARD_ORGAN_THRESHOLD 100
-#define STANDARD_ORGAN_HEALING 0.0005
+#define STANDARD_ORGAN_HEALING 0.001
 /// designed to fail organs when left to decay for ~15 minutes
-#define STANDARD_ORGAN_DECAY 0.00111
+#define STANDARD_ORGAN_DECAY 0.00222
 
 //used for the can_chromosome var on mutations
 #define CHROMOSOME_NEVER 0

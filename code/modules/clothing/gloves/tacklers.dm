@@ -23,10 +23,6 @@
 	/// See: [/datum/component/tackler/var/skill_mod]
 	var/skill_mod = 0
 
-/obj/item/clothing/gloves/tackler/Destroy()
-	tackler = null
-	return ..()
-
 /obj/item/clothing/gloves/tackler/equipped(mob/user, slot)
 	. = ..()
 	if(!ishuman(user))
@@ -41,7 +37,7 @@
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
-		QDEL_NULL(tackler)
+		qdel(tackler)
 
 /obj/item/clothing/gloves/tackler/dolphin
 	name = "dolphin gloves"

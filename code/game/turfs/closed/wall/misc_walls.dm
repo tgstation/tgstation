@@ -41,7 +41,6 @@
 /turf/closed/wall/vault
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
-	rcd_memory = null
 
 /turf/closed/wall/ice
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
@@ -50,7 +49,6 @@
 	desc = "A wall covered in a thick sheet of ice."
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
-	rcd_memory = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 	bullet_sizzle = TRUE

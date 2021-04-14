@@ -64,7 +64,7 @@
 	desc = "This spell charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
 	hand_path = /obj/item/melee/touch_attack/disintegrate
 
-	school = SCHOOL_EVOCATION
+	school = "evocation"
 	charge_max = 600
 	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
@@ -76,7 +76,7 @@
 	desc = "This spell charges your hand with the power to turn victims into inert statues for a long period of time."
 	hand_path = /obj/item/melee/touch_attack/fleshtostone
 
-	school = SCHOOL_TRANSMUTATION
+	school = "transmutation"
 	charge_max = 600
 	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
@@ -89,8 +89,8 @@
 	desc = "A spell that summons a duffel bag demon on the target, slowing them down and slowly eating them."
 	hand_path = /obj/item/melee/touch_attack/duffelbag
 	action_icon_state = "duffelbag_curse"
-
-	school = SCHOOL_CONJURATION
+	
+	school = "conjuration"
 	charge_max = 60
 	clothes_req = FALSE
 	cooldown_min = 20

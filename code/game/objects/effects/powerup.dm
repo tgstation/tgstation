@@ -105,7 +105,7 @@
 /obj/effect/powerup/speed
 	name = "Lightning Orb"
 	desc = "You feel faster just looking at it."
-	icon_state = "speed"
+	icon_state = "electricity2"
 	pickup_sound = 'sound/magic/lightningshock.ogg'
 
 /obj/effect/powerup/speed/trigger(mob/living/target)

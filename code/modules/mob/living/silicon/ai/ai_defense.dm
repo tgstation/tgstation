@@ -41,13 +41,13 @@
 
 /mob/living/silicon/ai/ex_act(severity, target)
 	switch(severity)
-		if(EXPLODE_DEVASTATE)
+		if(1)
 			gib()
-		if(EXPLODE_HEAVY)
+		if(2)
 			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
-		if(EXPLODE_LIGHT)
+		if(3)
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 
@@ -57,5 +57,5 @@
 	. = ..(Proj)
 	updatehealth()
 
-/mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
+/mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing

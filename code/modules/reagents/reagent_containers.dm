@@ -32,6 +32,9 @@
 	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
 	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
 
+/obj/item/reagent_containers/Destroy()
+	return ..()
+
 /obj/item/reagent_containers/attack(mob/living/M, mob/living/user, params)
 	if (!user.combat_mode)
 		return
@@ -60,8 +63,6 @@
 				return
 
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(target, DO_NOT_SPLASH))
-		return ..()
 	if (try_splash(user, target))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -136,7 +137,7 @@
 		for(var/datum/reagent/R in reagents.reagent_list)
 			R.on_ex_act()
 	if(!QDELETED(src))
-		return ..()
+		..()
 
 /obj/item/reagent_containers/fire_act(exposed_temperature, exposed_volume)
 	reagents.expose_temperature(exposed_temperature)
@@ -151,8 +152,8 @@
 	if(target.CanPass(src, get_turf(src)) && thrownby && HAS_TRAIT(thrownby, TRAIT_BOOZE_SLIDER))
 		. = TRUE
 
-/obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE, override_spillable = FALSE)
-	if(!reagents || !reagents.total_volume || (!spillable && !override_spillable))
+/obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
+	if(!reagents || !reagents.total_volume || !spillable)
 		return
 
 	if(ismob(target) && target.reagents)
@@ -195,25 +196,23 @@
 /// Updates the icon of the container when the reagents change. Eats signal args
 /obj/item/reagent_containers/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
-	update_appearance()
+	update_icon()
 	return NONE
 
 /obj/item/reagent_containers/update_overlays()
 	. = ..()
 	if(!fill_icon_thresholds)
 		return
-	if(!reagents.total_volume)
-		return
+	if(reagents.total_volume)
+		var/fill_name = fill_icon_state? fill_icon_state : icon_state
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
 
-	var/fill_name = fill_icon_state? fill_icon_state : icon_state
-	var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
+		var/percent = round((reagents.total_volume / volume) * 100)
+		for(var/i in 1 to fill_icon_thresholds.len)
+			var/threshold = fill_icon_thresholds[i]
+			var/threshold_end = (i == fill_icon_thresholds.len)? INFINITY : fill_icon_thresholds[i+1]
+			if(threshold <= percent && percent < threshold_end)
+				filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
 
-	var/percent = round((reagents.total_volume / volume) * 100)
-	for(var/i in 1 to fill_icon_thresholds.len)
-		var/threshold = fill_icon_thresholds[i]
-		var/threshold_end = (i == fill_icon_thresholds.len)? INFINITY : fill_icon_thresholds[i+1]
-		if(threshold <= percent && percent < threshold_end)
-			filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
-
-	filling.color = mix_color_from_reagents(reagents.reagent_list)
-	. += filling
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling

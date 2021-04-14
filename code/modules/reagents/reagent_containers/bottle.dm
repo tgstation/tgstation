@@ -14,7 +14,7 @@
 	. = ..()
 	if(!icon_state)
 		icon_state = "bottle"
-	update_appearance()
+	update_icon()
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
 	name = "epinephrine bottle"

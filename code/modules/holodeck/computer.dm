@@ -171,7 +171,6 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			nerf(obj_flags & EMAGGED,FALSE)
 			obj_flags ^= EMAGGED
 			say("Safeties reset. Restarting...")
-			log_game("[key_name(usr)] disabled Holodeck safeties.")
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)
 /datum/map_template/holodeck/update_blacklist(turf/placement, list/input_blacklist)
@@ -228,10 +227,6 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	template = SSmapping.holodeck_templates[map_id]
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
 
-	if(template.restricted)
-		log_game("[key_name(usr)] loaded a restricted Holodeck program: [program].")
-		message_admins("[ADMIN_LOOKUPFLW(usr)] loaded a restricted Holodeck program: [program].")
-
 	spawned = template.created_atoms //populate the spawned list with the atoms belonging to the holodeck
 
 	if(istype(template, /datum/map_template/holodeck/thunderdome1218) && !SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_MEDISIM])
@@ -248,6 +243,10 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	//turfs and overlay objects are taken out of the spawned list
 	//objects get resistance flags added to them
 	for (var/atom/atoms in spawned)
+		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis))
+			spawned -= atoms
+			continue
+
 		RegisterSignal(atoms, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
 		atoms.flags_1 |= HOLOGRAM_1
 

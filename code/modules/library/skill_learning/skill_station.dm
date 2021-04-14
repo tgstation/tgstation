@@ -1,5 +1,5 @@
-#define SKILLCHIP_IMPLANT_TIME 15 SECONDS
-#define SKILLCHIP_REMOVAL_TIME 15 SECONDS
+#define SKILLCHIP_IMPLANT_TIME 1 MINUTES
+#define SKILLCHIP_REMOVAL_TIME 30 SECONDS
 
 /obj/machinery/skill_station
 	name = "\improper Skillsoft station"
@@ -20,7 +20,7 @@
 
 /obj/machinery/skill_station/Initialize()
 	. = ..()
-	update_appearance()
+	update_icon()
 
 //Only usable by the person inside
 /obj/machinery/skill_station/ui_state(mob/user)
@@ -38,7 +38,6 @@
 		icon_state += "_open"
 	if(occupant)
 		icon_state += "_occupied"
-	return ..()
 
 /obj/machinery/skill_station/update_overlays()
 	. = ..()
@@ -73,7 +72,7 @@
 	if(work_timer)
 		deltimer(work_timer)
 		work_timer = null
-	update_appearance()
+	update_icon()
 
 /obj/machinery/skill_station/interact(mob/user)
 	. = ..()
@@ -116,7 +115,7 @@
 
 	working = TRUE
 	work_timer = addtimer(CALLBACK(src,.proc/implant),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
-	update_appearance()
+	update_icon()
 
 /// Finish implanting.
 /obj/machinery/skill_station/proc/implant()
@@ -130,7 +129,7 @@
 		to_chat(carbon_occupant,"<span class='notice'>Operation complete!</span>")
 		inserted_skillchip = null
 
-	update_appearance()
+	update_icon()
 
 /// Start removal.
 /obj/machinery/skill_station/proc/start_removal(obj/item/skillchip/to_be_removed)
@@ -143,13 +142,13 @@
 
 	working = TRUE
 	work_timer = addtimer(CALLBACK(src,.proc/remove_skillchip,to_be_removed),SKILLCHIP_REMOVAL_TIME,TIMER_STOPPABLE)
-	update_appearance()
+	update_icon()
 
 /// Finish removal.
 /obj/machinery/skill_station/proc/remove_skillchip(obj/item/skillchip/to_be_removed)
 	working = FALSE
 	work_timer = null
-	update_appearance()
+	update_icon()
 
 	var/mob/living/carbon/carbon_occupant = occupant
 

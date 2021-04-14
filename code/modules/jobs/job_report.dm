@@ -75,11 +75,13 @@
 				to_chat(usr, "<span class='danger'>ERROR: Insufficient admin rights.</span>", confidential = TRUE)
 				return TRUE
 
-			if(QDELETED(owner))
+			var/client/owner_client = locate(owner) in GLOB.clients
+
+			if(!owner_client)
 				to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>", confidential = TRUE)
 				return TRUE
 
-			viewer_admin_datum.toggle_exempt_status(owner)
+			viewer_admin_datum.toggle_exempt_status(owner_client)
 			return TRUE
 
 #undef JOB_REPORT_MENU_FAIL_REASON_TRACKING_DISABLED

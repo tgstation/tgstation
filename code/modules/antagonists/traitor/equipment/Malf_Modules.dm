@@ -13,30 +13,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/syndicatebomb/badmin/clown,
 		/obj/machinery/syndicatebomb/empty,
 		/obj/machinery/syndicatebomb/self_destruct,
-		/obj/machinery/syndicatebomb/training,
-		/obj/machinery/atmospherics/pipe/layer_manifold,
-		/obj/machinery/atmospherics/pipe/multiz,
-		/obj/machinery/atmospherics/pipe/smart,
-		/obj/machinery/atmospherics/pipe/smart/manifold, //mapped one
-		/obj/machinery/atmospherics/pipe/smart/manifold4w, //mapped one
-		/obj/machinery/atmospherics/pipe/color_adapter,
-		/obj/machinery/atmospherics/pipe/bridge_pipe,
-		/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-		/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
-		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
-		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w,
-		/obj/machinery/atmospherics/components/unary/tank,
-		/obj/machinery/atmospherics/components/unary/portables_connector,
-		/obj/machinery/atmospherics/components/unary/passive_vent,
-		/obj/machinery/atmospherics/components/unary/heat_exchanger,
-		/obj/machinery/atmospherics/components/unary/hypertorus/core,
-		/obj/machinery/atmospherics/components/unary/hypertorus/waste_output,
-		/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input,
-		/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input,
-		/obj/machinery/hypertorus/interface,
-		/obj/machinery/hypertorus/corner,
-		/obj/machinery/atmospherics/components/binary/valve,
-		/obj/machinery/portable_atmospherics/canister,
+		/obj/machinery/syndicatebomb/training
 	)))
 
 GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
@@ -701,7 +678,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		if(!is_station_level(F.z))
 			continue
 		F.obj_flags |= EMAGGED
-		F.update_appearance()
+		F.update_icon()
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 

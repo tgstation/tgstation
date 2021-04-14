@@ -41,9 +41,9 @@
 		/datum/reagent/fuel,
 	)
 
-/obj/machinery/plumbing/synthesizer/Initialize(mapload, bolt, layer)
+/obj/machinery/plumbing/synthesizer/Initialize(mapload, bolt)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
 /obj/machinery/plumbing/synthesizer/process(delta_time)
 	if(machine_stat & NOPOWER || !reagent_id || !amount)
@@ -94,11 +94,14 @@
 			if(new_reagent in dispensable_reagents)
 				reagent_id = new_reagent
 				. = TRUE
-	update_appearance()
+	update_icon()
 	reagents.clear_reagents()
 
 /obj/machinery/plumbing/synthesizer/update_overlays()
 	. = ..()
 	var/mutable_appearance/r_overlay = mutable_appearance(icon, "[icon_state]_overlay")
-	r_overlay.color = reagent_id ? initial(reagent_id.color) : "#FFFFFF"
+	if(reagent_id)
+		r_overlay.color = initial(reagent_id.color)
+	else
+		r_overlay.color = "#FFFFFF"
 	. += r_overlay

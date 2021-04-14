@@ -37,12 +37,7 @@
 	if(starting_tape_type)
 		mytape = new starting_tape_type(src)
 	soundloop = new(list(src))
-	update_appearance()
-
-/obj/item/taperecorder/Destroy()
-	QDEL_NULL(soundloop)
-	QDEL_NULL(mytape)
-	return ..()
+	update_icon()
 
 /obj/item/taperecorder/proc/readout()
 	if(mytape)
@@ -93,7 +88,7 @@
 		mytape = I
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
-		update_appearance()
+		update_icon()
 
 
 /obj/item/taperecorder/proc/eject(mob/user)
@@ -103,7 +98,7 @@
 		stop()
 		user.put_in_hands(mytape)
 		mytape = null
-		update_appearance()
+		update_icon()
 
 /obj/item/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.unspool() //Fires unspool the tape, which makes sense if you don't think about it
@@ -137,15 +132,12 @@
 /obj/item/taperecorder/update_icon_state()
 	if(!mytape)
 		icon_state = "taperecorder_empty"
-		return ..()
-	if(recording)
+	else if(recording)
 		icon_state = "taperecorder_recording"
-		return ..()
-	if(playing)
+	else if(playing)
 		icon_state = "taperecorder_playing"
-		return ..()
-	icon_state = "taperecorder_idle"
-	return ..()
+	else
+		icon_state = "taperecorder_idle"
 
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
@@ -174,7 +166,7 @@
 		recording = TRUE
 		say("Recording started.")
 		update_sound()
-		update_appearance()
+		update_icon()
 		var/used = mytape.used_capacity //to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
 		while(recording && used < max)
@@ -208,7 +200,7 @@
 		say("Playback stopped.")
 		playing = FALSE
 	time_warned = FALSE
-	update_appearance()
+	update_icon()
 	update_sound()
 
 /obj/item/taperecorder/verb/play()
@@ -225,7 +217,7 @@
 		return
 
 	playing = TRUE
-	update_appearance()
+	update_icon()
 	update_sound()
 	say("Playback started.")
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)

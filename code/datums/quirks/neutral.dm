@@ -240,7 +240,7 @@
 		W.hairstyle = pick(GLOB.hairstyles_list - "Bald")
 	else
 		W.hairstyle = old_hair
-	W.update_appearance()
+	W.update_icon()
 	var/list/slots = list (
 		"head" = ITEM_SLOT_HEAD,
 		"backpack" = ITEM_SLOT_BACKPACK,

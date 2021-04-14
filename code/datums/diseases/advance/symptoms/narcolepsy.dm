@@ -30,12 +30,11 @@ Bonus
 	)
 
 /datum/symptom/narcolepsy/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalTransmittable() >= 4) //yawning (mostly just some copy+pasted code from sneezing, with a few tweaks)
+	if(A.properties["transmittable"] >= 4) //yawning (mostly just some copy+pasted code from sneezing, with a few tweaks)
 		yawning = TRUE
-	if(A.totalStageSpeed() >= 10) //act more often
+	if(A.properties["stage_speed"] >= 10) //act more often
 		symptom_delay_min = 20
 		symptom_delay_max = 45
 

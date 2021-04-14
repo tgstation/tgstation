@@ -47,7 +47,7 @@ all_changelog_entries = {}
 validPrefixes = [
     'bugfix',
     'wip',
-    'qol',
+    'tweak',
     'soundadd',
     'sounddel',
     'rscdel',

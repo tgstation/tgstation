@@ -185,7 +185,7 @@
 
 	ready = !ready
 
-	update_appearance()
+	update_icon()
 
 	var/numbuttons = 0
 	var/numready = 0
@@ -198,8 +198,10 @@
 		begin_event()
 
 /obj/machinery/readybutton/update_icon_state()
-	icon_state = "auth_[ready ? "on" : "off"]"
-	return ..()
+	if(ready)
+		icon_state = "auth_on"
+	else
+		icon_state = "auth_off"
 
 /obj/machinery/readybutton/proc/begin_event()
 

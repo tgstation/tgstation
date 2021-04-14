@@ -39,23 +39,21 @@ BONUS
 	)
 
 /datum/symptom/cough/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStealth() >= 4)
+	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
-	if(A.totalTransmittable() >= 7)
+	if(A.properties["transmittable"] >= 7)
 		spread_range = 2
-	if(A.totalResistance() >= 11) //strong enough to drop items
+	if(A.properties["resistance"] >= 11) //strong enough to drop items
 		power = 1.5
-	if(A.totalResistance() >= 15) //strong enough to stun (occasionally)
+	if(A.properties["resistance"] >= 15) //strong enough to stun (occasionally)
 		power = 2
-	if(A.totalStageSpeed() >= 6) //cough more often
+	if(A.properties["stage_rate"] >= 6) //cough more often
 		symptom_delay_max = 10
 
 /datum/symptom/cough/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
 	if(HAS_TRAIT(M, TRAIT_SOOTHED_THROAT))

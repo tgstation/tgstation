@@ -394,7 +394,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/datum/reagent/gondola_mutation_toxin = 5
+		/datum/reagent/tranquility = 5
 	)
 	result = /obj/item/food/donkpocket/gondola
 	subcategory = CAT_PASTRY
@@ -432,15 +432,15 @@
 	result = /obj/item/food/muffin/booberry
 	subcategory = CAT_PASTRY
 
-
-/datum/crafting_recipe/food/moffin
-	name = "Moffin"
+/datum/crafting_recipe/food/chawanmushi
+	name = "Chawanmushi"
 	reqs = list(
-		/datum/reagent/consumable/milk = 5,
-		/obj/item/food/pastrybase = 1,
-		/obj/item/stack/sheet/cloth = 1,
+		/datum/reagent/water = 5,
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/food/boiledegg = 2,
+		/obj/item/food/grown/mushroom/chanterelle = 1
 	)
-	result = /obj/item/food/muffin/moffin
+	result = /obj/item/food/chawanmushi
 	subcategory = CAT_PASTRY
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////

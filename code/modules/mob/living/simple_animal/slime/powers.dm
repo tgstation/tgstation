@@ -140,8 +140,6 @@
 			amount_grown = 0
 			for(var/datum/action/innate/slime/evolve/E in actions)
 				E.Remove(src)
-			var/datum/action/innate/slime/reproduce/reproduce_action = new
-			reproduce_action.Grant(src)
 			regenerate_icons()
 			update_name()
 		else
@@ -157,6 +155,9 @@
 /datum/action/innate/slime/evolve/Activate()
 	var/mob/living/simple_animal/slime/S = owner
 	S.Evolve()
+	if(S.is_adult)
+		var/datum/action/innate/slime/reproduce/A = new
+		A.Grant(S)
 
 /mob/living/simple_animal/slime/verb/Reproduce()
 	set category = "Slime"

@@ -8,10 +8,7 @@ const createBabelConfig = options => {
   const { mode, presets = [], plugins = [] } = options;
   return {
     presets: [
-      [require.resolve('@babel/preset-typescript'), {
-        allowDeclareFields: true,
-      }],
-      [require.resolve('@babel/preset-env'), {
+      ['@babel/preset-env', {
         modules: 'commonjs',
         useBuiltIns: 'entry',
         corejs: '3.8',
@@ -22,19 +19,16 @@ const createBabelConfig = options => {
       ...presets,
     ],
     plugins: [
-      [require.resolve('@babel/plugin-proposal-class-properties'), {
-        loose: true,
-      }],
-      require.resolve('@babel/plugin-transform-jscript'),
-      require.resolve('babel-plugin-inferno'),
-      require.resolve('babel-plugin-transform-remove-console'),
-      require.resolve('common/string.babel-plugin.cjs'),
+      '@babel/plugin-transform-jscript',
+      'babel-plugin-inferno',
+      'babel-plugin-transform-remove-console',
+      'common/string.babel-plugin.cjs',
       ...plugins,
     ],
   };
 };
 
-module.exports = api => {
+module.exports = (api) => {
   api.cache(true);
   const mode = process.env.NODE_ENV;
   return createBabelConfig({ mode });

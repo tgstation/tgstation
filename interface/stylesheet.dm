@@ -52,8 +52,6 @@ em						{font-style: normal;	font-weight: bold;}
 .aiprivradio			{color: #ff00ff;}
 .redteamradio			{color: #ff0000;}
 .blueteamradio			{color: #0000ff;}
-.greenteamradio			{color: #00ff00;}
-.yellowteamradio		{color: #d1ba22;}
 
 .yell					{					font-weight: bold;}
 
@@ -106,8 +104,6 @@ h1.alert, h2.alert		{color: #000000;}
 .revenminor				{color: #823abb}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold;	font-size: 3;}
-
-.sentientdisease		{color: #446600;}
 
 .deconversion_message	{color: #5000A0;	font-size: 3;	font-style: italic;}
 

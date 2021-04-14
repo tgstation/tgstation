@@ -11,8 +11,8 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	flags_1 = NO_SCREENTIPS_1
-	turf_flags = CAN_BE_DIRTY_1
+	flags_1 = CAN_BE_DIRTY_1 | NO_SCREENTIPS_1
+
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
 	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
 
@@ -61,22 +61,21 @@
 	return ..()
 
 /turf/open/floor/ex_act(severity, target)
-	. = ..()
-
+	var/shielded = is_shielded()
+	..()
+	if(severity != 1 && shielded && target != src)
+		return
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		return TRUE
-	if(severity != EXPLODE_DEVASTATE && is_shielded())
-		return FALSE
-
-	if(target)
-		severity = EXPLODE_LIGHT
+		return
+	if(target != null)
+		severity = 3
 
 	switch(severity)
-		if(EXPLODE_DEVASTATE)
+		if(1)
 			ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
-		if(EXPLODE_HEAVY)
-			switch(rand(1, 3))
+		if(2)
+			switch(rand(1,3))
 				if(1)
 					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
 						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
@@ -95,7 +94,7 @@
 					hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33))
 						new /obj/item/stack/sheet/iron(src)
-		if(EXPLODE_LIGHT)
+		if(3)
 			if (prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
@@ -150,7 +149,7 @@
 	var/old_dir = dir
 	var/turf/open/floor/W = ..()
 	W.setDir(old_dir)
-	W.update_appearance()
+	W.update_icon()
 	return W
 
 /turf/open/floor/attackby(obj/item/object, mob/living/user, params)
@@ -238,10 +237,7 @@
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
-			return rcd_result_with_memory(
-				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 16),
-				src, RCD_MEMORY_WALL,
-			)
+			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
@@ -250,10 +246,7 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 33)
 		if(RCD_WINDOWGRILLE)
-			return rcd_result_with_memory(
-				list("mode" = RCD_WINDOWGRILLE, "delay" = 1 SECONDS, "cost" = 4),
-				src, RCD_MEMORY_WINDOWGRILLE,
-			)
+			return list("mode" = RCD_WINDOWGRILLE, "delay" = 10, "cost" = 4)
 		if(RCD_MACHINE)
 			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
 		if(RCD_COMPUTER)
@@ -282,7 +275,7 @@
 					new_window.req_one_access = the_rcd.airlock_electronics.one_access
 					new_window.unres_sides = the_rcd.airlock_electronics.unres_sides
 				new_window.autoclose = TRUE
-				new_window.update_appearance()
+				new_window.update_icon()
 				return TRUE
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src)
@@ -298,7 +291,7 @@
 			if(new_airlock.electronics.unres_sides)
 				new_airlock.unres_sides = new_airlock.electronics.unres_sides
 			new_airlock.autoclose = TRUE
-			new_airlock.update_appearance()
+			new_airlock.update_icon()
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))

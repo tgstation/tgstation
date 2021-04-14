@@ -3,8 +3,6 @@
 	desc = "This spell teleports the target to the turf in range."
 	nonabstract_req = TRUE
 
-	school = SCHOOL_TRANSLOCATION
-
 	var/inner_tele_radius = 1
 	var/outer_tele_radius = 2
 
@@ -17,8 +15,8 @@
 	playsound(get_turf(user), sound1, 50,TRUE)
 	for(var/mob/living/target in targets)
 		var/list/turfs = new/list()
-		for(var/turf/T as anything in RANGE_TURFS(outer_tele_radius, target))
-			if(T in RANGE_TURFS(inner_tele_radius, target))
+		for(var/turf/T in range(target,outer_tele_radius))
+			if(T in range(target,inner_tele_radius))
 				continue
 			if(isspaceturf(T) && !include_space)
 				continue
@@ -32,8 +30,8 @@
 
 		if(!turfs.len)
 			var/list/turfs_to_pick_from = list()
-			for(var/turf/T as anything in RANGE_TURFS(outer_tele_radius, target))
-				if(!(T in RANGE_TURFS(inner_tele_radius, target)))
+			for(var/turf/T in orange(target,outer_tele_radius))
+				if(!(T in orange(target,inner_tele_radius)))
 					turfs_to_pick_from += T
 			turfs += pick(/turf in turfs_to_pick_from)
 

@@ -325,12 +325,11 @@ LINEN BINS
 			icon_state = "linenbin-half"
 		else
 			icon_state = "linenbin-full"
-	return ..()
 
 /obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
 	if(amount)
 		amount = 0
-		update_appearance()
+		update_icon()
 	..()
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
@@ -340,7 +339,7 @@ LINEN BINS
 		sheets.Add(I)
 		amount++
 		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-		update_appearance()
+		update_icon()
 
 	else if(default_unfasten_wrench(user, I, 5))
 		return
@@ -389,7 +388,7 @@ LINEN BINS
 		B.forceMove(drop_location())
 		user.put_in_hands(B)
 		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
-		update_appearance()
+		update_icon()
 
 		if(hidden)
 			hidden.forceMove(drop_location())
@@ -413,7 +412,7 @@ LINEN BINS
 
 		B.forceMove(drop_location())
 		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
-		update_appearance()
+		update_icon()
 
 		if(hidden)
 			hidden.forceMove(drop_location())

@@ -55,7 +55,7 @@
 		to_chat(M,"<span class='notice'>\The [src] is dry.</span>")
 		return FALSE
 	on = !on
-	update_appearance()
+	update_icon()
 	handle_mist()
 	add_fingerprint(M)
 	if(on)
@@ -105,11 +105,10 @@
 
 /obj/machinery/shower/update_overlays()
 	. = ..()
-	if(!on)
-		return
-	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
-	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
-	. += water_falling
+	if(on)
+		var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
+		water_falling.color = mix_color_from_reagents(reagents.reagent_list)
+		. += water_falling
 
 /obj/machinery/shower/proc/handle_mist()
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
@@ -161,7 +160,7 @@
 	handle_mist()
 	if(can_refill)
 		reagents.add_reagent(reagent_id, refill_rate * delta_time)
-	update_appearance()
+	update_icon()
 	if(reagents.total_volume == reagents.maximum_volume)
 		return PROCESS_KILL
 

@@ -19,8 +19,7 @@
 	anchored = TRUE
 	appearance_flags = LONG_GLIDE
 	density = TRUE
-	plane = MASSIVE_OBJ_PLANE
-	plane = ABOVE_LIGHTING_PLANE
+	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	move_resist = INFINITY
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION

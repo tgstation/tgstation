@@ -61,6 +61,11 @@
 	name = "waffles tray"
 	icon_state = "waffles"
 
+/obj/item/trash/plate
+	name = "plate"
+	icon_state = "plate"
+	resistance_flags = NONE
+
 /obj/item/trash/pistachios
 	name = "pistachios pack"
 	icon_state = "pistachios_pack"

@@ -20,7 +20,7 @@
 	find_circs()
 	connect_to_network()
 	SSair.start_processing_machine(src)
-	update_appearance()
+	update_icon()
 
 /obj/machinery/power/generator/ComponentInitialize()
 	. = ..()
@@ -33,14 +33,13 @@
 
 /obj/machinery/power/generator/update_overlays()
 	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN))
-		return
+	if(!(machine_stat & (NOPOWER|BROKEN)))
+		var/L = min(round(lastgenlev/100000),11)
+		if(L != 0)
+			. += mutable_appearance('icons/obj/power.dmi', "teg-op[L]")
 
-	var/L = min(round(lastgenlev / 100000), 11)
-	if(L != 0)
-		. += mutable_appearance('icons/obj/power.dmi', "teg-op[L]")
-	if(hot_circ && cold_circ)
-		. += "teg-oc[lastcirc]"
+		if(hot_circ && cold_circ)
+			. += "teg-oc[lastcirc]"
 
 
 #define GENRATE 800 // generator output coefficient from Q
@@ -84,12 +83,12 @@
 			var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
 			cold_circ_air1.merge(cold_air)
 
-		update_appearance()
+		update_icon()
 
 	var/circ = "[cold_circ?.last_pressure_delta > 0 ? "1" : "0"][hot_circ?.last_pressure_delta > 0 ? "1" : "0"]"
 	if(circ != lastcirc)
 		lastcirc = circ
-		update_appearance()
+		update_icon()
 
 	src.updateDialog()
 

@@ -8,7 +8,6 @@
 	tastes = list("tasteless soup" = 1)
 	foodtypes = VEGETABLES
 	eatverbs = list("slurp","sip","inhale","drink")
-	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/soup/wish
 	name = "wish soup"
@@ -32,7 +31,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 8, /datum/reagent/water = 5)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
-	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/slime
 	name = "slime soup"
@@ -41,7 +39,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/toxin/slimejelly = 10, /datum/reagent/consumable/nutriment/vitamin = 9, /datum/reagent/water = 5)
 	tastes = list("slime" = 1)
 	foodtypes = TOXIC | SUGAR
-	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/blood
 	name = "tomato soup"
@@ -75,7 +72,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 8)
 	tastes = list("vegetables" = 1)
 	foodtypes = VEGETABLES
-	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/nettle
 	name = "nettle soup"
@@ -84,7 +80,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 9, /datum/reagent/medicine/omnizine = 5)
 	tastes = list("nettles" = 1)
 	foodtypes = VEGETABLES
-	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/mystery
 	name = "mystery soup"
@@ -107,7 +102,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/capsaicin = 3, /datum/reagent/consumable/tomatojuice = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("hot peppers" = 1)
 	foodtypes = VEGETABLES | MEAT
-	venue_value = FOOD_PRICE_NORMAL
+
 /obj/item/food/soup/coldchili
 	name = "cold chili"
 	desc = "This slush is barely a liquid!"
@@ -131,7 +126,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3,  /datum/reagent/consumable/nutriment/protein = 9, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("the jungle" = 1, "banana" = 1)
 	foodtypes = FRUIT
-	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/tomato
 	name = "tomato soup"
@@ -149,14 +143,13 @@
 	tastes = list("tomato" = 1, "squirming" = 1)
 	foodtypes = MEAT | GROSS
 
-/obj/item/food/soup/miso
-	name = "misosoup"
+/obj/item/food/soup/milo
+	name = "milosoup"
 	desc = "The universes best soup! Yum!!!"
-	icon_state = "misosoup"
+	icon_state = "milosoup"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("miso" = 1)
-	foodtypes = VEGETABLES | BREAKFAST
-	venue_value = FOOD_PRICE_NORMAL
+	tastes = list("milo" = 1) // wtf is milo
+	foodtypes = VEGETABLES
 
 /obj/item/food/soup/mushroom
 	name = "chantrelle soup"
@@ -206,7 +199,6 @@
 	max_volume = 100
 	tastes = list("tomato" = 1, "carrot" = 1)
 	foodtypes = VEGETABLES
-	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/soup/sweetpotato
 	name = "sweet potato soup"
@@ -215,7 +207,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("sweet potato" = 1)
 	foodtypes = VEGETABLES | SUGAR
-	venue_value = FOOD_PRICE_NORMAL
+
 /obj/item/food/soup/beet/red
 	name = "red beet soup"
 	desc = "Quite a delicacy."
@@ -239,13 +231,12 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("creamy texture" = 1, "crab" = 4)
 	foodtypes = MEAT
-	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/soup/electron
 	name = "electron soup"
 	desc = "A gastronomic curiosity of ethereal origin. It is famed for the minature weather system formed over a properly prepared soup."
 	icon_state = "electronsoup"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity/enriched = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity = 5)
 	tastes = list("mushroom" = 1, "electrons" = 4)
 	foodtypes = VEGETABLES | TOXIC
 
@@ -270,12 +261,3 @@
 	food_reagents = list (/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/oculine = 2)
 	tastes = list("creamy peas"= 2, "parsnip" = 1)
 	foodtypes = VEGETABLES
-
-/obj/item/food/soup/indian_curry
-	name = "indian chicken curry"
-	desc = "A mild, creamy curry from the old subcontinent. Liked by the Space-British, because it reminds them of the Raj."
-	icon_state = "indian_curry"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("chicken" = 2, "creamy curry" = 4, "earthy heat" = 1)
-	foodtypes = VEGETABLES | MEAT | DAIRY
-	venue_value = FOOD_PRICE_NORMAL

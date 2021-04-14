@@ -25,7 +25,6 @@
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	attack_vis_effect = ATTACK_EFFECT_KICK
 	health = 40
 	maxHealth = 40
 	minbodytemp = 180
@@ -47,29 +46,26 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/retaliate/goat/Life()
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && DT_PROB(0.5, delta_time))
+		if(!enemies.len && prob(1))
 			Retaliate()
 
-		if(enemies.len && DT_PROB(5, delta_time))
+		if(enemies.len && prob(10))
 			enemies = list()
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
-	if(stat != CONSCIOUS)
-		return
-
-	udder.generateMilk()
-	eat_plants()
-	if(pulledby)
-		return
-
-	for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
-		var/step = get_step(src, direction)
-		if(step && ((locate(/obj/structure/spacevine) in step) || (locate(/obj/structure/glowshroom) in step)))
-			Move(step, get_dir(src, step))
+	if(stat == CONSCIOUS)
+		udder.generateMilk()
+		eat_plants()
+		if(!pulledby)
+			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
+				var/step = get_step(src, direction)
+				if(step)
+					if(locate(/obj/structure/spacevine) in step || locate(/obj/structure/glowshroom) in step)
+						Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
 	..()
@@ -139,7 +135,6 @@
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	attack_vis_effect = ATTACK_EFFECT_KICK
 	health = 50
 	maxHealth = 50
 	var/obj/item/udder/udder = null
@@ -178,7 +173,7 @@
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
-/mob/living/simple_animal/cow/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/cow/Life()
 	. = ..()
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
@@ -282,17 +277,17 @@
 /mob/living/simple_animal/chick/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/chick/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/chick/Life()
 	. =..()
 	if(!.)
 		return
 	if(!stat && !ckey)
-		amount_grown += rand(0.5 * delta_time, 1 * delta_time)
+		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/chick/holo/Life()
 	..()
 	amount_grown = 0
 
@@ -371,16 +366,16 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/chicken/Life()
 	. =..()
 	if(!.)
 		return
-	if((!stat && DT_PROB(1.5, delta_time) && eggsleft > 0) && egg_type)
+	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
-		E.pixel_x = rand(-6, 6)
-		E.pixel_y = rand(-6, 6)
+		E.pixel_x = rand(-6,6)
+		E.pixel_y = rand(-6,6)
 		if(eggsFertile)
 			if(chicken_count < MAX_CHICKENS && prob(25))
 				START_PROCESSING(SSobj, E)
@@ -402,7 +397,7 @@
 	name = "udder"
 
 /obj/item/udder/Initialize()
-	create_reagents(50, REAGENT_HOLDER_ALIVE)
+	create_reagents(50)
 	reagents.add_reagent(/datum/reagent/consumable/milk, 20)
 	. = ..()
 

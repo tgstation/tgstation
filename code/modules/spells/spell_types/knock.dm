@@ -2,7 +2,7 @@
 	name = "Knock"
 	desc = "This spell opens nearby doors and closets."
 
-	school = SCHOOL_TRANSMUTATION
+	school = "transmutation"
 	charge_max = 100
 	clothes_req = FALSE
 	invocation = "AULIE OXIN FIERA"

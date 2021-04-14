@@ -242,28 +242,26 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	else
 		..()
 
-/obj/machinery/vending/update_appearance(updates=ALL)
-	. = ..()
-	if(machine_stat & BROKEN)
-		set_light(0)
-		return
-	set_light(powered() ? MINIMUM_USEFUL_LIGHT_RANGE : 0)
-
-
 /obj/machinery/vending/update_icon_state()
 	if(machine_stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
-		return ..()
-	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
-	return ..()
+		set_light(0)
+	else if(powered())
+		icon_state = initial(icon_state)
+		set_light(1.4)
+	else
+		icon_state = "[initial(icon_state)]-off"
+		set_light(0)
 
 
 /obj/machinery/vending/update_overlays()
 	. = ..()
 	if(!light_mask)
 		return
+
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!(machine_stat & BROKEN) && powered())
-		. += mutable_appearance(icon, light_mask, 0, EMISSIVE_PLANE)
+		SSvis_overlays.add_vis_overlay(src, icon, light_mask, EMISSIVE_LAYER, EMISSIVE_PLANE)
 
 /obj/machinery/vending/obj_break(damage_flag)
 	. = ..()
@@ -845,11 +843,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 					flick(icon_deny,src)
 					vend_ready = TRUE
 					return
-				else if(!C.registered_account.account_job)
-					say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
-					flick(icon_deny, src)
-					vend_ready = TRUE
-					return
 				else if(age_restrictions && R.age_restricted && (!C.registered_age || C.registered_age < AGE_MINOR))
 					say("You are not of legal age to purchase [R.name].")
 					if(!(usr in GLOB.narcd_underages))
@@ -1001,6 +994,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/proc/canLoadItem(obj/item/I, mob/user)
 	return FALSE
 
+/obj/machinery/vending/onTransitZ()
+	return
+
 /obj/machinery/vending/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/mob/living/L = AM
@@ -1008,9 +1004,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	tilt(L)
-
-/obj/machinery/vending/attack_tk_grab(mob/user)
-	to_chat(user, "<span class='warning'>[src] seems to resist your mental grasp!</span>")
 
 ///Crush the mob that the vending machine got thrown at
 /obj/machinery/vending/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -1043,14 +1036,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/custom/canLoadItem(obj/item/I, mob/user)
 	. = FALSE
-	if(I.flags_1 & HOLOGRAM_1)
-		say("This vendor cannot accept nonexistent items.")
-		return
 	if(loaded_items >= max_loaded_items)
 		say("There are too many items in stock.")
 		return
 	if(istype(I, /obj/item/stack))
-		say("Loose items may cause problems, try to use it inside wrapping paper.")
+		say("Loose items may cause problems, try use it inside wrapping paper.")
 		return
 	if(I.custom_price)
 		return TRUE
@@ -1158,6 +1148,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 			last_slogan = world.time + rand(0, slogan_delay)
 			return
 
+		if(canLoadItem(I))
+			loadingAttempt(I,user)
+			updateUsrDialog()
+			return
+
+	if(panel_open && is_wire_tool(I))
+		wires.interact(user)
+		return
+
 	return ..()
 
 /obj/machinery/vending/custom/crowbar_act(mob/living/user, obj/item/I)
@@ -1202,22 +1201,3 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/obj/item/I = target
 		I.custom_price = price
 		to_chat(user, "<span class='notice'>You set the price of [I] to [price] cr.</span>")
-
-/obj/machinery/vending/custom/greed //name and like decided by the spawn
-	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
-	material_flags = MATERIAL_COLOR //it's grey anyway, let's bling out
-
-/obj/machinery/vending/custom/greed/Initialize(mapload)
-	. = ..()
-	//starts in a state where you can move it
-	panel_open = TRUE
-	anchored = FALSE
-	add_overlay("[initial(icon_state)]-panel")
-	//and references the deity
-	name = "[GLOB.deity]'s Consecrated Vendor"
-	desc = "A vending machine created by [GLOB.deity]."
-	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
-	add_filter("vending_outline", 9, list("type" = "outline", "color" = "#FFFFFF"))
-	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35))
-
-

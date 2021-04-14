@@ -100,9 +100,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 
 	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
-		if(user == src)
-			to_chat(user,  "<span class='notice'>You can't seem to manage to place [W] on your head by yourself!</span>" )
-			return
 		if(hat && HAS_TRAIT(hat, TRAIT_NODROP))
 			to_chat(user, "<span class='warn'>You can't seem to remove [src]'s existing headwear!</span>")
 			return
@@ -282,7 +279,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	add_fingerprint(user)
 	if(opened && !wiresexposed && !issilicon(user))
 		if(cell)
-			cell.update_appearance()
+			cell.update_icon()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
 			to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
@@ -369,8 +366,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	sleep(5)
 	to_chat(src, "<span class='danger'>LAW SYNCHRONISATION ERROR</span>")
 	sleep(5)
-	if(user)
-		logevent("LOG: New user \[[replacetext(user.real_name," ","")]\], groups \[root\]")
 	to_chat(src, "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>")
 	sleep(10)
 	to_chat(src, "<span class='danger'>> N</span>")
@@ -393,14 +388,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
-		if(EXPLODE_DEVASTATE)
+		if(1)
 			gib()
 			return
-		if(EXPLODE_HEAVY)
+		if(2)
 			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
-		if(EXPLODE_LIGHT)
+		if(3)
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 

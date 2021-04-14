@@ -34,8 +34,6 @@
 	var/junkiness
 	///Will this food turn into badrecipe on a grill? Don't use this for everything; preferably mostly for food that is made on a grill to begin with so it burns after some time
 	var/burns_on_grill = FALSE
-	///Price of this food if sold in a venue
-	var/venue_value
 
 /obj/item/food/Initialize()
 	. = ..()
@@ -45,8 +43,6 @@
 		tastes = string_assoc_list(tastes)
 	if(eatverbs)
 		eatverbs = string_list(eatverbs)
-	if(venue_value)
-		AddElement(/datum/element/venue_price, venue_value)
 	MakeEdible()
 	MakeProcessable()
 	MakeLeaveTrash()

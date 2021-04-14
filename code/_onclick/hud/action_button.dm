@@ -130,7 +130,7 @@
 		name = "Show Buttons"
 	else
 		name = "Hide Buttons"
-	update_appearance()
+	update_icon()
 	usr.update_action_buttons()
 
 /atom/movable/screen/movable/action_button/hide_toggle/AltClick(mob/user)
@@ -151,14 +151,16 @@
 	hide_icon = settings["toggle_icon"]
 	hide_state = settings["toggle_hide"]
 	show_state = settings["toggle_show"]
-	update_appearance()
+	update_icon()
 
 /atom/movable/screen/movable/action_button/hide_toggle/update_overlays()
 	. = ..()
-	. += hidden ? show_appearance : hide_appearance
+	if(hidden)
+		. += show_appearance
+	else
+		. += hide_appearance
 
 /atom/movable/screen/movable/action_button/MouseEntered(location,control,params)
-	. = ..()
 	if(!QDELETED(src))
 		openToolTip(usr,src,params,title = name,content = desc,theme = actiontooltipstyle)
 

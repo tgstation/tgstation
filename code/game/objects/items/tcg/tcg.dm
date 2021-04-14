@@ -100,30 +100,18 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	. = ..()
 	flip_card(user)
 
-/obj/item/tcgcard/update_name(updates)
+/obj/item/tcgcard/update_icon_state()
 	. = ..()
 	if(!flipped)
 		var/datum/card/template = extract_datum()
 		name = template.name
+		desc = "<i>[template.desc]</i>"
+		icon_state = template.icon_state
+
 	else
 		name = "Trading Card"
-
-/obj/item/tcgcard/update_desc(updates)
-	. = ..()
-	if(!flipped)
-		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
-		desc = "<i>[template.desc]</i>"
-	else
 		desc = "It's the back of a trading card... no peeking!"
-
-/obj/item/tcgcard/update_icon_state()
-	if(flipped)
 		icon_state = "cardback"
-		return ..()
-
-	var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
-	icon_state = template.icon_state
-	return ..()
 
 /obj/item/tcgcard/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/tcgcard))
@@ -141,8 +129,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			return
 		user.transferItemToLoc(src, old_deck)
 		flipped = old_deck.flipped
-		old_deck.update_appearance()
-		update_appearance()
+		old_deck.update_icon()
+		update_icon()
 	return ..()
 
 /obj/item/tcgcard/proc/check_menu(mob/living/user)
@@ -183,7 +171,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	desc = "A stack of TCG cards."
 	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "deck_up"
-	base_icon_state = "deck"
 	obj_flags = UNIQUE_RENAME
 	var/flipped = FALSE
 	var/static/radial_draw = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_draw")
@@ -195,20 +182,17 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	LoadComponent(/datum/component/storage/concrete/tcg)
 
 /obj/item/tcgcard_deck/update_icon_state()
-	if(!flipped)
-		icon_state = "[base_icon_state]_up"
-		return ..()
-
-	switch(contents.len)
-		if(1 to 10)
-			icon_state = "[icon_state]_tcg_low"
-		if(11 to 20)
-			icon_state = "[icon_state]_tcg_half"
-		if(21 to INFINITY)
-			icon_state = "[icon_state]_tcg_full"
-		else
-			icon_state = "[base_icon_state]_tcg"
-	return ..()
+	. = ..()
+	if(flipped)
+		switch(contents.len)
+			if(1 to 10)
+				icon_state = "deck_tcg_low"
+			if(11 to 20)
+				icon_state = "deck_tcg_half"
+			if(21 to INFINITY)
+				icon_state = "deck_tcg_full"
+	else
+		icon_state = "deck_up"
 
 /obj/item/tcgcard_deck/examine(mob/user)
 	. = ..()

@@ -112,7 +112,7 @@
 
 /obj/item/gun/energy/e_gun/nuclear/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	failcheck()
-	update_appearance()
+	update_icon()
 	..()
 
 /obj/item/gun/energy/e_gun/nuclear/proc/failcheck()
@@ -139,12 +139,11 @@
 	. = ..()
 	if(reactor_overloaded)
 		. += "[icon_state]_fail_3"
-		return
-
-	switch(fail_tick)
-		if(0)
-			. += "[icon_state]_fail_0"
-		if(1 to 150)
-			. += "[icon_state]_fail_1"
-		if(151 to INFINITY)
-			. += "[icon_state]_fail_2"
+	else
+		switch(fail_tick)
+			if(0)
+				. += "[icon_state]_fail_0"
+			if(1 to 150)
+				. += "[icon_state]_fail_1"
+			if(151 to INFINITY)
+				. += "[icon_state]_fail_2"

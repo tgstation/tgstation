@@ -262,7 +262,6 @@
 	icon_state = initial(icon_state)
 	if(machine_stat & BROKEN)
 		icon_state += "b"
-	return ..()
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
@@ -361,10 +360,5 @@
 	name = "\improper AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")
-
-/obj/machinery/computer/security/telescreen/bar
-	name = "bar monitor"
-	desc = "A telescreen that connects to the bar's camera network. Perfect for checking on customers."
-	network = list("bar")
 
 #undef DEFAULT_MAP_SIZE

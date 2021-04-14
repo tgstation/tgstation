@@ -4,7 +4,7 @@
 	spread_text = "Airborne"
 	cure_text = "Banana products, especially banana bread."
 	cures = list(/datum/reagent/consumable/banana)
-	cure_chance = 50
+	cure_chance = 75
 	agent = "H0NI<42 Virus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 0.75
@@ -12,23 +12,23 @@
 	severity = DISEASE_SEVERITY_MEDIUM
 
 
-/datum/disease/pierrot_throat/stage_act(delta_time, times_fired)
+/datum/disease/pierrot_throat/stage_act()
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(1)
-			if(DT_PROB(5, delta_time))
+			if(prob(10))
 				to_chat(affected_mob, "<span class='danger'>You feel a little silly.</span>")
 		if(2)
-			if(DT_PROB(5, delta_time))
+			if(prob(10))
 				to_chat(affected_mob, "<span class='danger'>You start seeing rainbows.</span>")
 		if(3)
-			if(DT_PROB(5, delta_time))
+			if(prob(10))
 				to_chat(affected_mob, "<span class='danger'>Your thoughts are interrupted by a loud <b>HONK!</b></span>")
 		if(4)
-			if(DT_PROB(2.5, delta_time))
+			if(prob(5))
 				affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) , forced = "pierrot's throat")
 
 

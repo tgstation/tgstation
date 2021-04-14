@@ -97,7 +97,7 @@
 	if(A == hacking_cable)
 		hacking_cable = null
 		if(!QDELETED(card))
-			card.update_appearance()
+			card.update_icon()
 	if(A == internal_instrument)
 		internal_instrument = null
 	if(A == newscaster)
@@ -121,7 +121,7 @@
 		card.forceMove(drop_location())
 		card.pai = null //these are otherwise handled by paicard/handle_atom_del()
 		card.emotion_icon = initial(card.emotion_icon)
-		card.update_appearance()
+		card.update_icon()
 	GLOB.pai_list -= src
 	return ..()
 
@@ -163,11 +163,11 @@
 	aiPDA.ownjob = "pAI Messenger"
 	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
-/mob/living/silicon/pai/proc/process_hack(delta_time, times_fired)
+/mob/living/silicon/pai/proc/process_hack()
 
 
 	if(hacking_cable && hacking_cable.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = clamp(hackprogress + (2 * delta_time), 0, 100)
+		hackprogress = clamp(hackprogress + 4, 0, 100)
 	else
 		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
 		hackprogress = 0
@@ -175,7 +175,7 @@
 		hackdoor = null
 		QDEL_NULL(hacking_cable)
 		if(!QDELETED(card))
-			card.update_appearance()
+			card.update_icon()
 		return
 	if(screen == "doorjack" && subscreen == 0) // Update our view, if appropriate
 		paiInterface()
@@ -293,7 +293,7 @@
 	. = ..()
 	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
-/mob/living/silicon/pai/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/silicon/pai/Life()
 	. = ..()
 	if(QDELETED(src) || stat == DEAD)
 		return
@@ -303,10 +303,10 @@
 			T.visible_message("<span class='warning'>[hacking_cable] rapidly retracts back into its spool.</span>", "<span class='hear'>You hear a click and the sound of wire spooling rapidly.</span>")
 			QDEL_NULL(hacking_cable)
 			if(!QDELETED(card))
-				card.update_appearance()
+				card.update_icon()
 		else if(hacking)
-			process_hack(delta_time, times_fired)
-	silent = max(silent - (0.5 * delta_time), 0)
+			process_hack()
+	silent = max(silent - 1, 0)
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
@@ -327,13 +327,3 @@
 		return
 
 	return ..()
-
-/obj/item/paicard/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive
-	if(!pai)
-		return
-	to_chat(user, "<span class='notice'>You override [pai]'s directive system, clearing its master string and supplied directive.</span>")
-	to_chat(pai, "<span class='userdanger'>Warning: System override detected, check directive sub-system for any changes.</span>")
-	log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
-	pai.master = null
-	pai.master_dna = null
-	pai.laws.supplied[1] = "None." // Sets supplemental directive to this

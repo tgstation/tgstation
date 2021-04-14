@@ -25,23 +25,20 @@
 /obj/item/stack/ore/update_overlays()
 	. = ..()
 	var/difference = min(ORESTACK_OVERLAYS_MAX, amount) - (LAZYLEN(stack_overlays)+1)
-	if(!difference)
+	if(difference == 0)
 		return
-
-	if(difference < 0 && LAZYLEN(stack_overlays)) //amount < stack_overlays, remove excess.
-		if(LAZYLEN(stack_overlays)-difference <= 0)
+	else if(difference < 0 && LAZYLEN(stack_overlays)) //amount < stack_overlays, remove excess.
+		if (LAZYLEN(stack_overlays)-difference <= 0)
 			stack_overlays = null
-			return
-		stack_overlays.len += difference
-
-	else //amount > stack_overlays, add some.
+		else
+			stack_overlays.len += difference
+	else if(difference > 0) //amount > stack_overlays, add some.
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
 			newore.pixel_x = rand(-8,8)
 			newore.pixel_y = rand(-8,8)
 			LAZYADD(stack_overlays, newore)
-
-	if(stack_overlays)
+	if (stack_overlays)
 		. += stack_overlays
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
@@ -131,8 +128,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	qdel(src)
 
 /obj/item/stack/ore/glass/ex_act(severity, target)
-	if(severity != EXPLODE_NONE)
-		qdel(src)
+	if (severity == EXPLODE_NONE)
+		return
+	qdel(src)
 
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
@@ -334,8 +332,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	pixel_y = base_pixel_y + rand(0, 8) - 8
 
 /obj/item/stack/ore/ex_act(severity, target)
-	if(severity == EXPLODE_DEVASTATE)
-		qdel(src)
+	if (!severity || severity >= 2)
+		return
+	qdel(src)
 
 
 /*****************************Coin********************************/

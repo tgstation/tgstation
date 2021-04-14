@@ -3,7 +3,6 @@
 	desc = "A computer system running a deep neural network that processes arbitrary information to produce data useable in the development of new technologies. In layman's terms, it makes research points."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "RD-server-on"
-	base_icon_state = "RD-server"
 	var/heat_health = 100
 	//Code for point mining here.
 	var/working = TRUE //temperature should break it.
@@ -36,10 +35,11 @@
 
 /obj/machinery/rnd/server/update_icon_state()
 	if(machine_stat & EMPED || machine_stat & NOPOWER)
-		icon_state = "[base_icon_state]-off"
-		return ..()
-	icon_state = "[base_icon_state]-[research_disabled ? "halt" : "on"]"
-	return ..()
+		icon_state = "RD-server-off"
+	else if(research_disabled)
+		icon_state = "RD-server-halt"
+	else
+		icon_state = "RD-server-on"
 
 /obj/machinery/rnd/server/power_change()
 	. = ..()
@@ -51,7 +51,7 @@
 		working = FALSE
 	else
 		working = TRUE
-	update_appearance()
+	update_icon()
 
 /obj/machinery/rnd/server/emp_act()
 	. = ..()
@@ -68,6 +68,12 @@
 /obj/machinery/rnd/server/proc/toggle_disable()
 	research_disabled = !research_disabled
 	refresh_working()
+
+/obj/machinery/rnd/server/proc/mine()
+	. = base_mining_income
+	var/penalty = max((get_env_temp() - temp_tolerance_high), 0) * temp_penalty_coefficient
+	current_temp = get_env_temp()
+	. = max(. - penalty, 0)
 
 /obj/machinery/rnd/server/proc/get_env_temp()
 	var/turf/open/L = loc

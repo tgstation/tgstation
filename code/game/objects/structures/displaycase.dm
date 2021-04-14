@@ -31,19 +31,19 @@
 				trophy_message = showpiece_entry["trophy_message"]
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
-	update_appearance()
+	update_icon()
 
 /obj/structure/displaycase/vv_edit_var(vname, vval)
 	. = ..()
 	if(vname in list(NAMEOF(src, open), NAMEOF(src, showpiece), NAMEOF(src, custom_glass_overlay)))
-		update_appearance()
+		update_icon()
 
 /obj/structure/displaycase/handle_atom_del(atom/A)
 	if(A == electronics)
 		electronics = null
 	if(A == showpiece)
 		showpiece = null
-		update_appearance()
+		update_icon()
 	return ..()
 
 /obj/structure/displaycase/Destroy()
@@ -65,7 +65,7 @@
 		return
 	showpiece.forceMove(drop_location())
 	showpiece = null
-	update_appearance()
+	update_icon()
 
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -88,7 +88,7 @@
 		broken = TRUE
 		new /obj/item/shard(drop_location())
 		playsound(src, "shatter", 70, TRUE)
-		update_appearance()
+		update_icon()
 		trigger_alarm()
 
 ///Anti-theft alarm triggered when broken.
@@ -110,10 +110,8 @@
 		return
 	if(broken)
 		. += "[initial(icon_state)]_broken"
-		return
-	if(!open)
+	else if(!open)
 		. += "[initial(icon_state)]_closed"
-		return
 
 /obj/structure/displaycase/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID() && !broken && openable)
@@ -130,7 +128,7 @@
 			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 			if(W.use_tool(src, user, 40, amount=5, volume=50))
 				obj_integrity = max_integrity
-				update_appearance()
+				update_icon()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
@@ -159,7 +157,7 @@
 			G.use(2)
 			broken = FALSE
 			obj_integrity = max_integrity
-			update_appearance()
+			update_icon()
 	else
 		return ..()
 
@@ -170,11 +168,11 @@
 	if(user.transferItemToLoc(wack, src))
 		showpiece = wack
 		to_chat(user, "<span class='notice'>You put [wack] on display.</span>")
-		update_appearance()
+		update_icon()
 
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
 	open = !open
-	update_appearance()
+	update_icon()
 
 /obj/structure/displaycase/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -336,7 +334,7 @@
 		to_chat(user, "<span class='notice'>You insert [W] into the case.</span>")
 		showpiece = W
 		added_roundstart = FALSE
-		update_appearance()
+		update_icon()
 
 		placer_key = user.ckey
 
@@ -401,7 +399,6 @@
 
 /obj/structure/displaycase/forsale/update_icon_state()
 	icon_state = "[initial(icon_state)][broken ? "_broken" : (open ? "_open" : (!showpiece ? "_empty" : null))]"
-	return ..()
 
 /obj/structure/displaycase/forsale/update_overlays()
 	. = ..()
@@ -471,7 +468,7 @@
 				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 				flick("[initial(icon_state)]_vend", src)
 				showpiece = null
-				update_appearance()
+				update_icon()
 				SStgui.update_uis(src)
 				return TRUE
 		if("Open")
@@ -537,7 +534,7 @@
 		if(do_after(user, 20, target = src))
 			broken = FALSE
 			obj_integrity = max_integrity
-			update_appearance()
+			update_icon()
 		return TRUE
 
 /obj/structure/displaycase/forsale/wrench_act(mob/living/user, obj/item/I)
@@ -555,7 +552,7 @@
 			else
 				to_chat(user, "<span class='notice'>You secure [src].</span>")
 			set_anchored(!anchored)
-			return TRUE
+			return
 	else if(!open && !user.combat_mode)
 		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
 		return
@@ -577,7 +574,7 @@
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = TRUE
 		playsound(src, "shatter", 70, TRUE)
-		update_appearance()
+		update_icon()
 		trigger_alarm() //In case it's given an alarm anyway.
 
 /obj/structure/displaycase/forsale/kitchen

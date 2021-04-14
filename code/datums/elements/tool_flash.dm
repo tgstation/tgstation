@@ -19,7 +19,7 @@
 	RegisterSignal(target, COMSIG_TOOL_IN_USE, .proc/prob_flash)
 	RegisterSignal(target, COMSIG_TOOL_START_USE, .proc/flash)
 
-/datum/element/tool_flash/Detach(datum/source)
+/datum/element/tool_flash/Detach(datum/source, force)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_TOOL_IN_USE, COMSIG_TOOL_START_USE))
 

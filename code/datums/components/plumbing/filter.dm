@@ -3,7 +3,7 @@
 	demand_connects = NORTH
 	supply_connects = SOUTH | EAST | WEST //SOUTH is straight, EAST is left and WEST is right. We look from the perspective of the insert
 
-/datum/component/plumbing/filter/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
+/datum/component/plumbing/filter/Initialize()
 	. = ..()
 	if(!istype(parent, /obj/machinery/plumbing/filter))
 		return COMPONENT_INCOMPATIBLE

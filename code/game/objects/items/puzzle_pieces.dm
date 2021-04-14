@@ -55,7 +55,7 @@
 	return
 
 /obj/machinery/door/keycard/ex_act(severity, target)
-	return FALSE
+	return
 
 /obj/machinery/door/keycard/try_to_activate_door(mob/user)
 	add_fingerprint(user)

@@ -138,8 +138,6 @@
 
 /obj/machinery/computer/piratepad_control/civilian/AltClick(mob/user)
 	. = ..()
-	if(!Adjacent(user))
-		return FALSE
 	id_eject(user, inserted_scan_id)
 
 /obj/machinery/computer/piratepad_control/civilian/ui_interact(mob/user, datum/tgui/ui)

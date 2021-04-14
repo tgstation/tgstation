@@ -45,7 +45,7 @@
 		user.visible_message("<span class='notice'>[user] touches [src]. It seems to respond to [user.p_their()] presence!</span>", "<span class='warning'>You create a connection between you and [src].</span>")
 		linked_minds |= user.mind
 
-	update_appearance()
+	update_icon()
 	if(linked_minds.len)
 		START_PROCESSING(SSobj, src)
 		set_light(lit_luminosity)
@@ -54,8 +54,10 @@
 		set_light(0)
 
 /obj/structure/life_candle/update_icon_state()
-	icon_state = linked_minds.len ? icon_state_active : icon_state_inactive
-	return ..()
+	if(linked_minds.len)
+		icon_state = icon_state_active
+	else
+		icon_state = icon_state_inactive
 
 /obj/structure/life_candle/examine(mob/user)
 	. = ..()

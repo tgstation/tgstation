@@ -148,7 +148,7 @@
 //Debug proc used to highlight bounding area
 /obj/docking_port/proc/highlight(_color = "#f00")
 	invisibility = 0
-	plane = GHOST_PLANE
+	layer = GHOST_LAYER
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
 	var/turf/T1 = locate(L[3],L[4],z)
@@ -231,7 +231,7 @@
 
 	if(mapload)
 		for(var/turf/T in return_turfs())
-			T.turf_flags |= NO_RUINS
+			T.flags_1 |= NO_RUINS_1
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")

@@ -60,25 +60,13 @@
 
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
-
-	RegisterSignal(src, COMSIG_MOB_BOT_PRE_STEP, .proc/check_pre_step)
-	RegisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/check_pre_step)
-	RegisterSignal(src, COMSIG_MOB_BOT_STEP, .proc/on_bot_step)
-	RegisterSignal(src, COMSIG_MOB_CLIENT_MOVED, .proc/on_bot_step)
-	RegisterSignal(src, COMSIG_MOVABLE_CROSSED_OVER, .proc/on_crossed_over)
-
-	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
-
 	if(prob(0.666) && mapload)
 		new /mob/living/simple_animal/bot/mulebot/paranormal(loc)
 		return INITIALIZE_HINT_QDEL
 	wires = new /datum/wires/mulebot(src)
-
-	// Doing this hurts my soul, but simplebot access reworks are for another day.
-	var/datum/id_trim/job/cargo_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/cargo_technician]
-	access_card.add_access(cargo_trim.access + cargo_trim.wildcard_access)
-	prev_access = access_card.access.Copy()
-
+	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
+	access_card.access = J.get_access()
+	prev_access = access_card.access
 	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)
 
 	var/static/mulebot_count = 0
@@ -114,7 +102,6 @@
 
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
-	UnregisterSignal(src, COMSIG_MOB_BOT_PRE_STEP, COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_MOB_BOT_STEP, COMSIG_MOB_CLIENT_MOVED, COMSIG_MOVABLE_CROSSED_OVER)
 	unload(0)
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
@@ -150,7 +137,7 @@
 		if(open)
 			turn_off()
 		else
-			update_appearance() //this is also handled by turn_off(), so no need to call this twice.
+			update_icon() //this is also handled by turn_off(), so no need to call this twice.
 	else if(istype(I, /obj/item/stock_parts/cell) && open)
 		if(cell)
 			to_chat(user, "<span class='warning'>[src] already has a power cell!</span>")
@@ -197,7 +184,6 @@
 	playsound(src, "sparks", 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
-	. = ..()
 	icon_state = "[base_icon][on ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
@@ -213,12 +199,12 @@
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
 	unload(0)
 	switch(severity)
-		if(EXPLODE_DEVASTATE)
+		if(1)
 			qdel(src)
-		if(EXPLODE_HEAVY)
-			wires.cut_random()
-			wires.cut_random()
-		if(EXPLODE_LIGHT)
+		if(2)
+			for(var/i = 1; i < 3; i++)
+				wires.cut_random()
+		if(3)
 			wires.cut_random()
 
 
@@ -467,7 +453,7 @@
 
 	load = AM
 	mode = BOT_IDLE
-	update_appearance()
+	update_icon()
 
 ///resolves the name to display for the loaded mob. primarily needed for the paranormal subtype since we don't want to show the name of ghosts riding it.
 /mob/living/simple_animal/bot/mulebot/proc/get_load_name()
@@ -492,7 +478,7 @@
 	if(QDELETED(load))
 		if(load) //if our thing was qdel'd, there's likely a leftover reference. just clear it and remove the overlay. we'll let the bot keep moving around to prevent it abruptly stopping somewhere.
 			load = null
-			update_appearance()
+			update_icon()
 		return
 
 	mode = BOT_IDLE
@@ -511,7 +497,7 @@
 	if(dirn) //move the thing to the delivery point.
 		cached_load.Move(get_step(loc,dirn), dirn)
 
-	update_appearance()
+	update_icon()
 
 /mob/living/simple_animal/bot/mulebot/get_status_tab_items()
 	. = ..()
@@ -532,6 +518,9 @@
 		start()
 
 /mob/living/simple_animal/bot/mulebot/Move(atom/newloc, direct) //handle leaving bloody tracks. can't be done via Moved() since that can end up putting the tracks somewhere BEFORE we get bloody.
+	if(!has_power((client || paicard))) //turn off if we ran out of power.
+		turn_off()
+		return FALSE
 	if(!bloodiness) //important to check this first since Bump() is called in the Move() -> Entered() chain
 		return ..()
 	var/atom/oldLoc = loc
@@ -543,20 +532,13 @@
 	B.setDir(direct)
 	bloodiness--
 
-/**
- * Signal handler for COMSIG_MOVABLE_CROSSED_OVER signals sent by this mulebot.
- *
- * Intended to be used to crush various things.
- */
-/mob/living/simple_animal/bot/mulebot/proc/on_crossed_over(atom/movable/source, atom/movable/crossed_atom)
-	SIGNAL_HANDLER
-
-	if(ishuman(crossed_atom))
-		run_over(crossed_atom)
-
-/mob/living/simple_animal/bot/mulebot/Moved()
+/mob/living/simple_animal/bot/mulebot/Moved() //make sure we always use power after moving.
 	. = ..()
-
+	if(!cell)
+		return
+	cell.use(cell_move_power_usage)
+	if(cell.charge < cell_move_power_usage) //make sure we have enough power to move again, otherwise turn off.
+		turn_off()
 	diag_hud_set_mulebotcell()
 
 /mob/living/simple_animal/bot/mulebot/handle_automated_action()
@@ -595,14 +577,12 @@
 					path -= next
 					return
 				if(isturf(next))
-					if(SEND_SIGNAL(src, COMSIG_MOB_BOT_PRE_STEP) & COMPONENT_MOB_BOT_BLOCK_PRE_STEP)
-						return
 					var/oldloc = loc
 					var/moved = step_towards(src, next) // attempt to move
 					if(moved && oldloc!=loc) // successful move
-						SEND_SIGNAL(src, COMSIG_MOB_BOT_STEP)
 						blockcount = 0
 						path -= loc
+
 						if(destination == home_destination)
 							mode = BOT_GO_HOME
 						else
@@ -657,7 +637,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
-	path = get_path_to(src, target, 250, id=access_card, exclude=avoid)
+	path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid)
 
 // sets the current destination
 // signals all beacons matching the delivery code
@@ -743,8 +723,9 @@
 			visible_message("<span class='danger'>[src] knocks over [L]!</span>")
 	return ..()
 
+// called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
-/mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	log_combat(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!</span>")
@@ -809,7 +790,7 @@
 	new /obj/item/stack/cable_coil/cut(Tsec)
 	if(cell)
 		cell.forceMove(Tsec)
-		cell.update_appearance()
+		cell.update_icon()
 		cell = null
 
 	do_sparks(3, TRUE, src)
@@ -837,23 +818,6 @@
 	. = ..()
 	if(.)
 		visible_message("<span class='notice'>[src]'s safeties are locked on.</span>")
-
-/// Checks whether the bot can complete a step_towards, checking whether the bot is on and has the charge to do the move. Returns COMPONENT_MOB_BOT_CANCELSTEP if the bot should not step.
-/mob/living/simple_animal/bot/mulebot/proc/check_pre_step(datum/source)
-	SIGNAL_HANDLER
-
-	if(!on)
-		return COMPONENT_MOB_BOT_BLOCK_PRE_STEP
-
-	if((cell && (cell.charge < cell_move_power_usage)) || !has_power((client || paicard)))
-		turn_off()
-		return COMPONENT_MOB_BOT_BLOCK_PRE_STEP
-
-/// Uses power from the cell when the bot steps.
-/mob/living/simple_animal/bot/mulebot/proc/on_bot_step(datum/source)
-	SIGNAL_HANDLER
-
-	cell?.use(cell_move_power_usage)
 
 /mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
 	name = "\improper GHOULbot"
@@ -907,7 +871,8 @@
 
 	load = AM
 	mode = BOT_IDLE
-	update_appearance()
+	update_icon()
+
 
 /mob/living/simple_animal/bot/mulebot/paranormal/update_overlays()
 	. = ..()
@@ -934,4 +899,3 @@
 
 /obj/machinery/bot_core/mulebot
 	req_access = list(ACCESS_CARGO)
-

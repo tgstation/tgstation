@@ -24,8 +24,8 @@
 		exposed_mob.reagents.add_reagent(/datum/reagent/toxin/spore, 0.2*reac_volume)
 	exposed_mob.apply_damage(0.7*reac_volume, TOX)
 
-/datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	C.adjustToxLoss(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+/datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/carbon/C)
+	C.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER)
 	C.hal_screwyhud = SCREWYHUD_HEALTHY //fully healed, honest
 	..()
 

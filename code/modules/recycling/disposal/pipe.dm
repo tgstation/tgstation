@@ -51,7 +51,7 @@
 	if(H)
 		H.active = FALSE
 		expel(H, get_turf(src), 0)
-	stored = null //The qdel is handled in expel()
+	QDEL_NULL(stored)
 	return ..()
 
 /obj/structure/disposalpipe/handle_atom_del(atom/A)
@@ -119,7 +119,8 @@
 // pipe affected by explosion
 /obj/structure/disposalpipe/contents_explosion(severity, target)
 	var/obj/structure/disposalholder/H = locate() in src
-	H?.contents_explosion(severity, target)
+	if(H)
+		H.contents_explosion(severity, target)
 
 
 //welding tool: unfasten and convert to obj/disposalconstruct

@@ -78,7 +78,7 @@
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
-	update_appearance()
+	update_icon()
 
 /obj/item/toy/cards/deck/cas/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/cards/singlecard/cas))
@@ -93,12 +93,11 @@
 		cards += RC
 		user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
 		qdel(SC)
-	update_appearance()
+	update_icon()
 
 /obj/item/toy/cards/deck/cas/update_icon_state()
 	if(cards.len < 26)
 		icon_state = "deck_[deckstyle]_low"
-	return ..()
 
 /obj/item/toy/cards/singlecard/cas
 	name = "CAS card"
@@ -130,7 +129,7 @@
 	else if(flipped)
 		name = buffertext
 	flipped = !flipped
-	update_appearance()
+	update_icon()
 
 /obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
@@ -138,8 +137,10 @@
 	Flip()
 
 /obj/item/toy/cards/singlecard/cas/update_icon_state()
-	icon_state = "[card_face][flipped ? "_flipped" : null]"
-	return ..()
+	if(flipped)
+		icon_state = "[card_face]_flipped"
+	else
+		icon_state = "[card_face]"
 
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/pen))

@@ -6,7 +6,6 @@
 	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. Right-Click to change the transfer rate."
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
-	base_icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	///Who are we sticking our needle in?
@@ -27,7 +26,7 @@
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
-	update_appearance()
+	update_icon()
 	if(use_internal_storage)
 		create_reagents(100, TRANSPARENT)
 
@@ -37,43 +36,51 @@
 	return ..()
 
 /obj/machinery/iv_drip/update_icon_state()
+	icon_state = initial(icon_state)
+
 	if(attached)
-		icon_state = "[base_icon_state]_[mode ? "injecting" : "donating"]"
+		if(mode)
+			icon_state += "_injecting"
+		else
+			icon_state += "_donating"
 	else
-		icon_state = "[base_icon_state]_[mode ? "injectidle" : "donateidle"]"
-	return ..()
+		if(mode)
+			icon_state += "_injectidle"
+		else
+			icon_state += "_donateidle"
 
 /obj/machinery/iv_drip/update_overlays()
 	. = ..()
 
-	if(!beaker)
-		return
+	if(beaker)
+		if(attached)
+			. += "beakeractive"
+		else
+			. += "beakeridle"
 
-	. += attached ? "beakeractive" : "beakeridle"
-	var/datum/reagents/target_reagents = get_reagent_holder()
-	if(!target_reagents)
-		return
+		var/datum/reagents/target_reagents = get_reagent_holder()
+		if(target_reagents)
+			var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "reagent")
 
-	var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "reagent")
-	var/percent = round((target_reagents.total_volume / target_reagents.maximum_volume) * 100)
-	switch(percent)
-		if(0 to 9)
-			filling_overlay.icon_state = "reagent0"
-		if(10 to 24)
-			filling_overlay.icon_state = "reagent10"
-		if(25 to 49)
-			filling_overlay.icon_state = "reagent25"
-		if(50 to 74)
-			filling_overlay.icon_state = "reagent50"
-		if(75 to 79)
-			filling_overlay.icon_state = "reagent75"
-		if(80 to 90)
-			filling_overlay.icon_state = "reagent80"
-		if(91 to INFINITY)
-			filling_overlay.icon_state = "reagent100"
+			var/percent = round((target_reagents.total_volume / target_reagents.maximum_volume) * 100)
+			switch(percent)
+				if(0 to 9)
+					filling_overlay.icon_state = "reagent0"
+				if(10 to 24)
+					filling_overlay.icon_state = "reagent10"
+				if(25 to 49)
+					filling_overlay.icon_state = "reagent25"
+				if(50 to 74)
+					filling_overlay.icon_state = "reagent50"
+				if(75 to 79)
+					filling_overlay.icon_state = "reagent75"
+				if(80 to 90)
+					filling_overlay.icon_state = "reagent80"
+				if(91 to INFINITY)
+					filling_overlay.icon_state = "reagent100"
 
-	filling_overlay.color = mix_color_from_reagents(target_reagents.reagent_list)
-	. += filling_overlay
+			filling_overlay.color = mix_color_from_reagents(target_reagents.reagent_list)
+			. += filling_overlay
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
 	. = ..()
@@ -83,7 +90,7 @@
 	if(attached)
 		visible_message("<span class='warning'>[attached] is detached from [src].</span>")
 		attached = null
-		update_appearance()
+		update_icon()
 		return
 
 	if(!target.has_dna())
@@ -111,7 +118,7 @@
 		to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([beaker.reagents.log_list()])", LOG_ATTACK)
 		add_fingerprint(user)
-		update_appearance()
+		update_icon()
 		return
 	else
 		return ..()
@@ -143,7 +150,7 @@
 					// speed up transfer on blood packs
 					transfer_amount *= 2
 				target_reagents.trans_to(attached, transfer_amount * delta_time * 0.5, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
-				update_appearance()
+				update_icon()
 
 		// Take blood
 		else
@@ -161,7 +168,7 @@
 				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 			var/atom/movable/target = use_internal_storage ? src : beaker
 			attached.transfer_blood_to(target, amount)
-			update_appearance()
+			update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -195,7 +202,7 @@
 	add_fingerprint(usr)
 	attached = target
 	START_PROCESSING(SSmachines, src)
-	update_appearance()
+	update_icon()
 
 	SEND_SIGNAL(src, COMSIG_IV_ATTACH, target)
 
@@ -204,7 +211,7 @@
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
 
 	attached = null
-	update_appearance()
+	update_icon()
 
 /obj/machinery/iv_drip/proc/get_reagent_holder()
 	return use_internal_storage ? reagents : beaker?.reagents
@@ -223,7 +230,7 @@
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
-		update_appearance()
+		update_icon()
 
 /obj/machinery/iv_drip/verb/toggle_mode()
 	set category = "Object"
@@ -238,7 +245,7 @@
 		return
 	mode = !mode
 	to_chat(usr, "<span class='notice'>The IV drip is now [mode ? "injecting" : "taking blood"].</span>")
-	update_appearance()
+	update_icon()
 
 /obj/machinery/iv_drip/examine(mob/user)
 	. = ..()
@@ -264,7 +271,6 @@
 	name = "saline drip"
 	desc = "An all-you-can-drip saline canister designed to supply a hospital without running out, with a scary looking pump rigged to inject saline into containers, but filling people directly might be a bad idea."
 	icon_state = "saline"
-	base_icon_state = "saline"
 	density = TRUE
 
 /obj/machinery/iv_drip/saline/Initialize(mapload)
@@ -286,7 +292,6 @@
 	name = "automated IV drip"
 	desc = "A modified IV drip with plumbing connects. Reagents received from the connect are injected directly into their bloodstream, blood that is drawn goes to the internal storage and then into the ducting."
 	icon_state = "plumb"
-	base_icon_state = "plumb"
 
 	density = TRUE
 	use_internal_storage = TRUE

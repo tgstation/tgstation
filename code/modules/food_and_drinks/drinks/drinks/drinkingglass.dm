@@ -19,30 +19,25 @@
 	. = ..()
 	if(!length(reagents.reagent_list))
 		renamedByPlayer = FALSE //so new drinks can rename the glass
+		return
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/update_name(updates)
 	if(renamedByPlayer)
 		return
-	. = ..()
-	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	name = largest_reagent?.glass_name || initial(name)
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/update_desc(updates)
-	if(renamedByPlayer)
-		return
-	. = ..()
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	desc = largest_reagent?.glass_desc || initial(desc)
+	name = largest_reagent.glass_name || initial(name)
+	desc = largest_reagent.glass_desc || initial(desc)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/update_icon_state()
+	. = ..()
 	if(!length(reagents.reagent_list))
 		icon_state = "glass_empty"
-		return ..()
+		return
 
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	if(largest_reagent?.glass_icon_state)
+	if(largest_reagent.glass_icon_state)
 		icon_state = largest_reagent.glass_icon_state
-	return ..()
+	return NONE
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/update_overlays()
 	. = ..()
@@ -64,7 +59,6 @@
 	name = "shot glass"
 	desc = "A shot glass - the universal symbol for bad decisions."
 	icon_state = "shotglass"
-	base_icon_state = "shotglass"
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list()
@@ -72,33 +66,32 @@
 	custom_materials = list(/datum/material/glass=100)
 	custom_price = PAYCHECK_ASSISTANT * 0.4
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_name(updates)
-	if(renamedByPlayer)
-		return
-	. = ..()
-	name = "[length(reagents.reagent_list) ? "filled " : null]shot glass"
-
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_desc(updates)
-	if(renamedByPlayer)
-		return
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
+		name = "shot glass"
 		desc = "A shot glass - the universal symbol for bad decisions."
-	else
-		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
+		return
+
+	name = "filled shot glass"
+	desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_icon_state()
 	. = ..()
 	if(!length(reagents.reagent_list))
-		icon_state = base_icon_state
+		icon_state = "shotglass"
+		name = "shot glass"
+		desc = "A shot glass - the universal symbol for bad decisions."
 		return
 
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	icon_state = largest_reagent.shot_glass_icon_state || "[base_icon_state]clear"
+	name = "filled shot glass"
+	desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
+	icon_state = largest_reagent.shot_glass_icon_state || "shotglassclear"
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_overlays()
 	. = ..()
-	if(icon_state != "[base_icon_state]clear")
+	if(icon_state != "shotglassclear")
 		return
 
 	var/mutable_appearance/shot_overlay = mutable_appearance(icon, "shotglassoverlay")

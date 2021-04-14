@@ -10,7 +10,7 @@
 	var/list/baseturf_to_replace
 	var/baseturf
 
-	plane = POINT_PLANE
+	layer = POINT_LAYER
 
 /obj/effect/baseturf_helper/Initialize()
 	. = ..()
@@ -174,7 +174,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/no_lava/Initialize()
 	. = ..()
 	var/turf/T = get_turf(src)
-	T.turf_flags |= NO_LAVA_GEN
+	T.flags_1 |= NO_LAVA_GEN_1
 
 //This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/component_injector
@@ -252,7 +252,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			else
 				var/obj/item/organ/O = part
 				O.organ_flags |= ORGAN_FROZEN
-		j.update_appearance()
+		j.update_icon()
 	qdel(src)
 
 
@@ -375,7 +375,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		var/obj/machinery/door/airlock/found_airlock = locate(/obj/machinery/door/airlock) in turf
 		if(note_path)
 			found_airlock.note = note_path
-			found_airlock.update_appearance()
+			found_airlock.update_icon()
 			qdel(src)
 		if(note_info)
 			var/obj/item/paper/paper = new /obj/item/paper(src)
@@ -384,12 +384,83 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			paper.info = "[note_info]"
 			found_airlock.note = paper
 			paper.forceMove(found_airlock)
-			found_airlock.update_appearance()
+			found_airlock.update_icon()
 			qdel(src)
 		log_mapping("[src] at [x],[y] had no note_path or note_info, cannot place paper note.")
 		qdel(src)
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
 	qdel(src)
+
+/obj/effect/mapping_helpers/simple_pipes
+	name = "Simple Pipes"
+	late = TRUE
+	icon_state = "pipe-3"
+	var/piping_layer = 3
+	var/pipe_color = ""
+	var/connection_num = 0
+	var/hide = FALSE
+
+/obj/effect/mapping_helpers/simple_pipes/LateInitialize()
+	var/list/connections = list( dir2text(NORTH)  = FALSE, dir2text(SOUTH) = FALSE , dir2text(EAST) = FALSE , dir2text(WEST) = FALSE)
+	var/list/valid_connectors = typecacheof(/obj/machinery/atmospherics)
+	for(var/direction in connections)
+		var/turf/T = get_step(src,  text2dir(direction))
+		for(var/machine_type_owo in T.contents)
+			if(istype(machine_type_owo,type))
+				var/obj/effect/mapping_helpers/simple_pipes/found = machine_type_owo
+				if(found.piping_layer != piping_layer)
+					continue
+				connections[direction] = TRUE
+				connection_num++
+				break
+			if(!is_type_in_typecache(machine_type_owo,valid_connectors))
+				continue
+			var/obj/machinery/atmospherics/machine = machine_type_owo
+
+			if(machine.piping_layer != piping_layer)
+				continue
+
+			if(angle2dir(dir2angle(text2dir(direction))+180) & machine.initialize_directions)
+				connections[direction] = TRUE
+				connection_num++
+				break
+
+	switch(connection_num)
+		if(1)
+			for(var/direction in connections)
+				if(connections[direction] != TRUE)
+					continue
+				spawn_pipe(direction,/obj/machinery/atmospherics/pipe/simple)
+		if(2)
+			for(var/direction in connections)
+				if(connections[direction] != TRUE)
+					continue
+				//Detects straight pipes connected from east to west , north to south etc.
+				if(connections[dir2text(angle2dir(dir2angle(text2dir(direction))+180))] == TRUE)
+					spawn_pipe(direction,/obj/machinery/atmospherics/pipe/simple)
+					break
+
+				for(var/direction2 in connections - direction)
+					if(connections[direction2] != TRUE)
+						continue
+					spawn_pipe(dir2text(text2dir(direction)+text2dir(direction2)),/obj/machinery/atmospherics/pipe/simple)
+		if(3)
+			for(var/direction in connections)
+				if(connections[direction] == FALSE)
+					spawn_pipe(direction,/obj/machinery/atmospherics/pipe/manifold)
+		if(4)
+			spawn_pipe(dir2text(NORTH),/obj/machinery/atmospherics/pipe/manifold4w)
+
+	qdel(src)
+
+//spawn pipe
+/obj/effect/mapping_helpers/simple_pipes/proc/spawn_pipe(direction,type )
+	var/obj/machinery/atmospherics/pipe/pipe = new type(get_turf(src),TRUE,text2dir(direction))
+	pipe.hide = hide
+	pipe.piping_layer = piping_layer
+	pipe.update_layer()
+	pipe.paint(pipe_color)
+
 
 //This helper applies traits to things on the map directly.
 /obj/effect/mapping_helpers/trait_injector
@@ -443,7 +514,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/target_name
 	/// This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
 	var/target_variable = "icon"
-	/// This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
+	/// This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi"
 	var/icon_url
 
 /obj/effect/mapping_helpers/custom_icon/LateInitialize()
@@ -470,23 +541,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/custom_icon/proc/fetch_icon(url)
 	var/static/icon_cache = list()
-	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
-	if(query_in_progress)
-		UNTIL(!query_in_progress)
 	if(icon_cache[url])
 		return icon_cache[url]
 	log_asset("Custom Icon Helper fetching dmi from: [url]")
 	var/datum/http_request/request = new()
 	var/file_name = "tmp/custom_map_icon.dmi"
 	request.prepare(RUSTG_HTTP_METHOD_GET, url , "", "", file_name)
-	query_in_progress = TRUE
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
 	if(response.errored || response.status_code != 200)
-		query_in_progress = FALSE
-		CRASH("Failed to fetch mapped custom icon from url [url], code: [response.status_code], error: [response.error]")
+		stack_trace("Failed to fetch mapped custom icon from url [url], code: [response.status_code]")
 	var/icon/I = new(file_name)
 	icon_cache[url] = I
-	query_in_progress = FALSE
 	return I

@@ -47,7 +47,7 @@
 		icon_state = "screwdriver"
 		var/our_color = pick(screwdriver_colors)
 		add_atom_colour(screwdriver_colors[our_color], FIXED_COLOUR_PRIORITY)
-		update_appearance()
+		update_icon()
 	if(prob(75))
 		pixel_y = rand(0, 16)
 

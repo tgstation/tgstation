@@ -11,7 +11,6 @@ The console is located at computer/gulag_teleporter.dm
 	desc = "A bluespace teleporter used for teleporting prisoners to the labor camp."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
-	base_icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
 	use_power = IDLE_POWER_USE
@@ -57,7 +56,7 @@ The console is located at computer/gulag_teleporter.dm
 
 /obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
 	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
-		update_appearance()
+		update_icon()
 		return
 
 	if(default_deconstruction_crowbar(I))
@@ -69,22 +68,22 @@ The console is located at computer/gulag_teleporter.dm
 	return ..()
 
 /obj/machinery/gulag_teleporter/update_icon_state()
-	icon_state = "[base_icon_state][state_open ? "_open" : null]"
+	icon_state = initial(icon_state) + (state_open ? "_open" : "")
 	//no power or maintenance
 	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state += "_unpowered"
 		if((machine_stat & MAINT) || panel_open)
 			icon_state += "_maintenance"
-		return ..()
+		return
 
 	if((machine_stat & MAINT) || panel_open)
 		icon_state += "_maintenance"
-		return ..()
+		return
 
 	//running and someone in there
 	if(occupant)
 		icon_state += "_occupied"
-	return ..()
+		return
 
 
 /obj/machinery/gulag_teleporter/relaymove(mob/living/user, direction)

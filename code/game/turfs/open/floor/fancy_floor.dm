@@ -208,7 +208,7 @@
 
 /turf/open/floor/carpet/Initialize()
 	. = ..()
-	update_appearance()
+	update_icon()
 
 /turf/open/floor/carpet/update_icon()
 	. = ..()
@@ -222,12 +222,9 @@
 		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
+///Carpet variant for mapping aid, functionally the same as parent after smoothing.
 /turf/open/floor/carpet/lone
-	icon_state = "carpetsymbol"
-	smoothing_flags = NONE
-
-/turf/open/floor/carpet/lone/star
-	icon_state = "carpetstar"
+	icon_state = "carpet-0"
 
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'
@@ -370,11 +367,11 @@
 
 /turf/open/floor/carpet/break_tile()
 	broken = TRUE
-	update_appearance()
+	update_icon()
 
 /turf/open/floor/carpet/burn_tile()
 	burnt = TRUE
-	update_appearance()
+	update_icon()
 
 /turf/open/floor/carpet/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE

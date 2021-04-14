@@ -2,7 +2,7 @@
 	name = "pointer"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "arrow"
-	plane = POINT_PLANE
+	layer = POINT_LAYER
 	duration = 25
 
 /obj/effect/temp_visual/point/Initialize(mapload, set_invis = 0)

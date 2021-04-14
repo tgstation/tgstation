@@ -43,8 +43,8 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		I = L.get_idcard(TRUE)
-	if(istype(I, /obj/item/card/id/advanced/prisoner))
-		var/obj/item/card/id/advanced/prisoner/P = I
+	if(istype(I, /obj/item/card/id/prisoner))
+		var/obj/item/card/id/prisoner/P = I
 		if(P.points >= P.goal)
 			can_reclaim = TRUE
 

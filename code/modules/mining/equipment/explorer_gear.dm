@@ -92,7 +92,7 @@
 
 /obj/item/clothing/head/helmet/space/hostile_environment/Initialize()
 	. = ..()
-	update_appearance()
+	update_icon()
 
 /obj/item/clothing/head/helmet/space/hostile_environment/update_overlays()
 	. = ..()

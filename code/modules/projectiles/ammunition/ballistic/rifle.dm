@@ -8,7 +8,7 @@
 	projectile_type = /obj/projectile/bullet/a762
 
 /obj/item/ammo_casing/a762/enchanted
-	projectile_type = /obj/projectile/bullet/a762/enchanted
+	projectile_type = /obj/projectile/bullet/a762_enchanted
 
 // 5.56mm (M-90gl Carbine)
 

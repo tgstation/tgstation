@@ -227,7 +227,7 @@
 	var/obj/machinery/parent
 
 /obj/structure/filler/ex_act()
-	return FALSE
+	return
 
 /obj/machinery/computer/bsa_control
 	name = "bluespace artillery control"
@@ -275,7 +275,7 @@
 		if("recalibrate")
 			calibrate(usr)
 			. = TRUE
-	update_appearance()
+	update_icon()
 
 /obj/machinery/computer/bsa_control/proc/calibrate(mob/user)
 	if(!GLOB.bsa_unlock)

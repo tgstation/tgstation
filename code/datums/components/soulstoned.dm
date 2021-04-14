@@ -10,10 +10,12 @@
 	src.container = container
 
 	S.forceMove(container)
-	S.fully_heal()
+
+	S.status_flags |= GODMODE
 	ADD_TRAIT(S, TRAIT_IMMOBILIZED, SOULSTONE_TRAIT)
 	ADD_TRAIT(S, TRAIT_HANDS_BLOCKED, SOULSTONE_TRAIT)
-	S.status_flags |= GODMODE
+	S.health = S.maxHealth
+	S.bruteloss = 0
 
 	RegisterSignal(S, COMSIG_MOVABLE_MOVED, .proc/free_prisoner)
 

@@ -13,16 +13,15 @@
 #define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 
 //Human Overlays Indexes/////////
-#define MUTATIONS_LAYER 29 //mutations. Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER 28 //certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODYPARTS_LAYER 27 //Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODY_ADJ_LAYER 26 //certain mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_LAYER 25 //underwear, undershirts, socks, eyes, lips(makeup)
-#define FRONT_MUTATIONS_LAYER 24 //mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define DAMAGE_LAYER 23 //damage indicators (cuts and burns)
-#define UNIFORM_LAYER 22
-#define ID_LAYER 21
-#define ID_CARD_LAYER 20
+#define MUTATIONS_LAYER 28 //mutations. Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER 27 //certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER 26 //Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER 25 //certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER 24 //underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER 23 //mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER 22 //damage indicators (cuts and burns)
+#define UNIFORM_LAYER 21
+#define ID_LAYER 20 //lmao at the idiot who put both ids and hands on the same layer
 #define HANDS_PART_LAYER 19
 #define GLOVES_LAYER 18
 #define SHOES_LAYER 17
@@ -42,7 +41,7 @@
 #define BODY_FRONT_LAYER 3
 #define HALO_LAYER 2 //blood cult ascended halo, because there's currently no better solution for adding/removing
 #define FIRE_LAYER 1 //If you're on fire
-#define TOTAL_LAYERS 29 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS 28 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
@@ -300,7 +299,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
-#define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"
 
 //debug printing macros
 #define debug_world(msg) if (GLOB.Debug2) to_chat(world, \
@@ -429,7 +427,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define FLESH_SCAR_FILE "wounds/flesh_scar_desc.json"
 #define BONE_SCAR_FILE "wounds/bone_scar_desc.json"
 #define SCAR_LOC_FILE "wounds/scar_loc.json"
-#define EXODRONE_FILE "exodrone.json"
 
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
@@ -465,12 +462,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)
 
 #define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
-/// The gravity strength threshold for high gravity damage.
-#define GRAVITY_DAMAGE_THRESHOLD 3
-/// The scaling factor for high gravity damage.
-#define GRAVITY_DAMAGE_SCALING 0.5
-/// The maximum [BRUTE] damage a mob can take from high gravity per second.
-#define GRAVITY_DAMAGE_MAXIMUM 1.5
+#define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs
 
 #define CAMERA_NO_GHOSTS 0
 #define CAMERA_SEE_GHOSTS_BASIC 1
@@ -515,9 +507,8 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 //Religion
 
-#define HOLY_ROLE_DEACON 1 //role below priests, for losing most powers of priests but still being holy.
-#define HOLY_ROLE_PRIEST 2 //default priestly role
-#define HOLY_ROLE_HIGHPRIEST 3 //the one who designates the religion
+#define HOLY_ROLE_PRIEST 1 //default priestly role
+#define HOLY_ROLE_HIGHPRIEST 2 //the one who designates the religion
 
 #define ALIGNMENT_GOOD "good"
 #define ALIGNMENT_NEUT "neutral"
@@ -552,3 +543,4 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SKILLCHIP_CATEGORY_GENERAL "general"
 #define SKILLCHIP_CATEGORY_JOB "job"
 #define SKILLCHIP_CATEGORY_FIREMAN_CARRYING "fireman carrying"
+#define SKILLCHIP_CATEGORY_SYNDICATE "syndicate"

@@ -189,7 +189,7 @@
 			cached_icon.Insert(mob_icon, "frame[i]")
 
 		mob_underlay = mutable_appearance(cached_icon, "frame1")
-		update_appearance()
+		update_icon()
 
 		desc = initial(desc) + "<br><span class='info'>It appears to contain [target.name].</span>"
 	START_PROCESSING(SSobj, src)
@@ -200,8 +200,7 @@
 		gun.field_disconnect(src)
 	return ..()
 
-/obj/structure/chrono_field/update_overlays()
-	. = ..()
+/obj/structure/chrono_field/update_icon()
 	var/ttk_frame = 1 - (timetokill / initial(timetokill))
 	ttk_frame = clamp(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
 	if(ttk_frame != RPpos)
@@ -230,7 +229,7 @@
 			captured.Unconscious(80)
 			if(captured.loc != src)
 				captured.forceMove(src)
-			update_appearance()
+			update_icon()
 			if(gun)
 				if(gun.field_check(src))
 					timetokill -= delta_time
@@ -271,7 +270,7 @@
 	return
 
 /obj/structure/chrono_field/ex_act()
-	return FALSE
+	return
 
 /obj/structure/chrono_field/blob_act(obj/structure/blob/B)
 	return

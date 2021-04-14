@@ -30,11 +30,12 @@
 	wound_bonus = -50
 	wound_falloff_tile = 0
 
-/obj/projectile/bullet/mm712x82/ap
+/obj/projectile/bullet/mm712x82_ap
 	name = "7.12x82mm armor-piercing bullet"
+	damage = 40
 	armour_penetration = 75
 
-/obj/projectile/bullet/mm712x82/hp
+/obj/projectile/bullet/mm712x82_hp
 	name = "7.12x82mm hollow-point bullet"
 	damage = 50
 	armour_penetration = -60
@@ -48,14 +49,16 @@
 	damage = 20
 	fire_stacks = 3
 
-/obj/projectile/bullet/mm712x82/match
+/obj/projectile/bullet/mm712x82_match
 	name = "7.12x82mm match bullet"
+	damage = 40
 	ricochets_max = 2
 	ricochet_chance = 60
 	ricochet_auto_aim_range = 4
 	ricochet_incidence_leeway = 55
+	wound_bonus = -50
 
-/obj/projectile/bullet/mm712x82/bouncy
+/obj/projectile/bullet/mm712x82_bouncy
 	name = "7.12x82mm rubber bullet"
 	damage = 25
 	ricochets_max = 40

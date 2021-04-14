@@ -35,18 +35,16 @@ Bonus
 	)
 
 /datum/symptom/shivering/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStageSpeed() >= 5) //dangerous cold
+	if(A.properties["stage_rate"] >= 5) //dangerous cold
 		power = 1.5
 		unsafe = TRUE
-	if(A.totalStageSpeed() >= 10)
+	if(A.properties["stage_rate"] >= 10)
 		power = 2.5
 
 /datum/symptom/shivering/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	if(!unsafe || A.stage < 4)

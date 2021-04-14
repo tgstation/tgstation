@@ -150,7 +150,7 @@
 		mask = new mask_type(src)
 	if(storage_type)
 		storage = new storage_type(src)
-	update_appearance()
+	update_icon()
 
 /obj/machinery/suit_storage_unit/Destroy()
 	QDEL_NULL(suit)
@@ -165,38 +165,30 @@
 	if(uv)
 		if(uv_super)
 			. += "super"
-			return
-		if(occupant)
+		else if(occupant)
 			. += "uvhuman"
-			return
-
-		. += "uv"
-		return
-
-	if(state_open)
+		else
+			. += "uv"
+	else if(state_open)
 		if(machine_stat & BROKEN)
 			. += "broken"
-			return
-
-		. += "open"
-		if(suit)
-			. += "suit"
-		if(helmet)
-			. += "helm"
-		if(storage)
-			. += "storage"
-		return
-
-	if(occupant)
+		else
+			. += "open"
+			if(suit)
+				. += "suit"
+			if(helmet)
+				. += "helm"
+			if(storage)
+				. += "storage"
+	else if(occupant)
 		. += "human"
-		return
 
 /obj/machinery/suit_storage_unit/power_change()
 	. = ..()
 	if(!is_operational && state_open)
 		open_machine()
 		dump_inventory_contents()
-	update_appearance()
+	update_icon()
 
 /obj/machinery/suit_storage_unit/dump_inventory_contents()
 	. = ..()
@@ -360,7 +352,7 @@
 		uv_cycles--
 		uv = TRUE
 		locked = TRUE
-		update_appearance()
+		update_icon()
 		if(mob_occupant)
 			if(uv_super)
 				mob_occupant.adjustFireLoss(rand(20, 36))
@@ -511,7 +503,7 @@
 			storage = I
 
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
-		update_appearance()
+		update_icon()
 		return
 
 	if(panel_open && is_wire_tool(I))

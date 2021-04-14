@@ -210,7 +210,7 @@
 						else
 							new /obj/effect/pod_landingzone(LZ, podType, SO)
 						. = TRUE
-						update_appearance()
+						update_icon()
 			else
 				if(SO.pack.get_cost() * (0.72*MAX_EMAG_ROCKETS) <= points_to_check) // bulk discount :^)
 					landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]  //override default landing zone
@@ -232,5 +232,5 @@
 							else
 								new /obj/effect/pod_landingzone(LZ, podType, SO)
 							. = TRUE
-							update_appearance()
+							update_icon()
 							CHECK_TICK

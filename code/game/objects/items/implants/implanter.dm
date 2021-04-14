@@ -15,8 +15,10 @@
 
 
 /obj/item/implanter/update_icon_state()
-	icon_state = "implanter[imp ? 1 : 0]"
-	return ..()
+	if(imp)
+		icon_state = "implanter1"
+	else
+		icon_state = "implanter0"
 
 
 /obj/item/implanter/attack(mob/living/M, mob/user)
@@ -35,7 +37,7 @@
 					else
 						M.visible_message("<span class='notice'>[user] implants [M].</span>", "<span class='notice'>[user] implants you.</span>")
 					imp = null
-					update_appearance()
+					update_icon()
 				else
 					to_chat(user, "<span class='warning'>[src] fails to implant [M].</span>")
 
@@ -60,4 +62,4 @@
 	. = ..()
 	if(imp_type)
 		imp = new imp_type(src)
-	update_appearance()
+	update_icon()

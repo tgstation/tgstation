@@ -134,7 +134,7 @@
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, POWER_LACK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, POWER_LACK_TRAIT)
 	set_light_on(on)
-	update_appearance()
+	update_icon()
 	to_chat(src, "<span class='boldnotice'>You turned on!</span>")
 	diag_hud_set_botstat()
 	return TRUE
@@ -147,15 +147,14 @@
 	set_light_on(on)
 	bot_reset() //Resets an AI's call, should it exist.
 	to_chat(src, "<span class='userdanger'>You turned off!</span>")
-	update_appearance()
+	update_icon()
 
 /mob/living/simple_animal/bot/Initialize()
 	. = ..()
 	GLOB.bots_list += src
-	// Give bots a fancy new ID card that can hold any access.
-	access_card = new /obj/item/card/id/advanced/simple_bot(src)
-	// This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
-	access_card.set_access(list(ACCESS_ROBOTICS))
+	access_card = new /obj/item/card/id(src)
+//This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
+	access_card.access += ACCESS_ROBOTICS
 	set_custom_texts()
 	Radio = new/obj/item/radio(src)
 	if(radio_key)
@@ -190,9 +189,9 @@
 	GLOB.bots_list -= src
 	if(paicard)
 		ejectpai()
-	QDEL_NULL(Radio)
-	QDEL_NULL(access_card)
-	QDEL_NULL(bot_core)
+	qdel(Radio)
+	qdel(access_card)
+	qdel(bot_core)
 	return ..()
 
 /mob/living/simple_animal/bot/bee_friendly()
@@ -429,7 +428,7 @@
 	if(istype(dropped_item, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/dropped_cell = dropped_item
 		dropped_cell.charge = 0
-		dropped_cell.update_appearance()
+		dropped_cell.update_icon()
 
 	else if(istype(dropped_item, /obj/item/storage))
 		var/obj/item/storage/S = dropped_item
@@ -438,7 +437,7 @@
 	else if(istype(dropped_item, /obj/item/gun/energy))
 		var/obj/item/gun/energy/dropped_gun = dropped_item
 		dropped_gun.cell.charge = 0
-		dropped_gun.update_appearance()
+		dropped_gun.update_icon()
 
 //Generalized behavior code, override where needed!
 
@@ -528,40 +527,42 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	if(step_count >= 1 && tries < BOT_STEP_MAX_RETRIES)
 		for(var/step_number = 0, step_number < step_count,step_number++)
-			addtimer(CALLBACK(src, .proc/bot_step), BOT_STEP_DELAY*step_number)
+			addtimer(CALLBACK(src, .proc/bot_step, dest), BOT_STEP_DELAY*step_number)
 	else
 		return FALSE
 	return TRUE
 
-/// Performs a step_towards and increments the path if successful. Returns TRUE if the bot moved and FALSE otherwise.
-/mob/living/simple_animal/bot/proc/bot_step()
-	if(!length(path))
-		return FALSE
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_BOT_PRE_STEP) & COMPONENT_MOB_BOT_BLOCK_PRE_STEP)
+/mob/living/simple_animal/bot/proc/bot_step(dest) //Step,increase tries if failed
+	if(!path)
 		return FALSE
-
-	if(!step_towards(src, path[1]))
-		tries++
-		return FALSE
-
-	increment_path()
-	tries = 0
-	SEND_SIGNAL(src, COMSIG_MOB_BOT_STEP)
+	if(path.len > 1)
+		step_towards(src, path[1])
+		if(get_turf(src) == path[1]) //Successful move
+			increment_path()
+			tries = 0
+		else
+			tries++
+			return FALSE
+	else if(path.len == 1)
+		step_to(src, dest)
+		set_path(null)
 	return TRUE
 
 
 /mob/living/simple_animal/bot/proc/check_bot_access()
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
-		access_card.set_access(prev_access)
+		access_card.access = prev_access
 
 /mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
 
-	//For giving the bot temporary all-access. This method is bad and makes me feel bad. Refactoring access to a component is for another PR.
-	var/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
-	set_path(get_path_to(src, waypoint, 200, id=all_access))
-	qdel(all_access)
+	//For giving the bot temporary all-access.
+	var/obj/item/card/id/all_access = new /obj/item/card/id
+	var/datum/job/captain/All = new/datum/job/captain
+	all_access.access = All.get_access()
+
+	set_path(get_path_to(src, waypoint, /turf/proc/Distance_cardinal, 0, 200, id=all_access))
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -569,9 +570,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 		var/end_area = get_area_name(waypoint)
 		if(!on)
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
-		access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
+		access_card = all_access //Give the bot all-access while under the AI's command.
 		if(client)
-			reset_access_timer_id = addtimer(CALLBACK (src, .proc/bot_reset), 60 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
+			reset_access_timer_id = addtimer(CALLBACK (src, .proc/bot_reset), 600, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
 			to_chat(src, "<span class='notice'><span class='big'>Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area]</b>.</span><br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds.</span>")
 		if(message)
 			to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination.</span>")
@@ -603,7 +604,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	set_path(null)
 	summon_target = null
 	pathset = 0
-	access_card.set_access(prev_access)
+	access_card.access = prev_access
 	tries = 0
 	mode = BOT_IDLE
 	diag_hud_set_botstat()
@@ -741,10 +742,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 			bot_reset()
 			summon_target = get_turf(user)
 			if(user_access.len != 0)
-				access_card.set_access(user_access + prev_access) //Adds the user's access, if any.
+				access_card.access = user_access + prev_access //Adds the user's access, if any.
 			mode = BOT_SUMMON
 			speak("Responding.", radio_channel)
-
 			calc_summon_path()
 
 		if("ejectpai")
@@ -780,14 +780,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/proc/calc_path(turf/avoid)
 	check_bot_access()
-	set_path(get_path_to(src, patrol_target, 120, id=access_card, exclude=avoid))
+	set_path(get_path_to(src, patrol_target, /turf/proc/Distance_cardinal, 0, 120, id=access_card, exclude=avoid))
 
 /mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
 	INVOKE_ASYNC(src, .proc/do_calc_summon_path, avoid)
 
 /mob/living/simple_animal/bot/proc/do_calc_summon_path(turf/avoid)
-	set_path(get_path_to(src, summon_target, 150, id=access_card, exclude=avoid))
+	set_path(get_path_to(src, summon_target, /turf/proc/Distance_cardinal, 0, 150, id=access_card, exclude=avoid))
 	if(!length(path)) //Cannot reach target. Give up and announce the issue.
 		speak("Summon command failed, destination unreachable.",radio_channel)
 		bot_reset()
@@ -891,7 +891,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[initial(icon_state)][on]"
-	return ..()
 
 // Machinery to simplify topic and access calls
 /obj/machinery/bot_core
@@ -996,9 +995,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	// If we have any bonus player accesses, add them to our internal ID card.
-	if(length(player_access))
-		access_card.add_access(player_access)
+	access_card.access += player_access
 	diag_hud_set_botmode()
 
 /mob/living/simple_animal/bot/Logout()
@@ -1007,7 +1004,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..())
-		update_appearance()
+		update_icon()
 		. = TRUE
 
 /mob/living/simple_animal/bot/ghost()
@@ -1075,15 +1072,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 
 /mob/living/simple_animal/bot/proc/increment_path()
-	if(!length(path))
+	if(!path || !path.len)
 		return
 	var/image/I = path[path[1]]
 	if(I)
 		I.icon_state = null
 	path.Cut(1, 2)
-
-	if(!length(path))
-		set_path(null)
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)

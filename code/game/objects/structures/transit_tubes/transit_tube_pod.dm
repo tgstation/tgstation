@@ -31,8 +31,10 @@
 	return ..()
 
 /obj/structure/transit_tube_pod/update_icon_state()
-	icon_state = contents.len ? occupied_icon_state : initial(icon_state)
-	return ..()
+	if(contents.len)
+		icon_state = occupied_icon_state
+	else
+		icon_state = initial(icon_state)
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
@@ -60,18 +62,19 @@
 	qdel(src)
 
 /obj/structure/transit_tube_pod/ex_act(severity, target)
-	. = ..()
+	..()
 	if(!QDELETED(src))
 		empty_pod()
 
 /obj/structure/transit_tube_pod/contents_explosion(severity, target)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			SSexplosions.high_mov_atom += contents
-		if(EXPLODE_HEAVY)
-			SSexplosions.med_mov_atom += contents
-		if(EXPLODE_LIGHT)
-			SSexplosions.low_mov_atom += contents
+	for(var/thing in contents)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += thing
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
 	..()
@@ -95,7 +98,7 @@
 		location = get_turf(src)
 	for(var/atom/movable/M in contents)
 		M.forceMove(location)
-	update_appearance()
+	update_icon()
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
@@ -196,7 +199,7 @@
 		if(direction == turn(station.boarding_dir,180))
 			if(station.open_status == STATION_TUBE_OPEN)
 				user.forceMove(loc)
-				update_appearance()
+				update_icon()
 			else
 				station.open_animation()
 		else if(direction in station.tube_dirs)

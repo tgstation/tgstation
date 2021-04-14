@@ -44,9 +44,9 @@
 /obj/item/latexballon/ex_act(severity, target)
 	burst()
 	switch(severity)
-		if (EXPLODE_DEVASTATE)
+		if (1)
 			qdel(src)
-		if (EXPLODE_HEAVY)
+		if (2)
 			if (prob(50))
 				qdel(src)
 

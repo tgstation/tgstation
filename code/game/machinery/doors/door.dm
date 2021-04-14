@@ -4,13 +4,11 @@
 	desc = "It opens and closes."
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
-	base_icon_state = "door"
 	opacity = TRUE
 	density = TRUE
 	move_resist = MOVE_FORCE_VERY_STRONG
 	layer = OPEN_DOOR_LAYER
 	power_channel = AREA_USAGE_ENVIRON
-	pass_flags_self = PASSDOORS
 	max_integrity = 350
 	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 100, FIRE = 80, ACID = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -38,6 +36,7 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
+	var/poddoor = FALSE
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
@@ -46,16 +45,17 @@
 /obj/machinery/door/examine(mob/user)
 	. = ..()
 	if(red_alert_access)
-		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
+		if(GLOB.security_level >= SEC_LEVEL_RED)
 			. += "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>"
 		else
 			. += "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>"
-	. += "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>"
+	if(!poddoor)
+		. += "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>"
 	if(safety_mode)
 		. += "<span class='notice'>It has labels indicating that it has an emergency mechanism to open it with <b>just your hands</b> if there's no power.</span>"
 
 /obj/machinery/door/check_access_list(list/access_list)
-	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
+	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
 		return TRUE
 	return ..()
 
@@ -75,7 +75,6 @@
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
-	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
 /obj/machinery/door/proc/set_init_door_layer()
 	if(density)
@@ -91,23 +90,6 @@
 		spark_system = null
 	air_update_turf(TRUE, FALSE)
 	return ..()
-
-/**
- * Signal handler for checking if we notify our surrounding that access requirements are lifted accordingly to a newly set security level
- *
- * Arguments:
- * * source The datum source of the signal
- * * new_level The new security level that is in effect
- */
-/obj/machinery/door/proc/check_security_level(datum/source, new_level)
-	SIGNAL_HANDLER
-
-	if(new_level <= SEC_LEVEL_BLUE)
-		return
-	if(!red_alert_access)
-		return
-	audible_message("<span class='notice'>[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!</span>")
-	playsound(src, 'sound/machines/boltsup.ogg', 50, TRUE)
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
 	if(safety_mode && !hasPower() && density)
@@ -235,16 +217,12 @@
 /obj/machinery/door/proc/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
 	return
 
-
-/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user)
-	return
-
-/// Called when the user right-clicks on the door with a crowbar.
-/obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
+/obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
-	if(!user.combat_mode && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
+	var/list/modifiers = params2list(params)
+	if((!user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)) && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		var/forced_open = FALSE
 		if(istype(I, /obj/item/crowbar))
 			var/obj/item/crowbar/C = I
@@ -262,12 +240,6 @@
 /obj/machinery/door/attackby_secondary(obj/item/weapon, mob/user, params)
 	if (weapon.tool_behaviour == TOOL_WELDER)
 		try_to_weld_secondary(weapon, user)
-	if (weapon.tool_behaviour == TOOL_CROWBAR)
-		var/forced_open = FALSE
-		if(istype(weapon, /obj/item/crowbar))
-			var/obj/item/crowbar/crowbar = weapon
-			forced_open = crowbar.force_opens
-		try_to_crowbar_secondary(weapon, user, forced_open)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -305,8 +277,10 @@
 	secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 /obj/machinery/door/update_icon_state()
-	icon_state = "[base_icon_state][density]"
-	return ..()
+	if(density)
+		icon_state = "door1"
+	else
+		icon_state = "door0"
 
 /obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
@@ -338,7 +312,7 @@
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	sleep(5)
 	layer = initial(layer)
-	update_appearance()
+	update_icon()
 	set_opacity(0)
 	operating = FALSE
 	air_update_turf(TRUE, FALSE)
@@ -367,7 +341,7 @@
 	density = TRUE
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	sleep(5)
-	update_appearance()
+	update_icon()
 	if(visible && !glass)
 		set_opacity(1)
 	operating = FALSE
@@ -453,7 +427,7 @@
 
 /obj/machinery/door/ex_act(severity, target)
 	//if it blows up a wall it should blow up a door
-	return ..(severity ? max(1, severity - 1) : 0, target)
+	..(severity ? max(1, severity - 1) : 0, target)
 
 /obj/machinery/door/GetExplosionBlock()
 	return density ? real_explosion_block : 0

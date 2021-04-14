@@ -101,10 +101,11 @@
 		user.unset_machine()
 
 /obj/machinery/computer/camera_advanced/Destroy()
+	if(current_user)
+		current_user.unset_machine()
 	if(eyeobj)
-		QDEL_NULL(eyeobj)
+		qdel(eyeobj)
 	QDEL_LIST(actions)
-	current_user = null
 	return ..()
 
 /obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)

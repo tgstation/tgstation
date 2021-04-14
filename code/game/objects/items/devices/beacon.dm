@@ -17,7 +17,7 @@
 		icon_state = "beacon-off"
 
 /obj/item/beacon/Destroy()
-	GLOB.teleportbeacons -= src
+	GLOB.teleportbeacons.Remove(src)
 	return ..()
 
 /obj/item/beacon/attack_self(mob/user)
@@ -27,7 +27,7 @@
 		GLOB.teleportbeacons += src
 	else
 		icon_state = "beacon-off"
-		GLOB.teleportbeacons -= src
+		GLOB.teleportbeacons.Remove(src)
 	to_chat(user, "<span class='notice'>You [enabled ? "enable" : "disable"] the beacon.</span>")
 	return
 

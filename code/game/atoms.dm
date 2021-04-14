@@ -128,11 +128,6 @@
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
-	///The config type to use for greyscaled sprites. Both this and greyscale_colors must be assigned to work.
-	var/greyscale_config
-	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
-	var/greyscale_colors
-
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
@@ -175,7 +170,7 @@
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize != INITIALIZATION_INSSATOMS)
 		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		if(SSatoms.InitAtom(src, FALSE, args))
+		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
 
@@ -308,7 +303,7 @@
 		if((a_incidence_s < 90 && a_incidence_s < 90 - P.ricochet_incidence_leeway) || (a_incidence_s > 270 && a_incidence_s -270 > P.ricochet_incidence_leeway))
 			return FALSE
 	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
-	P.set_angle(new_angle_s)
+	P.setAngle(new_angle_s)
 	return TRUE
 
 ///Can the mover object pass this atom, while heading for the target turf
@@ -520,6 +515,9 @@
 /atom/proc/AllowDrop()
 	return FALSE
 
+/atom/proc/CheckExit()
+	return TRUE
+
 ///Is this atom within 1 tile of another atom
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
@@ -581,16 +579,6 @@
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
 	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
-
-/**
- * Returns an extended list of examine strings for any contained ID cards.
- *
- * Arguments:
- * * user - The user who is doing the examining.
- */
-/atom/proc/get_id_examine_strings(mob/user)
-	. = list()
-	return
 
 ///Used to insert text after the name but before the description in examine()
 /atom/proc/get_name_chaser(mob/user, list/name_chaser = list())
@@ -655,59 +643,18 @@
 	if(!LAZYLEN(.)) // lol ..length
 		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
 
-/**
- * Updates the appearence of the icon
- *
- * Mostly delegates to update_name, update_desc, and update_icon
- *
- * Arguments:
- * - updates: A set of bitflags dictating what should be updated. Defaults to [ALL]
- */
-/atom/proc/update_appearance(updates=ALL)
-	SHOULD_NOT_SLEEP(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
-
-	. = NONE
-	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_APPEARANCE, updates)
-	if(updates & UPDATE_NAME)
-		. |= update_name(updates)
-	if(updates & UPDATE_DESC)
-		. |= update_desc(updates)
-	if(updates & UPDATE_ICON)
-		. |= update_icon(updates)
-
-/// Updates the name of the atom
-/atom/proc/update_name(updates=ALL)
-	SHOULD_CALL_PARENT(TRUE)
-	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_NAME, updates)
-
-/// Updates the description of the atom
-/atom/proc/update_desc(updates=ALL)
-	SHOULD_CALL_PARENT(TRUE)
-	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_DESC, updates)
-
 /// Updates the icon of the atom
-/atom/proc/update_icon(updates=ALL)
+/atom/proc/update_icon()
 	SIGNAL_HANDLER
-	SHOULD_CALL_PARENT(TRUE)
 
-	. = NONE
-	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON, updates)
-	if(updates & UPDATE_ICON_STATE)
+	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
+	. = FALSE
+
+	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
 		update_icon_state()
-		. |= UPDATE_ICON_STATE
+		. = TRUE
 
-	if(updates & UPDATE_GREYSCALE)
-		var/list/colors = update_greyscale()
-		// Updating the greyscale config in update_greyscale() is fine or we would check this earlier
-		if(greyscale_config)
-			icon = SSgreyscale.GetColoredIconByType(greyscale_config, colors)
-		. |= UPDATE_GREYSCALE
-
-	if(updates & UPDATE_OVERLAYS)
-		if(LAZYLEN(managed_vis_overlays))
-			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-
+	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
 		var/list/new_overlays = update_overlays()
 		if(managed_overlays)
 			cut_overlay(managed_overlays)
@@ -715,22 +662,12 @@
 		if(length(new_overlays))
 			managed_overlays = new_overlays
 			add_overlay(new_overlays)
-		. |= UPDATE_OVERLAYS
+		. = TRUE
 
-	. |= SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, updates, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, signalOut, .)
 
 /// Updates the icon state of the atom
 /atom/proc/update_icon_state()
-	SHOULD_CALL_PARENT(TRUE)
-	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
-
-/atom/proc/update_greyscale()
-	SHOULD_CALL_PARENT(TRUE)
-	. = list()
-	var/list/raw_rgb = splittext(greyscale_colors, "#")
-	for(var/i in 2 to length(raw_rgb))
-		. += "#[raw_rgb[i]]"
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE, .)
 
 /// Updates the overlays of the atom
 /atom/proc/update_overlays()
@@ -1188,8 +1125,6 @@
 	VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
-	if(greyscale_colors)
-		VV_DROPDOWN_OPTION(VV_HK_MODIFY_GREYSCALE, "Modify greyscale colors")
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()
@@ -1295,21 +1230,19 @@
  */
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
-	SEND_SIGNAL(AM, COMSIG_ATOM_ENTERING, src, oldLoc)
 
 /**
  * An atom is attempting to exit this atom's contents
  *
  * Default behaviour is to send the [COMSIG_ATOM_EXIT]
+ *
+ * Return value should be set to FALSE if the moving atom is unable to leave,
+ * otherwise leave value the result of the parent call
  */
 /atom/Exit(atom/movable/AM, atom/newLoc)
-	// Don't call `..()` here, otherwise `Uncross()` gets called.
-	// See the doc comment on `Uncross()` to learn why this is bad.
-
+	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
 		return FALSE
-
-	return TRUE
 
 /**
  * An atom has exited this atom's contents
@@ -1653,7 +1586,7 @@
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(i)
-			custom_material.on_removed(src, custom_materials[i] * material_modifier, material_flags) //Remove the current materials
+			custom_material.on_removed(src, custom_materials[i], material_flags) //Remove the current materials
 
 	if(!length(materials))
 		custom_materials = null
@@ -1946,10 +1879,7 @@
 //Update the screentip to reflect what we're hoverin over
 /atom/MouseEntered(location, control, params)
 	. = ..()
-	// Statusbar
-	status_bar_set_text(usr, name)
-	// Screentips
-	if(!usr?.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
+	if(flags_1 & NO_SCREENTIPS_1 || !usr?.client?.prefs.screentip_pref)
 		usr.hud_used.screentip_text.maptext = ""
-	else
-		usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+		return
+	usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")

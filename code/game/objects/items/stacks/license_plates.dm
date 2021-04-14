@@ -22,13 +22,11 @@
 
 ///Override to allow for variations
 /obj/item/stack/license_plates/filled/update_icon_state()
-	. = ..()
 	if(novariants)
 		return
 	if(amount <= (max_amount * (1/3)))
 		icon_state = "filled_plate_[rand(1,6)]_1"
-		return
-	if (amount <= (max_amount * (2/3)))
+	else if (amount <= (max_amount * (2/3)))
 		icon_state = "filled_plate_[rand(1,6)]_2"
-		return
-	icon_state = "filled_plate_[rand(1,6)]_3"
+	else
+		icon_state = "filled_plate_[rand(1,6)]_3"

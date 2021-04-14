@@ -53,16 +53,16 @@
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
 	return ..()
 
-/turf/open/floor/engine/ex_act(severity, target)
+/turf/open/floor/engine/ex_act(severity,target)
+	var/shielded = is_shielded()
 	contents_explosion(severity, target)
+	if(severity != 1 && shielded && target != src)
+		return
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		return TRUE
-	if(severity != EXPLODE_DEVASTATE && is_shielded())
-		return FALSE
-
+		return
 	switch(severity)
-		if(EXPLODE_DEVASTATE)
+		if(1)
 			if(prob(80))
 				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
 					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
@@ -73,7 +73,7 @@
 				ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 			else
 				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		if(EXPLODE_HEAVY)
+		if(2)
 			if(prob(50))
 				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 

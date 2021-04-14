@@ -142,9 +142,8 @@
 
 /mob/living/simple_animal/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
-		return FALSE
-
-	. = ..()
+		return
+	..()
 	if(QDELETED(src))
 		return
 	var/bomb_armor = getarmor(null, BOMB)
@@ -161,7 +160,7 @@
 				bloss = bloss / 1.5
 			adjustBruteLoss(bloss)
 
-		if (EXPLODE_LIGHT)
+		if(EXPLODE_LIGHT)
 			var/bloss = 30
 			if(prob(bomb_armor))
 				bloss = bloss / 1.5
@@ -173,9 +172,7 @@
 
 /mob/living/simple_animal/do_attack_animation(atom/A, visual_effect_icon, used_item, no_effect)
 	if(!no_effect && !visual_effect_icon && melee_damage_upper)
-		if(attack_vis_effect && !iswallturf(A)) // override the standard visual effect.
-			visual_effect_icon = attack_vis_effect
-		else if(melee_damage_upper < 10)
+		if(melee_damage_upper < 10)
 			visual_effect_icon = ATTACK_EFFECT_PUNCH
 		else
 			visual_effect_icon = ATTACK_EFFECT_SMASH

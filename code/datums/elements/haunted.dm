@@ -13,7 +13,7 @@
 	master.AddElement(/datum/element/movetype_handler)
 	ADD_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT)
 
-/datum/element/haunted/Detach(datum/source)
+/datum/element/haunted/Detach(datum/source, force)
 	. = ..()
 	var/atom/movable/master = source
 	master.remove_filter("haunt_glow")

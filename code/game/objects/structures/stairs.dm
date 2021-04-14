@@ -33,13 +33,6 @@
 		force_open_above()
 		build_signal_listener()
 	update_surrounding()
-
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = .proc/on_exit,
-	)
-
-	AddElement(/datum/element/connect_loc, src, loc_connections)
-
 	return ..()
 
 /obj/structure/stairs/Destroy()
@@ -53,20 +46,20 @@
 	update_surrounding()
 
 /obj/structure/stairs/proc/update_surrounding()
-	update_appearance()
+	update_icon()
 	for(var/i in GLOB.cardinals)
 		var/turf/T = get_step(get_turf(src), i)
 		var/obj/structure/stairs/S = locate() in T
 		if(S)
-			S.update_appearance()
+			S.update_icon()
 
-/obj/structure/stairs/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
-	SIGNAL_HANDLER
-
-	if(!isobserver(leaving) && isTerminator() && (get_dir(src, new_location) == dir))
-		INVOKE_ASYNC(src, .proc/stair_ascend, leaving)
-		leaving.Bump(src)
-		return COMPONENT_ATOM_BLOCK_EXIT
+/obj/structure/stairs/Uncross(atom/movable/AM, atom/newloc)
+	if(!newloc || !AM)
+		return ..()
+	if(!isobserver(AM) && isTerminator() && (get_dir(src, newloc) == dir))
+		stair_ascend(AM)
+		return FALSE
+	return ..()
 
 /obj/structure/stairs/Cross(atom/movable/AM)
 	if(isTerminator() && (get_dir(src, AM) == dir))
@@ -74,8 +67,10 @@
 	return ..()
 
 /obj/structure/stairs/update_icon_state()
-	icon_state = "stairs[isTerminator() ? "_t" : null]"
-	return ..()
+	if(isTerminator())
+		icon_state = "stairs_t"
+	else
+		icon_state = "stairs"
 
 /obj/structure/stairs/proc/stair_ascend(atom/movable/AM)
 	var/turf/checking = get_step_multiz(get_turf(src), UP)

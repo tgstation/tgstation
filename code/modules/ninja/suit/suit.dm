@@ -232,6 +232,7 @@
 	if(n_gloves)
 		n_gloves.icon_state = "black"
 		REMOVE_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
+		n_gloves.candrain = FALSE
 		n_gloves.draining = FALSE
 
 		REMOVE_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)

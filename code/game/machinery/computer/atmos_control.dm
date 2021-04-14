@@ -91,7 +91,6 @@
 
 /obj/machinery/air_sensor/update_icon_state()
 	icon_state = "gsensor[on]"
-	return ..()
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)

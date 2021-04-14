@@ -6,7 +6,7 @@
 		S.charge = 0
 		S.output_level = 0
 		S.output_attempt = FALSE
-		S.update_appearance()
+		S.update_icon()
 		S.power_change()
 
 	for(var/area/A in GLOB.the_station_areas)
@@ -30,18 +30,18 @@
 
 /proc/power_restore()
 
-	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", ANNOUNCER_POWERON)
+	priority_announce("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", ANNOUNCER_POWEROFF)
 	for(var/obj/machinery/power/apc/C in GLOB.machines)
 		if(C.cell && is_station_level(C.z))
 			C.cell.charge = C.cell.maxcharge
-			COOLDOWN_RESET(C, failure_timer)
+			C.failure_timer = 0
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
 		if(!is_station_level(S.z))
 			continue
 		S.charge = S.capacity
 		S.output_level = S.output_level_max
 		S.output_attempt = TRUE
-		S.update_appearance()
+		S.update_icon()
 		S.power_change()
 	for(var/area/A in GLOB.the_station_areas)
 		if(!A.requires_power || A.always_unpowered)
@@ -61,5 +61,6 @@
 		S.charge = S.capacity
 		S.output_level = S.output_level_max
 		S.output_attempt = TRUE
-		S.update_appearance()
+		S.update_icon()
 		S.power_change()
+

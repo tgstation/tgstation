@@ -41,12 +41,10 @@
 /mob/living/simple_animal/bot/firebot/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	update_appearance(UPDATE_ICON)
-
-	// Doing this hurts my soul, but simplebot access reworks are for another day.
-	var/datum/id_trim/job/engi_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/station_engineer]
-	access_card.add_access(engi_trim.access + engi_trim.wildcard_access)
-	prev_access = access_card.access.Copy()
+	update_icon()
+	var/datum/job/engineer/J = new/datum/job/engineer
+	access_card.access += J.get_access()
+	prev_access = access_card.access
 
 	create_extinguisher()
 
@@ -84,11 +82,11 @@
 
 /mob/living/simple_animal/bot/firebot/turn_on()
 	. = ..()
-	update_appearance()
+	update_icon()
 
 /mob/living/simple_animal/bot/firebot/turn_off()
 	..()
-	update_appearance()
+	update_icon()
 
 /mob/living/simple_animal/bot/firebot/bot_reset()
 	..()
@@ -96,14 +94,14 @@
 	old_target_fire = null
 	ignore_list = list()
 	anchored = FALSE
-	update_appearance()
+	update_icon()
 
 /mob/living/simple_animal/bot/firebot/proc/soft_reset()
 	path = list()
 	target_fire = null
 	mode = BOT_IDLE
 	last_found = world.time
-	update_appearance()
+	update_icon()
 
 /mob/living/simple_animal/bot/firebot/set_custom_texts()
 	text_hack = "You corrupt [name]'s safety protocols."
@@ -160,7 +158,7 @@
 			stationary_mode = !stationary_mode
 
 	update_controls()
-	update_appearance()
+	update_icon()
 
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))
@@ -240,7 +238,7 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 
-		path = get_path_to(src, target_fire, 30, 1, id=access_card)
+		path = get_path_to(src, get_turf(target_fire), /turf/proc/Distance_cardinal, 0, 30, 1, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()
@@ -294,15 +292,16 @@
 		flick("firebot1_use", user)
 	internal_ext.afterattack(target, user, null)
 
-/mob/living/simple_animal/bot/firebot/update_icon_state()
-	. = ..()
+/mob/living/simple_animal/bot/firebot/update_icon()
 	if(!on)
 		icon_state = "firebot0"
 		return
-	if(IsStun() || IsParalyzed() || stationary_mode) //Bot has yellow light to indicate stationary mode.
+	if(IsStun() || IsParalyzed())
 		icon_state = "firebots1"
-		return
-	icon_state = "firebot1"
+	else if(stationary_mode) //Bot has yellow light to indicate stationary mode.
+		icon_state = "firebots1"
+	else
+		icon_state = "firebot1"
 
 
 /mob/living/simple_animal/bot/firebot/explode()

@@ -43,8 +43,10 @@
 			do_animate("deny")
 
 /obj/machinery/door/password/update_icon_state()
-	. = ..()
-	icon_state = density ? "closed" : "open"
+	if(density)
+		icon_state = "closed"
+	else
+		icon_state = "open"
 
 /obj/machinery/door/password/do_animate(animation)
 	switch(animation)
@@ -68,4 +70,4 @@
 	return
 
 /obj/machinery/door/password/ex_act(severity, target)
-	return FALSE
+	return

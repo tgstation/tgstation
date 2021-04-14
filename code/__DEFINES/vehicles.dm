@@ -17,10 +17,5 @@
 // For fireman carries, the carrying human needs an arm
 #define CARRIER_NEEDS_ARM (1<<4)
 
-//car_traits flags
-///Will this car kidnap people by ramming into them?
-#define CAN_KIDNAP (1<<0)
-
-#define CLOWN_CANNON_INACTIVE 0
-#define CLOWN_CANNON_BUSY 1
-#define CLOWN_CANNON_READY 2
+//Car trait flags
+#define CAN_KIDNAP 1

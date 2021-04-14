@@ -37,21 +37,19 @@ Bonus
 	)
 
 /datum/symptom/fire/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalStageSpeed() >= 4)
+	if(A.properties["stage_rate"] >= 4)
 		power = 1.5
-	if(A.totalStageSpeed() >= 8)
+	if(A.properties["stage_rate"] >= 8)
 		power = 2
-	if(A.totalStealth() >= 4)
+	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
-	if(A.totalTransmittable() >= 8) //burning skin spreads the virus through smoke
+	if(A.properties["transmittable"] >= 8) //burning skin spreads the virus through smoke
 		infective = TRUE
 
 /datum/symptom/fire/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
@@ -123,21 +121,19 @@ Bonus
 	)
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalResistance() >= 9) //intense but sporadic effect
+	if(A.properties["resistance"] >= 9) //intense but sporadic effect
 		power = 2
 		symptom_delay_min = 50
 		symptom_delay_max = 140
-	if(A.totalStageSpeed() >= 8) //serious boom when wet
+	if(A.properties["stage_rate"] >= 8) //serious boom when wet
 		explosion_power = 2
-	if(A.totalTransmittable() >= 8) //extra chemicals
+	if(A.properties["transmittable"] >= 8) //extra chemicals
 		chems = TRUE
 
 /datum/symptom/alkali/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)

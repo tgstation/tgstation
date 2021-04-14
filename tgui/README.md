@@ -87,7 +87,6 @@ Run `.\bin\tgui.bat` with any of the options listed below.
 doing development on IE8).
 - `bin/tgui --lint` - Show problems with the code.
 - `bin/tgui --fix` - Auto-fix problems with the code.
-- `bin/tgui --test` - Run tests.
 - `bin/tgui --analyze` - Run a bundle analyzer.
 - `bin/tgui --clean` - Clean up project repo.
 - `bin/tgui [webpack options]` - Build the project with custom webpack

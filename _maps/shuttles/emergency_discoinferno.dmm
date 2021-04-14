@@ -90,7 +90,7 @@
 	anchored = 1;
 	custom_materials = list(/datum/material/plasma = 100000)
 	},
-/turf/open/floor/light/colour_cycle/dancefloor_b,
+/turf/open/floor/light/colour_cycle,
 /area/shuttle/escape)
 "r" = (
 /turf/open/floor/mineral/plasma/disco,
@@ -99,7 +99,7 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "t" = (
-/turf/open/floor/light/colour_cycle/dancefloor_a,
+/turf/open/floor/light/colour_cycle,
 /area/shuttle/escape)
 "u" = (
 /obj/docking_port/mobile/emergency{
@@ -114,7 +114,7 @@
 /area/shuttle/escape)
 "v" = (
 /obj/machinery/jukebox/disco/indestructible,
-/turf/open/floor/light/colour_cycle/dancefloor_a,
+/turf/open/floor/light/colour_cycle,
 /area/shuttle/escape)
 "w" = (
 /obj/machinery/door/airlock/gold,
@@ -217,9 +217,6 @@
 /area/shuttle/escape)
 "O" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/escape)
-"R" = (
-/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -329,7 +326,7 @@ r
 s
 j
 t
-R
+t
 t
 j
 s
@@ -352,9 +349,9 @@ r
 j
 j
 t
-R
+t
 v
-R
+t
 t
 j
 j
@@ -377,7 +374,7 @@ r
 s
 j
 t
-R
+t
 t
 j
 s

@@ -134,10 +134,10 @@
 
 /obj/machinery/shieldgen/proc/shields_up()
 	active = TRUE
-	update_appearance()
+	update_icon()
 	move_resist = INFINITY
 
-	for(var/turf/target_tile as anything in RANGE_TURFS(shield_range, src))
+	for(var/turf/target_tile in range(shield_range, src))
 		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
 			if(!(machine_stat & BROKEN) || prob(33))
 				deployed_shields += new /obj/structure/emergency_shield(target_tile)
@@ -145,7 +145,7 @@
 /obj/machinery/shieldgen/proc/shields_down()
 	active = FALSE
 	move_resist = initial(move_resist)
-	update_appearance()
+	update_icon()
 	QDEL_LIST(deployed_shields)
 
 /obj/machinery/shieldgen/process(delta_time)
@@ -205,7 +205,7 @@
 			obj_integrity = max_integrity
 			set_machine_stat(machine_stat & ~BROKEN)
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
-			update_appearance()
+			update_icon()
 
 	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(locked)
@@ -245,8 +245,10 @@
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/shieldgen/update_icon_state()
-	icon_state = "shield[active ? "on" : "off"][(machine_stat & BROKEN) ? "br" : null]"
-	return ..()
+	if(active)
+		icon_state = (machine_stat & BROKEN) ? "shieldonbr":"shieldon"
+	else
+		icon_state = (machine_stat & BROKEN) ? "shieldoffbr":"shieldoff"
 
 #define ACTIVE_SETUPFIELDS 1
 #define ACTIVE_HASFIELDS 2

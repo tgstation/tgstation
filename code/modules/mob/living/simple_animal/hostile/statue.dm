@@ -27,7 +27,6 @@
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
-	attack_vis_effect = ATTACK_EFFECT_CLAW
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -83,7 +82,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/statue/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/statue/Life()
 	..()
 	if(!client && target) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()

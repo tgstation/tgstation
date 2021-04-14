@@ -318,8 +318,8 @@
 	..()
 
 /obj/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)
-	if(H.throw_mode)
-		H.throw_mode_off(THROW_MODE_TOGGLE) //Don't annoy the changeling if he doesn't catch the item
+	if(H.in_throw_mode)
+		H.throw_mode_off() //Don't annoy the changeling if he doesn't catch the item
 
 /obj/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
@@ -349,7 +349,7 @@
 		var/obj/item/I = target
 		if(!I.anchored)
 			to_chat(firer, "<span class='notice'>You pull [I] towards yourself.</span>")
-			H.throw_mode_on(THROW_MODE_TOGGLE)
+			H.throw_mode_on()
 			I.throw_at(H, 10, 2)
 			. = BULLET_ACT_HIT
 
@@ -465,7 +465,7 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/changeling
 	suit_name_simple = "flesh shell"
 	helmet_name_simple = "space helmet"
-	recharge_slowdown = 0.25
+	recharge_slowdown = 0.5
 	blood_on_castoff = 1
 
 /obj/item/clothing/suit/space/changeling
@@ -520,7 +520,7 @@
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1
-	recharge_slowdown = 0.125
+	recharge_slowdown = 0.25
 
 	suit_type = /obj/item/clothing/suit/armor/changeling
 	helmet_type = /obj/item/clothing/head/helmet/changeling

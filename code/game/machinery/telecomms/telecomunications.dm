@@ -115,8 +115,16 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 
 /obj/machinery/telecomms/update_icon_state()
-	icon_state = "[initial(icon_state)][panel_open ? "_o" : null][on ? null : "_off"]"
-	return ..()
+	if(on)
+		if(panel_open)
+			icon_state = "[initial(icon_state)]_o"
+		else
+			icon_state = initial(icon_state)
+	else
+		if(panel_open)
+			icon_state = "[initial(icon_state)]_o_off"
+		else
+			icon_state = "[initial(icon_state)]_off"
 
 /obj/machinery/telecomms/proc/update_power()
 
@@ -135,7 +143,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	update_power()
 
 	// Update the icon
-	update_appearance()
+	update_icon()
 
 	if(traffic > 0)
 		traffic -= netspeed * delta_time

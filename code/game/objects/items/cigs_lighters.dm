@@ -52,7 +52,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		attack_verb_continuous = string_list(list("burns", "sings"))
 		attack_verb_simple = string_list(list("burn", "sing"))
 		START_PROCESSING(SSobj, src)
-		update_appearance()
+		update_icon()
 
 /obj/item/match/proc/matchburnout()
 	if(lit)
@@ -157,16 +157,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user, params)
-	if(lit || smoketime <= 0)
+	if(!lit && smoketime > 0)
+		var/lighting_text = W.ignition_effect(src, user)
+		if(lighting_text)
+			light(lighting_text)
+	else
 		return ..()
-	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
-		var/datum/gas_mixture/air = return_air()
-		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
-			to_chat(user, "<span class='notice'>Your [name] needs a source of oxygen to burn.</span>")
-			return ..()
-	var/lighting_text = W.ignition_effect(src, user)
-	if(lighting_text)
-		light(lighting_text)
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/glass/glass, mob/user, proximity)
 	. = ..()
@@ -180,6 +176,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				to_chat(user, "<span class='warning'>[glass] is empty!</span>")
 			else
 				to_chat(user, "<span class='warning'>[src] is full!</span>")
+
 
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
 	if(lit)
@@ -272,11 +269,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/M = loc
 	if(isliving(loc))
 		M.IgniteMob()
-	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
-		var/datum/gas_mixture/air = return_air()
-		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
-			extinguish()
-			return
 	smoketime -= delta_time
 	if(smoketime <= 0)
 		new type_butt(location)
@@ -323,10 +315,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 // Cigarette brands.
 
 /obj/item/clothing/mask/cigarette/space_cigarette
-	desc = "A Space brand cigarette that can be smoked anywhere."
-	list_reagents = list(/datum/reagent/drug/nicotine = 9, /datum/reagent/oxygen = 9)
-	smoketime = 240 // space cigs have a shorter burn time than normal cigs
-	smoke_all = TRUE // so that it doesn't runout of oxygen while being smoked in space
+	desc = "A Space Cigarette brand cigarette."
 
 /obj/item/clothing/mask/cigarette/dromedary
 	desc = "A DromedaryCo brand cigarette. Contrary to popular belief, does not contain Calomel, but is reported to have a watery taste."
@@ -653,7 +642,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
-	update_appearance()
+	update_icon()
 
 /obj/item/lighter/cyborg_unequip(mob/user)
 	if(!lit)
@@ -675,7 +664,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/lighter/update_icon_state()
 	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
-	return ..()
 
 /obj/item/lighter/proc/create_lighter_overlay()
 	return mutable_appearance(icon, "lighter_overlay_[overlay_state][lit ? "-on" : ""]")
@@ -702,7 +690,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		attack_verb_simple = null
 		STOP_PROCESSING(SSobj, src)
 	set_light_on(lit)
-	update_appearance()
+	update_icon()
 
 /obj/item/lighter/extinguish()
 	set_lit(FALSE)
@@ -801,7 +789,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!lighter_color)
 		lighter_color = pick(color_list)
-	update_appearance()
+	update_icon()
 
 /obj/item/lighter/greyscale/create_lighter_overlay()
 	var/mutable_appearance/lighter_overlay = ..()

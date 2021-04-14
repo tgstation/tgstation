@@ -33,9 +33,6 @@ SUBSYSTEM_DEF(persistence)
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
 	LoadPaintings()
-	load_custom_outfits()
-
-	GLOB.explorer_drone_adventures = load_adventures()
 	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
@@ -171,7 +168,7 @@ SUBSYSTEM_DEF(persistence)
 		T.showpiece = new /obj/item/showpiece_dummy(T, path)
 		T.trophy_message = chosen_trophy["message"]
 		T.placer_key = chosen_trophy["placer_key"]
-		T.update_appearance()
+		T.update_icon()
 
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
@@ -184,7 +181,6 @@ SUBSYSTEM_DEF(persistence)
 	SaveRandomizedRecipes()
 	SavePaintings()
 	SaveScars()
-	save_custom_outfits()
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/photo_albums.json")
@@ -413,35 +409,3 @@ SUBSYSTEM_DEF(persistence)
 			original_human.save_persistent_scars(TRUE)
 		else
 			original_human.save_persistent_scars()
-
-
-/datum/controller/subsystem/persistence/proc/load_custom_outfits()
-	var/file = file("data/custom_outfits.json")
-	if(!fexists(file))
-		return
-	var/outfits_json = file2text(file)
-	var/list/outfits = json_decode(outfits_json)
-	if(!islist(outfits))
-		return
-
-	for(var/outfit_data in outfits)
-		if(!islist(outfit_data))
-			continue
-
-		var/outfittype = text2path(outfit_data["outfit_type"])
-		if(!ispath(outfittype, /datum/outfit))
-			continue
-		var/datum/outfit/outfit = new outfittype
-		if(!outfit.load_from(outfit_data))
-			continue
-		GLOB.custom_outfits += outfit
-
-/datum/controller/subsystem/persistence/proc/save_custom_outfits()
-	var/file = file("data/custom_outfits.json")
-	fdel(file)
-
-	var/list/data = list()
-	for(var/datum/outfit/outfit in GLOB.custom_outfits)
-		data += list(outfit.get_json_data())
-
-	WRITE_FILE(file, json_encode(data))

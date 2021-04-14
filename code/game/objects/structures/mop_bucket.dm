@@ -19,10 +19,10 @@
 			reagents.trans_to(I, 5, transfered_by = user)
 			to_chat(user, "<span class='notice'>You wet [I] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-			update_appearance()
+			update_icon()
 	else
 		. = ..()
-		update_appearance()
+		update_icon()
 
 /obj/structure/mopbucket/update_overlays()
 	. = ..()

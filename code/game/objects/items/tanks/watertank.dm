@@ -423,7 +423,7 @@
 	var/inj_am = injection_amount * delta_time
 	var/used_amount = inj_am / usage_ratio
 	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
-	update_appearance()
+	update_icon()
 	user.update_inv_back() //for overlays update
 
 //Operator backpack spray

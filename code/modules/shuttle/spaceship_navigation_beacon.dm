@@ -9,7 +9,6 @@
 	desc = "A device that creates a bluespace anchor that allow ships jump near to it."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "core"
-	base_icon_state = "core"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 0
 	density = TRUE
@@ -31,8 +30,10 @@
 
 // update the icon_state
 /obj/machinery/spaceship_navigation_beacon/update_icon_state()
-	icon_state = "[base_icon_state][powered() ? null : "-open"]"
-	return ..()
+	if(powered())
+		icon_state = "core"
+	else
+		icon_state = "core-open"
 
 /obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/multitool/I)
 	..()

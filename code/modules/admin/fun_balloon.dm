@@ -49,9 +49,8 @@
 
 /obj/effect/fun_balloon/sentience/effect()
 	var/list/bodies = list()
-	for(var/mob/living/possessable in range(effect_range, get_turf(src)))
-		if (!possessable.ckey && possessable.stat == CONSCIOUS) // Only assign ghosts to living, non-occupied mobs!
-			bodies += possessable
+	for(var/mob/living/M in range(effect_range, get_turf(src)))
+		bodies += M
 
 	var/question = "Would you like to be [group_name]?"
 	var/list/candidates = pollCandidatesForMobs(question, ROLE_PAI, null, FALSE, 100, bodies)
@@ -59,8 +58,9 @@
 		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
 
+		to_chat(body, "<span class='warning'>Your mob has been taken over by a ghost!</span>", confidential = TRUE)
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
-		body.ghostize(FALSE)
+		body.ghostize(0)
 		body.key = C.key
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 

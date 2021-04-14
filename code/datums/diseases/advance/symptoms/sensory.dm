@@ -18,19 +18,17 @@
 	)
 
 /datum/symptom/mind_restoration/Start(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
-	if(A.totalResistance() >= 6) //heal brain damage
+	if(A.properties["resistance"] >= 6) //heal brain damage
 		trauma_heal_mild = TRUE
-	if(A.totalResistance() >= 9) //heal severe traumas
+	if(A.properties["resistance"] >= 9) //heal severe traumas
 		trauma_heal_severe = TRUE
-	if(A.totalTransmittable() >= 8) //purge alcohol
+	if(A.properties["transmittable"] >= 8) //purge alcohol
 		purge_alcohol = TRUE
 
 /datum/symptom/mind_restoration/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
 
@@ -79,8 +77,7 @@
 	symptom_delay_max = 1
 
 /datum/symptom/sensory_restoration/Activate(datum/disease/advance/A)
-	. = ..()
-	if(!.)
+	if(!..())
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)

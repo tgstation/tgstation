@@ -11,7 +11,6 @@
 /obj/item/skillchip/job/chef/Initialize()
 	. = ..()
 	style = new
-	style.refresh_valid_areas()
 
 /obj/item/skillchip/job/chef/on_activate(mob/living/carbon/user, silent = FALSE)
 	. = ..()

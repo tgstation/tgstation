@@ -31,18 +31,17 @@
 		usr.client.running_find_references = type
 
 	testing("Beginning search for references to a [type].")
+	last_find_references = world.time
 
-	var/starting_time = world.time
-
-	DoSearchVar(GLOB, "GLOB") //globals
+	DoSearchVar(GLOB) //globals
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
-		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
+		DoSearchVar(thing, "World -> [thing]")
 
 	for(var/datum/thing) //datums
-		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
+		DoSearchVar(thing, "World -> [thing]")
 
 	for(var/client/thing) //clients
-		DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
+		DoSearchVar(thing, "World -> [thing]")
 
 	testing("Completed search for references to a [type].")
 	if(usr?.client)
@@ -72,65 +71,43 @@
 	qdel_and_find_ref_if_fail(src, TRUE)
 
 
-/datum/proc/DoSearchVar(potential_container, container_name, recursive_limit = 64, search_time = world.time)
-	#ifdef REFERENCE_TRACKING_DEBUG
-	if(!found_refs)
-		found_refs = list()
-	#endif
-
+/datum/proc/DoSearchVar(potential_container, container_name, recursive_limit = 64)
 	if(usr?.client && !usr.client.running_find_references)
 		return
 
 	if(!recursive_limit)
-		testing("Recursion limit reached. [container_name]")
 		return
 
 	if(istype(potential_container, /datum))
 		var/datum/datum_container = potential_container
-		if(datum_container.last_find_references == search_time)
+		if(datum_container.last_find_references == last_find_references)
 			return
 
-		datum_container.last_find_references = search_time
+		datum_container.last_find_references = last_find_references
 		var/list/vars_list = datum_container.vars
 
 		for(var/varname in vars_list)
-			if (varname == "vars" || varname == "vis_locs") //Fun fact, vis_locs don't count for references
+			if (varname == "vars")
 				continue
 			var/variable = vars_list[varname]
 
 			if(variable == src)
-				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[varname] = TRUE
-				#endif
-				testing("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
+				testing("Found [type] \ref[src] in [datum_container.type]'s [varname] var. [container_name]")
 
 			else if(islist(variable))
-				DoSearchVar(variable, "[container_name] \ref[datum_container] -> [varname] (list)", recursive_limit - 1, search_time)
+				DoSearchVar(variable, "[container_name] -> list", recursive_limit - 1)
 
 	else if(islist(potential_container))
 		var/normal = IS_NORMAL_LIST(potential_container)
 		for(var/element_in_list in potential_container)
-			//Check normal entrys
 			if(element_in_list == src)
-				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[potential_container] = TRUE
-				#endif
 				testing("Found [type] \ref[src] in list [container_name].")
 
-			//Check assoc entrys
 			else if(element_in_list && !isnum(element_in_list) && normal && potential_container[element_in_list] == src)
-				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[potential_container] = TRUE
-				#endif
 				testing("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
 
-			//Check normal sublists
 			else if(islist(element_in_list))
-				DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", recursive_limit - 1, search_time)
-
-			//Check assoc sublists
-			else if(element_in_list && !isnum(element_in_list) && normal && islist(potential_container[element_in_list]))
-				DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [potential_container[element_in_list]] (list)", recursive_limit - 1, search_time)
+				DoSearchVar(element_in_list, "[container_name] -> list", recursive_limit - 1)
 
 	#ifndef FIND_REF_NO_CHECK_TICK
 	CHECK_TICK
@@ -138,10 +115,7 @@
 
 
 /proc/qdel_and_find_ref_if_fail(datum/thing_to_del, force = FALSE)
-	thing_to_del.qdel_and_find_ref_if_fail(force)
-
-/datum/proc/qdel_and_find_ref_if_fail(force = FALSE)
-	SSgarbage.reference_find_on_fail["\ref[src]"] = TRUE
-	qdel(src, force)
+	SSgarbage.reference_find_on_fail[REF(thing_to_del)] = TRUE
+	qdel(thing_to_del, force)
 
 #endif

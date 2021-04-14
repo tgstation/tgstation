@@ -33,7 +33,7 @@
 		if(allowed(user))
 			to_chat(user, "<span class='notice'>You unlock [src].</span>")
 			locked = FALSE
-			update_appearance()
+			update_icon()
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
@@ -44,7 +44,7 @@
 	obj_flags |= EMAGGED
 	if(locked)
 		locked = FALSE
-		update_appearance()
+		update_icon()
 
 /obj/item/nanite_remote/update_overlays()
 	. = ..()
@@ -165,7 +165,7 @@
 		if("lock")
 			if(!(obj_flags & EMAGGED))
 				locked = TRUE
-				update_appearance()
+				update_icon()
 			. = TRUE
 
 

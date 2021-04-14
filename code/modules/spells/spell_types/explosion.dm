@@ -2,8 +2,6 @@
 	name = "Explosion"
 	desc = "This spell explodes an area."
 
-	school = SCHOOL_EVOCATION
-
 	var/ex_severe = 1
 	var/ex_heavy = 2
 	var/ex_light = 3

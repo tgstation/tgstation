@@ -299,7 +299,6 @@ const PageMain = (props, context) => {
   const {
     alertLevel,
     alertLevelTick,
-    aprilFools,
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
@@ -412,12 +411,6 @@ const PageMain = (props, context) => {
             icon="bullhorn"
             content="Make Priority Announcement"
             onClick={() => act("makePriorityAnnouncement")}
-          />}
-
-          {!!aprilFools && !!canMakeAnnouncement && <Button
-            icon="bullhorn"
-            content="Call Emergency Meeting"
-            onClick={() => act("emergency_meeting")}
           />}
 
           {!!canToggleEmergencyAccess && <Button.Confirm
@@ -690,9 +683,6 @@ export const CommunicationsConsole = (props, context) => {
     emagged,
     hasConnection,
     page,
-    canRequestSafeCode,
-    safeCodeDeliveryWait,
-    safeCodeDeliveryArea,
   } = data;
 
   return (
@@ -703,31 +693,18 @@ export const CommunicationsConsole = (props, context) => {
       <Window.Content scrollable>
         {!hasConnection && <NoConnectionModal />}
 
-        {(canLogOut || !authenticated) && (
-          <Section title="Authentication">
-            <Button
-              icon={authenticated ? "sign-out-alt" : "sign-in-alt"}
-              content={authenticated ? `Log Out${authorizeName ? ` (${authorizeName})` : ""}` : "Log In"}
-              color={authenticated ? "bad" : "good"}
-              onClick={() => act("toggleAuthentication")}
-            />
-          </Section>
-        )}
-
-        {(!!canRequestSafeCode && (
-          <Section title="Emergency Safe Code">
-            <Button
-              icon="key"
-              content="Request Safe Code"
-              color="good"
-              onClick={() => act("requestSafeCodes")} />
-          </Section>
-        )) || (!!safeCodeDeliveryWait && (
-          <Section title="Emergency Safe Code Delivery">
-            {`Drop pod to ${safeCodeDeliveryArea} in \
-            ${Math.round(safeCodeDeliveryWait/10)}s`}
-          </Section>
-        ))}
+        {(canLogOut || !authenticated)
+          ? (
+            <Section title="Authentication">
+              <Button
+                icon={authenticated ? "sign-out-alt" : "sign-in-alt"}
+                content={authenticated ? `Log Out${authorizeName ? ` (${authorizeName})` : ""}` : "Log In"}
+                color={authenticated ? "bad" : "good"}
+                onClick={() => act("toggleAuthentication")}
+              />
+            </Section>
+          )
+          : null}
 
         {!!authenticated && (
           page === STATE_BUYING_SHUTTLE && <PageBuyingShuttle />

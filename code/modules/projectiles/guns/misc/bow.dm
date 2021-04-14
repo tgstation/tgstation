@@ -2,7 +2,7 @@
 /obj/item/gun/ballistic/bow
 	name = "longbow"
 	desc = "While pretty finely crafted, surely you can find something better to use in the current year."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "bow"
 	inhand_icon_state = "bow"
 	load_sound = null
@@ -17,9 +17,12 @@
 	bolt_type = BOLT_TYPE_NO_BOLT
 	var/drawn = FALSE
 
-/obj/item/gun/ballistic/bow/update_icon_state()
+/obj/item/gun/ballistic/bow/update_icon()
 	. = ..()
-	icon_state = chambered ? "bow_[drawn]" : "bow"
+	if(!chambered)
+		icon_state = "bow"
+	else
+		icon_state = "bow_[drawn]"
 
 /obj/item/gun/ballistic/bow/proc/drop_arrow()
 	drawn = FALSE
@@ -29,7 +32,7 @@
 	if(!chambered)
 		return
 	chambered.forceMove(drop_location())
-	update_appearance()
+	update_icon()
 
 /obj/item/gun/ballistic/bow/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
 	if(chambered || !magazine)
@@ -42,7 +45,7 @@
 	if(chambered)
 		to_chat(user, "<span class='notice'>You [drawn ? "release the tension on" : "draw the string on"] [src].</span>")
 		drawn = !drawn
-	update_appearance()
+	update_icon()
 
 /obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	if(!chambered)
@@ -50,11 +53,11 @@
 	if(!drawn)
 		to_chat(user, "<span clasas='warning'>Without drawing the bow, the arrow uselessly falls to the ground.</span>")
 		drop_arrow()
-		update_appearance()
+		update_icon()
 		return
 	drawn = FALSE
 	. = ..() //fires, removing the arrow
-	update_appearance()
+	update_icon()
 
 /obj/item/gun/ballistic/bow/shoot_with_empty_chamber(mob/living/user)
 	return //so clicking sounds please

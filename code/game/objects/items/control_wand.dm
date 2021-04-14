@@ -12,13 +12,13 @@
 	desc = "Remotely controls airlocks."
 	w_class = WEIGHT_CLASS_TINY
 	var/mode = WAND_OPEN
-	var/region_access = REGION_GENERAL
+	var/region_access = 1 //See access.dm
 	var/list/access_list
 	network_id = NETWORK_DOOR_REMOTES
 
 /obj/item/door_remote/Initialize()
 	. = ..()
-	access_list = SSid_access.get_region_access_list(list(region_access))
+	access_list = get_region_accesses(region_access)
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_NAK, .proc/bad_signal)
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_ACK, .proc/good_signal)
 
@@ -65,47 +65,48 @@
 
 	ntnet_send(data)
 
+
 /obj/item/door_remote/omni
 	name = "omni door remote"
 	desc = "This control wand can access any door on the station."
 	icon_state = "gangtool-yellow"
-	region_access = REGION_ALL_STATION
+	region_access = 0
 
 /obj/item/door_remote/captain
 	name = "command door remote"
 	icon_state = "gangtool-yellow"
-	region_access = REGION_COMMAND
+	region_access = 7
 
 /obj/item/door_remote/chief_engineer
 	name = "engineering door remote"
 	icon_state = "gangtool-orange"
-	region_access = REGION_ENGINEERING
+	region_access = 5
 
 /obj/item/door_remote/research_director
 	name = "research door remote"
 	icon_state = "gangtool-purple"
-	region_access = REGION_RESEARCH
+	region_access = 4
 
 /obj/item/door_remote/head_of_security
 	name = "security door remote"
 	icon_state = "gangtool-red"
-	region_access = REGION_SECURITY
+	region_access = 2
 
 /obj/item/door_remote/quartermaster
 	name = "supply door remote"
 	desc = "Remotely controls airlocks. This remote has additional Vault access."
 	icon_state = "gangtool-green"
-	region_access = REGION_SUPPLY
+	region_access = 6
 
 /obj/item/door_remote/chief_medical_officer
 	name = "medical door remote"
 	icon_state = "gangtool-blue"
-	region_access = REGION_MEDBAY
+	region_access = 3
 
 /obj/item/door_remote/civilian
 	name = "civilian door remote"
 	icon_state = "gangtool-white"
-	region_access = REGION_GENERAL
+	region_access = 1
 
 #undef WAND_OPEN
 #undef WAND_BOLT

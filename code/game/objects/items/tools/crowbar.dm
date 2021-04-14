@@ -99,27 +99,25 @@
 		tool_behaviour = TOOL_WIRECUTTER
 		to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 		usesound = 'sound/items/jaws_cut.ogg'
-		update_appearance()
+		update_icon()
 
 	else
 		tool_behaviour = TOOL_CROWBAR
 		to_chat(user, "<span class='notice'>You attach the prying jaws to [src].</span>")
 		usesound = 'sound/items/jaws_pry.ogg'
-		update_appearance()
+		update_icon()
 
-/obj/item/crowbar/power/update_icon_state()
+/obj/item/crowbar/power/update_icon()
 	if(tool_behaviour == TOOL_WIRECUTTER)
 		icon_state = "jaws_cutter"
 	else
 		icon_state = "jaws_pry"
-	return ..()
 
-/obj/item/crowbar/power/syndicate/update_icon_state()
+/obj/item/crowbar/power/syndicate/update_icon()
 	if(tool_behaviour == TOOL_WIRECUTTER)
 		icon_state = "jaws_cutter_syndie"
 	else
 		icon_state = "jaws_pry_syndie"
-	return ..()
 
 /obj/item/crowbar/power/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && tool_behaviour == TOOL_WIRECUTTER)

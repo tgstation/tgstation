@@ -32,21 +32,19 @@
 	return ..()
 
 /obj/structure/extinguisher_cabinet/contents_explosion(severity, target)
-	if(!stored_extinguisher)
-		return
-
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			SSexplosions.high_mov_atom += stored_extinguisher
-		if(EXPLODE_HEAVY)
-			SSexplosions.med_mov_atom += stored_extinguisher
-		if(EXPLODE_LIGHT)
-			SSexplosions.low_mov_atom += stored_extinguisher
+	if(stored_extinguisher)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += stored_extinguisher
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += stored_extinguisher
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += stored_extinguisher
 
 /obj/structure/extinguisher_cabinet/handle_atom_del(atom/A)
 	if(A == stored_extinguisher)
 		stored_extinguisher = null
-		update_appearance()
+		update_icon()
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
@@ -66,7 +64,7 @@
 				return
 			stored_extinguisher = I
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
-			update_appearance()
+			update_icon()
 			return TRUE
 		else
 			toggle_cabinet(user)
@@ -89,7 +87,7 @@
 		if(!opened)
 			opened = 1
 			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
-		update_appearance()
+		update_icon()
 	else
 		toggle_cabinet(user)
 
@@ -102,7 +100,7 @@
 		stored_extinguisher = null
 		opened = TRUE
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
-		update_appearance()
+		update_icon()
 		return
 	toggle_cabinet(user)
 
@@ -121,20 +119,18 @@
 	else
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		opened = !opened
-		update_appearance()
+		update_icon()
 
 /obj/structure/extinguisher_cabinet/update_icon_state()
 	if(!opened)
 		icon_state = "extinguisher_closed"
-		return ..()
-	if(!stored_extinguisher)
+	else if(stored_extinguisher)
+		if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
+			icon_state = "extinguisher_mini"
+		else
+			icon_state = "extinguisher_full"
+	else
 		icon_state = "extinguisher_empty"
-		return ..()
-	if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
-		icon_state = "extinguisher_mini"
-		return ..()
-	icon_state = "extinguisher_full"
-	return ..()
 
 /obj/structure/extinguisher_cabinet/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
@@ -143,7 +139,7 @@
 		if(stored_extinguisher)
 			stored_extinguisher.forceMove(loc)
 			stored_extinguisher = null
-		update_appearance()
+		update_icon()
 
 
 /obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)
@@ -156,18 +152,6 @@
 			stored_extinguisher.forceMove(loc)
 			stored_extinguisher = null
 	qdel(src)
-
-/obj/structure/extinguisher_cabinet/directional/north
-	pixel_y = 32
-
-/obj/structure/extinguisher_cabinet/directional/south
-	pixel_y = -32
-
-/obj/structure/extinguisher_cabinet/directional/east
-	pixel_x = 26
-
-/obj/structure/extinguisher_cabinet/directional/west
-	pixel_x = -26
 
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"

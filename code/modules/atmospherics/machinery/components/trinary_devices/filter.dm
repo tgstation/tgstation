@@ -18,7 +18,7 @@
 	if(can_interact(user))
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
+		update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/AltClick(mob/user)
@@ -26,7 +26,7 @@
 		transfer_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
 		to_chat(user, "<span class='notice'>You maximize the volume output on [src] to [transfer_rate] L/s.</span>")
-		update_appearance()
+		update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
@@ -39,19 +39,28 @@
 	SSradio.remove_object(src,frequency)
 	return ..()
 
-/obj/machinery/atmospherics/components/trinary/filter/update_overlays()
-	. = ..()
+/obj/machinery/atmospherics/components/trinary/filter/update_icon()
+	cut_overlays()
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & initialize_directions))
 			continue
+		var/obj/machinery/atmospherics/node = findConnecting(direction)
 
-		. += getpipeimage(icon, "cap", direction, pipe_color, piping_layer, TRUE)
+		var/image/cap
+		if(node)
+			cap = getpipeimage(icon, "cap", direction, node.pipe_color, piping_layer = piping_layer, trinary = TRUE)
+		else
+			cap = getpipeimage(icon, "cap", direction, piping_layer = piping_layer, trinary = TRUE)
+
+		add_overlay(cap)
+
+	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
 	icon_state = "filter_[on_state ? "on" : "off"]-[set_overlay_offset(piping_layer)][flipped ? "_f" : ""]"
 
-/obj/machinery/atmospherics/components/trinary/filter/process_atmos()
+/obj/machinery/atmospherics/components/trinary/filter/process_atmos(delta_time)
 	..()
 	if(!on || !(nodes[1] && nodes[2] && nodes[3]) || !is_operational)
 		return
@@ -70,7 +79,7 @@
 		//No need to transfer if target is already full!
 		return
 
-	var/transfer_ratio = transfer_rate / air1.volume
+	var/transfer_ratio = (transfer_rate * delta_time) / air1.volume
 
 	//Actually transfer the gas
 
@@ -159,7 +168,7 @@
 				filter_name = GLOB.meta_gas_info[gas][META_GAS_NAME]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
-	update_appearance()
+	update_icon()
 
 /obj/machinery/atmospherics/components/trinary/filter/can_unwrench(mob/user)
 	. = ..()
