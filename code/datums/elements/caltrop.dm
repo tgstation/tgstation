@@ -39,7 +39,8 @@
 
 /datum/element/caltrop/proc/re_register_crossed(atom/movable/target, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
-	UnregisterSignal(oldloc, COMSIG_MOVABLE_CROSSED)
+	if(oldloc)
+		UnregisterSignal(oldloc, COMSIG_MOVABLE_CROSSED)
 	RegisterSignal(target.loc, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
 
 /datum/element/caltrop/proc/on_crossed(atom/caltrop, atom/movable/AM)

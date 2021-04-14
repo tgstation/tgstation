@@ -110,7 +110,6 @@
 
 /datum/component/squeak/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
-
 	holder = equipper
 	RegisterSignal(holder, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, TRUE)
 	RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted, TRUE)
@@ -121,8 +120,10 @@
 
 /datum/component/squeak/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
-
-	RemoveElement(/datum/element/connect_loc, user, holder_connections)
+	var/obj/parent_as_obj = parent
+	if(parent_as_obj.loc == holder)
+		return
+	RemoveElement(/datum/element/connect_loc, holder, holder_connections)
 	UnregisterSignal(holder, COMSIG_MOVABLE_DISPOSING)
 	UnregisterSignal(holder, COMSIG_PARENT_PREQDELETED)
 	holder = null

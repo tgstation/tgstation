@@ -184,7 +184,7 @@
 
 		var/atom/movable/pulling = A.pulling
 		var/atom/movable/puller = A
-		addtimer(CALLBACK(A, /atom/movable.proc/forceMove, DT), 1)
+		A.forceMove(DT)
 
 		while (pulling != null)
 			var/next_pulling = pulling.pulling

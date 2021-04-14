@@ -37,15 +37,17 @@
 		return
 
 	if (!isnull(tracked.loc))
-		unregister_signals(listener, tracked, tracked.loc)
+		unregister_signals(listener, tracked, tracked.loc)//its definitely going here, and its on a non null floor, but is target in null space?
+	else
+		unregister_signals(listener, tracked, null)
 
-	UnregisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE)
+	UnregisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE)//COMSIG_MOVABLE_LOCATION_CHANGE
 
 /datum/element/connect_loc/proc/update_signals(datum/listener, atom/movable/tracked)
 	var/existing = length(targets[tracked.loc])
-	LAZYSET(targets[tracked.loc], tracked, listener)
+	LAZYSET(targets[tracked.loc || tracked], tracked, listener)
 
-	if (isnull(tracked.loc))
+	if(isnull(tracked.loc))
 		return
 
 	for (var/signal in connections)
@@ -55,11 +57,11 @@
 		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, TRUE)
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
-	targets[old_loc] -= tracked
-	if (length(targets[old_loc]) == 0)
-		targets -= old_loc
+	targets[old_loc || tracked] -= tracked
+	if (length(targets[old_loc || tracked]) == 0)
+		targets -= (old_loc || tracked)
 
-	// Yes this is after the above because we use null as a key when objects are in nullspace
+	// Yes this is after the above because when tracked is in nullspace we use tracked as a key instead of its loc
 	if(isnull(old_loc))
 		return
 
@@ -72,7 +74,7 @@
 /datum/element/connect_loc/proc/on_moved(atom/movable/tracked, atom/old_loc)
 	SIGNAL_HANDLER
 
-	var/datum/listener = targets[old_loc][tracked]
+	var/datum/listener = targets[old_loc || tracked][tracked]
 	unregister_signals(listener, tracked, old_loc)
 	update_signals(listener, tracked)
 

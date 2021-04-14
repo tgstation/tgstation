@@ -44,7 +44,8 @@
 			var/mob/dead/observe = M
 			if(observe.client)
 				observe.client.screen -= I
-	I.forceMove(src)
+	if(I.loc != src)
+		I.forceMove(src)
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE

@@ -94,6 +94,7 @@
 /datum/component/slippery/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	UnregisterSignal(holder, COMSIG_PARENT_PREQDELETED)
 	RemoveElement(/datum/element/connect_loc, holder, holder_connections)
 	holder = null
 
