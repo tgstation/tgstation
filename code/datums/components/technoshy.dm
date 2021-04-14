@@ -20,10 +20,11 @@
 	src.whitelist = whitelist
 
 /datum/component/technoshy/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_TRY_USE_MACHINE, .proc/is_not_touched)
+	RegisterSignal(parent, COMSIG_TRY_USE_MACHINE, .proc/on_try_use_machine)
+	RegisterSignal(parent, COMSIG_TRY_WIRES_INTERACT, .proc/on_try_wires_interact)
 
 /datum/component/technoshy/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_TRY_USE_MACHINE)
+	UnregisterSignal(parent, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /datum/component/technoshy/PostTransfer()
 	if(!ismob(parent))
@@ -35,9 +36,20 @@
 		message = friend.message
 
 /datum/component/technoshy/proc/is_not_touched(datum/source, obj/machinery/machine)
-	SIGNAL_HANDLER
 	var/time_since = world.time - machine.last_used_time
 	if(time_since < unused_duration && !isnull(machine.last_user_mobtype) && !is_type_in_typecache(machine.last_user_mobtype, whitelist))
 		to_chat(source, "<span class='warning'>[replacetext(message, "%TARGET", machine)]</span>")
+		return TRUE
+
+/datum/component/technoshy/proc/on_try_use_machine(datum/source, obj/machinery/machine)
+	SIGNAL_HANDLER
+	if(is_not_touched(source, machine))
 		return COMPONENT_CANT_USE_MACHINE
+
+/datum/component/technoshy/proc/on_try_wires_interact(datum/source, atom/machine)
+	SIGNAL_HANDLER
+	if(!ismachinery(machine))
+		return
+	else if(is_not_touched(source, machine))
+		return COMPONENT_CANT_INTERACT_WIRES
 
