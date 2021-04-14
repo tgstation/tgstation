@@ -129,6 +129,7 @@
 	var/list/drone_area_blacklist_recursive = list(/area/engineering/supermatter)
 	/// whitelisted drone items, direct
 	var/list/drone_item_whitelist_flat = list(
+		/obj/item/chisel,
 		/obj/item/crowbar/drone,
 		/obj/item/screwdriver/drone,
 		/obj/item/wrench/drone,
@@ -152,6 +153,7 @@
 		/obj/item/stack/tile,
 		/obj/item/stock_parts,
 		/obj/item/toner,
+		/obj/item/wallframe,
 		/obj/item/clothing/head,
 		/obj/item/clothing/mask,
 	)
