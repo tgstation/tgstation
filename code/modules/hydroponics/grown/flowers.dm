@@ -246,8 +246,8 @@
 	attack_verb_simple = list("roast", "scorch", "burn")
 	grind_results = list(/datum/reagent/consumable/capsaicin = 0, /datum/reagent/consumable/condensedcapsaicin = 0)
 
-/obj/item/grown/novaflower/add_juice()
-	..()
+/obj/item/grown/novaflower/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
 	force = round((5 + seed.potency / 5), 1)
 
 /obj/item/grown/novaflower/attack(mob/living/carbon/M, mob/user)
@@ -271,14 +271,18 @@
 		qdel(src)
 
 /obj/item/grown/novaflower/pickup(mob/living/carbon/human/user)
-	..()
-	if(user.gloves)
+	. = ..()
+	if(!iscarbon(user))
 		return
 
-	to_chat(user, "<span class='danger'>The [name] burns your bare hand!</span>")
-	var/obj/item/bodypart/affecting = user.get_active_hand()
-	if(affecting?.receive_damage(0, 5))
-		user.update_damage_overlays()
+	var/mob/living/carbon/carbon_user = user
+	if(HAS_TRAIT(carbon_user, TRAIT_PLANT_SAFE))
+		return
+
+	to_chat(carbon_user, "<span class='danger'>\The [name] burns your bare hand!</span>")
+	var/obj/item/bodypart/affecting = carbon_user.get_active_hand()
+	if(affecting?.receive_damage(0, 5, wound_bonus = CANT_WOUND)))
+		carbon_user.update_damage_overlays()
 
 // Rose
 /obj/item/seeds/rose
@@ -313,17 +317,21 @@
 	foodtypes = VEGETABLES | GROSS
 
 /obj/item/food/grown/rose/pickup(mob/living/carbon/human/user)
-	..()
-	if(user.gloves)
+	. = ..()
+	if(!iscarbon(user))
+		return
+
+	var/mob/living/carbon/carbon_user = user
+	if(HAS_TRAIT(carbon_user, TRAIT_PLANT_SAFE) || HAS_TRAIT(carbon_user, TRAIT_PIERCEIMMUNE))
 		return
 
 	if(!seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
 		return
 
-	to_chat(user, "<span class='danger'>You prick your hand on \the [name]'s thorns. Ouch.</span>")
-	var/obj/item/bodypart/affecting = user.get_active_hand()
+	to_chat(carbon_user, "<span class='danger'>\The [name]'s thorns prick your hand. Ouch.</span>")
+	var/obj/item/bodypart/affecting = carbon_user.get_active_hand()
 	if(affecting?.receive_damage(2))
-		user.update_damage_overlays()
+		carbon_user.update_damage_overlays()
 
 // Carbon Rose
 /obj/item/seeds/carbon_rose

@@ -97,6 +97,22 @@
 	distill_reagent = null
 	wine_power = 80
 
+/obj/item/food/grown/tomato/blue/bluespace/pickup(mob/user)
+	. = ..()
+	if(!iscarbon(user))
+		return
+
+	var/mob/living/carbon/carbon_user = user
+	if(HAS_TRAIT(carbon_user, TRAIT_PLANT_SAFE))
+		return
+
+	if(!seed.get_gene(/datum/plant_gene/trait/squash))
+		return
+
+	if(prob(50))
+		to_chat(carbon_user, "<span class='danger'>\The [name] slips out of your hand!</span>")
+		attack_hand(user)
+
 // Killer Tomato
 /obj/item/seeds/tomato/killer
 	name = "pack of killer-tomato seeds"
@@ -132,10 +148,21 @@
 	if(awakening || isspaceturf(user.loc))
 		return
 	to_chat(user, "<span class='notice'>You begin to awaken the Killer Tomato...</span>")
-	awakening = TRUE
-	addtimer(CALLBACK(src, .proc/awaken), 3 SECONDS)
+	begin_awaken(3 SECONDS)
 	log_game("[key_name(user)] awakened a killer tomato at [AREACOORD(user)].")
 
+/*
+ * Begin the process of awakening the killer tomato.
+ *
+ * awaken_time - the time, in seconds, it will take for the tomato to spawn.
+ */
+/obj/item/food/grown/tomato/killer/proc/begin_awaken(awaken_time)
+	awakening = TRUE
+	addtimer(CALLBACK(src, .proc/awaken), awaken_time)
+
+/*
+ * Actually awaken the killer tomato, spawning the killer tomato mob.
+ */
 /obj/item/food/grown/tomato/killer/proc/awaken()
 	if(QDELETED(src))
 		return
@@ -147,3 +174,16 @@
 	K.health = K.maxHealth
 	K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
 	qdel(src)
+
+/obj/item/food/grown/tomato/killer/pickup(mob/user)
+	. = ..()
+	if(!iscarbon(user))
+		return
+
+	var/mob/living/carbon/carbon_user = user
+	if(HAS_TRAIT(carbon_user, TRAIT_PLANT_SAFE))
+		return
+
+	if(prob(25))
+		to_chat(carbon_user, "<span class='danger'>\The [name] begins to growl and shake!</span>")
+		begin_awaken(1 SECONDS)

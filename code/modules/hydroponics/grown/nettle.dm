@@ -49,26 +49,28 @@
 	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
 
+/obj/item/food/grown/nettle/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	force = round((5 + seed.potency / 5), 1)
+
 /obj/item/food/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|TOXLOSS)
 
-/obj/item/food/grown/nettle/pickup(mob/living/user)
-	..()
+/obj/item/food/grown/nettle/pickup(mob/user)
+	. = ..()
 	if(!iscarbon(user))
 		return FALSE
-	var/mob/living/carbon/C = user
-	if(C.gloves)
+
+	var/mob/living/carbon/carbon_user = user
+	if(HAS_TRAIT(carbon_user, TRAIT_PLANT_SAFE) || HAS_TRAIT(carbon_user, TRAIT_PIERCEIMMUNE))
 		return FALSE
-	if(HAS_TRAIT(C, TRAIT_PIERCEIMMUNE))
-		return FALSE
-	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
-	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
-	if(affecting)
-		if(affecting.receive_damage(0, force))
-			C.update_damage_overlays()
-	to_chat(C, "<span class='userdanger'>The nettle burns your bare hand!</span>")
-	return TRUE
+
+	to_chat(carbon_user, "<span class='danger'>\The [name] burns your bare hand!</span>")
+	var/obj/item/bodypart/affecting = carbon_user.get_active_hand()
+	if(affecting?.receive_damage(0, force, wound_bonus = CANT_WOUND))
+		carbon_user.update_damage_overlays()
+		return TRUE
 
 /obj/item/food/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
 	. = ..()
@@ -79,13 +81,6 @@
 	else
 		to_chat(usr, "<span class='warning'>All the leaves have fallen off the nettle from violent whacking.</span>")
 		qdel(src)
-
-/obj/item/food/grown/nettle/basic
-	seed = /obj/item/seeds/nettle
-
-/obj/item/food/grown/nettle/basic/Initialize(mapload, obj/item/seeds/new_seed)
-	. = ..()
-	force = round((5 + seed.potency / 5), 1)
 
 /obj/item/food/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
@@ -101,10 +96,12 @@
 	force = round((5 + seed.potency / 2.5), 1)
 
 /obj/item/food/grown/nettle/death/pickup(mob/living/carbon/user)
-	if(..())
-		if(prob(50))
-			user.Paralyze(100)
-			to_chat(user, "<span class='userdanger'>You are stunned by [src] as you try picking it up!</span>")
+	. = ..()
+	if(!.)
+		return
+	if(prob(50))
+		user.Paralyze(100)
+		to_chat(user, "<span class='userdanger'>You are stunned by \the [name] as you try picking it up!</span>")
 
 /obj/item/food/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..())
