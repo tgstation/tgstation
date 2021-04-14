@@ -41,7 +41,7 @@
 		icon_state = "cutters"
 		var/our_color = pick(wirecutter_colors)
 		add_atom_colour(wirecutter_colors[our_color], FIXED_COLOUR_PRIORITY)
-		update_icon()
+		update_appearance()
 
 /obj/item/wirecutters/update_overlays()
 	. = ..()

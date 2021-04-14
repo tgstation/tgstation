@@ -95,9 +95,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			if(C.cable_layer & cable_layer)
 				linked_dirs |= check_dir
 				C.linked_dirs |= inverse
-				C.update_icon()
+				C.update_appearance()
 
-	update_icon()
+	update_appearance()
 
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/Disconnect_cable()
@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			for(var/obj/structure/cable/C in TB)
 				if(cable_layer & C.cable_layer)
 					C.linked_dirs &= ~inverse
-					C.update_icon()
+					C.update_appearance()
 
 /obj/structure/cable/Destroy() // called when a cable is deleted
 	Disconnect_cable()
@@ -131,24 +131,26 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/update_icon_state()
 	if(!linked_dirs)
 		icon_state = "l[cable_layer]-noconnection"
-	else
-		var/list/dir_icon_list = list()
-		for(var/check_dir in GLOB.cardinals)
-			if(linked_dirs & check_dir)
-				dir_icon_list += "[check_dir]"
-		var/dir_string = dir_icon_list.Join("-")
-		if(dir_icon_list.len > 1)
-			for(var/obj/O in loc)
-				if(GLOB.wire_node_generating_types[O.type])
+		return ..()
+
+	var/list/dir_icon_list = list()
+	for(var/check_dir in GLOB.cardinals)
+		if(linked_dirs & check_dir)
+			dir_icon_list += "[check_dir]"
+	var/dir_string = dir_icon_list.Join("-")
+	if(dir_icon_list.len > 1)
+		for(var/obj/O in loc)
+			if(GLOB.wire_node_generating_types[O.type])
+				dir_string = "[dir_string]-node"
+				break
+			else if(istype(O, /obj/machinery/power))
+				var/obj/machinery/power/P = O
+				if(P.should_have_node())
 					dir_string = "[dir_string]-node"
 					break
-				else if(istype(O, /obj/machinery/power))
-					var/obj/machinery/power/P = O
-					if(P.should_have_node())
-						dir_string = "[dir_string]-node"
-						break
-		dir_string = "l[cable_layer]-[dir_string]"
-		icon_state = dir_string
+	dir_string = "l[cable_layer]-[dir_string]"
+	icon_state = dir_string
+	return ..()
 
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
@@ -395,6 +397,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
 	inhand_icon_state = "coil"
+	base_icon_state = "coil"
 	novariants = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -426,19 +429,25 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	. = ..()
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
-	update_icon()
+	update_appearance()
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()
 	. += "<b>Ctrl+Click</b> to change the layer you are placing on."
 
+/obj/item/stack/cable_coil/update_name()
+	. = ..()
+	name = "cable [(amount < 3) ? "piece" : "coil"]"
+
+/obj/item/stack/cable_coil/update_desc()
+	. = ..()
+	desc = "A [(amount < 3) ? "piece" : "coil"] of insulated power cable."
+
 /obj/item/stack/cable_coil/update_icon_state()
 	if(novariants)
 		return
-	icon_state = "[initial(icon_state)][amount < 3 ? amount : ""]"
-	var/how_many_things = amount < 3 ? "piece" : "coil"
-	name = "cable [how_many_things]"
-	desc = "A [how_many_things] of insulated power cable."
+	. = ..()
+	icon_state = "[base_icon_state][amount < 3 ? amount : ""]"
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
@@ -510,11 +519,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			novariants = TRUE
 		if("Cable restraints")
 			if (amount >= CABLE_RESTRAINTS_COST)
-				use(CABLE_RESTRAINTS_COST)
-				var/obj/item/restraints/handcuffs/cable/restraints = new
-				restraints.color = color
-				user.put_in_hands(restraints)
-	update_icon()
+				if(use(CABLE_RESTRAINTS_COST))
+					var/obj/item/restraints/handcuffs/cable/restraints = new
+					restraints.color = color
+					user.put_in_hands(restraints)
+	update_appearance()
 
 
 ///////////////////////////////////
@@ -543,7 +552,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		amount = max_amount
 	else
 		amount += extra
-	update_icon()
+	update_appearance()
 
 
 ///////////////////////////////////////////////
@@ -598,6 +607,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	amount = null
 	icon_state = "coil2"
 	worn_icon_state = "coil"
+	base_icon_state = "coil2"
 
 /obj/item/stack/cable_coil/cut/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	if(!amount)
@@ -605,7 +615,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	. = ..()
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
-	update_icon()
+	update_appearance()
 
 #undef CABLE_RESTRAINTS_COST
 #undef UNDER_SMES
@@ -648,18 +658,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
 
 /obj/structure/cable/multilayer/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/structure/cable/multilayer/update_icon()
-
 	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
-
 	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
-
 	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
-
 	cable_node_3?.alpha = cable_layer & CABLE_LAYER_3 ? 255 : 0
-
 	return ..()
 
 /obj/structure/cable/multilayer/Initialize(mapload)
@@ -680,7 +686,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	vis_contents += cable_node_2
 	cable_node_3 = new /obj/effect/node/layer3()
 	vis_contents += cable_node_3
-	update_icon()
+	update_appearance()
 
 /obj/structure/cable/multilayer/Destroy() // called when a cable is deleted
 	QDEL_NULL(machinery_node)
@@ -762,4 +768,6 @@ GLOBAL_LIST(hub_radial_layer_list)
 	to_chat(user, "<span class='warning'>You pust reset button.</span>")
 	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
 
-
+// This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active
+/obj/structure/cable/multilayer/connected
+		cable_layer = CABLE_LAYER_1 | CABLE_LAYER_2 | CABLE_LAYER_3

@@ -42,13 +42,12 @@
 	. = ..()
 	UnregisterSignal(H, COMSIG_MOB_SAY)
 
-/datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/medicine/c2/synthflesh)
-		chem.expose_mob(H, TOUCH, 2 ,0) //heal a little
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-		return 1
-	else
-		return ..()
+		chem.expose_mob(H, TOUCH, 2 * REAGENTS_EFFECT_MULTIPLIER * delta_time,0) //heal a little
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		return TRUE
+	return ..()
 
 
 /datum/species/synth/proc/assume_disguise(datum/species/S, mob/living/carbon/human/H)
@@ -61,6 +60,7 @@
 		species_traits |= S.species_traits
 		inherent_traits |= S.inherent_traits
 		attack_verb = S.attack_verb
+		attack_effect = S.attack_effect
 		attack_sound = S.attack_sound
 		miss_sound = S.miss_sound
 		meat = S.meat
@@ -79,6 +79,7 @@
 		species_traits = initial_species_traits.Copy()
 		inherent_traits = initial_inherent_traits.Copy()
 		attack_verb = initial(attack_verb)
+		attack_effect = initial(attack_verb)
 		attack_sound = initial(attack_sound)
 		miss_sound = initial(miss_sound)
 		mutant_bodyparts = list()

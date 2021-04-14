@@ -21,7 +21,7 @@
 
 	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = 'icons/hud/screen_alien.dmi'
-	pull_icon.update_icon()
+	pull_icon.update_appearance()
 	pull_icon.screen_loc = ui_above_movement
 	pull_icon.hud = src
 	hotkeybuttons += pull_icon
@@ -33,5 +33,5 @@
 
 	zone_select = new /atom/movable/screen/zone_sel/alien()
 	zone_select.hud = src
-	zone_select.update_icon()
+	zone_select.update_appearance()
 	static_inventory += zone_select

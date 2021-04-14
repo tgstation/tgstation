@@ -29,6 +29,10 @@
 	tastes = list("blue cherries" = 2, "ice cream" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
 
+/obj/item/food/spacefreezy/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder)
+
 /obj/item/food/sundae
 	name = "sundae"
 	desc = "A classic dessert."
@@ -39,6 +43,10 @@
 	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
 
+/obj/item/food/sundae/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, y_offset = -2, sweetener = /datum/reagent/consumable/caramel)
+
 /obj/item/food/honkdae
 	name = "honkdae"
 	desc = "The clown's favorite dessert."
@@ -48,6 +56,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
+
+/obj/item/food/honkdae/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, y_offset = -2) //The sugar will react with the banana forming laughter. Honk!
 
 /////////////
 //SNOWCONES//
@@ -229,14 +241,14 @@
 
 /obj/item/food/popsicle/update_overlays()
 	. = ..()
-	if(bitecount)
-		. += "[initial(overlay_state)]_[min(bitecount, 3)]"
-	else
+	if(!bitecount)
 		. += initial(overlay_state)
+		return
+	. += "[initial(overlay_state)]_[min(bitecount, 3)]"
 
 /obj/item/food/popsicle/proc/after_bite(mob/living/eater, mob/living/feeder, bitecount)
 	src.bitecount = bitecount
-	update_icon()
+	update_appearance()
 
 /obj/item/popsicle_stick
 	name = "popsicle stick"
@@ -282,3 +294,4 @@
 	tastes = list("chopped hazelnuts", "waffle")
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 4, /datum/reagent/consumable/sugar = 2)
 	foodtypes = DAIRY | SUGAR
+	venue_value = FOOD_PRICE_NORMAL

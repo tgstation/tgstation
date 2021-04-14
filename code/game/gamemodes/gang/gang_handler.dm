@@ -346,7 +346,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		var/datum/hud/H = M.hud_used
 		H.wanted_lvl.level = newlevel
 		H.wanted_lvl.cops_arrived = cops_arrived
-		H.wanted_lvl.update_icon()
+		H.wanted_lvl.update_appearance()
 
 /// Internal. Updates the end_time and sends out an announcement if the wanted level has increased. Called by update_wanted_level().
 /datum/gang_handler/proc/on_gain_wanted_level(newlevel)

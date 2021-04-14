@@ -28,6 +28,15 @@
 		for(var/obj/O in T)
 			if((O.density && O.anchored) || is_type_in_typecache(O, banned_objects))
 				return SHELTER_DEPLOY_ANCHORED_OBJECTS
+
+	// Check if the shelter sticks out of map borders
+	var/shelter_origin_x = deploy_location.x - round(width/2)
+	if(shelter_origin_x <= 1 || shelter_origin_x+width > world.maxx)
+		return SHELTER_DEPLOY_OUTSIDE_MAP
+	var/shelter_origin_y = deploy_location.y - round(height/2)
+	if(shelter_origin_y <= 1 || shelter_origin_y+height > world.maxy)
+		return SHELTER_DEPLOY_OUTSIDE_MAP
+
 	return SHELTER_DEPLOY_ALLOWED
 
 /datum/map_template/shelter/alpha

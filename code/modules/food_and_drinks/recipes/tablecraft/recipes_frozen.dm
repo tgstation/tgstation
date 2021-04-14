@@ -8,7 +8,7 @@
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
 		/datum/reagent/consumable/ice = 5,
-		/obj/item/food = 1
+		/obj/item/food/icecream = 1
 	)
 	result = /obj/item/food/icecreamsandwich
 	subcategory = CAT_ICE
@@ -19,6 +19,7 @@
 		/datum/reagent/consumable/cream = 5,
 		/datum/reagent/consumable/ice = 5,
 		/obj/item/food/grown/berries = 2,
+		/obj/item/food/icecream = 1
 	)
 	result = /obj/item/food/strawberryicecreamsandwich
 	subcategory = CAT_ICE
@@ -28,7 +29,7 @@
 	reqs = list(
 		/datum/reagent/consumable/bluecherryjelly = 5,
 		/datum/reagent/consumable/spacemountainwind = 15,
-		/obj/item/food = 1
+		/obj/item/food/icecream = 1
 	)
 	result = /obj/item/food/spacefreezy
 	subcategory = CAT_ICE
@@ -39,7 +40,7 @@
 		/datum/reagent/consumable/cream = 5,
 		/obj/item/food/grown/cherries = 1,
 		/obj/item/food/grown/banana = 1,
-		/obj/item/food = 1
+		/obj/item/food/icecream = 1
 	)
 	result = /obj/item/food/sundae
 	subcategory = CAT_ICE
@@ -51,7 +52,7 @@
 		/obj/item/clothing/mask/gas/clown_hat = 1,
 		/obj/item/food/grown/cherries = 1,
 		/obj/item/food/grown/banana = 2,
-		/obj/item/food = 1
+		/obj/item/food/icecream = 1
 	)
 	result = /obj/item/food/honkdae
 	subcategory = CAT_ICE
@@ -59,11 +60,11 @@
 /datum/crafting_recipe/food/cornuto
 	name = "Cornuto"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
 		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/cream = 4,
 		/datum/reagent/consumable/ice = 2,
-		/datum/reagent/consumable/sugar = 4
+		/datum/reagent/consumable/sugar = 4,
+		/obj/item/food/icecream = 1
 	)
 	result = /obj/item/food/cornuto
 	subcategory = CAT_ICE

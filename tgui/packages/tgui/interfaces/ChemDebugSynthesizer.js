@@ -6,6 +6,7 @@ export const ChemDebugSynthesizer = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     amount,
+    purity,
     beakerCurrentVolume,
     beakerMaxVolume,
     isBeakerLoaded,
@@ -32,6 +33,16 @@ export const ChemDebugSynthesizer = (props, context) => {
                 step={1}
                 stepPixelSize={2}
                 onChange={(e, value) => act('amount', {
+                  amount: value,
+                })} />
+              <NumberInput
+                value={purity}
+                unit="%"
+                minValue={0}
+                maxValue={120}
+                step={1}
+                stepPixelSize={2}
+                onChange={(e, value) => act('purity', {
                   amount: value,
                 })} />
               <Button

@@ -51,7 +51,7 @@
 	weapon.attack(C, src)
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
-		addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
+		addtimer(CALLBACK(src, /atom/.proc/update_appearance), 2)
 		back_to_idle()
 
 
@@ -60,13 +60,13 @@
 		return
 	switch(mode)
 		if(BOT_IDLE) // idle
-			update_icon()
+			update_appearance()
 			walk_to(src,0)
 			look_for_perp() // see if any criminals are in range
 			if(!mode && auto_patrol) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
 		if(BOT_HUNT) // hunting for perp
-			update_icon()
+			update_appearance()
 			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)

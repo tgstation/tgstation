@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/Life()
+/mob/living/silicon/ai/Life(delta_time = SSMOBS_DT, times_fired)
 	if (stat == DEAD)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
@@ -6,7 +6,7 @@
 
 		update_gravity(mob_has_gravity())
 
-		handle_status_effects()
+		handle_status_effects(delta_time, times_fired)
 
 		handle_traits()
 
@@ -29,16 +29,16 @@
 				to_chat(src, "<span class='warning'>Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable.</span>")
 				adjustOxyLoss(200)
 			else
-				battery --
+				battery--
 		else
 			// Gain Power
 			if (battery < 200)
-				battery ++
+				battery++
 
 		if(!lacks_power())
 			var/area/home = get_area(src)
 			if(home.powered(AREA_USAGE_EQUIP))
-				home.use_power(1000, AREA_USAGE_EQUIP)
+				home.use_power(500 * delta_time, AREA_USAGE_EQUIP)
 
 			if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 				ai_restore_power()

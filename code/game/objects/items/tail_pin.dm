@@ -29,9 +29,7 @@
 
 /obj/structure/sign/poster/party_game/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(!istype(I,/obj/item/tail_pin))
-		return
-	if(!(I.item_flags & ABSTRACT)) //We're using the same trick that tables use for placing objects x and y onto the click location.
+	if(!istype(I,/obj/item/tail_pin))//We're using the same trick that tables use for placing objects x and y onto the click location.
 		return
 	if(!user.transferItemToLoc(I, drop_location(), silent = FALSE))
 		return

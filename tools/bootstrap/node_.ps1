@@ -1,23 +1,9 @@
 ## bootstrap/node_.ps1
-##
-## Node bootstrapping script for Windows.
-##
-## Automatically downloads a Node version to a cache directory and invokes it.
-##
-## The underscore in the name is so that typing `bootstrap/node` into
-## PowerShell finds the `.bat` file first, which ensures this script executes
-## regardless of ExecutionPolicy.
+## Downloads a Node version to a cache directory and invokes it.
 
-#Requires -Version 4.0
-
-$Host.ui.RawUI.WindowTitle = "starting :: node $Args"
 $ErrorActionPreference = "Stop"
 
-## This forces UTF-8 encoding across all powershell built-ins
-$OutputEncoding = [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-$PSDefaultParameterValues['*:Encoding'] = 'utf8'
-
-function ExtractVersion {
+function Extract-Variable {
 	param([string] $Path, [string] $Key)
 	foreach ($Line in Get-Content $Path) {
 		if ($Line.StartsWith("export $Key=")) {
@@ -27,31 +13,46 @@ function ExtractVersion {
 	throw "Couldn't find value for $Key in $Path"
 }
 
+function Download-Node {
+	if (Test-Path $NodeTarget -PathType Leaf) {
+		return
+	}
+	Write-Output "Downloading Node v$NodeVersion (may take a while)"
+	New-Item $NodeTargetDir -ItemType Directory -ErrorAction silentlyContinue | Out-Null
+	$WebClient = New-Object Net.WebClient
+	$WebClient.DownloadFile($NodeSource, $NodeTarget)
+}
+
 ## Convenience variables
 $BaseDir = Split-Path $script:MyInvocation.MyCommand.Path
-$Cache = "$BaseDir/.cache"
+$Cache = "$BaseDir\.cache"
 if ($Env:TG_BOOTSTRAP_CACHE) {
 	$Cache = $Env:TG_BOOTSTRAP_CACHE
 }
-$NodeVersion = ExtractVersion -Path "$BaseDir/../../dependencies.sh" -Key "NODE_VERSION_PRECISE"
-$NodeDir = "$Cache/node-v$NodeVersion"
-$NodeExe = "$NodeDir/node.exe"
+$NodeVersion = Extract-Variable -Path "$BaseDir\..\..\dependencies.sh" -Key "NODE_VERSION_PRECISE"
+$NodeSource = "https://nodejs.org/download/release/v$NodeVersion/win-x86/node.exe"
+$NodeTargetDir = "$Cache\node-v$NodeVersion"
+$NodeTarget = "$NodeTargetDir\node.exe"
 
-## Download and unzip Node
-if (!(Test-Path $NodeExe -PathType Leaf)) {
-	$Host.ui.RawUI.WindowTitle = "Downloading Node $NodeVersion..."
-	New-Item $NodeDir -ItemType Directory -ErrorAction silentlyContinue | Out-Null
-	Invoke-WebRequest `
-		"https://nodejs.org/download/release/v$NodeVersion/win-x86/node.exe" `
-		-OutFile $NodeExe `
-		-ErrorAction Stop
+## Just print the path and exit
+if ($Args.length -eq 1 -and $Args[0] -eq "Get-Path") {
+	Write-Output "$NodeTargetDir"
+	exit 0
 }
 
+## Just download node and exit
+if ($Args.length -eq 1 -and $Args[0] -eq "Download-Node") {
+	Download-Node
+	exit 0
+}
+
+## Download node
+Download-Node
+
 ## Set PATH so that recursive calls find it
-$Env:PATH = "$NodeDir;$ENV:Path"
+$Env:PATH = "$NodeTargetDir;$ENV:Path"
 
 ## Invoke Node with all command-line arguments
-$Host.ui.RawUI.WindowTitle = "node $Args"
 $ErrorActionPreference = "Continue"
-& "$NodeExe" @Args
+& "$NodeTarget" @Args
 exit $LastExitCode

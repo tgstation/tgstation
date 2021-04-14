@@ -29,6 +29,6 @@
 	name = "hi-cap box magazine (Rubber 7.12x82mm)"
 	max_ammo = 150
 
-/obj/item/ammo_box/magazine/mm712x82/update_icon()
-	..()
-	icon_state = "a762-[round(ammo_count(),10)]"
+/obj/item/ammo_box/magazine/mm712x82/update_icon_state()
+	. = ..()
+	icon_state = "a762-[round(ammo_count(), 10)]"

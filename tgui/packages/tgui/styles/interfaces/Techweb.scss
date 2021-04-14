@@ -1,0 +1,78 @@
+@use '../colors.scss';
+
+.Techweb__NodeProgress {
+  margin-bottom: 1rem;
+}
+
+.Techweb__NodeProgress > *:not(:last-child) {
+  margin-right: 0.4rem;
+}
+
+.Techweb__DesignIcon {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.Techweb__OverviewNodes {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+  padding-top: 4px;
+}
+
+.Techweb__HeaderContent {
+  background-color: black;
+  padding: 6px;
+  border: 1px solid #40628a;
+}
+
+.Techweb__HeaderContent > * > :not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.Techweb__HeaderSectionTabs {
+  margin-top: 8px;
+  background-color: black;
+  border: 1px solid #40628a;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.Techweb__HeaderTabTitle {
+  border-right: 1px solid #40628a;
+  padding-right: 0.5em;
+  margin-right: 0.5em;
+  font-weight: bold;
+}
+
+.Techweb__HeaderSectionTabs input {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.Techweb__PointSummary {
+  list-style: none;
+  margin: 0.4em 0 0 1em;
+  padding: 0;
+}
+
+.Techweb__SecProtocol {
+  color: colors.$bad;
+  margin-left: 0.2em;
+}
+
+.Techweb__SecProtocol.engaged {
+  color: colors.$good;
+}
+
+.Techweb__DesignModal > :not(:last-child) {
+  margin-bottom: 0.5em;
+}
+
+.Techweb__LockedModal > :not(:last-child) {
+  margin-bottom: 0.5em;
+}
+
+.Techweb__ExperimentDiscount {
+  color: colors.$label;
+  margin: 0.5em 0;
+}

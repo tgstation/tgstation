@@ -321,19 +321,19 @@
 		icon_state = "rust_walker_n"
 	else if(newdir == SOUTH)
 		icon_state = "rust_walker_s"
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Moved()
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
-/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life()
+/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life(delta_time = SSMOBS_DT, times_fired)
 	if(stat == DEAD)
 		return ..()
 	var/turf/T = get_turf(src)
 	if(istype(T,/turf/open/floor/plating/rust))
-		adjustBruteLoss(-3, FALSE)
-		adjustFireLoss(-3, FALSE)
+		adjustBruteLoss(-1.5 * delta_time, FALSE)
+		adjustFireLoss(-1.5 * delta_time, FALSE)
 	return ..()
 
 /mob/living/simple_animal/hostile/eldritch/ash_spirit

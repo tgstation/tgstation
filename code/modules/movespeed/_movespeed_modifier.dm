@@ -186,6 +186,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 				continue
 		. += amt
 	cached_multiplicative_slowdown = .
+	SEND_SIGNAL(src, COMSIG_MOB_MOVESPEED_UPDATED)
 
 /// Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()

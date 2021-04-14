@@ -12,12 +12,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 #define PDA_SPAM_DELAY     2 MINUTES
 
 /obj/item/pda
-	name = "\improper PDA"
+	name = "\improper standard PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	inhand_icon_state = "electronic"
-	worn_icon_state = "electronic"
+	worn_icon_state = "pda"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -31,6 +31,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	light_power = 0.6
 	light_color = "#FFCC66"
 	light_on = FALSE
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
 
 	//Main variables
 	var/owner = null // String name of owner
@@ -117,7 +118,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else
 		inserted_item = new /obj/item/pen(src)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
-	update_icon()
+
+	update_appearance()
 
 /obj/item/pda/equipped(mob/user, slot)
 	. = ..()
@@ -150,6 +152,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return id.GetAccess()
 	else
 		return ..()
+
+/obj/item/pda/get_id_examine_strings(mob/user)
+	. = ..()
+	if(id)
+		. += "\The [src] is displaying [id]."
+		. += id.get_id_examine_strings(user)
 
 /obj/item/pda/GetID()
 	return id
@@ -318,7 +326,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if (pai)
 					if(pai.loc != src)
 						pai = null
-						update_icon()
+						update_appearance()
 					else
 						dat += "<li><a href='byond://?src=[REF(src)];choice=pai;option=1'>pAI Device Configuration</a></li>"
 						dat += "<li><a href='byond://?src=[REF(src)];choice=pai;option=2'>Eject pAI Device</a></li>"
@@ -488,8 +496,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 				id_check(U)
 			if("UpdateInfo")
 				ownjob = id.assignment
-				if(istype(id, /obj/item/card/id/syndicate))
-					owner = id.registered_name
 				update_label()
 				if(!silent)
 					playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
@@ -617,7 +623,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				sort_by_job = !sort_by_job
 
 			if("MessageAll")
-				send_to_all(U)
+				if(cartridge?.spam_enabled)
+					send_to_all(U)
 
 			if("cart")
 				if(cartridge)
@@ -669,7 +676,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //EXTRA FUNCTIONS===================================
 
 	if (mode == 2 || mode == 21)//To clear message overlays.
-		update_icon()
+		update_appearance()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
@@ -700,13 +707,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. = id
 	id = null
 	updateSelfDialog()
-	update_icon()
+	update_appearance()
 	playsound(src, 'sound/machines/terminal_eject.ogg', 50, TRUE)
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		if(H.wear_id == src)
 			H.sec_hud_set_ID()
+
+	update_slot_icon()
 
 
 /obj/item/pda/proc/msg_input(mob/living/U = usr)
@@ -790,7 +799,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
 		else
 			playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-		audible_message("[icon2html(src, hearers(src))] *[ttone]*", null, 3)
+		audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *[ttone]*</span>", null, 3)
 	//Search for holder of the PDA.
 	var/mob/living/L = null
 	if(loc && isliving(loc))
@@ -816,7 +825,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 		to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")
 
-	update_icon()
+	update_appearance()
 	add_overlay(icon_alert)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)
@@ -886,7 +895,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		set_light_on(FALSE)
 	else if(light_range)
 		set_light_on(TRUE)
-	update_icon()
+	update_appearance()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -896,7 +905,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	SIGNAL_HANDLER
 	set_light_on(FALSE)
 	set_light_range(0) //We won't be turning on again.
-	update_icon()
+	update_appearance()
 	visible_message("<span class='danger'>The light in [src] shorts out!</span>")
 	return COMPONENT_BLOCK_LIGHT_EATER
 
@@ -909,7 +918,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		user.put_in_hands(inserted_item)
 		to_chat(user, "<span class='notice'>You remove [inserted_item] from [src].</span>")
 		inserted_item = null
-		update_icon()
+		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 	else
 		to_chat(user, "<span class='warning'>This PDA does not have a pen in it!</span>")
@@ -924,7 +933,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		cartridge.host_pda = null
 		cartridge = null
 		updateSelfDialog()
-		update_icon()
+		update_appearance()
 
 //trying to insert or remove an id
 /obj/item/pda/proc/id_check(mob/user, obj/item/card/id/I)
@@ -941,7 +950,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
 		insert_id(I, user)
-		update_icon()
+		update_appearance()
 		playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 	return TRUE
 
@@ -958,6 +967,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			user.put_in_hands(old_id)
 		else
 			old_id.forceMove(get_turf(src))
+
+	update_slot_icon()
 
 
 /obj/item/pda/pre_attack(obj/target, mob/living/user, params)
@@ -994,7 +1005,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		cartridge.host_pda = src
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		updateSelfDialog()
-		update_icon()
+		update_appearance()
 		playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
 	else if(istype(C, /obj/item/card/id))
@@ -1024,7 +1035,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			return
 		pai = C
 		to_chat(user, "<span class='notice'>You slot \the [C] into [src].</span>")
-		update_icon()
+		update_appearance()
 		updateUsrDialog()
 	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
 		if(inserted_item)
@@ -1034,7 +1045,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				return
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 			inserted_item = C
-			update_icon()
+			update_appearance()
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 	else if(istype(C, /obj/item/photo))
 		var/obj/item/photo/P = C

@@ -59,10 +59,9 @@
 /obj/effect/proc_holder/spell/pointed/update_icon()
 	if(!action)
 		return
-	if(active)
-		action.button_icon_state = "[action_icon_state]1"
-	else
-		action.button_icon_state = "[action_icon_state]"
+
+	. = ..()
+	action.button_icon_state = "[action_icon_state][active ? 1 : null]"
 	action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)

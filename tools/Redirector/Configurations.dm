@@ -13,8 +13,8 @@ proc/gen_configs()
 
 	config_stream = dd_file2list("config.txt")
 
-	var/server_gen = 0	// if the stream is looking for servers
-	var/admin_gen = 0	// if the stream is looking for admins
+	var/server_gen = 0 // if the stream is looking for servers
+	var/admin_gen = 0 // if the stream is looking for admins
 	for(var/line in config_stream)
 
 		if(line == "\[SERVERS\]")

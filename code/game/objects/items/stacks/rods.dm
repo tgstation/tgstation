@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	attack_verb_continuous = list("hits", "bludgeons", "whacks")
 	attack_verb_simple = list("hit", "bludgeon", "whack")
 	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	embedding = list()
+	embedding = list(embed_chance = 50)
 	novariants = TRUE
 	matter_amount = 2
 	cost = 250
@@ -38,13 +38,14 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()
 	. += GLOB.rod_recipes
 
 /obj/item/stack/rods/update_icon_state()
+	. = ..()
 	var/amount = get_amount()
 	if(amount <= 5)
 		icon_state = "rods-[amount]"

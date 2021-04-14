@@ -1,4 +1,4 @@
-/datum/job/mining
+/datum/job/shaft_miner
 	title = "Shaft Miner"
 	department_head = list("Head of Personnel")
 	faction = "Station"
@@ -8,18 +8,20 @@
 	selection_color = "#dcba97"
 
 	outfit = /datum/outfit/job/miner
+	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
-	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_QM, ACCESS_MINING, ACCESS_MECH_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_AUX_BASE)
-	minimal_access = list(ACCESS_MINING, ACCESS_MECH_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM, ACCESS_AUX_BASE)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_CAR
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 	bounty_types = CIV_JOB_MINE
+	departments = DEPARTMENT_CARGO
+
+	family_heirlooms = list(/obj/item/pickaxe/mini, /obj/item/shovel)
 
 /datum/outfit/job/miner
 	name = "Shaft Miner"
-	jobtype = /datum/job/mining
+	jobtype = /datum/job/shaft_miner
 
 	belt = /obj/item/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
@@ -40,6 +42,8 @@
 	box = /obj/item/storage/box/survival/mining
 
 	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
+
+	id_trim = /datum/id_trim/job/shaft_miner
 
 /datum/outfit/job/miner/equipped
 	name = "Shaft Miner (Equipment)"

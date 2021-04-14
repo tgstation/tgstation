@@ -37,7 +37,7 @@
 	damtype = BURN
 	START_PROCESSING(SSobj, src)
 	playsound(src, 'sound/effects/fuse.ogg', 20, TRUE)
-	update_icon()
+	update_appearance()
 
 /obj/item/sparkler/process(delta_time)
 	burntime -= delta_time
@@ -94,7 +94,7 @@
 		to_chat(user, "<span class='notice'>You shorten the fuse of [src] with [I].</span>")
 		playsound(src, 'sound/items/wirecutter.ogg', 20, TRUE)
 		icon_state = initial(icon_state) + "_[det_time]"
-		update_icon()
+		update_appearance()
 	else
 		to_chat(user, "<span class='danger'>You've already removed all of the fuse!</span>")
 

@@ -26,7 +26,7 @@
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	mob_size = MOB_SIZE_LARGE
 	initial_language_holder = /datum/language_holder/slime
-
+	footstep_type = FOOTSTEP_MOB_SLIME
 	///Oozes have their own nutrition. Changes based on them eating
 	var/ooze_nutrition = 50
 	var/ooze_nutrition_loss = -0.15
@@ -36,8 +36,6 @@
 	. = ..()
 	create_reagents(300)
 	add_cell_sample()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
-
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
@@ -58,7 +56,7 @@
 	eat_atom(A)
 
 ///Handles nutrition gain/loss of mob and also makes it take damage if it's too low on nutrition, only happens for sentient mobs.
-/mob/living/simple_animal/hostile/ooze/Life()
+/mob/living/simple_animal/hostile/ooze/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 
 	if(!mind && stat != DEAD)//no mind no change
@@ -69,7 +67,7 @@
 	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
 	for(var/i in reagents.reagent_list)
 		var/datum/reagent/reagent = i
-		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM)
+		var/consumption_amount = min(reagents.get_reagent_amount(reagent.type), ooze_metabolism_modifier * REAGENTS_METABOLISM * delta_time)
 		if(istype(reagent, /datum/reagent/consumable))
 			var/datum/reagent/consumable/consumable = reagent
 			nutrition_change += consumption_amount * consumable.nutriment_factor
@@ -77,7 +75,7 @@
 	adjust_ooze_nutrition(nutrition_change)
 
 	if(ooze_nutrition <= 0)
-		adjustBruteLoss(0.5)
+		adjustBruteLoss(0.25 * delta_time)
 
 ///Returns whether or not the supplied movable atom is edible.
 /mob/living/simple_animal/hostile/ooze/proc/check_edible(atom/movable/potential_food)
@@ -365,8 +363,9 @@
 		return
 
 	ooze.visible_message("<span class='nicegreen>[ooze] launches a mending globule!</span>", "<span class='notice'>You launch a mending globule.</span>")
+	var/modifiers = params2list(params)
 	var/obj/projectile/globule/globule = new (ooze.loc)
-	globule.preparePixelProjectile(target, ooze, params)
+	globule.preparePixelProjectile(target, ooze, modifiers)
 	globule.def_zone = ooze.zone_selected
 	globule.fire()
 	ooze.adjust_ooze_nutrition(-5)

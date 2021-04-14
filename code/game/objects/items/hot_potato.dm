@@ -1,7 +1,7 @@
 //CREATOR'S NOTE: DO NOT FUCKING GIVE THIS TO BOTANY!
 /obj/item/hot_potato
 	name = "hot potato"
-	desc = "A label on the side of this potato reads \"Product of DonkCo Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures.\" <span class='boldnotice'>You can attack anyone with it to force it on them instead of yourself!</span>"
+	desc = "A label on the side of this potato reads \"Product of Donk Co. Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures.\" <span class='boldnotice'>You can attack anyone with it to force it on them instead of yourself!</span>"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	item_flags = NOBLUDGEON
@@ -137,7 +137,7 @@
 /obj/item/hot_potato/proc/activate(delay, mob/user)
 	if(active)
 		return
-	update_icon()
+	update_appearance()
 	if(sticky)
 		ADD_TRAIT(src, TRAIT_NODROP, HOT_POTATO_TRAIT)
 	name = "primed [name]"
@@ -151,7 +151,7 @@
 	active = TRUE
 
 /obj/item/hot_potato/proc/deactivate()
-	update_icon()
+	update_appearance()
 	name = initial(name)
 	REMOVE_TRAIT(src, TRAIT_NODROP, HOT_POTATO_TRAIT)
 	deltimer(detonation_timerid)
@@ -161,7 +161,8 @@
 	active = FALSE
 
 /obj/item/hot_potato/update_icon_state()
-	icon_state = active? icon_on : icon_off
+	icon_state = active ? icon_on : icon_off
+	return ..()
 
 /obj/item/hot_potato/syndicate
 	detonate_light_range = 4
@@ -171,7 +172,7 @@
 	detonate_explosion = FALSE
 
 /obj/item/hot_potato/harmless/toy
-	desc = "A label on the side of this potato reads \"Product of DonkCo Toys and Recreation department.\" <span class='boldnotice'>You can attack anyone with it to put it on them instead, if they have a free hand to take it!</span>"
+	desc = "A label on the side of this potato reads \"Product of Donk Co. Toys and Recreation department.\" <span class='boldnotice'>You can attack anyone with it to put it on them instead, if they have a free hand to take it!</span>"
 	sticky = FALSE
 	reusable = TRUE
 	forceful_attachment = FALSE

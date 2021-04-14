@@ -14,16 +14,16 @@
 	process_dead = TRUE
 
 
-/datum/disease/magnitis/stage_act()
+/datum/disease/magnitis/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel a slight shock course through your body.</span>")
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				for(var/obj/nearby_object in orange(2, affected_mob))
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
@@ -35,11 +35,11 @@
 					var/move_dir = get_dir(nearby_silicon, affected_mob)
 					nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir)
 		if(3)
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel a strong shock course through your body.</span>")
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel like clowning around.</span>")
-			if(prob(4))
+			if(DT_PROB(2, delta_time))
 				for(var/obj/nearby_object in orange(4, affected_mob))
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
@@ -55,11 +55,11 @@
 						if(!nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir))
 							break
 		if(4)
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel a powerful shock course through your body.</span>")
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You query upon the nature of miracles.</span>")
-			if(prob(8))
+			if(DT_PROB(4, delta_time))
 				for(var/obj/nearby_object in orange(6, affected_mob))
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue

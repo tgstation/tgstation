@@ -157,10 +157,6 @@
 /obj/item/clothing/head/helmet/space/syndicate/orange,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"O" = (
-/obj/structure/alien/weeds/node,
-/turf/template_noop,
-/area/ruin/unpowered/xenonest)
 "Q" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
@@ -168,10 +164,6 @@
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"R" = (
-/obj/structure/alien/weeds,
-/turf/template_noop,
 /area/ruin/unpowered/xenonest)
 
 (1,1,1) = {"
@@ -1065,8 +1057,8 @@ g
 g
 g
 b
-O
-R
+l
+g
 g
 g
 "}
@@ -1097,8 +1089,8 @@ b
 g
 l
 b
-O
-R
+l
+f
 g
 g
 "}

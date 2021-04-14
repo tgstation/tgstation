@@ -3,7 +3,7 @@
 	desc = "A culinary marvel that uses matter-to-energy conversion to store dishes and shards. Convenient! \
 	Additional features include a vacuum function to suck in nearby dishes, and an automatic transfer beam that empties its contents into nearby disposal bins every now and then. \
 	Or you can just drop your plates on the floor, like civilized folk."
-	icon = 'goon/icons/obj/kitchen.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "synthesizer"
 	idle_power_usage = 8 //5 with default parts
 	active_power_usage = 13 //10 with default parts
@@ -11,7 +11,6 @@
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	pass_flags = PASSTABLE
 	var/static/list/collectable_items = list(/obj/item/trash/waffles,
-		/obj/item/trash/plate,
 		/obj/item/trash/tray,
 		/obj/item/reagent_containers/glass/bowl,
 		/obj/item/reagent_containers/food/drinks/drinkingglass,
@@ -19,7 +18,6 @@
 		/obj/item/shard,
 		/obj/item/broken_bottle)
 	var/static/list/disposable_items = list(/obj/item/trash/waffles,
-		/obj/item/trash/plate,
 		/obj/item/trash/tray,
 		/obj/item/shard,
 		/obj/item/broken_bottle)
@@ -132,7 +130,7 @@
 		playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 		playsound(bin, 'sound/items/pshoom.ogg', 50, TRUE)
 		Beam(bin, icon_state = "rped_upgrade", time = 5)
-		bin.update_icon()
+		bin.update_appearance()
 		flick("synthesizer_beam", src)
 	else
 		visible_message("<span class='notice'>There are no disposable items in [src]!</span>")

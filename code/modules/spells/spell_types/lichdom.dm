@@ -6,7 +6,7 @@
 	between reincarnations grows steadily with use, along with the weakness \
 	that the new skeleton body will experience upon 'birth'. Note that \
 	becoming a lich destroys all internal organs except the brain."
-	school = "necromancy"
+	school = SCHOOL_NECROMANCY
 	charge_max = 10
 	clothes_req = FALSE
 	centcom_cancast = FALSE
@@ -75,7 +75,7 @@
 /obj/item/phylactery
 	name = "phylactery"
 	desc = "Stores souls. Revives liches. Also repels mosquitos."
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "bluespace"
 	color = COLOR_VERY_DARK_LIME_GREEN
 	light_system = MOVABLE_LIGHT

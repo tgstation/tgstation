@@ -35,7 +35,7 @@
 	var/splint_factor
 	/// How much blood flow this stack can absorb if used as a bandage on a cut wound, note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up
 	var/absorption_capacity
-	/// How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in ticks is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first
+	/// How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first
 	var/absorption_rate
 	/// Amount of matter for RCD
 	var/matter_amount = 0
@@ -76,7 +76,7 @@
 					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
 					recipes += temp
 	update_weight()
-	update_icon()
+	update_appearance()
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -125,13 +125,15 @@
 
 /obj/item/stack/update_icon_state()
 	if(novariants)
-		return
+		return ..()
 	if(amount <= (max_amount * (1/3)))
 		icon_state = initial(icon_state)
-	else if (amount <= (max_amount * (2/3)))
+		return ..()
+	if (amount <= (max_amount * (2/3)))
 		icon_state = "[initial(icon_state)]_2"
-	else
-		icon_state = "[initial(icon_state)]_3"
+		return ..()
+	icon_state = "[initial(icon_state)]_3"
+	return ..()
 
 /obj/item/stack/examine(mob/user)
 	. = ..()
@@ -150,7 +152,7 @@
 		. += "There are [get_amount()] in the stack."
 	else
 		. += "There is [get_amount()] in the stack."
-	. += "<span class='notice'>Alt-click to take a custom amount.</span>"
+	. += "<span class='notice'><b>Right-click</b> with an empty hand to take a custom amount.</span>"
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -364,7 +366,7 @@
 		return TRUE
 	if(length(mats_per_unit))
 		update_custom_materials()
-	update_icon()
+	update_appearance()
 	update_weight()
 	return TRUE
 
@@ -402,7 +404,7 @@
 		amount += _amount
 	if(length(mats_per_unit))
 		update_custom_materials()
-	update_icon()
+	update_appearance()
 	update_weight()
 
 /** Checks whether this stack can merge itself into another stack.
@@ -454,21 +456,18 @@
 	else
 		. = ..()
 
-/obj/item/stack/AltClick(mob/living/user)
-	. = ..()
-	if(isturf(loc)) // to prevent people that are alt clicking a tile to see its content from getting undesidered pop ups
-		return
+/obj/item/stack/attack_hand_secondary(mob/user, modifiers)
 	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || zero_amount())
-		return
-	//get amount from user
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	var/max = get_amount()
-	var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as null|num)
+	var/stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack? (Maximum [max])", "Stack Split") as null|num)
 	max = get_amount()
 	stackmaterial = min(max, stackmaterial)
 	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		return
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	split_stack(user, stackmaterial)
 	to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack.</span>")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /** Splits the stack into two stacks.
  *

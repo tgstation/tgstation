@@ -1,0 +1,29 @@
+name: GBP
+on:
+  pull_request_target:
+    types: [closed, opened]
+jobs:
+  gbp:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup git
+      run: |
+        git config --global user.name "gbp-action"
+        git config --global user.email "<>"
+    - name: Checkout alternate branch
+      uses: actions/checkout@v2
+      with:
+        ref: "gbp-balances" # The branch name
+        path: gbp-balances
+    # This is to ensure we keep the gbp.toml from master
+    # without having to update our separate branch.
+    - name: Copy configuration
+      run: cp ./.github/gbp.toml ./gbp-balances/.github/gbp.toml
+    - name: GBP action
+      uses: Mothblocks/gbp-action@collate-changes
+      with:
+        branch: "gbp-balances"
+        directory: ./gbp-balances
+        token: ${{ secrets.GITHUB_TOKEN }}

@@ -95,7 +95,7 @@
 		if(AOE_SQUARES)
 			aoe_squares(target)
 
-/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life()
+/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(health >= maxHealth * 0.5)
 		cooldown_time = 2 SECONDS

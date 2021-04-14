@@ -19,10 +19,13 @@
 /obj/item/onetankbomb/examine(mob/user)
 	return bombtank.examine(user)
 
+/obj/item/onetankbomb/update_icon(updates)
+	icon = bombtank?.icon || initial(icon)
+	return ..()
+
 /obj/item/onetankbomb/update_icon_state()
-	if(bombtank)
-		icon = bombtank.icon
-		icon_state = bombtank.icon_state
+	icon_state = bombtank?.icon_state || initial(icon_state)
+	return ..()
 
 /obj/item/onetankbomb/update_overlays()
 	. = ..()
@@ -66,7 +69,7 @@
 	return
 
 /obj/item/onetankbomb/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+	audible_message("<span class='warning'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>")
 	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	sleep(10)
 	if(QDELETED(src))
@@ -135,7 +138,7 @@
 	master = bomb
 
 	forceMove(bomb)
-	bomb.update_icon()
+	bomb.update_appearance()
 
 	user.put_in_hands(bomb) //Equips the bomb if possible, or puts it on the floor.
 	to_chat(user, "<span class='notice'>You attach [assembly] to [src].</span>")

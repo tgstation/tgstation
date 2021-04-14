@@ -28,7 +28,7 @@
 		atom/replacement,
 		fill_type,
 		ingredient_type = CUSTOM_INGREDIENT_TYPE_EDIBLE,
-		max_ingredients = INFINITY,
+		max_ingredients = MAX_ATOM_OVERLAYS - 2,
 		list/obj/item/initial_ingredients = null)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -122,7 +122,7 @@
 	if(!attacker.transferItemToLoc(ingredient, atom_parent))
 		return
 	if (replacement)
-		var/atom/replacement_parent = new replacement(atom_parent.loc)
+		var/atom/replacement_parent = new replacement(atom_parent.drop_location())
 		ingredient.forceMove(replacement_parent)
 		replacement = null
 		RemoveComponent()

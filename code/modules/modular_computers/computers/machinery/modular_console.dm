@@ -52,4 +52,4 @@
 		network_card.identification_string = "Unknown Console"
 	if(cpu)
 		cpu.screen_on = 1
-	update_icon()
+	update_appearance()

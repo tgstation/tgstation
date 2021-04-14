@@ -71,10 +71,8 @@
 	return wielded * sharpness
 
 /obj/item/dualsaber/update_icon_state()
-	if(wielded)
-		icon_state = "dualsaber[saber_color][wielded]"
-	else
-		icon_state = "dualsaber0"
+	icon_state = wielded ? "dualsaber[saber_color][wielded]" : "dualsaber0"
+	return ..()
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
@@ -194,7 +192,7 @@
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
 			saber_color = "rainbow"
-			update_icon()
+			update_appearance()
 		else
 			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
 	else

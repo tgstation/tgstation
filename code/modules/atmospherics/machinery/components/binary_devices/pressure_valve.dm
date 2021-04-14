@@ -2,10 +2,10 @@
 	icon_state = "pvalve_map-3"
 	name = "pressure valve"
 	desc = "An activable one way valve that let gas pass through if the pressure on the input side is higher than the set pressure."
-
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "pvalve"
 	///Amount of pressure needed before the valve for it to open
 	var/target_pressure = ONE_ATMOSPHERE
 	///Frequency for radio signaling
@@ -17,14 +17,11 @@
 	///Check if the gas is moving from one pipenet to the other
 	var/is_gas_flowing = FALSE
 
-	construction_type = /obj/item/pipe/directional
-	pipe_state = "pvalve"
-
 /obj/machinery/atmospherics/components/binary/pressure_valve/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/AltClick(mob/user)
@@ -32,7 +29,7 @@
 		target_pressure = MAX_OUTPUT_PRESSURE
 		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
 		to_chat(user, "<span class='notice'>You set the target pressure on [src] to [target_pressure] kPa.</span>")
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/Destroy()
@@ -65,12 +62,22 @@
 		is_gas_flowing = FALSE
 	update_icon_nopipes()
 
+//Radio remote control
+
+/**
+ * Called in atmosinit(), used to change or remove the radio frequency from the component
+ * Arguments:
+ * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
+ */
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
+/**
+ * Called in atmosinit(), send the component status to the radio device connected
+ */
 /obj/machinery/atmospherics/components/binary/pressure_valve/proc/broadcast_status()
 	if(!radio_connection)
 		return
@@ -117,7 +124,7 @@
 			if(.)
 				target_pressure = clamp(pressure, 0, ONE_ATMOSPHERE*100)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/atmosinit()
 	. = ..()
@@ -147,7 +154,7 @@
 		return
 
 	broadcast_status()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/can_unwrench(mob/user)
 	. = ..()

@@ -35,10 +35,14 @@
 	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/plasma = 10)
 
+	/// The current amount of stored plasma.
 	var/storedPlasma = 100
+	/// The maximum plasma this organ can store.
 	var/max_plasma = 250
-	var/heal_rate = 5
-	var/plasma_rate = 10
+	/// The rate this organ regenerates its owners health at per damage type per second.
+	var/heal_rate = 2.5
+	/// The rate this organ regenerates plasma at per second.
+	var/plasma_rate = 5
 
 /obj/item/organ/alien/plasmavessel/large
 	name = "large plasma vessel"
@@ -46,10 +50,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	storedPlasma = 200
 	max_plasma = 500
-	plasma_rate = 15
+	plasma_rate = 7.5
 
 /obj/item/organ/alien/plasmavessel/large/queen
-	plasma_rate = 20
+	plasma_rate = 10
 
 /obj/item/organ/alien/plasmavessel/small
 	name = "small plasma vessel"
@@ -57,7 +61,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	storedPlasma = 100
 	max_plasma = 150
-	plasma_rate = 5
+	plasma_rate = 2.5
 
 /obj/item/organ/alien/plasmavessel/small/tiny
 	name = "tiny plasma vessel"
@@ -66,22 +70,22 @@
 	max_plasma = 100
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
-/obj/item/organ/alien/plasmavessel/on_life()
+/obj/item/organ/alien/plasmavessel/on_life(delta_time, times_fired)
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
 		if(owner.health >= owner.maxHealth)
-			owner.adjustPlasma(plasma_rate)
+			owner.adjustPlasma(plasma_rate * delta_time)
 		else
 			var/heal_amt = heal_rate
 			if(!isalien(owner))
 				heal_amt *= 0.2
-			owner.adjustPlasma(plasma_rate*0.5)
-			owner.adjustBruteLoss(-heal_amt)
-			owner.adjustFireLoss(-heal_amt)
-			owner.adjustOxyLoss(-heal_amt)
-			owner.adjustCloneLoss(-heal_amt)
+			owner.adjustPlasma(0.5 * plasma_rate * delta_time)
+			owner.adjustBruteLoss(-heal_amt * delta_time)
+			owner.adjustFireLoss(-heal_amt * delta_time)
+			owner.adjustOxyLoss(-heal_amt * delta_time)
+			owner.adjustCloneLoss(-heal_amt * delta_time)
 	else
-		owner.adjustPlasma(plasma_rate * 0.1)
+		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()

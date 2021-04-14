@@ -17,7 +17,7 @@
 		var/obj/structure/blob/newB = B.expand(null, null, 0)
 		if(newB)
 			newB.obj_integrity = B.obj_integrity - damage
-			newB.update_icon()
+			newB.update_appearance()
 	return ..()
 
 

@@ -1,3 +1,7 @@
+///If the machine is used/deleted in the crafting process
+#define CRAFTING_MACHINERY_CONSUME 1
+///If the machine is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
+#define CRAFTING_MACHINERY_USE 0
 
 /datum/crafting_recipe
 	var/name = "" //in-game display name
@@ -10,12 +14,16 @@
 	var/list/tool_paths
 	var/time = 30 //time in deciseconds
 	var/list/parts = list() //type paths of items that will be placed in the result
-	var/list/chem_catalysts = list() //like tools but for reagents
+	var/list/chem_catalysts = list() //like tool_behaviors but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
 	var/always_available = TRUE //Set to FALSE if it needs to be learned first.
 	/// Additonal requirements text shown in UI
 	var/additional_req_text
+	///Required machines for the craft, set the assigned value of the typepath to CRAFTING_MACHINERY_CONSUME or CRAFTING_MACHINERY_USE. Lazy associative list: type_path key -> flag value.
+	var/list/machinery
+	///Should only one object exist on the same turf?
+	var/one_per_turf = FALSE
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))
@@ -33,6 +41,9 @@
  */
 /datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
 	return TRUE
+
+/datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
+	return
 
 /datum/crafting_recipe/improv_explosive
 	name = "IED"
@@ -127,6 +138,7 @@
 	result = /obj/item/tailclub
 	reqs = list(/obj/item/organ/tail/lizard = 1,
 				/obj/item/stack/sheet/iron = 1)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -136,6 +148,7 @@
 	result = /obj/item/melee/chainofcommand/tailwhip
 	reqs = list(/obj/item/organ/tail/lizard = 1,
 				/obj/item/stack/cable_coil = 1)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -296,10 +309,10 @@
 	..()
 	blacklist += subtypesof(/obj/item/gun/energy/laser)
 
-/datum/crafting_recipe/teslarevolver
-	name = "Tesla Revolver"
+/datum/crafting_recipe/teslacannon
+	name = "Tesla Cannon"
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	result = /obj/item/gun/energy/tesla_revolver
+	result = /obj/item/gun/energy/tesla_cannon
 	reqs = list(/obj/item/assembly/signaler/anomaly/flux = 1,
 				/obj/item/stack/cable_coil = 5,
 				/obj/item/weaponcrafting/gunkit/tesla = 1)
@@ -410,7 +423,7 @@
 	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH)
 	reqs = list(/obj/item/stack/sheet/iron = 4,
 				/obj/item/stack/package_wrap = 8,
-				/obj/item/pipe = 2)
+				/obj/item/pipe/quaternary = 2)
 	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -826,6 +839,13 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/godslayer
+	name = "Godslayer Armour"
+	result = /obj/item/clothing/suit/hooded/cloak/godslayer
+	time = 60
+	reqs = list(/obj/item/ice_energy_crystal = 1, /obj/item/wendigo_skull = 1, /obj/item/clockwork_alloy = 1)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/firebrand
 	name = "Firebrand"
 	result = /obj/item/match/firebrand
@@ -1002,14 +1022,6 @@
 	category = CAT_MISC
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
-/datum/crafting_recipe/multiduct
-	name = "Multi-layer duct"
-	result = /obj/machinery/duct/multilayered
-	time = 5
-	reqs = list(/obj/item/stack/ducts = 5)
-	category = CAT_MISC
-	tool_behaviors = list(TOOL_WELDER)
-
 /datum/crafting_recipe/rib
 	name = "Collosal Rib"
 	always_available = FALSE
@@ -1120,10 +1132,19 @@
 	name = "Elder Atmosian Statue"
 	result = /obj/structure/statue/elder_atmosian
 	time = 6 SECONDS
-	reqs = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 10,
-				/obj/item/grenade/gas_crystal/healium_crystal = 1,
-				/obj/item/grenade/gas_crystal/proto_nitrate_crystal = 1,
-				/obj/item/grenade/gas_crystal/zauker_crystal = 1
+	reqs = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 20,
+				/obj/item/stack/sheet/mineral/zaukerite = 15,
+				/obj/item/stack/sheet/iron = 30,
+				)
+	category = CAT_MISC
+
+/datum/crafting_recipe/bluespace_vendor_mount
+	name = "Bluespace Vendor Wall Mount"
+	result = /obj/item/wallframe/bluespace_vendor_mount
+	time = 6 SECONDS
+	reqs = list(/obj/item/stack/sheet/iron = 15,
+				/obj/item/stack/sheet/glass = 10,
+				/obj/item/stack/cable_coil = 10,
 				)
 	category = CAT_MISC
 
@@ -1137,6 +1158,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 15 SECONDS
 	category = CAT_MISC
+	one_per_turf = TRUE
 
 /datum/crafting_recipe/blast_doors
 	name = "Blast Door"
@@ -1148,6 +1170,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 30 SECONDS
 	category = CAT_MISC
+	one_per_turf = TRUE
 
 /datum/crafting_recipe/aquarium
 	name = "Aquarium"
@@ -1158,3 +1181,113 @@
 				/obj/item/aquarium_kit = 1
 				)
 	category = CAT_MISC
+
+/datum/crafting_recipe/alcohol_burner
+	name = "Alcohol burner"
+	result = /obj/item/burner
+	time = 5 SECONDS
+	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+				/datum/reagent/consumable/ethanol = 15,
+				/obj/item/paper = 1
+				)
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/oil_burner
+	name = "Oil burner"
+	result = /obj/item/burner/oil
+	time = 5 SECONDS
+	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+				/datum/reagent/fuel/oil = 15,
+				/obj/item/paper = 1
+				)
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/fuel_burner
+	name = "Fuel burner"
+	result = /obj/item/burner/fuel
+	time = 5 SECONDS
+	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+				/datum/reagent/fuel = 15,
+				/obj/item/paper = 1
+				)
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/thermometer
+	name = "Thermometer"
+	tool_behaviors = list(TOOL_WELDER)
+	result = /obj/item/thermometer
+	time = 5 SECONDS
+	reqs = list(
+				/datum/reagent/mercury = 5,
+				/obj/item/stack/sheet/glass = 1
+				)
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/thermometer_alt
+	name = "Thermometer"
+	result = /obj/item/thermometer/pen
+	time = 5 SECONDS
+	reqs = list(
+				/datum/reagent/mercury = 5,
+				/obj/item/pen = 1
+				)
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/ph_booklet
+	name = "pH booklet"
+	result = /obj/item/ph_booklet
+	time = 5 SECONDS
+	reqs = list(
+				/datum/reagent/universal_indicator = 5,
+				/obj/item/paper = 1
+				)
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/dropper //Maybe make a glass pipette icon?
+	name = "Dropper"
+	result = /obj/item/reagent_containers/dropper
+	tool_behaviors = list(TOOL_WELDER)
+	time = 5 SECONDS
+	reqs = list(
+				/obj/item/stack/sheet/glass  = 1,
+				)
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/improvised_chem_heater
+	name = "Improvised chem heater"
+	result = /obj/machinery/space_heater/improvised_chem_heater
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER)
+	time = 15 SECONDS
+	reqs = list(
+				/obj/item/stack/cable_coil = 2,
+				/obj/item/stack/sheet/glass = 2,
+				/obj/item/stack/sheet/iron = 2,
+				/datum/reagent/water = 50,
+				/obj/item/thermometer = 1
+				)
+	machinery = list(/obj/machinery/space_heater = CRAFTING_MACHINERY_CONSUME)
+	category = CAT_CHEMISTRY
+
+/datum/crafting_recipe/improvised_chem_heater/on_craft_completion(mob/user, atom/result)
+	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in range(1)
+	if(!cell)
+		return
+	var/obj/machinery/space_heater/improvised_chem_heater/heater = result
+	var/turf/turf = get_turf(cell)
+	heater.forceMove(turf)
+	heater.attackby(cell, user) //puts it into the heater
+
+/datum/crafting_recipe/improvised_coolant
+	name = "Improvised cooling spray"
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	result = /obj/item/extinguisher/crafted
+	time = 10 SECONDS
+	reqs = list(
+			/obj/item/toy/crayon/spraycan = 1,
+			/datum/reagent/water = 20,
+			/datum/reagent/consumable/ice = 10
+			)
+	category = CAT_CHEMISTRY
+
+#undef CRAFTING_MACHINERY_CONSUME
+#undef CRAFTING_MACHINERY_USE

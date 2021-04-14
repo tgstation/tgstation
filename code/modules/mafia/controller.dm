@@ -488,10 +488,10 @@
 	else
 		send_message("<span class='notice'>[voter.body.real_name] voted for [target.body.real_name]!</span>",team = teams)
 	if(!teams)
-		target.body.update_icon() //Update the vote display if it's a public vote
+		target.body.update_appearance() //Update the vote display if it's a public vote
 		var/datum/mafia_role/old = old_vote
 		if(old)
-			old.body.update_icon()
+			old.body.update_appearance()
 
 /**
  * Clears out the votes of a certain type (day votes, mafia kill votes) while leaving others untouched
@@ -503,7 +503,7 @@
 		bodies_to_update += R.body
 	votes[vote_type] = list()
 	for(var/mob/M in bodies_to_update)
-		M.update_icon()
+		M.update_appearance()
 
 /**
  * Returns how many people voted for the role, in whatever vote (day vote, night kill vote)

@@ -113,12 +113,12 @@
 			assembly.malf_xray_firmware_active = FALSE //make it appear like it's just normally upgraded so the icons and examine texts are restored.
 
 	upgrades |= CAMERA_UPGRADE_XRAY
-	update_icon()
+	update_appearance()
 
 /obj/machinery/camera/proc/removeXRay(ignore_malf_upgrades)
 	if(!ignore_malf_upgrades) //don't downgrade it if malf software is forced onto it.
 		upgrades &= ~CAMERA_UPGRADE_XRAY
-	update_icon()
+	update_appearance()
 
 
 

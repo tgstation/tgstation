@@ -61,7 +61,7 @@
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	return ..()
 
-/datum/wound/blunt/handle_process()
+/datum/wound/blunt/handle_process(delta_time, times_fired)
 	. = ..()
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
 		if(active_trauma)
@@ -75,12 +75,12 @@
 
 	regen_ticks_current++
 	if(victim.body_position == LYING_DOWN)
-		if(prob(50))
+		if(DT_PROB(30, delta_time))
 			regen_ticks_current += 0.5
-		if(victim.IsSleeping() && prob(50))
+		if(victim.IsSleeping() && DT_PROB(30, delta_time))
 			regen_ticks_current += 0.5
 
-	if(prob(severity * 3))
+	if(DT_PROB(severity * 1.5, delta_time))
 		victim.take_bodypart_damage(rand(1, severity * 2), stamina=rand(2, severity * 2.5), wound_bonus=CANT_WOUND)
 		if(prob(33))
 			to_chat(victim, "<span class='danger'>You feel a sharp pain in your body as your bones are reforming!</span>")

@@ -17,7 +17,7 @@
 	new /obj/item/radio/headset/heads/ce(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/areaeditor/blueprints(src)
-	new /obj/item/holosign_creator/engineering(src)
+	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/door_remote/chief_engineer(src)

@@ -21,15 +21,24 @@
 	// posters store what name and description they would like their
 	// rolled up form to take.
 	if(poster_structure)
+		if(QDELETED(poster_structure))
+			stack_trace("A poster was initialized with a qdeleted poster_structure, something's gone wrong")
+			return INITIALIZE_HINT_QDEL
 		name = poster_structure.poster_item_name
 		desc = poster_structure.poster_item_desc
 		icon_state = poster_structure.poster_item_icon_state
 
 		name = "[name] - [poster_structure.original_name]"
+		//If the poster structure is being deleted something has gone wrong, kill yourself off too
+		RegisterSignal(poster_structure, COMSIG_PARENT_QDELETING, .proc/react_to_deletion)
 
 /obj/item/poster/Destroy()
 	poster_structure = null
 	. = ..()
+
+/obj/item/poster/proc/react_to_deletion()
+	SIGNAL_HANDLER
+	qdel(src)
 
 // These icon_states may be overridden, but are for mapper's convinence
 /obj/item/poster/random_contraband
@@ -69,7 +78,7 @@
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
-	AddComponent(/datum/component/beauty, 300)
+	AddElement(/datum/element/beauty, 300)
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)

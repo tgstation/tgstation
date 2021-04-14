@@ -37,15 +37,15 @@
 		C.RemoveSpell(batform)
 		QDEL_NULL(batform)
 
-/datum/species/vampire/spec_life(mob/living/carbon/human/C)
+/datum/species/vampire/spec_life(mob/living/carbon/human/C, delta_time, times_fired)
 	. = ..()
 	if(istype(C.loc, /obj/structure/closet/crate/coffin))
-		C.heal_overall_damage(4,4,0, BODYPART_ORGANIC)
-		C.adjustToxLoss(-4)
-		C.adjustOxyLoss(-4)
-		C.adjustCloneLoss(-4)
+		C.heal_overall_damage(2 * delta_time, 2 * delta_time, 0, BODYPART_ORGANIC)
+		C.adjustToxLoss(-2 * delta_time)
+		C.adjustOxyLoss(-2 * delta_time)
+		C.adjustCloneLoss(-2 * delta_time)
 		return
-	C.blood_volume -= 0.25
+	C.blood_volume -= 0.125 * delta_time
 	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
 		var/obj/shapeshift_holder/H = locate() in C
@@ -55,8 +55,8 @@
 	var/area/A = get_area(C)
 	if(istype(A, /area/service/chapel))
 		to_chat(C, "<span class='warning'>You don't belong here!</span>")
-		C.adjustFireLoss(20)
-		C.adjust_fire_stacks(6)
+		C.adjustFireLoss(10 * delta_time)
+		C.adjust_fire_stacks(3 * delta_time)
 		C.IgniteMob()
 
 /datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)

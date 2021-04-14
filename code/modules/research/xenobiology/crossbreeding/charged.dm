@@ -42,7 +42,8 @@ Charged extracts:
 	effect_desc = "Instantly makes a large burst of flame for a moment."
 
 /obj/item/slimecross/charged/orange/do_effect(mob/user)
-	for(var/turf/turf in range(5,get_turf(user)))
+	var/turf/targetturf = get_turf(user)
+	for(var/turf/turf as anything in RANGE_TURFS(5,targetturf))
 		if(!locate(/obj/effect/hotspot) in turf)
 			new /obj/effect/hotspot(turf)
 	..()

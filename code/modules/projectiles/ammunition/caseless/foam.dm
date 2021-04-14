@@ -5,23 +5,23 @@
 	caliber = CALIBER_FOAM
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foamdart"
+	base_icon_state = "foamdart"
 	custom_materials = list(/datum/material/iron = 11.25)
 	harmful = FALSE
 	var/modified = FALSE
 
-/obj/item/ammo_casing/caseless/foam_dart/update_icon()
-	..()
-	if (modified)
-		icon_state = "foamdart_empty"
-		desc = "It's Donk or Don't! ... Although, this one doesn't look too safe."
-		if(loaded_projectile)
-			loaded_projectile.icon_state = "foamdart_empty"
-	else
-		icon_state = initial(icon_state)
-		desc = "It's Donk or Don't! Ages 8 and up."
-		if(loaded_projectile)
-			loaded_projectile.icon_state = initial(loaded_projectile.icon_state)
+/obj/item/ammo_casing/caseless/foam_dart/update_icon_state()
+	. = ..()
+	if(modified)
+		icon_state = "[base_icon_state]_empty"
+		loaded_projectile?.icon_state = "[base_icon_state]_empty"
+		return
+	icon_state = "[base_icon_state]"
+	loaded_projectile?.icon_state = "[loaded_projectile.base_icon_state]"
 
+/obj/item/ammo_casing/caseless/foam_dart/update_desc()
+	. = ..()
+	desc = "It's Donk or Don't! [modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."]"
 
 /obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
 	var/obj/projectile/bullet/reusable/foam_dart/FD = loaded_projectile
@@ -30,7 +30,7 @@
 		FD.modified = TRUE
 		FD.damage_type = BRUTE
 		to_chat(user, "<span class='notice'>You pop the safety cap off [src].</span>")
-		update_icon()
+		update_appearance()
 	else if (istype(A, /obj/item/pen))
 		if(modified)
 			if(!FD.pen)
@@ -62,4 +62,5 @@
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
+	base_icon_state = "foamdart_riot"
 	custom_materials = list(/datum/material/iron = 1125)

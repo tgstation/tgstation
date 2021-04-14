@@ -178,7 +178,7 @@
 			for(var/obj/machinery/atmospherics/components/unary/U in T)
 				if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
 					U.welded = TRUE
-					U.update_icon()
+					U.update_appearance()
 					U.visible_message("<span class='danger'>[U] is frozen shut!</span>")
 		for(var/mob/living/L in T)
 			L.extinguish_mob()
@@ -347,3 +347,14 @@
 
 /datum/effect_system/smoke_spread/bad/green
 	effect_type = /obj/effect/particle_effect/smoke/bad/green
+
+/////////////////////////////////////////////
+// Quick smoke
+/////////////////////////////////////////////
+
+/obj/effect/particle_effect/smoke/quick
+	lifetime = 1
+	opaque = FALSE
+
+/datum/effect_system/smoke_spread/quick
+	effect_type = /obj/effect/particle_effect/smoke/quick

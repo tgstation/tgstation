@@ -20,25 +20,25 @@
 
 /turf/open/floor/circuit/Initialize()
 	SSmapping.nuke_tiles += src
-	update_icon()
+	update_appearance()
 	. = ..()
 
 /turf/open/floor/circuit/Destroy()
 	SSmapping.nuke_tiles -= src
 	return ..()
 
-/turf/open/floor/circuit/update_icon()
-	if(on)
-		if(LAZYLEN(SSmapping.nuke_threats))
-			icon_state = "rcircuitanim"
-			set_light_color(LIGHT_COLOR_FLARE)
-		else
-			icon_state = icon_normal
-			set_light_color(initial(light_color))
-		set_light(1.4, 0.5)
-	else
-		icon_state = "[icon_normal]off"
+/turf/open/floor/circuit/update_appearance(updates)
+	. = ..()
+	if(!on)
 		set_light(0)
+		return
+
+	set_light_color(LAZYLEN(SSmapping.nuke_threats) ? LIGHT_COLOR_FLARE : initial(light_color))
+	set_light(1.4, 0.5)
+
+/turf/open/floor/circuit/update_icon_state()
+	icon_state = on ? (LAZYLEN(SSmapping.nuke_threats) ? "rcircuitanim" : icon_normal) : "[icon_normal]off"
+	return ..()
 
 /turf/open/floor/circuit/off
 	icon_state = "bcircuitoff"

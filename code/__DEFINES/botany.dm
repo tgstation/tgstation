@@ -40,6 +40,3 @@
 /// -- Flags for traits. --
 /// Caps the plant's yield at 5 instead of 10.
 #define TRAIT_HALVES_YIELD (1<<0)
-
-/// Define for how much endurance a glowcap loses per spread
-#define GLOWCAP_ENDURANCE_SPREAD_COST 20

@@ -86,7 +86,7 @@
 	name = ""
 	icon = 'icons/misc/pic_in_pic.dmi'
 	icon_state = "room_background"
-	flags_1 = NOJAUNT_1
+	flags_1 = NOJAUNT
 
 /area/ai_multicam_room
 	name = "ai_multicam_room"
@@ -168,14 +168,14 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 			continue
 		cameras_telegraphed -= C
 		C.in_use_lights--
-		C.update_icon()
+		C.update_appearance()
 	for (var/V in add)
 		var/obj/machinery/camera/C = V
 		if(QDELETED(C))
 			continue
 		cameras_telegraphed |= C
 		C.in_use_lights++
-		C.update_icon()
+		C.update_appearance()
 
 /mob/camera/ai_eye/pic_in_pic/proc/disable_camera_telegraphing()
 	telegraph_cameras = FALSE
@@ -184,7 +184,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		if(QDELETED(C))
 			continue
 		C.in_use_lights--
-		C.update_icon()
+		C.update_appearance()
 	cameras_telegraphed.Cut()
 
 /mob/camera/ai_eye/pic_in_pic/Destroy()

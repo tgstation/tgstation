@@ -176,7 +176,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /obj/machinery/gateway/Initialize()
 	generate_destination()
-	update_icon()
+	update_appearance()
 	portal_visuals = new
 	vis_contents += portal_visuals
 	return ..()
@@ -193,7 +193,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	dest.deactivate(src)
 	QDEL_NULL(portal)
 	use_power = IDLE_POWER_USE
-	update_icon()
+	update_appearance()
 	portal_visuals.reset_visuals()
 
 /obj/machinery/gateway/process()
@@ -201,6 +201,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		if(target)
 			deactivate()
 		return
+
 /obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
 
@@ -216,7 +217,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	portal_visuals.setup_visuals(target)
 	generate_bumper()
 	use_power = ACTIVE_POWER_USE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/gateway/proc/Transfer(atom/movable/AM)
 	if(!target || !target.incoming_pass_check(AM))

@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - code_imp: "Cleans up the weirdness of Blood Halberds by bringing them under the cultblade parent, as well as making their code more compliant with contributor guidelines. Also renames them to Bloody Halberds."
-  - qol: "Blood Rites now uses a radial menu to choose which spell to cast."
-  - imageadd: "A new sprite for the Bloody Halberds. It looks more like a polearm."

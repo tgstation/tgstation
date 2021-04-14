@@ -5,6 +5,8 @@
 
 	min_players = 10
 
+	dynamic_should_hijack = TRUE
+
 /datum/round_event_control/alien_infestation/canSpawnEvent()
 	. = ..()
 	if(!.)

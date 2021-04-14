@@ -12,9 +12,8 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/warden
+	plasmaman_outfit = /datum/outfit/plasmaman/warden
 
-	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MECH_SECURITY, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS, ACCESS_MINERAL_STOREROOM)
-	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_MECH_SECURITY, ACCESS_COURT, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM) // See /datum/job/warden/get_access()
 	paycheck = PAYCHECK_HARD
 	paycheck_department = ACCOUNT_SEC
 
@@ -23,11 +22,9 @@
 
 	display_order = JOB_DISPLAY_ORDER_WARDEN
 	bounty_types = CIV_JOB_SEC
+	departments = DEPARTMENT_SECURITY
 
-/datum/job/warden/get_access()
-	var/list/L = list()
-	L = ..() | check_config_for_sec_maint()
-	return L
+	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)
 
 /datum/outfit/job/warden
 	name = "Warden"
@@ -53,3 +50,4 @@
 
 	implants = list(/obj/item/implant/mindshield)
 
+	id_trim = /datum/id_trim/job/warden

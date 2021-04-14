@@ -11,6 +11,8 @@
 	exp_type = EXP_TYPE_CREW
 
 	display_order = JOB_DISPLAY_ORDER_CYBORG
+	departments = DEPARTMENT_SILICON
+	random_spawns_possible = FALSE
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source = null)
 	if(visualsOnly)

@@ -111,7 +111,7 @@ RLD
 		loaded = loadwithsheets(O, user)
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-		update_icon() //ensures that ammo counters (if present) get updated
+		update_appearance() //ensures that ammo counters (if present) get updated
 	return loaded
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
@@ -145,7 +145,7 @@ RLD
 				to_chat(user, no_ammo_message)
 			return FALSE
 		matter -= amount
-		update_icon()
+		update_appearance()
 		return TRUE
 	else
 		if(silo_mats.on_hold())
@@ -194,12 +194,25 @@ RLD
 	else
 		return FALSE
 
-/obj/item/construction/proc/check_menu(mob/living/user)
+/**
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The living mob interacting with the menu
+ * * remote_anchor The remote anchor for the menu
+ */
+/obj/item/construction/proc/check_menu(mob/living/user, remote_anchor)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated())
+		return FALSE
+	if(remote_anchor && user.remote_control != remote_anchor)
 		return FALSE
 	return TRUE
+
+#define RCD_DESTRUCTIVE_SCAN_RANGE 10
+#define RCD_HOLOGRAM_FADE_TIME (15 SECONDS)
+#define RCD_DESTRUCTIVE_SCAN_COOLDOWN (RCD_HOLOGRAM_FADE_TIME + 1 SECONDS)
 
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
@@ -213,6 +226,7 @@ RLD
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
+	actions_types = list(/datum/action/item_action/rcd_scan)
 	var/mode = RCD_FLOORWALL
 	var/construction_mode = RCD_FLOORWALL
 	var/ranged = FALSE
@@ -230,6 +244,82 @@ RLD
 	var/canRturf = FALSE //Variable for R walls to deconstruct them
 	/// Integrated airlock electronics for setting access to a newly built airlocks
 	var/obj/item/electronics/airlock/airlock_electronics
+
+	COOLDOWN_DECLARE(destructive_scan_cooldown)
+
+GLOBAL_VAR_INIT(icon_holographic_wall, init_holographic_wall())
+GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
+
+// `initial` does not work here. Neither does instantiating a wall/whatever
+// and referencing that. I don't know why.
+/proc/init_holographic_wall()
+	return getHologramIcon(
+		icon('icons/turf/walls/wall.dmi', "wall-0"),
+		opacity = 1,
+	)
+
+/proc/init_holographic_window()
+	var/icon/grille_icon = icon('icons/obj/structures.dmi', "grille")
+	var/icon/window_icon = icon('icons/obj/smooth_structures/window.dmi', "window-0")
+
+	grille_icon.Blend(window_icon, ICON_OVERLAY)
+
+	return getHologramIcon(grille_icon)
+
+/obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
+	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
+		to_chat(user, "<span class='warning'>[src] lets out a low buzz.</span>")
+		return
+
+	COOLDOWN_START(src, destructive_scan_cooldown, RCD_DESTRUCTIVE_SCAN_COOLDOWN)
+
+	playsound(src, 'sound/items/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
+
+	var/turf/source_turf = get_turf(src)
+	for (var/turf/open/surrounding_turf in RANGE_TURFS(RCD_DESTRUCTIVE_SCAN_RANGE, source_turf))
+		var/rcd_memory = surrounding_turf.rcd_memory
+		if (!rcd_memory)
+			continue
+
+		var/skip_to_next_turf = FALSE
+
+		#if MIN_COMPILER_VERSION >= 514
+		#warn Please replace the loop below this warning with an `as anything` loop.
+		#endif
+
+		for (var/_content_of_turf in surrounding_turf.contents)
+			// `as anything` doesn't play well on 513 with special lists such as contents.
+			// When the minimum version is raised to 514, upgrade this to `as anything`.
+			var/atom/content_of_turf = _content_of_turf
+			if (content_of_turf.density)
+				skip_to_next_turf = TRUE
+				break
+
+		if (skip_to_next_turf)
+			continue
+
+		var/hologram_icon
+		switch (rcd_memory)
+			if (RCD_MEMORY_WALL)
+				hologram_icon = GLOB.icon_holographic_wall
+			if (RCD_MEMORY_WINDOWGRILLE)
+				hologram_icon = GLOB.icon_holographic_window
+
+		var/obj/effect/rcd_hologram/hologram = new (surrounding_turf)
+		hologram.icon = hologram_icon
+		animate(hologram, alpha = 0, time = RCD_HOLOGRAM_FADE_TIME, easing = CIRCULAR_EASING | EASE_IN)
+
+/obj/effect/rcd_hologram
+	name = "hologram"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/rcd_hologram/Initialize(mapload)
+	. = ..()
+	QDEL_IN(src, RCD_HOLOGRAM_FADE_TIME)
+
+#undef RCD_DESTRUCTIVE_SCAN_COOLDOWN
+#undef RCD_DESTRUCTIVE_SCAN_RANGE
+#undef RCD_HOLOGRAM_FADE_TIME
 
 /obj/item/construction/rcd/suicide_act(mob/living/user)
 	var/turf/T = get_turf(user)
@@ -348,7 +438,14 @@ RLD
 		if("WEST")
 			computer_dir = 8
 
-/obj/item/construction/rcd/proc/change_airlock_setting(mob/user)
+/**
+ * Customizes RCD's airlock settings based on user's choices
+ *
+ * Arguments:
+ * * user The mob that is choosing airlock settings
+ * * remote_anchor The remote anchor for radial menus. If set, it will also remove proximity restrictions from the menus
+ */
+/obj/item/construction/rcd/proc/change_airlock_setting(mob/user, remote_anchor)
 	if(!user)
 		return
 
@@ -394,15 +491,11 @@ RLD
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	if(!check_menu(user))
-		return
+	var/airlockcat = show_radial_menu(user, remote_anchor || src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-				if(!check_menu(user))
-					return
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
@@ -443,9 +536,7 @@ RLD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-				if(!check_menu(user))
-					return
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock/glass
@@ -674,7 +765,7 @@ RLD
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
@@ -733,9 +824,8 @@ RLD
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "rcd"
-	inhand_icon_state = "rcdammo"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "rcdammo"
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -825,6 +915,7 @@ RLD
 
 /obj/item/construction/rld/update_icon_state()
 	icon_state = "rld-[round(matter/matter_divisor)]"
+	return ..()
 
 /obj/item/construction/rld/attack_self(mob/user)
 	..()
@@ -980,6 +1071,10 @@ RLD
 	var/list/machinery_data = list("cost" = list())
 	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
 	var/list/plumbing_design_types
+	///Possible layers to pick from
+	var/static/list/layers = list("Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, "Fourth Layer" = FOURTH_DUCT_LAYER)
+	///Current selected layer
+	var/current_layer = "Default Layer"
 
 /obj/item/construction/plumbing/Initialize(mapload)
 	. = ..()
@@ -1011,9 +1106,11 @@ RLD
 	/obj/machinery/plumbing/tank = 20,
 	/obj/machinery/plumbing/synthesizer = 15,
 	/obj/machinery/plumbing/reaction_chamber = 15,
-	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/buffer = 10,
+	/obj/machinery/plumbing/layer_manifold = 5,
+	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line, unless they're probably gonna be needed alot
 	/obj/machinery/plumbing/pill_press = 20,
-	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line
+	/obj/machinery/plumbing/acclimator = 10,
 	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/disposer = 10,
 	/obj/machinery/plumbing/fermenter = 30,
@@ -1037,7 +1134,7 @@ RLD
 				useResource(machinery_data["cost"][blueprint], user)
 				activate()
 				playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-				new blueprint (A, FALSE, FALSE)
+				new blueprint (A, FALSE, layers[current_layer])
 				return TRUE
 
 /obj/item/construction/plumbing/proc/canPlace(turf/T)
@@ -1062,6 +1159,20 @@ RLD
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 	else
 		create_machine(A, user)
+
+/obj/item/construction/plumbing/AltClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+
+	//this is just cycling options through a list
+	var/current_loc = layers.Find(current_layer) + 1
+
+	if(current_loc > layers.len)
+		current_loc = 1
+
+	//We want the key (the define), not the index (the string)
+	current_layer = layers[current_loc]
+	to_chat(user, "<span class='notice'>You switch [src] to [current_layer].</span>")
 
 /obj/item/construction/plumbing/research
 	name = "research plumbing constructor"
@@ -1102,10 +1213,13 @@ RLD
 /obj/item/rcd_upgrade/silo_link
 	desc = "It contains direct silo connection RCD upgrade."
 	upgrade = RCD_UPGRADE_SILO_LINK
-
 /obj/item/rcd_upgrade/furnishing
 	desc = "It contains the design for chairs, stools, tables, and glass tables."
 	upgrade = RCD_UPGRADE_FURNISHING
+
+/datum/action/item_action/rcd_scan
+	name = "Destruction Scan"
+	desc = "Scans the surrounding area for destruction. Scanned structures will rebuild significantly faster."
 
 #undef GLOW_MODE
 #undef LIGHT_MODE

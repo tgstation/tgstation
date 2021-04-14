@@ -9,7 +9,7 @@
 #define META_GAS_OVERLAY 4
 #define META_GAS_DANGER 5
 #define META_GAS_ID 6
-#define META_GAS_FUSION_POWER   7
+#define META_GAS_FUSION_POWER 7
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)
@@ -41,12 +41,26 @@
 #define MOLES_N2STANDARD (MOLES_CELLSTANDARD*N2STANDARD)
 /// liters in a cell
 #define CELL_VOLUME 2500
-
-/// liters in a normal breath. note that breaths are taken once every 4 life ticks, which is 8 seconds
-#define BREATH_VOLUME 2
+/** liters in a normal breath. note that breaths are taken once every 4 life ticks, which is 8 seconds
+ * Addendum for people tweaking this value in the future.
+ * Because o2 tank release values/human o2 requirements are very strictly set to the same pressure, small errors can cause breakage
+ * This comes from QUANTIZE being used in /datum/gas_mixture.remove(), forming a slight sawtooth pattern of the added/removed gas, centered on the actual pressure
+ * Changing BREATH_VOLUME can set us on the lower half of this sawtooth, making humans unable to breath at standard pressure.
+ * There's no good way I can come up with to hardcode a fix for this. So if you're going to change this variable
+ * graph the functions that describe how it is used/how it interacts with breath code, and pick something on the upper half of the sawtooth
+ *
+**/
+#define BREATH_VOLUME 1.99
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE (BREATH_VOLUME/CELL_VOLUME)
 
+//Defines for N2O and Healium euphoria moodlets
+#define EUPHORIA_INACTIVE 0
+#define EUPHORIA_ACTIVE 1
+#define EUPHORIA_LAST_FLAG 2
+
+#define MIASMA_CORPSE_MOLES 0.02
+#define MIASMA_GIBS_MOLES 0.005
 
 //EXCITED GROUPS
 /**
@@ -77,11 +91,6 @@
 #define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER 0.5
 #define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION (T20C+80)
 #define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION (T20C+400)
-
-//Excited Group Cleanup helper defines
-#define EX_CLEANUP_BREAKDOWN 1
-#define EX_CLEANUP_DISMANTLE 2
-#define EX_CLEANUP_TURFS 3
 
 //HEAT TRANSFER COEFFICIENTS
 //Must be between 0 and 1. Values closer to 1 equalize temperature faster
@@ -149,9 +158,9 @@
 /// The natural temperature for a body
 #define BODYTEMP_NORMAL 310.15
 /// This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
-#define BODYTEMP_AUTORECOVERY_DIVISOR 14
+#define BODYTEMP_AUTORECOVERY_DIVISOR 28
 /// Minimum amount of kelvin moved toward 310K per tick. So long as abs(310.15 - bodytemp) is more than 50.
-#define BODYTEMP_AUTORECOVERY_MINIMUM 6
+#define BODYTEMP_AUTORECOVERY_MINIMUM 3
 ///Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
 #define BODYTEMP_COLD_DIVISOR 15
 /// Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
@@ -216,10 +225,10 @@
 #define SHOES_MAX_TEMP_PROTECT 1500
 
 /// The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
-#define PRESSURE_DAMAGE_COEFFICIENT 4
-#define MAX_HIGH_PRESSURE_DAMAGE 4
+#define PRESSURE_DAMAGE_COEFFICIENT 2
+#define MAX_HIGH_PRESSURE_DAMAGE 2
 /// The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
-#define LOW_PRESSURE_DAMAGE 4
+#define LOW_PRESSURE_DAMAGE 2
 
 /// Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LIMIT divided by this
 #define COLD_SLOWDOWN_FACTOR 20
@@ -229,9 +238,9 @@
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE 4500
 /// (L/s) Maximum speed powered equipment can work at.
-#define MAX_TRANSFER_RATE 400
+#define MAX_TRANSFER_RATE 200
 /// How many percent of the contents that an overclocked volume pumps leak into the air
-#define VOLUME_PUMP_LEAK_AMOUNT 0.2
+#define VOLUME_PUMP_LEAK_AMOUNT 0.1
 //used for device_type vars
 #define UNARY 1
 #define BINARY 2
@@ -470,8 +479,20 @@
 #define PIPING_DEFAULT_LAYER_ONLY (1<<2)
 /// north/south east/west doesn't matter, auto normalize on build.
 #define PIPING_CARDINAL_AUTONORMALIZE (1<<3)
+/// intended to connect with everything, both layers and colors
+#define PIPING_ALL_COLORS (1<<4)
+/// can bridge over pipenets
+#define PIPING_BRIDGE (1<<5)
 
-//HELPERS
+// Ventcrawling bitflags, handled in var/vent_movement
+///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
+#define VENTCRAWL_ALLOWED	(1<<0)
+///Allows mobs to enter or leave from atmospheric machines. On for passive, unary, and scrubber vents.
+#define VENTCRAWL_ENTRANCE_ALLOWED (1<<1)
+///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
+#define VENTCRAWL_CAN_SEE	(1<<2)
+
+//Helpers
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
 	if(T.dir & (NORTH|SOUTH)) { \
 		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
@@ -505,9 +526,7 @@
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
-#define NORMAL_TURF 1
-#define MAKE_ACTIVE 2
-#define KILL_EXCITED 3
+
 #ifdef TESTING
 GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T, state) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = state}
@@ -515,30 +534,13 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T, state) SSadjacent_air.queue[T] = state
 #endif
 
+//Adjacent turf related defines, they dictate what to do with a turf once it's been recalculated
+//Used as "state" in CALCULATE_ADJACENT_TURFS
+#define NORMAL_TURF 1
+#define MAKE_ACTIVE 2
+#define KILL_EXCITED 3
+
 //If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks
 #define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
 //Use this to see if a turf is fully blocked or not, think windows or firelocks. Fails with 1x1 non full tile windows, but it's not worth the cost.
 #define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
-
-GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
-		"amethyst" = rgb(130,43,255), //supplymain
-		"blue" = rgb(0,0,255),
-		"brown" = rgb(178,100,56),
-		"cyan" = rgb(0,255,249),
-		"dark" = rgb(69,69,69),
-		"green" = rgb(30,255,0),
-		"grey" = rgb(255,255,255),
-		"orange" = rgb(255,129,25),
-		"purple" = rgb(128,0,182),
-		"red" = rgb(255,0,0),
-		"violet" = rgb(64,0,128),
-		"yellow" = rgb(255,198,0)
-)))
-
-#define MIASMA_CORPSE_MOLES 0.02
-#define MIASMA_GIBS_MOLES 0.005
-
-//Defines for N2O and Healium euphoria moodlets
-#define EUPHORIA_INACTIVE 0 
-#define EUPHORIA_ACTIVE 1
-#define EUPHORIA_LAST_FLAG 2

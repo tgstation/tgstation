@@ -70,7 +70,7 @@
 		to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 	return TRUE
 
-/obj/vehicle/ridden/secway/obj_break()
+/obj/vehicle/ridden/atv/obj_break()
 	START_PROCESSING(SSobj, src)
 	return ..()
 

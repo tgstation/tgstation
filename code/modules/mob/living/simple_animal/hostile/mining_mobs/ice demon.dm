@@ -15,7 +15,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = TRUE
 	ranged_message = "manifests ice"
-	ranged_cooldown_time = 3 SECONDS
+	ranged_cooldown_time = 1.5 SECONDS
 	minimum_distance = 3
 	retreat_distance = 3
 	maxHealth = 150
@@ -26,6 +26,7 @@
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	vision_range = 9
 	aggro_vision_range = 9
 	move_force = MOVE_FORCE_VERY_STRONG
@@ -67,11 +68,11 @@
 	SLEEP_CHECK_DEATH(8)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/Life()
+/mob/living/simple_animal/hostile/asteroid/ice_demon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return
-	adjustHealth(-maxHealth*0.025)
+	adjustHealth(-0.0125 * maxHealth * delta_time)
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT

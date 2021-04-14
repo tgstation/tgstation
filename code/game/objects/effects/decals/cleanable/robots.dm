@@ -45,7 +45,7 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/robot_debris/ex_act()
-	return
+	return FALSE
 
 /obj/effect/decal/cleanable/robot_debris/limb
 	icon_state = "gibarm"

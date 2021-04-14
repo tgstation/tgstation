@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
 		B.max_integrity *= max_structure_health_multiplier
 		B.obj_integrity *= max_structure_health_multiplier
-		B.update_icon()
+		B.update_appearance()
 
 	for(var/mob/living/simple_animal/hostile/blob/BM as anything in overmind.blob_mobs)
 		BM.maxHealth *= max_mob_health_multiplier

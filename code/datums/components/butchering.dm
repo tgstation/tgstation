@@ -62,7 +62,7 @@
 					"<span class='hear'>You hear a cutting noise!</span>", ignored_mobs = H)
 	H.show_message("<span class='userdanger'>Your throat is being slit by [user]!</span>", MSG_VISUAL, \
 					"<span class = 'userdanger'>Something is cutting into your neck!</span>", NONE)
-	log_combat(user, H, "starts slicing the throat of")
+	log_combat(user, H, "attempted throat slitting", source)
 
 	playsound(H.loc, butcher_sound, 50, TRUE, -1)
 	if(do_mob(user, H, clamp(500 / source.force, 30, 100)) && H.Adjacent(source))
@@ -73,7 +73,7 @@
 
 		H.visible_message("<span class='danger'>[user] slits [H]'s throat!</span>", \
 					"<span class='userdanger'>[user] slits your throat...</span>")
-		log_combat(user, H, "finishes slicing the throat of")
+		log_combat(user, H, "wounded via throat slitting", source)
 		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
 		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
 		if(slit_throat)

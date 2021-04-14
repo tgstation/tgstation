@@ -23,13 +23,15 @@
 	piping_layer = 4
 	icon_state = "he_map-4"
 
+/obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon_state()
+	icon_state = "he[nodes[1] ? 1 : 0]"
+	return ..()
+
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
+	. = ..()
 	if(nodes[1])
-		icon_state = "he1"
 		var/obj/machinery/atmospherics/node = nodes[1]
 		add_atom_colour(node.color, FIXED_COLOUR_PRIORITY)
-	else
-		icon_state = "he0"
 	PIPING_LAYER_SHIFT(src, piping_layer)
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/atmosinit()

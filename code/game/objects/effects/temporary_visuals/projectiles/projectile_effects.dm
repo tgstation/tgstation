@@ -1,6 +1,6 @@
 /obj/effect/projectile
 	name = "pew"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "nothing"
 	layer = ABOVE_MOB_LAYER
 	anchored = TRUE

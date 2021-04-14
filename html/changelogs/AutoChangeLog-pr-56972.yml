@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Observers can no longer click on alert icons to perform actions when auto-observing players."

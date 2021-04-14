@@ -12,6 +12,7 @@
 #define COLOR_SILVER "#C0C0C0"
 #define COLOR_GRAY "#808080"
 #define COLOR_FLOORTILE_GRAY "#8D8B8B"
+#define COLOR_DARK "#454545"
 #define COLOR_ALMOST_BLACK "#333333"
 #define COLOR_BLACK "#000000"
 #define COLOR_HALF_TRANSPARENT_BLACK    "#0000007A"
@@ -46,6 +47,7 @@
 #define COLOR_STRONG_BLUE "#1919c8"
 #define COLOR_BRIGHT_BLUE "#2CB2E8"
 #define COLOR_MODERATE_BLUE "#555CC2"
+#define COLOR_AMETHYST "#822BFF"
 #define COLOR_BLUE_LIGHT "#33CCFF"
 #define COLOR_NAVY "#000080"
 #define COLOR_BLUE_GRAY "#75A2BB"
@@ -71,6 +73,7 @@
 
 #define COLOR_BROWN "#BA9F6D"
 #define COLOR_DARK_BROWN "#997C4F"
+#define COLOR_ORANGE_BROWN "#a9734f"
 
 #define COLOR_GREEN_GRAY       "#99BB76"
 #define COLOR_RED_GRAY         "#B4696A"
@@ -104,6 +107,17 @@
 #define COLOR_SAMPLE_BROWN "#91542d"
 #define COLOR_SAMPLE_GRAY "#5e5856"
 
+///Main colors for UI themes
+#define COLOR_THEME_MIDNIGHT "#6086A0"
+#define COLOR_THEME_PLASMAFIRE "#FFB200"
+#define COLOR_THEME_RETRO "#24CA00"
+#define COLOR_THEME_SLIMECORE "#4FB259"
+#define COLOR_THEME_OPERATIVE "#B8221F"
+#define COLOR_THEME_GLASS "#75A4C4"
+#define COLOR_THEME_CLOCKWORK "#CFBA47"
+
+///Colors for eigenstates
+#define COLOR_PERIWINKLEE "#9999FF"
 /**
  * Some defines to generalise colours used in lighting.
  *

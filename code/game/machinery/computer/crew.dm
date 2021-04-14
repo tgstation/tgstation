@@ -17,7 +17,7 @@
 /obj/machinery/computer/crew/syndie
 	icon_keyboard = "syndie_key"
 
-/obj/machinery/computer/crew/interact(mob/user)
+/obj/machinery/computer/crew/ui_interact(mob/user)
 	GLOB.crewmonitor.show(user,src)
 
 GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
@@ -38,7 +38,11 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		"Head of Security" = 10,
 		"Warden" = 11,
 		"Security Officer" = 12,
-		"Detective" = 13,
+		"Security Officer (Medical)" = 13,
+		"Security Officer (Engineering)" = 14,
+		"Security Officer (Science)" = 15,
+		"Security Officer (Cargo)" = 16,
+		"Detective" = 17,
 		// 20-29: Medbay
 		"Chief Medical Officer" = 20,
 		"Chemist" = 21,
