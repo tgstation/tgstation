@@ -1,6 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - rscadd: "Adds eigenstasium, a new reagent that uses the new mechanics in depth!"
-  - bugfix: "Fixed a few things to do with reactions on the backend"
-  - refactor: "refactors status effects to have a var for processing speed"

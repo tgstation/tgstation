@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscadd: "Things that rot will now directly attempt to infect you when you interact with them, remember to wear a mask/gloves. (A freezer will be helpful for long term storage)"
-  - rscdel: "Things that rot no longer produce miasma"
