@@ -2,8 +2,8 @@
 	name = "Kobold"
 	id = "kobold"
 	say_mod = "shrills"
-	mutant_organs = list(/obj/item/organ/tail/lizard/kobold)
-	mutant_bodyparts = list("tail_kobold" = "Kobold")
+	mutant_organs = list(/obj/item/organ/tail/kobold)
+	mutant_bodyparts = list("tail_kobold" = "Kobold", "diaper" = "Diaper")
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	knife_butcher_results = list(/obj/item/food/meat/slab/human/mutant/lizard = 5, /obj/item/stack/sheet/animalhide/lizard = 1)
@@ -19,6 +19,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg,\
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest)
 	species_language_holder = /datum/language_holder/kobold
+	can_gorrilize = FALSE
 
 /datum/species/monkey/kobold/random_name(gender,unique,lastname)
 	var/randname = "kobold ([rand(1,999)])"

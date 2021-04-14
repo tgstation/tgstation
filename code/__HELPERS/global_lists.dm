@@ -18,6 +18,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/lizard, GLOB.animated_tails_list_lizard)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/kobold, GLOB.tails_list_kobold)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/diaper, GLOB.diaper_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/human, GLOB.animated_tails_list_human)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, GLOB.snouts_list)

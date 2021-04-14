@@ -106,13 +106,14 @@
 		H.dna.species.mutant_bodyparts -= "tail_monkey"
 		H.update_body()
 
-/obj/item/organ/tail/lizard/kobold
+/obj/item/organ/tail/kobold
 	name = "kobold tail"
 	desc = "A smaller version of a normal lizard tail. Somewhere, no doubt, a lizard hater feels cheated."
+	color = "#116611"
 	tail_type = "Kobold"
 	icon_state = "severedkoboldtail"
 
-/obj/item/organ/tail/monkey/Insert(mob/living/carbon/human/H, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/tail/kobold/Insert(mob/living/carbon/human/H, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(istype(H))
 		if(!("tail_kobold" in H.dna.species.mutant_bodyparts))
@@ -120,7 +121,7 @@
 			H.dna.features["tail_kobold"] = tail_type
 			H.update_body()
 
-/obj/item/organ/tail/monkey/Remove(mob/living/carbon/human/H, special = FALSE)
+/obj/item/organ/tail/kobold/Remove(mob/living/carbon/human/H, special = FALSE)
 	..()
 	if(istype(H))
 		H.dna.features["tail_kobold"] = "None"

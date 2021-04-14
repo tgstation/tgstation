@@ -28,6 +28,8 @@ GLOBAL_LIST_EMPTY(legs_list)
 GLOBAL_LIST_EMPTY(animated_spines_list)
 	//Just one for kobolds.
 GLOBAL_LIST_EMPTY(tails_list_kobold)
+	//monkey/primal accessory
+GLOBAL_LIST_EMPTY(diaper_list)
 
 	//Mutant Human bits
 GLOBAL_LIST_EMPTY(tails_list_human)

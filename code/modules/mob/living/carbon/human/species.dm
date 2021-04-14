@@ -798,6 +798,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_kobold"
 
+	if("diaper" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "diaper"
+
 	if(mutant_bodyparts["waggingtail_human"])
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "waggingtail_human"
@@ -917,6 +921,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.tails_list_monkey[H.dna.features["tail_monkey"]]
 				if("tail_kobold")
 					S = GLOB.tails_list_kobold[H.dna.features["tail_kobold"]]
+				if("diaper")
+					S = GLOB.diaper_list[H.dna.features["diaper"]]
 			if(!S || S.icon_state == "none")
 				continue
 

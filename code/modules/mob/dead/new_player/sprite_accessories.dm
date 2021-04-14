@@ -1562,6 +1562,12 @@
 	icon_state = "lbelly"
 	gender_specific = 1
 
+//there was no other way... i'm sorry.......
+/datum/sprite_accessory/diaper/default
+	icon = 'icons/mob/human_parts.dmi'
+	name = "Diaper"
+	icon_state = "diaper"
+
 /datum/sprite_accessory/tails
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
