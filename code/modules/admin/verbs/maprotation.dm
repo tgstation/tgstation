@@ -32,7 +32,7 @@
 			mapname += "\]"
 
 		maprotatechoices[mapname] = VM
-	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in sortList(maprotatechoices)|"Custom"
+	var/chosenmap = tgui_input_list(usr, "Choose a map to change to", "Change Map", sortList(maprotatechoices)|"Custom")
 	if (!chosenmap)
 		return
 

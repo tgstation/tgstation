@@ -120,7 +120,7 @@
 		else
 			title = null
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = tgui_input_list(usr, "Choose a category to search for:",, list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
 		if(newcategory)
 			category = sanitize(newcategory)
 		else
@@ -413,13 +413,13 @@
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion","Technical")
+		var/newcategory = tgui_input_list(usr, "Choose a category: ",, list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion","Technical"))
 		if(newcategory)
 			upload_category = newcategory
 	if(href_list["upload"])
 		if(scanner)
 			if(scanner.cache)
-				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
+				var/choice = tgui_alert(usr, "Are you certain you wish to upload this title to the Archive?",, list("Confirm", "Abort"))
 				if(choice == "Confirm")
 					if (!SSdbcore.Connect())
 						tgui_alert(usr,"Connection to Archive has been severed. Aborting.",,list("Ok"))

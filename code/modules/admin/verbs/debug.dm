@@ -96,11 +96,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/mob/C in GLOB.mob_list)
 		if(C.key)
 			available.Add(C)
-	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in sortNames(available)
+	var/mob/choice = tgui_input_list(usr, "Choose a player to play the pAI", "Spawn pAI", sortNames(available))
 	if(!choice)
 		return
 	if(!isobserver(choice))
-		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
+		var/confirm = tgui_alert(usr, "[choice.key] isn't ghosting right now. Are you sure you want to yank him out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", list("Yes", "No"))
 		if(confirm != "Yes")
 			return
 	var/obj/item/paicard/card = new(T)
@@ -552,7 +552,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+	switch(tgui_input_list(usr, "Which list?",, list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients")))
 		if("Players")
 			to_chat(usr, jointext(GLOB.player_list,","), confidential = TRUE)
 		if("Admins")

@@ -94,7 +94,7 @@
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
-			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
+			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease?",, list("Yes", "Cancel"))
 			if(choice == "Yes")
 				message_admins("[key_name_admin(holder)] has cured all diseases.")
 				for(var/thing in SSdisease.active_diseases)
