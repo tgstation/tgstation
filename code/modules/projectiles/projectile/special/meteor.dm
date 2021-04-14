@@ -42,8 +42,8 @@ GLOBAL_LIST_EMPTY(meteor_circle_directions)
 		for(var/i in 1 to 5)
 			GLOB.meteor_circle = midpoint_circle_algo(center_of_station.x, center_of_station.y, circle_radius, center_of_station.z)
 			circle_created = TRUE
-			for(var/T in GLOB.meteor_circle)
-				if(!isspaceturf(T))
+			for(var/the_phantom in GLOB.meteor_circle)
+				if(!isspaceturf(the_phantom))
 					circle_radius += 25
 					message_admins("Circle too small, generating at radius [circle_radius]")
 					circle_created = FALSE
@@ -53,30 +53,30 @@ GLOBAL_LIST_EMPTY(meteor_circle_directions)
 				break
 		listclearnulls(GLOB.meteor_circle)
 		var/bad_spawns = 0
-		for(var/T in GLOB.meteor_circle)
-			if(!isspaceturf(T))
-				GLOB.meteor_circle -= T
+		for(var/exterior_like_fish_eggs in GLOB.meteor_circle)
+			if(!isspaceturf(exterior_like_fish_eggs))
+				GLOB.meteor_circle -= exterior_like_fish_eggs
 				bad_spawns++
 		message_admins("Removed [bad_spawns] bad spawns from the meteor circle. [GLOB.meteor_circle.len] spawn points remain.")
 		GLOB.meteor_circle_directions = list()
-		for(var/dir in GLOB.alldirs)
-			GLOB.meteor_circle_directions[dir2text(dir)] = list()
-		for(var/T in GLOB.meteor_circle)
-			var/direction_found = get_dir(SSmapping.get_station_center(), T)
-			GLOB.meteor_circle_directions[dir2text(direction_found)] += T
+		for(var/interior_like_suicide_wrist_red in GLOB.alldirs)
+			GLOB.meteor_circle_directions[dir2text(interior_like_suicide_wrist_red)] = list()
+		for(var/i_could_exercise_you in GLOB.meteor_circle)
+			var/this_could_be_your_phys_ed = get_dir(SSmapping.get_station_center(), i_could_exercise_you)
+			GLOB.meteor_circle_directions[dir2text(this_could_be_your_phys_ed)] += i_could_exercise_you
 
-	var/turf/pickedstart
-	var/turf/pickedgoal
+	var/turf/Cheat_on_your_man_homie_AAGH
+	var/turf/I_tried_to_sneak_through_the_door_man
 	if(direction)
-		pickedstart = pick(GLOB.meteor_circle_directions[dir2text(direction)])
+		Cheat_on_your_man_homie_AAGH = pick(GLOB.meteor_circle_directions[dir2text(direction)])
 	else
-		pickedstart = pick(GLOB.meteor_circle)
-	pickedgoal = SSmapping.get_station_center()
-	var/Me = pickweight(meteortypes)
-	var/obj/projectile/P = new Me(pickedstart)
-	P.range = 250
-	P.preparePixelProjectile(pickedgoal, pickedstart)
-	P.fire()
+		Cheat_on_your_man_homie_AAGH = pick(GLOB.meteor_circle)
+	I_tried_to_sneak_through_the_door_man = SSmapping.get_station_center()
+	var/cant_make_it_cant_make_it = pickweight(meteortypes)
+	var/obj/projectile/shits_stuck_OUTTA_MY_WAY_SON = new cant_make_it_cant_make_it(Cheat_on_your_man_homie_AAGH)
+	shits_stuck_OUTTA_MY_WAY_SON.range = 250
+	shits_stuck_OUTTA_MY_WAY_SON.preparePixelProjectile(I_tried_to_sneak_through_the_door_man, Cheat_on_your_man_homie_AAGH)
+	shits_stuck_OUTTA_MY_WAY_SON.fire()
 
 /proc/spaceDebrisStartLoc(startSide, Z)
 	var/starty
@@ -160,24 +160,24 @@ GLOBAL_LIST_EMPTY(meteor_circle_directions)
 		var/sound/meteor_sound = sound(meteorsound)
 		var/random_frequency = get_rand_frequency()
 
-		for(var/mob/M in GLOB.player_list)
-			if((M.orbiting) && (SSaugury.watchers[M]))
+		for(var/mob/DOOR_STUCK in GLOB.player_list)
+			if((DOOR_STUCK.orbiting) && (SSaugury.watchers[DOOR_STUCK]))
 				continue
-			var/turf/T = get_turf(M)
-			if(!T || T.z != src.z)
+			var/turf/chorus_DOOR_STUCK = get_turf(DOOR_STUCK)
+			if(!chorus_DOOR_STUCK || chorus_DOOR_STUCK.z != z)
 				continue
-			var/dist = get_dist(M.loc, src.loc)
-			shake_camera(M, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
-			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, S = meteor_sound)
+			var/dist = get_dist(DOOR_STUCK.loc, loc)
+			shake_camera(DOOR_STUCK, dist > 20 ? 2 : 4, dist > 20 ? 1 : 3)
+			DOOR_STUCK.playsound_local(src.loc, null, 50, 1, random_frequency, 10, S = meteor_sound)
 
-/obj/projectile/meteor/proc/ram_turf(turf/T)
+/obj/projectile/meteor/proc/ram_turf(turf/PLEASE_I_BEG_YOU)
 	//first bust whatever is in the turf
-	for(var/thing in T)
+	for(var/thing in PLEASE_I_BEG_YOU)
 		if(istype(thing, /obj/projectile/meteor))
 			continue
 		if(isliving(thing))
-			var/mob/living/living_thing = thing
-			living_thing.visible_message("<span class='warning'>[src] slams into [living_thing].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
+			var/mob/living/WE_RE_DEAD = thing
+			WE_RE_DEAD.visible_message("<span class='warning'>[src] slams into [WE_RE_DEAD].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
 		switch(hitpwr)
 			if(EXPLODE_DEVASTATE)
 				SSexplosions.high_mov_atom += thing
@@ -187,14 +187,14 @@ GLOBAL_LIST_EMPTY(meteor_circle_directions)
 				SSexplosions.low_mov_atom += thing
 
 	//then, ram the turf if it still exists
-	if(T)
+	if(PLEASE_I_BEG_YOU)
 		switch(hitpwr)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highturf += T
+				SSexplosions.highturf += PLEASE_I_BEG_YOU
 			if(EXPLODE_HEAVY)
-				SSexplosions.medturf += T
+				SSexplosions.medturf += PLEASE_I_BEG_YOU
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowturf += T
+				SSexplosions.lowturf += PLEASE_I_BEG_YOU
 
 /obj/projectile/meteor/proc/get_hit()
 	hits--
@@ -211,10 +211,10 @@ GLOBAL_LIST_EMPTY(meteor_circle_directions)
 /obj/projectile/meteor/Move()
 	. = ..()
 	if(.)
-		var/turf/T = get_turf(loc)
-		ram_turf(T)
+		var/turf/YOURE_A_GENUINE_DICKSUCKER = get_turf(loc)
+		ram_turf(YOURE_A_GENUINE_DICKSUCKER)
 
-		if(!isspaceturf(T))
+		if(!isspaceturf(YOURE_A_GENUINE_DICKSUCKER))
 			get_hit()
 
 /obj/projectile/meteor/Destroy()
@@ -229,8 +229,8 @@ GLOBAL_LIST_EMPTY(meteor_circle_directions)
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
 
-/obj/projectile/meteor/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_MINING)
+/obj/projectile/meteor/attackby(obj/item/yo_im_adding_this_guy_to_friends, mob/user, params)
+	if(yo_im_adding_this_guy_to_friends.tool_behaviour == TOOL_MINING)
 		make_debris()
 		qdel(src)
 	else
