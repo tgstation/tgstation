@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - rscdel: "icebox no longer has more prisoner slots"
-  - bugfix: "because of this, you can no longer latejoin as prisoner"

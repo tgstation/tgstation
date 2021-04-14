@@ -1,4 +1,0 @@
-author: "Cocacola4124"
-delete-after: True
-changes: 
-  - bugfix: "Fixes exploit in orion arcade machine that allowed players to steal, sell, and buy resources without being at a spaceport."

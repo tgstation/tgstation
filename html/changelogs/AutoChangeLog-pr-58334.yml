@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - bugfix: "After many issues with plasmaman prisoners escaping perma and hiding in maint, NT will supply the station with up to date envirosuits with their suit sensors locked, just like other prisoner uniforms."
