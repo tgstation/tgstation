@@ -37,11 +37,11 @@
 		return
 
 	if (!isnull(tracked.loc))
-		unregister_signals(listener, tracked, tracked.loc)//its definitely going here, and its on a non null floor, but is target in null space?
+		unregister_signals(listener, tracked, tracked.loc)
 	else
 		unregister_signals(listener, tracked, null)
 
-	UnregisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE)//COMSIG_MOVABLE_LOCATION_CHANGE
+	UnregisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE)
 
 /datum/element/connect_loc/proc/update_signals(datum/listener, atom/movable/tracked)
 	var/existing = length(targets[tracked.loc])
@@ -61,7 +61,6 @@
 	if (length(targets[old_loc || tracked]) == 0)
 		targets -= (old_loc || tracked)
 
-	// Yes this is after the above because when tracked is in nullspace we use tracked as a key instead of its loc
 	if(isnull(old_loc))
 		return
 
