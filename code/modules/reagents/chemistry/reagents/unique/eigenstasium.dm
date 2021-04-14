@@ -24,7 +24,7 @@
 	inverse_chem_val = 0
 	failed_chem = /datum/reagent/bluespace //crashes out
 	chemical_flags = REAGENT_DEAD_PROCESS //So if you die with it in your body, you still get teleported back to the location as a corpse
-	data = list("location_created" = null)//So we retain the target location and creator between reagent instances
+	data = list("location_created" = null, "ingested" = FALSE)//So we retain the target location and creator between reagent instances
 	///The creation point assigned during the reaction
 	var/turf/location_created
 	///The return point indicator
@@ -37,16 +37,23 @@
 
 /datum/reagent/eigenstate/expose_mob(mob/living/living_mob, methods, reac_volume, show_message, touch_protection)
 	. = ..()
-	if(!(methods & INGEST))
+	if(!(methods & INGEST) || !iscarbon(living_mob))
 		return
-	if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
-		do_sparks(5,FALSE,living_mob)
-		do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
-		do_sparks(5,FALSE,living_mob)
+	//This looks rediculous, but expose is usually called from the donor reagents datum - we want to edit the post exposure version present in the mob.
+	var/mob/living/carbon/carby = living_mob
+	//But because carbon mobs have stomachs we have to search in there because we're ingested
+	var/obj/item/organ/stomach/stomach = carby.getorganslot(ORGAN_SLOT_STOMACH)
+	var/datum/reagent/eigenstate/eigen
+	if(stomach)
+		eigen = stomach.reagents.has_reagent(/datum/reagent/eigenstate)
+	if(!eigen)//But what if they have no stomach! I want to get off expose_mob's wild ride
+		eigen = carby.reagents.has_reagent(/datum/reagent/eigenstate)
+	//Because expose_mob and on_mob_add() across all of the different things call them in different orders, so I want to make sure whatever is the first one to call it sets up the location correctly.
+	eigen.data["ingested"] = TRUE
 
 //Main functions
 /datum/reagent/eigenstate/on_mob_add(mob/living/living_mob, amount)
-	//make hologram at return point
+	//make hologram at return point to indicate where someone will go back to
 	eigenstate = new (living_mob.loc)
 	eigenstate.appearance = living_mob.appearance
 	eigenstate.alpha = 170
@@ -59,6 +66,12 @@
 
 	location_return = get_turf(living_mob)	//sets up return point
 	to_chat(living_mob, "<span class='userdanger'>You feel like part of yourself has split off!</span>")
+
+	//Teleports you home if it's pure enough
+	if(creation_purity > 0.9 && location_created && data["ingested"])
+		do_sparks(5,FALSE,living_mob)
+		do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
+		do_sparks(5,FALSE,living_mob)
 
 	return ..()
 

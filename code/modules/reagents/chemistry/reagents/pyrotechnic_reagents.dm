@@ -219,7 +219,7 @@
 	ph = 8.6
 	metabolization_rate = 0.05 * REAGENTS_METABOLISM
 	taste_description = "icey bitterness"
-	purity = REAGENT_STANDARD_PUIRTY
+	purity = REAGENT_STANDARD_PURITY
 	self_consuming = TRUE
 	impure_chem = /datum/reagent/consumable/ice
 	inverse_chem_val = 0.5
@@ -245,7 +245,7 @@
 	consumer.color = COLOR_WHITE
 
 //Pauses decay! Does do something, I promise.
-/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/consumer)
+/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/consumer, delta_time)
 	. = ..()
 	metabolization_rate = 0.05 * REM //slower consumption when dead
 

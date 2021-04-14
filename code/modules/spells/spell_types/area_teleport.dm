@@ -2,6 +2,7 @@
 	name = "Area teleport"
 	desc = "This spell teleports you to a type of area of your selection."
 	nonabstract_req = TRUE
+	school = SCHOOL_TRANSLOCATION
 
 	var/randomise_selection = FALSE //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = TRUE //if the invocation appends the selected area

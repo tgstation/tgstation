@@ -322,6 +322,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		firedoors_last_closed_on = world.time
 		for(var/FD in firedoors)
 			var/obj/machinery/door/firedoor/D = FD
+			if (D.being_held_open)
+				continue
 			var/cont = !D.welded
 			if(cont && opening) //don't open if adjacent area is on fire
 				for(var/I in D.affecting_areas)

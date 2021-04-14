@@ -4,11 +4,10 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	impure_chem = null //Very few of these have impure effects, they're all baked in by creation_purity
 	inverse_chem = null //Some of these use inverse chems - we're just defining them all to null here to avoid repetition, eventually this will be moved up to parent
-	creation_purity = REAGENT_STANDARD_PUIRTY//All sources by default are 0.75 - reactions are primed to resolve to roughly the same with no intervention for these.
-	purity = REAGENT_STANDARD_PUIRTY
+	creation_purity = REAGENT_STANDARD_PURITY//All sources by default are 0.75 - reactions are primed to resolve to roughly the same with no intervention for these.
+	purity = REAGENT_STANDARD_PURITY
 	inverse_chem_val = 0
 	inverse_chem = null
-	failed_chem = /datum/reagent/impurity/healing/medicine_failure
 	chemical_flags = REAGENT_SPLITRETAINVOL
 
 /******BRUTE******/
@@ -245,7 +244,7 @@
 	color = "#FF6464"
 	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 	ph = 5.6
-	inverse_chem_val = 0.4
+	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/healing/convermol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 

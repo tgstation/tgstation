@@ -8,6 +8,7 @@
 	disliked_food = null
 	liked_food = GROSS
 	mutanteyes = /obj/item/organ/eyes/fly
+	disliked_food = CLOTH
 	toxic_food = NONE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly

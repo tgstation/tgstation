@@ -238,7 +238,10 @@
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
-			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)
+			return rcd_result_with_memory(
+				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 16),
+				src, RCD_MEMORY_WALL,
+			)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
@@ -247,7 +250,10 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 33)
 		if(RCD_WINDOWGRILLE)
-			return list("mode" = RCD_WINDOWGRILLE, "delay" = 10, "cost" = 4)
+			return rcd_result_with_memory(
+				list("mode" = RCD_WINDOWGRILLE, "delay" = 1 SECONDS, "cost" = 4),
+				src, RCD_MEMORY_WINDOWGRILLE,
+			)
 		if(RCD_MACHINE)
 			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
 		if(RCD_COMPUTER)

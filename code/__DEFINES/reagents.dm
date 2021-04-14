@@ -63,7 +63,7 @@
 #define CHEMICAL_MAXIMUM_TEMPERATURE 99999
 
 ///The default purity of all non reacted reagents
-#define REAGENT_STANDARD_PUIRTY 0.75
+#define REAGENT_STANDARD_PURITY 0.75
 
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
@@ -167,3 +167,8 @@
 /// For the pH meter flashing method
 #define ENABLE_FLASHING -1
 #define DISABLE_FLASHING 14
+
+#define GOLDSCHLAGER_VODKA (10)
+#define GOLDSCHLAGER_GOLD (1)
+
+#define GOLDSCHLAGER_GOLD_RATIO (GOLDSCHLAGER_GOLD/(GOLDSCHLAGER_VODKA+GOLDSCHLAGER_GOLD))

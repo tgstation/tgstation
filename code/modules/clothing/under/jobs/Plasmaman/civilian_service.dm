@@ -111,9 +111,12 @@
 
 /obj/item/clothing/under/plasmaman/prisoner
 	name = "prisoner envirosuit"
-	desc = "An orange envirosuit identifying and protecting a criminal plasmaman."
+	desc = "An orange envirosuit identifying and protecting a criminal plasmaman. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "prisoner_envirosuit"
 	inhand_icon_state = "prisoner_envirosuit"
+	has_sensor = LOCKED_SENSORS
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/plasmaman/clown/Extinguish(mob/living/carbon/human/H)
 	if(!istype(H))

@@ -28,7 +28,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/tank/internals/anesthetic(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/mask/breath/medical(src)
+		new /obj/item/clothing/mask/breathmuzzle(src)
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"

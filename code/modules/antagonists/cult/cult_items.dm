@@ -420,8 +420,19 @@
 	inhand_icon_state = "cult_armor"
 	w_class = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 50, BOMB = 50, BIO = 30, RAD = 30, FIRE = 50, ACID = 60)
-	var/current_charges = 3
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
+
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/Initialize()
+	. = ..()
+	// note that these charges don't regenerate
+	AddComponent(/datum/component/shielded, recharge_start_delay = 0, shield_icon_file = 'icons/effects/cult_effects.dmi', shield_icon = "shield-cult", run_hit_callback = CALLBACK(src, .proc/shield_damaged))
+
+/// A proc for callback when the shield breaks, since cult robes are stupid and have different effects
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
+	wearer.visible_message("<span class='danger'>[wearer]'s robes neutralize [attack_text] in a burst of blood-red sparks!</span>")
+	new /obj/effect/temp_visual/cult/sparks(get_turf(wearer))
+	if(new_current_charges == 0)
+		wearer.visible_message("<span class='danger'>The runed shield around [wearer] suddenly disappears!</span>")
 
 /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 	name = "empowered cultist helmet"
@@ -437,22 +448,6 @@
 		user.dropItemToGround(src, TRUE)
 		user.Dizzy(30)
 		user.Paralyze(100)
-
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(current_charges)
-		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
-		current_charges--
-		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-		if(!current_charges)
-			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
-			owner.update_inv_wear_suit()
-		return TRUE
-	return FALSE
-
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
-	. = list()
-	if(!isinhands && current_charges)
-		. += mutable_appearance('icons/effects/cult_effects.dmi', "shield-cult", MOB_LAYER + 0.01)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"

@@ -168,7 +168,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/gasthelizard)
 "t" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 1
 	},
 /obj/machinery/power/apc{
@@ -183,18 +183,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/gasthelizard)
-"u" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/gasthelizard)
 "v" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/gasthelizard)
 "w" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 9
 	},
 /obj/machinery/light{
@@ -221,7 +215,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/gasthelizard)
 "A" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -248,7 +242,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/gasthelizard)
 "F" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 9
 	},
 /turf/open/floor/iron,
@@ -459,7 +453,7 @@ c
 d
 i
 p
-u
+A
 B
 B
 B
@@ -491,7 +485,7 @@ c
 f
 k
 p
-u
+A
 B
 B
 K
@@ -523,7 +517,7 @@ c
 g
 k
 p
-u
+A
 B
 B
 M
@@ -555,7 +549,7 @@ c
 f
 k
 p
-u
+A
 B
 B
 O

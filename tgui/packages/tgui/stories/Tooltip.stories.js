@@ -17,15 +17,16 @@ const Story = props => {
     'left',
     'right',
     'bottom',
+    'bottom-left',
+    'bottom-right',
   ];
   return (
     <Section>
       <Box>
-        <Tooltip content="Tooltip text.">
-          <Box inline position="relative" mr={1}>
-            Box (hover me).
-          </Box>
-        </Tooltip>
+        <Box inline position="relative" mr={1}>
+          Box (hover me).
+          <Tooltip content="Tooltip text." />
+        </Box>
         <Button
           tooltip="Tooltip text."
           content="Button" />

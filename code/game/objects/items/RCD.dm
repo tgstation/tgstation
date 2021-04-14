@@ -210,6 +210,10 @@ RLD
 		return FALSE
 	return TRUE
 
+#define RCD_DESTRUCTIVE_SCAN_RANGE 10
+#define RCD_HOLOGRAM_FADE_TIME (15 SECONDS)
+#define RCD_DESTRUCTIVE_SCAN_COOLDOWN (RCD_HOLOGRAM_FADE_TIME + 1 SECONDS)
+
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
 	icon = 'icons/obj/tools.dmi'
@@ -222,6 +226,7 @@ RLD
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
+	actions_types = list(/datum/action/item_action/rcd_scan)
 	var/mode = RCD_FLOORWALL
 	var/construction_mode = RCD_FLOORWALL
 	var/ranged = FALSE
@@ -239,6 +244,82 @@ RLD
 	var/canRturf = FALSE //Variable for R walls to deconstruct them
 	/// Integrated airlock electronics for setting access to a newly built airlocks
 	var/obj/item/electronics/airlock/airlock_electronics
+
+	COOLDOWN_DECLARE(destructive_scan_cooldown)
+
+GLOBAL_VAR_INIT(icon_holographic_wall, init_holographic_wall())
+GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
+
+// `initial` does not work here. Neither does instantiating a wall/whatever
+// and referencing that. I don't know why.
+/proc/init_holographic_wall()
+	return getHologramIcon(
+		icon('icons/turf/walls/wall.dmi', "wall-0"),
+		opacity = 1,
+	)
+
+/proc/init_holographic_window()
+	var/icon/grille_icon = icon('icons/obj/structures.dmi', "grille")
+	var/icon/window_icon = icon('icons/obj/smooth_structures/window.dmi', "window-0")
+
+	grille_icon.Blend(window_icon, ICON_OVERLAY)
+
+	return getHologramIcon(grille_icon)
+
+/obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
+	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
+		to_chat(user, "<span class='warning'>[src] lets out a low buzz.</span>")
+		return
+
+	COOLDOWN_START(src, destructive_scan_cooldown, RCD_DESTRUCTIVE_SCAN_COOLDOWN)
+
+	playsound(src, 'sound/items/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
+
+	var/turf/source_turf = get_turf(src)
+	for (var/turf/open/surrounding_turf in RANGE_TURFS(RCD_DESTRUCTIVE_SCAN_RANGE, source_turf))
+		var/rcd_memory = surrounding_turf.rcd_memory
+		if (!rcd_memory)
+			continue
+
+		var/skip_to_next_turf = FALSE
+
+		#if MIN_COMPILER_VERSION >= 514
+		#warn Please replace the loop below this warning with an `as anything` loop.
+		#endif
+
+		for (var/_content_of_turf in surrounding_turf.contents)
+			// `as anything` doesn't play well on 513 with special lists such as contents.
+			// When the minimum version is raised to 514, upgrade this to `as anything`.
+			var/atom/content_of_turf = _content_of_turf
+			if (content_of_turf.density)
+				skip_to_next_turf = TRUE
+				break
+
+		if (skip_to_next_turf)
+			continue
+
+		var/hologram_icon
+		switch (rcd_memory)
+			if (RCD_MEMORY_WALL)
+				hologram_icon = GLOB.icon_holographic_wall
+			if (RCD_MEMORY_WINDOWGRILLE)
+				hologram_icon = GLOB.icon_holographic_window
+
+		var/obj/effect/rcd_hologram/hologram = new (surrounding_turf)
+		hologram.icon = hologram_icon
+		animate(hologram, alpha = 0, time = RCD_HOLOGRAM_FADE_TIME, easing = CIRCULAR_EASING | EASE_IN)
+
+/obj/effect/rcd_hologram
+	name = "hologram"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/rcd_hologram/Initialize(mapload)
+	. = ..()
+	QDEL_IN(src, RCD_HOLOGRAM_FADE_TIME)
+
+#undef RCD_DESTRUCTIVE_SCAN_COOLDOWN
+#undef RCD_DESTRUCTIVE_SCAN_RANGE
+#undef RCD_HOLOGRAM_FADE_TIME
 
 /obj/item/construction/rcd/suicide_act(mob/living/user)
 	var/turf/T = get_turf(user)
@@ -1132,10 +1213,13 @@ RLD
 /obj/item/rcd_upgrade/silo_link
 	desc = "It contains direct silo connection RCD upgrade."
 	upgrade = RCD_UPGRADE_SILO_LINK
-
 /obj/item/rcd_upgrade/furnishing
 	desc = "It contains the design for chairs, stools, tables, and glass tables."
 	upgrade = RCD_UPGRADE_FURNISHING
+
+/datum/action/item_action/rcd_scan
+	name = "Destruction Scan"
+	desc = "Scans the surrounding area for destruction. Scanned structures will rebuild significantly faster."
 
 #undef GLOW_MODE
 #undef LIGHT_MODE

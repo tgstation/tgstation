@@ -138,13 +138,15 @@
 	..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
-	..()
 	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on)
 		on = FALSE
 		return FALSE
-	scrub(loc)
+	var/turf/open/us = loc
+	if(!istype(us))
+		return
+	scrub(us)
 	if(widenet)
 		for(var/turf/tile in adjacent_turfs)
 			scrub(tile)

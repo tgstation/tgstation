@@ -140,7 +140,7 @@
 			var/new_sec_level = seclevel2num(params["newSecurityLevel"])
 			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
 				return
-			if (GLOB.security_level == new_sec_level)
+			if (SSsecurity_level.current_level == new_sec_level)
 				return
 
 			set_security_level(new_sec_level)
@@ -161,6 +161,12 @@
 			if (!message_index)
 				return
 			LAZYREMOVE(messages, LAZYACCESS(messages, message_index))
+		if ("emergency_meeting")
+			if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
+				return
+			if (!authenticated_as_silicon_or_captain(usr))
+				return
+			emergency_meeting(usr)
 		if ("makePriorityAnnouncement")
 			if (!authenticated_as_silicon_or_captain(usr))
 				return
@@ -399,7 +405,7 @@
 				data["importantActionReady"] = COOLDOWN_FINISHED(src, important_action_cooldown)
 				data["shuttleCalled"] = FALSE
 				data["shuttleLastCalled"] = FALSE
-
+				data["aprilFools"] = SSevents.holidays && SSevents.holidays[APRIL_FOOLS]
 				data["alertLevel"] = get_security_level()
 				data["authorizeName"] = authorize_name
 				data["canLogOut"] = !issilicon(user)
@@ -519,6 +525,23 @@
 		return
 
 	return length(CONFIG_GET(keyed_list/cross_server)) > 0
+
+/**
+ * Call an emergency meeting
+ *
+ * Comm Console wrapper for the Communications subsystem wrapper for the call_emergency_meeting world proc.
+ * Checks to make sure the proc can be called, and handles relevant feedback, logging and timing.
+ * See the SScommunications proc definition for more detail, in short, teleports the entire crew to
+ * the bridge for a meetup. Should only really happen during april fools.
+ * Arguments:
+ * * user - Mob who called the meeting
+ */
+/obj/machinery/computer/communications/proc/emergency_meeting(mob/living/user)
+	if(!SScommunications.can_make_emergency_meeting(user))
+		to_chat(user, "<span class='alert'>The emergency meeting button doesn't seem to work right now. Please stand by.</span>")
+		return
+	SScommunications.emergency_meeting(user)
+	deadchat_broadcast(" called an emergency meeting from <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = issilicon(user)

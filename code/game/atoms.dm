@@ -128,6 +128,11 @@
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
+	///The config type to use for greyscaled sprites. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_config
+	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
+	var/greyscale_colors
+
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
@@ -515,9 +520,6 @@
 /atom/proc/AllowDrop()
 	return FALSE
 
-/atom/proc/CheckExit()
-	return TRUE
-
 ///Is this atom within 1 tile of another atom
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
@@ -695,6 +697,13 @@
 		update_icon_state()
 		. |= UPDATE_ICON_STATE
 
+	if(updates & UPDATE_GREYSCALE)
+		var/list/colors = update_greyscale()
+		// Updating the greyscale config in update_greyscale() is fine or we would check this earlier
+		if(greyscale_config)
+			icon = SSgreyscale.GetColoredIconByType(greyscale_config, colors)
+		. |= UPDATE_GREYSCALE
+
 	if(updates & UPDATE_OVERLAYS)
 		if(LAZYLEN(managed_vis_overlays))
 			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
@@ -714,6 +723,14 @@
 /atom/proc/update_icon_state()
 	SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
+
+/atom/proc/update_greyscale()
+	SHOULD_CALL_PARENT(TRUE)
+	. = list()
+	var/list/raw_rgb = splittext(greyscale_colors, "#")
+	for(var/i in 2 to length(raw_rgb))
+		. += "#[raw_rgb[i]]"
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE, .)
 
 /// Updates the overlays of the atom
 /atom/proc/update_overlays()
@@ -1171,6 +1188,8 @@
 	VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
+	if(greyscale_colors)
+		VV_DROPDOWN_OPTION(VV_HK_MODIFY_GREYSCALE, "Modify greyscale colors")
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()
@@ -1282,14 +1301,15 @@
  * An atom is attempting to exit this atom's contents
  *
  * Default behaviour is to send the [COMSIG_ATOM_EXIT]
- *
- * Return value should be set to FALSE if the moving atom is unable to leave,
- * otherwise leave value the result of the parent call
  */
 /atom/Exit(atom/movable/AM, atom/newLoc)
-	. = ..()
+	// Don't call `..()` here, otherwise `Uncross()` gets called.
+	// See the doc comment on `Uncross()` to learn why this is bad.
+
 	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
 		return FALSE
+
+	return TRUE
 
 /**
  * An atom has exited this atom's contents
