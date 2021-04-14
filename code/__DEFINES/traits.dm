@@ -440,6 +440,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Minor trait used for beakers, or beaker-ishes. [/obj/item/reagent_containers], to show that they've been used in a reagent grinder.
 #define TRAIT_MAY_CONTAIN_BLENDED_DUST "may_contain_blended_dust"
 
+///Trait applied to turfs when an atmos holosign is placed on them. It will stop firedoors from closing.
+#define TRAIT_FIREDOOR_STOP "firedoor_stop"
+
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
 #define CAT_QUIRK_NOTES 1
@@ -594,6 +597,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Self-explainatory.
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_COMPONENT_TRAIT "mood_component"
+#define DRONE_SHY_TRAIT "drone_shy"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

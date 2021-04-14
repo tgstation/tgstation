@@ -712,7 +712,7 @@
 			if(reagent.overdosed)
 				need_mob_update += reagent.overdose_process(owner, delta_time, times_fired)
 
-			need_mob_update += reagent.on_mob_life(owner, delta_time, times_fired)
+		need_mob_update += reagent.on_mob_life(owner, delta_time, times_fired)
 	return need_mob_update
 
 /// Signals that metabolization has stopped, triggering the end of trait-based effects
