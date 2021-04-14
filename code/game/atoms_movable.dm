@@ -651,7 +651,7 @@
 
 		if(!same_loc)
 			if(oldloc)
-				SEND_SIGNAL(oldloc, COMSIG_MOVABLE_UNCROSSED)
+				SEND_SIGNAL(oldloc, COMSIG_MOVABLE_UNCROSSED, src)
 				oldloc.Exited(src, destination)
 				if(old_area && old_area != destarea)
 					old_area.Exited(src, destination)
@@ -677,7 +677,7 @@
 		var/atom/oldloc = loc
 		if (loc)
 			var/area/old_area = get_area(oldloc)
-			SEND_SIGNAL(oldloc, COMSIG_MOVABLE_UNCROSSED)
+			SEND_SIGNAL(oldloc, COMSIG_MOVABLE_UNCROSSED, src)
 			oldloc.Exited(src, null)
 			if(old_area)
 				old_area.Exited(src, null)
