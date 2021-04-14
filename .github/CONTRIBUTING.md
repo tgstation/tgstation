@@ -548,7 +548,7 @@ for (var/i in reagents)
 ```
 
 ### Icons are for image manipulation and defining an obj's `.icon` var, appearances are for everything else.
-Byond will allow you to use a raw icon file or even an icon datum for underlays, overlays, and what not (You can even use strings to refer to an icon state on the current icon). The issue is these get converted by byond to appearances on every overlay insert or removal involving them, and this process requires inserting the new appearance into the global list of appearances, and informing clients about them.
+BYOND will allow you to use a raw icon file or even an icon datum for underlays, overlays, and what not (you can even use strings to refer to an icon state on the current icon). The issue is these get converted by BYOND to appearances on every overlay insert or removal involving them, and this process requires inserting the new appearance into the global list of appearances, and informing clients about them.
 
 Converting them yourself to appearances and storing this converted value will ensure this process only has to happen once for the lifetime of the round. Helper functions exist to do most of the work for you.
 
@@ -584,7 +584,7 @@ Good:
 Note: images are appearances with extra steps, and don't incur the overhead in conversion.
 
 
-### Do not abuse assoicated lists.
+### Do not abuse associated lists.
 Associated lists that could instead be variables or statically defined number indexed lists will use more memory, as associated lists have a 24 bytes per item overhead (vs 8 for lists and most vars), and are slower to search compared to static/global variables and lists with known indexes.
 
 
@@ -614,9 +614,9 @@ Good:
 #undef OUR_OFF_OVERLAY
 #undef OUR_BROKEN_OVERLAY
 ```
-Storing these in a flat (non-assoicated) list saves on memory, and using defines to reference locations in the list saves cpu time searching the list.
+Storing these in a flat (non-associated) list saves on memory, and using defines to reference locations in the list saves CPU time searching the list.
 
-Also Good:
+Also good:
 ```dm
 /obj/machine/update_overlays(var/blah)
 	var/static/on_overlay = iconstate2appearance(overlay_icon, "on")
@@ -627,9 +627,9 @@ Also Good:
 		return
 	...
 ```
-Proc variables, static variables, and global variables are resolved at compile time, so the above is equalivent to the second example, but is easier to read, and avoids the need to store a list.
+Proc variables, static variables, and global variables are resolved at compile time, so the above is equivalent to the second example, but is easier to read, and avoids the need to store a list.
 
-Note: While there has historically been a strong impulse to use assoicated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. Its normally better for consumers of such systems to handle their own caching using vars and number indexed lists, then for you to do it using assoicated lists.
+Note: While there has historically been a strong impulse to use associated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. It's normally better for consumers of such systems to handle their own caching using vars and number indexed lists, than for you to do it using associated lists.
 
 
 ### Other Notes
