@@ -145,6 +145,7 @@
 	return
 
 /obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
+	START_PROCESSING(SSobj, src)
 	air_contents.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
 	var/fuel_moles = air_contents.gases[/datum/gas/plasma][MOLES] + air_contents.gases[/datum/gas/oxygen][MOLES]/6
 	air_contents.garbage_collect()
@@ -199,7 +200,7 @@
 	ground_zero.air_update_turf(FALSE, FALSE)
 
 /obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
-	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
+	var/datum/gas_mixture/removed = remove_air(air_contents.total_moles())
 	var/turf/T = get_turf(src)
 	if(!T)
 		return

@@ -36,16 +36,17 @@
 /obj/machinery/power/rad_collector/process(delta_time)
 	if(!loaded_tank)
 		return
-	if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
+	var/datum/gas_mixture/tank_mix = loaded_tank.return_air()
+	if(!tank_mix.gases[/datum/gas/plasma])
 		investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
 		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 		eject()
 	else
-		var/gasdrained = min(powerproduction_drain*drainratio*delta_time,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
-		loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= gasdrained
-		loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
-		loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained
-		loaded_tank.air_contents.garbage_collect()
+		var/gasdrained = min(powerproduction_drain * drainratio * delta_time, tank_mix.gases[/datum/gas/plasma][MOLES])
+		tank_mix.gases[/datum/gas/plasma][MOLES] -= gasdrained
+		tank_mix.assert_gas(/datum/gas/tritium)
+		tank_mix.gases[/datum/gas/tritium][MOLES] += gasdrained
+		tank_mix.garbage_collect()
 
 		var/power_produced = RAD_COLLECTOR_OUTPUT
 		add_avail(power_produced)

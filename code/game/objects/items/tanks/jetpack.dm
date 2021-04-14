@@ -26,8 +26,9 @@
 
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)
-		air_contents.assert_gas(gas_type)
-		air_contents.gases[gas_type][MOLES] = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+		var/datum/gas_mixture/our_mix = return_air()
+		our_mix.assert_gas(gas_type)
+		our_mix.gases[gas_type][MOLES] = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/tank/jetpack/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_jetpack))
@@ -99,7 +100,7 @@
 		turn_off(user)
 		return
 
-	var/datum/gas_mixture/removed = air_contents.remove(num)
+	var/datum/gas_mixture/removed = remove_air(num)
 	if(removed.total_moles() < 0.005)
 		turn_off(user)
 		return
@@ -223,7 +224,7 @@
 		return
 	var/mob/living/carbon/human/H = user
 	tank = H.s_store
-	air_contents = tank.air_contents
+	air_contents = tank.return_air()
 	START_PROCESSING(SSobj, src)
 	cur_user = user
 	..()
@@ -243,7 +244,8 @@
 	if(!tank || tank != H.s_store)
 		turn_off(cur_user)
 		return
-	..()
+	excited = TRUE
+	return ..()
 
 
 //Return a jetpack that the mob can use

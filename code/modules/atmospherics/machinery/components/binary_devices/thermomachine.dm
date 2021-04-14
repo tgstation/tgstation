@@ -370,7 +370,7 @@
 		if("pumping")
 			if(holding && nodes[2])
 				var/datum/gas_mixture/thermal_exchange_port = airs[2]
-				var/datum/gas_mixture/remove = holding.air_contents.remove(holding.air_contents.total_moles())
+				var/datum/gas_mixture/remove = holding.remove_air(holding.air_contents.total_moles())
 				thermal_exchange_port.merge(remove)
 				. = TRUE
 		if("eject")

@@ -36,6 +36,8 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
 	var/tank_holder_icon_state = "holder_generic"
+	///Used by process() to track if there's a reason to process each tick
+	var/excited = TRUE
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -205,15 +207,18 @@
 				distribute_pressure = clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 
 /obj/item/tank/remove_air(amount)
+	START_PROCESSING(SSobj, src)
 	return air_contents.remove(amount)
 
 /obj/item/tank/return_air()
+	START_PROCESSING(SSobj, src)
 	return air_contents
 
 /obj/item/tank/return_analyzable_air()
 	return air_contents
 
 /obj/item/tank/assume_air(datum/gas_mixture/giver)
+	START_PROCESSING(SSobj, src)
 	air_contents.merge(giver)
 	handle_tolerances(ASSUME_AIR_DT_FACTOR)
 	return TRUE
@@ -247,8 +252,12 @@
 		return
 
 	//Allow for reactions
-	air_contents.react(src)
-	handle_tolerances(delta_time)
+	excited = (excited || air_contents.react(src))
+	excited = (excited || handle_tolerances(delta_time))
+	excited = (excited || leaking)
+
+	if(!excited)
+		STOP_PROCESSING(SSobj, src)
 	if(QDELETED(src) || !leaking || !air_contents)
 		return
 	var/turf/location = get_turf(src)
@@ -288,6 +297,8 @@
 		return
 
 	leaking = TRUE
+	START_PROCESSING(SSobj, src)
+
 	if(obj_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
 		return
 	visible_message("<span class='warning'>[src] springs a leak!</span>")
@@ -338,5 +349,6 @@
 
 	if(gas_change)
 		air_contents.garbage_collect()
+		START_PROCESSING(SSobj, src)
 
 #undef ASSUME_AIR_DT_FACTOR

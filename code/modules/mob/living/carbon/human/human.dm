@@ -66,7 +66,7 @@
 	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 	. += "Move Mode: [m_intent]"
 	if (internal)
-		if (!internal.air_contents)
+		if (!internal.return_air())
 			qdel(internal)
 		else
 			. += ""

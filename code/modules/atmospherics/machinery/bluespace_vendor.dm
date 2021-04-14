@@ -112,7 +112,7 @@
 	if(!selected_gas)
 		return
 	var/gas_path = gas_id2path(selected_gas)
-	connected_machine.bluespace_network.pump_gas_to(internal_tank.air_contents, (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
+	connected_machine.bluespace_network.pump_gas_to(internal_tank.return_air(), (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
 
 /obj/machinery/bluespace_vendor/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!istype(multitool))
@@ -189,7 +189,7 @@
 	gas_price = temp_price
 
 	if(attempt_charge(src, user, gas_price) & COMPONENT_OBJ_CANCEL_CHARGE)
-		var/datum/gas_mixture/remove = internal_tank.air_contents.remove(internal_tank.air_contents.total_moles())
+		var/datum/gas_mixture/remove = internal_tank.remove_air(internal_tank.air_contents.total_moles())
 		connected_machine.bluespace_network.merge(remove)
 		return
 	connected_machine.credits_gained += gas_price + tank_cost
