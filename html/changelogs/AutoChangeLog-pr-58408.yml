@@ -1,0 +1,5 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - balance: "Ethereal blood no longer shocks."
+  - balance: "Liquid electricity found in food is now enriched, retaining the effect removed from the liquid electricity found in blood, which has less electrical properties. Enriched liquid electricity can also raise an ethereals blood levels"
