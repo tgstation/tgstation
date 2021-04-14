@@ -330,7 +330,7 @@
 	if(user)
 		if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
 			target = pick(orange(2, target))
-		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, user, target, params, zone_override)
+		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, src, target, params, zone_override)
 
 	SEND_SIGNAL(src, COMSIG_GUN_FIRED, user, target, params, zone_override)
 

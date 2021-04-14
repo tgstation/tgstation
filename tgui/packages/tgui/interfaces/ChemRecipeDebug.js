@@ -22,14 +22,17 @@ export const ChemRecipeDebug = (props, context) => {
     endIndex,
     beakerSpawn,
     minTemp,
+    editRecipeName,
+    editRecipeCold,
+    editRecipe = [],
     chamberContents = [],
     activeReactions = [],
     queuedReactions = [],
   } = data;
   return (
     <Window
-      width={330}
-      height={450}>
+      width={450}
+      height={850}>
       <Window.Content scrollable>
         <Section
           title="Controls"
@@ -135,6 +138,54 @@ export const ChemRecipeDebug = (props, context) => {
                 color="red"
                 content={"Stop"}
                 onClick={() => act('stop')} />
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+        <Section
+          title="Recipe edit">
+          <LabeledList>
+            <LabeledList.Item label={editRecipeName ? editRecipeName : "lookup"}>
+              <Button
+                icon={'flask'}
+                color="purple"
+                content={"Select recipe"}
+                onClick={() => act('setEdit')} />
+            </LabeledList.Item>
+            {!!editRecipe && (
+              <>
+                <LabeledList.Item label="is_cold_recipe">
+                  <Button
+                    icon={editRecipeCold ? 'smile' : 'times'}
+                    color={editRecipeCold ? 'green' : 'red'}
+                    content={"Cold?"}
+                    onClick={() => act("updateVar", {
+                      type: entry.name,
+                      target: value,
+                    })} />
+                </LabeledList.Item>
+                {editRecipe.map(entry => (
+                  <LabeledList.Item label={entry.name} key={entry.name}>
+                    <NumberInput
+                      width="65px"
+                      step={1}
+                      stepPixelSize={3}
+                      value={entry.var}
+                      minValue={-9999}
+                      maxValue={9999}
+                      onDrag={(e, value) => act("updateVar", {
+                        type: entry.name,
+                        target: value,
+                      })} />
+                  </LabeledList.Item>
+                ))}
+              </>
+            )}
+            <LabeledList.Item label="Export">
+              <Button
+                icon={'save'}
+                color="green"
+                content={"export"}
+                onClick={() => act('export')} />
             </LabeledList.Item>
           </LabeledList>
         </Section>

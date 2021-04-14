@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /datum/chemical_reaction/randomized
 
 	//Increase default leniency because these are already hard enough
-	optimal_ph_min = 1 
+	optimal_ph_min = 1
 	optimal_ph_max = 13
 	temp_exponent_factor = 0
 	ph_exponent_factor = 1
@@ -92,28 +92,28 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	if(randomize_req_temperature)
 		is_cold_recipe = pick(TRUE,FALSE)
 		if(is_cold_recipe)
-			required_temp = rand(min_temp+50, max_temp) 
-			optimal_temp = rand(min_temp+25, required_temp-10) 
+			required_temp = rand(min_temp+50, max_temp)
+			optimal_temp = rand(min_temp+25, required_temp-10)
 			overheat_temp = rand(min_temp, optimal_temp-10)
 			if(overheat_temp >= 200) //Otherwise it can disappear when you're mixing and I don't want this to happen here
 				overheat_temp = 200
 			if(exo_or_endothermic)
 				thermic_constant = (rand(-200, 200))
 		else
-			required_temp = rand(min_temp, max_temp-50) 
-			optimal_temp = rand(required_temp+10, max_temp-25) 
+			required_temp = rand(min_temp, max_temp-50)
+			optimal_temp = rand(required_temp+10, max_temp-25)
 			overheat_temp = rand(optimal_temp, max_temp+50)
 			if(overheat_temp <= 400)
 				overheat_temp = 400
 			if(exo_or_endothermic)
 				thermic_constant = (rand(-200, 200))
-	
+
 	if(randomize_req_ph)
 		optimal_ph_min = min_ph + rand(0, inoptimal_range_ph)
 		optimal_ph_max = max((max_ph + rand(0, inoptimal_range_ph)), (min_ph + 1)) //Always ensure we've a window of 1
 		determin_ph_range = inoptimal_range_ph
 		H_ion_release = (rand(0, 25)/100)// 0 - 0.25
-	
+
 	if(randomize_impurity_minimum)
 		purity_min = (rand(0, 4)/10)
 
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
 /datum/chemical_reaction/randomized/proc/HasConflicts()
 	for(var/x in required_reagents)
-		for(var/datum/chemical_reaction/R in GLOB.chemical_reactions_list[x])
+		for(var/datum/chemical_reaction/R in GLOB.chemical_reactions_list_reactant_index[x])
 			if(chem_recipes_do_conflict(R,src))
 				return TRUE
 	return FALSE

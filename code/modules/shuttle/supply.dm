@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
-		for(var/turf/shuttle_turf as anything in shuttle_area)
+		for(var/turf/shuttle_turf in shuttle_area)
 			for(var/atom/passenger in shuttle_turf.GetAllContents())
 				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
 					return FALSE
