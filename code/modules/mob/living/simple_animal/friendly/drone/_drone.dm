@@ -127,20 +127,6 @@
 	var/list/drone_area_blacklist_flat = list(/area/engineering/atmos, /area/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
 	var/list/drone_area_blacklist_recursive = list(/area/engineering/supermatter)
-	/// whitelisted drone machines, direct
-	var/list/drone_machinery_whitelist_flat
-	/// whitelisted drone machines, recursive/includes descendants
-	var/list/drone_machinery_whitelist_recursive = list(
-		/obj/machinery/atmospherics,
-		/obj/machinery/autolathe,
-		/obj/machinery/cell_charger,
-		/obj/machinery/disposal,
-		/obj/machinery/drone_dispenser,
-		/obj/machinery/light,
-		/obj/machinery/pipedispenser,
-		/obj/machinery/recharger,
-		/obj/machinery/rnd/production,
-	)
 	/// whitelisted drone items, direct
 	var/list/drone_item_whitelist_flat = list(
 		/obj/item/crowbar/drone,
@@ -366,19 +352,18 @@
 
 /mob/living/simple_animal/drone/proc/shy_update()
 	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
-	var/list/drone_good_machines = make_associative(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive)
 	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		LoadComponent(/datum/component/shy, typecacheof(/mob/living/simple_animal/drone), 4, "Your laws prevent this action near %TARGET.", TRUE)
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
-		LoadComponent(/datum/component/technointrovert, drone_good_machines, "Using %TARGET could break your laws.")
+		LoadComponent(/datum/component/technoshy, 5 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		qdel(GetComponent(/datum/component/shy))
 		qdel(GetComponent(/datum/component/shy_in_room))
-		qdel(GetComponent(/datum/component/technointrovert))
+		qdel(GetComponent(/datum/component/technoshy))
 		qdel(GetComponent(/datum/component/itempicky))
 
 /mob/living/simple_animal/drone/handle_temperature_damage()

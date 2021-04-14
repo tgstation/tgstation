@@ -555,6 +555,7 @@
 #include "code\datums\components\tackle.dm"
 #include "code\datums\components\tactical.dm"
 #include "code\datums\components\technointrovert.dm"
+#include "code\datums\components\technoshy.dm"
 #include "code\datums\components\tether.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\twohanded.dm"

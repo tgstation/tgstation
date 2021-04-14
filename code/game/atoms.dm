@@ -1353,6 +1353,7 @@
  * Must return  parent proc ..() in the end if overridden
  */
 /atom/proc/tool_act(mob/living/user, obj/item/I, tool_type, is_right_clicking)
+	var/act_result
 	var/signal_result
 	if(!is_right_clicking) // Left click first for sensibility
 		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
@@ -1363,38 +1364,40 @@
 			return TRUE
 		switch(tool_type)
 			if(TOOL_CROWBAR)
-				. = crowbar_act(user, I,)
+				act_result = crowbar_act(user, I,)
 			if(TOOL_MULTITOOL)
-				. = multitool_act(user, I)
+				act_result = multitool_act(user, I)
 			if(TOOL_SCREWDRIVER)
-				. = screwdriver_act(user, I)
+				act_result = screwdriver_act(user, I)
 			if(TOOL_WRENCH)
-				. = wrench_act(user, I)
+				act_result = wrench_act(user, I)
 			if(TOOL_WIRECUTTER)
-				. = wirecutter_act(user, I)
+				act_result = wirecutter_act(user, I)
 			if(TOOL_WELDER)
-				. = welder_act(user, I)
+				act_result = welder_act(user, I)
 			if(TOOL_ANALYZER)
-				. = analyzer_act(user, I)
+				act_result = analyzer_act(user, I)
 	else
 		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, I)
 		switch(tool_type)
 			if(TOOL_CROWBAR)
-				. = crowbar_act_secondary(user, I,)
+				act_result = crowbar_act_secondary(user, I,)
 			if(TOOL_MULTITOOL)
-				. = multitool_act_secondary(user, I)
+				act_result = multitool_act_secondary(user, I)
 			if(TOOL_SCREWDRIVER)
-				. = screwdriver_act_secondary(user, I)
+				act_result = screwdriver_act_secondary(user, I)
 			if(TOOL_WRENCH)
-				. = wrench_act_secondary(user, I)
+				act_result = wrench_act_secondary(user, I)
 			if(TOOL_WIRECUTTER)
-				. = wirecutter_act_secondary(user, I)
+				act_result = wirecutter_act_secondary(user, I)
 			if(TOOL_WELDER)
-				. = welder_act_secondary(user, I)
+				act_result = welder_act_secondary(user, I)
 			if(TOOL_ANALYZER)
-				. = analyzer_act_secondary(user, I)
-	if(. || signal_result & COMPONENT_BLOCK_TOOL_ATTACK) //Either the proc or the signal handled the tool's events in some way.
-		return TRUE
+				act_result = analyzer_act_secondary(user, I)
+	if(act_result) // A tooltype_act has completed successfully
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	else if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
+		return TOOL_ACT_SIGNAL_BLOCKING
 
 
 /atom/proc/process_recipes(mob/living/user, obj/item/I, list/processing_recipes)
