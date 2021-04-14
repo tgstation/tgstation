@@ -97,6 +97,8 @@
 	if(new_icon)
 		return icon(new_icon)
 	var/list/colors = ParseColorString(color_string)
+	if(length(colors) != expected_colors)
+		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
 	new_icon = GenerateLayerGroup(colors, layers)
 	// We read a pixel to force the icon to be fully generated before we let it loose into the world
 	// I hate this
