@@ -16,7 +16,7 @@
 
 /datum/chemical_reaction/drink/goldschlager
 	results = list(/datum/reagent/consumable/ethanol/goldschlager = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 10, /datum/reagent/gold = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = GOLDSCHLAGER_VODKA, /datum/reagent/gold = GOLDSCHLAGER_GOLD)
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY
 
 /datum/chemical_reaction/drink/patron
