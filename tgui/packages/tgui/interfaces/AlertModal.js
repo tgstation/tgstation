@@ -24,8 +24,8 @@ export const AlertModal = (props, context) => {
       width={350}
       height={150}>
       {timeout !== undefined && <Loader value={timeout} />}
-      <Section fill>
-        <Window.Content>
+      <Window.Content>
+        <Section fill>
           <Flex direction="column" height="100%">
             <Flex.Item grow={1}>
               <Flex
@@ -53,8 +53,8 @@ export const AlertModal = (props, context) => {
               </Flex>
             </Flex.Item>
           </Flex>
-        </Window.Content>
-      </Section>
+        </Section>
+      </Window.Content>
     </Window>
   );
 };
