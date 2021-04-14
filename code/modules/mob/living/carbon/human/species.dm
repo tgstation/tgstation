@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list()
 	///Generic traits tied to having the species.
-	var/list/inherent_traits = list(TRAIT_ADVANCEDTOOLUSER)
+	var/list/inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP)
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.
