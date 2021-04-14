@@ -449,7 +449,7 @@ GLOBAL_LIST_INIT(react_chances, list(1,2))
 	var/rand_output = pick(GLOB.react_chances)
 	if(rand_output == 1)
 		return react_old(holder)
-	else if (rand_output == 3)
+	else if (rand_output == 2)
 		return react_hybrid(holder)
 
 ///Performs various reactions such as combustion or fusion (LOL)
