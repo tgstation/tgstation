@@ -14,6 +14,8 @@
 	var/obj/item/tank/holding
 	///Volume (in L) of the inside of the machine
 	var/volume = 0
+	///Used to track if anything of note has happen while running process_atmos()
+	var/excited = TRUE
 
 /obj/machinery/portable_atmospherics/Initialize()
 	. = ..()
@@ -44,10 +46,14 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
-	if(!connected_port) // Pipe network handles reactions if connected.
-		air_contents.react(src)
+	if(!connected_port) // Pipe network handles reactions if connected, and we can't stop processing if there's a port effecting our mix
+		excited = (excited | air_contents.react(src))
+		if(!excited)
+			return PROCESS_KILL
+	excited = FALSE
 
 /obj/machinery/portable_atmospherics/return_air()
+	SSair.start_processing_machine(src)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/return_analyzable_air()
@@ -76,6 +82,8 @@
 	anchored = TRUE //Prevent movement
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
+
+	SSair.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -95,6 +103,8 @@
 	connected_port = null
 	pixel_x = 0
 	pixel_y = 0
+
+	SSair.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -129,6 +139,8 @@
 		holding = null
 	if(new_tank)
 		holding = new_tank
+
+	SSair.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -206,3 +218,4 @@
 
 	if(gas_change)
 		air_contents.garbage_collect()
+		SSair.start_processing_machine(src)

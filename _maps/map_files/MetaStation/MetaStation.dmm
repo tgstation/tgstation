@@ -73186,9 +73186,7 @@
 /turf/open/floor/circuit/green,
 /area/science/nanite)
 "vaC" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide{
-	valve_open = 1
-	},
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "vaD" = (

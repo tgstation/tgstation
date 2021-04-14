@@ -252,12 +252,14 @@
 		return
 
 	//Allow for reactions
-	excited = (excited || air_contents.react(src))
-	excited = (excited || handle_tolerances(delta_time))
-	excited = (excited || leaking)
+	excited = (excited | air_contents.react(src))
+	excited = (excited | handle_tolerances(delta_time))
+	excited = (excited | leaking)
 
 	if(!excited)
 		STOP_PROCESSING(SSobj, src)
+	excited = FALSE
+
 	if(QDELETED(src) || !leaking || !air_contents)
 		return
 	var/turf/location = get_turf(src)
@@ -270,6 +272,7 @@
 /**
  * Handles the minimum and maximum pressure tolerances of the tank.
  *
+ * Returns true if it did anything of significance, false otherwise
  * Arguments:
  * - delta_time: How long has passed between ticks.
  */
@@ -288,7 +291,8 @@
 	if(pressure >= TANK_LEAK_PRESSURE)
 		var/pressure_damage_ratio = (pressure - TANK_LEAK_PRESSURE) / (TANK_RUPTURE_PRESSURE - TANK_LEAK_PRESSURE)
 		take_damage(max_integrity * pressure_damage_ratio * delta_time, BRUTE, BOMB, FALSE, NONE)
-	return TRUE
+		return TRUE
+	return FALSE
 
 /// Handles the tank springing a leak.
 /obj/item/tank/obj_break(damage_flag)
