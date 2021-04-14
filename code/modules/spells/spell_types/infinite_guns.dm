@@ -5,7 +5,7 @@
 	include_user = TRUE
 	range = -1
 
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 750
 	clothes_req = TRUE
 	cooldown_min = 10 //Gun wizard

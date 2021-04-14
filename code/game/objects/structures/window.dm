@@ -73,7 +73,7 @@
 	)
 
 	if (flags_1 & ON_BORDER_1)
-		AddElement(/datum/element/connect_loc, loc_connections)
+		AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/structure/window/ComponentInitialize()
 	. = ..()

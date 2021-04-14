@@ -30,12 +30,58 @@
 	required_reagents = list(/datum/reagent/medicine/c2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
 	mix_message = "The mixture bubbles noticeably and becomes a dark grey color!"
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_ORGAN
+	//Fermichem vars
+	required_temp = 200
+	optimal_temp = 400
+	overheat_temp = 600
+	optimal_ph_min = 4.8
+	optimal_ph_max = 8.5
+	determin_ph_range = 5
+	temp_exponent_factor = 0.4
+	ph_exponent_factor = 1.7
+	thermic_constant = 1
+	H_ion_release = 0.01
+	rate_up_lim = 14.5
+	purity_min = 0.3
+
+/datum/chemical_reaction/medicine/oculine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	. = ..()
+	explode_flash(equilibrium.reacted_vol/10, 10)
+
+/datum/chemical_reaction/medicine/oculine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	. = ..()
+	explode_flash(3, 30)
+
 
 /datum/chemical_reaction/medicine/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/c2/multiver = 1)
 	mix_message = "The mixture sputters loudly and becomes a light grey color!"
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_ORGAN
+	//Fermichem vars
+	required_temp = 200
+	optimal_temp = 400
+	overheat_temp = 450
+	optimal_ph_min = 2
+	optimal_ph_max = 5
+	determin_ph_range = 10
+	temp_exponent_factor = 3
+	ph_exponent_factor = 0.5
+	thermic_constant = 200
+	H_ion_release = 0.05
+	rate_up_lim = 50
+	purity_min = 0.25
+
+///Calls it over and over
+/datum/chemical_reaction/medicine/inacusiate/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))]The [holder.my_atom] suddenly gives out a loud bang!</span>")
+	explode_deafen(holder, equilibrium, 0.5, 10, 3)
+
+/datum/chemical_reaction/medicine/inacusiate/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	var/power = equilibrium.reacted_vol/10
+	holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))]The [holder.my_atom] suddenly gives out an ear-crushingly loud bang!</span>")
+	explode_deafen(holder, equilibrium, power/2, power*2, max(power/2, 3))
+	clear_products(holder)
 
 /datum/chemical_reaction/medicine/synaptizine
 	results = list(/datum/reagent/medicine/synaptizine = 3)
@@ -110,7 +156,26 @@
 	results = list(/datum/reagent/medicine/ephedrine = 4)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/fuel/oil = 1, /datum/reagent/hydrogen = 1, /datum/reagent/diethylamine = 1)
 	mix_message = "The solution fizzes and gives off toxic fumes."
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER | REACTION_TAG_DANGEROUS
+	//FermiChem vars:
+	required_temp = 200
+	optimal_temp = 300
+	overheat_temp = 500
+	optimal_ph_min = 7
+	optimal_ph_max = 9
+	determin_ph_range = 3
+	temp_exponent_factor = 0.1
+	ph_exponent_factor = 0.8
+	thermic_constant = -0.25
+	H_ion_release = -0.02
+	rate_up_lim = 15
+	purity_min = 0.32
+
+/datum/chemical_reaction/medicine/ephedrine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	default_explode(holder, equilibrium.reacted_vol, 0, 25)
+
+/datum/chemical_reaction/medicine/ephedrine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	default_explode(holder, equilibrium.reacted_vol, 0, 20)
 
 /datum/chemical_reaction/medicine/diphenhydramine
 	results = list(/datum/reagent/medicine/diphenhydramine = 4)
@@ -143,11 +208,54 @@
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/hydrogen = 1, /datum/reagent/water = 1)
 	mix_message = "The solution slightly bubbles, becoming thicker."
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_ORGAN
+	//FermiChem vars:
+	required_temp = 50
+	optimal_temp = 300
+	overheat_temp = 650
+	optimal_ph_min = 5
+	optimal_ph_max = 7.5
+	determin_ph_range = 3
+	temp_exponent_factor = 1
+	ph_exponent_factor = 1
+	thermic_constant = 100
+	H_ion_release = 0
+	rate_up_lim = 10
+	purity_min = 0.4
+
+/datum/chemical_reaction/medicine/mannitol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	if(off_cooldown(holder, equilibrium, 10, "mannitol"))
+		explode_attack_chem(holder, equilibrium, /datum/reagent/impurity/mannitol, 5)
+		explode_invert_smoke(holder, equilibrium)
+
+/datum/chemical_reaction/medicine/mannitol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	overheated(holder, equilibrium, vol_added)
 
 /datum/chemical_reaction/medicine/neurine
 	results = list(/datum/reagent/medicine/neurine = 3)
 	required_reagents = list(/datum/reagent/medicine/mannitol = 1, /datum/reagent/acetone = 1, /datum/reagent/oxygen = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_ORGAN
+	//FermiChem vars:
+	required_temp = 100
+	optimal_temp = 500
+	overheat_temp = 700
+	optimal_ph_min = 6.8
+	optimal_ph_max = 10
+	determin_ph_range = 8
+	temp_exponent_factor = 0.8
+	ph_exponent_factor = 2
+	thermic_constant = 87
+	H_ion_release = -0.05
+	rate_up_lim = 15
+	purity_min = 0.4
+
+/datum/chemical_reaction/medicine/neurine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	if(off_cooldown(holder, equilibrium, 10, "neurine"))
+		explode_invert_smoke(holder, equilibrium, clear_products = FALSE, clear_reactants = FALSE)
+		explode_attack_chem(holder, equilibrium, /datum/reagent/inverse/neurine, 10)
+		clear_products(holder, 5)
+
+/datum/chemical_reaction/medicine/neurine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	overheated(holder, equilibrium, vol_added)
 
 /datum/chemical_reaction/medicine/mutadone
 	results = list(/datum/reagent/medicine/mutadone = 3)
@@ -158,6 +266,27 @@
 	results = list(/datum/reagent/medicine/antihol = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/c2/multiver = 1, /datum/reagent/copper = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
+	//FermiChem vars:
+	required_temp = 1
+	optimal_temp = 300
+	overheat_temp = 550
+	optimal_ph_min = 3.5
+	optimal_ph_max = 8.5
+	determin_ph_range = 5
+	temp_exponent_factor = 2
+	ph_exponent_factor = 2
+	thermic_constant = -100
+	H_ion_release = 0.09
+	rate_up_lim = 25
+	purity_min = 0.15
+	reaction_flags = REACTION_CLEAR_INVERSE
+
+/datum/chemical_reaction/medicine/antihol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	explode_smoke(holder, equilibrium)
+
+/datum/chemical_reaction/medicine/antihol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
+	explode_smoke(holder, equilibrium)
+
 
 /datum/chemical_reaction/medicine/cryoxadone
 	results = list(/datum/reagent/medicine/cryoxadone = 3)

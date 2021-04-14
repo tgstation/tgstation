@@ -30,3 +30,5 @@
 	desc = "Centcom is very impressed with your department!"
 	database_id = MEDAL_GOOD_SERVICE
 	icon = "chem_tut"
+
+//civilian achievies! while not recognized by the code, it is recognized by our hearts

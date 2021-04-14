@@ -29,3 +29,19 @@ GLOBAL_LIST_INIT(pipe_colors_ordered, sortList(list(
 	COLOR_STRONG_VIOLET = 4,
 	COLOR_YELLOW = 5
 )))
+
+///Names shown in the examine for every colored atmos component
+GLOBAL_LIST_INIT(pipe_color_name, sortList(list(
+	COLOR_VERY_LIGHT_GRAY = "grey",
+	COLOR_BLUE = "blue",
+	COLOR_RED = "red",
+	COLOR_VIBRANT_LIME = "green",
+	COLOR_TAN_ORANGE = "orange",
+	COLOR_CYAN = "cyan",
+	COLOR_DARK = "dark",
+	COLOR_YELLOW = "yellow",
+	COLOR_BROWN = "brown",
+	COLOR_LIGHT_PINK = "pink",
+	COLOR_PURPLE = "purple",
+	COLOR_STRONG_VIOLET = "violet"
+)))

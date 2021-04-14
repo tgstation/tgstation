@@ -462,6 +462,8 @@
 	latetoggle()
 
 /obj/machinery/door/firedoor/close()
+	if(HAS_TRAIT(loc, TRAIT_FIREDOOR_STOP))
+		return
 	. = ..()
 	latetoggle()
 
@@ -511,7 +513,7 @@
 		COMSIG_ATOM_EXIT = .proc/on_exit,
 	)
 
-	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
