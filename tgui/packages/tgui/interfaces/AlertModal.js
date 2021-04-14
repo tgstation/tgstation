@@ -6,7 +6,7 @@
 
 import { clamp01 } from 'common/math';
 import { useBackend } from '../backend';
-import { Box, Button, Flex } from '../components';
+import { Box, Button, Flex, Section } from '../components';
 import { Window } from '../layouts';
 
 export const AlertModal = (props, context) => {
@@ -24,35 +24,37 @@ export const AlertModal = (props, context) => {
       width={350}
       height={150}>
       {timeout !== undefined && <Loader value={timeout} />}
-      <Window.Content>
-        <Flex direction="column" height="100%">
-          <Flex.Item grow={1}>
-            <Flex
-              direction="column"
-              className="AlertModal__Message"
-              height="100%">
-              <Flex.Item>
-                <Box m={1}>
-                  {message}
-                </Box>
-              </Flex.Item>
-            </Flex>
-          </Flex.Item>
-          <Flex.Item my={2}>
-            <Flex className="AlertModal__Buttons">
-              {buttons.map(button => (
-                <Flex.Item key={button} mx={1}>
-                  <Button
-                    px={3}
-                    onClick={() => act("choose", { choice: button })}>
-                    {button}
-                  </Button>
+      <Section fill>
+        <Window.Content>
+          <Flex direction="column" height="100%">
+            <Flex.Item grow={1}>
+              <Flex
+                direction="column"
+                className="AlertModal__Message"
+                height="100%">
+                <Flex.Item>
+                  <Box m={1}>
+                    {message}
+                  </Box>
                 </Flex.Item>
-              ))}
-            </Flex>
-          </Flex.Item>
-        </Flex>
-      </Window.Content>
+              </Flex>
+            </Flex.Item>
+            <Flex.Item my={2}>
+              <Flex className="AlertModal__Buttons">
+                {buttons.map(button => (
+                  <Flex.Item key={button} mx={1}>
+                    <Button
+                      px={3}
+                      onClick={() => act("choose", { choice: button })}>
+                      {button}
+                    </Button>
+                  </Flex.Item>
+                ))}
+              </Flex>
+            </Flex.Item>
+          </Flex>
+        </Window.Content>
+      </Section>
     </Window>
   );
 };
