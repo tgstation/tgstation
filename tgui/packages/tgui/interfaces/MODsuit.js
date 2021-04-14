@@ -1,6 +1,21 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, ProgressBar, Section, Collapsible, Box, Icon } from '../components';
+import { Button, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack } from '../components';
 import { Window } from '../layouts';
+
+const ID2MODULE = {
+  rad_counter: () => RadCounter
+}
+
+const RadCounter = (props, context) => {
+  const { data } = useBackend(context);
+  return (
+    <Stack fill vertical>
+      <Stack.Item>
+        hi
+      </Stack.Item>
+    </Stack>
+  );
+};
 
 export const MODsuit = (props, context) => {
   const { act, data } = useBackend(context);
@@ -33,7 +48,7 @@ export const MODsuit = (props, context) => {
   return (
     <Window
       width={400}
-      height={500}
+      height={525}
       theme={data.ui_theme}
       title="MOD Interface Panel"
       resizable>
@@ -66,6 +81,9 @@ export const MODsuit = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Selected Module">
               {data.selected_module || "None"}
+            </LabeledList.Item>
+            <LabeledList.Item label="Complexity">
+              {data.complexity} ({data.complexity_max})
             </LabeledList.Item>
             <LabeledList.Item label="Occupant">
               {data.wearer_name}, {data.wearer_job}
@@ -108,35 +126,48 @@ export const MODsuit = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
+        <Section title="Info">
+          <Stack>
+            {inventory.map((module => {
+              data.active && (
+              <Stack.Item key={module}>
+                {!!module.id && (
+                  ID2MODULE[module.id]
+                )}
+              </Stack.Item>)
+            }))}
+          </Stack>
+        </Section>
         <Section title="Modules">
           {inventory.map((module => {
-            return (
-              <Collapsible
-                title={module.name}
-                key={module.name}
-                buttons={!!module.module_type && (
-                  <Button
-                    content={displayText(module.module_type)}
-                    selected={module.active}
-                    onClick={() => act('select', {
-                      'ref': module.ref,
-                    })} />)}>
-                <Box mb={1}>
-                  {module.description}
-                </Box>
-                <LabeledList>
-                  <LabeledList.Item label="Idle Power Cost">
-                    {module.idle_power}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Active Power Cost">
-                    {module.active_power}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Use Power Cost">
-                    {module.use_power}
-                  </LabeledList.Item>
-                </LabeledList>
-              </Collapsible>
-            );
+            <Collapsible
+              title={module.name}
+              key={module.name}
+              buttons={!!module.module_type && (
+                <Button
+                  content={displayText(module.module_type)}
+                  selected={module.active}
+                  onClick={() => act('select', {
+                    'ref': module.ref,
+                  })} />)}>
+              <Box mb={1}>
+                {module.description}
+              </Box>
+              <LabeledList>
+                <LabeledList.Item label="Complexity">
+                  {module.module_complexity}
+                </LabeledList.Item>
+                <LabeledList.Item label="Idle Power Cost">
+                  {module.idle_power}
+                </LabeledList.Item>
+                <LabeledList.Item label="Active Power Cost">
+                  {module.active_power}
+                </LabeledList.Item>
+                <LabeledList.Item label="Use Power Cost">
+                  {module.use_power}
+                </LabeledList.Item>
+              </LabeledList>
+            </Collapsible>
           }))}
         </Section>
       </Window.Content> )}

@@ -15,6 +15,8 @@
 	var/active_power_cost = 0
 	/// Power use when used
 	var/use_power_cost = 0
+	/// ID used by their TGUI
+	var/tgui_id = null
 	/// Linked MODsuit
 	var/obj/item/mod/control/mod
 	/// If we're an active module, what item are we?
@@ -99,6 +101,9 @@
 			mod.wearer.transferItemToLoc(device, src, TRUE)
 			to_chat(mod.wearer, "<span class='notice'>You retract [device].</span>")
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
+		else
+			to_chat(mod.wearer, "<span class='notice'>You deactivate [src].</span>")
+			UnregisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON)
 	if(wearer_overlay && overlay_state_inactive)
 		wearer_overlay.icon_state = overlay_state_inactive
 	return TRUE
@@ -447,6 +452,9 @@
 		return
 	if(!holstered)
 		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
+		if(!holding)
+			to_chat(mod.wearer, "<span class='notice'>You aren't holding anything to holster!</span>")
+			return
 		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY || holding.weapon_weight > WEAPON_MEDIUM)
 			to_chat(mod.wearer, "<span class='notice'>[holding] doesn't fit in the holster!</span>")
 			return
@@ -458,7 +466,7 @@
 		if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
 			to_chat(mod.wearer, "<span class='notice'>You draw [holstered].</span>")
 			holstered = null
-			playsound(src, "rustle", 50, TRUE)
+			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 
 /obj/item/mod/module/holster/on_uninstall()
 	if(holstered)
@@ -467,10 +475,17 @@
 
 /obj/item/mod/module/tether
 	name = "MOD emergency tether module"
-	desc = "A module that can shoot an emergency tether to pull yourself towards an object."
+	desc = "A module that can shoot an emergency tether to pull yourself towards an object in 0-G."
 	module_type = MODULE_ACTIVE
 	complexity = 3
 	use_power_cost = 50
+
+/obj/item/mod/module/tether/on_use()
+	if(mod.wearer.has_gravity(get_turf(src)))
+		to_chat(mod.wearer, "<span class='warning'>You need to be in a 0-G environment to use [src]!</span>")
+		playsound(src, 'sound/weapons/gun/general/dry_fire.ogg', 25, TRUE)
+		return FALSE
+	return ..()
 
 /obj/item/mod/module/tether/on_select_use(mob/source, atom/target)
 	. = ..()
@@ -484,24 +499,51 @@
 /obj/projectile/tether
 	name = "tether"
 	icon_state = "tether"
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mod.dmi'
 	pass_flags = PASSTABLE
 	damage = 0
 	nodamage = TRUE
-	hitsound = 'sound/weapons/batonextend.ogg'
 	range = 10
+	hitsound = 'sound/weapons/batonextend.ogg'
+	hitsound_wall = 'sound/weapons/batonextend.ogg'
 	var/line
 
 /obj/projectile/tether/fire(setAngle)
 	if(firer)
-		line = firer.Beam(src, icon_state = "line")
+		line = firer.Beam(src, "line", 'icons/obj/mod.dmi')
 	..()
 
 /obj/projectile/tether/on_hit(atom/target)
 	. = ..()
 	if(firer)
-		firer.throw_at(target, 10, 1, FALSE, FALSE, null, TRUE)
+		firer.throw_at(target, 10, 1, firer, FALSE, FALSE, null, MOVE_FORCE_NORMAL, TRUE)
 
 /obj/projectile/tether/Destroy()
 	QDEL_NULL(line)
 	return ..()
+
+/obj/item/mod/module/mouthhole
+	name = "MOD eating apparatus module"
+	desc = "A module that enables eating with the MOD helmet."
+	complexity = 2
+	var/former_flags = NONE
+	var/former_visor_flags = NONE
+
+/obj/item/mod/module/mouthhole/on_install()
+	former_flags = mod.helmet.flags_cover
+	former_visor_flags = mod.helmet.visor_flags_cover
+	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH
+	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH
+
+/obj/item/mod/module/mouthhole/on_uninstall()
+	if(!(former_flags & HEADCOVERSMOUTH))
+		mod.helmet.flags_cover |= HEADCOVERSMOUTH
+	if(!(former_visor_flags & HEADCOVERSMOUTH))
+		mod.helmet.visor_flags_cover |= HEADCOVERSMOUTH
+
+/obj/item/mod/module/rad_counter
+	name = "MOD radiation counter module"
+	desc = "A module that enables a radiation scan in the MOD."
+	complexity = 1
+	idle_power_cost = 3
+	tgui_id = "rad_counter"

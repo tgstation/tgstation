@@ -12,6 +12,8 @@
 	data["open"] = open
 	data["active"] = active
 	data["locked"] = locked
+	data["complexity"] = complexity
+	data["complexity_max"] = complexity_max
 	data["selected_module"] = selected_module?.name
 	data["wearer_name"] = wearer ? wearer.get_authentification_name("Unknown") : "No Occupant"
 	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown","Unknown",FALSE) : "No Job"
@@ -32,10 +34,13 @@
 			idle_power = module.idle_power_cost,
 			active_power = module.active_power_cost,
 			use_power = module.use_power_cost,
+			module_complexity = module.complexity,
+			id = module.tgui_id,
 			ref = REF(module)
 		)
 		data["modules"] += list(module_data)
-
+	//now we add all the data for different info modules
+	data["radcount"] = wearer ? wearer.radiation : 0
 	return data
 
 /obj/item/mod/control/ui_act(action, params)

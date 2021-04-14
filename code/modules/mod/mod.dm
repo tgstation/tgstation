@@ -40,9 +40,9 @@
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	/// If the suit interface is broken.
 	var/interface_break = FALSE
-	/// How much modules can this MOD carry.
+	/// How much module complexity can this MOD carry.
 	var/complexity_max = DEFAULT_MAX_COMPLEXITY
-	/// How much modules this MOD is carrying.
+	/// How much module complexity this MOD is carrying.
 	var/complexity = 0
 	/// Power usage of the MOD.
 	var/cell_drain = 0
@@ -221,7 +221,6 @@
 		if(do_after(user, 50, target = src))
 			to_chat(user, "<span class='notice'>You remove [cell].</span>")
 			user.put_in_hands(cell)
-			cell = null
 		return
 	return ..()
 
@@ -397,6 +396,9 @@
 
 	if(newloc == wearer || newloc == src)
 		return
+	if(part == cell)
+		cell.update_icon()
+		cell = null
 	if(modules.Find(part))
 		var/obj/item/mod/module/module = part
 		if(module.module_type == MODULE_TOGGLE || module.module_type == MODULE_ACTIVE)
