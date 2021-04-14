@@ -749,6 +749,7 @@
 	return attack_hand(user, modifiers)
 
 /obj/machinery/door/airlock/proc/on_attack_hand(atom/source, mob/user, list/modifiers)
+	SIGNAL_HANDLER
 	return attack_hand(user, modifiers)
 
 /obj/machinery/door/airlock/attack_hand(mob/user, list/modifiers)
