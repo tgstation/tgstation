@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - imageadd: "checker and cafeteria floors can now have dirs"
