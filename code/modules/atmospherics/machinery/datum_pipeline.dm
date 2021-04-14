@@ -32,11 +32,10 @@
 	return ..()
 
 /datum/pipeline/process()
-	if(building)
+	if(!update || building)
 		return
-	if(update)
-		update = FALSE
-		reconcile_air()
+	reconcile_air()
+	//Only react if the mix has changed, and don't keep updating if it hasn't
 	update = air.react(src)
 
 ///Preps a pipeline for rebuilding, insterts it into the rebuild queue
@@ -293,7 +292,7 @@
 	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
 
 	total_gas_mixture.garbage_collect()
-	
+
 	if(total_gas_mixture.volume > 0)
 		//Update individual gas_mixtures by volume ratio
 		for(var/mixture in gas_mixture_list)
