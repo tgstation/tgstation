@@ -372,8 +372,8 @@
 
 /obj/item/restraints/legcuffs/bola/energy/ensnare(mob/living/carbon/C)
 	var/mob/living/carbon/dirty_criminal = C
-	var/obj/item/restraints/legcuffs/beartrap/justice_beartrap_that_our_bola_spawns = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(criminal))
-	justice_beartrap_that_our_bola_spawns.Crossed(criminal)
+	var/obj/item/restraints/legcuffs/beartrap/justice_beartrap_that_our_bola_spawns = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(dirty_criminal))
+	justice_beartrap_that_our_bola_spawns.Crossed(dirty_criminal)
 	qdel(src)
 	..()
 
