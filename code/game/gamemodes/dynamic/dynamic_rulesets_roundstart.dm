@@ -87,7 +87,6 @@
 			M.add_antag_datum(/datum/antagonist/brother, team)
 			GLOB.pre_setup_antags -= M
 		team.update_name()
-	mode.brother_teams += pre_brother_teams
 	return TRUE
 
 //////////////////////////////////////////////

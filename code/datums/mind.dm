@@ -307,10 +307,6 @@
 /datum/mind/proc/remove_traitor()
 	remove_antag_datum(/datum/antagonist/traitor)
 
-/datum/mind/proc/remove_brother()
-	if(src in SSticker.mode.brothers)
-		remove_antag_datum(/datum/antagonist/brother)
-
 /datum/mind/proc/remove_nukeop()
 	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(nuke)
