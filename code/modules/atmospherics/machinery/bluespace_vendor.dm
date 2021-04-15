@@ -110,12 +110,22 @@
 	if(mode == BS_MODE_OPEN)
 		return
 	if(!selected_gas)
+		return
+	var/gas_path = gas_id2path(selected_gas)
+
+	var/list/gases = connected_machine.bluespace_network.gases
+	var/gas_found = FALSE
+	for(var/gas_id in gases)
+		if(gases[gas_path])
+			gas_found = TRUE
+			break
+	if(!gas_found)
 		pumping = FALSE
 		selected_gas = null
 		mode = BS_MODE_IDLE
 		update_appearance()
 		return
-	var/gas_path = gas_id2path(selected_gas)
+
 	connected_machine.bluespace_network.pump_gas_to(internal_tank.air_contents, (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
 
 /obj/machinery/bluespace_vendor/multitool_act(mob/living/user, obj/item/multitool/multitool)
