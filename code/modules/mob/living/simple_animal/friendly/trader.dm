@@ -34,10 +34,6 @@
 	check_friendly_fire = TRUE
 	///Sound used when item sold/bought
 	var/sell_sound = 'sound/effects/cashregister.ogg'
-	///Phrases used when you talk to the NPC
-	var/list/lore = list("Hello! I am the test trader.",
-						"Oooooooo~!"
-						)
 	///Associated list of items the NPC sells with how much they cost.
 	var/list/products = list(/obj/item/food/burger/ghost = 200)
 	///Associated list of items able to be sold to the NPC with the money given for them.
@@ -54,19 +50,23 @@
 	var/buyphrase = "Pleasure doing business with you."
 	///Phrase said when you have too little money to buy an item.
 	var/nocashphrase = "Sorry adventurer, I can't give credit! Come back when you're a little mmmmm... richer!"
+	///Phrases used when you talk to the NPC
+	var/list/lore = list(
+		"Hello! I am the test trader.",
+		"Oooooooo~!"
+	)
 
 /mob/living/simple_animal/hostile/retaliate/trader/attack_hand(mob/user)
-	. = FALSE
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
 	var/list/npc_options = list()
 	if(products.len)
-		npc_options += list("Buy" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy"))
+		npc_options["Buy"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy")
 	if(lore.len)
-		npc_options += list("Talk" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk"))
+		npc_options["Talk"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk")
 	if(wanted_items.len)
-		npc_options += list("Sell" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell"))
-	if(!(npc_options.len))
+		npc_options["Sell"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell")
+	if(!npc_options.len)
 		return FALSE
 	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	switch(npc_result)
@@ -102,7 +102,7 @@
 /mob/living/simple_animal/hostile/retaliate/trader/proc/try_sell(mob/user)
 	var/obj/item/activehanditem = user.get_active_held_item()
 	var/obj/item/inactivehanditem = user.get_inactive_held_item()
-	if(!(sell_item(user, activehanditem)||sell_item(user, inactivehanditem)))
+	if(!(sell_item(user, activehanditem) || sell_item(user, inactivehanditem)))
 		say(itemrejectphrase)
 
 ///Makes the NPC say one picked thing from the lore list variable, can be overriden for fun stuff
@@ -120,8 +120,7 @@
 
 	var/list/display_names = list()
 	var/list/items = list()
-	for(var/i in 1 to length(products))
-		var/obj/item/thing = products[i]
+	for(var/obj/item/thing as anything in products)
 		display_names["[initial(thing.name)]"] = thing
 		var/image/item_image = image(icon = initial(thing.icon), icon_state = initial(thing.icon_state))
 		items += list("[initial(thing.name)]" = item_image)
@@ -139,13 +138,13 @@
  * * user - The mob trying to buy something
  * * item_to_buy - Item that is being bought
  */
-/mob/living/simple_animal/hostile/retaliate/trader/proc/try_buy(mob/user, item_to_buy)
+/mob/living/simple_animal/hostile/retaliate/trader/proc/try_buy(mob/user, obj/item/item_to_buy)
 	var/cost = products[item_to_buy]
-	to_chat(user, "<span class='notice'>It will cost you [cost] credits to buy this item. Are you sure you want to buy it?</span>")
+	to_chat(user, "<span class='notice'>It will cost you [cost] credits to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?</span>")
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
-		)
+	)
 	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(npc_result != "Yes")
 		return
@@ -156,8 +155,8 @@
 		say(nocashphrase)
 		return
 	cash.spend(products[item_to_buy])
-	var/obj/item/bought_item = new item_to_buy(loc)
-	user.put_in_hands(bought_item)
+	item_to_buy = new item_to_buy(get_turf(user))
+	user.put_in_hands(item_to_buy)
 	playsound(src, sell_sound, 50, TRUE)
 	say(buyphrase)
 
@@ -169,16 +168,16 @@
  */
 /mob/living/simple_animal/hostile/retaliate/trader/proc/sell_item(mob/user, selling)
 	var/obj/item/sellitem = selling
-	var/progressive_type = ""
 	var/cost
 	if(!sellitem)
 		return FALSE
-	for(var/type_level in splittext("[sellitem.type]","/"))
-		if(type_level == "")
-			continue
-		progressive_type += ("/"+type_level)
-		if(text2path(progressive_type) in wanted_items)
-			cost = wanted_items[text2path(progressive_type)]
+	var/datum/checked_type = sellitem.type
+	do
+		if(checked_type in wanted_items)
+			cost = wanted_items[checked_type]
+			break
+		checked_type = checked_type.parent_type
+	while(checked_type != /obj)
 	if(!cost)
 		return FALSE
 	say(interestedphrase)
@@ -186,7 +185,7 @@
 	var/list/npc_options = list(
 		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
 		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
-		)
+	)
 	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	face_atom(user)
 	if(npc_result != "Yes")
@@ -222,21 +221,25 @@
 	speech_span = SPAN_SANS
 	sell_sound = 'sound/voice/hiss2.ogg'
 	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	products = list(/obj/item/clothing/head/helmet/skull = 150,
-					/obj/item/clothing/mask/bandana/skull = 50,
-					/obj/item/food/cookie/sugar/spookyskull = 10,
-					/obj/item/instrument/trombone/spectral = 10000,
-					/obj/item/shovel/serrated = 150
-					)
-	wanted_items = list(/obj/item/reagent_containers/food/condiment/milk = 1000,
-						/obj/item/stack/sheet/bone = 420)
+	products = list(
+		/obj/item/clothing/head/helmet/skull = 150,
+		/obj/item/clothing/mask/bandana/skull = 50,
+		/obj/item/food/cookie/sugar/spookyskull = 10,
+		/obj/item/instrument/trombone/spectral = 10000,
+		/obj/item/shovel/serrated = 150
+	)
+	wanted_items = list(
+		/obj/item/reagent_containers/food/condiment/milk = 1000,
+		/obj/item/stack/sheet/bone = 420
+	)
 	buyphrase = "Bone appetit!"
 	icon_state = "mrbones"
 	gender = MALE
 	loot = list(/obj/effect/decal/remains/human)
-	lore = list("Hello, I am Mr. Bones!",
-				"The ride never ends!",
-				"I'd really like a refreshing carton of milk!",
-				"I'm willing to play big prices for BONES! Need materials to make merch, eh?",
-				"It's a beautiful day outside. Birds are singing, Flowers are blooming... On days like these, kids like you... Should be buying my wares!"
-				)
+	lore = list(
+		"Hello, I am Mr. Bones!",
+		"The ride never ends!",
+		"I'd really like a refreshing carton of milk!",
+		"I'm willing to play big prices for BONES! Need materials to make merch, eh?",
+		"It's a beautiful day outside. Birds are singing, Flowers are blooming... On days like these, kids like you... Should be buying my wares!"
+	)
