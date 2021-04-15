@@ -643,7 +643,7 @@
 
 /datum/status_effect/bluespacestabilization
 	id = "stabilizedbluespacecooldown"
-	duration = 1200
+	duration = 3000
 	alert_type = null
 
 /datum/status_effect/stabilized/bluespace
