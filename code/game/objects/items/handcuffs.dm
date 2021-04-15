@@ -1,6 +1,7 @@
 /obj/item/restraints
 	breakouttime = 600
 	dye_color = DYE_PRISONER
+	var/trashtype = null //for disposable cuffs
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -41,7 +42,6 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	custom_price = PAYCHECK_HARD * 0.35
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
-	var/trashtype = null //for disposable cuffs
 
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/user)
 	if(!istype(C))
@@ -343,7 +343,10 @@
 /obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
 	if(!C.legcuffed && C.num_legs >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
-		C.legcuffed = src
+		if(trashtype)
+			C.legcuffed = new trashtype()
+		else
+			C.legcuffed = src
 		forceMove(C)
 		C.update_equipment_speed_mods()
 		C.update_inv_legcuffed()
@@ -351,6 +354,8 @@
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Knockdown(knockdown)
 		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+		if(trashtype)
+			QDEL_NULL(src)
 
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
@@ -369,13 +374,18 @@
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
 	custom_price = PAYCHECK_HARD * 0.35
+	trashtype = /obj/item/restraints/legcuffs/bola/energy/used
 
-/obj/item/restraints/legcuffs/bola/energy/ensnare(mob/living/carbon/C)
-	var/mob/living/carbon/dirty_criminal = C
-	var/obj/item/restraints/legcuffs/beartrap/justice_beartrap_that_our_bola_spawns = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(dirty_criminal))
-	justice_beartrap_that_our_bola_spawns.Crossed(dirty_criminal)
-	qdel(src)
-	..()
+/obj/item/restraints/legcuffs/bola/energy/used
+	item_flags = DROPDEL
+
+/obj/item/restraints/legcuffs/bola/energy/used/dropped(mob/user)
+	user.visible_message("<span class='danger'>[user]'s [name] breaks in a discharge of energy!</span>", \
+							"<span class='userdanger'>[user]'s [name] breaks in a discharge of energy!</span>")
+	var/datum/effect_system/spark_spread/S = new
+	S.set_up(4,0,user.loc)
+	S.start()
+	. = ..()
 
 /obj/item/restraints/legcuffs/bola/gonbola
 	name = "gonbola"
