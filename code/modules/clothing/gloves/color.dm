@@ -182,19 +182,21 @@
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
-	desc = "Cheap sterile gloves made from latex. Transfers minor paramedic knowledge to the user via budget nanochips."
+	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip."
 	icon_state = "latex"
 	inhand_icon_state = "latex"
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
+	clothing_traits = list(TRAIT_QUICK_CARRY)
 	transfer_prints = TRUE
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
-	desc = "Pricy sterile gloves that are thicker than latex. Transfers intimate paramedic knowledge into the user via nanochips."
+	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients."
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
+	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/latex/nitrile/infiltrator

@@ -118,6 +118,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else
 		inserted_item = new /obj/item/pen(src)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+
 	update_appearance()
 
 /obj/item/pda/equipped(mob/user, slot)

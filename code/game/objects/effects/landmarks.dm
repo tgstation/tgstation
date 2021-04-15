@@ -470,7 +470,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	if(!iscarbon(hangover_mob))
 		return
 	var/mob/living/carbon/spawned_carbon = hangover_mob
-	spawned_carbon.Sleeping(rand(2 SECONDS, 5 SECONDS))
+	spawned_carbon.set_resting(TRUE, silent = TRUE)
 	if(prob(50))
 		spawned_carbon.adjust_drugginess(rand(15, 20))
 	else
