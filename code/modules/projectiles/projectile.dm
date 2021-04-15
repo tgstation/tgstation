@@ -37,7 +37,7 @@
 	var/datum/point/vector/trajectory
 	var/trajectory_ignore_forcemove = FALSE //instructs forceMove to NOT reset our trajectory to the new location!
 	/// We already impacted these things, do not impact them again. Used to make sure we can pierce things we want to pierce. Lazylist, typecache style (object = TRUE) for performance.
-	var/list/impacted
+	var/list/impacted = list()
 	/// If TRUE, we can hit our firer.
 	var/ignore_source_check = FALSE
 	/// We are flagged PHASING temporarily to not stop moving when we Bump something but want to keep going anyways.
