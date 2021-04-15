@@ -18,6 +18,7 @@
 /mob/camera/forceMove(atom/destination)
 	var/oldloc = loc
 	loc = destination
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldloc)
 	Moved(oldloc, NONE, TRUE)
 
 /mob/camera/canUseStorage()

@@ -106,6 +106,7 @@ All ShuttleMove procs go here
 		return
 
 	loc = newT
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldT)
 
 
 	return TRUE
@@ -387,6 +388,7 @@ All ShuttleMove procs go here
 		return
 
 	loc = newT
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldT)
 
 	return TRUE
 

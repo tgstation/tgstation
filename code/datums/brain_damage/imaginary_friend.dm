@@ -191,7 +191,9 @@
 
 /mob/camera/imaginary_friend/forceMove(atom/destination)
 	dir = get_dir(get_turf(src), destination)
+	var/atom/oldloc = loc
 	loc = destination
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldloc)
 	Show()
 
 /mob/camera/imaginary_friend/proc/recall()
