@@ -297,6 +297,64 @@
 // It is HIGHLY, HIGHLY recomended that you consume all/a good volume of the reagents/products in an explosion - because it will just keep going forever until the reaction stops
 //If you have competitive reactions - it's a good idea to consume ALL reagents in a beaker (or product+reactant), otherwise it'll swing back with the deficit and blow up again
 
+/*
+ * The same method that pyrotechnic reagents used before
+ * Now instead of defining the var as part of the reaction - any recipe can call it and define their own method
+ * WILL REMOVE ALL REAGENTS
+ *
+ * arguments:
+ * * holder - the reagents datum that it is being used on
+ * * created_volume - the volume of reacting elements
+ * * modifier - a flat additive numeric to the size of the explosion - set this if you want a minimum range
+ * * strengthdiv - the divisional factor of the explosion, a larger number means a smaller range - This is the part that modifies an explosion's range with volume (i.e. it divides it by this number)
+ */
+/datum/chemical_reaction/proc/default_explode(datum/reagents/holder, created_volume, modifier = 0, strengthdiv = 10)
+	var/power = modifier + round(created_volume/strengthdiv, 1)
+	if(power > 0)
+		var/turf/T = get_turf(holder.my_atom)
+		var/inside_msg
+		if(ismob(holder.my_atom))
+			var/mob/M = holder.my_atom
+			inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
+		var/lastkey = holder.my_atom.fingerprintslast //This can runtime (null.fingerprintslast) - due to plumbing?
+		var/touch_msg = "N/A"
+		if(lastkey)
+			var/mob/toucher = get_mob_by_key(lastkey)
+			touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
+		if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
+			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+		var/datum/effect_system/reagents_explosion/e = new()
+		e.set_up(power , T, 0, 0)
+		e.start()
+	holder.clear_reagents()
+
+/*
+ *Creates a flash effect only - less expensive than explode()
+ *
+ * *Arguments
+ * * range - the radius around the holder's atom that is flashed
+ * * length - how long it lasts in ds
+ */
+/datum/chemical_reaction/proc/explode_flash(datum/reagents/holder, datum/equilibrium/equilibrium, range = 2, length = 25)
+	var/turf/location = get_turf(holder.my_atom)
+	for(var/mob/living/living_mob in viewers(range, location))
+		living_mob.flash_act(length = length)
+	holder.my_atom.visible_message("The [holder.my_atom] suddenly lets out a bright flash!")
+
+/*
+ *Deafens those in range causing ear damage and muting sound
+ *
+ * Arguments
+ * * power - How much damage is applied to the ear organ (I believe?)
+ * * stun - How long the mob is stunned for
+ * * range - the radius around the holder's atom that is banged
+ */
+/datum/chemical_reaction/proc/explode_deafen(datum/reagents/holder, datum/equilibrium/equilibrium, power = 3, stun = 20, range = 2)
+	var/location = get_turf(holder.my_atom)
+	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
+	for(var/mob/living/carbon/carbon_mob in get_hearers_in_view(range, location))
+		carbon_mob.soundbang_act(1, stun, power)
 
 //Spews out the inverse of the chems in the beaker of the products/reactants only
 /datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
@@ -319,7 +377,7 @@
 		sum_volume += reagent.volume
 		holder.remove_reagent(reagent.type, reagent.volume)
 	if(!force_range)
-		force_range = sum_volume/5
+		force_range = (sum_volume/6) + 3
 	if(invert_reagents.reagent_list)
 		smoke.set_up(invert_reagents, force_range, holder.my_atom)
 		smoke.start()
@@ -330,7 +388,7 @@
 		clear_products(holder)
 
 //Spews out the corrisponding reactions reagents  (products/required) of the beaker in a smokecloud. Doesn't spew catalysts
-/datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, clear_products = TRUE, clear_reactants = TRUE)
+/datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE)
 	var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
 	reagents.my_atom = holder.my_atom //fingerprint
@@ -339,8 +397,10 @@
 		if((reagent.type in required_reagents) || (reagent.type in results))
 			reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
+	if(!force_range)
+		force_range = (sum_volume/6) + 3
 	if(reagents.reagent_list)
-		smoke.set_up(reagents, (sum_volume/5), holder.my_atom)
+		smoke.set_up(reagents, force_range, holder.my_atom)
 		smoke.start()
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
@@ -375,7 +435,6 @@
 			var/moving_power = max(3 - distance, 1)//Make sure we're thrown out of range of the next one
 			var/atom/throw_target = get_edge_target_turf(movey, get_dir(movey, get_step_away(movey, this_turf)))
 			movey.throw_at(throw_target, moving_power, 1)
-
 
 ////////BEGIN FIRE BASED EXPLOSIONS
 
