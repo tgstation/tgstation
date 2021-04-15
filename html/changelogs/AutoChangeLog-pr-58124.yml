@@ -1,0 +1,4 @@
+author: "norill"
+delete-after: True
+changes: 
+  - rscadd: "You can now close airlocks by gently punching floors (not in combat mode)"
