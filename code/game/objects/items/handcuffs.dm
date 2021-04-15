@@ -371,8 +371,9 @@
 	custom_price = PAYCHECK_HARD * 0.35
 
 /obj/item/restraints/legcuffs/bola/energy/ensnare(mob/living/carbon/C)
-	var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(C))
-	B.Crossed(C)
+	var/mob/living/carbon/dirty_criminal = C
+	var/obj/item/restraints/legcuffs/beartrap/justice_beartrap_that_our_bola_spawns = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(criminal))
+	justice_beartrap_that_our_bola_spawns.Crossed(criminal)
 	qdel(src)
 	..()
 
