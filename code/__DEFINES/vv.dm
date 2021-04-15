@@ -136,6 +136,9 @@
 // paintings
 #define VV_HK_REMOVE_PAINTING "remove_painting"
 
+//outfits
+#define VV_HK_TO_OUTFIT_EDITOR "outfit_editor"
+
 // /obj/effect/proc_holder/spell
 /// Require casting_clothes to cast spell.
 #define VV_HK_SPELL_SET_ROBELESS "spell_set_robeless"

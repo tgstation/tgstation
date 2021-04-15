@@ -9,12 +9,12 @@
 /obj/item/ammo_casing/c10mm/ap
 	name = "10mm armor-piercing bullet casing"
 	desc = "A 10mm armor-piercing bullet casing."
-	projectile_type = /obj/projectile/bullet/c10mm_ap
+	projectile_type = /obj/projectile/bullet/c10mm/ap
 
 /obj/item/ammo_casing/c10mm/hp
 	name = "10mm hollow-point bullet casing"
 	desc = "A 10mm hollow-point bullet casing."
-	projectile_type = /obj/projectile/bullet/c10mm_hp
+	projectile_type = /obj/projectile/bullet/c10mm/hp
 
 /obj/item/ammo_casing/c10mm/fire
 	name = "10mm incendiary bullet casing"
@@ -32,12 +32,12 @@
 /obj/item/ammo_casing/c9mm/ap
 	name = "9mm armor-piercing bullet casing"
 	desc = "A 9mm armor-piercing bullet casing."
-	projectile_type =/obj/projectile/bullet/c9mm_ap
+	projectile_type =/obj/projectile/bullet/c9mm/ap
 
 /obj/item/ammo_casing/c9mm/hp
 	name = "9mm hollow-point bullet casing"
-	desc = "A 10mm hollow-point bullet casing."
-	projectile_type = /obj/projectile/bullet/c9mm_hp
+	desc = "A 9mm hollow-point bullet casing."
+	projectile_type = /obj/projectile/bullet/c9mm/hp
 
 /obj/item/ammo_casing/c9mm/fire
 	name = "9mm incendiary bullet casing"
