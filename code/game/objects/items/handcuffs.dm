@@ -370,11 +370,10 @@
 	breakouttime = 60
 	custom_price = PAYCHECK_HARD * 0.35
 
-/obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(iscarbon(hit_atom))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
-		B.Crossed(hit_atom)
-		qdel(src)
+/obj/item/restraints/legcuffs/bola/energy/ensnare(mob/living/carbon/C)
+	var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(C))
+	B.Crossed(C)
+	qdel(src)
 	..()
 
 /obj/item/restraints/legcuffs/bola/gonbola
