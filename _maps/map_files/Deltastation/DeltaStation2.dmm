@@ -39214,13 +39214,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "eqQ" = (
-/obj/structure/easel,
-/obj/item/canvas/twentythree_twentythree,
-/obj/item/canvas/twentythree_twentythree,
-/obj/item/canvas/twentythree_twentythree,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -45867,6 +45860,12 @@
 /obj/structure/chair/office,
 /turf/open/floor/iron/grimy,
 /area/service/library)
+"gjd" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "gje" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -57162,6 +57161,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/easel,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -60253,6 +60256,9 @@
 	},
 /turf/open/floor/iron/checker,
 /area/engineering/atmos)
+"kgb" = (
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "kgo" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -62293,7 +62299,6 @@
 	},
 /area/engineering/atmos)
 "kIA" = (
-/obj/structure/chair/stool,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -69123,6 +69128,10 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central/aft)
+"mtN" = (
+/obj/machinery/cryopod,
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "mtO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -80610,6 +80619,13 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
+"pmL" = (
+/obj/effect/landmark/start/hangover,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "pmQ" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -91119,6 +91135,10 @@
 	},
 /turf/open/floor/iron,
 /area/commons/storage/primary)
+"sdh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/commons/cryopods)
 "sdn" = (
 /obj/structure/chair{
 	dir = 4
@@ -96706,6 +96726,13 @@
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
+"tCL" = (
+/obj/machinery/cryopod,
+/obj/machinery/computer/cryopod{
+	pixel_y = 24
+	},
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "tCS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -100190,6 +100217,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/security/prison)
+"uua" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "uup" = (
 /obj/structure/table,
 /obj/item/toy/gun,
@@ -101000,6 +101031,11 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
+"uDP" = (
+/obj/machinery/cryopod,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "uDX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -109435,6 +109471,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"wWo" = (
+/turf/closed/wall,
+/area/commons/cryopods)
 "wWp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -170372,10 +170411,10 @@ sip
 tzl
 aad
 oNH
-wZU
-wZU
-wZU
-oNH
+sdh
+uua
+sdh
+wWo
 aad
 qYo
 qYo
@@ -170629,10 +170668,10 @@ cFF
 tqX
 aaa
 wZU
-aad
-aad
-aad
-aad
+uDP
+kgb
+gjd
+sdh
 aad
 mIc
 ajr
@@ -170885,11 +170924,11 @@ cFF
 cFF
 tqX
 aaa
-wZU
-aad
-aaa
-aaa
-mIc
+oNH
+tCL
+kgb
+gjd
+sdh
 mIc
 mIc
 aaa
@@ -171143,10 +171182,10 @@ cTi
 vGx
 aad
 wZU
-aad
-ajr
-aaa
-qYo
+mtN
+pmL
+gjd
+sdh
 aaa
 aaa
 aaa
@@ -171400,10 +171439,10 @@ cFF
 tqX
 aaa
 wZU
-aad
-ajr
-aaa
-qYo
+sdh
+sdh
+sdh
+sdh
 aaa
 aaa
 aaa

@@ -29259,6 +29259,9 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
+"gla" = (
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "glb" = (
 /turf/open/floor/iron/dark,
 /area/engineering/break_room)
@@ -33162,6 +33165,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"hEo" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 24
+	},
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "hEG" = (
 /obj/structure/destructible/cult/tome,
 /obj/machinery/newscaster{
@@ -48879,10 +48888,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/port)
-"ndz" = (
-/obj/structure/easel,
-/turf/open/floor/iron/dark,
-/area/commons/fitness/recreation)
 "ndE" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -49319,6 +49324,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
+"nkd" = (
+/turf/closed/wall,
+/area/commons/cryopods)
 "nkh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -53889,6 +53897,12 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
+"oLM" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "oLP" = (
 /obj/structure/cable,
 /obj/structure/table,
@@ -67320,6 +67334,12 @@
 /obj/structure/sign/warning/electricshock,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"teA" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "teC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -67393,36 +67413,9 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "tfr" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/sillycup,
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/machinery/door/airlock/glass,
 /turf/open/floor/iron/dark,
-/area/commons/fitness/recreation)
+/area/commons/cryopods)
 "tfD" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -80338,19 +80331,9 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "xBC" = (
-/obj/structure/reagent_dispensers/water_cooler,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/commons/fitness/recreation)
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/commons/cryopods)
 "xBF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -117365,11 +117348,11 @@ aaa
 aaa
 fwb
 aaa
-aaa
-aaa
-aaa
-ebG
-ebG
+xBC
+xBC
+xBC
+nkd
+nkd
 iai
 ebG
 ebG
@@ -117622,10 +117605,10 @@ aaa
 aaa
 fwb
 aaa
-aaa
-aaa
-aaa
-tdI
+xBC
+oLM
+oLM
+oLM
 xBC
 lHu
 oMv
@@ -117879,10 +117862,10 @@ aaa
 aaa
 nYJ
 aaa
-aaa
-aaa
-aaa
-tdI
+nkd
+hEo
+gla
+gla
 tfr
 lHu
 dUA
@@ -118136,11 +118119,11 @@ aaa
 aaa
 lMJ
 aaa
-aaa
-aaa
-aaa
-tdI
-ndz
+xBC
+teA
+teA
+teA
+xBC
 lHu
 hJy
 hJy
@@ -118393,11 +118376,11 @@ aaa
 aaa
 lMJ
 lMJ
-lMJ
-lMJ
-lMJ
-ebG
-ebG
+xBC
+xBC
+xBC
+nkd
+nkd
 jfj
 hJy
 ocJ
