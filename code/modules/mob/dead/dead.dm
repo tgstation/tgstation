@@ -32,6 +32,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		onTransitZ(old_turf?.z, new_turf?.z)
 	var/oldloc = loc
 	loc = destination
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldloc)
 	Moved(oldloc, NONE, TRUE)
 
 /mob/dead/get_status_tab_items()
