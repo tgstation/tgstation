@@ -36,10 +36,7 @@
 	if(!istype(tracked))
 		return
 
-	if (!isnull(tracked.loc))
-		unregister_signals(listener, tracked, tracked.loc)
-	else
-		unregister_signals(listener, tracked, null)
+	unregister_signals(listener, tracked, tracked.loc)
 
 	UnregisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE)
 
