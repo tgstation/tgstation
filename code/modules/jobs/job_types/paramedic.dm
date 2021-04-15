@@ -8,6 +8,7 @@
 	selection_color = "#ffeef0"
 
 	outfit = /datum/outfit/job/paramedic
+	plasmaman_outfit = /datum/outfit/plasmaman/paramedic
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED

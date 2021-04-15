@@ -74,6 +74,21 @@
 		return computer.add_log(text)
 	return 0
 
+/**
+ *Runs when the device is used to attack an atom in non-combat mode.
+ *
+ *Simulates using the device to read or scan something. Tap is called by the computer during pre_attack
+ *and sends us all of the related info. If we return TRUE, the computer will stop the attack process
+ *there. What we do with the info is up to us, but we should only return TRUE if we actually perform
+ *an action of some sort.
+ *Arguments:
+ *A is the atom being tapped
+ *user is the person making the attack action
+ *params is anything the pre_attack() proc had in the same-named variable.
+*/
+/datum/computer_file/program/proc/tap(atom/A, mob/living/user, params)
+	return FALSE
+
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)

@@ -248,6 +248,12 @@
 	firstname.Find(real_name)
 	return firstname.match
 
+/// Find the last name of a mob from the real name with regex
+/mob/proc/last_name()
+	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
+	lasttname.Find(real_name)
+	return lasttname.match
+
 ///Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name
 /mob/proc/get_realname_string()
 	if(real_name && real_name != name)

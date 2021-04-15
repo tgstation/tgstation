@@ -3,6 +3,7 @@
 	icon = 'icons/hud/blob.dmi'
 
 /atom/movable/screen/blob/MouseEntered(location,control,params)
+	. = ..()
 	openToolTip(usr,src,params,title = name,content = desc, theme = "blob")
 
 /atom/movable/screen/blob/MouseExited()
@@ -42,7 +43,7 @@
 		else
 			name = initial(name)
 			desc = initial(desc)
-	..()
+	return ..()
 
 /atom/movable/screen/blob/jump_to_core/Click()
 	if(isovermind(usr))
@@ -130,7 +131,7 @@
 		else
 			name = "[initial(name)] ([BLOB_POWER_REROLL_COST])"
 			desc = "Allows you to choose a new strain from [BLOB_POWER_REROLL_CHOICES] random choices for [BLOB_POWER_REROLL_COST] resources."
-	..()
+	return ..()
 
 /atom/movable/screen/blob/readapt_strain/Click()
 	if(isovermind(usr))
@@ -162,7 +163,6 @@
 	blobpwrdisplay.icon_state = "block"
 	blobpwrdisplay.screen_loc = ui_health
 	blobpwrdisplay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blobpwrdisplay.layer = ABOVE_HUD_LAYER
 	blobpwrdisplay.plane = ABOVE_HUD_PLANE
 	blobpwrdisplay.hud = src
 	infodisplay += blobpwrdisplay

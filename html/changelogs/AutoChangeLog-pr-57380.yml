@@ -1,6 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - balance: "Radioactive microlasers can no longer knock out creatures who are immune to the effects of radiation."
-  - bugfix: "The radioactive microlaser now calculates the strength of its delay effect using the intensity setting it had when you initially used it on your victim, not the intensity setting it currently has. This prevents people from \"cheating out\" its intensity 20 effect with only a 2 second delay and a 1 second cooldown."
-  - balance: "Radioactive microlasers no longer contain twice as much metal as normal health analyzers do."

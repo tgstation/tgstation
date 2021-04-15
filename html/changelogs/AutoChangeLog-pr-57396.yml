@@ -1,4 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "merging stacks of materials no longer increases beauty more than it should"

@@ -22,6 +22,7 @@
 	. += EXPERIMENT_PROG_BOOL("Fire an emitter at a tracked meat wall", is_complete())
 
 /datum/experiment/physical/meat_wall_explosion/proc/check_experiment(datum/source, obj/projectile/Proj)
+	SIGNAL_HANDLER
 	if(istype(Proj, /obj/projectile/beam/emitter))
 		finish_experiment(linked_experiment_handler)
 
@@ -53,4 +54,5 @@
 	. += EXPERIMENT_PROG_BOOL("Win an arcade game at a tracked arcade cabinet.", is_complete())
 
 /datum/experiment/physical/arcade_winner/proc/win_arcade(datum/source)
+	SIGNAL_HANDLER
 	finish_experiment(linked_experiment_handler)

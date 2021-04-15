@@ -49,7 +49,7 @@
 "h" = (
 /obj/structure/table/wood,
 /obj/item/clothing/mask/cigarette/pipe,
-/obj/item/book/manual/random,
+/obj/effect/holodeck_effect/random_book,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "i" = (
@@ -209,7 +209,7 @@
 /area/template_noop)
 "J" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/random,
+/obj/effect/holodeck_effect/random_book,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "K" = (

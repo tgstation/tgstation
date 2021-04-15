@@ -33,6 +33,7 @@
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_CLAW
 	friendly_verb_continuous = "bear hugs"
 	friendly_verb_simple = "bear hug"
 
@@ -142,6 +143,8 @@
 	deathmessage = "loses its false life and collapses!"
 	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/brain = 1, /obj/item/organ/heart = 1)
 	attack_sound = 'sound/weapons/slap.ogg'
+	attack_vis_effect = ATTACK_EFFECT_DISARM
+	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"
 
 /mob/living/simple_animal/hostile/bear/butter/add_cell_sample()

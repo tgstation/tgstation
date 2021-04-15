@@ -20,6 +20,10 @@
 	. = ..()
 	grill_loop = new(list(src), FALSE)
 
+/obj/machinery/grill/Destroy()
+	QDEL_NULL(grill_loop)
+	return ..()
+
 /obj/machinery/grill/update_icon_state()
 	if(grilled_item)
 		icon_state = "grill"

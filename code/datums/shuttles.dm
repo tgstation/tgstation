@@ -341,6 +341,12 @@
 	credit_cost = CARGO_CRATE_VALUE * 2
 	description = "Despite its namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
 
+/datum/map_template/shuttle/emergency/tram
+	suffix = "tram"
+	name = "Tram Station Emergency Shuttle"
+	credit_cost = CARGO_CRATE_VALUE * 4
+	description = "A train but in space, choo choo!"
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
@@ -496,6 +502,10 @@
 /datum/map_template/shuttle/whiteship/donut
 	suffix = "donut"
 	name = "NT Long-Distance Bluespace Jumper"
+
+/datum/map_template/shuttle/whiteship/tram
+	suffix = "tram"
+	name = "NT Long-Distance Bluespace Freighter"
 
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"

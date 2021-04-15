@@ -407,12 +407,12 @@
 
 	var/area/A = get_area(src)
 	if(emergency_mode || (A?.fire))
-		SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
+		. += mutable_appearance(overlayicon, "[base_state]_emergency", layer, plane)
 		return
 	if(nightshift_enabled)
-		SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
+		. += mutable_appearance(overlayicon, "[base_state]_nightshift", layer, plane)
 		return
-	SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
+	. += mutable_appearance(overlayicon, base_state, layer, plane)
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
@@ -600,7 +600,7 @@
 				drop_light_tube()
 			new /obj/item/stack/cable_coil(loc, 1, "red")
 		transfer_fingerprints_to(newlight)
-		if(cell)
+		if(!QDELETED(cell))
 			newlight.cell = cell
 			cell.forceMove(newlight)
 			cell = null
@@ -715,12 +715,12 @@
 			var/datum/species/ethereal/eth_species = H.dna?.species
 			if(istype(eth_species))
 				var/datum/species/ethereal/E = H.dna.species
-				if(E.drain_time > world.time)
+				var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+				if((E.drain_time > world.time) || !stomach)
 					return
 				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
 				E.drain_time = world.time + LIGHT_DRAIN_TIME
 				if(do_after(user, LIGHT_DRAIN_TIME, target = src))
-					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 					if(istype(stomach))
 						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
 						stomach.adjust_charge(LIGHT_POWER_GAIN)

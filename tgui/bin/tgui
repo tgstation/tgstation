@@ -67,7 +67,7 @@ task-lint() {
   cd "${base_dir}"
   yarn run tsc
   echo "tgui: type check passed"
-  yarn run eslint packages --ext .js,.jsx,.ts,.tsx,.cjs,.mjs "${@}"
+  yarn run eslint packages --ext .js,.cjs,.ts,.tsx "${@}"
   echo "tgui: eslint check passed"
 }
 
@@ -89,8 +89,9 @@ task-clean() {
   rm -rf .yarn/cache
   rm -rf .yarn/unplugged
   rm -rf .yarn/webpack
-  rm -rf .yarn/build-state.yml
-  rm -rf .yarn/install-state.gz
+  rm -f .yarn/build-state.yml
+  rm -f .yarn/install-state.gz
+  rm -f .yarn/install-target
   rm -f .pnp.js
   ## NPM artifacts
   rm -rf **/node_modules

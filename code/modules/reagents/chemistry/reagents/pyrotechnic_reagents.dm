@@ -67,7 +67,7 @@
 		else if(prob(reac_volume))
 			target_floor.burn_tile()
 		if(isfloorturf(target_floor))
-			for(var/turf/nearby_turf in range(1, target_floor))
+			for(var/turf/nearby_turf in RANGE_TURFS(1, target_floor))
 				if(!locate(/obj/effect/hotspot) in nearby_turf)
 					new /obj/effect/hotspot(nearby_turf)
 
@@ -219,7 +219,7 @@
 	ph = 8.6
 	metabolization_rate = 0.05 * REAGENTS_METABOLISM
 	taste_description = "icey bitterness"
-	purity = REAGENT_STANDARD_PUIRTY
+	purity = REAGENT_STANDARD_PURITY
 	self_consuming = TRUE
 	impure_chem = /datum/reagent/consumable/ice
 	inverse_chem_val = 0.5
@@ -245,7 +245,7 @@
 	consumer.color = COLOR_WHITE
 
 //Pauses decay! Does do something, I promise.
-/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/consumer)
+/datum/reagent/cryostylane/on_mob_dead(mob/living/carbon/consumer, delta_time)
 	. = ..()
 	metabolization_rate = 0.05 * REM //slower consumption when dead
 

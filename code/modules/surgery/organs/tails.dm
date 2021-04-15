@@ -81,6 +81,10 @@
 	new_tail.tail_type = tail_type
 	new_tail.spines = spines
 
+/obj/item/organ/tail/lizard/fake
+	name = "fabricated lizard tail"
+	desc = "A fabricated severed lizard tail. This one's made of synthflesh. Probably not usable for lizard wine."
+
 /obj/item/organ/tail/monkey
 	name = "monkey tail"
 	desc = "A severed monkey tail. Does not look like a banana."

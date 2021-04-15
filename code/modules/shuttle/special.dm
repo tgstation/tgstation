@@ -44,7 +44,7 @@
 	return
 
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
-	return
+	return FALSE
 
 /obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
 	return

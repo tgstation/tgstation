@@ -3,10 +3,11 @@
 	id = "moth"
 	say_mod = "flutters"
 	default_color = "00FF00"
-	species_traits = list(LIPS, NOEYESPRITES, HAS_FLESH, HAS_BONE, HAS_MARKINGS, TRAIT_ANTENNAE)
+	species_traits = list(LIPS, HAS_FLESH, HAS_BONE, HAS_MARKINGS, TRAIT_ANTENNAE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
 	attack_verb = "slash"
+	attack_effect = ATTACK_EFFECT_CLAW
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/food/meat/slab/human/mutant/moth
@@ -78,6 +79,13 @@
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
 
+/datum/species/moth/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
+	var/wings = pick(GLOB.moth_wings_list)
+	mutant_bodyparts["wings"] = wings
+	mutant_bodyparts["moth_wings"] = wings
+	human_mob.dna.features["wings"] = wings
+	human_mob.dna.features["moth_wings"] = wings
+	human_mob.update_body()
 
 /datum/species/moth/spec_fully_heal(mob/living/carbon/human/H)
 	. = ..()

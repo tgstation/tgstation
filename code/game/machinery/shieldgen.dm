@@ -137,7 +137,7 @@
 	update_appearance()
 	move_resist = INFINITY
 
-	for(var/turf/target_tile in range(shield_range, src))
+	for(var/turf/target_tile as anything in RANGE_TURFS(shield_range, src))
 		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
 			if(!(machine_stat & BROKEN) || prob(33))
 				deployed_shields += new /obj/structure/emergency_shield(target_tile)

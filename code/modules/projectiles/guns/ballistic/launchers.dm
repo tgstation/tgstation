@@ -108,26 +108,3 @@
 			"<span class='userdanger'>You look around after realizing you're still here, then proceed to choke yourself to death with [src]!</span>")
 		sleep(20)
 		return OXYLOSS
-
-/obj/item/gun/ballistic/foamfinger
-	name = "foam finger"
-	desc = "pull my finger. unless your hand has gotten blown off by it"
-	icon_state = "foamfinger"
-	inhand_icon_state = "foamfinger"
-	mag_type = /obj/item/ammo_box/magazine/internal/foamfinger
-	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
-	w_class = WEIGHT_CLASS_NORMAL
-	can_suppress = FALSE
-	pin = /obj/item/firing_pin
-	burst_size = 1
-	fire_delay = 0
-	casing_ejector = FALSE
-	weapon_weight = WEAPON_LIGHT
-	bolt_type = BOLT_TYPE_NO_BOLT
-	internal_magazine = TRUE
-	cartridge_wording = "rocket"
-	empty_indicator = TRUE
-	tac_reloads = FALSE
-
-
-

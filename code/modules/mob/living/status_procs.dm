@@ -558,3 +558,15 @@
 /// Shorthand for set_confusion(confusion + x).
 /mob/living/proc/add_confusion(confusion_to_add)
 	set_confusion(get_confusion() + confusion_to_add)
+
+/**
+ * Sets the [SHOCKED_1] flag on this mob.
+ */
+/mob/living/proc/set_shocked()
+	flags_1 |= SHOCKED_1
+
+/**
+ * Unsets the [SHOCKED_1] flag on this mob.
+ */
+/mob/living/proc/reset_shocked()
+	flags_1 &= ~ SHOCKED_1

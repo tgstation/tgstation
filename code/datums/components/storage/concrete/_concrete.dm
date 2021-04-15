@@ -122,11 +122,12 @@
 	var/list/seeing_mobs = can_see_contents()
 	for(var/mob/M in seeing_mobs)
 		M.client.screen -= AM
-	if(ismob(parent.loc) && isitem(AM))
-		var/obj/item/I = AM
-		var/mob/M = parent.loc
-		I.dropped(M, TRUE)
-		I.item_flags &= ~IN_STORAGE
+	if(isitem(AM))
+		var/obj/item/removed_item = AM
+		removed_item.item_flags &= ~IN_STORAGE
+		if(ismob(parent.loc))
+			var/mob/carrying_mob = parent.loc
+			removed_item.dropped(carrying_mob, TRUE)
 	if(new_location)
 		//Reset the items values
 		_removal_reset(AM)

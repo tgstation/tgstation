@@ -361,9 +361,9 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
-	amount = 4
+	amount = 1
 	self_delay = 20
-	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
+	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
 	novariants = TRUE
 	merge_type = /obj/item/stack/medical/bone_gel
 
@@ -393,6 +393,9 @@
 		bone.receive_damage(brute=60)
 	use(1)
 	return (BRUTELOSS)
+
+/obj/item/stack/medical/bone_gel/four
+	amount = 4
 
 /obj/item/stack/medical/poultice
 	name = "mourning poultices"

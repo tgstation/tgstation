@@ -25,33 +25,24 @@
 /obj/vehicle/ridden/wheelchair/obj_destruction(damage_flag)
 	new /obj/item/stack/rods(drop_location(), 1)
 	new /obj/item/stack/sheet/iron(drop_location(), 1)
-	..()
-
-/obj/vehicle/ridden/wheelchair/Destroy()
-	if(has_buckled_mobs())
-		var/mob/living/carbon/H = buckled_mobs[1]
-		unbuckle_mob(H)
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
-	cut_overlays()
 	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
-	if(has_buckled_mobs())
-		handle_rotation_overlayed()
 
 
 /obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/living/user)
 	. = ..()
-	handle_rotation_overlayed()
+	update_appearance()
 
 /obj/vehicle/ridden/wheelchair/post_unbuckle_mob()
 	. = ..()
-	cut_overlays()
+	update_appearance()
 
 /obj/vehicle/ridden/wheelchair/setDir(newdir)
-	..()
-	handle_rotation(newdir)
+	. = ..()
+	update_appearance()
 
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/I) //Attackby should stop it attacking the wheelchair after moving away during decon
 	..()
@@ -63,23 +54,17 @@
 		qdel(src)
 	return TRUE
 
-/obj/vehicle/ridden/wheelchair/proc/handle_rotation(direction)
+/obj/vehicle/ridden/wheelchair/update_overlays()
+	. = ..()
 	if(has_buckled_mobs())
-		handle_rotation_overlayed()
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.setDir(direction)
-
-/obj/vehicle/ridden/wheelchair/proc/handle_rotation_overlayed()
-	cut_overlays()
-	var/image/V = image(icon = icon, icon_state = overlay_icon, layer = FLY_LAYER, dir = src.dir)
-	add_overlay(V)
+		. += image(icon = icon, icon_state = overlay_icon, layer = FLY_LAYER, dir = dir)
 
 
-
+///used for simple rotation component checks
 /obj/vehicle/ridden/wheelchair/proc/can_be_rotated(mob/living/user)
 	return TRUE
 
+///used in simple rotation component checks as to whether a user can rotate this chair
 /obj/vehicle/ridden/wheelchair/proc/can_user_rotate(mob/living/user)
 	var/mob/living/L = user
 	if(istype(L))
@@ -114,6 +99,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 8 //Force is same as a chair
 	custom_materials = list(/datum/material/iron = 10000)
+	///The wheelchair vehicle type we create when we unfold this chair
 	var/unfolded_type = /obj/vehicle/ridden/wheelchair
 
 /obj/item/wheelchair/gold

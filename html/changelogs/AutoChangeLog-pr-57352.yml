@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - refactor: "The definition of the transfer_blood variable (of gloves) has been moved from the file that otherwise only contains the code of damp rags to the file that defines the other variables of gloves, and has also been documented."

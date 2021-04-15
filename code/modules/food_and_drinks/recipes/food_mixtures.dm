@@ -23,7 +23,7 @@
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/tofu/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/tofu/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/food/tofu(location)
@@ -41,7 +41,7 @@
 	required_reagents = list(/datum/reagent/consumable/soymilk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/chocolate_bar/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/chocolate_bar/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/food/chocolatebar(location)
@@ -52,7 +52,7 @@
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/chocolate_bar2/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/chocolate_bar2/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/food/chocolatebar(location)
@@ -62,7 +62,7 @@
 	required_reagents = list(/datum/reagent/consumable/milk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/chocolate_bar3/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/chocolate_bar3/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/food/chocolatebar(location)
@@ -88,7 +88,8 @@
 	results = list(/datum/reagent/carbon = 1)
 	required_reagents = list(/datum/reagent/consumable/caramel = 1)
 	required_temp = 483.15
-	optimal_temp = 600
+	optimal_temp = 1000
+	rate_up_lim = 10
 	mob_react = FALSE
 
 /datum/chemical_reaction/food/cheesewheel
@@ -96,7 +97,7 @@
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/cheesewheel/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/cheesewheel/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/food/cheese/wheel(location)
@@ -106,7 +107,7 @@
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/synthmeat/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/synthmeat/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/food/meat/slab/synthmeat(location)
@@ -125,7 +126,7 @@
 	mix_message = "The mixture becomes similar to carp meat."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/imitationcarpmeat/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/imitationcarpmeat/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/food/fishmeat/carp/imitation(location)
 	if(holder?.my_atom)
@@ -136,7 +137,7 @@
 	mix_message = "The ingredients form a dough."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/dough/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/dough/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/food/dough(location)
@@ -146,7 +147,7 @@
 	mix_message = "The ingredients form a cake batter."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/cakebatter/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/cakebatter/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/food/cakebatter(location)
@@ -164,7 +165,7 @@
 	mix_message = "The rice absorbs the water."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/ricebowl/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/food/ricebowl/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/food/salad/ricebowl(location)
 	if(holder?.my_atom)

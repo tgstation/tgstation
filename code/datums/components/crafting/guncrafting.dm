@@ -30,9 +30,9 @@
 	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into an advaned energy gun."
 
 /obj/item/weaponcrafting/gunkit/tesla
-	name = "tesla revolver parts kit"
-	desc = "A suitcase containing the necessary gun parts to construct a tesla revolver around a stabilized flux anomaly. Handle with care."
-	
+	name = "tesla cannon parts kit"
+	desc = "A suitcase containing the necessary gun parts to construct a tesla cannon around a stabilized flux anomaly. Handle with care."
+
 /obj/item/weaponcrafting/gunkit/xray
 	name = "x-ray laser gun parts kit"
 	desc = "A suitcase containing the necessary gun parts to turn a laser gun into a x-ray laser gun. Do not point most parts directly towards face."
@@ -44,7 +44,7 @@
 /obj/item/weaponcrafting/gunkit/temperature
 	name = "temperature gun parts kit"
 	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into a temperature gun. Fantastic at birthday parties and killing indigenious populations of lizardpeople."
-	
+
 /obj/item/weaponcrafting/gunkit/beam_rifle
 	name = "particle acceleration rifle part kit"
 	desc = "The coup de grace of guncrafting. This suitcase contains the highly experimental rig for a particle acceleration rifle. Requires an energy gun, a stabilized flux anomaly and a stabilized gravity anomaly."

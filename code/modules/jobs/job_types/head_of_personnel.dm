@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_SERVICE
 
 	outfit = /datum/outfit/job/hop
+	plasmaman_outfit = /datum/outfit/plasmaman/head_of_personnel
 	departments = DEPARTMENT_COMMAND | DEPARTMENT_SERVICE
 
 	paycheck = PAYCHECK_COMMAND

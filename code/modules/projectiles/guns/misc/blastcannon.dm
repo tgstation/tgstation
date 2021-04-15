@@ -69,7 +69,7 @@
 	if(!istype(bomb_to_attach))
 		return ..()
 
-	if(!bomb_to_attach.tank_one || !bomb_to_attach.tank_two)
+	if(!bomb_to_attach.ready())
 		to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 		return FALSE
 	if(!user.transferItemToLoc(bomb_to_attach, src))
@@ -83,7 +83,7 @@
 
 /// Handles the bomb power calculations
 /obj/item/gun/blastcannon/proc/calculate_bomb()
-	if(!istype(bomb) || !istype(bomb.tank_one) || !istype(bomb.tank_two))
+	if(!istype(bomb) || !bomb.ready())
 		return 0
 
 	var/datum/gas_mixture/temp = new(max(reaction_volume_mod, 0))
@@ -98,7 +98,6 @@
 		temp.react(src)
 
 	var/pressure = temp.return_pressure()
-	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
 		return 0
 	return ((pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE)
@@ -171,4 +170,4 @@
 		return
 
 /obj/projectile/blastwave/ex_act()
-	return
+	return FALSE

@@ -32,7 +32,7 @@
 	return ..()
 
 /obj/effect/dummy/phased_mob/ex_act()
-	return
+	return FALSE
 
 /obj/effect/dummy/phased_mob/bullet_act(blah)
 	return BULLET_ACT_FORCE_PIERCE

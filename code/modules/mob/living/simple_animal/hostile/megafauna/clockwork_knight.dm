@@ -7,7 +7,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 */
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_defender
-	name = "the clockwork defender"
+	name = "clockwork defender"
 	desc = "A traitorous clockwork knight who lived on, despite its creators destruction."
 	health = 300
 	maxHealth = 300
@@ -17,6 +17,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	weather_immunities = list("snow")
 	speak_emote = list("roars")
 	armour_penetration = 40

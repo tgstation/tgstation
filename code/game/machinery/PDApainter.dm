@@ -78,10 +78,22 @@
 		stored_id_card = null
 
 /obj/machinery/pdapainter/contents_explosion(severity, target)
-	if(stored_pda)
-		stored_pda.ex_act(severity, target)
-	if(stored_id_card)
-		stored_id_card.ex_act(severity, target)
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			if(stored_pda)
+				SSexplosions.high_mov_atom += stored_pda
+			if(stored_id_card)
+				SSexplosions.high_mov_atom += stored_id_card
+		if(EXPLODE_HEAVY)
+			if(stored_pda)
+				SSexplosions.med_mov_atom += stored_pda
+			if(stored_id_card)
+				SSexplosions.med_mov_atom += stored_id_card
+		if(EXPLODE_LIGHT)
+			if(stored_pda)
+				SSexplosions.low_mov_atom += stored_pda
+			if(stored_id_card)
+				SSexplosions.low_mov_atom += stored_id_card
 
 /obj/machinery/pdapainter/handle_atom_del(atom/A)
 	if(A == stored_pda)
@@ -115,11 +127,11 @@
 
 	// Chameleon checks first so they can exit the logic early if they're detected.
 	if(istype(O, /obj/item/card/id/advanced/chameleon))
-		to_chat(user, "<span class='warning'>The machine rejects your [src]. It's clearly not a compatible ID card.</span>")
+		to_chat(user, "<span class='warning'>The machine rejects your [O]. This ID card does not appear to be compatible with the PDA Painter.</span>")
 		return
 
 	if(istype(O, /obj/item/pda/chameleon))
-		to_chat(user, "<span class='warning'>The machine rejects your [src]. It's clearly not a compatible PDA.</span>")
+		to_chat(user, "<span class='warning'>The machine rejects your [O]. This PDA does not appear to be compatible with the PDA Painter.</span>")
 		return
 
 	if(istype(O, /obj/item/pda))
@@ -322,7 +334,7 @@
 				if(SSid_access.apply_trim_to_card(stored_id_card, path, copy_access = FALSE))
 					return TRUE
 
-				to_chat(usr, "<span class='warning'>The trim you selected could not be added to \the [src]. You will need a rarer ID card to imprint that trim data.</span>")
+				to_chat(usr, "<span class='warning'>The trim you selected could not be added to \the [stored_id_card]. You will need a rarer ID card to imprint that trim data.</span>")
 
 			return TRUE
 

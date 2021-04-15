@@ -60,6 +60,7 @@
 		species_traits |= S.species_traits
 		inherent_traits |= S.inherent_traits
 		attack_verb = S.attack_verb
+		attack_effect = S.attack_effect
 		attack_sound = S.attack_sound
 		miss_sound = S.miss_sound
 		meat = S.meat
@@ -78,6 +79,7 @@
 		species_traits = initial_species_traits.Copy()
 		inherent_traits = initial_inherent_traits.Copy()
 		attack_verb = initial(attack_verb)
+		attack_effect = initial(attack_verb)
 		attack_sound = initial(attack_sound)
 		miss_sound = initial(miss_sound)
 		mutant_bodyparts = list()

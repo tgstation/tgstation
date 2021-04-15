@@ -44,13 +44,13 @@
 	if(connected_port)
 		. += "siphon-connector"
 
-/obj/machinery/portable_atmospherics/pump/process_atmos(delta_time)
+/obj/machinery/portable_atmospherics/pump/process_atmos()
 	. = ..()
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 	///function used to check the limit of the pumps and also set the amount of damage that the pump can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(temperature > heat_limit || pressure > pressure_limit)
-		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit) * delta_time * 0.5, 5, 50), BURN, 0)
+		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
 		return
 
 	if(!on)

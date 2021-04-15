@@ -4,6 +4,8 @@
 	var/list/moving_controllers = list()
 	///Does this type require processing?
 	var/requires_processing = TRUE
+	///How many times a given controller can fail on their route before they just give up
+	var/max_pathing_attempts
 
 /datum/ai_movement/proc/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target)
 	controller.pathing_attempts = 0

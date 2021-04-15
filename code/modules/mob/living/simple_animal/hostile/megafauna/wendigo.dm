@@ -24,6 +24,7 @@ Difficulty: Hard
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_CLAW
 	weather_immunities = list("snow")
 	speak_emote = list("roars")
 	armour_penetration = 40
