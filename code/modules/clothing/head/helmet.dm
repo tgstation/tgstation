@@ -202,13 +202,10 @@
 /obj/item/clothing/head/helmet/constable
 	name = "constable helmet"
 	desc = "A british looking helmet."
-	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "constable"
 	inhand_icon_state = "constable"
-	worn_x_dimension = 64
-	worn_y_dimension = 64
-	clothing_flags = LARGE_WORN_ICON
 	custom_price = PAYCHECK_HARD * 1.5
+	worn_y_offset = 4
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"

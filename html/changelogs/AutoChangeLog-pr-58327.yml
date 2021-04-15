@@ -1,0 +1,4 @@
+author: "Anonymous"
+delete-after: True
+changes: 
+  - bugfix: "Mailman jumpsuit no longer exposes yours back when looking at left/west."
