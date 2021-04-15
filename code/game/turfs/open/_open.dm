@@ -168,14 +168,24 @@
 			excited = TRUE
 			SSair.active_turfs += src
 
-/turf/open/proc/GetHeatCapacity()
+/turf/open/GetHeatCapacity()
 	. = air.heat_capacity()
 
-/turf/open/proc/GetTemperature()
+/turf/open/GetTemperature()
 	. = air.temperature
 
-/turf/open/proc/TakeTemperature(temp)
+/turf/open/TakeTemperature(temp)
 	air.temperature += temp
+	air_update_turf(FALSE, FALSE)
+
+/turf/proc/GetHeatCapacity()
+	. = heat_capacity
+
+/turf/proc/GetTemperature()
+	. = temperature
+
+/turf/proc/TakeTemperature(temp)
+	temperature += temp
 	air_update_turf(FALSE, FALSE)
 
 /turf/open/proc/freon_gas_act()

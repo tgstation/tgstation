@@ -13,6 +13,7 @@
 	girder_type = /obj/structure/girder/reinforced
 	explosion_block = 2
 	rad_insulation = RAD_HEAVY_INSULATION
+	heat_capacity = 300000 //also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
 	///Dismantled state, related to deconstruction.
 	var/d_state = INTACT
 
