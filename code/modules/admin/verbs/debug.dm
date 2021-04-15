@@ -42,7 +42,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Make Robot"
 
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"Wait until the game starts",,list("Ok"))
+		tgui_alert(usr,"Wait until the game starts")
 		return
 	if(ishuman(M))
 		log_admin("[key_name(src)] has robotized [M.key].")
@@ -50,21 +50,21 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		INVOKE_ASYNC(H, /mob/living/carbon/human.proc/Robotize)
 
 	else
-		tgui_alert(usr,"Invalid mob",,list("Ok"))
+		tgui_alert(usr,"Invalid mob")
 
 /client/proc/cmd_admin_blobize(mob/M in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Make Blob"
 
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"Wait until the game starts",,list("Ok"))
+		tgui_alert(usr,"Wait until the game starts")
 		return
 	if(ishuman(M))
 		log_admin("[key_name(src)] has blobized [M.key].")
 		var/mob/living/carbon/human/H = M
 		H.become_overmind()
 	else
-		tgui_alert(usr,"Invalid mob",,list("Ok"))
+		tgui_alert(usr,"Invalid mob")
 
 
 /client/proc/cmd_admin_animalize(mob/M in GLOB.mob_list)
@@ -72,15 +72,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Make Simple Animal"
 
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"Wait until the game starts",,list("Ok"))
+		tgui_alert(usr,"Wait until the game starts")
 		return
 
 	if(!M)
-		tgui_alert(usr,"That mob doesn't seem to exist, close the panel and try again.",,list("Ok"))
+		tgui_alert(usr,"That mob doesn't seem to exist, close the panel and try again.")
 		return
 
 	if(isnewplayer(M))
-		tgui_alert(usr,"The mob must not be a new_player.",,list("Ok"))
+		tgui_alert(usr,"The mob must not be a new_player.")
 		return
 
 	log_admin("[key_name(src)] has animalized [M.key].")
@@ -125,7 +125,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Make Alien"
 
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"Wait until the game starts",,list("Ok"))
+		tgui_alert(usr,"Wait until the game starts")
 		return
 	if(ishuman(M))
 		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/Alienize)
@@ -133,14 +133,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien at [AREACOORD(M)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] into an alien.</span>")
 	else
-		tgui_alert(usr,"Invalid mob",,list("Ok"))
+		tgui_alert(usr,"Invalid mob")
 
 /client/proc/cmd_admin_slimeize(mob/M in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Make slime"
 
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"Wait until the game starts",,list("Ok"))
+		tgui_alert(usr,"Wait until the game starts")
 		return
 	if(ishuman(M))
 		INVOKE_ASYNC(M, /mob/living/carbon/human/proc/slimeize)
@@ -148,7 +148,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime at [AREACOORD(M)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] into a slime.</span>")
 	else
-		tgui_alert(usr,"Invalid mob",,list("Ok"))
+		tgui_alert(usr,"Invalid mob")
 
 
 //TODO: merge the vievars version into this or something maybe mayhaps
@@ -189,7 +189,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Grant Full Access"
 
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"Wait until the game starts",,list("Ok"))
+		tgui_alert(usr,"Wait until the game starts")
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -223,7 +223,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			H.equip_to_slot(id,ITEM_SLOT_ID)
 
 	else
-		tgui_alert(usr,"Invalid mob",,list("Ok"))
+		tgui_alert(usr,"Invalid mob")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Grant Full Access") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")

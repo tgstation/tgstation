@@ -11,19 +11,11 @@ import { Window } from '../layouts';
 
 export const AlertModal = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    title,
-    message,
-    buttons,
-    timeout,
-  } = data;
+  const { title, message, buttons, timeout } = data;
 
   return (
-    <Window
-      title={title}
-      width={350}
-      height={150}>
-      {timeout !== undefined && <Loader value={timeout} />}
+    <Window title={title} width={350} height={150} noClose={!timeout}>
+      {timeout && <Loader value={timeout} />}
       <Window.Content>
         <Section fill>
           <Flex direction="column" height="100%">
@@ -61,14 +53,12 @@ export const AlertModal = (props, context) => {
 
 export const Loader = props => {
   const { value } = props;
+
   return (
-    <div
-      className="AlertModal__Loader">
+    <div className="AlertModal__Loader">
       <Box
         className="AlertModal__LoaderProgress"
-        style={{
-          width: clamp01(value) * 100 + '%',
-        }} />
+        style={{width: clamp01(value) * 100 + '%'}}/>
     </div>
   );
 };

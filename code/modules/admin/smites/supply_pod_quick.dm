@@ -28,7 +28,7 @@
 	if(!ispath(delivery))
 		delivery = pick_closest_path(attempted_target_path)
 		if(!delivery)
-			tgui_alert(user, "ERROR: Incorrect / improper path given.",, list("Ok"))
+			tgui_alert(user, "ERROR: Incorrect / improper path given.")
 			return FALSE
 	target_path = delivery
 

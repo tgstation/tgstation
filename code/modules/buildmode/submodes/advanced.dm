@@ -22,11 +22,11 @@
 	if(!ispath(objholder))
 		objholder = pick_closest_path(target_path)
 		if(!objholder)
-			tgui_alert(usr,"No path was selected",,list("Ok"))
+			tgui_alert(usr,"No path was selected")
 			return
 		else if(ispath(objholder, /area))
 			objholder = null
-			tgui_alert(usr,"That path is not allowed.",,list("Ok"))
+			tgui_alert(usr,"That path is not allowed.")
 			return
 
 /datum/buildmode_mode/advanced/handle_click(client/c, params, obj/object)

@@ -37,7 +37,7 @@
 	user = CLIENT_FROM_VAR(_user)
 
 	if(!ishuman(target) && !isobserver(target))
-		tgui_alert(usr,"Invalid mob",,list("Ok"))
+		tgui_alert(usr,"Invalid mob")
 		return
 	target_mob = target
 
@@ -196,7 +196,7 @@
 
 /client/proc/admin_apply_outfit(mob/target, dresscode)
 	if(!ishuman(target) && !isobserver(target))
-		tgui_alert(usr,"Invalid mob",,list("Ok"))
+		tgui_alert(usr,"Invalid mob")
 		return
 
 	if(!dresscode)

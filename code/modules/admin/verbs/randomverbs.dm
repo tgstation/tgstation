@@ -535,7 +535,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!mob)
 		return
 	if(!istype(M))
-		tgui_alert(usr,"Cannot revive a ghost",,list("Ok"))
+		tgui_alert(usr,"Cannot revive a ghost")
 		return
 	M.revive(full_heal = TRUE, admin_revive = TRUE)
 

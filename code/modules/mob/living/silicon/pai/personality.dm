@@ -51,7 +51,7 @@
 	if (isnull(version) || version != 1)
 		fdel(path)
 		if (!silent)
-			tgui_alert(user, "Your savefile was incompatible with this version and was deleted.",,list("Ok"))
+			tgui_alert(user, "Your savefile was incompatible with this version and was deleted.")
 		return 0
 
 	F["name"] >> src.name

@@ -7,7 +7,7 @@
 
 	if (SSdbcore.IsConnected())
 		if (!check_rights(R_DEBUG,0))
-			tgui_alert(usr,"The database is already connected! (Only those with +debug can force a reconnection)", "The database is already connected!",list("Ok"))
+			tgui_alert(usr,"The database is already connected! (Only those with +debug can force a reconnection)", "The database is already connected!")
 			return
 
 		var/reconnect = tgui_alert(usr,"The database is already connected! If you *KNOW* that this is incorrect, you can force a reconnection", "The database is already connected!", list("Force Reconnect", "Cancel"))

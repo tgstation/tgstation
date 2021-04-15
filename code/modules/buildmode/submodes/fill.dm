@@ -19,11 +19,11 @@
 	if(!ispath(objholder))
 		objholder = pick_closest_path(target_path)
 		if(!objholder)
-			tgui_alert(usr,"No path has been selected.",,list("Ok"))
+			tgui_alert(usr,"No path has been selected.")
 			return
 		else if(ispath(objholder, /area))
 			objholder = null
-			tgui_alert(usr,"Area paths are not supported for this mode, use the area edit mode instead.",,list("Ok"))
+			tgui_alert(usr,"Area paths are not supported for this mode, use the area edit mode instead.")
 			return
 	deselect_region()
 

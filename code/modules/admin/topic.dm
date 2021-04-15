@@ -514,9 +514,9 @@
 		if(!check_rights(R_ADMIN))
 			return
 		if(SSticker?.mode)
-			return tgui_alert(usr, "The game has already started.",, list("Ok"))
+			return tgui_alert(usr, "The game has already started.")
 		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode.",, list("Ok"))
+			return tgui_alert(usr, "The game mode has to be dynamic mode.")
 		var/roundstart_rules = list()
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
 			var/datum/dynamic_ruleset/roundstart/newrule = new rule()
@@ -550,9 +550,9 @@
 			return
 
 		if(SSticker?.mode)
-			return tgui_alert(usr, "The game has already started.",, list("Ok"))
+			return tgui_alert(usr, "The game has already started.")
 		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode!",, list("Ok"))
+			return tgui_alert(usr, "The game mode has to be dynamic mode!")
 
 		dynamic_mode_options(usr)
 	else if(href_list["f_dynamic_force_extended"])
@@ -560,7 +560,7 @@
 			return
 
 		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode!",, list("Ok"))
+			return tgui_alert(usr, "The game mode has to be dynamic mode!")
 
 		GLOB.dynamic_forced_extended = !GLOB.dynamic_forced_extended
 		log_admin("[key_name(usr)] set 'forced_extended' to [GLOB.dynamic_forced_extended].")
@@ -572,7 +572,7 @@
 			return
 
 		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode!",, list("Ok"))
+			return tgui_alert(usr, "The game mode has to be dynamic mode!")
 
 		GLOB.dynamic_no_stacking = !GLOB.dynamic_no_stacking
 		log_admin("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
@@ -583,7 +583,7 @@
 			return
 
 		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode!",, list("Ok"))
+			return tgui_alert(usr, "The game mode has to be dynamic mode!")
 
 		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 		log_admin("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
@@ -595,14 +595,14 @@
 			return
 
 		if(SSticker?.mode)
-			return tgui_alert(usr, "The game has already started.",, list("Ok"))
+			return tgui_alert(usr, "The game has already started.")
 
 		if(!SSticker.is_mode("dynamic"))
-			return tgui_alert(usr, "The game mode has to be dynamic mode!",, list("Ok"))
+			return tgui_alert(usr, "The game mode has to be dynamic mode!")
 
 		var/new_value = input(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level") as num
 		if (new_value > 100)
-			return tgui_alert(usr, "The value must be be under 100.",, list("Ok"))
+			return tgui_alert(usr, "The value must be be under 100.")
 		GLOB.dynamic_forced_threat_level = new_value
 
 		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
@@ -1235,7 +1235,7 @@
 			return
 
 		if(!SSticker.HasRoundStarted())
-			tgui_alert(usr,"The game hasn't started yet!",,list("Ok"))
+			tgui_alert(usr,"The game hasn't started yet!")
 			return
 
 		var/mob/M = locate(href_list["traitor"])
@@ -1254,7 +1254,7 @@
 			return
 
 		if(!SSticker.HasRoundStarted())
-			tgui_alert(usr,"The game hasn't started yet!",,list("Ok"))
+			tgui_alert(usr,"The game hasn't started yet!")
 			return
 
 		var/target = locate(href_list["skill"])
@@ -1336,10 +1336,10 @@
 			paths += path
 
 		if(!paths)
-			tgui_alert(usr,"The path list you sent is empty.",,list("Ok"))
+			tgui_alert(usr,"The path list you sent is empty.")
 			return
 		if(length(paths) > 5)
-			tgui_alert(usr,"Select fewer object types, (max 5).",,list("Ok"))
+			tgui_alert(usr,"Select fewer object types, (max 5).")
 			return
 
 		var/list/offset = splittext(href_list["offset"],",")

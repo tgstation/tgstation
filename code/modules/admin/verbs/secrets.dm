@@ -120,11 +120,11 @@
 			holder.holder.output_ai_laws()//huh, inconvenient var naming, huh?
 		if("showgm")
 			if(!SSticker.HasRoundStarted())
-				tgui_alert(usr,"The game hasn't started yet!",,list("Ok"))
+				tgui_alert(usr,"The game hasn't started yet!")
 			else if (SSticker.mode)
-				tgui_alert(usr,"The game mode is [SSticker.mode.name]",,list("Ok"))
+				tgui_alert(usr,"The game mode is [SSticker.mode.name]")
 			else
-				tgui_alert(usr,"For some reason there's a SSticker, but not a game mode",,list("Ok"))
+				tgui_alert(usr,"For some reason there's a SSticker, but not a game mode")
 		if("manifest")
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
@@ -457,7 +457,7 @@
 			if(!is_funmin)
 				return
 			if(!SSticker.HasRoundStarted())
-				tgui_alert(usr,"The game hasn't started yet!",,list("Ok"))
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/objective = stripped_input(holder, "Enter an objective")
 			if(!objective)
