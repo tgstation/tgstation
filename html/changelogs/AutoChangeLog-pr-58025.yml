@@ -1,6 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - rscadd: "The cryopod machine has been added, an IC way to reopen job slots for yourself and other players."
-  - rscadd: "AFK and SSD players can be placed into cryopods to reopen their job slot."
-  - refactor: "Refactored cult sacrifice targeting to compensate for players logging out."

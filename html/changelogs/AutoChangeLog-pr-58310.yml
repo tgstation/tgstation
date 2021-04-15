@@ -1,6 +1,0 @@
-author: "Celotajs"
-delete-after: True
-changes: 
-  - admin: "Added a configuration option for splitting the admin tab into multiple tabs"
-  - admin: "Interviews have been moved to the Tickets tab"
-  - qol: "It is now possible for administrators to split the admin tab into multiple tabs"

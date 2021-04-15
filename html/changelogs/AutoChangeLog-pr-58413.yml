@@ -1,0 +1,4 @@
+author: "John Willard"
+delete-after: True
+changes: 
+  - bugfix: "Flypeople can now use more than 1 S"

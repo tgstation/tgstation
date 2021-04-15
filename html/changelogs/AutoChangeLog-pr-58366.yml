@@ -1,0 +1,4 @@
+author: "Trigg"
+delete-after: True
+changes: 
+  - bugfix: "The Select Equipment menu now uses the UI owner's favorite outfits instead of the target mob's. Whoops."
