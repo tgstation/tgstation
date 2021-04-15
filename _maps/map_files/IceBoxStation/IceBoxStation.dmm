@@ -26012,7 +26012,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "cXO" = (
-/turf/open/floor/carpet,
+/turf/open/floor/carpet/red,
 /area/commons/vacant_room/office)
 "cXW" = (
 /obj/structure/window/reinforced{
@@ -26346,9 +26346,6 @@
 /turf/open/floor/plating,
 /area/service/bar)
 "dgg" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/structure/sign/poster/official/no_erp{
 	pixel_x = -30
 	},
@@ -27809,6 +27806,10 @@
 /area/maintenance/aft)
 "egs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "egN" = (
@@ -28458,6 +28459,12 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
+"eGD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/commons/vacant_room/office)
 "eGN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -28868,7 +28875,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/carpet/red,
 /area/commons/vacant_room/office)
 "eVu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -32319,6 +32326,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/cargo/miningdock)
+"hdj" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/commons/vacant_room/office)
 "hdy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -32524,6 +32537,12 @@
 /area/engineering/supermatter/room)
 "hlc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "hlq" = (
@@ -32673,6 +32692,21 @@
 /obj/item/stamp/hos,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
+"hrh" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/obj/structure/window/reinforced/tinted{
+	dir = 4
+	},
+/obj/machinery/door/window/northleft{
+	name = "Shower Cubicle"
+	},
+/turf/open/floor/iron/freezer,
+/area/maintenance/starboard/fore)
 "hrF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -34102,6 +34136,9 @@
 /area/commons/locker)
 "imo" = (
 /obj/item/kirbyplants/random,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "imA" = (
@@ -36025,6 +36062,13 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
+"jBf" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/commons/vacant_room/office)
 "jBj" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -39317,6 +39361,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "lHe" = (
@@ -40495,7 +40542,6 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/food/plant_smudge,
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
 "moV" = (
@@ -42111,8 +42157,8 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "nms" = (
-/obj/machinery/shower{
-	pixel_y = 12
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/open/floor/iron/freezer,
 /area/maintenance/starboard/fore)
@@ -42195,9 +42241,19 @@
 	},
 /turf/open/floor/iron,
 /area/commons/locker)
+"npw" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/iron/grimy,
+/area/commons/vacant_room/office)
 "npE" = (
 /obj/item/radio/intercom{
 	pixel_y = -29
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
@@ -43789,6 +43845,12 @@
 /obj/machinery/shower{
 	dir = 1
 	},
+/obj/structure/window/reinforced/tinted{
+	dir = 4
+	},
+/obj/machinery/door/window/northleft{
+	name = "Shower Cubicle"
+	},
 /turf/open/floor/iron/freezer,
 /area/maintenance/starboard/fore)
 "opK" = (
@@ -43920,6 +43982,16 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/cargo/qm)
+"otg" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/obj/structure/mirror{
+	pixel_x = 28
+	},
+/turf/open/floor/iron/freezer,
+/area/maintenance/starboard/fore)
 "otm" = (
 /obj/structure/sink{
 	dir = 4;
@@ -44142,6 +44214,9 @@
 	},
 /obj/machinery/light_switch{
 	pixel_x = -28
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
@@ -45802,7 +45877,7 @@
 "pHn" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
-/turf/open/floor/carpet,
+/turf/open/floor/carpet/red,
 /area/commons/vacant_room/office)
 "pHB" = (
 /obj/effect/turf_decal/stripes/line{
@@ -46030,6 +46105,12 @@
 "pOI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
@@ -46388,6 +46469,10 @@
 /turf/closed/wall,
 /area/service/library)
 "pXA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "pXD" = (
@@ -48041,6 +48126,9 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "rbC" = (
@@ -48696,7 +48784,7 @@
 	pixel_x = 6;
 	pixel_y = 1
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/carpet/red,
 /area/commons/vacant_room/office)
 "rwp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -51871,7 +51959,8 @@
 /area/command/gateway)
 "tty" = (
 /obj/machinery/door/window/northright{
-	dir = 8
+	dir = 8;
+	name = "Shop Counter"
 	},
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
@@ -54317,6 +54406,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "uQL" = (
@@ -54441,6 +54533,19 @@
 	},
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/ce)
+"uUz" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/obj/machinery/door/window/northleft{
+	name = "Shower Cubicle"
+	},
+/obj/item/soap/nanotrasen,
+/turf/open/floor/iron/freezer,
+/area/maintenance/starboard/fore)
 "uUA" = (
 /obj/item/trash/raisins,
 /turf/open/floor/plating,
@@ -59159,7 +59264,7 @@
 /obj/item/folder/red{
 	pixel_x = -5
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/carpet/red,
 /area/commons/vacant_room/office)
 "xNc" = (
 /obj/structure/closet/toolcloset,
@@ -74004,8 +74109,8 @@ aRd
 ayl
 fbY
 rbb
-pXA
-pXA
+hdj
+jBf
 nNo
 wUB
 fbY
@@ -74261,7 +74366,7 @@ aRd
 aSd
 fbY
 uPY
-pXA
+eGD
 hlc
 pOI
 npE
@@ -75031,7 +75136,7 @@ aLB
 aQK
 aSe
 fbY
-eoj
+npw
 cXO
 eUU
 cXO
@@ -106877,7 +106982,7 @@ iUD
 eQd
 alP
 nms
-opH
+hrh
 asB
 asB
 asB
@@ -107133,8 +107238,8 @@ oVQ
 mEL
 mwh
 alP
-nms
-opH
+otg
+uUz
 asB
 atG
 eGN
