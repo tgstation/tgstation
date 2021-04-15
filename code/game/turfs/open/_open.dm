@@ -178,16 +178,6 @@
 	air.temperature += temp
 	air_update_turf(FALSE, FALSE)
 
-/turf/proc/GetHeatCapacity()
-	. = heat_capacity
-
-/turf/proc/GetTemperature()
-	. = temperature
-
-/turf/proc/TakeTemperature(temp)
-	temperature += temp
-	air_update_turf(FALSE, FALSE)
-
 /turf/open/proc/freon_gas_act()
 	for(var/obj/I in contents)
 		if(I.resistance_flags & FREEZE_PROOF)
