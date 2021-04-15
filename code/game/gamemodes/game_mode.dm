@@ -591,22 +591,8 @@
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/game_mode/proc/age_check(client/C)
-	if(get_remaining_days(C) == 0)
-		return 1 //Available in 0 days = available right now = player is old enough to play.
-	return 0
-
-
-/datum/game_mode/proc/get_remaining_days(client/C)
-	if(!C)
-		return 0
-	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
-		return 0
-	if(!isnum(C.player_age))
-		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
-	if(!isnum(enemy_minimum_age))
-		return 0
-
-	return max(0, enemy_minimum_age - C.player_age)
+	// MOTHBLOCKS TODO: kill
+	return TRUE
 
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
 	SSticker.mode.remove_cultist(newborgie, 0, 0)
