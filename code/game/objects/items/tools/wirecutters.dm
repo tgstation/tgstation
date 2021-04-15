@@ -36,12 +36,11 @@
 	)
 
 /obj/item/wirecutters/Initialize()
-	. = ..()
 	if(random_color)
-		greyscale_config = /datum/greyscale_config/wirecutters
+		set_greyscale_config(/datum/greyscale_config/wirecutters)
 		var/our_color = pick(wirecutter_colors)
-		greyscale_colors = wirecutter_colors[our_color]
-		update_icon()
+		set_greyscale_colors(list(wirecutter_colors[our_color]))
+	return ..()
 
 /obj/item/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/restraints/handcuffs/cable))
