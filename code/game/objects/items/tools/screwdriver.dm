@@ -44,27 +44,30 @@
 	return(BRUTELOSS)
 
 /obj/item/screwdriver/Initialize()
-	. = ..()
 	if(random_color)
-		greyscale_config = /datum/greyscale_config/screwdriver
+		set_greyscale_config(/datum/greyscale_config/screwdriver)
 		var/our_color = pick(screwdriver_colors)
-		greyscale_colors = screwdriver_colors[our_color]
-		update_icon()
+		set_greyscale_colors(list(screwdriver_colors[our_color]))
+	. = ..()
 	if(prob(75))
 		pixel_y = rand(0, 16)
 
 /obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
 	if(isinhands && random_color)
+		var/mutable_appearance/inhand_overlay
 		switch(icon_file)
 			if('icons/mob/inhands/equipment/tools_lefthand.dmi')
-				. += mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_left, greyscale_colors))
+				inhand_overlay = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_left, greyscale_colors))
+				. += inhand_overlay
 			if('icons/mob/inhands/equipment/tools_righthand.dmi')
-				. += mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_right, greyscale_colors))
+				inhand_overlay = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_right, greyscale_colors))
+				. += inhand_overlay
 
 /obj/item/screwdriver/get_belt_overlay()
 	if(random_color)
-		return mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
+		var/mutable_appearance/colored_belt_overlay = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
+		return colored_belt_overlay
 	else
 		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
 
