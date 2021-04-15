@@ -124,8 +124,8 @@
 	stage5 = list("<span class='warning'>You feel like monkeying around.</span>")
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
-	if(affected_mob.mind && !is_monkey(affected_mob.mind))
-		add_monkey(affected_mob.mind)
+	if(affected_mob.mind && !IS_INFECTED_MONKEY(affected_mob.mind))
+		affected_mob.mind.add_antag_datum(/datum/antagonist/monkey)
 		affected_mob.monkeyize()
 		ADD_TRAIT(affected_mob, TRAIT_VENTCRAWLER_ALWAYS, type)
 
@@ -149,7 +149,7 @@
 
 
 /datum/disease/transformation/jungle_fever/cure()
-	remove_monkey(affected_mob.mind)
+	affected_mob.mind.remove_antag_datum(/datum/antagonist/monkey)
 	..()
 
 /datum/disease/transformation/jungle_fever/monkeymode
@@ -157,7 +157,7 @@
 	disease_flags = CAN_CARRY //no vaccines! no cure!
 
 /datum/disease/transformation/jungle_fever/monkeymode/after_add()
-	if(affected_mob && !is_monkey_leader(affected_mob.mind))
+	if(affected_mob && !IS_MONKEY_LEADER(affected_mob.mind))
 		visibility_flags = NONE
 
 
