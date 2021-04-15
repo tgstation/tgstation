@@ -2,7 +2,7 @@
 #define CONSTRUCTION_NO_CIRCUIT 2 //Circuit board removed, can safely weld apart
 #define DEFAULT_STEP_TIME 20 /// default time for each step
 #define MINIMUM_TEMPERATURE_TO_BURN_ARMS 500 ///everything above this temperature will start burning unprotected arms
-#define TOOLLESS_OPEN_DURATION_SOLO 20 SECONDS ///opening a firelock without a tool takes this long if only one person is doing it
+#define TOOLLESS_OPEN_DURATION_SOLO (20 SECONDS) ///opening a firelock without a tool takes this long if only one person is doing it
 #define TOOLLESS_BURN_DAMAGE_PER_SECOND 5 ///how much burn
 #define TRUE_OPENING_TIME max(TOOLLESS_OPEN_DURATION_SOLO / max(length(people_trying_to_open) * 0.75, 1), 2 SECONDS)
 
@@ -103,7 +103,7 @@
 			"<span class='notice'>You bang on [src].</span>")
 		playsound(loc, 'sound/effects/glassknock.ogg', 10, FALSE, frequency = 32000)
 	else
-		if(living_user.do_afters)//you get one firelock to open, better pick the right one
+		if(DOING_INTERACTION(living_user, DOAFTER_SOURCE_BAREHAND_FIRELOCK_OPEN))//you get one firelock to open, better pick the right one
 			return
 
 		//dont want them to be moved by pressure differences when theyre holding onto the firelock with all their strength
@@ -144,7 +144,7 @@
 			user.visible_message("<span class='notice'>[living_user] tries to open [src] with [user_their_pronoun] [hand_string], struggling greatly to open the heavy door by themselves.</span>", \
 				"<span class='notice'>You try with all your strength to pry open [src] with your [hand_string], barely moving [p_them()]!</span>")
 		else if (length(people_trying_to_open) == 2)
-			user.visible_message("<span class='notice'>[living_user] joins [people_trying_to_open[1]] in trying to open [src] with [user_their_pronoun] [hand_string].</span>", \
+			user.visible_message("<span class='notice'>[living_user] joins [people_trying_to_open[1]["user"]] in trying to open [src] with [user_their_pronoun] [hand_string].</span>", \
 				"<span class='notice'>You join [people_trying_to_open[1]] in trying to pry open [src] with your [hand_string]!</span>")
 		else
 			user.visible_message("<span class='notice'>[living_user] joins the others in trying to open [src] with [user_their_pronoun] [hand_string]!</span>", \
@@ -155,12 +155,12 @@
 
 		//this callback adjusts the timer of the do_after_dynamic for each user if the number of people trying to open the firelock changes
 		var/datum/callback/timer_callback = CALLBACK(src, .proc/adjust_do_after_timer)
-		//TODOKYLER: double and triple check whether the teaming up thing would actually work
 
 		START_PROCESSING(SSmachines, src)//burns the arms of everyone trying to open the firelock if its hot enough and they dont have protection
 
+		//TODOKYLER: the progress bar is inaccurate for teaming up, and only the first person will succeed, this needs to be centralized to work
 		///players can team up to open it faster. 20 seconds -> 13.333 -> 8.88 ... -> 2
-		if(do_after_dynamic(user, TRUE_OPENING_TIME, src, extra_checks = is_closed_callback, dynamic_timer_change = timer_callback))
+		if(do_after_dynamic(user, TRUE_OPENING_TIME, src, extra_checks = is_closed_callback, interaction_key = DOAFTER_SOURCE_BAREHAND_FIRELOCK_OPEN, max_interact_count = 1,  dynamic_timer_change = timer_callback))
 			user.visible_message("<span class='notice'>[living_user] opens [src] with [user.p_their()] [hand_string].</span>", \
 				self_message = "<span class='notice'>You pry open [src] with your [hand_string]!</span>")
 
@@ -178,7 +178,7 @@
 /obj/machinery/door/firedoor/attack_paw(mob/living/user, list/modifiers)
 	. = ..()
 	if(!user.combat_mode)
-		attack_hand(user, modifiers)//TODOKYLER: what im doing probably messes with xenomorphs opening doors, double check that
+		attack_hand(user, modifiers)
 
 /**
  * deals with logging either when failing or succeeding to open a firelock without a crowbar.
@@ -304,7 +304,6 @@
 			if(left_arm && left_arm.status == BODYPART_ORGANIC && !left_arm.is_pseudopart)
 				left_arm.receive_damage(0, TOOLLESS_BURN_DAMAGE_PER_SECOND)
 
-//TODOKYLER: somehow this gets done in < 20 seconds
 ///used in a callback given to do_after_dynamic to adjust the timer based on how many people are trying to open it barehanded
 /obj/machinery/door/firedoor/proc/adjust_do_after_timer(old_delay, multiplicative_action_slowdown)
 	if(old_delay == (TRUE_OPENING_TIME) * multiplicative_action_slowdown)
