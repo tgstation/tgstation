@@ -1,0 +1,4 @@
+author: "Fikou, Jegub"
+delete-after: True
+changes: 
+  - rscadd: "Adds Trader NPCs, currently unused"
