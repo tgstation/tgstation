@@ -110,6 +110,10 @@
 	if(mode == BS_MODE_OPEN)
 		return
 	if(!selected_gas)
+		pumping = FALSE
+		selected_gas = null
+		mode = BS_MODE_IDLE
+		update_appearance()
 		return
 	var/gas_path = gas_id2path(selected_gas)
 	connected_machine.bluespace_network.pump_gas_to(internal_tank.air_contents, (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
