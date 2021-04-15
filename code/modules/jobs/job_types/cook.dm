@@ -11,6 +11,7 @@
 	var/list/kitchen_areas = list(/area/service/kitchen)
 
 	outfit = /datum/outfit/job/cook
+	plasmaman_outfit = /datum/outfit/plasmaman/chef
 
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV

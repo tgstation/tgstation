@@ -169,6 +169,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
+	//any sprite modifications we want to do (aka, coloring a greyscaled asset)
+	I = ModifyInserted(I)
 	var/size_id = "[I.Width()]x[I.Height()]"
 	var/size = sizes[size_id]
 
@@ -184,6 +186,15 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	else
 		sizes[size_id] = size = list(1, I, null)
 		sprites[sprite_name] = list(size_id, 0)
+
+/**
+ * A simple proc handing the Icon for you to modify before it gets turned into an asset.
+ *
+ * Arguments:
+ * * I: icon being turned into an asset
+ */
+/datum/asset/spritesheet/proc/ModifyInserted(icon/pre_asset)
+	return pre_asset
 
 /datum/asset/spritesheet/proc/InsertAll(prefix, icon/I, list/directions)
 	if (length(prefix))

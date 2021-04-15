@@ -38,9 +38,7 @@
 			target = AH.initiator_ckey
 		else
 			return "Ticket #[id] not found!"
-	var/res = TgsPm(target, all_params.Join(" "), sender.friendly_name)
-	if(res != "Message Successful")
-		return res
+	return TgsPm(target, all_params.Join(" "), sender.friendly_name)
 
 /datum/tgs_chat_command/namecheck
 	name = "namecheck"

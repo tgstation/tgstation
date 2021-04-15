@@ -121,9 +121,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	if (timerid)
 		deltimer(timerid)
 	GLOB.meteor_list -= src
-	SSaugury.unregister_doom(src)
 	walk(src,0) //this cancels the walk_towards() proc
-	. = ..()
+	return ..()
 
 /obj/effect/meteor/Initialize(mapload, target)
 	. = ..()

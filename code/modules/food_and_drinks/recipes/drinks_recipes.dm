@@ -1,13 +1,13 @@
 //////////////////////////////////////// DRINK RECIPE BASE ////////////////////////////////
 
 /datum/chemical_reaction/drink
-	optimal_temp = 400
+	optimal_temp = 250
 	temp_exponent_factor = 1
 	optimal_ph_min = 2
 	optimal_ph_max = 10
 	thermic_constant = 0
 	H_ion_release = 0
-	rate_up_lim = 50
+	rate_up_lim = 60
 	purity_min = 0
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY
 
@@ -16,7 +16,7 @@
 
 /datum/chemical_reaction/drink/goldschlager
 	results = list(/datum/reagent/consumable/ethanol/goldschlager = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 10, /datum/reagent/gold = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = GOLDSCHLAGER_VODKA, /datum/reagent/gold = GOLDSCHLAGER_GOLD)
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY
 
 /datum/chemical_reaction/drink/patron
@@ -93,8 +93,8 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/ethanol/vermouth = 1)
 
 /datum/chemical_reaction/drink/white_russian
-	results = list(/datum/reagent/consumable/ethanol/white_russian = 5)
-	required_reagents = list(/datum/reagent/consumable/ethanol/black_russian = 3, /datum/reagent/consumable/cream = 2)
+	results = list(/datum/reagent/consumable/ethanol/white_russian = 8)
+	required_reagents = list(/datum/reagent/consumable/ethanol/black_russian = 5, /datum/reagent/consumable/cream = 3)
 
 /datum/chemical_reaction/drink/whiskey_cola
 	results = list(/datum/reagent/consumable/ethanol/whiskey_cola = 3)

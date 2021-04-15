@@ -402,8 +402,8 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == EXPLODE_LIGHT)
-		return
-	..()
+		return FALSE
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (swooping & SWOOP_INVULNERABLE))

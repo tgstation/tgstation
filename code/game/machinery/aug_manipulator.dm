@@ -42,8 +42,16 @@
 		storedpart = null
 
 /obj/machinery/aug_manipulator/contents_explosion(severity, target)
-	if(storedpart)
-		storedpart.ex_act(severity, target)
+	if(!storedpart)
+		return
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += storedpart
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += storedpart
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += storedpart
 
 /obj/machinery/aug_manipulator/handle_atom_del(atom/A)
 	if(A == storedpart)

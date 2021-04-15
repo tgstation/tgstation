@@ -30,13 +30,13 @@
 /mob/living/silicon/pai/ex_act(severity, target)
 	take_holo_damage(severity * 50)
 	switch(severity)
-		if(1) //RIP
+		if(EXPLODE_DEVASTATE) //RIP
 			qdel(card)
 			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			fold_in(force = 1)
 			Paralyze(400)
-		if(3)
+		if(EXPLODE_LIGHT)
 			fold_in(force = 1)
 			Paralyze(200)
 

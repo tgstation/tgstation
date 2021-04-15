@@ -301,7 +301,7 @@
 	if(rad_sickness_value >= 1000)  //
 		rad_sickness_status = "Patient is suffering from extreme radiation poisoning, high toxen damage expected. Suggested treatment: Repeated dosages of Pentetic Acid or high amounts of Cold Seiver and anti-toxen"
 	else if(rad_sickness_value >= 300)
-		rad_sickness_status = "Patient is suffering from alarming radiation poisoning. Suggested treatment: Take Cold Seiver or Potassium Iodine, watch the toxen levels."
+		rad_sickness_status = "Patient is suffering from alarming radiation poisoning. Suggested treatment: Take Cold Seiver or Potassium Iodine, watch the toxin levels."
 	else if(rad_sickness_value >= 100)
 		rad_sickness_status = "Patient has moderate radioactive signatures. Symptoms will subside in a few minutes"
 

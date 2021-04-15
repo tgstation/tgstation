@@ -6,8 +6,11 @@
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
 
-	///At what volume do we start reacting?
-	var/target_volume = 200
+	/**
+	* list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
+	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
+	*/
+	var/list/required_reagents = list()
 	///If above this pH, we start dumping buffer into it
 	var/acidic_limit = 9
 	///If below this pH, we start dumping buffer into it
@@ -24,9 +27,9 @@
 	///beaker that holds the alkaline buffer.
 	var/obj/item/reagent_containers/glass/beaker/alkaline_beaker
 
-/obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt)
+/obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/reaction_chamber, bolt)
+	AddComponent(/datum/component/plumbing/reaction_chamber, bolt, layer)
 
 	acidic_beaker = new (src)
 	alkaline_beaker = new (src)
@@ -80,12 +83,16 @@
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
 	var/list/data = list()
 
+	var/list/text_reagents = list()
+	for(var/datum/reagent/required_reagent as anything in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
+		text_reagents[initial(required_reagent.name)] = required_reagents[required_reagent]
+
+	data["reagents"] = text_reagents
 	data["emptying"] = emptying
 	data["temperature"] = round(reagents.chem_temp, 0.1)
 	data["ph"] = round(reagents.ph, 0.01)
 	data["targetTemp"] = target_temperature
 	data["isReacting"] = reagents.is_reacting
-	data["reagentQuantity"] = target_volume
 	data["reagentAcidic"] = acidic_limit
 	data["reagentAlkaline"] = alkaline_limit
 	return data
@@ -96,6 +103,16 @@
 		return
 	. = TRUE
 	switch(action)
+		if("remove")
+			var/reagent = get_chem_id(params["chem"])
+			if(reagent)
+				required_reagents.Remove(reagent)
+		if("add")
+			var/input_reagent = get_chem_id(params["chem"])
+			if(input_reagent && !required_reagents.Find(input_reagent))
+				var/input_amount = text2num(params["amount"])
+				if(input_amount)
+					required_reagents[input_reagent] = input_amount
 		if("temperature")
 			var/target = params["target"]
 			if(text2num(target) != null)
@@ -103,8 +120,6 @@
 				. = TRUE
 			if(.)
 				target_temperature = clamp(target, 0, 1000)
-		if("volume")
-			target_volume = round(text2num(params["target"]))
 		if("acidic")
 			acidic_limit = round(text2num(params["target"]))
 		if("alkaline")

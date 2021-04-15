@@ -456,7 +456,7 @@ const FunForYouTab = (props, context) => {
             icon="hand-lizard"
             fluid
             content="Change everyone's species"
-            onClick={() => act("traitor_all")} />
+            onClick={() => act("allspecies")} />
         </NoticeBox>
       </Stack.Item>
       <Stack.Item>

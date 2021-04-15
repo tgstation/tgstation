@@ -220,6 +220,7 @@
 	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
 	icon_state = "maltliquorbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 100)
+	custom_price = PAYCHECK_EASY
 
 /obj/item/reagent_containers/food/drinks/bottle/holywater
 	name = "flask of holy water"

@@ -452,6 +452,18 @@
 	inhand_icon_state = "redglasses"
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
+/obj/item/clothing/glasses/geist_gazers
+	name = "geist gazers"
+	icon_state = "geist_gazers"
+	worn_icon_state = "geist_gazers"
+	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/psych
+	name = "psych glasses"
+	icon_state = "psych_glasses"
+	worn_icon_state = "psych_glasses"
+	glass_colour_type = /datum/client_colour/glass_colour/red
+
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"
 	desc = "A strange eye, said to have been torn from an omniscient creature that used to roam the wastes."

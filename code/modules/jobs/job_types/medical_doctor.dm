@@ -8,6 +8,7 @@
 	selection_color = "#ffeef0"
 
 	outfit = /datum/outfit/job/doctor
+	plasmaman_outfit = /datum/outfit/plasmaman/medical
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
@@ -37,7 +38,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 	box = /obj/item/storage/box/survival/medical
 
-	skillchips = list(/obj/item/skillchip/entrails_reader, /obj/item/skillchip/quickcarry)
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 	chameleon_extras = /obj/item/gun/syringe
 

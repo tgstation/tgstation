@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_MEDICAL
 
 	outfit = /datum/outfit/job/cmo
+	plasmaman_outfit = /datum/outfit/plasmaman/chief_medical_officer
 	departments = DEPARTMENT_MEDICAL | DEPARTMENT_COMMAND
 
 	paycheck = PAYCHECK_COMMAND
@@ -47,7 +48,7 @@
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
 
-	skillchips = list(/obj/item/skillchip/entrails_reader, /obj/item/skillchip/quickercarry)
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

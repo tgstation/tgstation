@@ -34,6 +34,9 @@
 /// Flag for the mutation ref search system. Search will include advanced injector mutations
 #define SEARCH_ADV_INJ 8
 
+/// The base cooldown of the ability to copy enzymes and genetic makeup to people.
+#define ENZYME_COPY_BASE_COOLDOWN (60 SECONDS)
+
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Console"
 	desc = "Scan DNA."
@@ -85,6 +88,8 @@
 	var/rad_pulse_index = 0
 	/// World time when the enzyme pulse should complete
 	var/rad_pulse_timer = 0
+	/// Cooldown for the genetic makeup transfer actions.
+	COOLDOWN_DECLARE(enzyme_copy_timer)
 
 	/// Used for setting tgui data - Whether the connected DNA Scanner is usable
 	var/can_use_scanner = FALSE
@@ -204,6 +209,7 @@
 	injectorready = world.time + INJECTOR_TIMEOUT
 	scrambleready = world.time + SCRAMBLE_TIMEOUT
 	jokerready = world.time + JOKER_TIMEOUT
+	COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 
 	// Set the default tgui state
 	set_default_state()
@@ -328,6 +334,7 @@
 	data["injectorSeconds"] = time_to_injector
 	data["isPulsingRads"] = is_pulsing_rads
 	data["radPulseSeconds"] = time_to_pulse
+	data["geneticMakeupCooldown"] = COOLDOWN_TIMELEFT(src, enzyme_copy_timer) / 10
 
 	if(diskette != null)
 		data["hasDisk"] = TRUE
@@ -1198,6 +1205,8 @@
 		//  "ui" - Unique Identity, changes looks
 		//  "mixed" - Combination of both ue and ui
 		if("makeup_injector")
+			if(!COOLDOWN_FINISHED(src, enzyme_copy_timer))
+				return
 			// Convert the index to a number and clamp within the array range, then
 			//  copy the data from the disk to that buffer
 			var/buffer_index = text2num(params["index"])
@@ -1280,6 +1289,9 @@
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
 			if(!can_modify_occupant())
+				return
+
+			if(!COOLDOWN_FINISHED(src, enzyme_copy_timer))
 				return
 
 			// Convert the index to a number and clamp within the array range, then
@@ -1570,6 +1582,7 @@
 			if(!buffer_slot["UI"])
 				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
 				return FALSE
+			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.uni_identity = buffer_slot["UI"]
 			scanner_occupant.updateappearance(mutations_overlay_update=1)
 			scanner_occupant.radiation += rad_increase
@@ -1582,6 +1595,7 @@
 			if(!buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["blood_type"])
 				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
 				return FALSE
+			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
@@ -1596,6 +1610,7 @@
 			if(!buffer_slot["UI"] || !buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["blood_type"])
 				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
 				return FALSE
+			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.uni_identity = buffer_slot["UI"]
 			scanner_occupant.updateappearance(mutations_overlay_update=1)
 			scanner_occupant.real_name = buffer_slot["name"]
@@ -1692,7 +1707,7 @@
 	//  we want to perform it.
 	// GUARD CHECK - Make sure we can modify the occupant, apply_genetic_makeup()
 	//  assumes we've already done this.
-	if(delayed_action && can_modify_occupant())
+	if(delayed_action && can_modify_occupant() && COOLDOWN_FINISHED(src, enzyme_copy_timer))
 		var/type = delayed_action["type"]
 		var/buffer_slot = delayed_action["buffer_slot"]
 		if(apply_genetic_makeup(type, buffer_slot))
@@ -2136,6 +2151,7 @@
 		diskette.forceMove(drop_location())
 	diskette = null
 
+#undef ENZYME_COPY_BASE_COOLDOWN
 #undef INJECTOR_TIMEOUT
 #undef NUMBER_OF_BUFFERS
 #undef SCRAMBLE_TIMEOUT

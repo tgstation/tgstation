@@ -399,6 +399,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Central Primary Hallway"
 	icon_state = "hallC"
 
+/area/hallway/primary/central/fore
+	name = "Fore Central Primary Hallway"
+	icon_state = "hallCF"
+
+/area/hallway/primary/central/aft
+	name = "Aft Cntral Primary Hallway"
+	icon_state = "hallCA"
+
 /area/hallway/primary/upper
 	name = "Upper Central Primary Hallway"
 	icon_state = "hallC"
@@ -599,6 +607,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/commons/fitness/recreation
 	name = "Recreation Area"
 	icon_state = "rec"
+
+/area/commons/cryopods
+	name = "Cryopod Room"
+	icon_state = "cryopod"
 
 // Commons - Vacant Rooms
 
@@ -837,6 +849,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "engine_sm"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/engineering/supermatter/room
+	name = "Supermatter Engine Room"
+	icon_state = "engine_sm_room"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
 /area/engineering/break_room
 	name = "Engineering Foyer"
@@ -1096,6 +1113,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = list('sound/ambience/aurora_caelus_short.ogg')
 
 //Security
+///When adding a new area to the security areas, make sure to add it to /datum/bounty/item/security/paperwork as well!
 
 /area/security
 	name = "Security"
@@ -1171,6 +1189,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/processing/cremation
 	name = "Security Crematorium"
 	icon_state = "sec_cremation"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/security/interrogation
+	name = "Interrogation Room"
+	icon_state =  "interrogation"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/security/warden

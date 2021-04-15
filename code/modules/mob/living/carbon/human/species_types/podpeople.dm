@@ -4,6 +4,7 @@
 	id = "pod"
 	default_color = "59CE00"
 	species_traits = list(MUTCOLORS,EYECOLOR, HAS_FLESH, HAS_BONE)
+	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	inherent_factions = list("plants", "vines")
 	attack_verb = "slash"
 	attack_effect = ATTACK_EFFECT_CLAW
@@ -42,27 +43,3 @@
 		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 		return TRUE
-
-/datum/species/pod/on_hit(obj/projectile/P, mob/living/carbon/human/H)
-	switch(P.type)
-		if(/obj/projectile/energy/floramut)
-			if(prob(15))
-				H.rad_act(rand(30,80))
-				H.Paralyze(100)
-				H.visible_message("<span class='warning'>[H] writhes in pain as [H.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='hear'>You hear the crunching of leaves.</span>")
-				if(prob(80))
-					H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
-				else
-					H.easy_randmut(POSITIVE)
-				H.randmuti()
-				H.domutcheck()
-			else
-				H.adjustFireLoss(rand(5,15))
-				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
-		if(/obj/projectile/energy/florayield)
-			H.set_nutrition(min(H.nutrition+30, NUTRITION_LEVEL_FULL))
-		if(/obj/projectile/energy/florarevolution)
-			H.show_message("<span class='notice'>The radiation beam leaves you feeling disoriented!</span>")
-			H.Dizzy(15)
-			H.emote("flip")
-			H.emote("spin")

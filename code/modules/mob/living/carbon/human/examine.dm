@@ -93,10 +93,6 @@
 		. += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)]."
 
 		. += wear_id.get_id_examine_strings(user)
-		//var/list/extended_id_examine = wear_id.get_id_examine_strings(user)
-
-		//for(var/examine_string in extended_id_examine)
-		//	. += examine_string
 
 	//Status effects
 	var/list/status_examines = status_effect_examines()

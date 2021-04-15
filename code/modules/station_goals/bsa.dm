@@ -227,7 +227,7 @@
 	var/obj/machinery/parent
 
 /obj/structure/filler/ex_act()
-	return
+	return FALSE
 
 /obj/machinery/computer/bsa_control
 	name = "bluespace artillery control"

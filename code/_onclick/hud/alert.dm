@@ -107,6 +107,7 @@
 
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
+	. = ..()
 	if(!QDELETED(src))
 		openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
@@ -552,30 +553,33 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/nocell
 	name = "Missing Power Cell"
 	desc = "Unit has no power cell. No modules available until a power cell is reinstalled. Robotics may provide assistance."
-	icon_state = "nocell"
+	icon_state = "no_cell"
 
 /atom/movable/screen/alert/emptycell
 	name = "Out of Power"
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
 Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
-	icon_state = "emptycell"
+	icon_state = "empty_cell"
 
 /atom/movable/screen/alert/lowcell
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
-	icon_state = "lowcell"
+	icon_state = "low_cell"
 
 //Ethereal
 
-/atom/movable/screen/alert/etherealcharge
+/atom/movable/screen/alert/lowcell/ethereal
 	name = "Low Blood Charge"
 	desc = "Your charge is running low, find a source of energy! Use a recharging station, eat some Ethereal-friendly food, or syphon some power from lights, a power cell, or an APC (done by right clicking on combat mode)."
-	icon_state = "etherealcharge"
+
+/atom/movable/screen/alert/emptycell/ethereal
+	name = "No Blood Charge"
+	desc = "You are out of juice, find a source of energy! Use a recharging station, eat some Ethereal-friendly food, or syphon some power from lights, a power cell, or an APC (done by right clicking on combat mode)."
 
 /atom/movable/screen/alert/ethereal_overcharge
 	name = "Blood Overcharge"
 	desc = "Your charge is running dangerously high, find an outlet for your energy! Right click an APC while not in combat mode."
-	icon_state = "ethereal_overcharge"
+	icon_state = "cell_overcharge"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /atom/movable/screen/alert/hacked

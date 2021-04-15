@@ -675,7 +675,6 @@
 	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 		for(var/obj/item/I in held_items)
 			var/index = get_held_index_of_item(I)
-			I.layer = ABOVE_HUD_LAYER
 			I.plane = ABOVE_HUD_PLANE
 			I.screen_loc = ui_hand_position(index)
 			client.screen |= I

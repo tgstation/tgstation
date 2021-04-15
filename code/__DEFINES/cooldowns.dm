@@ -36,6 +36,12 @@
 #define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
 
+//car cooldowns
+#define COOLDOWN_CAR_HONK "car_honk"
+
+//clown car cooldowns
+#define COOLDOWN_CLOWNCAR_RANDOMNESS "clown_car_randomness"
+
 //TIMER COOLDOWN MACROS
 
 #define COMSIG_CD_STOP(cd_index) "cooldown_[cd_index]"

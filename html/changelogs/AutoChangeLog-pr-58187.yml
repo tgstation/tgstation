@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - balance: "adds a stun time modifier (reducing the stun) to climbing tables for the freerunning quirk, and reduces the knockdown penalty for the freerunning falling down z levels"

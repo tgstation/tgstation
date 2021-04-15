@@ -357,7 +357,26 @@
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
 
+/obj/item/food/muffin/moffin
+	name = "moffin"
+	icon_state = "moffin"
+	desc = "A delicious and spongy little cake."
+	tastes = list("muffin" = 3, "dust" = 1, "lint" = 1)
+	foodtypes = CLOTH | GRAIN | SUGAR | BREAKFAST
 
+/obj/item/food/muffin/moffin/Initialize(mapload)
+	. = ..()
+	icon_state = "[icon_state]_[rand(1,3)]"
+
+/obj/item/food/muffin/moffin/examine(mob/user)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/moffin_observer = user
+	if(moffin_observer.dna.species.liked_food & CLOTH)
+		. += "<span class='nicegreen'>Ooh! It's even got bits of clothes on it! Yummy!</span>"
+	else
+		. += "<span class='warning'>You're not too sure what's on top though...</span>"
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
@@ -855,6 +874,42 @@
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	w_class = WEIGHT_CLASS_TINY
+	venue_value = FOOD_PRICE_CHEAP // Pastry base, 3u of sugar and a single. fucking. unit. of. milk. really?
 
+/obj/item/food/icecream
+	name = "waffle cone"
+	desc = "Delicious waffle cone, but no ice cream."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "icecream_cone_waffle"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("cream" = 2, "waffle" = 1)
+	bite_consumption = 4
+	foodtypes = DAIRY | SUGAR
+	max_volume = 10 //The max volumes scales up with the number of scoops of ice cream served.
+	/// These two variables are used by the ice cream vat. Latter is the one that shows on the UI.
+	var/list/ingredients = list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar)
+	var/ingredients_text
+	/*
+	 * Assoc list var used to prefill the cone with ice cream.
+	 * Key is the flavour's name (use text defines; see __DEFINES/food.dm or ice_cream_holder.dm),
+	 * assoc is the list of args that is going to be used in [flavour/add_flavour()]. Can as well be null for simple flavours.
+	 */
+	var/list/prefill_flavours
+
+/obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)
+	if(prefill_flavours)
+		src.prefill_flavours = prefill_flavours
+	return ..()
+
+/obj/item/food/icecream/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, filled_name = "ice cream", change_desc = TRUE, prefill_flavours = prefill_flavours)
+
+/obj/item/food/icecream/chocolate
+	name = "chocolate cone"
+	desc = "Delicious chocolate cone, but no ice cream."
+	icon_state = "icecream_cone_chocolate"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/coco = 1)
+	ingredients = list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar, /datum/reagent/consumable/coco)
 
 #undef DONUT_SPRINKLE_CHANCE

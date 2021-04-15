@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "Adds a negative station trait: Bot Language Matrix Malfunction. Is Beepsky speaking nekomimetic...?"
-  - bugfix: "The \"Slow Shuttle\" station trait is now properly classified as a negative trait instead of a neutral trait."

@@ -1,7 +1,8 @@
 /atom/movable/screen/ghost
 	icon = 'icons/hud/screen_ghost.dmi'
 
-/atom/movable/screen/ghost/MouseEntered()
+/atom/movable/screen/ghost/MouseEntered(location, control, params)
+	. = ..()
 	flick(icon_state + "_anim", src)
 
 /atom/movable/screen/ghost/spawners_menu

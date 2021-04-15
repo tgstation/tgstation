@@ -204,7 +204,6 @@
 			/obj/item/trash/chips = 1,
 			/obj/item/food/deadmouse = 1,
 			/obj/item/trash/pistachios = 1,
-			/obj/item/trash/plate = 1,
 			/obj/item/trash/popcorn = 1,
 			/obj/item/trash/raisins = 1,
 			/obj/item/trash/sosjerky = 1,

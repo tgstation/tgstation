@@ -54,7 +54,7 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
-	return
+	return FALSE
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/up
 	icon_state = "xgibup1"

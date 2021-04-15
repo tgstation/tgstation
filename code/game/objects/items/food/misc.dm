@@ -116,7 +116,7 @@
 	name = "space fries"
 	desc = "AKA: French Fries, Freedom Fries, etc."
 	icon_state = "fries"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtypes = VEGETABLES | GRAIN | FRIED
@@ -144,7 +144,7 @@
 	name = "soy dope"
 	desc = "Dope from a soy."
 	icon_state = "soydope"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1)
 	tastes = list("soy" = 1)
 	foodtypes = VEGETABLES
@@ -154,7 +154,7 @@
 	name = "cheesy fries"
 	desc = "Fries. Covered in cheese. Duh."
 	icon_state = "cheesyfries"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | GRAIN | DAIRY
@@ -177,6 +177,15 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILLED, .proc/OnGrill)
 
+/obj/item/food/badrecipe/moldy
+	name = "moldy mess"
+	desc = "A rancid, living culture of mold. Somewhere, under there, at SOME POINT... there was food."
+	food_reagents = list(/datum/reagent/consumable/mold = 30)
+
+/obj/item/food/badrecipe/moldy/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
+
 ///Prevents grilling burnt shit from well, burning.
 /obj/item/food/badrecipe/proc/OnGrill()
 	return COMPONENT_HANDLED_GRILLING
@@ -185,7 +194,7 @@
 	name = "carrot fries"
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/oculine = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtypes = VEGETABLES
@@ -210,7 +219,7 @@
 	desc = "It is only wafer thin."
 	icon_state = "mint"
 	bite_consumption = 1
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/toxin/minttoxin = 2)
 	foodtypes = TOXIC | SUGAR
 	w_class = WEIGHT_CLASS_TINY
@@ -242,7 +251,7 @@
 	foodtypes = MEAT | TOXIC
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/chewable/spiderlollipop
+/obj/item/food/spiderlollipop
 	name = "spider lollipop"
 	desc = "Still gross, but at least it has a mountain of sugar on it."
 	icon_state = "spiderlollipop"
@@ -250,6 +259,11 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/toxin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //lollipop, but vitamins = toxins
 	tastes = list("cobwebs" = 1, "sugar" = 2)
 	foodtypes = JUNKFOOD | SUGAR
+	slot_flags = ITEM_SLOT_MASK
+
+/obj/item/food/spiderlollipop/Initialize()
+	. = ..()
+	AddElement(/datum/element/chewable)
 
 /obj/item/food/chococoin
 	name = "chocolate coin"
@@ -283,11 +297,12 @@
 	name = "eggplant parmigiana"
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("eggplant" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/tortilla
 	name = "tortilla"
@@ -343,7 +358,7 @@
 	name = "yaki imo"
 	desc = "Made with roasted sweet potatoes!"
 	icon_state = "yakiimo"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("sweet potato" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR
@@ -353,7 +368,7 @@
 	name = "roast parsnip"
 	desc = "Sweet and crunchy."
 	icon_state = "roastparsnip"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("parsnip" = 1)
 	foodtypes = VEGETABLES
@@ -443,49 +458,7 @@
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
 
-///Shit typepath to allow you to suck on shit. Like the coder of this code probably did to penis.
-/obj/item/food/chewable
-	slot_flags = ITEM_SLOT_MASK
-	///How long it lasts before being deleted in seconds
-	var/succ_dur = 360
-	///The delay between each time it will handle reagents
-	var/succ_int = 100
-	///Stores the time set for the next handle_reagents
-	var/next_succ = 0
-
-	//makes snacks actually wearable as masks and still edible the old-fashioned way.
-/obj/item/food/chewable/proc/handle_reagents()
-	if(reagents.total_volume)
-		if(iscarbon(loc))
-			var/mob/living/carbon/C = loc
-			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-				if(!reagents.trans_to(C, REAGENTS_METABOLISM, methods = INGEST))
-					reagents.remove_any(REAGENTS_METABOLISM)
-				return
-		reagents.remove_any(REAGENTS_METABOLISM)
-
-/obj/item/food/chewable/process(delta_time)
-	if(iscarbon(loc))
-		if(succ_dur <= 0)
-			qdel(src)
-			return
-		succ_dur -= delta_time
-		if((reagents?.total_volume) && (next_succ <= world.time))
-			handle_reagents()
-			next_succ = world.time + succ_int
-
-/obj/item/food/chewable/equipped(mob/user, slot)
-	. = ..()
-	if(slot == ITEM_SLOT_MASK)
-		START_PROCESSING(SSobj, src)
-	else
-		STOP_PROCESSING(SSobj, src)
-
-/obj/item/food/chewable/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
-/obj/item/food/chewable/lollipop
+/obj/item/food/lollipop
 	name = "lollipop"
 	desc = "A delicious lollipop. Makes for a great Valentine's present."
 	icon = 'icons/obj/lollipop.dmi'
@@ -496,40 +469,30 @@
 	var/headcolor = rgb(0, 0, 0)
 	tastes = list("candy" = 1)
 	foodtypes = JUNKFOOD | SUGAR
+	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/food/chewable/lollipop/Initialize()
+/obj/item/food/lollipop/Initialize()
 	. = ..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+	AddElement(/datum/element/chewable)
 
-/obj/item/food/chewable/lollipop/proc/change_head_color(C)
+/obj/item/food/lollipop/proc/change_head_color(C)
 	headcolor = C
 	cut_overlay(head)
 	head.color = C
 	add_overlay(head)
 
-/obj/item/food/chewable/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/food/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..(hit_atom)
 	throw_speed = 1
 	throwforce = 0
 
-/obj/item/food/chewable/lollipop/cyborg
-	var/spamchecking = TRUE
+/obj/item/food/lollipop/cyborg
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/psicodine = 2) //psicodine instead of omnizine, because the latter was making coders freak out
 
-/obj/item/food/chewable/lollipop/cyborg/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
-
-/obj/item/food/chewable/lollipop/cyborg/equipped(mob/living/user, slot)
-	. = ..(user, slot)
-	spamchecking = FALSE
-
-/obj/item/food/chewable/lollipop/cyborg/proc/spamcheck()
-	if(spamchecking)
-		qdel(src)
-
-/obj/item/food/chewable/bubblegum
+/obj/item/food/bubblegum
 	name = "bubblegum"
 	desc = "A rubbery strip of gum. Not exactly filling, but it keeps you busy."
 	icon_state = "bubblegum"
@@ -537,36 +500,43 @@
 	color = "#E48AB5" // craftable custom gums someday?
 	food_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
-	succ_dur = 15 * 60
+	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/food/chewable/bubblegum/nicotine
+	/// The amount to metabolize per second
+	var/metabolization_amount = REAGENTS_METABOLISM / 2
+
+/obj/item/food/bubblegum/Initialize()
+	. = ..()
+	AddElement(/datum/element/chewable, metabolization_amount = metabolization_amount)
+
+/obj/item/food/bubblegum/nicotine
 	name = "nicotine gum"
 	food_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/consumable/menthol = 5)
 	tastes = list("mint" = 1)
 	color = "#60A584"
 
-/obj/item/food/chewable/bubblegum/happiness
+/obj/item/food/bubblegum/happiness
 	name = "HP+ gum"
 	desc = "A rubbery strip of gum. It smells funny."
 	food_reagents = list(/datum/reagent/drug/happiness = 15)
 	tastes = list("paint thinner" = 1)
 	color = "#EE35FF"
 
-/obj/item/food/chewable/bubblegum/bubblegum
+/obj/item/food/bubblegum/bubblegum
 	name = "bubblegum gum"
 	desc = "A rubbery strip of gum. You don't feel like eating it is a good idea."
 	color = "#913D3D"
 	food_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
-	succ_dur = 6 * 60
+	metabolization_amount = REAGENTS_METABOLISM
 
-/obj/item/food/chewable/bubblegum/bubblegum/process()
+/obj/item/food/bubblegum/bubblegum/process()
 	. = ..()
 	if(iscarbon(loc))
 		hallucinate(loc)
 
-/obj/item/food/chewable/bubblegum/bubblegum/MakeEdible()
+/obj/item/food/bubblegum/bubblegum/MakeEdible()
 	AddComponent(/datum/component/edible,\
 				initial_reagents = food_reagents,\
 				food_flags = food_flags,\
@@ -580,12 +550,12 @@
 				junkiness = junkiness,\
 				on_consume = CALLBACK(src, .proc/OnConsume))
 
-/obj/item/food/chewable/bubblegum/bubblegum/proc/OnConsume(mob/living/eater, mob/living/feeder)
+/obj/item/food/bubblegum/bubblegum/proc/OnConsume(mob/living/eater, mob/living/feeder)
 	if(iscarbon(eater))
 		hallucinate(eater)
 
 ///This proc has a 5% chance to have a bubblegum line appear, with an 85% chance for just text and 15% for a bubblegum hallucination and scarier text.
-/obj/item/food/chewable/bubblegum/bubblegum/proc/hallucinate(mob/living/carbon/victim)
+/obj/item/food/bubblegum/bubblegum/proc/hallucinate(mob/living/carbon/victim)
 	if(!prob(5)) //cursed by bubblegum
 		return
 	if(prob(15))
@@ -594,7 +564,7 @@
 	else
 		to_chat(victim, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
 
-/obj/item/food/chewable/gumball
+/obj/item/food/gumball
 	name = "gumball"
 	desc = "A colorful, sugary gumball."
 	icon = 'icons/obj/lollipop.dmi'
@@ -603,26 +573,13 @@
 	food_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/sal_acid = 2, /datum/reagent/medicine/oxandrolone = 2) //Kek
 	tastes = list("candy")
 	foodtypes = JUNKFOOD
+	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/food/chewable/gumball/Initialize()
+/obj/item/food/gumball/Initialize()
 	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-
-/obj/item/food/chewable/gumball/cyborg
-	var/spamchecking = TRUE
-
-/obj/item/food/chewable/gumball/cyborg/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
-
-/obj/item/food/chewable/gumball/cyborg/equipped(mob/living/user, slot)
-	. = ..(user, slot)
-	spamchecking = FALSE
-
-/obj/item/food/chewable/gumball/cyborg/proc/spamcheck()
-	if(spamchecking)
-		qdel(src)
+	AddElement(/datum/element/chewable)
 
 /obj/item/food/taco
 	name = "classic taco"
@@ -766,6 +723,7 @@
 	icon_state = "peachcanmaint"
 	trash_type = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
+	venue_value = FOOD_EXOTIC
 
 /obj/item/food/crab_rangoon
 	name = "Crab Rangoon"

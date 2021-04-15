@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "buffed space heater to have double power (from 20000 to 40000 at t1), every tier has been doubled in power as effect"
-  - refactor: "refactored construction code to use subtype instead of deleting old cell on construction, changed attackby to use default procs and early returns"
-  - code_imp: "added documentation and variables with snake cases"

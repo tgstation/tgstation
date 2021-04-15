@@ -46,7 +46,7 @@
 	cut_overlays()
 	if(showpipe)
 		// everything is already shifted so don't shift the cap
-		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
+		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions, pipe_color))
 
 	if(!nodes[1] || !on || !is_operational)
 		icon_state = "inje_off"
@@ -61,6 +61,10 @@
 	if(!on || !is_operational)
 		return
 
+	var/turf/location = get_turf(loc)
+	if(isclosedturf(location))
+		return
+
 	var/datum/gas_mixture/air_contents = airs[1]
 
 	if(air_contents.temperature > 0)
@@ -68,7 +72,7 @@
 
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
-		loc.assume_air(removed)
+		location.assume_air(removed)
 		air_update_turf(FALSE, FALSE)
 
 		update_parents()

@@ -8,6 +8,7 @@
 	selection_color = "#dcba97"
 
 	outfit = /datum/outfit/job/miner
+	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_CAR

@@ -8,6 +8,7 @@
 	selection_color = "#ffeef0"
 
 	outfit = /datum/outfit/job/paramedic
+	plasmaman_outfit = /datum/outfit/plasmaman/paramedic
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
@@ -36,8 +37,6 @@
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(/obj/item/roller=1)
 	pda_slot = ITEM_SLOT_LPOCKET
-
-	skillchips = list(/obj/item/skillchip/quickercarry)
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
