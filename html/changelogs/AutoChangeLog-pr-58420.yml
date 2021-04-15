@@ -1,0 +1,4 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - bugfix: "Fixes traumas caused by bone fractures not repairing after treatment"
