@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - code_imp: "Wirecutters now use a new greyscaling method for their sprites."
