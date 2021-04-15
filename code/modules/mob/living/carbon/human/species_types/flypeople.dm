@@ -2,12 +2,11 @@
 	name = "Flyperson"
 	id = "fly"
 	say_mod = "buzzes"
-	species_traits = list(NOEYESPRITES,HAS_FLESH,HAS_BONE,TRAIT_ANTENNAE)
+	species_traits = list(HAS_FLESH, HAS_BONE, TRAIT_ANTENNAE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	meat = /obj/item/food/meat/slab/human/mutant/fly
-	disliked_food = null
-	liked_food = GROSS
 	mutanteyes = /obj/item/organ/eyes/fly
+	liked_food = GROSS
 	disliked_food = CLOTH
 	toxic_food = NONE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
