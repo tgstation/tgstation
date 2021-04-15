@@ -102,7 +102,7 @@
 /mob/living/simple_animal/hostile/retaliate/trader/proc/try_sell(mob/user)
 	var/obj/item/activehanditem = user.get_active_held_item()
 	var/obj/item/inactivehanditem = user.get_inactive_held_item()
-	if(!(sell_item(user, activehanditem) || sell_item(user, inactivehanditem)))
+	if(!sell_item(user, activehanditem) && !sell_item(user, inactivehanditem))
 		say(itemrejectphrase)
 
 ///Makes the NPC say one picked thing from the lore list variable, can be overriden for fun stuff
