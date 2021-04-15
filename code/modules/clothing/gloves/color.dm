@@ -1,8 +1,15 @@
 /obj/item/clothing/gloves/color
 	dying_key = DYE_REGISTRY_GLOVES
 
+/obj/item/clothing/gloves/color/chief_engineer
+	desc = "These gloves provide protection against electric shock. They are so thin you can barely feel them."
+	name = "advanced insulated gloves"
+	icon_state = "ce_insuls"
+	inhand_icon_state = "lgloves"
+	siemens_coefficient = 0
+
 /obj/item/clothing/gloves/color/yellow
-	desc = "These gloves provide protection against electric shock."
+	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
@@ -12,6 +19,7 @@
 	custom_price = PAYCHECK_MEDIUM * 10
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
+	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
