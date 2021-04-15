@@ -32,6 +32,7 @@
 	stat_attack = HARD_CRIT
 	robust_searching = TRUE
 	check_friendly_fire = TRUE
+	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND|INTERACT_ATOM_ATTACK_HAND|INTERACT_ATOM_NO_FINGERPRINT_INTERACT
 	///Sound used when item sold/bought
 	var/sell_sound = 'sound/effects/cashregister.ogg'
 	///Associated list of items the NPC sells with how much they cost.
@@ -56,9 +57,9 @@
 		"Oooooooo~!"
 	)
 
-/mob/living/simple_animal/hostile/retaliate/trader/attack_hand(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		. = TRUE
+/mob/living/simple_animal/hostile/retaliate/trader/interact(mob/user)
+	if(user == target)
+		return FALSE
 	var/list/npc_options = list()
 	if(products.len)
 		npc_options["Buy"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy")
@@ -71,12 +72,13 @@
 	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	switch(npc_result)
 		if("Buy")
-			return buy_item(user)
+			buy_item(user)
 		if("Sell")
-			return try_sell(user)
+			try_sell(user)
 		if("Talk")
-			return deep_lore()
+			deep_lore()
 	face_atom(user)
+	return TRUE
 
 /**
  * Checks if the user is ok to use the radial
