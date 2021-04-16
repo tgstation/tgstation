@@ -54,14 +54,6 @@
 			to_chat(usr, "<span class='danger'>Not until the round starts!</span>", confidential = TRUE)
 			return
 		switch(href_list["makeAntag"])
-			if("revs")
-				var/maxCount = input("Set number of Revolutionaries","Set Revolutionaries Count (max)",1) as num|null
-				if(src.makeRevs(maxCount))
-					message_admins("[key_name(usr)] started a revolution with [maxCount] freedom fighters.")
-					log_admin("[key_name(usr)] started a [maxCount] freedom fighters.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a revolution with [maxCount] freedom fighters. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a revolution with [maxCount] freedom fighters.")
 			if("wizard")
 				message_admins("[key_name(usr)] is creating a wizard...")
 				if(src.makeWizard())

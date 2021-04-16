@@ -871,7 +871,6 @@
 #include "code\game\gamemodes\gang\gang.dm"
 #include "code\game\gamemodes\gang\gang_handler.dm"
 #include "code\game\gamemodes\gang\gang_things.dm"
-#include "code\game\gamemodes\revolution\revolution.dm"
 #include "code\game\machinery\_machinery.dm"
 #include "code\game\machinery\accounting.dm"
 #include "code\game\machinery\ai_slipper.dm"

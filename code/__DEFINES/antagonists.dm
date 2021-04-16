@@ -99,3 +99,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
+
+/// Checks if the given mob is a revolutionary. Will return TRUE for rev heads as well.
+#define IS_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev))
+
+/// Checks if the given mob is a head revolutionary.
+#define IS_HEAD_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev/head))

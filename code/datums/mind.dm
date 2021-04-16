@@ -406,7 +406,7 @@
 	if(IS_CULTIST(creator))
 		add_antag_datum(/datum/antagonist/cult)
 
-	else if(is_revolutionary(creator))
+	else if(IS_REVOLUTIONARY(creator))
 		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
 		converter.add_revolutionary(src,FALSE)
 
