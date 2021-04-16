@@ -870,7 +870,6 @@
 #include "code\game\gamemodes\dynamic\dynamic_rulesets_roundstart.dm"
 #include "code\game\gamemodes\dynamic\dynamic_simulations.dm"
 #include "code\game\gamemodes\dynamic\ruleset_picking.dm"
-#include "code\game\gamemodes\extended\extended.dm"
 #include "code\game\gamemodes\gang\gang.dm"
 #include "code\game\gamemodes\gang\gang_handler.dm"
 #include "code\game\gamemodes\gang\gang_things.dm"
