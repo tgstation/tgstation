@@ -1,0 +1,4 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - rscadd: "Adds O2 to Pure pipeline on icebox atmos and fixes air mix pipeline to take up less space and work better with smartpipes."
