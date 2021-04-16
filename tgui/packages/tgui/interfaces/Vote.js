@@ -124,7 +124,7 @@ const VotersList = (props, context) => {
 
   return (
     <Stack.Item>
-      <Collapsible title={`View Voters: ${voting.length}`}>
+      <Collapsible title={`View Voters${voting.length ? `: ${voting.length}` : ""}`}>
         <Section height={8} fill scrollable>
           {voting.map((voter) => {
             return <Box key={voter}>{voter}</Box>;
