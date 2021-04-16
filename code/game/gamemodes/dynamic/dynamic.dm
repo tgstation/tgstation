@@ -154,6 +154,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Used for choosing different midround injections.
 	var/list/current_midround_rulesets
 
+	/// The amount of threat shown on the piece of paper.
+	/// Can differ from the actual threat amount.
+	var/shown_threat
+
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</a><BR>"
@@ -256,11 +260,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
-	var/shown_threat
-	if(prob(FAKE_REPORT_CHANCE))
-		shown_threat = rand(1, 100)
-	else
-		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
 	switch(round(shown_threat))
 		if(0 to 19)
 			if(!current_players[CURRENT_LIVING_ANTAGS].len)
@@ -355,6 +354,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]! ([round_start_budget] round start budget)")
 	return TRUE
 
+/datum/game_mode/dynamic/proc/setup_shown_threat()
+	if (prob(FAKE_REPORT_CHANCE))
+		shown_threat = rand(1, 100)
+	else
+		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
+
 /datum/game_mode/dynamic/proc/set_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
 	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
@@ -376,6 +381,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	setup_parameters()
 	setup_hijacking()
+	setup_shown_threat()
 
 	var/valid_roundstart_ruleset = 0
 	for (var/rule in subtypesof(/datum/dynamic_ruleset))
