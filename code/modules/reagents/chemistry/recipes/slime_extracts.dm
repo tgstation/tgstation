@@ -222,7 +222,7 @@
 	..()
 
 //Orange
-/datum/chemical_reaction/slime/slimecasp
+/datum/chemical_reaction/slime/slimecapsaicin
 	results = list(/datum/reagent/consumable/capsaicin = 10)
 	required_reagents = list(/datum/reagent/blood = 1)
 	required_container = /obj/item/slime_extract/orange
