@@ -92,6 +92,7 @@
 				log_combat(user, C, "failed to handcuff")
 		else
 			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
+
 /**
  * This handles handcuffing people
  *
@@ -101,7 +102,7 @@
  * * mob/user - Who or what is doing the handcuffing
  * * dispense - True if the cuffing should create a new item instead of using putting src on the mob, false otherwise. False by default.
 */
-/obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FLASH_LIGHT_RANGE)
+/obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE)
 	if(target.handcuffed)
 		return
 
@@ -265,6 +266,7 @@
 			qdel(src)
 	else
 		return ..()
+
 /**
  * # Zipties
  *
@@ -280,6 +282,7 @@
 	breakouttime = 45 SECONDS
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
 	color = null
+
 /**
  * # Used zipties
  *
@@ -348,6 +351,7 @@
 	armed = !armed
 	update_appearance()
 	to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
+
 /**
  * Closes a bear trap
  *
@@ -395,6 +399,7 @@
 						"<span class='userdanger'>You trigger \the [src]!</span>")
 				L.apply_damage(trap_damage, BRUTE, def_zone)
 	..()
+
 /**
  * # Energy snare
  *
@@ -414,6 +419,7 @@
 /obj/item/restraints/legcuffs/beartrap/energy/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
+
 /**
  * Handles energy snares disappearing
  *
@@ -471,6 +477,7 @@
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Knockdown(knockdown)
 		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
+
 /**
  * A traitor variant of the bola.
  *
@@ -505,6 +512,7 @@
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
+
 /**
  * A pacifying variant of the bola.
  *
