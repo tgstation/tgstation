@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	if (istype(M, /mob/living/simple_animal/hostile/construct/wraith))
 		return TRUE
-	if(isrevenant(M) || iswizard(M))
+	if(isrevenant(M) || IS_WIZARD(M))
 		return TRUE
 	return FALSE
 

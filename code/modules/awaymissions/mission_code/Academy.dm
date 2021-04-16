@@ -209,7 +209,7 @@
 	if(used)
 		return
 
-	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
+	if(!ishuman(user) || !user.mind || IS_WIZARD(user))
 		to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans!</span>")
 		return
 
@@ -224,7 +224,7 @@
 
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
 	. = ..()
-	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
+	if(!ishuman(user) || !user.mind || IS_WIZARD(user))
 		to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans! You should leave it alone.</span>")
 		user.dropItemToGround(src)
 
@@ -405,5 +405,5 @@
 	user.visible_message("<span class='notice'>[user] activates \the [src].</span>", "<span class='notice'>You activate \the [src].</span>")
 
 /obj/structure/ladder/unbreakable/rune/use(mob/user, is_ghost=FALSE)
-	if(is_ghost || !(user.mind in SSticker.mode.wizards))
+	if(is_ghost || !IS_WIZARD(user))
 		..()
