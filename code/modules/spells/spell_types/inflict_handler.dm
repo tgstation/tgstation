@@ -2,6 +2,8 @@
 	name = "Inflict Handler"
 	desc = "This spell blinds and/or destroys/damages/heals and/or knockdowns/stuns the target."
 
+	school = SCHOOL_EVOCATION
+
 	var/amt_paralyze = 0
 	var/amt_unconscious = 0
 	var/amt_stun = 0
