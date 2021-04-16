@@ -364,7 +364,7 @@
 	drop_all_held_items()
 
 
-/mob/living/carbon/proc/check_obscured_slots(transparent_protection, opaque_vulnerability)
+/mob/living/carbon/proc/check_obscured_slots(transparent_protection)
 	var/obscured = NONE
 	var/hidden_slots = NONE
 
@@ -372,8 +372,6 @@
 		hidden_slots |= I.flags_inv
 		if(transparent_protection)
 			hidden_slots |= I.transparent_protection
-		if(opaque_vulnerability)
-			hidden_slots &= ~I.opaque_vulnerability
 
 	if(hidden_slots & HIDENECK)
 		obscured |= ITEM_SLOT_NECK
