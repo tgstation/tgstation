@@ -201,7 +201,7 @@ const TitleBar = (props, context) => {
           <Icon name="bug" />
         </div>
       )}
-      {!!fancy && canClose && (
+      {Boolean(fancy && canClose) && (
         <div
           className="TitleBar__close TitleBar__clickable"
           // IE8: Synthetic onClick event doesn't work on IE8.
