@@ -62,14 +62,6 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create  [maxCount] traitor(s). Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create [maxCount] traitor(s).")
-			if("changelings")
-				var/maxCount = input("Set number of Changelings","Set Changeling Count (max)",1) as num|null
-				if(src.makeChangelings(maxCount))
-					message_admins("[key_name(usr)] created [maxCount] changelings.")
-					log_admin("[key_name(usr)] created [maxCount] changelings.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create [maxCount] changelings. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create [maxCount] changelings.")
 			if("revs")
 				var/maxCount = input("Set number of Revolutionaries","Set Revolutionaries Count (max)",1) as num|null
 				if(src.makeRevs(maxCount))
