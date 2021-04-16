@@ -223,6 +223,7 @@
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR | HIDEHEADGEAR
+	opaque_vulnerability = HIDEHEADGEAR
 	color = "#000"
 	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?

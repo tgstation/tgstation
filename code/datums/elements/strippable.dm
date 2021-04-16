@@ -259,7 +259,7 @@
 /datum/strippable_item/mob_item_slot/get_obscuring(atom/source)
 	if (iscarbon(source))
 		var/mob/living/carbon/carbon_source = source
-		return (carbon_source.check_obscured_slots() & item_slot) \
+		return (carbon_source.check_obscured_slots(opaque_vulnerability = TRUE) & item_slot) \
 			? STRIPPABLE_OBSCURING_COMPLETELY \
 			: STRIPPABLE_OBSCURING_NONE
 
