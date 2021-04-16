@@ -251,7 +251,7 @@
 /obj/structure/fluff/mannequin/process(delta_time)
 	for(var/mob/living/L in range(2, src))
 		if(DT_PROB(1, delta_time))
-			if(prob(2))
+			if(prob(1))
 				if(!loudmouth)
 					statement = pick(1,2,3,4,5)
 					switch(statement)
