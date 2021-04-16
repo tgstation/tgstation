@@ -137,18 +137,26 @@ export const releaseHeldKeys = () => {
   }
 };
 
+type ByondSkinMacro = {
+  command: string;
+  name: string;
+};
+
 export const setupHotKeys = () => {
   // Read macros
-  Byond.winget('default.*').then((data: any) => {
+  Byond.winget('default.*').then((data: Record<string, string>) => {
     // Group each macro by ref
-    const groupedByRef: any = {};
+    const groupedByRef: Record<string, ByondSkinMacro> = {};
     for (let key of Object.keys(data)) {
       const keyPath = key.split('.');
       const ref = keyPath[1];
       const prop = keyPath[2];
       if (ref && prop) {
+        // This piece of code imperatively adds each property to a
+        // ByondSkinMacro object in the order we meet it, which is hard
+        // to express safely in typescript.
         if (!groupedByRef[ref]) {
-          groupedByRef[ref] = {};
+          groupedByRef[ref] = {} as any;
         }
         groupedByRef[ref][prop] = data[key];
       }
