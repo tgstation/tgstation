@@ -77,8 +77,10 @@
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
-
 	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(RightClickOn(A))
+			return
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)
@@ -299,6 +301,17 @@
  * Useful for mobs that have their abilities mapped to right click.
  */
 /mob/proc/ranged_secondary_attack(atom/target, modifiers)
+
+/**
+ * Right click
+ */
+/mob/proc/RightClickOn(atom/target, params)
+	return target.RightClick(src)
+
+/atom/proc/RightClick(mob/user)
+	if(SEND_SIGNAL(src, COMSIG_CLICK_RIGHT, user) & COMPONENT_CANCEL_CLICK_ALT)
+		return FALSE
+	return TRUE
 
 /**
  * Middle click
