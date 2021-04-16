@@ -153,6 +153,7 @@
 	light_range = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 	light_color = "#fff2bf"
+	worn_y_offset = 1
 
 /obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
 	name = "carved blumpkin"
