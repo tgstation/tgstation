@@ -1,3 +1,10 @@
+/**
+ * # Generic restraints
+ *
+ * Parent class for handcuffs and handcuff accessories
+ *
+ *
+*/
 /obj/item/restraints
 	breakouttime = 600
 	dye_color = DYE_PRISONER
