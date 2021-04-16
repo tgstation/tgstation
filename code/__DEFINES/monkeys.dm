@@ -37,11 +37,3 @@
 
 ///Monkey recruit cooldown
 #define MONKEY_RECRUIT_COOLDOWN 1 MINUTES
-
-// Defines for the monkey antagoni9st
-
-/// Checks if the given mind is a leader of the monkey antagonists
-#define IS_MONKEY_LEADER(mind) mind?.has_antag_datum(/datum/antagonist/monkey/leader)
-
-/// Checks if the given mind is a monkey antagonist
-#define IS_INFECTED_MONKEY(mind) mind?.has_antag_datum(/datum/antagonist/monkey)
