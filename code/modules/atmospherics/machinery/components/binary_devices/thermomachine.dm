@@ -350,14 +350,10 @@
 	explosion(loc, 0, 0, 3, 3, TRUE)
 	var/datum/gas_mixture/main_port = airs[1]
 	var/datum/gas_mixture/thermal_exchange_port = airs[2]
-	var/datum/gas_mixture/remove_first
 	if(main_port)
-		remove_first = main_port.remove(main_port.total_moles())
-		loc.assume_air(remove_first)
-	var/datum/gas_mixture/remove_second
+		loc.assume_air(main_port.remove_ratio(1))
 	if(thermal_exchange_port)
-		remove_second = thermal_exchange_port.remove(thermal_exchange_port.total_moles())
-		loc.assume_air(remove_second)
+		loc.assume_air(thermal_exchange_port.remove_ratio(1))
 	air_update_turf(FALSE, FALSE)
 	qdel(src)
 
