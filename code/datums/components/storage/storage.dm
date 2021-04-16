@@ -835,7 +835,7 @@
 	if(locked)
 		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 		return
-
+	. = COMPONENT_CANCEL_CLICK_ALT
 	var/atom/A = parent
 	if(!quickdraw)
 		A.add_fingerprint(user)

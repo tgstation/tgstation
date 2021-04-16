@@ -310,8 +310,7 @@
 
 /atom/proc/RightClick(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_CLICK_RIGHT, user) & COMPONENT_CANCEL_CLICK_ALT)
-		return FALSE
-	return TRUE
+		return TRUE
 
 /**
  * Middle click
