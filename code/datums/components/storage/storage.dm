@@ -848,7 +848,7 @@
 		return
 	A.add_fingerprint(user)
 	remove_from_storage(I, get_turf(user))
-	INVOKE_ASYNC(src, .proc/quickdraw.quickdraw, user, I)
+	INVOKE_ASYNC(src, .proc/quickdraw, user, I)
 
 /datum/component/storage/proc/quickdraw(mob/user, obj/target)
 	if(!user.put_in_hands(target))
