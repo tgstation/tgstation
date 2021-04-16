@@ -1,3 +1,12 @@
+/**
+ * # Generic restraints
+ *
+ * Parent class for handcuffs and handcuff accessories
+ *
+ * Functionality:
+ * 1. A special suicide
+ * 2. If a restraint is handcuffing/legcuffing a carbon while being deleted, it will remove the handcuff/legcuff status.
+*/
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
@@ -19,8 +28,13 @@
 			M.update_inv_legcuffed()
 	return ..()
 
-//Handcuffs
-
+/**
+ * # Handcuffs
+ *
+ * Stuff that makes humans unable to use hands
+ *
+ * Clicking people with those will cause an attempt at handcuffing them to occur
+*/
 /obj/item/restraints/handcuffs
 	name = "handcuffs"
 	desc = "Use this to keep prisoners in line."
@@ -40,8 +54,10 @@
 	breakouttime = 1 MINUTES
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	custom_price = PAYCHECK_HARD * 0.35
+	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
-	var/trashtype = null //for disposable cuffs
+	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
+	var/trashtype = null
 
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/user)
 	if(!istype(C))
@@ -49,7 +65,7 @@
 
 	SEND_SIGNAL(C, COMSIG_CARBON_CUFF_ATTEMPTED, user)
 
-	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
+	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
@@ -76,7 +92,15 @@
 				log_combat(user, C, "failed to handcuff")
 		else
 			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
-
+/**
+ * This handles handcuffing people
+ *
+ * When called, this instantly puts handcuffs on someone (if possible)
+ * Arguments:
+ * * mob/living/carbon/target - Who is being handcuffed
+ * * mob/user - Who or what is doing the handcuffing
+ * * dispense - boolean value. True if the cuffing should create a new item instead of using putting src on the mob, false otherwise. False by default.
+*/
 /obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0)
 	if(target.handcuffed)
 		return
@@ -97,16 +121,30 @@
 	if(trashtype && !dispense)
 		qdel(src)
 	return
+/**
+ * # Alien handcuffs
+ *
+ * Ayyy lmao
+*/
+/obj/item/restraints/handcuffs/alien
+	icon_state = "handcuffAlien"
 
-/obj/item/restraints/handcuffs/cable/sinew
-	name = "sinew restraints"
-	desc = "A pair of restraints fashioned from long strands of flesh."
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "sinewcuff"
-	inhand_icon_state = "sinewcuff"
-	custom_materials = null
-	color = null
+/**
+ *
+ * # Fake handcuffs
+ *
+ * Fake handcuffs that can be removed near-instantly.
+*/
+/obj/item/restraints/handcuffs/fake
+	name = "fake handcuffs"
+	desc = "Fake handcuffs meant for gag purposes."
+	breakouttime = 1 SECONDS
 
+/**
+ * # Cable restraints
+ *
+ * Ghetto handcuffs.
+*/
 /obj/item/restraints/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
@@ -118,40 +156,87 @@
 	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+/**
+ * # Sinew restraints
+ *
+ * Primal ghetto handcuffs
+ *
+ * Just cable restraints that look differently and can't be recycled.
+*/
+/obj/item/restraints/handcuffs/cable/sinew
+	name = "sinew restraints"
+	desc = "A pair of restraints fashioned from long strands of flesh."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "sinewcuff"
+	inhand_icon_state = "sinewcuff"
+	custom_materials = null
+	color = null
 
+/**
+ * # Red cable restraints
+ *
+ * A red version of cable restraints
+*/
 /obj/item/restraints/handcuffs/cable/red
 	color = "#ff0000"
 
+/**
+ * # Yellow cable restraints
+ *
+ * A yellow version of cable restraints
+*/
 /obj/item/restraints/handcuffs/cable/yellow
 	color = "#ffff00"
 
+/**
+ * # Blue cable restraints
+ *
+ * A blue version of cable restraints
+*/
 /obj/item/restraints/handcuffs/cable/blue
 	color = "#1919c8"
 
+/**
+ * # Green cable restraints
+ *
+ * A green version of cable restraints
+*/
 /obj/item/restraints/handcuffs/cable/green
 	color = "#00aa00"
 
+/**
+ * # Pink cable restraints
+ *
+ * A pink version of cable restraints
+*/
 /obj/item/restraints/handcuffs/cable/pink
 	color = "#ff3ccd"
 
+/**
+ * # Orange cable restraints
+ *
+ * An orange (the color) version of cable restraints
+*/
 /obj/item/restraints/handcuffs/cable/orange
 	color = "#ff8000"
 
+/**
+ * # Cyan cable restraints
+ *
+ * A cyan version of cable restraints
+*/
 /obj/item/restraints/handcuffs/cable/cyan
 	color = "#00ffff"
 
+/**
+ * # White cable restraints
+ *
+ * A white version of cable restraints
+*/
 /obj/item/restraints/handcuffs/cable/white
 	color = null
 
-/obj/item/restraints/handcuffs/alien
-	icon_state = "handcuffAlien"
-
-/obj/item/restraints/handcuffs/fake
-	name = "fake handcuffs"
-	desc = "Fake handcuffs meant for gag purposes."
-	breakouttime = 1 SECONDS
-
-/obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
+/obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params) //Slapcrafting
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
@@ -180,7 +265,11 @@
 			qdel(src)
 	else
 		return ..()
-
+/**
+ * # Zipties
+ *
+ * One-use handcuffs that take 45 seconds to resist out of instead of one minute. This turns into the used version when applied.
+*/
 /obj/item/restraints/handcuffs/cable/zipties
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
@@ -191,7 +280,11 @@
 	breakouttime = 45 SECONDS
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
 	color = null
-
+/**
+ * # Used zipties
+ *
+ * What zipties turn into when applied. Those can't be used to cuff people.
+*/
 /obj/item/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_used"
