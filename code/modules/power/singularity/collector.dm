@@ -3,8 +3,6 @@
 #define RAD_COLLECTOR_COEFFICIENT 100
 //(this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
 #define RAD_COLLECTOR_STORED_OUT 0.04
-//This is the number used to calculate the conversion of watts to research points per process()
-#define RAD_COLLECTOR_MINING_CONVERSION_RATE 0.00001
 //Produces at least 1000 watts if it has more than that stored
 #define RAD_COLLECTOR_OUTPUT min(stored_energy, (stored_energy*RAD_COLLECTOR_STORED_OUT)+1000)
 
@@ -208,5 +206,4 @@
 #undef RAD_COLLECTOR_EFFICIENCY
 #undef RAD_COLLECTOR_COEFFICIENT
 #undef RAD_COLLECTOR_STORED_OUT
-#undef RAD_COLLECTOR_MINING_CONVERSION_RATE
 #undef RAD_COLLECTOR_OUTPUT

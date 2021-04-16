@@ -44,7 +44,7 @@
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 	///Sparks emitted with every shot
 	var/datum/effect_system/spark_spread/sparks
-	///Stopes the type of gun we are using inside the emitter
+	///Stores the type of gun we are using inside the emitter
 	var/obj/item/gun/energy/gun
 	///List of all the properties of the inserted gun
 	var/list/gun_properties
@@ -52,7 +52,7 @@
 	var/mode = FALSE
 
 	// The following 3 vars are mostly for the prototype
-	///manual shooting?
+	///manual shooting? (basically you hop onto the emitter and choose the shooting direction, is very janky since you can only shoot at the 8 directions and i don't think is ever used since you can't build those)
 	var/manual = FALSE
 	///Amount of power inside
 	var/charge = 0
@@ -103,7 +103,7 @@
 	var/power_usage = 350
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
 		max_fire_delay -= 2 SECONDS * laser.rating
-		min_fire_delay -= 4 SECONDS * laser.rating
+		min_fire_delay -= 0.4 SECONDS * laser.rating
 		fire_shoot_delay -= 2 SECONDS * laser.rating
 	maximum_fire_delay = max_fire_delay
 	minimum_fire_delay = min_fire_delay
@@ -165,13 +165,13 @@
 	add_fingerprint(user)
 	if(!welded)
 		to_chat(user, "<span class='warning'>[src] needs to be firmly secured to the floor first!</span>")
-		return TRUE
+		return FALSE
 	if(!powernet)
 		to_chat(user, "<span class='warning'>\The [src] isn't connected to a wire!</span>")
-		return TRUE
+		return FALSE
 	if(locked || !allow_switch_interact)
 		to_chat(user, "<span class='warning'>The controls are locked!</span>")
-		return TRUE
+		return FALSE
 
 	if(active)
 		active = FALSE
@@ -306,7 +306,7 @@
 	user.visible_message("<span class='notice'>[user.name] starts to weld the [name] to the floor.</span>", \
 		"<span class='notice'>You start to weld [src] to the floor...</span>", \
 		"<span class='hear'>You hear welding.</span>")
-	if(!item.use_tool(src, user, 20, volume=50) || !anchored)
+	if(!item.use_tool(src, user, amount=20, volume=50) || !anchored)
 		return
 	welded = TRUE
 	to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
@@ -422,22 +422,22 @@
 	auto.Remove(buckled_mob)
 	. = ..()
 
-/obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/mob, mob/user, check_loc = TRUE)
+/obj/machinery/power/emitter/prototype/user_buckle_mob(mob/living/buckled_mob, mob/user, check_loc = TRUE)
 	if(user.incapacitated() || !istype(user))
 		return
 	for(var/atom/movable/atom in get_turf(src))
-		if(atom.density && (atom != src && atom != mob))
+		if(atom.density && (atom != src && atom != buckled_mob))
 			return
-	mob.forceMove(get_turf(src))
+	buckled_mob.forceMove(get_turf(src))
 	..()
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
-	mob.pixel_y = 14
+	buckled_mob.pixel_y = 14
 	layer = 4.1
-	if(mob.client)
-		mob.client.view_size.setTo(view_range)
+	if(buckled_mob.client)
+		buckled_mob.client.view_size.setTo(view_range)
 	if(!auto)
 		auto = new()
-	auto.Grant(mob, src)
+	auto.Grant(buckled_mob, src)
 
 /datum/action/innate/protoemitter
 	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
@@ -476,9 +476,10 @@
 	for(var/things in buckled_mob.held_items)
 		var/obj/item/item = things
 		if(istype(item))
-			if(buckled_mob.dropItemToGround(item))
-				var/obj/item/turret_control/turret_control = new /obj/item/turret_control()
-				buckled_mob.put_in_hands(turret_control)
+			if(!buckled_mob.dropItemToGround(item))
+				continue
+			var/obj/item/turret_control/turret_control = new /obj/item/turret_control()
+			buckled_mob.put_in_hands(turret_control)
 		else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 			var/obj/item/turret_control/turret_control = new /obj/item/turret_control()
 			buckled_mob.put_in_hands(turret_control)
