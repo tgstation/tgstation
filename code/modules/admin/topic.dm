@@ -54,14 +54,6 @@
 			to_chat(usr, "<span class='danger'>Not until the round starts!</span>", confidential = TRUE)
 			return
 		switch(href_list["makeAntag"])
-			if("traitors")
-				var/maxCount = input("Set number of Traitors","Set Traitor Count (max)",1) as num|null
-				if(src.makeTraitors(maxCount))
-					message_admins("[key_name_admin(usr)] created [maxCount] traitor(s).")
-					log_admin("[key_name(usr)] created [maxCount] traitor(s).")
-				else
-					message_admins("[key_name_admin(usr)] tried to create  [maxCount] traitor(s). Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create [maxCount] traitor(s).")
 			if("revs")
 				var/maxCount = input("Set number of Revolutionaries","Set Revolutionaries Count (max)",1) as num|null
 				if(src.makeRevs(maxCount))

@@ -107,8 +107,6 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 			return
 	var/datum/summon_guns_controller/controller = GLOB.summon_guns
 	if(prob(controller.survivor_probability) && !(H.mind.has_antag_datum(/datum/antagonist)))
-		SSticker.mode.traitors += H.mind
-
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
 		H.log_message("was made into a survivalist, and trusts no one!", LOG_ATTACK, color="red")
 
