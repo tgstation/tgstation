@@ -2,6 +2,8 @@
 	name = "Genetic"
 	desc = "This spell inflicts a set of mutations and disabilities upon the target."
 
+	school = SCHOOL_TRANSMUTATION
+
 	var/list/active_on = list()
 	var/list/traits = list() //disabilities
 	var/list/mutations = list() //mutation defines

@@ -183,6 +183,8 @@
 	var/mineralChance = 13
 
 /turf/closed/mineral/random/Initialize()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		mineralSpawnChanceList[/obj/item/stack/ore/bananium] = 3
 
 	mineralSpawnChanceList = typelist("mineralSpawnChanceList", mineralSpawnChanceList)
 

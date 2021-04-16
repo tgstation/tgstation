@@ -58,6 +58,9 @@
 #define HARS /datum/mutation/human/headless
 #define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
 
+#define HONORBOUND /datum/mutation/human/honorbound
+#define BURDENED /datum/mutation/human/burdened
+
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
 

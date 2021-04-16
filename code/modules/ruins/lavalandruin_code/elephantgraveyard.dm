@@ -110,6 +110,7 @@
 	new /obj/effect/decal/cleanable/oil(loc)
 
 //***Grave mounds.
+/// has no items inside unless you use the filled subtype
 /obj/structure/closet/crate/grave
 	name = "burial mound"
 	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
@@ -128,7 +129,7 @@
 	var/lead_tomb = FALSE
 	var/first_open = FALSE
 
-/obj/structure/closet/crate/grave/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
+/obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
 	new /obj/effect/decal/remains/human/grave(src)
 	switch(rand(1,8))
@@ -201,7 +202,7 @@
 	dump_contents()
 	return
 
-/obj/structure/closet/crate/grave/lead_researcher
+/obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
 	desc = "Even in a place filled to the brim with graves, this one shows a level of preperation and planning that fills you with dread."
 	icon = 'icons/obj/crates.dmi'
@@ -209,7 +210,7 @@
 	lead_tomb = TRUE
 	first_open = TRUE
 
-/obj/structure/closet/crate/grave/lead_researcher/PopulateContents()  //ADVANCED GRAVEROBBING
+/obj/structure/closet/crate/grave/filled/lead_researcher/PopulateContents()  //ADVANCED GRAVEROBBING
 	..()
 	new /obj/effect/decal/cleanable/blood/gibs/old(src)
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)

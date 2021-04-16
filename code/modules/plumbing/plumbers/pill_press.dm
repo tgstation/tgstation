@@ -35,6 +35,7 @@
 
 /obj/machinery/plumbing/pill_press/Initialize(mapload, bolt, layer)
 	. = ..()
+
 	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
 	//expertly copypasted from chemmasters
