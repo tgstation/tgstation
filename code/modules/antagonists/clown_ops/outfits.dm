@@ -1,31 +1,3 @@
-/datum/game_mode/nuclear/clown_ops
-	name = "clown ops"
-	config_tag = "clownops"
-
-	announce_span = "danger"
-	announce_text = "Clown empire forces are approaching the station in an attempt to HONK it!\n\
-	<span class='danger'>Operatives</span>: Secure the nuclear authentication disk and use your bananium fission explosive to HONK the station.\n\
-	<span class='notice'>Crew</span>: Defend the nuclear authentication disk and ensure that it leaves with you on the emergency shuttle."
-
-	operative_antag_datum_type = /datum/antagonist/nukeop/clownop
-	leader_antag_datum_type = /datum/antagonist/nukeop/leader/clownop
-
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-
-/datum/game_mode/nuclear/clown_ops/pre_setup()
-	. = ..()
-	if(.)
-		for(var/obj/machinery/nuclearbomb/syndicate/S in GLOB.nuke_list)
-			var/turf/T = get_turf(S)
-			if(T)
-				qdel(S)
-				new /obj/machinery/nuclearbomb/syndicate/bananium(T)
-		for(var/V in pre_nukeops)
-			var/datum/mind/the_op = V
-			the_op.assigned_role = "Clown Operative"
-			the_op.special_role = "Clown Operative"
-
 /datum/outfit/syndicate/clownop
 	name = "Clown Operative - Basic"
 	uniform = /obj/item/clothing/under/syndicate
