@@ -99,9 +99,9 @@
  * Arguments:
  * * mob/living/carbon/target - Who is being handcuffed
  * * mob/user - Who or what is doing the handcuffing
- * * dispense - boolean value. True if the cuffing should create a new item instead of using putting src on the mob, false otherwise. False by default.
+ * * dispense - True if the cuffing should create a new item instead of using putting src on the mob, false otherwise. False by default.
 */
-/obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0)
+/obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FLASH_LIGHT_RANGE)
 	if(target.handcuffed)
 		return
 
@@ -283,7 +283,7 @@
 /**
  * # Used zipties
  *
- * What zipties turn into when applied. Those can't be used to cuff people.
+ * What zipties turn into when applied. These can't be used to cuff people.
 */
 /obj/item/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."
@@ -293,8 +293,11 @@
 /obj/item/restraints/handcuffs/cable/zipties/used/attack()
 	return
 
-//Legcuffs
-
+/**
+ * # Generic leg cuffs
+ *
+ * Parent class for everything that can legcuff carbons. Can't legcuff anything itself.
+*/
 /obj/item/restraints/legcuffs
 	name = "leg cuffs"
 	desc = "Use this to keep prisoners in line."
@@ -309,13 +312,20 @@
 	slowdown = 7
 	breakouttime = 30 SECONDS
 
+/**
+ * # Bear trap
+ *
+ * This opens, closes, and bites people's legs.
+ */
 /obj/item/restraints/legcuffs/beartrap
 	name = "bear trap"
 	throw_speed = 1
 	throw_range = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
-	var/armed = 0
+	///If true, the trap is "open" and can trigger.
+	var/armed = FALSE
+	///How much damage the trap deals when triggered.
 	var/trap_damage = 20
 
 /obj/item/restraints/legcuffs/beartrap/Initialize()
@@ -338,7 +348,12 @@
 	armed = !armed
 	update_appearance()
 	to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
-
+/**
+ * Closes a bear trap
+ *
+ * Closes a bear trap.
+ * Arguments:
+ */
 /obj/item/restraints/legcuffs/beartrap/proc/close_trap()
 	armed = FALSE
 	update_appearance()
@@ -380,7 +395,13 @@
 						"<span class='userdanger'>You trigger \the [src]!</span>")
 				L.apply_damage(trap_damage, BRUTE, def_zone)
 	..()
-
+/**
+ * # Energy snare
+ *
+ * This closes on people's legs.
+ *
+ * A weaker version of the bear trap that can be resisted out of faster and disappears
+ */
 /obj/item/restraints/legcuffs/beartrap/energy
 	name = "energy snare"
 	armed = 1
@@ -393,7 +414,12 @@
 /obj/item/restraints/legcuffs/beartrap/energy/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
-
+/**
+ * Handles energy snares disappearing
+ *
+ * If the snare isn't closed on anyone, it will disappear in a shower of sparks.
+ * Arguments:
+ */
 /obj/item/restraints/legcuffs/beartrap/energy/proc/dissipate()
 	if(!ismob(loc))
 		do_sparks(1, TRUE, src)
@@ -415,6 +441,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/thrown_righthand.dmi'
 	breakouttime = 3.5 SECONDS//easy to apply, easy to break out of
 	gender = NEUTER
+	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
@@ -444,16 +471,25 @@
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Knockdown(knockdown)
 		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
-
-/obj/item/restraints/legcuffs/bola/tactical//traitor variant
+/**
+ * A traitor variant of the bola.
+ *
+ * It knocks people down and is harder to remove.
+ */
+/obj/item/restraints/legcuffs/bola/tactical
 	name = "reinforced bola"
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
 	inhand_icon_state = "bola_r"
 	breakouttime = 7 SECONDS
-	knockdown = 35
+	knockdown = 3.5 SECONDS
 
-/obj/item/restraints/legcuffs/bola/energy //For Security
+/**
+ * A security variant of the bola.
+ *
+ * It's harder to remove, smaller and has a defined price.
+ */
+/obj/item/restraints/legcuffs/bola/energy
 	name = "energy bola"
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	icon_state = "ebola"
@@ -469,7 +505,11 @@
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
-
+/**
+ * A pacifying variant of the bola.
+ *
+ * It's much harder to remove, doesn't cause a slowdown and gives people STATUS_EFFECT_GONBOLAPACIFY.
+ */
 /obj/item/restraints/legcuffs/bola/gonbola
 	name = "gonbola"
 	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
