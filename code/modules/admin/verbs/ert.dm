@@ -1,121 +1,6 @@
 /// If we spawn an ERT with the "choose experienced leader" option, select the leader from the top X playtimes
 #define ERT_EXPERIENCED_LEADER_CHOOSE_TOP 3
 
-/client/proc/one_click_antag()
-	set name = "Create Antagonist"
-	set desc = "Auto-create an antagonist of your choice"
-	set category = "Admin.Events"
-
-	if(holder)
-		holder.one_click_antag()
-	return
-
-
-/datum/admins/proc/one_click_antag()
-	var/dat = {"
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=traitors'>Make Traitors</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=changelings'>Make Changelings</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revs'>Make Revs</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=cult'>Make Cult</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=blob'>Make Blob</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=nerd'>Make N.E.R.D. (Requires Ghost)</a><br>
-		"}
-
-	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
-	popup.set_content(dat)
-	popup.open()
-
-/datum/admins/proc/isReadytoRumble(mob/living/carbon/human/applicant, targetrole, onstation = TRUE, conscious = TRUE)
-	if(applicant.mind.special_role)
-		return FALSE
-	if(!(targetrole in applicant.client.prefs.be_special))
-		return FALSE
-	if(onstation)
-		var/turf/T = get_turf(applicant)
-		if(!is_station_level(T.z))
-			return FALSE
-	if(conscious && applicant.stat) //incase you don't care about a certain antag being unconcious when made, ie if they have selfhealing abilities.
-		return FALSE
-	if(!considered_alive(applicant.mind) || considered_afk(applicant.mind)) //makes sure the player isn't a zombie, brain, or just afk all together
-		return FALSE
-	return !is_banned_from(applicant.ckey, list(targetrole, ROLE_SYNDICATE))
-
-/datum/admins/proc/makeWizard()
-
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", ROLE_WIZARD)
-
-	var/mob/dead/observer/selected = pick_n_take(candidates)
-
-	var/mob/living/carbon/human/new_character = makeBody(selected)
-	new_character.mind.make_Wizard()
-	return TRUE
-
-
-/datum/admins/proc/makeNukeTeam(maxCount = 5)
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a nuke team being sent in?", ROLE_OPERATIVE, ROLE_OPERATIVE)
-	var/list/mob/dead/observer/chosen = list()
-	var/mob/dead/observer/theghost = null
-
-	if(candidates.len)
-		var/numagents = maxCount
-		var/agentcount = 0
-
-		for(var/i = 0, i<numagents,i++)
-			shuffle_inplace(candidates) //More shuffles means more randoms
-			for(var/mob/j in candidates)
-				if(!j || !j.client)
-					candidates.Remove(j)
-					continue
-
-				theghost = j
-				candidates.Remove(theghost)
-				chosen += theghost
-				agentcount++
-				break
-		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
-		if(agentcount < 3)
-			return FALSE
-
-		//Let's find the spawn locations
-		var/leader_chosen = FALSE
-		var/datum/team/nuclear/nuke_team
-		for(var/mob/c in chosen)
-			var/mob/living/carbon/human/new_character=makeBody(c)
-			if(!leader_chosen)
-				leader_chosen = TRUE
-				var/datum/antagonist/nukeop/N = new_character.mind.add_antag_datum(/datum/antagonist/nukeop/leader)
-				nuke_team = N.nuke_team
-			else
-				new_character.mind.add_antag_datum(/datum/antagonist/nukeop,nuke_team)
-		return TRUE
-	else
-		return FALSE
-
-
-
-
-
-/datum/admins/proc/makeAliens()
-	var/datum/round_event/ghost_role/alien_infestation/E = new(FALSE)
-	E.spawncount = 3
-	// TODO The fact we have to do this rather than just have events start
-	// when we ask them to, is bad.
-	E.processing = TRUE
-	return TRUE
-
-/datum/admins/proc/makeSpaceNinja()
-	new /datum/round_event/ghost_role/space_ninja()
-	return TRUE
-
-// DEATH SQUADS
-/datum/admins/proc/makeDeathsquad()
-	return makeEmergencyresponseteam(/datum/ert/deathsquad)
-
 // CENTCOM RESPONSE TEAM
 
 /datum/admins/proc/makeERTTemplateModified(list/settings)
@@ -328,40 +213,17 @@
 
 	return
 
-//Abductors
-/datum/admins/proc/makeAbductorTeam()
-	new /datum/round_event/ghost_role/abductor
-	return TRUE
+/client/proc/summon_ert()
+	set category = "Admin.Fun"
+	set name = "Summon ERT"
+	set desc = "Summons an emergency response team"
 
-/datum/admins/proc/makeRevenant()
-	new /datum/round_event/ghost_role/revenant(TRUE, TRUE)
-	return TRUE
-
-/datum/admins/proc/makeNerd()
-	var/spawnpoint = pick(GLOB.blobstart)
-	var/list/mob/dead/observer/candidates
-	var/mob/dead/observer/chosen_candidate
-	var/mob/living/simple_animal/drone/nerd
-	var/teamsize
-
-	teamsize = input(usr, "How many drones?", "N.E.R.D. team size", 2) as num|null
-
-	if(teamsize <= 0)
-		return FALSE
-
-	candidates = pollGhostCandidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
-
-	if(length(candidates) == 0)
-		return FALSE
-
-	while(length(candidates) && teamsize)
-		chosen_candidate = pick(candidates)
-		candidates -= chosen_candidate
-		nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
-		nerd.key = chosen_candidate.key
-		log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
-		teamsize--
-
-	return TRUE
+	message_admins("[key_name(usr)] is creating a CentCom response team...")
+	if(holder?.makeEmergencyresponseteam())
+		message_admins("[key_name(usr)] created a CentCom response team.")
+		log_admin("[key_name(usr)] created a CentCom response team.")
+	else
+		message_admins("[key_name_admin(usr)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
+		log_admin("[key_name(usr)] failed to create a CentCom response team.")
 
 #undef ERT_EXPERIENCED_LEADER_CHOOSE_TOP
