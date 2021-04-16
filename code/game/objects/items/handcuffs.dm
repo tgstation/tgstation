@@ -122,6 +122,7 @@
 	if(trashtype && !dispense)
 		qdel(src)
 	return
+
 /**
  * # Alien handcuffs
  *
@@ -157,6 +158,7 @@
 	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+
 /**
  * # Sinew restraints
  *
