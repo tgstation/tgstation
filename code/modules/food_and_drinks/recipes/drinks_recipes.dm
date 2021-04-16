@@ -585,7 +585,7 @@
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
 
-//Funny wallem additions
+//Funny Heaven additions
 
 /datum/chemical_reaction/whipcream
 	results = list(/datum/reagent/consumable/whipcream = 4)
@@ -594,3 +594,7 @@
 /datum/chemical_reaction/naenaecream
 	results = list(/datum/reagent/consumable/naenaecream = 8)
 	required_reagents = list(/datum/reagent/consumable/whipcream = 4, /datum/reagent/consumable/ethanol/neurotoxin = 8, /datum/reagent/drug/krokodil = 1) //Krokodil was literally the only way to make this even close to balanced.
+
+/datum/chemical_reaction/schrodinger
+	results = list(/datum/reagent/consumable/schrodinger = 3)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/toxin/glovepowder = 1)

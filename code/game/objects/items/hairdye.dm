@@ -45,7 +45,10 @@
 			H.beardcolor_origin = H.facial_hair_color
 			H.hair_color = sanitize_hexcolor(hairdye_color)
 			H.facial_hair_color = sanitize_hexcolor(hairdye_color)
-			to_chat(user, "<span class='notice'>[user] sprays some dye into [H]'s hair, changing its color.</span>")
+			if(H != user)
+				user.visible_message("<span class='notice'>[user] sprays some dye into [H]'s hair, changing its color.</span>")
+			else
+				user.visible_message("<span class='notice'>[user] sprays some dye into [user.p_their()] hair, changing its color.</span>")
 			playsound(user.loc, 'sound/effects/spray.ogg', 25, TRUE, 5)
 			charges -= 1
 			H.hair_dyed = TRUE

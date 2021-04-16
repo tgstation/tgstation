@@ -185,6 +185,7 @@
 	throw_range = 3
 	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
+	var/pruned = FALSE
 
 /obj/item/britevidence/foxglove/pickup(mob/living/carbon/user)
 	..()
@@ -215,7 +216,6 @@
 	if(isliving(M))
 		to_chat(M, "<span class='danger'>You are stunned by the powerful poison of [src]!</span>")
 		log_combat(user, M, "attacked", src)
-
 		M.adjust_blurriness(force/7)
 		if(prob(20))
 			M.Unconscious(force / 0.3)
@@ -224,14 +224,53 @@
 
 /obj/item/britevidence/foxglove/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/britevidence/ribbon))
-		to_chat(user, "<span class='notice'>You carefully tie the ribbon to the flower's stem.</span>")
+		to_chat(user, "<span class='notice'>You carefully tie the ribbon to the flower's stem. A single petal falls from the plant.</span>")
 		qdel(O)
+		new /obj/item/britevidence/glovepetal(loc)
 		icon_state = "flower_ribbon"
 		return 1
+	else if (istype(O, /obj/item/secateurs))
+		if(!pruned)
+			if(do_after(user, 15, TRUE))
+				to_chat(user, "<span class='notice'>You carefully prune some petals from the plant.</span>")
+				new /obj/item/britevidence/glovepetal(loc)
+				new /obj/item/britevidence/glovepetal(loc)
+				new /obj/item/britevidence/glovepetal(loc)
+				pruned = TRUE
+			else
+				to_chat(user, "<span class='notice'>Your movement diverts your focus.</span>")
+		else
+			to_chat(user, "<span class='notice'>It's already been pruned!</span>")
 	else
 		return ..()
+
+/obj/item/britevidence/foxglove/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(!(L.is_flying() || L.is_floating() || L.buckled))
+			to_chat(L, "<span class='danger'>You are stunned by the powerful poison of [src]!</span>")
+			L.adjust_blurriness(force/7)
+			if(prob(20))
+				L.Unconscious(force / 0.3)
+				L.Paralyze(force / 0.75)
+			L.drop_all_held_items()
 
 /obj/item/britevidence/ribbon
 	name = "blue ribbon"
 	desc = "It's surprisingly intact. Made of a soft material, with pieces of fur sticking to it."
 	icon_state = "ribbon"
+
+/obj/item/britevidence/glovepetal
+	name = "Foxglove Petal"
+	icon_state = "glovepetal"
+	desc = "A petal from a foxglove plant. In such a low volume, they're relatively harmless unless directly consumed."
+	grind_results = list(/datum/reagent/toxin/glovepowder = 5)
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/britevidence/glovepetal/attack(mob/living/carbon/M, mob/user)
+	if(isliving(M))
+		if(M != user)
+			user.visible_message("<span class='danger'>[user] tries to feed [M] the [src], but [M.p_they()] spit it out!</span>")
+		else
+			to_chat(M, "<span class='danger'>You try to eat the [src], but the taste makes you spit it out!</span>")
