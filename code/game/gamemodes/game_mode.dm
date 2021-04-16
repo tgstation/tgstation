@@ -99,7 +99,6 @@
 	if(!GLOB.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
 			return FALSE
-	antag_candidates = get_players_for_role(antag_flag)
 	if(!GLOB.Debug2)
 		if(antag_candidates.len < required_enemies)
 			return FALSE
@@ -414,66 +413,6 @@
 	WARNING("Something has gone terribly wrong. /datum/game_mode/proc/antag_pick failed to select a candidate. Falling back to pick()")
 	return pick(candidates)
 
-/datum/game_mode/proc/get_players_for_role(role)
-	var/list/players = list()
-	var/list/candidates = list()
-	var/list/drafted = list()
-	var/datum/mind/applicant = null
-
-	// Ultimate randomizing code right here
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/player = i
-		if(player.ready == PLAYER_READY_TO_PLAY && player.check_preferences())
-			players += player
-
-	// Shuffling, the players list is now ping-independent!!!
-	// Goodbye antag dante
-	players = shuffle(players)
-
-	for(var/mob/dead/new_player/player in players)
-		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
-			if(role in player.client.prefs.be_special)
-				if(!is_banned_from(player.ckey, list(role, ROLE_SYNDICATE)) && !QDELETED(player))
-					if(age_check(player.client)) //Must be older than the minimum age
-						candidates += player.mind // Get a list of all the people who want to be the antagonist for this round
-
-	if(restricted_jobs)
-		for(var/datum/mind/player in candidates)
-			for(var/job in restricted_jobs) // Remove people who want to be antagonist but have a job already that precludes it
-				if(player.assigned_role == job)
-					candidates -= player
-
-	if(candidates.len < recommended_enemies)
-		for(var/mob/dead/new_player/player in players)
-			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
-				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a separate list of people who don't want to be one
-					if(!is_banned_from(player.ckey, list(role, ROLE_SYNDICATE)) && !QDELETED(player))
-						drafted += player.mind
-
-	if(restricted_jobs)
-		for(var/datum/mind/player in drafted) // Remove people who can't be an antagonist
-			for(var/job in restricted_jobs)
-				if(player.assigned_role == job)
-					drafted -= player
-
-	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
-
-	while(candidates.len < recommended_enemies) // Pick randomlly just the number of people we need and add them to our list of candidates
-		if(drafted.len > 0)
-			applicant = pick(drafted)
-			if(applicant)
-				candidates += applicant
-				drafted.Remove(applicant)
-
-		else // Not enough scrubs, ABORT ABORT ABORT
-			break
-
-	return candidates // Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than recommended_enemies
-							// recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
-							// Less if there are not enough valid players in the game entirely to make recommended_enemies.
-
-
-
 /datum/game_mode/proc/num_players()
 	. = 0
 	for(var/i in GLOB.new_player_list)
@@ -588,11 +527,6 @@
 
 	for (var/C in GLOB.admins)
 		to_chat(C, msg.Join())
-
-//If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
-/datum/game_mode/proc/age_check(client/C)
-	// MOTHBLOCKS TODO: kill
-	return TRUE
 
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
 	newborgie.remove_antag_datum(/datum/antagonist/cult)
