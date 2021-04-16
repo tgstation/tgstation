@@ -848,11 +848,13 @@
 		return
 	A.add_fingerprint(user)
 	remove_from_storage(I, get_turf(user))
-	if(INVOKE_ASYNC(!user.put_in_hands(I)))
-		to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
-		return
-	user.visible_message("<span class='warning'>[user] draws [I] from [parent]!</span>", "<span class='notice'>You draw [I] from [parent].</span>")
+	INVOKE_ASYNC(src, .proc/quickdraw.quickdraw, user, I)
 
+/datum/component/storage/proc/quickdraw(mob/user, obj/target)
+	if(!user.put_in_hands(target))
+		to_chat(user, "<span class='notice'>You fumble for [target] and it falls on the floor.</span>")
+		return
+	user.visible_message("<span class='warning'>[user] draws [target] from [parent]!</span>", "<span class='notice'>You draw [target] from [parent].</span>")
 
 /datum/component/storage/proc/action_trigger(datum/signal_source, datum/action/source)
 	SIGNAL_HANDLER
