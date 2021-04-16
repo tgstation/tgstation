@@ -148,37 +148,6 @@
 	return TRUE
 
 
-/datum/admins/proc/makeCult(maxCount = 4)
-	var/datum/game_mode/cult/temp = new
-	if(CONFIG_GET(flag/protect_roles_from_antagonist))
-		temp.restricted_jobs += temp.protected_jobs
-
-	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		temp.restricted_jobs += "Assistant"
-
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(isReadytoRumble(applicant, ROLE_CULTIST))
-			if(temp.age_check(applicant.client))
-				if(!(applicant.job in temp.restricted_jobs))
-					candidates += applicant
-
-	if(candidates.len)
-		var/numCultists = min(candidates.len, maxCount)
-
-		for(var/i = 0, i<numCultists, i++)
-			H = pick(candidates)
-			H.mind.make_Cultist()
-			candidates.Remove(H)
-
-		return TRUE
-
-	return FALSE
-
-
-
 /datum/admins/proc/makeNukeTeam(maxCount = 5)
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a nuke team being sent in?", ROLE_OPERATIVE, ROLE_OPERATIVE)
 	var/list/mob/dead/observer/chosen = list()

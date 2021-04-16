@@ -78,14 +78,6 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to start a revolution with [maxCount] freedom fighters. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to start a revolution with [maxCount] freedom fighters.")
-			if("cult")
-				var/maxCount = input("Set number of Cultists","Set Cultist Count (max)",1) as num|null
-				if(src.makeCult(maxCount))
-					message_admins("[key_name(usr)] started a cult with [maxCount] cultists.")
-					log_admin("[key_name(usr)] started a cult with [maxCount] cultists.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a cult with [maxCount] cultists. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a cult with [maxCount] cultists.")
 			if("wizard")
 				message_admins("[key_name(usr)] is creating a wizard...")
 				if(src.makeWizard())

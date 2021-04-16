@@ -531,7 +531,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	has_unique_girder = TRUE
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
-	if(!iscultist(user))
+	if(!IS_CULTIST(user))
 		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
 	var/turf/T = get_turf(user) //we may have moved. adjust as needed...

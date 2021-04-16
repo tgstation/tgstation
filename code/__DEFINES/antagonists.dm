@@ -81,6 +81,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 /// because they have nothing else that supports an implant.
 #define UPLINK_IMPLANT_TELECRYSTAL_COST 4
 
+/// Checks if the given mob is a blood cultist
+#define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
+
 /// Checks if the given mind is a leader of the monkey antagonists
 #define IS_MONKEY_LEADER(mind) mind?.has_antag_datum(/datum/antagonist/monkey/leader)
 
@@ -88,7 +91,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define IS_INFECTED_MONKEY(mind) mind?.has_antag_datum(/datum/antagonist/monkey)
 
 /// Checks if the given mob is a nuclear operative
-#define IS_NUKE_OP(mob) (mob.mind?.has_antag_datum(/datum/antagonist/nukeop))
+#define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
 
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 
