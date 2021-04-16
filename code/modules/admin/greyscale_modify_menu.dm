@@ -89,4 +89,5 @@
 	var/list/steps = list()
 	sprite_data["steps"] = steps
 	for(var/step in data["steps"])
+		CHECK_TICK
 		steps += list(list("layer"=icon2html(data["steps"][step], user, sourceonly=TRUE), "result"=icon2html(step, user, sourceonly=TRUE)))
