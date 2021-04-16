@@ -287,9 +287,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		#warn Please replace the loop below this warning with an `as anything` loop.
 		#endif
 
-		for (var/_content_of_turf in surrounding_turf.contents)
-			// `as anything` doesn't play well on 513 with special lists such as contents.
-			// When the minimum version is raised to 514, upgrade this to `as anything`.
+		for (var/_content_of_turf as anything in surrounding_turf.contents)
 			var/atom/content_of_turf = _content_of_turf
 			if (content_of_turf.density)
 				skip_to_next_turf = TRUE
