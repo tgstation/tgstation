@@ -14,7 +14,7 @@ export const AlertModal = (props, context) => {
   const { title, message, buttons, timeout } = data;
 
   return (
-    <Window title={title} width={350} height={150} noClose={!timeout}>
+    <Window title={title} width={350} height={150} canClose={timeout}>
       {timeout && <Loader value={timeout} />}
       <Window.Content>
         <Section fill>
