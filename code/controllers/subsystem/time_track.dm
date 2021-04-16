@@ -28,6 +28,7 @@ SUBSYSTEM_DEF(time_track)
 			"tidi_avg",
 			"tidi_slowavg",
 			"maptick",
+			"maptick per player",
 			"num_timers",
 			"air_turf_cost",
 			"air_eg_cost",
@@ -51,6 +52,8 @@ SUBSYSTEM_DEF(time_track)
 	var/current_byondtime = world.time
 	var/current_tickcount = world.time/world.tick_lag
 
+	var/player_amount = length(GLOB.clients)
+
 	if (!first_run)
 		var/tick_drift = max(0, (((current_realtime - last_tick_realtime) - (current_byondtime - last_tick_byond_time)) / world.tick_lag))
 
@@ -69,12 +72,13 @@ SUBSYSTEM_DEF(time_track)
 	log_perf(
 		list(
 			world.time,
-			length(GLOB.clients),
+			player_amount,
 			time_dilation_current,
 			time_dilation_avg_fast,
 			time_dilation_avg,
 			time_dilation_avg_slow,
 			MAPTICK_LAST_INTERNAL_TICK_USAGE,
+			(player_amount > 0) ? MAPTICK_LAST_INTERNAL_TICK_USAGE / player_amount : "",
 			length(SStimer.timer_id_dict),
 			SSair.cost_turfs,
 			SSair.cost_groups,
