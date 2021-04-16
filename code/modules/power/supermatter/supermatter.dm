@@ -554,6 +554,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				removed.gases[/datum/gas/miasma][MOLES] -= consumed_miasma
 				matter_power += consumed_miasma * MIASMA_POWER_GAIN
 
+		if(gas_comp[/datum/gas/healium] > 10) //min 10% of healium
+			if(damage && damage - HEALIUM_DAMAGE_THRESHOLD > 0)
+				damage -= HEALIUM_DAMAGE_THRESHOLD
+				removed.gases[/datum/gas/healium][MOLES] -= HEALIUM_DAMAGE_THRESHOLD * 0.01
+
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 

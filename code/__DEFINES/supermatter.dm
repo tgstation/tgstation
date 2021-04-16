@@ -100,3 +100,5 @@
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
 
 #define MAX_SPACE_EXPOSURE_DAMAGE 2
+
+#define HEALIUM_DAMAGE_THRESHOLD 100
