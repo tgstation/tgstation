@@ -427,10 +427,19 @@ DEFINE_BITFIELD(smoothing_junction, list(
 /// Internal: Takes icon states as text to replace smoothing corner overlays
 /atom/proc/replace_smooth_overlays(nw, ne, sw, se)
 	clear_smooth_overlays()
-	nw = mutable_appearance(icon, nw).appearance
-	ne = mutable_appearance(icon, ne).appearance
-	sw = mutable_appearance(icon, sw).appearance
-	se = mutable_appearance(icon, se).appearance
+	var/mutable_appearance/temp_ma
+
+	temp_ma = mutable_appearance(icon, nw)
+	nw = temp_ma.appearance
+
+	temp_ma = mutable_appearance(icon, ne)
+	ne = temp_ma.appearance
+
+	temp_ma = mutable_appearance(icon, sw)
+	sw = temp_ma.appearance
+
+	temp_ma = mutable_appearance(icon, se)
+	se = temp_ma.appearance
 
 	var/list/new_overlays = list()
 
