@@ -140,7 +140,7 @@
 	allow_duplicates = FALSE
 	always_place = TRUE
 
-/datum/map_template/ruin/lavaland/godpainting
+/datum/map_template/ruin/lavaland/mindpalace
 	name = "Mind Palace"
 	id = "palace"
 	description = "The entrance to a mind palace, made physical."

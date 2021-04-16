@@ -3,30 +3,33 @@
 "f" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 10},/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
 "h" = (/obj/structure/toilet{desc = "Unsurprisingly, it's broken."; dir = 8},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/powered/mindpalace)
 "i" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors/explored)
-"k" = (/obj/machinery/flasher{pixel_x = -24},/obj/machinery/button/door{id = "palacelk"; name = "Door Lock"; normaldoorcontrol = 1; pixel_y = 24; specialfunctions = 4},/turf/open/floor/plating,/area/ruin/powered/mindpalace)
+"k" = (/obj/machinery/flasher{desc = "A wall-mounted flashbulb device. It's burnt out."; pixel_x = -24},/obj/machinery/button/door{id = "palacelk"; name = "Door Lock"; normaldoorcontrol = 1; pixel_y = 24; specialfunctions = 4},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
 "l" = (/turf/closed/wall/r_wall/rust,/area/ruin/powered/mindpalace)
 "m" = (/obj/effect/turf_decal/stripes/asteroid/line{dir = 6},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/powered/mindpalace)
 "p" = (/obj/structure/bed/maint{desc = "An old grubby mattress. It doesn't look like it was very comfortable."},/turf/open/floor/plating{icon_state = "platingdmg1"},/area/ruin/powered/mindpalace)
 "q" = (/obj/item/chair/stool,/obj/structure/fluff/mannequin{dir = 4},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/powered/mindpalace)
 "s" = (/turf/open/floor/plating,/area/ruin/powered/mindpalace)
+"u" = (/obj/effect/decal/cleanable/greenglow,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
 "v" = (/obj/structure/table,/obj/item/toy/cards/deck,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
 "w" = (/obj/structure/lattice,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/mindpalace)
-"x" = (/obj/machinery/door/airlock/security/glass{name = "High-Risk Cell"},/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
+"x" = (/obj/machinery/door/airlock/security/glass{desc = "It's caked in dust and ash."; name = "High-Priority, Low Risk Cell"},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/powered/mindpalace)
 "z" = (/obj/structure/fluff/lightbulb,/obj/structure/fluff/lightbulb_light,/obj/item/britevidence/ribbon,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
 "A" = (/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
 "B" = (/obj/machinery/door/airlock/grunge{id_tag = "palacelk"; name = "Commons Area"},/obj/effect/mapping_helpers/airlock/locked,/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
 "C" = (/obj/item/chair/stool,/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
 "E" = (/turf/closed/wall/r_wall,/area/ruin/powered/mindpalace)
 "G" = (/obj/effect/spawner/lootdrop/prison_contraband,/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
-"I" = (/obj/structure/mirror{desc = "It's broken."; icon_state = "mirror_broke"; pixel_y = 40},/obj/structure/sink{desc = "It's broken, though there's still some dormant water in the bowl."; pixel_y = 22},/obj/structure/fluff/mannequin{dir = 1},/turf/open/floor/plating{icon_state = "platingdmg1"},/area/ruin/powered/mindpalace)
+"I" = (/obj/structure/mirror{desc = "It's made of a non-reflective material."; icon_state = "mirror_broke"; pixel_y = 40},/obj/structure/sink{desc = "A green film coats the now dormant water of the broken sink."; pixel_y = 22},/obj/structure/fluff/mannequin{dir = 1},/obj/effect/decal/cleanable/glass,/turf/open/floor/plating{icon_state = "platingdmg1"},/area/ruin/powered/mindpalace)
 "J" = (/obj/effect/spawner/lootdrop/prison_contraband,/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/powered/mindpalace)
 "K" = (/obj/structure/chair/stool,/obj/structure/fluff/mannequin{dir = 8},/turf/open/floor/plating{icon_state = "platingdmg1"},/area/ruin/powered/mindpalace)
-"Q" = (/obj/machinery/light/small/broken,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
+"N" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
+"P" = (/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
+"Q" = (/obj/machinery/light/small/broken,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
 "R" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors/explored)
 "T" = (/turf/open/floor/plating{icon_state = "platingdmg1"},/area/ruin/powered/mindpalace)
 "U" = (/obj/structure/fluff/vent/north/palace,/turf/open/floor/plating/rust,/area/ruin/powered/mindpalace)
 "V" = (/obj/machinery/light/small/broken{dir = 1},/obj/structure/chair/stool,/obj/structure/fluff/mannequin,/turf/open/floor/plating{icon_state = "platingdmg3"},/area/ruin/powered/mindpalace)
-"W" = (/obj/item/wallframe/intercom{pixel_y = 26},/turf/open/floor/plating,/area/ruin/powered/mindpalace)
+"W" = (/obj/item/wallframe/intercom{desc = "Someone's yanked all of the electronics out."; pixel_y = 26},/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
 "X" = (/obj/machinery/light/small/built,/turf/open/floor/plating,/area/ruin/powered/mindpalace)
 "Y" = (/obj/item/gps{alpha = 1; gpstag = "Calming Signal"},/turf/closed/wall/r_wall,/area/ruin/powered/mindpalace)
 "Z" = (/obj/effect/turf_decal/stripes/asteroid/line,/turf/open/floor/plating{icon_state = "platingdmg1"},/area/ruin/powered/mindpalace)
@@ -36,14 +39,14 @@ aaaaiiiiiaaaaaa
 aaaiiiiiiiiaiaa
 aaiiiiiiiiiiiaa
 aiilEEEEEEEliia
-aiiEJIUVWswEiia
-aiiEsAqvKGTEiia
-aiiEAQbCwXsliia
+aiiEJIUVWuwEiia
+aiiEPNqvKGTEiia
+aiiEAQbCwXPliia
 aiiElEfZmlEEiaa
 aaiiilEBlliiiaa
 aaaiiEkAhEiiaaa
 aaaiiEAzpliiaaa
-aaaiilTsAliiaaa
+aaaiilTsNliiaaa
 aaaaiEYxlEiiaaa
 aaaaiiRRRiiaaaa
 aaaaaiaRaaaaaaa

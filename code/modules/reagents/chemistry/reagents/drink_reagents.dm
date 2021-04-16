@@ -1170,3 +1170,31 @@
 		M.drowsyness++
 	return ..()
 
+/////////////////////////////
+//	  HEAVEN ADDITIONS     //
+/////////////////////////////
+
+
+/datum/reagent/consumable/schrodinger
+	name = "Schrodinger's Love"
+	description = "A sweet purple tea in a state of toxical flux."
+	color = "#AE59B9" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	taste_description = "a tea of fluxuating taste"
+	glass_icon_state = "schrodinger"
+	glass_name = "Schrodinger's Love"
+	glass_desc = "A glass of tea in a state of toxical flux."
+
+/datum/reagent/consumable/schrodinger/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-2)
+	M.drowsyness = max(0,M.drowsyness-1)
+	M.jitteriness = max(0,M.jitteriness-3)
+	M.AdjustSleeping(-20, FALSE)
+	if(prob(30))
+		if(M.getToxLoss() && prob(50))
+			M.adjustToxLoss(-5, 0)
+		else
+			M.adjustToxLoss(5, 0)
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
+	..()
+	. = 1

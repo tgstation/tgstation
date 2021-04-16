@@ -67,12 +67,15 @@
 
 	/// Wire assignment for airlocks in this area
 	var/airlock_wires = /datum/wires/airlock
-    
+
 	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
 	var/datum/map_generator/map_generator
 
 	///Used to decide what kind of reverb the area makes sound have
 	var/sound_environment = SOUND_ENVIRONMENT_NONE
+
+	///Used to force ambient sounds
+	var/always_ambient = FALSE
 
 
 /**
@@ -546,7 +549,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
 		return //General ambience check is below the ship ambience so one can play without the other
 
-	if(prob(35))
+	if(always_ambient)
+		var/sound = pick(ambientsounds)
+
+		if(!L.client.played)
+			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
+			L.client.played = TRUE
+			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+	else if(prob(35))
 		var/sound = pick(ambientsounds)
 
 		if(!L.client.played)

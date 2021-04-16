@@ -4,15 +4,21 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/ratvarmonument
+	name = "Ratvar Monument"
 	icon_state = "dk_yellow"
 	ambientsounds = SPOOKY
 
 /area/ruin/powered/godpainting
+	name = "God Painting"
 	icon_state = "dk_yellow"
 	ambientsounds = list('sound/ambience/it was for the better.ogg')
+	always_ambient = TRUE
 
 /area/ruin/powered/mindpalace
-	icon_state = "dk_yellow"
+	name = "Palace Grounds"
+	icon_state = "green"
+	ambientsounds = list('sound/ambience/life_after_yours.ogg')
+	always_ambient = TRUE
 
 /area/ruin/powered/clownplanet
 	name = "Clown Planet"

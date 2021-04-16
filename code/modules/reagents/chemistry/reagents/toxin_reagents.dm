@@ -420,6 +420,14 @@
 	toxpwr = 0.1
 	taste_description = "green tea"
 
+/datum/reagent/toxin/glovepowder
+	name = "Ground Foxglove Petals"
+	description = "Finely shredded foxglove petals, used for making an herbal drink."
+	reagent_state = SOLID
+	color = "#D187BE" // rgb: 209, 135, 190
+	toxpwr = 0.1
+	taste_description = "burnt tires"
+
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
 	description = "A nonlethal poison that inhibits speech in its victim."
