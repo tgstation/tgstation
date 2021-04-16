@@ -113,13 +113,7 @@
 		return
 	var/gas_path = gas_id2path(selected_gas)
 
-	var/list/gases = connected_machine.bluespace_network.gases
-	var/gas_found = FALSE
-	for(var/gas_id in gases)
-		if(gases[gas_path])
-			gas_found = TRUE
-			break
-	if(!gas_found)
+	if(!connected_machine.bluespace_network.gases[gas_path])
 		pumping = FALSE
 		selected_gas = null
 		mode = BS_MODE_IDLE
