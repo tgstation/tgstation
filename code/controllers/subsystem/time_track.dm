@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(time_track)
 	name = "Time Tracking"
-	wait = 10
+	wait = 50
 	init_order = INIT_ORDER_TIMETRACK
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
@@ -17,6 +17,8 @@ SUBSYSTEM_DEF(time_track)
 	var/last_tick_tickcount = 0
 
 	var/maptick_per_player = 0
+	var/list/maptick_per_player_values = list()
+	var/average_maptick_per_player = 0
 
 /datum/controller/subsystem/time_track/Initialize(start_timeofday)
 	. = ..()
@@ -31,6 +33,7 @@ SUBSYSTEM_DEF(time_track)
 			"tidi_slowavg",
 			"maptick",
 			"maptick per player",
+			"average maptick per player",
 			"num_timers",
 			"air_turf_cost",
 			"air_eg_cost",
@@ -70,7 +73,16 @@ SUBSYSTEM_DEF(time_track)
 	last_tick_realtime = current_realtime
 	last_tick_byond_time = current_byondtime
 	last_tick_tickcount = current_tickcount
+
 	maptick_per_player = (player_amount > 0) ? MAPTICK_LAST_INTERNAL_TICK_USAGE / player_amount : ""
+	if(player_amount > 0)
+		maptick_per_player_values += maptick_per_player
+		var/maptick_per_player_sum = 0
+		for(var/value in maptick_per_player_values)
+			maptick_per_player_sum += value
+
+		average_maptick_per_player = maptick_per_player_sum / length(maptick_per_player_values)
+
 	SSblackbox.record_feedback("associative", "time_dilation_current", 1, list("[SQLtime()]" = list("current" = "[time_dilation_current]", "avg_fast" = "[time_dilation_avg_fast]", "avg" = "[time_dilation_avg]", "avg_slow" = "[time_dilation_avg_slow]")))
 	log_perf(
 		list(
@@ -82,6 +94,7 @@ SUBSYSTEM_DEF(time_track)
 			time_dilation_avg_slow,
 			MAPTICK_LAST_INTERNAL_TICK_USAGE,
 			maptick_per_player,
+			average_maptick_per_player,
 			length(SStimer.timer_id_dict),
 			SSair.cost_turfs,
 			SSair.cost_groups,
