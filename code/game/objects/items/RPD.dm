@@ -544,6 +544,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	SStgui.update_uis(src)
 	to_chat(source, "<span class='notice'>You set the layer to [piping_layer].</span>")
 
+#undef ATMOS_CATEGORY
+#undef DISPOSALS_CATEGORY
+#undef TRANSIT_CATEGORY
+
+#undef BUILD_MODE
+#undef DESTROY_MODE
+#undef WRENCH_MODE
+
 /obj/item/rpd_upgrade
 	name = "RPD advanced design disk"
 	desc = "It seems to be empty."
@@ -555,11 +563,3 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/rpd_upgrade/unwrench
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
 	upgrade_flags = RPD_UPGRADE_UNWRENCH
-
-#undef ATMOS_CATEGORY
-#undef DISPOSALS_CATEGORY
-#undef TRANSIT_CATEGORY
-
-#undef BUILD_MODE
-#undef DESTROY_MODE
-#undef WRENCH_MODE
