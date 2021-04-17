@@ -12,32 +12,34 @@
 	outfit = /datum/outfit/job/virologist
 	plasmaman_outfit = /datum/outfit/plasmaman/viro
 
+	bounty_types = CIV_JOB_VIRO
+	departments = DEPARTMENT_MEDICAL
+	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
 
-	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
-
-	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
-	bounty_types = CIV_JOB_VIRO
-	departments = DEPARTMENT_MEDICAL
-
-	family_heirlooms = list(/obj/item/reagent_containers/syringe)
+	family_heirlooms = list(
+		/obj/item/reagent_containers/syringe,
+		)
+	liver_traits = list(
+		TRAIT_MEDICAL_METABOLISM,
+		)
 
 /datum/outfit/job/virologist
 	name = "Virologist"
 	jobtype = /datum/job/virologist
 
-	belt = /obj/item/pda/viro
-	ears = /obj/item/radio/headset/headset_med
+	id_trim = /datum/id_trim/job/virologist
 	uniform = /obj/item/clothing/under/rank/medical/virologist
-	mask = /obj/item/clothing/mask/surgical
-	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store =  /obj/item/flashlight/pen
+	belt = /obj/item/pda/viro
+	ears = /obj/item/radio/headset/headset_med
+	mask = /obj/item/clothing/mask/surgical
+	shoes = /obj/item/clothing/shoes/sneakers/white
 
 	backpack = /obj/item/storage/backpack/virology
 	satchel = /obj/item/storage/backpack/satchel/vir
 	duffelbag = /obj/item/storage/backpack/duffelbag/virology
-	box = /obj/item/storage/box/survival/medical
 
-	id_trim = /datum/id_trim/job/virologist
+	box = /obj/item/storage/box/survival/medical

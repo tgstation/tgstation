@@ -16,17 +16,19 @@
 
 	outfit = /datum/outfit/job/hop
 	plasmaman_outfit = /datum/outfit/plasmaman/head_of_personnel
-	departments = DEPARTMENT_COMMAND | DEPARTMENT_SERVICE
 
+	bounty_types = CIV_JOB_RANDOM
+	departments = DEPARTMENT_COMMAND | DEPARTMENT_SERVICE
+	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SRV
-	bounty_types = CIV_JOB_RANDOM
 
-	liver_traits = list(TRAIT_ROYAL_METABOLISM)
-
-	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
-
-	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
+	family_heirlooms = list(
+		/obj/item/reagent_containers/food/drinks/trophy/silver_cup,
+		)
+	liver_traits = list(
+		TRAIT_ROYAL_METABOLISM,
+		)
 
 /datum/job/head_of_personnel/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
@@ -38,17 +40,22 @@
 	jobtype = /datum/job/head_of_personnel
 
 	id = /obj/item/card/id/advanced/silver
+	id_trim = /datum/id_trim/job/head_of_personnel
+	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
+	backpack_contents = list(
+		/obj/item/storage/box/ids = 1,
+		/obj/item/melee/classic_baton/telescopic = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
+		)
 	belt = /obj/item/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
-	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
-	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hopcap
-	backpack_contents = list(/obj/item/storage/box/ids=1,\
-		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command = 1)
+	shoes = /obj/item/clothing/shoes/sneakers/brown
 
-	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)
-
-	id_trim = /datum/id_trim/job/head_of_personnel
+	chameleon_extras = list(
+		/obj/item/gun/energy/e_gun,
+		/obj/item/stamp/hop,
+		)
 
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
 	..()

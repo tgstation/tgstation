@@ -1,6 +1,3 @@
-/*
-Assistant
-*/
 /datum/job/assistant
 	title = "Assistant"
 	faction = "Station"
@@ -8,22 +5,28 @@ Assistant
 	spawn_positions = 5
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
+	antag_rep = 7
+
 	outfit = /datum/outfit/job/assistant
 	plasmaman_outfit = /datum/outfit/plasmaman
-	antag_rep = 7
-	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
+
 	departments = DEPARTMENT_SERVICE
-
-	liver_traits = list(TRAIT_GREYTIDE_METABOLISM)
-
-	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
+	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
+	paycheck_department = ACCOUNT_CIV
 
-	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
+	family_heirlooms = list(
+		/obj/item/clothing/gloves/cut/heirloom,
+		/obj/item/storage/toolbox/mechanical/old/heirloom,
+		)
+	liver_traits = list(
+		TRAIT_GREYTIDE_METABOLISM,
+		)
 
 /datum/outfit/job/assistant
 	name = "Assistant"
 	jobtype = /datum/job/assistant
+
 	id_trim = /datum/id_trim/job/assistant
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)

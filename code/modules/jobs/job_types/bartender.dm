@@ -10,26 +10,32 @@
 	outfit = /datum/outfit/job/bartender
 	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
-	paycheck = PAYCHECK_EASY
-	paycheck_department = ACCOUNT_SRV
-	display_order = JOB_DISPLAY_ORDER_BARTENDER
 	bounty_types = CIV_JOB_DRINK
 	departments = DEPARTMENT_SERVICE
+	display_order = JOB_DISPLAY_ORDER_BARTENDER
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_SRV
 
-	family_heirlooms = list(/obj/item/reagent_containers/glass/rag, /obj/item/clothing/head/that, /obj/item/reagent_containers/food/drinks/shaker)
+	family_heirlooms = list(
+		/obj/item/clothing/head/that,
+		/obj/item/reagent_containers/food/drinks/shaker,
+		/obj/item/reagent_containers/glass/rag,
+		)
 
 /datum/outfit/job/bartender
 	name = "Bartender"
 	jobtype = /datum/job/bartender
 
-	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	belt = /obj/item/pda/bar
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/bartender
 	uniform = /obj/item/clothing/under/rank/civilian/bartender
 	suit = /obj/item/clothing/suit/armor/vest
-	backpack_contents = list(/obj/item/storage/box/beanbag=1)
+	backpack_contents = list(
+		/obj/item/storage/box/beanbag = 1,
+		)
+	belt = /obj/item/pda/bar
+	ears = /obj/item/radio/headset/headset_srv
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	shoes = /obj/item/clothing/shoes/laceup
-	id_trim = /datum/id_trim/job/bartender
 
 /datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

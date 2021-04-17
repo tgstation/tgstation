@@ -13,16 +13,17 @@
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
 
-	family_heirlooms = list(/obj/item/pen/blue)
+	family_heirlooms = list(
+		/obj/item/pen/blue,
+		)
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"
 	jobtype = /datum/job/prisoner
 
-	uniform = /obj/item/clothing/under/rank/prisoner
-	shoes = /obj/item/clothing/shoes/sneakers/orange
 	id = /obj/item/card/id/advanced/prisoner
-	ears = null
-	belt = null
-
 	id_trim = /datum/id_trim/job/prisoner
+	uniform = /obj/item/clothing/under/rank/prisoner
+	belt = null
+	ears = null
+	shoes = /obj/item/clothing/shoes/sneakers/orange

@@ -10,14 +10,15 @@
 	outfit = /datum/outfit/job/chaplain
 	plasmaman_outfit = /datum/outfit/plasmaman/chaplain
 
+	departments = DEPARTMENT_SERVICE
+	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
-	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
-	departments = DEPARTMENT_SERVICE
-
-	family_heirlooms = list(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
-
+	family_heirlooms = list(
+		/obj/item/reagent_containers/food/drinks/bottle/holywater,
+		/obj/item/toy/windup_toolbox,
+		)
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
 	. = ..()
@@ -123,19 +124,19 @@
 	name = "Chaplain"
 	jobtype = /datum/job/chaplain
 
-	belt = /obj/item/pda/chaplain
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/chaplain
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	backpack_contents = list(
+		/obj/item/camera/spooky = 1,
 		/obj/item/stamp/chap = 1,
-		/obj/item/camera/spooky = 1
 		)
-
-	skillchips = list(/obj/item/skillchip/entrails_reader)
+	belt = /obj/item/pda/chaplain
+	ears = /obj/item/radio/headset/headset_srv
 
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack
 
 	chameleon_extras = /obj/item/stamp/chap
-
-	id_trim = /datum/id_trim/job/chaplain
+	skillchips = list(
+		/obj/item/skillchip/entrails_reader,
+		)

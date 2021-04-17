@@ -11,33 +11,37 @@
 	outfit = /datum/outfit/job/lawyer
 	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
+	departments = DEPARTMENT_SERVICE
+	display_order = JOB_DISPLAY_ORDER_LAWYER
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
-	mind_traits = list(TRAIT_DONUT_LOVER)
-	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
-
-	display_order = JOB_DISPLAY_ORDER_LAWYER
-	departments = DEPARTMENT_SERVICE
-
-	family_heirlooms = list(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
+	family_heirlooms = list(
+		/obj/item/book/manual/wiki/security_space_law,
+		/obj/item/gavelhammer,
+		)
+	liver_traits = list(
+		TRAIT_LAW_ENFORCEMENT_METABOLISM,
+		)
+	mind_traits = list(
+		TRAIT_DONUT_LOVER,
+		)
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
 	jobtype = /datum/job/lawyer
 
-	belt = /obj/item/pda/lawyer
-	ears = /obj/item/radio/headset/headset_srvsec
+	id_trim = /datum/id_trim/job/lawyer
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
+	belt = /obj/item/pda/lawyer
+	ears = /obj/item/radio/headset/headset_srvsec
 	shoes = /obj/item/clothing/shoes/laceup
-	l_hand = /obj/item/storage/briefcase/lawyer
 	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
+	l_hand = /obj/item/storage/briefcase/lawyer
 
 	chameleon_extras = /obj/item/stamp/law
-
-	id_trim = /datum/id_trim/job/lawyer
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

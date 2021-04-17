@@ -13,16 +13,20 @@
 	outfit = /datum/outfit/job/cook
 	plasmaman_outfit = /datum/outfit/plasmaman/chef
 
+	bounty_types = CIV_JOB_CHEF
+	departments = DEPARTMENT_SERVICE
+	display_order = JOB_DISPLAY_ORDER_COOK
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
-	liver_traits = list(TRAIT_CULINARY_METABOLISM)
-
-	display_order = JOB_DISPLAY_ORDER_COOK
-	bounty_types = CIV_JOB_CHEF
-	departments = DEPARTMENT_SERVICE
-
-	family_heirlooms = list(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
+	family_heirlooms = list(
+		/obj/item/clothing/head/chefhat,
+		/obj/item/kitchen/rollingpin,
+		/obj/item/reagent_containers/food/condiment/saltshaker,
+		)
+	liver_traits = list(
+		TRAIT_CULINARY_METABOLISM,
+		)
 
 /datum/job/cook/New()
 	. = ..()
@@ -58,19 +62,22 @@
 	name = "Cook"
 	jobtype = /datum/job/cook
 
-	belt = /obj/item/pda/cook
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/cook
 	uniform = /obj/item/clothing/under/rank/civilian/chef
 	suit = /obj/item/clothing/suit/toggle/chef
-	head = /obj/item/clothing/head/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 	backpack_contents = list(
+		/obj/item/choice_beacon/ingredient = 1,
 		/obj/item/sharpener = 1,
-		/obj/item/choice_beacon/ingredient = 1
 	)
-	skillchips = list(/obj/item/skillchip/job/chef)
+	belt = /obj/item/pda/cook
+	ears = /obj/item/radio/headset/headset_srv
+	head = /obj/item/clothing/head/chefhat
 
-	id_trim = /datum/id_trim/job/cook
+	skillchips = list(
+		/obj/item/skillchip/job/chef,
+		)
+
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

@@ -12,13 +12,15 @@
 
 	paycheck = PAYCHECK_MINIMAL
 	paycheck_department = ACCOUNT_SRV
-
-	liver_traits = list(TRAIT_COMEDY_METABOLISM)
-
 	display_order = JOB_DISPLAY_ORDER_CLOWN
 	departments = DEPARTMENT_SERVICE
 
-	family_heirlooms = list(/obj/item/bikehorn/golden)
+	family_heirlooms = list(
+		/obj/item/bikehorn/golden,
+		)
+	liver_traits = list(
+		TRAIT_COMEDY_METABOLISM,
+		)
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
 	. = ..()
@@ -28,30 +30,29 @@
 	name = "Clown"
 	jobtype = /datum/job/clown
 
-	belt = /obj/item/pda/clown
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/clown
 	uniform = /obj/item/clothing/under/rank/civilian/clown
-	shoes = /obj/item/clothing/shoes/clown_shoes
-	mask = /obj/item/clothing/mask/gas/clown_hat
-	l_pocket = /obj/item/bikehorn
 	backpack_contents = list(
-		/obj/item/stamp/clown = 1,
-		/obj/item/reagent_containers/spray/waterflower = 1,
 		/obj/item/food/grown/banana = 1,
 		/obj/item/instrument/bikehorn = 1,
+		/obj/item/reagent_containers/spray/waterflower = 1,
+		/obj/item/stamp/clown = 1,
 		)
-
-	implants = list(/obj/item/implant/sad_trombone)
+	belt = /obj/item/pda/clown
+	ears = /obj/item/radio/headset/headset_srv
+	mask = /obj/item/clothing/mask/gas/clown_hat
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	l_pocket = /obj/item/bikehorn
 
 	backpack = /obj/item/storage/backpack/clown
 	satchel = /obj/item/storage/backpack/clown
 	duffelbag = /obj/item/storage/backpack/duffelbag/clown //strangely has a duffel
 
 	box = /obj/item/storage/box/hug/survival
-
 	chameleon_extras = /obj/item/stamp/clown
-
-	id_trim = /datum/id_trim/job/clown
+	implants = list(
+		/obj/item/implant/sad_trombone,
+		)
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

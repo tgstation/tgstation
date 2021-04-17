@@ -10,21 +10,25 @@
 	outfit = /datum/outfit/job/cargo_tech
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
-	paycheck = PAYCHECK_EASY
-	paycheck_department = ACCOUNT_CAR
-	display_order = JOB_DISPLAY_ORDER_CARGO_TECHNICIAN
 	bounty_types = CIV_JOB_RANDOM
 	departments = DEPARTMENT_CARGO
+	display_order = JOB_DISPLAY_ORDER_CARGO_TECHNICIAN
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_CAR
 
-	family_heirlooms = list(/obj/item/clipboard)
+	family_heirlooms = list(
+		/obj/item/clipboard,
+		)
 
 /datum/outfit/job/cargo_tech
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_technician
 
+	id_trim = /datum/id_trim/job/cargo_technician
+	uniform = /obj/item/clothing/under/rank/cargo/tech
+	backpack_contents = list(
+		/obj/item/modular_computer/tablet/preset/cargo = 1,
+		)
 	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/cargo/tech
 	l_hand = /obj/item/export_scanner
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
-	id_trim = /datum/id_trim/job/cargo_technician

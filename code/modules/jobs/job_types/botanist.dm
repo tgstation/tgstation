@@ -10,27 +10,30 @@
 	outfit = /datum/outfit/job/botanist
 	plasmaman_outfit = /datum/outfit/plasmaman/botany
 
-	paycheck = PAYCHECK_EASY
-	paycheck_department = ACCOUNT_SRV
-	display_order = JOB_DISPLAY_ORDER_BOTANIST
 	bounty_types = CIV_JOB_GROW
 	departments = DEPARTMENT_SERVICE
+	display_order = JOB_DISPLAY_ORDER_BOTANIST
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_SRV
 
-	family_heirlooms = list(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/toy/plush/beeplushie)
+	family_heirlooms = list(
+		/obj/item/cultivator,
+		/obj/item/reagent_containers/glass/bucket,
+		/obj/item/toy/plush/beeplushie,
+		)
 
 /datum/outfit/job/botanist
 	name = "Botanist"
 	jobtype = /datum/job/botanist
 
-	belt = /obj/item/pda/botanist
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/botanist
 	uniform = /obj/item/clothing/under/rank/civilian/hydroponics
 	suit = /obj/item/clothing/suit/apron
-	gloves  =/obj/item/clothing/gloves/botanic_leather
 	suit_store = /obj/item/plant_analyzer
+	belt = /obj/item/pda/botanist
+	ears = /obj/item/radio/headset/headset_srv
+	gloves  =/obj/item/clothing/gloves/botanic_leather
 
 	backpack = /obj/item/storage/backpack/botany
 	satchel = /obj/item/storage/backpack/satchel/hyd
 	duffelbag = /obj/item/storage/backpack/duffelbag/hydroponics
-
-	id_trim = /datum/id_trim/job/botanist

@@ -12,30 +12,30 @@
 	outfit = /datum/outfit/job/scientist
 	plasmaman_outfit = /datum/outfit/plasmaman/science
 
+	bounty_types = CIV_JOB_SCI
+	departments = DEPARTMENT_SCIENCE
+	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SCI
 
-	display_order = JOB_DISPLAY_ORDER_SCIENTIST
-	bounty_types = CIV_JOB_SCI
-	departments = DEPARTMENT_SCIENCE
-
-	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
+	family_heirlooms = list(
+		/obj/item/toy/plush/slimeplushie,
+		)
 
 /datum/outfit/job/scientist
 	name = "Scientist"
 	jobtype = /datum/job/scientist
 
+	id_trim = /datum/id_trim/job/scientist
+	uniform = /obj/item/clothing/under/rank/rnd/scientist
+	suit = /obj/item/clothing/suit/toggle/labcoat/science
 	belt = /obj/item/pda/toxins
 	ears = /obj/item/radio/headset/headset_sci
-	uniform = /obj/item/clothing/under/rank/rnd/scientist
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit = /obj/item/clothing/suit/toggle/labcoat/science
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
 	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
-
-	id_trim = /datum/id_trim/job/scientist
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()

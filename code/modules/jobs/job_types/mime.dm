@@ -10,13 +10,14 @@
 	outfit = /datum/outfit/job/mime
 	plasmaman_outfit = /datum/outfit/plasmaman/mime
 
+	departments = DEPARTMENT_SERVICE
+	display_order = JOB_DISPLAY_ORDER_MIME
 	paycheck = PAYCHECK_MINIMAL
 	paycheck_department = ACCOUNT_SRV
 
-	display_order = JOB_DISPLAY_ORDER_MIME
-	departments = DEPARTMENT_SERVICE
-
-	family_heirlooms = list(/obj/item/food/baguette)
+	family_heirlooms = list(
+		/obj/item/food/baguette,
+		)
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.apply_pref_name("mime", M.client)
@@ -25,25 +26,25 @@
 	name = "Mime"
 	jobtype = /datum/job/mime
 
-	belt = /obj/item/pda/mime
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/mime
 	uniform = /obj/item/clothing/under/rank/civilian/mime
-	mask = /obj/item/clothing/mask/gas/mime
-	gloves = /obj/item/clothing/gloves/color/white
-	head = /obj/item/clothing/head/frenchberet
 	suit = /obj/item/clothing/suit/toggle/suspenders
 	backpack_contents = list(
-		/obj/item/stamp/mime = 1,
 		/obj/item/book/mimery = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 1
+		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 1,
+		/obj/item/stamp/mime = 1,
 		)
+	belt = /obj/item/pda/mime
+	ears = /obj/item/radio/headset/headset_srv
+	gloves = /obj/item/clothing/gloves/color/white
+	head = /obj/item/clothing/head/frenchberet
+	mask = /obj/item/clothing/mask/gas/mime
 
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/mime
 
 	chameleon_extras = /obj/item/stamp/mime
 
-	id_trim = /datum/id_trim/job/mime
 
 /datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -67,7 +68,7 @@
 	var/list/spell_icons = list(
 		"Invisible Wall" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_wall"),
 		"Invisible Chair" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_chair"),
-		"Invisible Box" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_box")
+		"Invisible Box" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_box"),
 		)
 	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
 	switch(picked_spell)
