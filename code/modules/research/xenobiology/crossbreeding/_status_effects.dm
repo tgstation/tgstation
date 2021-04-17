@@ -1,5 +1,3 @@
-
-
 /atom/movable/screen/alert/status_effect/rainbow_protection
 	name = "Rainbow Protection"
 	desc = "You are defended from harm, but so are those you might seek to injure!"
