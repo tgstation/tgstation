@@ -29,7 +29,7 @@
 		processed_colors += colors[i]
 	return InternalGenerate(processed_colors, render_steps)
 
-/datum/greyscale_layer/proc/InternalGenerate(list/colors)
+/datum/greyscale_layer/proc/InternalGenerate(list/colors, list/render_steps)
 
 ////////////////////////////////////////////////////////
 // Subtypes
@@ -69,9 +69,4 @@
 		CRASH("An unknown greyscale configuration was given to a reference layer: [json_data["reference_type"]]")
 
 /datum/greyscale_layer/reference/InternalGenerate(list/colors, list/render_steps)
-	if(render_steps)
-		// We're debugging
-		var/list/debug_data = reference_config.GenerateDebug(colors)
-		render_steps += debug_data["steps"]
-		return debug_data["icon"]
-	return reference_config.Generate(colors.Join())
+	return reference_config.Generate(colors.Join(), render_steps)

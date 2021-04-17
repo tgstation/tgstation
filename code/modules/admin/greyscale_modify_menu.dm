@@ -83,7 +83,7 @@
 		split_colors += "#[raw_colors[i]]"
 
 /datum/greyscale_modify_menu/proc/refresh_preview()
-	var/list/data = SSgreyscale.configurations["[target.greyscale_config]"].GenerateDebug(split_colors)
+	var/list/data = SSgreyscale.configurations["[target.greyscale_config]"].GenerateDebug(split_colors.Join())
 
 	sprite_data = list()
 	var/list/steps = list()

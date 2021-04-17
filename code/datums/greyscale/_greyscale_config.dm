@@ -110,7 +110,7 @@
 /datum/greyscale_config/proc/Generate(color_string, list/render_steps)
 	var/key = color_string
 	var/icon/new_icon = icon_cache[key]
-	if(new_icon)
+	if(new_icon && !render_steps)
 		return icon(new_icon)
 	var/list/colors = ParseColorString(color_string)
 	if(length(colors) != expected_colors)
@@ -144,15 +144,10 @@
 
 		// These are so we can see the result of every step of the process in the preview ui
 		if(render_steps)
-			var/icon/new_icon_copy = new(new_icon)
-			var/icon/layer_icon_copy = new(layer_icon)
-			render_steps[layer_icon_copy] = icon(new_icon_copy)
+			render_steps[image(new_icon)] = image(layer_icon)
 	return new_icon
 
-/datum/greyscale_config/proc/GenerateDebug(list/colors)
-	if(istype(colors))
-		colors = colors.Join()
-
+/datum/greyscale_config/proc/GenerateDebug(colors)
 	var/list/output = list()
 	var/list/debug_steps = list()
 	output["steps"] = debug_steps
