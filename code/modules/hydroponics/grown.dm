@@ -3,6 +3,11 @@
 // Data from the seeds carry over to these grown foods
 // ***********************************************************
 
+/// When calculating bite size, potency is multiplied by this number.
+#define BITE_SIZE_POTENCY_MULTIPLIER 0.05
+/// When calculating bite size, max_volume is multiplied by this number.
+#define BITE_SIZE_VOLUME_MULTIPLIER 0.01
+
 // Base type. Subtypes are found in /grown dir. Lavaland-based subtypes can be found in mining/ash_flora.dm
 /obj/item/food/grown
 	icon = 'icons/obj/hydroponics/harvest.dmi'
@@ -13,8 +18,8 @@
 	var/obj/item/seeds/seed = null
 	///Name of the plant
 	var/plantname = ""
-	/// If set, bitesize = 1 + round(reagents.total_volume / bite_consumption_mod)
-	var/bite_consumption_mod = 0
+	/// The base bite-size for plants is [max_volume / 20], multiplied by this if set
+	var/bite_consumption_mod = 1
 	///the splat it makes when it splats lol
 	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge
 
@@ -49,6 +54,12 @@
 	for(var/datum/plant_gene/trait/trait in seed.genes)
 		trait.on_new_plant(src, loc)
 
+	// Set our default bite size
+	// Bite size = 1 + (potency / 20) * (volume / 100) * modifier
+	// A 100 potency, non-densified plant = 1 + (5 * 1 * modifier) = 6u bite size
+	// For reference, your average tomato has 14u of reagents
+	bite_consumption = 1 + round(max((seed.potency * BITE_SIZE_POTENCY_MULTIPLIER), 1) * (max_volume * BITE_SIZE_VOLUME_MULTIPLIER) * bite_consumption_mod)
+
 	. = ..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.
 
 	seed.prepare_result(src)
@@ -63,7 +74,7 @@
 				eat_time = eat_time,\
 				tastes = tastes,\
 				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption_mod ? 1 + round(max_volume / bite_consumption_mod) : bite_consumption,\
+				bite_consumption = bite_consumption,\
 				microwaved_type = microwaved_type,\
 				junkiness = junkiness)
 
@@ -105,3 +116,6 @@
 			juice_results[juice_results[i]] = nutriment
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
+
+#undef BITE_SIZE_POTENCY_MULTIPLIER
+#undef BITE_SIZE_VOLUME_MULTIPLIER
