@@ -88,6 +88,12 @@
 	post_change_callbacks += changeturf_callback
 
 /datum/element/connect_loc/proc/post_turf_change(turf/new_turf)
-	for (var/atom/movable/tracked as anything in targets[new_turf])
-		var/datum/listener = targets[new_turf][tracked]
+	// If we don't cut the targets list before iterating,
+	// then we won't re-register the change turf signal.
+	var/list/turf_targets = targets[new_turf]
+	var/list/targets_copy = turf_targets.Copy()
+	turf_targets.Cut()
+
+	for (var/atom/movable/tracked as anything in targets_copy)
+		var/datum/listener = targets_copy[tracked]
 		update_signals(listener, tracked)
