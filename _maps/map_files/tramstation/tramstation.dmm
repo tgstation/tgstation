@@ -31201,6 +31201,8 @@
 /obj/item/raw_anomaly_core/random{
 	pixel_y = -2
 	},
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/gloves/color/black,
 /turf/open/floor/iron,
 /area/science/mixing)
 "hQH" = (

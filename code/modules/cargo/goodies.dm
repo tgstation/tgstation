@@ -79,6 +79,12 @@
 	cost = PAYCHECK_MEDIUM * 8
 	contains = list(/obj/item/clothing/gloves/color/yellow)
 
+/datum/supply_pack/goody/heat_resistant_gloves
+	name = "Heat resistant gloves Single-Pack"
+	desc = "A spare pair of heat resistant gloves, useful for handling hot stuff (clown doesn't count)."
+	cost = PAYCHECK_MEDIUM * 5
+	contains = list(/obj/item/clothing/gloves/color/black)
+
 /datum/supply_pack/goody/gripper_single
 	name = "Gripper Gloves Single-Pack"
 	desc = "A spare pair of gripper gloves. Perfect for when the security vendor is empty (or when you're not actually a security officer)."

@@ -23885,6 +23885,8 @@
 	pixel_x = 11;
 	pixel_y = 7
 	},
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/gloves/color/black,
 /turf/open/floor/iron/showroomfloor,
 /area/science/mixing)
 "bed" = (

@@ -732,6 +732,16 @@
 	crate_name = "insulated gloves crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+/datum/supply_pack/engineering/heat_resistant_gloves_pack
+	name = "Heat Resistant Gloves Crate"
+	desc = "Contains three heat resistant gloves."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/clothing/gloves/color/black,
+					/obj/item/clothing/gloves/color/black,
+					/obj/item/clothing/gloves/color/black)
+	crate_name = "heat resistant gloves crate"
+	crate_type = /obj/structure/closet/crate/engineering
+
 /datum/supply_pack/engineering/inducers
 	name = "NT-75 Electromagnetic Power Inducers Crate"
 	desc = "No rechargers? No problem, with the NT-75 EPI, you can recharge any standard cell-based equipment anytime, anywhere. Contains two Inducers."

@@ -32410,6 +32410,8 @@
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/toxins,
 /obj/item/storage/firstaid/toxin,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/gloves/color/black,
 /turf/open/floor/iron,
 /area/science/mixing)
 "gQb" = (
