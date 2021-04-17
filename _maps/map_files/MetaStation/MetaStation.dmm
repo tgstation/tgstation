@@ -11500,12 +11500,6 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bKM" = (
-/obj/machinery/light/small,
-/obj/machinery/camera{
-	c_tag = "Telecomms - Server Room - Aft";
-	dir = 1;
-	network = list("ss13","tcomms")
-	},
 /obj/machinery/ntnet_relay,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
@@ -63375,6 +63369,15 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/warehouse)
+"rQJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/tcommsat/server)
 "rQO" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
@@ -137220,7 +137223,7 @@ bGd
 bGd
 bUL
 bCD
-bCD
+gfU
 gfU
 bly
 cVP
@@ -137477,7 +137480,7 @@ bKO
 hum
 hum
 dII
-hum
+rQJ
 fMJ
 pfb
 eNh
@@ -137734,7 +137737,7 @@ fOJ
 oYU
 cgy
 bCD
-bCD
+gfU
 gfU
 bcQ
 cVP
