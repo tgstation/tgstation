@@ -281,7 +281,7 @@
 
 	to_chat(carbon_user, "<span class='danger'>\The [name] burns your bare hand!</span>")
 	var/obj/item/bodypart/affecting = carbon_user.get_active_hand()
-	if(affecting?.receive_damage(0, 5, wound_bonus = CANT_WOUND)))
+	if(affecting?.receive_damage(0, 5, wound_bonus = CANT_WOUND))
 		carbon_user.update_damage_overlays()
 
 // Rose
