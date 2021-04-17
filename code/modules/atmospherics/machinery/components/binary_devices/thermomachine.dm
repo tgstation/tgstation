@@ -183,7 +183,7 @@
 		skip_tick = FALSE
 	if(use_enviroment_heat && main_port.total_moles() > 0.01)
 		var/enviroment_efficiency = 1
-		if(cooling && enviroment.total_moles() > 0.01)
+		if(cooling && enviroment.total_moles() > 0.01 && (thermal_exchange_port.temperature <= FUSION_MAXIMUM_TEMPERATURE || !safeties))
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
 			if(enviroment.total_moles())
 				enviroment_efficiency = clamp(log(1.55, enviroment.total_moles()) * 0.15, 0.65, 1)
@@ -194,6 +194,18 @@
 			update_appearance()
 			update_parents()
 			return
+		if(enviroment.temperature > FUSION_MAXIMUM_TEMPERATURE && safeties)
+			on = FALSE
+			visible_message("<span class='warning'>The enviroment's temperature has reached critical levels, shutting down...</span>")
+			update_appearance()
+			return
+		else if(enviroment.temperature > FUSION_MAXIMUM_TEMPERATURE && !safeties)
+			if((REALTIMEOFDAY - lastwarning) / 5 >= WARNING_DELAY)
+				lastwarning = REALTIMEOFDAY
+				visible_message("<span class='warning'>The enviroment's temperature has reached critical levels!</span>")
+				if(check_explosion(enviroment.temperature))
+					explode()
+					return PROCESS_KILL //we dying anyway, so let's stop processing
 		temperature_difference = enviroment.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
@@ -343,7 +355,7 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/check_explosion(temperature)
 	if(temperature < FUSION_MAXIMUM_TEMPERATURE + 2000)
 		return FALSE
-	if(prob(log(100000000, temperature) * 10)) //10% at 1e8
+	if(prob(log(15, temperature) * 10)) //68% at 1e8, 100% at 1e12
 		return TRUE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/explode()
