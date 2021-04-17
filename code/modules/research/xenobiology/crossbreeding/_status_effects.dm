@@ -1,4 +1,4 @@
-#define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
+
 
 /atom/movable/screen/alert/status_effect/rainbow_protection
 	name = "Rainbow Protection"
@@ -974,5 +974,3 @@
 				qdel(src)
 				qdel(linked_extract)
 	return ..()
-
-#undef STABILIZED_LIGHT_PINK_TRAIT

@@ -598,6 +598,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_COMPONENT_TRAIT "mood_component"
 #define DRONE_SHY_TRAIT "drone_shy"
+/// Pacifism trait given by stabilized light pink extracts.
+#define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
