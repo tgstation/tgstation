@@ -339,4 +339,41 @@
 	if(gas_change)
 		air_contents.garbage_collect()
 
+/obj/item/tank/attack_hand(mob/living/carbon/human/user)
+
+	var/celsius_temperature = KELVIN_TO_CELSIUS(air_contents.temperature)
+
+	// make it burn hands unless you're wearing heat insulated gloves or have the RESISTHEAT/RESISTHEATHANDS traits (recycled comment as it still fits)
+	if(celsius_temperature >= 50)
+		var/protection = FALSE
+		var/mob/living/carbon/human/human = user
+		if(human.gloves)
+			var/obj/item/clothing/gloves/gloves = human.gloves
+			if(gloves.max_heat_protection_temperature)
+				protection = (gloves.max_heat_protection_temperature > 360)
+		if(protection || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS) || celsius_temperature < 80)
+			to_chat(user, "<span class='notice'>The tank feels very hot.</span>")
+		else if(istype(user) && user.dna.check_mutation(TK))
+			to_chat(user, "<span class='notice'>You can feel the searing heat in your mind.</span>")
+		else
+			var/obj/item/bodypart/affecting = human.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+			var/heat_damage = 0
+			var/wound_type = /datum/wound/burn/moderate
+			switch(celsius_temperature)
+				if(1001 to INFINITY)
+					wound_type = /datum/wound/burn/critical
+					heat_damage = 15
+				if(251 to 1000)
+					wound_type = /datum/wound/burn/severe
+					heat_damage = 10
+				if(80 to 250)
+					wound_type = /datum/wound/burn/moderate
+					heat_damage = 5
+			affecting?.force_wound_upwards(wound_type)
+			if(affecting?.receive_damage( 0, heat_damage ))
+				human.update_damage_overlays()
+			to_chat(user, "<span class='warning'>You burn your hand on the tank!</span>")
+			return
+	return ..()
+
 #undef ASSUME_AIR_DT_FACTOR
