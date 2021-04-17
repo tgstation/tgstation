@@ -613,3 +613,12 @@
 	attack_verb_continuous = list("hugs", "squeezes")
 	attack_verb_simple = list("hug", "squeeze")
 	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)
+
+/obj/item/toy/plush/rouny
+	name = "runner plushie"
+	desc = "A plushie depicting a xenomorph runner, made to commemorate the centenary of the Battle of LV-426. Much cuddlier than the real thing."
+	icon_state = "rouny"
+	inhand_icon_state = "rouny"
+	attack_verb_continuous = list("slashes", "bites", "charges")
+	attack_verb_simple = list("slash", "bite", "charge")
+	squeak_override = list('sound/items/intents/Help.ogg' = 1)

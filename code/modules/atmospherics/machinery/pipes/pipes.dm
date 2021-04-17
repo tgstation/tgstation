@@ -26,10 +26,6 @@
 	if(hide)
 		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
-/obj/machinery/atmospherics/pipe/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>[src] is on layer [piping_layer].</span>"
-
 /obj/machinery/atmospherics/pipe/nullifyNode(i)
 	var/obj/machinery/atmospherics/oldN = nodes[i]
 	..()
@@ -98,7 +94,7 @@
 	. = ..()
 	update_layer()
 
-/obj/machinery/atmospherics/pipe/proc/update_node_icon()
+/obj/machinery/atmospherics/proc/update_node_icon()
 	for(var/i in 1 to device_type)
 		if(nodes[i])
 			var/obj/machinery/atmospherics/N = nodes[i]

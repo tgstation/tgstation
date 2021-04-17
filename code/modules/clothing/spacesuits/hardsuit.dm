@@ -775,50 +775,20 @@
 	allowed = null
 	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 10, BIO = 100, RAD = 50, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/current_charges = 3
-	var/max_charges = 3 //How many charges total the shielding has
-	var/recharge_delay = 200 //How long after we've been shot before we can start recharging. 20 seconds here
-	var/recharge_cooldown = 0 //Time since we've last been shot
-	var/recharge_rate = 1 //How quickly the shield recharges once it starts charging
-	var/shield_state = "shield-old"
-	var/shield_on = "shield-old"
+	/// How many charges total the shielding has
+	var/max_charges = 3
+	/// How long after we've been shot before we can start recharging.
+	var/recharge_delay = 20 SECONDS
+	/// How quickly the shield recharges each charge once it starts charging
+	var/recharge_rate = 1 SECONDS
+	/// The icon for the shield
+	var/shield_icon = "shield-old"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/Initialize()
 	. = ..()
 	if(!allowed)
 		allowed = GLOB.advanced_hardsuit_allowed
-
-/obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	recharge_cooldown = world.time + recharge_delay
-	if(current_charges > 0)
-		var/datum/effect_system/spark_spread/s = new
-		s.set_up(2, 1, src)
-		s.start()
-		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
-		current_charges--
-		if(current_charges <= 0)
-			owner.visible_message("<span class='warning'>[owner]'s shield overloads!</span>")
-			shield_state = "broken"
-			owner.update_inv_wear_suit()
-		return TRUE
-	return FALSE
-
-/obj/item/clothing/suit/space/hardsuit/shielded/process()
-	. = ..()
-	if(recharge_rate && world.time > recharge_cooldown && current_charges < max_charges)
-		current_charges = clamp((current_charges + recharge_rate), 0, max_charges)
-		playsound(loc, 'sound/magic/charge.ogg', 50, TRUE)
-		if(current_charges == max_charges)
-			playsound(loc, 'sound/machines/ding.ogg', 50, TRUE)
-		shield_state = "[shield_on]"
-		if(ishuman(loc))
-			var/mob/living/carbon/human/C = loc
-			C.update_inv_wear_suit()
-
-/obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands)
-	. = list()
-	if(!isinhands)
-		. += mutable_appearance('icons/effects/effects.dmi', shield_state, MOB_LAYER + 0.01)
+	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_delay, charge_increment_delay = recharge_rate, shield_icon = shield_icon)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -843,8 +813,7 @@
 	inhand_icon_state = "ert_security"
 	hardsuit_type = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
-	shield_state = "shield-red"
-	shield_on = "shield-red"
+	shield_icon = "shield-red"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	name = "blue shielded hardsuit"
@@ -859,8 +828,7 @@
 	inhand_icon_state = "ert_green"
 	hardsuit_type = "ert_green"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/green
-	shield_state = "shield-green"
-	shield_on = "shield-green"
+	shield_icon = "shield-green"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
 	name = "yellow shielded hardsuit"
@@ -868,8 +836,7 @@
 	inhand_icon_state = "ert_engineer"
 	hardsuit_type = "ert_engineer"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/yellow
-	shield_state = "shield-yellow"
-	shield_on = "shield-yellow"
+	shield_icon = "shield-yellow"
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
@@ -917,25 +884,7 @@
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
-	shield_state = "shield-red"
-	shield_on = "shield-red"
-
-/obj/item/clothing/suit/space/hardsuit/shielded/syndi/multitool_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(shield_state == "broken")
-		to_chat(user, "<span class='warning'>You can't interface with the hardsuit's software if the shield's broken!</span>")
-		return
-
-	if(shield_state == "shield-red")
-		shield_state = "shield-old"
-		shield_on = "shield-old"
-		to_chat(user, "<span class='warning'>You roll back the hardsuit's software, changing the shield's color!</span>")
-
-	else
-		shield_state = "shield-red"
-		shield_on = "shield-red"
-		to_chat(user, "<span class='warning'>You update the hardsuit's hardware, changing back the shield's color to red.</span>")
-	user.update_inv_wear_suit()
+	shield_icon = "shield-red"
 
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi/Initialize()
 	jetpack = new /obj/item/tank/jetpack/suit(src)
@@ -957,8 +906,7 @@
 	inhand_icon_state = "swat_suit"
 	hardsuit_type = "syndi"
 	max_charges = 4
-	current_charges = 4
-	recharge_delay = 15
+	recharge_delay = 1.5 SECONDS
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100, WOUND = 30)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT

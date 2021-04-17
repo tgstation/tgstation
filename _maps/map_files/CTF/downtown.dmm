@@ -62,6 +62,22 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
+"bs" = (
+/obj/structure/chair/stool/bar{
+	item_chair = null;
+	resistance_flags = 64
+	},
+/turf/open/floor/wood,
+/area/ctf)
+"bA" = (
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
+	dir = 4;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
 "bF" = (
 /obj/structure/rack{
 	resistance_flags = 64
@@ -74,14 +90,6 @@
 "bH" = (
 /obj/effect/turf_decal/siding/yellow/corner,
 /turf/open/floor/iron/dark,
-/area/ctf)
-"bO" = (
-/obj/effect/turf_decal/siding/wood/corner,
-/obj/structure/chair/stool/bar{
-	item_chair = null;
-	resistance_flags = 64
-	},
-/turf/open/floor/wood,
 /area/ctf)
 "bR" = (
 /obj/effect/turf_decal/trimline/blue/line{
@@ -251,13 +259,6 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
-"fJ" = (
-/obj/structure/chair/stool/bar{
-	item_chair = null;
-	resistance_flags = 64
-	},
-/turf/open/floor/wood,
-/area/ctf)
 "fO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/red/line,
@@ -355,15 +356,6 @@
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/ctf)
-"hq" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4;
-	mouse_opacity = 0;
-	resistance_flags = 64
-	},
-/obj/effect/turf_decal/siding/white/corner,
-/turf/open/floor/iron/dark,
 /area/ctf)
 "hy" = (
 /obj/structure/rack{
@@ -516,6 +508,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
+"jD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
+	dir = 4;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
 "jH" = (
 /obj/effect/turf_decal/trimline/red/line,
 /obj/structure/fluff/bus/dense{
@@ -573,18 +573,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
-"kx" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/chair/stool/bar{
-	item_chair = null;
-	resistance_flags = 64
-	},
-/turf/open/floor/iron,
-/area/ctf)
 "kO" = (
 /obj/machinery/door/airlock/command{
 	resistance_flags = 64
@@ -615,17 +603,6 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/plating,
-/area/ctf)
-"ll" = (
-/obj/effect/turf_decal/siding/yellow{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4;
-	mouse_opacity = 0;
-	resistance_flags = 64
-	},
-/turf/open/floor/iron/dark,
 /area/ctf)
 "lv" = (
 /obj/effect/turf_decal/siding/yellow,
@@ -867,6 +844,14 @@
 "ql" = (
 /turf/open/floor/wood,
 /area/ctf)
+"qJ" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/chair/stool/bar{
+	item_chair = null;
+	resistance_flags = 64
+	},
+/turf/open/floor/wood,
+/area/ctf)
 "qT" = (
 /obj/structure/sign/poster/random{
 	pixel_y = 32
@@ -895,6 +880,18 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
+"rG" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/shreds,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
+	dir = 4;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
 "rO" = (
 /obj/effect/turf_decal/siding/yellow,
 /obj/effect/decal/cleanable/shreds,
@@ -919,14 +916,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
-/area/ctf)
-"rT" = (
-/obj/structure/chair{
-	dir = 4;
-	item_chair = null;
-	resistance_flags = 64
-	},
-/turf/open/floor/plating/grass,
 /area/ctf)
 "rZ" = (
 /obj/effect/turf_decal/tile/blue{
@@ -962,6 +951,14 @@
 /turf/open/floor/iron/dark/corner{
 	dir = 4
 	},
+/area/ctf)
+"sM" = (
+/obj/structure/chair{
+	dir = 8;
+	item_chair = null;
+	resistance_flags = 64
+	},
+/turf/open/floor/plating/grass,
 /area/ctf)
 "sZ" = (
 /obj/effect/turf_decal/tile/bar{
@@ -1178,15 +1175,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
-"xh" = (
-/obj/effect/decal/cleanable/oil,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4;
-	mouse_opacity = 0;
-	resistance_flags = 64
-	},
-/turf/open/floor/iron/dark,
-/area/ctf)
 "xk" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -1224,6 +1212,16 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
+/area/ctf)
+"xD" = (
+/obj/effect/decal/cleanable/oil,
+/obj/structure/barricade/security/ctf,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
+	dir = 4;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
+/turf/open/floor/iron/dark,
 /area/ctf)
 "xK" = (
 /obj/effect/turf_decal/stripes/white/line,
@@ -1447,14 +1445,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/ctf)
-"BL" = (
-/obj/structure/chair{
-	dir = 8;
-	item_chair = null;
-	resistance_flags = 64
-	},
-/turf/open/floor/plating/grass,
-/area/ctf)
 "BO" = (
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
@@ -1516,9 +1506,11 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
-"Cq" = (
-/obj/structure/barricade/security/ctf,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+"Cg" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4;
 	mouse_opacity = 0;
 	resistance_flags = 64
@@ -1601,15 +1593,17 @@
 /obj/structure/barricade/security/ctf,
 /turf/open/floor/iron/dark,
 /area/ctf)
-"Dx" = (
-/obj/effect/decal/cleanable/oil,
-/obj/structure/barricade/security/ctf,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4;
-	mouse_opacity = 0;
+"Dm" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/chair/stool/bar{
+	item_chair = null;
 	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron,
 /area/ctf)
 "DE" = (
 /obj/effect/turf_decal/tile/bar{
@@ -1765,6 +1759,14 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/decal/cleanable/plastic,
 /turf/open/floor/iron,
+/area/ctf)
+"GP" = (
+/obj/structure/chair{
+	dir = 4;
+	item_chair = null;
+	resistance_flags = 64
+	},
+/turf/open/floor/plating/grass,
 /area/ctf)
 "GT" = (
 /obj/machinery/door/airlock{
@@ -2122,14 +2124,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
-"NH" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4;
-	mouse_opacity = 0;
-	resistance_flags = 64
-	},
-/turf/open/floor/iron/dark,
-/area/ctf)
 "NS" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2225,17 +2219,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
-"Pt" = (
-/obj/structure/barricade/sandbags{
-	resistance_flags = 64
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4;
-	mouse_opacity = 0;
-	resistance_flags = 64
-	},
-/turf/open/floor/iron/dark,
-/area/ctf)
 "PX" = (
 /obj/structure/fluff/bus/dense{
 	icon_state = "hoodtop";
@@ -2280,18 +2263,6 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
-"QQ" = (
-/obj/effect/turf_decal/siding/white/corner{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/shreds,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4;
-	mouse_opacity = 0;
-	resistance_flags = 64
-	},
-/turf/open/floor/iron/dark,
-/area/ctf)
 "QW" = (
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/turf_decal/tile/blue,
@@ -2325,6 +2296,15 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/plating/grass,
+/area/ctf)
+"RD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
+	dir = 4;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
+/obj/effect/turf_decal/siding/white/corner,
+/turf/open/floor/iron/dark,
 /area/ctf)
 "RN" = (
 /obj/effect/turf_decal/trimline/red/line{
@@ -2485,6 +2465,15 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
+/area/ctf)
+"Vi" = (
+/obj/structure/barricade/security/ctf,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
+	dir = 4;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
+/turf/open/floor/iron/dark,
 /area/ctf)
 "Vu" = (
 /obj/effect/turf_decal/siding/white/corner{
@@ -2730,6 +2719,17 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
+"ZM" = (
+/obj/structure/barricade/sandbags{
+	resistance_flags = 64
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
+	dir = 4;
+	mouse_opacity = 0;
+	resistance_flags = 64
+	},
+/turf/open/floor/iron/dark,
+/area/ctf)
 "ZN" = (
 /obj/structure/trap/ctf/blue,
 /turf/open/floor/iron/dark,
@@ -2965,7 +2965,7 @@ OO
 Vu
 bH
 yR
-QQ
+rG
 oO
 mB
 TD
@@ -3003,7 +3003,7 @@ xe
 Xj
 lv
 Pi
-NH
+jD
 YE
 Ad
 TD
@@ -3038,7 +3038,7 @@ td
 mB
 TD
 xe
-NH
+jD
 lv
 Pi
 Xj
@@ -3076,7 +3076,7 @@ td
 mB
 TD
 xe
-Dx
+xD
 OP
 Fr
 UG
@@ -3117,7 +3117,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 mB
 GJ
@@ -3155,7 +3155,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 mB
 TD
@@ -3190,7 +3190,7 @@ BH
 Ad
 TD
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -3228,7 +3228,7 @@ td
 iZ
 TD
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -3269,7 +3269,7 @@ jC
 Xj
 rO
 Pi
-NH
+jD
 De
 zN
 TD
@@ -3307,7 +3307,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 Ad
 TD
@@ -3342,7 +3342,7 @@ Lr
 Ad
 TD
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -3380,7 +3380,7 @@ td
 Ad
 TD
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -3421,7 +3421,7 @@ Dg
 GA
 lv
 Pi
-Pt
+ZM
 Tb
 iZ
 xq
@@ -3459,7 +3459,7 @@ jC
 JY
 lv
 Pi
-NH
+jD
 YD
 Ad
 xq
@@ -3494,7 +3494,7 @@ Lr
 Ad
 TD
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -3532,7 +3532,7 @@ Lr
 Ad
 xq
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -3573,7 +3573,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 Ad
 TD
@@ -3611,7 +3611,7 @@ jC
 Xj
 lv
 Pi
-xh
+bA
 De
 Ad
 It
@@ -3646,7 +3646,7 @@ td
 mB
 TD
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -3676,15 +3676,15 @@ xs
 td
 Bh
 ql
-fJ
+bs
 ql
-fJ
+bs
 QC
 td
 mB
 TD
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -3725,14 +3725,14 @@ jC
 GA
 OP
 Fr
-Pt
+ZM
 De
 Ad
 jS
 RB
 Kd
 mj
-rT
+GP
 Kd
 mj
 TD
@@ -3751,9 +3751,9 @@ El
 BH
 Lr
 Ug
-fJ
+bs
 ql
-fJ
+bs
 ql
 QC
 oq
@@ -3763,7 +3763,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 Ad
 jS
@@ -3798,7 +3798,7 @@ td
 JO
 TD
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -3808,7 +3808,7 @@ zA
 RB
 Kd
 mj
-BL
+sM
 mj
 Kd
 TD
@@ -3828,15 +3828,15 @@ BH
 Lr
 Ug
 ql
-fJ
+bs
 ql
-fJ
+bs
 QC
 Lr
 Ad
 lW
 nQ
-ll
+Cg
 hF
 Pi
 Xj
@@ -3877,7 +3877,7 @@ aq
 CB
 Hg
 Pi
-NH
+jD
 vb
 nO
 jS
@@ -3903,9 +3903,9 @@ BH
 El
 td
 mP
-fJ
+bs
 ql
-fJ
+bs
 ql
 QC
 td
@@ -3915,7 +3915,7 @@ dC
 gZ
 LK
 Pi
-NH
+jD
 vb
 nO
 jS
@@ -4029,7 +4029,7 @@ JM
 gZ
 OU
 Pi
-NH
+jD
 vb
 Ao
 zA
@@ -4067,7 +4067,7 @@ CC
 Rj
 OU
 Pi
-NH
+jD
 vb
 Kh
 jS
@@ -4171,9 +4171,9 @@ td
 Ek
 dO
 sZ
-kx
+Dm
 ql
-fJ
+bs
 td
 qT
 yX
@@ -4181,7 +4181,7 @@ eC
 kR
 Ok
 Pi
-NH
+jD
 vb
 ru
 jS
@@ -4209,7 +4209,7 @@ td
 vX
 dO
 RU
-kx
+Dm
 Ie
 iv
 Lr
@@ -4219,7 +4219,7 @@ PX
 af
 GI
 Pi
-NH
+jD
 vb
 ru
 Oc
@@ -4247,14 +4247,14 @@ Lr
 Ux
 dO
 sZ
-kx
+Dm
 ql
 EJ
 Lr
 ru
 da
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -4285,14 +4285,14 @@ Lr
 nT
 dO
 bd
-kx
+Dm
 ql
-bO
+qJ
 td
 ru
 da
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -4302,7 +4302,7 @@ zA
 RB
 Ga
 mj
-rT
+GP
 mj
 Ga
 da
@@ -4323,7 +4323,7 @@ Lr
 nT
 dO
 sZ
-kx
+Dm
 ql
 en
 VD
@@ -4333,7 +4333,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 KV
 Kh
 zA
@@ -4371,14 +4371,14 @@ jC
 GA
 OP
 Fr
-Pt
+ZM
 De
 Kh
 zA
 RB
 Ga
 mj
-BL
+sM
 Ga
 mj
 da
@@ -4406,7 +4406,7 @@ Pb
 Kh
 da
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -4438,13 +4438,13 @@ Bx
 KN
 ql
 ql
-fJ
+bs
 RX
 td
 Kh
 da
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -4485,7 +4485,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 Kh
 da
@@ -4523,7 +4523,7 @@ jC
 Qw
 lv
 Pi
-NH
+jD
 De
 vS
 da
@@ -4558,7 +4558,7 @@ Lr
 vS
 Jc
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -4596,7 +4596,7 @@ Lr
 vS
 da
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -4637,7 +4637,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 vS
 da
@@ -4675,7 +4675,7 @@ Dg
 GA
 lv
 Pi
-Pt
+ZM
 Tb
 WS
 da
@@ -4710,7 +4710,7 @@ td
 vS
 da
 jC
-NH
+jD
 lv
 Pi
 JY
@@ -4748,7 +4748,7 @@ Lr
 vS
 da
 jC
-NH
+jD
 rO
 Pi
 Xj
@@ -4789,7 +4789,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 Kh
 da
@@ -4827,7 +4827,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 Kh
 da
@@ -4862,7 +4862,7 @@ td
 ZO
 da
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -4900,7 +4900,7 @@ BH
 Kh
 da
 jC
-NH
+jD
 lv
 Pi
 Xj
@@ -4941,7 +4941,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 Kh
 BC
@@ -4979,7 +4979,7 @@ jC
 Xj
 lv
 Pi
-NH
+jD
 De
 Kh
 Lz
@@ -5014,7 +5014,7 @@ td
 Kh
 BC
 xe
-Cq
+Vi
 yp
 Fr
 UG
@@ -5052,7 +5052,7 @@ td
 Kh
 BC
 xe
-NH
+jD
 lv
 Pi
 Xj
@@ -5093,7 +5093,7 @@ xe
 Xj
 lv
 Pi
-NH
+jD
 YE
 Kh
 da
@@ -5131,7 +5131,7 @@ pp
 zB
 lv
 Pi
-hq
+RD
 ez
 Kh
 da

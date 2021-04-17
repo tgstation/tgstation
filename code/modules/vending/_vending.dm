@@ -1001,9 +1001,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/proc/canLoadItem(obj/item/I, mob/user)
 	return FALSE
 
-/obj/machinery/vending/onTransitZ()
-	return
-
 /obj/machinery/vending/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/mob/living/L = AM
@@ -1205,3 +1202,22 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/obj/item/I = target
 		I.custom_price = price
 		to_chat(user, "<span class='notice'>You set the price of [I] to [price] cr.</span>")
+
+/obj/machinery/vending/custom/greed //name and like decided by the spawn
+	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
+	material_flags = MATERIAL_COLOR //it's grey anyway, let's bling out
+
+/obj/machinery/vending/custom/greed/Initialize(mapload)
+	. = ..()
+	//starts in a state where you can move it
+	panel_open = TRUE
+	anchored = FALSE
+	add_overlay("[initial(icon_state)]-panel")
+	//and references the deity
+	name = "[GLOB.deity]'s Consecrated Vendor"
+	desc = "A vending machine created by [GLOB.deity]."
+	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
+	add_filter("vending_outline", 9, list("type" = "outline", "color" = "#FFFFFF"))
+	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35))
+
+

@@ -87,6 +87,7 @@
 	serialized["threat_level"] = threat_level
 	serialized["round_start_budget"] = initial_round_start_budget
 	serialized["mid_round_budget"] = threat_level - initial_round_start_budget
+	serialized["shown_threat"] = shown_threat
 
 	var/list/serialized_snapshots = list()
 	for (var/_snapshot in snapshots)

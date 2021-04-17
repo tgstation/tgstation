@@ -2,6 +2,8 @@
 	name = "Explosion"
 	desc = "This spell explodes an area."
 
+	school = SCHOOL_EVOCATION
+
 	/// The devastation range of the resulting explosion.
 	var/ex_severe = 1
 	/// The heavy impact range of the resulting explosion.

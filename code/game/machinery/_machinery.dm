@@ -342,6 +342,9 @@
 	if(!isliving(user))
 		return FALSE //no ghosts in the machine allowed, sorry
 
+	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE)
+		return FALSE
+
 	var/mob/living/living_user = user
 
 	var/is_dextrous = FALSE
@@ -476,6 +479,8 @@
 
 /obj/machinery/_try_interact(mob/user)
 	if((interaction_flags_machine & INTERACT_MACHINE_WIRES_IF_OPEN) && panel_open && (attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK))
+		return TRUE
+	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE)
 		return TRUE
 	return ..()
 

@@ -608,6 +608,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Recreation Area"
 	icon_state = "rec"
 
+/area/commons/cryopods
+	name = "Cryopod Room"
+	icon_state = "cryopod"
+
 // Commons - Vacant Rooms
 
 /area/commons/vacant_room
@@ -845,6 +849,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "engine_sm"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/engineering/supermatter/room
+	name = "Supermatter Engine Room"
+	icon_state = "engine_sm_room"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
 /area/engineering/break_room
 	name = "Engineering Foyer"

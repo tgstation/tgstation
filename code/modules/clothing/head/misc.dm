@@ -426,7 +426,7 @@
 
 /obj/item/clothing/head/frenchberet
 	name = "french beret"
-	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage military conflict, for some reason."
+	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage in military conflict, for some reason."
 	icon_state = "beret"
 	dynamic_hair_suffix = ""
 
@@ -491,13 +491,10 @@
 	name = "shrine maiden's wig"
 	desc = "Purify in style!"
 	flags_inv = HIDEHAIR //bald
-	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "shrine_wig"
 	inhand_icon_state = "shrine_wig"
-	worn_x_dimension = 64
-	worn_y_dimension = 64
-	clothing_flags = LARGE_WORN_ICON
 	dynamic_hair_suffix = ""
+	worn_y_offset = 1
 
 /obj/item/clothing/head/intern
 	name = "\improper CentCom Head Intern beancap"
@@ -507,7 +504,7 @@
 
 /obj/item/clothing/head/coordinator
 	name = "coordinator cap"
-	desc = "A cap for a party ooordinator, stylish!."
+	desc = "A cap for a party coordinator, stylish!."
 	icon_state = "capcap"
 	inhand_icon_state = "that"
 	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
@@ -524,10 +521,10 @@
 	icon_state = "weddingveil"
 	inhand_icon_state = "weddingveil"
 
-/obj/item/clothing/head/centom_cap
-	name = "\improper CentCom Commander Cap"
+/obj/item/clothing/head/centcom_cap
+	name = "\improper CentCom commander cap"
 	icon_state = "centcom_cap"
-	desc = "Worn by the finest of CentCom Commanders. Inside the lining of the cap, lies two faint initials."
+	desc = "Worn by the finest of CentCom commanders. Inside the lining of the cap, lies two faint initials."
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)

@@ -507,9 +507,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//This is more error prevention, according to all known laws of atmos, gas_mix.remove() should never make negative mol values.
 		//But this is tg
 
-		//Lets get the proportions of the gasses in the mix and then slowly move our comp to that value
-		//Can cause an overestimation of mol count, should stabalize things though.
-		//Prevents huge bursts of gas/heat when a large amount of something is introduced
+		//Lets get the proportions of the gasses in the mix for scaling stuff later
 		//They range between 0 and 1
 		for(var/gasID in gases_we_care_about)
 			gas_comp[gasID] = clamp(removed.gases[gasID][MOLES] / combined_gas, 0, 1)
@@ -518,7 +516,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/list/transit_mod = gases_we_care_about.Copy()
 		var/list/resistance_mod = gases_we_care_about.Copy()
 
-		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 		var/h2obonus = 1 - (gas_comp[/datum/gas/water_vapor] * 0.25)//At max this value should be 0.75
 		var/freonbonus = (gas_comp[/datum/gas/freon] <= 0.03) //Let's just yeet power output if this shit is high
 

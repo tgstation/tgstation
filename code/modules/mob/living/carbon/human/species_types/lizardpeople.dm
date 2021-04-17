@@ -21,7 +21,7 @@
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = GRAIN | DAIRY
+	disliked_food = GRAIN | DAIRY | CLOTH
 	liked_food = GROSS | MEAT
 	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
@@ -116,7 +116,7 @@ Lizard subspecies: ASHWALKERS
 	id = "ashlizard"
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH,TRAIT_VIRUSIMMUNE)
 	species_language_holder = /datum/language_holder/lizard/ash
 
 /*

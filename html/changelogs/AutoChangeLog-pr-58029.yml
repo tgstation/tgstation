@@ -1,5 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - rscadd: "The RCD now has an option to scan the world around you for showing original walls and windows."
-  - rscadd: "The RCD will now rebuild existing windows/windows/grilles significantly faster and with less resources."

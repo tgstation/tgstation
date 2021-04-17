@@ -38,7 +38,6 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
-	var/poddoor = FALSE
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
@@ -47,17 +46,16 @@
 /obj/machinery/door/examine(mob/user)
 	. = ..()
 	if(red_alert_access)
-		if(GLOB.security_level >= SEC_LEVEL_RED)
+		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
 			. += "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>"
 		else
 			. += "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>"
-	if(!poddoor)
-		. += "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>"
+	. += "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>"
 	if(safety_mode)
 		. += "<span class='notice'>It has labels indicating that it has an emergency mechanism to open it with <b>just your hands</b> if there's no power.</span>"
 
 /obj/machinery/door/check_access_list(list/access_list)
-	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
+	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
 		return TRUE
 	return ..()
 
@@ -77,6 +75,7 @@
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
 /obj/machinery/door/proc/set_init_door_layer()
 	if(density)
@@ -92,6 +91,23 @@
 		spark_system = null
 	air_update_turf(TRUE, FALSE)
 	return ..()
+
+/**
+ * Signal handler for checking if we notify our surrounding that access requirements are lifted accordingly to a newly set security level
+ *
+ * Arguments:
+ * * source The datum source of the signal
+ * * new_level The new security level that is in effect
+ */
+/obj/machinery/door/proc/check_security_level(datum/source, new_level)
+	SIGNAL_HANDLER
+
+	if(new_level <= SEC_LEVEL_BLUE)
+		return
+	if(!red_alert_access)
+		return
+	audible_message("<span class='notice'>[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!</span>")
+	playsound(src, 'sound/machines/boltsup.ogg', 50, TRUE)
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
 	if(safety_mode && !hasPower() && density)
@@ -219,7 +235,12 @@
 /obj/machinery/door/proc/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
 	return
 
-/obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
+
+/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user)
+	return
+
+/// Called when the user right-clicks on the door with a crowbar.
+/obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
@@ -246,7 +267,7 @@
 		if(istype(weapon, /obj/item/crowbar))
 			var/obj/item/crowbar/crowbar = weapon
 			forced_open = crowbar.force_opens
-		try_to_crowbar(weapon, user, forced_open)
+		try_to_crowbar_secondary(weapon, user, forced_open)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

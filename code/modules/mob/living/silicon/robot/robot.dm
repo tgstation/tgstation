@@ -3,6 +3,8 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
+
 	wires = new /datum/wires/robot(src)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
