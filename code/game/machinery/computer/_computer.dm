@@ -36,11 +36,12 @@
 	. += icon_keyboard
 
 	// This whole block lets screens ignore lighting and be visible even in the darkest room
-	var/overlay_state = icon_screen
-	if(machine_stat & BROKEN)
-		overlay_state = "[icon_state]_broken"
-	. += mutable_appearance(icon, overlay_state, layer, plane)
-	. += mutable_appearance(icon, overlay_state, layer, EMISSIVE_PLANE)
+	if(icon_screen)
+		var/overlay_state = icon_screen
+		if(machine_stat & BROKEN)
+			overlay_state = "[icon_state]_broken"
+		. += mutable_appearance(icon, overlay_state, layer, plane)
+		. += mutable_appearance(icon, overlay_state, layer, EMISSIVE_PLANE)
 
 /obj/machinery/computer/power_change()
 	. = ..()
