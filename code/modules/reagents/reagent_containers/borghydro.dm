@@ -24,7 +24,7 @@ Borg Hypospray
 	var/charge_cost = 50
 	var/charge_timer = 0
 	var/recharge_time = 10 //Time it takes for shots to recharge (in seconds)
-	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE
+	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE ///Optional variable to override the temperature add_reagent() will use
 	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
