@@ -823,13 +823,19 @@
 	stored.forceMove(get_turf(usr))
 	return
 
+/**
+* Attack_self will pass for the stored item. 
+*/
 /obj/item/borg/apparatus/attack_self(mob/living/silicon/robot/user)
 	if(!stored)
 		return ..()
-	if(user.client?.keys_held["Alt"])
-		stored.forceMove(get_turf(user))
-		return
 	stored.attack_self(user)
+
+//Alt click drops the stored item.
+/obj/item/borg/apparatus/AltClick(mob/living/silicon/robot/user)
+	if(!stored)
+		return ..()
+	stored.forceMove(get_turf(user))
 
 /obj/item/borg/apparatus/pre_attack(atom/A, mob/living/user, params)
 	if(!stored)
@@ -867,13 +873,18 @@
 		return
 	. = ..()
 
+/// Parent proc for all apparatus, tells the player that they can alt-click to drop.
+/obj/item/borg/apparatus/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'> <i>Alt+click</i> will drop the currently stored item. </span>"
+
 /////////////////
 //beaker holder//
 /////////////////
 
 /obj/item/borg/apparatus/beaker
 	name = "beaker storage apparatus"
-	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
+	desc = "A special apparatus for carrying beakers without spilling the contents."
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/glass/beaker,
 					/obj/item/reagent_containers/glass/bottle)
@@ -901,6 +912,8 @@
 				. += "[R.volume] units of [R.name]"
 		else
 			. += "Nothing."
+		
+		. += "<span class='notice'> <i>Right-clicking</i> will splash the beaker on the floor.</span>"
 
 /obj/item/borg/apparatus/beaker/update_overlays()
 	. = ..()
@@ -919,12 +932,11 @@
 		arm.pixel_y = arm.pixel_y - 5
 	. += arm
 
-/obj/item/borg/apparatus/beaker/attack_self(mob/living/silicon/robot/user)
-	if(stored && !user.client?.keys_held["Alt"] && user.combat_mode)
-		var/obj/item/reagent_containers/C = stored
-		C.SplashReagents(get_turf(user))
-		loc.visible_message("<span class='notice'>[user] spills the contents of the [C] all over the floor.</span>")
-		return
+/// Secondary attack spills the content of the beaker.
+/obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
+	var/obj/item/reagent_containers/stored_beaker = stored
+	stored_beaker.SplashReagents(get_turf(user))
+	loc.visible_message("<span class='notice'>[user] spills the contents of the [stored_beaker] all over the floor.</span>")
 	. = ..()
 
 /obj/item/borg/apparatus/beaker/extra
@@ -933,7 +945,7 @@
 
 /obj/item/borg/apparatus/beaker/service
 	name = "beverage storage apparatus"
-	desc = "A special apparatus for carrying drinks without spilling the contents. Alt-Z or right-click to drop the beaker."
+	desc = "A special apparatus for carrying drinks without spilling the contents."
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/food/drinks,
 					/obj/item/reagent_containers/food/condiment)
@@ -983,7 +995,8 @@
 		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
 	. += bag
 
-/obj/item/borg/apparatus/organ_storage/attack_self(mob/user)
+/obj/item/borg/apparatus/organ_storage/AltClick(mob/living/silicon/robot/user)
+	. = ..()
 	if(stored)
 		var/obj/item/organ = stored
 		user.visible_message("<span class='notice'>[user] dumps [organ] from [src].</span>", "<span class='notice'>You dump [organ] from [src].</span>")
@@ -999,7 +1012,7 @@
 
 /obj/item/borg/apparatus/circuit
 	name = "circuit manipulation apparatus"
-	desc = "A special apparatus for carrying and manipulating circuit boards. Alt-Z or right-click to drop the stored object."
+	desc = "A special apparatus for carrying and manipulating circuit boards."
 	icon_state = "borg_hardware_apparatus"
 	storable = list(/obj/item/circuitboard,
 				/obj/item/electronics)
