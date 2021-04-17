@@ -51,10 +51,10 @@
 /datum/mutation/human/thermal/modify()
 	if(!power)
 		return FALSE
-	var/obj/effect/proc_holder/spell/self/thermal_vision_activate/Modified_power = power
-	Modified_power.eye_damage = 10 * GET_MUTATION_SYNCHRONIZER(src)
-	Modified_power.thermal_duration = 10 * GET_MUTATION_POWER(src)
-	Modified_power.charge_max = 25 * GET_MUTATION_ENERGY(src) SECONDS
+	var/obj/effect/proc_holder/spell/self/thermal_vision_activate/modified_power = power
+	modified_power.eye_damage = 10 * GET_MUTATION_SYNCHRONIZER(src)
+	modified_power.thermal_duration = 10 * GET_MUTATION_POWER(src)
+	modified_power.charge_max = (25 * GET_MUTATION_ENERGY(src)) SECONDS
 
 
 /obj/effect/proc_holder/spell/self/thermal_vision_activate
