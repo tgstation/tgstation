@@ -99,16 +99,15 @@
 
 /obj/item/food/grown/tomato/blue/bluespace/pickup(mob/user)
 	. = ..()
-	var/mob/living/carbon/carbon_user = user
-	if(plant_safety_check(carbon_user))
+	if(plant_safety_check(user))
 		return
 
 	if(!seed.get_gene(/datum/plant_gene/trait/squash))
 		return
 
 	if(prob(50))
-		to_chat(carbon_user, "<span class='danger'>[src] slips out of your hand!</span>")
-		attack_self(carbon_user)
+		to_chat(user, "<span class='danger'>[src] slips out of your hand!</span>")
+		attack_self(user)
 
 // Killer Tomato
 /obj/item/seeds/tomato/killer
@@ -174,10 +173,9 @@
 
 /obj/item/food/grown/tomato/killer/pickup(mob/user)
 	. = ..()
-	var/mob/living/carbon/carbon_user = user
-	if(plant_safety_check(carbon_user))
+	if(plant_safety_check(user))
 		return
 
 	if(prob(25))
-		to_chat(carbon_user, "<span class='danger'>[src] begins to growl and shake!</span>")
+		to_chat(user, "<span class='danger'>[src] begins to growl and shake!</span>")
 		begin_awaken(1 SECONDS)
