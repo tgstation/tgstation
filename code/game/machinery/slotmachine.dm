@@ -17,9 +17,9 @@
 /obj/machinery/computer/slot_machine
 	name = "slot machine"
 	desc = "Gambling for the antisocial."
-	icon = 'icons/obj/economy.dmi'
+	icon = 'icons/obj/computer.dmi'
 	icon_state = "slots"
-	icon_keyboard = "slots_controls"
+	icon_keyboard = "no_keyboard"
 	icon_screen = "slots_screen"
 	density = TRUE
 	use_power = IDLE_POWER_USE
