@@ -3,6 +3,7 @@
 // Data from the seeds carry over to these grown foods
 // ***********************************************************
 
+/// A few defines for use in calculating our plant's bite size.
 /// When calculating bite size, potency is multiplied by this number.
 #define BITE_SIZE_POTENCY_MULTIPLIER 0.05
 /// When calculating bite size, max_volume is multiplied by this number.
@@ -18,7 +19,7 @@
 	var/obj/item/seeds/seed = null
 	///Name of the plant
 	var/plantname = ""
-	/// The base bite-size for plants is [max_volume / 20], multiplied by this if set
+	/// The modifier applied to the plant's bite size. If your plant has a large amount of reagents naturally, this should be increased to match.
 	var/bite_consumption_mod = 1
 	///the splat it makes when it splats lol
 	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge
@@ -54,10 +55,9 @@
 	for(var/datum/plant_gene/trait/trait in seed.genes)
 		trait.on_new_plant(src, loc)
 
-	// Set our default bite size
-	// Bite size = 1 + (potency / 20) * (volume / 100) * modifier
+	// Set our default bitesize: bite size = 1 + (potency * 0.05) * (max_volume * 0.01) * modifier
 	// A 100 potency, non-densified plant = 1 + (5 * 1 * modifier) = 6u bite size
-	// For reference, your average tomato has 14u of reagents
+	// For reference, your average 100 potency tomato has 14u of reagents - So, with no modifier it is eaten in 3 bites
 	bite_consumption = 1 + round(max((seed.potency * BITE_SIZE_POTENCY_MULTIPLIER), 1) * (max_volume * BITE_SIZE_VOLUME_MULTIPLIER) * bite_consumption_mod)
 
 	. = ..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.

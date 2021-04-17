@@ -45,7 +45,6 @@
 	name = "pack of fairygrass seeds"
 	desc = "These seeds grow into a more mystical grass."
 	icon_state = "seed-fairygrass"
-	bite_consumption_mod = 1
 	species = "fairygrass"
 	plantname = "Fairygrass"
 	product = /obj/item/food/grown/grass/fairy
@@ -60,6 +59,7 @@
 	name = "fairygrass"
 	desc = "Blue, glowing, and smells fainly of mushrooms."
 	icon_state = "fairygrassclump"
+	bite_consumption_mod = 1
 	stacktype = /obj/item/stack/tile/fairygrass
 
 // Carpet
