@@ -11010,15 +11010,6 @@
 /turf/open/floor/iron/dark,
 /area/hallway/primary/aft)
 "ayB" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -13091,6 +13082,9 @@
 	},
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer,
 /obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/central)
 "aFD" = (
@@ -21441,6 +21435,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/surgery)
 "aZB" = (
@@ -24290,10 +24291,13 @@
 /area/science/research)
 "beF" = (
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/central)
 "beH" = (
