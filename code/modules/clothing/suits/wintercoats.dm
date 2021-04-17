@@ -204,7 +204,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 20, ACID = 30)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/cmo
 	
-/obj/item/clothing/suit/hooded/wintercoat/medical/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/medical/cmo/Initialize()
 	. = ..()
 	allowed += list(
 		/obj/item/melee/classic_baton/telescopic,
