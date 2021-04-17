@@ -91,7 +91,7 @@
 
 /obj/item/food/grown/tomato/blue/bluespace
 	seed = /obj/item/seeds/tomato/blue/bluespace
-	name = "bluespace tomato"
+	name = "\improper bluespace tomato"
 	desc = "So lubricated, you might slip through space-time."
 	icon_state = "bluespacetomato"
 	distill_reagent = null
@@ -110,8 +110,8 @@
 		return
 
 	if(prob(50))
-		to_chat(carbon_user, "<span class='danger'>\The [name] slips out of your hand!</span>")
-		attack_hand(user)
+		to_chat(carbon_user, "<span class='danger'>[src] slips out of your hand!</span>")
+		attack_self(user)
 
 // Killer Tomato
 /obj/item/seeds/tomato/killer
@@ -132,7 +132,7 @@
 
 /obj/item/food/grown/tomato/killer
 	seed = /obj/item/seeds/tomato/killer
-	name = "killer-tomato"
+	name = "\improper killer-tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
 	icon_state = "killertomato"
 	var/awakening = 0
@@ -140,14 +140,14 @@
 
 /obj/item/food/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)
-		to_chat(user, "<span class='warning'>The tomato is twitching and shaking, preventing you from eating it.</span>")
+		to_chat(user, "<span class='warning'>[src] is twitching and shaking, preventing you from eating it.</span>")
 		return
 	..()
 
 /obj/item/food/grown/tomato/killer/attack_self(mob/user)
 	if(awakening || isspaceturf(user.loc))
 		return
-	to_chat(user, "<span class='notice'>You begin to awaken the Killer Tomato...</span>")
+	to_chat(user, "<span class='notice'>You begin to awaken [src]...</span>")
 	begin_awaken(3 SECONDS)
 	log_game("[key_name(user)] awakened a killer tomato at [AREACOORD(user)].")
 
@@ -172,7 +172,7 @@
 	K.melee_damage_upper += round(seed.potency / 10)
 	K.move_to_delay -= round(seed.production / 50)
 	K.health = K.maxHealth
-	K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
+	K.visible_message("<span class='notice'>[src] growls as it suddenly awakens.</span>")
 	qdel(src)
 
 /obj/item/food/grown/tomato/killer/pickup(mob/user)
@@ -185,5 +185,5 @@
 		return
 
 	if(prob(25))
-		to_chat(carbon_user, "<span class='danger'>\The [name] begins to growl and shake!</span>")
+		to_chat(carbon_user, "<span class='danger'>[src] begins to growl and shake!</span>")
 		begin_awaken(1 SECONDS)

@@ -230,7 +230,7 @@
 
 /obj/item/grown/novaflower
 	seed = /obj/item/seeds/sunflower/novaflower
-	name = "novaflower"
+	name = "\improper novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
 	icon_state = "novaflower"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
@@ -254,7 +254,7 @@
 	if(!..())
 		return
 	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>")
+		to_chat(M, "<span class='danger'>You are lit on fire from the intense heat of [src]!</span>")
 		M.adjust_fire_stacks(seed.potency / 20)
 		if(M.IgniteMob())
 			message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(M)] on fire with [src] at [AREACOORD(user)]")
@@ -267,7 +267,7 @@
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1)
 	else
-		to_chat(usr, "<span class='warning'>All the petals have fallen off the [name] from violent whacking!</span>")
+		to_chat(usr, "<span class='warning'>All the petals have fallen off [src] from violent whacking!</span>")
 		qdel(src)
 
 /obj/item/grown/novaflower/pickup(mob/living/carbon/human/user)
@@ -279,9 +279,9 @@
 	if(HAS_TRAIT(carbon_user, TRAIT_PLANT_SAFE))
 		return
 
-	to_chat(carbon_user, "<span class='danger'>\The [name] burns your bare hand!</span>")
+	to_chat(carbon_user, "<span class='danger'>[src] burns your bare hand!</span>")
 	var/obj/item/bodypart/affecting = carbon_user.get_active_hand()
-	if(affecting?.receive_damage(0, 5, wound_bonus = CANT_WOUND))
+	if(affecting?.receive_damage(0, force, wound_bonus = CANT_WOUND))
 		carbon_user.update_damage_overlays()
 
 // Rose
@@ -307,7 +307,7 @@
 
 /obj/item/food/grown/rose
 	seed = /obj/item/seeds/rose
-	name = "rose"
+	name = "\improper rose"
 	desc = "The classic fleur d'amour - flower of love. Watch for its thorns!"
 	icon_state = "rose"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
@@ -328,7 +328,7 @@
 	if(!seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
 		return
 
-	to_chat(carbon_user, "<span class='danger'>\The [name]'s thorns prick your hand. Ouch.</span>")
+	to_chat(carbon_user, "<span class='danger'>[src]'s thorns prick your hand. Ouch.</span>")
 	var/obj/item/bodypart/affecting = carbon_user.get_active_hand()
 	if(affecting?.receive_damage(2))
 		carbon_user.update_damage_overlays()

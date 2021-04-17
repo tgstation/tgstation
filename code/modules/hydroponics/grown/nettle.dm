@@ -33,7 +33,7 @@
 
 /obj/item/food/grown/nettle // "snack"
 	seed = /obj/item/seeds/nettle
-	name = "nettle"
+	name = "\improper nettle"
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "nettle"
@@ -66,7 +66,7 @@
 	if(HAS_TRAIT(carbon_user, TRAIT_PLANT_SAFE) || HAS_TRAIT(carbon_user, TRAIT_PIERCEIMMUNE))
 		return FALSE
 
-	to_chat(carbon_user, "<span class='danger'>\The [name] burns your bare hand!</span>")
+	to_chat(carbon_user, "<span class='danger'>[src] burns your bare hand!</span>")
 	var/obj/item/bodypart/affecting = carbon_user.get_active_hand()
 	if(affecting?.receive_damage(0, force, wound_bonus = CANT_WOUND))
 		carbon_user.update_damage_overlays()
@@ -79,12 +79,12 @@
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
-		to_chat(usr, "<span class='warning'>All the leaves have fallen off the nettle from violent whacking.</span>")
+		to_chat(usr, "<span class='warning'>All the leaves have fallen off [src] from violent whacking.</span>")
 		qdel(src)
 
 /obj/item/food/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
-	name = "deathnettle"
+	name = "\improper deathnettle"
 	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
 	force = 30
@@ -101,7 +101,7 @@
 		return
 	if(prob(50))
 		user.Paralyze(100)
-		to_chat(user, "<span class='userdanger'>You are stunned by \the [name] as you try picking it up!</span>")
+		to_chat(user, "<span class='userdanger'>You are stunned by [src] as you try picking it up!</span>")
 
 /obj/item/food/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..())
