@@ -202,10 +202,13 @@
 	icon_state = "coatcmo"
 	inhand_icon_state = "coatcmo"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 20, ACID = 30)
-	allowed = list(
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/cmo
+	
+/obj/item/clothing/suit/hooded/wintercoat/medical/Initialize()
+	. = ..()
+	allowed += list(
 		/obj/item/melee/classic_baton/telescopic,
 	)	
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/cmo
 
 /obj/item/clothing/head/hooded/winterhood/medical/cmo
 	desc = "A blue winter coat hood."
@@ -282,10 +285,13 @@
 	icon_state = "coatrd"
 	inhand_icon_state = "coatrd"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 20, BIO = 0, RAD = 0, FIRE = 30, ACID = 0)
-	allowed = list(
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/science/rd
+	
+/obj/item/clothing/suit/hooded/wintercoat/science/Initialize()
+	. = ..()
+	allowed += list(
 		/obj/item/melee/classic_baton/telescopic,
 	)		
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/science/rd
 
 /obj/item/clothing/head/hooded/winterhood/science/rd
 	desc = "A white winter coat hood. It smells faintly of hair gel."
@@ -344,10 +350,13 @@
 	icon_state = "coatce"
 	inhand_icon_state = "coatce"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 20, FIRE = 30, ACID = 10)
-	allowed = list(
-		/obj/item/melee/classic_baton/telescopic,
-	)	
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/ce
+
+/obj/item/clothing/suit/hooded/wintercoat/engineering/ce/Initialize()
+	. = ..()
+	allowed += list(
+		/obj/item/melee/classic_baton/telescopic,
+	)		
 
 /obj/item/clothing/head/hooded/winterhood/engineering/ce
 	desc = "A white winter coat hood. Feels surprisingly heavy. The tag says that it's not child safe."
