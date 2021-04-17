@@ -26,9 +26,6 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
 	initialized = INITIALIZATION_INNEW_REGULAR
-	for(var/station_level in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		for(var/turf/open/floor/station_floor in block(locate(1,1,station_level), locate(world.maxx,world.maxy,station_level)))
-			new /obj/effect/turf_decal/tile/blue (station_floor)
 
 	return ..()
 

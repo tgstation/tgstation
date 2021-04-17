@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(time_track)
 	name = "Time Tracking"
-	wait = 100
+	wait = 10
 	init_order = INIT_ORDER_TIMETRACK
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
@@ -15,6 +15,8 @@ SUBSYSTEM_DEF(time_track)
 	var/last_tick_realtime = 0
 	var/last_tick_byond_time = 0
 	var/last_tick_tickcount = 0
+
+	var/maptick_per_player = 0
 
 /datum/controller/subsystem/time_track/Initialize(start_timeofday)
 	. = ..()
@@ -68,6 +70,7 @@ SUBSYSTEM_DEF(time_track)
 	last_tick_realtime = current_realtime
 	last_tick_byond_time = current_byondtime
 	last_tick_tickcount = current_tickcount
+	maptick_per_player = (player_amount > 0) ? MAPTICK_LAST_INTERNAL_TICK_USAGE / player_amount : ""
 	SSblackbox.record_feedback("associative", "time_dilation_current", 1, list("[SQLtime()]" = list("current" = "[time_dilation_current]", "avg_fast" = "[time_dilation_avg_fast]", "avg" = "[time_dilation_avg]", "avg_slow" = "[time_dilation_avg_slow]")))
 	log_perf(
 		list(
@@ -78,7 +81,7 @@ SUBSYSTEM_DEF(time_track)
 			time_dilation_avg,
 			time_dilation_avg_slow,
 			MAPTICK_LAST_INTERNAL_TICK_USAGE,
-			(player_amount > 0) ? MAPTICK_LAST_INTERNAL_TICK_USAGE / player_amount : "",
+			maptick_per_player,
 			length(SStimer.timer_id_dict),
 			SSair.cost_turfs,
 			SSair.cost_groups,
