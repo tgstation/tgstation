@@ -128,7 +128,7 @@
 	inhand_icon_state = "beaker"
 	worn_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass=500)
-	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
+	fill_icon_thresholds = list(0, 20, 40, 60, 80, 100)
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
