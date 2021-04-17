@@ -44,5 +44,4 @@
 	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(
 		/obj/item/skillchip/entrails_reader,
-		/obj/item/skillchip/quickcarry,
 		)
