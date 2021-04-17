@@ -150,6 +150,9 @@
 	return new_icon
 
 /datum/greyscale_config/proc/GenerateDebug(list/colors)
+	if(istype(colors))
+		colors = colors.Join()
+
 	var/list/output = list()
 	var/list/debug_steps = list()
 	output["steps"] = debug_steps
