@@ -1001,9 +1001,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/proc/canLoadItem(obj/item/I, mob/user)
 	return FALSE
 
-/obj/machinery/vending/onTransitZ()
-	return
-
 /obj/machinery/vending/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/mob/living/L = AM

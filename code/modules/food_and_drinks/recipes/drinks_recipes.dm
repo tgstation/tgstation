@@ -93,8 +93,8 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/ethanol/vermouth = 1)
 
 /datum/chemical_reaction/drink/white_russian
-	results = list(/datum/reagent/consumable/ethanol/white_russian = 5)
-	required_reagents = list(/datum/reagent/consumable/ethanol/black_russian = 3, /datum/reagent/consumable/cream = 2)
+	results = list(/datum/reagent/consumable/ethanol/white_russian = 8)
+	required_reagents = list(/datum/reagent/consumable/ethanol/black_russian = 5, /datum/reagent/consumable/cream = 3)
 
 /datum/chemical_reaction/drink/whiskey_cola
 	results = list(/datum/reagent/consumable/ethanol/whiskey_cola = 3)

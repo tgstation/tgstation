@@ -1,4 +1,0 @@
-author: "Celotajs"
-delete-after: True
-changes: 
-  - bugfix: "Fixed flashing for non admin users"

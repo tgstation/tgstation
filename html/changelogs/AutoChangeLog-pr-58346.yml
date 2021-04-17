@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - qol: "Examining an AI's camera eye as a ghost will now show you their laws, the same as if you examined their core"
