@@ -66,7 +66,6 @@
 		)
 	skillchips = list(
 		/obj/item/skillchip/entrails_reader,
-		/obj/item/skillchip/quickercarry,
 		)
 
 /datum/outfit/job/cmo/hardsuit
