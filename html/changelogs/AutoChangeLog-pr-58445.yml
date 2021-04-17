@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Fixed edge cases where some things that could strip should not have."

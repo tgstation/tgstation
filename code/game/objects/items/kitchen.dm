@@ -34,10 +34,13 @@
 	attack_verb_simple = list("attack", "stab", "poke")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
-	item_flags = EYE_STAB
 	sharpness = SHARP_POINTY
 	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_PRISONER
+
+/obj/item/kitchen/fork/Initialize()
+	. = ..()
+	AddElement(/datum/element/eyestab)
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!</span>")
@@ -95,14 +98,14 @@
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
-	item_flags = EYE_STAB
 	var/bayonet = FALSE //Can this be attached to a gun?
 	wound_bonus = -5
 	bare_wound_bonus = 10
 	tool_behaviour = TOOL_KNIFE
 
-/obj/item/kitchen/knife/ComponentInitialize()
+/obj/item/kitchen/knife/Initialize()
 	. = ..()
+	AddElement(/datum/element/eyestab)
 	set_butchering()
 
 ///Adds the butchering component, used to override stats for special cases
