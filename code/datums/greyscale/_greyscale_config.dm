@@ -91,15 +91,21 @@
 	expected_colors = length(color_groups)
 
 /// Actually create the icon and color it in, handles caching
-/datum/greyscale_config/proc/Generate(list/colors)
-	if(length(colors) != expected_colors)
-		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
-	var/key = colors.Join("&")
+/datum/greyscale_config/proc/Generate(color_string)
+	var/key = color_string
 	var/icon/new_icon = icon_cache[key]
 	if(new_icon)
-		return new_icon
-	new_icon = icon_cache[key] = GenerateLayerGroup(colors, layers)
-	return new_icon
+		return icon(new_icon)
+	var/list/colors = ParseColorString(color_string)
+	if(length(colors) != expected_colors)
+		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
+	new_icon = GenerateLayerGroup(colors, layers)
+	// We read a pixel to force the icon to be fully generated before we let it loose into the world
+	// I hate this
+	new_icon.GetPixel(1, 1)
+	new_icon = fcopy_rsc(new_icon)
+	icon_cache[key] = new_icon
+	return icon(new_icon)
 
 /// Internal recursive proc to handle nested layer groups
 /datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
@@ -134,3 +140,9 @@
 
 	output["icon"] = GenerateLayerGroup(colors, layers, debug_steps)
 	return output
+
+/datum/greyscale_config/proc/ParseColorString(color_string)
+	. = list()
+	var/list/split_colors = splittext(color_string, "#")
+	for(var/color in 2 to length(split_colors))
+		. += "#[split_colors[color]]"
