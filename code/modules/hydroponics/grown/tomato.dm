@@ -44,6 +44,7 @@
 	name = "blood-tomato"
 	desc = "So bloody...so...very...bloody....AHHHH!!!!"
 	icon_state = "bloodtomato"
+	bite_consumption_mod = 3
 	splat_type = /obj/effect/gibspawner/generic
 	foodtypes = FRUIT | GROSS
 	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)

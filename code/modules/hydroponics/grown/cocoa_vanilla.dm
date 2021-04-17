@@ -76,6 +76,7 @@
 	name = "bungo fruit"
 	desc = "A strange fruit, tough leathery skin protects its juicy flesh and large poisonous seed."
 	icon_state = "bungo"
+	bite_consumption_mod = 2
 	trash_type = /obj/item/food/grown/bungopit
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/bungojuice = 0)
@@ -86,6 +87,7 @@
 	seed = /obj/item/seeds/cocoapod/bungotree
 	name = "bungo pit"
 	icon_state = "bungopit"
+	bite_consumption_mod = 5
 	desc = "A large seed, it is said to be potent enough to be able to stop a mans heart."
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5

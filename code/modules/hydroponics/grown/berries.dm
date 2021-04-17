@@ -85,7 +85,6 @@
 	icon_state = "seed-glowberry"
 	species = "glowberry"
 	plantname = "Glow-Berry Bush"
-	bite_consumption_mod = 3
 	product = /obj/item/food/grown/berries/glow
 	lifespan = 30
 	endurance = 25
@@ -99,6 +98,7 @@
 	seed = /obj/item/seeds/berry/glow
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
+	bite_consumption_mod = 3
 	icon_state = "glowberrypile"
 	foodtypes = FRUIT
 	tastes = list("glow-berry" = 1)
@@ -133,7 +133,7 @@
 	desc = "Great for toppings!"
 	icon_state = "cherry"
 	gender = PLURAL
-
+	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
@@ -156,7 +156,7 @@
 	name = "blue cherries"
 	desc = "They're cherries that are blue."
 	icon_state = "bluecherry"
-
+	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/bluecherryjelly = 0)
 	tastes = list("blue cherry" = 1)
@@ -181,7 +181,7 @@
 	name = "cherry bulbs"
 	desc = "They're like little Space Christmas lights!"
 	icon_state = "cherry_bulb"
-
+	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
