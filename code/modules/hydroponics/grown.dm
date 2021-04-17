@@ -105,3 +105,25 @@
 			juice_results[juice_results[i]] = nutriment
 		reagents.del_reagent(/datum/reagent/consumable/nutriment)
 		reagents.del_reagent(/datum/reagent/consumable/nutriment/vitamin)
+
+/*
+ * Check if someone interacting with our plant has taken safety precautions (gloves) before picking it up or attacking with it.
+ * This is on /obj/item because grown edibles and grown inedibles are 2 different typepaths. Pain.
+ *
+ * user - the mob interacting with our plant (picking it up, attacking with it, etc)
+ * extra_traits - optional; list of additional TRAITS that we check that also count as 'safe handling' (EX: Pierce immunity for nettles)
+ *
+ * returns TRUE if [user] is considered safe. Returns FALSE otherwise.
+ */
+/obj/item/proc/plant_safety_check(mob/living/carbon/user, extra_traits)
+	if(!istype(user))
+		return TRUE
+
+	if(HAS_TRAIT(user, TRAIT_PLANT_SAFE))
+		return TRUE
+
+	for(var/checked_trait in extra_traits)
+		if(HAS_TRAIT(user, checked_trait))
+			return TRUE
+
+	return FALSE

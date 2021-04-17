@@ -250,6 +250,13 @@
 	. = ..()
 	force = round((5 + seed.potency / 5), 1)
 
+/obj/item/grown/novaflower/pre_attack(atom/hit_atom, mob/living/user, params)
+	. = ..()
+	if(plant_safety_check(user))
+		return FALSE
+	singe_holder(user)
+	return TRUE
+
 /obj/item/grown/novaflower/attack(mob/living/carbon/M, mob/user)
 	if(!..())
 		return
@@ -270,19 +277,22 @@
 		to_chat(usr, "<span class='warning'>All the petals have fallen off [src] from violent whacking!</span>")
 		qdel(src)
 
-/obj/item/grown/novaflower/pickup(mob/living/carbon/human/user)
+/obj/item/grown/novaflower/pickup(mob/user)
 	. = ..()
-	if(!iscarbon(user))
+	if(plant_safety_check(user))
 		return
+	singe_holder(user)
 
-	var/mob/living/carbon/carbon_user = user
-	if(HAS_TRAIT(carbon_user, TRAIT_PLANT_SAFE))
-		return
-
-	to_chat(carbon_user, "<span class='danger'>[src] burns your bare hand!</span>")
-	var/obj/item/bodypart/affecting = carbon_user.get_active_hand()
+/*
+ * Burn the person holding the novaflower's hand. Their active hand takes burn = the novaflower's force.
+ *
+ * user - the carbon who is holding the flower.
+ */
+/obj/item/grown/novaflower/proc/singe_holder(mob/living/carbon/user)
+	to_chat(user, "<span class='danger'>[src] singes your bare hand!</span>")
+	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(0, force, wound_bonus = CANT_WOUND))
-		carbon_user.update_damage_overlays()
+		user.update_damage_overlays()
 
 // Rose
 /obj/item/seeds/rose
@@ -316,13 +326,10 @@
 	bite_consumption_mod = 3
 	foodtypes = VEGETABLES | GROSS
 
-/obj/item/food/grown/rose/pickup(mob/living/carbon/human/user)
+/obj/item/food/grown/rose/pickup(mob/user)
 	. = ..()
-	if(!iscarbon(user))
-		return
-
 	var/mob/living/carbon/carbon_user = user
-	if(HAS_TRAIT(carbon_user, TRAIT_PLANT_SAFE) || HAS_TRAIT(carbon_user, TRAIT_PIERCEIMMUNE))
+	if(plant_safety_check(carbon_user, list(TRAIT_PIERCEIMMUNE)))
 		return
 
 	if(!seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))

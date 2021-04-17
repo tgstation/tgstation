@@ -59,18 +59,27 @@
 
 /obj/item/food/grown/nettle/pickup(mob/user)
 	. = ..()
-	if(!iscarbon(user))
-		return FALSE
+	if(plant_safety_check(user, list(TRAIT_PIERCEIMMUNE)))
+		return
+	burn_holder(user)
 
-	var/mob/living/carbon/carbon_user = user
-	if(HAS_TRAIT(carbon_user, TRAIT_PLANT_SAFE) || HAS_TRAIT(carbon_user, TRAIT_PIERCEIMMUNE))
+/obj/item/food/grown/nettle/pre_attack(atom/hit_atom, mob/living/user, params)
+	. = ..()
+	if(plant_safety_check(user, list(TRAIT_PIERCEIMMUNE)))
 		return FALSE
+	burn_holder(user)
+	return TRUE
 
-	to_chat(carbon_user, "<span class='danger'>[src] burns your bare hand!</span>")
-	var/obj/item/bodypart/affecting = carbon_user.get_active_hand()
+/*
+ * Burn the person holding the nettle's hands. Their active hand takes burn = the nettle's force.
+ *
+ * user - the carbon who is holding the nettle.
+ */
+/obj/item/food/grown/nettle/proc/burn_holder(mob/living/carbon/user)
+	to_chat(user, "<span class='danger'>[src] burns your bare hand!</span>")
+	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(0, force, wound_bonus = CANT_WOUND))
-		carbon_user.update_damage_overlays()
-		return TRUE
+		user.update_damage_overlays()
 
 /obj/item/food/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
 	. = ..()
@@ -95,13 +104,11 @@
 	. = ..()
 	force = round((5 + seed.potency / 2.5), 1)
 
-/obj/item/food/grown/nettle/death/pickup(mob/living/carbon/user)
+/obj/item/food/grown/nettle/death/burn_holder(mob/living/carbon/user)
 	. = ..()
-	if(!.)
-		return
 	if(prob(50))
 		user.Paralyze(100)
-		to_chat(user, "<span class='userdanger'>You are stunned by [src] as you try picking it up!</span>")
+		to_chat(user, "<span class='userdanger'>You are stunned by the powerful acids of [src]!</span>")
 
 /obj/item/food/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..())
