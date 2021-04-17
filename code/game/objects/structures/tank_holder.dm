@@ -39,7 +39,7 @@
 	if(tank)
 		. += "It is holding one [tank]."
 	else
-		. += "it is empty."
+		. += "It is empty."
 	. += "<span class='notice'>It is held together by some <b>screws</b>.</span>"
 
 /obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, params)
