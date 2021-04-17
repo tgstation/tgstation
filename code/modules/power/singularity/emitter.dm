@@ -394,17 +394,17 @@
 /obj/machinery/power/emitter/prototype
 	name = "Prototype Emitter"
 	icon = 'icons/obj/turrets.dmi'
-	icon_state = "protoemitter"
-	base_icon_state = "protoemitter"
-	icon_state_on = "protoemitter_+a"
-	icon_state_underpowered = "protoemitter_+u"
-	base_icon_state = "protoemitter"
+	icon_state = "proto_emitter"
+	base_icon_state = "proto_emitter"
+	icon_state_on = "proto_emitter_+a"
+	icon_state_underpowered = "proto_emitter_+u"
+	base_icon_state = "proto_emitter"
 	can_buckle = TRUE
 	buckle_lying = 0
 	///Sets the view size for the user
 	var/view_range = 4.5
 	///Grants the buckled mob the action button
-	var/datum/action/innate/protoemitter/firing/auto
+	var/datum/action/innate/proto_emitter/firing/auto
 
 //BUCKLE HOOKS
 
@@ -439,24 +439,29 @@
 		auto = new()
 	auto.Grant(buckled_mob, src)
 
-/datum/action/innate/protoemitter
+/datum/action/innate/proto_emitter
 	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
 	///Stores the emitter the user is currently buckled on
 	var/obj/machinery/power/emitter/prototype/proto_emitter
 	///Stores the mob instance that is buckled to the emitter
 	var/mob/living/carbon/buckled_mob
 
-/datum/action/innate/protoemitter/Grant(mob/living/carbon/user, obj/machinery/power/emitter/prototype/proto)
+/datum/action/innate/proto_emitter/Destroy()
+	proto_emitter = null
+	buckled_mob = null
+	return ..()
+
+/datum/action/innate/proto_emitter/Grant(mob/living/carbon/user, obj/machinery/power/emitter/prototype/proto)
 	proto_emitter = proto
 	buckled_mob = user
 	. = ..()
 
-/datum/action/innate/protoemitter/firing
+/datum/action/innate/proto_emitter/firing
 	name = "Switch to Manual Firing"
 	desc = "The emitter will only fire on your command and at your designated target"
 	button_icon_state = "mech_zoom_on"
 
-/datum/action/innate/protoemitter/firing/Activate()
+/datum/action/innate/proto_emitter/firing/Activate()
 	if(proto_emitter.manual)
 		playsound(proto_emitter,'sound/mecha/mechmove01.ogg', 50, TRUE)
 		proto_emitter.manual = FALSE
