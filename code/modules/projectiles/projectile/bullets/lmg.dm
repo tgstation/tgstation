@@ -37,8 +37,8 @@
 /obj/projectile/bullet/mm712x82/hp
 	name = "7.12x82mm hollow-point bullet"
 	damage = 50
-	armour_penetration = -60
 	sharpness = SHARP_EDGED
+	weak_against_armour = TRUE
 	wound_bonus = -40
 	bare_wound_bonus = 30
 	wound_falloff_tile = -8

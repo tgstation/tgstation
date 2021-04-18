@@ -16,7 +16,7 @@
 	///whether we feed slower
 	var/dripfeed = FALSE
 	///Internal beaker
-	var/obj/item/reagent_containers/beaker
+	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
 	var/use_internal_storage = FALSE
 	///Typecache of containers we accept
@@ -33,7 +33,7 @@
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
-	QDEL_NULL(beaker)
+	QDEL_NULL(reagent_container)
 	return ..()
 
 /obj/machinery/iv_drip/update_icon_state()
@@ -46,7 +46,7 @@
 /obj/machinery/iv_drip/update_overlays()
 	. = ..()
 
-	if(!beaker)
+	if(!reagent_container)
 		return
 
 	. += attached ? "beakeractive" : "beakeridle"
@@ -100,16 +100,16 @@
 /obj/machinery/iv_drip/attackby(obj/item/W, mob/user, params)
 	if(use_internal_storage)
 		return ..()
-
-	if(is_type_in_typecache(W, drip_containers))
-		if(beaker)
-			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
+	
+	if(is_type_in_typecache(W, drip_containers) || IS_EDIBLE(W))
+		if(reagent_container)
+			to_chat(user, "<span class='warning'>[reagent_container] is already loaded on [src]!</span>")
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
-		beaker = W
+		reagent_container = W
 		to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
-		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([beaker.reagents.log_list()])", LOG_ATTACK)
+		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.log_list()])", LOG_ATTACK)
 		add_fingerprint(user)
 		update_appearance()
 		return
@@ -139,7 +139,7 @@
 				var/transfer_amount = 5
 				if (dripfeed)
 					transfer_amount = 1
-				if(istype(beaker, /obj/item/reagent_containers/blood))
+				if(istype(reagent_container, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount *= 2
 				target_reagents.trans_to(attached, transfer_amount * delta_time * 0.5, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
@@ -159,7 +159,7 @@
 			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
 				visible_message("<span class='hear'>[src] beeps loudly.</span>")
 				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-			var/atom/movable/target = use_internal_storage ? src : beaker
+			var/atom/movable/target = use_internal_storage ? src : reagent_container
 			attached.transfer_blood_to(target, amount)
 			update_appearance()
 
@@ -173,7 +173,7 @@
 		visible_message("<span class='notice'>[attached] is detached from [src].</span>")
 		detach_iv()
 		return
-	else if(beaker)
+	else if(reagent_container)
 		eject_beaker(user)
 	else
 		toggle_mode()
@@ -207,7 +207,7 @@
 	update_appearance()
 
 /obj/machinery/iv_drip/proc/get_reagent_holder()
-	return use_internal_storage ? reagents : beaker?.reagents
+	return use_internal_storage ? reagents : reagent_container?.reagents
 
 /obj/machinery/iv_drip/verb/eject_beaker()
 	set category = "Object"
@@ -220,9 +220,9 @@
 
 	if(usr.incapacitated())
 		return
-	if(beaker)
-		beaker.forceMove(drop_location())
-		beaker = null
+	if(reagent_container)
+		reagent_container.forceMove(drop_location())
+		reagent_container = null
 		update_appearance()
 
 /obj/machinery/iv_drip/verb/toggle_mode()
@@ -247,11 +247,11 @@
 
 	. += "[src] is [mode ? "injecting" : "taking blood"]."
 
-	if(beaker)
-		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			. += "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
+	if(reagent_container)
+		if(reagent_container.reagents && reagent_container.reagents.reagent_list.len)
+			. += "<span class='notice'>Attached is \a [reagent_container] with [reagent_container.reagents.total_volume] units of liquid.</span>"
 		else
-			. += "<span class='notice'>Attached is an empty [beaker.name].</span>"
+			. += "<span class='notice'>Attached is an empty [reagent_container.name].</span>"
 	else if(use_internal_storage)
 		. += "<span class='notice'>It has an internal chemical storage.</span>"
 	else
@@ -269,7 +269,7 @@
 
 /obj/machinery/iv_drip/saline/Initialize(mapload)
 	. = ..()
-	beaker = new /obj/item/reagent_containers/glass/saline(src)
+	reagent_container = new /obj/item/reagent_containers/glass/saline(src)
 
 /obj/machinery/iv_drip/saline/ComponentInitialize()
 	. = ..()
