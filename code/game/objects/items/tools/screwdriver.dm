@@ -37,7 +37,7 @@
 		"cyan" = "#18a2d5",
 		"yellow" = "#ffa500"
 	)
-	/// Colored belt apperance for adding it as a belt overlay
+	/// Colored belt appearance for adding it as a belt overlay
 	var/mutable_appearance/colored_belt_appearance
 
 /obj/item/screwdriver/suicide_act(mob/user)
