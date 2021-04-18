@@ -1,7 +1,7 @@
 /// -- Plant backfire element --
 /// Certain high-danger plants, like death-nettles, will backfire and harm the holder if they're not properly protected.
 /// If a user is protected with something like leather gloves, they can handle them normally.
-/// If they're not protected properly, we call backfire proc on the user.
+/// If they're not protected properly, we call a backfire proc on the user, harming or inconveniencing them.
 /datum/element/plant_backfire
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
@@ -33,7 +33,7 @@
  * Checks before we attack if we're okay to continue.
  *
  * source - our plant
- * user - the mob wielding [source]
+ * user - the mob wielding our [source]
  */
 /datum/element/plant_backfire/proc/attack_safety_check(datum/source, atom/target, mob/user)
 	SIGNAL_HANDLER
@@ -47,7 +47,7 @@
  * Checks before we pick up the plant if we're okay to continue.
  *
  * source - our plant
- * user - the mob picking up [source]
+ * user - the mob picking our [source]
  */
 /datum/element/plant_backfire/proc/pickup_safety_check(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -60,21 +60,27 @@
  * Checks before we throw the plant if we're okay to continue.
  *
  * source - our plant
- * thrower - the mob throwing up [source]
+ * thrower - the mob throwing our [source]
  */
-/datum/element/plant_backfire/proc/throw_safety_check(datum/source, atom/target, range, speed, mob/thrower)
+/datum/element/plant_backfire/proc/throw_safety_check(datum/source, list/arguments)
 	SIGNAL_HANDLER
 
-	if(plant_safety_check(source, thrower))
+	if(plant_safety_check(source, arguments[4]))
 		return
-	call(source, backfire_procpath)(thrower)
+	call(source, backfire_procpath)(arguments[4])
 	return COMPONENT_CANCEL_THROW
 
 /*
  * Actually checks if our user is safely handling our plant.
  *
+ * Checks for TRAIT_PLANT_SAFE, and returns TRUE if we have it.
+ * Then, any extra traits we need to check (Like TRAIT_PIERCEIMMUNE for nettles) and returns TRUE if we have one of them.
+ * Then, any extra genes we need to check (Like liquid contents for bluespace tomatos) and returns TRUE if we don't have the gene.
+ *
  * source - our plant
- * user - the carbon handling [source]
+ * user - the carbon handling our [source]
+ *
+ * returns FALSE if none of the checks are successful.
  */
 /datum/element/plant_backfire/proc/plant_safety_check(datum/source, mob/living/carbon/user)
 	if(!istype(user))
