@@ -438,7 +438,7 @@
 			var/obj/item/weldingtool/welder = tool
 			if(welder.isOn())
 				user.visible_message("<span class='notice'>[user] holds \the [tool] to the security screws on \the [src]...</span>",
-									"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
+				"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
 			if(tool.use_tool(src, user, 150, volume = 100))
 				to_chat(user, "<span class='notice'>The security screws are glowing white hot and look ready to be removed.</span>")
 				state = RWINDOW_BOLTS_HEATED

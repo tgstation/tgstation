@@ -74,7 +74,7 @@
 
 /obj/item/weldingtool/process(delta_time)
 	switch(welding)
-		if(FALSE)
+		if(0)
 			force = 3
 			damtype = BRUTE
 			update_appearance()
@@ -82,12 +82,12 @@
 				STOP_PROCESSING(SSobj, src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
-		if(TRUE)
+		if(1)
 			force = 15
 			damtype = BURN
 			burned_fuel_for += delta_time
 			if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
-				use(TRUE)
+				use(1)
 			update_appearance()
 
 	//This is to start fires. process() is only called if the welder is on.
