@@ -352,7 +352,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/explode()
 	for(var/mob/living/victim in GLOB.alive_mob_list)
-		if(!istype(victim) || living.z != z)
+		if(!istype(victim) || victim.z != z)
 			continue
 		if(ishuman(victim))
 			//Hilariously enough, running into a closet should make you get hit the hardest.
