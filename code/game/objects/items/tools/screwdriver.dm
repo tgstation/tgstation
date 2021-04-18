@@ -24,7 +24,6 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
 	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
-	item_flags = EYE_STAB
 	sharpness = SHARP_POINTY
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
@@ -49,6 +48,7 @@
 		var/our_color = pick(screwdriver_colors)
 		set_greyscale_colors(list(screwdriver_colors[our_color]))
 	. = ..()
+	AddElement(/datum/element/eyestab)
 	if(prob(75))
 		pixel_y = rand(0, 16)
 

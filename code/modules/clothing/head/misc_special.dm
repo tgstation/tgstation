@@ -222,7 +222,7 @@
 	icon_state = "hair_vlong"
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
-	flags_inv = HIDEHAIR | HIDEHEADGEAR
+	flags_inv = HIDEHAIR
 	color = "#000"
 	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?
@@ -230,6 +230,15 @@
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
 	update_appearance()
+
+/obj/item/clothing/head/wig/equipped(mob/user, slot)
+	. = ..()
+	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
+		item_flags |= EXAMINE_SKIP
+
+/obj/item/clothing/head/wig/dropped(mob/user)
+	. = ..()
+	item_flags &= ~EXAMINE_SKIP
 
 /obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/S = GLOB.hairstyles_list[hairstyle]
