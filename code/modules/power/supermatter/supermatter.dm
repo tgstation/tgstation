@@ -351,29 +351,28 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explode()
 
 /obj/machinery/power/supermatter_crystal/proc/explode()
-	for(var/mob in GLOB.alive_mob_list)
-		var/mob/living/living = mob
-		if(!istype(living) || living.z != z)
+	for(var/mob/living/victim in GLOB.alive_mob_list)
+		if(!istype(victim) || living.z != z)
 			continue
-		if(ishuman(mob))
+		if(ishuman(victim))
 			//Hilariously enough, running into a closet should make you get hit the hardest.
-			var/mob/living/carbon/human/human = mob
-			human.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
-		var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(living, src) + 1) )
-		living.rad_act(rads)
+			var/mob/living/carbon/human/human = victim
+			human.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1)) ) )
+		var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(victim, src) + 1) )
+		victim.rad_act(rads)
 
 	var/turf/local_turf = get_turf(src)
-	for(var/mob/mob in GLOB.player_list)
-		var/turf/mob_turf = get_turf(mob)
+	for(var/mob/victim as anything in GLOB.player_list)
+		var/turf/mob_turf = get_turf(victim)
 		if(local_turf.z != mob_turf.z)
 			continue
-		SEND_SOUND(mob, 'sound/magic/charge.ogg')
+		SEND_SOUND(victim, 'sound/magic/charge.ogg')
 
-		if (mob.z != z)
-			to_chat(mob, "<span class='boldannounce'>You hold onto \the [mob.loc] as hard as you can, as reality distorts around you. You feel safe.</span>")
+		if (victim.z != z)
+			to_chat(victim, "<span class='boldannounce'>You hold onto \the [victim.loc] as hard as you can, as reality distorts around you. You feel safe.</span>")
 			continue
-		to_chat(mob, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
-		SEND_SIGNAL(mob, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
+		to_chat(victim, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
+		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
 
 
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
@@ -645,9 +644,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			living.hallucination += power * hallucination_power * distance
 			living.hallucination = clamp(living.hallucination, 0, 200)
 	psyCoeff = clamp(psyCoeff + to_add, 0, 1)
-	for(var/mob/living/living in range(src, round((power / 100) ** 0.25)))
-		var/rads = (power / 10) * sqrt( 1 / max(get_dist(living, src),1) )
-		living.rad_act(rads)
+	for(var/mob/living/rad_victim in range(src, round((power / 100) ** 0.25)))
+		var/rads = (power / 10) * sqrt( 1 / max(get_dist(rad_victim, src),1) )
+		rad_victim.rad_act(rads)
 
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
@@ -763,11 +762,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	investigate_log("Supermatter shard consumed by singularity.", INVESTIGATE_SINGULO)
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
-	for(var/mob/mob in GLOB.player_list)
-		if(mob.z != z)
+	for(var/mob/hearing_mob as anything in GLOB.player_list)
+		if(hearing_mob.z != z)
 			continue
-		SEND_SOUND(mob, 'sound/effects/supermatter.ogg') //everyone goan know bout this
-		to_chat(mob, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")
+		SEND_SOUND(hearing_mob, 'sound/effects/supermatter.ogg') //everyone goan know bout this
+		to_chat(hearing_mob, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")
 	qdel(src)
 	return gain
 
@@ -777,12 +776,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 	damage += blob.obj_integrity * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
 	if(blob.obj_integrity > 100)
-		blob.visible_message("<span class='danger'>\The [blob] strikes at \the [src] and flinches away!</span>",\
-		"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
+		blob.visible_message("<span class='danger'>\The [blob] strikes at \the [src] and flinches away!</span>",
+			"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
 		blob.take_damage(100, BURN)
 	else
-		blob.visible_message("<span class='danger'>\The [blob] strikes at \the [src] and rapidly flashes to ash.</span>",\
-		"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
+		blob.visible_message("<span class='danger'>\The [blob] strikes at \the [src] and rapidly flashes to ash.</span>",
+			"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
 		Consume(blob)
 
 /obj/machinery/power/supermatter_crystal/attack_tk(mob/user)
@@ -949,57 +948,57 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		default_unfasten_wrench(user, tool, time = 20)
 	return TRUE
 
-/obj/machinery/power/supermatter_crystal/Bumped(atom/movable/object)
-	if(isliving(object))
-		object.visible_message("<span class='danger'>\The [object] slams into \the [src] inducing a resonance... [object.p_their()] body starts to glow and burst into flames before flashing into dust!</span>",\
-		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
-		"<span class='hear'>You hear an unearthly noise as a wave of heat washes over you.</span>")
-	else if(isobj(object) && !iseffect(object))
-		object.visible_message("<span class='danger'>\The [object] smacks into \the [src] and rapidly flashes to ash.</span>", null,\
-		"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
+/obj/machinery/power/supermatter_crystal/Bumped(atom/movable/hit_object)
+	if(isliving(hit_object))
+		hit_object.visible_message("<span class='danger'>\The [hit_object] slams into \the [src] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!</span>",
+			"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",
+			"<span class='hear'>You hear an unearthly noise as a wave of heat washes over you.</span>")
+	else if(isobj(hit_object) && !iseffect(hit_object))
+		hit_object.visible_message("<span class='danger'>\The [hit_object] smacks into \the [src] and rapidly flashes to ash.</span>", null,
+			"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	else
 		return
 
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
-	Consume(object)
+	Consume(hit_object)
 
-/obj/machinery/power/supermatter_crystal/intercept_zImpact(atom/movable/object, levels)
+/obj/machinery/power/supermatter_crystal/intercept_zImpact(atom/movable/hit_object, levels)
 	. = ..()
-	Bumped(object)
+	Bumped(hit_object)
 	. |= FALL_STOP_INTERCEPTING | FALL_INTERCEPTED
 
-/obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/object)
-	if(isliving(object))
-		var/mob/living/user = object
-		if(user.status_flags & GODMODE)
+/obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/consumed_object)
+	if(isliving(consumed_object))
+		var/mob/living/consumed_mob = consumed_object
+		if(consumed_mob.status_flags & GODMODE)
 			return
-		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
-		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
-		user.dust(force = TRUE)
+		message_admins("[src] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(src)].")
+		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_SUPERMATTER)
+		consumed_mob.dust(force = TRUE)
 		if(power_changes)
 			matter_power += 200
-	else if(object.flags_1 & SUPERMATTER_IGNORES_1)
+	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
-	else if(isobj(object))
-		if(!iseffect(object))
+	else if(isobj(consumed_object))
+		if(!iseffect(consumed_object))
 			var/suspicion = ""
-			if(object.fingerprintslast)
-				suspicion = "last touched by [object.fingerprintslast]"
-				message_admins("[src] has consumed [object], [suspicion] [ADMIN_JMP(src)].")
-			investigate_log("has consumed [object] - [suspicion].", INVESTIGATE_SUPERMATTER)
-		qdel(object)
-	if(!iseffect(object) && power_changes)
+			if(consumed_object.fingerprintslast)
+				suspicion = "last touched by [consumed_object.fingerprintslast]"
+				message_admins("[src] has consumed [consumed_object], [suspicion] [ADMIN_JMP(src)].")
+			investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_SUPERMATTER)
+		qdel(consumed_object)
+	if(!iseffect(consumed_object) && power_changes)
 		matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(src, 3000, 2, TRUE)
-	for(var/mob/living/living in range(10))
-		investigate_log("has irradiated [key_name(living)] after consuming [object].", INVESTIGATE_SUPERMATTER)
-		if(living in view())
-			living.show_message("<span class='danger'>As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", MSG_VISUAL,\
+	for(var/mob/living/near_mob in range(10))
+		investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_SUPERMATTER)
+		if(near_mob in view())
+			near_mob.show_message("<span class='danger'>As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", MSG_VISUAL,
 				"<span class='danger'>The unearthly ringing subsides and you notice you have new radiation burns.</span>", MSG_AUDIBLE)
 		else
-			living.show_message("<span class='hear'>You hear an unearthly ringing and notice your skin is covered in fresh radiation burns.</span>", MSG_AUDIBLE)
+			near_mob.show_message("<span class='hear'>You hear an unearthly ringing and notice your skin is covered in fresh radiation burns.</span>", MSG_AUDIBLE)
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
 	return
@@ -1043,17 +1042,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
-	for(var/atom/movable/atom in orange(pull_range,center))
-		if((atom.anchored || atom.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)) //move resist memes.
-			if(istype(atom, /obj/structure/closet))
-				var/obj/structure/closet/toggle = atom
-				toggle.open(force = TRUE)
+	for(var/atom/movable/movable_atom in orange(pull_range,center))
+		if((movable_atom.anchored || movable_atom.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)) //move resist memes.
+			if(istype(movable_atom, /obj/structure/closet))
+				var/obj/structure/closet/closet = movable_atom
+				closet.open(force = TRUE)
 			continue
-		if(ismob(atom))
-			var/mob/mob = atom
-			if(mob.mob_negates_gravity())
+		if(ismob(movable_atom))
+			var/mob/pulled_mob = movable_atom
+			if(pulled_mob.mob_negates_gravity())
 				continue //You can't pull someone nailed to the deck
-		step_towards(atom,center)
+		step_towards(movable_atom,center)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
 	var/turf/local_turf = pick(orange(anomalyrange, anomalycenter))
