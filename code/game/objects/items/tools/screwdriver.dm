@@ -3,10 +3,7 @@
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "screwdriver_map"
-	inhand_icon_state = "screwdriver_head"
 	worn_icon_state = "screwdriver"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
@@ -37,6 +34,8 @@
 		"cyan" = "#18a2d5",
 		"yellow" = "#ffa500"
 	)
+	/// Colored belt apperance for adding it as a belt overlay
+	var/mutable_appearance/colored_belt_appearance
 
 /obj/item/screwdriver/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -47,27 +46,17 @@
 		set_greyscale_config(/datum/greyscale_config/screwdriver)
 		var/our_color = pick(screwdriver_colors)
 		set_greyscale_colors(list(screwdriver_colors[our_color]))
+		lefthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_left, greyscale_colors)
+		righthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_right, greyscale_colors)
+		colored_belt_appearance = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	if(prob(75))
 		pixel_y = rand(0, 16)
 
-/obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file)
-	. = list()
-	if(isinhands && random_color)
-		var/mutable_appearance/inhand_overlay
-		switch(icon_file)
-			if('icons/mob/inhands/equipment/tools_lefthand.dmi')
-				inhand_overlay = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_left, greyscale_colors))
-				. += inhand_overlay
-			if('icons/mob/inhands/equipment/tools_righthand.dmi')
-				inhand_overlay = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_inhand_right, greyscale_colors))
-				. += inhand_overlay
-
 /obj/item/screwdriver/get_belt_overlay()
 	if(random_color)
-		var/mutable_appearance/colored_belt_overlay = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
-		return colored_belt_overlay
+		return colored_belt_appearance
 	else
 		return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
 
