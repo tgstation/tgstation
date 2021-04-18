@@ -52,23 +52,11 @@
 /obj/item/food/grown/nettle/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
 	force = round((5 + seed.potency / 5), 1)
+	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/nettle.proc/burn_holder, list(TRAIT_PIERCEIMMUNE))
 
 /obj/item/food/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|TOXLOSS)
-
-/obj/item/food/grown/nettle/pickup(mob/user)
-	. = ..()
-	if(plant_safety_check(user, list(TRAIT_PIERCEIMMUNE)))
-		return
-	burn_holder(user)
-
-/obj/item/food/grown/nettle/pre_attack(atom/hit_atom, mob/living/user, params)
-	. = ..()
-	if(plant_safety_check(user, list(TRAIT_PIERCEIMMUNE)))
-		return FALSE
-	burn_holder(user)
-	return TRUE
 
 /*
  * Burn the person holding the nettle's hands. Their active hand takes burn = the nettle's force.

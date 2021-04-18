@@ -97,14 +97,16 @@
 	distill_reagent = null
 	wine_power = 80
 
-/obj/item/food/grown/tomato/blue/bluespace/pickup(mob/user)
+/obj/item/food/grown/tomato/blue/bluespace/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	if(plant_safety_check(user))
-		return
+	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/tomato/blue/bluespace.proc/splat_user, extra_genes = list(/datum/plant_gene/trait/squash))
 
-	if(!seed.get_gene(/datum/plant_gene/trait/squash))
-		return
-
+/*
+ * Splat our tomato on our user. Called from [/datum/element/plant_backfire]
+ *
+ * user - the mob handling the bluespace tomato
+ */
+/obj/item/food/grown/tomato/blue/bluespace/proc/splat_user(mob/living/carbon/user)
 	if(prob(50))
 		to_chat(user, "<span class='danger'>[src] slips out of your hand!</span>")
 		attack_self(user)
@@ -133,6 +135,10 @@
 	icon_state = "killertomato"
 	var/awakening = 0
 	distill_reagent = /datum/reagent/consumable/ethanol/demonsblood
+
+/obj/item/food/grown/tomato/killer/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/tomato/killer.proc/early_awaken, extra_genes = list(/datum/plant_gene/trait/squash))
 
 /obj/item/food/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)
@@ -171,11 +177,12 @@
 	K.visible_message("<span class='notice'>[src] growls as it suddenly awakens.</span>")
 	qdel(src)
 
-/obj/item/food/grown/tomato/killer/pickup(mob/user)
-	. = ..()
-	if(plant_safety_check(user))
-		return
-
-	if(prob(25))
+/*
+ * Wakes up our tomato early. Called from [/datum/element/plant_backfire]
+ *
+ * user - the mob handling the killer tomato
+ */
+/obj/item/food/grown/tomato/killer/proc/early_awaken(mob/living/carbon/user)
+	if(!awakening && prob(25))
 		to_chat(user, "<span class='danger'>[src] begins to growl and shake!</span>")
 		begin_awaken(1 SECONDS)

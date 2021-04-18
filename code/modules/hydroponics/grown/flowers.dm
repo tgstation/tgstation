@@ -249,13 +249,7 @@
 /obj/item/grown/novaflower/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
 	force = round((5 + seed.potency / 5), 1)
-
-/obj/item/grown/novaflower/pre_attack(atom/hit_atom, mob/living/user, params)
-	. = ..()
-	if(plant_safety_check(user))
-		return FALSE
-	singe_holder(user)
-	return TRUE
+	AddElement(/datum/element/plant_backfire, /obj/item/grown/novaflower.proc/singe_holder)
 
 /obj/item/grown/novaflower/attack(mob/living/carbon/M, mob/user)
 	if(!..())
@@ -276,12 +270,6 @@
 	else
 		to_chat(usr, "<span class='warning'>All the petals have fallen off [src] from violent whacking!</span>")
 		qdel(src)
-
-/obj/item/grown/novaflower/pickup(mob/user)
-	. = ..()
-	if(plant_safety_check(user))
-		return
-	singe_holder(user)
 
 /*
  * Burn the person holding the novaflower's hand. Their active hand takes burn = the novaflower's force.
@@ -326,19 +314,18 @@
 	bite_consumption_mod = 3
 	foodtypes = VEGETABLES | GROSS
 
-/obj/item/food/grown/rose/pickup(mob/user)
+/obj/item/food/grown/rose/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	var/mob/living/carbon/carbon_user = user
-	if(plant_safety_check(carbon_user, list(TRAIT_PIERCEIMMUNE)))
-		return
+	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/rose.proc/prick_holder, list(TRAIT_PIERCEIMMUNE))
 
+/obj/item/food/grown/rose/proc/prick_holder(mob/living/carbon/user)
 	if(!seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
 		return
 
-	to_chat(carbon_user, "<span class='danger'>[src]'s thorns prick your hand. Ouch.</span>")
-	var/obj/item/bodypart/affecting = carbon_user.get_active_hand()
+	to_chat(user, "<span class='danger'>[src]'s thorns prick your hand. Ouch.</span>")
+	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(2))
-		carbon_user.update_damage_overlays()
+		user.update_damage_overlays()
 
 // Carbon Rose
 /obj/item/seeds/carbon_rose
