@@ -44,6 +44,10 @@ GLOBAL_LIST_INIT(low_filtering_gases, list(
 	for(var/gas_id in GLOB.meta_gas_info)
 		LAZYADD(gases_moles, gas_id)
 
+/obj/item/gas_filter/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>[src] is at [filter_status] % durability.</span>"
+
 /**
  * called by the gas mask where the filter is installed, lower the filter_status depending on the breath gas composition and by the strenght of the filter
  * returns the modified breath gas mixture
@@ -85,3 +89,12 @@ GLOBAL_LIST_INIT(low_filtering_gases, list(
 
 	filter_status = max(filter_status - danger_points - 1, 0)
 	return breath
+
+/obj/item/gas_filter/damaged
+	name = "damaged gas filter"
+	desc = "piece of filtering cloth to be used with atmospheric gas masks and emergency gas masks, it seems damaged"
+	filter_status = 50 //override on initialize
+
+/obj/item/gas_filter/damaged/Initialize()
+	. = ..()
+	filter_status = rand(35, 65)

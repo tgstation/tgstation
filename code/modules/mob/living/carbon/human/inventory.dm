@@ -211,6 +211,11 @@
 		gloves = null
 		if(!QDELETED(src))
 			update_inv_gloves()
+	else if(I == wear_mask)
+		wear_mask = null
+		var/obj/item/clothing/mask/mask = I
+		if(mask.tint || initial(mask.tint))
+			update_tint()
 	else if(I == glasses)
 		glasses = null
 		var/obj/item/clothing/glasses/G = I
