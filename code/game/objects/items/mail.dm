@@ -54,15 +54,15 @@
 /obj/item/mail/Initialize()
 	. = ..()
 	AddElement(/datum/element/item_scaling, 0.5, 1)
-	if(!department_colors?.len)
+	if(isnull(department_colors))
 		department_colors = list(
-		ACCOUNT_CIV = COLOR_WHITE,
-		ACCOUNT_ENG = COLOR_PALE_ORANGE,
-		ACCOUNT_SCI = COLOR_PALE_PURPLE_GRAY,
-		ACCOUNT_MED = COLOR_PALE_BLUE_GRAY,
-		ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
-		ACCOUNT_CAR = COLOR_BEIGE,
-		ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
+			ACCOUNT_CIV = COLOR_WHITE,
+			ACCOUNT_ENG = COLOR_PALE_ORANGE,
+			ACCOUNT_SCI = COLOR_PALE_PURPLE_GRAY,
+			ACCOUNT_MED = COLOR_PALE_BLUE_GRAY,
+			ACCOUNT_SRV = COLOR_PALE_GREEN_GRAY,
+			ACCOUNT_CAR = COLOR_BEIGE,
+			ACCOUNT_SEC = COLOR_PALE_RED_GRAY,
 		)
 
 	// Icons
@@ -119,14 +119,14 @@
 		return
 
 	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
-	if(!do_after(user, 15, target = user))
+	if(!do_after(user, 1.5 SECONDS, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	unwrap_contents()
 	for(var/mail_contents in contents)
 		var/atom/movable/AM = mail_contents
 		user.put_in_hands(AM)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
 /obj/item/mail/proc/unwrap_contents()

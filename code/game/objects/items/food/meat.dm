@@ -390,7 +390,7 @@
 
 /obj/item/food/monkeycube/chicken
 	name = "chicken cube"
-	desc = "A new Nanotrasen classic, the chicken cube. Tates like everything!"
+	desc = "A new Nanotrasen classic, the chicken cube. Tastes like everything!"
 	bite_consumption = 20
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 30, /datum/reagent/medicine/strange_reagent = 1)
 	tastes = list("chicken" = 1, "the country" = 1, "chicken bouillon" = 1)
