@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Admin logs showing someone being stripped of an item will now correctly show the perp's name/ckey"
