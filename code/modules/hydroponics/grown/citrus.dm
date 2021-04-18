@@ -59,6 +59,9 @@
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
 
+/obj/item/food/grown/citrus/orange/New()
+	qdel(src)
+
 // Lemon
 /obj/item/seeds/lemon
 	name = "pack of lemon seeds"
