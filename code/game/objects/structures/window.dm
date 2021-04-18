@@ -395,37 +395,37 @@
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 //2021 AND STILLLL GOING STRONG
-/obj/structure/window/reinforced/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/window/reinforced/attackby(obj/item/tool, mob/living/user, params)
 	switch(state)
 		if(RWINDOW_BOLTS_HEATED)
-			if(I.tool_behaviour == TOOL_SCREWDRIVER)
+			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("<span class='notice'>[user] digs into the heated security screws and starts removing them...</span>",
 										"<span class='notice'>You dig into the heated screws hard and they start turning...</span>")
-				if(I.use_tool(src, user, 50, volume = 50))
+				if(tool.use_tool(src, user, 50, volume = 50))
 					state = RWINDOW_BOLTS_OUT
 					to_chat(user, "<span class='notice'>The screws come out, and a gap forms around the edge of the pane.</span>")
 				return
 		if(RWINDOW_BOLTS_OUT)
-			if(I.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message("<span class='notice'>[user] wedges \the [I] into the gap in the frame and starts prying...</span>",
-										"<span class='notice'>You wedge \the [I] into the gap in the frame and start prying...</span>")
-				if(I.use_tool(src, user, 40, volume = 50))
+			if(tool.tool_behaviour == TOOL_CROWBAR)
+				user.visible_message("<span class='notice'>[user] wedges \the [tool] into the gap in the frame and starts prying...</span>",
+										"<span class='notice'>You wedge \the [tool] into the gap in the frame and start prying...</span>")
+				if(tool.use_tool(src, user, 40, volume = 50))
 					state = RWINDOW_POPPED
 					to_chat(user, "<span class='notice'>The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut.</span>")
 				return
 		if(RWINDOW_POPPED)
-			if(I.tool_behaviour == TOOL_WIRECUTTER)
+			if(tool.tool_behaviour == TOOL_WIRECUTTER)
 				user.visible_message("<span class='notice'>[user] starts cutting the exposed bars on \the [src]...</span>",
 										"<span class='notice'>You start cutting the exposed bars on \the [src]</span>")
-				if(I.use_tool(src, user, 20, volume = 50))
+				if(tool.use_tool(src, user, 20, volume = 50))
 					state = RWINDOW_BARS_CUT
 					to_chat(user, "<span class='notice'>The panels falls out of the way exposing the frame bolts.</span>")
 				return
 		if(RWINDOW_BARS_CUT)
-			if(I.tool_behaviour == TOOL_WRENCH)
+			if(tool.tool_behaviour == TOOL_WRENCH)
 				user.visible_message("<span class='notice'>[user] starts unfastening \the [src] from the frame...</span>",
 					"<span class='notice'>You start unfastening the bolts from the frame...</span>")
-				if(I.use_tool(src, user, 40, volume = 50))
+				if(tool.use_tool(src, user, 40, volume = 50))
 					to_chat(user, "<span class='notice'>You unscrew the bolts from the frame and the window pops loose.</span>")
 					state = WINDOW_OUT_OF_FRAME
 					set_anchored(FALSE)
@@ -442,7 +442,8 @@
 				state = RWINDOW_BOLTS_HEATED
 				addtimer(CALLBACK(src, .proc/cool_bolts), 300)
 				return SECONDARY_ATTACK_CALL_NORMAL
-	to_chat("<span class='notice'>The security screws need to be heated first!</span>")
+		else if (tool.tool_behaviour)
+			to_chat(user, "<span class='warning'>The security screws need to be heated first!</span>")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/window/proc/cool_bolts()
