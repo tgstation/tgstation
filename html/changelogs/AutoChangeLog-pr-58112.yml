@@ -1,6 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - rscadd: "Canisters when broken will fall in other directions than to the right"
-  - imageadd: "Canisters have been unified under a greyscale system"
-  - imagedel: "Old canister images have been removed"

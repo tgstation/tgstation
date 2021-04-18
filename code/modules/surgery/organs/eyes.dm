@@ -20,6 +20,8 @@
 	low_threshold_cleared = "<span class='info'>Your vision is cleared of any ailment.</span>"
 
 	var/sight_flags = 0
+	/// changes how the eyes overlay is applied, makes it apply over the lighting layer
+	var/overlay_ignore_lighting = FALSE
 	var/see_in_dark = 2
 	var/tint = 0
 	var/eye_color = "" //set to a hex code to override a mob's eye color
@@ -444,6 +446,8 @@
 /obj/item/organ/eyes/fly
 	name = "fly eyes"
 	desc = "These eyes seem to stare back no matter the direction you look at it from."
+	eye_icon_state = "flyeyes"
+	icon_state = "eyeballs-fly"
 
 /obj/item/organ/eyes/fly/Insert(mob/living/carbon/M, special = FALSE)
 	. = ..()
@@ -451,4 +455,50 @@
 
 /obj/item/organ/eyes/fly/Remove(mob/living/carbon/M, special = FALSE)
 	REMOVE_TRAIT(M, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
+	return ..()
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted
+	name = "adapted eyes"
+	desc = "These red eyes look like two foggy marbles. They give off a particularly worrying glow in the dark."
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	eye_color = "f00"
+	icon_state = "adapted_eyes"
+	eye_icon_state = "eyes_glow"
+	overlay_ignore_lighting = TRUE
+	var/obj/item/flashlight/eyelight/adapted/adapt_light
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted/Initialize()
+	. = ..()
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted/Insert(mob/living/carbon/adapted, special = FALSE)
+	. = ..()
+	//add lighting
+	if(!adapt_light)
+		adapt_light = new /obj/item/flashlight/eyelight/adapted()
+	adapt_light.on = TRUE
+	adapt_light.forceMove(adapted)
+	adapt_light.update_brightness(adapted)
+	//traits
+	ADD_TRAIT(adapted, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
+	ADD_TRAIT(adapted, CULT_EYES, ORGAN_TRAIT)
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted/on_life(delta_time, times_fired)
+	var/turf/T = get_turf(owner)
+	var/lums = T.get_lumcount()
+	if(lums > 0.5) //we allow a little more than usual so we can produce light from the adapted eyes
+		to_chat(owner, "<span class='danger'>Your eyes! They burn in the light!</span>")
+		applyOrganDamage(10) //blind quickly
+		playsound(owner, 'sound/machines/grill/grillsizzle.ogg', 50)
+	else
+		applyOrganDamage(-10) //heal quickly
+	. = ..()
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted/Remove(mob/living/carbon/unadapted, special = FALSE)
+	//remove lighting
+	adapt_light.on = FALSE
+	adapt_light.update_brightness(unadapted)
+	adapt_light.forceMove(src)
+	//traits
+	REMOVE_TRAIT(unadapted, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
+	REMOVE_TRAIT(unadapted, CULT_EYES, ORGAN_TRAIT)
 	return ..()

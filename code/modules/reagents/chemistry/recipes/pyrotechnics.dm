@@ -6,28 +6,7 @@
 	required_temp = 0 //Prevent impromptu RPGs
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	explode(holder, created_volume)
-
-/datum/chemical_reaction/reagent_explosion/proc/explode(datum/reagents/holder, created_volume)
-	var/power = modifier + round(created_volume/strengthdiv, 1)
-	if(power > 0)
-		var/turf/T = get_turf(holder.my_atom)
-		var/inside_msg
-		if(ismob(holder.my_atom))
-			var/mob/M = holder.my_atom
-			inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
-		var/lastkey = holder.my_atom.fingerprintslast //This can runtime (null.fingerprintslast) - due to plumbing?
-		var/touch_msg = "N/A"
-		if(lastkey)
-			var/mob/toucher = get_mob_by_key(lastkey)
-			touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
-		if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
-			message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
-		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
-		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(power , T, 0, 0)
-		e.start()
-	holder.clear_reagents()
+	default_explode(holder, created_volume, modifier, strengthdiv)
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
@@ -177,7 +156,7 @@
 	mix_message = "<span class='boldannounce'>Sparks start flying around the gunpowder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	addtimer(CALLBACK(src, .proc/explode, holder, created_volume), rand(5,10) SECONDS)
+	addtimer(CALLBACK(src, .proc/default_explode, holder, created_volume), rand(5,10) SECONDS)
 
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
@@ -576,7 +555,7 @@
 		added_delay += 1.5 SECONDS
 	if(created_volume >= 10) //10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
 		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T3), added_delay)
-	addtimer(CALLBACK(src, .proc/explode, holder, created_volume), added_delay)
+	addtimer(CALLBACK(src, .proc/default_explode, holder, created_volume), added_delay)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/proc/zappy_zappy(datum/reagents/holder, power)
 	if(QDELETED(holder.my_atom))
