@@ -375,6 +375,7 @@
 			if(affecting?.receive_damage( 0, heat_damage ))
 				human.update_damage_overlays()
 			to_chat(user, "<span class='warning'>You burn your hand on the tank!</span>")
+			forceMove(user.loc)
 			return
 	return ..()
 
