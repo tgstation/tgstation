@@ -1,4 +1,0 @@
-author: "Celotajs"
-delete-after: True
-changes: 
-  - bugfix: "Stopped obscenities from appearing on slot machines"
