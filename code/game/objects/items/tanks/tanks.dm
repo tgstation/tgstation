@@ -107,19 +107,21 @@
 
 	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
 
-	var/celsius_temperature = src.air_contents.temperature-T0C
+	var/celsius_temperature = KELVIN_TO_CELSIUS(air_contents.temperature)
 	var/descriptive
 
-	if (celsius_temperature < 20)
+	if (celsius_temperature < 10)
 		descriptive = "cold"
-	else if (celsius_temperature < 40)
+	else if (celsius_temperature < 30)
 		descriptive = "room temperature"
-	else if (celsius_temperature < 80)
+	else if (celsius_temperature < 50)
 		descriptive = "lukewarm"
-	else if (celsius_temperature < 100)
+	else if (celsius_temperature < 80)
 		descriptive = "warm"
-	else if (celsius_temperature < 300)
+	else if (celsius_temperature < 250)
 		descriptive = "hot"
+	else if (celsius_temperature < 500)
+		descriptive = "very hot"
 	else
 		descriptive = "furiously hot"
 
@@ -360,10 +362,10 @@
 			var/heat_damage = 0
 			var/wound_type = /datum/wound/burn/moderate
 			switch(celsius_temperature)
-				if(1001 to INFINITY)
+				if(501 to INFINITY)
 					wound_type = /datum/wound/burn/critical
 					heat_damage = 15
-				if(251 to 1000)
+				if(251 to 500)
 					wound_type = /datum/wound/burn/severe
 					heat_damage = 10
 				if(80 to 250)
