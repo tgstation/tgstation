@@ -1,3 +1,5 @@
+#define THERMOMACHINE_SAFE_TEMPERATURE 500000
+
 /obj/machinery/atmospherics/components/binary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "freezer"
@@ -156,19 +158,19 @@
 	var/temperature_difference = 0
 	var/skip_tick = TRUE
 	if(!use_enviroment_heat && main_port.total_moles() > 0.01)
-		if(cooling && thermal_exchange_port.total_moles() > 0.01 && nodes[2] && (thermal_exchange_port.temperature <= FUSION_MAXIMUM_TEMPERATURE || !safeties))
+		if(cooling && thermal_exchange_port.total_moles() > 0.01 && nodes[2] && (thermal_exchange_port.temperature <= THERMOMACHINE_SAFE_TEMPERATURE || !safeties))
 			thermal_exchange_port.temperature = max(thermal_exchange_port.temperature + heat_amount / thermal_heat_capacity + motor_heat / thermal_heat_capacity, TCMB)
 		else if(cooling && (!thermal_exchange_port.total_moles() || !nodes[2]))
 			skipping_work = skip_tick
 			update_appearance()
 			update_parents()
 			return
-		if(thermal_exchange_port.temperature > FUSION_MAXIMUM_TEMPERATURE && safeties)
+		if(thermal_exchange_port.temperature > THERMOMACHINE_SAFE_TEMPERATURE && safeties)
 			on = FALSE
 			visible_message("<span class='warning'>The thermal exchange port's temperature has reached critical levels, shutting down...</span>")
 			update_appearance()
 			return
-		else if(thermal_exchange_port.temperature > FUSION_MAXIMUM_TEMPERATURE && !safeties)
+		else if(thermal_exchange_port.temperature > THERMOMACHINE_SAFE_TEMPERATURE && !safeties)
 			if((REALTIMEOFDAY - lastwarning) / 5 >= WARNING_DELAY)
 				lastwarning = REALTIMEOFDAY
 				visible_message("<span class='warning'>The thermal exchange port's temperature has reached critical levels!</span>")
@@ -183,7 +185,7 @@
 		skip_tick = FALSE
 	if(use_enviroment_heat && main_port.total_moles() > 0.01)
 		var/enviroment_efficiency = 1
-		if(cooling && enviroment.total_moles() > 0.01 && (thermal_exchange_port.temperature <= FUSION_MAXIMUM_TEMPERATURE || !safeties))
+		if(cooling && enviroment.total_moles() > 0.01 && (thermal_exchange_port.temperature <= THERMOMACHINE_SAFE_TEMPERATURE || !safeties))
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
 			if(enviroment.total_moles())
 				enviroment_efficiency = clamp(log(1.55, enviroment.total_moles()) * 0.15, 0.65, 1)
@@ -194,12 +196,12 @@
 			update_appearance()
 			update_parents()
 			return
-		if(enviroment.temperature > FUSION_MAXIMUM_TEMPERATURE && safeties)
+		if(enviroment.temperature > THERMOMACHINE_SAFE_TEMPERATURE && safeties)
 			on = FALSE
 			visible_message("<span class='warning'>The enviroment's temperature has reached critical levels, shutting down...</span>")
 			update_appearance()
 			return
-		else if(enviroment.temperature > FUSION_MAXIMUM_TEMPERATURE && !safeties)
+		else if(enviroment.temperature > THERMOMACHINE_SAFE_TEMPERATURE && !safeties)
 			if((REALTIMEOFDAY - lastwarning) / 5 >= WARNING_DELAY)
 				lastwarning = REALTIMEOFDAY
 				visible_message("<span class='warning'>The enviroment's temperature has reached critical levels!</span>")
@@ -353,9 +355,9 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/check_explosion(temperature)
-	if(temperature < FUSION_MAXIMUM_TEMPERATURE + 2000)
+	if(temperature < THERMOMACHINE_SAFE_TEMPERATURE + 2000)
 		return FALSE
-	if(prob(log(15, temperature) * 10)) //68% at 1e8, 100% at 1e12
+	if(prob(log(6, temperature) * 10)) //75% at 500000, 100% at 1e8
 		return TRUE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/explode()
@@ -505,3 +507,5 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/heater/on
 	on = TRUE
 	icon_state = "heater_1"
+
+#undef THERMOMACHINE_SAFE_TEMPERATURE
