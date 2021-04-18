@@ -102,23 +102,8 @@
 			H.throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
 		return FALSE
 
-	breath.assert_gases(/datum/gas/oxygen,
-						/datum/gas/plasma,
-						/datum/gas/carbon_dioxide,
-						/datum/gas/nitrous_oxide,
-						/datum/gas/bz,
-						/datum/gas/nitrogen,
-						/datum/gas/tritium,
-						/datum/gas/nitryl,
-						/datum/gas/pluoxium,
-						/datum/gas/stimulum,
-						/datum/gas/freon,
-						/datum/gas/hypernoblium,
-						/datum/gas/healium,
-						/datum/gas/proto_nitrate,
-						/datum/gas/zauker,
-						/datum/gas/halon
-						)
+	for(var/gas_id in GLOB.meta_gas_info)
+		breath.assert_gas(gas_id)
 
 	if(H.wear_mask && H.wear_mask.clothing_flags & GAS_FILTERING && H.wear_mask.has_filter == TRUE)
 		breath = H.wear_mask.consume_filter(breath)

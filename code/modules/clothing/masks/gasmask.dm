@@ -23,16 +23,17 @@
 	if(LAZYLEN(gas_filters) > 0)
 		. += "<span class='notice'>Currently there are [LAZYLEN(gas_filters)] filters with [get_filter_durability()]% durability.</span>"
 
-/obj/item/clothing/mask/gas/attackby(obj/item/I, mob/user)
+/obj/item/clothing/mask/gas/attackby(obj/item/filter, mob/user)
 	. = ..()
-	if(!istype(I, /obj/item/gas_filter))
+	if(!istype(filter, /obj/item/gas_filter))
 		return TRUE
 	if(LAZYLEN(gas_filters) >= max_filters)
 		return TRUE
-	if(!user.transferItemToLoc(I, src))
+	if(!user.transferItemToLoc(filter, src))
 		return TRUE
-	has_filter = TRUE
-	LAZYADD(gas_filters, I)
+	LAZYADD(gas_filters, filter)
+	if(LAZYLEN(gas_filters) > 0)
+		has_filter = TRUE
 
 ///Check _masks.dm for this one
 /obj/item/clothing/mask/gas/consume_filter(datum/gas_mixture/breath)
@@ -41,9 +42,10 @@
 	var/obj/item/gas_filter/gas_filter = pick(gas_filters)
 	var/datum/gas_mixture/filtered_breath = gas_filter.reduce_filter_status(breath)
 	if(gas_filter.filter_status <= 0)
-		has_filter = FALSE
 		LAZYREMOVE(gas_filters, gas_filter)
 		qdel(gas_filter)
+	if(LAZYLEN(gas_filters) <= 0)
+		has_filter = FALSE
 	return filtered_breath
 
 /**
@@ -68,6 +70,13 @@
 	permeability_coefficient = 0.001
 	resistance_flags = FIRE_PROOF
 	max_filters = 3
+
+/obj/item/clothing/mask/gas/atmos/Initialize()
+	. = ..()
+	for(var/i in 1 to max_filters)
+		var/obj/item/gas_filter/filter = new(src)
+		LAZYADD(gas_filters, filter)
+	has_filter = TRUE
 
 /obj/item/clothing/mask/gas/atmos/captain
 	name = "captain's gas mask"
