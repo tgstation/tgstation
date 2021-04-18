@@ -936,7 +936,7 @@
 /obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
 	var/obj/item/reagent_containers/stored_beaker = stored
 	stored_beaker.SplashReagents(get_turf(user))
-	loc.visible_message("<span class='notice'>[user] spills the contents of the [stored_beaker] all over the floor.</span>")
+	loc.visible_message("<span class='notice'>[user] spills the contents of [stored_beaker] all over the floor.</span>")
 	. = ..()
 
 /obj/item/borg/apparatus/beaker/extra
