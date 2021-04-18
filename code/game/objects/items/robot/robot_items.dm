@@ -876,7 +876,7 @@
 /// Parent proc for all apparatus, tells the player that they can alt-click to drop.
 /obj/item/borg/apparatus/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'> <i>Alt+click</i> will drop the currently stored item. </span>"
+	. += "<span class='notice'><i>Alt-click</i> will drop the currently stored item.</span>"
 
 /////////////////
 //beaker holder//
