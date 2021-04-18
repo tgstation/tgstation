@@ -29,6 +29,7 @@
 	default_storage = /obj/item/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	hacked = TRUE
+	shy = FALSE
 	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
@@ -61,11 +62,15 @@
 	icon_state = "syndrone_item"
 	mob_name = "syndrone"
 	mob_type = /mob/living/simple_animal/drone/syndrone
+	short_desc = "You are a Syndicate Maintenance Drone."
+	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some upgrades... and now serve an enemy of your former masters."
+	important_info = ""
 
 /obj/effect/mob_spawn/drone/syndrone/badass
 	name = "badass syndrone shell"
 	mob_name = "badass syndrone"
 	mob_type = /mob/living/simple_animal/drone/syndrone/badass
+	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some BETTER upgrades... and now serve an enemy of your former masters."
 
 /obj/effect/mob_spawn/drone/snowflake
 	name = "snowflake drone shell"
@@ -91,6 +96,14 @@
 
 	icon_living = icon_state
 	icon_dead = "[visualAppearance]_dead"
+
+/obj/effect/mob_spawn/drone/classic
+	mob_type = /mob/living/simple_animal/drone/classic
+
+/mob/living/simple_animal/drone/classic
+	name = "classic drone shell"
+	shy = FALSE
+	default_storage = /obj/item/storage/backpack/duffelbag/drone
 
 /obj/effect/mob_spawn/drone/derelict
 	name = "derelict drone shell"
@@ -120,10 +133,10 @@
 	"<span class='notice'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+	shy = FALSE
 
 /mob/living/simple_animal/drone/derelict/Initialize()
 	. = ..()
 	AddComponent(/datum/component/stationstuck, PUNISHMENT_GIB, "01000110 01010101 01000011 01001011 00100000 01011001 01001111 01010101<br>WARNING: Dereliction of KS13 detected. Self-destruct activated.")
-
 
 
