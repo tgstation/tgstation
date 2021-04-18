@@ -435,13 +435,14 @@
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
 	if(state == RWINDOW_SECURE)
 		if(tool.tool_behaviour == TOOL_WELDER)
-			user.visible_message("<span class='notice'>[user] holds \the [tool] to the security screws on \the [src]...</span>",
-								"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
+			var/obj/item/weldingtool/welder = tool
+			if(welder.isOn())
+				user.visible_message("<span class='notice'>[user] holds \the [tool] to the security screws on \the [src]...</span>",
+									"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
 			if(tool.use_tool(src, user, 150, volume = 100))
 				to_chat(user, "<span class='notice'>The security screws are glowing white hot and look ready to be removed.</span>")
 				state = RWINDOW_BOLTS_HEATED
 				addtimer(CALLBACK(src, .proc/cool_bolts), 300)
-				return SECONDARY_ATTACK_CALL_NORMAL
 		else if (tool.tool_behaviour)
 			to_chat(user, "<span class='warning'>The security screws need to be heated first!</span>")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
