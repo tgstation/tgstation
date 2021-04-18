@@ -177,17 +177,17 @@
 
 /obj/structure/window/attackby(obj/item/I, mob/living/user, params)
 	if(!can_be_reached(user))
-		return 1 //skip the afterattack
+		return TRUE //skip the afterattack
 
 	add_fingerprint(user)
 
-	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
+	if(I.tool_behaviour == TOOL_WELDER)
 		if(obj_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount = 0))
 				return
 
 			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-			if(I.use_tool(src, user, 40, volume=50))
+			if(I.use_tool(src, user, 40, volume = 50))
 				obj_integrity = max_integrity
 				update_nearby_icons()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
@@ -396,17 +396,7 @@
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 //2021 AND STILLLL GOING STRONG
 /obj/structure/window/reinforced/attackby(obj/item/I, mob/living/user, params)
-	var/list/modifiers = params2list(params)
 	switch(state)
-		if(RWINDOW_SECURE)
-			if(I.tool_behaviour == TOOL_WELDER && modifiers && modifiers["right"])
-				user.visible_message("<span class='notice'>[user] holds \the [I] to the security screws on \the [src]...</span>",
-										"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
-				if(I.use_tool(src, user, 150, volume = 100))
-					to_chat(user, "<span class='notice'>The security bolts are glowing white hot and look ready to be removed.</span>")
-					state = RWINDOW_BOLTS_HEATED
-					addtimer(CALLBACK(src, .proc/cool_bolts), 300)
-				return
 		if(RWINDOW_BOLTS_HEATED)
 			if(I.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("<span class='notice'>[user] digs into the heated security screws and starts removing them...</span>",
@@ -441,6 +431,19 @@
 					set_anchored(FALSE)
 				return
 	return ..()
+
+/obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
+	if(state == RWINDOW_SECURE)
+		if(tool.tool_behaviour == TOOL_WELDER)
+			user.visible_message("<span class='notice'>[user] holds \the [tool] to the security screws on \the [src]...</span>",
+								"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
+			if(tool.use_tool(src, user, 150, volume = 100))
+				to_chat(user, "<span class='notice'>The security screws are glowing white hot and look ready to be removed.</span>")
+				state = RWINDOW_BOLTS_HEATED
+				addtimer(CALLBACK(src, .proc/cool_bolts), 300)
+				return SECONDARY_ATTACK_CALL_NORMAL
+	to_chat("<span class='notice'>The security screws need to be heated first!</span>")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
