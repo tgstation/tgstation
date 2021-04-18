@@ -3,7 +3,7 @@
 /// If a user is protected with something like leather gloves, they can handle them normally.
 /// If they're not protected properly, we call a backfire proc on the user, harming or inconveniencing them.
 /datum/element/plant_backfire
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2
 	/// Any extra traits we want to check in addition to TRAIT_PLANT_SAFE. Mobs with a trait in this list will be considered safe. List of traits.
 	var/extra_traits
@@ -65,9 +65,10 @@
 /datum/element/plant_backfire/proc/throw_safety_check(datum/source, list/arguments)
 	SIGNAL_HANDLER
 
-	if(plant_safety_check(source, arguments[4]))
+	var/mob/living/thrower = arguments[4] // 4th arg = mob/thrower
+	if(plant_safety_check(source, thrower))
 		return
-	call(source, backfire_procpath)(arguments[4])
+	call(source, backfire_procpath)(thrower)
 	return COMPONENT_CANCEL_THROW
 
 /*
