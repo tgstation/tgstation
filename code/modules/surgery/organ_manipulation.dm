@@ -85,6 +85,8 @@
 			return -1
 		I = tool.contents[1]
 		if(!isorgan(I))
+			if (target_zone == BODY_ZONE_PRECISE_EYES)
+				target_zone = check_zone(target_zone)
 			to_chat(user, "<span class='warning'>You cannot put [I] into [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 		tool = I
@@ -98,6 +100,8 @@
 		if(!meatslab.useable)
 			to_chat(user, "<span class='warning'>[I] seems to have been chewed on, you can't use this!</span>")
 			return -1
+		if (target_zone == BODY_ZONE_PRECISE_EYES)
+			target_zone = check_zone(target_zone)
 		display_results(user, target, "<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>",
 			"<span class='notice'>[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] begins to insert something into [target]'s [parse_zone(target_zone)].</span>")
@@ -105,6 +109,8 @@
 	else if(implement_type in implements_extract)
 		current_type = "extract"
 		var/list/organs = target.getorganszone(target_zone)
+		if (target_zone == BODY_ZONE_PRECISE_EYES)
+			target_zone = check_zone(target_zone)
 		if(!organs.len)
 			to_chat(user, "<span class='warning'>There are no removable organs in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
@@ -130,6 +136,8 @@
 
 
 /datum/surgery_step/manipulate_organs/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+	if (target_zone == BODY_ZONE_PRECISE_EYES)
+		target_zone = check_zone(target_zone)
 	if(current_type == "insert")
 		if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 			I = tool.contents[1]
