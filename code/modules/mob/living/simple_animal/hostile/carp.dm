@@ -62,26 +62,26 @@
 		"lightred" = "#fd6767",
 		"yellow" = "#f3ca4a",
 		"blue" = "#09bae1",
-		"palegreen" = "#7ef099",
+		"palegreen" = "#7ef099"
 	)
 	/// List of rare carp colors
 	var/static/list/carp_colors_rare = list(
-		"silver" = "#fdfbf3",
+		"silver" = "#fdfbf3"
 	)
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload)
+	if(random_color)
+		set_greyscale_config(/datum/greyscale_config/carp)
+		carp_randomify(rarechance)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_cell_sample()
-	if(random_color)
-		greyscale_config = /datum/greyscale_config/carp
-		carp_randomify(rarechance)
 
 /mob/living/simple_animal/hostile/carp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /**
- * Randomly assigns a color to a carp from either a common or rare color variants lists
+ * Randomly assigns a color to a carp from either a common or rare color variant lists
  *
  * Arguments:
  * * rare The chance of the carp receiving color from the rare color variant list
@@ -90,25 +90,10 @@
 	var/our_color
 	if(prob(rarechance))
 		our_color = pick(carp_colors_rare)
-		greyscale_colors = carp_colors_rare[our_color]
+		set_greyscale_colors(list(carp_colors_rare[our_color]))
 	else
 		our_color = pick(carp_colors)
-		greyscale_colors = carp_colors[our_color]
-	update_icon()
-
-/mob/living/simple_animal/hostile/carp/revive(full_heal, admin_revive)
-	. = ..()
-	if(!random_color || !.)
-		return
-	greyscale_config = /datum/greyscale_config/carp
-	update_icon()
-
-/mob/living/simple_animal/hostile/carp/death(gibbed)
-	. = ..()
-	if(!random_color || gibbed)
-		return
-	greyscale_config = /datum/greyscale_config/carp/dead
-	update_icon()
+		set_greyscale_colors(list(carp_colors[our_color]))
 
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
 	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in view(1, src)
@@ -240,9 +225,12 @@
 	var/obj/item/disk/nuclear/disky
 	/// Location of the file storing disk overlays
 	var/icon/disk_overlay_file = 'icons/mob/carp.dmi'
+	/// Colored disk mouth appearance for adding it as a mouth overlay
+	var/mutable_appearance/colored_disk_mouth
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize()
 	. = ..()
+	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors))
 	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART
 
@@ -294,7 +282,7 @@
 	. = ..()
 	if(!disky || stat == DEAD)
 		return
-	. += mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors))
+	. += colored_disk_mouth
 	. += mutable_appearance(disk_overlay_file, "disk_overlay")
 
 #undef REGENERATION_DELAY

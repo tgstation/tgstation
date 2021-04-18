@@ -1,5 +1,5 @@
 {
-	"layers": [
+	"base": [
 		{
 			"type": "icon_state",
 			"icon_state": "base",
@@ -9,6 +9,19 @@
 		{
 			"type": "icon_state",
 			"icon_state": "base_mouth",
+			"blend_mode": "overlay"
+		}
+	],
+	"base_dead": [
+		{
+			"type": "icon_state",
+			"icon_state": "base_dead",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "base_dead_mouth",
 			"blend_mode": "overlay"
 		}
 	]
