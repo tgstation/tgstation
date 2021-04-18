@@ -13,7 +13,6 @@
 	attack_verb_continuous = list("bashes", "batters", "judges", "whacks")
 	attack_verb_simple = list("bash", "batter", "judge", "whack")
 	resistance_flags = FLAMMABLE
-	item_flags = KNEE_JERK
 
 /obj/item/gavelhammer/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] has sentenced [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

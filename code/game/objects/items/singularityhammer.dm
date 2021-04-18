@@ -8,7 +8,6 @@
 	worn_icon_state = "singularity_hammer"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
-	item_flags = KNEE_JERK
 	force = 5
 	throwforce = 15
 	throw_range = 1

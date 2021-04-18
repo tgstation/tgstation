@@ -575,7 +575,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("smashes", "bashes", "hammers", "crunches")
 	attack_verb_simple = list("smash", "bash", "hammer", "crunch")
-	item_flags = KNEE_JERK
 
 /obj/item/nullrod/chainsaw
 	name = "chainsaw hand"
@@ -623,7 +622,6 @@
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	item_flags = KNEE_JERK
 	attack_verb_continuous = list("attacks", "smashes", "crushes", "splatters", "cracks")
 	attack_verb_simple = list("attack", "smash", "crush", "splatter", "crack")
 	hitsound = 'sound/weapons/blade1.ogg'

@@ -36,7 +36,6 @@
 #define EXAMINE_SKIP (1<<15) // Makes the Examine proc not read out this item.
 #define XENOMORPH_HOLDABLE (1<<16) // A Xenomorph can hold this item.
 #define NO_PIXEL_RANDOM_DROP (1<<17) //if dropped, it wont have a randomized pixel_x/pixel_y
-#define KNEE_JERK (1<<18) //Item can be used to test reactions
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

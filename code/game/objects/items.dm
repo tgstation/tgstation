@@ -631,42 +631,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			to_chat(M, "<span class='danger'>You go blind!</span>")
 	return TRUE
 
-///This proc runs when you hit someone with an item campable of performing a knee jerk reaction test, a measure of brain health
-/obj/item/proc/kneejerk(mob/living/carbon/M, mob/living/carbon/user)
-	var/selected_zone = user.zone_selected
-	var/obj/item/bodypart/r_leg = M.get_bodypart(BODY_ZONE_R_LEG)
-	var/obj/item/bodypart/l_leg = M.get_bodypart(BODY_ZONE_L_LEG)
-	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
-	if(ishuman(M))
-		if(selected_zone == BODY_ZONE_R_LEG) //do they have the leg?
-			if(!r_leg)
-				return
-		if(selected_zone == BODY_ZONE_L_LEG)
-			if(!l_leg)
-				return
-		user.do_attack_animation(M)
-		M.visible_message("<span class='warning'>[user] gently taps [M]'s knee with [src].</span>", \
-			"<span class='userdanger'>[user] taps your knee with [src].</span>")
-		playsound(M, 'sound/weapons/punchmiss.ogg', 20, TRUE, -1)
-		if(B) //do they have a brain?
-			var/BH = B.damage
-			if(!BH || BH < BRAIN_DAMAGE_MILD) //a healthy brain produces a normal reaction
-				M.visible_message("<span class='danger'>[M]'s leg kicks out sharply!</span>", \
-					"<span class='userdanger'>Your leg kicks out sharply!</span>")
-				return TRUE
-			else if(BH < BRAIN_DAMAGE_SEVERE) //a mildly damaged brain produces a delayed reaction
-				M.visible_message("<span class='danger'>After a moment, [M]'s leg kicks out sharply!</span>", \
-					"<span class='userdanger'>After a moment, your leg kicks out sharply!</span>")
-				return TRUE
-			else if(BH < BRAIN_DAMAGE_DEATH) //a severely damaged brain produces a delayed + weaker reaction
-				M.visible_message("<span class='danger'>After a moment, [M]'s leg kicks out weakly!</span>", \
-					"<span class='userdanger'>After a moment, your leg kicks out weakly!</span>")
-				return TRUE
-			else if (BH >= BRAIN_DAMAGE_DEATH) //a dead/missing brain produces no reaction
-				return TRUE
-		else
-			return TRUE
-
 /obj/item/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FOUR)

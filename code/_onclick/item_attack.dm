@@ -171,10 +171,6 @@
 			M = user
 		if(eyestab(M,user))
 			return
-	var/list/modifiers = params2list(params)
-	if(item_flags & KNEE_JERK && (user.zone_selected == (BODY_ZONE_L_LEG || BODY_ZONE_R_LEG)) && LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(kneejerk(M,user))
-			return
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(hitsound)
