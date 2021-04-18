@@ -34,7 +34,7 @@
 
 /obj/item/melee/sickly_blade
 	name = "\improper Sickly Blade"
-	desc = "A sickly green crescent blade, decorated with an ornamental eye. You feel like you're being watched... A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand."
+	desc = "A sickly green crescent blade, decorated with an ornamental eye. You feel like you're being watched..."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "eldritch_blade"
 	inhand_icon_state = "eldritch_blade"
@@ -68,6 +68,7 @@
 			to_chat(user,"<span class='warning'>You shatter [src], but your plea goes unanswered.</span>")
 	else
 		to_chat(user,"<span class='warning'>You shatter [src].</span>")
+	playsound(src, "shatter", 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -85,27 +86,32 @@
 		else
 			eldritch_knowledge_datum.on_ranged_attack_eldritch_blade(target,user,click_parameters)
 
+/obj/item/melee/sickly_blade/examine(mob/user)
+	. = ..()
+	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
+		. += {"<span class='notice'>A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand.</span>"}
+
 /obj/item/melee/sickly_blade/rust
 	name = "\improper Rusted Blade"
-	desc = "This crescent blade is decrepit, wasting to rust. Yet still it bites, ripping flesh and bone with jagged, rotten teeth. A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand."
+	desc = "This crescent blade is decrepit, wasting to rust. Yet still it bites, ripping flesh and bone with jagged, rotten teeth."
 	icon_state = "rust_blade"
 	inhand_icon_state = "rust_blade"
 
 /obj/item/melee/sickly_blade/ash
 	name = "\improper Ashen Blade"
-	desc = "Molten and unwrought, a hunk of metal warped to cinders and slag. Unmade, it aspires to be more than it is, and shears soot-filled wounds with a blunt edge. A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand."
+	desc = "Molten and unwrought, a hunk of metal warped to cinders and slag. Unmade, it aspires to be more than it is, and shears soot-filled wounds with a blunt edge."
 	icon_state = "ash_blade"
 	inhand_icon_state = "ash_blade"
 
 /obj/item/melee/sickly_blade/flesh
 	name = "Flesh Blade"
-	desc = "A crescent blade born from a fleshwarped creature. Keenly aware, it seeks to spread to others the suffering it has endured from its dreadful origins. A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand."
+	desc = "A crescent blade born from a fleshwarped creature. Keenly aware, it seeks to spread to others the suffering it has endured from its dreadful origins."
 	icon_state = "flesh_blade"
 	inhand_icon_state = "flesh_blade"
 
 /obj/item/melee/sickly_blade/void
 	name = "Void Blade"
-	desc = "Devoid of any substance, this blade reflects nothingness. It is a real depiction of purity, and chaos that ensues after its implementation. A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand."
+	desc = "Devoid of any substance, this blade reflects nothingness. It is a real depiction of purity, and chaos that ensues after its implementation."
 	icon_state = "void_blade"
 	inhand_icon_state = "void_blade"
 
