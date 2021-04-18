@@ -98,7 +98,7 @@
 	ignores_timeout = TRUE
 
 
-/obj/item/station_charter/flag
+/obj/item/station_charter/banner
 	name = "\improper Nanotrasen banner"
 	icon = 'icons/obj/banner.dmi'
 	name_type = "planet"
@@ -106,14 +106,14 @@
 	inhand_icon_state = "banner"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	desc = "A cunning device used to claim ownership of planets."
-	w_class = 5
+	desc = "A cunning device used to claim ownership of celestial bodies."
+	w_class = WEIGHT_CLASS_HUGE
 	force = 15
 
-/obj/item/station_charter/flag/rename_station(designation, uname, ureal_name, ukey)
+/obj/item/station_charter/banner/rename_station(designation, uname, ureal_name, ukey)
 	set_station_name(designation)
-	minor_announce("[ureal_name] has designated the planet as [station_name()]", "Captain's Banner", 0)
-	log_game("[ukey] has renamed the planet as [station_name()].")
+	minor_announce("[ureal_name] has designated the [name_type] as [station_name()]", "Captain's Banner", 0)
+	log_game("[ukey] has renamed the [name_type] as [station_name()].")
 	name = "banner of [station_name()]"
 	desc = "The banner bears the official coat of arms of Nanotrasen, signifying that [station_name()] has been claimed by Captain [uname] in the name of the company."
 	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")

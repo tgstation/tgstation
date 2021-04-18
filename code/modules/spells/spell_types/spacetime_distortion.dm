@@ -6,6 +6,7 @@
 	range = 7
 	var/list/effects
 	var/ready = TRUE
+	school = SCHOOL_EVOCATION
 	centcom_cancast = FALSE
 	sound = 'sound/effects/magic.ogg'
 	cooldown_min = 300

@@ -40,6 +40,9 @@
 ///from SSsun when the sun changes position : (azimuth)
 #define COMSIG_SUN_MOVED "sun_moved"
 
+///from SSsecurity_level when the security level changes : (new_level)
+#define COMSIG_SECURITY_LEVEL_CHANGED "security_level_changed"
+
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
@@ -285,8 +288,15 @@
 #define COMSIG_LIVING_START_PULL "living_start_pull"
 ///called on /living when someone is pulled (mob/living/puller)
 #define COMSIG_LIVING_GET_PULLED "living_start_pulled"
+///called on /living, when pull is attempted, but before it completes, from base of [/mob/living/start_pulling]: (atom/movable/thing, force)
+#define COMSIG_LIVING_TRY_PULL "living_try_pull"
+	#define COMSIG_LIVING_CANCEL_PULL (1 << 0)
 ///from base of [/atom/proc/interact]: (mob/user)
 #define COMSIG_ATOM_UI_INTERACT "atom_ui_interact"
+///called on /living when attempting to pick up an item, from base of /mob/living/put_in_hand_check(): (obj/item/I)
+#define COMSIG_LIVING_TRY_PUT_IN_HAND "living_try_put_in_hand"
+	/// Can't pick up
+	#define COMPONENT_LIVING_CANT_PUT_IN_HAND (1<<0)
 
 /// from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()
 /// if a callback returns `SINGULARITY_TRY_MOVE_BLOCK`, then the singularity will not move to that turf
@@ -570,6 +580,15 @@
 ///from end of fully_heal(): (admin_revive)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
 
+///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
+///also from /mob/living/stripPanel(Un)equip)()
+#define COMSIG_TRY_STRIP "try_strip"
+	#define COMPONENT_CANT_STRIP (1<<0)
+
+///Called on user, from base of /datum/strippable_item/alternate_action() (atom/target)
+#define COMSIG_TRY_ALT_ACTION "try_alt_action"
+	#define COMPONENT_CANT_ALT_ACTION (1<<0)
+
 ///From /datum/component/creamed/Initialize()
 #define COMSIG_MOB_CREAMED "mob_creamed"
 ///From /obj/item/gun/proc/check_botched()
@@ -615,6 +634,18 @@
 #define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
+///Called when a carbon mutates (source = dna, mutation = mutation added)
+#define COMSIG_CARBON_GAIN_MUTATION "carbon_gain_mutation"
+///Called when a carbon loses a mutation (source = dna, mutation = mutation lose)
+#define COMSIG_CARBON_LOSE_MUTATION "carbon_lose_mutation"
+///Called when a carbon becomes addicted (source = what addiction datum, addicted_mind = mind of the addicted carbon)
+#define COMSIG_CARBON_GAIN_ADDICTION "carbon_gain_addiction"
+///Called when a carbon is no longer addicted (source = what addiction datum was lost, addicted_mind = mind of the freed carbon)
+#define COMSIG_CARBON_LOSE_ADDICTION "carbon_lose_addiction"
+///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added) - this is before on_gain()
+#define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
+///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
+#define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
 
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
@@ -652,6 +683,10 @@
 ///from /obj/machinery/computer/arcade/prizevend(mob/user, prizes = 1)
 #define COMSIG_ARCADE_PRIZEVEND "arcade_prizevend"
 
+///from /obj/machinery/can_interact(mob/user): Called on user when attempting to interact with a machine (obj/machinery/machine)
+#define COMSIG_TRY_USE_MACHINE "try_use_machine"
+	#define COMPONENT_CANT_USE_MACHINE (1<<0)
+
 ///from obj/machinery/iv_drip/IV_attach(target, usr) : (attachee)
 #define COMSIG_IV_ATTACH "iv_attach"
 ///from obj/machinery/iv_drip/IV_detach() : (detachee)
@@ -684,6 +719,9 @@
 
 ///from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
+///called on [/obj/item] before unequip from base of [mob/proc/doUnEquip]: (force, atom/newloc, no_move, invdrop, silent)
+#define COMSIG_ITEM_PRE_UNEQUIP "item_pre_unequip"
+	#define COMPONENT_ITEM_BLOCK_UNEQUIP (1<<0)
 ///from base of obj/item/on_grind(): ())
 #define COMSIG_ITEM_ON_GRIND "on_grind"
 ///from base of obj/item/on_juice(): ()
@@ -817,10 +855,15 @@
 
 // /obj/item/gun signals
 
-///called in /obj/item/gun/process_fire (user, target, params, zone_override)
+///called in /obj/item/gun/process_fire (src, target, params, zone_override)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GUN_FIRED "gun_fired"
+
+// /obj/effect/proc_holder/spell signals
+
+///called from /obj/effect/proc_holder/spell/perform (src)
+#define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
 
 // /obj/item/grenade signals
 
@@ -1144,9 +1187,11 @@
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
 ///From base of mob/update_movespeed():area
 #define COMSIG_MOB_MOVESPEED_UPDATED "mob_update_movespeed"
-///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
+///(NOT on humans) from mob/living/*/UnarmedAttack(): (atom/target, proximity, modifiers)
+#define COMSIG_LIVING_UNARMED_ATTACK "living_unarmed_attack"
+///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
-///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
+///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
 
 

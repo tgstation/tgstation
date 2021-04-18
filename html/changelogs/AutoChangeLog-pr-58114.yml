@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - balance: "Armor now checks if an attack is weak against armor, and if so, multiplies any existing armor by two."
+  - balance: "Hollowpoint bullets and shrapnel now follow this logic, and no longer grant someone additional armor if they have any armor at all."
