@@ -89,7 +89,7 @@
 /obj/item/melee/sickly_blade/examine(mob/user)
 	. = ..()
 	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
-		. += {"<span class='notice'>A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand.</span>"}
+		. += {"<span class='notice'><B>A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand.</B></span>"}
 
 /obj/item/melee/sickly_blade/rust
 	name = "\improper Rusted Blade"
