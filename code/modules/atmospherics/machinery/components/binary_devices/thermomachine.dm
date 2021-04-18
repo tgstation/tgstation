@@ -226,7 +226,7 @@
 		update_appearance()
 		return
 
-	if(!anchored && item.tool_behaviour == TOOL_MULTITOOL)
+	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL)
 		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
 		to_chat(user, "<span class='notice'>You change the circuitboard to layer [piping_layer].</span>")
 		update_appearance()
@@ -280,7 +280,7 @@
 	if(panel_open && item.tool_behaviour == TOOL_WRENCH && !check_pipe_on_turf())
 		if(default_unfasten_wrench(user, item))
 			return SECONDARY_ATTACK_CONTINUE_CHAIN
-	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL && !anchored)
+	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL)
 		color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
 		pipe_color = GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]]
 		visible_message("<span class='notice'>You set [src] pipe color to [GLOB.pipe_color_name[pipe_color]].")
