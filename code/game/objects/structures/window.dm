@@ -396,9 +396,10 @@
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 //2021 AND STILLLL GOING STRONG
 /obj/structure/window/reinforced/attackby(obj/item/I, mob/living/user, params)
+	var/list/modifiers = params2list(params)
 	switch(state)
 		if(RWINDOW_SECURE)
-			if(I.tool_behaviour == TOOL_WELDER && user.combat_mode)
+			if(I.tool_behaviour == TOOL_WELDER && modifiers && modifiers["right"])
 				user.visible_message("<span class='notice'>[user] holds \the [I] to the security screws on \the [src]...</span>",
 										"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
 				if(I.use_tool(src, user, 150, volume = 100))
