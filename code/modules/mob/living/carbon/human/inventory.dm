@@ -108,7 +108,7 @@
 			var/obj/item/clothing/glasses/G = I
 			if(G.glass_colour_type)
 				update_glasses_color(G, 1)
-			if(G.tint)
+			if(G.tint || initial(G.tint))
 				update_tint()
 			if(G.vision_correction)
 				clear_fullscreen("nearsighted")
@@ -216,7 +216,7 @@
 		var/obj/item/clothing/glasses/G = I
 		if(G.glass_colour_type)
 			update_glasses_color(G, 0)
-		if(G.tint)
+		if(G.tint || initial(G.tint))
 			update_tint()
 		if(G.vision_correction)
 			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
