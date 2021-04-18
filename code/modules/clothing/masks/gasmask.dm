@@ -2,7 +2,7 @@
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "gas_alt"
@@ -10,10 +10,56 @@
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+	tint = 0.9
+	///Max numbers of installable filters
+	var/max_filters = 1
+	///List to keep track of each filter
+	var/list/gas_filters
+
+/obj/item/clothing/mask/gas/examine(mob/user)
+	. = ..()
+	if(max_filters > 0)
+		. += "<span class='notice'>The amount of slots for filters are [max_filters].</span>"
+	if(LAZYLEN(gas_filters) > 0)
+		. += "<span class='notice'>Currently there are [LAZYLEN(gas_filters)] filters with [get_filter_durability()]% durability.</span>"
+
+/obj/item/clothing/mask/gas/attackby(obj/item/I, mob/user)
+	. = ..()
+	if(!istype(I, /obj/item/gas_filter))
+		return TRUE
+	if(LAZYLEN(gas_filters) >= max_filters)
+		return TRUE
+	if(!user.transferItemToLoc(I, src))
+		return TRUE
+	has_filter = TRUE
+	LAZYADD(gas_filters, I)
+
+///Check _masks.dm for this one
+/obj/item/clothing/mask/gas/consume_filter(datum/gas_mixture/breath)
+	if(LAZYLEN(gas_filters) <= 0 || max_filters == 0)
+		return breath
+	var/obj/item/gas_filter/gas_filter = pick(gas_filters)
+	var/datum/gas_mixture/filtered_breath = gas_filter.reduce_filter_status(breath)
+	if(gas_filter.filter_status <= 0)
+		has_filter = FALSE
+		LAZYREMOVE(gas_filters, gas_filter)
+		qdel(gas_filter)
+	return filtered_breath
+
+/**
+ * Getter for overall filter durability, takes into consideration all filters filter_status
+ */
+/obj/item/clothing/mask/gas/proc/get_filter_durability()
+	var/max_filters_durability = LAZYLEN(gas_filters) * 100
+	var/current_filters_durability
+	for(var/obj/item/gas_filter/gas_filter as anything in gas_filters)
+		current_filters_durability += gas_filter.filter_status
+	var/durability = (current_filters_durability / max_filters_durability) * 100
+	return durability
 
 /obj/item/clothing/mask/gas/atmos
 	name = "atmospheric gas mask"
-	desc = "Improved gas mask utilized by atmospheric technicians. Still not very good at blocking gas flow, but it's flameproof!"
+	desc = "Improved gas mask utilized by atmospheric technicians. It's flameproof!"
 	icon_state = "gas_atmos"
 	inhand_icon_state = "gas_atmos"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 20, ACID = 10)
@@ -21,6 +67,7 @@
 	gas_transfer_coefficient = 0.001 //cargo cult time, this var does nothing but just in case someone actually makes it do something
 	permeability_coefficient = 0.001
 	resistance_flags = FIRE_PROOF
+	max_filters = 3
 
 /obj/item/clothing/mask/gas/atmos/captain
 	name = "captain's gas mask"
@@ -85,6 +132,7 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
+	tint = 0
 	var/list/clownmask_designs = list()
 
 /obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
@@ -143,6 +191,7 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
+	tint = 0
 	var/list/mimemask_designs = list()
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)

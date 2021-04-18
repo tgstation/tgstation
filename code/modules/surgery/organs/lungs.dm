@@ -102,10 +102,6 @@
 			H.throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
 		return FALSE
 
-	var/gas_breathed = 0
-
-	var/list/breath_gases = breath.gases
-
 	breath.assert_gases(/datum/gas/oxygen,
 						/datum/gas/plasma,
 						/datum/gas/carbon_dioxide,
@@ -123,6 +119,13 @@
 						/datum/gas/zauker,
 						/datum/gas/halon
 						)
+
+	if(H.wear_mask && H.wear_mask.clothing_flags & GAS_FILTERING && H.wear_mask.has_filter == TRUE)
+		breath = H.wear_mask.consume_filter(breath)
+
+	var/gas_breathed = 0
+
+	var/list/breath_gases = breath.gases
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
