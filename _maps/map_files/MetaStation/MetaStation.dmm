@@ -16686,13 +16686,6 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/fore)
-"cAF" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/purple/visible{
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "cAH" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "toxinsaccess";
@@ -16955,7 +16948,9 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "cCG" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 1
+	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engineering/atmos)
@@ -37112,6 +37107,10 @@
 /obj/effect/spawner/lootdrop/techstorage/command,
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
+"iVR" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible,
+/turf/open/floor/iron/dark,
+/area/engineering/atmos)
 "iWa" = (
 /obj/machinery/button/door{
 	id = "kitchen_counter";
@@ -46185,7 +46184,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "mfa" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/dark/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -59892,7 +59891,7 @@
 /turf/open/floor/engine/air,
 /area/engineering/atmos)
 "qGq" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/purple{
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -73098,12 +73097,12 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "uSQ" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 4
+	},
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics Airway";
 	req_access_txt = "24"
-	},
-/obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
@@ -75745,7 +75744,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "vNA" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/brown/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/brown/visible{
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -77345,9 +77344,7 @@
 /obj/effect/turf_decal{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer4{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "wpX" = (
@@ -83001,7 +82998,7 @@
 /turf/open/floor/engine,
 /area/science/cytology)
 "yls" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -127518,7 +127515,7 @@ lVV
 wNL
 nHL
 lVV
-lVV
+iVR
 wpT
 jMk
 aaf
@@ -127758,7 +127755,7 @@ ack
 jMk
 jMk
 jMk
-cAF
+qGq
 cor
 fPe
 cor
