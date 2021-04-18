@@ -48,17 +48,17 @@
 		atom_movable.forceMove(src)
 		if(istype(atom_movable, /obj/structure/big_delivery) && !hasmob)
 			var/obj/structure/big_delivery/tagged_big = atom_movable
-			src.destinationTag = tagged_big.sortTag
+			destinationTag = tagged_big.sortTag
 		else if(istype(atom_movable, /obj/item/small_delivery) && !hasmob)
 			var/obj/item/small_delivery/tagged_small = atom_movable
-			src.destinationTag = tagged_small.sortTag
+			destinationTag = tagged_small.sortTag
 		else if(istype(atom_movable, /obj/item/mail))
 			var/obj/item/mail/tagged_mail = atom_movable
-			src.destinationTag = tagged_mail.sortTag
+			destinationTag = tagged_mail.sort_tag
 		else if(istype(atom_movable, /mob/living/silicon/robot))
 			var/obj/item/dest_tagger/borg/tagger = locate() in atom_movable
-			if (tagger)
-				src.destinationTag = tagger.currTag
+			if(tagger)
+				destinationTag = tagger.currTag
 
 
 // start the movement process

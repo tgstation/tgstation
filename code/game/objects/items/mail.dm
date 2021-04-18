@@ -1,3 +1,4 @@
+#define FULL_CRATE_LETTER_ODDS 70
 
 /// Mail is tamper-evident and unresealable, postmarked by CentCom for an individual recepient.
 /obj/item/mail
@@ -14,7 +15,7 @@
 	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// destination tagging for the mail sorter
-	var/sortTag = 0
+	var/sort_tag = 0
 	/// who this mail is for and who can open it
 	var/mob/recipient
 	/// how many goodies this mail contains
@@ -74,43 +75,39 @@
 			stamps += list("stamp_[X]")
 	update_icon()
 
-/obj/item/mail/update_icon()
+/obj/item/mail/update_overlays()
 	. = ..()
-	cut_overlays()
-
 	var/bonus_stamp_offset = 0
-	for(var/S in stamps)
-		var/image/SI = image(
+	for(var/stamp in stamps)
+		var/image/stamp_image = image(
 			icon = icon,
-			icon_state = S,
+			icon_state = stamp,
 			pixel_x = stamp_offset_x,
 			pixel_y = stamp_offset_y + bonus_stamp_offset
 		)
-		// Stops postmarks from inheriting letter color.
-		// http://www.byond.com/docs/ref/#/atom/var/appearance_flags
-		SI.appearance_flags |= RESET_COLOR
-		add_overlay(SI)
+		stamp_image.appearance_flags |= RESET_COLOR
+		add_overlay(stamp_image)
 		bonus_stamp_offset -= 5
 
 	if(postmarked == TRUE)
-		var/image/PMI = image(
+		var/image/postmark_image = image(
 			icon = icon,
 			icon_state = "postmark",
 			pixel_x = stamp_offset_x + rand(-3, 1),
 			pixel_y = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
 		)
-		PMI.appearance_flags |= RESET_COLOR
-		add_overlay(PMI)
+		postmark_image.appearance_flags |= RESET_COLOR
+		add_overlay(postmark_image)
 
 /obj/item/mail/attackby(obj/item/W, mob/user, params)
 	// Destination tagging
 	if(istype(W, /obj/item/dest_tagger))
-		var/obj/item/dest_tagger/O = W
+		var/obj/item/dest_tagger/destination_tag = W
 
-		if(sortTag != O.currTag)
+		if(sort_tag != destination_tag.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
-			sortTag = O.currTag
+			sort_tag = destination_tag.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 /obj/item/mail/attack_self(mob/user)
@@ -118,20 +115,14 @@
 		to_chat(user, "<span class='notice'>You can't open somebody else's mail! That's <em>illegal</em>!</span>")
 		return
 
-	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
+	user.visible_message("<span class='notice'>You start to unwrap the package...</span>")
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	unwrap_contents()
-	for(var/mail_contents in contents)
-		var/atom/movable/AM = mail_contents
-		user.put_in_hands(AM)
+	user.put_in_hands(contents)
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
-
-/obj/item/mail/proc/unwrap_contents()
-	for(var/obj/object in GetAllContents())
-		SEND_SIGNAL(object, COMSIG_STRUCTURE_UNWRAPPED)
 
 /// Accepts a mob to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(mob/new_recipient)
@@ -219,21 +210,21 @@
 	for(var/mob/living/carbon/human/alive in GLOB.player_list)
 		if(alive.stat != DEAD)
 			mail_recipients += alive
-	for(var/iterator in 1 to 22)
-		var/obj/item/mail/New_mail
-		if(prob(70))
-			New_mail = new /obj/item/mail(src)
+	for(var/iterator in 1 to storage_capacity)
+		var/obj/item/mail/new_mail
+		if(prob(FULL_CRATE_LETTER_ODDS))
+			new_mail = new /obj/item/mail(src)
 		else
-			New_mail = new /obj/item/mail/envelope(src)
+			new_mail = new /obj/item/mail/envelope(src)
 		var/mob/living/carbon/human/mail_to
 		if(mail_recipients.len)
 			mail_to = pick(mail_recipients)
-		if(prob(50)) //so after 21 passes if everyone's at least gotten something we'll junkmail it up
-			mail_recipients -= mail_to
 		if(mail_to)
-			New_mail.initialize_for_recipient(mail_to)
+			new_mail.initialize_for_recipient(mail_to)
+			mail_recipients -= mail_to //Once picked, the mail crate will need a new recipient.
 		else
-			New_mail.junk_mail()
+			new_mail.junk_mail()
+
 
 /// Mailbag.
 /obj/item/storage/bag/mail
@@ -246,12 +237,12 @@
 
 /obj/item/storage/bag/mail/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 42
-	STR.max_items = 21
-	STR.display_numerical_stacking = FALSE
-	STR.set_holdable(list(
+	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	storage.max_w_class = WEIGHT_CLASS_NORMAL
+	storage.max_combined_w_class = 42
+	storage.max_items = 21
+	storage.display_numerical_stacking = FALSE
+	storage.set_holdable(list(
 		/obj/item/mail,
 		/obj/item/small_delivery,
 		/obj/item/paper
@@ -260,14 +251,21 @@
 /obj/item/paper/fluff/junkmail_redpill
 	name = "smudged paper"
 	icon_state = "scrap"
+	var/nuclear_option_odds = 0.1
 
 /obj/item/paper/fluff/junkmail_redpill/Initialize()
 	. = ..()
+	if(!prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
+		info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'"
+		return
 	var/code = random_nukecode()
 	for(var/obj/machinery/nuclearbomb/selfdestruct/self_destruct in GLOB.nuke_list)
 		self_destruct.r_code = code
 	message_admins("Through junkmail, the self-destruct code was set to \"[code]\".")
 	info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[code[rand(1,5)]][code[rand(1,5)]]...'"
+
+/obj/item/paper/fluff/junkmail_redpill/true //admin letter enabling players to brute force their way through the nuke code if they're so inclined.
+	nuclear_option_odds = 100
 
 /obj/item/paper/fluff/junkmail_generic
 	name = "important document"

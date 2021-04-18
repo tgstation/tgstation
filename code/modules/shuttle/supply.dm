@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/initiate_docking()
 	if(getDockedId() == "supply_away") // Buy when we leave home.
 		buy()
-		mail()
+		create_mail()
 	. = ..() // Fly/enter transit.
 	if(. != DOCKING_SUCCESS)
 		return
@@ -241,14 +241,14 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	Applied in the cargo shuttle sending/arriving, by building the crate if the round is ready to introduce mail based on the economy subsystem.
 	Then, fills the mail crate with mail, by picking applicable crew who can recieve mail at the time to sending.
 */
-/obj/docking_port/mobile/supply/proc/mail()
+/obj/docking_port/mobile/supply/proc/create_mail()
 
 	//Early return if there's no mail waiting to prevent taking up a slot.
 	if(!SSeconomy.mail_waiting)
 		return
 	//spawn crate
 	var/list/empty_turfs = list()
-	for(var/place in shuttle_areas)
+	for(var/place in shuttle_areas as anything)
 		var/area/shuttle/shuttle_area = place
 		for(var/turf/open/floor/shuttle_floor in shuttle_area)
 			if(shuttle_floor.is_blocked_turf())
@@ -265,7 +265,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	//Creates mail for all the mail waiting to arrive, if there's nobody to recieve it it's just junkmail.
 	for(var/mail_iterator in 1 to SSeconomy.mail_waiting)
 		var/obj/item/mail/new_mail
-		if(prob(70))
+		if(prob(FULL_CRATE_LETTER_ODDS))
 			new_mail = new /obj/item/mail(mailcrate)
 		else
 			new_mail = new /obj/item/mail/envelope(mailcrate)
