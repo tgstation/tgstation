@@ -323,6 +323,9 @@ SUBSYSTEM_DEF(job)
 	var/list/overflow_candidates = FindOccupationCandidates(overflow, JP_LOW)
 	JobDebug("AC1, Candidates: [overflow_candidates.len]")
 	for(var/mob/dead/new_player/player in overflow_candidates)
+		if(player.IsJobUnavailable(SSjob.overflow_role) != JOB_AVAILABLE)
+			JobDebug("AC1 failed, removing from overflow pool, Player: [player]")
+			overflow_candidates -= player
 		JobDebug("AC1 pass, Player: [player]")
 		AssignRole(player, SSjob.overflow_role)
 		overflow_candidates -= player
@@ -386,6 +389,9 @@ SUBSYSTEM_DEF(job)
 				if(player.client.prefs.job_preferences[job.title] == level)
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
+						if(player.IsJobUnavailable(job.title) != JOB_AVAILABLE)
+							JobDebug("DO failed on IsJobAvailable, Job: [job.title], Player: [player]")
+							continue
 						JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
 						AssignRole(player, job.title)
 						unassigned -= player
