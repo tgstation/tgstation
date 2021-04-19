@@ -101,4 +101,8 @@
 			if(!our_seed.get_gene(checked_gene))
 				return TRUE
 
+	for(var/obj/item/clothing/worn_item in user.get_equipped_items())
+		if((worn_item.body_parts_covered & HANDS) && (worn_item.clothing_flags & THICKMATERIAL))
+			return TRUE
+
 	return FALSE
