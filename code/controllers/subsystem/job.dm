@@ -301,6 +301,8 @@ SUBSYSTEM_DEF(job)
 	if(unassigned.len == 0)
 		return validate_required_jobs(required_jobs)
 
+	//Scale number of open assistant slots to population
+	setup_assistant_positions()
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
 
@@ -559,6 +561,19 @@ SUBSYSTEM_DEF(job)
 		return C.holder.auto_deadmin()
 	else if((job.auto_deadmin_role_flags & DEADMIN_POSITION_SILICON) && ((CONFIG_GET(flag/auto_deadmin_silicons) && !timegate_expired) || (C.prefs?.toggles & DEADMIN_POSITION_SILICON))) //in the event there's ever psuedo-silicon roles added, ie synths.
 		return C.holder.auto_deadmin()
+
+/datum/controller/subsystem/job/proc/setup_assistant_positions()
+	var/datum/job/job = SSjob.GetJob("Assistant")
+	if(!job)
+		CRASH("setup_assistant_positions(): Assistant job is missing")
+
+	var/assistant_ratio = CONFIG_GET(number/assistant_scaling_coeff)
+	if(assistant_ratio > 0)
+		if(job.spawn_positions > 0)
+			var/assistant_positions = max(job.spawn_positions, round(unassigned.len / assistant_ratio))
+			JobDebug("Setting open assistants positions to [assistant_positions]")
+			job.total_positions = assistant_positions
+			job.spawn_positions = assistant_positions
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
 	var/datum/job/J = SSjob.GetJob("Security Officer")

@@ -205,6 +205,11 @@ CHANGELING_SCALING_COEFF 6
 ## Set to 0 to disable scaling and use default numbers instead.
 SECURITY_SCALING_COEFF 8
 
+## Variables calculate how number of open assistant positions will scale to population.
+## Used as (Assistants = Population / Coeff)
+## Set to 0 to disable scaling and use default numbers instead.
+ASSISTANT_SCALING_COEFF 8
+
 ## The number of objectives traitors get.
 ## Not including escaping/hijacking.
 TRAITOR_OBJECTIVES_AMOUNT 2
