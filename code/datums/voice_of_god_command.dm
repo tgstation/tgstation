@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/stun/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	// Ensure 'as anything' is not used for loops that don't target all living mob types.
 	for(var/mob/living/target as anything in listeners)
-		target.Stun(40 * power_multiplier)
+		target.Stun(4 SECONDS * power_multiplier)
 
 /// This command knocks the listeners down.
 /datum/voice_of_god_command/paralyze
