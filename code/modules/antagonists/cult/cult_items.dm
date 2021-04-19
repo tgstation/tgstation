@@ -283,7 +283,7 @@
 	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'Sien cultists. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
 	inhand_icon_state = "bola_cult"
-	breakouttime = 60
+	breakouttime = 6 SECONDS
 	knockdown = 30
 
 #define CULT_BOLA_PICKUP_STUN 6 SECONDS

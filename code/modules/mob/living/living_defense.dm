@@ -1,9 +1,11 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE, weak_against_armour = FALSE)
 	var/armor = getarmor(def_zone, attack_flag)
 
 	if(armor <= 0)
 		return armor
+	if(weak_against_armour && armor >= 0)
+		armor *= ARMOR_WEAKENED_MULTIPLIER
 	if(silent)
 		return max(0, armor - armour_penetration)
 
@@ -48,7 +50,7 @@
 	return BULLET_ACT_HIT
 
 /mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
-	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
+	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration, "", FALSE, P.weak_against_armour)
 	var/on_hit_state = P.on_hit(src, armor, piercing_hit)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
 		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness)
@@ -102,7 +104,7 @@
 						"<span class='userdanger'>You're hit by [thrown_item]!</span>")
 		if(!thrown_item.throwforce)
 			return
-		var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration)
+		var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
 		apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
 		if(QDELETED(src)) //Damage can delete the mob.
 			return

@@ -1,6 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "Junkie pills quench addictions again"
-  - balance: "Now takes one minute to start withdrawal from addictions, down from 1 second (also made you withdraw while still using)"
-  - balance: "Quenching opiod addiction clears disgust, so you wont spent the next 20 minutes being vomitlocked"

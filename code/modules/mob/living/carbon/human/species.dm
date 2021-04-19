@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list()
 	///Generic traits tied to having the species.
-	var/list/inherent_traits = list(TRAIT_ADVANCEDTOOLUSER)
+	var/list/inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP)
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.
@@ -1507,7 +1507,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone
 
-	var/armor_block = H.run_armor_check(affecting, MELEE, "<span class='notice'>Your armor has protected your [hit_area]!</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area]!</span>",I.armour_penetration)
+	var/armor_block = H.run_armor_check(affecting, MELEE, "<span class='notice'>Your armor has protected your [hit_area]!</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area]!</span>",I.armour_penetration, weak_against_armour = I.weak_against_armour)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iwound_bonus = I.wound_bonus
 
