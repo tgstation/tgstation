@@ -528,27 +528,29 @@ generate/load female uniform sprites matching all previously decided variables
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 
-	//Handle held offsets
-	var/mob/M = loc
-	if(istype(M))
-		var/list/L = get_held_offsets()
-		if(L)
-			standing.pixel_x += L["x"] //+= because of center()ing
-			standing.pixel_y += L["y"]
+	//Worn offsets
+	var/list/offsets = get_worn_offsets(isinhands)
+	standing.pixel_x += offsets[1]
+	standing.pixel_y += offsets[2]
 
 	standing.alpha = alpha
 	standing.color = color
 
 	return standing
 
-
-/obj/item/proc/get_held_offsets()
-	var/list/L
-	if(ismob(loc))
-		var/mob/M = loc
-		L = M.get_item_offsets_for_index(M.get_held_index_of_item(src))
-	return L
-
+/// Returns offsets used for equipped item overlays in list(px_offset,py_offset) form.
+/obj/item/proc/get_worn_offsets(isinhands)
+	. = list(0,0) //(px,py)
+	if(isinhands)
+		//Handle held offsets
+		var/mob/holder = loc
+		if(istype(holder))
+			var/list/offsets = holder.get_item_offsets_for_index(holder.get_held_index_of_item(src))
+			if(offsets)
+				.[1] = offsets["x"]
+				.[2] = offsets["y"]
+	else
+		.[2] = worn_y_offset
 
 //Can't think of a better way to do this, sadly
 /mob/proc/get_item_offsets_for_index(i)

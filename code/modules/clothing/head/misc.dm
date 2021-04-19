@@ -491,13 +491,10 @@
 	name = "shrine maiden's wig"
 	desc = "Purify in style!"
 	flags_inv = HIDEHAIR //bald
-	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "shrine_wig"
 	inhand_icon_state = "shrine_wig"
-	worn_x_dimension = 64
-	worn_y_dimension = 64
-	clothing_flags = LARGE_WORN_ICON
 	dynamic_hair_suffix = ""
+	worn_y_offset = 1
 
 /obj/item/clothing/head/intern
 	name = "\improper CentCom Head Intern beancap"

@@ -129,6 +129,8 @@
 	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
+	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
+	var/weak_against_armour = FALSE
 	var/projectile_type = /obj/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
 	var/decayedRange //stores original range
