@@ -37,7 +37,7 @@
 	id_trim = /datum/id_trim/job/station_engineer
 	uniform = /obj/item/clothing/under/rank/engineering/engineer
 	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/advanced = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/engineering = 1,
 		)
 	belt = /obj/item/storage/belt/utility/full/engi
 	ears = /obj/item/radio/headset/headset_eng
