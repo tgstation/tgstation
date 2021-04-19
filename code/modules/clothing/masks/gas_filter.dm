@@ -1,25 +1,38 @@
 ///List of gases with high filter priority
 GLOBAL_LIST_INIT(high_filtering_gases, list(
-		/datum/gas/plasma,
-		/datum/gas/carbon_dioxide,
-		/datum/gas/nitrous_oxide
-	))
+	/datum/gas/plasma,
+	/datum/gas/carbon_dioxide,
+	/datum/gas/nitrous_oxide
+))
 ///List of gases with medium filter priority
 GLOBAL_LIST_INIT(mid_filtering_gases, list(
-		/datum/gas/nitryl,
-		/datum/gas/stimulum,
-		/datum/gas/freon,
-		/datum/gas/hypernoblium,
-		/datum/gas/bz
-	))
+	/datum/gas/nitryl,
+	/datum/gas/stimulum,
+	/datum/gas/freon,
+	/datum/gas/hypernoblium,
+	/datum/gas/bz
+))
 ///List of gases with low filter priority
 GLOBAL_LIST_INIT(low_filtering_gases, list(
-		/datum/gas/healium,
-		/datum/gas/proto_nitrate,
-		/datum/gas/halon,
-		/datum/gas/tritium,
-		/datum/gas/zauker
-	))
+	/datum/gas/healium,
+	/datum/gas/proto_nitrate,
+	/datum/gas/halon,
+	/datum/gas/tritium,
+	/datum/gas/zauker
+))
+
+///Filtering ratio for high amounts of gas
+#define HIGH_FILTERING_RATIO 0.001
+///Filtering ratio for min amount of gas
+#define LOW_FILTERING_RATIO 0.0005
+///Min amount of high filtering gases for high filtering ratio
+#define HIGH_FILTERING_MOLES 0.001
+///Min amount of mid filtering gases for high filtering ratio
+#define MID_FILTERING_MOLES 0.0025
+///Min amount of low filtering gases for high filtering ratio
+#define LOW_FILTERING_MOLES 0.0005
+///Min amount of wear that the filter gets when used
+#define FILTERS_CONSTANT_WEAR 0.05
 
 /obj/item/gas_filter
 	name = "atmospheric gas filter"
@@ -46,7 +59,7 @@ GLOBAL_LIST_INIT(low_filtering_gases, list(
 
 /obj/item/gas_filter/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] is at [filter_status] % durability.</span>"
+	. += "<span class='notice'>[src] is at <b>[filter_status]%</b> durability.</span>"
 
 /**
  * called by the gas mask where the filter is installed, lower the filter_status depending on the breath gas composition and by the strenght of the filter
@@ -64,30 +77,30 @@ GLOBAL_LIST_INIT(low_filtering_gases, list(
 	var/danger_points = 0
 
 	for(var/gas_id in GLOB.high_filtering_gases)
-		if(gases_moles[gas_id] > 0.005)
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_high * filter_efficiency * 0.001, 0)
+		if(gases_moles[gas_id] > HIGH_FILTERING_MOLES)
+			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_high * filter_efficiency * HIGH_FILTERING_RATIO, 0)
 			danger_points += 0.5
 		else if(gases_moles[gas_id] > 0)
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_high * filter_efficiency * 0.0005, 0)
+			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_high * filter_efficiency * LOW_FILTERING_RATIO, 0)
 			danger_points += 0.05
 
 	for(var/gas_id in GLOB.mid_filtering_gases)
-		if(gases_moles[gas_id] > 0.0025)
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_mid * filter_efficiency * 0.001, 0)
+		if(gases_moles[gas_id] > MID_FILTERING_MOLES)
+			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_mid * filter_efficiency * HIGH_FILTERING_RATIO, 0)
 			danger_points += 0.75
 		else if(gases_moles[gas_id] > 0)
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_mid * filter_efficiency * 0.0005, 0)
+			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_mid * filter_efficiency * LOW_FILTERING_RATIO, 0)
 			danger_points += 0.15
 
 	for(var/gas_id in GLOB.low_filtering_gases)
-		if(gases_moles[gas_id] > 0.001)
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_low * filter_efficiency * 0.001, 0)
+		if(gases_moles[gas_id] > LOW_FILTERING_MOLES)
+			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_low * filter_efficiency * HIGH_FILTERING_RATIO, 0)
 			danger_points += 1
 		else if(gases_moles[gas_id] > 0)
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_low * filter_efficiency * 0.0005, 0)
+			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strenght_low * filter_efficiency * LOW_FILTERING_RATIO, 0)
 			danger_points += 0.5
 
-	filter_status = max(filter_status - danger_points - 1, 0)
+	filter_status = max(filter_status - danger_points - FILTERS_CONSTANT_WEAR, 0)
 	return breath
 
 /obj/item/gas_filter/damaged

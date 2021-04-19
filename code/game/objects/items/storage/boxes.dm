@@ -136,9 +136,6 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
-		new /obj/item/gas_filter(src)
-	else
-		new /obj/item/gas_filter/damaged(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
