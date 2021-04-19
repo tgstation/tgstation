@@ -50,7 +50,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/chief_engineer
 	backpack_contents = list(
 		/obj/item/melee/classic_baton/telescopic = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/command/engineering = 1,
 		)
 	belt = /obj/item/storage/belt/utility/chief/full
 	ears = /obj/item/radio/headset/heads/ce
