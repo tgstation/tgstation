@@ -10,11 +10,19 @@
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
-	tint = 0.9
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
 	var/list/gas_filters
+
+/obj/item/clothing/mask/gas/Initialize()
+	. = ..()
+	if(!max_filters)
+		return
+	for(var/i in 1 to max_filters)
+		var/obj/item/gas_filter/filter = new(src)
+		LAZYADD(gas_filters, filter)
+	has_filter = TRUE
 
 /obj/item/clothing/mask/gas/examine(mob/user)
 	. = ..()
@@ -70,13 +78,6 @@
 	permeability_coefficient = 0.001
 	resistance_flags = FIRE_PROOF
 	max_filters = 3
-
-/obj/item/clothing/mask/gas/atmos/Initialize()
-	. = ..()
-	for(var/i in 1 to max_filters)
-		var/obj/item/gas_filter/filter = new(src)
-		LAZYADD(gas_filters, filter)
-	has_filter = TRUE
 
 /obj/item/clothing/mask/gas/atmos/captain
 	name = "captain's gas mask"
@@ -141,7 +142,6 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
-	tint = 0
 	var/list/clownmask_designs = list()
 
 /obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
@@ -200,7 +200,6 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
-	tint = 0
 	var/list/mimemask_designs = list()
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)

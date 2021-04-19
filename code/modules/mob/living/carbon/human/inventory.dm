@@ -108,7 +108,7 @@
 			var/obj/item/clothing/glasses/G = I
 			if(G.glass_colour_type)
 				update_glasses_color(G, 1)
-			if(G.tint || initial(G.tint))
+			if(G.tint)
 				update_tint()
 			if(G.vision_correction)
 				clear_fullscreen("nearsighted")
@@ -211,17 +211,12 @@
 		gloves = null
 		if(!QDELETED(src))
 			update_inv_gloves()
-	else if(I == wear_mask)
-		wear_mask = null
-		var/obj/item/clothing/mask/mask = I
-		if(mask.tint || initial(mask.tint))
-			update_tint()
 	else if(I == glasses)
 		glasses = null
 		var/obj/item/clothing/glasses/G = I
 		if(G.glass_colour_type)
 			update_glasses_color(G, 0)
-		if(G.tint || initial(G.tint))
+		if(G.tint)
 			update_tint()
 		if(G.vision_correction)
 			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))

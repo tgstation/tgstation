@@ -570,11 +570,6 @@
 		if(!isnull(G.lighting_alpha))
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 
-	if(wear_mask)
-		var/obj/item/clothing/mask/mask = wear_mask
-		if(mask.tint || initial(mask.tint))
-			update_tint()
-
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		sight |= (SEE_MOBS)
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
@@ -593,20 +588,14 @@
 	if(!GLOB.tinted_weldhelh)
 		return
 	tinttotal = get_total_tint()
-	clear_fullscreen("tint", 0)
 	if(tinttotal >= TINT_BLIND)
 		become_blind(EYES_COVERED)
-	else if(tinttotal >= TINT_DARKENED && tinttotal < TINT_BLIND)
+	else if(tinttotal >= TINT_DARKENED)
 		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2, clamp(tinttotal * 100, 0, 255))
-	else if(tinttotal >= TINT_LIGHTER && tinttotal < TINT_DARKENED)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
+	else
 		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1, clamp(tinttotal * 100, 0, 255))
-	else if(tinttotal > TINT_NONE && tinttotal < TINT_LIGHTER)
-		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 0, clamp(tinttotal * 100, 0, 255))
-	else if(tinttotal <= TINT_NONE)
-		cure_blind(EYES_COVERED)
+		clear_fullscreen("tint", 0)
 
 /mob/living/carbon/proc/get_total_tint()
 	. = 0
@@ -621,9 +610,6 @@
 
 	else
 		. += INFINITY
-
-	if(isclothing(glasses))
-		. += glasses.tint
 
 /mob/living/carbon/get_permeability_protection(list/target_zones = list(HANDS,CHEST,GROIN,LEGS,FEET,ARMS,HEAD))
 	var/list/tally = list()

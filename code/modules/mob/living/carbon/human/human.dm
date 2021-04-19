@@ -690,6 +690,11 @@
 		if(R)
 			R.fields["name"] = newname
 
+/mob/living/carbon/human/get_total_tint()
+	. = ..()
+	if(glasses)
+		. += glasses.tint
+
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)
 		return
