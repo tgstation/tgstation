@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/paralyze/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		target.Paralyze(40 * power_multiplier)
+		target.Paralyze(4 SECONDS * power_multiplier)
 
 /// This command puts carbon listeners to sleep.
 /datum/voice_of_god_command/sleeping
