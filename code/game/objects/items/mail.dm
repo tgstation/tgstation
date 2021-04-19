@@ -105,7 +105,7 @@
 		var/obj/item/dest_tagger/destination_tag = W
 
 		if(sort_tag != destination_tag.currTag)
-			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
+			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
 			sort_tag = destination_tag.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
@@ -119,7 +119,6 @@
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	unwrap_contents()
 	user.put_in_hands(contents)
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
