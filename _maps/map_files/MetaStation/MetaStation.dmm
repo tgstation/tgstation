@@ -76148,11 +76148,11 @@
 /turf/open/floor/iron,
 /area/construction/storage_wing)
 "wdk" = (
-/obj/item/mop/cyborg,
 /obj/structure/mopbucket,
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/mop,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "wdq" = (
