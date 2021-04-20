@@ -46,6 +46,13 @@ multiple modular subtrees with behaviors
 
 /datum/ai_controller/New(atom/new_pawn)
 	ai_movement = SSai_movement.movement_types[ai_movement]
+
+	var/list/temp_subtree_list = list()
+	for(var/subtree in planning_subtrees)
+		var/subtree_instance = SSai_controllers.ai_subtrees[subtree]
+		temp_subtree_list += subtree_instance
+	planning_subtrees = temp_subtree_list
+
 	PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)
