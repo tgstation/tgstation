@@ -168,12 +168,6 @@
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/proc/has_equipped(obj/item/I, slot, initial = FALSE)
-	return I.equipped(src, slot, initial)
-
-/mob/living/carbon/human/dummy/has_equipped(obj/item/I, slot, initial = FALSE)
-	return I.visual_equipped(src, slot, initial)
-
 /mob/living/carbon/human/equipped_speed_mods()
 	. = ..()
 	for(var/sloties in get_all_slots() - list(l_store, r_store, s_store))
