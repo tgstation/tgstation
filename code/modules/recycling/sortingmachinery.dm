@@ -168,7 +168,7 @@
 	for(var/obj/I in src.GetAllContents())
 		SEND_SIGNAL(I, COMSIG_STRUCTURE_UNWRAPPED)
 
-/obj/structure/big_delivery/proc/disposal_handling(obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
+/obj/structure/big_delivery/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
 	SIGNAL_HANDLER
 	if(!hasmob)
 		disposal_holder.destinationTag = sort_tag
@@ -337,7 +337,7 @@
 	for(var/obj/I in src.GetAllContents())
 		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 
-/obj/item/small_delivery/proc/disposal_handling(obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
+/obj/item/small_delivery/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
 	SIGNAL_HANDLER
 	if(!hasmob)
 		disposal_holder.destinationTag = sort_tag

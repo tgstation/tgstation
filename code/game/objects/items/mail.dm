@@ -179,7 +179,7 @@
 	junk = new junk(src)
 	return TRUE
 
-/obj/item/mail/proc/disposal_handling(obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
+/obj/item/mail/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
 	SIGNAL_HANDLER
 	if(!hasmob)
 		disposal_holder.destinationTag = sort_tag
