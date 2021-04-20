@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - rscadd: "Players can now initiate votes using the new vote panel (assuming CentCom allows it)."
-  - bugfix: "Admins' voting list is now properly rendered"
