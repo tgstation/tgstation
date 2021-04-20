@@ -29,7 +29,8 @@
 	mail_goodies = list(
 		/obj/effect/spawner/lootdrop/organ_spawner = 10,
 		/obj/effect/spawner/lootdrop/memeorgans = 8,
-		/obj/effect/spawner/lootdrop/space/fancytool/medicalonly = 3
+		/obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly = 4,
+		/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly = 1
 	)
 	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 

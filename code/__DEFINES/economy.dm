@@ -1,5 +1,5 @@
 #define STARTING_PAYCHECKS 7
-#define MAX_MAIL_PER_FIVE_MINUTES 15
+#define MAX_MAIL_PER_MIN 3
 
 //Experimental change: These are subject to tweaking based on the /tg/ economy overhaul.
 //Current design direction: Higher paying jobs are vastly outnumbered by lower paying jobs, so anything above medium hurts inflation, common jobs help inflation
