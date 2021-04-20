@@ -268,7 +268,7 @@ SUBSYSTEM_DEF(vote)
 	)
 
 	if(!!user.client?.holder)
-		data["voting"] += list(voting)
+		data["voting"] = voting
 
 	for(var/key in choices)
 		data["choices"] += list(list(

@@ -3998,7 +3998,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "axL" = (
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -36870,7 +36870,7 @@
 /turf/open/floor/iron/freezer,
 /area/commons/toilet/restrooms)
 "iTQ" = (
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "iUd" = (
