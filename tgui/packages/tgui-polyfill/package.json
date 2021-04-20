@@ -3,7 +3,7 @@
   "name": "tgui-polyfill",
   "version": "4.3.0",
   "dependencies": {
-    "core-js": "^3.9.1",
+    "core-js": "^3.10.1",
     "regenerator-runtime": "^0.13.8",
     "whatwg-fetch": "^3.6.2"
   }

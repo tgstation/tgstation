@@ -1,5 +1,5 @@
 /obj/item/restraints
-	breakouttime = 600
+	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
@@ -293,7 +293,7 @@
 	armed = 1
 	icon_state = "e_snare"
 	trap_damage = 0
-	breakouttime = 30
+	breakouttime = 3 SECONDS
 	item_flags = DROPDEL
 	flags_1 = NONE
 
@@ -311,7 +311,7 @@
 	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
-	breakouttime = 20 // Cyborgs shouldn't have a strong restraint
+	breakouttime = 2 SECONDS // Cyborgs shouldn't have a strong restraint
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
@@ -320,7 +320,7 @@
 	inhand_icon_state = "bola"
 	lefthand_file = 'icons/mob/inhands/weapons/thrown_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/thrown_righthand.dmi'
-	breakouttime = 35//easy to apply, easy to break out of
+	breakouttime = 3.5 SECONDS//easy to apply, easy to break out of
 	gender = NEUTER
 	var/knockdown = 0
 
@@ -357,7 +357,7 @@
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
 	inhand_icon_state = "bola_r"
-	breakouttime = 70
+	breakouttime = 7 SECONDS
 	knockdown = 35
 
 /obj/item/restraints/legcuffs/bola/energy //For Security
@@ -367,7 +367,7 @@
 	inhand_icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	breakouttime = 60
+	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_HARD * 0.35
 
 /obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -382,7 +382,7 @@
 	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
 	icon_state = "gonbola"
 	inhand_icon_state = "bola_r"
-	breakouttime = 300
+	breakouttime = 30 SECONDS
 	slowdown = 0
 	var/datum/status_effect/gonbola_pacify/effectReference
 

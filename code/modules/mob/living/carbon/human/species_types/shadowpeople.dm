@@ -5,7 +5,13 @@
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/shadow
 	species_traits = list(NOBLOOD,NOEYESPRITES)
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_RADIMMUNE,
+		TRAIT_VIRUSIMMUNE,
+		TRAIT_NOBREATH,
+	)
 	inherent_factions = list("faithless")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	mutanteyes = /obj/item/organ/eyes/night_vision

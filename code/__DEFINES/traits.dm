@@ -328,6 +328,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ROYAL_METABOLISM "royal_metabolism"
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
 
+/// This mob can strip other mobs.
+#define TRAIT_CAN_STRIP "can_strip"
+
 // If present on a mob or mobmind, allows them to "suplex" an immovable rod
 // turning it into a glorified potted plant, and giving them an
 // achievement. Can also be used on rod-form wizards.
@@ -439,6 +442,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Minor trait used for beakers, or beaker-ishes. [/obj/item/reagent_containers], to show that they've been used in a reagent grinder.
 #define TRAIT_MAY_CONTAIN_BLENDED_DUST "may_contain_blended_dust"
+
+///Trait applied to turfs when an atmos holosign is placed on them. It will stop firedoors from closing.
+#define TRAIT_FIREDOOR_STOP "firedoor_stop"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
