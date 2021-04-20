@@ -130,7 +130,6 @@
 	if(DT_PROB(10, delta_time) )
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[2]]</span>")
 
-
 /// Called when addiction is in stage 3 every process
 /datum/addiction/proc/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	if(DT_PROB(15, delta_time))

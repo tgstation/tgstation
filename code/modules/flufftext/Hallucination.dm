@@ -745,6 +745,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		count++
 		LAZYADD(airlocks_to_hit, A)
 
+	if(!LAZYLEN(airlocks_to_hit)) //no valid airlocks in sight
+		qdel(src)
+		return
+
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/hallucination/bolts/process(delta_time)

@@ -140,7 +140,7 @@
 		if(product_types[cone_path] >= 1)
 			product_types[cone_path]--
 			var/obj/item/food/icecream/cone = new cone_path(loc)
-			visible_message("<span class='info'>[usr] dispenses a crunchy [cone] from [src].</span>")
+			visible_message("<span class='info'>[usr] dispenses a crunchy [cone.name] from [src].</span>")
 		else
 			to_chat(usr, "<span class='warning'>There are no [initial(cone_path.name)]s left!</span>")
 

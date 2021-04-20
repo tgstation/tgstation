@@ -1,0 +1,7 @@
+author: "Greniza"
+delete-after: True
+changes: 
+  - imageadd: "added new icons for reverse bear trap: inhand, worn, and item icons."
+  - imageadd: "added minor animation to the reverse bear trap sprite"
+  - imageadd: "added update_overlays() function to /obj/item/reverse_bear_trap/"
+  - imagedel: "deleted old icons for reverse bear trap."
