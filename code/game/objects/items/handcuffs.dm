@@ -126,7 +126,7 @@
 /**
  * # Alien handcuffs
  *
- * Ayyy lmao
+ * Abductor reskin of the handcuffs.
 */
 /obj/item/restraints/handcuffs/alien
 	icon_state = "handcuffAlien"
