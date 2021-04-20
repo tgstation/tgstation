@@ -269,14 +269,14 @@
 	if(!job)
 		return JOB_UNAVAILABLE_GENERIC
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
-		if(job.title == "Assistant")
+		if(job.title == SSjob.overflow_role)
 			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
 				return JOB_AVAILABLE
 			for(var/datum/job/job_to_check in SSjob.occupations)
 				if(job_to_check && job_to_check.title != job.title && !is_banned_from(ckey, href_list[job_to_check.title])) //you have at least one job you are not banned from
 					return JOB_UNAVAILABLE_SLOTFULL
-			for(var/datum/job/J in SSjob.occupations)
-				if(J && J.current_positions < J.total_positions && J.title != job.title)
+			for(var/datum/job/job_to_check in SSjob.occupations)
+				if(job_to_check && job_to_check.current_positions < job_to_check.total_positions && job_to_check.title != job.title)
 					return JOB_UNAVAILABLE_SLOTFULL
 		else
 			return JOB_UNAVAILABLE_SLOTFULL
