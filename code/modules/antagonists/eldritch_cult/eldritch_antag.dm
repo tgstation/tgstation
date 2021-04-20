@@ -197,7 +197,7 @@
 	parts += "<b>Knowledge Researched:</b> "
 
 	var/list/knowledge_message = list()
-	var/list/knowledge = get_all_knowledge()
+	var/list/researched_knowledge = get_all_knowledge()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/eldritch_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge_message += "[knowledge.name]"
