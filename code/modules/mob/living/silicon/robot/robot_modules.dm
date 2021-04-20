@@ -256,9 +256,25 @@
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "engineer"
-	model_select_icon = "engineer"
 	magpulsing = TRUE
 	hat_offset = -4
+
+/obj/item/robot_model/engineering/be_transformed_to(obj/item/robot_model/old_model)
+	var/mob/living/silicon/robot/cyborg = loc
+	var/list/engineering_icons = list(
+		"engineer" = image(icon = 'icons/mob/robots.dmi', icon_state = "engineer"),
+		"engi-tread" = image(icon = 'icons/mob/robots.dmi', icon_state = "engi-tread"),
+		)
+	var/engineering_robot_icon = show_radial_menu(cyborg, cyborg, engineering_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
+	switch(engineering_robot_icon)
+		if("engineer")
+			cyborg_base_icon = "engineer"
+		if("engi-tread")
+			cyborg_base_icon = "engi-tread"
+		else
+			return FALSE
+	cyborg.update_icons()
+	return ..()
 
 // --------------------- Janitor
 /obj/item/robot_model/janitor
