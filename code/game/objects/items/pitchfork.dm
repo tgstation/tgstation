@@ -1,3 +1,9 @@
+/**
+ * Pitchfork item
+ *
+ * Essentially spears with different stats and sprites.
+ * Also fireproof for some reason.
+ */
 /obj/item/pitchfork
 	icon_state = "pitchfork0"
 	base_icon_state = "pitchfork"
