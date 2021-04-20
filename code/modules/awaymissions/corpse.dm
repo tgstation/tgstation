@@ -88,7 +88,7 @@
 	if(!random || newname)
 		if(newname)
 			M.real_name = newname
-		else
+		else if(!M.unique_name)
 			M.real_name = mob_name ? mob_name : M.name
 		if(!mob_gender)
 			mob_gender = pick(MALE, FEMALE)
