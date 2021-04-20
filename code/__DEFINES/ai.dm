@@ -1,4 +1,4 @@
-#define GET_AI_BEHAVIOR(behavior_type) SSai_controllers.ai_behaviors[behavior_type]
+#define GET_AI_BEHAVIOR(behavior_type) SSai_behaviors.ai_behaviors[behavior_type]
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
 #define AI_STATUS_ON 1
@@ -12,6 +12,9 @@
 ///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
 
+///Cooldown on planning if planning failed last time
+#define AI_FAILED_PLANNING_COOLDOWN 1.5
+
 ///Flags for ai_behavior new()
 #define AI_CONTROLLER_INCOMPATIBLE (1<<0)
 
@@ -20,6 +23,11 @@
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
 
+
+///Subtree defines
+
+///This subtree should cancel any further planning, (Including from other subtrees)
+#define SUBTREE_RETURN_FINISH_PLANNING 1
 
 ///Monkey AI controller blackboard keys
 

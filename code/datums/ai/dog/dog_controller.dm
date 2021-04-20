@@ -9,6 +9,7 @@
 		BB_DOG_PLAYING_DEAD = FALSE,\
 		BB_DOG_HARASS_TARGET = null)
 	ai_movement = /datum/ai_movement/jps
+	planning_subtrees = list(/datum/ai_planning_subtree/dog)
 
 	COOLDOWN_DECLARE(heel_cooldown)
 	COOLDOWN_DECLARE(command_cooldown)
@@ -54,49 +55,6 @@
 		return
 
 	return simple_pawn.access_card
-
-/datum/ai_controller/dog/SelectBehaviors(delta_time)
-	current_behaviors = list()
-	var/mob/living/living_pawn = pawn
-
-	// occasionally reset our ignore list
-	if(COOLDOWN_FINISHED(src, reset_ignore_cooldown) && length(blackboard[BB_FETCH_IGNORE_LIST]))
-		COOLDOWN_START(src, reset_ignore_cooldown, AI_FETCH_IGNORE_DURATION)
-		blackboard[BB_FETCH_IGNORE_LIST] = list()
-
-	// if we were just ordered to heel, chill out for a bit
-	if(!COOLDOWN_FINISHED(src, heel_cooldown))
-		return
-
-	// if we're not already carrying something and we have a fetch target (and we're not already doing something with it), see if we can eat/equip it
-	if(!blackboard[BB_SIMPLE_CARRY_ITEM] && blackboard[BB_FETCH_TARGET])
-		var/atom/movable/interact_target = blackboard[BB_FETCH_TARGET]
-		if(in_range(living_pawn, interact_target) && (isturf(interact_target.loc)))
-			current_movement_target = interact_target
-			if(IS_EDIBLE(interact_target))
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/eat_snack)
-			else
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/simple_equip)
-			return
-
-	// if we're carrying something and we have a destination to deliver it, do that
-	if(blackboard[BB_SIMPLE_CARRY_ITEM] && blackboard[BB_FETCH_DELIVER_TO])
-		var/atom/return_target = blackboard[BB_FETCH_DELIVER_TO]
-		if(!can_see(pawn, return_target, length=AI_DOG_VISION_RANGE))
-			// if the return target isn't in sight, we'll just forget about it and carry the thing around
-			blackboard[BB_FETCH_DELIVER_TO] = null
-			return
-		current_movement_target = return_target
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/deliver_item)
-		return
-
-	// occasionally see if there's any loose snacks in sight nearby
-	if(DT_PROB(40, delta_time))
-		for(var/obj/item/potential_snack in oview(living_pawn,2))
-			if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
-				current_movement_target = potential_snack
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/eat_snack)
-				return
 
 /datum/ai_controller/dog/PerformIdleBehavior(delta_time)
 	var/mob/living/living_pawn = pawn

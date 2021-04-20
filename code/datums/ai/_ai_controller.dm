@@ -1,6 +1,7 @@
 /*
 AI controllers are a datumized form of AI that simulates the input a player would otherwise give to a atom. What this means is that these datums
-have ways of interacting with a specific atom and control it. They posses a blackboard with the information the AI knows and has, and will plan behaviors it will try to execute.
+have ways of interacting with a specific atom and control it. They posses a blackboard with the information the AI knows and has, and will plan behaviors it will try to execute through
+multiple modular subtrees with behaviors
 */
 
 /datum/ai_controller
@@ -24,12 +25,20 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/continue_processing_when_client = FALSE
 	///distance to give up on target
 	var/max_target_distance = 14
+	///Cooldown for new plans, to prevent AI from going nuts if it can't think of new plans and looping on end
+	COOLDOWN_DECLARE(failed_planning_cooldown)
+	///All subtrees this AI has available, will run them in order, so make sure they're in the order you want them to run
+	var/list/planning_subtrees = list()
+
+	///Movement related things here
 	///Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.
 	var/datum/ai_movement/ai_movement = /datum/ai_movement/dumb
 	///Cooldown until next movement
 	COOLDOWN_DECLARE(movement_cooldown)
 	///Delay between movements. This is on the controller so we can keep the movement datum singleton
 	var/movement_delay = 0.1 SECONDS
+
+	/////The variables below are fucking stupid and should be put into the blackboard at some point.
 	///A list for the path we're currently following, if we're using JPS pathing
 	var/list/movement_path
 	///Cooldown for JPS movement, how often we're allowed to try making a new path
@@ -87,17 +96,16 @@ have ways of interacting with a specific atom and control it. They posses a blac
 /datum/ai_controller/proc/able_to_run()
 	return TRUE
 
-/// Generates a plan and see if our existing one is still valid.
+
+///Runs any actions that are currently running
 /datum/ai_controller/process(delta_time)
 	if(!able_to_run())
 		walk(pawn, 0) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
-	if(!current_behaviors?.len)
-		SelectBehaviors(delta_time)
-		if(!current_behaviors?.len)
-			PerformIdleBehavior(delta_time) //Do some stupid shit while we have nothing to do
-			return
 
+	if(!current_behaviors?.len)
+		PerformIdleBehavior(delta_time) //Do some stupid shit while we have nothing to do
+		return
 
 	if(current_movement_target && get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
 		CancelActions()
@@ -139,7 +147,13 @@ have ways of interacting with a specific atom and control it. They posses a blac
 ///This is where you decide what actions are taken by the AI.
 /datum/ai_controller/proc/SelectBehaviors(delta_time)
 	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
-	return
+	if(!COOLDOWN_FINISHED(src, failed_planning_cooldown))
+		return FALSE
+
+	current_behaviors = list()
+
+	for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
+		subtree.SelectBehaviors(src, delta_time)
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
@@ -149,9 +163,11 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	ai_status = new_ai_status
 	switch(ai_status)
 		if(AI_STATUS_ON)
-			START_PROCESSING(SSai_controllers, src)
+			SSai_controllers.active_ai_controllers += src
+			START_PROCESSING(SSai_behaviors, src)
 		if(AI_STATUS_OFF)
-			STOP_PROCESSING(SSai_controllers, src)
+			STOP_PROCESSING(SSai_behaviors, src)
+			SSai_controllers.active_ai_controllers -= src
 			CancelActions()
 
 /datum/ai_controller/proc/CancelActions()

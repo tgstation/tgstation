@@ -6,6 +6,7 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey
 	movement_delay = 0.4 SECONDS
+	planning_subtrees = list(/datum/ai_planning_subtree/monkey_tree)
 	blackboard = list(BB_MONKEY_AGRESSIVE = FALSE,\
 	BB_MONKEY_BEST_FORCE_FOUND = 0,\
 	BB_MONKEY_ENEMIES = list(),\
@@ -55,90 +56,6 @@ have ways of interacting with a specific mob and control it.
 		return FALSE
 	return ..()
 
-/datum/ai_controller/monkey/SelectBehaviors(delta_time)
-	current_behaviors = list()
-	var/mob/living/living_pawn = pawn
-
-	if(SHOULD_RESIST(living_pawn) && DT_PROB(MONKEY_RESIST_PROB, delta_time))
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist) //BRO IM ON FUCKING FIRE BRO
-		return //IM NOT DOING ANYTHING ELSE BUT EXTUINGISH MYSELF, GOOD GOD HAVE MERCY.
-
-	var/list/enemies = blackboard[BB_MONKEY_ENEMIES]
-
-	if(HAS_TRAIT(pawn, TRAIT_PACIFISM)) //Not a pacifist? lets try some combat behavior.
-		return
-	if(length(enemies) || blackboard[BB_MONKEY_AGRESSIVE]) //We have enemies or are pissed
-
-		var/mob/living/selected_enemy
-
-		for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, living_pawn))
-			if(possible_enemy == living_pawn || (!enemies[possible_enemy] && (!blackboard[BB_MONKEY_AGRESSIVE] || HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey)))) //Are they an enemy? (And do we even care?)
-				continue
-
-			selected_enemy = possible_enemy
-			break
-		if(selected_enemy)
-			if(!selected_enemy.stat) //He's up, get him!
-				if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
-					blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
-					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_flee)
-					return //I'm running fuck you guys
-
-				if(TryFindWeapon()) //Getting a weapon is higher priority if im not fleeing.
-					return
-
-				blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
-				current_movement_target = selected_enemy
-				if(blackboard[BB_MONKEY_RECRUIT_COOLDOWN] < world.time)
-					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/recruit_monkeys)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
-				return //Focus on this
-
-			else //He's down, can we disposal him?
-				var/obj/machinery/disposal/bodyDisposal = locate(/obj/machinery/disposal/) in view(MONKEY_ENEMY_VISION, living_pawn)
-				if(bodyDisposal)
-					blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
-					blackboard[BB_MONKEY_TARGET_DISPOSAL] = bodyDisposal
-					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/disposal_mob)
-					return
-
-			return //Too busy fighting to steal atm.
-
-	else if(DT_PROB(MONKEY_SHENANIGAN_PROB, delta_time))
-		if(TryFindWeapon()) //Found a better weapon, let's grab it first.
-			return
-
-///re-used behavior pattern by monkeys for finding a weapon
-/datum/ai_controller/monkey/proc/TryFindWeapon()
-	var/mob/living/living_pawn = pawn
-
-	if(!locate(/obj/item) in living_pawn.held_items)
-		blackboard[BB_MONKEY_BEST_FORCE_FOUND] = 0
-
-	var/obj/item/W
-	for(var/obj/item/i in oview(2, living_pawn))
-		if(!istype(i))
-			continue
-		if(HAS_TRAIT(i, TRAIT_NEEDS_TWO_HANDS) || blackboard[BB_MONKEY_BLACKLISTITEMS][i] || i.force < blackboard[BB_MONKEY_BEST_FORCE_FOUND])
-			continue
-		W = i
-		break
-
-	if(W)
-		blackboard[BB_MONKEY_PICKUPTARGET] = W
-		current_movement_target = W
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/ground)
-		return TRUE
-	else
-		var/mob/living/carbon/human/H = locate(/mob/living/carbon/human/) in oview(2,living_pawn)
-		if(H)
-			W = pick(H.held_items)
-			if(W && !blackboard[BB_MONKEY_BLACKLISTITEMS][W] && W.force > blackboard[BB_MONKEY_BEST_FORCE_FOUND] && !HAS_TRAIT(W, TRAIT_NEEDS_TWO_HANDS))
-				blackboard[BB_MONKEY_PICKUPTARGET] = W
-				current_movement_target = W
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/pickpocket)
-				return TRUE
 
 //When idle just kinda fuck around.
 /datum/ai_controller/monkey/PerformIdleBehavior(delta_time)
@@ -228,3 +145,35 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/target_del(target)
 	SIGNAL_HANDLER
 	blackboard[BB_MONKEY_BLACKLISTITEMS] -= target
+
+
+///re-used behavior pattern by monkeys for finding a weapon
+/datum/ai_controller/monkey/proc/TryFindWeapon()
+	var/mob/living/living_pawn = pawn
+
+	if(!locate(/obj/item) in living_pawn.held_items)
+		blackboard[BB_MONKEY_BEST_FORCE_FOUND] = 0
+
+	var/obj/item/W
+	for(var/obj/item/i in oview(2, living_pawn))
+		if(!istype(i))
+			continue
+		if(HAS_TRAIT(i, TRAIT_NEEDS_TWO_HANDS) || blackboard[BB_MONKEY_BLACKLISTITEMS][i] || i.force < blackboard[BB_MONKEY_BEST_FORCE_FOUND])
+			continue
+		W = i
+		break
+
+	if(W)
+		blackboard[BB_MONKEY_PICKUPTARGET] = W
+		current_movement_target = W
+		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/ground)
+		return TRUE
+	else
+		var/mob/living/carbon/human/H = locate(/mob/living/carbon/human/) in oview(2,living_pawn)
+		if(H)
+			W = pick(H.held_items)
+			if(W && !blackboard[BB_MONKEY_BLACKLISTITEMS][W] && W.force > blackboard[BB_MONKEY_BEST_FORCE_FOUND] && !HAS_TRAIT(W, TRAIT_NEEDS_TWO_HANDS))
+				blackboard[BB_MONKEY_PICKUPTARGET] = W
+				current_movement_target = W
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/pickpocket)
+				return TRUE
