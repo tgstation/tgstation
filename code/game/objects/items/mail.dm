@@ -14,11 +14,11 @@
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	/// destination tagging for the mail sorter
+	/// Destination tagging for the mail sorter.
 	var/sort_tag = 0
-	/// who this mail is for and who can open it
-	var/mob/recipient
-	/// how many goodies this mail contains
+	/// Who this mail is for and who can open it.
+	var/datum/weakref/recipient
+	/// How many goodies this mail contains.
 	var/goodie_count = 1
 	/// Goodies which can be given to anyone. The base weight for cash is 56. For there to be a 50/50 chance of getting a department item, they need 56 weight as well.
 	var/list/generic_goodies = list(
@@ -54,6 +54,7 @@
 
 /obj/item/mail/Initialize()
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 	AddElement(/datum/element/item_scaling, 0.5, 1)
 	if(isnull(department_colors))
 		department_colors = list(
@@ -119,17 +120,18 @@
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	user.put_in_hands(contents)
+	if(contents.len)
+		user.put_in_hands(contents[1])
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
 
 /// Accepts a mob to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(mob/new_recipient)
 	recipient = new_recipient
-	name = "[initial(name)] for [recipient.real_name] ([recipient.job])"
+	name = "[initial(name)] for [new_recipient.real_name] ([new_recipient.job])"
 	var/list/goodies = generic_goodies
 
-	var/datum/job/this_job = SSjob.name_occupations[recipient.job]
+	var/datum/job/this_job = SSjob.name_occupations[new_recipient.job]
 	if(this_job)
 		if(this_job.paycheck_department && department_colors[this_job.paycheck_department])
 			color = department_colors[this_job.paycheck_department]
@@ -176,6 +178,11 @@
 
 	junk = new junk(src)
 	return TRUE
+
+/obj/item/mail/proc/disposal_handling(obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
+	SIGNAL_HANDLER
+	if(!hasmob)
+		disposal_holder.destinationTag = sort_tag
 
 /// Subtype that's always junkmail
 /obj/item/mail/junkmail/Initialize()
