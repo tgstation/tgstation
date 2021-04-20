@@ -187,7 +187,7 @@
 	var/mob/living/carbon/human/waltzing = user
 	waltzing.physiology.brute_mod *= 0.5
 	waltzing.physiology.burn_mod *= 0.5
-	ADD_TRAIT(H, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
+	ADD_TRAIT(waltzing, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
 	waltzing.client?.give_award(/datum/award/achievement/misc/void_ascension, waltzing)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [waltzing.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
 
