@@ -168,7 +168,7 @@
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/human/proc/has_equipped(obj/item/I, slot, initial = FALSE)
+/mob/living/carbon/proc/has_equipped(obj/item/I, slot, initial = FALSE)
 	return I.equipped(src, slot, initial)
 
 /mob/living/carbon/human/dummy/has_equipped(obj/item/I, slot, initial = FALSE)
