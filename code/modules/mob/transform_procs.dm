@@ -163,7 +163,7 @@
 
 /mob/living/silicon/robot/proc/replace_banned_cyborg()
 	to_chat(src, "<b>You are job banned from cyborg! Appeal your job ban if you want to avoid this in the future!</b>")
-	ghostize(0)
+	ghostize(FALSE)
 
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [src]?", "[src]", null, "Cyborg", 50, src)
 	if(LAZYLEN(candidates))
