@@ -440,7 +440,7 @@ SUBSYSTEM_DEF(job)
 		RejectPlayer(player)
 	else if(player.client.prefs.joblessrole == BEOVERFLOW)
 		var/allowed_to_be_a_loser = !is_banned_from(player.ckey, SSjob.overflow_role)
-		if(QDELETED(player) || !allowed_to_be_a_loser)
+		if(QDELETED(player) || !allowed_to_be_a_loser || player.IsJobUnavailable(SSjob.overflow_role) != JOB_AVAILABLE)
 			RejectPlayer(player)
 		else
 			if(!AssignRole(player, SSjob.overflow_role))
