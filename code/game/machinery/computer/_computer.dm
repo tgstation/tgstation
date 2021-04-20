@@ -30,10 +30,11 @@
 
 /obj/machinery/computer/update_overlays()
 	. = ..()
-	if(machine_stat & NOPOWER)
-		. += "[icon_keyboard]_off"
-		return
-	. += icon_keyboard
+	if(icon_keyboard)
+		if(machine_stat & NOPOWER)
+			. += "[icon_keyboard]_off"
+			return
+		. += icon_keyboard
 
 	// This whole block lets screens ignore lighting and be visible even in the darkest room
 	var/overlay_state = icon_screen
