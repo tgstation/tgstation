@@ -22,6 +22,13 @@ SUBSYSTEM_DEF(greyscale)
 
 /datum/controller/subsystem/greyscale/proc/GetColoredIconByType(type, list/colors)
 	type = "[type]"
-	if(istype(colors)) // It's the color list format
-		colors = colors.Join()
+	if(istext(colors)) // It's the color string format for map edits/type values etc
+		colors = ParseColorString(colors)
 	return configurations[type].Generate(colors)
+
+/datum/controller/subsystem/greyscale/proc/ParseColorString(colors)
+	var/list/split_colors = splittext(colors, "#")
+	var/list/output = list()
+	for(var/i in 2 to length(split_colors))
+		output += "#[split_colors[i]]"
+	return output

@@ -502,12 +502,12 @@
 
 	switch(terrain_theme)
 		if("lavaland")//Depressurizes the place... and free cult metal, I guess.
-			NewTerrainFloors = /turf/open/floor/grass/snow/basalt/safe
+			NewTerrainFloors = /turf/open/floor/grass/snow/basalt
 			NewTerrainWalls = /turf/closed/wall/mineral/cult
 			NewFlora = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
 			florachance = 1
 		if("winter") //Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.
-			NewTerrainFloors = /turf/open/floor/grass/snow/safe
+			NewTerrainFloors = /turf/open/floor/grass/snow
 			NewTerrainWalls = /turf/closed/wall/mineral/wood
 			NewTerrainChairs = /obj/structure/chair/wood
 			NewTerrainTables = /obj/structure/table/glass
@@ -534,7 +534,7 @@
 				if(isturf(Stuff))
 					var/turf/T = Stuff
 					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
-						var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_IGNORE_AIR)
+						var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_INHERIT_AIR)
 						if(prob(florachance) && NewFlora.len && !O.is_blocked_turf(TRUE))
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)

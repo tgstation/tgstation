@@ -157,9 +157,6 @@
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
 
-/turf/open/floor/grass/snow/basalt/safe
-	planetary_atmos = FALSE
-
 /turf/open/floor/grass/snow/safe
 	slowdown = 1.5
 	planetary_atmos = FALSE

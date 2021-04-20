@@ -69,4 +69,13 @@
 		CRASH("An unknown greyscale configuration was given to a reference layer: [json_data["reference_type"]]")
 
 /datum/greyscale_layer/reference/InternalGenerate(list/colors, list/render_steps)
+<<<<<<< HEAD
 	return reference_config.Generate(colors.Join(), render_steps)
+=======
+	if(render_steps)
+		// We're debugging
+		var/list/debug_data = reference_config.GenerateDebug(colors)
+		render_steps += debug_data["steps"]
+		return debug_data["icon"]
+	return reference_config.Generate(colors)
+>>>>>>> parent of 3ffbfee8b6 (Merge branch 'master' into ice-maint-box)

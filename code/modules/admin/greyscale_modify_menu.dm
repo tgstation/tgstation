@@ -70,8 +70,8 @@
 				split_colors[group] = new_color
 				refresh_preview()
 		if("apply")
-			target.greyscale_colors = "" // We do this to force an update, in some cases it will think nothing changed when it should be refreshing
-			target.set_greyscale_colors(split_colors)
+			target.greyscale_colors = split_colors.Join()
+			target.update_appearance()
 		if("refresh_file")
 			SSgreyscale.RefreshConfigsFromFile()
 			refresh_preview()

@@ -12,6 +12,7 @@
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	species_traits = list(HAS_FLESH,HAS_BONE,NO_UNDERWEAR,LIPS,NOEYESPRITES,NOBLOODOVERLAY,NOTRANSSTING, NOAUGMENTS)
+<<<<<<< HEAD
 	inherent_traits = list(
 		TRAIT_CAN_STRIP,
 		TRAIT_VENTCRAWLER_NUDE,
@@ -19,6 +20,9 @@
 		TRAIT_WEAK_SOUL,
 		TRAIT_CAN_STRIP,
 	)
+=======
+	inherent_traits = list(TRAIT_VENTCRAWLER_NUDE, TRAIT_PRIMITIVE, TRAIT_WEAK_SOUL)
+>>>>>>> parent of 3ffbfee8b6 (Merge branch 'master' into ice-maint-box)
 	no_equip = list(ITEM_SLOT_EARS, ITEM_SLOT_EYES, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
 	liked_food = MEAT | FRUIT

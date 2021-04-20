@@ -107,6 +107,7 @@
 	expected_colors = length(color_groups)
 
 /// Actually create the icon and color it in, handles caching
+<<<<<<< HEAD
 /datum/greyscale_config/proc/Generate(color_string, list/render_steps)
 	var/key = color_string
 	var/icon/new_icon = icon_cache[key]
@@ -125,6 +126,17 @@
 	icon_bundle = fcopy_rsc(icon_bundle)
 	icon_cache[key] = icon_bundle
 	return icon(icon_bundle)
+=======
+/datum/greyscale_config/proc/Generate(list/colors)
+	if(length(colors) != expected_colors)
+		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
+	var/key = colors.Join("&")
+	var/icon/new_icon = icon_cache[key]
+	if(new_icon)
+		return new_icon
+	new_icon = icon_cache[key] = GenerateLayerGroup(colors, layers)
+	return new_icon
+>>>>>>> parent of 3ffbfee8b6 (Merge branch 'master' into ice-maint-box)
 
 /// Internal recursive proc to handle nested layer groups
 /datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
@@ -154,9 +166,3 @@
 
 	output["icon"] = Generate(colors, debug_steps)
 	return output
-
-/datum/greyscale_config/proc/ParseColorString(color_string)
-	. = list()
-	var/list/split_colors = splittext(color_string, "#")
-	for(var/color in 2 to length(split_colors))
-		. += "#[split_colors[color]]"
