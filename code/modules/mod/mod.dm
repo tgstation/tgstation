@@ -545,4 +545,4 @@
 	theme = /datum/mod_theme/syndicate
 	req_access = list(ACCESS_SYNDICATE)
 	cell = /obj/item/stock_parts/cell/hyper
-	initial_modules = list(/obj/item/mod/module/storage/antag)
+	initial_modules = list(/obj/item/mod/module/storage/antag, /obj/item/mod/module/jetpack)
