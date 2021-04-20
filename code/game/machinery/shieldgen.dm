@@ -257,7 +257,7 @@
 	icon_state = "shield_wall_gen"
 	anchored = FALSE
 	density = TRUE
-	req_access = list(ACCESS_ENGINE)
+	req_one_access = list(ACCESS_ENGINE, ACCESS_TELEPORTER)
 	flags_1 = CONDUCT_1
 	use_power = NO_POWER_USE
 	idle_power_usage = 10
