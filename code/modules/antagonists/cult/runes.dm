@@ -316,7 +316,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
 			"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
 			)
-		var/construct_class = show_radial_menu(first_invoker, src, constructs, require_near = TRUE, tooltips = TRUE)
+		var/construct_class = show_radial_menu(first_invoker, sacrificial, constructs, require_near = TRUE, tooltips = TRUE)
 		if(QDELETED(sacrificial))
 			return FALSE
 		switch(construct_class)
