@@ -325,6 +325,10 @@ SUBSYSTEM_DEF(job)
 	var/list/overflow_candidates = FindOccupationCandidates(overflow, JP_LOW)
 	JobDebug("AC1, Candidates: [overflow_candidates.len]")
 	for(var/mob/dead/new_player/player in overflow_candidates)
+		if(player.IsJobUnavailable(SSjob.overflow_role) != JOB_AVAILABLE)
+			JobDebug("AC1 failed, removing from overflow pool, Player: [player]")
+			overflow_candidates -= player
+			continue
 		JobDebug("AC1 pass, Player: [player]")
 		AssignRole(player, SSjob.overflow_role)
 		overflow_candidates -= player
@@ -388,6 +392,9 @@ SUBSYSTEM_DEF(job)
 				if(player.client.prefs.job_preferences[job.title] == level)
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
+						if(player.IsJobUnavailable(job.title) != JOB_AVAILABLE)
+							JobDebug("DO failed on IsJobAvailable, Job: [job.title], Player: [player]")
+							continue
 						JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
 						AssignRole(player, job.title)
 						unassigned -= player
@@ -570,7 +577,7 @@ SUBSYSTEM_DEF(job)
 	var/assistant_ratio = CONFIG_GET(number/assistant_scaling_coeff)
 	if(assistant_ratio > 0)
 		if(job.spawn_positions > 0)
-			var/assistant_positions = max(job.spawn_positions, round(unassigned.len / assistant_ratio))
+			var/assistant_positions = max(3, max(job.spawn_positions, round(unassigned.len / assistant_ratio))) //with a ratio of 8, we'd need a pop of more than 24 to have more than 3 assistants (we'll alway have at least 3 of them)
 			JobDebug("Setting open assistants positions to [assistant_positions]")
 			job.total_positions = assistant_positions
 			job.spawn_positions = assistant_positions
