@@ -268,8 +268,18 @@
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
 		return JOB_UNAVAILABLE_GENERIC
+
+	if(job.title == "Assistant" && latejoin) //check for latejoin overflow
+		var/job_overflow_check = TRUE
+		for(var/datum/job/job_overflow in SSjob.occupations)
+			if(job_overflow && job_overflow.total_positions > 0 && job_overflow.current_positions < job_overflow.total_positions)
+				job_overflow_check = FALSE
+				break
+		if(job_overflow_check && !is_banned_from(ckey, job.title))
+			return JOB_AVAILABLE
+
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
-		if(job.title == SSjob.overflow_role)
+		if(job.title == "Assistant")
 			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
 				return JOB_AVAILABLE
 			for(var/datum/job/job_to_check in SSjob.occupations)
