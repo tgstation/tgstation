@@ -118,7 +118,8 @@ GLOBAL_LIST_EMPTY(objectives)
 		if(O.late_joiner)
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target,dupe_search_range))
+		var/target_area = get_area(possible_target.current)
+		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target,dupe_search_range) && !istype(target_area, /area/shuttle/arrival))
 			if (!(possible_target in blacklist))
 				possible_targets += possible_target
 	if(try_target_late_joiners)
