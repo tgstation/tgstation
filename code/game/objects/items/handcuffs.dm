@@ -145,7 +145,7 @@
 /**
  * # Cable restraints
  *
- * Ghetto handcuffs.
+ * Ghetto handcuffs. Removing those is faster.
 */
 /obj/item/restraints/handcuffs/cable
 	name = "cable restraints"
@@ -176,65 +176,49 @@
 	color = null
 
 /**
- * # Red cable restraints
- *
- * A red version of cable restraints
+ * Red cable restraints
 */
 /obj/item/restraints/handcuffs/cable/red
 	color = "#ff0000"
 
 /**
- * # Yellow cable restraints
- *
- * A yellow version of cable restraints
+ * Yellow cable restraints
 */
 /obj/item/restraints/handcuffs/cable/yellow
 	color = "#ffff00"
 
 /**
- * # Blue cable restraints
- *
- * A blue version of cable restraints
+ * Blue cable restraints
 */
 /obj/item/restraints/handcuffs/cable/blue
 	color = "#1919c8"
 
 /**
- * # Green cable restraints
- *
- * A green version of cable restraints
+ * Green cable restraints
 */
 /obj/item/restraints/handcuffs/cable/green
 	color = "#00aa00"
 
 /**
- * # Pink cable restraints
- *
- * A pink version of cable restraints
+ * Pink cable restraints
 */
 /obj/item/restraints/handcuffs/cable/pink
 	color = "#ff3ccd"
 
 /**
- * # Orange cable restraints
- *
- * An orange (the color) version of cable restraints
+ * Orange (the color) cable restraints
 */
 /obj/item/restraints/handcuffs/cable/orange
 	color = "#ff8000"
 
 /**
- * # Cyan cable restraints
- *
- * A cyan version of cable restraints
+ * Cyan cable restraints
 */
 /obj/item/restraints/handcuffs/cable/cyan
 	color = "#00ffff"
 
 /**
- * # White cable restraints
- *
- * A white version of cable restraints
+ * White cable restraints
 */
 /obj/item/restraints/handcuffs/cable/white
 	color = null
