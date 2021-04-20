@@ -2227,6 +2227,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"iU" = (
+/obj/structure/sign/warning/biohazard{
+	pixel_x = -32
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/aft)
 "iX" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
@@ -2548,11 +2556,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
-"mu" = (
-/obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "mx" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/iron,
@@ -2737,10 +2740,6 @@
 "oh" = (
 /turf/open/openspace/icemoon,
 /area/icemoon/underground/explored)
-"oi" = (
-/obj/structure/closet,
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "on" = (
 /obj/structure/cable,
 /obj/structure/table,
@@ -3282,6 +3281,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+"sU" = (
+/obj/structure/rack,
+/obj/structure/sign/poster/random{
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "sX" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -3553,6 +3559,11 @@
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
+"vR" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/aft)
 "we" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -3845,12 +3856,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/science/xenobiology)
-"zB" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "zE" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/box,
@@ -4173,6 +4178,11 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/iron,
 /area/mine/eva)
+"CC" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "CG" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
@@ -4642,6 +4652,12 @@
 /obj/item/pen,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"Gx" = (
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "Gz" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
@@ -4752,6 +4768,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/storage)
+"HG" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/aft)
 "HO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -5093,10 +5114,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"Ld" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "Lg" = (
 /obj/item/clothing/under/color/jumpskirt/random,
 /obj/effect/turf_decal/tile/brown{
@@ -5120,12 +5137,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
-"Ls" = (
-/obj/structure/sign/warning/biohazard{
-	pixel_x = -32
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "Lt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5156,6 +5167,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"LH" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/aft)
 "LI" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -5182,6 +5199,12 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"LT" = (
+/obj/structure/cable,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/aft)
 "LU" = (
 /obj/structure/table,
 /obj/machinery/computer/bookmanagement,
@@ -5373,6 +5396,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/mine/laborcamp)
+"NB" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/aft)
 "NG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 10
@@ -6064,6 +6092,15 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"Ud" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/structure/sign/poster/random{
+	pixel_y = -32
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "Up" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -6363,6 +6400,17 @@
 /obj/structure/sign/warning/electricshock,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"WR" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/aft)
+"WT" = (
+/obj/structure/closet,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/aft)
 "Xd" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
@@ -47952,7 +48000,7 @@ hM
 hM
 hM
 YT
-zB
+Ud
 hM
 hM
 hM
@@ -48222,7 +48270,7 @@ hM
 hM
 hM
 hM
-RC
+sU
 Fa
 Fa
 eJ
@@ -48237,7 +48285,7 @@ hM
 hM
 tj
 Fa
-oi
+WT
 hM
 ak
 ak
@@ -48469,7 +48517,7 @@ Fa
 Fa
 Fa
 Fa
-Fa
+HG
 Fa
 Fa
 Fa
@@ -48481,7 +48529,7 @@ Fa
 Fa
 Fa
 Fa
-Fa
+WR
 Fa
 Fa
 Fa
@@ -48729,24 +48777,24 @@ Fa
 Fa
 Fa
 Fa
+NB
+Fa
+Fa
+Fa
+Fa
+Fa
+HG
 Fa
 Fa
 Fa
 Fa
 Fa
 Fa
-Fa
-Fa
-Fa
-Fa
-Fa
-Fa
-Fa
-Fa
+vR
 zS
 pY
 CG
-Fa
+WR
 Fa
 Fa
 Fa
@@ -49235,7 +49283,7 @@ Fp
 Fp
 Fp
 hM
-Fa
+HG
 Qv
 jw
 Wb
@@ -49778,7 +49826,7 @@ sF
 Wb
 jJ
 xj
-Xp
+LT
 hM
 ak
 ak
@@ -50006,7 +50054,7 @@ ak
 ak
 Fp
 hM
-Fa
+WR
 Qv
 Qv
 LM
@@ -51034,7 +51082,7 @@ Fp
 Fp
 Fp
 hM
-Fa
+NB
 Qv
 Fu
 nX
@@ -52064,7 +52112,7 @@ hM
 RC
 Fa
 Fa
-Ls
+iU
 Vg
 jv
 Qv
@@ -52091,7 +52139,7 @@ Qv
 Qv
 Qv
 Qv
-Fa
+WR
 Xp
 hM
 ak
@@ -52333,7 +52381,7 @@ Fa
 Fa
 Fa
 Fa
-Ld
+LH
 pY
 LC
 Fa
@@ -52345,8 +52393,8 @@ Fa
 Mv
 jM
 Fa
-Fa
-Fa
+WR
+eJ
 Fa
 Fa
 on
@@ -52578,7 +52626,7 @@ hM
 hM
 kS
 Fa
-Fa
+HG
 NG
 Lt
 Vi
@@ -52601,7 +52649,7 @@ Vi
 Vi
 nZ
 DS
-Xp
+LT
 Xp
 Xp
 Xp
@@ -52834,7 +52882,7 @@ IH
 Up
 Vj
 ha
-Fa
+Gx
 kB
 Jv
 TZ
@@ -52847,7 +52895,7 @@ ww
 dd
 Fa
 pY
-Fa
+WR
 Fa
 Fa
 Fa
@@ -52859,10 +52907,10 @@ Fa
 RC
 pY
 Fa
-Fa
-Fa
-Fa
-Fa
+Gx
+CC
+pY
+pY
 hM
 hM
 ak
@@ -53116,8 +53164,8 @@ hM
 hM
 hM
 hM
-Fa
-Fa
+hM
+hM
 hM
 hM
 hM
@@ -53372,10 +53420,10 @@ ak
 ak
 ak
 ak
-hM
-Fa
-eJ
-hM
+ak
+ak
+ak
+ak
 ak
 ak
 ak
@@ -53629,10 +53677,10 @@ ak
 ak
 ak
 ak
-hM
-Fa
-mu
-hM
+ak
+ak
+ak
+ak
 ak
 ak
 ak
@@ -53886,10 +53934,10 @@ ak
 ak
 ak
 ak
-hM
-hM
-hM
-hM
+ak
+ak
+ak
+ak
 ak
 ak
 ak
