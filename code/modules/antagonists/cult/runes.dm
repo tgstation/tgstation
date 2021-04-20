@@ -340,12 +340,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		stone.invisibility = 0
 
 	if(sacrificial)
-		if(iscyborg(sacrificial))
-			playsound(sacrificial, 'sound/magic/disable_tech.ogg', 100, TRUE)
-			sacrificial.dust() //To prevent the MMI from remaining
-		else
-			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
-			sacrificial.gib()
+		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
+		sacrificial.gib()
 	return TRUE
 
 
