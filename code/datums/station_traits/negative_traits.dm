@@ -146,11 +146,12 @@
 		weapon_types = list(
 			/obj/item/chair = 20,
 			/obj/item/tailclub = 10,
+			/obj/item/melee/baseball_bat = 10,
 			/obj/item/melee/chainofcommand/tailwhip = 10,
 			/obj/item/melee/chainofcommand/tailwhip/kitty = 10,
 			/obj/item/reagent_containers/food/drinks/bottle = 20,
 			/obj/item/reagent_containers/food/drinks/bottle/kong = 5,
-			/obj/item/switchblade = 10,
+			/obj/item/switchblade/extended = 10,
 			/obj/item/sign/random = 10,
 			/obj/item/gun/ballistic/automatic/pistol = 1,
 		)
