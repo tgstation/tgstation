@@ -23,10 +23,10 @@
 	to_chat(owner, "<span class='boldannounce'>You are the Heretic!</span><br>\
 	<B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
-	to_chat(owner, "<span class='cult'>The book whispers softly, its forbidden knowledge walks this plane once again!<br>\
-	Your book allows you to research abilities. Read it very carefully, for you cannot undo what has been done!<br>\
-	You gain charges by either collecting influences or sacrificing people tracked by the living heart.<br> \
-	You can find a basic guide at: https://tgstation13.org/wiki/Heresy_101 </span>")
+	to_chat(owner, "<span class='cult'>The book whispers softly, its forbidden knowledge walks this plane once again!</span>")
+	var/policy = get_policy(ROLE_HERETIC)
+	if(policy)
+		to_chat(owner, policy)
 
 /datum/antagonist/heretic/farewell()
 	to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
