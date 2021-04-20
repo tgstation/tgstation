@@ -144,7 +144,7 @@
 
 		// These are so we can see the result of every step of the process in the preview ui
 		if(render_steps)
-			render_steps[image(new_icon)] = image(layer_icon)
+			render_steps[image(layer_icon)] = image(new_icon)
 	return new_icon
 
 /datum/greyscale_config/proc/GenerateDebug(colors)
