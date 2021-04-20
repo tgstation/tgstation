@@ -309,6 +309,29 @@ structure_check() searches for nearby cultist structures required for the invoca
 				to_chat(M, "<span class='cultlarge'>\"I accept this sacrifice.\"</span>")
 			else
 				to_chat(M, "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>")
+	
+	if(iscyborg(sacrificial))
+		var/static/list/constructs = list(
+			"Juggernaut" = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
+			"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
+			"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
+			)
+		var/construct_class = show_radial_menu(first_invoker, src, constructs, require_near = TRUE, tooltips = TRUE)
+		if(QDELETED(sacrificial))
+			return FALSE
+		switch(construct_class)
+			if("Juggernaut")
+				makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, sacrificial, first_invoker, FALSE, get_turf(src))
+			if("Wraith")
+				makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, sacrificial, first_invoker, FALSE, get_turf(src))
+			if("Artificer")
+				makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, sacrificial, first_invoker, FALSE, get_turf(src))
+			else
+				return FALSE
+		var/mob/living/silicon/robot/sacriborg = sacrificial
+		sacriborg.mmi = null
+		qdel(sacrificial)
+		return TRUE
 
 	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
 	if(sacrificial.mind && !sacrificial.suiciding)
