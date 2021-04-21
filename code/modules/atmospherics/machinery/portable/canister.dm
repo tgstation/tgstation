@@ -610,6 +610,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					desc = initial(replacement.desc)
 					icon_state = initial(replacement.icon_state)
 					base_icon_state = icon_state
+					set_greyscale_config(initial(replacement.greyscale_config), FALSE)
+					set_greyscale_colors(initial(replacement.greyscale_colors))
 		if("restricted")
 			restricted = !restricted
 			if(restricted)
