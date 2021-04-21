@@ -208,9 +208,7 @@
 					var/obj/item/card/id/id_card_of_human_user = worn.GetID()
 					if(istype(id_card_of_human_user))
 						logname = "User: [id_card_of_human_user.registered_name]"
-			var/i = stored_research.research_logs.len
-			stored_research.research_logs += null
-			stored_research.research_logs[++i] = list(tech_node.display_name, price["General Research"], logname, "[get_area(computer)] ([user.x],[user.y],[user.z])")
+			stored_research.research_logs += list(list(tech_node.display_name, price["General Research"], logname, "[get_area(computer)] ([user.x],[user.y],[user.z])"))
 			return TRUE
 		else
 			computer.say("Failed to research node: Internal database error!")
