@@ -201,6 +201,8 @@
 
 /**
  * Pink cable restraints
+ * 
+ * OwO
 */
 /obj/item/restraints/handcuffs/cable/pink
 	color = "#ff3ccd"
