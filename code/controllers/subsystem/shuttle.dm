@@ -59,6 +59,9 @@ SUBSYSTEM_DEF(shuttle)
 	/// A listing of previously delivered supply packs
 	var/list/orderhistory = list()
 
+	/// A list of job accesses that are able to purchase any shuttles
+	var/list/has_purchase_shuttle_access
+
 	var/list/hidden_shuttle_turfs = list() //all turfs hidden from navigation computers associated with a list containing the image hiding them and the type of the turf they are pretending to be
 	var/list/hidden_shuttle_turf_images = list() //only the images from the above list
 
@@ -103,6 +106,7 @@ SUBSYSTEM_DEF(shuttle)
 		supply_packs[pack.id] = pack
 
 	initial_load()
+	has_purchase_shuttle_access = init_has_purchase_shuttle_access()
 
 	if(!arrivals)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
@@ -952,3 +956,13 @@ SUBSYSTEM_DEF(shuttle)
 					var/set_purchase = alert(usr, "Do you want to also disable shuttle purchases/random events that would change the shuttle?", "Butthurt Admin Prevention", "Yes, disable purchases/events", "No, I want to possibly get owned")
 					if(set_purchase == "Yes, disable purchases/events")
 						SSshuttle.shuttle_purchased = SHUTTLEPURCHASE_FORCED
+
+/datum/controller/subsystem/shuttle/proc/init_has_purchase_shuttle_access()
+	var/list/has_purchase_shuttle_access = list()
+
+	for (var/shuttle_id in SSmapping.shuttle_templates)
+		var/datum/map_template/shuttle/shuttle_template = SSmapping.shuttle_templates[shuttle_id]
+		if (!isnull(shuttle_template.who_can_purchase))
+			has_purchase_shuttle_access |= shuttle_template.who_can_purchase
+
+	return has_purchase_shuttle_access
