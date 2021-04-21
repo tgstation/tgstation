@@ -1,0 +1,4 @@
+author: "Cimika / Kathy Ryals"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the Mitosis nanite program's description."
