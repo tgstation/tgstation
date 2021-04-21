@@ -8316,7 +8316,7 @@ resolve@^2.0.0-next.3:
   dependencies:
     core-js: ^3.10.1
     regenerator-runtime: ^0.13.8
-    whatwg-fetch: ^3.6.2
+    unfetch: ^4.2.0
   languageName: unknown
   linkType: soft
 
@@ -8679,6 +8679,13 @@ typescript@^4.2.4:
   bin:
     uglifyjs: bin/uglifyjs
   checksum: 32dd0bf3dd767b66ba8b20d3c757b98ab5253fde3dd6d52e41c0d669ec528b444a09cfca704cba9a7498a2d6de8755f89113c9737763dfa0833ef05c2aa43bcc
+  languageName: node
+  linkType: hard
+
+"unfetch@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "unfetch@npm:4.2.0"
+  checksum: a1ec2f1d0fd6e0e9d46d659b6639dac490eefde4dcb5d9a060b78e380a543182bbdf395c7772685a023fb76c8e5d2c8b843f199d727c5f3af3cced88b3dcc741
   languageName: node
   linkType: hard
 
@@ -9060,13 +9067,6 @@ typescript@^4.2.4:
   dependencies:
     iconv-lite: 0.4.24
   checksum: 44e4276ad2c770d1eb8c5a49294b863c581ef4bc78a10ac6a73a7eba00b377bc53ae0501d7ffce29a2c051b6af5ebbbd135f1da7d8eb98097af2cf12f7b2c984
-  languageName: node
-  linkType: hard
-
-"whatwg-fetch@npm:^3.6.2":
-  version: 3.6.2
-  resolution: "whatwg-fetch@npm:3.6.2"
-  checksum: eaa370015f81fbf7fc69d5410a13c2200d3342fa783397e9a7e64215498276459993c05e826ed736d28a8abe4e7cc3f97e9b2ffadbc58129a55f443abdfea494
   languageName: node
   linkType: hard
 

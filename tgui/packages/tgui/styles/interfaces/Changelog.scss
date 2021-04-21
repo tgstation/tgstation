@@ -1,0 +1,22 @@
+@use '../colors.scss';
+
+.Changelog {
+  &__Change {
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+  &__Cell {
+    padding: 3px 0;
+  }
+
+  &__Description {
+    display: flex;
+  }
+
+  &__Icon {
+    color: colors.$primary;
+    position: relative;
+  }
+}
