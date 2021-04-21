@@ -14,7 +14,7 @@
 	hide = TRUE
 
 	move_resist = MOVE_RESIST_DEFAULT
-
+	vent_movement = NONE
 	pipe_flags = PIPING_ONE_PER_TURF
 
 	var/icon_state_off = "freezer"

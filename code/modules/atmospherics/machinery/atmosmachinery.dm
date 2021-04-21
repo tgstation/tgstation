@@ -484,10 +484,8 @@
 
 	if(!target_move)
 		return
-	message_admins("PASS TARGET")
 	if(target_move.vent_movement & VENTCRAWL_ALLOWED)
 		user.forceMove(target_move)
-		message_admins("PASS MOVE")
 		user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
 		var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
 		if(pipenetdiff.len)
