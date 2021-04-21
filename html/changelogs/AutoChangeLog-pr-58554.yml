@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "Added some job ban checks to the robot factory! You'll be ghosted if you're cyborg banned."
