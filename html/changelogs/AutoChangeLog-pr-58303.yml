@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - qol: "players can change the thermomachines pipe color with the multitool right click when it's unanchored."
-  - bugfix: "fixed hitting the machine with tools in some cases"
