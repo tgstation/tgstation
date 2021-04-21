@@ -18,11 +18,15 @@ Buildable meters
 	icon_state = "simple"
 	inhand_icon_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
+	///Piping layer that we are going to be on
 	var/piping_layer = PIPING_LAYER_DEFAULT
+	///Type of pipe-object made, selected from the RPD
 	var/RPD_type
-	/// Whether it can be painted
+	///Whether it can be painted
 	var/paintable = FALSE
+	///Color of the pipe is going to be made from this pipe-object
 	var/pipe_color
+	///Initial direction of the created pipe (either made from the RPD or after unwrenching the pipe)
 	var/p_init_dir = 0
 
 /obj/item/pipe/directional

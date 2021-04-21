@@ -196,28 +196,42 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
+	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
-	var/working = 0
+	///Direction of the device we are going to spawn, set up in the UI
 	var/p_dir = NORTH
+	///Initial direction of the smart pipe we are going to spawn, set up in the UI
 	var/p_init_dir = ALL_CARDINALS
+	///Is the device of the flipped type?
 	var/p_flipped = FALSE
+	///Color of the device we are going to spawn
 	var/paint_color = "grey"
-	var/atmos_build_speed = 5 //deciseconds (500ms)
-	var/disposal_build_speed = 5
-	var/transit_build_speed = 5
-	var/destroy_speed = 5
-	var/paint_speed = 5
+	///Speed of building atmos devices
+	var/atmos_build_speed = 0.5 SECONDS
+	///Speed of building disposal devices
+	var/disposal_build_speed = 0.5 SECONDS
+	///Speed of building transit devices
+	var/transit_build_speed = 0.5 SECONDS
+	///Speed of removal of unwrenched devices
+	var/destroy_speed = 0.5 SECONDS
+	///Category currently active (Atmos, disposal, transit)
 	var/category = ATMOS_CATEGORY
+	///Piping layer we are going to spawn the atmos device in
 	var/piping_layer = PIPING_LAYER_DEFAULT
+	///Layer for disposal ducts
 	var/ducting_layer = DUCT_LAYER_DEFAULT
+	///Stores the current device to spawn
 	var/datum/pipe_info/recipe
+	///Stores the first atmos device
 	var/static/datum/pipe_info/first_atmos
+	///Stores the first disposal device
 	var/static/datum/pipe_info/first_disposal
+	///Stores the first transit device
 	var/static/datum/pipe_info/first_transit
+	///The modes that are allowed for the RPD
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
-	var/list/init_directions = list(list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE))
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -346,7 +360,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers))
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
-	init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
+	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
 	for(var/direction in GLOB.cardinals)
 		if(p_init_dir & direction)
 			init_directions[dir2text(direction)] = TRUE
