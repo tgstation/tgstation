@@ -6057,7 +6057,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /obj/structure/sign/poster/official/no_erp{
 	pixel_x = -30
 	},
