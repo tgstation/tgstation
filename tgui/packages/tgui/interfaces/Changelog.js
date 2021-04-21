@@ -40,7 +40,7 @@ const Header = () => (
       <a href="https://github.com/tgstation?tab=members">
         here
       </a>
-      {', recent GitHub contributors can be seen '}
+      {', recent GitHub contributors can be found '}
       <a href="https://github.com/tgstation/tgstation/pulse/monthly">
         here
       </a>.
@@ -56,6 +56,12 @@ const Header = () => (
 
 const Footer = () => (
   <>
+    <p>
+      <b>Licence: </b>
+      <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">
+        GNU Affero General Public License 3.0
+      </a>
+    </p>
     <h3>GoonStation 13 Development Team</h3>
     <p>
       <b>Coders: </b>
@@ -65,12 +71,6 @@ const Footer = () => (
     <p>
       <b>Spriters: </b>
       Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange, I Said No
-    </p>
-    <p>
-      <b>Licence: </b>
-      <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">
-        Creative Commons Attribution-Noncommercial-Share Alike 3.0 License.
-      </a>
     </p>
     <p>
       {'Except where otherwise noted, Goon Station 13 is licensed under a '}
