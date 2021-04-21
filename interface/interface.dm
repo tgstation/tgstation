@@ -102,7 +102,7 @@
 	set name = "Changelog"
 	set category = "OOC"
 	if(!GLOB.changelog_tgui)
-		GLOB.changelog_tgui = new /datum/changelog(src)
+		GLOB.changelog_tgui = new /datum/changelog()
 
 	GLOB.changelog_tgui.ui_interact(usr)
 	if(prefs.lastchangelog != GLOB.changelog_hash)
