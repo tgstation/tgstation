@@ -395,8 +395,21 @@
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 //2021 AND STILLLL GOING STRONG
-/obj/structure/window/reinforced/attackby(obj/item/tool, mob/living/user, params)
+/obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
 	switch(state)
+		if(RWINDOW_SECURE)
+			if(tool.tool_behaviour == TOOL_WELDER)
+				var/obj/item/weldingtool/welder = tool
+				if(welder.isOn())
+					user.visible_message("<span class='notice'>[user] holds \the [tool] to the security screws on \the [src]...</span>",
+						"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
+				if(tool.use_tool(src, user, 150, volume = 100))
+					to_chat(user, "<span class='notice'>The security screws are glowing white hot and look ready to be removed.</span>")
+					state = RWINDOW_BOLTS_HEATED
+					addtimer(CALLBACK(src, .proc/cool_bolts), 300)
+			else if (tool.tool_behaviour)
+				to_chat(user, "<span class='warning'>The security screws need to be heated first!</span>")
+
 		if(RWINDOW_BOLTS_HEATED)
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message("<span class='notice'>[user] digs into the heated security screws and starts removing them...</span>",
@@ -404,7 +417,9 @@
 				if(tool.use_tool(src, user, 50, volume = 50))
 					state = RWINDOW_BOLTS_OUT
 					to_chat(user, "<span class='notice'>The screws come out, and a gap forms around the edge of the pane.</span>")
-				return
+			else if (tool.tool_behaviour)
+				to_chat(user, "<span class='warning'>The security screws need to be removed first!</span>")
+
 		if(RWINDOW_BOLTS_OUT)
 			if(tool.tool_behaviour == TOOL_CROWBAR)
 				user.visible_message("<span class='notice'>[user] wedges \the [tool] into the gap in the frame and starts prying...</span>",
@@ -412,7 +427,9 @@
 				if(tool.use_tool(src, user, 40, volume = 50))
 					state = RWINDOW_POPPED
 					to_chat(user, "<span class='notice'>The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut.</span>")
-				return
+			else if (tool.tool_behaviour)
+				to_chat(user, "<span class='warning'>The gap needs to be pried first!</span>")
+
 		if(RWINDOW_POPPED)
 			if(tool.tool_behaviour == TOOL_WIRECUTTER)
 				user.visible_message("<span class='notice'>[user] starts cutting the exposed bars on \the [src]...</span>",
@@ -420,7 +437,9 @@
 				if(tool.use_tool(src, user, 20, volume = 50))
 					state = RWINDOW_BARS_CUT
 					to_chat(user, "<span class='notice'>The panels falls out of the way exposing the frame bolts.</span>")
-				return
+			else if (tool.tool_behaviour)
+				to_chat(user, "<span class='warning'>The bars need to be cut first!</span>")
+
 		if(RWINDOW_BARS_CUT)
 			if(tool.tool_behaviour == TOOL_WRENCH)
 				user.visible_message("<span class='notice'>[user] starts unfastening \the [src] from the frame...</span>",
@@ -429,22 +448,9 @@
 					to_chat(user, "<span class='notice'>You unscrew the bolts from the frame and the window pops loose.</span>")
 					state = WINDOW_OUT_OF_FRAME
 					set_anchored(FALSE)
-				return
-	return ..()
+			else if (tool.tool_behaviour)
+				to_chat(user, "<span class='warning'>The bolts need to be loosened first!</span>")
 
-/obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
-	if(state == RWINDOW_SECURE)
-		if(tool.tool_behaviour == TOOL_WELDER)
-			var/obj/item/weldingtool/welder = tool
-			if(welder.isOn())
-				user.visible_message("<span class='notice'>[user] holds \the [tool] to the security screws on \the [src]...</span>",
-					"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
-			if(tool.use_tool(src, user, 150, volume = 100))
-				to_chat(user, "<span class='notice'>The security screws are glowing white hot and look ready to be removed.</span>")
-				state = RWINDOW_BOLTS_HEATED
-				addtimer(CALLBACK(src, .proc/cool_bolts), 300)
-		else if (tool.tool_behaviour)
-			to_chat(user, "<span class='warning'>The security screws need to be heated first!</span>")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/window/proc/cool_bolts()
