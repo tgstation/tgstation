@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Fixed emitters welding instantly at the cost of 20 units of fuel."
