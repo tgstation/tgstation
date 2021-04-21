@@ -1358,6 +1358,8 @@
 	if(!is_right_clicking) // Left click first for sensibility
 		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
 		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, I, processing_recipes)
+		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
+			return TOOL_ACT_SIGNAL_BLOCKING
 		if(processing_recipes.len)
 			process_recipes(user, I, processing_recipes)
 		if(QDELETED(I))
@@ -1379,6 +1381,8 @@
 				act_result = analyzer_act(user, I)
 	else
 		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, I)
+		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
+			return TOOL_ACT_SIGNAL_BLOCKING
 		switch(tool_type)
 			if(TOOL_CROWBAR)
 				act_result = crowbar_act_secondary(user, I,)
@@ -1396,8 +1400,6 @@
 				act_result = analyzer_act_secondary(user, I)
 	if(act_result) // A tooltype_act has completed successfully
 		return TOOL_ACT_TOOLTYPE_SUCCESS
-	else if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
-		return TOOL_ACT_SIGNAL_BLOCKING
 
 
 /atom/proc/process_recipes(mob/living/user, obj/item/I, list/processing_recipes)
