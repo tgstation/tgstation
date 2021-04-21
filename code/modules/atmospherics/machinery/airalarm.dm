@@ -753,6 +753,8 @@
 	return TRUE
 
 /obj/machinery/airalarm/screwdriver_act(mob/living/user, obj/item/tool)
+	if(buildstage != AIRALARM_BUILD_COMPLETE)
+		return
 	tool.play_tool_sound(src)
 	panel_open = !panel_open
 	to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
@@ -771,6 +773,8 @@
 	return TRUE
 
 /obj/machinery/airalarm/wrench_act(mob/living/user, obj/item/tool)
+	if(buildstage != AIRALARM_BUILD_NO_CIRCUIT)
+		return
 	to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
 	tool.play_tool_sound(src)
 	var/obj/item/wallframe/airalarm/alarm_frame = new(drop_location())
