@@ -453,7 +453,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	attack_cooldown = 0 SECONDS
 	confusion_amt = 0
 	stamina_loss_amt = 0
-	apply_stun_delay = 0 SECONDS
 	stun_time = 14 SECONDS
 
 	preload_cell_type = /obj/item/stock_parts/cell/infinite //Any sufficiently advanced technology is indistinguishable from magic
@@ -544,9 +543,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(BATON_PROBE)
 			ProbeAttack(L,user)
 	return
-
-/obj/item/melee/baton/abductor/apply_stun_effect_end(mob/living/target)
-	StunAttack(target)
 
 /obj/item/melee/baton/abductor/proc/StunAttack(mob/living/L)
 	L.Paralyze(stun_time)
