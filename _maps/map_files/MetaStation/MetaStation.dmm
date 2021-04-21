@@ -16296,6 +16296,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"cvF" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 24
+	},
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "cvG" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
@@ -36055,6 +36061,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/science/genetics)
+"iBO" = (
+/turf/closed/wall,
+/area/commons/cryopods)
 "iBZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -49025,10 +49034,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/port)
-"ndz" = (
-/obj/structure/easel,
-/turf/open/floor/iron/dark,
-/area/commons/fitness/recreation)
 "ndE" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -53802,6 +53807,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel/main)
+"oFF" = (
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "oFG" = (
 /obj/machinery/camera/autoname,
 /obj/item/solar_assembly,
@@ -67661,6 +67669,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/commons/fitness/recreation)
+"tdS" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "tdZ" = (
 /obj/effect/turf_decal/bot/right,
 /obj/effect/decal/cleanable/dirt,
@@ -67793,36 +67807,9 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "tfr" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/sillycup,
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/sillycup{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/machinery/door/airlock/glass,
 /turf/open/floor/iron/dark,
-/area/commons/fitness/recreation)
+/area/commons/cryopods)
 "tfD" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -72645,6 +72632,12 @@
 	},
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
+"uKy" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/commons/cryopods)
 "uKA" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -80867,19 +80860,9 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "xBC" = (
-/obj/structure/reagent_dispensers/water_cooler,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/commons/fitness/recreation)
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/commons/cryopods)
 "xBF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -117932,11 +117915,11 @@ aaa
 aaa
 fwb
 aaa
-aaa
-aaa
-aaa
-ebG
-ebG
+xBC
+xBC
+xBC
+iBO
+iBO
 iai
 ebG
 ebG
@@ -118189,10 +118172,10 @@ aaa
 aaa
 fwb
 aaa
-aaa
-aaa
-aaa
-tdI
+xBC
+uKy
+uKy
+uKy
 xBC
 lHu
 oMv
@@ -118446,10 +118429,10 @@ aaa
 aaa
 nYJ
 aaa
-aaa
-aaa
-aaa
-tdI
+iBO
+cvF
+oFF
+oFF
 tfr
 lHu
 dUA
@@ -118703,11 +118686,11 @@ aaa
 aaa
 lMJ
 aaa
-aaa
-aaa
-aaa
-tdI
-ndz
+xBC
+tdS
+tdS
+tdS
+xBC
 lHu
 hJy
 hJy
@@ -118960,11 +118943,11 @@ aaa
 aaa
 lMJ
 lMJ
-lMJ
-lMJ
-lMJ
-ebG
-ebG
+xBC
+xBC
+xBC
+iBO
+iBO
 jfj
 hJy
 ocJ
