@@ -81,16 +81,6 @@ const Footer = () => (
       <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a>
       {' only.'}
     </p>
-    <p>
-      {'Some icons by '}
-      <a href="https://p.yusukekamiyamane.com/">
-        Yusuke Kamiyamane.
-      </a>
-      {' All rights reserved. Licensed under a '}
-      <a href="https://creativecommons.org/licenses/by/3.0/">
-        Creative Commons Attribution 3.0 License.
-      </a>
-    </p>
   </>
 );
 
