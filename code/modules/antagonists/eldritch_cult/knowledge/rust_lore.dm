@@ -43,7 +43,7 @@
 
 /datum/eldritch_knowledge/spell/area_conversion
 	name = "Agressive Spread"
-	desc = "Spreads rust to nearby surfaces. Already rusted surfaces are destroyed."
+	desc = "Spreads rust to nearby surfaces. Already rusted surfaces are destroyed. Breaks cuffs and legcuffs on you."
 	gain_text = "All wise men know well not to touch the Bound King."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/rust_conversion

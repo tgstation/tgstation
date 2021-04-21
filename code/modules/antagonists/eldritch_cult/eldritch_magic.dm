@@ -96,13 +96,14 @@
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion/cast(list/targets, mob/user = usr)
 	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
 	var/list/cuffies = list()
-	var/mob/living/carbon/heretic = usr
-	if(heretic.handcuffed)
-		cuffies |= heretic.handcuffed
-	if(heretic.legcuffed)
-		cuffies |= heretic.legcuffed
-	for(var/obj/cuffs in cuffies)
-		heretic.cuff_resist(cuffs, 0, INSTANT_CUFFBREAK)
+	if(iscarbon(usr))
+		var/mob/living/carbon/heretic = usr
+		if(heretic.handcuffed)
+			cuffies |= heretic.handcuffed
+		if(heretic.legcuffed)
+			cuffies |= heretic.legcuffed
+		for(var/obj/cuffs in cuffies)
+			heretic.cuff_resist(cuffs, 0, INSTANT_CUFFBREAK)
 	for(var/turf/T in targets)
 		///What we want is the 3 tiles around the user and the tile under him to be rusted, so min(dist,1)-1 causes us to get 0 for these tiles, rest of the tiles are based on chance
 		var/chance = 100 - (max(get_dist(T,user),1)-1)*100/(range+1)
