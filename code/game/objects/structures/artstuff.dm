@@ -295,11 +295,11 @@
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user,obj/item/canvas/new_canvas)
 	if(user.transferItemToLoc(new_canvas,src))
-		C = new_canvas
-		if(!C.finalized)
-			C.finalize(user)
-		pixel_y = C.wall_y_offset
-		to_chat(user,"<span class='notice'>You frame [C].</span>")
+		current_canvas = new_canvas
+		if(!current_canvas.finalized)
+			current_canvas.finalize(user)
+		pixel_y = current_canvas.wall_y_offset
+		to_chat(user,"<span class='notice'>You frame [current_canvas].</span>")
 	update_icon()
 
 /obj/structure/sign/painting/proc/try_rename(mob/user)
@@ -308,7 +308,7 @@
 
 /obj/structure/sign/painting/update_icon_state()
 	. = ..()
-	if(C)
+	if(current_canvas)
 		icon_state = null
 	else
 		icon_state = "frame-empty"
@@ -319,12 +319,12 @@
 
 /obj/structure/sign/painting/update_overlays()
 	. = ..()
-	if(C)
-		var/mutable_appearance/MA = mutable_appearance(C.generated_icon)
-		MA.pixel_x = C.framed_offset_x
-		MA.pixel_y = C.framed_offset_y
+	if(current_canvas)
+		var/mutable_appearance/MA = mutable_appearance(current_canvas.generated_icon)
+		MA.pixel_x = current_canvas.framed_offset_x
+		MA.pixel_y = current_canvas.framed_offset_y
 		. += MA
-		var/mutable_appearance/frame = mutable_appearance('icons/obj/painting_frames.dmi',"[C.icon_state]frame")
+		var/mutable_appearance/frame = mutable_appearance('icons/obj/painting_frames.dmi',"[current_canvas.icon_state]frame")
 		. += frame
 
 	var/mutable_appearance/MA = mutable_appearance(current_canvas.generated_icon)
