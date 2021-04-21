@@ -22,6 +22,8 @@
 	var/fingerprint
 
 /datum/wires/explosive/chem_grenade/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/item/grenade/chem_grenade/G = holder
 	if(G.stage == GRENADE_WIRED)
 		return TRUE
@@ -66,6 +68,8 @@
 	holder_type = /obj/item/grenade/c4
 
 /datum/wires/explosive/c4/interactable(mob/user) // No need to unscrew wire panels on plastic explosives
+	if(!..())
+		return TRUE
 	return TRUE
 
 /datum/wires/explosive/c4/explode()
@@ -83,6 +87,8 @@
 	..()
 
 /datum/wires/explosive/pizza/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/item/pizzabox/P = holder
 	if(P.open && P.bomb)
 		return TRUE
