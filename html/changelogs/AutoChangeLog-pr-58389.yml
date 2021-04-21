@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - rscadd: "The CE can now buy the \"Build Your Own Shuttle Kit\" independently."
