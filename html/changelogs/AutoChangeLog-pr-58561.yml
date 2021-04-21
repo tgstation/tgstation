@@ -1,0 +1,4 @@
+author: "KathrinBailey"
+delete-after: True
+changes: 
+  - bugfix: "Status displays now go on top of windows, instead of underneath it."
