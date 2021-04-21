@@ -16,8 +16,6 @@
 		return WIRE_INTERACTION_FAIL
 	if(!user.CanReach(src))
 		return WIRE_INTERACTION_FAIL
-	if(SEND_SIGNAL(user, COMSIG_TRY_WIRES_INTERACT, src) & COMPONENT_CANT_INTERACT_WIRES)
-		return WIRE_INTERACTION_FAIL
 	wires.interact(user)
 	return WIRE_INTERACTION_BLOCK
 
@@ -209,6 +207,8 @@
 
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)
+	if((SEND_SIGNAL(user, COMSIG_TRY_WIRES_INTERACT, holder) & COMPONENT_CANT_INTERACT_WIRES))
+		return FALSE
 	return TRUE
 
 /datum/wires/proc/get_status()

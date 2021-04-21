@@ -44,7 +44,7 @@
 /datum/component/technoshy/proc/on_try_use_machine(datum/source, obj/machinery/machine)
 	SIGNAL_HANDLER
 	if(is_not_touched(source, machine))
-		return COMPONENT_CANT_USE_MACHINE
+		return COMPONENT_CANT_USE_MACHINE_INTERACT | COMPONENT_CANT_USE_MACHINE_TOOLS
 
 /datum/component/technoshy/proc/on_try_wires_interact(datum/source, atom/machine)
 	SIGNAL_HANDLER

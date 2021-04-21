@@ -348,7 +348,7 @@
 	if(!isliving(user))
 		return FALSE //no ghosts in the machine allowed, sorry
 
-	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE)
+	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
 
 	var/mob/living/living_user = user
@@ -499,6 +499,8 @@
 	update_last_used(user)
 
 /obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type)
+	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
+		return TOOL_ACT_MELEE_CHAIN_BLOCKING
 	. = ..()
 	if(. & TOOL_ACT_SIGNAL_BLOCKING)
 		return
@@ -507,7 +509,7 @@
 /obj/machinery/_try_interact(mob/user)
 	if((interaction_flags_machine & INTERACT_MACHINE_WIRES_IF_OPEN) && panel_open && (attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK))
 		return TRUE
-	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE)
+	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return TRUE
 	return ..()
 
