@@ -204,7 +204,7 @@
 	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients."
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
-	clothing_traits = list(TRAIT_QUICKER_CARRY)
+	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
 	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/latex/nitrile/infiltrator

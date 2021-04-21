@@ -23,6 +23,7 @@
 #include "code\__DEFINES\_protect.dm"
 #include "code\__DEFINES\_tick.dm"
 #include "code\__DEFINES\access.dm"
+#include "code\__DEFINES\nitrile.dm"
 #include "code\__DEFINES\achievements.dm"
 #include "code\__DEFINES\acid.dm"
 #include "code\__DEFINES\actionspeed_modification.dm"
