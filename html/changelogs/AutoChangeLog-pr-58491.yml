@@ -1,0 +1,5 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the cooldown of vog spells back to the normal timers instead of seconds"
+  - balance: "lowers the stun times on commands to be more reasonable for an aoe effect, sleep from 4s to 2s,stop to 4s from 6s,"
