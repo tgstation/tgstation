@@ -418,8 +418,6 @@
 	. = ..()
 	if(slot != ITEM_SLOT_HEAD)
 		return
-	if(istype(user, /mob/living/carbon/human/dummy)) //Prevents ghosts from being polled when the helmet is put on a dummy.
-		return
 	if(!ismonkey(user) || user.ckey)
 		var/mob/living/something = user
 		to_chat(something, "<span class='boldnotice'>You feel a stabbing pain in the back of your head for a moment.</span>")

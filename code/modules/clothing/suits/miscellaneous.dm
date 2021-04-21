@@ -189,7 +189,7 @@
 	flags_inv = HIDEJUMPSUIT
 	dog_fashion = /datum/dog_fashion/back
 
-/obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/cardborg/visual_equipped(mob/living/user, slot)
 	..()
 	if(slot == ITEM_SLOT_OCLOTHING)
 		disguise(user)
