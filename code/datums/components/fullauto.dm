@@ -34,10 +34,6 @@
 	if(!(autofire_stat & AUTOFIRE_STAT_FIRING))
 		STOP_PROCESSING(SSprojectiles, src)
 		return
-
-	if(!COOLDOWN_FINISHED(src, next_shot_cd))
-		return
-
 	process_shot()
 
 /datum/component/automatic_fire/proc/wake_up(datum/source, mob/user, slot)
@@ -149,7 +145,7 @@
 //Dakka-dakka
 /datum/component/automatic_fire/proc/start_autofiring()
 	if(autofire_stat == AUTOFIRE_STAT_FIRING)
-		return //Already pew-pewing.
+		return
 	autofire_stat = AUTOFIRE_STAT_FIRING
 
 	clicker.mouse_override_icon = 'icons/effects/mouse_pointers/weapon_pointer.dmi'
@@ -225,7 +221,9 @@
 
 /datum/component/automatic_fire/proc/process_shot()
 	if(autofire_stat != AUTOFIRE_STAT_FIRING)
-		return
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, next_shot_cd))
+		return TRUE
 	if(QDELETED(target) || get_turf(target) != target_loc) //Target moved or got destroyed since we last aimed.
 		target = target_loc //So we keep firing on the emptied tile until we move our mouse and find a new target.
 	if(get_dist(shooter, target) <= 0)
@@ -244,7 +242,10 @@
 // Gun procs.
 
 /obj/item/gun/proc/on_autofire_start(mob/living/shooter)
-	if(!can_shoot(shooter) || !can_trigger_gun(shooter) || semicd)
+	if(semicd || shooter.stat || !can_trigger_gun(shooter))
+		return FALSE
+	if(!can_shoot())
+		shoot_with_empty_chamber(shooter)
 		return FALSE
 	var/obj/item/bodypart/other_hand = shooter.has_hand_for_held_index(shooter.get_inactive_hand_index())
 	if(weapon_weight == WEAPON_HEAVY && (shooter.get_inactive_held_item() || !other_hand))
@@ -261,6 +262,8 @@
 
 /obj/item/gun/proc/do_autofire(datum/source, atom/target, mob/living/shooter, params)
 	SIGNAL_HANDLER
+	if(semicd || shooter.stat || !can_shoot())
+		return NONE
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
 		return NONE
