@@ -1,7 +1,6 @@
 /// An element which enables certain items to tap people on their knees to measure brain health
 /datum/element/kneejerk
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_DETACH
 
 /datum/element/kneejerk/Attach(datum/target)
 	. = ..()
@@ -21,8 +20,7 @@
 
 	var/list/modifiers = params2list(params)
 
-	///target a leg and right click with a capable item while the target is buckled
-	if((user.zone_selected in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)) && LAZYACCESS(modifiers, RIGHT_CLICK) && target.buckled)
+	if((user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && LAZYACCESS(modifiers, RIGHT_CLICK) && target.buckled)
 		tap_knee(source, target, user)
 
 		return COMPONENT_SKIP_ATTACK
@@ -33,44 +31,41 @@
 	var/obj/item/bodypart/l_leg = target.get_bodypart(BODY_ZONE_L_LEG)
 	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 
-	if(ishuman(target))
-		if(selected_zone == BODY_ZONE_R_LEG) //do they have the leg?
-			if(!r_leg)
-				return
-		if(selected_zone == BODY_ZONE_L_LEG)
-			if(!l_leg)
-				return
+	if(!ishuman(target))
+		return
+	if(selected_zone == BODY_ZONE_R_LEG)
+		if(!r_leg)
+			return
+	if(selected_zone == BODY_ZONE_L_LEG)
+		if(!l_leg)
+			return
 
-		user.do_attack_animation(target)
-		target.visible_message("<span class='warning'>[user] gently taps [target]'s knee with [item].</span>", \
-			"<span class='userdanger'>[user] taps your knee with [item].</span>")
+	user.do_attack_animation(target)
+	target.visible_message("<span class='warning'>[user] gently taps [target]'s knee with [item].</span>", \
+		"<span class='userdanger'>[user] taps your knee with [item].</span>")
 
-		if(target.stat == DEAD) //dead men have no reflexes!
+	if(target.stat == DEAD) //dead men have no reflexes!
+		return TRUE
+
+	if(target_brain)
+		var/target_brain_damage = target_brain.damage
+
+		if(target_brain_damage < BRAIN_DAMAGE_MILD) //a healthy brain produces a normal reaction
+			playsound(target, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+			target.visible_message("<span class='danger'>[target]'s leg kicks out sharply!</span>", \
+				"<span class='danger'>Your leg kicks out sharply!</span>")
 			return TRUE
 
-		if(target_brain) //do they have a brain?
-			var/target_brain_damage = target_brain.damage
-
-			if(target_brain_damage < BRAIN_DAMAGE_MILD) //a healthy brain produces a normal reaction
-				playsound(target, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-				target.visible_message("<span class='danger'>[target]'s leg kicks out sharply!</span>", \
-					"<span class='danger'>Your leg kicks out sharply!</span>")
-				return TRUE
-
-			else if(target_brain_damage < BRAIN_DAMAGE_SEVERE) //a mildly damaged brain produces a delayed reaction
-				playsound(target, 'sound/weapons/punchmiss.ogg', 15, TRUE, -1)
-				target.visible_message("<span class='danger'>After a moment, [target]'s leg kicks out sharply!</span>", \
-					"<span class='danger'>After a moment, your leg kicks out sharply!</span>")
-				return TRUE
-
-			else if(target_brain_damage < BRAIN_DAMAGE_DEATH) //a severely damaged brain produces a delayed + weaker reaction
-				playsound(target, 'sound/weapons/punchmiss.ogg', 5, TRUE, -1)
-				target.visible_message("<span class='danger'>After a moment, [target]'s leg kicks out weakly!</span>", \
-					"<span class='danger'>After a moment, your leg kicks out weakly!</span>")
-				return TRUE
-
-			else if(target_brain_damage >= BRAIN_DAMAGE_DEATH) //a dead brain produces no reaction
-				return TRUE
-
-		else //a missing brain produces no reaction
+		else if(target_brain_damage < BRAIN_DAMAGE_SEVERE) //a mildly damaged brain produces a delayed reaction
+			playsound(target, 'sound/weapons/punchmiss.ogg', 15, TRUE, -1)
+			target.visible_message("<span class='danger'>After a moment, [target]'s leg kicks out sharply!</span>", \
+				"<span class='danger'>After a moment, your leg kicks out sharply!</span>")
 			return TRUE
+
+		else if(target_brain_damage < BRAIN_DAMAGE_DEATH) //a severely damaged brain produces a delayed + weaker reaction
+			playsound(target, 'sound/weapons/punchmiss.ogg', 5, TRUE, -1)
+			target.visible_message("<span class='danger'>After a moment, [target]'s leg kicks out weakly!</span>", \
+				"<span class='danger'>After a moment, your leg kicks out weakly!</span>")
+			return TRUE
+
+	return TRUE
