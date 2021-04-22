@@ -70,7 +70,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 	var/list/player_records = cli.prefs.exp
 	var/assistant_playtime = text2num(player_records["Assistant"])
-	var/bad_quirks_to_add = assistant_playtime % 100
+	var/bad_quirks_to_add = assistant_playtime % 12000
 	if(bad_quirks_to_add > 0 && user.job == "Assistant")
 		var/list/quirk_list = subtypesof(/datum/quirk)
 		for(var/datum/quirk/quirk_to_check in quirk_list)
