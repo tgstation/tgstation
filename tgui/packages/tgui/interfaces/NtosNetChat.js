@@ -1,10 +1,12 @@
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Input, Section, Table } from '../components';
+import { Box, Button, Icon, Input, Section, Stack, Table } from '../components';
 import { NtosWindow } from '../layouts';
+import { StackingConsole } from './StackingConsole';
 
 export const NtosNetChat = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    title,
     can_admin,
     adminmode,
     authed,
@@ -22,17 +24,11 @@ export const NtosNetChat = (props, context) => {
       width={900}
       height={675}>
       <NtosWindow.Content>
-        <Section height="600px">
-          <Table height="580px">
-            <Table.Row>
-              <Table.Cell
-                verticalAlign="top"
-                style={{
-                  width: '200px',
-                }}>
-                <Box
-                  height="537px"
-                  overflowY="scroll">
+        <Stack fill>
+          <Stack.Item>
+            <Section fill>
+              <Stack vertical fill>
+                <Stack.Item grow>
                   <Button.Input
                     fluid
                     content="New Channel..."
@@ -50,28 +46,37 @@ export const NtosNetChat = (props, context) => {
                         id: channel.id,
                       })} />
                   ))}
-                </Box>
-                <Button.Input
-                  fluid
-                  mt={1}
-                  content={username + '...'}
-                  currentValue={username}
-                  onCommit={(e, value) => act('PRG_changename', {
-                    new_name: value,
-                  })} />
-                {!!can_admin && (
-                  <Button
+
+                </Stack.Item>
+                <Stack.Item>
+                  <Box>
+                    Username:
+                  </Box>
+                  <Button.Input
                     fluid
-                    bold
-                    content={"ADMIN MODE: " + (adminmode ? 'ON' : 'OFF')}
-                    color={adminmode ? 'bad' : 'good'}
-                    onClick={() => act('PRG_toggleadmin')} />
-                )}
-              </Table.Cell>
-              <Table.Cell>
-                <Box
-                  height="560px"
-                  overflowY="scroll">
+                    mt={1}
+                    content={username + '...'}
+                    currentValue={username}
+                    onCommit={(e, value) => act('PRG_changename', {
+                      new_name: value,
+                    })} />
+                  {!!can_admin && (
+                    <Button
+                      fluid
+                      bold
+                      content={"ADMIN MODE: " + (adminmode ? 'ON' : 'OFF')}
+                      color={adminmode ? 'bad' : 'good'}
+                      onClick={() => act('PRG_toggleadmin')} />
+                  )}
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Stack.Item>
+          <Stack.Divider />
+          <Stack.Item grow>
+            <Stack vertical fill>
+              <Stack.Item grow>
+                <Section scrollable fill>
                   {in_channel && (
                     authorized ? (
                       messages.map(message => (
@@ -99,68 +104,79 @@ export const NtosNetChat = (props, context) => {
                       </Box>
                     )
                   )}
-                </Box>
-                <Input
-                  fluid
-                  selfClear
-                  mt={1}
-                  onEnter={(e, value) => act('PRG_speak', {
-                    message: value,
-                  })} />
-              </Table.Cell>
-              <Table.Cell
-                verticalAlign="top"
-                style={{
-                  width: '150px',
-                }}>
-                <Box
-                  height="477px"
-                  overflowY="scroll">
-                  {clients.map(client => (
-                    <Box key={client.name}>
-                      {client.name}
-                    </Box>
-                  ))}
-                </Box>
-                {(in_channel && authorized) && (
-                  <>
-                    <Button.Input
-                      fluid
-                      content="Save log..."
-                      defaultValue="new_log"
-                      onCommit={(e, value) => act('PRG_savelog', {
-                        log_name: value,
-                      })} />
-                    <Button.Confirm
-                      fluid
-                      content="Leave Channel"
-                      onClick={() => act('PRG_leavechannel')} />
-                  </>
-                )}
-                {!!is_operator && authed && (
-                  <>
-                    <Button.Confirm
-                      fluid
-                      content="Delete Channel"
-                      onClick={() => act('PRG_deletechannel')} />
-                    <Button.Input
-                      fluid
-                      content="Rename Channel..."
-                      onCommit={(e, value) => act('PRG_renamechannel', {
-                        new_name: value,
-                      })} />
-                    <Button.Input
-                      fluid
-                      content="Set Password..."
-                      onCommit={(e, value) => act('PRG_setpassword', {
-                        new_password: value,
-                      })} />
-                  </>
-                )}
-              </Table.Cell>
-            </Table.Row>
-          </Table>
-        </Section>
+                </Section>
+              </Stack.Item>
+              <Input
+                placeholder="Enter Message"
+                fluid
+                selfClear
+                mt={1}
+                onEnter={(e, value) => act('PRG_speak', {
+                  message: value,
+                })} />
+            </Stack>
+          </Stack.Item>
+          {!!in_channel && (
+            <>
+              <Stack.Divider />
+              <Stack.Item>
+                <Stack vertical fill >
+                  <Stack.Item grow>
+                    <Section scrollable fill>
+                      {clients.map(client => (
+                        <Box key={client.name}>
+                          {client.name}
+                        </Box>
+                      ))}
+                    </Section>
+                  </Stack.Item>
+                  <Section>
+                    <Stack.Item mb="8px">
+                      Settings for {title}:
+                    </Stack.Item>
+                    <Stack.Item>
+                      {!!(in_channel && authorized) && (
+                        <>
+                          <Button.Input
+                            fluid
+                            content="Save log..."
+                            defaultValue="new_log"
+                            onCommit={(e, value) => act('PRG_savelog', {
+                              log_name: value,
+                            })} />
+                          <Button.Confirm
+                            fluid
+                            content="Leave Channel"
+                            onClick={() => act('PRG_leavechannel')} />
+                        </>
+                      )}
+                      {!!(is_operator && authed) && (
+                        <>
+                          <Button.Confirm
+                            fluid
+                            content="Delete Channel"
+                            onClick={() => act('PRG_deletechannel')} />
+                          <Button.Input
+                            fluid
+                            content="Rename Channel..."
+                            onCommit={(e, value) => act('PRG_renamechannel', {
+                              new_name: value,
+                            })} />
+                          <Button.Input
+                            fluid
+                            content="Set Password..."
+                            onCommit={(e, value) => act('PRG_setpassword', {
+                              new_password: value,
+                            })} />
+                        </>
+                      )}
+                    </Stack.Item>
+                  </Section>
+                </Stack>
+              </Stack.Item>
+            </>
+          )}
+        </Stack>
       </NtosWindow.Content>
     </NtosWindow>
   );

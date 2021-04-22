@@ -90,7 +90,7 @@
 				return TRUE
 		if("PRG_changename")
 			var/newname = sanitize(params["new_name"])
-			if(!newname)
+			if(!newname || newname == username)
 				return
 			for(var/C in SSnetworks.station_network.chat_channels)
 				var/datum/ntnet_conversation/chan = C
