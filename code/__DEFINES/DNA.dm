@@ -62,8 +62,8 @@
 #define BURDENED /datum/mutation/human/burdened
 #define HONORBOUND /datum/mutation/human/honorbound
 
-#define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
+#define UI_CHANGED "ui changed"
 
 #define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
 
@@ -83,14 +83,14 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
 
-#define DNA_UNI_IDENTITY_BLOCKS 7
-#define DNA_HAIR_COLOR_BLOCK 1
-#define DNA_FACIAL_HAIR_COLOR_BLOCK 2
-#define DNA_SKIN_TONE_BLOCK 3
 #define DNA_EYE_COLOR_BLOCK 4
-#define DNA_GENDER_BLOCK 5
+#define DNA_FACIAL_HAIR_COLOR_BLOCK 2
 #define DNA_FACIAL_HAIRSTYLE_BLOCK 6
+#define DNA_GENDER_BLOCK 5
+#define DNA_HAIR_COLOR_BLOCK 1
 #define DNA_HAIRSTYLE_BLOCK 7
+#define DNA_SKIN_TONE_BLOCK 3
+#define DNA_UNI_IDENTITY_BLOCKS 7
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -131,38 +131,38 @@
 #define NOAUGMENTS 22
 
 //organ slots
-#define ORGAN_SLOT_BRAIN "brain"
+#define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"
-#define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
-#define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device"
-#define ORGAN_SLOT_STOMACH "stomach"
-#define ORGAN_SLOT_STOMACH_AID "stomach_aid"
+#define ORGAN_SLOT_BRAIN "brain"
+#define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
+#define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"
-#define ORGAN_SLOT_LUNGS "lungs"
 #define ORGAN_SLOT_HEART "heart"
-#define ORGAN_SLOT_ZOMBIE "zombie_infection"
-#define ORGAN_SLOT_THRUSTERS "thrusters"
+#define ORGAN_SLOT_HEART_AID "heartdrive"
 #define ORGAN_SLOT_HUD "eye_hud"
 #define ORGAN_SLOT_LIVER "liver"
-#define ORGAN_SLOT_TONGUE "tongue"
-#define ORGAN_SLOT_VOICE "vocal_cords"
-#define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
-#define ORGAN_SLOT_HEART_AID "heartdrive"
-#define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
-#define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
-#define ORGAN_SLOT_TAIL "tail"
+#define ORGAN_SLOT_LUNGS "lungs"
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
 #define ORGAN_SLOT_REGENERATIVE_CORE "hivecore"
+#define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
+#define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device" //This one ignores alphabetical order cause the arms should be together
+#define ORGAN_SLOT_STOMACH "stomach"
+#define ORGAN_SLOT_STOMACH_AID "stomach_aid"
+#define ORGAN_SLOT_TAIL "tail"
+#define ORGAN_SLOT_THRUSTERS "thrusters"
+#define ORGAN_SLOT_TONGUE "tongue"
+#define ORGAN_SLOT_VOICE "vocal_cords"
+#define ORGAN_SLOT_ZOMBIE "zombie_infection"
 
 /// Xenomorph organ slots
-#define ORGAN_SLOT_XENO_PLASMAVESSEL "plasma_vessel"
-#define ORGAN_SLOT_XENO_HIVENODE "hive_node"
-#define ORGAN_SLOT_XENO_RESINSPINNER "resin_spinner"
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
-#define ORGAN_SLOT_XENO_NEUROTOXINGLAND "neurotoxin_gland"
 #define ORGAN_SLOT_XENO_EGGSAC "eggsac"
+#define ORGAN_SLOT_XENO_HIVENODE "hive_node"
+#define ORGAN_SLOT_XENO_NEUROTOXINGLAND "neurotoxin_gland"
+#define ORGAN_SLOT_XENO_PLASMAVESSEL "plasma_vessel"
+#define ORGAN_SLOT_XENO_RESINSPINNER "resin_spinner"
 
 //organ defines
 #define STANDARD_ORGAN_THRESHOLD 100
