@@ -22,6 +22,7 @@
 	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_RAD, MODE_RAD = MODE_NONE)
 	var/mode = MODE_NONE
 	var/range = 1
+	var/list/connection_images = list()
 
 /obj/item/clothing/glasses/meson/engine/Initialize()
 	. = ..()
@@ -39,7 +40,8 @@
 /obj/item/clothing/glasses/meson/engine/proc/toggle_mode(mob/user, voluntary)
 	mode = modes[mode]
 	to_chat(user, "<span class='[voluntary ? "notice":"warning"]'>[voluntary ? "You turn the goggles":"The goggles turn"] [mode ? "to [mode] mode":"off"][voluntary ? ".":"!"]</span>")
-
+	if(connection_images.len)
+		connection_images.Cut()
 	switch(mode)
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
@@ -138,17 +140,22 @@
 
 /obj/item/clothing/glasses/meson/engine/proc/show_connections()
 	var/mob/living/carbon/human/user = loc
-	var/list/connection_images = list()
 	for(var/obj/machinery/atmospherics/pipe/smart/smart in orange(range, user))
+		if(!connection_images[smart])
+			connection_images[smart] = list()
 		for(var/direction in GLOB.cardinals)
-			var/image/connection
 			if(!(smart.GetInitDirections() & direction))
 				continue
-			connection = new('icons/obj/atmospherics/pipes/simple.dmi', get_turf(smart), "connection_overlay")
-			connection.dir = direction
-			connection_images += connection
-	if(connection_images.len)
-		flick_overlay(connection_images, list(user.client), 1.5 SECONDS)
+			if(!connection_images[smart][dir2text(direction)])
+				var/image/arrow
+				arrow = new('icons/obj/atmospherics/pipes/simple.dmi', get_turf(smart), "connection_overlay")
+				arrow.dir = direction
+				arrow.layer = smart.layer
+				arrow.color = smart.pipe_color
+				PIPING_LAYER_DOUBLE_SHIFT(arrow, smart.piping_layer)
+				connection_images[smart][dir2text(direction)] = arrow
+			if(connection_images.len)
+				flick_overlay(connection_images[smart][dir2text(direction)], list(user.client), 1.5 SECONDS)
 
 /obj/item/clothing/glasses/meson/engine/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
