@@ -52,7 +52,7 @@
 			set_anchored(!anchored)
 	else if(!SEND_SIGNAL(W, COMSIG_CONTAINER_TRY_ATTACH, src, user))
 		to_chat(user, "<span class='warning'>[W] does not fit in [src].</span>")
-	return ..()
+	return
 
 /obj/structure/tank_holder/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
