@@ -123,7 +123,7 @@
 	name = "convermol pill"
 	desc = "Used to treat oxygen deprivation at the cost of toxicity."
 	icon_state = "pill16"
-	list_reagents = list(/datum/reagent/medicine/c2/convermol = 15)
+	list_reagents = list(/datum/reagent/medicine/c2/convermol = 5)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/multiver

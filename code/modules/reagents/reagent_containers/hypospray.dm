@@ -195,7 +195,7 @@
 	icon_state = "salpen"
 	inhand_icon_state = "salpen"
 	base_icon_state = "salpen"
-	list_reagents = list(/datum/reagent/medicine/c2/convermol = 10)
+	list_reagents = list(/datum/reagent/medicine/c2/convermol = 5)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"

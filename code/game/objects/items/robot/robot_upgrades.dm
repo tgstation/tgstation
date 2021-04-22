@@ -436,7 +436,7 @@
 	desc = "An upgrade to the Medical model's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
 	additional_reagents = list(/datum/reagent/medicine/mannitol, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate,
-		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol, /datum/reagent/medicine/c2/aiuri, /datum/reagent/medicine/c2/helbital,
+		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol, /datum/reagent/medicine/c2/lenturi, /datum/reagent/medicine/c2/helbital,
 		/datum/reagent/medicine/rezadone)
 
 /obj/item/borg/upgrade/piercing_hypospray

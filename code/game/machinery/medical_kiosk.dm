@@ -299,7 +299,7 @@
 		brain_status = "Mild brain damage detected."  //You may have a miiiild case of severe brain damage.
 
 	if(rad_sickness_value >= 1000)  //
-		rad_sickness_status = "Patient is suffering from extreme radiation poisoning, high toxen damage expected. Suggested treatment: Repeated dosages of High amounts of Cold Seiver and anti-toxin"
+		rad_sickness_status = "Patient is suffering from extreme radiation poisoning, high toxin damage expected. Suggested treatment: Repeated dosages of high amounts of cold seiver and anti-toxin"
 	else if(rad_sickness_value >= 300)
 		rad_sickness_status = "Patient is suffering from alarming radiation poisoning. Suggested treatment: Take Cold Seiver or Potassium Iodine, watch the toxin levels."
 	else if(rad_sickness_value >= 100)
