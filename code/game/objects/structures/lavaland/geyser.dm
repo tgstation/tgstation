@@ -1,17 +1,24 @@
 //If you look at the "geyser_soup" overlay icon_state, you'll see that the first frame has 25 ticks.
 //That's because the first 18~ ticks are completely skipped for some ungodly weird fucking byond reason
 
+///A lavaland geyser that spawns chems and can be mining scanned for points. Made to work with the plumbing pump to extract that sweet rare nectar
 /obj/structure/geyser
 	name = "geyser"
 	icon = 'icons/obj/lavaland/terrain.dmi'
 	icon_state = "geyser"
 	anchored = TRUE
 
-	var/erupting_state = null //set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
-	var/activated = FALSE //whether we are active and generating chems
+	///set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
+	var/erupting_state = null
+	//whether we are active and generating chems
+	var/activated = FALSE
+	///what chem do we produce?
 	var/reagent_id = /datum/reagent/fuel/oil
-	var/potency = 2 //how much reagents we add every process (2 seconds)
+	///how much reagents we add every process (2 seconds)
+	var/potency = 2
+	///maximum volume
 	var/max_volume = 500
+	///how much we start with after getting activated
 	var/start_volume = 50
 
 	///Have we been discovered with a mining scanner?
@@ -27,6 +34,7 @@
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC, 1, 5)
 
+///start producing chems, should be called just once
 /obj/structure/geyser/proc/start_chemming()
 	activated = TRUE
 	create_reagents(max_volume, DRAINABLE)
@@ -69,7 +77,6 @@
 
 			AddComponent(/datum/component/gps, true_name) //put it on the gps so miners can mark it and chemists can profit off of it
 
-
 			if(isliving(user))
 				var/mob/living/living = user
 
@@ -77,7 +84,6 @@
 				if(card?.bank_account)
 					to_chat(user, "<span class='notice'>[point_value] has been paid out!")
 					bank_account.adjust_money(point_value)
-
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel
