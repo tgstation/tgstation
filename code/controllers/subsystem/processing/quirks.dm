@@ -77,7 +77,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			if(quirk_to_check.value >= 0)
 				quirk_list -= quirk_to_check
 
-		for(var/i in 1 to bad_quirks_to_add)
+		for(var/i in 1 to min(3, bad_quirks_to_add))
 			var/quirk_to_give = pick_n_take(quirk_list)
 			if(user.has_quirk(quirk_to_give))
 				continue //no need to add it again
