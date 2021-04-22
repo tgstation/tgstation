@@ -537,6 +537,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	switch (mode)
 		if(BATON_STUN)
 			..()
+			addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), apply_stun_delay)
 		if(BATON_SLEEP)
 			SleepAttack(L,user)
 		if(BATON_CUFF)
@@ -545,7 +546,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			ProbeAttack(L,user)
 	return
 
-/obj/item/melee/baton/abductor/apply_stun_effect_end(mob/living/target)
+/obj/item/melee/baton/abductor/proc/apply_stun_effect_end(mob/living/target)
 	StunAttack(target)
 
 /obj/item/melee/baton/abductor/proc/StunAttack(mob/living/L)
