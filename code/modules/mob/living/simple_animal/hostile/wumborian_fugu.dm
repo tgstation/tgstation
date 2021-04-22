@@ -43,6 +43,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = HOSTILE_SPAWN
 	loot = list(/obj/item/fugu_gland{layer = ABOVE_MOB_LAYER})
+	retreat_distance = 9
 	///Whether or not the fugu is currently enlarged.
 	var/wumbo = FALSE
 	///The cooldown for the fugu's growth ability.
