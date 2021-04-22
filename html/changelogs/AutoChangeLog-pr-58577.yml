@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Painted directional windows are no longer opaque."

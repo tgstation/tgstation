@@ -1,0 +1,4 @@
+author: "FernandoJ8"
+delete-after: True
+changes: 
+  - qol: "Atmospherics envirohelmet has the same fire protection as the Atmospherics hardsuit helmet.  It's description has also changed to reflect this."
