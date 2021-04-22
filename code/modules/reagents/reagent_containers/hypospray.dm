@@ -249,7 +249,7 @@
 	base_icon_state = "luxpen"
 	volume = 20
 	amount_per_transfer_from_this = 20
-	list_reagents = list(/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
+	list_reagents = list(/datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
