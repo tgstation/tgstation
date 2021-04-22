@@ -21,7 +21,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/wake_up)
 	if(_autofire_shot_delay)
 		autofire_shot_delay = _autofire_shot_delay
-	if(ismob(gun.loc))
+	if(autofire_stat == AUTOFIRE_STAT_IDLE && ismob(gun.loc))
 		var/mob/user = gun.loc
 		wake_up(src, user)
 
@@ -31,7 +31,7 @@
 	return ..()
 
 /datum/component/automatic_fire/process(delta_time)
-	if(!(autofire_stat & AUTOFIRE_STAT_FIRING))
+	if(autofire_stat != AUTOFIRE_STAT_FIRING)
 		STOP_PROCESSING(SSprojectiles, src)
 		return
 	process_shot()
@@ -39,9 +39,9 @@
 /datum/component/automatic_fire/proc/wake_up(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if(autofire_stat & (AUTOFIRE_STAT_ALERT))
+	if(autofire_stat == AUTOFIRE_STAT_ALERT)
 		return //We've updated the firemode. No need for more.
-	if(autofire_stat & AUTOFIRE_STAT_FIRING)
+	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring() //Let's stop shooting to avoid issues.
 		return
 
@@ -58,7 +58,7 @@
 // There is a gun and there is a user wielding it. The component now waits for the mouse click.
 /datum/component/automatic_fire/proc/autofire_on(client/usercli)
 	SIGNAL_HANDLER
-	if(autofire_stat & (AUTOFIRE_STAT_ALERT|AUTOFIRE_STAT_FIRING))
+	if(autofire_stat != AUTOFIRE_STAT_IDLE)
 		return
 	autofire_stat = AUTOFIRE_STAT_ALERT
 	if(!QDELETED(usercli))
@@ -74,9 +74,9 @@
 
 /datum/component/automatic_fire/proc/autofire_off(datum/source)
 	SIGNAL_HANDLER
-	if(autofire_stat & AUTOFIRE_STAT_IDLE)
+	if(autofire_stat == AUTOFIRE_STAT_IDLE)
 		return
-	if(autofire_stat & AUTOFIRE_STAT_FIRING)
+	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring()
 
 	autofire_stat = AUTOFIRE_STAT_IDLE
@@ -132,9 +132,9 @@
 
 	source.click_intercept_time = world.time //From this point onwards Click() will no longer be triggered.
 
-	if(autofire_stat & (AUTOFIRE_STAT_IDLE))
+	if(autofire_stat == (AUTOFIRE_STAT_IDLE))
 		CRASH("on_mouse_down() called with [autofire_stat] autofire_stat")
-	if(autofire_stat & AUTOFIRE_STAT_FIRING)
+	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring() //This can happen if we click and hold and then alt+tab, printscreen or other such action. MouseUp won't be called then and it will keep autofiring.
 
 	target = _target
@@ -184,9 +184,8 @@
 
 /datum/component/automatic_fire/proc/stop_autofiring(datum/source, atom/object, turf/location, control, params)
 	SIGNAL_HANDLER
-	switch(autofire_stat)
-		if(AUTOFIRE_STAT_IDLE, AUTOFIRE_STAT_ALERT)
-			return
+	if(autofire_stat != AUTOFIRE_STAT_FIRING)
+		return
 	STOP_PROCESSING(SSprojectiles, src)
 	autofire_stat = AUTOFIRE_STAT_ALERT
 	if(clicker)
