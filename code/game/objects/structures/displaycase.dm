@@ -301,20 +301,8 @@
 		return
 	if(user.combat_mode)
 		return ..()
-
 	if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
-		if(obj_integrity < max_integrity)
-			if(!W.tool_start_check(user, amount=5))
-				return
-
-			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-			if(W.use_tool(src, user, 40, amount=5, volume=50))
-				obj_integrity = max_integrity
-				update_appearance()
-				to_chat(user, "<span class='notice'>You repair [src].</span>")
-		else
-			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
-		return
+		return ..()
 
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
 		if(added_roundstart)
