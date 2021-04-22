@@ -8,6 +8,8 @@
 	var/tame_chance
 	///Added success chance after every failed tame attempt.
 	var/bonus_tame_chance
+	///For effects once soemthing is tamed
+	var/datum/callback/after_tame
 
 /datum/component/tameable/Initialize(food_types, tame_chance, bonus_tame_chance, datum/callback/after_tame)
 	if(!isatom(parent)) //yes, you could make a tameable toolbox.
@@ -28,11 +30,13 @@
 
 /datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER
-	if(!is_type_in_list(O, food_types))
+	if(!is_type_in_list(food, food_types))
 		return
-	if(stat == DEAD)
-		to_chat(attacker, "<span class='warning'>[parent] is dead!</span>")
-		return
+	if(isliving(source))
+		var/mob/living/potentially_dead_horse = source
+		if(potentially_dead_horse.stat == DEAD)
+			to_chat(attacker, "<span class='warning'>[parent] is dead!</span>")
+			return
 
 	. = COMPONENT_CANCEL_ATTACK_CHAIN //No beating up anymore!
 
@@ -54,5 +58,6 @@
 		after_tame.Invoke(tamer)
 
 	if(ishostile(parent) && isliving(tamer)) //Kinda shit check but this only applies to hostiles atm
-		friends = tamer
-		faction = tamer.faction.Copy()
+		var/mob/living/simple_animal/hostile/evil_but_now_not_evil = parent
+		evil_but_now_not_evil.friends = tamer
+		evil_but_now_not_evil.faction = tamer.faction.Copy()

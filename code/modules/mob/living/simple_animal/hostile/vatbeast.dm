@@ -36,7 +36,7 @@
 	. = ..()
 	QDEL_NULL(tentacle_slap)
 
-/mob/living/simple_animal/hostile/vatbeast/tamed(mob/living/tamer)
+/mob/living/simple_animal/hostile/vatbeast/proc/tamed(mob/living/tamer)
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
