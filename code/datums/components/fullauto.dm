@@ -258,7 +258,7 @@
 
 /obj/item/gun/proc/do_autofire(datum/source, atom/target, mob/living/shooter, params)
 	SIGNAL_HANDLER
-	if(semicd || shooter.stat || !can_shoot())
+	if(semicd || shooter.stat)
 		return NONE
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
