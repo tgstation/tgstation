@@ -652,6 +652,7 @@
 	#define COMPONENT_HOSTILE_NO_ATTACK (1<<0)
 ///from base of mob/living/simple_animal/hostile/regalrat: (mob/living/simple_animal/hostile/regalrat/king)
 #define COMSIG_RAT_INTERACT "rat_interaction"
+#define COMSIG_SIMPLEMOB_SENTIENCEPOTION "simplemob_sentiencepotion"
 
 // /obj signals
 

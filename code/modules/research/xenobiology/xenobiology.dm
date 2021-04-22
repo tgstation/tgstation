@@ -707,6 +707,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		SM.key = C.key
 		SM.mind.enslave_mind_to_creator(user)
+		SEND_SIGNAL(SM, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
 		if(!SM.tame)
 			SM.tamed(user)
 		SM.sentience_act()
