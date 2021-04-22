@@ -61,11 +61,12 @@
 	if(autofire_stat & (AUTOFIRE_STAT_ALERT|AUTOFIRE_STAT_FIRING))
 		return
 	autofire_stat = AUTOFIRE_STAT_ALERT
-	clicker = usercli
-	shooter = clicker.mob
-	RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDOWN, .proc/on_mouse_down)
-	RegisterSignal(shooter, COMSIG_MOB_LOGOUT, .proc/autofire_off)
+	if(!QDELETED(usercli))
+		clicker = usercli
+		shooter = clicker.mob
+		RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDOWN, .proc/on_mouse_down)
 	if(!QDELETED(shooter))
+		RegisterSignal(shooter, COMSIG_MOB_LOGOUT, .proc/autofire_off)
 		UnregisterSignal(shooter, COMSIG_MOB_LOGIN)
 	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, /obj/item/gun/.proc/autofire_bypass_check)
 	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, /obj/item/gun/.proc/do_autofire)
@@ -73,7 +74,7 @@
 
 /datum/component/automatic_fire/proc/autofire_off(datum/source)
 	SIGNAL_HANDLER
-	if(autofire_stat & (AUTOFIRE_STAT_IDLE))
+	if(autofire_stat & AUTOFIRE_STAT_IDLE)
 		return
 	if(autofire_stat & AUTOFIRE_STAT_FIRING)
 		stop_autofiring()
@@ -84,8 +85,8 @@
 		UnregisterSignal(clicker, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP, COMSIG_CLIENT_MOUSEDRAG))
 	mouse_status = AUTOFIRE_MOUSEUP //In regards to the component there's no click anymore to care about.
 	clicker = null
-	RegisterSignal(shooter, COMSIG_MOB_LOGIN, .proc/on_client_login)
 	if(!QDELETED(shooter))
+		RegisterSignal(shooter, COMSIG_MOB_LOGIN, .proc/on_client_login)
 		UnregisterSignal(shooter, COMSIG_MOB_LOGOUT)
 	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED))
 	shooter = null
