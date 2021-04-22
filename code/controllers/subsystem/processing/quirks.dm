@@ -68,6 +68,21 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	if(cli.get_exp_living(TRUE) < EXP_ASSIGN_WAYFINDER && !user.has_quirk(/datum/quirk/needswayfinder))
 		user.add_quirk(/datum/quirk/needswayfinder, TRUE)
 
+	var/list/quirk_list = subtypesof(/datum/quirk)
+	for(var/datum/quirk/quirk_to_check in quirk_list)
+		if(quirk_to_check.value >= 0)
+			quirk_list -= quirk_to_check
+
+	var/list/player_records = cli.prefs.exp
+	var/assistant_playtime = text2num(player_records["Assistant"])
+	var/bad_quirks_to_add = assistant_playtime % 100
+	if(bad_quirks_to_add > 0 && user.job == "Assistant")
+		for(var/i in 1 to bad_quirks_to_add)
+			var/quirk_to_give = pick_n_take(quirk_list)
+			if(user.has_quirk(quirk_to_give))
+				continue //no need to add it again
+			user.add_quirk(quirk_to_give, TRUE)
+
 /*
  *Randomises the quirks for a specified mob
  */
