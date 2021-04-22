@@ -1,4 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - bugfix: "Kilo medbay: wired an unwired APC, added some missing APCs/air alarms"
