@@ -13,6 +13,8 @@ SUBSYSTEM_DEF(job)
 	var/list/latejoin_trackers = list() //Don't read this list, use GetLateJoinTurfs() instead
 
 	var/overflow_role = "Assistant"
+	///Role that new players are always allowed to use and can be always chosen when all other slots are filled
+	var/new_player_role = "Assistant"
 
 	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
@@ -570,17 +572,17 @@ SUBSYSTEM_DEF(job)
 		return C.holder.auto_deadmin()
 
 /datum/controller/subsystem/job/proc/setup_assistant_positions()
-	var/datum/job/job = SSjob.GetJob("Assistant")
+	var/datum/job/job = SSjob.GetJob(new_player_role)
 	if(!job)
 		CRASH("setup_assistant_positions(): Assistant job is missing")
 
 	var/assistant_ratio = CONFIG_GET(number/assistant_scaling_coeff)
-	if(assistant_ratio > 0)
-		if(job.spawn_positions > 0)
-			var/assistant_positions = max(3, max(job.spawn_positions, round(unassigned.len / assistant_ratio))) //with a ratio of 8, we'd need a pop of more than 24 to have more than 3 assistants (we'll alway have at least 3 of them)
-			JobDebug("Setting open assistants positions to [assistant_positions]")
-			job.total_positions = assistant_positions
-			job.spawn_positions = assistant_positions
+	if (assistant_ratio <= 0 || job.spawn_positions <= 0)
+		return
+	var/assistant_positions = max(3, max(job.spawn_positions, round(unassigned.len / assistant_ratio))) //with a ratio of 8, we'd need a pop of more than 24 to have more than 3 assistants (we'll always have at least 3 of them)
+	JobDebug("Setting open assistants positions to [assistant_positions]")
+	job.total_positions = assistant_positions
+	job.spawn_positions = assistant_positions
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
 	var/datum/job/J = SSjob.GetJob("Security Officer")

@@ -88,7 +88,8 @@
 	integer = FALSE
 	min_val = 0
 
-/datum/config_entry/number/assistant_scaling_coeff //how much does the amount of players get divided by to determine open assistants positions
+///how much does the amount of players get divided by to determine open assistants positions
+/datum/config_entry/number/assistant_scaling_coeff
 	config_entry_value = 8
 	integer = FALSE
 	min_val = 0

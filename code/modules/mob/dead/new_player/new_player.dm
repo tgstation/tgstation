@@ -269,22 +269,22 @@
 	if(!job)
 		return JOB_UNAVAILABLE_GENERIC
 
-	if(job.title == "Assistant" && latejoin) //check for latejoin overflow
+	if(job.title == SSjob.new_player_role && latejoin) //check for latejoin overflow
 		var/job_overflow_check = TRUE
 		for(var/datum/job/job_overflow in SSjob.occupations)
-			if(job_overflow && job_overflow.total_positions > 0 && job_overflow.current_positions < job_overflow.total_positions)
+			if(job_overflow?.total_positions > 0 && job_overflow.current_positions < job_overflow.total_positions)
 				job_overflow_check = FALSE
 				break
 		if(job_overflow_check && !is_banned_from(ckey, job.title))
 			return JOB_AVAILABLE
 
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
-		if(job.title == "Assistant")
+		if(job.title == SSjob.new_player_role)
 			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
 				return JOB_AVAILABLE
 			for(var/datum/job/job_to_check in SSjob.occupations)
 				//you have at least one job you are not banned from and it has slots to join to
-				if(job_to_check && job_to_check.current_positions < job_to_check.total_positions && job_to_check.title != job.title && !is_banned_from(ckey, job_to_check.title))
+				if(job_to_check?.current_positions < job_to_check.total_positions && job_to_check.title != job.title && !is_banned_from(ckey, job_to_check.title))
 					return JOB_UNAVAILABLE_SLOTFULL
 		else
 			return JOB_UNAVAILABLE_SLOTFULL
@@ -301,7 +301,7 @@
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	var/error = IsJobUnavailable(rank, TRUE)
+	var/error = IsJobUnavailable(rank, latejoin = TRUE)
 	if(error != JOB_AVAILABLE)
 		alert(src, get_job_unavailable_error_message(error, rank))
 		return FALSE
