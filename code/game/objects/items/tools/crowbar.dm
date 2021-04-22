@@ -55,7 +55,7 @@
 
 /obj/item/crowbar/large/heavy //from space ruin
 	name = "heavy crowbar"
-	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It It feels oddly heavy.."
+	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
 	force = 20
 	icon_state = "crowbar_powergame"
 
