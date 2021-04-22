@@ -1,3 +1,4 @@
+/// Throws target in a random direction, passing through walls and taking damage if they hit anything
 /datum/smite/away_with_ye
 	name = "THEY MUST GO"
 
