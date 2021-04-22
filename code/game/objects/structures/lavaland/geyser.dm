@@ -14,6 +14,15 @@
 	var/max_volume = 500
 	var/start_volume = 50
 
+	///Have we been discovered with a mining scanner?
+	var/discovered = FALSE
+	///How many points we grant to whoever discovers us
+	var/point_value = CARGO_CRATE_VALUE * 0.20
+	///what's our real name that will show upon discovery? null to do nothing
+	var/true_name
+	///the message given when you discover this geyser.
+	var/discovery_message = "<span class'notice'>It's a standard oil geyser, not worth much</span>"
+
 /obj/structure/geyser/Initialize(mapload) //if xenobio wants to bother, nethermobs are around geysers.
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC, 1, 5)
@@ -46,14 +55,52 @@
 	if(do_after(user, 50 * P.plunge_mod, target = src) && !activated)
 		start_chemming()
 
+/obj/structure/geyser/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner))
+		if(discovered)
+			to_chat(user, "<span class='warning'>This geyser has already been discovered!")
+		else
+			to_chat(user, "<span class='notice'>You discovered the geyser and mark it on the gps system!")
+			to_chat(user, discovery_message)
+
+			discovered = TRUE
+			if(true_name)
+				name = true_name
+
+			AddComponent(/datum/component/gps, true_name) //put it on the gps so miners can mark it and chemists can profit off of it
+
+
+			if(isliving(user))
+				var/mob/living/living = user
+
+				var/obj/item/card/id/card = living.get_idcard()
+				if(card?.bank_account)
+					to_chat(user, "<span class='notice'>[point_value] has been paid out!")
+					bank_account.adjust_money(point_value)
+
+
+/obj/structure/geyser/wittel
+	reagent_id = /datum/reagent/wittel
+	point_value = CARGO_CRATE_VALUE
+	true_name = "wittel geyser"
+
+/obj/structure/geyser/plasma_oxide
+	reagent_id = /datum/reagent/plasma_oxide
+	true_name = "plasma-oxide geyser"
+
+/obj/structure/geyser/protozine
+	reagent_id = /datum/reagent/medicine/omnizine/protozine
+	true_name = "protozine geyser"
+
 /obj/structure/geyser/random
-	erupting_state = null
-	var/list/options = list(/datum/reagent/clf3 = 10, /datum/reagent/water/hollowwater = 10,/datum/reagent/plasma_oxide = 8, /datum/reagent/medicine/omnizine/protozine = 6, /datum/reagent/wittel = 1)
+	point_value = CARGO_CRATE_VALUE * 2
+	true_name = "strange geyser"
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()
-	reagent_id = pickweight(options)
+	reagent_id = get_random_reagent_id()
 
+///A wearable tool that lets you empty plumbing machinery and some other stuff
 /obj/item/plunger
 	name = "plunger"
 	desc = "It's a plunger for plunging."
@@ -67,7 +114,7 @@
 	///time*plunge_mod = total time we take to plunge an object
 	var/plunge_mod = 1
 	///whether we do heavy duty stuff like geysers
-	var/reinforced = FALSE
+	var/reinforced = TRUE
 	///alt sprite for the toggleable layer change mode
 	var/layer_mode_sprite = "plunger_layer"
 	///Wheter we're in layer mode
@@ -118,13 +165,14 @@
 	if(new_layer)
 		target_layer = layers[new_layer]
 
+///A faster reinforced plunger
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"
 	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
 	worn_icon_state = "reinforced_plunger"
 	reinforced = TRUE
-	plunge_mod = 0.8
+	plunge_mod = 0.5
 	layer_mode_sprite = "reinforced_plunger_layer"
 
 	custom_premium_price = PAYCHECK_MEDIUM * 8
