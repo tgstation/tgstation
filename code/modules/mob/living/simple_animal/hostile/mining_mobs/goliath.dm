@@ -102,7 +102,7 @@
 	loot = list()
 	stat_attack = HARD_CRIT
 	robust_searching = 1
-5
+
 	var/can_saddle = FALSE
 	var/saddled = FALSE
 
