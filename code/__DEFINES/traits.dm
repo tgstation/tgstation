@@ -132,8 +132,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLUMSY "clumsy"
 /// means that you can't use weapons with normal trigger guards.
 #define TRAIT_CHUNKYFINGERS "chunkyfingers"
-/// means things you're dragging can't be taken from you, or interacted with.
-#define TRAIT_SAFERCARRY "safercarry"
 #define TRAIT_DUMB "dumb"
 /// Whether a mob is dexterous enough to use machines and certain items or not.
 #define TRAIT_ADVANCEDTOOLUSER "advancedtooluser"
