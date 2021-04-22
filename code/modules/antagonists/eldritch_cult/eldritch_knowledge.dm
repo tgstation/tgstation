@@ -284,15 +284,15 @@
 			A.owner = user.mind
 			var/list/datum/team/teams = list()
 			for(var/datum/antagonist/antag in user.mind.antag_datums)
-				var/datum/team/T = antag.get_team()
-				if(T)
-					teams |= T
+				var/datum/team/team = antag.get_team()
+				if(team)
+					teams |= team
 			var/list/targets = list()
 			for(var/i in 0 to 3)
 				var/datum/mind/targeted =  A.find_target()//easy way, i dont feel like copy pasting that entire block of code
 				var/is_teammate = FALSE
-				for(var/datum/team/T in teams)
-					if(targeted in T.members)
+				for(var/datum/team/team in teams)
+					if(targeted in team.members)
 						is_teammate = TRUE
 						break
 				if(!targeted)
