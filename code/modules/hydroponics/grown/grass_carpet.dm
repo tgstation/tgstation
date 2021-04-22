@@ -24,7 +24,7 @@
 	name = "grass"
 	desc = "Green and lush."
 	icon_state = "grassclump"
-	bite_consumption_mod = 0.5
+	bite_consumption_mod = 0.5 // Grazing on grass
 	var/stacktype = /obj/item/stack/tile/grass
 	var/tile_coefficient = 0.02 // 1/50
 	wine_power = 15

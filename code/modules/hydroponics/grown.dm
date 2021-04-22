@@ -3,7 +3,7 @@
 // Data from the seeds carry over to these grown foods
 // ***********************************************************
 
-/// A few defines for use in calculating our plant's bite size.
+// A few defines for use in calculating our plant's bite size.
 /// When calculating bite size, potency is multiplied by this number.
 #define BITE_SIZE_POTENCY_MULTIPLIER 0.05
 /// When calculating bite size, max_volume is multiplied by this number.
@@ -19,7 +19,7 @@
 	var/obj/item/seeds/seed = null
 	///Name of the plant
 	var/plantname = ""
-	/// The modifier applied to the plant's bite size. If your plant has a large amount of reagents naturally, this should be increased to match.
+	/// The modifier applied to the plant's bite size. If a plant has a large amount of reagents naturally, this should be increased to match.
 	var/bite_consumption_mod = 1
 	///the splat it makes when it splats lol
 	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge

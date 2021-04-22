@@ -20,7 +20,7 @@
 	desc = "Sigh... wheat... a-grain?"
 	gender = PLURAL
 	icon_state = "wheat"
-	bite_consumption_mod = 0.5
+	bite_consumption_mod = 0.5 // Chewing on wheat grains?
 	foodtypes = GRAIN
 	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("wheat" = 1)
