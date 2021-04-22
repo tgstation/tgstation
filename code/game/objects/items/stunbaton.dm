@@ -330,4 +330,3 @@
 
 /obj/item/melee/baton/boomerang/loaded //Same as above, comes with a cell.
 	preload_cell_type = /obj/item/stock_parts/cell/high
-	
