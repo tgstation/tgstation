@@ -26,7 +26,7 @@
 			C.vomit(0)
 		O.forceMove(get_turf(user))
 
-	for(var/datum/reagent/the_reagent in user.reagents.reagent_list as anything)
+	for(var/datum/reagent/the_reagent as anything in user.reagents.reagent_list)
 		if(!the_reagent.harmful)
 			continue
 		user.reagents.remove_reagent(the_reagent.type)
