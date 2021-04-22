@@ -1521,6 +1521,7 @@
 #include "code\modules\admin\topic.dm"
 #include "code\modules\admin\whitelist.dm"
 #include "code\modules\admin\callproc\callproc.dm"
+#include "code\modules\admin\smites\away_with_ye.dm"
 #include "code\modules\admin\smites\bad_luck.dm"
 #include "code\modules\admin\smites\berforate.dm"
 #include "code\modules\admin\smites\bloodless.dm"
