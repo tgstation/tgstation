@@ -1,5 +1,3 @@
-
-
 ///This component lets you make specific mobs tameable by feeding them
 /datum/component/tameable
 	///Are we domesticated?
@@ -29,6 +27,7 @@
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_SENTIENCEPOTION, .proc/on_tame) //Instantly succeeds
 
 /datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
+	SIGNAL_HANDLER
 	if(!is_type_in_list(O, food_types))
 		return
 	if(stat == DEAD)
@@ -48,6 +47,7 @@
 
 ///Ran once taming succeeds
 /datum/component/tameable/proc/on_tame(mob/living/tamer)
+	SIGNAL_HANDLER
 	tame = TRUE
 
 	if(after_tame) //Run custom behavior if needed
