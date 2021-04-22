@@ -316,10 +316,11 @@ var turfcontents = [];
 var turfname = "";
 var imageRetryDelay = 500;
 var imageRetryLimit = 50;
-var menu = document.querySelector('#menu');
-var under_menu = document.querySelector('#under_menu');
-var statcontentdiv = document.querySelector('#statcontent');
+var menu = document.getElementById('menu');
+var under_menu = document.getElementById('under_menu');
+var statcontentdiv = document.getElementById('statcontent');
 var storedimages = [];
+var split_admin_tabs = false;
 
 // Any BYOND commands that could result in the client's focus changing go through this
 // to ensure that when we relinquish our focus, we don't do it after the result of
@@ -330,9 +331,28 @@ function send_byond_focus_command(url) {
 	}, 0);
 }
 
+function update_split_admin_tabs(status) {
+	status = (status == true);
+
+	if (split_admin_tabs !== status) {
+		if (split_admin_tabs === true) {
+			removeStatusTab("Events");
+			removeStatusTab("Fun");
+			removeStatusTab("Game");
+		}
+		update_verbs();
+	}
+	split_admin_tabs = status;
+}
+
 function createStatusTab(name) {
-	if (name.indexOf(".") != -1)
-		name = name.split(".")[0];
+	if (name.indexOf(".") != -1) {
+		var splitName = name.split(".");
+		if (split_admin_tabs && splitName[0] === "Admin")
+			name = splitName[1];
+		else
+			name = splitName[0];
+	}
 	if(document.getElementById(name) || name.trim() == "")
 		return;
 	if(!verb_tabs.includes(name) && !permanent_tabs.includes(name))
@@ -405,6 +425,7 @@ function checkStatusTab() {
 		if(!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
 			menu.removeChild(menu.children[i]);
 }
+
 function remove_verb(v) {
 	var verb_to_remove = v; // to_remove = [verb:category, verb:name]
 	for(var i = verbs.length - 1; i >= 0; i--){
@@ -422,7 +443,14 @@ function check_verbs() {
 }
 
 function verbs_cat_check(cat) {
-	var tabCat = cat.indexOf(".") != -1 ? cat.split(".")[0] : cat;
+	var tabCat = cat;
+	if (cat.indexOf(".") != -1) {
+		var splitName = cat.split(".");
+		if (split_admin_tabs && splitName[0] === "Admin")
+			tabCat = splitName[1];
+		else
+			tabCat = splitName[0];
+	}
 	var verbs_in_cat = 0;
 	var verbcat = "";
 	if(!verb_tabs.includes(tabCat)){
@@ -431,7 +459,14 @@ function verbs_cat_check(cat) {
 	}
 	for(var v = 0; v < verbs.length; v++){
 		var part = verbs[v];
-		verbcat = part[0].indexOf(".") != -1 ? part[0].split(".")[0] : part[0];
+		verbcat = part[0];
+		if (verbcat.indexOf(".") != -1) {
+			var splitName = verbcat.split(".");
+			if (split_admin_tabs && splitName[0] === "Admin")
+				verbcat = splitName[1];
+			else
+				verbcat = splitName[0];
+		}
 		if(verbcat != tabCat || verbcat.trim() == ""){
 			continue;
 		}
@@ -460,6 +495,11 @@ function wipe_verbs() {
 	checkStatusTab(); // remove all empty verb tabs
 }
 
+function update_verbs() {
+	wipe_verbs();
+	window.location.href = "byond://winset?command=Update-Verbs";
+}
+
 function add_verb_list(v) {
 	var to_add = JSON.parse(v); // list of a list with category and verb inside it
 	to_add.sort(); // sort what we're adding
@@ -467,7 +507,14 @@ function add_verb_list(v) {
 		var part = to_add[i];
 		if(!part[0])
 			continue;
-		var category = part[0].indexOf(".") == -1 ? part[0] : part[0].split(".")[0];
+		var category = part[0];
+		if (category.indexOf(".") != -1) {
+			var splitName = category.split(".");
+			if (split_admin_tabs && splitName[0] === "Admin")
+				category = splitName[1];
+			else
+				category = splitName[0];
+		}
 		if(findVerbindex(part[1], verbs))
 			continue;
 		if(verb_tabs.includes(category)){
@@ -638,7 +685,6 @@ function tab_change(tab) {
 		draw_debug();
 	} else if(tab == "Tickets") {
 		draw_tickets();
-	} else if(tab == "Interviews") {
 		draw_interviews();
 	} else if(tab == "SDQL2") {
 		draw_sdql2();
@@ -661,12 +707,26 @@ function draw_debug() {
 	link[textContentKey] = "Wipe All Verbs";
 	wipeverbstabs.appendChild(link);
 	document.getElementById("statcontent").appendChild(wipeverbstabs);
+	var wipeUpdateVerbsTabs = document.createElement("div");
+	var updateLink = document.createElement("a");
+	updateLink.onclick = function() {update_verbs()};
+	updateLink[textContentKey] = "Wipe and Update All Verbs";
+	wipeUpdateVerbsTabs.appendChild(updateLink);
+	document.getElementById("statcontent").appendChild(wipeUpdateVerbsTabs);
 	var text = document.createElement("div");
 	text[textContentKey] = "Verb Tabs:";
 	document.getElementById("statcontent").appendChild(text);
 	var table1 = document.createElement("table");
 	for(var i=0; i < verb_tabs.length ; i++) {
 		var part = verb_tabs[i];
+		// Hide subgroups except admin subgroups if they are split
+		if (verb_tabs[i].lastIndexOf(".") != -1) {
+			var splitName = verb_tabs[i].split(".");
+			if (split_admin_tabs && splitName[0] === "Admin")
+				part = splitName[1];
+			else
+				continue;
+		}
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
 		td1[textContentKey] = part;
@@ -766,11 +826,7 @@ function update_tickets(T){
 }
 function update_interviews(I){
 	interviewManager = JSON.parse(I);
-	if(!verb_tabs.includes("Interviews")) {
-		verb_tabs.push("Interviews");
-		addPermanentTab("Interviews");
-	}
-	if(current_tab == "Interviews")
+	if(current_tab == "Tickets")
 		draw_interviews();
 }
 function update_sdql2(S) {
@@ -806,9 +862,6 @@ function remove_tickets() {
 function remove_interviews() {
 	if(tickets) {
 		tickets = [];
-		removePermanentTab("Interviews");
-		if(current_tab == "Interviews")
-			tab_change("Status");
 	}
 	checkStatusTab();
 }
@@ -826,7 +879,6 @@ function add_admin_tabs(ht) {
 	href_token = ht;
 	addPermanentTab("MC");
 	addPermanentTab("Tickets");
-	addPermanentTab("Interviews");
 }
 function create_listedturf(TN) {
 	remove_listedturf(); // remove the last one if we had one
@@ -967,8 +1019,10 @@ function draw_tickets() {
 }
 
 function draw_interviews() {
-	statcontentdiv[textContentKey] = "";
 	var body = document.createElement("div");
+	var header = document.createElement("h3");
+	header[textContentKey] = "Interviews";
+	body.appendChild(header);
 	var manDiv = document.createElement("div");
 	manDiv.className = "interview_panel_controls"
 	var manLink = document.createElement("a");
@@ -1050,10 +1104,20 @@ function draw_verbs(cat){
 	var additions = {}; // additional sub-categories to be rendered
 	table.className = "grid-container";
 	sortVerbs();
+	if (split_admin_tabs && cat.lastIndexOf(".") != -1) {
+		var splitName = cat.split(".");
+		if (splitName[0] === "Admin")
+			cat = splitName[1];
+	}
 	verbs.reverse(); // sort verbs backwards before we draw
 	for (var i = 0; i < verbs.length; ++i) {
 		var part = verbs[i];
 		var name = part[0];
+		if (split_admin_tabs && name.lastIndexOf(".") != -1) {
+			var splitName = name.split(".");
+			if (splitName[0] === "Admin")
+				name = splitName[1];
+		}
 		var command = part[1];
 
 		if (command && name.lastIndexOf(cat, 0) != -1 && (name.length == cat.length || name.charAt(cat.length) == ".")) {

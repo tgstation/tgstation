@@ -77,10 +77,10 @@
 /obj/machinery/chem_recipe_debug/proc/setup_reactions()
 	cached_reactions = list()
 	if(process_all)
-		for(var/reaction in GLOB.chemical_reactions_list)
-			if(is_type_in_list(GLOB.chemical_reactions_list[reaction], cached_reactions))
+		for(var/reaction in GLOB.chemical_reactions_list_reactant_index)
+			if(is_type_in_list(GLOB.chemical_reactions_list_reactant_index[reaction], cached_reactions))
 				continue
-			cached_reactions += GLOB.chemical_reactions_list[reaction]
+			cached_reactions += GLOB.chemical_reactions_list_reactant_index[reaction]
 	else
 		cached_reactions = reaction_names
 	reagents.clear_reagents()

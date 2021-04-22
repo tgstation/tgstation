@@ -11,7 +11,7 @@
 
 /datum/eldritch_knowledge/rust_fist
 	name = "Grasp of Rust"
-	desc = "Empowers your Mansus Grasp to deal 500 damage to non-living matter and rust any surface it touches. Already rusted surfaces are destroyed. You only rust surfaces and machinery on harm intent."
+	desc = "Empowers your Mansus Grasp to deal 500 damage to non-living matter and rust any surface it touches. Already rusted surfaces are destroyed. You only rust surfaces and machinery while in combat mode."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen)

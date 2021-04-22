@@ -384,12 +384,12 @@
 	actual_trauma.brain = src
 	if(owner)
 		actual_trauma.owner = owner
+		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
 		actual_trauma.on_gain()
 	if(resilience)
 		actual_trauma.resilience = resilience
-	. = actual_trauma
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
-	return TRUE
+	return actual_trauma
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience, natural_gain = FALSE)
