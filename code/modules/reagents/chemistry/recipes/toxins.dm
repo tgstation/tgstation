@@ -181,7 +181,7 @@
 
 /datum/chemical_reaction/lexorin
 	results = list(/datum/reagent/toxin/lexorin = 3)
-	required_reagents = list(/datum/reagent/toxin/plasma = 1, /datum/reagent/hydrogen = 1, /datum/reagent/medicine/salbutamol = 1)
+	required_reagents = list(/datum/reagent/toxin/plasma = 1, /datum/reagent/hydrogen = 1, /datum/reagent/medicine/c2/ convermol = 1)
 	mix_message = "The mixture turns clear and stops reacting."
 	is_cold_recipe = FALSE
 	required_temp = 100

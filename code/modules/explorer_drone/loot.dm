@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /// Drugs
 /datum/adventure_loot_generator/simple/drugs
 	id = "drugs"
-	loot_list = list(/obj/item/storage/pill_bottle/happy,/obj/item/storage/pill_bottle/lsd,/obj/item/storage/pill_bottle/penacid,/obj/item/storage/pill_bottle/stimulant)
+	loot_list = list(/obj/item/storage/pill_bottle/happy,/obj/item/storage/pill_bottle/lsd,/obj/item/storage/pill_bottle/stimulant)
 
 /// Rare minerals/materials
 /datum/adventure_loot_generator/simple/materials

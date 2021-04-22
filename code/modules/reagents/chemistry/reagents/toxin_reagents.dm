@@ -958,7 +958,7 @@
 
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/remove_amt = 5
-	if(holder.has_reagent(/datum/reagent/medicine/calomel) || holder.has_reagent(/datum/reagent/medicine/pen_acid))
+	if(holder.has_reagent(/datum/reagent/medicine/calomel))
 		remove_amt = 0.5
 	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type, remove_amt * REM * normalise_creation_purity() * delta_time)

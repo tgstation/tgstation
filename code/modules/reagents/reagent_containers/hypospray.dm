@@ -173,37 +173,29 @@
 	base_icon_state = "morphen"
 	list_reagents = list(/datum/reagent/medicine/morphine = 10)
 
-/obj/item/reagent_containers/hypospray/medipen/oxandrolone
-	name = "oxandrolone medipen"
-	desc = "An autoinjector containing oxandrolone, used to treat severe burns."
+/obj/item/reagent_containers/hypospray/medipen/lenturi
+	name = "lenturi medipen"
+	desc = "An autoinjector containing lenturi, used to treat burns. Makes you slower while in patient's symptom, and provides stomach cramps once fully removed."
 	icon_state = "oxapen"
 	inhand_icon_state = "oxapen"
 	base_icon_state = "oxapen"
-	list_reagents = list(/datum/reagent/medicine/oxandrolone = 10)
+	list_reagents = list(/datum/reagent/medicine/c2/lenturi = 5)
 
-/obj/item/reagent_containers/hypospray/medipen/penacid
-	name = "pentetic acid medipen"
-	desc = "An autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins."
-	icon_state = "penacid"
-	inhand_icon_state = "penacid"
-	base_icon_state = "penacid"
-	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
-
-/obj/item/reagent_containers/hypospray/medipen/salacid
-	name = "salicylic acid medipen"
-	desc = "An autoinjector containing salicylic acid, used to treat severe brute damage."
+/obj/item/reagent_containers/hypospray/medipen/libital
+	name = "libital medipen"
+	desc = "An autoinjector containing libital, used to treat brute damage at a cost of minor liver toxicity."
 	icon_state = "salacid"
 	inhand_icon_state = "salacid"
 	base_icon_state = "salacid"
-	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
+	list_reagents = list(/datum/reagent/medicine/c2/libital = 5)
 
-/obj/item/reagent_containers/hypospray/medipen/salbutamol
-	name = "salbutamol medipen"
-	desc = "An autoinjector containing salbutamol, used to heal oxygen damage quickly."
+/obj/item/reagent_containers/hypospray/medipen/convermol
+	name = "convermol medipen"
+	desc = "An autoinjector containing convermol, used to quickly cure asphyxiation but is toxic."
 	icon_state = "salpen"
 	inhand_icon_state = "salpen"
 	base_icon_state = "salpen"
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
+	list_reagents = list(/datum/reagent/medicine/c2/convermol = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
@@ -255,9 +247,9 @@
 	icon_state = "luxpen"
 	inhand_icon_state = "atropen"
 	base_icon_state = "luxpen"
-	volume = 60
-	amount_per_transfer_from_this = 60
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
+	volume = 20
+	amount_per_transfer_from_this = 20
+	list_reagents = list(/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"

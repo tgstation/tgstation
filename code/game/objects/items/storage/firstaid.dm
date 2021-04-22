@@ -171,7 +171,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/reagent_containers/spray/hercuri = 1,
-		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
+		/obj/item/reagent_containers/hypospray/medipen/lenturi = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
 
@@ -196,8 +196,7 @@
 	var/static/items_inside = list(
 	    /obj/item/storage/pill_bottle/multiver/less = 1,
 		/obj/item/reagent_containers/syringe/syriniver = 3,
-		/obj/item/storage/pill_bottle/potassiodide = 1,
-		/obj/item/reagent_containers/hypospray/medipen/penacid = 1)
+		/obj/item/storage/pill_bottle/potassiodide = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/o2
@@ -220,7 +219,7 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/syringe/convermol = 3,
-		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 1,
+		/obj/item/reagent_containers/hypospray/medipen/convermol = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/storage/pill_bottle/iron = 1)
 	generate_items_inside(items_inside,src)
@@ -247,7 +246,7 @@
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
+		/obj/item/reagent_containers/hypospray/medipen/libital = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/advanced
@@ -264,8 +263,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
-		/obj/item/stack/medical/gauze = 1,
-		/obj/item/storage/pill_bottle/penacid = 1)
+		/obj/item/stack/medical/gauze = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/tactical
@@ -470,15 +468,6 @@
 /obj/item/storage/pill_bottle/psicodine/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/psicodine(src)
-
-/obj/item/storage/pill_bottle/penacid
-	name = "bottle of pentetic acid pills"
-	desc = "Contains pills to expunge radiation and toxins."
-
-/obj/item/storage/pill_bottle/penacid/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/penacid(src)
-
 
 /obj/item/storage/pill_bottle/neurine
 	name = "bottle of neurine pills"

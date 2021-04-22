@@ -9,9 +9,6 @@ Self-Respiration
 	Decreases transmittablity tremendously.
 	Fatal Level.
 
-Bonus
-	The body generates salbutamol.
-
 //////////////////////////////////////
 */
 

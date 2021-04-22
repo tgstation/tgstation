@@ -486,6 +486,14 @@
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around [loc.p_their()] body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
 
+/obj/item/clothing/suit/space/changeling/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_NOBREATH, ITEM_SLOT_OCLOTHING)
+
+/obj/item/clothing/suit/space/changeling/dropped(mob/living/carbon/human/user)
+	REMOVE_TRAIT(user, TRAIT_NOBREATH, ITEM_SLOT_OCLOTHING)
+	return ..()
+
 // seal the cell door
 /obj/item/clothing/suit/space/changeling/toggle_spacesuit_cell(mob/user)
 	return
@@ -493,7 +501,6 @@
 /obj/item/clothing/suit/space/changeling/process(delta_time)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		H.reagents.add_reagent(/datum/reagent/medicine/salbutamol, REAGENTS_METABOLISM * (delta_time / SSMOBS_DT))
 		H.adjust_bodytemperature(temperature_setting - H.bodytemperature) // force changelings to normal temp step mode played badly
 
 /obj/item/clothing/head/helmet/space/changeling

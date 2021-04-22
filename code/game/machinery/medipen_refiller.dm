@@ -9,10 +9,9 @@
 	/// list of medipen subtypes it can refill
 	var/list/allowed = list(/obj/item/reagent_containers/hypospray/medipen = /datum/reagent/medicine/epinephrine,
 						    /obj/item/reagent_containers/hypospray/medipen/atropine = /datum/reagent/medicine/atropine,
-						    /obj/item/reagent_containers/hypospray/medipen/salbutamol = /datum/reagent/medicine/salbutamol,
-						    /obj/item/reagent_containers/hypospray/medipen/oxandrolone = /datum/reagent/medicine/oxandrolone,
-						    /obj/item/reagent_containers/hypospray/medipen/salacid = /datum/reagent/medicine/sal_acid,
-						    /obj/item/reagent_containers/hypospray/medipen/penacid = /datum/reagent/medicine/pen_acid)
+						    /obj/item/reagent_containers/hypospray/medipen/convermol = /datum/reagent/medicine/c2/convermol,
+						    /obj/item/reagent_containers/hypospray/medipen/lenturi = /datum/reagent/medicine/c2/lenturi,
+						    /obj/item/reagent_containers/hypospray/medipen/libital = /datum/reagent/medicine/c2/libital)
 	/// var to prevent glitches in the animation
 	var/busy = FALSE
 

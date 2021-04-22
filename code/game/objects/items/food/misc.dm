@@ -570,7 +570,7 @@
 	icon = 'icons/obj/lollipop.dmi'
 	icon_state = "gumball"
 	worn_icon_state = "bubblegum"
-	food_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/sal_acid = 2, /datum/reagent/medicine/oxandrolone = 2) //Kek
+	food_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/c2/libital = 1, /datum/reagent/medicine/c2/aiuri = 1) //Kek
 	tastes = list("candy")
 	foodtypes = JUNKFOOD
 	slot_flags = ITEM_SLOT_MASK

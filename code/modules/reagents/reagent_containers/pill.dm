@@ -119,11 +119,11 @@
 	icon_state = "pill19"
 	list_reagents = list(/datum/reagent/medicine/ephedrine = 10, /datum/reagent/medicine/antihol = 10, /datum/reagent/consumable/coffee = 30)
 
-/obj/item/reagent_containers/pill/salbutamol
-	name = "salbutamol pill"
-	desc = "Used to treat oxygen deprivation."
+/obj/item/reagent_containers/pill/convermol
+	name = "convermol pill"
+	desc = "Used to treat oxygen deprivation at the cost of toxicity."
 	icon_state = "pill16"
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 30)
+	list_reagents = list(/datum/reagent/medicine/c2/convermol = 15)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/multiver
@@ -159,18 +159,11 @@
 	list_reagents = list(/datum/reagent/medicine/mutadone = 50)
 	rename_with_volume = TRUE
 
-/obj/item/reagent_containers/pill/salicylic
-	name = "salicylic acid pill"
-	desc = "Used to dull pain."
-	icon_state = "pill9"
-	list_reagents = list(/datum/reagent/medicine/sal_acid = 24)
-	rename_with_volume = TRUE
-
-/obj/item/reagent_containers/pill/oxandrolone
-	name = "oxandrolone pill"
-	desc = "Used to stimulate burn healing."
+/obj/item/reagent_containers/pill/lenturi
+	name = "lenturi pill"
+	desc = "Used to stimulate burn healing. Slows the patient down and gives stomach cramps once fully metabolized."
 	icon_state = "pill11"
-	list_reagents = list(/datum/reagent/medicine/oxandrolone = 24)
+	list_reagents = list(/datum/reagent/medicine/c2/lenturi = 12)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/insulin
@@ -184,13 +177,6 @@
 	name = "psicodine pill"
 	desc = "Used to treat mental instability and phobias."
 	list_reagents = list(/datum/reagent/medicine/psicodine = 10)
-	icon_state = "pill22"
-	rename_with_volume = TRUE
-
-/obj/item/reagent_containers/pill/penacid
-	name = "pentetic acid pill"
-	desc = "Used to expunge radiation and toxins."
-	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
 	icon_state = "pill22"
 	rename_with_volume = TRUE
 

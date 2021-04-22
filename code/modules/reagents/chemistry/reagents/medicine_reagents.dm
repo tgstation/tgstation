@@ -276,30 +276,6 @@
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 
-/datum/reagent/medicine/oxandrolone
-	name = "Oxandrolone"
-	description = "Stimulates the healing of severe burns. Extremely rapidly heals severe burns and slowly heals minor ones. Overdose will worsen existing burns."
-	reagent_state = LIQUID
-	color = "#1E8BFF"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 25
-	ph = 10.7
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.getFireLoss() > 25)
-		M.adjustFireLoss(-4 * REM * delta_time, 0) //Twice as effective as AIURI for severe burns
-	else
-		M.adjustFireLoss(-0.5 * REM * delta_time, 0) //But only a quarter as effective for more minor ones
-	..()
-	. = TRUE
-
-/datum/reagent/medicine/oxandrolone/overdose_process(mob/living/M, delta_time, times_fired)
-	if(M.getFireLoss()) //It only makes existing burns worse
-		M.adjustFireLoss(4.5 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC) // it's going to be healing either 4 or 0.5
-		. = TRUE
-	..()
-
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a temporary blood substitute, as well as slowly speeding blood regeneration."
@@ -450,64 +426,6 @@
 	if(M.radiation > 0)
 		M.radiation -= min(8 * REM * delta_time, M.radiation)
 	..()
-
-/datum/reagent/medicine/pen_acid
-	name = "Pentetic Acid"
-	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body."
-	reagent_state = LIQUID
-	color = "#E6FFF0"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	ph = 1 //One of the best buffers, NEVERMIND!
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.radiation -= (max(M.radiation - RAD_MOB_SAFE, 0) / 50) * REM * delta_time
-	M.adjustToxLoss(-2 * REM * delta_time, 0)
-	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(R != src)
-			M.reagents.remove_reagent(R.type, 2 * REM * delta_time)
-	..()
-	. = TRUE
-
-/datum/reagent/medicine/sal_acid
-	name = "Salicylic Acid"
-	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
-	reagent_state = LIQUID
-	color = "#D2D2D2"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 25
-	ph = 2.1
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/sal_acid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.getBruteLoss() > 25)
-		M.adjustBruteLoss(-4 * REM * delta_time, 0)
-	else
-		M.adjustBruteLoss(-0.5 * REM * delta_time, 0)
-	..()
-	. = TRUE
-
-/datum/reagent/medicine/sal_acid/overdose_process(mob/living/M, delta_time, times_fired)
-	if(M.getBruteLoss()) //It only makes existing bruises worse
-		M.adjustBruteLoss(4.5 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC) // it's going to be healing either 4 or 0.5
-		. = TRUE
-	..()
-
-/datum/reagent/medicine/salbutamol
-	name = "Salbutamol"
-	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent."
-	reagent_state = LIQUID
-	color = "#00FFFF"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	ph = 2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOxyLoss(-3 * REM * delta_time, 0)
-	if(M.losebreath >= 4)
-		M.losebreath -= 2 * REM * delta_time
-	..()
-	. = TRUE
 
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"

@@ -563,7 +563,8 @@
 /obj/item/slime_extract/cerulean/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			user.reagents.add_reagent(/datum/reagent/medicine/salbutamol,15)
+			ADD_TRAIT(user, TRAIT_NOBREATH, src)
+			addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_NOBREATH, src), (15 SECONDS))
 			to_chat(user, "<span class='notice'>You feel like you don't need to breathe!</span>")
 			return 150
 

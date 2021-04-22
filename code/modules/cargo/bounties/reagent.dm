@@ -134,7 +134,6 @@
 		/datum/reagent/toxin/itching_powder,\
 		/datum/reagent/toxin/cyanide,\
 		/datum/reagent/toxin/heparin,\
-		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/atropine,\
 		/datum/reagent/drug/aranesp,\
 		/datum/reagent/drug/krokodil,\
@@ -216,10 +215,9 @@
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/spaceacillin,\
 		/datum/reagent/medicine/c2/synthflesh,\
-		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/atropine,\
 		/datum/reagent/medicine/cryoxadone,\
-		/datum/reagent/medicine/salbutamol,\
+		/datum/reagent/medicine/c2/convermol,\
 		/datum/reagent/medicine/c2/hercuri,\
 		/datum/reagent/medicine/c2/probital,\
 		/datum/reagent/drug/methamphetamine,\

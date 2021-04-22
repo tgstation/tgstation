@@ -60,7 +60,7 @@
 										/datum/reagent/pax, /datum/reagent/drug/happiness, /datum/reagent/medicine/ephedrine
 									),
 									list( // level 9
-										/datum/reagent/toxin/lipolicide, /datum/reagent/medicine/sal_acid
+										/datum/reagent/toxin/lipolicide, /datum/reagent/medicine/c2/helbital
 									),
 									list( // level 10
 										/datum/reagent/medicine/haloperidol, /datum/reagent/drug/aranesp, /datum/reagent/medicine/diphenhydramine
