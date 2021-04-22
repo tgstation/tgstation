@@ -215,8 +215,7 @@
 		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/food/scotchegg
-
-	subcategory = CAT_MISCFOOD
+	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/mammi
 	name = "Mammi"

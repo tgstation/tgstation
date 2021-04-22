@@ -142,6 +142,15 @@
 	foodtypes = MEAT | BREAKFAST | GRAIN
 	venue_value = FOOD_PRICE_NORMAL
 
+/obj/item/food/eggwrap
+	name = "egg wrap"
+	desc = "The precursor to Pigs in a Blanket."
+	icon_state = "eggwrap"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("egg" = 1)
+	foodtypes = MEAT
+	w_class = WEIGHT_CLASS_TINY
+
 /obj/item/food/chawanmushi
 	name = "chawanmushi"
 	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
