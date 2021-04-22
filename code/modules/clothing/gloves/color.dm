@@ -201,20 +201,21 @@
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
-	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients."
+	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
 	transfer_prints = FALSE
 
-/obj/item/clothing/gloves/color/latex/nitrile/infiltrator
+/obj/item/clothing/gloves/color/infiltrator
 	name = "infiltrator gloves"
 	desc = "Specialized combat gloves for carrying people around. Transfers tactical kidnapping knowledge into the user via nanochips."
 	icon_state = "infiltrator"
 	inhand_icon_state = "infiltrator"
-	siemens_coefficient = 0
 	permeability_coefficient = 0.3
+	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/latex/engineering
 	name = "tinker's gloves"
