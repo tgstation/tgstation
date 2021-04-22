@@ -26,6 +26,12 @@
 			C.vomit(0)
 		O.forceMove(get_turf(user))
 
+	for(var/i in user.reagents.reagent_list)
+		var/datum/reagent/the_reagent = i
+		if(!the_reagent.harmful)
+			continue
+		user.reagents.remove_reagent(the_reagent.type)
+
 	user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10)
 	user.reagents.add_reagent(/datum/reagent/medicine/antihol, 10)
 	user.reagents.add_reagent(/datum/reagent/medicine/mannitol, 25)
