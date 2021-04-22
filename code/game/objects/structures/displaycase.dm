@@ -301,7 +301,7 @@
 		return
 	if(user.combat_mode)
 		return ..()
-	if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
+	if(W.tool_behaviour == TOOL_WELDER && !broken)
 		return ..()
 
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
