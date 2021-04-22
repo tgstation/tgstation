@@ -595,6 +595,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
+	var/mob/user = usr
 	. = ..()
 	if(.)
 		return
@@ -638,6 +639,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			if(.)
 				release_pressure = clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
+				user.log_message("set a canister to [release_pressure] kPa.", LOG_ATTACK)
 		if("valve")
 			var/logmsg
 			valve_open = !valve_open
@@ -645,22 +647,27 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
 					var/list/danger = list()
+					var/attack_log_message ="opened a canister at [pressure]kPa pressure that contains the following: "
 					for(var/id in air_contents.gases)
 						var/gas = air_contents.gases[id]
-						if(!gas[GAS_META][META_GAS_DANGER])
+						var/mole_count = air_contents.get_moles(id)
+						if(mole_count > 0) //only log gases that exist
+							attack_log_message += "[GLOB.meta_gas_info[id][META_GAS_NAME]]:[mole_count] moles, "
+						if(!GLOB.meta_gas_info[id][META_GAS_DANGER]) //if the gas doesn't have the danger variable set skip it
 							continue
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
 							danger[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //ex. "plasma" = 20
 
-					if(danger.len)
-						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
-						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
+					if(danger.len) // only message admins when dangerous gases are in the canister
+						var/admin_message = "[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following dangerous gases at [ADMIN_VERBOSEJMP(src)]: "
 						for(var/name in danger)
-							var/msg = "[name]: [danger[name]] moles."
-							log_admin(msg)
-							message_admins(msg)
+							admin_message += "[name]: [danger[name]] moles, "
+						message_admins(admin_message)
+						log_admin(admin_message)
+					user.log_message(attack_log_message, LOG_ATTACK)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
+				user.log_message("closed a canister", LOG_ATTACK)
 			investigate_log(logmsg, INVESTIGATE_ATMOS)
 			release_log += logmsg
 			. = TRUE
@@ -688,6 +695,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		if("eject")
 			if(holding)
 				if(valve_open)
+					//TODO: Search for dangerous gases and log those
 					message_admins("[ADMIN_LOOKUPFLW(usr)] removed [holding] from [src] with valve still open at [ADMIN_VERBOSEJMP(src)] releasing contents into the <span class='boldannounce'>air</span>.")
 					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span>.", INVESTIGATE_ATMOS)
 				replace_tank(usr, FALSE)
