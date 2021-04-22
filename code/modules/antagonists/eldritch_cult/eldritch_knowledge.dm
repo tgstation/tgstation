@@ -283,29 +283,21 @@
 			var/datum/objective/A = new
 			A.owner = user.mind
 			var/list/datum/team/teams = list()
-			var/list/datum/mind/deprioritized = list()
 			for(var/datum/antagonist/antag in user.mind.antag_datums)
 				var/datum/team/team = antag.get_team()
 				if(team)
 					teams |= team
-					deprioritized |= team.members
 			var/list/targets = list()
-			var/i = 0
-			while(i < 4)
-				var/datum/mind/targeted =  A.find_target(blacklist = deprioritized)//easy way, i dont feel like copy pasting that entire block of code
-				if(!targeted)
-					if(deprioritized.len)
-						deprioritized = list()
-						continue
-					else
-						break
+			for(var/i in 0 to 3)
+				var/datum/mind/targeted =  A.find_target()//easy way, i dont feel like copy pasting that entire block of code
 				var/is_teammate = FALSE
 				for(var/datum/team/team in teams)
 					if(targeted in team.members)
 						is_teammate = TRUE
 						break
+				if(!targeted)
+					break
 				targets["[targeted.current.real_name] the [targeted.assigned_role][is_teammate ? " (ally)" : ""]"] = targeted.current
-				i++
 			LH.target = targets[input(user,"Choose your next target","Target") in targets]
 			qdel(A)
 			if(LH.target)
