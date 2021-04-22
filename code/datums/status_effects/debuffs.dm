@@ -818,15 +818,24 @@
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)
 
+/datum/status_effect/go_away/proc/move_owner(turf/target)
+	owner.forceMove(target)
+
 /datum/status_effect/go_away/tick()
 	owner.AdjustStun(1, ignore_canstun = TRUE)
-	var/turf/T = get_step(owner, direction)
-	owner.forceMove(T)
+	var/turf/target = get_step(owner, direction)
+	move_owner(target)
 
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"
 	desc = "I must go, my people need me!"
 	icon_state = "high"
+
+/datum/status_effect/go_away/hard
+	id = "go_away_hard"
+
+/datum/status_effect/go_away/hard/move_owner(turf/target)
+	..()
 
 /datum/status_effect/fake_virus
 	id = "fake_virus"
