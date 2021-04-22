@@ -835,7 +835,7 @@
 /obj/item/borg/apparatus/AltClick(mob/living/silicon/robot/user)
 	if(!stored)
 		return ..()
-	stored.forceMove(get_turf(user))
+	stored.forceMove(user.drop_location())
 
 /obj/item/borg/apparatus/pre_attack(atom/A, mob/living/user, params)
 	if(!stored)
