@@ -212,6 +212,7 @@
 	desc = "Specialized combat gloves for carrying people around. Transfers tactical kidnapping knowledge into the user via nanochips."
 	icon_state = "infiltrator"
 	inhand_icon_state = "infiltrator"
+	siemens_coefficient = 0
 	permeability_coefficient = 0.3
 	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
