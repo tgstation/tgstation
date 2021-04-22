@@ -138,7 +138,7 @@
 
 /obj/item/reagent_containers/syringe/update_icon_state()
 	var/rounded_vol = get_rounded_vol()
-	icon_state = "[rounded_vol]"
+	icon_state = "[base_icon_state]_[rounded_vol]"
 	inhand_icon_state = "[base_icon_state]_[rounded_vol]"
 	return ..()
 
@@ -219,6 +219,7 @@
 /obj/item/reagent_containers/syringe/bluespace
 	name = "bluespace syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals."
+	base_icon_state = "bluespace"
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10, 20, 30, 40, 50, 60)
 	volume = 60
@@ -226,6 +227,7 @@
 /obj/item/reagent_containers/syringe/piercing
 	name = "piercing syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
+	base_icon_state = "piercing"
 	volume = 10
 	possible_transfer_amounts = list(5, 10)
 	proj_piercing = 1
