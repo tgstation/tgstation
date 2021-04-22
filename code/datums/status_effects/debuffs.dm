@@ -835,6 +835,7 @@
 	id = "go_away_hard"
 
 /datum/status_effect/go_away/hard/move_owner(turf/target)
+	owner.throw_at(target, 2, 4)
 	..()
 
 /datum/status_effect/fake_virus
