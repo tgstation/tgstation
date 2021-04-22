@@ -55979,8 +55979,6 @@
 /turf/open/floor/iron/dark,
 /area/command/gateway)
 "eHO" = (
-/obj/effect/turf_decal/delivery,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -55991,6 +55989,11 @@
 	dir = 8;
 	pixel_x = 28
 	},
+/obj/structure/rack,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/dark,
 /area/cargo/storage)
 "eIc" = (
@@ -88701,9 +88704,6 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/brown{

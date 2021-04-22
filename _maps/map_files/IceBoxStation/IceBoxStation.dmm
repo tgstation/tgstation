@@ -34732,6 +34732,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
+"itD" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/turf/open/floor/iron,
+/area/cargo/storage)
 "itG" = (
 /obj/item/beacon,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -79293,7 +79300,7 @@ rSS
 hFZ
 mmg
 uIw
-dCr
+itD
 dCr
 sbp
 jIx

@@ -8807,6 +8807,10 @@
 	dir = 6
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/structure/table,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/item/clothing/gloves/cargo_gauntlet,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "aBG" = (

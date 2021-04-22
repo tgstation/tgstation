@@ -112024,6 +112024,9 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/item/clothing/gloves/cargo_gauntlet,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "xFF" = (
