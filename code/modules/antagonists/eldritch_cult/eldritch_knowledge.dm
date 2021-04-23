@@ -29,7 +29,7 @@
 /datum/eldritch_knowledge/New()
 	. = ..()
 	var/list/temp_list
-	for(var/atom/required_atom in required_atoms)
+	for(var/atom/required_atom as anything in required_atoms)
 		temp_list += list(typesof(required_atom))
 	required_atoms = temp_list
 
@@ -78,7 +78,7 @@
  * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
  */
 /datum/eldritch_knowledge/proc/on_finished_recipe(mob/living/user, list/atoms, loc)
-	if(!result_atoms.len)
+	if(!length(result_atoms))
 		return FALSE
 	for(var/result in result_atoms)
 		new result(loc)
@@ -155,7 +155,7 @@
 
 	var/list/compiled_list = list()
 
-	for(var/mob/living/carbon/human/human_to_check in GLOB.human_list)
+	for(var/mob/living/carbon/human/human_to_check as anything in GLOB.human_list)
 		if(fingerprints[md5(human_to_check.dna.uni_identity)])
 			compiled_list |= human_to_check.real_name
 			compiled_list[human_to_check.real_name] = human_to_check
