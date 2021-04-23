@@ -1,0 +1,4 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the 2 missing rwindows in metastation atmos"

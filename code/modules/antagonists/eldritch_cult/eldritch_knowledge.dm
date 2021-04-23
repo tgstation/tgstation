@@ -282,12 +282,22 @@
 		if(!LH.target)
 			var/datum/objective/A = new
 			A.owner = user.mind
+			var/list/datum/team/teams = list()
+			for(var/datum/antagonist/antag as anything in user.mind.antag_datums)
+				var/datum/team/team = antag.get_team()
+				if(team)
+					teams |= team
 			var/list/targets = list()
 			for(var/i in 0 to 3)
 				var/datum/mind/targeted =  A.find_target()//easy way, i dont feel like copy pasting that entire block of code
+				var/is_teammate = FALSE
+				for(var/datum/team/team as anything in teams)
+					if(targeted in team.members)
+						is_teammate = TRUE
+						break
 				if(!targeted)
 					break
-				targets["[targeted.current.real_name] the [targeted.assigned_role]"] = targeted.current
+				targets["[targeted.current.real_name] the [targeted.assigned_role][is_teammate ? " (ally)" : ""]"] = targeted.current
 			LH.target = targets[input(user,"Choose your next target","Target") in targets]
 			qdel(A)
 			if(LH.target)

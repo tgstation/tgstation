@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Research done from the Science Hub tablet app will now show up on the RD Server controller."
