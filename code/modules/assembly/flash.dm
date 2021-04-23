@@ -80,12 +80,7 @@
 /obj/item/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	if(!burnt_out)
 		burnt_out = TRUE
-		if(ismob(loc))
-			var/mob/M = loc
-			M.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
-		else
-			var/turf/T = get_turf(src)
-			T.visible_message("<span class='danger'>[src] burns out!</span>")
+		loc?.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
 		update_appearance()
 
 /obj/item/assembly/flash/proc/flash_recharge(interval = 10)
