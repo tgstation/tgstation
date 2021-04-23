@@ -51916,6 +51916,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/item/storage/box/beakers,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "qcs" = (
@@ -68582,6 +68583,11 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
+	},
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/bodybags{
+	pixel_x = 5;
+	pixel_y = 5
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
