@@ -35,13 +35,24 @@
 
 /obj/structure/tank_holder/examine(mob/user)
 	. = ..()
+	. += "It is [anchored ? "wrenched to the floor." : "The <i>bolts</i> on the bottom are unsecured."]<br/>"
+	if(tank)
+		. += "It is holding one [tank]."
+	else
+		. += "It is empty."
 	. += "<span class='notice'>It is held together by some <b>screws</b>.</span>"
 
 /obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
-	if(!SEND_SIGNAL(W, COMSIG_CONTAINER_TRY_ATTACH, src, user))
+	if(W.tool_behaviour == TOOL_WRENCH)
+		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
+		if(W.use_tool(src, user, 20, volume=50))
+			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
+			set_anchored(!anchored)
+	else if(!SEND_SIGNAL(W, COMSIG_CONTAINER_TRY_ATTACH, src, user))
 		to_chat(user, "<span class='warning'>[W] does not fit in [src].</span>")
+	return
 
 /obj/structure/tank_holder/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

@@ -66,7 +66,7 @@
 		if(living_target != user)
 			living_target.visible_message("<span class='danger'>[user] is trying to inject [living_target]!</span>", \
 									"<span class='userdanger'>[user] is trying to inject you!</span>")
-			if(!do_mob(user, living_target, 3 SECONDS, extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
+			if(!do_mob(user, living_target, CHEM_INTERACT_DELAY(3 SECONDS, user), extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
 				return
 			if(!reagents.total_volume)
 				return
@@ -97,7 +97,7 @@
 			target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 							"<span class='userdanger'>[user] is trying to take a blood sample from you!</span>")
 			busy = TRUE
-			if(!do_mob(user, target, 3 SECONDS, extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
+			if(!do_mob(user, target, CHEM_INTERACT_DELAY(3 SECONDS, user), extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
 				busy = FALSE
 				return SECONDARY_ATTACK_CONTINUE_CHAIN
 			if(reagents.total_volume >= reagents.maximum_volume)

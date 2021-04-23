@@ -49,7 +49,7 @@
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
-	uplink_items = get_uplink_items(_gamemode, TRUE, allow_restricted)
+	update_items()
 
 	if(_owner)
 		owner = _owner
@@ -82,6 +82,9 @@
 	purchase_log = null
 	return ..()
 
+/datum/component/uplink/proc/update_items()
+	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
 	if(!silent)
 		to_chat(user, "<span class='notice'>You slot [TC] into [parent] and charge its internal uplink.</span>")
@@ -92,7 +95,7 @@
 
 /datum/component/uplink/proc/set_gamemode(_gamemode)
 	gamemode = _gamemode
-	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	update_items()
 
 /datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
@@ -121,6 +124,7 @@
 	if(locked)
 		return
 	active = TRUE
+	update_items()
 	if(user)
 		INVOKE_ASYNC(src, .proc/ui_interact, user)
 	// an unlocked uplink blocks also opening the PDA or headset menu
