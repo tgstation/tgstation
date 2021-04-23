@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		language = get_selected_language()
 	var/mob/living/carbon/human/H = src
 	if(!can_speak_vocal(message))
-		if(H.mind.miming)
+		if(H.mind?.miming)
 			if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
 				to_chat(src, "<span class='warning'>You stop yourself from signing in favor of the artform of mimery!</span>")
 				return
