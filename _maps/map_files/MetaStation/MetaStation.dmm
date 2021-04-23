@@ -74830,9 +74830,6 @@
 /obj/structure/table{
 	name = "Jim Norton's Quebecois Coffee table"
 	},
-/obj/item/modular_computer/laptop{
-	pixel_y = -4
-	},
 /obj/item/reagent_containers/food/drinks/coffee{
 	pixel_x = -3;
 	pixel_y = 9
@@ -74847,6 +74844,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/modular_computer/laptop/preset/civilian,
 /turf/open/floor/wood,
 /area/service/cafeteria)
 "vyM" = (
