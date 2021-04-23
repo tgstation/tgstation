@@ -1,0 +1,5 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - qol: "initiating deconstructing a reinforced window is now done by right clicking for each step"
+  - code_imp: "reinforced table weakening moved to attack_secondary"
