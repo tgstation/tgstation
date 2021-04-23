@@ -49,7 +49,7 @@
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
-	update_items(TRUE)
+	update_items()
 
 	if(_owner)
 		owner = _owner
@@ -82,17 +82,18 @@
 	purchase_log = null
 	return ..()
 
-/datum/component/uplink/proc/update_items(update_sales = FALSE)
+/datum/component/uplink/proc/update_items()
 	var/updated_items
-	var/discount_categories = list("Discounted Gear", "Discounted Team Gear", "Limited Stock Team Gear")
-
 	updated_items = get_uplink_items(gamemode, TRUE, allow_restricted)
-	if (update_sales)
-		uplink_items = updated_items
-	for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
-		if (uplink_items[category] != null && updated_items[category] != null)
-			updated_items[category] = uplink_items[category]
+	update_sales(updated_items)
 	uplink_items = updated_items
+
+/datum/component/uplink/proc/update_sales(updated_items)
+	var/discount_categories = list("Discounted Gear", "Discounted Team Gear", "Limited Stock Team Gear")
+	if (uplink_items != null)
+		for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
+			if (uplink_items[category] != null && updated_items[category] != null)
+				updated_items[category] = uplink_items[category]
 
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
 	if(!silent)
