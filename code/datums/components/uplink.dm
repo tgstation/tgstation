@@ -90,10 +90,11 @@
 
 /datum/component/uplink/proc/update_sales(updated_items)
 	var/discount_categories = list("Discounted Gear", "Discounted Team Gear", "Limited Stock Team Gear")
-	if (uplink_items != null)
-		for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
-			if (uplink_items[category] != null && updated_items[category] != null)
-				updated_items[category] = uplink_items[category]
+	if (uplink_items == null)
+		return
+	for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
+		if (uplink_items[category] != null && updated_items[category] != null)
+			updated_items[category] = uplink_items[category]
 
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
 	if(!silent)
