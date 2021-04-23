@@ -194,6 +194,8 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 
 /atom/proc/corners_cardinal_smooth(adjacencies)
+	var/mutable_appearance/temp_ma
+
 	//NW CORNER
 	var/nw = "1-i"
 	if((adjacencies & NORTH_JUNCTION) && (adjacencies & WEST_JUNCTION))
@@ -206,6 +208,8 @@ DEFINE_BITFIELD(smoothing_junction, list(
 			nw = "1-n"
 		else if(adjacencies & WEST_JUNCTION)
 			nw = "1-w"
+	temp_ma = mutable_appearance(icon, nw)
+	nw = temp_ma.appearance
 
 	//NE CORNER
 	var/ne = "2-i"
@@ -219,6 +223,8 @@ DEFINE_BITFIELD(smoothing_junction, list(
 			ne = "2-n"
 		else if(adjacencies & EAST_JUNCTION)
 			ne = "2-e"
+	temp_ma = mutable_appearance(icon, ne)
+	ne = temp_ma.appearance
 
 	//SW CORNER
 	var/sw = "3-i"
@@ -232,6 +238,8 @@ DEFINE_BITFIELD(smoothing_junction, list(
 			sw = "3-s"
 		else if(adjacencies & WEST_JUNCTION)
 			sw = "3-w"
+	temp_ma = mutable_appearance(icon, sw)
+	sw = temp_ma.appearance
 
 	//SE CORNER
 	var/se = "4-i"
@@ -245,6 +253,8 @@ DEFINE_BITFIELD(smoothing_junction, list(
 			se = "4-s"
 		else if(adjacencies & EAST_JUNCTION)
 			se = "4-e"
+	temp_ma = mutable_appearance(icon, se)
+	se = temp_ma.appearance
 
 	var/list/new_overlays
 
@@ -414,19 +424,38 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	cut_overlay(bottom_left_corner)
 	bottom_left_corner = null
 
-
+/// Internal: Takes icon states as text to replace smoothing corner overlays
 /atom/proc/replace_smooth_overlays(nw, ne, sw, se)
 	clear_smooth_overlays()
-	var/list/O = list()
+	var/mutable_appearance/temp_ma
+
+	temp_ma = mutable_appearance(icon, nw)
+	nw = temp_ma.appearance
+
+	temp_ma = mutable_appearance(icon, ne)
+	ne = temp_ma.appearance
+
+	temp_ma = mutable_appearance(icon, sw)
+	sw = temp_ma.appearance
+
+	temp_ma = mutable_appearance(icon, se)
+	se = temp_ma.appearance
+
+	var/list/new_overlays = list()
+
 	top_left_corner = nw
-	O += nw
+	new_overlays += nw
+
 	top_right_corner = ne
-	O += ne
+	new_overlays += ne
+
 	bottom_left_corner = sw
-	O += sw
+	new_overlays += sw
+
 	bottom_right_corner = se
-	O += se
-	add_overlay(O)
+	new_overlays += se
+
+	add_overlay(new_overlays)
 
 
 /proc/reverse_ndir(ndir)
