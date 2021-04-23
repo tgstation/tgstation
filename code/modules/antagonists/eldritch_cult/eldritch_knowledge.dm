@@ -283,7 +283,7 @@
 			var/datum/objective/A = new
 			A.owner = user.mind
 			var/list/datum/team/teams = list()
-			for(var/datum/antagonist/antag in user.mind.antag_datums)
+			for(var/datum/antagonist/antag as anything in user.mind.antag_datums)
 				var/datum/team/team = antag.get_team()
 				if(team)
 					teams |= team
@@ -291,7 +291,7 @@
 			for(var/i in 0 to 3)
 				var/datum/mind/targeted =  A.find_target()//easy way, i dont feel like copy pasting that entire block of code
 				var/is_teammate = FALSE
-				for(var/datum/team/team in teams)
+				for(var/datum/team/team as anything in teams)
 					if(targeted in team.members)
 						is_teammate = TRUE
 						break
