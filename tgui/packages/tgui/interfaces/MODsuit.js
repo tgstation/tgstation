@@ -2,11 +2,7 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack } from '../components';
 import { Window } from '../layouts';
 
-const ID2MODULE = {
-  rad_counter: () => RadCounter
-}
-
-const RadCounter = (props, context) => {
+const rad_counter = (props, context) => {
   const { data } = useBackend(context);
   return (
     <Stack fill vertical>
@@ -17,160 +13,234 @@ const RadCounter = (props, context) => {
   );
 };
 
+const LockedInterface = () => (
+  <Section align="center" fill>
+    <Icon
+      color="red"
+      name="exclamation-triangle"
+      size={15}
+    />
+    <Box fontSize="30px" color="red">
+      ERROR: INTERFACE UNRESPONSIVE.
+    </Box>
+  </Section>
+);
+
+const displayText = param => {
+  switch (param) {
+    case 1:
+      return "Use";
+    case 2:
+      return "Toggle";
+    case 3:
+      return "Select";
+  }
+};
+
+const ParametersSection = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    active,
+    malfunctioning,
+    locked,
+    open,
+    selected_module,
+    complexity,
+    complexity_max,
+    wearer_name,
+    wearer_job,
+    AI,
+    cell,
+    charge,
+  } = data;
+  const status = malfunctioning
+    ? 'Malfunctioning' : active
+      ? 'Active' : 'Inactive';
+  return (
+    <Section title="Parameters">
+      <LabeledList>
+        <LabeledList.Item
+          label="Status"
+          buttons={
+            <Button
+              icon="power-off"
+              content={active ? 'Deactivate' : 'Activate'}
+              onClick={() => act('activate')} />
+          } >
+          {status}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Lock"
+          buttons={
+            <Button
+              icon={!locked ? "lock-open" : "lock"}
+              content={!locked ? 'Unlock' : 'Lock'}
+              onClick={() => act('lock')} />
+          } >
+          {locked ? 'Locked' : 'Unlocked'}
+        </LabeledList.Item>
+        <LabeledList.Item label="Cover">
+          {open ? 'Open' : 'Closed'}
+        </LabeledList.Item>
+        <LabeledList.Item label="Selected Module">
+          {selected_module || "None"}
+        </LabeledList.Item>
+        <LabeledList.Item label="Complexity">
+          {complexity} ({complexity_max})
+        </LabeledList.Item>
+        <LabeledList.Item label="Occupant">
+          {wearer_name}, {wearer_job}
+        </LabeledList.Item>
+        <LabeledList.Item label="Onboard AI">
+          {AI || 'None'}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Cell Charge"
+          color={!cell && 'bad'}>
+          {cell && (
+            <ProgressBar
+              value={charge / 100}
+              content={charge + '%'}
+              ranges={{
+                good: [0.6, Infinity],
+                average: [0.3, 0.6],
+                bad: [-Infinity, 0.3],
+              }} />
+          ) || 'No Cell'}
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
+};
+
+const HardwareSection = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    cell,
+    helmet,
+    chestplate,
+    gauntlets,
+    boots,
+  } = data;
+  return (
+    <Section title="Hardware">
+      <LabeledList>
+        <LabeledList.Item label="Cell">
+          {cell || "None"}
+        </LabeledList.Item>
+        <LabeledList.Item label="Helmet">
+          {helmet || "None"}
+        </LabeledList.Item>
+        <LabeledList.Item label="Chestplate">
+          {chestplate || "None"}
+        </LabeledList.Item>
+        <LabeledList.Item label="Gauntlets">
+          {gauntlets || "None"}
+        </LabeledList.Item>
+        <LabeledList.Item label="Boots">
+          {boots || "None"}
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
+};
+
+
+
+const InfoSection = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    active,
+    modules,
+  } = data;
+
+  return (
+    <Section title="Info">
+      <Stack vertical>
+        {modules.map(module => (
+          <Stack.Item key={module.id}>
+            {module.name}
+          </Stack.Item>
+        ))}
+      </Stack>
+    </Section>
+  );
+};
+
+const ModuleSection = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    modules,
+  } = data;
+  return (
+    <Section title="Modules" fill>
+      {modules.map(module => {
+        <Collapsible
+          title={module.name}
+          key={module.name}
+          buttons={!!module.module_type && (
+            <Button
+              content={displayText(module.module_type)}
+              selected={module.active}
+              onClick={() => act('select', {
+                'ref': module.ref,
+              })} />)}>
+          <Box mb={1}>
+            {module.description}
+          </Box>
+          <LabeledList>
+            <LabeledList.Item label="Complexity">
+              {module.module_complexity}
+            </LabeledList.Item>
+            <LabeledList.Item label="Idle Power Cost">
+              {module.idle_power}
+            </LabeledList.Item>
+            <LabeledList.Item label="Active Power Cost">
+              {module.active_power}
+            </LabeledList.Item>
+            <LabeledList.Item label="Use Power Cost">
+              {module.use_power}
+            </LabeledList.Item>
+          </LabeledList>
+        </Collapsible>;
+      })}
+    </Section>
+  );
+};
+
 export const MODsuit = (props, context) => {
   const { act, data } = useBackend(context);
-  let inventory = [
-    ...data.modules,
-  ]
-  const displayText = param => {
-    switch(param){
-      case 1:
-          return "Use"
-      case 2:
-          return "Toggle"
-      case 3:
-          return "Select"
-  }}
-  const LockedInterface = (props) => (
-    <Window.Content>
-      <Section align="center" fill>
-        <Icon
-          color="red"
-          name="exclamation-triangle"
-          size={15}
-           />
-        <Box fontSize="30px" color="red">
-          ERROR: INTERFACE UNRESPONSIVE.
-        </Box>
-      </Section>
-    </Window.Content>
-  );
+  const {
+    ui_theme,
+    interface_break,
+  } = data;
   return (
     <Window
       width={400}
       height={525}
-      theme={data.ui_theme}
+      theme={ui_theme}
       title="MOD Interface Panel"
       resizable>
-      {data.interface_break && (
-        <LockedInterface />
-      ) || (
-      <Window.Content scrollable>
-        <Section title="Parameters">
-          <LabeledList>
-            <LabeledList.Item
-              label="Status"
-              buttons={
-                <Button
-                  icon="power-off"
-                  content={data.active ? 'Deactivate' : 'Activate'}
-                  onClick={() => act('activate')} />} >
-              {data.malfunctioning ? 'Malfunctioning' : data.active ? 'Active' : 'Inactive'}
-            </LabeledList.Item>
-            <LabeledList.Item
-              label="Lock"
-              buttons={
-                <Button
-                  icon={data.locked ? "lock-open" : "lock"}
-                  content={data.locked ? 'Unlock' : 'Lock'}
-                  onClick={() => act('lock')} />} >
-              {data.locked ? 'Locked' : 'Unlocked'}
-            </LabeledList.Item>
-            <LabeledList.Item label="Cover">
-              {data.open ? 'Open' : 'Closed'}
-            </LabeledList.Item>
-            <LabeledList.Item label="Selected Module">
-              {data.selected_module || "None"}
-            </LabeledList.Item>
-            <LabeledList.Item label="Complexity">
-              {data.complexity} ({data.complexity_max})
-            </LabeledList.Item>
-            <LabeledList.Item label="Occupant">
-              {data.wearer_name}, {data.wearer_job}
-            </LabeledList.Item>
-            <LabeledList.Item label="Onboard AI">
-              {data.AI || 'None'}
-            </LabeledList.Item>
-            <LabeledList.Item
-              label="Cell Charge"
-              color={!data.cell && 'bad'}>
-              {data.cell && (
-                <ProgressBar
-                  value={data.charge / 100}
-                  content={data.charge + '%'}
-                  ranges={{
-                    good: [0.6, Infinity],
-                    average: [0.3, 0.6],
-                    bad: [-Infinity, 0.3],
-                  }} />
-              ) || 'No Cell'}
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-        <Section title="Hardware">
-          <LabeledList>
-            <LabeledList.Item label="Cell">
-              {data.cell || "None"}
-            </LabeledList.Item>
-            <LabeledList.Item label="Helmet">
-              {data.helmet || "None"}
-            </LabeledList.Item>
-            <LabeledList.Item label="Chestplate">
-              {data.chestplate || "None"}
-            </LabeledList.Item>
-            <LabeledList.Item label="Gauntlets">
-              {data.gauntlets || "None"}
-            </LabeledList.Item>
-            <LabeledList.Item label="Boots">
-              {data.boots || "No AI"}
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-        <Section title="Info">
-          <Stack>
-            {inventory.map((module => {
-              data.active && (
-              <Stack.Item key={module}>
-                {!!module.id && (
-                  ID2MODULE[module.id]
-                )}
-              </Stack.Item>)
-            }))}
+      <Window.Content scrollable={!interface_break}>
+        {!!interface_break && (
+          <LockedInterface />
+        ) || (
+          <Stack vertical fill>
+            <Stack.Item>
+              <ParametersSection />
+            </Stack.Item>
+            <Stack.Item>
+              <HardwareSection />
+            </Stack.Item>
+            <Stack.Item>
+              <InfoSection />
+            </Stack.Item>
+            <Stack.Item grow>
+              <ModuleSection />
+            </Stack.Item>
           </Stack>
-        </Section>
-        <Section title="Modules">
-          {inventory.map((module => {
-            <Collapsible
-              title={module.name}
-              key={module.name}
-              buttons={!!module.module_type && (
-                <Button
-                  content={displayText(module.module_type)}
-                  selected={module.active}
-                  onClick={() => act('select', {
-                    'ref': module.ref,
-                  })} />)}>
-              <Box mb={1}>
-                {module.description}
-              </Box>
-              <LabeledList>
-                <LabeledList.Item label="Complexity">
-                  {module.module_complexity}
-                </LabeledList.Item>
-                <LabeledList.Item label="Idle Power Cost">
-                  {module.idle_power}
-                </LabeledList.Item>
-                <LabeledList.Item label="Active Power Cost">
-                  {module.active_power}
-                </LabeledList.Item>
-                <LabeledList.Item label="Use Power Cost">
-                  {module.use_power}
-                </LabeledList.Item>
-              </LabeledList>
-            </Collapsible>
-          }))}
-        </Section>
-      </Window.Content> )}
+        )}
+      </Window.Content>
     </Window>
   );
 };
