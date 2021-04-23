@@ -518,4 +518,4 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/effect/landmark/tram/right_part
 	name = "East Wing"
 	destination_id = "right_part"
-	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box")
+	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "beaker")
