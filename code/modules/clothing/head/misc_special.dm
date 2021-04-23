@@ -203,7 +203,7 @@
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 
-/obj/item/clothing/head/cardborg/visual_equipped(mob/living/user, slot)
+/obj/item/clothing/head/cardborg/equipped(mob/living/user, slot)
 	..()
 	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		var/mob/living/carbon/human/H = user

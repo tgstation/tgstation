@@ -490,7 +490,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /**
  * To be overwritten to only perform visual tasks;
- * this is directly called instead of equipped on visual-only features like human dummies equipping outfits.
+ * this is directly called instead of `equipped` on visual-only features like human dummies equipping outfits.
  *
  * This separation exists to prevent things like the monkey sentience helmet from
  * polling ghosts while it's just being equipped as a visual preview for a dummy.
