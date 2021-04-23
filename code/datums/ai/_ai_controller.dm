@@ -18,6 +18,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/atom/current_movement_target
 	///This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.
 	var/list/blackboard = list()
+	///Stored arguments for behaviors given during their initial creation
+	var/list/behavior_args = list()
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
 	var/pathing_attempts
 	///Can the AI remain in control if there is a client?
@@ -171,11 +173,11 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	current_behaviors += behavior
 	arguments.Cut(1, 2)
 	if(length(arguments))
-		blackboard["[behavior_type].args"] = arguments
+		behavior_args[behavior_type] = arguments
 
 /datum/ai_controller/proc/ProcessBehavior(delta_time, datum/ai_behavior/behavior)
 	var/list/arguments = list(delta_time, src)
-	var/list/stored_arguments = blackboard["[behavior.type].args"]
+	var/list/stored_arguments = behavior_args[behavior.type]
 	if(stored_arguments)
 		arguments += stored_arguments
 	behavior.perform(arglist(arguments))

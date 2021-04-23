@@ -20,7 +20,7 @@
 ///Called when the action is finished.
 /datum/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded)
 	controller.current_behaviors.Remove(src)
+	controller.behavior_args -= type
 	if(behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //If this was a movement task, reset our movement target.
 		controller.current_movement_target = null
 		controller.ai_movement.stop_moving_towards(controller)
-	return
