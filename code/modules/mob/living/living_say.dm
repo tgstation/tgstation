@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				to_chat(src, "<span class='warning'>You stop yourself from signing in favor of the artform of mimery!</span>")
 				return
 			else
-				to_chat(src, "<span class='warning'>Your vow of silence prevents you from speaking!</span>")
+				to_chat(src, "<span class='green'>Your vow of silence prevents you from speaking!</span>")
 				return
 		else
 			to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
