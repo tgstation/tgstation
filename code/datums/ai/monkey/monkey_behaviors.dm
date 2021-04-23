@@ -200,6 +200,8 @@
 			// We attempt to attack even if we can't shoot so we get the effects of pulling the trigger
 			gun.afterattack(real_target, living_pawn, FALSE)
 			controller.blackboard[BB_MONKEY_GUN_WORKED] = can_shoot ? TRUE : prob(80) // Only 20% likely to notice it didn't work
+			if(can_shoot)
+				controller.blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] = TRUE
 		else
 			living_pawn.throw_item(real_target)
 			controller.blackboard[BB_MONKEY_GUN_WORKED] = TRUE // 'worked'
