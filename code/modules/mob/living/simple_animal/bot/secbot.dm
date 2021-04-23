@@ -217,7 +217,7 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/W, mob/living/user, params)
 	..()
-	if(on == FALSE) // Bots won't remember if you hit them while they're off.
+	if(!on) // Bots won't remember if you hit them while they're off.
 		return
 	if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode) // Any intent but harm will heal, so we shouldn't get angry.
 		return
