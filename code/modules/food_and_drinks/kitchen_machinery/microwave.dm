@@ -333,7 +333,7 @@
 		spark()
 		broken = 2
 		if(prob(max(metal / 2, 33)))
-			explosion(src, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 2)
+			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
 	else
 		dump_inventory_contents()
 

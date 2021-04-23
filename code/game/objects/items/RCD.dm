@@ -754,7 +754,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	addtimer(CALLBACK(src, .proc/detonate_pulse_explode), 50)
 
 /obj/item/construction/rcd/proc/detonate_pulse_explode()
-	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 3, flame_range = 1, flash_range = 1)
+	explosion(src, light_impact_range = 3, flame_range = 1, flash_range = 1)
 	qdel(src)
 
 /obj/item/construction/rcd/update_overlays()

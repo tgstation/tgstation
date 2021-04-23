@@ -309,7 +309,7 @@
  * Create the explosion + the gas emission before deleting the machine core.
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/meltdown()
-	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = power_level * 5, flash_range = power_level * 6, adminlog = TRUE, ignorecap = TRUE)
+	explosion(src, light_impact_range = power_level * 5, flash_range = power_level * 6, adminlog = TRUE, ignorecap = TRUE)
 	radiation_pulse(loc, power_level * 7000, (1 / (power_level + 5)), TRUE)
 	empulse(loc, power_level * 5, power_level * 7)
 	var/fusion_moles = internal_fusion.total_moles() ? internal_fusion.total_moles() : 0

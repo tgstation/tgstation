@@ -236,7 +236,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/medium/meteor_effect()
 	..()
-	explosion(src, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 2, flame_range = 0, flash_range = 3, adminlog = FALSE)
+	explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 3, adminlog = FALSE)
 
 //Large-sized
 /obj/effect/meteor/big
@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/big/meteor_effect()
 	..()
-	explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3, flame_range = 0, flash_range = 4, adminlog = FALSE)
+	explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3, flash_range = 4, adminlog = FALSE)
 
 //Flaming meteor
 /obj/effect/meteor/flaming
@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
-	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 4, flame_range = 0, flash_range = 3, adminlog = FALSE)
+	explosion(src, light_impact_range = 4, flash_range = 3, adminlog = FALSE)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
 	radiation_pulse(src, 500)
 
@@ -350,12 +350,12 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()
-	explosion(src, devastation_range = 5, heavy_impact_range = 10, light_impact_range = 15, flame_range = 0, flash_range = 20, adminlog = FALSE)
+	explosion(src, devastation_range = 5, heavy_impact_range = 10, light_impact_range = 15, flash_range = 20, adminlog = FALSE)
 
 /obj/effect/meteor/tunguska/Bump()
 	..()
 	if(prob(20))
-		explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, flame_range = 0, flash_range = 8, adminlog = FALSE)
+		explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 6, flash_range = 8, adminlog = FALSE)
 
 //////////////////////////
 //Spookoween meteors

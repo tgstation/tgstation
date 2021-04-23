@@ -1203,7 +1203,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/turf/turf_loc = get_turf(src)
 	if(!turf_loc)
 		return
-	explosion(turf_loc, devastation_range = 0, heavy_impact_range = round(portal_numbers/5), light_impact_range = round(portal_numbers), flash_range = 1, adminlog = TRUE, ignorecap = TRUE)
+	explosion(turf_loc, heavy_impact_range = round(portal_numbers/5), light_impact_range = round(portal_numbers), flash_range = 1, adminlog = TRUE, ignorecap = TRUE)
 	. = new/obj/machinery/destabilized_crystal(turf_loc)
 	qdel(src)
 

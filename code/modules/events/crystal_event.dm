@@ -121,7 +121,7 @@ This section is for the event controller
 		var/area/center_area = get_area(center_turf)
 		center_areas += center_area
 
-		explosion(center_turf, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 5, flame_range = 7, flash_range = 7)
+		explosion(center_turf, light_impact_range = 5, flame_range = 7, flash_range = 7)
 
 		new /obj/structure/crystal_portal/huge(center_turf)
 
@@ -550,9 +550,9 @@ This section is for the crystal portals variations
 	if(!closed)
 		switch(name)
 			if("Small Portal")
-				explosion(src, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 3)
+				explosion(src, heavy_impact_range = 1, light_impact_range = 3)
 			if("Medium Portal")
-				explosion(src, devastation_range = 0, heavy_impact_range = 3, light_impact_range = 5)
+				explosion(src, heavy_impact_range = 3, light_impact_range = 5)
 			if("Big Portal")
 				explosion(src, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5)
 			if("Huge Portal")

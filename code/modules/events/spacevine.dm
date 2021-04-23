@@ -115,7 +115,7 @@
 		QDEL_IN(holder, 5)
 
 /datum/spacevine_mutation/explosive/on_death(obj/structure/spacevine/holder, mob/hitter, obj/item/I)
-	explosion(holder, devastation_range = 0, heavy_impact_range = 0, light_impact_range = severity, flash_range = 0, adminlog = FALSE)
+	explosion(holder, light_impact_range = severity, adminlog = FALSE)
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire proof"

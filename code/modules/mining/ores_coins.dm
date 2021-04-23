@@ -325,7 +325,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			if(GIBTONITE_QUALITY_MEDIUM)
 				explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, adminlog = notify_admins)
 			if(GIBTONITE_QUALITY_LOW)
-				explosion(src, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 3, adminlog = notify_admins)
+				explosion(src, heavy_impact_range = 1, light_impact_range = 3, adminlog = notify_admins)
 		qdel(src)
 
 /obj/item/stack/ore/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)

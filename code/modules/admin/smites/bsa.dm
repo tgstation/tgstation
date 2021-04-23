@@ -10,7 +10,7 @@
 /datum/smite/bsa/effect(client/user, mob/living/target)
 	. = ..()
 
-	explosion(target.loc, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flash_range = 0)
+	explosion(target.loc)
 
 	var/turf/open/floor/target_turf = get_turf(target)
 	if (istype(target_turf))

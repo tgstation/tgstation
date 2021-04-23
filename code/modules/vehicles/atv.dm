@@ -92,7 +92,7 @@
 	return TRUE
 
 /obj/vehicle/ridden/atv/obj_destruction()
-	explosion(src, devastation_range = -1, heavy_impact_range = 0, light_impact_range = 2, flame_range = 3, flash_range = 4)
+	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)
 	return ..()
 
 /obj/vehicle/ridden/atv/Destroy()

@@ -32,7 +32,7 @@
 		log_bomber(user, "has detonated a", src)
 	for(var/atom/movable/AM in src)
 		qdel(AM)
-	explosion(src, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 5, flash_range = 5)
+	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flash_range = 5)
 	qdel(src)
 
 /obj/structure/closet/crate/secure/weapon

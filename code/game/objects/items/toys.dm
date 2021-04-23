@@ -1038,7 +1038,7 @@
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
 		sleep(140)
 		user.visible_message("<span class='alert'>[src] violently explodes!</span>")
-		explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1)
+		explosion(src, light_impact_range = 1)
 		qdel(src)
 	else if (cooldown < world.time)
 		cooldown = world.time + 600 //1 minute

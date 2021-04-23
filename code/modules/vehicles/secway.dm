@@ -71,7 +71,7 @@
 		. += "<span class='warning'>Something appears to be stuck in its exhaust...</span>"
 
 /obj/vehicle/ridden/secway/obj_destruction()
-	explosion(src, devastation_range = -1, heavy_impact_range = 0, light_impact_range = 2, flame_range = 3, flash_range = 4)
+	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)
 	return ..()
 
 /obj/vehicle/ridden/secway/Destroy()

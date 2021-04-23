@@ -49,7 +49,7 @@
  */
 /obj/structure/training_machine/obj_destruction(damage_flag)
 	remove_attached_item(throwing = TRUE)
-	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 2)
+	explosion(src, light_impact_range = 1, flash_range = 2)
 	return ..()
 
 /obj/structure/training_machine/ui_state(mob/user)

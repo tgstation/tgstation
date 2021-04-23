@@ -126,7 +126,7 @@
 	. += "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/tank/deconstruct(disassembled = TRUE)
-	var/turf/location = loc
+	var/atom/location = loc
 	if(location)
 		location.assume_air(air_contents)
 		location.air_update_turf(FALSE, FALSE)
@@ -251,7 +251,7 @@
 	handle_tolerances(delta_time)
 	if(QDELETED(src) || !leaking || !air_contents)
 		return
-	var/turf/location = loc
+	var/atom/location = loc
 	if(!location)
 		return
 	var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)

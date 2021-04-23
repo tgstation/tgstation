@@ -440,7 +440,7 @@
 
 //Calls the default explosion subsystem handiler to explode with fire (random firespots and noise)
 /datum/chemical_reaction/proc/explode_fire(datum/reagents/holder, datum/equilibrium/equilibrium, range = 3)
-	explosion(holder.my_atom, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = range, flash_range = 0)
+	explosion(holder.my_atom, flame_range = range)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly errupts in flames!")
 
 //Creates a ring of fire in a set range around the beaker location

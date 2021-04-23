@@ -199,7 +199,7 @@
 	if(mother != null)
 		mother.children_list -= src
 	visible_message("<span class='warning'>[src] explodes!</span>")
-	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 3, adminlog = FALSE)
+	explosion(src, flame_range = 3, adminlog = FALSE)
 	gib()
 
 //Tentacles have less stun time compared to regular variant, to balance being able to use them much more often.  Also, 10 more damage.

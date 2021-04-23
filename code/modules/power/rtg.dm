@@ -76,7 +76,7 @@
 		"<span class='hear'>You hear a loud electrical crack!</span>")
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	tesla_zap(src, 5, power_gen * 0.05)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, src, 2, 3, 4, null, 8), 100) // Not a normal explosion.
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, src, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, flash_range = 8), 10 SECONDS) // Not a normal explosion.
 
 /obj/machinery/power/rtg/abductor/bullet_act(obj/projectile/Proj)
 	. = ..()

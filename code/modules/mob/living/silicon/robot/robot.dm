@@ -389,7 +389,7 @@
 		QDEL_NULL(mmi)
 		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2)
 	else
-		explosion(src, devastation_range = -1, heavy_impact_range = 0, light_impact_range = 2)
+		explosion(src, devastation_range = -1, light_impact_range = 2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()

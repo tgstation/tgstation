@@ -241,7 +241,7 @@
 
 /obj/item/gun/magic/wand/fireball/zap_self(mob/living/user)
 	..()
-	explosion(user, devastation_range = -1, heavy_impact_range = 0, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = 0)
+	explosion(user, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE)
 	charges--
 
 /////////////////////////////////////
