@@ -1,7 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - balance: "adds fullauto to saber smg's, borg l6's, tommy guns and security autorifles"
-  - balance: "tesla cannon sucks less"
-  - balance: "l6 bullets now do less damage"
-  - bugfix: "fixes full auto letting you fire in crit or spamclick"
