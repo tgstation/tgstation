@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - qol: "When selecting a sacrifice target, heretics that are also on an antag team(s) (E.G. cult, revs) will be told which of their potential targets are also on the same team(s) as them."

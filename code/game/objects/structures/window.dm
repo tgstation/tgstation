@@ -299,7 +299,7 @@
 /obj/structure/window/proc/on_painted(is_dark_color)
 	SIGNAL_HANDLER
 
-	if (is_dark_color)
+	if (is_dark_color && fulltile) //Opaque directional windows restrict vision even in directions they are not placed in, please don't do this
 		set_opacity(255)
 	else
 		set_opacity(initial(opacity))
