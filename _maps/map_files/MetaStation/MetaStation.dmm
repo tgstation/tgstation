@@ -11574,14 +11574,7 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bKM" = (
-/obj/structure/table/glass,
-/obj/item/folder{
-	pixel_y = 2
-	},
-/obj/item/folder{
-	pixel_y = 2
-	},
-/obj/item/pen,
+/obj/machinery/ntnet_relay,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "bKN" = (
@@ -12485,6 +12478,10 @@
 /area/maintenance/starboard)
 "bUL" = (
 /obj/machinery/telecomms/server/presets/security,
+/obj/machinery/camera{
+	dir = 1;
+	network = list("ss13","tcomms")
+	},
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bUR" = (
@@ -13962,6 +13959,7 @@
 /area/maintenance/disposal/incinerator)
 "cgy" = (
 /obj/machinery/telecomms/server/presets/service,
+/obj/machinery/light/small,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cgz" = (
@@ -22044,9 +22042,13 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "dII" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Telecomms Server Room"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/closed/wall,
-/area/ai_monitored/aisat/exterior)
+/turf/open/floor/iron/dark,
+/area/tcommsat/server)
 "dIL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -25225,17 +25227,6 @@
 /turf/closed/wall,
 /area/service/library)
 "eNh" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "MiniSat Exterior - Aft";
-	network = list("minisat")
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
@@ -28310,15 +28301,14 @@
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "fMJ" = (
-/obj/machinery/light/small,
-/obj/machinery/camera{
-	c_tag = "Telecomms - Server Room - Aft";
-	dir = 1;
-	network = list("ss13","tcomms")
+/obj/machinery/door/airlock/hatch{
+	name = "Telecomms Server Room"
 	},
-/obj/machinery/ntnet_relay,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/server)
 "fMS" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -46888,6 +46878,11 @@
 "mqq" = (
 /obj/structure/window/reinforced,
 /obj/machinery/holopad,
+/obj/machinery/camera{
+	dir = 1;
+	network = list("minisat")
+	},
+/obj/machinery/light/small,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
 "mqC" = (
@@ -55460,10 +55455,16 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "pfb" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/space,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/telecomms,
 /area/ai_monitored/aisat/exterior)
 "pfk" = (
 /obj/effect/turf_decal/stripes/line{
@@ -63700,6 +63701,15 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/warehouse)
+"rQJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/telecomms,
+/area/tcommsat/server)
 "rQO" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
@@ -137783,10 +137793,10 @@ bGd
 bGd
 bGd
 bUL
+bCD
 gfU
-eNR
-aaa
-aMq
+gfU
+bly
 cVP
 uKj
 oqn
@@ -138039,10 +138049,10 @@ dhW
 bKM
 bKO
 hum
-fMJ
-pan
+hum
 dII
-rhL
+rQJ
+fMJ
 pfb
 eNh
 orU
@@ -138297,10 +138307,10 @@ fOJ
 fOJ
 oYU
 cgy
+bCD
 gfU
-eNR
-aaa
-aMq
+gfU
+bcQ
 cVP
 uKj
 oqn
