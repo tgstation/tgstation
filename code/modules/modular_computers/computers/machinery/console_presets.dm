@@ -117,8 +117,11 @@
 /obj/machinery/modular_computer/console/preset/cargochat/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	chatprogram = new
+	chatprogram.computer = cpu
 	hard_drive.store_file(chatprogram)
 	chatprogram.username = "[lowertext(console_department)]_department"
+	chatprogram.program_state = PROGRAM_STATE_ACTIVE
+	cpu.active_program = chatprogram
 
 //ONE PER MAP PLEASE, IT MAKES A CARGOBUS FOR EACH ONE OF THESE
 /obj/machinery/modular_computer/console/preset/cargochat/cargo
@@ -128,13 +131,21 @@
 
 /obj/machinery/modular_computer/console/preset/cargochat/cargo/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
+
+	//adding chat, setting it as the active window immediately
 	chatprogram = new
+	chatprogram.computer = cpu
 	hard_drive.store_file(chatprogram)
+	chatprogram.program_state = PROGRAM_STATE_ACTIVE
+	cpu.active_program = chatprogram
+
+	//setting up chat
 	chatprogram.username = "cargo_requests_operator"
 	var/datum/ntnet_conversation/cargochat = new
+	cargochat.operator = chatprogram //adding operator before joining the chat prevents an unnecessary message about switching op from showing
 	cargochat.add_client(chatprogram)
-	cargochat.operator = chatprogram
 	cargochat.title = "#cargobus"
+	cargochat.strong = TRUE
 	chatprogram.active_channel = cargochat.id
 
 /obj/machinery/modular_computer/console/preset/cargochat/cargo/LateInitialize()
@@ -144,7 +155,7 @@
 		if(cargochat_console == src)
 			continue
 		cargochat_console.chatprogram.active_channel = chatprogram.active_channel
-		cargochat.add_client(cargochat_console.chatprogram)
+		cargochat.add_client(cargochat_console.chatprogram, silent = TRUE)
 
 /obj/machinery/modular_computer/console/preset/cargochat/service
 	console_department = "Service"
