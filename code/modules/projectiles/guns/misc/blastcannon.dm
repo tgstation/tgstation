@@ -133,7 +133,7 @@
  * Arguments:
  * - [blastwave_data][/list]: A list containing all of the data for the blastwave.
  */
-/obj/item/gun/blastcannon/proc/channel_blastwave(list/arguments)
+/obj/item/gun/blastcannon/proc/channel_blastwave(atom/source, list/arguments)
 	. = COMSIG_CANCEL_EXPLOSION
 
 	var/heavy = arguments[EXARG_KEY_DEV_RANGE]
@@ -253,7 +253,7 @@
 	var/turf/start_turf = get_turf(src)
 	message_admins("Blast wave primed by [ADMIN_LOOKUPFLW(firer)] fired from [ADMIN_VERBOSEJMP(start_turf)] roughly towards [ADMIN_VERBOSEJMP(target)] at [ADMIN_VERBOSEJMP(loc)] ([loc]) with power [heavy]/[medium]/[light].")
 	log_game("Blast wave primed by [key_name(firer)] fired from [AREACOORD(start_turf)] roughly towards [AREACOORD(target)] at [AREACOORD(loc)] ([loc]) with power [heavy]/[medium]/[light].")
-	return fire_blastwave(target, heavy, medium, light, null, (90 * (rand() - 0.5)))
+	return fire_blastwave(target, heavy, medium, light, null, 360 * rand())
 
 /**
  * Handles firing the blastcannon with debug power.

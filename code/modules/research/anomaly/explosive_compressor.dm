@@ -177,7 +177,7 @@
 /**
  * Checks whether an internal explosion was sufficient to compress the core.
  */
-/obj/machinery/research/explosive_compressor/proc/check_test(list/arguments)
+/obj/machinery/research/explosive_compressor/proc/check_test(atom/source, list/arguments)
 	. = COMSIG_CANCEL_EXPLOSION
 	if(!inserted_core)
 		test_status = "ERROR: No core present during detonation."
@@ -204,7 +204,7 @@
 	if(test_status)
 		return
 	inserted_core = inserted_core.create_core(src, TRUE, TRUE)
-	test_status = "Success. Resultant detonation has theoretical range of [light_impact_range]. Required radius was [required_range]. Core production complete."
+	test_status = "Success. Resultant detonation has theoretical range of [explosion_range]. Required radius was [required_range]. Core production complete."
 	return
 
 /**
