@@ -91,6 +91,8 @@
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+			if (type == /obj/item/reagent_containers/food/drinks/drinkingglass)
+				return
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
