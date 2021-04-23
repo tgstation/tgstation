@@ -206,12 +206,12 @@ SUBSYSTEM_DEF(explosions)
 /datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE)
 	var/list/arguments = list(EXARG_KEY_ORIGIN = origin, EXARG_KEY_DEV_RANGE = devastation_range, EXARG_KEY_HEAVY_RANGE = heavy_impact_range, EXARG_KEY_LIGHT_RANGE = light_impact_range, EXARG_KEY_FLAME_RANGE = flame_range, EXARG_KEY_FLASH_RANGE = flash_range, EXARG_KEY_ADMIN_LOG = adminlog, EXARG_KEY_IGNORE_CAP = ignorecap, EXARG_KEY_SILENT = silent, EXARG_KEY_SMOKE = smoke)
 	var/atom/location = isturf(origin) ? origin : origin.loc
-	if(SEND_SIGNAL(origin, COMSIG_ATOM_EXPLODE, arguments[EXARG_KEY_DEV_RANGE], arguments[EXARG_KEY_HEAVY_RANGE], arguments[EXARG_KEY_LIGHT_RANGE], arguments[EXARG_KEY_FLAME_RANGE], arguments[EXARG_KEY_FLASH_RANGE], arguments[EXARG_KEY_ADMIN_LOG], arguments[EXARG_KEY_IGNORE_CAP], arguments[EXARG_KEY_SILENT], arguments[EXARG_KEY_SMOKE], arguments) & COMSIG_CANCEL_EXPLOSION)
+	if(SEND_SIGNAL(origin, COMSIG_ATOM_EXPLODE, arguments) & COMSIG_CANCEL_EXPLOSION)
 		return // Signals are incompatible with `arglist(...)` so we can't actually use that for these. Additionally,
 
 	while(location)
 		var/next_loc = location.loc
-		if(SEND_SIGNAL(location, COMSIG_ATOM_INTERNAL_EXPLOSION, arguments[EXARG_KEY_ORIGIN], arguments[EXARG_KEY_DEV_RANGE], arguments[EXARG_KEY_HEAVY_RANGE], arguments[EXARG_KEY_LIGHT_RANGE], arguments[EXARG_KEY_FLAME_RANGE], arguments[EXARG_KEY_FLASH_RANGE], arguments[EXARG_KEY_ADMIN_LOG], arguments[EXARG_KEY_IGNORE_CAP], arguments[EXARG_KEY_SILENT], arguments[EXARG_KEY_SMOKE], arguments) & COMSIG_CANCEL_EXPLOSION)
+		if(SEND_SIGNAL(location, COMSIG_ATOM_INTERNAL_EXPLOSION, arguments) & COMSIG_CANCEL_EXPLOSION)
 			return
 		if(isturf(location))
 			break
@@ -221,10 +221,11 @@ SUBSYSTEM_DEF(explosions)
 		return
 
 	var/area/epicenter_area = get_area(location)
-	if(SEND_SIGNAL(epicenter_area, COMSIG_AREA_INTERNAL_EXPLOSION, arguments[EXARG_KEY_ORIGIN], arguments[EXARG_KEY_DEV_RANGE], arguments[EXARG_KEY_HEAVY_RANGE], arguments[EXARG_KEY_LIGHT_RANGE], arguments[EXARG_KEY_FLAME_RANGE], arguments[EXARG_KEY_FLASH_RANGE], arguments[EXARG_KEY_ADMIN_LOG], arguments[EXARG_KEY_IGNORE_CAP], arguments[EXARG_KEY_SILENT], arguments[EXARG_KEY_SMOKE], arguments) & COMSIG_CANCEL_EXPLOSION)
+	if(SEND_SIGNAL(epicenter_area, COMSIG_AREA_INTERNAL_EXPLOSION, arguments) & COMSIG_CANCEL_EXPLOSION)
 		return
 
-	propagate_blastwave(location, arguments[EXARG_KEY_DEV_RANGE], arguments[EXARG_KEY_HEAVY_RANGE], arguments[EXARG_KEY_LIGHT_RANGE], arguments[EXARG_KEY_FLAME_RANGE], arguments[EXARG_KEY_FLASH_RANGE], arguments[EXARG_KEY_ADMIN_LOG], arguments[EXARG_KEY_IGNORE_CAP], arguments[EXARG_KEY_SILENT], arguments[EXARG_KEY_SMOKE])
+	arguments.Cut(1,2)
+	propagate_blastwave(location, arglist(list(location) + arguments))
 
 
 /**

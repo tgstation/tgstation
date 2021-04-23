@@ -133,17 +133,17 @@
  * Arguments:
  * - [blastwave_data][/list]: A list containing all of the data for the blastwave.
  */
-/obj/item/gun/blastcannon/proc/channel_blastwave(atom/source, atom/origin, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, list/arguments)
+/obj/item/gun/blastcannon/proc/channel_blastwave(list/arguments)
 	. = COMSIG_CANCEL_EXPLOSION
-	var/heavy = devastation_range
-	var/medium = heavy_impact_range
-	var/light = light_impact_range
+
+	var/heavy = arguments[EXARG_KEY_DEV_RANGE]
+	var/medium = arguments[EXARG_KEY_HEAVY_RANGE]
+	var/light = arguments[EXARG_KEY_LIGHT_RANGE]
 	var/range = max(heavy, medium, light, 0)
 	if(!range)
 		visible_message("<span class='warning'>[src] lets out a little \"phut\".</span>")
 		return
 
-	/// Is our location a mob?
 	if(!ismob(loc))
 		fire_dropped(heavy, medium, light)
 		return
