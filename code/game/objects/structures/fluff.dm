@@ -237,39 +237,6 @@
 	anchored = FALSE
 	density = TRUE
 	deconstructible = FALSE
-	var/statement = null
-	var/loudmouth = FALSE
-
-/obj/structure/fluff/mannequin/Initialize()
-	. = ..()
-	START_PROCESSING(SSfastprocess, src)
-
-/obj/structure/fluff/mannequin/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	. = ..()
-
-/obj/structure/fluff/mannequin/process(delta_time)
-	for(var/mob/living/L in range(2, src))
-		if(DT_PROB(1, delta_time))
-			if(prob(1))
-				if(!loudmouth)
-					statement = pick(1,2,3,4,5)
-					switch(statement)
-						if(1)
-							say("They take ones that young now?")
-						if(2)
-							say("It won't last forever.")
-						if(3)
-							say("The silent type, are we?")
-						if(4)
-							say("I told you to stay quiet. They're listening.")
-						if(5)
-							say("When'd they grab you?")
-					loudmouth = TRUE
-					addtimer(CALLBACK(src, /obj/structure/fluff/mannequin/proc/shut_it), 200)
-
-/obj/structure/fluff/mannequin/proc/shut_it()
-	loudmouth = FALSE
 
 /obj/structure/fluff/vent
 	name = "wall vent"
