@@ -283,7 +283,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 		var/skip_to_next_turf = FALSE
 
-		for (var/content_of_turf as anything in surrounding_turf.contents)
+		for (var/atom/movable/content_of_turf as anything in surrounding_turf.contents)
 			if (content_of_turf.density)
 				skip_to_next_turf = TRUE
 				break
