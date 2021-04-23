@@ -17,6 +17,10 @@
 	custom_price = PAYCHECK_EASY * 0.5
 	sharpness = SHARP_POINTY
 
+/obj/item/reagent_containers/syringe/Initialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
