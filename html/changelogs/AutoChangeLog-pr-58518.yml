@@ -1,0 +1,4 @@
+author: "ishitbyabullet"
+delete-after: True
+changes: 
+  - bugfix: "The lavaland xeno ruin can no longer get pushed around by puny fauna. This fix will not help if you hide inside to avoid a megafauna chasing you."
