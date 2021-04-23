@@ -57,11 +57,6 @@
 #error You need version 514.1554 or higher
 #endif
 
-//Don't load extools on 514
-#if DM_VERSION < 514
-#define USE_EXTOOLS
-#endif
-
 //Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
