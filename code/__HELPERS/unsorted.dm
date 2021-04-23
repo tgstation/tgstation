@@ -1501,7 +1501,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	if(!spawn_type)
 		spawn_type = /obj/structure/closet/supplypod/podspawn
 	var/obj/structure/closet/supplypod/podspawn/pod = new spawn_type(null, style)
-	if(!islist(paths_to_spawn))
+	if(paths_to_spawn && !islist(paths_to_spawn))
 		paths_to_spawn = list(paths_to_spawn)
 	for(var/atom/path as anything in paths_to_spawn)
 		path = new path(pod)
@@ -1510,7 +1510,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	specifications -= landing_location
 	specifications -= style
 	specifications -= spawn_type
-	specifications -= paths_to_spawn
+	specifications -= "paths_to_spawn" //list, we remove the key
 
 	//rest of specificiations are edits on the pod
 	for(var/variable_name in specifications)
