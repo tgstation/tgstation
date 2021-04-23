@@ -49,13 +49,17 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 /datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/cli, spawn_effects)
 	var/badquirk = FALSE
-	for(var/V in cli.prefs.all_quirks)
-		var/datum/quirk/Q = quirks[V]
-		if(Q)
-			user.add_quirk(Q, spawn_effects)
+	var/selected_baddies = 0
+	for(var/selected_quirk in cli.prefs.all_quirks)
+		var/datum/quirk/check_quirk = quirks[selected_quirk]
+		if(check_quirk)
+			user.add_quirk(check_quirk, spawn_effects)
+			if(check_quirk.value > -4)
+				continue
+			selected_baddies += 1
 		else
-			stack_trace("Invalid quirk \"[V]\" in client [cli.ckey] preferences")
-			cli.prefs.all_quirks -= V
+			stack_trace("Invalid quirk \"[selected_quirk]\" in client [cli.ckey] preferences")
+			cli.prefs.all_quirks -= selected_quirk
 			badquirk = TRUE
 	if(badquirk)
 		cli.prefs.save_character()
@@ -70,14 +74,15 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 	var/list/player_records = cli.prefs.exp
 	var/assistant_playtime = text2num(player_records["Assistant"])
-	var/bad_quirks_to_add = assistant_playtime % 12000
-	if(bad_quirks_to_add > 0 && user.job == "Assistant")
+	var/bad_quirks_to_have = assistant_playtime % 12000
+	var/bad_quirks_amount = max(0, bad_quirks_to_have - selected_baddies)
+	if(bad_quirks_amount > 0 && user.job == "Assistant")
 		var/list/quirk_list = subtypesof(/datum/quirk)
 		for(var/datum/quirk/quirk_to_check in quirk_list)
 			if(quirk_to_check.value >= 0)
 				quirk_list -= quirk_to_check
 
-		for(var/i in 1 to min(3, bad_quirks_to_add))
+		for(var/i in 1 to min(3, bad_quirks_amount))
 			var/quirk_to_give = pick_n_take(quirk_list)
 			if(user.has_quirk(quirk_to_give))
 				continue //no need to add it again
