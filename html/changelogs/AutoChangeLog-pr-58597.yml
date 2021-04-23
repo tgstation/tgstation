@@ -1,0 +1,4 @@
+author: "Trigg"
+delete-after: True
+changes: 
+  - bugfix: "The reactive tesla armor prototype has been given a remote firmware update. Nanotrasen denies any claims that given prototype was able to give anyone permanent shock immunity after simply being held and dropped."
