@@ -11498,10 +11498,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/chem_heater,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
+/obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "aLx" = (
@@ -35048,12 +35048,12 @@
 /obj/structure/window/reinforced{
 	pixel_y = 2
 	},
-/obj/machinery/chem_heater,
 /obj/machinery/camera{
 	c_tag = "Medical - Pharmacy";
 	dir = 4;
 	network = list("ss13","medbay")
 	},
+/obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "juo" = (
@@ -58888,7 +58888,6 @@
 /turf/closed/wall/r_wall,
 /area/command/heads_quarters/ce)
 "sSd" = (
-/obj/machinery/chem_heater,
 /obj/structure/window/reinforced{
 	pixel_y = 2
 	},
@@ -58898,6 +58897,7 @@
 	pixel_x = 24;
 	pixel_y = 8
 	},
+/obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "sSh" = (
