@@ -140,6 +140,11 @@
 
 /obj/item/clothing/glasses/meson/engine/proc/show_connections()
 	var/mob/living/carbon/human/user = loc
+
+	for(var/obj/machinery/atmospherics/pipe/smart/smart in connection_images)
+		if(get_dist(loc, smart.loc) > range)
+			connection_images -= smart
+
 	for(var/obj/machinery/atmospherics/pipe/smart/smart in orange(range, user))
 		if(!connection_images[smart])
 			connection_images[smart] = list()
