@@ -274,16 +274,26 @@
 		if(!heart.target)
 			var/datum/objective/temp_objective = new
 			temp_objective.owner = user.mind
+			var/list/datum/team/teams = list()
+			for(var/datum/antagonist/antag as anything in user.mind.antag_datums)
+				var/datum/team/team = antag.get_team()
+				if(team)
+					teams |= team
 			var/list/targets = list()
 			for(var/i in 0 to 3)
-				var/datum/mind/targeted = temp_objective.find_target() //easy way, i dont feel like copy pasting that entire block of code
+				var/datum/mind/targeted =  temp_objective.find_target()//easy way, i dont feel like copy pasting that entire block of code
+				var/is_teammate = FALSE
+				for(var/datum/team/team as anything in teams)
+					if(targeted in team.members)
+						is_teammate = TRUE
+						break
 				if(!targeted)
 					break
-				targets["[targeted.current.real_name] the [targeted.assigned_role]"] = targeted.current
+				targets["[targeted.current.real_name] the [targeted.assigned_role][is_teammate ? " (ally)" : ""]"] = targeted.current
 			heart.target = targets[input(user,"Choose your next target","Target") in targets]
 			qdel(temp_objective)
 			if(heart.target)
-				to_chat(user, "<span class='warning'>Your new target has been selected, go and sacrifice [heart.target.real_name]!</span>")
+				to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [heart.target.real_name]!</span>")
 			else
 				to_chat(user, "<span class='warning'>target could not be found for living heart.</span>")
 

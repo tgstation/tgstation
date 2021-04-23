@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - balance: "Deathnettles, Novaflowers, and similar plants now require botanical leather gloves (or biosuits/hardsuits) to hold and use instead of any pair of gloves. Additionally, Novaflowers now deal their force to their wielder instead of 5 flat damage."
+  - balance: "Bluespace Tomatos and Killer Tomatos now require botanical gloves to hold and use safely, and can backfire on you if you aren't wearing them."
+  - balance: "Podpeople are naturally immune to plants harming them or backfiring on use."
+  - bugfix: "Corrected the typepath of Plasmaman botanical gloves."
+  - code_imp: "Improves/modernizes nettle and novaflower code a bit."

@@ -1,0 +1,5 @@
+author: "Unoki"
+delete-after: True
+changes: 
+  - rscadd: "Added a computer vendor to Kilo Station."
+  - rscadd: "Added a computer vendor to Meta Station."

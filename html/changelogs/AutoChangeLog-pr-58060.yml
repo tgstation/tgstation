@@ -1,0 +1,5 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - balance: "Leeching walk now provides stun resistance when on rust"
+  - balance: "Rust ascension now gives a lot of immunities when on rust"
