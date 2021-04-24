@@ -21,6 +21,7 @@ const icons = {
   qol: { icon: 'hand-holding-heart', color: 'green' },
   soundadd: { icon: 'tg-sound-plus', color: 'green' },
   sounddel: { icon: 'tg-sound-minus', color: 'red' },
+  add: { icon: 'check-circle', color: 'green' },
   rscadd: { icon: 'check-circle', color: 'green' },
   rscdel: { icon: 'times-circle', color: 'red' },
   imageadd: { icon: 'tg-image-plus', color: 'green' },
@@ -252,12 +253,16 @@ export class Changelog extends Component {
                             ])}
                           >
                             <Icon
-                              className={classes([
-                                'Changelog__Icon',
-                                icons[changeType].class,
-                              ])}
-                              color={icons[changeType].color}
-                              name={icons[changeType].icon}
+                              color={
+                                icons[changeType]
+                                ? icons[changeType].color
+                                : icons["unknown"].color
+                              }
+                              name={
+                                icons[changeType]
+                                ? icons[changeType].icon
+                                : icons["unknown"].icon
+                              }
                             />
                           </Table.Cell>
                           <Table.Cell className="Changelog__Cell">
