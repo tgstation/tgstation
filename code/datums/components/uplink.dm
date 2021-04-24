@@ -49,8 +49,6 @@
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
-	update_items()
-
 	if(_owner)
 		owner = _owner
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
@@ -61,6 +59,7 @@
 	lockable = _lockable
 	active = _enabled
 	src.uplink_flag = uplink_flag
+	update_items()
 	telecrystals = starting_tc
 	if(!lockable)
 		active = TRUE
