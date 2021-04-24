@@ -1,5 +1,0 @@
-author: "mozi_h"
-delete-after: True
-changes: 
-  - rscadd: "Clipboards have a snazzy new look."
-  - refactor: "Gave clipboards some purpose in life: Edit, rename and sort to your hearts' desire! Insert a pen by just clicking it in. Rapidly pick up paper by clicking on it with the clipboard."

@@ -37,7 +37,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(mob/source, atom/target, params)
 	var/area/ourarea = get_area(src)
-	if(!action_checks(target) || ourarea & NOTELEPORT)
+	if(!action_checks(target) || ourarea.area_flags & NOTELEPORT)
 		return
 	var/area/targetarea = pick(get_areas_in_range(100, chassis))
 	if(!targetarea)//Literally middle of nowhere how did you even get here
@@ -250,7 +250,7 @@
 		for(var/int_dam_flag in repairable_damage)
 			if(!chassis.internal_damage & int_dam_flag)
 				continue
-			chassis.clearInternalDamage(int_dam_flag)
+			chassis.clear_internal_damage(int_dam_flag)
 			repaired = TRUE
 			break
 	if(h_boost<0 || chassis.obj_integrity < chassis.max_integrity)

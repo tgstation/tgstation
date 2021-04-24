@@ -182,9 +182,7 @@
 	. = ..()
 	if(active)
 		return
-	if(iscarbon(user))
-		var/mob/living/carbon/user_human = user
-		user_human.throw_mode_on()
+
 
 	playsound(src, 'sound/weapons/armbomb.ogg', 70, TRUE)
 	to_chat(user, "<span class='warning'>You arm \the [src], causing it to shake! It will deploy in 3 seconds.</span>")

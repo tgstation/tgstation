@@ -28,39 +28,45 @@
 	smoke.set_up(0, src)
 	smoke.start()
 
-/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-		if(obj_integrity < max_integrity)
-			if(W.use_tool(src, user, 0, volume = 50, amount = 1))
-				user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
-				obj_integrity += min(10, max_integrity-obj_integrity)
-				if(obj_integrity == max_integrity)
-					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
-		return TRUE
+/obj/vehicle/ridden/secway/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(obj_integrity >= max_integrity)
+		to_chat(user, "<span class='notice'>It is fully repaired already!</span>")
+		return
+	if(!I.use_tool(src, user, 0, volume = 50, amount = 1))
+		return
+	user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
+	obj_integrity += min(10, max_integrity-obj_integrity)
+	if(obj_integrity >= max_integrity)
+		to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
+		STOP_PROCESSING(SSobj, src)
 
-	if(istype(W, /obj/item/food/grown/banana))
-		// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
-		user.visible_message("<span class='warning'>[user] begins stuffing [W] into [src]'s tailpipe.</span>", "<span class='warning'>You begin stuffing [W] into [src]'s tailpipe...</span>", ignored_mobs = occupants)
-		if(do_after(user, 3 SECONDS, src))
-			if(user.transferItemToLoc(W, src))
-				user.visible_message("<span class='warning'>[user] stuffs [W] into [src]'s tailpipe.</span>", "<span class='warning'>You stuff [W] into [src]'s tailpipe.</span>", ignored_mobs = occupants)
-				eddie_murphy = W
+/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/living/user, params)
+	if(!istype(W, /obj/item/food/grown/banana))
+		return ..()
+	// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
+	user.visible_message("<span class='warning'>[user] begins stuffing [W] into [src]'s tailpipe.</span>", "<span class='warning'>You begin stuffing [W] into [src]'s tailpipe...</span>", ignored_mobs = occupants)
+	if(!do_after(user, 3 SECONDS, src))
 		return TRUE
-	return ..()
+	if(user.transferItemToLoc(W, src))
+		user.visible_message("<span class='warning'>[user] stuffs [W] into [src]'s tailpipe.</span>", "<span class='warning'>You stuff [W] into [src]'s tailpipe.</span>", ignored_mobs = occupants)
+		eddie_murphy = W
+	return TRUE
 
 /obj/vehicle/ridden/secway/attack_hand(mob/living/user, list/modifiers)
-	if(eddie_murphy)                                                       // v lol
-		user.visible_message("<span class='warning'>[user] begins cleaning [eddie_murphy] out of [src].</span>", "<span class='warning'>You begin cleaning [eddie_murphy] out of [src]...</span>")
-		if(do_after(user, 60, target = src))
-			user.visible_message("<span class='warning'>[user] cleans [eddie_murphy] out of [src].</span>", "<span class='warning'>You manage to get [eddie_murphy] out of [src].</span>")
-			eddie_murphy.forceMove(drop_location())
-			eddie_murphy = null
-		return
-	return ..()
+	if(!eddie_murphy)
+		return ..()
+	user.visible_message("<span class='warning'>[user] begins cleaning [eddie_murphy] out of [src].</span>", "<span class='warning'>You begin cleaning [eddie_murphy] out of [src]...</span>")
+	if(!do_after(user, 60, target = src))
+		return ..()
+	user.visible_message("<span class='warning'>[user] cleans [eddie_murphy] out of [src].</span>", "<span class='warning'>You manage to get [eddie_murphy] out of [src].</span>")
+	eddie_murphy.forceMove(drop_location())
+	eddie_murphy = null
 
 /obj/vehicle/ridden/secway/examine(mob/user)
 	. = ..()
-
 	if(eddie_murphy)
 		. += "<span class='warning'>Something appears to be stuck in its exhaust...</span>"
 
@@ -72,9 +78,10 @@
 	STOP_PROCESSING(SSobj,src)
 	return ..()
 
+//bullets will have a 60% chance to hit any riders
 /obj/vehicle/ridden/secway/bullet_act(obj/projectile/P)
-	if(prob(60) && buckled_mobs)
-		for(var/mob/M in buckled_mobs)
-			M.bullet_act(P)
-		return TRUE
-	return ..()
+	if(!buckled_mobs || prob(40))
+		return ..()
+	for(var/mob/rider as anything in buckled_mobs)
+		rider.bullet_act(P)
+	return TRUE

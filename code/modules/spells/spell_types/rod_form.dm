@@ -6,6 +6,7 @@
 	charge_max = 250
 	cooldown_min = 100
 	range = -1
+	school = SCHOOL_TRANSMUTATION
 	include_user = TRUE
 	invocation = "CLANG!"
 	invocation_type = INVOCATION_SHOUT

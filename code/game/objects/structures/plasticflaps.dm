@@ -29,14 +29,19 @@
 		return TRUE
 	add_fingerprint(user)
 	var/action = anchored ? "unscrews [src] from" : "screws [src] to"
-	var/uraction = anchored ? "unscrew [src] from " : "screw [src] to"
+	var/uraction = anchored ? "unscrew [src] from" : "screw [src] to"
 	user.visible_message("<span class='warning'>[user] [action] the floor.</span>", "<span class='notice'>You start to [uraction] the floor...</span>", "<span class='hear'>You hear rustling noises.</span>")
-	if(W.use_tool(src, user, 100, volume=100, extra_checks = CALLBACK(src, .proc/check_anchored_state, anchored)))
-		set_anchored(!anchored)
-		to_chat(user, "<span class='notice'>You [anchored ? "unscrew" : "screw"] [src] from the floor.</span>")
+	if(!W.use_tool(src, user, 100, volume=100, extra_checks = CALLBACK(src, .proc/check_anchored_state, anchored)))
 		return TRUE
-	else
-		return TRUE
+	set_anchored(!anchored)
+	update_atmos_behaviour()
+	air_update_turf(TRUE)
+	to_chat(user, "<span class='notice'>You [uraction] the floor.</span>")
+	return TRUE
+
+///Update the flaps behaviour to gases, if not anchored will let air pass through
+/obj/structure/plasticflaps/proc/update_atmos_behaviour()
+	CanAtmosPass = anchored ? ATMOS_PASS_YES : ATMOS_PASS_NO
 
 /obj/structure/plasticflaps/wirecutter_act(mob/living/user, obj/item/W)
 	. = ..()

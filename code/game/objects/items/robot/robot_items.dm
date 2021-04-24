@@ -72,7 +72,8 @@
 			if(M.health >= 0)
 				if(isanimal(M))
 					var/list/modifiers = params2list(params)
-					M.attack_hand(user, modifiers) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
+					if (!user.combat_mode && !LAZYACCESS(modifiers, RIGHT_CLICK))
+						M.attack_hand(user, modifiers) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
 					return
 				if(user.zone_selected == BODY_ZONE_HEAD)
 					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
@@ -345,9 +346,9 @@
 	name = "treat fabricator"
 	desc = "Reward humans with various treats. Toggle in-module to switch between dispensing and high velocity ejection modes."
 	icon_state = "lollipop"
-	var/candy = 30
-	var/candymax = 30
-	var/charge_delay = 10
+	var/candy = 5
+	var/candymax = 5
+	var/charge_delay = 10 SECONDS
 	var/charging = FALSE
 	var/mode = DISPENSE_LOLLIPOP_MODE
 
@@ -365,9 +366,7 @@
 	check_amount()
 
 /obj/item/borg/lollipop/proc/check_amount() //Doesn't even use processing ticks.
-	if(charging)
-		return
-	if(candy < candymax)
+	if(!charging && candy < candymax)
 		addtimer(CALLBACK(src, .proc/charge_lollipops), charge_delay)
 		charging = TRUE
 
@@ -391,12 +390,10 @@
 	var/obj/item/food_item
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE)
-			food_item = new /obj/item/food/chewable/lollipop(T)
+			food_item = new /obj/item/food/lollipop(T)
 		if(DISPENSE_ICECREAM_MODE)
-			food_item = new /obj/item/food/icecream(T)
-			var/obj/item/food/icecream/I = food_item
-			I.add_ice_cream("vanilla")
-			I.desc = "Eat the ice cream."
+			food_item = new /obj/item/food/icecream(T, list(ICE_CREAM_VANILLA))
+			food_item.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
 	if(ismob(A))
@@ -502,20 +499,19 @@
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/food/chewable/gumball/cyborg
+	ammo_type = /obj/item/food/gumball
 	nodamage = TRUE
 	damage = 0
 	speed = 0.5
 
 /obj/projectile/bullet/reusable/gumball/harmful
-	ammo_type = /obj/item/food/chewable/gumball/cyborg
 	nodamage = FALSE
-	damage = 3
+	damage = 10 //mediborgs get 5 shots before needing to reload at a rate of 1 shot/10 seconds, so they can do 50 damage from range max before needing to close the distance or retreat
 
 /obj/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/food/chewable/gumball/S = new ammo_type(T)
+		var/obj/item/food/gumball/S = new ammo_type(T)
 		S.color = color
 		dropped = TRUE
 
@@ -533,7 +529,7 @@
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
-	ammo_type = /obj/item/food/chewable/lollipop/cyborg
+	ammo_type = /obj/item/food/lollipop/cyborg
 	nodamage = TRUE
 	damage = 0
 	speed = 0.5
@@ -541,13 +537,13 @@
 
 /obj/projectile/bullet/reusable/lollipop/harmful
 	embedding = list(embed_chance=35, fall_chance=2, jostle_chance=0, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=3, rip_time=10)
-	damage = 3
+	damage = 10
 	nodamage = FALSE
 	embed_falloff_tile = 0
 
 /obj/projectile/bullet/reusable/lollipop/Initialize()
 	. = ..()
-	var/obj/item/food/chewable/lollipop/S = new ammo_type(src)
+	var/obj/item/food/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
 	var/mutable_appearance/head = mutable_appearance('icons/obj/guns/projectiles.dmi', "lollipop_2")
 	head.color = color2
@@ -556,7 +552,7 @@
 /obj/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/food/chewable/lollipop/S = new ammo_type(T)
+		var/obj/item/food/lollipop/S = new ammo_type(T)
 		S.change_head_color(color2)
 		dropped = TRUE
 
@@ -812,7 +808,7 @@
 
 /obj/item/borg/apparatus/Exited(atom/A)
 	if(A == stored) //sanity check
-		UnregisterSignal(stored, COMSIG_ATOM_UPDATE_ICON)
+		UnregisterSignal(stored, COMSIG_ATOM_UPDATED_ICON)
 		stored = null
 	update_appearance()
 	. = ..()
@@ -846,7 +842,7 @@
 			var/obj/item/O = A
 			O.forceMove(src)
 			stored = O
-			RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
+			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
 			update_appearance()
 			return
 	else
@@ -854,10 +850,16 @@
 		return
 	. = ..()
 
-/// Exists to eat signal args
-/obj/item/borg/apparatus/proc/on_update_icon(datum/source, updates)
+/**
+ * Updates the appearance of the apparatus when the stored object's icon gets updated.
+ *
+ * Returns NONE as we have not done anything to the stored object itself,
+ * which is where this signal that this handler intercepts is sent from.
+ */
+/obj/item/borg/apparatus/proc/on_stored_updated_icon(datum/source, updates)
 	SIGNAL_HANDLER
-	return on_update_icon(updates)
+	update_appearance()
+	return NONE
 
 /obj/item/borg/apparatus/attackby(obj/item/W, mob/user, params)
 	if(stored)
@@ -879,7 +881,7 @@
 /obj/item/borg/apparatus/beaker/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
-	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
 	update_appearance()
 
 /obj/item/borg/apparatus/beaker/Destroy()
@@ -939,7 +941,7 @@
 /obj/item/borg/apparatus/beaker/service/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
-	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
 	update_appearance()
 
 /////////////////////

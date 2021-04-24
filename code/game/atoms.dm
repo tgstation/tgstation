@@ -128,6 +128,11 @@
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
+	///The config type to use for greyscaled sprites. Both this and greyscale_colors must be assigned to work.
+	var/greyscale_config
+	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
+	var/greyscale_colors
+
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
@@ -170,7 +175,7 @@
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize != INITIALIZATION_INSSATOMS)
 		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		if(SSatoms.InitAtom(src, args))
+		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
 
@@ -217,6 +222,8 @@
 
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
+
+	update_greyscale()
 
 	//atom color stuff
 	if(color)
@@ -515,9 +522,6 @@
 /atom/proc/AllowDrop()
 	return FALSE
 
-/atom/proc/CheckExit()
-	return TRUE
-
 ///Is this atom within 1 tile of another atom
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
@@ -720,6 +724,33 @@
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
+
+/// Checks if the colors given are different and if so causes a greyscale icon update
+/// The colors argument can be either a list or the full color string
+/atom/proc/set_greyscale_colors(list/colors, update=TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+	if(istype(colors))
+		colors = colors.Join("")
+	if(greyscale_colors == colors)
+		return
+	greyscale_colors = colors
+	if(!greyscale_config)
+		return
+	if(update)
+		update_greyscale()
+
+/// Checks if the greyscale config given is different and if so causes a greyscale icon update
+/atom/proc/set_greyscale_config(new_config, update=TRUE)
+	if(greyscale_config == new_config)
+		return
+	greyscale_config = new_config
+	if(update)
+		update_greyscale()
+
+/// Checks if this atom uses the GAS system and if so updates the icon
+/atom/proc/update_greyscale()
+	if(greyscale_config && greyscale_colors)
+		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
 
 /**
  * An atom we are buckled or is contained within us has tried to move
@@ -1171,6 +1202,8 @@
 	VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
+	if(greyscale_colors)
+		VV_DROPDOWN_OPTION(VV_HK_MODIFY_GREYSCALE, "Modify greyscale colors")
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()
@@ -1276,19 +1309,21 @@
  */
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
+	SEND_SIGNAL(AM, COMSIG_ATOM_ENTERING, src, oldLoc)
 
 /**
  * An atom is attempting to exit this atom's contents
  *
  * Default behaviour is to send the [COMSIG_ATOM_EXIT]
- *
- * Return value should be set to FALSE if the moving atom is unable to leave,
- * otherwise leave value the result of the parent call
  */
 /atom/Exit(atom/movable/AM, atom/newLoc)
-	. = ..()
+	// Don't call `..()` here, otherwise `Uncross()` gets called.
+	// See the doc comment on `Uncross()` to learn why this is bad.
+
 	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
 		return FALSE
+
+	return TRUE
 
 /**
  * An atom has exited this atom's contents
@@ -1632,7 +1667,7 @@
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(i)
-			custom_material.on_removed(src, custom_materials[i], material_flags) //Remove the current materials
+			custom_material.on_removed(src, custom_materials[i] * material_modifier, material_flags) //Remove the current materials
 
 	if(!length(materials))
 		custom_materials = null
@@ -1925,7 +1960,10 @@
 //Update the screentip to reflect what we're hoverin over
 /atom/MouseEntered(location, control, params)
 	. = ..()
-	if(flags_1 & NO_SCREENTIPS_1 || !usr?.client?.prefs.screentip_pref)
+	// Statusbar
+	status_bar_set_text(usr, name)
+	// Screentips
+	if(!usr?.client?.prefs.screentip_pref || (flags_1 & NO_SCREENTIPS_1))
 		usr.hud_used.screentip_text.maptext = ""
-		return
-	usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")
+	else
+		usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.client.prefs.screentip_color]: 32px'>[name]</span>")

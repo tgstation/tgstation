@@ -76,6 +76,16 @@ export const RADIO_CHANNELS = [
     color: '#3434fd',
   },
   {
+    name: 'Green Team',
+    freq: 1219,
+    color: '#34fd34',
+  },
+  {
+    name: 'Yellow Team',
+    freq: 1221,
+    color: '#d1ba22',
+  },
+  {
     name: 'CentCom',
     freq: 1337,
     color: '#2681a5',

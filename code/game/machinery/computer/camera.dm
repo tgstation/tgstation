@@ -209,7 +209,7 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
 	icon_state = "television"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
@@ -361,5 +361,10 @@
 	name = "\improper AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")
+
+/obj/machinery/computer/security/telescreen/bar
+	name = "bar monitor"
+	desc = "A telescreen that connects to the bar's camera network. Perfect for checking on customers."
+	network = list("bar")
 
 #undef DEFAULT_MAP_SIZE

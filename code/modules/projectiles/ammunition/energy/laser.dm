@@ -76,3 +76,8 @@
 	projectile_type = /obj/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
 	fire_sound = 'sound/weapons/laser.ogg'
+
+/obj/item/ammo_casing/energy/laser/minigun
+	select_name = "kill"
+	projectile_type = /obj/projectile/beam/weak/penetrator
+	variance = 0.8

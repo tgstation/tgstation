@@ -44,7 +44,7 @@
 	return
 
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
-	return
+	return FALSE
 
 /obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
 	return
@@ -136,6 +136,7 @@
 	name = "Bardrone"
 	desc = "A barkeeping drone, a robot built to tend bars."
 	hacked = TRUE
+	shy = FALSE
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."

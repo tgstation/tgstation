@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Modular Computer Tablets held in the ID slot will now correctly show SecHUD icons for their contained ID cards in all scenarios."

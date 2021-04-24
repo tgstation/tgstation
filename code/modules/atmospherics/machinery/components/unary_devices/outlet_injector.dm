@@ -13,7 +13,7 @@
 
 	var/injecting = 0
 
-	var/volume_rate = 100
+	var/volume_rate = 50
 
 	var/frequency = 0
 	var/id = null
@@ -46,14 +46,14 @@
 	cut_overlays()
 	if(showpipe)
 		// everything is already shifted so don't shift the cap
-		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
+		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions, pipe_color))
 
 	if(!nodes[1] || !on || !is_operational)
 		icon_state = "inje_off"
 	else
 		icon_state = "inje_on"
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos(delta_time)
+/obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos()
 	..()
 
 	injecting = 0
@@ -61,14 +61,18 @@
 	if(!on || !is_operational)
 		return
 
+	var/turf/location = get_turf(loc)
+	if(isclosedturf(location))
+		return
+
 	var/datum/gas_mixture/air_contents = airs[1]
 
 	if(air_contents.temperature > 0)
-		var/transfer_moles = (air_contents.return_pressure() * volume_rate * delta_time) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = (air_contents.return_pressure() * volume_rate) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
-		loc.assume_air(removed)
+		location.assume_air(removed)
 		air_update_turf(FALSE, FALSE)
 
 		update_parents()

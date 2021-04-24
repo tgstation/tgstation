@@ -32,14 +32,16 @@
 	return ..()
 
 /obj/structure/extinguisher_cabinet/contents_explosion(severity, target)
-	if(stored_extinguisher)
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += stored_extinguisher
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += stored_extinguisher
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += stored_extinguisher
+	if(!stored_extinguisher)
+		return
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += stored_extinguisher
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += stored_extinguisher
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += stored_extinguisher
 
 /obj/structure/extinguisher_cabinet/handle_atom_del(atom/A)
 	if(A == stored_extinguisher)
@@ -154,6 +156,18 @@
 			stored_extinguisher.forceMove(loc)
 			stored_extinguisher = null
 	qdel(src)
+
+/obj/structure/extinguisher_cabinet/directional/north
+	pixel_y = 32
+
+/obj/structure/extinguisher_cabinet/directional/south
+	pixel_y = -32
+
+/obj/structure/extinguisher_cabinet/directional/east
+	pixel_x = 26
+
+/obj/structure/extinguisher_cabinet/directional/west
+	pixel_x = -26
 
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"

@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(job)
 
 	/// A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.
 	var/list/station_jobs
+	/// A list of all Head of Staff jobs.
+	var/list/head_of_staff_jobs
 	/// A list of additional jobs that have various icons associated with them including sechud and card trims.
 	var/list/additional_jobs_with_icons
 	/// A list of jobs associed with Centcom and should use the standard NT Centcom icons.
@@ -41,6 +43,12 @@ SUBSYSTEM_DEF(job)
 
 	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
 	var/assigned_captain = FALSE
+	/// Whether the emergency safe code has been requested via a comms console on shifts with no Captain or Acting Captain.
+	var/safe_code_requested = FALSE
+	/// Timer ID for the emergency safe code request.
+	var/safe_code_timer_id
+	/// The loc to which the emergency safe code has been requested for delivery.
+	var/turf/safe_code_request_loc
 	/// If TRUE, the "Captain" job will always be given the code to the spare ID safe and always have a "Captain on deck!" announcement.
 	var/always_promote_captain_job = TRUE
 
@@ -129,6 +137,14 @@ SUBSYSTEM_DEF(job)
 	JobDebug("AR has failed, Player: [player], Rank: [rank]")
 	return FALSE
 
+/datum/controller/subsystem/job/proc/FreeRole(rank)
+	if(!rank)
+		return
+	JobDebug("Freeing role: [rank]")
+	var/datum/job/job = GetJob(rank)
+	if(!job)
+		return FALSE
+	job.current_positions = max(0, job.current_positions - 1)
 
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level, flag)
 	JobDebug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
@@ -452,12 +468,19 @@ SUBSYSTEM_DEF(job)
 	if(!joined_late)
 		var/spawning_handled = FALSE
 		var/obj/S = null
-		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && job.random_spawns_possible)
 			SendToLateJoin(living_mob)
 			spawning_handled = TRUE
-		else if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
+		else if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS) && job.random_spawns_possible)
 			DropLandAtRandomHallwayPoint(living_mob)
 			spawning_handled = TRUE
+		else if(HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER) && job.random_spawns_possible)
+			for(var/obj/effect/landmark/start/hangover/hangover_spawn in GLOB.start_landmarks_list)
+				S = hangover_spawn
+				if(locate(/mob/living) in hangover_spawn.loc) //so we can revert to spawning them on top of eachother if something goes wrong
+					continue
+				hangover_spawn.used = TRUE
+				break
 		else if(length(GLOB.jobspawn_overrides[rank]))
 			S = pick(GLOB.jobspawn_overrides[rank])
 		else
@@ -759,6 +782,8 @@ SUBSYSTEM_DEF(job)
 		"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychologist", \
 		"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
 
+	head_of_staff_jobs = list("Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Head of Security", "Captain")
+
 	additional_jobs_with_icons = list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", \
 		"Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando", "Security Officer (Engineering)", \
 		"Security Officer (Cargo)", "Security Officer (Medical)", "Security Officer (Science)")
@@ -775,6 +800,18 @@ SUBSYSTEM_DEF(job)
 	var/safe_code = SSid_access.spare_id_safe_code
 
 	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge.<br><br>If your job would not ordinarily have Head of Staff access, your ID card has been specially modified to possess it."
+	update_appearance()
+
+/obj/item/paper/fluff/emergency_spare_id_safe_code
+	name = "Emergency Spare ID Safe Code Requisition"
+	desc = "Proof that nobody has been approved for Captaincy. A skeleton key for a skeleton shift."
+
+/obj/item/paper/fluff/emergency_spare_id_safe_code/Initialize()
+	. = ..()
+	var/safe_code = SSid_access.spare_id_safe_code
+
+	info = "Captain's Spare ID safe code combination: [safe_code ? safe_code : "\[REDACTED\]"]<br><br>The spare ID can be found in its dedicated safe on the bridge."
+	update_appearance()
 
 /datum/controller/subsystem/job/proc/promote_to_captain(mob/living/carbon/human/new_captain, acting_captain = FALSE)
 	var/id_safe_code = SSid_access.spare_id_safe_code
@@ -804,3 +841,9 @@ SUBSYSTEM_DEF(job)
 			id_card.add_wildcards(list(ACCESS_HEADS), mode=FORCE_ADD_ALL)
 
 	assigned_captain = TRUE
+
+/// Send a drop pod containing a piece of paper with the spare ID safe code to loc
+/datum/controller/subsystem/job/proc/send_spare_id_safe_code(loc)
+	new /obj/effect/pod_landingzone(loc, /obj/structure/closet/supplypod/centcompod, new /obj/item/paper/fluff/emergency_spare_id_safe_code())
+	safe_code_timer_id = null
+	safe_code_request_loc = null

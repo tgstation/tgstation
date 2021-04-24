@@ -3,7 +3,8 @@
 
 /obj/item/defibrillator
 	name = "defibrillator"
-	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
+	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients. \
+	Has a rear bracket for attachments to wall mounts and medical cyborgs."
 	icon = 'icons/obj/defib.dmi'
 	icon_state = "defibunit"
 	inhand_icon_state = "defibunit"

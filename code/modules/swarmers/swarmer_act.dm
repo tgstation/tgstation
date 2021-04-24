@@ -109,7 +109,7 @@
 
 /obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(get_area(src), /area/shuttle)
-	for(var/turf/turf_in_range in range(1, src))
+	for(var/turf/turf_in_range as anything in RANGE_TURFS(1, src))
 		var/area/turf_area = get_area(turf_in_range)
 		//Check for dangerous pressure differences
 		if (turf_in_range.return_turf_delta_p() > DANGEROUS_DELTA_P)
@@ -193,7 +193,7 @@
 
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(loc, /area/shuttle)
-	for(var/turf/turf_in_range in range(1, src))
+	for(var/turf/turf_in_range as anything in RANGE_TURFS(1, src))
 		var/area/turf_area = get_area(turf_in_range)
 		if (turf_in_range.return_turf_delta_p() > DANGEROUS_DELTA_P)
 			to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause an explosive pressure release. Aborting.</span>")

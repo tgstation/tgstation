@@ -122,31 +122,33 @@
 	if(prob(deflect_chance))
 		severity++
 		log_message("Armor saved, changing severity to [severity]", LOG_MECHA)
-	. = ..()
+	return ..()
 
 /obj/vehicle/sealed/mecha/contents_explosion(severity, target)
 	severity++
-	for(var/X in equipment)
-		var/obj/item/mecha_parts/mecha_equipment/ME = X
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += ME
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += ME
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += ME
-	for(var/Y in trackers)
-		var/obj/item/mecha_parts/mecha_tracking/MT = Y
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += MT
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += MT
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += MT
-	for(var/Z in occupants)
-		var/mob/living/occupant = Z
-		occupant.ex_act(severity,target)
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			if(equipment)
+				SSexplosions.high_mov_atom += equipment
+			if(trackers)
+				SSexplosions.high_mov_atom += trackers
+			if(occupants)
+				SSexplosions.high_mov_atom += occupants
+		if(EXPLODE_HEAVY)
+			if(equipment)
+				SSexplosions.med_mov_atom += equipment
+			if(trackers)
+				SSexplosions.med_mov_atom += trackers
+			if(occupants)
+				SSexplosions.med_mov_atom += occupants
+		if(EXPLODE_LIGHT)
+			if(equipment)
+				SSexplosions.low_mov_atom += equipment
+			if(trackers)
+				SSexplosions.low_mov_atom += trackers
+			if(occupants)
+				SSexplosions.low_mov_atom += occupants
 
 /obj/vehicle/sealed/mecha/handle_atom_del(atom/A)
 	if(A in occupants)
@@ -255,7 +257,7 @@
 		if(construction_state == MECHA_OPEN_HATCH && (internal_damage & MECHA_INT_SHORT_CIRCUIT))
 			var/obj/item/stack/cable_coil/CC = W
 			if(CC.use(2))
-				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
+				clear_internal_damage(MECHA_INT_SHORT_CIRCUIT)
 				to_chat(user, "<span class='notice'>You replace the fused wires.</span>")
 			else
 				to_chat(user, "<span class='warning'>You need two lengths of cable to fix this mech!</span>")
@@ -294,7 +296,7 @@
 	..()
 	. = TRUE
 	if(internal_damage & MECHA_INT_TEMP_CONTROL)
-		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
+		clear_internal_damage(MECHA_INT_TEMP_CONTROL)
 		to_chat(user, "<span class='notice'>You repair the damaged temperature controller.</span>")
 		return
 
@@ -306,7 +308,7 @@
 	if(internal_damage & MECHA_INT_TANK_BREACH)
 		if(!W.use_tool(src, user, 0, volume=50, amount=1))
 			return
-		clearInternalDamage(MECHA_INT_TANK_BREACH)
+		clear_internal_damage(MECHA_INT_TANK_BREACH)
 		to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 		return
 	if(obj_integrity < max_integrity)
@@ -341,15 +343,15 @@
 	if(cell && charge_cell)
 		cell.charge = cell.maxcharge
 	if(internal_damage & MECHA_INT_FIRE)
-		clearInternalDamage(MECHA_INT_FIRE)
+		clear_internal_damage(MECHA_INT_FIRE)
 	if(internal_damage & MECHA_INT_TEMP_CONTROL)
-		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
+		clear_internal_damage(MECHA_INT_TEMP_CONTROL)
 	if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
-		clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
+		clear_internal_damage(MECHA_INT_SHORT_CIRCUIT)
 	if(internal_damage & MECHA_INT_TANK_BREACH)
-		clearInternalDamage(MECHA_INT_TANK_BREACH)
+		clear_internal_damage(MECHA_INT_TANK_BREACH)
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
-		clearInternalDamage(MECHA_INT_CONTROL_LOST)
+		clear_internal_damage(MECHA_INT_CONTROL_LOST)
 
 /obj/vehicle/sealed/mecha/narsie_act()
 	emp_act(EMP_HEAVY)

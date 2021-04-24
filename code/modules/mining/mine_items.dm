@@ -92,7 +92,6 @@
 	shuttleId = "mining_common"
 	possible_destinations = "commonmining_home;lavaland_common_away;landing_zone_dock;mining_public"
 
-
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 
 /obj/structure/closet/crate/miningcar

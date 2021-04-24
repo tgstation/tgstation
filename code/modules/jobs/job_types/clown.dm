@@ -8,6 +8,7 @@
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/clown
+	plasmaman_outfit = /datum/outfit/plasmaman/clown
 
 	paycheck = PAYCHECK_MINIMAL
 	paycheck_department = ACCOUNT_SRV

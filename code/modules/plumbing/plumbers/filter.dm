@@ -14,9 +14,9 @@
 	///whitelist of chems but their name instead of path
 	var/list/english_right = list()
 
-/obj/machinery/plumbing/filter/Initialize(mapload, bolt)
+/obj/machinery/plumbing/filter/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/filter, bolt)
+	AddComponent(/datum/component/plumbing/filter, bolt, layer)
 
 /obj/machinery/plumbing/filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

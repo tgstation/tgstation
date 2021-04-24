@@ -15,7 +15,7 @@
 		return
 	var/list/message_mods = list()
 	message = get_message_mods(message, message_mods)
-	if(client && (message_mods[RADIO_EXTENSION] == MODE_ADMIN || message_mods[RADIO_EXTENSION] == MODE_DEADMIN))
+	if(client?.holder && (message_mods[RADIO_EXTENSION] == MODE_ADMIN || message_mods[RADIO_EXTENSION] == MODE_DEADMIN))
 		message = trim_left(copytext_char(message, length(message_mods[RADIO_KEY]) + 2))
 		if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
 			client.cmd_admin_say(message)

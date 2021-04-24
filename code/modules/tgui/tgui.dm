@@ -94,6 +94,8 @@
 		window.send_message("ping")
 	var/flush_queue = window.send_asset(get_asset_datum(
 		/datum/asset/simple/namespaced/fontawesome))
+	flush_queue |= window.send_asset(get_asset_datum(
+		/datum/asset/simple/namespaced/tgfont))
 	for(var/datum/asset/asset in src_object.ui_assets(user))
 		flush_queue |= window.send_asset(asset)
 	if (flush_queue)

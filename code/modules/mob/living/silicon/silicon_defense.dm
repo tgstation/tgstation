@@ -64,17 +64,20 @@
 	. = FALSE
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
-	if(user.combat_mode)
-		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-		playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
-		visible_message("<span class='danger'>[user] punches [src], but doesn't leave a dent!</span>", \
-						"<span class='warning'>[user] punches you, but doesn't leave a dent!</span>", null, COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, "<span class='danger'>You punch [src], but don't leave a dent!</span>")
+	if(has_buckled_mobs() && !user.combat_mode)
+		user_unbuckle_mob(buckled_mobs[1], user)
 	else
-		visible_message("<span class='notice'>[user] pets [src].</span>", \
-						"<span class='notice'>[user] pets you.</span>", null, null, user)
-		to_chat(user, "<span class='notice'>You pet [src].</span>")
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT_RND, "pet_borg", /datum/mood_event/pet_borg)
+		if(user.combat_mode)
+			user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+			playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
+			visible_message("<span class='danger'>[user] punches [src], but doesn't leave a dent!</span>", \
+							"<span class='warning'>[user] punches you, but doesn't leave a dent!</span>", null, COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, "<span class='danger'>You punch [src], but don't leave a dent!</span>")
+		else
+			visible_message("<span class='notice'>[user] pets [src].</span>", \
+							"<span class='notice'>[user] pets you.</span>", null, null, user)
+			to_chat(user, "<span class='notice'>You pet [src].</span>")
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT_RND, "pet_borg", /datum/mood_event/pet_borg)
 
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)

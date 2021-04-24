@@ -40,7 +40,7 @@
 	boxtag = "Margherita Deluxe"
 
 /obj/item/food/pizza/margherita/robo
-	food_reagents = list(/datum/reagent/nanomachines = 70, /datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
+	food_reagents = list(/datum/reagent/cyborg_mutation_nanomachines = 70, /datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 
 /obj/item/food/pizzaslice/margherita
 	name = "margherita slice"

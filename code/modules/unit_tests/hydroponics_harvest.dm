@@ -27,7 +27,7 @@
 
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
 
-	hydroponics_tray.loc = run_loc_bottom_left
+	hydroponics_tray.loc = run_loc_floor_bottom_left
 	human.loc = hydroponics_tray.loc
 	human.x += 1
 

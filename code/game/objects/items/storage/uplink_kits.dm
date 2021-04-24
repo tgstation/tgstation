@@ -239,7 +239,7 @@
 			new /obj/item/melee/transforming/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue
 			
 		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
-			/obj/item/storage/toolbox/emergency/old/ancientbundle //Items fit neatly into a classic toolbox just to remind you what the theme is.
+			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
 		
 /obj/item/storage/toolbox/emergency/old/ancientbundle/ //So the subtype works
 		

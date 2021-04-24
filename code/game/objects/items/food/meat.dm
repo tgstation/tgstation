@@ -7,7 +7,6 @@
 	name = "\improper Cuban carp"
 	desc = "A grifftastic sandwich that burns your tongue and then leaves it numb!"
 	icon_state = "cubancarp"
-	trash_type = /obj/item/trash/plate
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6,  /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("fish" = 4, "batter" = 1, "hot peppers" = 1)
@@ -61,7 +60,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
-	venue_value = FOOD_PRICE_EXOTIC
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/fishfry
 	name = "fish fry"
@@ -106,7 +105,6 @@
 	name = "corned beef and cabbage"
 	desc = "Now you can feel like a real tourist vacationing in Ireland."
 	icon_state = "cornedbeef"
-	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("meat" = 1, "cabbage" = 1)
 	foodtypes = MEAT | VEGETABLES
@@ -116,7 +114,6 @@
 	name = "Filet migrawr"
 	desc = "Because eating bear wasn't manly enough."
 	icon_state = "bearsteak"
-	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 9, /datum/reagent/consumable/ethanol/manly_dorf = 5)
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtypes = MEAT | ALCOHOL
@@ -405,7 +402,6 @@
 	name = "stewed soy meat"
 	desc = "Even non-vegetarians will LOVE this!"
 	icon_state = "stewedsoymeat"
-	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("soy" = 1, "vegetables" = 1)
 	eatverbs = list("slurp","sip","inhale","drink")
@@ -419,7 +415,6 @@
 	name = "boiled spider leg"
 	desc = "A giant spider's leg that's still twitching after being cooked. Gross!"
 	icon_state = "spiderlegcooked"
-	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/capsaicin = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("hot peppers" = 1, "cobwebs" = 1)
 	foodtypes = MEAT
@@ -430,7 +425,6 @@
 	name = "green eggs and ham"
 	desc = "Would you eat them on a train? Would you eat them on a plane? Would you eat them on a state of the art corporate deathtrap floating through space?"
 	icon_state = "spidereggsham"
-	trash_type = /obj/item/trash/plate
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 3)
 	bite_consumption = 4
 	tastes = list("meat" = 1, "the colour green" = 1)
@@ -445,8 +439,8 @@
 	tastes = list("fish" = 1, "hot peppers" = 1)
 	foodtypes = MEAT | TOXIC
 	w_class = WEIGHT_CLASS_TINY
-	//spider eggs, xenomeat. both of those events have to happen or xenobio memes
-	venue_value = FOOD_PRICE_EXOTIC
+	//total price of this dish is 20 and a small amount more for soy sauce, all of which are available at the orders console
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/sashimi/Initialize()
 	. = ..()
@@ -503,6 +497,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/tomatojuice = 10)
 	tastes = list("meat" = 3, "pasta" = 3, "tomato" = 2, "cheese" = 2)
 	foodtypes = MEAT | DAIRY | GRAIN
+	venue_value = FOOD_PRICE_NORMAL
 
 //////////////////////////////////////////// KEBABS AND OTHER SKEWERS ////////////////////////////////////////////
 
@@ -681,7 +676,7 @@
 /obj/item/food/meat/slab/human/mutant/ethereal
 	icon_state = "etherealmeat"
 	desc = "So shiny you feel like ingesting it might make you shine too"
-	food_reagents = list(/datum/reagent/consumable/liquidelectricity = 3)
+	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 3)
 	tastes = list("pure electricity" = 2, "meat" = 1)
 	foodtypes = RAW | MEAT | TOXIC
 
@@ -850,7 +845,7 @@
 /obj/item/food/meat/slab/gondola
 	name = "gondola meat"
 	desc = "According to legends of old, consuming raw gondola flesh grants one inner peace."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/tranquility = 5, /datum/reagent/consumable/cooking_oil = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/gondola_mutation_toxin = 5, /datum/reagent/consumable/cooking_oil = 3)
 	tastes = list("meat" = 4, "tranquility" = 1)
 	foodtypes = RAW | MEAT
 
@@ -905,7 +900,6 @@
 	tastes = list("chicken" = 1)
 
 /obj/item/food/meat/slab/chicken/MakeProcessable()
-	. = ..()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 30)
 
 /obj/item/food/meat/slab/chicken/MakeGrillable()
@@ -921,7 +915,7 @@
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
-	trash_type = /obj/item/trash/plate
+
 	foodtypes = MEAT
 	tastes = list("meat" = 1)
 	burns_on_grill = TRUE
@@ -1206,7 +1200,40 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("beef" = 3, "sour cream" = 1, "salt" = 1, "pepper" = 1)
 	foodtypes = MEAT | VEGETABLES | DAIRY
-	trash_type = /obj/item/trash/plate
+
 	w_class = WEIGHT_CLASS_SMALL
 	//basic ingredients, but a lot of them. just covering costs here
 	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/beef_wellington
+	name = "beef wellington"
+	desc = "A luxurious log of beef, covered in a fine mushroom duxelle and pancetta ham, then bound in puff pastry."
+	icon_state = "beef_wellington"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 21, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
+	foodtypes = MEAT | VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
+
+/obj/item/food/beef_wellington/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington/slice, 3, 30)
+
+/obj/item/food/beef_wellington/slice
+	name = "beef wellington slice"
+	desc = "A slice of beef wellington, topped with a rich gravy. Simply delicious."
+	icon_state = "beef_wellington_slice"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
+	foodtypes = MEAT | VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/full_english
+	name = "full english breakfast"
+	desc = "A hearty plate with all the trimmings, representing the pinnacle of the breakfast art."
+	icon_state = "full_english"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("sausage" = 1, "bacon" = 1, "egg" = 1, "tomato" = 1, "mushrooms" = 1, "bread" = 1, "beans" = 1)
+	foodtypes = MEAT | VEGETABLES | GRAIN | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_EXOTIC

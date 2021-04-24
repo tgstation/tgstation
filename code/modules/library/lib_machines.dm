@@ -18,7 +18,7 @@
 	name = "library visitor console"
 	icon_state = "oldcomp"
 	icon_screen = "library"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
 	var/screenstate = 0
@@ -172,7 +172,7 @@
 
 	icon_state = "oldcomp"
 	icon_screen = "library"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 
 	var/screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book

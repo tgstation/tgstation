@@ -7,6 +7,7 @@
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
 	health_doll_icon = "pine_1"
+	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	gender = NEUTER
 	speak_chance = 0
 	turns_per_move = 5
@@ -29,6 +30,7 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	speak_emote = list("pines")
 	emote_taunt = list("growls")
 	taunt_chance = 20

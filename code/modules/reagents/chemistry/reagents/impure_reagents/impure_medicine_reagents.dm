@@ -56,7 +56,9 @@
 	tox_damage = 0.25
 	ph = 14
 	//Compensates for delta_time lag by spawning multiple hands at the end
-	var/lag_compensate = 0
+	var/lag_remainder = 0
+	//Keeps track of the hand timer so we can cleanup on removal
+	var/list/timer_ids
 
 //Warns you about the impenting hands
 /datum/reagent/inverse/helgrasp/on_mob_add(mob/living/L, amount)
@@ -65,14 +67,34 @@
 	. = ..()
 
 //Sends hands after you for your hubris
+/*
+How it works:
+Standard delta_time for a reagent is 2s - and volume consumption is equal to the volume * delta_time.
+In this chem, I want to consume 0.5u for 1 hand created (since 1*REM is 0.5) so on a single tick I create a hand and set up a callback for another one in 1s from now. But since delta time can vary, I want to be able to create more hands for when the delay is longer.
+
+Initally I round delta_time to the nearest whole number, and take the part that I am rounding down from (i.e. the decimal numbers) and keep track of them. If the decimilised numbers go over 1, then the number is reduced down and an extra hand is created that tick.
+
+Then I attempt to calculate the how many hands to created based off the current delta_time, since I can't know the delay to the next one it assumes the next will be in 2s.
+I take the 2s interval period and divide it by the number of hands I want to make (i.e. the current delta_time) and I keep track of how many hands I'm creating (since I always create one on a tick, then I start at 1 hand). For each hand I then use this time value multiplied by the number of hands. Since we're spawning one now, and it checks to see if hands is less than, but not less than or equal to, delta_time, no hands will be created on the next expected tick.
+Basically, we fill the time between now and 2s from now with hands based off the current lag.
+*/
 /datum/reagent/inverse/helgrasp/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	spawn_hands(owner)
-	lag_compensate += 1 - max(delta_time, 1)
-	. = ..()
+	lag_remainder += delta_time - FLOOR(delta_time, 1)
+	delta_time = FLOOR(delta_time, 1)
+	if(lag_remainder >= 1)
+		delta_time += 1
+		lag_remainder -= 1
+	var/hands = 1
+	var/time = 2 / delta_time
+	while(hands < delta_time) //we already made a hand now so start from 1
+		LAZYADD(timer_ids, addtimer(CALLBACK(src, .proc/spawn_hands, owner), (time*hands) SECONDS, TIMER_STOPPABLE)) //keep track of all the timers we set up
+		hands += time
+	return ..()
 
 /datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/owner)
-	if(!owner)//Unit test has a very strange interation where hands spawned will no longer have a target causing the beam to runtime
-		return
+	if(!owner && iscarbon(holder.my_atom))//Catch timer
+		owner = holder.my_atom
 	//Adapted from the end of the curse - but lasts a short time
 	var/grab_dir = turn(owner.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
 	var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 8)//Larger range so you have more time to dodge
@@ -86,12 +108,16 @@
 		return
 	hand.fire()
 
+//At the end, we clear up any loose hanging timers just in case and spawn any remaining lag_remaining hands all at once.
 /datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/owner)
 	var/hands = 0
-	while(lag_compensate > hands)
+	while(lag_remainder > hands)
 		spawn_hands(owner)
 		hands++
-	. = ..()
+	for(var/id in timer_ids) // So that we can be certain that all timers are deleted at the end.
+		deltimer(id)
+	timer_ids.Cut()
+	return ..()
 
 //libital
 //Impure
@@ -109,11 +135,20 @@
 	var/mob/living/carbon/consumer = L
 	if(!consumer)
 		return
+	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance *= 2
 
+/datum/reagent/impurity/libitoil/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
+	if(!istype(organ, /obj/item/organ/liver))
+		return
+	var/obj/item/organ/liver/this_liver = organ
+	this_liver.alcohol_tolerance *= 2
+
 /datum/reagent/impurity/libitoil/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/liver))
 		return
 	var/obj/item/organ/liver/this_liver = organ
@@ -123,6 +158,7 @@
 	. = ..()
 	var/mob/living/carbon/consumer = L
 	UnregisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN)
 	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	if(!this_liver)
 		return
@@ -324,10 +360,21 @@
 
 /datum/reagent/inverse/healing/convermol/on_mob_add(mob/living/owner, amount)
 	. = ..()
+	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
+	apply_lung_levels(lungs)
+
+/datum/reagent/inverse/healing/convermol/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
+	if(!istype(organ, /obj/item/organ/lungs))
+		return
+	var/obj/item/organ/lungs/lungs = organ
+	apply_lung_levels(lungs)
+
+/datum/reagent/inverse/healing/convermol/proc/apply_lung_levels(obj/item/organ/lungs/lungs)
 	cached_heat_level_1 = lungs.heat_level_1_threshold
 	cached_heat_level_2 = lungs.heat_level_2_threshold
 	cached_heat_level_3 = lungs.heat_level_3_threshold
@@ -344,6 +391,7 @@
 	lungs.cold_level_3_threshold *= creation_purity * 0.5
 
 /datum/reagent/inverse/healing/convermol/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/lungs))
 		return
 	var/obj/item/organ/lungs/lungs = organ
@@ -360,6 +408,7 @@
 /datum/reagent/inverse/healing/convermol/on_mob_delete(mob/living/owner)
 	. = ..()
 	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
 	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
@@ -452,7 +501,7 @@
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
 
-/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/owner)
+/datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/owner, delta_time)
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
@@ -521,3 +570,217 @@
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
+
+/*				Non c2 medicines 				*/
+
+/datum/reagent/impurity/mannitol
+	name = "Mannitoil"
+	description = "Gives the patient a temporary speech impediment."
+	color = "#CDCDFF"
+	addiction_types = list(/datum/addiction/medicine = 5)
+	ph = 12.4
+	liver_damage = 0
+	///The speech we're forcing on the owner
+	var/speech_option
+
+/datum/reagent/impurity/mannitol/on_mob_add(mob/living/owner, amount)
+	. = ..()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon = owner
+	if(!carbon.dna)
+		return
+	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE)
+	speech_options = shuffle(speech_options)
+	for(var/option in speech_options)
+		if(carbon.dna.get_mutation(option))
+			continue
+		carbon.dna.add_mutation(option)
+		speech_option = option
+		return
+
+/datum/reagent/impurity/mannitol/on_mob_delete(mob/living/owner)
+	. = ..()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon = owner
+	carbon.dna?.remove_mutation(speech_option)
+
+/datum/reagent/inverse/neurine
+	name = "Neruwhine"
+	description = "Induces a temporary brain trauma in the patient by redirecting neuron activity."
+	color = "#DCDCAA"
+	ph = 13.4
+	addiction_types = list(/datum/addiction/medicine = 8)
+	metabolization_rate = 0.025 * REM
+	tox_damage = 0
+	//The temporary trauma passed to the owner
+	var/datum/brain_trauma/temp_trauma
+
+/datum/reagent/inverse/neurine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+	.=..()
+	if(temp_trauma)
+		return
+	if(!(DT_PROB(creation_purity*10, delta_time)))
+		return
+	var/traumalist = subtypesof(/datum/brain_trauma)
+	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
+	traumalist -= /datum/brain_trauma/special/obsessed //Sets the owner as an antag - I presume this will lead to problems, so we'll remove it
+	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	traumalist = shuffle(traumalist)
+	for(var/trauma in traumalist)
+		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
+			temp_trauma = trauma
+			return
+
+/datum/reagent/inverse/neurine/on_mob_delete(mob/living/carbon/owner)
+	.=..()
+	if(!temp_trauma)
+		return
+	if(istype(temp_trauma, /datum/brain_trauma/special/imaginary_friend))//Good friends stay by you, no matter what
+		return
+	owner.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
+
+/datum/reagent/inverse/corazargh
+	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free. Also an omage to an older chem
+	description = "Interferes with the body's natural pacemaker, forcing the patient to manually beat their heart."
+	color = "#5F5F5F"
+	self_consuming = TRUE
+	ph = 13.5
+	addiction_types = list(/datum/addiction/medicine = 2.5)
+	metabolization_rate = 0.01 * REM
+	chemical_flags = REAGENT_DEAD_PROCESS
+	tox_damage = 0
+	///The old heart we're swapping for
+	var/obj/item/organ/heart/original_heart
+	///The new heart that's temp added
+	var/obj/item/organ/heart/cursed/manual_heart
+
+///Creates a new cursed heart and puts the old inside of it, then replaces the position of the old
+/datum/reagent/inverse/corazargh/on_mob_metabolize(mob/living/owner)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_mob = owner
+	original_heart = owner.getorganslot(ORGAN_SLOT_HEART)
+	if(!original_heart)
+		return
+	manual_heart = new(null, src)
+	original_heart.Remove(carbon_mob, special = TRUE) //So we don't suddenly die
+	original_heart.forceMove(manual_heart)
+	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
+	manual_heart.Insert(carbon_mob, special = TRUE)
+	//these last so instert doesn't call them
+	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
+	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	to_chat(owner, "<span class='userdanger'>You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!</spans>")
+	..()
+
+///Intercepts the new heart and creates a new cursed heart - putting the old inside of it
+/datum/reagent/inverse/corazargh/proc/on_gained_organ(mob/owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
+	if(!istype(organ, /obj/item/organ/heart))
+		return
+	var/mob/living/carbon/carbon_mob = owner
+	original_heart = organ
+	original_heart.Remove(carbon_mob, special = TRUE)
+	original_heart.forceMove(manual_heart)
+	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
+	if(!manual_heart)
+		manual_heart = new(null, src)
+	manual_heart.Insert(carbon_mob, special = TRUE)
+
+///If we're ejecting out the organ - replace it with the original
+/datum/reagent/inverse/corazargh/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+	SIGNAL_HANDLER
+	if(!organ == manual_heart)
+		return
+	original_heart.forceMove(organ.loc)
+	original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
+	qdel(organ)
+
+///We're done - remove the curse and restore the old one
+/datum/reagent/inverse/corazargh/on_mob_end_metabolize(mob/living/owner)
+	//Do these first so Insert doesn't call them
+	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_mob = owner
+	if(original_heart) //Mostly a just in case
+		original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
+		original_heart.Insert(carbon_mob, special = TRUE)
+	qdel(manual_heart)
+	to_chat(owner, "<span class='userdanger'>You feel your heart start beating normally again!</spans>")
+	..()
+
+/datum/reagent/inverse/antihol
+	name = "Prohol"
+	description = "Promotes alcoholic substances within the patients body, making their effects more potent."
+	taste_description = "alcohol" //mostly for sneaky slips
+	chemical_flags = REAGENT_INVISIBLE
+	metabolization_rate = 0.05 * REM//This is fast
+	addiction_types = list(/datum/addiction/medicine = 4.5)
+	color = "#4C8000"
+	tox_damage = 0
+
+/datum/reagent/inverse/antihol/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
+	for(var/datum/reagent/consumable/ethanol/alcohol in C.reagents.reagent_list)
+		alcohol.boozepwr += delta_time
+	..()
+
+/datum/reagent/inverse/oculine
+	name = "Oculater"
+	description = "Temporarily blinds the patient."
+	reagent_state = LIQUID
+	color = "#DDDDDD"
+	metabolization_rate = 0.1 * REM
+	addiction_types = list(/datum/addiction/medicine = 3)
+	taste_description = "funky toxin"
+	ph = 13
+	tox_damage = 0
+	metabolization_rate = 0.2 * REM
+	///Did we get a headache?
+	var/headache = FALSE
+
+/datum/reagent/inverse/oculine/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+	if(headache)
+		return ..()
+	if(DT_PROB(100*(1-creation_purity), delta_time))
+		owner.become_blind("oculine_impure")
+		to_chat(owner, "<span class='warning'>You suddenly develop a pounding headache as your vision fluxuates.</spans>")
+		headache = TRUE
+	..()
+
+/datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/owner)
+	owner.cure_blind("oculine_impure")
+	if(headache)
+		to_chat(owner, "<span class='notice'>Your headache clears up!</spans>")
+	..()
+
+/datum/reagent/impurity/inacusiate
+	name = "Tinacusiate"
+	description = "Makes the patient's hearing temporarily funky."
+	reagent_state = LIQUID
+	addiction_types = list(/datum/addiction/medicine = 5.6)
+	color = "#DDDDFF"
+	taste_description = "the heat evaporating from your mouth."
+	ph = 1
+	liver_damage = 0.1
+	metabolization_rate = 0.04 * REM
+	///The random span we start hearing in
+	var/randomSpan
+
+/datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/owner, delta_time, times_fired)
+	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
+	to_chat(owner, "<span class='notice'>Your hearing seems to be a bit off...!</spans>")
+	..()
+
+/datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/owner)
+	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	to_chat(owner, "<span class='notice'>You start hearing things normally again.</spans>")
+	..()
+
+/datum/reagent/impurity/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[randomSpan]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"

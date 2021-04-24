@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Meteor events now announce themselves properly again"
