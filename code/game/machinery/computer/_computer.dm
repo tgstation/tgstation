@@ -32,7 +32,7 @@
 	. = ..()
 	if(icon_keyboard)
 		if(machine_stat & NOPOWER)
-			return . += "[icon_keyboard]_off"
+			return . + "[icon_keyboard]_off"
 		. += icon_keyboard
 
 	// This whole block lets screens ignore lighting and be visible even in the darkest room
