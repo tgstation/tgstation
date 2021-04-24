@@ -44,50 +44,50 @@ try{
 	}
 
 	function download_file($path){
-		header('Content-type: application/zip'); 
+		header('Content-type: application/zip');
 		header('Content-Disposition: attachment; filename=' . basename($path));
 		header('Content-length: ' . filesize($path));
-		header('Pragma: no-cache'); 
-		header('Expires: 0'); 
+		header('Pragma: no-cache');
+		header('Expires: 0');
 		readfile($path);
 	}
 
-	function recurse_copy($src,$dst) { 
-		$dir = opendir($src); 
-		@mkdir($dst); 
-		while(false !== ( $file = readdir($dir)) ) { 
-			if (( $file != '.' ) && ( $file != '..' )) { 
-				if ( is_dir($src . '/' . $file) ) { 
-					recurse_copy($src . '/' . $file,$dst . '/' . $file); 
-				} 
-				else { 
-					copy($src . '/' . $file,$dst . '/' . $file); 
-				} 
-			} 
-		} 
-		closedir($dir); 
-	} 
+	function recurse_copy($src,$dst) {
+		$dir = opendir($src);
+		@mkdir($dst);
+		while(false !== ( $file = readdir($dir)) ) {
+			if (( $file != '.' ) && ( $file != '..' )) {
+				if ( is_dir($src . '/' . $file) ) {
+					recurse_copy($src . '/' . $file,$dst . '/' . $file);
+				}
+				else {
+					copy($src . '/' . $file,$dst . '/' . $file);
+				}
+			}
+		}
+		closedir($dir);
+	}
 
-	function rrmdir($dir) { 
-		if (is_dir($dir)) { 
-		$objects = scandir($dir); 
-		foreach ($objects as $object) { 
-			if ($object != "." && $object != "..") { 
+	function rrmdir($dir) {
+		if (is_dir($dir)) {
+		$objects = scandir($dir);
+		foreach ($objects as $object) {
+			if ($object != "." && $object != "..") {
 			if (is_dir($dir."/".$object))
 				rrmdir($dir."/".$object);
 			else
-				unlink($dir."/".$object); 
-			} 
+				unlink($dir."/".$object);
+			}
 		}
-		rmdir($dir); 
-		} 
+		rmdir($dir);
+		}
 	}
 
 	function update_git(){
 		global $tgdir;
 		shell_exec('cd ' . $tgdir . ' && git pull');
 	}
-	
+
 	$full_path_to_gulp = str_replace('/', '\\', $full_path_to_gulp);
 	$parent_dir = str_replace('\\', '/', realpath(dirname(__FILE__)));
 	$tgdir = $parent_dir . '/' . $repo_dir;
@@ -137,7 +137,7 @@ try{
 					unlink($target_name); //remove the file
 				move_uploaded_file($F['tmp_name'], $target_name);
 			}
-			
+
 			//compile
 			$command = '"' . $full_path_to_gulp . '" --cwd "' . str_replace('/', '\\', $target_path) . '" --min 2>&1';
 			$output = shell_exec($command);

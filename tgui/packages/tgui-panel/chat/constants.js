@@ -36,6 +36,7 @@ export const MESSAGE_TYPE_EVENTCHAT = 'eventchat';
 export const MESSAGE_TYPE_ADMINLOG = 'adminlog';
 export const MESSAGE_TYPE_ATTACKLOG = 'attacklog';
 export const MESSAGE_TYPE_DEBUG = 'debug';
+export const MESSAGE_TYPE_LOOC = 'looc';
 
 // Metadata for each message type
 export const MESSAGE_TYPES = [

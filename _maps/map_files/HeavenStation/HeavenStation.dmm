@@ -6522,7 +6522,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/open/space/basic,
-/area/maintenance/solars/starboard/fore)
+/area/solar/port/fore)
 "cXR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -7888,7 +7888,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/maintenance/solars/starboard/fore)
+/area/solar/port/fore)
 "dAd" = (
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -39176,7 +39176,7 @@
 "qdY" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/maintenance/solars/starboard/fore)
+/area/solar/port/fore)
 "qem" = (
 /obj/machinery/light{
 	dir = 8
@@ -47042,7 +47042,7 @@
 /obj/structure/lattice/catwalk,
 /obj/item/stack/cable_coil,
 /turf/open/space/basic,
-/area/maintenance/solars/starboard/fore)
+/area/solar/port/fore)
 "tss" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/plasteel,
@@ -49630,7 +49630,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/maintenance/solars/starboard/fore)
+/area/solar/port/fore)
 "uuK" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
