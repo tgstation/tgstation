@@ -160,7 +160,7 @@
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
-		I.equipped(src, slot, initial)
+		has_equipped(I, slot, initial)
 
 		// Send a signal for when we equip an item that used to cover our feet/shoes. Used for bloody feet
 		if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)

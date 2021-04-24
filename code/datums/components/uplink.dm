@@ -49,7 +49,7 @@
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
-	uplink_items = get_uplink_items(uplink_flag, TRUE, allow_restricted)
+	update_items()
 
 	if(_owner)
 		owner = _owner
@@ -79,6 +79,20 @@
 /datum/component/uplink/Destroy()
 	purchase_log = null
 	return ..()
+
+/datum/component/uplink/proc/update_items()
+	var/updated_items
+	updated_items = get_uplink_items(uplink_flag, TRUE, allow_restricted)
+	update_sales(updated_items)
+	uplink_items = updated_items
+
+/datum/component/uplink/proc/update_sales(updated_items)
+	var/discount_categories = list("Discounted Gear", "Discounted Team Gear", "Limited Stock Team Gear")
+	if (uplink_items == null)
+		return
+	for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
+		if (uplink_items[category] != null && updated_items[category] != null)
+			updated_items[category] = uplink_items[category]
 
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
 	if(!silent)
@@ -115,6 +129,7 @@
 	if(locked)
 		return
 	active = TRUE
+	update_items()
 	if(user)
 		INVOKE_ASYNC(src, .proc/ui_interact, user)
 	// an unlocked uplink blocks also opening the PDA or headset menu

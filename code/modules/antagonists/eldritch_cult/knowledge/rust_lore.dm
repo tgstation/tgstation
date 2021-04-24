@@ -11,7 +11,7 @@
 
 /datum/eldritch_knowledge/rust_fist
 	name = "Grasp of Rust"
-	desc = "Empowers your Mansus Grasp to deal 500 damage to non-living matter and rust any surface it touches. Already rusted surfaces are destroyed. You only rust surfaces and machinery on harm intent."
+	desc = "Empowers your Mansus Grasp to deal 500 damage to non-living matter and rust any surface it touches. Already rusted surfaces are destroyed. You only rust surfaces and machinery while in combat mode."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen)
@@ -52,11 +52,23 @@
 
 /datum/eldritch_knowledge/rust_regen
 	name = "Leeching Walk"
-	desc = "Passively heals you when you are on rusted tiles."
+	desc = "Passively heals you and provides stun resistance when you are on rusted tiles."
 	gain_text = "The strength was unparalleled, unnatural. The Blacksmith was smiling."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/armor,/datum/eldritch_knowledge/essence)
 	route = PATH_RUST
+
+/datum/eldritch_knowledge/rust_regen/on_gain(mob/user)
+	. = ..()
+	RegisterSignal(user,COMSIG_MOVABLE_MOVED,.proc/on_move)
+
+/datum/eldritch_knowledge/rust_regen/proc/on_move(mob/mover)
+	SIGNAL_HANDLER
+
+	if(istype(get_turf(mover),/turf/open/floor/plating/rust))
+		ADD_TRAIT(mover,TRAIT_STUNRESISTANCE,type)
+	else
+		REMOVE_TRAIT(mover,TRAIT_STUNRESISTANCE,type)
 
 /datum/eldritch_knowledge/rust_regen/on_life(mob/user)
 	. = ..()
@@ -131,20 +143,41 @@
 
 /datum/eldritch_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
-	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resillient overall."
+	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become extremely more resillient."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for the Rustbringer has come! Rusted Hills, CALL MY NAME!"
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_RUST
+	var/list/conditional_immunities = list(TRAIT_STUNIMMUNE,TRAIT_SLEEPIMMUNE,TRAIT_PUSHIMMUNE,TRAIT_SHOCKIMMUNE,TRAIT_NOSLIPALL,TRAIT_RADIMMUNE,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RESISTCOLD,TRAIT_RESISTHEAT,TRAIT_PIERCEIMMUNE,TRAIT_BOMBIMMUNE,TRAIT_NOBREATH)
+	///if this is set to true then immunities are active, if false then they are not active, simple as.
+	var/immunities_active = FALSE
 
 /datum/eldritch_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/H = user
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
 	H.client?.give_award(/datum/award/achievement/misc/rust_ascension, H)
+	RegisterSignal(H,COMSIG_MOVABLE_MOVED,.proc/on_move)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
 	new /datum/rust_spread(loc)
 	return ..()
+
+/datum/eldritch_knowledge/final/rust_final/proc/on_move(mob/mover)
+	SIGNAL_HANDLER
+	var/mover_on_rust = istype(get_turf(mover),/turf/open/floor/plating/rust)
+
+	//We check if we are currently standing on a rust tile, but the immunities are not active, if so apply immunities, set immunities_active to TRUE
+	if(mover_on_rust && !immunities_active)
+		for(var/trait in conditional_immunities)
+			ADD_TRAIT(mover,trait,type)
+		immunities_active = TRUE
+		return
+
+	//We check if we are NOT standing on a rust tile, if so we check if immunities are active, if immunities are active then we de-apply them and set immunities to FALSE
+	if(!mover_on_rust && immunities_active)
+		for(var/trait in conditional_immunities)
+			REMOVE_TRAIT(mover,trait,type)
+		immunities_active = FALSE
 
 
 /datum/eldritch_knowledge/final/rust_final/on_life(mob/user)
@@ -156,9 +189,8 @@
 	human_user.adjustBruteLoss(-4, FALSE)
 	human_user.adjustFireLoss(-4, FALSE)
 	human_user.adjustToxLoss(-4, FALSE, forced = TRUE)
-	human_user.adjustOxyLoss(-2, FALSE)
+	human_user.adjustOxyLoss(-4, FALSE)
 	human_user.adjustStaminaLoss(-20)
-	human_user.AdjustAllImmobility(-10)
 
 /**
  * #Rust spread datum
@@ -196,8 +228,7 @@
 	for(var/i in 0 to spread_am)
 		if(!edge_turfs.len)
 			continue
-		T = pick(edge_turfs)
-		edge_turfs -= T
+		T = pick(edge_turfs - turfs)
 		T.rust_heretic_act()
 		turfs += T
 
@@ -218,6 +249,7 @@
 		max_dist = max(max_dist,get_dist(turfie,centre)+1)
 	turfs -= removal_list
 	for(var/turfie in spiral_range_turfs(max_dist,centre,FALSE))
+
 		if(turfie in turfs || is_type_in_typecache(turfie,blacklisted_turfs))
 			continue
 		for(var/line_turfie_owo in getline(turfie,centre))
