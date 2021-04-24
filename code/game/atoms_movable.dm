@@ -284,6 +284,7 @@
 
 /atom/movable/proc/stop_pulling()
 	if(pulling)
+		SEND_SIGNAL(pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 		pulling.set_pulledby(null)
 		setGrabState(GRAB_PASSIVE)
 		pulling = null
