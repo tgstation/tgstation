@@ -157,9 +157,9 @@ export class Changelog extends Component {
         <p>
           {'Except where otherwise noted, Goon Station 13 is licensed under a '}
           <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">
-            Creative Commons Attribution-Noncommercial-Share Alike 3.0 License.
+            Creative Commons Attribution-Noncommercial-Share Alike 3.0 License
           </a>
-          {' Rights are currently extended to '}
+          {'. Rights are currently extended to '}
           <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a>
           {' only.'}
         </p>
