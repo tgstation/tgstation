@@ -367,6 +367,7 @@
 	icon_state_off = "corner_off"
 	icon_state_open = "corner_open"
 	icon_state_active = "corner_active"
+	dir = SOUTHEAST
 
 /obj/item/paper/guides/jobs/atmos/hypertorus
 	name = "paper- 'Quick guide to safe handling of the HFR'"
@@ -392,3 +393,89 @@
 	-In case of a power shortage, the fusion reaction will CONTINUE but the cooling will STOP<BR><BR>\
 	The writer of the quick guide will not be held responsible for misuses and meltdown caused by the use of the guide, \
 	use more advanced guides to understando how the various gases will act as moderators."
+
+/obj/item/hfr_box
+	name = "HFR box"
+	desc = "If you see this, call the police."
+	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon_state = "box"
+	///What kind of box are we handling?
+	var/box_type = "impossible"
+	///What's the path of the machine we making
+	var/part_path
+
+/obj/item/hfr_box/corner
+	name = "HFR box corner"
+	desc = "Place this as the corner of your 3x3 multiblock fusion reactor"
+	icon_state = "box_corner"
+	box_type = "corner"
+	part_path = /obj/machinery/hypertorus/corner
+
+/obj/item/hfr_box/body
+	name = "HFR box body"
+	desc = "Place this on the sides of the core box of your 3x3 multiblock fusion reactor"
+	box_type = "body"
+	icon_state = "box_body"
+
+/obj/item/hfr_box/body/fuel_input
+	name = "HFR box fuel input"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
+
+/obj/item/hfr_box/body/moderator_input
+	name = "HFR box moderator input"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
+
+/obj/item/hfr_box/body/waste_output
+	name = "HFR box waste output"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
+
+/obj/item/hfr_box/body/interface
+	name = "HFR box interface"
+	part_path = /obj/machinery/hypertorus/interface
+
+/obj/item/hfr_box/core
+	name = "HFR box core"
+	desc = "Activate this with a multitool to deploy the full machine after setting up the other boxes"
+	icon_state = "box_core"
+	box_type = "core"
+	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/core
+
+/obj/item/hfr_box/core/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	var/list/parts = list()
+	for(var/obj/item/hfr_box/box in orange(1,src))
+		var/direction = get_dir(src, box)
+		if(box.box_type == "corner")
+			if(ISDIAGONALDIR(direction))
+				box.dir = direction
+				parts |= box
+			continue
+		if(box.box_type == "body")
+			if(direction in GLOB.cardinals)
+				box.dir = DIRFLIP(direction)
+				parts |= box
+			continue
+	if(parts.len == 8)
+		build_reactor(parts)
+	return
+
+/obj/item/hfr_box/core/proc/build_reactor(list/parts)
+	for(var/obj/item/hfr_box/box in parts)
+		if(box.box_type == "corner")
+			var/obj/machinery/hypertorus/corner/corner = new box.part_path(box.loc)
+			corner.dir = box.dir
+			qdel(box)
+			continue
+		if(box.box_type == "body")
+			var/location = get_turf(box)
+			if(box.part_path != /obj/machinery/hypertorus/interface)
+				var/obj/machinery/atmospherics/components/unary/hypertorus/part = new box.part_path(location, TRUE, box.dir)
+				part.dir = box.dir
+			else
+				var/obj/machinery/hypertorus/interface/part = new box.part_path(location)
+				part.dir = box.dir
+			qdel(box)
+			continue
+
+	new/obj/machinery/atmospherics/components/unary/hypertorus/core(loc, TRUE)
+	qdel(src)
