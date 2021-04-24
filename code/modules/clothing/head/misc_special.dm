@@ -165,7 +165,7 @@
 
 	dog_fashion = /datum/dog_fashion/head/kitty
 
-/obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/head/kitty/visual_equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		update_icon(ALL, user)
 		user.update_inv_head() //Color might have been changed by update_appearance.
@@ -294,7 +294,7 @@
 	hairstyle = pick(GLOB.hairstyles_list - "Bald")
 	. = ..()
 
-/obj/item/clothing/head/wig/natural/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
 		if (color != "#[user.hair_color]") // only update if necessary
