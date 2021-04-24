@@ -409,71 +409,28 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "P" = (
 /obj/machinery/status_display/ai,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
-"Q" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/arrival)
 "R" = (
 /obj/structure/chair/office,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "S" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/arrival)
-"U" = (
-/obj/machinery/computer{
-	dir = 1;
-	name = "Shuttle computer"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "V" = (
 /obj/machinery/computer{
 	dir = 1;
 	name = "Shuttle computer"
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 
 (1,1,1) = {"
@@ -548,8 +505,8 @@ B
 p
 I
 N
-Q
-U
+S
+V
 h
 "}
 (5,1,1) = {"
@@ -587,7 +544,7 @@ p
 K
 P
 S
-U
+V
 h
 "}
 (7,1,1) = {"

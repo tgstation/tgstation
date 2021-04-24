@@ -21001,6 +21001,7 @@
 /area/maintenance/central)
 "iOZ" = (
 /obj/structure/window/reinforced,
+/obj/structure/tank_holder/emergency_oxygen,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "iPo" = (
@@ -49592,10 +49593,6 @@
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
-"utM" = (
-/obj/structure/tank_holder/emergency_oxygen,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "utR" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
@@ -72210,7 +72207,7 @@ qbq
 cVf
 bXz
 cVf
-utM
+qPX
 pgt
 cVf
 qbq

@@ -298,7 +298,7 @@
 
 /obj/structure/fluff/palacechest
 	name = "scratched chest"
-	desc = "You see something moving inside of it through the keyhole."
+	desc = "A heavy steel chest, covered in deep inhuman scratches. You see something moving inside of it through the keyhole."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "palacechest"
 	layer = TURF_LAYER
@@ -315,7 +315,7 @@
 			playsound(loc, 'sound/machines/wooden_closet_open.ogg', 50, TRUE)
 			opened = TRUE
 			icon_state = "palacechest_open"
-			desc = "An empty chest."
+			desc = "An empty chest. There's white fur inside of it."
 			new /obj/item/britevidence/ribbon(loc)
 			for(var/obj/structure/fluff/mannequin/hallucinations in range(7, src))
 				hallucinations.say("Going so soon?")
