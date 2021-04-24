@@ -179,6 +179,11 @@ export class Changelog extends Component {
               this.setData(null);
               this.setSelectedIndex(index);
               this.setSelectedDate(dateChoices[index]);
+              window.scrollTo(
+                0,
+                document.body.scrollHeight
+                || document.documentElement.scrollHeight
+              );
               return this.getData(dates[index] + '.yml');
             }} />
         </Stack.Item>
@@ -192,6 +197,11 @@ export class Changelog extends Component {
               this.setData(null);
               this.setSelectedIndex(index);
               this.setSelectedDate(value);
+              window.scrollTo(
+                0,
+                document.body.scrollHeight
+                || document.documentElement.scrollHeight
+              );
               return this.getData(dates[index] + '.yml');
             }}
             selected={selectedDate}
@@ -208,6 +218,11 @@ export class Changelog extends Component {
               this.setData(null);
               this.setSelectedIndex(index);
               this.setSelectedDate(dateChoices[index]);
+              window.scrollTo(
+                0,
+                document.body.scrollHeight
+                || document.documentElement.scrollHeight
+              );
               return this.getData(dates[index] + '.yml');
             }} />
         </Stack.Item>
