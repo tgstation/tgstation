@@ -106,67 +106,7 @@ export class Changelog extends Component {
     const { data: { dates } } = useBackend(this.context);
     const { dateChoices } = this;
 
-    const header = (
-      <>
-        <h1>Traditional Games Space Station 13</h1>
-        <p>
-          <b>Thanks to: </b>
-          Baystation 12, /vg/station, NTstation, CDK Station devs,
-          FacepunchStation, GoonStation devs, the original Space Station 13
-          developers, Invisty for the title image and the countless others who
-          have contributed to the game, issue tracker or wiki over the years.
-        </p>
-        <p>
-          {'Current project maintainers can be found '}
-          <a href="https://github.com/tgstation?tab=members">
-            here
-          </a>
-          {', recent GitHub contributors can be found '}
-          <a href="https://github.com/tgstation/tgstation/pulse/monthly">
-            here
-          </a>.
-        </p>
-        <p>
-          {'You can also join our discord '}
-          <a href="https://tgstation13.org/phpBB/viewforum.php?f=60">
-            here
-          </a>.
-        </p>
-      </>
-    );
-
-    const footer = (
-      <>
-        <p>
-          <b>Licence: </b>
-          <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">
-            GNU Affero General Public License 3.0
-          </a>
-        </p>
-        <h3>GoonStation 13 Development Team</h3>
-        <p>
-          <b>Coders: </b>
-          Stuntwaffle, Showtime, Pantaloons, Nannek, Keelin, Exadv1, hobnob,
-          Justicefries, 0staf, sniperchance, AngriestIBM, BrianOBlivion
-        </p>
-        <p>
-          <b>Spriters: </b>
-          Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange,
-          I Said No
-        </p>
-        <p>
-          {'Except where otherwise noted, Goon Station 13 is licensed under a '}
-          <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">
-            Creative Commons Attribution-Noncommercial-Share Alike 3.0 License
-          </a>
-          {'. Rights are currently extended to '}
-          <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a>
-          {' only.'}
-        </p>
-      </>
-    );
-
-    const dateDropdown = (
+    const dateDropdown = dateChoices && (
       <Stack mb={1}>
         <Stack.Item>
           <Button
@@ -229,6 +169,62 @@ export class Changelog extends Component {
       </Stack>
     );
 
+    const header = (
+      <Section>
+        <h1>Traditional Games Space Station 13</h1>
+        <p>
+          <b>Thanks to: </b>
+          Baystation 12, /vg/station, NTstation, CDK Station devs,
+          FacepunchStation, GoonStation devs, the original Space Station 13
+          developers, Invisty for the title image and the countless others who
+          have contributed to the game, issue tracker or wiki over the years.
+        </p>
+        <p>
+          {'Current project maintainers can be found '}
+          <a href="https://github.com/tgstation?tab=members">
+            here
+          </a>
+          {', recent GitHub contributors can be found '}
+          <a href="https://github.com/tgstation/tgstation/pulse/monthly">
+            here
+          </a>.
+        </p>
+        <p>
+          {'You can also join our discord '}
+          <a href="https://tgstation13.org/phpBB/viewforum.php?f=60">
+            here
+          </a>.
+        </p>
+        {dateDropdown}
+      </Section>
+    );
+
+    const footer = (
+      <Section>
+        {dateDropdown}
+        <h3>GoonStation 13 Development Team</h3>
+        <p>
+          <b>Coders: </b>
+          Stuntwaffle, Showtime, Pantaloons, Nannek, Keelin, Exadv1, hobnob,
+          Justicefries, 0staf, sniperchance, AngriestIBM, BrianOBlivion
+        </p>
+        <p>
+          <b>Spriters: </b>
+          Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange,
+          I Said No
+        </p>
+        <p>
+          {'Except where otherwise noted, Goon Station 13 is licensed under a '}
+          <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">
+            Creative Commons Attribution-Noncommercial-Share Alike 3.0 License
+          </a>
+          {'. Rights are currently extended to '}
+          <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a>
+          {' only.'}
+        </p>
+      </Section>
+    );
+
     const changes = data && (
       Object.entries(data).reverse().map(([date, authors]) => (
         <Section key={date} title={dateformat(date, 'd mmmm yyyy')}>
@@ -276,11 +272,9 @@ export class Changelog extends Component {
       <Window title="Changelog" width={675} height={650}>
         <Window.Content scrollable>
           {header}
-          {dateDropdown}
           {changes}
           {!data && <p>Loading changelog data...</p>}
           {data === 'error' && <p>Failed to load data after 3 attempts</p>}
-          {dateDropdown}
           {footer}
         </Window.Content>
       </Window>
