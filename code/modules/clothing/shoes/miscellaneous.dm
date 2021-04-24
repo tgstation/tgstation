@@ -272,8 +272,8 @@
 		recharging_time = world.time + recharging_rate
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
-		
-/obj/item/clothing/shoes/bhop/rocket 
+
+/obj/item/clothing/shoes/bhop/rocket
 	name = "rocket boots"
 	desc = "Very special boots with built-in rocket thrusters! SHAZBOT!"
 	icon_state = "rocketboots"
@@ -544,3 +544,7 @@
 /obj/item/clothing/shoes/gunboots/Initialize()
 	. = ..()
 	AddComponent(/datum/component/projectile_shooter, projectile_type = projectile_type, shot_prob = shot_prob, signal_or_sig_list = list(COMSIG_SHOES_STEP_ACTION, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))
+
+/obj/item/clothing/shoes/gunboots/disabler
+	name = "disaboots"
+	projectile_type = /obj/projectile/beam/disabler
