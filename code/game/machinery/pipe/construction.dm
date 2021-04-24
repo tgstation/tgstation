@@ -27,7 +27,7 @@ Buildable meters
 	///Color of the pipe is going to be made from this pipe-object
 	var/pipe_color
 	///Initial direction of the created pipe (either made from the RPD or after unwrenching the pipe)
-	var/p_init_dir = 0
+	var/p_init_dir = SOUTH
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
@@ -47,7 +47,7 @@ Buildable meters
 	//Flipping handled manually due to custom handling for trinary pipes
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
-/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = 0)
+/obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
 	if(make_from)
 		make_from_existing(make_from)
 	else

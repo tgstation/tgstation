@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ColorBox, Dimmer, Stack, LabeledList, Section, Tabs } from '../components';
+import { Box, Button, ColorBox, Dimmer, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const ROOT_CATEGORIES = [

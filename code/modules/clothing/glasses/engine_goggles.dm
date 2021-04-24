@@ -188,3 +188,4 @@
 #undef MODE_TRAY
 #undef MODE_RAD
 #undef MODE_SHUTTLE
+#undef MODE_PIPE_CONNECTABLE

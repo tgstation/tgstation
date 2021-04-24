@@ -483,10 +483,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
 						var/obj/item/pipe/pipe_type
 						if(ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart))
-							pipe_type = new pipe_item_type(get_turf(attack_target), queued_p_type, queued_p_dir, null, GLOB.pipe_paint_colors[paint_color], p_init_dir)
-						else
-							pipe_type = new pipe_item_type(get_turf(attack_target), queued_p_type, queued_p_dir, null, GLOB.pipe_paint_colors[paint_color])
-
+							pipe_type = new pipe_item_type(
+							get_turf(attack_target),
+							queued_p_type,
+							queued_p_dir,
+							null,
+							GLOB.pipe_paint_colors[paint_color],
+							ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart) ? p_init_dir : null,
+						)
 						if(queued_p_flipped && istype(pipe_type, /obj/item/pipe/trinary/flippable))
 							var/obj/item/pipe/trinary/flippable/F = pipe_type
 							F.flipped = queued_p_flipped
