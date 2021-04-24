@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
@@ -13,7 +12,7 @@ export const Electrolyzer = (props, context) => {
         <Section
           title="Power"
           buttons={(
-            <Fragment>
+            <>
               <Button
                 icon="eject"
                 content="Eject Cell"
@@ -25,7 +24,7 @@ export const Electrolyzer = (props, context) => {
                 selected={data.on}
                 disabled={!data.hasPowercell}
                 onClick={() => act('power')} />
-            </Fragment>
+            </>
           )}>
           <LabeledList>
             <LabeledList.Item

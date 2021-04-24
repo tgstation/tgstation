@@ -20,6 +20,9 @@
 	var/suicide_mob
 	var/hearing_range = 1
 
+	/// String containing the last piece of logging data relating to when this signaller has received a signal.
+	var/last_receive_signal_log
+
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
@@ -36,9 +39,9 @@
 		user.visible_message("<span class='suicide'>[user]'s [src] receives a signal, killing [user.p_them()] instantly!</span>")
 	else
 		user.visible_message("<span class='suicide'>[user]'s [src] receives a signal and [user.p_they()] die[user.p_s()] like a gamer!</span>")
+	user.set_suicide(TRUE)
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
-	user.set_suicide(TRUE)
 	user.suicide_log()
 	playsound(user, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	qdel(src)
@@ -58,10 +61,9 @@
 	signal()
 	return TRUE
 
-/obj/item/assembly/signaler/update_icon()
-	if(holder)
-		holder.update_icon()
-	return
+/obj/item/assembly/signaler/update_appearance()
+	. = ..()
+	holder?.update_appearance()
 
 /obj/item/assembly/signaler/ui_status(mob/user)
 	if(is_secured(user))
@@ -83,7 +85,8 @@
 	return data
 
 /obj/item/assembly/signaler/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -106,7 +109,7 @@
 				code = initial(code)
 			. = TRUE
 
-	update_icon()
+	update_appearance()
 
 /obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
 	if(issignaler(W))
@@ -121,13 +124,16 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new(list("code" = code))
-	radio_connection.post_signal(src, signal)
-
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
+
+	var/logging_data
 	if(usr)
-		GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
+		logging_data = "[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]"
+		GLOB.lastsignalers.Add(logging_data)
+
+	var/datum/signal/signal = new(list("code" = code), logging_data = logging_data)
+	radio_connection.post_signal(src, signal)
 
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
 	. = FALSE
@@ -140,8 +146,12 @@
 	if(suicider)
 		manual_suicide(suicider)
 		return
+
+	// If the holder is a TTV, we want to store the last received signal to incorporate it into TTV logging, else wipe it.
+	last_receive_signal_log = istype(holder, /obj/item/transfer_valve) ? signal.logging_data : null
+
 	pulse(TRUE)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
+	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/CHM in get_hearers_in_view(hearing_range, src))
 		if(ismob(CHM))
 			var/mob/LM = CHM

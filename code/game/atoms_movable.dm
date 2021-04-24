@@ -11,9 +11,11 @@
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
+	///Max range this atom can be thrown via telekinesis
+	var/tk_throw_range = 10
 	var/mob/pulledby = null
 	var/initial_language_holder = /datum/language_holder
-	var/datum/language_holder/language_holder	// Mindless mobs and objects need language too, some times. Mind holder takes prescedence.
+	var/datum/language_holder/language_holder // Mindless mobs and objects need language too, some times. Mind holder takes prescedence.
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -26,16 +28,23 @@
 	var/inertia_moving = 0
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
+	/// Things we can pass through while moving. If any of this matches the thing we're trying to pass's [pass_flags_self], then we can pass through.
 	var/pass_flags = NONE
 	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
-	var/atom/movable/moving_from_pull		//attempt to resume grab after moving instead of before.
+	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
-	var/list/acted_explosions	//for explosion dodging
-	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	///In case you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc. Should only be changed through setMovetype()
+	var/list/area_sensitive_contents // A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
+	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
+
+	/**
+	  * In case you have multiple types, you automatically use the most useful one.
+	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
+	  * I reccomend you use the movetype_handler system and not modify this directly, especially for living mobs.
+	  */
 	var/movement_type = GROUND
+
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
@@ -60,20 +69,30 @@
 	///Highest-intensity light affecting us, which determines our visibility.
 	var/affecting_dynamic_lumi = 0
 
+	/// Whether this atom should have its dir automatically changed when it moves. Setting this to FALSE allows for things such as directional windows to retain dir on moving without snowflake code all of the place.
+	var/set_dir_on_move = TRUE
+
 
 /atom/movable/Initialize(mapload)
 	. = ..()
 	switch(blocks_emissive)
 		if(EMISSIVE_BLOCK_GENERIC)
-			update_emissive_block()
+			var/mutable_appearance/gen_emissive_blocker = mutable_appearance(icon, icon_state, 0, EMISSIVE_BLOCKER_PLANE)
+			gen_emissive_blocker.dir = dir
+			gen_emissive_blocker.alpha = alpha
+			gen_emissive_blocker.appearance_flags |= appearance_flags
+			add_overlay(list(gen_emissive_blocker))
 		if(EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
 			em_block = new(src, render_target)
-			vis_contents += em_block
+			add_overlay(list(em_block))
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
-	if(light_system == MOVABLE_LIGHT)
-		AddComponent(/datum/component/overlay_lighting)
+	switch(light_system)
+		if(MOVABLE_LIGHT)
+			AddComponent(/datum/component/overlay_lighting)
+		if(MOVABLE_LIGHT_DIRECTIONAL)
+			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
 
 
 /atom/movable/Destroy(force)
@@ -87,7 +106,7 @@
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
 		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
 			CanAtmosPass = ATMOS_PASS_YES
-			air_update_turf(TRUE)
+			air_update_turf(TRUE, FALSE)
 		loc.handle_atom_del(src)
 
 	if(opacity)
@@ -104,6 +123,9 @@
 
 	. = ..()
 
+	//We add ourselves to this list, best to clear it out
+	LAZYCLEARLIST(area_sensitive_contents)
+
 	for(var/movable_content in contents)
 		qdel(movable_content)
 
@@ -111,17 +133,26 @@
 
 	moveToNullspace()
 
+	vis_contents.Cut()
 
 /atom/movable/proc/update_emissive_block()
-	if(blocks_emissive != EMISSIVE_BLOCK_GENERIC)
+	if(!blocks_emissive)
 		return
-	if(length(managed_vis_overlays))
-		for(var/a in managed_vis_overlays)
-			var/obj/effect/overlay/vis/vs
-			if(vs.plane == EMISSIVE_BLOCKER_PLANE)
-				SSvis_overlays.remove_vis_overlay(src, list(vs))
-				break
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE, dir)
+	else if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
+		var/mutable_appearance/gen_emissive_blocker = mutable_appearance(icon, icon_state, 0, EMISSIVE_BLOCKER_PLANE)
+		gen_emissive_blocker.dir = dir
+		gen_emissive_blocker.alpha = alpha
+		gen_emissive_blocker.appearance_flags |= appearance_flags
+		return gen_emissive_blocker
+	else if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
+		if(!em_block)
+			render_target = ref(src)
+			em_block = new(src, render_target)
+		return em_block
+
+/atom/movable/update_overlays()
+	. = ..()
+	. += update_emissive_block()
 
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
 	if(!direction)
@@ -165,44 +196,55 @@
 			return FALSE
 	return T.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, T)
 
+
 /atom/movable/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("step_x", "step_y", "step_size", "bounds")
-	var/static/list/careful_edits = list("bound_x", "bound_y", "bound_width", "bound_height")
-	if(var_name in banned_edits)
-		return FALSE	//PLEASE no.
-	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
+	var/static/list/banned_edits = list("step_x" = TRUE, "step_y" = TRUE, "step_size" = TRUE, "bounds" = TRUE)
+	var/static/list/careful_edits = list("bound_x" = TRUE, "bound_y" = TRUE, "bound_width" = TRUE, "bound_height" = TRUE)
+	if(banned_edits[var_name])
+		return FALSE //PLEASE no.
+	if((careful_edits[var_name]) && (var_value % world.icon_size) != 0)
 		return FALSE
+
 	switch(var_name)
-		if(NAMEOF(src, anchored))
-			set_anchored(var_value)
-			return TRUE
 		if(NAMEOF(src, x))
 			var/turf/T = locate(var_value, y, z)
 			if(T)
-				forceMove(T)
+				admin_teleport(T)
 				return TRUE
 			return FALSE
 		if(NAMEOF(src, y))
 			var/turf/T = locate(x, var_value, z)
 			if(T)
-				forceMove(T)
+				admin_teleport(T)
 				return TRUE
 			return FALSE
 		if(NAMEOF(src, z))
 			var/turf/T = locate(x, y, var_value)
 			if(T)
-				forceMove(T)
+				admin_teleport(T)
 				return TRUE
 			return FALSE
 		if(NAMEOF(src, loc))
-			if(istype(var_value, /atom))
-				forceMove(var_value)
-				return TRUE
-			else if(isnull(var_value))
-				moveToNullspace()
+			if(isatom(var_value) || isnull(var_value))
+				admin_teleport(var_value)
 				return TRUE
 			return FALSE
+		if(NAMEOF(src, anchored))
+			set_anchored(var_value)
+			. = TRUE
+		if(NAMEOF(src, pulledby))
+			set_pulledby(var_value)
+			. = TRUE
+		if(NAMEOF(src, glide_size))
+			set_glide_size(var_value)
+			. = TRUE
+
+	if(!isnull(.))
+		datum_flags |= DF_VAR_EDITED
+		return
+
 	return ..()
+
 
 /atom/movable/proc/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	if(QDELETED(AM))
@@ -243,12 +285,8 @@
 /atom/movable/proc/stop_pulling()
 	if(pulling)
 		pulling.set_pulledby(null)
-		var/mob/living/ex_pulled = pulling
 		setGrabState(GRAB_PASSIVE)
 		pulling = null
-		if(isliving(ex_pulled))
-			var/mob/living/L = ex_pulled
-			L.update_mobility()// mob gets up if it was lyng down in a chokehold
 
 
 ///Reports the event of the change in value of the pulledby variable.
@@ -301,7 +339,7 @@
 		if(pulling.anchored || pulling.move_resist > move_force)
 			stop_pulling()
 			return
-	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)		//separated from our puller and not in the middle of a diagonal move.
+	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1) //separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
 
@@ -324,7 +362,9 @@
 
 	if(!direct)
 		direct = get_dir(src, newloc)
-	setDir(direct)
+
+	if(set_dir_on_move)
+		setDir(direct)
 
 	if(!loc.Exit(src, newloc))
 		return
@@ -424,7 +464,7 @@
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 			if(moving_diagonally == SECOND_DIAG_STEP)
-				if(!.)
+				if(!. && set_dir_on_move)
 					setDir(first_step_dir)
 				else if (!inertia_moving)
 					inertia_next_move = world.time + inertia_move_delay
@@ -443,8 +483,8 @@
 			stop_pulling()
 		else
 			var/pull_dir = get_dir(src, pulling)
-			//puller and pullee more than one tile away or in diagonal position
-			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+			//puller and pullee more than one tile away or in diagonal position and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
+			if(!pulling.pulling?.moving_from_pull && (get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir))))
 				pulling.moving_from_pull = src
 				pulling.Move(T, get_dir(pulling, T), glide_size) //the pullee tries to reach our previous position
 				pulling.moving_from_pull = null
@@ -457,7 +497,9 @@
 		set_glide_size(glide_size_override)
 
 	last_move = direct
-	setDir(direct)
+
+	if(set_dir_on_move)
+		setDir(direct)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
 		return FALSE
 
@@ -479,6 +521,7 @@
 /atom/movable/Cross(atom/movable/AM)
 	. = TRUE
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, AM)
+	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSS_OVER, src)
 	return CanPass(AM, AM.loc, TRUE)
 
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
@@ -486,16 +529,35 @@
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
+	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, src)
 
-/atom/movable/Uncross(atom/movable/AM, atom/newloc)
-	. = ..()
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSS, AM) & COMPONENT_MOVABLE_BLOCK_UNCROSS)
-		return FALSE
-	if(isturf(newloc) && !CheckExit(AM, newloc))
-		return FALSE
+/**
+ * `Uncross()` is a default BYOND proc that is called when something is *going*
+ * to exit this atom's turf. It is prefered over `Uncrossed` when you want to
+ * deny that movement, such as in the case of border objects, objects that allow
+ * you to walk through them in any direction except the one they block
+ * (think side windows).
+ *
+ * While being seemingly harmless, most everything doesn't actually want to
+ * use this, meaning that we are wasting proc calls for every single atom
+ * on a turf, every single time something exits it, when basically nothing
+ * cares.
+ *
+ * This overhead caused real problems on Sybil round #159709, where lag
+ * attributed to Uncross was so bad that the entire master controller
+ * collapsed and people made Among Us lobbies in OOC.
+ *
+ * If you want to replicate the old `Uncross()` behavior, the most apt
+ * replacement is [`/datum/element/connect_loc`] while hooking onto
+ * [`COMSIG_ATOM_EXIT`].
+ */
+/atom/movable/Uncross()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	CRASH("Uncross() should not be being called, please read the doc-comment for it for why.")
 
 /atom/movable/Uncrossed(atom/movable/AM)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
+	SEND_SIGNAL(AM, COMSIG_MOVABLE_UNCROSSED_OVER, src)
 
 /atom/movable/Bump(atom/A)
 	if(!A)
@@ -508,6 +570,33 @@
 		if(QDELETED(A))
 			return
 	A.Bumped(src)
+
+/atom/movable/Exited(atom/movable/AM, atom/newLoc)
+	. = ..()
+	if(AM.area_sensitive_contents)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYREMOVE(location.area_sensitive_contents, AM.area_sensitive_contents)
+
+/atom/movable/Entered(atom/movable/AM, atom/oldLoc)
+	. = ..()
+	if(AM.area_sensitive_contents)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYADD(location.area_sensitive_contents, AM.area_sensitive_contents)
+
+/// See traits.dm. Use this in place of ADD_TRAIT.
+/atom/movable/proc/become_area_sensitive(trait_source = TRAIT_GENERIC)
+	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), .proc/on_area_sensitive_trait_loss)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYADD(location.area_sensitive_contents, src)
+	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
+
+/atom/movable/proc/on_area_sensitive_trait_loss()
+	SIGNAL_HANDLER
+
+	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
+	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+		LAZYREMOVE(location.area_sensitive_contents, src)
 
 ///Sets the anchored var and returns if it was sucessfully changed or not.
 /atom/movable/proc/set_anchored(anchorvalue)
@@ -583,31 +672,22 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
-
-///Proc to modify the movement_type and hook behavior associated with it changing.
-/atom/movable/proc/setMovetype(newval)
-	if(movement_type == newval)
-		return
-	. = movement_type
-	movement_type = newval
-
-
 /**
-  * Called whenever an object moves and by mobs when they attempt to move themselves through space
-  * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
-  *
-  * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-  *
-  * Mobs should return 1 if they should be able to move of their own volition, see [/client/Move]
-  *
-  * Arguments:
-  * * movement_dir - 0 when stopping or any dir when trying to move
-  */
+ * Called whenever an object moves and by mobs when they attempt to move themselves through space
+ * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
+ *
+ * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+ *
+ * Mobs should return 1 if they should be able to move of their own volition, see [/client/proc/Move]
+ *
+ * Arguments:
+ * * movement_dir - 0 when stopping or any dir when trying to move
+ */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
 		return TRUE
 
-	if(pulledby)
+	if(pulledby && (pulledby.pulledby != src || moving_from_pull))
 		return TRUE
 
 	if(throwing)
@@ -624,7 +704,7 @@
 
 /// Only moves the object if it's under no gravity
 /atom/movable/proc/newtonian_move(direction)
-	if(!loc || Process_Spacemove(0))
+	if(!isturf(loc) || Process_Spacemove(0))
 		inertia_dir = 0
 		return FALSE
 
@@ -729,7 +809,8 @@
 
 	if(pulledby)
 		pulledby.stop_pulling()
-
+	if (quickstart && (throwing || SSthrowing.state == SS_RUNNING)) //Avoid stack overflow edgecases.
+		quickstart = FALSE
 	throwing = TT
 	if(spin)
 		SpinAnimation(5, 1)
@@ -781,11 +862,11 @@
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /atom/movable/proc/on_exit_storage(datum/component/storage/concrete/master_storage)
-	SEND_SIGNAL(src, CONSIG_STORAGE_EXITED, master_storage)
+	SEND_SIGNAL(src, COMSIG_STORAGE_EXITED, master_storage)
 
 /// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /atom/movable/proc/on_enter_storage(datum/component/storage/concrete/master_storage)
-	SEND_SIGNAL(src, COMISG_STORAGE_ENTERED, master_storage)
+	SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, master_storage)
 
 /atom/movable/proc/get_spacemove_backup()
 	var/atom/movable/dense_object_backup
@@ -837,8 +918,8 @@
 
 	var/matrix/initial_transform = matrix(transform)
 	var/matrix/rotated_transform = transform.Turn(15 * turn_dir)
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN)
-	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING)
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -883,31 +964,9 @@
 	. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]'>Follow</option>"
 	. += "<option value='?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]'>Get</option>"
 
-/atom/movable/proc/ex_check(ex_id)
-	if(!ex_id)
-		return TRUE
-	LAZYINITLIST(acted_explosions)
-	if(ex_id in acted_explosions)
-		return FALSE
-	acted_explosions += ex_id
-	return TRUE
 
-//TODO: Better floating
-/atom/movable/proc/float(on)
-	if(throwing)
-		return
-	if(on && !(movement_type & FLOATING))
-		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
-		sleep(10)
-		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		setMovetype(movement_type | FLOATING)
-	else if (!on && (movement_type & FLOATING))
-		animate(src, pixel_y = initial(pixel_y), time = 10)
-		setMovetype(movement_type & ~FLOATING)
-
-
-/* 	Language procs
-*	Unless you are doing something very specific, these are the ones you want to use.
+/* Language procs
+* Unless you are doing something very specific, these are the ones you want to use.
 */
 
 /// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
@@ -992,13 +1051,7 @@
 
 /* End language procs */
 
-
-/atom/movable/proc/ConveyorMove(movedir)
-	set waitfor = FALSE
-	if(!anchored && has_gravity())
-		step(src, movedir)
-
-///Returns an atom's power cell, if it has one. Overload for individual items.
+//Returns an atom's power cell, if it has one. Overload for individual items.
 /atom/movable/proc/get_cell()
 	return
 
@@ -1012,27 +1065,69 @@
 	return TRUE
 
 /**
-  * Updates the grab state of the movable
-  *
-  * This exists to act as a hook for behaviour
-  */
+ * Updates the grab state of the movable
+ *
+ * This exists to act as a hook for behaviour
+ */
 /atom/movable/proc/setGrabState(newstate)
 	if(newstate == grab_state)
 		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
 	. = grab_state
 	grab_state = newstate
-	switch(.) //Previous state.
-		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
-			if(grab_state >= GRAB_NECK)
-				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
-				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
-	switch(grab_state) //Current state.
-		if(GRAB_PASSIVE, GRAB_AGGRESSIVE)
-			if(. >= GRAB_NECK)
-				REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+	switch(grab_state) // Current state.
+		if(GRAB_PASSIVE)
+			REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+			REMOVE_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+			if(. >= GRAB_NECK) // Previous state was a a neck-grab or higher.
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+		if(GRAB_AGGRESSIVE)
+			if(. >= GRAB_NECK) // Grab got downgraded.
+				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+			else // Grab got upgraded from a passive one.
+				ADD_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
+				ADD_TRAIT(pulling, TRAIT_HANDS_BLOCKED, CHOKEHOLD_TRAIT)
+		if(GRAB_NECK, GRAB_KILL)
+			if(. <= GRAB_AGGRESSIVE)
+				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 
+/**
+ * Adds the deadchat_plays component to this atom with simple movement commands.
+ *
+ * Returns the component added.
+ * Arguments:
+ * * mode - Either ANARCHY_MODE or DEMOCRACY_MODE passed to the deadchat_control component. See [/datum/component/deadchat_control] for more info.
+ * * cooldown - The cooldown between command inputs passed to the deadchat_control component. See [/datum/component/deadchat_control] for more info.
+ */
+/atom/movable/proc/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	return AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown)
+
+/atom/movable/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
+
+/atom/movable/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
+		if(alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", "Allow", "Cancel") == "Cancel")
+			return
+
+		// Alert is async, so quick sanity check to make sure we should still be doing this.
+		if(QDELETED(src))
+			return
+
+		// This should never happen, but if it does it should not be silent.
+		if(deadchat_plays() == COMPONENT_INCOMPATIBLE)
+			to_chat(usr, "<span class='warning'>Deadchat control not compatible with [src].</span>")
+			CRASH("deadchat_control component incompatible with object of type: [type]")
+
+		to_chat(usr, "<span class='notice'>Deadchat now control [src].</span>")
+		log_admin("[key_name(usr)] has added deadchat control to [src]")
+		message_admins("<span class='notice'>[key_name(usr)] has added deadchat control to [src]</span>")
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
@@ -1044,24 +1139,32 @@
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	var/turf/T = get_turf(src)
 	var/direction
-	var/to_x = 0
-	var/to_y = 0
+	var/to_x = target.base_pixel_x
+	var/to_y = target.base_pixel_y
 
 	if(!QDELETED(T) && !QDELETED(target))
 		direction = get_dir(T, target)
 	if(direction & NORTH)
-		to_y = 32
+		to_y += 32
 	else if(direction & SOUTH)
-		to_y = -32
+		to_y -= 32
 	if(direction & EAST)
-		to_x = 32
+		to_x += 32
 	else if(direction & WEST)
-		to_x = -32
+		to_x -= 32
 	if(!direction)
-		to_y = 16
+		to_y += 16
 	flick_overlay(I, GLOB.clients, 6)
 	var/matrix/M = new
 	M.Turn(pick(-30, 30))
 	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
 	sleep(1)
 	animate(I, alpha = 0, transform = matrix(), time = 1)
+
+/**
+* A wrapper for setDir that should only be able to fail by living mobs.
+*
+* Called from [/atom/movable/proc/keyLoop], this exists to be overwritten by living mobs with a check to see if we're actually alive enough to change directions
+*/
+/atom/movable/proc/keybind_face_direction(direction)
+	setDir(direction)

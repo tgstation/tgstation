@@ -18,11 +18,10 @@
 	playing.play(watcher)
 	qdel(playing)
 
-/obj/screen/cinematic
+/atom/movable/screen/cinematic
 	icon = 'icons/effects/station_explosion.dmi'
 	icon_state = "station_intact"
 	plane = SPLASHSCREEN_PLANE
-	layer = SPLASHSCREEN_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = "BOTTOM,LEFT+50%"
 	appearance_flags = APPEARANCE_UI | TILE_BOUND
@@ -32,7 +31,7 @@
 	var/list/watching = list() //List of clients watching this
 	var/list/locked = list() //Who had notransform set during the cinematic
 	var/is_global = FALSE //Global cinematics will override mob-specific ones
-	var/obj/screen/cinematic/screen
+	var/atom/movable/screen/cinematic/screen
 	var/datum/callback/special_callback //For special effects synced with animation (explosions after the countdown etc)
 	var/cleanup_time = 300 //How long for the final screen to remain
 	var/stop_ooc = TRUE //Turns off ooc when played globally.
@@ -74,7 +73,7 @@
 		ooc_toggled = TRUE
 		toggle_ooc(FALSE)
 
-	//Place /obj/screen/cinematic into everyone's screens, prevent them from moving
+	//Place /atom/movable/screen/cinematic into everyone's screens, prevent them from moving
 	for(var/MM in watchers)
 		var/mob/M = MM
 		show_to(M, M.client)
@@ -101,7 +100,7 @@
 	if(!C)
 		return
 	watching += C
-	M.overlay_fullscreen("cinematic",/obj/screen/fullscreen/cinematic_backdrop)
+	M.overlay_fullscreen("cinematic",/atom/movable/screen/fullscreen/cinematic_backdrop)
 	C.screen += screen
 
 //Sound helper

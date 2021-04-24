@@ -1,23 +1,21 @@
 
-/*
- Mecha Pilots!
- by Remie Richards
-
- Mecha pilot mobs are able to pilot Mecha to a rudimentary level
- This allows for certain mobs to be more of a threat (Because they're in a MECH)
-
- Mecha Pilots can either spawn with one, or steal one!
-
- (Inherits from syndicate just to avoid copy-paste)
-
- Featuring:
- * Mecha piloting skills
- * Uses Mecha equipment
- * Uses Mecha special abilities in specific situations
- * Pure Evil Incarnate
-
-*/
-
+/**
+ * Mecha Pilots!
+ * By Remie Richards
+ *
+ * Mecha pilot mobs are able to pilot Mecha to a rudimentary level
+ * this allows for certain mobs to be more of a threat (Because they're in a MECH)
+ *
+ * Mecha Pilots can either spawn with one, or steal one!
+ *
+ * Inherits from syndicate just to avoid copy-paste)
+ *
+ * Featuring:
+ * * Mecha piloting skills
+ * * Uses Mecha equipment
+ * * Uses Mecha special abilities in specific situations
+ * * Pure Evil Incarnate
+ */
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot
 	name = "Syndicate Mecha Pilot"
 	desc = "Death to Nanotrasen. This variant comes in MECHA DEATH flavour."
@@ -65,7 +63,7 @@
 	if(spawn_mecha_type)
 		var/obj/vehicle/sealed/mecha/M = new spawn_mecha_type (get_turf(src))
 		if(istype(M))
-			enter_mecha(M)
+			INVOKE_ASYNC(src, .proc/enter_mecha, M)
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/enter_mecha(obj/vehicle/sealed/mecha/M)
@@ -221,7 +219,7 @@
 			exit_mecha(mecha)
 			return
 
-		//Smoke if there's too many targets	- Smoke Power
+		//Smoke if there's too many targets - Smoke Power
 		if(threat_count >= threat_use_mecha_smoke && prob(smoke_chance))
 			if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_smoke) && !mecha.smoke_charges)
 				var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_smoke]
@@ -265,7 +263,7 @@
 	if(ismecha(the_target))
 		var/obj/vehicle/sealed/mecha/M = the_target
 		if(mecha)
-			if(M == mecha)	//Dont kill yourself
+			if(M == mecha) //Dont kill yourself
 				return FALSE
 		else //we're not in a mecha, so we check if we can steal it instead.
 			if(is_valid_mecha(M))

@@ -8,7 +8,7 @@
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 	var/scanning = FALSE
 	var/timing = FALSE
-	var/time = 10
+	var/time = 20
 	var/sensitivity = 1
 	var/hearing_range = 3
 
@@ -32,7 +32,7 @@
 		timing = !timing
 	else
 		scanning = FALSE
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/item/assembly/prox_sensor/on_detach()
@@ -53,7 +53,7 @@
 	else
 		START_PROCESSING(SSobj, src)
 		proximity_monitor.SetHost(loc,src)
-	update_icon()
+	update_appearance()
 	return secured
 
 /obj/item/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
@@ -65,7 +65,7 @@
 	if(!scanning || !secured || next_activate > world.time)
 		return FALSE
 	pulse(FALSE)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
+	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/CHM in get_hearers_in_view(hearing_range, src))
 		if(ismob(CHM))
 			var/mob/LM = CHM
@@ -73,10 +73,10 @@
 	next_activate = world.time + 30
 	return TRUE
 
-/obj/item/assembly/prox_sensor/process()
+/obj/item/assembly/prox_sensor/process(delta_time)
 	if(!timing)
 		return
-	time--
+	time -= delta_time
 	if(time <= 0)
 		timing = FALSE
 		toggle_scan(TRUE)
@@ -87,7 +87,7 @@
 		return FALSE
 	scanning = scan
 	proximity_monitor.SetRange(scanning ? sensitivity : 0)
-	update_icon()
+	update_appearance()
 
 /obj/item/assembly/prox_sensor/proc/sensitivity_change(value)
 	var/sense = min(max(sensitivity + value, 0), 5)
@@ -95,18 +95,19 @@
 	if(scanning && proximity_monitor.SetRange(sense))
 		sense()
 
-/obj/item/assembly/prox_sensor/update_icon()
-	cut_overlays()
+/obj/item/assembly/prox_sensor/update_appearance()
+	. = ..()
+	holder?.update_appearance()
+
+/obj/item/assembly/prox_sensor/update_overlays()
+	. = ..()
 	attached_overlays = list()
 	if(timing)
-		add_overlay("prox_timing")
+		. += "prox_timing"
 		attached_overlays += "prox_timing"
 	if(scanning)
-		add_overlay("prox_scanning")
+		. += "prox_scanning"
 		attached_overlays += "prox_scanning"
-	if(holder)
-		holder.update_icon()
-	return
 
 /obj/item/assembly/prox_sensor/ui_status(mob/user)
 	if(is_secured(user))
@@ -129,7 +130,8 @@
 	return data
 
 /obj/item/assembly/prox_sensor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -143,7 +145,7 @@
 				. = TRUE
 		if("time")
 			timing = !timing
-			update_icon()
+			update_appearance()
 			. = TRUE
 		if("input")
 			var/value = text2num(params["adjust"])

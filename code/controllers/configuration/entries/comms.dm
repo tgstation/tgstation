@@ -21,3 +21,6 @@
 	return key_value != "byond:\\address:port" && ..()
 
 /datum/config_entry/string/cross_comms_name
+
+/datum/config_entry/string/cross_comms_network
+	protection = CONFIG_ENTRY_LOCKED

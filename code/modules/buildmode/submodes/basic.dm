@@ -13,18 +13,19 @@
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
 /datum/buildmode_mode/basic/handle_click(client/c, params, obj/object)
-	var/list/pa = params2list(params)
-	var/left_click = pa.Find("left")
-	var/right_click = pa.Find("right")
-	var/ctrl_click = pa.Find("ctrl")
-	var/alt_click = pa.Find("alt")
+	var/list/modifiers = params2list(params)
+	
+	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
+	var/right_click = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/alt_click = LAZYACCESS(modifiers, ALT_CLICK)
+	var/ctrl_click = LAZYACCESS(modifiers, CTRL_CLICK)
 
 	if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
 		var/turf/T = object
 		if(isspaceturf(object))
 			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		else if(isplatingturf(object))
-			T.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
+			T.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
 		else if(isfloorturf(object))
 			T.PlaceOnTop(/turf/closed/wall)
 		else if(iswallturf(object))

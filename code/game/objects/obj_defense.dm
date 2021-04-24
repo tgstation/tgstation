@@ -11,6 +11,9 @@
 	damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
 	if(damage_amount < DAMAGE_PRECISION)
 		return
+	if(SEND_SIGNAL(src, COMSIG_OBJ_TAKE_DAMAGE, damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration) & COMPONENT_NO_TAKE_DAMAGE)
+		return
+
 	. = damage_amount
 	obj_integrity = max(obj_integrity - damage_amount, 0)
 	//BREAKING FIRST
@@ -32,7 +35,7 @@
 	var/armor_protection = 0
 	if(damage_flag)
 		armor_protection = armor.getRating(damage_flag)
-	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
+	if(armor_protection) //Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
 		armor_protection = clamp(armor_protection - armour_penetration, min(armor_protection, 0), 100)
 	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
 
@@ -54,18 +57,19 @@
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
-	..() //contents explosion
+
+	. = ..() //contents explosion
 	if(QDELETED(src))
 		return
 	if(target == src)
 		take_damage(INFINITY, BRUTE, BOMB, 0)
 		return
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			take_damage(INFINITY, BRUTE, BOMB, 0)
-		if(2)
+		if(EXPLODE_HEAVY)
 			take_damage(rand(100, 250), BRUTE, BOMB, 0)
-		if(3)
+		if(EXPLODE_LIGHT)
 			take_damage(rand(10, 90), BRUTE, BOMB, 0)
 
 /obj/bullet_act(obj/projectile/P)
@@ -91,6 +95,8 @@
 	return TRUE
 
 /obj/blob_act(obj/structure/blob/B)
+	if (!..())
+		return
 	if(isturf(loc))
 		var/turf/T = loc
 		if(T.intact && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
@@ -102,22 +108,22 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user), armor_penetration)
 
-/obj/attack_alien(mob/living/carbon/alien/humanoid/user)
+/obj/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(attack_generic(user, 60, BRUTE, MELEE, 0))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
 
-/obj/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper && !M.obj_damage)
-		M.emote("custom", message = "[M.friendly_verb_continuous] [src].")
+/obj/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(!user.melee_damage_upper && !user.obj_damage)
+		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
 		return FALSE
 	else
 		var/play_soundeffect = TRUE
-		if(M.environment_smash)
+		if(user.environment_smash)
 			play_soundeffect = FALSE
-		if(M.obj_damage)
-			. = attack_generic(M, M.obj_damage, M.melee_damage_type, MELEE, play_soundeffect, M.armour_penetration)
+		if(user.obj_damage)
+			. = attack_generic(user, user.obj_damage, user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
 		else
-			. = attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, MELEE, play_soundeffect, M.armour_penetration)
+			. = attack_generic(user, rand(user.melee_damage_lower,user.melee_damage_upper), user.melee_damage_type, MELEE, play_soundeffect, user.armour_penetration)
 		if(. && !play_soundeffect)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
@@ -151,31 +157,15 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
-	if(!(resistance_flags & UNACIDABLE) && acid_volume)
-
-		if(!acid_level)
-			SSacid.processing[src] = src
-			update_icon()
-		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
-		if(acid_level < acid_cap)
-			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
-		return 1
-
-///the proc called by the acid subsystem to process the acid that's on the obj
-/obj/proc/acid_processing()
-	. = TRUE
-	if(!(resistance_flags & ACID_PROOF))
-		if(prob(33))
-			playsound(loc, 'sound/items/welder.ogg', 150, TRUE)
-		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, ACID, 0)
-
-	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
-	if(!acid_level)
+	. = ..()
+	if((resistance_flags & UNACIDABLE) || (acid_volume <= 0) || acidpwr <= 0)
 		return FALSE
+
+	AddComponent(/datum/component/acid, acidpwr, acid_volume)
+	return TRUE
 
 ///called when the obj is destroyed by acid.
 /obj/proc/acid_melt()
-	SSacid.processing -= src
 	deconstruct(FALSE)
 
 //// FIRE
@@ -191,7 +181,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
-		update_icon()
+		update_appearance()
 		return 1
 	return ..()
 
@@ -205,7 +195,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		update_icon()
+		update_appearance()
 		SSfire_burning.processing -= src
 
 ///Called when the obj is hit by a tesla bolt.
@@ -252,7 +242,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	if(current_integrity != 0 && current_max != 0)
 		var/percentage = current_integrity / current_max
-		current_integrity = max(1, round(percentage * new_max))	//don't destroy it as a result
+		current_integrity = max(1, round(percentage * new_max)) //don't destroy it as a result
 		obj_integrity = current_integrity
 
 	max_integrity = new_max

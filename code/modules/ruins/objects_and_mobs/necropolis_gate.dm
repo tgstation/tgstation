@@ -46,6 +46,12 @@
 	dais_overlay.layer = CLOSED_TURF_LAYER
 	add_overlay(dais_overlay)
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXIT = .proc/on_exit,
+	)
+
+	AddElement(/datum/element/connect_loc, src, loc_connections)
+
 /obj/structure/necropolis_gate/Destroy(force)
 	if(force)
 		qdel(sight_blocker, TRUE)
@@ -61,10 +67,12 @@
 	if(!(get_dir(loc, target) == dir))
 		return TRUE
 
-/obj/structure/necropolis_gate/CheckExit(atom/movable/O, target)
-	if(get_dir(O.loc, target) == dir)
-		return !density
-	return 1
+/obj/structure/necropolis_gate/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
+	SIGNAL_HANDLER
+
+	if (get_dir(leaving.loc, new_location) == dir && density)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/structure/opacity_blocker
 	icon = 'icons/effects/96x96.dmi'
@@ -86,7 +94,7 @@
 		return QDEL_HINT_LETMELIVE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/necropolis_gate/attack_hand(mob/user)
+/obj/structure/necropolis_gate/attack_hand(mob/user, list/modifiers)
 	if(locked)
 		to_chat(user, "<span class='boldannounce'>It's [open ? "stuck open":"locked"].</span>")
 		return
@@ -155,7 +163,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		return QDEL_HINT_LETMELIVE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user)
+/obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user, list/modifiers)
 	if(!open && !changing_openness)
 		var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated())

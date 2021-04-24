@@ -2,7 +2,7 @@
 	name = "pizza"
 	desc = "~Jamme, jamme, n'coppa, jamme ja! Jamme, jamme, n'coppa jamme ja, funi-culi funi-cala funi-culi funi-cala!! Jamme jamme ja funiculi funicula!~"
 	color = "#FF9F23"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/pizza
 	value_per_unit = 0.05
 	beauty_modifier = 0.1
@@ -12,7 +12,7 @@
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "pizza"
 
-/datum/material/pizza/on_removed(atom/source, material_flags)
+/datum/material/pizza/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	qdel(source.GetComponent(/datum/component/edible))
 

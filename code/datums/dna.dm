@@ -29,9 +29,9 @@
 
 	QDEL_NULL(species)
 
-	mutations.Cut()					//This only references mutations, just dereference.
-	temporary_mutations.Cut()		//^
-	previous.Cut()					//^
+	mutations.Cut() //This only references mutations, just dereference.
+	temporary_mutations.Cut() //^
+	previous.Cut() //^
 
 	return ..()
 
@@ -68,6 +68,7 @@
 		mutation_type = HM.type
 	if(get_mutation(mutation_type))
 		return
+	SEND_SIGNAL(holder, COMSIG_CARBON_GAIN_MUTATION, mutation_type, class)
 	return force_give(new mutation_type (class, time, copymut = mutation))
 
 /datum/dna/proc/remove_mutation(mutation_type)
@@ -120,7 +121,7 @@
 
 /datum/dna/proc/generate_dna_blocks()
 	var/bonus
-	if(species && species.inert_mutation)
+	if(species?.inert_mutation)
 		bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
 	if(!LAZYLEN(mutations_temp))
@@ -128,11 +129,7 @@
 	mutation_index.Cut()
 	default_mutation_genes.Cut()
 	shuffle_inplace(mutations_temp)
-	if(ismonkey(holder))
-		mutations |= new RACEMUT(MUT_NORMAL)
-		mutation_index[RACEMUT] = GET_SEQUENCE(RACEMUT)
-	else
-		mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
+	mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
 	default_mutation_genes[RACEMUT] = mutation_index[RACEMUT]
 	for(var/i in 2 to DNA_MUTATION_BLOCKS)
 		var/datum/mutation/human/M = mutations_temp[i]
@@ -218,9 +215,15 @@
 		update_instability(FALSE)
 		return
 
-/datum/dna/proc/is_same_as(datum/dna/D)
-	if(uni_identity == D.uni_identity && mutation_index == D.mutation_index && real_name == D.real_name)
-		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
+/**
+ * Checks if two DNAs are practically the same by comparing their most defining features
+ *
+ * Arguments:
+ * * target_dna The DNA that we are comparing to
+ */
+/datum/dna/proc/is_same_as(datum/dna/target_dna)
+	if(uni_identity == target_dna.uni_identity && mutation_index == target_dna.mutation_index && real_name == target_dna.real_name)
+		if(species.type == target_dna.species.type && compare_list(features, target_dna.features) && blood_type == target_dna.blood_type)
 			return TRUE
 	return FALSE
 
@@ -401,7 +404,7 @@
 	facial_hairstyle = GLOB.facial_hairstyles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), GLOB.facial_hairstyles_list.len)]
 	hairstyle = GLOB.hairstyles_list[deconstruct_block(getblock(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
 	if(icon_update)
-		update_body()
+		dna.species.handle_body(src) // We want 'update_body_parts()' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
 		update_hair()
 		if(mutcolor_update)
 			update_body_parts()
@@ -417,8 +420,7 @@
 		return
 
 	for(var/mutation in dna.mutation_index)
-		if(ismob(dna.check_block(mutation)))
-			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
+		dna.check_block(mutation)
 
 	update_mutations_overlay()
 
@@ -652,8 +654,6 @@
 				set_species(/datum/species/skeleton)
 				if(prob(90))
 					addtimer(CALLBACK(src, .proc/death), 30)
-					if(mind)
-						mind.hasSoul = FALSE
 			if(5)
 				to_chat(src, "<span class='phobia'>LOOK UP!</span>")
 				addtimer(CALLBACK(src, .proc/something_horrible_mindmelt), 30)

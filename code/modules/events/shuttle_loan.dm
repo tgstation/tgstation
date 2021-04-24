@@ -135,7 +135,7 @@
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged)	//drops a mateba
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged) //drops a mateba
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear/russian)
 				if(prob(75))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
@@ -263,7 +263,7 @@
 	set_anchored(TRUE)
 	timer_set = rand(480, 600) //once the supply shuttle docks (after 5 minutes travel time), players have between 3-5 minutes to defuse the bomb
 	activate()
-	update_icon()
+	update_appearance()
 
 /obj/item/paper/fluff/cargo/bomb
 	name = "hastly scribbled note"

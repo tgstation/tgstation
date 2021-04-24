@@ -23,8 +23,8 @@
 		           /obj/item/computer_hardware/recharger/apc_recharger = 2,
 		           /obj/item/paicard = 2)
 	refill_canister = /obj/item/vending_refill/modularpc
-	default_price = 150
-	extra_price = 400
+	default_price = PAYCHECK_MEDIUM
+	extra_price = PAYCHECK_HARD
 	payment_department = ACCOUNT_SCI
 
 /obj/item/vending_refill/modularpc

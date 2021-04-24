@@ -18,18 +18,17 @@
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	bullet_bounce_sound = null
+	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
-	vis_flags = VIS_INHERIT_ID	//when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
-
-/turf/open/space/basic/New()	//Do not convert to Initialize
+/turf/open/space/basic/New() //Do not convert to Initialize
 	//This is used to optimize the map loader
 	return
 
 /**
-  * Space Initialize
-  *
-  * Doesn't call parent, see [/atom/proc/Initialize]
-  */
+ * Space Initialize
+ *
+ * Doesn't call parent, see [/atom/proc/Initialize]
+ */
 /turf/open/space/Initialize()
 	SHOULD_CALL_PARENT(FALSE)
 	icon_state = SPACE_ICON_STATE
@@ -55,13 +54,20 @@
 		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
-		SSair.add_to_active(src)
+		SSair.add_to_active(src, TRUE)
 
 	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()
 
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
+
+	var/turf/T = SSmapping.get_turf_above(src)
+	if(T)
+		T.multiz_turf_new(src, DOWN)
+	T = SSmapping.get_turf_below(src)
+	if(T)
+		T.multiz_turf_new(src, UP)
 
 	ComponentInitialize()
 
@@ -102,8 +108,8 @@
 			return
 		set_light(0)
 
-/turf/open/space/attack_paw(mob/user)
-	return attack_hand(user)
+/turf/open/space/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /turf/open/space/proc/CanBuildHere()
 	return TRUE
@@ -138,10 +144,10 @@
 		else
 			to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
 		return
-	if(istype(C, /obj/item/stack/tile/plasteel))
+	if(istype(C, /obj/item/stack/tile/iron))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			var/obj/item/stack/tile/plasteel/S = C
+			var/obj/item/stack/tile/iron/S = C
 			if(S.use(1))
 				qdel(L)
 				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)

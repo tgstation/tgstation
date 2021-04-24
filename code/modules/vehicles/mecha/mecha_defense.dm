@@ -51,7 +51,7 @@
 	if(.)
 		. *= booster_damage_modifier
 
-/obj/vehicle/sealed/mecha/attack_hand(mob/living/user)
+/obj/vehicle/sealed/mecha/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -61,15 +61,15 @@
 	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens.</span>", null, null, COMBAT_MESSAGE_RANGE)
 	log_message("Attack by hand/paw. Attacker - [user].", LOG_MECHA, color="red")
 
-/obj/vehicle/sealed/mecha/attack_paw(mob/user as mob)
-	return attack_hand(user)
+/obj/vehicle/sealed/mecha/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/vehicle/sealed/mecha/attack_alien(mob/living/user)
+/obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
-	attack_generic(user, 15, BRUTE, MELEE, 0)
+	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
 
-/obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user)
+/obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
@@ -122,31 +122,33 @@
 	if(prob(deflect_chance))
 		severity++
 		log_message("Armor saved, changing severity to [severity]", LOG_MECHA)
-	. = ..()
+	return ..()
 
 /obj/vehicle/sealed/mecha/contents_explosion(severity, target)
 	severity++
-	for(var/X in equipment)
-		var/obj/item/mecha_parts/mecha_equipment/ME = X
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += ME
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += ME
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += ME
-	for(var/Y in trackers)
-		var/obj/item/mecha_parts/mecha_tracking/MT = Y
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += MT
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += MT
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += MT
-	for(var/Z in occupants)
-		var/mob/living/occupant = Z
-		occupant.ex_act(severity,target)
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			if(equipment)
+				SSexplosions.high_mov_atom += equipment
+			if(trackers)
+				SSexplosions.high_mov_atom += trackers
+			if(occupants)
+				SSexplosions.high_mov_atom += occupants
+		if(EXPLODE_HEAVY)
+			if(equipment)
+				SSexplosions.med_mov_atom += equipment
+			if(trackers)
+				SSexplosions.med_mov_atom += trackers
+			if(occupants)
+				SSexplosions.med_mov_atom += occupants
+		if(EXPLODE_LIGHT)
+			if(equipment)
+				SSexplosions.low_mov_atom += equipment
+			if(trackers)
+				SSexplosions.low_mov_atom += trackers
+			if(occupants)
+				SSexplosions.low_mov_atom += occupants
 
 /obj/vehicle/sealed/mecha/handle_atom_del(atom/A)
 	if(A in occupants)
@@ -168,15 +170,17 @@
 		for(var/occus in occupants)
 			var/mob/living/occupant = occus
 			occupant.update_mouse_pointer()
-	if(!equipment_disabled && occupants) //prevent spamming this message with back-to-back EMPs
+	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, "<span=danger>Error -- Connection to equipment control unit has been lost.</span>")
 	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha/proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = 1
 
-/obj/vehicle/sealed/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature>max_temperature)
-		log_message("Exposed to dangerous temperature.", LOG_MECHA, color="red")
-		take_damage(5, BURN, 0, 1)
+/obj/vehicle/sealed/mecha/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > max_temperature
+
+/obj/vehicle/sealed/mecha/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	log_message("Exposed to dangerous temperature.", LOG_MECHA, color="red")
+	take_damage(5, BURN, 0, 1)
 
 /obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/user, params)
 
@@ -253,7 +257,7 @@
 		if(construction_state == MECHA_OPEN_HATCH && (internal_damage & MECHA_INT_SHORT_CIRCUIT))
 			var/obj/item/stack/cable_coil/CC = W
 			if(CC.use(2))
-				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
+				clear_internal_damage(MECHA_INT_SHORT_CIRCUIT)
 				to_chat(user, "<span class='notice'>You replace the fused wires.</span>")
 			else
 				to_chat(user, "<span class='warning'>You need two lengths of cable to fix this mech!</span>")
@@ -292,19 +296,19 @@
 	..()
 	. = TRUE
 	if(internal_damage & MECHA_INT_TEMP_CONTROL)
-		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
+		clear_internal_damage(MECHA_INT_TEMP_CONTROL)
 		to_chat(user, "<span class='notice'>You repair the damaged temperature controller.</span>")
 		return
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
 	. = ..()
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return
 	. = TRUE
 	if(internal_damage & MECHA_INT_TANK_BREACH)
 		if(!W.use_tool(src, user, 0, volume=50, amount=1))
 			return
-		clearInternalDamage(MECHA_INT_TANK_BREACH)
+		clear_internal_damage(MECHA_INT_TANK_BREACH)
 		to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 		return
 	if(obj_integrity < max_integrity)
@@ -326,12 +330,12 @@
 			target.reagents.add_reagent(/datum/reagent/toxin, force/2.5)
 
 
-/obj/vehicle/sealed/mecha/mech_melee_attack(obj/vehicle/sealed/mecha/M, mob/user)
+/obj/vehicle/sealed/mecha/mech_melee_attack(obj/vehicle/sealed/mecha/M, mob/living/user)
 	if(!has_charge(melee_energy_drain))
 		return NONE
 	use_power(melee_energy_drain)
 	if(M.damtype == BRUTE || M.damtype == BURN)
-		log_combat(user, src, "attacked", M, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
+		log_combat(user, src, "attacked", M, "(COMBAT MODE: [uppertext(user.combat_mode)] (DAMTYPE: [uppertext(M.damtype)])")
 		. = ..()
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
@@ -339,15 +343,15 @@
 	if(cell && charge_cell)
 		cell.charge = cell.maxcharge
 	if(internal_damage & MECHA_INT_FIRE)
-		clearInternalDamage(MECHA_INT_FIRE)
+		clear_internal_damage(MECHA_INT_FIRE)
 	if(internal_damage & MECHA_INT_TEMP_CONTROL)
-		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
+		clear_internal_damage(MECHA_INT_TEMP_CONTROL)
 	if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
-		clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
+		clear_internal_damage(MECHA_INT_SHORT_CIRCUIT)
 	if(internal_damage & MECHA_INT_TANK_BREACH)
-		clearInternalDamage(MECHA_INT_TANK_BREACH)
+		clear_internal_damage(MECHA_INT_TANK_BREACH)
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
-		clearInternalDamage(MECHA_INT_CONTROL_LOST)
+		clear_internal_damage(MECHA_INT_CONTROL_LOST)
 
 /obj/vehicle/sealed/mecha/narsie_act()
 	emp_act(EMP_HEAVY)

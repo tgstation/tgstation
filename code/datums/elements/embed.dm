@@ -74,12 +74,18 @@
 		return
 
 	var/actual_chance = embed_chance
+	var/penetrative_behaviour = 1 //Keep this above 1, as it is a multiplier for the pen_mod for determining actual embed chance.
+	if(weapon.weak_against_armour)
+		penetrative_behaviour = ARMOR_WEAKENED_MULTIPLIER
+
+	if(throwingdatum?.speed > weapon.throw_speed)
+		actual_chance += (throwingdatum.speed - weapon.throw_speed) * EMBED_CHANCE_SPEED_BONUS
 
 	if(!weapon.isEmbedHarmless()) // all the armor in the world won't save you from a kick me sign
 		var/armor = max(victim.run_armor_check(hit_zone, BULLET, silent=TRUE), victim.run_armor_check(hit_zone, BOMB, silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved
 
 		if(armor) // we only care about armor penetration if there's actually armor to penetrate
-			var/pen_mod = -armor + weapon.armour_penetration // even a little bit of armor can make a big difference for shrapnel with large negative armor pen
+			var/pen_mod = -(armor * penetrative_behaviour) // if our shrapnel is weak into armor, then we restore our armor to the full value.
 			actual_chance += pen_mod // doing the armor pen as a separate calc just in case this ever gets expanded on
 			if(actual_chance <= 0)
 				victim.visible_message("<span class='danger'>[weapon] bounces off [victim]'s armor, unable to embed!</span>", "<span class='notice'>[weapon] bounces off your armor, unable to embed!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
@@ -131,11 +137,11 @@
 		examine_list += "[I] has a fine point, and could probably embed in someone if thrown properly!"
 
 /**
-  * checkEmbedProjectile() is what we get when a projectile with a defined shrapnel_type impacts a target.
-  *
-  * If we hit a valid target, we create the shrapnel_type object and immediately call tryEmbed() on it, targeting what we impacted. That will lead
-  *	it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
-  */
+ * checkEmbedProjectile() is what we get when a projectile with a defined shrapnel_type impacts a target.
+ *
+ * If we hit a valid target, we create the shrapnel_type object and immediately call tryEmbed() on it, targeting what we impacted. That will lead
+ * it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
+ */
 /datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit, angle, hit_zone)
 	SIGNAL_HANDLER
 
@@ -153,21 +159,21 @@
 	if(!limb)
 		limb = C.get_bodypart()
 
-	. = payload.tryEmbed(limb)
+	payload.tryEmbed(limb) // at this point we've created our shrapnel baby and set them up to embed in the target, we can now die in peace as they handle their embed try on their own
 	Detach(P)
 
 /**
-  * tryForceEmbed() is called here when we fire COMSIG_EMBED_TRY_FORCE from [/obj/item/proc/tryEmbed]. Mostly, this means we're a piece of shrapnel from a projectile that just impacted something, and we're trying to embed in it.
-  *
-  * The reason for this extra mucking about is avoiding having to do an extra hitby(), and annoying the target by impacting them once with the projectile, then again with the shrapnel, and possibly
-  * AGAIN if we actually embed. This way, we save on at least one message.
-  *
-  * Arguments:
-  * * I- the item we're trying to insert into the target
-  * * target- what we're trying to shish-kabob, either a bodypart or a carbon
-  * * hit_zone- if our target is a carbon, try to hit them in this zone, if we don't have one, pick a random one. If our target is a bodypart, we already know where we're hitting.
-  * * forced- if we want this to succeed 100%
-  */
+ * tryForceEmbed() is called here when we fire COMSIG_EMBED_TRY_FORCE from [/obj/item/proc/tryEmbed]. Mostly, this means we're a piece of shrapnel from a projectile that just impacted something, and we're trying to embed in it.
+ *
+ * The reason for this extra mucking about is avoiding having to do an extra hitby(), and annoying the target by impacting them once with the projectile, then again with the shrapnel, and possibly
+ * AGAIN if we actually embed. This way, we save on at least one message.
+ *
+ * Arguments:
+ * * I- the item we're trying to insert into the target
+ * * target- what we're trying to shish-kabob, either a bodypart or a carbon
+ * * hit_zone- if our target is a carbon, try to hit them in this zone, if we don't have one, pick a random one. If our target is a bodypart, we already know where we're hitting.
+ * * forced- if we want this to succeed 100%
+ */
 /datum/element/embed/proc/tryForceEmbed(obj/item/I, atom/target, hit_zone, forced=FALSE)
 	SIGNAL_HANDLER
 
@@ -187,5 +193,4 @@
 		hit_zone = limb.body_zone
 		C = limb.owner
 
-	checkEmbed(I, C, hit_zone, forced=TRUE)
-	return TRUE
+	return checkEmbed(I, C, hit_zone, forced=TRUE)

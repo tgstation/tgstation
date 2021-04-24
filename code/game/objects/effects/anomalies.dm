@@ -1,5 +1,8 @@
 //Anomalies, used for events. Note that these DO NOT work by themselves; their procs are called by the event datum.
 
+/// Chance of taking a step per second
+#define ANOMALY_MOVECHANCE 45
+
 /obj/effect/anomaly
 	name = "anomaly"
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
@@ -7,7 +10,7 @@
 	density = FALSE
 	anchored = TRUE
 	light_range = 3
-	var/movechance = 70
+
 	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
@@ -22,7 +25,9 @@
 
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
-	GLOB.poi_list |= src
+
+	AddElement(/datum/element/point_of_interest)
+
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
 
@@ -48,30 +53,29 @@
 		countdown.color = countdown_colour
 	countdown.start()
 
-/obj/effect/anomaly/process()
-	anomalyEffect()
+/obj/effect/anomaly/process(delta_time)
+	anomalyEffect(delta_time)
 	if(death_time < world.time)
 		if(loc)
 			detonate()
 		qdel(src)
 
 /obj/effect/anomaly/Destroy()
-	GLOB.poi_list.Remove(src)
 	STOP_PROCESSING(SSobj, src)
 	qdel(countdown)
 	if(aSignal)
 		QDEL_NULL(aSignal)
 	return ..()
 
-/obj/effect/anomaly/proc/anomalyEffect()
-	if(prob(movechance))
+/obj/effect/anomaly/proc/anomalyEffect(delta_time)
+	if(DT_PROB(ANOMALY_MOVECHANCE, delta_time))
 		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
 	return
 
 /obj/effect/anomaly/ex_act(severity, target)
-	if(severity == 1)
+	if(severity == EXPLODE_DEVASTATE)
 		qdel(src)
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
@@ -141,7 +145,7 @@
 
 /obj/effect/anomaly/grav/high/Initialize(mapload, new_lifespan)
 	. = ..()
-	setup_grav_field()
+	INVOKE_ASYNC(src, .proc/setup_grav_field)
 
 /obj/effect/anomaly/grav/high/proc/setup_grav_field()
 	grav_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 7, "host" = src, "gravity_value" = rand(0,3)))
@@ -197,7 +201,7 @@
 
 /obj/effect/anomaly/bluespace
 	name = "bluespace anomaly"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "bluespace"
 	density = TRUE
 	aSignal = /obj/item/assembly/signaler/anomaly/bluespace
@@ -273,15 +277,17 @@
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
 	var/ticks = 0
+	/// How many seconds between each gas release
+	var/releasedelay = 10
 	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
-/obj/effect/anomaly/pyro/anomalyEffect()
+/obj/effect/anomaly/pyro/anomalyEffect(delta_time)
 	..()
-	ticks++
-	if(ticks < 5)
+	ticks += delta_time
+	if(ticks < releasedelay)
 		return
 	else
-		ticks = 0
+		ticks -= releasedelay
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
 		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
@@ -376,3 +382,5 @@
 				SSexplosions.medturf += T
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += T
+
+#undef ANOMALY_MOVECHANCE

@@ -29,7 +29,7 @@
 
 	var/list/previous_attempts
 
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
+/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = TELECRYSTALS_DEFAULT)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -49,7 +49,7 @@
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
-	uplink_items = get_uplink_items(_gamemode, TRUE, allow_restricted)
+	update_items()
 
 	if(_owner)
 		owner = _owner
@@ -82,22 +82,37 @@
 	purchase_log = null
 	return ..()
 
+/datum/component/uplink/proc/update_items()
+	var/updated_items
+	updated_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	update_sales(updated_items)
+	uplink_items = updated_items
+
+/datum/component/uplink/proc/update_sales(updated_items)
+	var/discount_categories = list("Discounted Gear", "Discounted Team Gear", "Limited Stock Team Gear")
+	if (uplink_items == null)
+		return
+	for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
+		if (uplink_items[category] != null && updated_items[category] != null)
+			updated_items[category] = uplink_items[category]
+
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
 	if(!silent)
 		to_chat(user, "<span class='notice'>You slot [TC] into [parent] and charge its internal uplink.</span>")
 	var/amt = TC.amount
 	telecrystals += amt
 	TC.use(amt)
+	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
 
 /datum/component/uplink/proc/set_gamemode(_gamemode)
 	gamemode = _gamemode
-	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	update_items()
 
 /datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
 
 	if(!active)
-		return	//no hitting everyone/everything just to try to slot tcs in!
+		return //no hitting everyone/everything just to try to slot tcs in!
 	if(istype(I, /obj/item/stack/telecrystal))
 		LoadTC(user, I)
 	for(var/category in uplink_items)
@@ -107,6 +122,7 @@
 			var/cost = UI.refund_amount || UI.cost
 			if(I.type == path && UI.refundable && I.check_uplink_validity())
 				telecrystals += cost
+				log_uplink("[key_name(user)] refunded [UI] for [cost] telecrystals using [parent]'s uplink")
 				if(purchase_log)
 					purchase_log.total_spent -= cost
 				to_chat(user, "<span class='notice'>[I] refunded.</span>")
@@ -114,15 +130,17 @@
 				return
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(locked)
 		return
 	active = TRUE
+	update_items()
 	if(user)
-		ui_interact(user)
+		INVOKE_ASYNC(src, .proc/ui_interact, user)
 	// an unlocked uplink blocks also opening the PDA or headset menu
-	return COMPONENT_NO_INTERACT
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /datum/component/uplink/ui_state(mob/user)
 	return GLOB.inventory_state
@@ -183,6 +201,9 @@
 	return data
 
 /datum/component/uplink/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
 	if(!active)
 		return
 	switch(action)
@@ -229,7 +250,7 @@
 // Implant signal responses
 
 /datum/component/uplink/proc/implant_activation()
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/obj/item/implant/implant = parent
 	locked = FALSE
@@ -256,7 +277,7 @@
 // PDA signal responses
 
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/obj/item/pda/master = parent
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
@@ -279,7 +300,7 @@
 // Radio signal responses
 
 /datum/component/uplink/proc/new_frequency(datum/source, list/arguments)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/obj/item/radio/master = parent
 	var/frequency = arguments[1]
@@ -294,7 +315,7 @@
 // Pen signal responses
 
 /datum/component/uplink/proc/pen_rotation(datum/source, degrees, mob/living/carbon/user)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/obj/item/pen/master = parent
 	previous_attempts += degrees
@@ -325,7 +346,7 @@
 	if(istype(parent,/obj/item/pda))
 		return "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 	else if(istype(parent,/obj/item/radio))
-		return sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
+		return return_unused_frequency()
 	else if(istype(parent,/obj/item/pen))
 		var/list/L = list()
 		for(var/i in 1 to PEN_ROTATIONS)

@@ -9,7 +9,7 @@
 /datum/round_event/anomaly
 	var/area/impact_area
 	var/obj/effect/anomaly/anomaly_path = /obj/effect/anomaly/flux
-	announceWhen	= 1
+	announceWhen = 1
 
 
 /datum/round_event/anomaly/proc/findEventArea()
@@ -19,8 +19,8 @@
 		var/list/safe_area_types = typecacheof(list(
 		/area/ai_monitored/turret_protected/ai,
 		/area/ai_monitored/turret_protected/ai_upload,
-		/area/engine,
-		/area/solar,
+		/area/engineering,
+		/area/solars,
 		/area/holodeck,
 		/area/shuttle,
 		/area/maintenance,
@@ -28,7 +28,7 @@
 		)
 
 		//Subtypes from the above that actually should explode.
-		var/list/unsafe_area_subtypes = typecacheof(list(/area/engine/break_room))
+		var/list/unsafe_area_subtypes = typecacheof(list(/area/engineering/break_room))
 
 		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
 	var/list/possible_areas = typecache_filter_list(GLOB.sortedAreas,allowed_areas)

@@ -6,9 +6,9 @@
 	space_chance = 20
 	syllables = list(
 		"bzzt", "skrrt", "zzp", "mmm", "hzz", "tk", "shz", "k", "z",
-    	"bzt", "zzt", "skzt", "skzz", "hmmt", "zrrt", "hzzt", "hz",
-    	"vzt", "zt", "vz", "zip", "tzp", "lzzt", "dzzt", "zdt", "kzt",
-    	"zzzz", "mzz"
+		"bzt", "zzt", "skzt", "skzz", "hmmt", "zrrt", "hzzt", "hz",
+		"vzt", "zt", "vz", "zip", "tzp", "lzzt", "dzzt", "zdt", "kzt",
+		"zzzz", "mzz"
 	)
 	icon_state = "volt"
 	default_priority = 90

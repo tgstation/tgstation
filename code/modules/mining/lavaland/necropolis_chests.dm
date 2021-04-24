@@ -10,10 +10,22 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/structure/closet/crate/necropolis/tendril
-	desc = "It's watching you suspiciously."
+	desc = "It's watching you suspiciously. You need a skeleton key to open it."
+	///prevents bust_open to fire
+	integrity_failure = 0
+	/// var to check if it got opened by a key
+	var/spawned_loot = FALSE
 
-/obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,21)
+/obj/structure/closet/crate/necropolis/tendril/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
+
+/obj/structure/closet/crate/necropolis/tendril/proc/try_spawn_loot(datum/source, obj/item/item, mob/user, params) ///proc that handles key checking and generating loot
+	SIGNAL_HANDLER
+
+	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
+		return FALSE
+	var/loot = rand(1,20)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -45,7 +57,7 @@
 		if(10)
 			new /obj/item/ship_in_a_bottle(src)
 		if(11)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker(src)
+			new /obj/item/clothing/suit/space/hardsuit/berserker(src)
 		if(12)
 			new /obj/item/jacobs_ladder(src)
 		if(13)
@@ -57,16 +69,23 @@
 		if(16)
 			new /obj/item/immortality_talisman(src)
 		if(17)
-			new /obj/item/voodoo(src)
-		if(18)
 			new /obj/item/book/granter/spell/summonitem(src)
-		if(19)
+		if(18)
 			new /obj/item/book_of_babel(src)
-		if(20)
+		if(19)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-		if(21)
+		if(20)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
+	spawned_loot = TRUE
+	qdel(item)
+	to_chat(user, "<span class='notice'>You disable the magic lock, revealing the loot.</span>")
+	return TRUE
+
+/obj/structure/closet/crate/necropolis/tendril/can_open(mob/living/user, force = FALSE)
+	if(!spawned_loot)
+		return FALSE
+	return ..()
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -97,7 +116,7 @@
 
 /datum/design/unique_modkit
 	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
@@ -136,6 +155,8 @@
 	name = "\improper Rod of Asclepius"
 	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding its way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon_state = "asclepius_dormant"
 	var/activated = FALSE
 	var/usedHand
@@ -214,9 +235,9 @@
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(do_after(user, 40, target = user))
 		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
-		ADD_TRAIT(user, TRAIT_NODEATH, "memento_mori")
-		ADD_TRAIT(user, TRAIT_NOHARDCRIT, "memento_mori")
-		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, "memento_mori")
+		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -375,9 +396,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
-/obj/effect/warp_cube/ex_act(severity, target)
-	return
-
 //Meat Hook
 /obj/item/gun/magic/hook
 	name = "meat hook"
@@ -390,14 +408,19 @@
 	fire_sound = 'sound/weapons/batonextend.ogg'
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
+	sharpness = SHARP_POINTY
 	force = 18
+
+/obj/item/gun/magic/hook/shoot_with_empty_chamber(mob/living/user)
+	to_chat(user, "<span class='warning'>[src] isn't ready to fire yet!</span>")
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
 	desc = "A hook."
 	projectile_type = /obj/projectile/hook
-	caliber = "hook"
+	caliber = CALIBER_HOOK
 	icon_state = "hook"
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/projectile/hook
 	name = "hook"
@@ -414,7 +437,7 @@
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = "chain", time = INFINITY, maxdistance = INFINITY)
+		chain = firer.Beam(src, icon_state = "chain")
 	..()
 	//TODO: root the firer until the chain returns
 
@@ -441,9 +464,6 @@
 /obj/item/gun/magic/hook/bounty
 	name = "hook"
 	ammo_type = /obj/item/ammo_casing/magic/hook/bounty
-
-/obj/item/gun/magic/hook/bounty/shoot_with_empty_chamber(mob/living/user)
-	to_chat(user, "<span class='warning'>The [src] isn't ready to fire yet!</span>")
 
 /obj/item/ammo_casing/magic/hook/bounty
 	projectile_type = /obj/projectile/hook/bounty
@@ -514,9 +534,6 @@
 	qdel(src)
 
 /obj/effect/immortality_talisman/attackby()
-	return
-
-/obj/effect/immortality_talisman/ex_act()
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()
@@ -591,10 +608,8 @@
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
 /obj/item/reagent_containers/glass/bottle/potion/update_icon_state()
-	if(reagents.total_volume)
-		icon_state = "potionflask"
-	else
-		icon_state = "potionflask_empty"
+	icon_state = "potionflask[reagents.total_volume ? null : "_empty"]"
+	return ..()
 
 /datum/reagent/flightpotion
 	name = "Flight Potion"
@@ -602,27 +617,32 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/flightpotion/expose_mob(mob/living/M, methods=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && M.stat != DEAD)
-		var/mob/living/carbon/C = M
-		var/holycheck = ishumanbasic(C)
-		if(reac_volume < 5 || !(holycheck || islizard(C) || (ismoth(C) && C.dna.features["moth_wings"] != "Burnt Off"))) // implying xenohumans are holy //as with all things,
+/datum/reagent/flightpotion/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
+	. = ..()
+	if(iscarbon(exposed_mob) && exposed_mob.stat != DEAD)
+		var/mob/living/carbon/exposed_carbon = exposed_mob
+		var/holycheck = ishumanbasic(exposed_carbon)
+		if(reac_volume < 5 || !(holycheck || islizard(exposed_carbon) || (ismoth(exposed_carbon) && exposed_carbon.dna.features["moth_wings"] != "Burnt Off"))) // implying xenohumans are holy //as with all things,
 			if((methods & INGEST) && show_message)
-				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
-			return ..()
-		if(C.dna.species.has_innate_wings)
-			to_chat(C, "<span class='userdanger'>A terrible pain travels down your back as your wings change shape!</span>")
-			C.dna.features["moth_wings"] = "None"
+				to_chat(exposed_carbon, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
+			return
+		if(exposed_carbon.dna.species.has_innate_wings)
+			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as your wings change shape!</span>")
+			if(!exposed_carbon.dna.features["original_moth_wings"]) //Stores their wings for later possible reconstruction
+				exposed_carbon.dna.features["original_moth_wings"] = exposed_carbon.dna.features["moth_wings"]
+			exposed_carbon.dna.features["moth_wings"] = "None"
+			if(!exposed_carbon.dna.features["original_moth_antennae"]) //Stores their antennae type as well
+				exposed_carbon.dna.features["original_moth_antennae"] = exposed_carbon.dna.features["moth_antennae"]
+			exposed_carbon.dna.features["moth_antennae"] = "Regal"
 		else
-			to_chat(C, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
-		C.dna.species.GiveSpeciesFlight(C)
+			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
+		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)
 		if(holycheck)
-			to_chat(C, "<span class='notice'>You feel blessed!</span>")
-			ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
-		playsound(C.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
-		C.adjustBruteLoss(20)
-		C.emote("scream")
-	..()
+			to_chat(exposed_carbon, "<span class='notice'>You feel blessed!</span>")
+			ADD_TRAIT(exposed_carbon, TRAIT_HOLY, SPECIES_TRAIT)
+		playsound(exposed_carbon.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
+		exposed_carbon.adjustBruteLoss(20)
+		exposed_carbon.emote("scream")
 
 
 /obj/item/jacobs_ladder
@@ -684,10 +704,10 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
-    if(!istype(A, /turf/closed/mineral))
-        return
-    A.attackby(src, H)
-    return COMPONENT_NO_ATTACK_HAND
+	if(!istype(A, /turf/closed/mineral))
+		return
+	A.attackby(src, H)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
 ///Bosses
@@ -708,6 +728,7 @@
 	inhand_y_dimension = 64
 	icon_state = "cleaving_saw"
 	icon_state_on = "cleaving_saw_open"
+	worn_icon_state = "cleaving_saw"
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_off = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_on = list("cleaves", "swipes", "slashes", "chops")
@@ -834,7 +855,7 @@
 	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	AddComponent(/datum/component/butchering, 150, 90)
 
 /obj/item/melee/ghost_sword/Destroy()
@@ -842,7 +863,6 @@
 		G.invisibility = GLOB.observer_default_invisibility
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/melee/ghost_sword/attack_self(mob/user)
@@ -875,7 +895,7 @@
 		var/atom/A = thing
 		A.transfer_observers_to(src)
 
-	for(var/i in orbiters?.orbiters)
+	for(var/i in orbiters?.orbiter_list)
 		if(!isobserver(i))
 			continue
 		var/mob/dead/observer/G = i
@@ -946,14 +966,14 @@
 	cures = list(/datum/reagent/medicine/adminordrazine)
 	agent = "dragon's blood"
 	desc = "What do dragons have to do with Space Station 13?"
-	stage_prob = 20
+	stage_prob = 10
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
-	stage1	= list("Your bones ache.")
-	stage2	= list("Your skin feels scaly.")
-	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
-	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
+	stage1 = list("Your bones ache.")
+	stage2 = list("Your skin feels scaly.")
+	stage3 = list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
+	stage4 = list("<span class='danger'>Your blood burns.</span>")
+	stage5 = list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
 	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
 
@@ -1053,12 +1073,11 @@
 
 /obj/item/mayhem/attack_self(mob/user)
 	for(var/mob/living/carbon/human/H in range(7,user))
-		var/obj/effect/mine/pickup/bloodbath/B = new(H)
-		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
+		H.apply_status_effect(STATUS_EFFECT_MAYHEM)
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!</span>")
-	log_combat(user, null, "activated a bottle of mayhem", src)
+	user.log_message("activated a bottle of mayhem", LOG_ATTACK)
 	qdel(src)
 
 //Colossus
@@ -1106,13 +1125,13 @@
 		var/obj/item/hierophant_club/club = src.target
 		if(istype(club))
 			club.blink_charged = FALSE
-			club.update_icon()
+			club.update_appearance()
 
 /datum/action/innate/dash/hierophant/charge()
 	var/obj/item/hierophant_club/club = target
 	if(istype(club))
 		club.blink_charged = TRUE
-		club.update_icon()
+		club.update_appearance()
 
 	current_charges = clamp(current_charges + 1, 0, max_charges)
 	holder.update_action_buttons_icon()
@@ -1191,6 +1210,7 @@
 
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
+	return ..()
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
 	if(!user.is_holding(src)) //you need to hold the staff to teleport
@@ -1287,7 +1307,7 @@
 	sleep(2)
 	if(!M)
 		return
-	M.forceMove(turf_to_teleport_to)
+	var/success = do_teleport(M, turf_to_teleport_to, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 	sleep(1)
 	if(!M)
 		return
@@ -1296,7 +1316,7 @@
 	if(!M)
 		return
 	M.visible_message("<span class='hierophant_warning'>[M] fades in!</span>")
-	if(user != M)
+	if(user != M && success)
 		log_combat(user, M, "teleported", null, "from [AREACOORD(source)]")
 
 /obj/item/hierophant_club/pickup(mob/living/user)
@@ -1322,6 +1342,13 @@
 			new /obj/item/wisp_lantern(src)
 		if(3)
 			new /obj/item/prisoncube(src)
+
+/obj/item/skeleton_key
+	name = "skeleton key"
+	desc = "An artifact usually found in the hands of the natives of lavaland, which NT now holds a monopoly on."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "skeleton_key"
+	w_class = WEIGHT_CLASS_SMALL
 
 #undef HIEROPHANT_BLINK_RANGE
 #undef HIEROPHANT_BLINK_COOLDOWN

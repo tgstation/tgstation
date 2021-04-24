@@ -41,16 +41,22 @@
 	return ..()
 
 /datum/nanite_program/temperature/active_effect()
-	if(host_mob.bodytemperature > host_mob.get_body_temp_normal(apply_change=FALSE))
-		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, host_mob.get_body_temp_normal(apply_change=FALSE))
-	else if(host_mob.bodytemperature < (host_mob.get_body_temp_normal(apply_change=FALSE) + 1))
-		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, host_mob.get_body_temp_normal(apply_change=FALSE))
+	var/target_temp = host_mob.get_body_temp_normal(apply_change=FALSE)
+	if(host_mob.bodytemperature > target_temp)
+		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
+	else if(host_mob.bodytemperature < (target_temp + 1))
+		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, target_temp)
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
 	desc = "The nanites purge toxins and chemicals from the host's bloodstream. Consumes nanites even if it has no effect."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
+
+/datum/nanite_program/purging/check_conditions()
+	. = ..()
+	if(!. || !host_mob.reagents)
+		return FALSE // No trying to purge simple mobs
 
 /datum/nanite_program/purging/active_effect()
 	host_mob.adjustToxLoss(-1)
@@ -140,6 +146,11 @@
 			The added processing power required to analyze the chemicals severely increases the nanite consumption rate. Consumes nanites even if it has no effect."
 	use_rate = 2
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
+
+/datum/nanite_program/purging_advanced/check_conditions()
+	. = ..()
+	if(!. || !host_mob.reagents)
+		return FALSE
 
 /datum/nanite_program/purging_advanced/active_effect()
 	host_mob.adjustToxLoss(-1)

@@ -16,7 +16,7 @@ Consuming extracts:
 	var/cookietype = /obj/item/slime_cookie
 
 /obj/item/slimecross/consuming/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/reagent_containers/food/snacks))
+	if(IS_EDIBLE(O))
 		if(last_produced + cooldown > world.time)
 			to_chat(user, "<span class='warning'>[src] is still digesting after its last meal!</span>")
 			return
@@ -35,8 +35,8 @@ Consuming extracts:
 			last_produced = world.time
 			for(var/i in 1 to cookies)
 				var/obj/item/S = spawncookie()
-				S.pixel_x = rand(-5, 5)
-				S.pixel_y = rand(-5, 5)
+				S.pixel_x = base_pixel_x + rand(-5, 5)
+				S.pixel_y = base_pixel_y + rand(-5, 5)
 		return
 	..()
 
@@ -247,7 +247,7 @@ Consuming extracts:
 	if(target)
 		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		new /obj/effect/particle_effect/sparks(get_turf(M))
-		playsound(get_turf(M), "sparks", 50, TRUE)
+		playsound(get_turf(M), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/slimecross/consuming/sepia
 	colour = "sepia"

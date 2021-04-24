@@ -72,9 +72,10 @@
 
 	if(ismecha(O))
 		var/obj/vehicle/sealed/mecha/R = O
-		R.update_icon()
+		R.update_appearance()
 		to_chat(user, "<span class='info'>You strengthen [R], improving its resistance against melee, bullet and laser damage.</span>")
 	else
+		SEND_SIGNAL(O, COMSIG_ARMOR_PLATED, amount, maxamount)
 		to_chat(user, "<span class='info'>You strengthen [O], improving its resistance against melee attacks.</span>")
 
 
@@ -92,6 +93,6 @@
 		var/overlay_string = "ripley-g"
 		if(amount >= 3)
 			overlay_string += "-full"
-		if(LAZYLEN(mech.occupants))
+		if(!LAZYLEN(mech.occupants))
 			overlay_string += "-open"
 		overlays += overlay_string

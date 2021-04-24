@@ -2,19 +2,19 @@
 	A derivative of radial menu which persists onscreen until closed and invokes a callback each time an element is clicked
 */
 
-/obj/screen/radial/persistent/center
+/atom/movable/screen/radial/persistent/center
 	name = "Close Menu"
 	icon_state = "radial_center"
 
-/obj/screen/radial/persistent/center/Click(location, control, params)
+/atom/movable/screen/radial/persistent/center/Click(location, control, params)
 	if(usr.client == parent.current_user)
 		parent.element_chosen(null,usr)
 
-/obj/screen/radial/persistent/center/MouseEntered(location, control, params)
+/atom/movable/screen/radial/persistent/center/MouseEntered(location, control, params)
 	. = ..()
 	icon_state = "radial_center_focus"
 
-/obj/screen/radial/persistent/center/MouseExited(location, control, params)
+/atom/movable/screen/radial/persistent/center/MouseExited(location, control, params)
 	. = ..()
 	icon_state = "radial_center"
 
@@ -25,7 +25,7 @@
 	var/datum/callback/select_proc_callback
 
 /datum/radial_menu/persistent/New()
-	close_button = new /obj/screen/radial/persistent/center
+	close_button = new /atom/movable/screen/radial/persistent/center
 	close_button.parent = src
 
 

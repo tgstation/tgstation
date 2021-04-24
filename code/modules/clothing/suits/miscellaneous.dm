@@ -1,8 +1,8 @@
 /*
  * Contains:
- *		Lasertag
- *		Costume
- *		Misc
+ * Lasertag
+ * Costume
+ * Misc
  */
 
 /*
@@ -44,7 +44,7 @@
 	desc = "You will learn to fear the flash."
 	icon_state = "flashsuit"
 	body_parts_covered = HEAD
-	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK|HIDESNOUT
 
 /obj/item/clothing/suit/pirate
 	name = "pirate coat"
@@ -52,12 +52,23 @@
 	icon_state = "pirate"
 	inhand_icon_state = "pirate"
 	allowed = list(/obj/item/melee/transforming/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/food/drinks/bottle/rum)
+	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/pirate/armored
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
+	strip_delay = 40
+	equip_delay_other = 20
 
 /obj/item/clothing/suit/pirate/captain
 	name = "pirate captain coat"
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	inhand_icon_state = "hgpirate"
+
+/obj/item/clothing/suit/pirate/captain/armored
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
+	strip_delay = 40
+	equip_delay_other = 20
 
 
 /obj/item/clothing/suit/cyborg_suit
@@ -95,6 +106,7 @@
 	icon_state = "overalls"
 	inhand_icon_state = "overalls"
 	body_parts_covered = CHEST|GROIN|LEGS
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/apron/purple_bartender
 	name = "purple bartender apron"
@@ -210,6 +222,7 @@
 	desc = "Your classic, non-racist poncho."
 	icon_state = "classicponcho"
 	inhand_icon_state = "classicponcho"
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"
@@ -248,8 +261,8 @@
 	inhand_icon_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
-	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/pneumatic_cannon/speargun)
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT //Space carp like space, so you should too
+	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
 
 /obj/item/clothing/head/hooded/carp_hood
@@ -271,7 +284,7 @@
 	if (user.head == src)
 		user.faction -= "carp"
 
-/obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
+/obj/item/clothing/suit/hooded/ian_costume //It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
 	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
 	icon_state = "ian"
@@ -310,7 +323,7 @@
 	flags_inv = HIDEHAIR|HIDEEARS
 	dynamic_hair_suffix = ""
 
-/obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
+/obj/item/clothing/suit/hooded/bloated_human //OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"
 	desc = "A horribly bloated suit made from human skins."
 	icon_state = "lingspacesuit"
@@ -319,6 +332,7 @@
 	allowed = list()
 	actions_types = list(/datum/action/item_action/toggle_human_head)
 	hoodtype = /obj/item/clothing/head/hooded/human_head
+	species_exception = list(/datum/species/golem) //Finally, flesh
 
 
 /obj/item/clothing/head/hooded/human_head
@@ -327,7 +341,7 @@
 	icon_state = "lingspacehelmet"
 	body_parts_covered = HEAD
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/suit/security/officer/russian
 	name = "\improper Russian officer's jacket"
@@ -358,19 +372,21 @@
 	clothing_flags = DANGEROUS_OBJECT
 	equip_delay_self = 50
 	strip_delay = 60
-	breakouttime = 3000
+	breakouttime = 5 MINUTES
 
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it, but it's pretty close. Good for sleeping in."
 	icon_state = "ianshirt"
 	inhand_icon_state = "ianshirt"
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/nerdshirt
 	name = "gamer shirt"
 	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would anyone wear this?"
 	icon_state = "nerdshirt"
 	inhand_icon_state = "nerdshirt"
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/vapeshirt //wearing this is asking to get beat.
 	name = "Vape Naysh shirt"
@@ -393,6 +409,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
@@ -402,6 +419,7 @@
 	resistance_flags = NONE
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/gun/ballistic/revolver/detective, /obj/item/radio)
+	species_exception = list(/datum/species/golem/bone) //bad to the bone
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
@@ -416,6 +434,7 @@
 	icon_state = "pufferjacket"
 	inhand_icon_state = "hostrench"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 0, ACID = 0)
+	species_exception = list(/datum/species/golem/bone)
 
 /obj/item/clothing/suit/jacket/puffer/vest
 	name = "puffer vest"
@@ -438,24 +457,28 @@
 	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
 	icon_state = "letterman"
 	inhand_icon_state = "letterman"
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/jacket/letterman_red
 	name = "red letterman jacket"
 	desc = "A letterman jacket in a sick red color. Radical."
 	icon_state = "letterman_red"
 	inhand_icon_state = "letterman_red"
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/jacket/letterman_syndie
 	name = "blood-red letterman jacket"
 	desc = "Oddly, this jacket seems to have a large S on the back..."
 	icon_state = "letterman_s"
 	inhand_icon_state = "letterman_s"
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/jacket/letterman_nanotrasen
 	name = "blue letterman jacket"
 	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
 	icon_state = "letterman_n"
 	inhand_icon_state = "letterman_n"
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/dracula
 	name = "dracula coat"
@@ -506,6 +529,7 @@
 	attack_verb_continuous = list("warns", "cautions", "smashes")
 	attack_verb_simple = list("warn", "caution", "smash")
 	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/changshan_red
 	name = "red changshan"
@@ -534,135 +558,6 @@
 	icon_state = "cheongsam_blue"
 	inhand_icon_state = "cheongsam_blue"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-
-// WINTER COATS
-
-/obj/item/clothing/suit/hooded/wintercoat
-	name = "winter coat"
-	desc = "A heavy jacket made from 'synthetic' animal furs."
-	icon_state = "coatwinter"
-	inhand_icon_state = "coatwinter"
-	body_parts_covered = CHEST|GROIN|ARMS
-	cold_protection = CHEST|GROIN|ARMS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
-
-/obj/item/clothing/head/hooded/winterhood
-	name = "winter hood"
-	desc = "A hood attached to a heavy winter jacket."
-	icon_state = "winterhood"
-	body_parts_covered = HEAD
-	cold_protection = HEAD
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	flags_inv = HIDEHAIR|HIDEEARS
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
-
-/obj/item/clothing/suit/hooded/wintercoat/captain
-	name = "captain's winter coat"
-	icon_state = "coatcaptain"
-	inhand_icon_state = "coatcaptain"
-	armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
-
-/obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
-	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
-
-/obj/item/clothing/head/hooded/winterhood/captain
-	icon_state = "winterhood_captain"
-	armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
-
-/obj/item/clothing/suit/hooded/wintercoat/security
-	name = "security winter coat"
-	icon_state = "coatsecurity"
-	inhand_icon_state = "coatsecurity"
-	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
-
-/obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
-	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
-
-/obj/item/clothing/head/hooded/winterhood/security
-	icon_state = "winterhood_security"
-	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
-
-/obj/item/clothing/suit/hooded/wintercoat/medical
-	name = "medical winter coat"
-	icon_state = "coatmedical"
-	inhand_icon_state = "coatmedical"
-	allowed = list(/obj/item/analyzer, /obj/item/sensor_device, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 0, ACID = 45)
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical
-
-/obj/item/clothing/head/hooded/winterhood/medical
-	icon_state = "winterhood_medical"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 0, ACID = 45)
-
-/obj/item/clothing/suit/hooded/wintercoat/science
-	name = "science winter coat"
-	icon_state = "coatscience"
-	inhand_icon_state = "coatscience"
-	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
-
-/obj/item/clothing/head/hooded/winterhood/science
-	icon_state = "winterhood_science"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
-
-/obj/item/clothing/suit/hooded/wintercoat/engineering
-	name = "engineering winter coat"
-	icon_state = "coatengineer"
-	inhand_icon_state = "coatengineer"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 20, FIRE = 30, ACID = 45)
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
-
-/obj/item/clothing/head/hooded/winterhood/engineering
-	icon_state = "winterhood_engineer"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 20, FIRE = 30, ACID = 45)
-
-/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
-	name = "atmospherics winter coat"
-	icon_state = "coatatmos"
-	inhand_icon_state = "coatatmos"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/atmos
-
-/obj/item/clothing/head/hooded/winterhood/engineering/atmos
-	icon_state = "winterhood_atmos"
-
-/obj/item/clothing/suit/hooded/wintercoat/hydro
-	name = "hydroponics winter coat"
-	icon_state = "coathydro"
-	inhand_icon_state = "coathydro"
-	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants, /obj/item/toy, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/hydro
-
-/obj/item/clothing/head/hooded/winterhood/hydro
-	icon_state = "winterhood_hydro"
-
-/obj/item/clothing/suit/hooded/wintercoat/cargo
-	name = "cargo winter coat"
-	icon_state = "coatcargo"
-	inhand_icon_state = "coatcargo"
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/cargo
-
-/obj/item/clothing/head/hooded/winterhood/cargo
-	icon_state = "winterhood_cargo"
-
-/obj/item/clothing/suit/hooded/wintercoat/miner
-	name = "mining winter coat"
-	icon_state = "coatminer"
-	inhand_icon_state = "coatminer"
-	allowed = list(/obj/item/pickaxe, /obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
-
-/obj/item/clothing/head/hooded/winterhood/miner
-	icon_state = "winterhood_miner"
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/head/hooded/ablative
 	name = "ablative hood"
@@ -730,8 +625,9 @@
 	throw_speed = 1
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
-	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	alternate_worn_layer = UNDER_HEAD_LAYER
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/ghost_sheet/spooky
 	name = "spooky ghost"
@@ -781,6 +677,7 @@
 	desc = "A cool shirt for chilling on the beach."
 	icon_state = "hawaiian_blue"
 	inhand_icon_state = "hawaiian_blue"
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/yakuza
 	name = "tojo clan jacket"

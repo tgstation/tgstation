@@ -25,12 +25,12 @@
 	else
 		user_by_item -= source
 
-/datum/element/earhealing/process()
+/datum/element/earhealing/process(delta_time)
 	for(var/i in user_by_item)
 		var/mob/living/carbon/user = user_by_item[i]
 		var/obj/item/organ/ears/ears = user.getorganslot(ORGAN_SLOT_EARS)
 		if(!ears || HAS_TRAIT_NOT_FROM(user, TRAIT_DEAF, EAR_DAMAGE))
 			continue
-		ears.deaf = max(ears.deaf - 0.25, (ears.damage < ears.maxHealth ? 0 : 1)) // Do not clear deafness if our ears are too damaged
-		ears.damage = max(ears.damage - 0.025, 0)
+		ears.deaf = max(ears.deaf - 0.25 * delta_time, (ears.damage < ears.maxHealth ? 0 : 1)) // Do not clear deafness if our ears are too damaged
+		ears.damage = max(ears.damage - 0.025 * delta_time, 0)
 		CHECK_TICK

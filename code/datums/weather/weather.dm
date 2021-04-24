@@ -1,18 +1,18 @@
 /**
-  * Causes weather to occur on a z level in certain area types
-  *
-  * The effects of weather occur across an entire z-level. For instance, lavaland has periodic ash storms that scorch most unprotected creatures.
-  * Weather always occurs on different z levels at different times, regardless of weather type.
-  * Can have custom durations, targets, and can automatically protect indoor areas.
-  *
-  */
+ * Causes weather to occur on a z level in certain area types
+ *
+ * The effects of weather occur across an entire z-level. For instance, lavaland has periodic ash storms that scorch most unprotected creatures.
+ * Weather always occurs on different z levels at different times, regardless of weather type.
+ * Can have custom durations, targets, and can automatically protect indoor areas.
+ *
+ */
 
 /datum/weather
 	/// name of weather
 	var/name = "space wind"
 	/// description of weather
 	var/desc = "Heavy gusts of wind blanket the area, periodically knocking down anyone caught in the open."
-    /// The message displayed in chat to foreshadow the weather's beginning
+	/// The message displayed in chat to foreshadow the weather's beginning
 	var/telegraph_message = "<span class='warning'>The wind begins to pick up.</span>"
 	/// In deciseconds, how long from the beginning of the telegraph until the weather begins
 	var/telegraph_duration = 300
@@ -56,7 +56,7 @@
 	/// The list of z-levels that this weather is actively affecting
 	var/impacted_z_levels
 
-    /// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
+	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
 	var/overlay_plane = BLACKNESS_PLANE
@@ -65,7 +65,7 @@
 	/// Used by mobs to prevent them from being affected by the weather
 	var/immunity_type = "storm"
 
-    /// The stage of the weather, from 1-4
+	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
 
 	/// Weight amongst other eligible weather. If zero, will never happen randomly.
@@ -77,18 +77,20 @@
 	var/barometer_predictable = FALSE
 	/// For barometers to know when the next storm will hit
 	var/next_hit_time = 0
+	/// This causes the weather to only end if forced to
+	var/perpetual = FALSE
 
 /datum/weather/New(z_levels)
 	..()
 	impacted_z_levels = z_levels
 
 /**
-  * Telegraphs the beginning of the weather on the impacted z levels
-  *
-  * Sends sounds and details to mobs in the area
-  * Calculates duration and hit areas, and makes a callback for the actual weather to start
-  *
-  */
+ * Telegraphs the beginning of the weather on the impacted z levels
+ *
+ * Sends sounds and details to mobs in the area
+ * Calculates duration and hit areas, and makes a callback for the actual weather to start
+ *
+ */
 /datum/weather/proc/telegraph()
 	if(stage == STARTUP_STAGE)
 		return
@@ -117,12 +119,12 @@
 	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
 
 /**
-  * Starts the actual weather and effects from it
-  *
-  * Updates area overlays and sends sounds and messages to mobs to notify them
-  * Begins dealing effects from weather to mobs in the area
-  *
-  */
+ * Starts the actual weather and effects from it
+ *
+ * Updates area overlays and sends sounds and messages to mobs to notify them
+ * Begins dealing effects from weather to mobs in the area
+ *
+ */
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
 		return
@@ -135,15 +137,16 @@
 				to_chat(M, weather_message)
 			if(weather_sound)
 				SEND_SOUND(M, sound(weather_sound))
-	addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
+	if(!perpetual)
+		addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
 
 /**
-  * Weather enters the winding down phase, stops effects
-  *
-  * Updates areas to be in the winding down phase
-  * Sends sounds and messages to mobs to notify them
-  *
-  */
+ * Weather enters the winding down phase, stops effects
+ *
+ * Updates areas to be in the winding down phase
+ * Sends sounds and messages to mobs to notify them
+ *
+ */
 /datum/weather/proc/wind_down()
 	if(stage >= WIND_DOWN_STAGE)
 		return
@@ -159,12 +162,12 @@
 	addtimer(CALLBACK(src, .proc/end), end_duration)
 
 /**
-  * Fully ends the weather
-  *
-  * Effects no longer occur and area overlays are removed
-  * Removes weather from processing completely
-  *
-  */
+ * Fully ends the weather
+ *
+ * Effects no longer occur and area overlays are removed
+ * Removes weather from processing completely
+ *
+ */
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
 		return 1
@@ -173,9 +176,9 @@
 	update_areas()
 
 /**
-  * Returns TRUE if the living mob can be affected by the weather
-  *
-  */
+ * Returns TRUE if the living mob can be affected by the weather
+ *
+ */
 /datum/weather/proc/can_weather_act(mob/living/L)
 	var/turf/mob_turf = get_turf(L)
 	if(mob_turf && !(mob_turf.z in impacted_z_levels))
@@ -187,16 +190,16 @@
 	return TRUE
 
 /**
-  * Affects the mob with whatever the weather does
-  *
-  */
+ * Affects the mob with whatever the weather does
+ *
+ */
 /datum/weather/proc/weather_act(mob/living/L)
 	return
 
 /**
-  * Updates the overlays on impacted areas
-  *
-  */
+ * Updates the overlays on impacted areas
+ *
+ */
 /datum/weather/proc/update_areas()
 	for(var/V in impacted_areas)
 		var/area/N = V

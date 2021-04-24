@@ -13,10 +13,10 @@
 
 /obj/item/food/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	slot_flags = ITEM_SLOT_HEAD
 	foodtypes = GRAIN
 	eat_time = 0.5 SECONDS
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/breadslice/Initialize()
 	. = ..()
@@ -26,12 +26,17 @@
 	name = "bread"
 	desc = "Some plain old earthen bread."
 	icon_state = "bread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 17)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10)
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/bread/plain/Initialize()
 	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+
+/obj/item/food/bread/plain/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 30)
 
 /obj/item/food/breadslice/plain
@@ -39,6 +44,12 @@
 	desc = "A slice of home."
 	icon_state = "breadslice"
 	foodtypes = GRAIN
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	venue_value = FOOD_PRICE_TRASH
+
+/obj/item/food/breadslice/plain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/breadslice/moldy
 	name = "moldy bread slice"
@@ -48,16 +59,22 @@
 	tastes = list("decaying fungus" = 1)
 	foodtypes = GROSS
 
+/obj/item/food/breadslice/moldy/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
+
+
 /obj/item/food/bread/meat
 	name = "meatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
 	icon_state = "meatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/vitamin = 15, /datum/reagent/consumable/nutriment/protein = 17)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/consumable/nutriment/protein = 12)
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtypes = GRAIN | MEAT
+	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/bread/meat/Initialize()
-	. = ..()
+
+/obj/item/food/bread/meat/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/meat, 5, 30)
 
 /obj/item/food/breadslice/meat
@@ -65,42 +82,41 @@
 	desc = "A slice of delicious meatbread."
 	icon_state = "meatbreadslice"
 	foodtypes = GRAIN | MEAT
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2.4)
 
 /obj/item/food/bread/xenomeat
 	name = "xenomeatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
 	icon_state = "xenomeatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/vitamin = 15, /datum/reagent/consumable/nutriment/protein = 24)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/consumable/nutriment/protein = 15)
 	tastes = list("bread" = 10, "acid" = 10)
 	foodtypes = GRAIN | MEAT
 
-/obj/item/food/bread/xenomeat/Initialize()
-	. = ..()
+/obj/item/food/bread/xenomeat/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/xenomeat, 5, 30)
 
 /obj/item/food/breadslice/xenomeat
 	name = "xenomeatbread slice"
 	desc = "A slice of delicious meatbread. Extra Heretical."
 	icon_state = "xenobreadslice"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/nutriment/protein = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 3)
 	foodtypes = GRAIN | MEAT
 
 /obj/item/food/bread/spidermeat
 	name = "spider meat loaf"
 	desc = "Reassuringly green meatloaf made from spider meat."
 	icon_state = "spidermeatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/toxin = 15, /datum/reagent/consumable/nutriment/vitamin = 15, /datum/reagent/consumable/nutriment/protein = 17)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/toxin = 15, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/consumable/nutriment/protein = 12)
 	tastes = list("bread" = 10, "cobwebs" = 5)
 	foodtypes = GRAIN | MEAT | TOXIC
 
-/obj/item/food/bread/spidermeat/Initialize()
-	. = ..()
+/obj/item/food/bread/spidermeat/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/spidermeat, 5, 30)
 
 /obj/item/food/breadslice/spidermeat
 	name = "spider meat bread slice"
 	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
-	icon_state = "xenobreadslice"
+	icon_state = "spidermeatslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/toxin = 3, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtypes = GRAIN | MEAT | TOXIC
 
@@ -108,12 +124,11 @@
 	name = "banana-nut bread"
 	desc = "A heavenly and filling treat."
 	icon_state = "bananabread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/banana = 40)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/banana = 20)
 	tastes = list("bread" = 10) // bananjuice will also flavour
 	foodtypes = GRAIN | FRUIT
 
-/obj/item/food/bread/banana/Initialize()
-	. = ..()
+/obj/item/food/bread/banana/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/banana, 5, 30)
 
 /obj/item/food/breadslice/banana
@@ -127,19 +142,19 @@
 	name = "Tofubread"
 	desc = "Like meatbread but for vegetarians. Not guaranteed to give superpowers."
 	icon_state = "tofubread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 15, /datum/reagent/consumable/nutriment/protein = 13)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/consumable/nutriment/protein = 10)
 	tastes = list("bread" = 10, "tofu" = 10)
 	foodtypes = GRAIN | VEGETABLES
+	venue_value = FOOD_PRICE_TRASH
 
-/obj/item/food/bread/tofu/Initialize()
-	. = ..()
+/obj/item/food/bread/tofu/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/tofu, 5, 30)
 
 /obj/item/food/breadslice/tofu
 	name = "tofubread slice"
 	desc = "A slice of delicious tofubread."
 	icon_state = "tofubreadslice"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GRAIN | VEGETABLES
 
 /obj/item/food/bread/creamcheese
@@ -150,39 +165,51 @@
 	tastes = list("bread" = 10, "cheese" = 10)
 	foodtypes = GRAIN | DAIRY
 
-/obj/item/food/bread/creamcheese/Initialize()
-	. = ..()
+/obj/item/food/bread/creamcheese/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/creamcheese, 5, 30)
 
 /obj/item/food/breadslice/creamcheese
 	name = "cream cheese bread slice"
 	desc = "A slice of yum!"
 	icon_state = "creamcheesebreadslice"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+
+/obj/item/food/bread/empty
+	name = "bread"
+	icon_state = "tofubread"
+	desc = "It's bread, customized to your wildest dreams."
+
+/obj/item/food/bread/empty/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/empty, 5, 30)
 
 /obj/item/food/bread/mimana
 	name = "mimana bread"
 	desc = "Best eaten in silence."
 	icon_state = "mimanabread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 5, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("bread" = 10, "silence" = 10)
 	foodtypes = GRAIN | FRUIT
 
-/obj/item/food/bread/mimana/Initialize()
-	. = ..()
+/obj/item/food/bread/mimana/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/mimana, 5, 30)
 
 /obj/item/food/breadslice/mimana
 	name = "mimana bread slice"
 	desc = "A slice of silence!"
 	icon_state = "mimanabreadslice"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/mutetoxin = 1, /datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/toxin/mutetoxin = 1, /datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GRAIN | FRUIT
 
-/obj/item/food/breadslice/custom
+// What you get from cutting a custom bread. Different from custom sliced bread.
+/obj/item/food/breadslice/empty
 	name = "bread slice"
 	icon_state = "tofubreadslice"
 	foodtypes = GRAIN
+	desc = "It's a slice of bread, customized to your wildest dreams."
+
+/obj/item/food/breadslice/empty/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/baguette
 	name = "baguette"
@@ -199,6 +226,7 @@
 	attack_verb_simple = list("touche")
 	tastes = list("bread" = 1)
 	foodtypes = GRAIN
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/garlicbread
 	name = "garlic bread"
@@ -210,6 +238,7 @@
 	bite_consumption = 3
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
 	foodtypes = GRAIN
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
@@ -294,6 +323,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
 	foodtypes = GRAIN | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/butterdog
 	name = "butterdog"
@@ -304,6 +335,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "exotic butter" = 1)
 	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/butterdog/ComponentInitialize()
 	. = ..()

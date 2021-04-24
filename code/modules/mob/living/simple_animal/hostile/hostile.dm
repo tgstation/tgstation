@@ -10,19 +10,19 @@
 
 	var/dodging = FALSE
 	var/approaching_target = FALSE //We should dodge now
-	var/in_melee = FALSE	//We should sidestep now
+	var/in_melee = FALSE //We should sidestep now
 	var/dodge_prob = 30
 	var/sidestep_per_cycle = 1 //How many sidesteps per npcpool cycle when in melee
 
-	var/projectiletype	//set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
+	var/projectiletype //set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
 	var/projectilesound
-	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
+	var/casingtype //set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
 	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
-	var/rapid_melee = 1			 //Number of melee attacks between each npc pool tick. Spread evenly.
+	var/rapid_melee = 1  //Number of melee attacks between each npc pool tick. Spread evenly.
 	var/melee_queue_distance = 4 //If target is close enough start preparing to hit them if we have rapid_melee enabled
 
 	var/ranged_message = "fires" //Fluff text for ranged mobs
@@ -48,9 +48,21 @@
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
 	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
-
 	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
+
+	///When a target is found, will the mob attempt to charge at it's target?
+	var/charger = FALSE
+	///Tracks if the target is actively charging.
+	var/charge_state = FALSE
+	///In a charge, how many tiles will the charger travel?
+	var/charge_distance = 3
+	///How often can the charging mob actually charge? Effects the cooldown between charges.
+	var/charge_frequency = 6 SECONDS
+	///If the mob is charging, how long will it stun it's target on success, and itself on failure?
+	var/knockdown_time = 3 SECONDS
+	///Declares a cooldown for potential charges right off the bat.
+	COOLDOWN_DECLARE(charge_cooldown)
 
 /mob/living/simple_animal/hostile/Initialize()
 	. = ..()
@@ -64,7 +76,7 @@
 	targets_from = null
 	return ..()
 
-/mob/living/simple_animal/hostile/Life()
+/mob/living/simple_animal/hostile/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) //dead
 		walk(src, 0) //stops walking
@@ -81,8 +93,8 @@
 		if(!QDELETED(target) && !targets_from.Adjacent(target))
 			DestroyPathToTarget()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
-			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
-				toggle_ai(AI_IDLE)			// otherwise we go idle
+			if(AIShouldSleep(possible_targets)) // we try to acquire a new one
+				toggle_ai(AI_IDLE) // otherwise we go idle
 	return 1
 
 /mob/living/simple_animal/hostile/handle_automated_movement()
@@ -95,6 +107,10 @@
 				addtimer(cb, (i - 1)*sidestep_delay)
 		else //Otherwise randomize it to make the players guessing.
 			addtimer(cb,rand(1,SSnpcpool.wait))
+
+/mob/living/simple_animal/hostile/update_stamina()
+	. = ..()
+	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/hostile/proc/sidestep()
 	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
@@ -274,6 +290,9 @@
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
+		if(charger && (target_distance > minimum_distance) && (target_distance <= charge_distance))//Attempt to close the distance with a charge.
+			enter_charge(target)
+			return TRUE
 		if(!Process_Spacemove()) //Drifting
 			walk(src,0)
 			return 1
@@ -358,7 +377,7 @@
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/proc/summon_backup(distance, exact_faction_match)
-	do_alert_animation(src)
+	do_alert_animation()
 	playsound(loc, 'sound/machines/chime.ogg', 50, TRUE, -1)
 	for(var/mob/living/simple_animal/hostile/M in oview(distance, targets_from))
 		if(faction_check_mob(M, TRUE))
@@ -489,12 +508,12 @@
 			A.attack_animal(src)
 		return 1
 
-/mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
+
+/mob/living/simple_animal/hostile/RangedAttack(atom/A, modifiers) //Player firing
 	if(ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
-	..()
-
+	return ..()
 
 
 ////// AI Status ///////
@@ -572,8 +591,64 @@
 				. += M.loc
 
 /mob/living/simple_animal/hostile/tamed(whomst)
+	. = ..()
 	if(isliving(whomst))
 		var/mob/living/fren = whomst
 		friends = fren
 		faction = fren.faction.Copy()
-	return ..()
+
+/**
+ * Proc that handles a charge attack windup for a mob.
+ */
+/mob/living/simple_animal/hostile/proc/enter_charge(atom/target)
+	if(charge_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+		return FALSE
+
+	if(!(COOLDOWN_FINISHED(src, charge_cooldown)) || !has_gravity() || !target.has_gravity())
+		return FALSE
+	Shake(15, 15, 1 SECONDS)
+	addtimer(CALLBACK(src, .proc/handle_charge_target, target), 1.5 SECONDS, TIMER_STOPPABLE)
+
+/**
+ * Proc that throws the mob at the target after the windup.
+ */
+/mob/living/simple_animal/hostile/proc/handle_charge_target(atom/target)
+	charge_state = TRUE
+	throw_at(target, charge_distance, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charge_end))
+	COOLDOWN_START(src, charge_cooldown, charge_frequency)
+	return TRUE
+
+/**
+ * Proc that handles a charge attack after it's concluded.
+ */
+/mob/living/simple_animal/hostile/proc/charge_end()
+	charge_state = FALSE
+
+/**
+ * Proc that handles the charge impact of the charging mob.
+ */
+/mob/living/simple_animal/hostile/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(!charge_state)
+		return ..()
+
+	if(hit_atom)
+		if(isliving(hit_atom))
+			var/mob/living/L = hit_atom
+			var/blocked = FALSE
+			if(ishuman(hit_atom))
+				var/mob/living/carbon/human/H = hit_atom
+				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
+					blocked = TRUE
+			if(!blocked)
+				L.visible_message("<span class='danger'>[src] charges on [L]!</span>", "<span class='userdanger'>[src] charges into you!</span>")
+				L.Knockdown(knockdown_time)
+			else
+				Stun((knockdown_time * 2), ignore_canstun = TRUE)
+			charge_end()
+		else if(hit_atom.density && !hit_atom.CanPass(src))
+			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>")
+			Stun((knockdown_time * 2), ignore_canstun = TRUE)
+
+		if(charge_state)
+			charge_state = FALSE
+			update_icons()

@@ -169,6 +169,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
+	//any sprite modifications we want to do (aka, coloring a greyscaled asset)
+	I = ModifyInserted(I)
 	var/size_id = "[I.Width()]x[I.Height()]"
 	var/size = sizes[size_id]
 
@@ -184,6 +186,15 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	else
 		sizes[size_id] = size = list(1, I, null)
 		sprites[sprite_name] = list(size_id, 0)
+
+/**
+ * A simple proc handing the Icon for you to modify before it gets turned into an asset.
+ *
+ * Arguments:
+ * * I: icon being turned into an asset
+ */
+/datum/asset/spritesheet/proc/ModifyInserted(icon/pre_asset)
+	return pre_asset
 
 /datum/asset/spritesheet/proc/InsertAll(prefix, icon/I, list/directions)
 	if (length(prefix))
@@ -216,6 +227,19 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		return null
 	var/size_id = sprite[SPR_SIZE]
 	return {"[name][size_id] [sprite_name]"}
+
+/**
+ * Returns the size class (ex design32x32) for a given sprite's icon
+ *
+ * Arguments:
+ * * sprite_name - The sprite to get the size of
+ */
+/datum/asset/spritesheet/proc/icon_size_id(sprite_name)
+	var/sprite = sprites[sprite_name]
+	if (!sprite)
+		return null
+	var/size_id = sprite[SPR_SIZE]
+	return "[name][size_id]"
 
 #undef SPR_SIZE
 #undef SPR_IDX

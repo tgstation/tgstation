@@ -1,4 +1,4 @@
-#define C2NAMEREAGENT	"[initial(reagent.name)] (Has Side-Effects)"
+#define C2NAMEREAGENT "[initial(reagent.name)] (Has Side-Effects)"
 /*
 Contains:
 Borg Hypospray
@@ -22,8 +22,9 @@ Borg Hypospray
 	possible_transfer_amounts = list()
 	var/mode = 1
 	var/charge_cost = 50
-	var/charge_tick = 0
-	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
+	var/charge_timer = 0
+	var/recharge_time = 10 //Time it takes for shots to recharge (in seconds)
+	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE ///Optional variable to override the temperature add_reagent() will use
 	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
@@ -48,13 +49,12 @@ Borg Hypospray
 	return ..()
 
 
-/obj/item/reagent_containers/borghypo/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
-	charge_tick++
-	if(charge_tick >= recharge_time)
+/obj/item/reagent_containers/borghypo/process(delta_time) //Every [recharge_time] seconds, recharge some reagents for the cyborg
+	charge_timer += delta_time
+	if(charge_timer >= recharge_time)
 		regenerate_reagents()
-		charge_tick = 0
+		charge_timer = 0
 
-	//update_icon()
 	return 1
 
 // Use this to add more chemicals for the borghypo to produce.
@@ -65,7 +65,7 @@ Borg Hypospray
 	reagent_list += RG
 
 	var/datum/reagents/R = reagent_list[reagent_list.len]
-	R.add_reagent(reagent, 30)
+	R.add_reagent(reagent, 30, reagtemp = dispensed_temperature)
 
 	modes[reagent] = modes.len + 1
 
@@ -96,12 +96,12 @@ Borg Hypospray
 /obj/item/reagent_containers/borghypo/proc/regenerate_reagents()
 	if(iscyborg(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
+		if(R?.cell)
 			for(var/i in 1 to reagent_ids.len)
 				var/datum/reagents/RG = reagent_list[i]
-				if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents and drain power if the storage is full.
-					R.cell.use(charge_cost) 					//Take power from borg...
-					RG.add_reagent(reagent_ids[i], 5)		//And fill hypo with reagent.
+				if(RG.total_volume < RG.maximum_volume) //Don't recharge reagents and drain power if the storage is full.
+					R.cell.use(charge_cost) //Take power from borg...
+					RG.add_reagent(reagent_ids[i], 5, reagtemp = dispensed_temperature) //And fill hypo with reagent.
 
 /obj/item/reagent_containers/borghypo/attack(mob/living/carbon/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
@@ -110,7 +110,7 @@ Borg Hypospray
 		return
 	if(!istype(M))
 		return
-	if(R.total_volume && M.can_inject(user, 1, user.zone_selected,bypass_protection))
+	if(R.total_volume && M.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)))
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		to_chat(user, "<span class='notice'>You inject [M] with the injector.</span>")
 		if(M.reagents)
@@ -134,7 +134,7 @@ Borg Hypospray
 
 /obj/item/reagent_containers/borghypo/examine(mob/user)
 	. = ..()
-	. += DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
+	. += DescribeContents() //Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
 	var/datum/reagent/loaded = modes[mode]
 	. += "Currently loaded: [initial(loaded.name)]. [initial(loaded.description)]"
 	. += "<span class='notice'><i>Alt+Click</i> to change transfer amount. Currently set to [amount_per_transfer_from_this == 5 ? "dose normally (5u)" : "microdose (2u)"].</span>"
@@ -181,12 +181,17 @@ Borg Hypospray
 
 /obj/item/reagent_containers/borghypo/syndicate
 	name = "syndicate cyborg hypospray"
-	desc = "An experimental piece of Syndicate technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. Also metabolizes potassium iodide, for radiation poisoning, and morphine, for offense."
+	desc = "An experimental piece of Syndicate technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. Also metabolizes potassium iodide for radiation poisoning, inacusiate for ear damage and morphine for offense."
 	icon_state = "borghypo_s"
 	charge_cost = 20
 	recharge_time = 2
-	reagent_ids = list(/datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/potass_iodide, /datum/reagent/medicine/morphine)
-	bypass_protection = 1
+	reagent_ids = list(
+		/datum/reagent/medicine/syndicate_nanites,
+		/datum/reagent/medicine/inacusiate,
+		/datum/reagent/medicine/potass_iodide,
+		/datum/reagent/medicine/morphine,
+	)
+	bypass_protection = TRUE
 	accepts_reagent_upgrades = FALSE
 
 /*
@@ -201,6 +206,7 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
+	dispensed_temperature = T0C + 1.35
 
 	reagent_ids = list(/datum/reagent/consumable/applejuice, /datum/reagent/consumable/banana, /datum/reagent/consumable/coffee,
 	/datum/reagent/consumable/cream, /datum/reagent/consumable/dr_gibb, /datum/reagent/consumable/grenadine,
@@ -225,13 +231,13 @@ Borg Shaker
 /obj/item/reagent_containers/borghypo/borgshaker/regenerate_reagents()
 	if(iscyborg(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
+		if(R?.cell)
 			for(var/i in modes) //Lots of reagents in this one, so it's best to regenrate them all at once to keep it from being tedious.
 				var/valueofi = modes[i]
 				var/datum/reagents/RG = reagent_list[valueofi]
 				if(RG.total_volume < RG.maximum_volume)
 					R.cell.use(charge_cost)
-					RG.add_reagent(reagent_ids[valueofi], 5)
+					RG.add_reagent(reagent_ids[valueofi], 5, reagtemp = dispensed_temperature)
 
 /obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
 	. = ..()
@@ -268,6 +274,7 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
+	dispensed_temperature = T0C + 1.35
 
 	reagent_ids = list(/datum/reagent/toxin/fakebeer, /datum/reagent/consumable/ethanol/fernet)
 

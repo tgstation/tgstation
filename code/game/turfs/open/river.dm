@@ -11,7 +11,7 @@
 	while(num_spawned < nodes && possible_locs.len)
 		var/turf/T = pick(possible_locs)
 		var/area/A = get_area(T)
-		if(!istype(A, whitelist_area) || (T.flags_1 & NO_LAVA_GEN_1))
+		if(!istype(A, whitelist_area) || (T.turf_flags & NO_LAVA_GEN))
 			possible_locs -= T
 		else
 			river_nodes += new /obj/effect/landmark/river_waypoint(T)
@@ -47,7 +47,7 @@
 
 			cur_turf = get_step(cur_turf, cur_dir)
 			var/area/new_area = get_area(cur_turf)
-			if(!istype(new_area, whitelist_area) || (cur_turf.flags_1 & NO_LAVA_GEN_1)) //Rivers will skip ruins
+			if(!istype(new_area, whitelist_area) || (cur_turf.turf_flags & NO_LAVA_GEN)) //Rivers will skip ruins
 				detouring = FALSE
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
@@ -75,7 +75,7 @@
 	for(var/F in RANGE_TURFS(1, src) - src)
 		var/turf/T = F
 		var/area/new_area = get_area(T)
-		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)) || (T.flags_1 & NO_LAVA_GEN_1) )
+		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)) || (T.turf_flags & NO_LAVA_GEN) )
 			continue
 
 		if(!logged_turf_type && ismineralturf(T))

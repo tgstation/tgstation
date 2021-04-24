@@ -47,24 +47,24 @@
 	return L
 
 /datum/sprite_accessory
-	var/icon			//the icon file the accessory is located in
-	var/icon_state		//the icon_state of the accessory
-	var/name			//the preview name of the accessory
-	var/gender = NEUTER	//Determines if the accessory will be skipped or included in random hair generations
+	var/icon //the icon file the accessory is located in
+	var/icon_state //the icon_state of the accessory
+	var/name //the preview name of the accessory
+	var/gender = NEUTER //Determines if the accessory will be skipped or included in random hair generations
 	var/gender_specific //Something that can be worn by either gender, but looks different on each
-	var/use_static		//determines if the accessory will be skipped by color preferences
-	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
-	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
-	var/locked = FALSE		//Is this part locked from roundstart selection? Used for parts that apply effects
+	var/use_static //determines if the accessory will be skipped by color preferences
+	var/color_src = MUTCOLORS //Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
+	var/hasinner //Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
+	var/locked = FALSE //Is this part locked from roundstart selection? Used for parts that apply effects
 	var/dimension_x = 32
 	var/dimension_y = 32
-	var/center = FALSE	//Should we center the sprite?
+	var/center = FALSE //Should we center the sprite?
 
 //////////////////////
 // Hair Definitions //
 //////////////////////
 /datum/sprite_accessory/hair
-	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
+	icon = 'icons/mob/human_face.dmi'   // default icon for all hairs
 
 	// please make sure they're sorted alphabetically and, where needed, categorized
 	// try to capitalize the names please~
@@ -226,6 +226,10 @@
 /datum/sprite_accessory/hair/buzz
 	name = "Buzzcut"
 	icon_state = "hair_buzzcut"
+
+/datum/sprite_accessory/hair/comet
+	name = "Comet"
+	icon_state = "hair_comet"
 
 /datum/sprite_accessory/hair/cia
 	name = "CIA"
@@ -1614,6 +1618,11 @@
 	icon_state = "cat"
 	color_src = HAIR
 
+/datum/sprite_accessory/tails/monkey/default
+	name = "Monkey"
+	icon_state = "monkey"
+	color_src = FALSE
+
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
@@ -1732,6 +1741,23 @@
 	center = TRUE
 	dimension_y = 32
 
+/datum/sprite_accessory/wings/mothra
+	name = "Mothra"
+	icon_state = "mothra"
+	color_src = 0
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+	locked = TRUE
+
+/datum/sprite_accessory/wings_open/mothra
+	name = "Mothra"
+	icon_state = "mothra"
+	color_src = 0
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
@@ -1805,8 +1831,8 @@
 	name = "Aquatic"
 	icon_state = "aqua"
 
-/datum/sprite_accessory/legs 	//legs are a special case, they aren't actually sprite_accessories but are updated with them.
-	icon = null					//These datums exist for selecting legs on preference, and little else
+/datum/sprite_accessory/legs //legs are a special case, they aren't actually sprite_accessories but are updated with them.
+	icon = null //These datums exist for selecting legs on preference, and little else
 
 /datum/sprite_accessory/legs/none
 	name = "Normal Legs"
@@ -1862,9 +1888,9 @@
 	name = "White Fly"
 	icon_state = "whitefly"
 
-/datum/sprite_accessory/moth_wings/punished
+/datum/sprite_accessory/moth_wings/burnt_off
 	name = "Burnt Off"
-	icon_state = "punished"
+	icon_state = "burnt_off"
 	locked = TRUE
 
 /datum/sprite_accessory/moth_wings/firewatch
@@ -1903,6 +1929,74 @@
 	name = "Witch Wing"
 	icon_state = "witchwing"
 
+/datum/sprite_accessory/moth_antennae //Finally splitting the sprite
+	icon = 'icons/mob/moth_antennae.dmi'
+	color_src = null
+
+/datum/sprite_accessory/moth_antennae/plain
+	name = "Plain"
+	icon_state = "plain"
+
+/datum/sprite_accessory/moth_antennae/reddish
+	name = "Reddish"
+	icon_state = "reddish"
+
+/datum/sprite_accessory/moth_antennae/royal
+	name = "Royal"
+	icon_state = "royal"
+
+/datum/sprite_accessory/moth_antennae/gothic
+	name = "Gothic"
+	icon_state = "gothic"
+
+/datum/sprite_accessory/moth_antennae/whitefly
+	name = "White Fly"
+	icon_state = "whitefly"
+
+/datum/sprite_accessory/moth_antennae/lovers
+	name = "Lovers"
+	icon_state = "lovers"
+
+/datum/sprite_accessory/moth_antennae/burnt_off
+	name = "Burnt Off"
+	icon_state = "burnt_off"
+
+/datum/sprite_accessory/moth_antennae/firewatch
+	name = "Firewatch"
+	icon_state = "firewatch"
+
+/datum/sprite_accessory/moth_antennae/deathhead
+	name = "Deathshead"
+	icon_state = "deathhead"
+
+/datum/sprite_accessory/moth_antennae/poison
+	name = "Poison"
+	icon_state = "poison"
+
+/datum/sprite_accessory/moth_antennae/ragged
+	name = "Ragged"
+	icon_state = "ragged"
+
+/datum/sprite_accessory/moth_antennae/moonfly
+	name = "Moon Fly"
+	icon_state = "moonfly"
+
+/datum/sprite_accessory/moth_antennae/oakworm
+	name = "Oak Worm"
+	icon_state = "oakworm"
+
+/datum/sprite_accessory/moth_antennae/jungle
+	name = "Jungle"
+	icon_state = "jungle"
+
+/datum/sprite_accessory/moth_antennae/witchwing
+	name = "Witch Wing"
+	icon_state = "witchwing"
+
+/datum/sprite_accessory/moth_antennae/regal
+	name = "Regal"
+	icon_state = "regal"
+
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/moth_markings.dmi'
 	color_src = null
@@ -1931,9 +2025,9 @@
 	name = "Lovers"
 	icon_state = "lovers"
 
-/datum/sprite_accessory/moth_markings/punished
-	name = "Punished"
-	icon_state = "punished"
+/datum/sprite_accessory/moth_markings/burnt_off
+	name = "Burnt Off"
+	icon_state = "burnt_off"
 
 /datum/sprite_accessory/moth_markings/firewatch
 	name = "Firewatch"

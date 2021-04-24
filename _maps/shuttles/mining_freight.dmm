@@ -63,7 +63,7 @@
 /area/shuttle/mining)
 "k" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -91,7 +91,7 @@
 	port_direction = 4;
 	width = 7
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -116,7 +116,7 @@
 /obj/effect/spawner/structure/window/shuttle,
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
-/area/space)
+/area/template_noop)
 "q" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/delivery,

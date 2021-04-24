@@ -1,7 +1,7 @@
 /**
-  *This is NOW the gradual affects that each chemical applies on every process() proc. Nutrients now use a more robust reagent holder in order to apply less insane
-  * stat changes as opposed to 271 lines of individual statline effects. Shoutout to the original comments on chems, I just cleaned a few up.
-  */
+ *This is NOW the gradual affects that each chemical applies on every process() proc. Nutrients now use a more robust reagent holder in order to apply less insane
+ * stat changes as opposed to 271 lines of individual statline effects. Shoutout to the original comments on chems, I just cleaned a few up.
+ */
 /obj/machinery/hydroponics/proc/apply_chemicals(mob/user)
 	///Contains the reagents within the tray.
 	if(myseed)

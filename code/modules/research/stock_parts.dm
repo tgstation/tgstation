@@ -51,6 +51,22 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	alt_sound = 'sound/items/pshoom_2.ogg'
 	component_type = /datum/component/storage/concrete/bluespace/rped
 
+/obj/item/storage/part_replacer/bluespace/Initialize()
+	. = ..()
+
+	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
+
+/obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/I)
+	if(!istype(I, /obj/item/stock_parts/cell))
+		return
+
+	var/obj/item/stock_parts/cell/inserted_cell = I
+
+	if(inserted_cell.rigged || inserted_cell.corrupted)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		log_game("[key_name(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
+
 /obj/item/storage/part_replacer/bluespace/tier1
 
 /obj/item/storage/part_replacer/bluespace/tier1/PopulateContents()
@@ -130,8 +146,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/stock_parts/Initialize()
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 
 /obj/item/stock_parts/get_part_rating()
 	return rating

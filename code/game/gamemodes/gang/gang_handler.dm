@@ -17,21 +17,21 @@
 GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 /**
-  * # Families gamemode / dynamic ruleset handler
-  *
-  * A special datum used by the families gamemode and dynamic rulesets to centralize code. "Family" and "gang" used interchangeably in code.
-  *
-  * This datum centralizes code used for the families gamemode / dynamic rulesets. Families incorporates a significant
-  * amount of unique processing; without this datum, that could would be duplicated. To ensure the maintainability
-  * of the families gamemode / rulesets, the code was moved to this datum. The gamemode / rulesets instance this
-  * datum, pass it lists (lists are passed by reference; removing candidates here removes candidates in the gamemode),
-  * and call its procs. Additionally, the families antagonist datum and families induction package also
-  * contain vars that reference this datum, allowing for new families / family members to add themselves
-  * to this datum's lists thereof (primarily used for point calculation). Despite this, the basic team mechanics
-  * themselves should function regardless of this datum's instantiation, should a player have the gang or cop
-  * antagonist datum added to them through methods external to the families gamemode / rulesets.
-  *
-  */
+ * # Families gamemode / dynamic ruleset handler
+ *
+ * A special datum used by the families gamemode and dynamic rulesets to centralize code. "Family" and "gang" used interchangeably in code.
+ *
+ * This datum centralizes code used for the families gamemode / dynamic rulesets. Families incorporates a significant
+ * amount of unique processing; without this datum, that could would be duplicated. To ensure the maintainability
+ * of the families gamemode / rulesets, the code was moved to this datum. The gamemode / rulesets instance this
+ * datum, pass it lists (lists are passed by reference; removing candidates here removes candidates in the gamemode),
+ * and call its procs. Additionally, the families antagonist datum and families induction package also
+ * contain vars that reference this datum, allowing for new families / family members to add themselves
+ * to this datum's lists thereof (primarily used for point calculation). Despite this, the basic team mechanics
+ * themselves should function regardless of this datum's instantiation, should a player have the gang or cop
+ * antagonist datum added to them through methods external to the families gamemode / rulesets.
+ *
+ */
 /datum/gang_handler
 	/// A counter used to minimize the overhead of computationally intensive, periodic family point gain checks. Used and set internally.
 	var/check_counter = 0
@@ -70,40 +70,40 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/list/restricted_jobs
 
 /**
-  * Sets antag_candidates and restricted_jobs.
-  *
-  * Sets the antag_candidates and restricted_jobs lists to the equivalent
-  * lists of its instantiating game_mode / dynamic_ruleset datum. As lists
-  * are passed by reference, the variable set in this datum and the passed list
-  * list used to set it are literally the same; changes to one affect the other.
-  * Like all New() procs, called when the datum is first instantiated.
-  * There's an annoying caveat here, though -- dynamic rulesets don't have
-  * lists of minds for candidates, they have lists of mobs. Ghost mobs, before
-  * the round has started. But we still want to preserve the structure of the candidates
-  * list by not duplicating it and making sure to remove the candidates as we use them.
-  * So there's a little bit of boilerplate throughout to preserve the sanctity of this reference.
-  * Arguments:
-  * * given_candidates - The antag_candidates list or equivalent of the datum instantiating this one.
-  * * revised_restricted - The restricted_jobs list or equivalent of the datum instantiating this one.
-  */
+ * Sets antag_candidates and restricted_jobs.
+ *
+ * Sets the antag_candidates and restricted_jobs lists to the equivalent
+ * lists of its instantiating game_mode / dynamic_ruleset datum. As lists
+ * are passed by reference, the variable set in this datum and the passed list
+ * list used to set it are literally the same; changes to one affect the other.
+ * Like all New() procs, called when the datum is first instantiated.
+ * There's an annoying caveat here, though -- dynamic rulesets don't have
+ * lists of minds for candidates, they have lists of mobs. Ghost mobs, before
+ * the round has started. But we still want to preserve the structure of the candidates
+ * list by not duplicating it and making sure to remove the candidates as we use them.
+ * So there's a little bit of boilerplate throughout to preserve the sanctity of this reference.
+ * Arguments:
+ * * given_candidates - The antag_candidates list or equivalent of the datum instantiating this one.
+ * * revised_restricted - The restricted_jobs list or equivalent of the datum instantiating this one.
+ */
 /datum/gang_handler/New(list/given_candidates, list/revised_restricted)
 	antag_candidates = given_candidates
 	restricted_jobs = revised_restricted
 
 /**
-  * pre_setup() or pre_execute() equivalent.
-  *
-  * This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
-  * This is done during the pre_setup() or pre_execute() phase, after first instantiation
-  * and the modification of gangs_to_generate, gang_balance_cap, and midround_ruleset.
-  * It is intended to take the place of the code that would normally occupy the pre_setup()
-  * or pre_execute() proc, were the code localized to the game_mode or dynamic_ruleset datum respectively
-  * as opposed to this handler. As such, it picks players to be chosen for starting familiy members
-  * or undercover cops prior to assignment to jobs. Sets start_time, default end_time,
-  * and the current value of deaths_during_shift, to ensure the wanted level only cares about
-  * the deaths since this proc has been called.
-  * Takes no arguments.
-  */
+ * pre_setup() or pre_execute() equivalent.
+ *
+ * This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
+ * This is done during the pre_setup() or pre_execute() phase, after first instantiation
+ * and the modification of gangs_to_generate, gang_balance_cap, and midround_ruleset.
+ * It is intended to take the place of the code that would normally occupy the pre_setup()
+ * or pre_execute() proc, were the code localized to the game_mode or dynamic_ruleset datum respectively
+ * as opposed to this handler. As such, it picks players to be chosen for starting familiy members
+ * or undercover cops prior to assignment to jobs. Sets start_time, default end_time,
+ * and the current value of deaths_during_shift, to ensure the wanted level only cares about
+ * the deaths since this proc has been called.
+ * Takes no arguments.
+ */
 /datum/gang_handler/proc/pre_setup_analogue()
 	for(var/j = 0, j < gangs_to_generate, j++)
 		if (!antag_candidates.len)
@@ -141,21 +141,21 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	return TRUE
 
 /**
-  * post_setup() or execute() equivalent.
-  *
-  * This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
-  * This is done during the post_setup() or execute() phase, after the pre_setup() / pre_execute() phase.
-  * It is intended to take the place of the code that would normally occupy the pre_setup()
-  * or pre_execute() proc. As such, it ensures that all prospective starting family members /
-  * undercover cops are eligible, and picks replacements if there were ineligible cops / family members.
-  * It then assigns gear to the finalized family members and undercover cops, adding them to its lists,
-  * and sets the families announcement proc (that does the announcing) to trigger in five minutes.
-  * Additionally, if given the argument TRUE, it will return FALSE if there are no eligible starting family members.
-  * This is only to be done if the instantiating datum is a dynamic_ruleset, as these require returns
-  * while a game_mode is not expected to return early during this phase.
-  * Arguments:
-  * * return_if_no_gangs - Boolean that determines if the proc should return FALSE should it find no eligible family members. Should be used for dynamic only.
-  */
+ * post_setup() or execute() equivalent.
+ *
+ * This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
+ * This is done during the post_setup() or execute() phase, after the pre_setup() / pre_execute() phase.
+ * It is intended to take the place of the code that would normally occupy the pre_setup()
+ * or pre_execute() proc. As such, it ensures that all prospective starting family members /
+ * undercover cops are eligible, and picks replacements if there were ineligible cops / family members.
+ * It then assigns gear to the finalized family members and undercover cops, adding them to its lists,
+ * and sets the families announcement proc (that does the announcing) to trigger in five minutes.
+ * Additionally, if given the argument TRUE, it will return FALSE if there are no eligible starting family members.
+ * This is only to be done if the instantiating datum is a dynamic_ruleset, as these require returns
+ * while a game_mode is not expected to return early during this phase.
+ * Arguments:
+ * * return_if_no_gangs - Boolean that determines if the proc should return FALSE should it find no eligible family members. Should be used for dynamic only.
+ */
 /datum/gang_handler/proc/post_setup_analogue(return_if_no_gangs = FALSE)
 	var/replacement_gangsters = 0
 	var/replacement_cops = 0
@@ -224,16 +224,16 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	return TRUE
 
 /**
-  * process() or rule_process() equivalent.
-  *
-  * This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
-  * This is done during the process() or rule_process() phase, after post_setup() or
-  * execute() and at regular intervals thereafter. process() and rule_process() are optional
-  * for a game_mode / dynamic_ruleset, but are important for this gamemode. It is of central
-  * importance to the gamemode's flow, calculating wanted level updates, family point gain,
-  * and announcing + executing the arrival of the space cops, achieved through calling internal procs.
-  * Takes no arguments.
-  */
+ * process() or rule_process() equivalent.
+ *
+ * This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
+ * This is done during the process() or rule_process() phase, after post_setup() or
+ * execute() and at regular intervals thereafter. process() and rule_process() are optional
+ * for a game_mode / dynamic_ruleset, but are important for this gamemode. It is of central
+ * importance to the gamemode's flow, calculating wanted level updates, family point gain,
+ * and announcing + executing the arrival of the space cops, achieved through calling internal procs.
+ * Takes no arguments.
+ */
 /datum/gang_handler/proc/process_analogue()
 	check_wanted_level()
 	check_counter++
@@ -249,14 +249,14 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		check_rollin_with_crews()
 
 /**
-  * set_round_result() or round_result() equivalent.
-  *
-  * This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
-  * This is done by the set_round_result() or round_result() procs, at roundend.
-  * Sets the ticker subsystem to the correct result based off of the relative populations
-  * of space cops and family members.
-  * Takes no arguments.
-  */
+ * set_round_result() or round_result() equivalent.
+ *
+ * This proc is always called externally, by the instantiating game_mode / dynamic_ruleset.
+ * This is done by the set_round_result() or round_result() procs, at roundend.
+ * Sets the ticker subsystem to the correct result based off of the relative populations
+ * of space cops and family members.
+ * Takes no arguments.
+ */
 /datum/gang_handler/proc/set_round_result_analogue()
 	var/alive_gangsters = 0
 	var/alive_cops = 0
@@ -346,7 +346,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		var/datum/hud/H = M.hud_used
 		H.wanted_lvl.level = newlevel
 		H.wanted_lvl.cops_arrived = cops_arrived
-		H.wanted_lvl.update_icon()
+		H.wanted_lvl.update_appearance()
 
 /// Internal. Updates the end_time and sends out an announcement if the wanted level has increased. Called by update_wanted_level().
 /datum/gang_handler/proc/on_gain_wanted_level(newlevel)

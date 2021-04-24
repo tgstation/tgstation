@@ -1,5 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - rscadd: "The \"plating repair tool\" has been added to the game in the form of a printable upgrade for janiborgs. It's a subtype of the cautery that can repair burnt or damaged hull platings, allowing floor tiles to be placed over them once again."
-  - rscadd: "The upgrade that adds it to a janiborg's list of tools can be printed once the Cyborg Upgrades: Utility tech node is researched."

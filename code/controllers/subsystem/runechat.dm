@@ -6,15 +6,15 @@
 #define BUCKET_LIMIT (world.time + TICKS2DS(min(BUCKET_LEN - (SSrunechat.practical_offset - DS2TICKS(world.time - SSrunechat.head_offset)) - 1, BUCKET_LEN - 1)))
 
 /**
-  * # Runechat Subsystem
-  *
-  * Maintains a timer-like system to handle destruction of runechat messages. Much of this code is modeled
-  * after or adapted from the timer subsystem.
-  *
-  * Note that this has the same structure for storing and queueing messages as the timer subsystem does
-  * for handling timers: the bucket_list is a list of chatmessage datums, each of which are the head
-  * of a circularly linked list. Any given index in bucket_list could be null, representing an empty bucket.
-  */
+ * # Runechat Subsystem
+ *
+ * Maintains a timer-like system to handle destruction of runechat messages. Much of this code is modeled
+ * after or adapted from the timer subsystem.
+ *
+ * Note that this has the same structure for storing and queueing messages as the timer subsystem does
+ * for handling timers: the bucket_list is a list of chatmessage datums, each of which are the head
+ * of a circularly linked list. Any given index in bucket_list could be null, representing an empty bucket.
+ */
 SUBSYSTEM_DEF(runechat)
 	name = "Runechat"
 	flags = SS_TICKER | SS_NO_INIT
@@ -50,6 +50,7 @@ SUBSYSTEM_DEF(runechat)
 	if (MC_TICK_CHECK)
 		return
 
+
 	// Check for when we need to loop the buckets, this occurs when
 	// the head_offset is approaching BUCKET_LEN ticks in the past
 	if (practical_offset > BUCKET_LEN)
@@ -57,6 +58,11 @@ SUBSYSTEM_DEF(runechat)
 		practical_offset = 1
 		resumed = FALSE
 
+	// Check for when we have to reset buckets, typically from auto-reset
+	if ((length(bucket_list) != BUCKET_LEN) || (world.tick_lag != bucket_resolution))
+		reset_buckets()
+		bucket_list = src.bucket_list
+		resumed = FALSE
 	// Store a reference to the 'working' chatmessage so that we can resume if the MC
 	// has us stop mid-way through processing
 	var/static/datum/chatmessage/cm
@@ -119,15 +125,20 @@ SUBSYSTEM_DEF(runechat)
 	bucket_list |= SSrunechat.bucket_list
 	second_queue |= SSrunechat.second_queue
 
+/datum/controller/subsystem/runechat/proc/reset_buckets()
+	bucket_list.len = BUCKET_LEN
+	head_offset = world.time
+	bucket_resolution = world.tick_lag
+
 /**
-  * Enters the runechat subsystem with this chatmessage, inserting it into the end-of-life queue
-  *
-  * This will also account for a chatmessage already being registered, and in which case
-  * the position will be updated to remove it from the previous location if necessary
-  *
-  * Arguments:
-  * * new_sched_destruction Optional, when provided is used to update an existing message with the new specified time
-  */
+ * Enters the runechat subsystem with this chatmessage, inserting it into the end-of-life queue
+ *
+ * This will also account for a chatmessage already being registered, and in which case
+ * the position will be updated to remove it from the previous location if necessary
+ *
+ * Arguments:
+ * * new_sched_destruction Optional, when provided is used to update an existing message with the new specified time
+ */
 /datum/chatmessage/proc/enter_subsystem(new_sched_destruction = 0)
 	// Get local references from subsystem as they are faster to access than the datum references
 	var/list/bucket_list = SSrunechat.bucket_list
@@ -183,8 +194,8 @@ SUBSYSTEM_DEF(runechat)
 
 
 /**
-  * Removes this chatmessage datum from the runechat subsystem
-  */
+ * Removes this chatmessage datum from the runechat subsystem
+ */
 /datum/chatmessage/proc/leave_subsystem()
 	// Attempt to find the bucket that contains this chat message
 	var/bucket_pos = BUCKET_POS(scheduled_destruction)

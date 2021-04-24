@@ -5,14 +5,13 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
+	base_icon_state = "posibrain"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/ask_role = "" ///Can be set to tell ghosts what the brain will be used for
 	var/next_ask ///World time tick when ghost polling will be available again
 	var/askDelay = 600 ///Delay after polling ghosts
 	var/searching = FALSE
-	brainmob = null
 	req_access = list(ACCESS_ROBOTICS)
-	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
 	var/autoping = TRUE ///If it pings on creation immediately
 	///Message sent to the user when polling ghosts
@@ -47,7 +46,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/attack_self(mob/user)
 	if(!brainmob)
-		brainmob = new(src)
+		set_brainmob(new /mob/living/brain(src))
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
 		to_chat(user, "<span class='warning'>Central Command has temporarily outlawed posibrain sentience in this sector...</span>")
 	if(is_occupied())
@@ -61,7 +60,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	ping_ghosts("requested", FALSE)
 	next_ask = world.time + askDelay
 	searching = TRUE
-	update_icon()
+	update_appearance()
 	addtimer(CALLBACK(src, .proc/check_success), askDelay)
 
 /obj/item/mmi/posibrain/AltClick(mob/living/user)
@@ -73,11 +72,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(input_seed)
 		to_chat(user, "<span class='notice'>You set the personality seed to \"[input_seed]\".</span>")
 		ask_role = input_seed
-		update_icon()
+		update_appearance()
 
 /obj/item/mmi/posibrain/proc/check_success()
 	searching = FALSE
-	update_icon()
+	update_appearance()
 	if(QDELETED(brainmob))
 		return
 	if(brainmob.client)
@@ -132,7 +131,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 	brainmob.mind.remove_all_antag()
 	brainmob.mind.wipe_memory()
-	update_icon()
+	update_appearance()
 
 ///Moves the candidate from the ghost to the posibrain
 /obj/item/mmi/posibrain/proc/transfer_personality(mob/candidate)
@@ -151,8 +150,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		to_chat(brainmob, policy)
 	brainmob.mind.assigned_role = new_role
 	brainmob.set_stat(CONSCIOUS)
-	brainmob.remove_from_dead_mob_list()
-	brainmob.add_to_alive_mob_list()
 
 	visible_message(new_mob_message)
 	check_success()
@@ -161,7 +158,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/examine(mob/user)
 	. = ..()
-	if(brainmob && brainmob.key)
+	if(brainmob?.key)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
 				if(!brainmob.client)
@@ -176,7 +173,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/Initialize()
 	. = ..()
-	brainmob = new(src)
+	set_brainmob(new /mob/living/brain(src))
 	var/new_name
 	if(!LAZYLEN(possible_names))
 		new_name = pick(GLOB.posibrain_names)
@@ -189,17 +186,21 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(autoping)
 		ping_ghosts("created", TRUE)
 
+
 /obj/item/mmi/posibrain/attackby(obj/item/O, mob/user)
 	return
 
 
 /obj/item/mmi/posibrain/update_icon_state()
+	. = ..()
 	if(searching)
-		icon_state = "[initial(icon_state)]-searching"
-	else if(brainmob && brainmob.key)
-		icon_state = "[initial(icon_state)]-occupied"
-	else
-		icon_state = initial(icon_state)
+		icon_state = "[base_icon_state]-searching"
+		return
+	if(brainmob?.key)
+		icon_state = "[base_icon_state]-occupied"
+		return
+	icon_state = "[base_icon_state]"
+	return
 
 /obj/item/mmi/posibrain/add_mmi_overlay()
 	return

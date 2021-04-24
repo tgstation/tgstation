@@ -1,6 +1,6 @@
 /datum/surgery/organ_manipulation
 	name = "Organ manipulation"
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_real_bodypart = 1
 	steps = list(
@@ -68,7 +68,7 @@
 	time = 64
 	name = "manipulate organs"
 	repeatable = TRUE
-	implements = list(/obj/item/organ = 100, /obj/item/organ_storage = 100)
+	implements = list(/obj/item/organ = 100, /obj/item/borg/apparatus/organ_storage = 100)
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55, /obj/item/kitchen/fork = 35)
 	var/current_type
 	var/obj/item/organ/I = null
@@ -79,12 +79,14 @@
 
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	I = null
-	if(istype(tool, /obj/item/organ_storage))
+	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 		if(!tool.contents.len)
 			to_chat(user, "<span class='warning'>There is nothing inside [tool]!</span>")
 			return -1
 		I = tool.contents[1]
 		if(!isorgan(I))
+			if (target_zone == BODY_ZONE_PRECISE_EYES)
+				target_zone = check_zone(target_zone)
 			to_chat(user, "<span class='warning'>You cannot put [I] into [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 		tool = I
@@ -98,6 +100,8 @@
 		if(!meatslab.useable)
 			to_chat(user, "<span class='warning'>[I] seems to have been chewed on, you can't use this!</span>")
 			return -1
+		if (target_zone == BODY_ZONE_PRECISE_EYES)
+			target_zone = check_zone(target_zone)
 		display_results(user, target, "<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>",
 			"<span class='notice'>[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] begins to insert something into [target]'s [parse_zone(target_zone)].</span>")
@@ -105,6 +109,8 @@
 	else if(implement_type in implements_extract)
 		current_type = "extract"
 		var/list/organs = target.getorganszone(target_zone)
+		if (target_zone == BODY_ZONE_PRECISE_EYES)
+			target_zone = check_zone(target_zone)
 		if(!organs.len)
 			to_chat(user, "<span class='warning'>There are no removable organs in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
@@ -119,15 +125,21 @@
 				I = organs[I]
 				if(!I)
 					return -1
+				if(I.organ_flags & ORGAN_UNREMOVABLE)
+					to_chat(user, "<span class='warning'>[I] is too well connected to take out!</span>")
+					return -1
 				display_results(user, target, "<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>",
 					"<span class='notice'>[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].</span>",
 					"<span class='notice'>[user] begins to extract something from [target]'s [parse_zone(target_zone)].</span>")
 			else
 				return -1
 
-/datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+
+/datum/surgery_step/manipulate_organs/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+	if (target_zone == BODY_ZONE_PRECISE_EYES)
+		target_zone = check_zone(target_zone)
 	if(current_type == "insert")
-		if(istype(tool, /obj/item/organ_storage))
+		if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 			I = tool.contents[1]
 			tool.icon_state = initial(tool.icon_state)
 			tool.desc = initial(tool.desc)
@@ -146,7 +158,7 @@
 			display_results(user, target, "<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>",
 				"<span class='notice'>[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!</span>",
 				"<span class='notice'>[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!</span>")
-			log_combat(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
+			log_combat(user, target, "surgically removed [I.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			I.Remove(target)
 			I.forceMove(get_turf(target))
 		else

@@ -11,6 +11,7 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants, /obj/item/graft, /obj/item/secateurs, /obj/item/geneshears)
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/apron/waders
 	name = "horticultural waders"
@@ -41,6 +42,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/kitchen)
 	togglename = "sleeves"
+	species_exception = list(/datum/species/golem)
 
 //Cook
 /obj/item/clothing/suit/apron/chef
@@ -89,6 +91,7 @@
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/radio)
 	resistance_flags = NONE
+	species_exception = list(/datum/species/golem)
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
@@ -99,6 +102,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	togglename = "buttons"
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple suit jacket"
@@ -122,6 +126,7 @@
 	worn_icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	togglename = "straps"
+	species_exception = list(/datum/species/golem)
 
 //Security
 /obj/item/clothing/suit/security/officer

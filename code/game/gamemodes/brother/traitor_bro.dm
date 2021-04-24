@@ -46,7 +46,7 @@
 			log_game("[key_name(bro)] has been selected as a Brother")
 		pre_brother_teams += team
 	. = ..()
-	if(.)	//To ensure the game mode is going ahead
+	if(.) //To ensure the game mode is going ahead
 		for(var/teams in pre_brother_teams)
 			for(var/antag in teams)
 				GLOB.pre_setup_antags += antag

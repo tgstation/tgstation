@@ -34,7 +34,7 @@ effective or pretty fucking useless.
 
 
 /obj/item/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
-	if(!user) 	return
+	if(!user) return
 	if(times_used >= max_uses)
 		to_chat(user, "<span class='danger'>The mind batterer has been burnt out!</span>")
 		return
@@ -69,7 +69,6 @@ effective or pretty fucking useless.
 */
 
 /obj/item/healthanalyzer/rad_laser
-	custom_materials = list(/datum/material/iron=400)
 	var/irradiate = TRUE
 	var/stealth = FALSE
 	var/used = FALSE // is it cooling down?
@@ -89,16 +88,16 @@ effective or pretty fucking useless.
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
-		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M), (wavelength+(intensity*4))*5)
+		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M, intensity), (wavelength+(intensity*4))*5)
 	else
 		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
 
-/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M)
-	if(QDELETED(M))
+/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
+	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE))
 		return
-	if(intensity >= 5)
-		M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)
-	M.rad_act(intensity*10)
+	if(passed_intensity >= 5)
+		M.apply_effect(round(passed_intensity/0.075), EFFECT_UNCONSCIOUS) //to save you some math, this is a round(intensity * (4/3)) second long knockout
+	M.rad_act(passed_intensity*10)
 
 /obj/item/healthanalyzer/rad_laser/proc/get_cooldown()
 	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
@@ -130,7 +129,8 @@ effective or pretty fucking useless.
 	return data
 
 /obj/item/healthanalyzer/rad_laser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -232,7 +232,7 @@ effective or pretty fucking useless.
 	if(user && user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 
-/obj/item/shadowcloak/process()
+/obj/item/shadowcloak/process(delta_time)
 	if(user.get_item_by_slot(ITEM_SLOT_BELT) != src)
 		Deactivate()
 		return
@@ -240,9 +240,9 @@ effective or pretty fucking useless.
 	if(on)
 		var/lumcount = T.get_lumcount()
 		if(lumcount > 0.3)
-			charge = max(0,charge - 25)//Quick decrease in light
+			charge = max(0, charge - 12.5 * delta_time)//Quick decrease in light
 		else
-			charge = min(max_charge,charge + 50) //Charge in the dark
+			charge = min(max_charge, charge + 25 * delta_time) //Charge in the dark
 		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
 
 
@@ -261,7 +261,7 @@ effective or pretty fucking useless.
 		GLOB.active_jammers |= src
 	else
 		GLOB.active_jammers -= src
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
@@ -275,12 +275,12 @@ effective or pretty fucking useless.
 	new /obj/item/wirecutters(src)
 
 /obj/item/storage/toolbox/emergency/turret/attackby(obj/item/I, mob/living/user, params)
-    if(I.tool_behaviour == TOOL_WRENCH && user.a_intent == INTENT_HARM)
-        user.visible_message("<span class='danger'>[user] bashes [src] with [I]!</span>", \
-            "<span class='danger'>You bash [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
-        playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
-        var/obj/machinery/porta_turret/syndicate/pod/toolbox/turret = new(get_turf(loc))
-        turret.faction = list("[REF(user)]")
-        qdel(src)
+	if(I.tool_behaviour == TOOL_WRENCH && user.combat_mode)
+		user.visible_message("<span class='danger'>[user] bashes [src] with [I]!</span>", \
+			"<span class='danger'>You bash [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
+		playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+		var/obj/machinery/porta_turret/syndicate/pod/toolbox/turret = new(get_turf(loc))
+		turret.faction = list("[REF(user)]")
+		qdel(src)
 
-    ..()
+	..()

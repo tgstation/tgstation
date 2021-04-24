@@ -3,7 +3,7 @@
 	icon = 'icons/obj/shields.dmi'
 	block_chance = 50
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
-	var/transparent = FALSE	// makes beam projectiles pass through the shield
+	var/transparent = FALSE // makes beam projectiles pass through the shield
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
 	return TRUE
@@ -100,7 +100,7 @@
 
 /obj/item/shield/riot/roman/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/grillehit.ogg', 100)
-	new /obj/item/stack/sheet/metal(get_turf(src))
+	new /obj/item/stack/sheet/iron(get_turf(src))
 
 /obj/item/shield/riot/buckler
 	name = "wooden buckler"
@@ -137,17 +137,17 @@
 
 /obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
 	. =  embedded_flash.attack(M, user)
-	update_icon()
+	update_appearance()
 
 /obj/item/shield/riot/flash/attack_self(mob/living/carbon/user)
 	. = embedded_flash.attack_self(user)
-	update_icon()
+	update_appearance()
 
 /obj/item/shield/riot/flash/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
 	if (. && !embedded_flash.burnt_out)
 		embedded_flash.activate()
-		update_icon()
+		update_appearance()
 
 
 /obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
@@ -165,14 +165,14 @@
 				qdel(embedded_flash)
 				embedded_flash = flash
 				flash.forceMove(src)
-				update_icon()
+				update_appearance()
 				return
 	..()
 
 /obj/item/shield/riot/flash/emp_act(severity)
 	. = ..()
 	embedded_flash.emp_act(severity)
-	update_icon()
+	update_appearance()
 
 /obj/item/shield/riot/flash/update_icon_state()
 	if(!embedded_flash || embedded_flash.burnt_out)
@@ -181,6 +181,7 @@
 	else
 		icon_state = "flashshield"
 		inhand_icon_state = "flashshield"
+	return ..()
 
 /obj/item/shield/riot/flash/examine(mob/user)
 	. = ..()

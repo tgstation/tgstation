@@ -60,7 +60,7 @@
 		local_apc = null
 
 /obj/machinery/computer/monitor/proc/get_powernet() //keep in sync with /datum/computer_file/program/power_monitor's version
-	if(attached_wire || (local_apc && local_apc.terminal))
+	if(attached_wire || (local_apc?.terminal))
 		return attached_wire ? attached_wire.powernet : local_apc.terminal.powernet
 	return FALSE
 

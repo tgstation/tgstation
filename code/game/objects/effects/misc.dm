@@ -40,16 +40,11 @@
 	density = TRUE
 	layer = FLY_LAYER
 
-/obj/effect/supplypod_selector
-	icon_state = "supplypod_selector"
-	layer = FLY_LAYER
-
 //Makes a tile fully lit no matter what
 /obj/effect/fullbright
 	icon = 'icons/effects/alphacolors.dmi'
 	icon_state = "white"
 	plane = LIGHTING_PLANE
-	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
 
 /obj/effect/abstract/marker
@@ -98,3 +93,6 @@
 	. = ..()
 	if(!ismob(loc))
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/abstract/directional_lighting
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

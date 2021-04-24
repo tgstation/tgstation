@@ -14,6 +14,7 @@
 	desc = "A tool used by great men to placate the frothing masses."
 	icon_state = "chain"
 	inhand_icon_state = "chain"
+	worn_icon_state = "whip"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -172,7 +173,7 @@
 
 /obj/item/melee/classic_baton
 	name = "police baton"
-	desc = "A wooden truncheon for beating criminal scum."
+	desc = "A wooden truncheon for beating criminal scum. Left click to stun, right click to harm."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
@@ -243,7 +244,7 @@
 /obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
 	return
 
-/obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user)
+/obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user, params)
 	if(!on)
 		return ..()
 
@@ -263,7 +264,7 @@
 		return
 	if(iscyborg(target))
 		// We don't stun if we're on harm.
-		if (user.a_intent != INTENT_HARM)
+		if (!user.combat_mode)
 			if (affect_silicon)
 				var/list/desc = get_silicon_stun_description(target, user)
 
@@ -283,51 +284,52 @@
 		return
 	if(!isliving(target))
 		return
-	if (user.a_intent == INTENT_HARM)
-		if(!..())
+	var/list/modifiers = params2list(params)
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		..()
+		return
+	if(cooldown_check > world.time)
+		var/wait_desc = get_wait_description()
+		if (wait_desc)
+			to_chat(user, wait_desc)
+		return
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 			return
-		if(!iscyborg(target))
+		if(check_martial_counter(H, user))
 			return
+
+	var/list/desc = get_stun_description(target, user)
+
+	if (stun_animation)
+		user.do_attack_animation(target)
+
+	playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
+	target.Knockdown(knockdown_time_carbon)
+	target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+	additional_effects_carbon(target, user)
+
+	log_combat(user, target, "stunned", src)
+	add_fingerprint(user)
+
+	target.visible_message(desc["visible"], desc["local"])
+
+	if(!iscarbon(user))
+		target.LAssailant = null
 	else
-		if(cooldown_check <= world.time)
-			if(ishuman(target))
-				var/mob/living/carbon/human/H = target
-				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
-					return
-				if(check_martial_counter(H, user))
-					return
+		target.LAssailant = user
+	cooldown_check = world.time + cooldown
+	return
 
-			var/list/desc = get_stun_description(target, user)
-
-			if (stun_animation)
-				user.do_attack_animation(target)
-
-			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
-			target.Knockdown(knockdown_time_carbon)
-			target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
-			additional_effects_carbon(target, user)
-
-			log_combat(user, target, "stunned", src)
-			add_fingerprint(user)
-
-			target.visible_message(desc["visible"], desc["local"])
-
-			if(!iscarbon(user))
-				target.LAssailant = null
-			else
-				target.LAssailant = user
-			cooldown_check = world.time + cooldown
-		else
-			var/wait_desc = get_wait_description()
-			if (wait_desc)
-				to_chat(user, wait_desc)
 
 /obj/item/conversion_kit
 	name = "conversion kit"
 	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "uk"
-	custom_price = 450
+	custom_price = PAYCHECK_HARD * 4.5
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -337,7 +339,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	inhand_icon_state = null
-	worn_icon_state = null
+	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
@@ -485,14 +487,17 @@
 	balanced = 0
 
 /obj/item/melee/supermatter_sword/ex_act(severity, target)
-	visible_message("<span class='danger'>The blast wave smacks into [src] and rapidly flashes to ash.</span>",\
-	"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	visible_message(
+		"<span class='danger'>The blast wave smacks into [src] and rapidly flashes to ash.</span>",
+		"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>"
+	)
 	consume_everything()
 
 /obj/item/melee/supermatter_sword/acid_act()
 	visible_message("<span class='danger'>The acid smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	consume_everything()
+	return TRUE
 
 /obj/item/melee/supermatter_sword/bullet_act(obj/projectile/P)
 	visible_message("<span class='danger'>[P] smacks into [src] and rapidly flashes to ash.</span>",\
@@ -522,7 +527,6 @@
 	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
 	"<span class='hear'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	shard.Consume()
-	CALCULATE_ADJACENT_TURFS(T)
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
 	return FALSE
@@ -534,6 +538,7 @@
 	inhand_icon_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	worn_icon_state = "whip"
 	slot_flags = ITEM_SLOT_BELT
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
@@ -553,13 +558,14 @@
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
 	icon_state = "roastingstick_0"
 	inhand_icon_state = "null"
+	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NONE
 	force = 0
 	attack_verb_continuous = list("hits", "pokes")
 	attack_verb_simple = list("hit", "poke")
-	var/obj/item/reagent_containers/food/snacks/sausage/held_sausage
+	var/obj/item/food/sausage/held_sausage
 	var/static/list/ovens
 	var/on = FALSE
 	var/datum/beam/beam
@@ -567,7 +573,7 @@
 /obj/item/melee/roastingstick/Initialize()
 	. = ..()
 	if (!ovens)
-		ovens = typecacheof(list(/obj/singularity, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
+		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
 
 /obj/item/melee/roastingstick/attack_self(mob/user)
 	on = !on
@@ -584,7 +590,7 @@
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
-	if (istype(target, /obj/item/reagent_containers/food/snacks/sausage))
+	if (istype(target, /obj/item/food/sausage))
 		if (!on)
 			to_chat(user, "<span class='warning'>You must extend [src] to attach anything to it!</span>")
 			return
@@ -595,18 +601,18 @@
 			held_sausage = target
 		else
 			to_chat(user, "<span class='warning'>[target] doesn't seem to want to get on [src]!</span>")
-	update_icon()
+	update_appearance()
 
-/obj/item/melee/roastingstick/attack_hand(mob/user)
+/obj/item/melee/roastingstick/attack_hand(mob/user, list/modifiers)
 	..()
 	if (held_sausage)
 		user.put_in_hands(held_sausage)
 		held_sausage = null
-	update_icon()
+	update_appearance()
 
 /obj/item/melee/roastingstick/update_overlays()
 	. = ..()
-	if (held_sausage)
+	if(held_sausage)
 		. += mutable_appearance(icon, "roastingstick_sausage")
 
 /obj/item/melee/roastingstick/proc/extend(user)
@@ -624,20 +630,20 @@
 /obj/item/melee/roastingstick/handle_atom_del(atom/target)
 	if (target == held_sausage)
 		held_sausage = null
-		update_icon()
+		update_appearance()
 
 /obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if (!on)
 		return
 	if (is_type_in_typecache(target, ovens))
-		if (held_sausage && held_sausage.roasted)
+		if (held_sausage?.roasted)
 			to_chat("<span class='warning'>Your [held_sausage] has already been cooked!</span>")
 			return
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
 			to_chat(user, "<span class='notice'>You send [held_sausage] towards [target].</span>")
 			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
-			beam = user.Beam(target,icon_state="rped_upgrade",time=100)
+			beam = user.Beam(target,icon_state="rped_upgrade", time = 10 SECONDS)
 		else if (user.Adjacent(target))
 			to_chat(user, "<span class='notice'>You extend [src] towards [target].</span>")
 			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
@@ -655,7 +661,7 @@
 	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
 	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
-	update_icon()
+	update_appearance()
 
 /obj/item/melee/cleric_mace
 	name = "cleric mace"
@@ -682,5 +688,5 @@
 /obj/item/melee/cleric_mace/Initialize()
 	. = ..()
 	overlay = mutable_appearance(icon, overlay_state)
-	overlay.appearance_flags = RESET_COLOR
+	overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | KEEP_APART
 	add_overlay(overlay)

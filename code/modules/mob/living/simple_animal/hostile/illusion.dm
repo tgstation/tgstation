@@ -9,7 +9,7 @@
 	mob_biotypes = NONE
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	attack_verb_continuous = "gores"
 	attack_verb_simple = "gore"
 	maxHealth = 100
@@ -23,7 +23,7 @@
 	deathmessage = "vanishes into thin air! It was a fake!"
 
 
-/mob/living/simple_animal/hostile/illusion/Life()
+/mob/living/simple_animal/hostile/illusion/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(world.time > life_span)
 		death()
@@ -40,8 +40,9 @@
 	multiply_chance = replicate
 	faction -= "neutral"
 	transform = initial(transform)
-	pixel_y = initial(pixel_y)
-	pixel_x = initial(pixel_x)
+	pixel_x = base_pixel_x
+	pixel_y = base_pixel_y
+
 
 /mob/living/simple_animal/hostile/illusion/examine(mob/user)
 	if(parent_mob)

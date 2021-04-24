@@ -8,7 +8,7 @@
 	var/variance = 0
 	var/randomspread = FALSE //use random spread for machineguns, instead of shotgun scatter
 	var/projectile_delay = 0
-	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
+	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect //the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
 	mech_flags = EXOSUIT_MODULE_COMBAT
 
@@ -37,7 +37,9 @@
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
 
 		var/obj/projectile/A = new projectile(get_turf(src))
-		A.preparePixelProjectile(target, source, params, spread)
+		var/modifiers = params2list(params)
+		A.firer = chassis
+		A.preparePixelProjectile(target, source, modifiers, spread)
 
 		A.fire()
 		if(!A.suppressed && firing_effect_type)
@@ -48,8 +50,7 @@
 
 		if(kickback)
 			chassis.newtonian_move(newtonian_target)
-	chassis.log_message("Fired from [src.name], targeting [target].", LOG_MECHA)
-	return ..()
+	chassis.log_message("Fired from [name], targeting [target].", LOG_ATTACK)
 
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
@@ -378,7 +379,7 @@
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(user)] fired a [F] in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(user)] fired a [F] in [AREACOORD(T)]")
-	addtimer(CALLBACK(F, /obj/item/grenade/flashbang.proc/prime), det_time)
+	addtimer(CALLBACK(F, /obj/item/grenade/flashbang.proc/detonate), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
 	name = "\improper SOB-3 grenade launcher"
@@ -471,10 +472,12 @@
 	..()
 	if(href_list["lethalPunch"])
 		harmful = !harmful
+		if(!chassis)
+			return
 		if(harmful)
-			chassis?.to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Enabled.</span>")
+			to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Enabled.</span>")
 		else
-			chassis?.to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Disabled.</span>")
+			to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Disabled.</span>")
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(mob/source, atom/target, params)
 	. = ..()
@@ -490,8 +493,7 @@
 	else
 		PG.throwforce = 0
 
-	 //has to be low sleep or it looks weird, the beam doesn't exist for very long so it's a non-issue
-	chassis.Beam(PG, icon_state = "chain", time = missile_range * 20, maxdistance = missile_range + 2, beam_sleep_time = 1)
+	chassis.Beam(PG, icon_state = "chain", time = missile_range * 20, maxdistance = missile_range + 2)
 
 /obj/item/punching_glove
 	name = "punching glove"
@@ -505,3 +507,37 @@
 			var/atom/movable/AM = hit_atom
 			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), clamp(round(throwforce/5), 2, 20), 2) //Throws them equal to damage/5, with a min range of 2 and max range of 20
 		qdel(src)
+
+///dark honk weapons
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana
+	name = "bombanana mortar"
+	desc = "Equipment for clown exosuits. Launches exploding banana peels."
+	icon_state = "mecha_bananamrtr"
+	projectile = /obj/item/grown/bananapeel/bombanana
+	projectiles = 8
+	projectile_energy_cost = 1000
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana/can_attach(obj/vehicle/sealed/mecha/combat/honker/M)
+	if(..())
+		if(istype(M))
+			return TRUE
+	return FALSE
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache
+	name = "\improper HONKeR-6 grenade launcher"
+	desc = "A weapon for combat exosuits. Launches primed tear-stache grenades."
+	icon_state = "mecha_grenadelnchr"
+	projectile = /obj/item/grenade/chem_grenade/teargas/moustache
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	projectiles = 6
+	missile_speed = 1.5
+	projectile_energy_cost = 800
+	equip_cooldown = 60
+	det_time = 20
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache/can_attach(obj/vehicle/sealed/mecha/combat/honker/M)
+	if(..())
+		if(istype(M))
+			return TRUE
+	return FALSE

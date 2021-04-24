@@ -39,8 +39,8 @@
 	master.remove_filter("rad_glow")
 	return ..()
 
-/datum/component/radioactive/process()
-	if(!prob(50))
+/datum/component/radioactive/process(delta_time)
+	if(!DT_PROB(50, delta_time))
 		return
 	radiation_pulse(parent, strength, RAD_DISTANCE_COEFFICIENT*2, FALSE, can_contaminate)
 	if(!hl3_release_date)
@@ -67,24 +67,27 @@
 	else
 		strength = max(strength, _strength)
 
-/datum/component/radioactive/proc/rad_examine(datum/source, mob/user, atom/thing)
+/datum/component/radioactive/proc/rad_examine(datum/source, mob/user, list/out)
 	SIGNAL_HANDLER
 
 	var/atom/master = parent
-	var/list/out = list()
+
+	var/list/fragments = list()
 	if(get_dist(master, user) <= 1)
-		out += "The air around [master] feels warm"
+		fragments += "The air around [master] feels warm"
 	switch(strength)
+		if(0 to RAD_AMOUNT_LOW)
+			if(length(fragments))
+				fragments += "."
 		if(RAD_AMOUNT_LOW to RAD_AMOUNT_MEDIUM)
-			out += "[length(out) ? " and it " : "[master] "]feels weird to look at."
+			fragments += "[length(fragments) ? " and [master.p_they()] " : "[master] "]feel[master.p_s()] weird to look at."
 		if(RAD_AMOUNT_MEDIUM to RAD_AMOUNT_HIGH)
-			out += "[length(out) ? " and it " : "[master] "]seems to be glowing a bit."
+			fragments += "[length(fragments) ? " and [master.p_they()] " : "[master] "]seem[master.p_s()] to be glowing a bit."
 		if(RAD_AMOUNT_HIGH to INFINITY) //At this level the object can contaminate other objects
-			out += "[length(out) ? " and it " : "[master] "]hurts to look at."
-	if(!LAZYLEN(out))
-		return
-	out += "."
-	to_chat(user, "<span class ='warning'>[out.Join()]</span>")
+			fragments += "[length(fragments) ? " and [master.p_they()] " : "[master] "]hurt[master.p_s()] to look at."
+
+	if(length(fragments))
+		out += "<span class='warning'>[fragments.Join()]</span>"
 
 /datum/component/radioactive/proc/rad_attack(datum/source, atom/movable/target, mob/living/user)
 	SIGNAL_HANDLER
@@ -99,18 +102,19 @@
 	SIGNAL_HANDLER
 
 	if(QDELETED(src))
-		return
+		return COMPONENT_CLEANED
 
 	if(!(clean_types & CLEAN_TYPE_RADIATION))
-		return
+		return COMPONENT_CLEANED
 
 	if(!(clean_types & CLEAN_TYPE_WEAK))
 		qdel(src)
-		return
+		return COMPONENT_CLEANED
 
 	strength = max(0, (strength - (RAD_BACKGROUND_RADIATION * 2)))
 	if(strength <= RAD_BACKGROUND_RADIATION)
 		qdel(src)
+		return COMPONENT_CLEANED
 
 #undef RAD_AMOUNT_LOW
 #undef RAD_AMOUNT_MEDIUM

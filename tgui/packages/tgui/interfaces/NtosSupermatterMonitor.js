@@ -2,7 +2,7 @@ import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, Flex, LabeledList, ProgressBar, Section, Table } from '../components';
+import { Button, LabeledList, ProgressBar, Section, Stack, Table } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { NtosWindow } from '../layouts';
 
@@ -12,8 +12,7 @@ export const NtosSupermatterMonitor = (props, context) => {
   return (
     <NtosWindow
       width={600}
-      height={350}
-      resizable>
+      height={350}>
       <NtosWindow.Content scrollable>
         <NtosSupermatterMonitorContent />
       </NtosWindow.Content>
@@ -29,6 +28,8 @@ export const NtosSupermatterMonitorContent = (props, context) => {
     SM_power,
     SM_ambienttemp,
     SM_ambientpressure,
+    SM_moles,
+    SM_bad_moles_amount,
   } = data;
   if (!active) {
     return (
@@ -41,8 +42,8 @@ export const NtosSupermatterMonitorContent = (props, context) => {
   ])(data.gases || []);
   const gasMaxAmount = Math.max(1, ...gases.map(gas => gas.amount));
   return (
-    <Flex spacing={1}>
-      <Flex.Item width="270px">
+    <Stack>
+      <Stack.Item width="270px">
         <Section title="Metrics">
           <LabeledList>
             <LabeledList.Item label="Integrity">
@@ -81,6 +82,20 @@ export const NtosSupermatterMonitorContent = (props, context) => {
                 {toFixed(SM_ambienttemp) + ' K'}
               </ProgressBar>
             </LabeledList.Item>
+            <LabeledList.Item label="Total Moles">
+              <ProgressBar
+                value={logScale(SM_moles)}
+                minValue={0}
+                maxValue={logScale(50000)}
+                ranges={{
+                  good: [-Infinity, logScale(SM_bad_moles_amount * 0.75)],
+                  average: [logScale(SM_bad_moles_amount * 0.75), 
+                    logScale(SM_bad_moles_amount)],
+                  bad: [logScale(SM_bad_moles_amount), Infinity],
+                }}>
+                {toFixed(SM_moles) + ' moles'}
+              </ProgressBar>
+            </LabeledList.Item>
             <LabeledList.Item label="Pressure">
               <ProgressBar
                 value={logScale(SM_ambientpressure)}
@@ -96,8 +111,8 @@ export const NtosSupermatterMonitorContent = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
-      </Flex.Item>
-      <Flex.Item grow={1} basis={0}>
+      </Stack.Item>
+      <Stack.Item grow={1} basis={0}>
         <Section
           title="Gases"
           buttons={(
@@ -122,8 +137,8 @@ export const NtosSupermatterMonitorContent = (props, context) => {
             ))}
           </LabeledList>
         </Section>
-      </Flex.Item>
-    </Flex>
+      </Stack.Item>
+    </Stack>
   );
 };
 

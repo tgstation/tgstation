@@ -55,7 +55,7 @@
 	name = "\improper Detomatix cartridge"
 	icon_state = "cart"
 	access = CART_REMOTE_DOOR
-	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
+	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!! //don't ask about the name, testing.
 	charges = 4
 
 /obj/item/cartridge/virus/syndicate/send_virus(obj/item/pda/target, mob/living/U)
@@ -69,8 +69,6 @@
 			difficulty += BitCount(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
 			if(target.cartridge.access & CART_MANIFEST)
 				difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
-			else
-				difficulty += 2
 		if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", MSG_VISUAL)
 		else

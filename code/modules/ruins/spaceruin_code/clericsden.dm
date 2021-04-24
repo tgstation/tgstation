@@ -1,4 +1,4 @@
-///////////	cleric's den items.
+/////////// cleric's den items.
 
 //Primary reward: the cleric's mace design disk.
 /obj/item/disk/design_disk/adv/cleric_mace

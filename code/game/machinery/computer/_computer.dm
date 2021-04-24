@@ -17,11 +17,11 @@
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
+
 	power_change()
-	if(!QDELETED(C))
-		qdel(circuit)
-		circuit = C
-		C.moveToNullspace()
+
+/obj/machinery/computer/Destroy()
+	. = ..()
 
 /obj/machinery/computer/process()
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -30,19 +30,17 @@
 
 /obj/machinery/computer/update_overlays()
 	. = ..()
-
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	if(machine_stat & NOPOWER)
-		. += "[icon_keyboard]_off"
-		return
-	. += icon_keyboard
+	if(icon_keyboard)
+		if(machine_stat & NOPOWER)
+			return . + "[icon_keyboard]_off"
+		. += icon_keyboard
 
 	// This whole block lets screens ignore lighting and be visible even in the darkest room
 	var/overlay_state = icon_screen
 	if(machine_stat & BROKEN)
 		overlay_state = "[icon_state]_broken"
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, EMISSIVE_PLANE, dir)
+	. += mutable_appearance(icon, overlay_state, layer, plane)
+	. += mutable_appearance(icon, overlay_state, layer, EMISSIVE_PLANE)
 
 /obj/machinery/computer/power_change()
 	. = ..()
@@ -96,6 +94,8 @@
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.setDir(dir)
 			A.circuit = circuit
+			// Circuit removal code is handled in /obj/machinery/Exited()
+			circuit.forceMove(A)
 			A.set_anchored(TRUE)
 			if(machine_stat & BROKEN)
 				if(user)
@@ -111,7 +111,6 @@
 					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
-			circuit = null
 		for(var/obj/C in src)
 			C.forceMove(loc)
 	qdel(src)

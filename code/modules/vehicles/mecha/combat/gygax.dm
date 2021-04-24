@@ -2,6 +2,7 @@
 	desc = "A lightweight, security exosuit. Popular among private and corporate security."
 	name = "\improper Gygax"
 	icon_state = "gygax"
+	base_icon_state = "gygax"
 	allow_diagonal_movement = TRUE
 	movedelay = 3
 	dir_in = 1 //Facing North.
@@ -20,6 +21,7 @@
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
 	name = "\improper Dark Gygax"
 	icon_state = "darkgygax"
+	base_icon_state = "darkgygax"
 	max_integrity = 300
 	deflect_chance = 20
 	armor = list(MELEE = 40, BULLET = 40, LASER = 50, ENERGY = 35, BOMB = 20, BIO = 0, RAD =20, FIRE = 100, ACID = 100)

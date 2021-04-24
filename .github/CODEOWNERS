@@ -14,6 +14,7 @@
 
 # Cyberboss
 
+/code/__HELPERS/jatum.dm @Cyberboss
 /code/controllers/subsystem/atoms.dm @Cyberboss
 /code/controllers/subsystem/mapping.dm @Cyberboss
 /code/controllers/globals.dm @Cyberboss
@@ -24,10 +25,12 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
+/tools/LinuxOneShot/ @Cyberboss
+/tools/tgs4_scripts/ @Cyberboss
 
-# Jared-Fogle
+# Mothblocks
 
-/code/modules/unit_tests/ @Jared-Fogle
+/code/modules/unit_tests/ @Mothblocks
 
 # Jordie0608
 
@@ -49,6 +52,8 @@
 /code/controllers/failsafe.dm @MrStonedOne
 /code/controllers/subsystem.dm @MrStonedOne
 /code/controllers/subsystem/timer.dm @MrStonedOne
+/code/controllers/configuration/entries @MrStonedOne
+/config/ @MrStonedOne
 
 # ninjanomnom
 
@@ -61,7 +66,6 @@
 
 # ShizCalev
 
-/_maps/ @ShizCalev
 /sound/ @ShizCalev
 
 # stylemistake
@@ -79,6 +83,7 @@
 
 /icons/ @Twaticus @ShizCalev
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
+/_maps/ @EOBGames @ShizCalev
 
 #SIC SEMPER TYRANNIS
 /code/modules/hydroponics/grown/citrus.dm @optimumtact

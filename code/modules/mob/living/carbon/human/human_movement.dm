@@ -41,13 +41,12 @@
 			. = 1
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return ((shoes && shoes.negates_gravity()) || (dna.species.negates_gravity(src)))
+	return ((shoes?.negates_gravity()) || (dna.species.negates_gravity(src)))
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
-	if(shoes && (mobility_flags & MOBILITY_STAND) && loc == NewLoc && has_gravity(loc))
-		var/obj/item/clothing/shoes/S = shoes
-		S.step_action()
+	if(shoes && body_position == STANDING_UP && loc == NewLoc && has_gravity(loc))
+		SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(dna.species.space_move(src))

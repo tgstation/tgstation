@@ -1,7 +1,7 @@
 //CREATOR'S NOTE: DO NOT FUCKING GIVE THIS TO BOTANY!
 /obj/item/hot_potato
 	name = "hot potato"
-	desc = "A label on the side of this potato reads \"Product of DonkCo Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures.\" <span class='boldnotice'>You can attack anyone with it to force it on them instead of yourself!</span>"
+	desc = "A label on the side of this potato reads \"Product of Donk Co. Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures.\" <span class='boldnotice'>You can attack anyone with it to force it on them instead of yourself!</span>"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	item_flags = NOBLUDGEON
@@ -10,9 +10,9 @@
 	var/icon_on = "potato_active"
 	var/detonation_timerid
 	var/activation_time = 0
-	var/timer = 600			//deciseconds
+	var/timer = 600 //deciseconds
 	var/show_timer = FALSE
-	var/reusable = FALSE		//absolute madman
+	var/reusable = FALSE //absolute madman
 	var/sticky = TRUE
 	var/forceful_attachment = TRUE
 	var/stimulant = TRUE
@@ -68,17 +68,20 @@
 	return ..()
 
 /obj/item/hot_potato/process()
-	if(stimulant)
-		if(isliving(loc))
-			var/mob/living/L = loc
-			L.SetStun(0)
-			L.SetKnockdown(0)
-			L.SetSleeping(0)
-			L.SetImmobilized(0)
-			L.SetParalyzed(0)
-			L.SetUnconscious(0)
-			L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, clamp(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5))	//If you don't have legs or get bola'd, tough luck!
-			colorize(L)
+	if(!isliving(loc))
+		return
+	var/mob/living/L = loc
+	colorize(L)
+	if(!stimulant)
+		return
+	L.SetStun(0)
+	L.SetKnockdown(0)
+	L.SetSleeping(0)
+	L.SetImmobilized(0)
+	L.SetParalyzed(0)
+	L.SetUnconscious(0)
+	L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, clamp(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5)) //If you don't have legs or get bola'd, tough luck!
+
 
 /obj/item/hot_potato/examine(mob/user)
 	. = ..()
@@ -134,7 +137,7 @@
 /obj/item/hot_potato/proc/activate(delay, mob/user)
 	if(active)
 		return
-	update_icon()
+	update_appearance()
 	if(sticky)
 		ADD_TRAIT(src, TRAIT_NODROP, HOT_POTATO_TRAIT)
 	name = "primed [name]"
@@ -148,7 +151,7 @@
 	active = TRUE
 
 /obj/item/hot_potato/proc/deactivate()
-	update_icon()
+	update_appearance()
 	name = initial(name)
 	REMOVE_TRAIT(src, TRAIT_NODROP, HOT_POTATO_TRAIT)
 	deltimer(detonation_timerid)
@@ -158,7 +161,8 @@
 	active = FALSE
 
 /obj/item/hot_potato/update_icon_state()
-	icon_state = active? icon_on : icon_off
+	icon_state = active ? icon_on : icon_off
+	return ..()
 
 /obj/item/hot_potato/syndicate
 	detonate_light_range = 4
@@ -168,7 +172,8 @@
 	detonate_explosion = FALSE
 
 /obj/item/hot_potato/harmless/toy
-	desc = "A label on the side of this potato reads \"Product of DonkCo Toys and Recreation department.\" <span class='boldnotice'>You can attack anyone with it to put it on them instead, if they have a free hand to take it!</span>"
+	desc = "A label on the side of this potato reads \"Product of Donk Co. Toys and Recreation department.\" <span class='boldnotice'>You can attack anyone with it to put it on them instead, if they have a free hand to take it!</span>"
 	sticky = FALSE
 	reusable = TRUE
 	forceful_attachment = FALSE
+	stimulant = FALSE

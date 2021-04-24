@@ -1,10 +1,10 @@
 /datum/proximity_monitor
-	var/atom/host	//the atom we are tracking
+	var/atom/host //the atom we are tracking
 	var/atom/hasprox_receiver //the atom that will receive HasProximity calls.
 	var/atom/last_host_loc
 	var/list/checkers //list of /obj/effect/abstract/proximity_checkers
 	var/current_range
-	var/ignore_if_not_on_turf	//don't check turfs in range if the host's loc isn't a turf
+	var/ignore_if_not_on_turf //don't check turfs in range if the host's loc isn't a turf
 	var/wire = FALSE
 
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
@@ -36,17 +36,17 @@
 	return ..()
 
 /datum/proximity_monitor/proc/HandleMove()
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/atom/_host = host
 	var/atom/new_host_loc = _host.loc
 	if(last_host_loc != new_host_loc)
-		last_host_loc = new_host_loc	//hopefully this won't cause GC issues with containers
+		last_host_loc = new_host_loc //hopefully this won't cause GC issues with containers
 		var/curr_range = current_range
 		SetRange(curr_range, TRUE)
 		if(curr_range)
 			testing("HasProx: [host] -> [host]")
-			hasprox_receiver.HasProximity(host)	//if we are processing, we're guaranteed to be a movable
+			hasprox_receiver.HasProximity(host) //if we are processing, we're guaranteed to be a movable
 
 /datum/proximity_monitor/proc/SetRange(range, force_rebuild = FALSE)
 	if(!force_rebuild && range == current_range)
@@ -63,7 +63,7 @@
 	var/atom/loc_to_use = ignore_if_not_on_turf ? _host.loc : get_turf(_host)
 	if(wire && !isturf(loc_to_use)) //it makes assemblies attached on wires work
 		loc_to_use = get_turf(loc_to_use)
-	if(!isturf(loc_to_use))	//only check the host's loc
+	if(!isturf(loc_to_use)) //only check the host's loc
 		if(range)
 			var/obj/effect/abstract/proximity_checker/pc
 			if(old_checkers_len)
@@ -73,7 +73,7 @@
 			else
 				pc = new(loc_to_use, src)
 
-			checkers_local += pc	//only check the host's loc
+			checkers_local += pc //only check the host's loc
 		return
 
 	var/list/turfs = RANGE_TURFS(range, loc_to_use)
@@ -86,7 +86,7 @@
 			var/obj/effect/abstract/proximity_checker/pc = checkers_local[I]
 			pc.forceMove(turfs[I])
 		else
-			qdel(checkers_local[I])	//delete the leftovers
+			qdel(checkers_local[I]) //delete the leftovers
 
 	if(old_checkers_len < turfs_len)
 		//create what we lack

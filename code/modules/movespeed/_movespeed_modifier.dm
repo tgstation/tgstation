@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			type_or_datum = new type_or_datum
 	var/datum/movespeed_modifier/existing = LAZYACCESS(movespeed_modification, type_or_datum.id)
 	if(existing)
-		if(existing == type_or_datum)		//same thing don't need to touch
+		if(existing == type_or_datum) //same thing don't need to touch
 			return TRUE
 		remove_movespeed_modifier(existing, FALSE)
 	if(length(movespeed_modification))
@@ -90,10 +90,10 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /mob/proc/remove_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE)
 	var/key
 	if(ispath(type_id_datum))
-		key = initial(type_id_datum.id) || "[type_id_datum]"		//id if set, path set to string if not.
-	else if(!istext(type_id_datum))		//if it isn't text it has to be a datum, as it isn't a type.
+		key = initial(type_id_datum.id) || "[type_id_datum]" //id if set, path set to string if not.
+	else if(!istext(type_id_datum)) //if it isn't text it has to be a datum, as it isn't a type.
 		key = type_id_datum.id
-	else								//assume it's an id
+	else //assume it's an id
 		key = type_id_datum
 	if(!LAZYACCESS(movespeed_modification, key))
 		return FALSE
@@ -142,20 +142,6 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		update_movespeed(TRUE)
 	return final
 
-/// Handles the special case of editing the movement var
-/mob/vv_edit_var(var_name, var_value)
-	if(var_name == NAMEOF(src, control_object))
-		var/obj/O = var_value
-		if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
-			return FALSE
-	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
-	var/diff
-	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))
-		remove_movespeed_modifier(/datum/movespeed_modifier/admin_varedit)
-		diff = var_value - cached_multiplicative_slowdown
-	. = ..()
-	if(. && slowdown_edit && isnum(diff))
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/admin_varedit, multiplicative_slowdown = diff)
 
 ///Is there a movespeed modifier for this mob
 /mob/proc/has_movespeed_modifier(datum/movespeed_modifier/datum_type_id)
@@ -200,6 +186,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 				continue
 		. += amt
 	cached_multiplicative_slowdown = .
+	SEND_SIGNAL(src, COMSIG_MOB_MOVESPEED_UPDATED)
 
 /// Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()
@@ -215,7 +202,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		. += M.multiplicative_slowdown
 
 /// Checks if a move speed modifier is valid and not missing any data
-/proc/movespeed_data_null_check(datum/movespeed_modifier/M)		//Determines if a data list is not meaningful and should be discarded.
+/proc/movespeed_data_null_check(datum/movespeed_modifier/M) //Determines if a data list is not meaningful and should be discarded.
 	. = TRUE
 	if(M.multiplicative_slowdown)
 		. = FALSE

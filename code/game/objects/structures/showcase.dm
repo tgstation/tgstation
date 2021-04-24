@@ -122,7 +122,7 @@
 	if(W.tool_behaviour == TOOL_CROWBAR && deconstruction_state == SHOWCASE_SCREWDRIVERED)
 		if(W.use_tool(src, user, 20, volume=100))
 			to_chat(user, "<span class='notice'>You start to crowbar the showcase apart...</span>")
-			new /obj/item/stack/sheet/metal(drop_location(), 4)
+			new /obj/item/stack/sheet/iron(drop_location(), 4)
 			qdel(src)
 
 	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, W))

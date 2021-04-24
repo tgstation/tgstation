@@ -4,7 +4,7 @@
 /datum/blackmarket_item/consumable/clown_tears
 	name = "Bowl of Clown's Tears"
 	desc = "Guaranteed fresh from Weepy Boggins Tragic Kitchen"
-	item = /obj/item/reagent_containers/food/snacks/soup/clownstears
+	item = /obj/item/food/soup/clownstears
 	stock = 1
 
 	price_min = 520
@@ -44,7 +44,7 @@
 /datum/blackmarket_item/consumable/floor_pill
 	name = "Strange Pill"
 	desc = "The Russian Roulette of the Maintenance Tunnels."
-	item = /obj/item/reagent_containers/pill/floorpill
+	item = /obj/item/reagent_containers/pill/maintenance
 
 	stock_min = 5
 	stock_max = 35

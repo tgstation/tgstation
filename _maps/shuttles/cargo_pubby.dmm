@@ -1,0 +1,291 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "ShuttleLoad"
+	},
+/turf/open/floor/iron,
+/area/shuttle/supply)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "ShuttleLoad"
+	},
+/turf/open/floor/iron,
+/area/shuttle/supply)
+"f" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "ShuttleLoad"
+	},
+/turf/open/floor/iron,
+/area/shuttle/supply)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door{
+	id = "cargoload";
+	name = "Loading Doors";
+	pixel_x = -24;
+	pixel_y = -8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/supply)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/shuttle/supply)
+"k" = (
+/obj/machinery/door/poddoor{
+	id = "cargoload";
+	name = "supply dock loading door"
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "ShuttleLoad"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/chapel{
+	dir = 4
+	},
+/area/shuttle/supply)
+"o" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/iron/chapel{
+	dir = 8
+	},
+/area/shuttle/supply)
+"q" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/supply)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/supply)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/iron/chapel{
+	dir = 1
+	},
+/area/shuttle/supply)
+"t" = (
+/obj/machinery/button/door{
+	id = "cargounload";
+	name = "Loading Doors";
+	pixel_x = -24;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/supply)
+"w" = (
+/turf/open/floor/iron/dark,
+/area/shuttle/supply)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "ShuttleUnload"
+	},
+/turf/open/floor/iron,
+/area/shuttle/supply)
+"y" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "ShuttleUnload"
+	},
+/turf/open/floor/iron,
+/area/shuttle/supply)
+"z" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"A" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"B" = (
+/turf/template_noop,
+/area/template_noop)
+"C" = (
+/obj/structure/shuttle/engine/propulsion/burst/left,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"D" = (
+/obj/structure/shuttle/engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"E" = (
+/obj/structure/shuttle/engine/propulsion/burst/right,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"J" = (
+/obj/machinery/door/poddoor{
+	id = "cargounload";
+	name = "supply dock loading door"
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "ShuttleUnload"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"K" = (
+/turf/open/floor/iron/chapel{
+	dir = 1
+	},
+/area/shuttle/supply)
+"N" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/iron/chapel{
+	dir = 1
+	},
+/area/shuttle/supply)
+"R" = (
+/obj/docking_port/mobile/supply{
+	dir = 4
+	},
+/obj/machinery/door/airlock/shuttle{
+	name = "Supply Shuttle Airlock";
+	req_access_txt = "31"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/shuttle/supply)
+"U" = (
+/turf/open/floor/iron/chapel,
+/area/shuttle/supply)
+"X" = (
+/turf/open/floor/iron/chapel{
+	dir = 8
+	},
+/area/shuttle/supply)
+
+(1,1,1) = {"
+a
+k
+a
+a
+r
+R
+r
+a
+a
+J
+a
+B
+"}
+(2,1,1) = {"
+a
+e
+g
+s
+o
+w
+N
+X
+t
+x
+a
+C
+"}
+(3,1,1) = {"
+a
+f
+w
+m
+U
+w
+m
+U
+w
+x
+z
+D
+"}
+(4,1,1) = {"
+a
+d
+j
+j
+w
+j
+w
+j
+w
+y
+A
+D
+"}
+(5,1,1) = {"
+a
+e
+j
+K
+X
+w
+K
+X
+w
+y
+A
+D
+"}
+(6,1,1) = {"
+a
+f
+j
+m
+U
+q
+m
+U
+w
+y
+a
+E
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+B
+"}

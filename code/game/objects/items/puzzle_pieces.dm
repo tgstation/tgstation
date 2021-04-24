@@ -1,6 +1,6 @@
 //**************
 //*****Keys*******************
-//**************		**  **
+//************** **  **
 /obj/item/keycard
 	name = "security keycard"
 	desc = "This feels like it belongs to a door."
@@ -55,7 +55,7 @@
 	return
 
 /obj/machinery/door/keycard/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/machinery/door/keycard/try_to_activate_door(mob/user)
 	add_fingerprint(user)
@@ -117,7 +117,7 @@
 	trigger_delay = 10
 	protected = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	var/reward = /obj/item/reagent_containers/food/snacks/cookie
+	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
 
 /obj/item/pressure_plate/hologrid/Initialize()
@@ -143,5 +143,4 @@
 		AM.set_anchored(TRUE)
 		flick("laserbox_burn", AM)
 		trigger()
-		sleep(15)
-		qdel(AM)
+		QDEL_IN(AM, 15)

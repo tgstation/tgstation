@@ -53,13 +53,13 @@
 /area/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 1
 	},
 /area/mafia)
 "o" = (
 /obj/structure/closet/crate/coffin,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 4
 	},
 /area/mafia)
@@ -76,7 +76,7 @@
 /turf/open/floor/carpet/red,
 /area/mafia)
 "r" = (
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 8
 	},
 /area/mafia)
@@ -96,12 +96,12 @@
 /area/mafia)
 "D" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 4
 	},
 /area/mafia)
 "E" = (
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 4
 	},
 /area/mafia)
@@ -113,35 +113,35 @@
 /area/mafia)
 "J" = (
 /obj/structure/closet/crate/coffin,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 1
 	},
 /area/mafia)
 "M" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 8
 	},
 /area/mafia)
 "N" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/plasteel/chapel,
+/turf/open/floor/iron/chapel,
 /area/mafia)
 "O" = (
-/turf/open/floor/plasteel/chapel,
+/turf/open/floor/iron/chapel,
 /area/mafia)
 "P" = (
 /obj/structure/closet/crate/coffin,
-/turf/open/floor/plasteel/chapel,
+/turf/open/floor/iron/chapel,
 /area/mafia)
 "Q" = (
 /obj/structure/closet/crate/coffin,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 8
 	},
 /area/mafia)
 "X" = (
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 1
 	},
 /area/mafia)

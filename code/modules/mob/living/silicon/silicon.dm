@@ -9,11 +9,11 @@
 	see_in_dark = 8
 	bubble_icon = "machine"
 	weather_immunities = list("ash")
-	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	mob_biotypes = MOB_ROBOTIC
 	deathsound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	examine_cursor_icon = null
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -31,7 +31,6 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 	var/hackedcheck[1]
-	var/devillawcheck[5]
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
@@ -44,7 +43,7 @@
 	var/updating = FALSE //portable camera camerachunk update
 
 	var/hack_software = FALSE //Will be able to use hacking actions
-	var/interaction_range = 7			//wireless control range
+	var/interaction_range = 7 //wireless control range
 	var/obj/item/pda/ai/aiPDA
 
 /mob/living/silicon/Initialize()
@@ -58,6 +57,17 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
+	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
+
+/mob/living/silicon/Destroy()
+	QDEL_NULL(radio)
+	QDEL_NULL(aicamera)
+	QDEL_NULL(builtInCamera)
+	QDEL_NULL(aiPDA)
+	QDEL_NULL(laws)
+	GLOB.silicon_mobs -= src
+	return ..()
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -65,18 +75,13 @@
 /mob/living/silicon/med_hud_set_status()
 	return //we use a different hud
 
-/mob/living/silicon/Destroy()
-	QDEL_NULL(radio)
-	QDEL_NULL(aicamera)
-	QDEL_NULL(builtInCamera)
-	QDEL_NULL(aiPDA)
-	GLOB.silicon_mobs -= src
-	return ..()
-
 /mob/living/silicon/contents_explosion(severity, target)
 	return
 
 /mob/living/silicon/proc/cancelAlarm()
+	return
+
+/mob/living/silicon/proc/freeCamera()
 	return
 
 /mob/living/silicon/proc/triggerAlarm()
@@ -158,13 +163,13 @@
 	for(var/key in alarm_types_clear)
 		alarm_types_clear[key] = 0
 
-/mob/living/silicon/can_inject(mob/user, error_msg)
-	if(error_msg)
-		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
+/mob/living/silicon/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
 
-/mob/living/silicon/IsAdvancedToolUser()
-	return TRUE
+/mob/living/silicon/try_inject(mob/user, target_zone, injection_flags)
+	. = ..()
+	if(!. && (injection_flags & INJECT_TRY_SHOW_ERROR_MESSAGE))
+		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
@@ -201,15 +206,6 @@
 				hackedcheck[L] = "Yes"
 		checklaws()
 
-	if (href_list["lawdevil"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
-		var/L = text2num(href_list["lawdevil"])
-		switch(devillawcheck[L])
-			if ("Yes")
-				devillawcheck[L] = "No"
-			if ("No")
-				devillawcheck[L] = "Yes"
-		checklaws()
-
 
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
@@ -222,8 +218,18 @@
 
 	return
 
-
 /mob/living/silicon/proc/statelaws(force = 0)
+	// Create a cache of our laws and lawcheck flags before we do anything else.
+	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
+	var/lawcache_zeroth = laws.zeroth
+	var/list/lawcache_hacked = laws.hacked.Copy()
+	var/list/lawcache_ion = laws.ion.Copy()
+	var/list/lawcache_inherent = laws.inherent.Copy()
+	var/list/lawcache_supplied = laws.supplied.Copy()
+
+	var/list/lawcache_lawcheck = lawcheck.Copy()
+	var/list/lawcache_ioncheck = ioncheck.Copy()
+	var/list/lawcache_hackedcheck = hackedcheck.Copy()
 
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	say("[radiomod] Current Active Laws:")
@@ -232,49 +238,42 @@
 	var/number = 1
 	sleep(10)
 
-	if (laws.devillaws && laws.devillaws.len)
-		for(var/index = 1, index <= laws.devillaws.len, index++)
-			if (force || devillawcheck[index] == "Yes")
-				say("[radiomod] 666. [laws.devillaws[index]]")
-				sleep(10)
-
-
-	if (laws.zeroth)
-		if (force || lawcheck[1] == "Yes")
-			say("[radiomod] 0. [laws.zeroth]")
+	if (lawcache_zeroth)
+		if (force || lawcache_lawcheck[1] == "Yes")
+			say("[radiomod] 0. [lawcache_zeroth]")
 			sleep(10)
 
-	for (var/index = 1, index <= laws.hacked.len, index++)
-		var/law = laws.hacked[index]
+	for (var/index in 1 to length(lawcache_hacked))
+		var/law = lawcache_hacked[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (force || hackedcheck[index] == "Yes")
+			if (force || lawcache_hackedcheck[index] == "Yes")
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= laws.ion.len, index++)
-		var/law = laws.ion[index]
+	for (var/index in 1 to length(lawcache_ion))
+		var/law = lawcache_ion[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (force || ioncheck[index] == "Yes")
+			if (force || lawcache_ioncheck[index] == "Yes")
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= laws.inherent.len, index++)
-		var/law = laws.inherent[index]
+	for (var/index in 1 to length(lawcache_inherent))
+		var/law = lawcache_inherent[index]
 
 		if (length(law) > 0)
-			if (force || lawcheck[index+1] == "Yes")
+			if (force || lawcache_lawcheck[index+1] == "Yes")
 				say("[radiomod] [number]. [law]")
 				number++
 				sleep(10)
 
-	for (var/index = 1, index <= laws.supplied.len, index++)
-		var/law = laws.supplied[index]
+	for (var/index in 1 to length(lawcache_supplied))
+		var/law = lawcache_supplied[index]
 
 		if (length(law) > 0)
-			if(lawcheck.len >= number+1)
-				if (force || lawcheck[number+1] == "Yes")
+			if(lawcache_lawcheck.len >= number+1)
+				if (force || lawcache_lawcheck[number+1] == "Yes")
 					say("[radiomod] [number]. [law]")
 					number++
 					sleep(10)
@@ -283,12 +282,6 @@
 /mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
-
-	if (laws.devillaws && laws.devillaws.len)
-		for(var/index = 1, index <= laws.devillaws.len, index++)
-			if (!devillawcheck[index])
-				devillawcheck[index] = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawdevil=[index]'>[devillawcheck[index]] 666:</A> <font color='#cc5500'>[laws.devillaws[index]]</font><BR>"}
 
 	if (laws.zeroth)
 		if (!lawcheck[1])
@@ -343,9 +336,10 @@
 		return
 	client.crew_manifest_delay = world.time + (1 SECONDS)
 
-	var/datum/browser/popup = new(src, "airoster", "Crew Manifest", 387, 420)
-	popup.set_content(GLOB.data_core.get_manifest_html())
-	popup.open()
+	if(!GLOB.crew_manifest_tgui)
+		GLOB.crew_manifest_tgui = new /datum/crew_manifest(src)
+
+	GLOB.crew_manifest_tgui.ui_interact(src)
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
 	if(!radio)
@@ -362,7 +356,7 @@
 		Autochan += " ([radio.frequency])"
 	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
-	else	//For department channels, if any, given by the internal radio.
+	else //For department channels, if any, given by the internal radio.
 		for(var/key in GLOB.department_radio_keys)
 			if(GLOB.department_radio_keys[key] == Autochan)
 				radiomod = ":" + key
@@ -431,8 +425,20 @@
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE
 
-/mob/living/silicon/handle_high_gravity(gravity)
+/mob/living/silicon/handle_high_gravity(gravity, delta_time, times_fired)
 	return
 
 /mob/living/silicon/rust_heretic_act()
 	adjustBruteLoss(500)
+
+/mob/living/silicon/on_floored_start()
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_floored_end()
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_lying_down()
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_standing_up()
+	return // Silicons are always standing by default.

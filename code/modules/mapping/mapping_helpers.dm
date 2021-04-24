@@ -10,7 +10,7 @@
 	var/list/baseturf_to_replace
 	var/baseturf
 
-	layer = POINT_LAYER
+	plane = POINT_PLANE
 
 /obj/effect/baseturf_helper/Initialize()
 	. = ..()
@@ -34,11 +34,12 @@
 	qdel(src)
 
 /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
-	var/list/baseturf_cache = thing.baseturfs
-	if(length(baseturf_cache))
+	if(length(thing.baseturfs))
+		var/list/baseturf_cache = thing.baseturfs.Copy()
 		for(var/i in baseturf_cache)
 			if(baseturf_to_replace[i])
 				baseturf_cache -= i
+		thing.baseturfs = baseturfs_string_list(baseturf_cache, thing)
 		if(!baseturf_cache.len)
 			thing.assemble_baseturfs(baseturf)
 		else
@@ -154,6 +155,15 @@
 	else
 		airlock.abandoned = TRUE
 
+/obj/effect/mapping_helpers/airlock/cutaiwire
+	name = "airlock cut ai wire helper"
+	icon_state = "airlock_cutaiwire"
+
+/obj/effect/mapping_helpers/airlock/cutaiwire/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.cutAiWire)
+		log_mapping("[src] at [AREACOORD(src)] tried to cut the ai wire on [airlock] but it's already cut!")
+	else
+		airlock.cutAiWire = TRUE
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
@@ -164,11 +174,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/no_lava/Initialize()
 	. = ..()
 	var/turf/T = get_turf(src)
-	T.flags_1 |= NO_LAVA_GEN_1
+	T.turf_flags |= NO_LAVA_GEN
 
 //This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/component_injector
 	name = "Component Injector"
+	icon_state = "component"
 	late = TRUE
 	var/all = FALSE //Will inject into all fitting the criteria if true, otherwise first found
 	var/target_type //Will inject into atoms of this type
@@ -241,7 +252,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			else
 				var/obj/item/organ/O = part
 				O.organ_flags |= ORGAN_FROZEN
-		j.update_icon()
+		j.update_appearance()
 	qdel(src)
 
 
@@ -275,7 +286,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	//cake + knife to cut it!
 	var/turf/food_turf = get_turf(pick(table))
 	new /obj/item/kitchen/knife(food_turf)
-	var/obj/item/reagent_containers/food/snacks/store/cake/birthday/iancake = new(food_turf)
+	var/obj/item/food/cake/birthday/iancake = new(food_turf)
 	iancake.desc = "Happy birthday, Ian!"
 	//some balloons! this picks an open turf and pops a few balloons in and around that turf, yay.
 	for(var/i in 1 to balloon_clusters)
@@ -364,7 +375,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		var/obj/machinery/door/airlock/found_airlock = locate(/obj/machinery/door/airlock) in turf
 		if(note_path)
 			found_airlock.note = note_path
-			found_airlock.update_icon()
+			found_airlock.update_appearance()
 			qdel(src)
 		if(note_info)
 			var/obj/item/paper/paper = new /obj/item/paper(src)
@@ -373,10 +384,109 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			paper.info = "[note_info]"
 			found_airlock.note = paper
 			paper.forceMove(found_airlock)
-			found_airlock.update_icon()
+			found_airlock.update_appearance()
 			qdel(src)
 		log_mapping("[src] at [x],[y] had no note_path or note_info, cannot place paper note.")
 		qdel(src)
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
 	qdel(src)
 
+//This helper applies traits to things on the map directly.
+/obj/effect/mapping_helpers/trait_injector
+	name = "Trait Injector"
+	icon_state = "trait"
+	late = TRUE
+	///Will inject into all fitting the criteria if false, otherwise first found.
+	var/first_match_only = TRUE
+	///Will inject into atoms of this type.
+	var/target_type
+	///Will inject into atoms with this name.
+	var/target_name
+	///Name of the trait, in the lower-case text (NOT the upper-case define) form.
+	var/trait_name
+
+//Late init so everything is likely ready and loaded (no warranty)
+/obj/effect/mapping_helpers/trait_injector/LateInitialize()
+	if(!GLOB.trait_name_map)
+		GLOB.trait_name_map = generate_trait_name_map()
+	if(!GLOB.trait_name_map.Find(trait_name))
+		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
+	var/turf/target_turf = get_turf(src)
+	var/matches_found = 0
+	for(var/a in target_turf.GetAllContents())
+		var/atom/atom_on_turf = a
+		if(atom_on_turf == src)
+			continue
+		if(target_name && atom_on_turf.name != target_name)
+			continue
+		if(target_type && !istype(atom_on_turf,target_type))
+			continue
+		ADD_TRAIT(atom_on_turf, trait_name, MAPPING_HELPER_TRAIT)
+		matches_found++
+		if(first_match_only)
+			qdel(src)
+			return
+	if(!matches_found)
+		stack_trace("Trait mapper found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name] | trait name: [trait_name]")
+	qdel(src)
+
+/// Fetches an external dmi and applies to the target object
+/obj/effect/mapping_helpers/custom_icon
+	name = "Custom Icon Helper"
+	icon_state = "trait"
+	late = TRUE
+	///Will inject into all fitting the criteria if false, otherwise first found.
+	var/first_match_only = TRUE
+	///Will inject into atoms of this type.
+	var/target_type
+	///Will inject into atoms with this name.
+	var/target_name
+	/// This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
+	var/target_variable = "icon"
+	/// This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
+	var/icon_url
+
+/obj/effect/mapping_helpers/custom_icon/LateInitialize()
+	///TODO put this injector stuff under common root
+	var/I = fetch_icon(icon_url)
+	var/turf/target_turf = get_turf(src)
+	var/matches_found = 0
+	for(var/a in target_turf.GetAllContents())
+		var/atom/atom_on_turf = a
+		if(atom_on_turf == src)
+			continue
+		if(target_name && atom_on_turf.name != target_name)
+			continue
+		if(target_type && !istype(atom_on_turf,target_type))
+			continue
+		atom_on_turf.vars[target_variable] = I
+		matches_found++
+		if(first_match_only)
+			qdel(src)
+			return
+	if(!matches_found)
+		stack_trace("[src] found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name]")
+	qdel(src)
+
+/obj/effect/mapping_helpers/custom_icon/proc/fetch_icon(url)
+	var/static/icon_cache = list()
+	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	if(query_in_progress)
+		UNTIL(!query_in_progress)
+	if(icon_cache[url])
+		return icon_cache[url]
+	log_asset("Custom Icon Helper fetching dmi from: [url]")
+	var/datum/http_request/request = new()
+	var/file_name = "tmp/custom_map_icon.dmi"
+	request.prepare(RUSTG_HTTP_METHOD_GET, url , "", "", file_name)
+	query_in_progress = TRUE
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+	if(response.errored || response.status_code != 200)
+		query_in_progress = FALSE
+		CRASH("Failed to fetch mapped custom icon from url [url], code: [response.status_code], error: [response.error]")
+	var/icon/I = new(file_name)
+	icon_cache[url] = I
+	query_in_progress = FALSE
+	return I

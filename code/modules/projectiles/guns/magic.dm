@@ -9,11 +9,13 @@
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags_1 =  CONDUCT_1
 	w_class = WEIGHT_CLASS_HUGE
+	///what kind of magic is this
+	var/school = SCHOOL_EVOCATION
 	var/checks_antimagic = TRUE
 	var/max_charges = 6
 	var/charges = 0
-	var/recharge_rate = 4
-	var/charge_tick = 0
+	var/recharge_rate = 8
+	var/charge_timer = 0
 	var/can_charge = TRUE
 	var/ammo_type
 	var/no_den_usage
@@ -40,11 +42,11 @@
 	return charges
 
 /obj/item/gun/magic/recharge_newshot()
-	if (charges && chambered && !chambered.BB)
+	if (charges && chambered && !chambered.loaded_projectile)
 		chambered.newshot()
 
 /obj/item/gun/magic/process_chamber()
-	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
+	if(chambered && !chambered.loaded_projectile) //if BB is null, i.e the shot has been fired...
 		charges--//... drain a charge
 		recharge_newshot()
 
@@ -54,6 +56,7 @@
 	chambered = new ammo_type(src)
 	if(can_charge)
 		START_PROCESSING(SSobj, src)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
 
 
 /obj/item/gun/magic/Destroy()
@@ -62,14 +65,14 @@
 	return ..()
 
 
-/obj/item/gun/magic/process()
+/obj/item/gun/magic/process(delta_time)
 	if (charges >= max_charges)
-		charge_tick = 0
+		charge_timer = 0
 		return
-	charge_tick++
-	if(charge_tick < recharge_rate)
+	charge_timer += delta_time
+	if(charge_timer < recharge_rate)
 		return 0
-	charge_tick = 0
+	charge_timer = 0
 	charges++
 	if(charges == 1)
 		recharge_newshot()
@@ -89,3 +92,8 @@
 	switch(var_name)
 		if(NAMEOF(src, charges))
 			recharge_newshot()
+
+/obj/item/gun/magic/proc/instant_recharge()
+	charges = max_charges
+	recharge_newshot()
+	update_appearance()

@@ -31,11 +31,9 @@
 		user.show_message("<span class='notice'>You need at least [FABRIC_PER_SHEET] units of fabric before using this.</span>", MSG_VISUAL)
 		return FALSE
 	user.show_message("<span class='notice'>You start weaving \the [W.name] through the loom..</span>", MSG_VISUAL)
-	if(W.use_tool(src, user, W.pull_effort))
-		if(W.amount >= FABRIC_PER_SHEET)
-			new W.loom_result(drop_location())
-			W.use(FABRIC_PER_SHEET)
-			user.show_message("<span class='notice'>You weave \the [W.name] into a workable fabric.</span>", MSG_VISUAL)
+	while(W.use_tool(src, user, W.pull_effort) && W.use(FABRIC_PER_SHEET))
+		new W.loom_result(drop_location())
+		user.show_message("<span class='notice'>You weave \the [W.name] into a workable fabric.</span>", MSG_VISUAL)
 	return TRUE
 
 #undef FABRIC_PER_SHEET

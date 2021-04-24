@@ -79,11 +79,11 @@
 					if(MEDIUM_HOLE)
 						visible_message("<span class='notice'>\The [user] cuts into \the [src] some more.</span>")
 						to_chat(user, "<span class='info'>You could probably fit yourself through that hole now. Although climbing through would be much faster if you made it even bigger.</span>")
-						climbable = TRUE
+						AddElement(/datum/element/climbable)
 					if(LARGE_HOLE)
 						visible_message("<span class='notice'>\The [user] completely cuts through \the [src].</span>")
 						to_chat(user, "<span class='info'>The hole in \the [src] is now big enough to walk through.</span>")
-						climbable = FALSE
+						RemoveElement(/datum/element/climbable)
 
 				update_cut_status()
 
@@ -121,7 +121,7 @@
 	open = TRUE
 	density = TRUE
 
-/obj/structure/fence/door/attack_hand(mob/user)
+/obj/structure/fence/door/attack_hand(mob/user, list/modifiers)
 	if(can_open(user))
 		toggle(user)
 

@@ -26,9 +26,6 @@
 /mob/living/silicon/binarycheck()
 	return TRUE
 
-/mob/living/silicon/lingcheck()
-	return FALSE //Borged or AI'd lings can't speak on the ling channel.
-
 /mob/living/silicon/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
 	if(.)

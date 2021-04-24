@@ -8,15 +8,15 @@
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 	var/timing = FALSE
-	var/time = 5
-	var/saved_time = 5
+	var/time = 10
+	var/saved_time = 10
 	var/loop = FALSE
 	var/hearing_range = 3
 
 /obj/item/assembly/timer/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] looks at the timer and decides [user.p_their()] fate! It looks like [user.p_theyre()] going to commit suicide!</span>")
 	activate()//doesnt rely on timer_end to prevent weird metas where one person can control the timer and therefore someone's life. (maybe that should be how it works...)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), time*10)//kill yourself once the time runs out
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), time SECONDS)//kill yourself once the time runs out
 	return MANUAL_SUICIDE
 
 /obj/item/assembly/timer/proc/manual_suicide(mob/living/user)
@@ -40,7 +40,7 @@
 	if(!..())
 		return FALSE//Cooldown check
 	timing = !timing
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/item/assembly/timer/toggle_secure()
@@ -50,39 +50,41 @@
 	else
 		timing = FALSE
 		STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance()
 	return secured
 
 /obj/item/assembly/timer/proc/timer_end()
 	if(!secured || next_activate > world.time)
 		return FALSE
 	pulse(FALSE)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
+	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/CHM in get_hearers_in_view(hearing_range, src))
 		if(ismob(CHM))
 			var/mob/LM = CHM
 			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	if(loop)
 		timing = TRUE
-	update_icon()
+	update_appearance()
 
-/obj/item/assembly/timer/process()
+/obj/item/assembly/timer/process(delta_time)
 	if(!timing)
 		return
-	time--
+	time -= delta_time
 	if(time <= 0)
 		timing = FALSE
 		timer_end()
 		time = saved_time
 
-/obj/item/assembly/timer/update_icon()
-	cut_overlays()
+/obj/item/assembly/timer/update_appearance()
+	. = ..()
+	holder?.update_appearance()
+
+/obj/item/assembly/timer/update_overlays()
+	. = ..()
 	attached_overlays = list()
 	if(timing)
-		add_overlay("timer_timing")
+		. += "timer_timing"
 		attached_overlays += "timer_timing"
-	if(holder)
-		holder.update_icon()
 
 /obj/item/assembly/timer/ui_status(mob/user)
 	if(is_secured(user))
@@ -104,7 +106,8 @@
 	return data
 
 /obj/item/assembly/timer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -112,7 +115,7 @@
 			timing = !timing
 			if(timing && istype(holder, /obj/item/transfer_valve))
 				log_bomber(usr, "activated a", src, "attachment on [holder]")
-			update_icon()
+			update_appearance()
 			. = TRUE
 		if("repeat")
 			loop = !loop

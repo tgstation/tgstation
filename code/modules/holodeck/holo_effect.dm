@@ -5,7 +5,7 @@
 	These remove snowflake code for special holodeck functions.
 */
 /obj/effect/holodeck_effect
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -45,14 +45,14 @@
 		D.card_throwforce = 0
 		D.card_throw_speed = 3
 		D.card_throw_range = 7
-		D.card_attack_verb_continuous = list("attacks")
+		D.card_attack_verb_continuous = string_list(list("attacks"))
 	else
 		D.card_hitsound = 'sound/weapons/bladeslice.ogg'
 		D.card_force = 5
 		D.card_throwforce = 10
 		D.card_throw_speed = 3
 		D.card_throw_range = 7
-		D.card_attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
+		D.card_attack_verb_continuous = string_list(list("attacks", "slices", "dices", "slashes", "cuts"))
 
 
 /obj/effect/holodeck_effect/sparks/activate(obj/machinery/computer/holodeck/HC)
@@ -61,10 +61,18 @@
 		var/datum/effect_system/spark_spread/s = new
 		s.set_up(3, 1, T)
 		s.start()
-		T.temperature = 5000
+		T.temperature = 5000 //Why? not quite sure to be honest with you
 		T.hotspot_expose(50000,50000,1)
 
+/obj/effect/holodeck_effect/random_book
 
+
+/obj/effect/holodeck_effect/random_book/activate(obj/machinery/computer/holodeck/father_holodeck)
+	var/static/banned_books = list(/obj/item/book/manual/random, /obj/item/book/manual/nuclear, /obj/item/book/manual/wiki)
+	var/newtype = pick(subtypesof(/obj/item/book/manual) - banned_books)
+	var/obj/item/book/manual/to_spawn = new newtype(loc)
+	to_spawn.flags_1 |= (HOLOGRAM_1 | NODECONSTRUCT_1)
+	return to_spawn
 
 /obj/effect/holodeck_effect/mobspawner
 	var/mobtype = /mob/living/simple_animal/hostile/carp/holocarp

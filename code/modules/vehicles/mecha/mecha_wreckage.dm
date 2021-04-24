@@ -10,7 +10,7 @@
 	density = TRUE
 	anchored = FALSE
 	opacity = FALSE
-	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/metal, /obj/item/stack/rods)
+	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	var/salvage_num = 5
 	var/list/crowbar_salvage = list()
 	var/wires_removed = FALSE
@@ -32,9 +32,9 @@
 		return
 	AI = AI_pilot
 	AI.apply_damage(150, BURN) //Give the AI a bit of damage from the "shock" of being suddenly shut down
-	AI.death() //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
+	INVOKE_ASYNC(AI, /mob/living/silicon.proc/death) //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
 	AI.forceMove(src) //Put the dead AI inside the wreckage for recovery
-	add_overlay(mutable_appearance('icons/obj/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
+	add_overlay(mutable_appearance('icons/obj/guns/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
 	AI.controlled_mech = null
 	AI.remote_control = null
 
@@ -93,7 +93,7 @@
 	if(!..())
 		return
 
- //Proc called on the wreck by the AI card.
+	//Proc called on the wreck by the AI card.
 	if(interaction != AI_TRANS_TO_CARD) //AIs can only be transferred in one direction, from the wreck to the card.
 		return
 	if(!AI) //No AI in the wreck
@@ -154,7 +154,7 @@
 				/obj/item/mecha_parts/part/ripley_left_leg,
 				/obj/item/mecha_parts/part/ripley_right_leg)
 
-/obj/structure/mecha_wreckage/ripley/mkii
+/obj/structure/mecha_wreckage/ripley/mk2
 	name = "\improper Ripley MK-II wreckage"
 	icon_state = "ripleymkii-broken"
 

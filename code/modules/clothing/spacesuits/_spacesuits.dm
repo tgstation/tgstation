@@ -10,7 +10,7 @@
 	inhand_icon_state = "spaceold"
 	permeability_coefficient = 0.01
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 50, FIRE = 80, ACID = 70)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
 	cold_protection = HEAD
@@ -61,7 +61,7 @@
 	. = ..()
 	if(slot == ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
-		update_hud_icon(user)		// update the hud
+		update_hud_icon(user) // update the hud
 
 // On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/user)
@@ -72,7 +72,7 @@
 		human.update_spacesuit_hud_icon("0")
 
 // Space Suit temperature regulation and power usage
-/obj/item/clothing/suit/space/process()
+/obj/item/clothing/suit/space/process(delta_time)
 	var/mob/living/carbon/human/user = src.loc
 	if(!user || !ishuman(user) || !(user.wear_suit == src))
 		return
@@ -92,11 +92,12 @@
 	if(!cell.use(THERMAL_REGULATOR_COST))
 		toggle_spacesuit()
 		update_hud_icon(user)
+		to_chat(user, "<span class='warning'>The thermal regulator cuts off as [cell] runs out of charge.</span>")
 		return
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
 	// just had enough charge subtracted from it to power the thermal regulator
-	user.adjust_bodytemperature((temperature_setting - user.bodytemperature), use_steps=TRUE, capped=FALSE)
+	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), 0.08 * delta_time))
 	update_hud_icon(user)
 
 // Clean up the cell on destroy
@@ -164,13 +165,13 @@
 
 /// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/AltClick(mob/living/user)
-	if(!user || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return ..()
 	toggle_spacesuit_cell(user)
 
 /// Remove the cell whent he cover is open on CTRL+Click
 /obj/item/clothing/suit/space/CtrlClick(mob/living/user)
-	if(user && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		if(cell_cover_open && cell)
 			remove_cell(user)
 			return
@@ -199,11 +200,15 @@
 	// If we're turning thermal protection on, check for valid cell and for enough
 	// charge that cell. If it's too low, we shouldn't bother with setting the
 	// thermal protection value and should just return out early.
+	var/mob/living/carbon/human/user = src.loc
 	if(!thermal_on && !(cell && cell.charge >= THERMAL_REGULATOR_COST))
+		to_chat(user, "<span class='warning'>The thermal regulator on \the [src] has no charge.</span>")
 		return
 
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
+	if(user)
+		to_chat(user, "<span class='notice'>You turn [thermal_on ? "on" : "off"] \the [src]'s thermal regulator.</span>")
 	SEND_SIGNAL(src, COMSIG_SUIT_SPACE_TOGGLE)
 
 // let emags override the temperature settings
@@ -212,7 +217,7 @@
 		obj_flags |= EMAGGED
 		user.visible_message("<span class='warning'>You emag [src], overwriting thermal regulator restrictions.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)

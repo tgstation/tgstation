@@ -46,7 +46,7 @@
 	var/list/team_keys = list()
 	/// List of outfit datums/types indexed by team id, can be empty
 	var/list/outfits = list()
-	/// Default team outfit if outfits[team] is empty
+	/// Default team outfit if `outfits[team]` is empty
 	var/default_outfit = /datum/outfit/job/assistant
 
 	/// Is the arena template loading in
@@ -78,9 +78,9 @@
 			team_hud_index[team] = length(GLOB.huds)
 
 /**
-  * Loads the arenas from config directory.
-  * THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT
-  */
+ * Loads the arenas from config directory.
+ * THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT
+ */
 /obj/machinery/computer/arena/proc/LoadDefaultArenas()
 	if(default_arenas_loaded)
 		return
@@ -88,7 +88,7 @@
 	var/list/default_arenas = flist(arena_dir)
 	for(var/arena_file in default_arenas)
 		var/simple_name = replacetext(replacetext(arena_file,arena_dir,""),".dmm","")
-		add_new_arena_template(null,arena_dir + arena_file,simple_name)
+		INVOKE_ASYNC(src, .proc/add_new_arena_template, null, arena_dir + arena_file, simple_name)
 
 /obj/machinery/computer/arena/proc/get_landmark_turf(landmark_tag)
 	for(var/obj/effect/landmark/arena/L in GLOB.landmarks_list)
@@ -205,7 +205,7 @@
 	ready_to_spawn = !ready_to_spawn
 	to_chat(user,"You [ready_to_spawn ? "enable" : "disable"] the spawners.")
 	log_admin("[key_name(user)] toggled event arena spawning for [arena_id] arena.")
-	// Could use update_icon on spawnpoints here to show they're on
+	// Could use update_appearance on spawnpoints here to show they're on
 	if(ready_to_spawn)
 		for(var/mob/M in all_contestants())
 			to_chat(M,"<span class='userdanger'>Arena you're signed up for is ready!</span>")

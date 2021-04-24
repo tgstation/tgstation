@@ -1,22 +1,17 @@
 #!/bin/sh
-# `sh` must be used here instead of `bash` to support GitHub Desktop.
 set -e
-if command -v python3 >/dev/null 2>&1; then
-	PY=python3
-elif command -v python >/dev/null 2>&1; then
-	PY=python
-elif command -v py >/dev/null 2>&1; then
-	PY=py
+if [ "$*" = "-m precommit" ]; then
+	echo "Hooks are being updated..."
+	echo "Details: https://github.com/tgstation/tgstation/pull/55658"
+	if [ "$(uname -o)" = "Msys" ]; then
+		tools/hooks/Install.bat
+	else
+		tools/hooks/install.sh
+	fi
+	echo "---------------"
+	exec tools/hooks/pre-commit.hook
 else
-	echo "Please install Python 3.6 or later."
+	echo "tools/hooks/python.sh is replaced by tools/bootstrap/python"
+	echo "Details: https://github.com/tgstation/tgstation/pull/55658"
+	exit 1
 fi
-PATHSEP=$($PY - <<'EOF'
-import sys, os
-if sys.version_info.major != 3 or sys.version_info.minor < 6:
-	sys.stderr.write("Python 3.6 or later is required, but you have:\n" + sys.version + "\n")
-	exit(1)
-print(os.pathsep)
-EOF
-)
-export PYTHONPATH=tools/mapmerge2/${PATHSEP}${PYTHONPATH}
-exec $PY "$@"

@@ -16,12 +16,15 @@
 /datum/movespeed_modifier/slaughter
 	multiplicative_slowdown = -1
 
+/datum/movespeed_modifier/resonance
+	multiplicative_slowdown = 0.75
+
 /datum/movespeed_modifier/damage_slowdown
 	blacklisted_movetypes = FLOATING|FLYING
 	variable = TRUE
 
 /datum/movespeed_modifier/damage_slowdown_flying
-	movetypes = FLOATING
+	movetypes = FLYING
 	variable = TRUE
 
 /datum/movespeed_modifier/equipment_speedmod
@@ -90,7 +93,7 @@
 	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/tarantula_web
-	multiplicative_slowdown = 3
+	multiplicative_slowdown = 5
 
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING
@@ -114,3 +117,9 @@
 
 /datum/movespeed_modifier/metabolicboost
 	multiplicative_slowdown = -1.5
+
+/datum/movespeed_modifier/dragon_rage
+	multiplicative_slowdown = -0.5
+
+/datum/movespeed_modifier/dragon_depression
+	multiplicative_slowdown = 5

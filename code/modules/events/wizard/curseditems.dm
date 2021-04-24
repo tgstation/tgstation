@@ -39,7 +39,7 @@
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(ruins_spaceworthiness && !is_station_level(H.z) || isspaceturf(H.loc) || isplasmaman(H))
-			continue	//#savetheminers
+			continue //#savetheminers
 		if(ruins_wizard_loadout && iswizard(H))
 			continue
 		if(item_set == "catgirls2015") //Wizard code means never having to say you're sorry

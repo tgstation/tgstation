@@ -2,7 +2,7 @@
 /obj/item/clothing/glasses/sunglasses/spy
 	desc = "Made by Nerd. Co's infiltration and surveillance department. Upon closer inspection, there's a small screen in each lens."
 	actions_types = list(/datum/action/item_action/activate_remote_view)
-	var/obj/item/spy_bug/linked_bug
+	var/obj/item/clothing/accessory/spy_bug/linked_bug
 
 /obj/item/clothing/glasses/sunglasses/spy/proc/show_to_user(mob/user)//this is the meat of it. most of the map_popup usage is in this.
 	if(!user)
@@ -41,20 +41,19 @@
 	. = ..()
 
 
-/obj/item/spy_bug
+/obj/item/clothing/accessory/spy_bug
 	name = "pocket protector"
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "pocketprotector"
 	desc = "An advanced piece of espionage equipment in the shape of a pocket protector. It has a built in 360 degree camera for all your \"admirable\" needs. Microphone not included."
-
 	var/obj/item/clothing/glasses/sunglasses/spy/linked_glasses
-	var/obj/screen/map_view/cam_screen
+	var/atom/movable/screen/map_view/cam_screen
 	var/list/cam_plane_masters
 	// Ranges higher than one can be used to see through walls.
 	var/cam_range = 1
 	var/datum/movement_detector/tracker
 
-/obj/item/spy_bug/Initialize()
+/obj/item/clothing/accessory/spy_bug/Initialize()
 	. = ..()
 	tracker = new /datum/movement_detector(src, CALLBACK(src, .proc/update_view))
 
@@ -69,14 +68,14 @@
 	// NOT apply to map popups. If there's ever a way to make planesmasters
 	// omnipresent, then this wouldn't be needed.
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/instance = new plane()
 		instance.assigned_map = "spypopup_map"
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "spypopup_map:CENTER"
 		cam_plane_masters += instance
 
-/obj/item/spy_bug/Destroy()
+/obj/item/clothing/accessory/spy_bug/Destroy()
 	if(linked_glasses)
 		linked_glasses.linked_bug = null
 	qdel(cam_screen)
@@ -84,7 +83,7 @@
 	qdel(tracker)
 	. = ..()
 
-/obj/item/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
+/obj/item/clothing/accessory/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
 	cam_screen.vis_contents.Cut()
 	for(var/turf/visible_turf in view(1,get_turf(src)))//fuck you usr
 		cam_screen.vis_contents += visible_turf
@@ -110,7 +109,7 @@ A shrill beep coming from your SpySpeks means that they can't connect to the inc
 	"}
 
 /obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
-	var/obj/item/spy_bug/newbug = new(src)
+	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)
 	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(src)
 	newbug.linked_glasses = newglasses
 	newglasses.linked_bug = newbug

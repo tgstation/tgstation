@@ -30,7 +30,7 @@
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
-	if(chambered && chambered.BB)
+	if(chambered?.loaded_projectile)
 		process_fire(user, user, FALSE)
 		. = 1
 
@@ -44,7 +44,7 @@
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
 	inhand_icon_state = "shotgun"
-	fire_delay = 7
+	fire_delay = 8
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off  = TRUE
@@ -105,7 +105,7 @@
 		to_chat(user, "<span class='notice'>You switch to tube A.</span>")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	rack()
 
@@ -121,7 +121,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
-	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	can_suppress = FALSE
@@ -182,109 +181,35 @@
 	if(.)
 		weapon_weight = WEAPON_MEDIUM
 
-// IMPROVISED SHOTGUN //
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised
-	name = "improvised shotgun"
-	desc = "Essentially a tube that aims shotgun shells."
-	icon_state = "ishotgun"
-	inhand_icon_state = "ishotgun"
-	w_class = WEIGHT_CLASS_BULKY
-	force = 10
-	slot_flags = null
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
-	sawn_desc = "I'm just here for the gasoline."
-	unique_reskin = null
-	var/slung = FALSE
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
-		var/obj/item/stack/cable_coil/C = A
-		if(C.use(10))
-			slot_flags = ITEM_SLOT_BACK
-			to_chat(user, "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>")
-			slung = TRUE
-			update_icon()
-		else
-			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon_state()
-	. = ..()
-	if(slung)
-		inhand_icon_state = "ishotgunsling"
-	if(sawn_off)
-		inhand_icon_state = "ishotgun_sawn"
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_overlays()
-	. = ..()
-	if(slung)
-		. += "ishotgunsling"
-	if(sawn_off)
-		. += "ishotgun_sawn"
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
-	. = ..()
-	if(. && slung) //sawing off the gun removes the sling
-		new /obj/item/stack/cable_coil(get_turf(src), 10)
-		slung = FALSE
-		update_icon()
-		lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-		righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn
-	name = "sawn-off improvised shotgun"
-	desc = "A single-shot shotgun. Better not miss."
-	icon_state = "ishotgun_sawn"
-	inhand_icon_state = "ishotgun_sawn"
-	worn_icon_state = "gun"
-	worn_icon = null
-	w_class = WEIGHT_CLASS_NORMAL
-	sawn_off = TRUE
-	slot_flags = ITEM_SLOT_BELT
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/hook
+/obj/item/gun/ballistic/shotgun/hook
 	name = "hook modified sawn-off shotgun"
 	desc = "Range isn't an issue when you can bring your victim to you."
 	icon_state = "hookshotgun"
-	inhand_icon_state = "shotgun"
-	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
+	inhand_icon_state = "hookshotgun"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/bounty
-	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
-	can_be_sawn_off = FALSE
-	force = 16 //it has a hook on it
+	semi_auto = TRUE
+	flags_1 = CONDUCT_1
+	force = 18 //it has a hook on it
+	sharpness = SHARP_POINTY //it does in fact, have a hook on it
 	attack_verb_continuous = list("slashes", "hooks", "stabs")
 	attack_verb_simple = list("slash", "hook", "stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook
-	var/toggled = FALSE
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/hook/Initialize()
+/obj/item/gun/ballistic/shotgun/hook/Initialize()
 	. = ..()
 	hook = new /obj/item/gun/magic/hook/bounty(src)
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/hook/AltClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	if(toggled)
-		to_chat(user,"<span class='notice'>You switch to the shotgun.</span>")
-		fire_sound = initial(fire_sound)
-	else
-		to_chat(user,"<span class='notice'>You switch to the hook.</span>")
-		fire_sound = 'sound/weapons/batonextend.ogg'
-	toggled = !toggled
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/hook/examine(mob/user)
+/obj/item/gun/ballistic/shotgun/hook/examine(mob/user)
 	. = ..()
-	if(toggled)
-		. += "<span class='notice'>Alt-click to switch to the shotgun.</span>"
-	else
-		. += "<span class='notice'>Alt-click to switch to the hook.</span>"
+	. += "<span class='notice'>Right-click to shoot the hook.</span>"
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/hook/afterattack(atom/target, mob/living/user, flag, params)
-	if(toggled)
-		hook.afterattack(target, user, flag, params)
-	else
-		return ..()
+/obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	hook.afterattack(target, user, proximity_flag, click_parameters)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

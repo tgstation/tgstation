@@ -141,26 +141,31 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return destination
 
-/proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
-	var/px=M.x		//starting x
+/**
+ * Get a list of turfs in a line from `M` to `N`.
+ *
+ * Uses the ultra-fast [Bresenham Line-Drawing Algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm).
+ */
+/proc/getline(atom/M,atom/N)
+	var/px=M.x //starting x
 	var/py=M.y
 	var/line[] = list(locate(px,py,M.z))
-	var/dx=N.x-px	//x distance
+	var/dx=N.x-px //x distance
 	var/dy=N.y-py
 	var/dxabs = abs(dx)//Absolute value of x distance
 	var/dyabs = abs(dy)
-	var/sdx = SIGN(dx)	//Sign of x distance (+ or -)
+	var/sdx = SIGN(dx) //Sign of x distance (+ or -)
 	var/sdy = SIGN(dy)
-	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
-	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
-	var/j			//Generic integer for counting
-	if(dxabs>=dyabs)	//x distance is greater than y
+	var/x=dxabs>>1 //Counters for steps taken, setting to distance/2
+	var/y=dyabs>>1 //Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
+	var/j //Generic integer for counting
+	if(dxabs>=dyabs) //x distance is greater than y
 		for(j=0;j<dxabs;j++)//It'll take dxabs steps to get there
 			y+=dyabs
-			if(y>=dxabs)	//Every dyabs steps, step once in y direction
+			if(y>=dxabs) //Every dyabs steps, step once in y direction
 				y-=dxabs
 				py+=sdy
-			px+=sdx		//Step on in x direction
+			px+=sdx //Step on in x direction
 			line+=locate(px,py,M.z)//Add the turf to the list
 	else
 		for(j=0;j<dyabs;j++)
@@ -197,7 +202,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/banned = C ? is_banned_from(C.ckey, "Appearance") : null
 
 	while(loop && safety < 5)
-		if(C && C.prefs.custom_names[role] && !safety && !banned)
+		if(C?.prefs.custom_names[role] && !safety && !banned)
 			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
@@ -233,7 +238,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return "![pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0,skip_mindless=0)
+/proc/getpois(mobs_only = FALSE, skip_mindless = FALSE, specify_dead_role = TRUE)
 	var/list/mobs = sortmobs()
 	var/list/namecounts = list()
 	var/list/pois = list()
@@ -243,11 +248,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
-		var/name = avoid_assoc_duplicate_keys(M.name, namecounts)
+		var/name = avoid_assoc_duplicate_keys(M.name, namecounts) + M.get_realname_string()
 
-		if(M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
-		if(M.stat == DEAD)
+		if(M.stat == DEAD && specify_dead_role)
 			if(isobserver(M))
 				name += " \[ghost\]"
 			else
@@ -283,13 +286,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/dead/new_player/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/carbon/monkey/M in sortmob)
-		moblist.Add(M)
 	for(var/mob/living/simple_animal/slime/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/true_devil/M in sortmob)
 		moblist.Add(M)
 	return moblist
 
@@ -334,11 +333,22 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Optional arg 'type' to stop once it reaches a specific type instead of a turf.
 /proc/get_atom_on_turf(atom/movable/M, stop_type)
 	var/atom/loc = M
-	while(loc && loc.loc && !isturf(loc.loc))
+	while(loc?.loc && !isturf(loc.loc))
 		loc = loc.loc
 		if(stop_type && istype(loc, stop_type))
 			break
 	return loc
+
+//Returns a list of all locations (except the area) the movable is within.
+/proc/get_nested_locs(atom/movable/AM, include_turf = FALSE)
+	. = list()
+	var/atom/location = AM.loc
+	var/turf/turf = get_turf(AM)
+	while(location && location != turf)
+		. += location
+		location = location.loc
+	if(location && include_turf) //At this point, only the turf is left, provided it exists.
+		. += location
 
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
@@ -384,16 +394,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return locate(x,y,A.z)
 
 /**
-  * Get ranged target turf, but with direct targets as opposed to directions
-  *
-  * Starts at atom A and gets the exact angle between A and target
-  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
-  * Arguments:
-  * * A - Initial Firer / Position
-  * * target - Target to aim towards
-  * * range - Distance of returned target turf from A
-  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
-  */
+ * Get ranged target turf, but with direct targets as opposed to directions
+ *
+ * Starts at atom A and gets the exact angle between A and target
+ * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+ * Arguments:
+ * * A - Initial Firer / Position
+ * * target - Target to aim towards
+ * * range - Distance of returned target turf from A
+ * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+ */
 /proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
 	var/angle = ATAN2(target.x - A.x, target.y - A.y)
 	if(offset)
@@ -415,30 +425,25 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-/*
-	Gets all contents of contents and returns them all in a list.
-*/
 
-/atom/proc/GetAllContents(T, ignore_flag_1)
+///Returns the src and all recursive contents as a list.
+/atom/proc/GetAllContents()
+	. = list(src)
+	var/i = 0
+	while(i < length(.))
+		var/atom/A = .[++i]
+		. += A.contents
+
+///identical to getallcontents but returns a list of atoms of the type passed in the argument.
+/atom/proc/get_all_contents_type(type)
 	var/list/processing_list = list(src)
-	if(T)
-		. = list()
-		var/i = 0
-		while(i < length(processing_list))
-			var/atom/A = processing_list[++i]
-			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
-			//This is also why we don't need to check against assembled as we go along
-			if (!(A.flags_1 & ignore_flag_1))
-				processing_list += A.contents
-				if(istype(A,T))
-					. += A
-	else
-		var/i = 0
-		while(i < length(processing_list))
-			var/atom/A = processing_list[++i]
-			if (!(A.flags_1 & ignore_flag_1))
-				processing_list += A.contents
-		return processing_list
+	. = list()
+	while(length(processing_list))
+		var/atom/A = processing_list[1]
+		processing_list.Cut(1, 2)
+		processing_list += A.contents
+		if(istype(A, type))
+			. += A
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
 	if(!length(ignore_typecache))
@@ -456,6 +461,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
+	if(get_dist(source, target) > length)
+		return FALSE
 	var/steps = 1
 	if(current != target_turf)
 		current = get_step_towards(current, target_turf)
@@ -576,16 +583,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 /*
 
- Gets the turf this atom's *ICON* appears to inhabit
- It takes into account:
- * Pixel_x/y
- * Matrix x/y
+Lets the turf this atom's *ICON* appears to inhabit
+it takes into account:
+* Pixel_x/y
+* Matrix x/y
 
- NOTE: if your atom has non-standard bounds then this proc
- will handle it, but:
- * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
- (this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
- * if the bounds are odd, the true middle turf of the atom is returned
+NOTE: if your atom has non-standard bounds then this proc
+will handle it, but:
+* if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
+this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
+* if the bounds are odd, the true middle turf of the atom is returned
 
 */
 
@@ -699,7 +706,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
 	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
 	That said, this proc should not be used if the change facing proc of the click code is overridden at the same time*/
-	if(!ismob(target) || !(target.mobility_flags & MOBILITY_STAND))
+	if(!isliving(target) || target.body_position == LYING_DOWN)
 	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
 		return FALSE
 	if(initator.dir == target.dir) //mobs are facing the same direction
@@ -724,7 +731,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 			living_player_count += 1
 	return living_player_count
 
-/proc/randomColor(mode = 0)	//if 1 it doesn't pick white, black or gray
+/proc/randomColor(mode = 0) //if 1 it doesn't pick white, black or gray
 	switch(mode)
 		if(0)
 			return pick("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
@@ -776,7 +783,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 		return FALSE
 	if(isliving(A))
 		var/mob/living/LA = A
-		if(!(LA.mobility_flags & MOBILITY_STAND))
+		if(LA.body_position == LYING_DOWN)
 			return FALSE
 	var/goal_dir = get_dir(A,B)
 	var/clockwise_A_dir = turn(A.dir, -45)
@@ -790,21 +797,21 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /*
 rough example of the "cone" made by the 3 dirs checked
 
- B
-  \
-   \
-    >
-      <
-       \
-        \
-B --><-- A
-        /
-       /
-      <
-     >
-    /
-   /
- B
+
+* \
+*  \
+*   >
+*     <
+*      \
+*       \
+*B --><-- A
+*       /
+*      /
+*     <
+*    >
+*   /
+*  /
+
 
 */
 
@@ -994,9 +1001,9 @@ B --><-- A
 	if (length(turfs))
 		return pick(turfs)
 
-/proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
+/proc/get_safe_random_station_turf(list/areas_to_pick_from = GLOB.the_station_areas) //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
 	for (var/i in 1 to 5)
-		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
+		var/list/L = get_area_turfs(pick(areas_to_pick_from))
 		var/turf/target
 		while (L.len && !target)
 			var/I = rand(1, L.len)
@@ -1178,6 +1185,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
 	SHOULD_CALL_PARENT(FALSE)
+	if(flags_1 & INITIALIZED_1)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	flags_1 |= INITIALIZED_1
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dview/Destroy(force = FALSE)
@@ -1199,24 +1209,36 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 #define FOR_DVIEW_END GLOB.dview_mob.loc = null
 
-//can a window be here, or is there a window blocking it?
-/proc/valid_window_location(turf/T, dir_to_check)
-	if(!T)
+/**
+ * Checks whether the target turf is in a valid state to accept a directional window
+ * or other directional pseudo-dense object such as railings.
+ *
+ * Returns FALSE if the target turf cannot accept a directional window or railing.
+ * Returns TRUE otherwise.
+ *
+ * Arguments:
+ * * dest_turf - The destination turf to check for existing windows and railings
+ * * test_dir - The prospective dir of some atom you'd like to put on this turf.
+ * * is_fulltile - Whether the thing you're attempting to move to this turf takes up the entire tile or whether it supports multiple movable atoms on its tile.
+ */
+/proc/valid_window_location(turf/dest_turf, test_dir, is_fulltile = FALSE)
+	if(!dest_turf)
 		return FALSE
-	for(var/obj/O in T)
-		if(istype(O, /obj/machinery/door/window) && (O.dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR))
-			return FALSE
-		if(istype(O, /obj/structure/windoor_assembly))
-			var/obj/structure/windoor_assembly/W = O
-			if(W.ini_dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR)
+	for(var/obj/turf_content in dest_turf)
+		if(istype(turf_content, /obj/machinery/door/window))
+			if((turf_content.dir == test_dir) || is_fulltile)
 				return FALSE
-		if(istype(O, /obj/structure/window))
-			var/obj/structure/window/W = O
-			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+		if(istype(turf_content, /obj/structure/windoor_assembly))
+			var/obj/structure/windoor_assembly/windoor_assembly = turf_content
+			if(windoor_assembly.dir == test_dir || is_fulltile)
 				return FALSE
-		if(istype(O, /obj/structure/railing))
-			var/obj/structure/railing/rail = O
-			if(rail.ini_dir == dir_to_check || rail.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+		if(istype(turf_content, /obj/structure/window))
+			var/obj/structure/window/window_structure = turf_content
+			if(window_structure.dir == test_dir || window_structure.fulltile || is_fulltile)
+				return FALSE
+		if(istype(turf_content, /obj/structure/railing))
+			var/obj/structure/railing/rail = turf_content
+			if(rail.dir == test_dir || is_fulltile)
 				return FALSE
 	return TRUE
 
@@ -1246,50 +1268,12 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //in constant time and memory!
 /proc/BitCount(bitfield)
 	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449) //0133333 and 0111111 respectively
-	temp = ((temp + (temp>>3))&29127) % 63	//070707
+	temp = ((temp + (temp>>3))&29127) % 63 //070707
 	return temp
-
-//same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
-/proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
-	if(!user || !target)
-		return TRUE
-	var/user_loc = user.loc
-
-	var/drifting = FALSE
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = TRUE
-
-	var/target_drifting = FALSE
-	if(!target.Process_Spacemove(0) && target.inertia_dir)
-		target_drifting = TRUE
-
-	var/target_loc = target.loc
-
-	var/endtime = world.time+time
-	. = TRUE
-	while (world.time < endtime)
-		stoplag(1)
-		if(QDELETED(user) || QDELETED(target))
-			. = 0
-			break
-		if(uninterruptible)
-			continue
-
-		if(drifting && !user.inertia_dir)
-			drifting = FALSE
-			user_loc = user.loc
-
-		if(target_drifting && !target.inertia_dir)
-			target_drifting = FALSE
-			target_loc = target.loc
-
-		if((!drifting && user.loc != user_loc) || (!target_drifting && target.loc != target_loc) || (extra_checks && !extra_checks.Invoke()))
-			. = FALSE
-			break
 
 //returns a GUID like identifier (using a mostly made up record format)
 //guids are not on their own suitable for access or security tokens, as most of their bits are predictable.
-//	(But may make a nice salt to one)
+// (But may make a nice salt to one)
 /proc/GUID()
 	var/const/GUID_VERSION = "b"
 	var/const/GUID_VARIANT = "d"
@@ -1343,12 +1327,12 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		return
 	var/datum/D = list_or_datum
 	if(IsAdminAdvancedProcCall())
-		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
+		D.vv_edit_var(var_name, var_value) //same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
 
-#define	TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
-#define	TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
+#define TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
+#define TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
 
 ///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
 /proc/___TraitAdd(target,trait,source)
@@ -1381,28 +1365,28 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /proc/get_random_food()
 	var/list/blocked = list(/obj/item/food/bread,
 		/obj/item/food/breadslice,
-		/obj/item/reagent_containers/food/snacks/store/cake,
-		/obj/item/reagent_containers/food/snacks/cakeslice,
-		/obj/item/reagent_containers/food/snacks/store,
-		/obj/item/reagent_containers/food/snacks/pie,
-		/obj/item/reagent_containers/food/snacks/kebab,
-		/obj/item/reagent_containers/food/snacks/pizza,
-		/obj/item/reagent_containers/food/snacks/pizzaslice,
-		/obj/item/reagent_containers/food/snacks/salad,
-		/obj/item/reagent_containers/food/snacks/meat,
-		/obj/item/reagent_containers/food/snacks/meat/slab,
-		/obj/item/reagent_containers/food/snacks/soup,
-		/obj/item/reagent_containers/food/snacks/grown,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/food/cake,
+		/obj/item/food/cakeslice,
+		/obj/item/food/pie,
+		/obj/item/food/pieslice,
+		/obj/item/food/kebab,
+		/obj/item/food/pizza,
+		/obj/item/food/pizzaslice,
+		/obj/item/food/salad,
+		/obj/item/food/meat,
+		/obj/item/food/meat/slab,
+		/obj/item/food/soup,
+		/obj/item/food/grown,
+		/obj/item/food/grown/mushroom,
 		/obj/item/food/deepfryholder,
-		/obj/item/reagent_containers/food/snacks/clothing,
-		/obj/item/reagent_containers/food/snacks/grown/shell, //base types
-		/obj/item/food/bread,
-		/obj/item/reagent_containers/food/snacks/grown/nettle
+		/obj/item/food/clothing,
+		/obj/item/food/meat/slab/human/mutant,
+		/obj/item/food/grown/ash_flora,
+		/obj/item/food/grown/nettle,
+		/obj/item/food/grown/shell
 		)
-	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
-	return pick(subtypesof(/obj/item/reagent_containers/food/snacks) - blocked)
+	return pick(subtypesof(/obj/item/food) - blocked)
 
 /proc/get_random_drink()
 	var/list/blocked = list(/obj/item/reagent_containers/food/drinks/soda_cans,
@@ -1465,17 +1449,74 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		for(var/i in 1 to items_list[each_item])
 			new each_item(where_to)
 
-
-/proc/num2sign(numeric)
-	if(numeric > 0)
-		return 1
-	else if(numeric < 0)
-		return -1
-	else
-		return 0
-
 /proc/CallAsync(datum/source, proctype, list/arguments)
 	set waitfor = FALSE
 	return call(source, proctype)(arglist(arguments))
 
+/// Returns the name of the mathematical tuple of same length as the number arg (rounded down).
+/proc/make_tuple(number)
+	var/static/list/units_prefix = list("", "un", "duo", "tre", "quattuor", "quin", "sex", "septen", "octo", "novem")
+	var/static/list/tens_prefix = list("", "decem", "vigin", "trigin", "quadragin", "quinquagin", "sexagin", "septuagin", "octogin", "nongen")
+	var/static/list/one_to_nine = list("monuple", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple", "octuple", "nonuple")
+	number = round(number)
+	switch(number)
+		if(0)
+			return "empty tuple"
+		if(1 to 9)
+			return one_to_nine[number]
+		if(10 to 19)
+			return "[units_prefix[(number%10)+1]]decuple"
+		if(20 to 99)
+			return "[units_prefix[(number%10)+1]][tens_prefix[round((number % 100)/10)+1]]tuple"
+		if(100)
+			return "centuple"
+		else //It gets too tedious to use latin prefixes from here.
+			return "[number]-tuple"
+
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
+
+
+/**
+ * One proc for easy spawning of pods in the code to drop off items before whizzling (please don't proc call this in game, it will destroy you)
+ *
+ * Arguments:
+ * * specifications: special mods to the pod, see non var edit specifications for details on what you should fill this with
+ * Non var edit specifications:
+ * * target = where you want the pod to drop
+ * * path = a special specific pod path if you want, this can save you a lot of var edits
+ * * style = style of the pod, defaults to the normal pod
+ * * spawn = spawned path or a list of the paths spawned, what you're sending basically
+ * Returns the pod spawned, in case you want to spawn items yourself and modify them before putting them in.
+ */
+/proc/podspawn(specifications)
+	//get non var edit specifications
+	var/turf/landing_location = specifications["target"]
+	var/spawn_type = specifications["path"]
+	var/style = specifications["style"]
+	var/list/paths_to_spawn = specifications["spawn"]
+
+	//setup pod, add contents
+	if(!isturf(landing_location))
+		landing_location = get_turf(landing_location)
+	if(!spawn_type)
+		spawn_type = /obj/structure/closet/supplypod/podspawn
+	var/obj/structure/closet/supplypod/podspawn/pod = new spawn_type(null, style)
+	if(paths_to_spawn && !islist(paths_to_spawn))
+		paths_to_spawn = list(paths_to_spawn)
+	for(var/atom/path as anything in paths_to_spawn)
+		path = new path(pod)
+
+	//remove non var edits from specifications
+	specifications -= landing_location
+	specifications -= style
+	specifications -= spawn_type
+	specifications -= "paths_to_spawn" //list, we remove the key
+
+	//rest of specificiations are edits on the pod
+	for(var/variable_name in specifications)
+		var/variable_value = specifications[variable_name]
+		if(!pod.vv_edit_var(variable_name, variable_value))
+			stack_trace("WARNING! podspawn vareditting \"[variable_name]\" to \"[variable_value]\" was rejected by the pod!")
+	new /obj/effect/pod_landingzone(landing_location, pod)
+	return pod
+

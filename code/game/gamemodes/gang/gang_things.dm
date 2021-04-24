@@ -22,7 +22,7 @@
 		qdel(src)
 		return
 	var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
-	if(is_gangster && is_gangster.starter_gangster)
+	if(is_gangster?.starter_gangster)
 		if(is_gangster.my_gang == team_to_use)
 			to_chat(user, "You started your family. You don't need to join it.")
 			return
@@ -47,7 +47,7 @@
 
 /// Checks if the user is trying to use the package of the family they are in, and if not, adds them to the family, with some differing processing depending on whether the user is already a family member.
 /obj/item/gang_induction_package/proc/attempt_join_gang(mob/living/user)
-	if(user && user.mind)
+	if(user?.mind)
 		var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
 		if(is_gangster)
 			if(is_gangster.my_gang == team_to_use)

@@ -19,10 +19,22 @@
 
 /obj/machinery/recycler/Initialize()
 	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
-	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/plasma, /datum/material/gold, /datum/material/diamond, /datum/material/plastic, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), INFINITY, FALSE, null, null, null, TRUE)
+	var/list/allowed_materials = list(/datum/material/iron,
+									/datum/material/glass,
+									/datum/material/silver,
+									/datum/material/plasma,
+									/datum/material/gold,
+									/datum/material/diamond,
+									/datum/material/plastic,
+									/datum/material/uranium,
+									/datum/material/bananium,
+									/datum/material/titanium,
+									/datum/material/bluespace
+									)
+	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
 	. = ..()
-	update_icon()
-	req_one_access = get_all_accesses() + get_all_centcom_access()
+	update_appearance(UPDATE_ICON)
+	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
@@ -67,16 +79,16 @@
 	obj_flags |= EMAGGED
 	if(safety_mode)
 		safety_mode = FALSE
-		update_icon()
-	playsound(src, "sparks", 75, TRUE, -1)
+		update_appearance()
+	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
 
 /obj/machinery/recycler/update_icon_state()
-	..()
 	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
 	if(safety_mode)
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(bloody ? "bld" : "")]" // add the blood tag at the end
+	return ..()
 
 /obj/machinery/recycler/CanAllowThrough(atom/movable/AM)
 	. = ..()
@@ -94,6 +106,8 @@
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
+		return
+	if(iseffect(AM0))
 		return
 	if(!isturf(AM0.loc))
 		return //I don't know how you called Crossed() but stop it.
@@ -131,7 +145,6 @@
 	if(not_eaten)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
 	if(!ismob(AM0))
-		AM0.moveToNullspace()
 		qdel(AM0)
 	else // Lets not move a mob to nullspace and qdel it, yes?
 		for(var/i in AM0.contents)
@@ -149,23 +162,23 @@
 		new L.plank_type(loc, 1 + seed_modifier)
 	else
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		var/material_amount = materials.get_item_material_amount(I)
+		var/material_amount = materials.get_item_material_amount(I, BREAKDOWN_FLAGS_RECYCLER)
 		if(!material_amount)
 			return
-		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100))
+		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
 		materials.retrieve_all()
 
 
 /obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 	safety_mode = TRUE
-	update_icon()
+	update_appearance()
 	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
 	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
 	safety_mode = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
 
@@ -183,7 +196,7 @@
 
 	if(!bloody && !issilicon(L))
 		bloody = TRUE
-		update_icon()
+		update_appearance()
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)

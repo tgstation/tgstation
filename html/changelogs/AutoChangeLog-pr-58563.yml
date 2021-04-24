@@ -1,0 +1,4 @@
+author: "Celotajs"
+delete-after: True
+changes: 
+  - code_imp: "Computers now have a proper way of not having keyboards instead of an empty sprite"

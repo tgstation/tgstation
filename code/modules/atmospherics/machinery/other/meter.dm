@@ -3,7 +3,7 @@
 	desc = "It measures something."
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
 	icon_state = "meterX"
-	layer = GAS_PUMP_LAYER
+	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -12,7 +12,6 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 40, ACID = 0)
 	var/frequency = 0
 	var/atom/target
-	var/id_tag
 	var/target_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/meter/atmos
@@ -33,14 +32,14 @@
 	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
 
 /obj/machinery/meter/Destroy()
-	SSair.atmos_machinery -= src
+	SSair.stop_processing_machine(src)
 	target = null
 	return ..()
 
 /obj/machinery/meter/Initialize(mapload, new_piping_layer)
 	if(!isnull(new_piping_layer))
 		target_layer = new_piping_layer
-	SSair.atmos_machinery += src
+	SSair.start_processing_machine(src)
 	if(!target)
 		reattach_to_layer()
 	return ..()
@@ -145,7 +144,7 @@
 		deconstruct()
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
-//	why are you yelling?
+// why are you yelling?
 /obj/machinery/meter/turf
 
 /obj/machinery/meter/turf/reattach_to_layer()

@@ -37,7 +37,7 @@
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(!pod.moving)
 				AM.forceMove(pod)
-				pod.update_icon()
+				pod.update_appearance()
 				return
 
 
@@ -59,12 +59,12 @@
 	qdel(R)
 
 
-/obj/structure/transit_tube/station/attack_hand(mob/user)
+/obj/structure/transit_tube/station/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(!pod_moving)
-		if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+		if(user.pulling && isliving(user.pulling))
 			if(open_status == STATION_TUBE_OPEN)
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -115,6 +115,14 @@
 		if(STATION_TUBE_OPENING)
 			icon_state = "open_[base_icon]"
 			open_status = STATION_TUBE_OPEN
+			for(var/obj/structure/transit_tube_pod/pod in loc)
+				for(var/thing in pod)
+					if(ismob(thing))
+						var/mob/mob_content = thing
+						if(mob_content.client && mob_content.stat < UNCONSCIOUS)
+							continue // Let the mobs with clients decide what they want to do themselves.
+					var/atom/movable/movable_content = thing
+					movable_content.forceMove(loc) //Everything else is moved out of.
 		if(STATION_TUBE_CLOSING)
 			icon_state = "closed_[base_icon]"
 			open_status = STATION_TUBE_CLOSED
@@ -163,7 +171,7 @@
 		floor_mixture.archive()
 		pod.air_contents.archive()
 		pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 
 /obj/structure/transit_tube/station/init_tube_dirs()
 	switch(dir)
@@ -251,7 +259,7 @@
 	playsound(src, 'sound/weapons/emitter2.ogg', 50, TRUE)
 	pod.setDir(turn(src.dir, -90))
 	AM.forceMove(pod)
-	pod.update_icon()
+	pod.update_appearance()
 	launch_pod()
 
 /obj/structure/transit_tube/station/dispenser/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)

@@ -26,13 +26,15 @@
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = FALSE //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
+	/// Icon state when inside a tank holder
+	var/tank_holder_icon_state = "holder_extinguisher"
 
 /obj/item/extinguisher/mini
 	name = "pocket fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
 	inhand_icon_state = "miniFE"
-	hitsound = null	//it is much lighter, after all.
+	hitsound = null //it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
@@ -41,6 +43,28 @@
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
+
+/obj/item/extinguisher/crafted
+	name = "Improvised cooling spray"
+	desc = "Spraycan turned coolant dipsenser. Can be sprayed on containers to cool them. Refll using water."
+	icon_state = "coolant0"
+	inhand_icon_state = "miniFE"
+	hitsound = null	//it is much lighter, after all.
+	flags_1 = null //doesn't CONDUCT_1
+	throwforce = 1
+	w_class = WEIGHT_CLASS_SMALL
+	force = 3
+	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
+	max_water = 30
+	sprite_name = "coolant"
+	dog_fashion = null
+	cooling_power = 1.5
+	power = 3
+
+/obj/item/extinguisher/crafted/attack_self(mob/user)
+	safety = !safety
+	icon_state = "[sprite_name][!safety]"
+	to_chat(user, "[safety ? "You remove the straw and put it on the side of the cool canister" : "You insert the straw, readying it for use"].")
 
 /obj/item/extinguisher/proc/refill()
 	if(!chem)
@@ -52,11 +76,17 @@
 	. = ..()
 	refill()
 
+/obj/item/extinguisher/ComponentInitialize()
+	. = ..()
+	if(tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"
 	desc = "Used to stop thermonuclear fires from spreading inside your engine."
 	icon_state = "foam_extinguisher0"
 	inhand_icon_state = "foam_extinguisher"
+	tank_holder_icon_state = "holder_foam_extinguisher"
 	dog_fashion = null
 	chem = /datum/reagent/firefighting_foam
 	tanktype = /obj/structure/reagent_dispensers/foamtank
@@ -81,13 +111,13 @@
 	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
 
-/obj/item/extinguisher/attack(mob/M, mob/user)
-	if(user.a_intent == INTENT_HELP && !safety) //If we're on help intent and going to spray people, don't bash them.
+/obj/item/extinguisher/attack(mob/M, mob/living/user)
+	if(!user.combat_mode && !safety) //If we're on help intent and going to spray people, don't bash them.
 		return FALSE
 	else
 		return ..()
 
-/obj/item/extinguisher/attack_obj(obj/O, mob/living/user)
+/obj/item/extinguisher/attack_obj(obj/O, mob/living/user, params)
 	if(AttemptRefill(O, user))
 		refilling = TRUE
 		return FALSE
@@ -223,7 +253,7 @@
 	addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection, repetition), timer_seconds)
 
 /obj/item/extinguisher/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	if(!user.is_holding(src))
 		to_chat(user, "<span class='notice'>You must be holding the [src] in your hands do this!</span>")

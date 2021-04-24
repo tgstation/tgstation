@@ -10,9 +10,9 @@
 	///input dir
 	var/eat_dir = SOUTH
 
-/obj/machinery/plumbing/fermenter/Initialize(mapload, bolt)
+/obj/machinery/plumbing/fermenter/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt)
+	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 
 /obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
 	if(anchored)
@@ -44,8 +44,8 @@
 		return
 	if(!isitem(AM))
 		return
-	if(istype(AM, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/G = AM
+	if(istype(AM, /obj/item/food/grown))
+		var/obj/item/food/grown/G = AM
 		if(G.distill_reagent)
 			var/amount = G.seed.potency * 0.25
 			reagents.add_reagent(G.distill_reagent, amount)

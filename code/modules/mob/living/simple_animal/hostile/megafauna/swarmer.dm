@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		step(R, ddir) //Step the swarmers, instead of spawning them there, incase the turf is solid
 
 
-/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Life()
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		var/createtype = GetUncappedAISwarmerType()
@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 
 //RESOURCE SWARMER:
-//Similar to the original Player-Swarmers, these dismantle things to obtain the metal inside
+//Similar to the original Player-Swarmers, these dismantle things to obtain the iron inside
 //They then use this medal to produce more swarmers or traps/barricades
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource
@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	if(is_type_in_typecache(the_target, sharedWanted)) //always eat
 		return TRUE
 
-	return ..()	//else, have a nibble, see if it's food
+	return ..() //else, have a nibble, see if it's food
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource/OpenFire(atom/A)
@@ -285,4 +285,5 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	name = "swarmer catwalk"
 	desc = "A catwalk-like mesh, produced by swarmers to allow them to navigate hostile terrain."
 	icon = 'icons/obj/smooth_structures/swarmer_catwalk.dmi'
-	icon_state = "swarmer_catwalk"
+	icon_state = "swarmer_catwalk-0"
+	base_icon_state = "swarmer_catwalk"

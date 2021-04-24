@@ -49,7 +49,7 @@ AI MODULES
 	//Handle the lawcap
 	if(law_datum)
 		var/tot_laws = 0
-		for(var/lawlist in list(law_datum.devillaws, law_datum.inherent, law_datum.supplied, law_datum.ion, law_datum.hacked, laws))
+		for(var/lawlist in list(law_datum.inherent, law_datum.supplied, law_datum.ion, law_datum.hacked, laws))
 			for(var/mylaw in lawlist)
 				if(mylaw != "")
 					tot_laws++
@@ -479,7 +479,7 @@ AI MODULES
 	..()
 
 /obj/item/ai_module/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-//	..()    //We don't want this module reporting to the AI who dun it. --NEO
+// ..()    //We don't want this module reporting to the AI who dun it. --NEO
 	if(law_datum.owner)
 		to_chat(law_datum.owner, "<span class='warning'>BZZZZT</span>")
 		if(!overflow)

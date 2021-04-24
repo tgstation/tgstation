@@ -14,28 +14,28 @@
 	exp_type_department = EXP_TYPE_COMMAND
 
 	outfit = /datum/outfit/job/captain
+	plasmaman_outfit = /datum/outfit/plasmaman/captain
 
-	access = list() 			//See get_access()
-	minimal_access = list() 	//See get_access()
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
 
-	mind_traits = list(TRAIT_DISK_VERIFIER)
+	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
+	departments = DEPARTMENT_COMMAND
 
-/datum/job/captain/get_access()
-	return get_all_accesses()
+	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
 
-/datum/job/captain/announce(mob/living/carbon/human/H)
+/datum/job/captain/announce(mob/living/carbon/human/H, announce_captaincy = TRUE)
 	..()
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.real_name] on deck!"))
+	if(announce_captaincy)
+		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.real_name] on deck!"))
 
 /datum/outfit/job/captain
 	name = "Captain"
 	jobtype = /datum/job/captain
 
-	id = /obj/item/card/id/gold
+	id = /obj/item/card/id/advanced/gold
 	belt = /obj/item/pda/captain
 	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/radio/headset/heads/captain/alt
@@ -46,6 +46,8 @@
 	head = /obj/item/clothing/head/caphat
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/station_charter=1)
 
+	skillchips = list(/obj/item/skillchip/disk_verifier)
+
 	backpack = /obj/item/storage/backpack/captain
 	satchel = /obj/item/storage/backpack/satchel/cap
 	duffelbag = /obj/item/storage/backpack/duffelbag/captain
@@ -54,6 +56,31 @@
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
+
+	id_trim = /datum/id_trim/job/captain
+	var/special_charter
+
+/datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	SSmapping.HACK_LoadMapConfig()
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!length(job_changes))
+		return
+	var/list/captain_changes = job_changes["captain"]
+	if(!length(captain_changes))
+		return
+	special_charter = captain_changes["special_charter"]
+	if(!special_charter)
+		return
+	backpack_contents.Remove(/obj/item/station_charter)
+	l_hand = /obj/item/station_charter/banner
+
+/datum/outfit/job/captain/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+	. = ..()
+	var/obj/item/station_charter/banner/celestial_charter = equipped.held_items[LEFT_HANDS]
+	if(!celestial_charter)
+		return
+	celestial_charter.name_type = special_charter
 
 /datum/outfit/job/captain/hardsuit
 	name = "Captain (Hardsuit)"

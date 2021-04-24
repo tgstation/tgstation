@@ -1,15 +1,14 @@
 {
   "private": true,
   "name": "tgui-dev-server",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "common": "workspace:*",
     "esm": "^3.2.25",
-    "glob": "^7.1.4",
+    "glob": "^7.1.6",
     "source-map": "^0.7.3",
-    "stacktrace-parser": "^0.1.7",
-    "webpack": "^4.40.2",
-    "ws": "^7.1.2"
+    "stacktrace-parser": "^0.1.10",
+    "ws": "^7.4.4"
   }
 }

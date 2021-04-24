@@ -15,8 +15,8 @@
 	icon_state = "drone_synd"
 	icon_living = "drone_synd"
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
-	health = 30
-	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	health = 120
+	maxHealth = 120
 	initial_language_holder = /datum/language_holder/drone/syndicate
 	faction = list(ROLE_SYNDICATE)
 	speak_emote = list("hisses")
@@ -29,18 +29,13 @@
 	default_storage = /obj/item/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	hacked = TRUE
+	shy = FALSE
 	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 10
-
-/mob/living/simple_animal/drone/syndrone/Login()
-	. = ..()
-	if(!. || !client)
-		return FALSE
-	to_chat(src, "<span class='notice'>You can kill and eat other drones to increase your health!</span>" )
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
@@ -67,11 +62,16 @@
 	icon_state = "syndrone_item"
 	mob_name = "syndrone"
 	mob_type = /mob/living/simple_animal/drone/syndrone
+	short_desc = "You are a Syndicate Maintenance Drone."
+	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some upgrades... and now serve an enemy of your former masters."
+	important_info = ""
+	assignedrole = null
 
 /obj/effect/mob_spawn/drone/syndrone/badass
 	name = "badass syndrone shell"
 	mob_name = "badass syndrone"
 	mob_type = /mob/living/simple_animal/drone/syndrone/badass
+	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some BETTER upgrades... and now serve an enemy of your former masters."
 
 /obj/effect/mob_spawn/drone/snowflake
 	name = "snowflake drone shell"
@@ -98,6 +98,14 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearance]_dead"
 
+/obj/effect/mob_spawn/drone/classic
+	mob_type = /mob/living/simple_animal/drone/classic
+
+/mob/living/simple_animal/drone/classic
+	name = "classic drone shell"
+	shy = FALSE
+	default_storage = /obj/item/storage/backpack/duffelbag/drone
+
 /obj/effect/mob_spawn/drone/derelict
 	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
@@ -109,6 +117,7 @@
 	short_desc = "You are a drone on Kosmicheskaya Stantsiya 13."
 	flavour_text = "Something has brought you out of hibernation, and the station is in gross disrepair."
 	important_info = "Build, repair, maintain and improve the station that housed you on activation."
+	assignedrole = null
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
@@ -126,10 +135,10 @@
 	"<span class='notice'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+	shy = FALSE
 
 /mob/living/simple_animal/drone/derelict/Initialize()
 	. = ..()
 	AddComponent(/datum/component/stationstuck, PUNISHMENT_GIB, "01000110 01010101 01000011 01001011 00100000 01011001 01001111 01010101<br>WARNING: Dereliction of KS13 detected. Self-destruct activated.")
-
 
 

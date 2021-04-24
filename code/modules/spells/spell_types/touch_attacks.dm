@@ -9,7 +9,9 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/Destroy()
 	remove_hand()
-	to_chat(usr, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
+	if(action?.owner)
+		var/mob/guy_who_needs_to_know = action.owner
+		to_chat(guy_who_needs_to_know, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
 	..()
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
@@ -62,7 +64,7 @@
 	desc = "This spell charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
 	hand_path = /obj/item/melee/touch_attack/disintegrate
 
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 600
 	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
@@ -74,10 +76,21 @@
 	desc = "This spell charges your hand with the power to turn victims into inert statues for a long period of time."
 	hand_path = /obj/item/melee/touch_attack/fleshtostone
 
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 600
 	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"
 	sound = 'sound/magic/fleshtostone.ogg'
+
+/obj/effect/proc_holder/spell/targeted/touch/duffelbag
+	name = "Bestow Cursed Duffel Bag"
+	desc = "A spell that summons a duffel bag demon on the target, slowing them down and slowly eating them."
+	hand_path = /obj/item/melee/touch_attack/duffelbag
+	action_icon_state = "duffelbag_curse"
+
+	school = SCHOOL_CONJURATION
+	charge_max = 60
+	clothes_req = FALSE
+	cooldown_min = 20

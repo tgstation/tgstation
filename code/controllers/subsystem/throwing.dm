@@ -85,6 +85,7 @@ SUBSYSTEM_DEF(throwing)
 
 /datum/thrownthing/Destroy()
 	SSthrowing.processing -= thrownthing
+	SSthrowing.currentrun -= thrownthing
 	thrownthing.throwing = null
 	thrownthing = null
 	target = null
@@ -188,6 +189,9 @@ SUBSYSTEM_DEF(throwing)
 		if(T && thrownthing.has_gravity(T))
 			T.zFall(thrownthing)
 
+	if(thrownthing)
+		SEND_SIGNAL(thrownthing, COMSIG_MOVABLE_THROW_LANDED, src)
+
 	qdel(src)
 
 /datum/thrownthing/proc/hit_atom(atom/A)
@@ -198,6 +202,6 @@ SUBSYSTEM_DEF(throwing)
 		var/atom/movable/AM = thing
 		if (AM == thrownthing || (AM == thrower && !ismob(thrownthing)))
 			continue
-		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
+		if (AM.density && !(AM.pass_flags_self & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
 			finalize(hit=TRUE, target=AM)
 			return TRUE

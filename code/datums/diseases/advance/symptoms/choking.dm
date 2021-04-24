@@ -34,16 +34,18 @@ Bonus
 	)
 
 /datum/symptom/choking/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stage_rate"] >= 8)
+	if(A.totalStageSpeed() >= 8)
 		symptom_delay_min = 7
 		symptom_delay_max = 24
-	if(A.properties["stealth"] >= 4)
+	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
 
 /datum/symptom/choking/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
@@ -108,15 +110,17 @@ Bonus
 
 
 /datum/symptom/asphyxiation/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stage_rate"] >= 8)
+	if(A.totalStageSpeed() >= 8)
 		paralysis = TRUE
-	if(A.properties["transmittable"] >= 8)
+	if(A.totalTransmittable() >= 8)
 		power = 2
 
 /datum/symptom/asphyxiation/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)

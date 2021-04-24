@@ -12,8 +12,8 @@ at the cost of risking a vicious bite.**/
 	///This var determines if there is a chance to recieve a bite when sticking your hand into the water.
 	var/critter_infested = TRUE
 	var/list/loot = list(
-					/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton = 35,
-					/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie = 15,
+					/obj/item/food/meat/slab/human/mutant/skeleton = 35,
+					/obj/item/food/meat/slab/human/mutant/zombie = 15,
 					/obj/item/trash/can = 15,
 					/obj/item/clothing/head/helmet/skull = 10,
 					/obj/item/restraints/handcuffs = 4,
@@ -42,16 +42,18 @@ at the cost of risking a vicious bite.**/
 		QDEL_NULL(hidden_item)
 	return ..()
 
+
 ///This proc checks if we are able to reach inside the trap to interact with it.
 /obj/structure/moisture_trap/proc/CanReachInside(mob/user)
 	if(!isliving(user))
 		return FALSE
 	var/mob/living/living_user = user
-	if((living_user.mobility_flags & MOBILITY_STAND) && ishuman(living_user)) //I dont think monkeys can crawl on command.
+	if(living_user.body_position == STANDING_UP && ishuman(living_user)) //I dont think monkeys can crawl on command.
 		return FALSE
 	return TRUE
 
-/obj/structure/moisture_trap/attack_hand(mob/user)
+
+/obj/structure/moisture_trap/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(iscyborg(user) || isalien(user))
 		return
@@ -82,8 +84,8 @@ at the cost of risking a vicious bite.**/
 		return ..()
 	add_fingerprint(user)
 	if(istype(I, /obj/item/reagent_containers))
-		if(istype(I, /obj/item/reagent_containers/food/snacks/monkeycube))
-			var/obj/item/reagent_containers/food/snacks/monkeycube/cube = I
+		if(istype(I, /obj/item/food/monkeycube))
+			var/obj/item/food/monkeycube/cube = I
 			cube.Expand()
 			return
 		var/obj/item/reagent_containers/reagent_container = I

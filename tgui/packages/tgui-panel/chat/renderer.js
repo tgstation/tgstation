@@ -313,7 +313,10 @@ class ChatRenderer {
           }
         }
         // Linkify text
-        linkifyNode(node);
+        const linkifyNodes = node.querySelectorAll('.linkify');
+        for (let i = 0; i < linkifyNodes.length; ++i) {
+          linkifyNode(linkifyNodes[i]);
+        }
         // Assign an image error handler
         if (now < message.createdAt + IMAGE_RETRY_MESSAGE_AGE) {
           const imgNodes = node.querySelectorAll('img');
@@ -446,7 +449,7 @@ class ChatRenderer {
     cssText += 'body, html { background-color: #141414 }\n';
     // Compile chat log as HTML text
     let messagesHtml = '';
-    for (let message of this.messages) {
+    for (let message of this.visibleMessages) {
       if (message.node) {
         messagesHtml += message.node.outerHTML + '\n';
       }

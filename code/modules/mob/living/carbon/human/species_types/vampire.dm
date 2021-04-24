@@ -3,9 +3,14 @@
 	id = "vampire"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_NOHUNGER,
+		TRAIT_NOBREATH,
+	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	exotic_bloodtype = "U"
 	use_skintones = TRUE
@@ -15,9 +20,6 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform //attached to the datum itself to avoid cloning memes, and other duplicates
-
-
-
 
 /datum/species/vampire/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -32,6 +34,7 @@
 	if(isnull(batform))
 		batform = new
 		C.AddSpell(batform)
+	C.set_safe_hunger_level()
 
 /datum/species/vampire/on_species_loss(mob/living/carbon/C)
 	. = ..()
@@ -39,15 +42,15 @@
 		C.RemoveSpell(batform)
 		QDEL_NULL(batform)
 
-/datum/species/vampire/spec_life(mob/living/carbon/human/C)
+/datum/species/vampire/spec_life(mob/living/carbon/human/C, delta_time, times_fired)
 	. = ..()
 	if(istype(C.loc, /obj/structure/closet/crate/coffin))
-		C.heal_overall_damage(4,4,0, BODYPART_ORGANIC)
-		C.adjustToxLoss(-4)
-		C.adjustOxyLoss(-4)
-		C.adjustCloneLoss(-4)
+		C.heal_overall_damage(2 * delta_time, 2 * delta_time, 0, BODYPART_ORGANIC)
+		C.adjustToxLoss(-2 * delta_time)
+		C.adjustOxyLoss(-2 * delta_time)
+		C.adjustCloneLoss(-2 * delta_time)
 		return
-	C.blood_volume -= 0.25
+	C.blood_volume -= 0.125 * delta_time
 	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
 		var/obj/shapeshift_holder/H = locate() in C
@@ -55,16 +58,16 @@
 			H.shape.dust() //make sure we're killing the bat if you are out of blood, if you don't it creates weird situations where the bat is alive but the caster is dusted.
 		C.dust()
 	var/area/A = get_area(C)
-	if(istype(A, /area/chapel))
+	if(istype(A, /area/service/chapel))
 		to_chat(C, "<span class='warning'>You don't belong here!</span>")
-		C.adjustFireLoss(20)
-		C.adjust_fire_stacks(6)
+		C.adjustFireLoss(10 * delta_time)
+		C.adjust_fire_stacks(3 * delta_time)
 		C.IgniteMob()
 
 /datum/species/vampire/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/nullrod/whip))
-		return 1 //Whips deal 2x damage to vampires. Vampire killer.
-	return 0
+		return 2 //Whips deal 2x damage to vampires. Vampire killer.
+	return 1
 
 /obj/item/organ/tongue/vampire
 	name = "vampire tongue"
@@ -102,7 +105,7 @@
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
 				return
-			if(victim?.reagents?.has_reagent(/datum/reagent/consumable/garlic))
+			if(victim.has_reagent(/datum/reagent/consumable/garlic))
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but recoils in disgust!</span>")
 				to_chat(H, "<span class='warning'>[victim] reeks of garlic! you can't bring yourself to drain such tainted blood.</span>")
 				return
@@ -125,7 +128,7 @@
 	. = ..()
 	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
 	if(darkheart)
-		. += "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>"
+		. += "Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM]."
 
 
 /obj/item/organ/heart/vampire

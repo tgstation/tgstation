@@ -107,14 +107,24 @@ export const recallWindowGeometry = async (options = {}) => {
     logger.log('recalled geometry:', geometry);
   }
   let pos = geometry?.pos || options.pos;
-  const size = options.size;
+  let size = options.size;
+  // Wait until screen offset gets resolved
+  await screenOffsetPromise;
+  const areaAvailable = [
+    window.screen.availWidth,
+    window.screen.availHeight,
+  ];
   // Set window size
   if (size) {
+    // Constraint size to not exceed available screen area.
+    size = [
+      Math.min(areaAvailable[0], size[0]),
+      Math.min(areaAvailable[1], size[1]),
+    ];
     setWindowSize(size);
   }
   // Set window position
   if (pos) {
-    await screenOffsetPromise;
     // Constraint window position if monitor lock was set in preferences.
     if (size && options.locked) {
       pos = constraintPosition(pos, size)[1];
@@ -123,12 +133,7 @@ export const recallWindowGeometry = async (options = {}) => {
   }
   // Set window position at the center of the screen.
   else if (size) {
-    await screenOffsetPromise;
-    const areaAvailable = [
-      window.screen.availWidth - Math.abs(screenOffset[0]),
-      window.screen.availHeight - Math.abs(screenOffset[1]),
-    ];
-    const pos = vecAdd(
+    pos = vecAdd(
       vecScale(areaAvailable, 0.5),
       vecScale(size, -0.5),
       vecScale(screenOffset, -1.0));
@@ -178,6 +183,8 @@ export const dragStartHandler = event => {
     window.screenLeft - event.screenX,
     window.screenTop - event.screenY,
   ];
+  // Focus click target
+  event.target?.focus();
   document.addEventListener('mousemove', dragMoveHandler);
   document.addEventListener('mouseup', dragEndHandler);
   dragMoveHandler(event);
@@ -214,6 +221,8 @@ export const resizeStartHandler = (x, y) => event => {
     window.innerWidth,
     window.innerHeight,
   ];
+  // Focus click target
+  event.target?.focus();
   document.addEventListener('mousemove', resizeMoveHandler);
   document.addEventListener('mouseup', resizeEndHandler);
   resizeMoveHandler(event);

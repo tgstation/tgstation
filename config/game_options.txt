@@ -20,8 +20,8 @@ OOC_DURING_ROUND
 EMOJIS
 
 ## HEART COMMENDATIONS ###
-## Uncomment this if you'd like to enable commendation pollings for this percentage of players near the end of the round (5% default)
-## COMMENDATIONS 0.05
+## Uncomment this if you'd like to enable commendation pollings for this percentage of players near the end of the round (5% suggested)
+COMMENDATION_PERCENT_POLL 0.05
 
 ## MOB MOVEMENT ###
 
@@ -42,7 +42,6 @@ WALK_DELAY 4
 ## /mob/living/carbon/human on the last entry, the last entry will override the first.
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
 MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
@@ -50,7 +49,7 @@ MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
 
 ## NAMES ###
 ## If uncommented this adds a random surname to a player's name if they only specify one name.
-#HUMANS_NEED_SURNAMES
+HUMANS_NEED_SURNAMES
 
 ## If uncommented, this forces all players to use random names !and appearances!.
 #FORCE_RANDOM_NAMES
@@ -102,8 +101,6 @@ PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 PROBABILITY SECRET_EXTENDED 0
-PROBABILITY DEVIL 0
-PROBABILITY DEVIL_AGENTS 0
 PROBABILITY CLOWNOPS 0
 
 ## You probably want to keep sandbox off by default for secret and random.
@@ -186,12 +183,6 @@ MIDROUND_ANTAG WIZARD
 
 #MIN_POP METEOR 0
 #MAX_POP METEOR -1
-
-#MIN_POP DEVIL 0
-#MAX_POP DEVIL -1
-
-#MIN_POP DEVIL_AGENTS 25
-#MAX_POP DEVIL_AGENTS -1
 
 ## Setting at least one mode to be playable at 0/1 players is required.
 #MIN_POP EXTENDED 0
@@ -278,11 +269,11 @@ ALLOW_AI
 ALLOW_AI_MULTICAM
 
 ## Secborg ###
-## Uncomment to prevent the security cyborg module from being chosen
+## Uncomment to prevent the security cyborg model from being chosen
 #DISABLE_SECBORG
 
 ## Peacekeeper Borg ###
-## Uncomment to prevent the peacekeeper cyborg module from being chosen
+## Uncomment to prevent the peacekeeper cyborg model from being chosen
 #DISABLE_PEACEBORG
 
 ## AWAY MISSIONS ###
@@ -321,7 +312,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 #EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this out this to make security officers spawn in departmental security posts
-SEC_START_BRIG
+#SEC_START_BRIG
 
 
 ## GHOST INTERACTION ###
@@ -572,3 +563,10 @@ RATCAP 64
 
 ## Maximum fine for a citation
 MAXFINE 2000
+
+## Which role is required of playtime to be eligible for Maintenance Drones
+## See code/__DEFINES/preferences.dm for available options, use the string portion without quotes
+#DRONE_REQUIRED_ROLE Silicon
+
+## How many played hours of DRONE_REQUIRED_ROLE required to be a Maintenance Done
+#DRONE_ROLE_PLAYTIME 40

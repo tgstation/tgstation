@@ -25,11 +25,33 @@
 //print a testing-mode debug message to world.log and world
 #ifdef TESTING
 #define testing(msg) log_world("## TESTING: [msg]"); to_chat(world, "## TESTING: [msg]")
+
+GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
+// we don't really check if a word or name is used twice, be aware of that
+#define testing_profile_start(NAME, LIST) LIST[NAME] = world.timeofday
+#define testing_profile_current(NAME, LIST) round((world.timeofday - LIST[NAME])/10,0.1)
+#define testing_profile_output(NAME, LIST) testing("[LIST["_PROFILE_NAME"]] profile of [NAME] is [testing_profile_current(NAME,LIST)]s")
+#define testing_profile_output_all(LIST) { for(var/_NAME in LIST) { testing_profile_current(,_NAME,LIST); }; };
 #else
 #define testing(msg)
+#define testing_profile_start(NAME, LIST)
+#define testing_profile_current(NAME, LIST)
+#define testing_profile_output(NAME, LIST)
+#define testing_profile_output_all(LIST)
 #endif
 
-#ifdef UNIT_TESTS
+#define testing_profile_global_start(NAME) testing_profile_start(NAME,GLOB.testing_global_profiler)
+#define testing_profile_global_current(NAME) testing_profile_current(NAME, GLOB.testing_global_profiler)
+#define testing_profile_global_output(NAME) testing_profile_output(NAME, GLOB.testing_global_profiler)
+#define testing_profile_global_output_all testing_profile_output_all(GLOB.testing_global_profiler)
+
+#define testing_profile_local_init(PROFILE_NAME) var/list/_timer_system = list( "_PROFILE_NAME" = PROFILE_NAME, "_start_of_proc"  = world.timeofday )
+#define testing_profile_local_start(NAME) testing_profile_start(NAME, _timer_system)
+#define testing_profile_local_current(NAME) testing_profile_current(NAME, _timer_system)
+#define testing_profile_local_output(NAME) testing_profile_output(NAME, _timer_system)
+#define testing_profile_local_output_all testing_profile_output_all(_timer_system)
+
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 /proc/log_test(text)
 	WRITE_LOG(GLOB.test_log, text)
 	SEND_TEXT(world.log, text)
@@ -92,10 +114,6 @@
 	if (CONFIG_GET(flag/log_attack))
 		WRITE_LOG(GLOB.world_attack_log, "ATTACK: [text]")
 
-/proc/log_wounded(text)
-	if (CONFIG_GET(flag/log_attack))
-		WRITE_LOG(GLOB.world_attack_log, "WOUND: [text]")
-
 /proc/log_econ(text)
 	if (CONFIG_GET(flag/log_econ))
 		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
@@ -146,6 +164,18 @@
 	if (CONFIG_GET(flag/log_pda))
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		WRITE_LOG(GLOB.world_pda_log, "COMMENT: [text]")
+
+/proc/log_uplink(text)
+	if (CONFIG_GET(flag/log_uplink))
+		WRITE_LOG(GLOB.world_uplink_log, "UPLINK: [text]")
+
+/proc/log_spellbook(text)
+	if (CONFIG_GET(flag/log_uplink))
+		WRITE_LOG(GLOB.world_uplink_log, "SPELLBOOK: [text]")
+
+/proc/log_codex_ciatrix(text)
+	if (CONFIG_GET(flag/log_uplink))
+		WRITE_LOG(GLOB.world_uplink_log, "CODEX: [text]")
 
 /proc/log_telecomms(text)
 	if (CONFIG_GET(flag/log_telecomms))
@@ -202,6 +232,10 @@
 /proc/log_mapping(text)
 	WRITE_LOG(GLOB.world_map_error_log, text)
 
+/proc/log_perf(list/perf_info)
+	. = "[perf_info.Join(",")]\n"
+	WRITE_LOG_NO_FORMAT(GLOB.perf_log, .)
+
 /**
  * Appends a tgui-related log entry. All arguments are optional.
  */
@@ -224,7 +258,7 @@
 	else if(window)
 		entry += " in [window.id]"
 	// Resolve src_object
-	if(!src_object && window && window.locked_by)
+	if(!src_object && window?.locked_by)
 		src_object = window.locked_by.src_object
 	// Insert src_object info
 	if(src_object)
@@ -299,7 +333,7 @@
 		include_link = FALSE
 
 	if(key)
-		if(C && C.holder && C.holder.fakekey && !include_name)
+		if(C?.holder && C.holder.fakekey && !include_name)
 			if(include_link)
 				. += "<a href='?priv_msg=[C.findStealthKey()]'>"
 			. += "Administrator"

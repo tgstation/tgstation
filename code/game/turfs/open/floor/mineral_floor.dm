@@ -17,19 +17,16 @@
 
 
 /turf/open/floor/mineral/Initialize()
-	if(!broken_states)
-		broken_states = list("[initial(icon_state)]_dam")
 	. = ..()
 	icons = typelist("icons", icons)
 
+/turf/open/floor/mineral/setup_broken_states()
+	return list("[initial(icon_state)]_dam")
 
-/turf/open/floor/mineral/update_icon()
-	. = ..()
-	if(!.)
-		return
-	if(!broken && !burnt)
-		if( !(icon_state in icons) )
-			icon_state = initial(icon_state)
+/turf/open/floor/mineral/update_icon_state()
+	if(!broken && !burnt && !(icon_state in icons))
+		icon_state = initial(icon_state)
+	return ..()
 
 //PLASMA
 
@@ -38,8 +35,9 @@
 	icon_state = "plasma"
 	floor_tile = /obj/item/stack/tile/mineral/plasma
 	icons = list("plasma","plasma_dam")
+	custom_materials = list(/datum/material/plasma = 500)
 
-/turf/open/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/turf/open/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
@@ -72,6 +70,7 @@
 	icon_state = "gold"
 	floor_tile = /obj/item/stack/tile/mineral/gold
 	icons = list("gold","gold_dam")
+	custom_materials = list(/datum/material/gold = 500)
 
 //SILVER
 
@@ -80,6 +79,7 @@
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
 	icons = list("silver","silver_dam")
+	custom_materials = list(/datum/material/silver = 500)
 
 //TITANIUM (shuttle)
 
@@ -87,7 +87,10 @@
 	name = "shuttle floor"
 	icon_state = "titanium"
 	floor_tile = /obj/item/stack/tile/mineral/titanium
-	broken_states = list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
+	custom_materials = list(/datum/material/titanium = 500)
+
+/turf/open/floor/mineral/titanium/setup_broken_states()
+	return list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
 
 /turf/open/floor/mineral/titanium/rust_heretic_act()
 	return // titanium does not rust
@@ -97,26 +100,70 @@
 
 /turf/open/floor/mineral/titanium/yellow
 	icon_state = "titanium_yellow"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/yellow
 
 /turf/open/floor/mineral/titanium/yellow/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/blue
 	icon_state = "titanium_blue"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/blue
 
 /turf/open/floor/mineral/titanium/blue/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/white
 	icon_state = "titanium_white"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/white
 
 /turf/open/floor/mineral/titanium/white/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/purple
 	icon_state = "titanium_purple"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/purple
 
 /turf/open/floor/mineral/titanium/purple/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+// OLD TITANIUM (titanium floor tiles before PR #50454)
+/turf/open/floor/mineral/titanium/tiled
+	name = "titanium tile"
+	icon_state = "titanium_tiled"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled
+
+/turf/open/floor/mineral/titanium/tiled/setup_broken_states()
+	return list("titanium_dam1_old","titanium_dam2_old","titanium_dam3_old","titanium_dam4_old","titanium_dam5_old")
+
+/turf/open/floor/mineral/titanium/tiled/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/yellow
+	icon_state = "titanium_tiled_yellow"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/yellow
+
+/turf/open/floor/mineral/titanium/tiled/yellow/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/blue
+	icon_state = "titanium_tiled_blue"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/blue
+
+/turf/open/floor/mineral/titanium/tiled/blue/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/white
+	icon_state = "titanium_tiled_white"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/white
+
+/turf/open/floor/mineral/titanium/tiled/white/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/purple
+	icon_state = "titanium_tiled_purple"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/purple
+
+/turf/open/floor/mineral/titanium/tiled/purple/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 //PLASTITANIUM (syndieshuttle)
@@ -124,7 +171,10 @@
 	name = "shuttle floor"
 	icon_state = "plastitanium"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
-	broken_states = list("plastitanium_dam1","plastitanium_dam2","plastitanium_dam3","plastitanium_dam4","plastitanium_dam5")
+	custom_materials = list(/datum/material/alloy/plastitanium = 500)
+
+/turf/open/floor/mineral/plastitanium/setup_broken_states()
+	return list("plastitanium_dam1","plastitanium_dam2","plastitanium_dam3","plastitanium_dam4","plastitanium_dam5")
 
 /turf/open/floor/mineral/plastitanium/rust_heretic_act()
 	return // plastitanium does not rust
@@ -148,6 +198,7 @@
 	icon_state = "bananium"
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
+	custom_materials = list(/datum/material/bananium = 500)
 	var/sound_cooldown = 0
 
 /turf/open/floor/mineral/bananium/Entered(atom/movable/AM)
@@ -161,12 +212,12 @@
 	if(!.)
 		honk()
 
-/turf/open/floor/mineral/bananium/attack_hand(mob/user)
+/turf/open/floor/mineral/bananium/attack_hand(mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		honk()
 
-/turf/open/floor/mineral/bananium/attack_paw(mob/user)
+/turf/open/floor/mineral/bananium/attack_paw(mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		honk()
@@ -191,6 +242,7 @@
 	icon_state = "diamond"
 	floor_tile = /obj/item/stack/tile/mineral/diamond
 	icons = list("diamond","diamond_dam")
+	custom_materials = list(/datum/material/diamond = 500)
 
 //URANIUM
 
@@ -200,6 +252,7 @@
 	icon_state = "uranium"
 	floor_tile = /obj/item/stack/tile/mineral/uranium
 	icons = list("uranium","uranium_dam")
+	custom_materials = list(/datum/material/uranium = 500)
 	var/last_event = 0
 	var/active = null
 
@@ -214,12 +267,12 @@
 	if(!.)
 		radiate()
 
-/turf/open/floor/mineral/uranium/attack_hand(mob/user)
+/turf/open/floor/mineral/uranium/attack_hand(mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		radiate()
 
-/turf/open/floor/mineral/uranium/attack_paw(mob/user)
+/turf/open/floor/mineral/uranium/attack_paw(mob/user, list/modifiers)
 	.=..()
 	if(!.)
 		radiate()
@@ -242,6 +295,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
 	baseturfs = /turf/open/floor/plating/abductor2
+	custom_materials = list(/datum/material/alloy/alien = 500)
 
 /turf/open/floor/mineral/abductor/Initialize()
 	. = ..()

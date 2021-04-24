@@ -3,6 +3,7 @@
 /datum/computer_file/program/power_monitor
 	filename = "ampcheck"
 	filedesc = "AmpCheck"
+	category = PROGRAM_CATEGORY_ENGI
 	program_icon_state = "power_monitor"
 	extended_desc = "This program connects to sensors around the station to provide information about electrical systems"
 	ui_header = "power_norm.gif"
@@ -11,6 +12,7 @@
 	requires_ntnet = 0
 	size = 9
 	tgui_id = "NtosPowerMonitor"
+	program_icon = "plug"
 
 	var/has_alert = 0
 	var/obj/structure/cable/attached_wire
@@ -49,7 +51,7 @@
 		local_apc = null
 
 /datum/computer_file/program/power_monitor/proc/get_powernet() //keep in sync with /obj/machinery/computer/monitor's version
-	if(attached_wire || (local_apc && local_apc.terminal))
+	if(attached_wire || (local_apc?.terminal))
 		return attached_wire ? attached_wire.powernet : local_apc.terminal.powernet
 	return FALSE
 

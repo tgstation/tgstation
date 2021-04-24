@@ -13,7 +13,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
+	butcher_results = list(/obj/item/food/meat/slab = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -25,6 +25,11 @@
 	held_state = "fox"
 	pet_bonus = TRUE
 	pet_bonus_emote = "pants and yaps happily!"
+	///In the case 'melee_damage_upper' is somehow raised above 0
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
+	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 

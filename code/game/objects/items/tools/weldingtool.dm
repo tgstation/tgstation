@@ -1,4 +1,5 @@
-#define WELDER_FUEL_BURN_INTERVAL 13
+/// How many seconds between each fuel depletion tick ("use" proc)
+#define WELDER_FUEL_BURN_INTERVAL 26
 /obj/item/weldingtool
 	name = "welding tool"
 	desc = "A standard edition welder provided by Nanotrasen."
@@ -34,11 +35,11 @@
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
 	///Whether the welding tool is on or off.
 	var/welding = FALSE
-	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
-	var/max_fuel = 20 	//The max amount of fuel the welder can hold
+	var/status = TRUE //Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
+	var/max_fuel = 20 //The max amount of fuel the welder can hold
 	var/change_icons = 1
 	var/can_off_process = 0
-	var/burned_fuel_for = 0	//when fuel was last removed
+	var/burned_fuel_for = 0 //when fuel was last removed
 	var/acti_sound = 'sound/items/welderactivate.ogg'
 	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 
@@ -46,7 +47,7 @@
 	. = ..()
 	create_reagents(max_fuel)
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
-	update_icon()
+	update_appearance()
 
 /obj/item/weldingtool/ComponentInitialize()
 	. = ..()
@@ -58,6 +59,7 @@
 		inhand_icon_state = "[initial(inhand_icon_state)]1"
 	else
 		inhand_icon_state = "[initial(inhand_icon_state)]"
+	return ..()
 
 
 /obj/item/weldingtool/update_overlays()
@@ -70,23 +72,23 @@
 		. += "[initial(icon_state)]-on"
 
 
-/obj/item/weldingtool/process()
-	switch(welding)
-		if(0)
-			force = 3
-			damtype = BRUTE
-			update_icon()
-			if(!can_off_process)
-				STOP_PROCESSING(SSobj, src)
-			return
+/obj/item/weldingtool/process(delta_time)
+	if(welding)
+		force = 15
+		damtype = BURN
+		burned_fuel_for += delta_time
+		if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
+			use(TRUE)
+		update_appearance()
+
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
-		if(1)
-			force = 15
-			damtype = BURN
-			++burned_fuel_for
-			if(burned_fuel_for >= WELDER_FUEL_BURN_INTERVAL)
-				use(1)
-			update_icon()
+	else
+		force = 3
+		damtype = BRUTE
+		update_appearance()
+		if(!can_off_process)
+			STOP_PROCESSING(SSobj, src)
+		return
 
 	//This is to start fires. process() is only called if the welder is on.
 	open_flame()
@@ -104,7 +106,7 @@
 		flamethrower_rods(I, user)
 	else
 		. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/weldingtool/proc/explode()
 	var/turf/T = get_turf(loc)
@@ -112,13 +114,13 @@
 	dyn_explosion(T, plasmaAmount/5)//20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
 
-/obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/user)
+/obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/living/user)
 	if(!istype(H))
 		return ..()
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
+	if(affecting && affecting.status == BODYPART_ROBOTIC && !user.combat_mode)
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
 				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",
@@ -146,7 +148,7 @@
 	if(!status && O.is_refillable())
 		reagents.trans_to(O, reagents.total_volume, transfered_by = user)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
-		update_icon()
+		update_appearance()
 
 /obj/item/weldingtool/attack_qdeleted(atom/O, mob/user, proximity)
 	. = ..()
@@ -169,7 +171,7 @@
 		explode()
 	switched_on(user)
 
-	update_icon()
+	update_appearance()
 
 
 // Ah fuck, I can't believe you've done this
@@ -188,8 +190,9 @@
 	if(!isOn() || !check_fuel())
 		return FALSE
 
-	if(used)
+	if(used > 0)
 		burned_fuel_for = 0
+
 	if(get_fuel() >= used)
 		reagents.remove_reagent(/datum/reagent/fuel, used)
 		check_fuel()
@@ -212,7 +215,7 @@
 	if(get_fuel() <= 0 && welding)
 		set_light_on(FALSE)
 		switched_on(user)
-		update_icon()
+		update_appearance()
 		return FALSE
 	return TRUE
 
@@ -229,7 +232,7 @@
 			force = 15
 			damtype = BURN
 			hitsound = 'sound/items/welder.ogg'
-			update_icon()
+			update_appearance()
 			START_PROCESSING(SSobj, src)
 		else
 			to_chat(user, "<span class='warning'>You need more fuel!</span>")
@@ -246,7 +249,7 @@
 	force = 3
 	damtype = BRUTE
 	hitsound = "swing_hit"
-	update_icon()
+	update_appearance()
 
 
 /obj/item/weldingtool/examine(mob/user)

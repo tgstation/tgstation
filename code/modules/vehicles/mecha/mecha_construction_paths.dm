@@ -270,7 +270,7 @@
 	circuit_control = /obj/item/circuitboard/mecha/ripley/main
 	circuit_periph = /obj/item/circuitboard/mecha/ripley/peripherals
 
-	inner_plating=/obj/item/stack/sheet/metal
+	inner_plating=/obj/item/stack/sheet/iron
 	inner_plating_amount = 5
 
 	outer_plating=/obj/item/stack/rods
@@ -414,7 +414,7 @@
 	circuit_periph = /obj/item/circuitboard/mecha/gygax/peripherals
 	circuit_weapon = /obj/item/circuitboard/mecha/gygax/targeting
 
-	inner_plating = /obj/item/stack/sheet/metal
+	inner_plating = /obj/item/stack/sheet/iron
 	inner_plating_amount = 5
 
 	outer_plating=/obj/item/mecha_parts/part/gygax_armor
@@ -836,7 +836,7 @@
 	circuit_periph = /obj/item/circuitboard/mecha/durand/peripherals
 	circuit_weapon = /obj/item/circuitboard/mecha/durand/targeting
 
-	inner_plating = /obj/item/stack/sheet/metal
+	inner_plating = /obj/item/stack/sheet/iron
 	inner_plating_amount = 5
 
 	outer_plating = /obj/item/mecha_parts/part/durand_armor
@@ -1222,7 +1222,7 @@
 	circuit_control = /obj/item/circuitboard/mecha/odysseus/main
 	circuit_periph = /obj/item/circuitboard/mecha/odysseus/peripherals
 
-	inner_plating = /obj/item/stack/sheet/metal
+	inner_plating = /obj/item/stack/sheet/iron
 	inner_plating_amount = 5
 
 	outer_plating = /obj/item/stack/sheet/plasteel

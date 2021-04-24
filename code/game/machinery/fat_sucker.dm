@@ -11,7 +11,7 @@
 	var/start_at = NUTRITION_LEVEL_WELL_FED
 	var/stop_at = NUTRITION_LEVEL_STARVING
 	var/free_exit = TRUE //set to false to prevent people from exiting before being completely stripped of fat
-	var/bite_size = 15 //amount of nutrients we take per process
+	var/bite_size = 7.5 //amount of nutrients we take per second
 	var/nutrients //amount of nutrients we got build up
 	var/nutrient_to_meat = 90 //one slab of meat gives about 52 nutrition
 	var/datum/looping_sound/microwave/soundloop //100% stolen from microwaves
@@ -30,14 +30,14 @@
 /obj/machinery/fat_sucker/Initialize()
 	. = ..()
 	soundloop = new(list(src),  FALSE)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/fat_sucker/RefreshParts()
 	..()
 	var/rating = 0
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		rating += L.rating
-	bite_size = initial(bite_size) + rating * 5
+	bite_size = initial(bite_size) + rating * 2.5
 	nutrient_to_meat = initial(nutrient_to_meat) - rating * 5
 
 /obj/machinery/fat_sucker/examine(mob/user)
@@ -55,11 +55,11 @@
 	if(occupant)
 		if(!iscarbon(occupant))
 			occupant.forceMove(drop_location())
-			occupant = null
+			set_occupant(null)
 			return
 		to_chat(occupant, "<span class='notice'>You enter [src].</span>")
 		addtimer(CALLBACK(src, .proc/start_extracting), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
-		update_icon()
+		update_appearance()
 
 /obj/machinery/fat_sucker/open_machine(mob/user)
 	make_meat()
@@ -128,7 +128,7 @@
 	if(panel_open)
 		. += "[icon_state]_panel"
 
-/obj/machinery/fat_sucker/process()
+/obj/machinery/fat_sucker/process(delta_time)
 	if(!processing)
 		return
 	if(!powered() || !occupant || !iscarbon(occupant))
@@ -140,8 +140,8 @@
 		open_machine()
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 		return
-	C.adjust_nutrition(-bite_size)
-	nutrients += bite_size
+	C.adjust_nutrition(-bite_size * delta_time)
+	nutrients += bite_size * delta_time
 
 	if(next_fact <= 0)
 		next_fact = initial(next_fact)
@@ -159,7 +159,7 @@
 		if(C.nutrition > start_at)
 			processing = TRUE
 			soundloop.start()
-			update_icon()
+			update_appearance()
 			set_light(2, 1, "#ff0000")
 		else
 			say("Subject not fat enough.")
@@ -176,13 +176,15 @@
 		var/mob/living/carbon/C = occupant
 		if(C.type_of_meat)
 			if(nutrients >= nutrient_to_meat * 2)
-				C.put_in_hands(new /obj/item/reagent_containers/food/snacks/cookie (), TRUE)
+				C.put_in_hands(new /obj/item/food/cookie, del_on_fail = TRUE)
 			while(nutrients >= nutrient_to_meat)
 				nutrients -= nutrient_to_meat
-				new C.type_of_meat (drop_location())
+				var/atom/meat = new C.type_of_meat (drop_location())
+				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = MINERAL_MATERIAL_AMOUNT * 4))
 			while(nutrients >= nutrient_to_meat / 3)
 				nutrients -= nutrient_to_meat / 3
-				new /obj/item/reagent_containers/food/snacks/meat/rawcutlet/plain (drop_location())
+				var/atom/meat = new /obj/item/food/meat/rawcutlet/plain (drop_location())
+				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = round(MINERAL_MATERIAL_AMOUNT * (4/3))))
 			nutrients = 0
 
 /obj/machinery/fat_sucker/screwdriver_act(mob/living/user, obj/item/I)
@@ -196,7 +198,7 @@
 		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
 		return
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-		update_icon()
+		update_appearance()
 		return
 	return FALSE
 
