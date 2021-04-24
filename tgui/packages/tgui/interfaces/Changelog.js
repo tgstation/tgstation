@@ -27,7 +27,7 @@ const icons = {
   imageadd: { icon: 'tg-image-plus', color: 'green' },
   imagedel: { icon: 'tg-image-minus', color: 'red' },
   spellcheck: { icon: 'spell-check', color: 'green' },
-  experiment: { icon: 'radiation', color: 'orange' },
+  experiment: { icon: 'radiation', color: 'yellow' },
   balance: { icon: 'balance-scale-right', color: 'yellow' },
   code_imp: { icon: 'code', color: 'green' },
   refactor: { icon: 'tools', color: 'green' },
