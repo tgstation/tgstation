@@ -20,6 +20,7 @@
 /obj/item/clothing/shoes/sneakers/blue
 	name = "blue shoes"
 	icon_state = "blue"
+	permeability_coefficient = 0.01
 
 /obj/item/clothing/shoes/sneakers/green
 	name = "green shoes"
