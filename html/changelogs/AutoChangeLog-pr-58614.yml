@@ -1,0 +1,5 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - bugfix: "fixed crystallizer locking up when the input port is devoid of proper gases."
+  - bugfix: "fixed crystallizer conducting heat with the heat loop only on reactions. It should conduct at all times now."
