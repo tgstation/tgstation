@@ -125,10 +125,6 @@
 		/datum/asset/simple/irv
 	)
 
-/datum/asset/simple/changelog
-	assets = list("changelog.json" = 'html/changelog.json')
-
-
 /datum/asset/simple/jquery
 	legacy = TRUE
 	assets = list(

@@ -1,11 +1,17 @@
-@use '../colors.scss';
-
 .Changelog {
-  &__Cell {
-    padding: 3px 0;
+  &__Button {
+    height: 22px;
   }
 
-  &__Icon {
-    position: relative;
+  &__Cell {
+    padding: 3px 0;
+
+    &--Icon {
+      width: 25px;
+    }
+  }
+
+  &__Dropdown {
+    width: 150px;
   }
 }

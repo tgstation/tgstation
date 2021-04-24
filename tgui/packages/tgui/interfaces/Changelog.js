@@ -1,29 +1,45 @@
-import { classes } from 'common/react';
-import { Component, Fragment } from 'inferno';
-import { Box, Icon, Section, Table } from "../components";
-import { Window } from "../layouts";
-import { resolveAsset } from '../assets';
+// This is done due to state usage not being detected outside of component
+/* eslint-disable react/no-unused-state */
 
-// Do not change the order, it is important
-const icons = [
-  { icon: 'bug', color: 'green' }, // bugfix
-  { icon: 'hammer', color: 'orange' }, // wip
-  { icon: 'hand-holding-heart', color: 'green' }, // qol
-  { icon: 'tg-sound-plus', color: 'green' }, // soundadd
-  { icon: 'tg-sound-minus', color: 'red' }, // sounddel
-  { icon: 'check-circle', color: 'green' }, // rscadd
-  { icon: 'times-circle', color: 'red' }, // rscdel
-  { icon: 'tg-image-plus', color: 'green' }, // imageadd
-  { icon: 'tg-image-minus', color: 'red' }, // imagedel
-  { icon: 'spell-check', color: 'green' }, // spellcheck
-  { icon: 'radiation', color: 'orange' }, // experiment
-  { icon: 'balance-scale-right', color: 'yellow' }, // balance
-  { icon: 'code', color: 'green' }, // code_imp
-  { icon: 'tools', color: 'green' }, // refactor
-  { icon: 'cogs', color: 'purple' }, // config
-  { icon: 'user-shield', color: 'purple' }, // admin
-  { icon: 'server', color: 'purple' }, // server
-];
+import { classes } from 'common/react';
+import { useBackend } from '../backend';
+import { Component, Fragment } from 'inferno';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Icon,
+  Section,
+  Stack,
+  Table,
+} from '../components';
+import { Window } from '../layouts';
+import { resolveAsset } from '../assets';
+import dateformat from 'dateformat';
+import yaml from 'js-yaml';
+
+const icons = {
+  bugfix: { icon: 'bug', color: 'green' },
+  wip: { icon: 'hammer', color: 'orange' },
+  qol: { icon: 'hand-holding-heart', color: 'green' },
+  soundadd: { icon: 'tg-sound-plus', color: 'green' },
+  sounddel: { icon: 'tg-sound-minus', color: 'red' },
+  rscadd: { icon: 'check-circle', color: 'green' },
+  rscdel: { icon: 'times-circle', color: 'red' },
+  imageadd: { icon: 'tg-image-plus', color: 'green' },
+  imagedel: { icon: 'tg-image-minus', color: 'red' },
+  spellcheck: { icon: 'spell-check', color: 'green' },
+  experiment: { icon: 'radiation', color: 'orange' },
+  balance: { icon: 'balance-scale-right', color: 'yellow' },
+  code_imp: { icon: 'code', color: 'green' },
+  refactor: { icon: 'tools', color: 'green' },
+  config: { icon: 'cogs', color: 'purple' },
+  admin: { icon: 'user-shield', color: 'purple' },
+  server: { icon: 'server', color: 'purple' },
+  tgs: { icon: 'toolbox', color: 'purple' },
+  tweak: { icon: 'wrench', color: 'green' },
+  unknown: { icon: 'info-circle', color: 'label' },
+};
 
 const Header = () => (
   <>
@@ -89,7 +105,7 @@ const ChangelogData = (props) => {
 
   return (
     Object.entries(data).map(([date, authors]) => (
-      <Section key={date} title={date}>
+      <Section key={date} title={dateformat(date, 'd mmmm yyyy')}>
         <Box ml={3}>
           {Object.entries(authors).map(([name, changes]) => (
             <Fragment key={name}>
@@ -97,24 +113,26 @@ const ChangelogData = (props) => {
               <Box ml={3}>
                 <Table>
                   {changes.map(change => {
-                    const index = Object.keys(change)[0];
+                    const changeType = Object.keys(change)[0];
                     return (
-                      <Table.Row key={index + change[index]}>
+                      <Table.Row key={changeType + change[changeType]}>
                         <Table.Cell
-                          className="Changelog__Cell"
-                          style={{ width: '25px' }}
+                          className={classes([
+                            'Changelog__Cell',
+                            'Changelog__Cell--Icon',
+                          ])}
                         >
                           <Icon
                             className={classes([
-                              "Changelog__Icon",
-                              icons[index].class,
+                              'Changelog__Icon',
+                              icons[changeType].class,
                             ])}
-                            color={icons[index].color}
-                            name={icons[index].icon}
+                            color={icons[changeType].color}
+                            name={icons[changeType].icon}
                           />
                         </Table.Cell>
                         <Table.Cell className="Changelog__Cell">
-                          {change[index]}
+                          {change[changeType]}
                         </Table.Cell>
                       </Table.Row>
                     );
@@ -129,28 +147,118 @@ const ChangelogData = (props) => {
   );
 };
 
+const DateDropdown = (props) => {
+  const { self } = props;
+  const { selectedDate, selectedIndex } = self.state;
+  const { data: { dates } } = useBackend(self.context);
+  const { dateChoices } = self;
+
+  return (
+    <Stack mb={1}>
+      <Stack.Item>
+        <Button
+          className="Changelog__Button"
+          disabled={selectedIndex === 0}
+          icon={'chevron-left'}
+          onClick={() => {
+            const index = selectedIndex - 1;
+
+            self.setData(null);
+            self.setSelectedIndex(index);
+            self.setSelectedDate(dateChoices[index]);
+            return self.getData(dates[index] + '.yml');
+          }} />
+      </Stack.Item>
+      <Stack.Item>
+        <Dropdown
+          className="Changelog__Dropdown"
+          displayText={selectedDate}
+          options={dateChoices}
+          onSelected={value => {
+            const index = dateChoices.indexOf(value);
+
+            self.setData(null);
+            self.setSelectedIndex(index);
+            self.setSelectedDate(value);
+            return self.getData(dates[index] + '.yml');
+          }}
+          selected={selectedDate} />
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          className="Changelog__Button"
+          disabled={selectedIndex === dateChoices.length - 1}
+          icon={'chevron-right'}
+          onClick={() => {
+            const index = selectedIndex + 1;
+
+            self.setData(null);
+            self.setSelectedIndex(index);
+            self.setSelectedDate(dateChoices[index]);
+            return self.getData(dates[index] + '.yml');
+          }} />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 export class Changelog extends Component {
   constructor() {
     super();
     this.state = {
       data: null,
+      selectedDate: '',
+      selectedIndex: 0,
     };
+    this.dateChoices = [];
   }
 
   setData(data) {
     this.setState({ data });
   }
 
-  getData = () => {
+  setSelectedDate(selectedDate) {
+    this.setState({ selectedDate });
+  }
+
+  setSelectedIndex(selectedIndex) {
+    this.setState({ selectedIndex });
+  }
+
+  getData = (filename, attemptNumber = 1) => {
+    const { act } = useBackend(this.context);
     const self = this;
-    fetch(resolveAsset('changelog.json'))
+
+    if (attemptNumber > 3) {
+      return this.setData('error');
+    }
+
+    act('get_month', { filename });
+
+    fetch(resolveAsset(filename))
       .then(async (changelogData) => {
-        self.setData(await changelogData.json());
+        const result = await changelogData.text();
+        const errorRegex = /^Cannot find/;
+
+        if (errorRegex.test(result)) {
+          const timeout = attemptNumber * 1000;
+
+          setTimeout(() => {
+            self.getData(filename, attemptNumber + 1);
+          }, timeout);
+        } else {
+          self.setData(yaml.load(result, { schema: yaml.CORE_SCHEMA }));
+        }
       });
   }
 
   componentDidMount() {
-    this.getData();
+    const { data: { dates } } = useBackend(this.context);
+
+    dates.forEach(date => this.dateChoices.push(dateformat(date, 'mmmm yyyy')));
+    this.setSelectedDate(this.dateChoices[0]);
+    const filename = dates[0] + '.yml';
+    this.getData(filename);
   }
 
   render() {
@@ -160,8 +268,11 @@ export class Changelog extends Component {
       <Window title="Changelog" width={675} height={650}>
         <Window.Content scrollable>
           <Header />
+          <DateDropdown self={this} />
           {data && <ChangelogData data={data} />}
           {!data && <p>Loading changelog data...</p>}
+          {data === 'error' && <p>Failed to load data after 3 attempts</p>}
+          <DateDropdown self={this} />
           <Footer />
         </Window.Content>
       </Window>
