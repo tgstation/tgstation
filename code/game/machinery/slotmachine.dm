@@ -17,8 +17,10 @@
 /obj/machinery/computer/slot_machine
 	name = "slot machine"
 	desc = "Gambling for the antisocial."
-	icon = 'icons/obj/economy.dmi'
-	icon_state = "slots1"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "slots"
+	icon_keyboard = "no_keyboard"
+	icon_screen = "slots_screen"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
@@ -67,17 +69,18 @@
 	money += round(delta_time / 2) //SPESSH MAJICKS
 
 /obj/machinery/computer/slot_machine/update_icon_state()
-	if(machine_stat & NOPOWER)
-		icon_state = "slots0"
-
-	else if(machine_stat & BROKEN)
-		icon_state = "slotsb"
-
-	else if(working)
-		icon_state = "slots2"
-
+	if(machine_stat & BROKEN)
+		icon_state = "slots_broken"
 	else
-		icon_state = "slots1"
+		icon_state = "slots"
+	return ..()
+
+/obj/machinery/computer/slot_machine/update_overlays()
+	if(working)
+		icon_screen = "slots_screen_working"
+	else
+		icon_screen = "slots_screen"
+	return ..()
 
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/coin))

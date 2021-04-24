@@ -187,6 +187,46 @@
 	anchored = TRUE
 	density = FALSE
 	deconstructible = FALSE
+	var/replaced_light = FALSE
+
+/obj/structure/fluff/lightbulb/attack_hand(mob/living/carbon/human/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	if(istype(H))
+		var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+		if(affecting?.receive_damage( 0, 5 ))			// 5 burn damage
+			H.update_damage_overlays()
+		else
+			to_chat(user, "<span class='warning'>You try to remove the light, but your hand passes through it, burning it in the process! You swear you feel something inside the bulb.</span>")
+			return
+
+/obj/structure/fluff/lightbulb/attackby(obj/item/O, mob/user)
+	var/turf/T = get_turf(src)
+	if(istype(O, /obj/item/light/bulb) && !replaced_light)
+		if(do_after(user, 25, TRUE))
+			to_chat(user, "<span class='warning'>The red bulb shatters as you place the new bulb into the space it occupied. A key falls among the shards.</span>")
+			qdel(O)
+			playsound(loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
+			desc = "Its harsh light and hard buzzing makes you anxious."
+			name = "lightbulb"
+			icon_state = "bulb_y"
+			var/obj/structure/fluff/lightbulb_light/floorlight = locate(/obj/structure/fluff/lightbulb_light, T)
+			floorlight.burnt = TRUE
+			floorlight.name = "glow"
+			floorlight.desc = "The room's walls are bleached by the light."
+			floorlight.light_power = 10
+			floorlight.light_range = 5
+			floorlight.light_color = "#d6d188"
+			floorlight.update_light()
+			floorlight.icon_state = "yellow_bulb_light"
+			new /obj/effect/decal/cleanable/glass(loc)
+			new /obj/item/britevidence/blue_key(loc)
+			replaced_light = TRUE
+			return 1
+		else
+			to_chat(user, "<span class='notice'>The new bulb passes through the old one. You'll probably need to focus to line them up.</span>")
+	else
+		return ..()
 
 /obj/structure/fluff/lightbulb_light
 	name = "red glow"
@@ -201,6 +241,8 @@
 	density = FALSE
 	deconstructible = FALSE
 	var/antispam = FALSE
+	var/burnt = FALSE
+	var/sizzle = null
 
 /obj/structure/fluff/lightbulb_light/Initialize()
 	. = ..()
@@ -212,17 +254,33 @@
 
 /obj/structure/fluff/lightbulb_light/process(delta_time)
 	for(var/mob/living/L in range(2, src))
-		if(DT_PROB(15, delta_time) && (L.health != L.maxHealth))
-			L.adjustBruteLoss(-3, 0, forced = TRUE)
-			L.adjustFireLoss(-3, 0, forced = TRUE)
-			L.adjustToxLoss(-3, 0, forced = TRUE)
-			L.adjustOxyLoss(-3, 0, forced = TRUE)
-			L.updatehealth()
-			new /obj/effect/temp_visual/heal(get_turf(L), "#bd3827")
-			if(!antispam)
-				to_chat(L, "<span class='notice'>You feel safe under the light.</span>")
-				antispam = TRUE
-				addtimer(CALLBACK(src, /obj/structure/fluff/lightbulb_light/proc/spam_check), 600)
+		if(!burnt)
+			if(DT_PROB(15, delta_time) && (L.health != L.maxHealth))
+				L.adjustBruteLoss(-3, 0, forced = TRUE)
+				L.adjustFireLoss(-3, 0, forced = TRUE)
+				L.adjustToxLoss(-3, 0, forced = TRUE)
+				L.adjustOxyLoss(-3, 0, forced = TRUE)
+				L.updatehealth()
+				new /obj/effect/temp_visual/heal(get_turf(L), "#bd3827")
+				if(!antispam)
+					to_chat(L, "<span class='notice'>You feel safe under the light.</span>")
+					antispam = TRUE
+					addtimer(CALLBACK(src, /obj/structure/fluff/lightbulb_light/proc/spam_check), 600)
+		if(burnt)
+			if(DT_PROB(15, delta_time))
+				L.adjustBruteLoss(3, 0)
+				L.adjustFireLoss(3, 0)
+				L.updatehealth()
+				sizzle = pick(1,2)
+				switch(sizzle)
+					if(1)
+						playsound(loc, 'sound/effects/wounds/sizzle1.ogg', 40, TRUE)
+					if(2)
+						playsound(loc, 'sound/effects/wounds/sizzle2.ogg', 40, TRUE)
+				if(!antispam)
+					to_chat(L, "<span class='notice'>You can't stand being in this light!</span>")
+					antispam = TRUE
+					addtimer(CALLBACK(src, /obj/structure/fluff/lightbulb_light/proc/spam_check), 600)
 
 //Would be annoying if the game kept telling you it on repeat
 /obj/structure/fluff/lightbulb_light/proc/spam_check()
@@ -237,6 +295,35 @@
 	anchored = FALSE
 	density = TRUE
 	deconstructible = FALSE
+
+/obj/structure/fluff/palacechest
+	name = "scratched chest"
+	desc = "You see something moving inside of it through the keyhole."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "palacechest"
+	layer = TURF_LAYER
+	anchored = TRUE
+	density = TRUE
+	deconstructible = FALSE
+	var/opened = FALSE
+
+/obj/structure/fluff/palacechest/attackby(obj/item/O, mob/user)
+	if(istype(O, /obj/item/britevidence/blue_key) && !opened)
+		if(do_after(user, 25, TRUE))
+			to_chat(user, "<span class='notice'>The key falls apart in the slot as you lift the lid off the chest. There's a single ribbon inside.</span>")
+			qdel(O)
+			playsound(loc, 'sound/machines/wooden_closet_open.ogg', 50, TRUE)
+			opened = TRUE
+			icon_state = "palacechest_open"
+			desc = "An empty chest."
+			new /obj/item/britevidence/ribbon(loc)
+			for(var/obj/structure/fluff/mannequin/hallucinations in range(7, src))
+				hallucinations.say("Going so soon?")
+			return 1
+		else
+			to_chat(user, "<span class='notice'>You struggle to get the key in the hole. Maybe focusing a little more...?</span>")
+	else
+		return ..()
 
 /obj/structure/fluff/vent
 	name = "wall vent"
