@@ -222,6 +222,13 @@ export class Changelog extends Component {
           <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a>
           {' only.'}
         </p>
+        <p>
+          {'Traditional Games Space Station 13 is licensed under a '}
+          <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">
+            GNU Affero General Public 3.0 License
+          </a>
+          .
+        </p>
       </Section>
     );
 
