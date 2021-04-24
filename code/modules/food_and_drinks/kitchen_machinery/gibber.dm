@@ -123,9 +123,11 @@
 	set category = "Object"
 	set name = "Empty gibber"
 	set src in oview(1)
-
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
+	if(isanimal(usr))
+		var/mob/living/simple_animal/usr_mob = usr
+		return usr_mob.canUseTopic()
 	src.go_out()
 	add_fingerprint(usr)
 	return

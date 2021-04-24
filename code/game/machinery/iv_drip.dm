@@ -100,7 +100,7 @@
 /obj/machinery/iv_drip/attackby(obj/item/W, mob/user, params)
 	if(use_internal_storage)
 		return ..()
-	
+
 	if(is_type_in_typecache(W, drip_containers) || IS_EDIBLE(W))
 		if(reagent_container)
 			to_chat(user, "<span class='warning'>[reagent_container] is already loaded on [src]!</span>")
@@ -217,7 +217,9 @@
 	if(!isliving(usr))
 		to_chat(usr, "<span class='warning'>You can't do that!</span>")
 		return
-
+	if(isanimal(usr))
+		var/mob/living/simple_animal/usr_mob = usr
+		return usr_mob.canUseTopic()
 	if(usr.incapacitated())
 		return
 	if(reagent_container)
@@ -233,7 +235,9 @@
 	if(!isliving(usr))
 		to_chat(usr, "<span class='warning'>You can't do that!</span>")
 		return
-
+	if(isanimal(usr))
+		var/mob/living/simple_animal/usr_mob = usr
+		return usr_mob.canUseTopic()
 	if(usr.incapacitated())
 		return
 	mode = !mode
