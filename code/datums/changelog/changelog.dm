@@ -14,8 +14,7 @@
 	if(.)
 		return
 	if(action == "get_month")
-		var/filename = params["filename"]
-		return ui.send_asset(file("html/changelogs/archive/" + filename))
+		return ui.send_asset(new /datum/asset/changelog_item(params["filename"]))
 
 /datum/changelog/ui_static_data()
 	var/list/data = list( "dates" = list() )

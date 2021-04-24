@@ -246,24 +246,19 @@
  *
  * Makes an asset available to use in tgui.
  *
- * required asset
+ * required asset datum/asset
  *
  * return bool - TRUE if any assets had to be sent to the client
  */
-/datum/tgui_window/proc/send_asset(asset)
+/datum/tgui_window/proc/send_asset(datum/asset/asset)
 	if(!client || !asset)
 		return
-	if (istype(asset, /datum/asset))
-		var/datum/asset/current_asset = asset
-		sent_assets |= list(current_asset)
-		. = current_asset.send(client)
-		if(istype(current_asset, /datum/asset/spritesheet))
-			var/datum/asset/spritesheet/spritesheet = current_asset
-			send_message("asset/stylesheet", spritesheet.css_filename())
-		send_message("asset/mappings", current_asset.get_url_mappings())
-	else
-		client << browse_rsc(asset)
-		. = TRUE
+	sent_assets |= list(asset)
+	. = asset.send(client)
+	if(istype(asset, /datum/asset/spritesheet))
+		var/datum/asset/spritesheet/spritesheet = asset
+		send_message("asset/stylesheet", spritesheet.css_filename())
+	send_message("asset/mappings", asset.get_url_mappings())
 
 /**
  * private

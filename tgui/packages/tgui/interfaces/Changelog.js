@@ -43,7 +43,7 @@ export class Changelog extends Component {
   constructor() {
     super();
     this.state = {
-      data: null,
+      data: 'Loading changelog data...',
       selectedDate: '',
       selectedIndex: 0,
     };
@@ -62,12 +62,12 @@ export class Changelog extends Component {
     this.setState({ selectedIndex });
   }
 
-  getData = (filename, attemptNumber = 1) => {
+  getData = (filename, attemptNumber = 0) => {
     const { act } = useBackend(this.context);
     const self = this;
 
-    if (attemptNumber > 3) {
-      return this.setData('error');
+    if (attemptNumber > 2) {
+      return this.setData('Failed to load data after 3 attempts');
     }
 
     act('get_month', { filename });
@@ -78,8 +78,11 @@ export class Changelog extends Component {
         const errorRegex = /^Cannot find/;
 
         if (errorRegex.test(result)) {
-          const timeout = attemptNumber * 1000;
+          const timeout = 250 + attemptNumber * 500;
 
+          self.setData(
+            'Loading changelog data' + '.'.repeat(attemptNumber + 3)
+          );
           setTimeout(() => {
             self.getData(filename, attemptNumber + 1);
           }, timeout);
@@ -107,7 +110,7 @@ export class Changelog extends Component {
     const { data: { dates } } = useBackend(this.context);
     const { dateChoices } = this;
 
-    const dateDropdown = dateChoices && (
+    const dateDropdown = dateChoices.length > 0 && (
       <Stack mb={1}>
         <Stack.Item>
           <Button
@@ -117,7 +120,7 @@ export class Changelog extends Component {
             onClick={() => {
               const index = selectedIndex - 1;
 
-              this.setData(null);
+              this.setData('Loading changelog data...');
               this.setSelectedIndex(index);
               this.setSelectedDate(dateChoices[index]);
               window.scrollTo(
@@ -135,7 +138,7 @@ export class Changelog extends Component {
             onSelected={value => {
               const index = dateChoices.indexOf(value);
 
-              this.setData(null);
+              this.setData('Loading changelog data...');
               this.setSelectedIndex(index);
               this.setSelectedDate(value);
               window.scrollTo(
@@ -156,7 +159,7 @@ export class Changelog extends Component {
             onClick={() => {
               const index = selectedIndex + 1;
 
-              this.setData(null);
+              this.setData('Loading changelog data...');
               this.setSelectedIndex(index);
               this.setSelectedDate(dateChoices[index]);
               window.scrollTo(
@@ -233,7 +236,7 @@ export class Changelog extends Component {
       </Section>
     );
 
-    const changes = data && (
+    const changes = typeof data === 'object' && Object.keys(data).length > 0 && (
       Object.entries(data).reverse().map(([date, authors]) => (
         <Section key={date} title={dateformat(date, 'd mmmm yyyy')}>
           <Box ml={3}>
@@ -256,12 +259,12 @@ export class Changelog extends Component {
                               color={
                                 icons[changeType]
                                   ? icons[changeType].color
-                                  : icons["unknown"].color
+                                  : icons['unknown'].color
                               }
                               name={
                                 icons[changeType]
                                   ? icons[changeType].icon
-                                  : icons["unknown"].icon
+                                  : icons['unknown'].icon
                               }
                             />
                           </Table.Cell>
@@ -285,8 +288,7 @@ export class Changelog extends Component {
         <Window.Content scrollable>
           {header}
           {changes}
-          {!data && <p>Loading changelog data...</p>}
-          {data === 'error' && <p>Failed to load data after 3 attempts</p>}
+          {typeof data === 'string' && <p>{data}</p>}
           {footer}
         </Window.Content>
       </Window>
