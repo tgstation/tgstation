@@ -515,6 +515,10 @@
 	name = "One Shoulder"
 	icon_state = "hair_oneshoulder"
 
+/datum/sprite_accessory/hair/cinder
+	name = "Overseer"
+	icon_state = "hair_cinder"
+
 /datum/sprite_accessory/hair/over_eye
 	name = "Over Eye"
 	icon_state = "hair_shortovereye"

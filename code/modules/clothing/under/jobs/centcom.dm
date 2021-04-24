@@ -21,3 +21,11 @@
 	icon_state = "intern"
 	inhand_icon_state = "g_suit"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/centcom/administrator
+	name = "\improper CentCom Administrator Uniform"
+	desc = "Your uniform! Though you refuse to wear the actual uniform. The colors fit you nicely atleast!"
+	icon_state = "administrator"
+	inhand_icon_state = "administrator"
+	can_adjust = FALSE
+	body_parts_covered = CHEST|GROIN|LEGS|FEET

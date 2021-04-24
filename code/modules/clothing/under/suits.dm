@@ -267,3 +267,9 @@
 	icon_state = "servantsuit"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/under/suit/onfield_medical_outfit
+	name = "onfield medical uniform"
+	desc = "A bomberjacket with a medical uniform underneath. It suits you."
+	icon_state = "onfield_medical_outfit"
+	permeability_coefficient = 0.5
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
