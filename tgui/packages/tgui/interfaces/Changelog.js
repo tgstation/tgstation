@@ -104,7 +104,7 @@ const ChangelogData = (props) => {
   const { data } = props;
 
   return (
-    Object.entries(data).map(([date, authors]) => (
+    Object.entries(data).reverse().map(([date, authors]) => (
       <Section key={date} title={dateformat(date, 'd mmmm yyyy')}>
         <Box ml={3}>
           {Object.entries(authors).map(([name, changes]) => (
@@ -171,7 +171,6 @@ const DateDropdown = (props) => {
       </Stack.Item>
       <Stack.Item>
         <Dropdown
-          className="Changelog__Dropdown"
           displayText={selectedDate}
           options={dateChoices}
           onSelected={value => {
@@ -182,7 +181,8 @@ const DateDropdown = (props) => {
             self.setSelectedDate(value);
             return self.getData(dates[index] + '.yml');
           }}
-          selected={selectedDate} />
+          selected={selectedDate}
+          width={'150px'}/>
       </Stack.Item>
       <Stack.Item>
         <Button
@@ -253,12 +253,16 @@ export class Changelog extends Component {
   }
 
   componentDidMount() {
-    const { data: { dates } } = useBackend(this.context);
+    const { data: { dates = [] } } = useBackend(this.context);
 
-    dates.forEach(date => this.dateChoices.push(dateformat(date, 'mmmm yyyy')));
-    this.setSelectedDate(this.dateChoices[0]);
-    const filename = dates[0] + '.yml';
-    this.getData(filename);
+    if (dates) {
+      dates.forEach(
+        date => this.dateChoices.push(dateformat(date, 'mmmm yyyy'))
+      );
+      this.setSelectedDate(this.dateChoices[0]);
+      const filename = dates[0] + '.yml';
+      this.getData(filename);
+    }
   }
 
   render() {
