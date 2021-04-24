@@ -1,5 +1,0 @@
-author: "Owai-Seek"
-delete-after: True
-changes: 
-  - qol: "Mexican Foods now have a food tab of their own. Egg Wraps and Scotch Eggs are now under Egg tab."
-  - bugfix: "Burritos should have the proper food tags now. Egg Wraps have had their GRAIN tag removed."

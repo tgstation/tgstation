@@ -1,5 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes: 
-  - spellcheck: "Ordered all things not in numerical order by alphabetical order in the DNA.dm file"
-  - code_imp: "Adds the missing #define statement for the Autonomy mutation in the DNA.dm file"
