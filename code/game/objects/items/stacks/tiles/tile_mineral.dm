@@ -71,7 +71,7 @@
 /obj/item/stack/tile/mineral/titanium
 	name = "titanium tile"
 	singular_name = "titanium floor tile"
-	desc = "A tile made of titanium, used for shuttles."
+	desc = "A tile made of titanium, used for shuttles. Use while in your hand to change what type of titanium tiles you want."
 	icon_state = "tile_shuttle"
 	inhand_icon_state = "tile-shuttle"
 	turf_type = /turf/open/floor/mineral/titanium

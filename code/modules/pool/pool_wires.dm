@@ -31,8 +31,10 @@
 	switch(wire)
 		if(POOL_WIRE_DRAIN)
 			P.drainable = FALSE
+			holder.visible_message("<span class='notice'>[icon2html(P, viewers(holder))] The drain lets out some bubbles.</span>")
 		if(POOL_WIRE_TEMP)
 			P.tempunlocked = FALSE
+			holder.visible_message("<span class='notice'>[icon2html(P, viewers(holder))] The thermostat blinks on and off.</span>")
 		if(WIRE_SHOCK)
 			P.shocked = !P.shocked
 			addtimer(CALLBACK(P, /obj/machinery/autolathe.proc/reset, wire), 60)

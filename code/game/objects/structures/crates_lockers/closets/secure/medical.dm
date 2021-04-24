@@ -95,7 +95,7 @@
 	new /obj/item/wallframe/defib_mount(src)
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
-	new /obj/item/clothing/under/syndicate/tacticool/medical(src)
+	new /obj/item/clothing/under/suit/onfield_medical_outfit(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"

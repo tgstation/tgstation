@@ -9,7 +9,6 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 /// The color the prefix for LOOC uses.
 #define LOOC_PREFIX_COLOR "#5f008b"
 
-
 /// The LOOC verb
 /client/verb/looc(msg as text)
 	set name = "LOOC"
@@ -127,7 +126,7 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 				if(!send)
 					prefix += " (Relayed)"
 				if(target != src)
-					display_name = "([ADMIN_LOOKUPFLW(mob)])"
+					display_admin = "([ADMIN_LOOKUPFLW(mob)])"
 				send = TRUE
 
 			if(send)

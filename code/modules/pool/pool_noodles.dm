@@ -24,21 +24,12 @@
 
 /obj/item/toy/poolnoodle/red
 	inhand_icon_state = "noodlered"
+	color = "#ff4c4c"
 
 /obj/item/toy/poolnoodle/blue
 	inhand_icon_state = "noodleblue"
+	color = "#3232ff"
 
 /obj/item/toy/poolnoodle/yellow
 	inhand_icon_state = "noodleyellow"
-
-/obj/item/toy/poolnoodle/red/Initialize()
-	. = ..()
-	color = "#ff4c4c"
-
-/obj/item/toy/poolnoodle/blue/Initialize()
-	. = ..()
-	color = "#3232ff"
-
-/obj/item/toy/poolnoodle/yellow/Initialize()
-	. = ..()
 	color = "#ffff66"

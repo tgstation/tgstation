@@ -535,7 +535,7 @@ const PageMain = (props, context) => {
               {sectors.length > 2 && (
                 <Flex.Item>
                   <Button
-                   content="Send a message to all allied stations"
+                    content="Send a message to all allied stations"
                     disabled={!importantActionReady}
                     onClick={() => setMessagingSector("all")}
                   />

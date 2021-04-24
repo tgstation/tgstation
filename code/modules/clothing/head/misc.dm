@@ -546,3 +546,10 @@
 	icon_state = "prince"
 	inhand_icon_state = "prince"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
+
+/obj/item/clothing/head/admin_headset
+	name = "Overseer Headset"
+	desc = "A heavy duty headset for long distance communication. It's state of the art tech."
+	icon_state = "admin_headset"
+	inhand_icon_state = "admin_headset"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF

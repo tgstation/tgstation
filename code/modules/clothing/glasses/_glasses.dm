@@ -544,7 +544,6 @@
 	var/old_hair
 	var/old_beard
 
-
 /obj/item/clothing/glasses/fox/equipped(mob/user, slot)
 	if(slot != ITEM_SLOT_EYES)
 		return
@@ -591,3 +590,9 @@
 			inhand_icon_state = "fox"
 			user.regenerate_icons()
 		handled = FALSE
+
+/obj/item/clothing/glasses/mystic_killer
+	name = "Strange Glasses"
+	desc = "Mystic Eye Killers. They're more for everyone else's safety than your own. "
+	icon_state = "mystic killer"
+	inhand_icon_state = "mystic_killer"

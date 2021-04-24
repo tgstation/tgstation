@@ -869,3 +869,8 @@
 /obj/item/clothing/head/hooded/travelerhood
 	icon_state = "travelerhood"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 0)
+
+/obj/item/clothing/suit/corset
+	name = "Centcomm Top"
+	desc = "You used to wear red, but green fits you a lot more nicely."
+	icon_state = "corset"

@@ -83,5 +83,5 @@ export const PoolController = (props, context) => {
         </Section>
       </Window.Content>
     </Window>
-  ); 
+  );
 };
