@@ -255,13 +255,13 @@ export class Changelog extends Component {
                             <Icon
                               color={
                                 icons[changeType]
-                                ? icons[changeType].color
-                                : icons["unknown"].color
+                                  ? icons[changeType].color
+                                  : icons["unknown"].color
                               }
                               name={
                                 icons[changeType]
-                                ? icons[changeType].icon
-                                : icons["unknown"].icon
+                                  ? icons[changeType].icon
+                                  : icons["unknown"].icon
                               }
                             />
                           </Table.Cell>
