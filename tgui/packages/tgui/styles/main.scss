@@ -42,6 +42,7 @@
 @include meta.load-css('./components/Tooltip.scss');
 
 // Interfaces
+@include meta.load-css('./interfaces/ListInput.scss');
 @include meta.load-css('./interfaces/CameraConsole.scss');
 @include meta.load-css('./interfaces/NuclearBomb.scss');
 @include meta.load-css('./interfaces/Roulette.scss');
