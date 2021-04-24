@@ -163,8 +163,8 @@
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(isanimal(usr))
-		var/mob/living/simple_animal/usr_mob = usr
-		return usr_mob.canUseTopic()
+		var/mob/living/simple_animal/user_animal = usr
+		return user_animal.canUseTopic()
 	if(isliving(usr))
 		var/mob/living/L = usr
 		if(!(L.mobility_flags & MOBILITY_UI))

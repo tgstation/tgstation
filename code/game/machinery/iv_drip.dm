@@ -236,8 +236,8 @@
 		to_chat(usr, "<span class='warning'>You can't do that!</span>")
 		return
 	if(isanimal(usr))
-		var/mob/living/simple_animal/usr_mob = usr
-		return usr_mob.canUseTopic()
+		var/mob/living/simple_animal/user_animal = usr
+		return user_animal.canUseTopic()
 	if(usr.incapacitated())
 		return
 	mode = !mode
