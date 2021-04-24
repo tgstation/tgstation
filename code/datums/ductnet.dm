@@ -1,16 +1,22 @@
 ///We handle the unity part of plumbing. We track who is connected to who.
 /datum/ductnet
+	///Stuff that can supply chems
 	var/list/suppliers = list()
+	////Stuff that can take chems
 	var/list/demanders = list()
+	///All the ducts that make this network
 	var/list/obj/machinery/duct/ducts = list()
 
+	///Max reagents we can carry per tick
 	var/capacity
+
 ///Add a duct to our network
 /datum/ductnet/proc/add_duct(obj/machinery/duct/D)
 	if(!D || (D in ducts))
 		return
 	ducts += D
 	D.duct = src
+
 ///Remove a duct from our network and commit suicide, because this is probably easier than to check who that duct was connected to and what part of us was lost
 /datum/ductnet/proc/remove_duct(obj/machinery/duct/ducting)
 	destroy_network(FALSE)
@@ -18,6 +24,7 @@
 		addtimer(CALLBACK(D, /obj/machinery/duct/proc/reconnect), 0) //all needs to happen after the original duct that was destroyed finishes destroying itself
 		addtimer(CALLBACK(D, /obj/machinery/duct/proc/generate_connects), 0)
 	qdel(src)
+
 ///add a plumbing object to either demanders or suppliers
 /datum/ductnet/proc/add_plumber(datum/component/plumbing/P, dir)
 	if(!P.can_add(src, dir))
@@ -28,6 +35,7 @@
 	else if(dir & P.demand_connects)
 		demanders += P
 	return TRUE
+
 ///remove a plumber. we dont delete ourselves because ductnets dont persist through plumbing objects
 /datum/ductnet/proc/remove_plumber(datum/component/plumbing/P)
 	suppliers.Remove(P) //we're probably only in one of these, but Remove() is inherently sane so this is fine
@@ -54,6 +62,7 @@
 		var/obj/machinery/duct/M = A
 		M.duct = src //forget your old master
 
+	D.ducts.Cut() //clear this so the other network doesnt clear the ducts along with themselves (this took the life out of me)
 	D.destroy_network()
 
 ///destroy the network and tell all our ducts and plumbers we are gone

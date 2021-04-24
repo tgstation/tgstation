@@ -15,3 +15,10 @@ PROCESSING_SUBSYSTEM_DEF(fluids)
 	if(!build_queued.len && prime_queued.len)
 		var/obj/machinery/duct/D = pick(prime_queued)
 		D.attempt_connect()
+
+//yes this is the exact same as the above function, but i dont want to make unnecessary proc calls in something thats called non-stop
+///If a player lays down a duct, we'll check if its safe and then instantly built it, otherwise the delay might be a bit jarring to players
+/datum/controller/subsystem/processing/fluids/proc/attempt_quick_build()
+	if(!build_queued.len && prime_queued.len)
+		var/obj/machinery/duct/D = pick(prime_queued)
+		D.attempt_connect()

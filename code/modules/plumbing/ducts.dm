@@ -63,7 +63,10 @@ All the important duct code:
 		if(D.duct_layer & duct_layer)
 			disconnect_duct()
 
-	SSfluids.prime_queued += src
+	if(!mapload)
+		safe_connect()
+	else
+		SSfluids.prime_queued += src
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
@@ -134,17 +137,26 @@ All the important duct code:
 		else
 			create_duct()
 			duct.add_duct(D)
-	add_neighbour(D, direction)
 
-	D.safe_connect()
+	add_neighbour(D, direction)
+	D.add_neighbour(src, opposite_dir)
+	D.add_connects(opposite_dir)
+
+	D.safe_connect(FALSE)
 
 	return TRUE
 
 ///Delegates connecting to the plumbing subsystem, which ensures connections are done sane and clean
-/obj/machinery/duct/proc/safe_connect()
-	//addtimer so it's delegated to a proper queued subsystem. might cause large networks of ducts to visually connect and reconnect, but prevents lagspikes and crashes
-	addtimer(CALLBACK(src, .proc/attempt_connect))
-	SSfluids.build_queued += src //track we're already being built
+/obj/machinery/duct/proc/safe_connect(prime = TRUE)
+
+	//safe option, waits for all other ducts to finish and then politely asks if it could perhaps be connected, m'lady
+	if(prime)
+		SSfluids.prime_queued += src
+		SSfluids.attempt_quick_build()
+	else //this should only be done through other ducts
+		//addtimer so it's delegated to a proper queued subsystem. might cause large networks of ducts to visually connect and reconnect, but prevents lagspikes and crashes
+		SSfluids.build_queued += src //track we're already being built
+		addtimer(CALLBACK(src, .proc/attempt_connect))
 
 ///connect to a plumbing object
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/P, direction)
@@ -328,6 +340,8 @@ All the important duct code:
 	anchored = FALSE
 
 /obj/machinery/duct/Destroy()
+	SSfluids.build_queued -= src
+	SSfluids.prime_queued -= src
 	disconnect_duct()
 	return ..()
 
