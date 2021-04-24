@@ -540,10 +540,20 @@
 	var/projectile_type = /obj/projectile/bullet/c10mm
 	/// Each step, this is the chance we fire a shot
 	var/shot_prob = 50
+	/// Storing the projectile shooter component so we can create/remove it on equip/drop
+	var/datum/component/projectile_shooter/shooter_component
 
-/obj/item/clothing/shoes/gunboots/Initialize()
+/obj/item/clothing/shoes/gunboots/equipped(mob/user, slot)
 	. = ..()
-	AddComponent(/datum/component/projectile_shooter, projectile_type = projectile_type, shot_prob = shot_prob, signal_or_sig_list = list(COMSIG_SHOES_STEP_ACTION, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))
+	if(slot == ITEM_SLOT_FEET)
+		shooter_component = AddComponent(/datum/component/projectile_shooter, projectile_type = projectile_type, shot_prob = shot_prob, \
+			restricted_zones = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), signal_or_sig_list = list(COMSIG_SHOES_STEP_ACTION, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))
+	else
+		QDEL_NULL(shooter_component)
+
+/obj/item/clothing/shoes/gunboots/dropped(mob/user)
+	. = ..()
+	QDEL_NULL(shooter_component)
 
 /obj/item/clothing/shoes/gunboots/disabler
 	name = "disaboots"

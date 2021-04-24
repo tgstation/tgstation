@@ -1,10 +1,13 @@
-/*This is the projectile_shooter component, a ripoff of the [/datum/component/sound_player] component used for firing off projectiles when certain signals are triggered.
+/*
+	This is the projectile_shooter component, a ripoff of the [/datum/component/sound_player] component used for firing off projectiles when certain signals are triggered.
+
 	This isn't a replacement for how guns work, this is a simply a modular way to fire bullets from things that don't otherwise fire bullets
 	Usage :
 		target.AddComponent(/datum/component/projectile_shooter, args)
 	Arguments :
 		projectile_type : What projectile do we shoot?
 		shot_prob : If we only want to go off some of the time when a signal fires, this is the percent chance for it to fire
+		restricted_zones: A list containing which zones the projectile is limited to hitting on a carbon target, like if we only want to hit peoples legs. No restriction if null
 		signal_or_sig_list : Used to register the signal(s) you want to fire a shot when sent
 */
 /datum/component/projectile_shooter
@@ -12,16 +15,24 @@
 	var/projectile_type
 	/// If we only want to go off some of the time when a signal fires, this is the percent chance for it to fire
 	var/shot_prob
+	/// If we only want the projectile to hit certain zones on a carbon target, like if we only want to hit legs
+	var/list/restricted_zones
 
-/datum/component/projectile_shooter/Initialize(projectile_type = /obj/projectile/bullet/c10mm, shot_prob = 100, signal_or_sig_list)
+/datum/component/projectile_shooter/Initialize(projectile_type = /obj/projectile/bullet/c10mm, shot_prob = 100, list/restricted_zones = null, signal_or_sig_list)
 	src.projectile_type = projectile_type
 	src.shot_prob = shot_prob
+	if(istype(restricted_zones))
+		src.restricted_zones = restricted_zones
 
 	// unarmed attack is a special case for gunboots so they can shoot someone you stomp on. This happens 100% of the time you kick, ignoring shot_prob
 	if(islist(signal_or_sig_list) && (COMSIG_HUMAN_MELEE_UNARMED_ATTACK in signal_or_sig_list))
 		signal_or_sig_list -= COMSIG_HUMAN_MELEE_UNARMED_ATTACK
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/check_equip)
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/check_dropped)
+
+	if(istype(parent, /obj/item/clothing/shoes)) // special case for gunboots kicking
+		var/obj/item/clothing/shoes/parent_shoes = parent
+		if(ishuman(parent_shoes.loc))
+			var/mob/living/carbon/human/wearer = parent_shoes.loc
+			RegisterSignal(wearer, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/check_kick)
 
 	RegisterSignal(parent, signal_or_sig_list, .proc/shoot_randomly) //Registers all the signals in signal_or_sig_list.
 
@@ -46,8 +57,11 @@
 	shot.original = target
 	shot.fired_from = parent_atom
 	shot.firer = parent_atom // don't hit ourself that would be really annoying
-	shot.impacted = list(possible_owner = TRUE) // just to make sure we don't hit the wearer
-	shot.def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	shot.impacted = list()
+	if(isliving(possible_owner))
+		shot.impacted[possible_owner] = TRUE// just to make sure we don't hit the wearer if there is one
+	if(restricted_zones)
+		shot.def_zone = pick(restricted_zones)
 	shot.preparePixelProjectile(target, possible_owner)
 	if(!shot.suppressed)
 		if(isliving(possible_owner))
@@ -64,13 +78,3 @@
 	var/mob/living/attacked_living = attacked_atom
 	if(attacked_living.body_position == LYING_DOWN)
 		INVOKE_ASYNC(src, .proc/pew, attacked_living)
-
-/// As above, special case for gun shoes so they can kick and shoot
-/datum/component/projectile_shooter/proc/check_equip(datum/source, mob/living/user, slot)
-	SIGNAL_HANDLER
-	RegisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/check_kick)
-
-/// As above, special case for gun shoes so they can kick and shoot
-/datum/component/projectile_shooter/proc/check_dropped(datum/source, mob/living/user)
-	SIGNAL_HANDLER
-	UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
