@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - qol: "added a unique message to trying to speak with a vow of silence"
