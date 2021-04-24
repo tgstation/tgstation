@@ -1,0 +1,4 @@
+author: "Moose1002"
+delete-after: True
+changes: 
+  - bugfix: "Dogs no longer respond to commands when dead."
