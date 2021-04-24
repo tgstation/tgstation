@@ -1565,6 +1565,7 @@
 #include "code\modules\admin\verbs\fps.dm"
 #include "code\modules\admin\verbs\getlogs.dm"
 #include "code\modules\admin\verbs\ghost_pool_protection.dm"
+#include "code\modules\admin\verbs\hiddenprints.dm"
 #include "code\modules\admin\verbs\highlander_datum.dm"
 #include "code\modules\admin\verbs\individual_logging.dm"
 #include "code\modules\admin\verbs\machine_upgrade.dm"
