@@ -14,7 +14,9 @@
 	if(.)
 		return
 	if(action == "get_month")
-		return ui.send_asset(new /datum/asset/changelog_item(params["filename"]))
+		var/datum/asset/changelog_item/changelog_item = new /datum/asset/changelog_item(params["filename"])
+		ui.send_asset(changelog_item)
+		return qdel(changelog_item)
 
 /datum/changelog/ui_static_data()
 	var/list/data = list( "dates" = list() )
