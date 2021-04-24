@@ -63,8 +63,7 @@ All the important duct code:
 		if(D.duct_layer & duct_layer)
 			disconnect_duct()
 
-	if(active)
-		attempt_connect()
+	SSfluids.prime_queued += src
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
@@ -88,6 +87,9 @@ All the important duct code:
 				add_connects(D)
 	update_appearance()
 
+	SSfluids.prime_queued -= src
+	SSfluids.build_queued -= src
+
 ///see if whatever we found can be connected to
 /obj/machinery/duct/proc/connect_network(atom/movable/AM, direction, ignore_color)
 	if(istype(AM, /obj/machinery/duct))
@@ -101,7 +103,7 @@ All the important duct code:
 ///connect to a duct
 /obj/machinery/duct/proc/connect_duct(obj/machinery/duct/D, direction, ignore_color)
 	var/opposite_dir = turn(direction, 180)
-	if(!active || !D.active)
+	if(!active || !D.active || (D in SSfluids.build_queued)) //if they're already build queued, someone else primed them already and we'll end up being connected anyway
 		return
 
 	if(!dumb && D.dumb && !(opposite_dir & D.connects))
@@ -133,10 +135,16 @@ All the important duct code:
 			create_duct()
 			duct.add_duct(D)
 	add_neighbour(D, direction)
-	//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
-	D.attempt_connect()
+
+	D.safe_connect()
 
 	return TRUE
+
+///Delegates connecting to the plumbing subsystem, which ensures connections are done sane and clean
+/obj/machinery/duct/proc/safe_connect()
+	//addtimer so it's delegated to a proper queued subsystem. might cause large networks of ducts to visually connect and reconnect, but prevents lagspikes and crashes
+	addtimer(CALLBACK(src, .proc/attempt_connect))
+	SSfluids.build_queued += src //track we're already being built
 
 ///connect to a plumbing object
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/P, direction)

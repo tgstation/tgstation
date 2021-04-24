@@ -3,3 +3,15 @@ PROCESSING_SUBSYSTEM_DEF(fluids)
 	wait = 20
 	stat_tag = "FD" //its actually Fluid Ducts
 	flags = SS_NO_INIT | SS_TICKER
+
+	///We randomly pick a duct from this list to start building a network
+	var/list/prime_queued = list()
+	///We track all the ducts that are currently building and queued in the timer subsystem, so we only prime new ductnetworks
+	var/list/build_queued = list()
+
+/datum/controller/subsystem/processing/fluids/fire(resumed = FALSE)
+	. = ..()
+
+	if(!build_queued.len && prime_queued.len)
+		var/obj/machinery/duct/D = pick(prime_queued)
+		D.attempt_connect()
