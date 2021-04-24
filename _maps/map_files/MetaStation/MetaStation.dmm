@@ -7316,11 +7316,12 @@
 /obj/structure/window/reinforced,
 /obj/structure/table,
 /obj/machinery/button/door{
-	id = "xenobio5";
+	id = "xenobio4";
 	layer = 3.3;
-	name = "Xenobio Pen 5 Blast Doors";
+	name = "Xenobio Pen 4 Blast Doors";
 	pixel_y = 4;
-	req_access_txt = "55"
+	req_access_txt = "55";
+	sync_doors = 4
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
