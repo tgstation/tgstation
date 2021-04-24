@@ -141,6 +141,12 @@
 	item_instance = /obj/item/food/fishmeat
 	cost_per_order = 12
 
+/datum/orderable_item/meat_product
+	name = "Meat Product"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/meat/slab/meatproduct
+	cost_per_order = 15
+
 /datum/orderable_item/spider_eggs
 	name = "Spider Eggs"
 	category_index = CATEGORY_MILK_EGGS
@@ -188,4 +194,10 @@
 	name = "Soy Sauce"
 	category_index = CATEGORY_SAUCES_REAGENTS
 	item_instance = /obj/item/reagent_containers/food/condiment/soysauce
+	cost_per_order = 15
+
+/datum/orderable_item/bbqsauce
+	name = "BBQ Sauce"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/bbqsauce
 	cost_per_order = 15
