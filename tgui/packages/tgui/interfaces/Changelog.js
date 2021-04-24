@@ -1,6 +1,3 @@
-// This is done due to state usage not being detected outside of component
-/* eslint-disable react/no-unused-state */
-
 import { classes } from 'common/react';
 import { useBackend } from '../backend';
 import { Component, Fragment } from 'inferno';
@@ -39,167 +36,6 @@ const icons = {
   tgs: { icon: 'toolbox', color: 'purple' },
   tweak: { icon: 'wrench', color: 'green' },
   unknown: { icon: 'info-circle', color: 'label' },
-};
-
-const Header = () => (
-  <>
-    <h1>Traditional Games Space Station 13</h1>
-    <p>
-      <b>Thanks to: </b>
-      Baystation 12, /vg/station, NTstation, CDK Station devs, FacepunchStation,
-      GoonStation devs, the original Space Station 13 developers, Invisty for
-      the title image and the countless others who have contributed to the game,
-      issue tracker or wiki over the years.
-    </p>
-    <p>
-      {'Current project maintainers can be found '}
-      <a href="https://github.com/tgstation?tab=members">
-        here
-      </a>
-      {', recent GitHub contributors can be found '}
-      <a href="https://github.com/tgstation/tgstation/pulse/monthly">
-        here
-      </a>.
-    </p>
-    <p>
-      {'You can also join our discord '}
-      <a href="https://tgstation13.org/phpBB/viewforum.php?f=60">
-        here
-      </a>.
-    </p>
-  </>
-);
-
-const Footer = () => (
-  <>
-    <p>
-      <b>Licence: </b>
-      <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">
-        GNU Affero General Public License 3.0
-      </a>
-    </p>
-    <h3>GoonStation 13 Development Team</h3>
-    <p>
-      <b>Coders: </b>
-      Stuntwaffle, Showtime, Pantaloons, Nannek, Keelin, Exadv1, hobnob,
-      Justicefries, 0staf, sniperchance, AngriestIBM, BrianOBlivion
-    </p>
-    <p>
-      <b>Spriters: </b>
-      Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange, I Said No
-    </p>
-    <p>
-      {'Except where otherwise noted, Goon Station 13 is licensed under a '}
-      <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">
-        Creative Commons Attribution-Noncommercial-Share Alike 3.0 License.
-      </a>
-      {' Rights are currently extended to '}
-      <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a>
-      {' only.'}
-    </p>
-  </>
-);
-
-const ChangelogData = (props) => {
-  const { data } = props;
-
-  return (
-    Object.entries(data).reverse().map(([date, authors]) => (
-      <Section key={date} title={dateformat(date, 'd mmmm yyyy')}>
-        <Box ml={3}>
-          {Object.entries(authors).map(([name, changes]) => (
-            <Fragment key={name}>
-              <h4>{name} changed:</h4>
-              <Box ml={3}>
-                <Table>
-                  {changes.map(change => {
-                    const changeType = Object.keys(change)[0];
-                    return (
-                      <Table.Row key={changeType + change[changeType]}>
-                        <Table.Cell
-                          className={classes([
-                            'Changelog__Cell',
-                            'Changelog__Cell--Icon',
-                          ])}
-                        >
-                          <Icon
-                            className={classes([
-                              'Changelog__Icon',
-                              icons[changeType].class,
-                            ])}
-                            color={icons[changeType].color}
-                            name={icons[changeType].icon}
-                          />
-                        </Table.Cell>
-                        <Table.Cell className="Changelog__Cell">
-                          {change[changeType]}
-                        </Table.Cell>
-                      </Table.Row>
-                    );
-                  })}
-                </Table>
-              </Box>
-            </Fragment>
-          ))}
-        </Box>
-      </Section>
-    ))
-  );
-};
-
-const DateDropdown = (props) => {
-  const { self } = props;
-  const { selectedDate, selectedIndex } = self.state;
-  const { data: { dates } } = useBackend(self.context);
-  const { dateChoices } = self;
-
-  return (
-    <Stack mb={1}>
-      <Stack.Item>
-        <Button
-          className="Changelog__Button"
-          disabled={selectedIndex === 0}
-          icon={'chevron-left'}
-          onClick={() => {
-            const index = selectedIndex - 1;
-
-            self.setData(null);
-            self.setSelectedIndex(index);
-            self.setSelectedDate(dateChoices[index]);
-            return self.getData(dates[index] + '.yml');
-          }} />
-      </Stack.Item>
-      <Stack.Item>
-        <Dropdown
-          displayText={selectedDate}
-          options={dateChoices}
-          onSelected={value => {
-            const index = dateChoices.indexOf(value);
-
-            self.setData(null);
-            self.setSelectedIndex(index);
-            self.setSelectedDate(value);
-            return self.getData(dates[index] + '.yml');
-          }}
-          selected={selectedDate}
-          width={'150px'}/>
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          className="Changelog__Button"
-          disabled={selectedIndex === dateChoices.length - 1}
-          icon={'chevron-right'}
-          onClick={() => {
-            const index = selectedIndex + 1;
-
-            self.setData(null);
-            self.setSelectedIndex(index);
-            self.setSelectedDate(dateChoices[index]);
-            return self.getData(dates[index] + '.yml');
-          }} />
-      </Stack.Item>
-    </Stack>
-  );
 };
 
 export class Changelog extends Component {
@@ -266,18 +102,171 @@ export class Changelog extends Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { data, selectedDate, selectedIndex } = this.state;
+    const { data: { dates } } = useBackend(this.context);
+    const { dateChoices } = this;
+
+    const header = (
+      <>
+        <h1>Traditional Games Space Station 13</h1>
+        <p>
+          <b>Thanks to: </b>
+          Baystation 12, /vg/station, NTstation, CDK Station devs,
+          FacepunchStation, GoonStation devs, the original Space Station 13
+          developers, Invisty for the title image and the countless others who
+          have contributed to the game, issue tracker or wiki over the years.
+        </p>
+        <p>
+          {'Current project maintainers can be found '}
+          <a href="https://github.com/tgstation?tab=members">
+            here
+          </a>
+          {', recent GitHub contributors can be found '}
+          <a href="https://github.com/tgstation/tgstation/pulse/monthly">
+            here
+          </a>.
+        </p>
+        <p>
+          {'You can also join our discord '}
+          <a href="https://tgstation13.org/phpBB/viewforum.php?f=60">
+            here
+          </a>.
+        </p>
+      </>
+    );
+
+    const footer = (
+      <>
+        <p>
+          <b>Licence: </b>
+          <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">
+            GNU Affero General Public License 3.0
+          </a>
+        </p>
+        <h3>GoonStation 13 Development Team</h3>
+        <p>
+          <b>Coders: </b>
+          Stuntwaffle, Showtime, Pantaloons, Nannek, Keelin, Exadv1, hobnob,
+          Justicefries, 0staf, sniperchance, AngriestIBM, BrianOBlivion
+        </p>
+        <p>
+          <b>Spriters: </b>
+          Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange,
+          I Said No
+        </p>
+        <p>
+          {'Except where otherwise noted, Goon Station 13 is licensed under a '}
+          <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">
+            Creative Commons Attribution-Noncommercial-Share Alike 3.0 License.
+          </a>
+          {' Rights are currently extended to '}
+          <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a>
+          {' only.'}
+        </p>
+      </>
+    );
+
+    const dateDropdown = (
+      <Stack mb={1}>
+        <Stack.Item>
+          <Button
+            className="Changelog__Button"
+            disabled={selectedIndex === 0}
+            icon={'chevron-left'}
+            onClick={() => {
+              const index = selectedIndex - 1;
+
+              this.setData(null);
+              this.setSelectedIndex(index);
+              this.setSelectedDate(dateChoices[index]);
+              return this.getData(dates[index] + '.yml');
+            }} />
+        </Stack.Item>
+        <Stack.Item>
+          <Dropdown
+            displayText={selectedDate}
+            options={dateChoices}
+            onSelected={value => {
+              const index = dateChoices.indexOf(value);
+
+              this.setData(null);
+              this.setSelectedIndex(index);
+              this.setSelectedDate(value);
+              return this.getData(dates[index] + '.yml');
+            }}
+            selected={selectedDate}
+            width={'150px'} />
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            className="Changelog__Button"
+            disabled={selectedIndex === dateChoices.length - 1}
+            icon={'chevron-right'}
+            onClick={() => {
+              const index = selectedIndex + 1;
+
+              this.setData(null);
+              this.setSelectedIndex(index);
+              this.setSelectedDate(dateChoices[index]);
+              return this.getData(dates[index] + '.yml');
+            }} />
+        </Stack.Item>
+      </Stack>
+    );
+
+    const changes = data && (
+      Object.entries(data).reverse().map(([date, authors]) => (
+        <Section key={date} title={dateformat(date, 'd mmmm yyyy')}>
+          <Box ml={3}>
+            {Object.entries(authors).map(([name, changes]) => (
+              <Fragment key={name}>
+                <h4>{name} changed:</h4>
+                <Box ml={3}>
+                  <Table>
+                    {changes.map(change => {
+                      const changeType = Object.keys(change)[0];
+                      return (
+                        <Table.Row key={changeType + change[changeType]}>
+                          <Table.Cell
+                            className={classes([
+                              'Changelog__Cell',
+                              'Changelog__Cell--Icon',
+                            ])}
+                          >
+                            <Icon
+                              className={classes([
+                                'Changelog__Icon',
+                                icons[changeType].class,
+                              ])}
+                              color={icons[changeType].color}
+                              name={icons[changeType].icon}
+                            />
+                          </Table.Cell>
+                          <Table.Cell className="Changelog__Cell">
+                            {change[changeType]}
+                          </Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
+                  </Table>
+                </Box>
+              </Fragment>
+            ))}
+          </Box>
+        </Section>
+      ))
+    );
 
     return (
       <Window title="Changelog" width={675} height={650}>
         <Window.Content scrollable>
-          <Header />
-          <DateDropdown self={this} />
-          {data && <ChangelogData data={data} />}
+          {header}
+          {dateDropdown}
+          {changes}
           {!data && <p>Loading changelog data...</p>}
           {data === 'error' && <p>Failed to load data after 3 attempts</p>}
-          <DateDropdown self={this} />
-          <Footer />
+          {dateDropdown}
+          {footer}
         </Window.Content>
       </Window>
     );
