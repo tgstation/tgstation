@@ -259,22 +259,19 @@
 	light_power = 0
 
 /obj/machinery/computer/security/telescreen/update_icon_state()
-	icon_state = initial(icon_state)
 	if(machine_stat & BROKEN)
 		icon_state += "b"
+	else
+		icon_state = initial(icon_state)
 	return ..()
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
 	desc = "Damn, they better have the /tg/ channel on these things."
-	icon = 'icons/obj/status_display.dmi'
-	icon_state = "entertainment_blank"
 	network = list("thunder")
 	density = FALSE
 	circuit = null
 	interaction_flags_atom = NONE  // interact() is called by BigClick()
-	var/icon_state_off = "entertainment_blank"
-	var/icon_state_on = "entertainment"
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()
@@ -286,16 +283,20 @@
 
 	INVOKE_ASYNC(src, /atom.proc/interact, usr)
 
-/obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
-	if(on && icon_state == icon_state_off)
+obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
+	if(on)
 		say(pick(
 			"Feats of bravery live now at the thunderdome!",
 			"Two enter, one leaves! Tune in now!",
 			"Violence like you've never seen it before!",
 			"Spears! Camera! Action! LIVE NOW!"))
-		icon_state = icon_state_on
-	else
-		icon_state = icon_state_off
+
+/obj/machinery/computer/security/telescreen/entertainment/update_overlays()
+	. = ..()
+	cut_overlays()
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
+	. += "[initial(icon_state)][rand(1,4)]"
 
 /obj/machinery/computer/security/telescreen/rd
 	name = "\improper Research Director's telescreen"

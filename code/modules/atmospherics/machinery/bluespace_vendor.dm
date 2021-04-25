@@ -12,7 +12,7 @@
 #define BS_MODE_OPEN 4
 
 /obj/machinery/bluespace_vendor
-	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
+	icon = 'icons/obj/atmospherics/components/bluespace_gas_vendor.dmi'
 	icon_state = "bluespace_vendor_off"
 	name = "Bluespace Gas Vendor"
 	desc = "Sells gas tanks with custom mixes for all the family!"
@@ -74,14 +74,12 @@
 
 	if(nbuild)
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -30 : 30)
-		pixel_y = (dir & 3)? (dir == 1 ? -30 : 30) : 0
-
 	update_appearance()
 
 /obj/machinery/bluespace_vendor/Initialize()
 	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
+	AddElement(/datum/element/wall_mount)
 
 /obj/machinery/bluespace_vendor/LateInitialize()
 	. = ..()
@@ -105,6 +103,14 @@
 		if(BS_MODE_OPEN)
 			icon_state = "[base_icon]_open"
 	return ..()
+
+/obj/machinery/bluespace_vendor/update_overlays()
+	. = ..()
+	cut_overlays()
+	if(mode == BS_MODE_IDLE)
+		. += mutable_appearance(icon, "[base_icon]_idle_light-mask", 0, EMISSIVE_PLANE, alpha)
+	else if(mode == BS_MODE_PUMPING)
+		. += mutable_appearance(icon, "[base_icon]_pumping_light-mask", 0, EMISSIVE_PLANE, alpha)
 
 /obj/machinery/bluespace_vendor/process()
 	if(mode == BS_MODE_OPEN)
