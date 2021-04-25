@@ -909,7 +909,7 @@
 			. += "Nothing."
 		
 		. += "<span class='notice'> <i>Right-clicking</i> will splash the beaker on the ground.</span>"
-	. += "<span class='notice'> <i>Alt+click</i> will drop the currently stored beaker. </span>"
+	. += "<span class='notice'> <i>Alt-click</i> will drop the currently stored beaker. </span>"
 
 /obj/item/borg/apparatus/beaker/update_overlays()
 	. = ..()
@@ -973,7 +973,7 @@
 		. += organ.name
 	else
 		. += "Nothing."
-	. += "<span class='notice'> <i>Alt+click</i> will drop the currently stored organ. </span>"
+	. += "<span class='notice'> <i>Alt-click</i> will drop the currently stored organ. </span>"
 
 /obj/item/borg/apparatus/organ_storage/update_overlays()
 	. = ..()
@@ -1037,7 +1037,7 @@
 	. = ..()
 	if(stored)
 		. += "The apparatus currently has [stored] secured."
-	. += "<span class='notice'> <i>Alt+click</i> will drop the currently stored circuit. </span>"
+	. += "<span class='notice'> <i>Alt-click</i> will drop the currently stored circuit. </span>"
 
 /obj/item/borg/apparatus/circuit/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
