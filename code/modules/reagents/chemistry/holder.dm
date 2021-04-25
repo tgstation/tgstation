@@ -488,7 +488,8 @@
 					R.expose_single(reagent, target_atom, methods, part, show_message)
 				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(reagent.type, transfer_amount)
-			transfer_log[reagent.type] = transfer_amount
+			var/list/reagent_qualities = list("amount" = transfer_amount, "purity" = reagent.purity)
+			transfer_log[reagent.type] = reagent_qualities
 
 	else
 		var/to_transfer = amount
@@ -513,7 +514,8 @@
 					R.expose_single(reagent, target_atom, methods, transfer_amount, show_message)
 				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(reagent.type, transfer_amount)
-			transfer_log[reagent.type] = transfer_amount
+			var/list/reagent_qualities = list("amount" = transfer_amount, "purity" = reagent.purity)
+			transfer_log[reagent.type] = reagent_qualities
 
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
@@ -1438,19 +1440,22 @@
  * Used in attack logs for reagents in pills and such
  *
  * Arguments:
- * * external_list - list of reagent types = amounts
+ * * external_list - assoc list of reagent type = list("amount" = amounts, "purity" = purity)
  */
 /datum/reagents/proc/log_list(external_list)
 	if((external_list && !length(external_list)) || !length(reagent_list))
 		return "no reagents"
 
+
+
 	var/list/data = list()
 	if(external_list)
 		for(var/r in external_list)
-			data += "[r] ([round(external_list[r], 0.1)]u)"
+			var/list/qualities = external_list[r]
+			data += "[r] ([round(qualities["amount"], 0.1)]u, [qualities["purity"]] purity)"
 	else
 		for(var/datum/reagent/reagent as anything in reagent_list) //no reagents will be left behind
-			data += "[reagent.type] ([round(reagent.volume, 0.1)]u)"
+			data += "[reagent.type] ([round(reagent.volume, 0.1)]u, [reagent.purity] purity)"
 			//Using types because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 	return english_list(data)
 
