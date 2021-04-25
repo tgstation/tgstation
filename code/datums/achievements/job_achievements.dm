@@ -43,5 +43,5 @@
 
 /datum/award/achievement/jobs/supply_good
 	name = "Centcom Grade: Exemplary Supply"
-	desc = "Every requested item was delivered WITH a signature! Amazing!"
+	desc = "Every requested item today was delivered WITH a signature! Amazing!"
 	database_id = MEDAL_GOOD_SUPPLY

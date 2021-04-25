@@ -490,12 +490,10 @@
 			parts += G.get_result()
 		return "<div class='panel stationborder'><ul>[parts.Join()]</ul></div>"
 
-///Generate a report for how much money is on station, as well as the richest crewmember on the station.
+///Generate a report for how much money is on station, as well as the richest crewmember on the station. and centcom grades for each department, in their own proc.
 /datum/controller/subsystem/ticker/proc/market_report()
 	var/list/parts = list()
 
-	///total service income
-	var/tourist_income = 0
 	///This is the richest account on station at roundend.
 	var/datum/bank_account/mr_moneybags
 	///This is the station's total wealth at the end of the round.
@@ -511,6 +509,26 @@
 		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
 			mr_moneybags = current_acc
 	parts += "<div class='panel stationborder'><span class='header'>Station Economic Summary:</span><br>"
+
+	parts += service_report()
+	parts += supply_report()
+
+	parts += "<b>General Statistics:</b><br>"
+	parts += "There were [station_vault] credits collected by crew this shift.<br>"
+	if(total_players > 0)
+		parts += "An average of [station_vault/total_players] credits were collected.<br>"
+		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
+	if(mr_moneybags)
+		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
+	else
+		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
+	return parts
+
+///This report has a centcom grade for service, and shows how much money they earned.
+/datum/controller/subsystem/ticker/proc/service_report()
+	var/list/parts = list()
+	///total service income
+	var/tourist_income = 0
 	parts += "<span class='service'>Service Statistics:</span><br>"
 	for(var/venue_path in SSrestaurant.all_venues)
 		var/datum/venue/venue = SSrestaurant.all_venues[venue_path]
@@ -530,16 +548,12 @@
 		else
 			parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with service today! What a team!</span><br>"
 			award_positions(GLOB.service_food_positions, /datum/award/achievement/jobs/service_good)
+	return parts
 
-
-///TODO: expected_signatures NEEDS TO BE AT LEAST 3 FOR ACHIEVEMENTS
-
-//1 to 50 shitty supply
-//50 to 99 okay supply
-//100 good supply
-
+///This report has a centcom grade for supply, and shows how many signatures they got.
+/datum/controller/subsystem/ticker/proc/supply_report()
+	var/list/parts = list()
 	var/percentage_of_completed_signatures = (SSshuttle.correct_signatures / SSshuttle.expected_signatures) * 100
-
 	parts += "<span class='supply'>Supply Statistics:</span><br>"
 
 	if(SSshuttle.expected_signatures)
@@ -555,26 +569,14 @@
 		switch(percentage_of_completed_signatures)
 			if(0 to 49)
 				parts += "<span class='redtext'>Centcom is unimpressed with the sub-50 percent signature return rate.</span><br>"
-				award_positions(/datum/award/achievement/jobs/supply_bad)
-			if(2001 to 4999)
+				award_positions(GLOB.supply_positions - "Shaft Miner", /datum/award/achievement/jobs/supply_bad)
+			if(50 to 99)
 				parts += "<span class='greentext'>Centcom is satisfied with supply's signature return rate today.</span><br>"
-				award_positions(/datum/award/achievement/jobs/supply_okay)
+				award_positions(GLOB.supply_positions - "Shaft Miner", /datum/award/achievement/jobs/supply_okay)
 			else
 				parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with supply today! What a team!</span><br>"
-				award_positions(/datum/award/achievement/jobs/supply_good)
-
-	parts += "<b>General Statistics:</b><br>"
-	parts += "There were [station_vault] credits collected by crew this shift.<br>"
-	if(total_players > 0)
-		parts += "An average of [station_vault/total_players] credits were collected.<br>"
-		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
-	if(mr_moneybags)
-		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
-	else
-		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
+				award_positions(GLOB.supply_positions - "Shaft Miner", /datum/award/achievement/jobs/supply_good)
 	return parts
-
-/datum/controller/subsystem/ticker/proc/award_service(award)
 
 /**
  * Awards the list of jobs an achievement and updates the chef and bartender's highscore for tourists served.
