@@ -102,7 +102,7 @@
 	new /obj/effect/temp_visual/resonance_crush(T)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
-		M.gets_drilled(creator)
+		M.gets_drilled(creator, TRUE)
 	check_pressure(T)
 	playsound(T,'sound/weapons/resonator_blast.ogg',50,TRUE)
 	for(var/mob/living/L in T)

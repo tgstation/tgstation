@@ -89,7 +89,7 @@
 /turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	for(var/turf/closed/mineral/M in range(drill.chassis,1))
 		if(get_dir(drill.chassis,M)&drill.chassis.dir)
-			M.gets_drilled()
+			M.gets_drilled(user, TRUE)
 	drill.log_message("[user] drilled through [src]", LOG_MECHA)
 	drill.move_ores()
 

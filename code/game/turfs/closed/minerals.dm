@@ -100,7 +100,7 @@
 		to_chat(user, "<span class='notice'>You finish pulling apart [src].</span>")
 		gets_drilled(user)
 
-/turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
+/turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE, exp_mod = 1)
 	if (mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
@@ -108,9 +108,9 @@
 		var/mob/living/carbon/human/H = user
 		if(give_exp)
 			if (mineralType && (mineralAmt > 0))
-				H.mind.adjust_experience(/datum/skill/mining, initial(mineralType.mine_experience) * mineralAmt)
+				H.mind.adjust_experience(/datum/skill/mining, initial(mineralType.mine_experience) * mineralAmt * exp_mod)
 			else
-				H.mind.adjust_experience(/datum/skill/mining, 4)
+				H.mind.adjust_experience(/datum/skill/mining, 4 * exp_mod)
 
 	for(var/obj/effect/temp_visual/mining_overlay/M in src)
 		qdel(M)
