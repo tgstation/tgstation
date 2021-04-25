@@ -129,7 +129,7 @@
 	var/obj/effect/proc_holder/spell/spell_to_add
 
 /datum/eldritch_knowledge/spell/on_gain(mob/user)
-	spell_to_add = new
+	spell_to_add = new spell_to_add
 	user.mind.AddSpell(spell_to_add)
 	return ..()
 
