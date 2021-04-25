@@ -160,7 +160,7 @@
 	. = ""
 	var/newletter = ""
 	var/rawchar = ""
-	var/static/regex/nostutter = regex(@@[aeiouAEIOU "'()[\]{}.!?,:;_`~-]@)
+	var/static/regex/nostutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
 	for(var/i = 1, i <= leng, i += length(rawchar))
 		rawchar = newletter = phrase[i]
 		if(prob(80) && !nostutter.Find(rawchar))
