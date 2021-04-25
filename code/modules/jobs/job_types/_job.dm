@@ -310,12 +310,6 @@
 	types += duffelbag
 	return types
 
-/// Warden and regular officers add this result to their get_access()
-/datum/job/proc/check_config_for_sec_maint()
-	if(CONFIG_GET(flag/security_has_maint_access))
-		return list(ACCESS_MAINT_TUNNELS)
-	return list()
-
 /// An overridable getter for more dynamic goodies.
 /datum/job/proc/get_mail_goodies(mob/recipient)
 	return mail_goodies

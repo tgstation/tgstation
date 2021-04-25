@@ -46,7 +46,7 @@
 			continue
 		SEND_SIGNAL(atom_in_transit, COMSIG_MOVABLE_DISPOSING, src, D, hasmob)
 		atom_in_transit.forceMove(src)
-		if(istype(atom_in_transit, /mob/living/silicon/robot))
+		if(iscyborg(atom_in_transit))
 			var/obj/item/dest_tagger/borg/tagger = locate() in atom_in_transit
 			if(tagger)
 				destinationTag = tagger.currTag

@@ -203,7 +203,7 @@
 	. = ..()
 	if(opened)
 		icon_state = "[initial(icon_state)]open"
-		for(var/obj/item/mail/Mail in src)
+		if(locate(/obj/item/mail) in src)
 			icon_state = initial(icon_state)
 			break
 	else
@@ -222,8 +222,7 @@
 		else
 			new_mail = new /obj/item/mail/envelope(src)
 		var/mob/living/carbon/human/mail_to
-		if(mail_recipients.len)
-			mail_to = pick(mail_recipients)
+		mail_to = pick(mail_recipients)
 		if(mail_to)
 			new_mail.initialize_for_recipient(mail_to)
 			mail_recipients -= mail_to //Once picked, the mail crate will need a new recipient.
@@ -279,3 +278,5 @@
 /obj/item/paper/fluff/junkmail_generic/Initialize()
 	. = ..()
 	info = pick(GLOB.junkmail_messages)
+
+#undef FULL_CRATE_LETTER_ODDS
