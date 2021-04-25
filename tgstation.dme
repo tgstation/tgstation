@@ -1459,6 +1459,7 @@
 #include "code\game\turfs\closed\wall\mineral_walls.dm"
 #include "code\game\turfs\closed\wall\misc_walls.dm"
 #include "code\game\turfs\closed\wall\reinf_walls.dm"
+#include "code\game\turfs\closed\wall\window_frames.dm"
 #include "code\game\turfs\open\_open.dm"
 #include "code\game\turfs\open\chasm.dm"
 #include "code\game\turfs\open\dirtystation.dm"
