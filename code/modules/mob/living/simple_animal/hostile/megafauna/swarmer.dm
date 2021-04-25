@@ -167,7 +167,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	attack_all_objects = TRUE //attempt to nibble everything
 	lose_patience_timeout = 150
 	var/static/list/sharedWanted = typecacheof(list(/turf/closed/mineral, /turf/closed/wall)) //eat rocks and walls
-	var/static/list/sharedIgnore = list()
+	var/static/list/sharedIgnore = list(/obj/machinery/mineral/ore_redemption, /obj/machinery/rnd/production/protolathe, /obj/machinery/rnd/production/circuit_imprinter/department, /obj/machinery/ore_silo)
 
 //This handles viable things to eat/attack
 //Place specific cases of AI derpiness here
