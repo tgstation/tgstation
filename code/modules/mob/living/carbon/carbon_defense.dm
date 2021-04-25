@@ -2,6 +2,8 @@
 
 /mob/living/carbon/get_eye_protection()
 	. = ..()
+	if(HAS_TRAIT(src, TRAIT_BLIND))
+		return INFINITY //For all my homies that can not see in the world
 	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		return INFINITY //Can't get flashed without eyes
@@ -16,6 +18,8 @@
 
 /mob/living/carbon/get_ear_protection()
 	. = ..()
+	if(HAS_TRAIT(src, TRAIT_DEAF))
+		return INFINITY //For all my homies that can not hear in the world
 	var/obj/item/organ/ears/E = getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
 		return INFINITY
