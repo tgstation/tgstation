@@ -139,10 +139,8 @@
 
 /datum/antagonist/traitor/internal_affairs/reinstate_escape_objective()
 	..()
-	for (var/objective in objectives)
-		if(!(istype(objective, /datum/objective/martyr)))
-			continue
-		remove_objective(objective)
+	for (var/datum/objective/martyr/martyr_objective in objectives)
+		remove_objective(martyr_objective)
 
 	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive/malf
 	var/datum/objective/escape_objective = new objtype
