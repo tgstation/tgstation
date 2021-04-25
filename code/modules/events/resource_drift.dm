@@ -61,9 +61,9 @@
 	// Spawn some debris in based on the number of caches we're throwing.
 	switch(amt_debris)
 		if(MAJOR_DEBRIS)
-			spawn_meteors(num_caches * 3, GLOB.meteorsC)
-		if(MINOR_DEBRIS)
 			spawn_meteors(num_caches * 2, GLOB.meteorsC)
+		if(MINOR_DEBRIS)
+			spawn_meteors(num_caches, GLOB.meteorsC)
 
 	// Now, spawn the caches and yeet them out
 	for(var/crate in picked_crates)
@@ -119,7 +119,7 @@
 		"Cyber Arabia", \
 		"Jerusalem 2", \
 		"C'est La France", \
-		"Germany 3"
+		"Germany III"
 		)
 	var/party_one = pick_n_take(parties)
 	var/party_two = pick_n_take(parties)
