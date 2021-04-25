@@ -321,9 +321,11 @@
 			current_movement_target = pointed_movable
 			blackboard[BB_FETCH_TARGET] = pointed_movable
 			blackboard[BB_FETCH_DELIVER_TO] = pointing_friend
+			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/fetch)
 		if(DOG_COMMAND_ATTACK)
 			pawn.visible_message("<span class='notice'>[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and growls intensely!</span>")
 			current_movement_target = pointed_movable
 			blackboard[BB_DOG_HARASS_TARGET] = pointed_movable
+			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/harass)
