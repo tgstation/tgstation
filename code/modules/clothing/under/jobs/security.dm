@@ -12,17 +12,17 @@
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30, WOUND = 10)
+	strip_delay = 50
+	alt_covers_chest = TRUE
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/officer
 	name = "security jumpsuit"
 	desc = "A tactical security jumpsuit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rsecurity"
 	inhand_icon_state = "r_suit"
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30, WOUND = 10)
-	strip_delay = 50
-	alt_covers_chest = TRUE
-	sensor_mode = SENSOR_COORDS
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/officer/grey
 	name = "grey security jumpsuit"
@@ -51,7 +51,6 @@
 	desc = "The latest in fashionable security outfits."
 	icon_state = "officerblueclothes"
 	inhand_icon_state = "officerblueclothes"
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/constable
 	name = "constable outfit"
@@ -66,11 +65,6 @@
 	desc = "A formal security suit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rwarden"
 	inhand_icon_state = "r_suit"
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30, WOUND = 10)
-	strip_delay = 50
-	alt_covers_chest = TRUE
-	sensor_mode = 3
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/warden/grey
 	name = "grey security suit"
@@ -92,7 +86,6 @@
 	name = "warden's formal uniform"
 	icon_state = "wardenblueclothes"
 	inhand_icon_state = "wardenblueclothes"
-	alt_covers_chest = TRUE
 
 /*
  * Detective
@@ -102,11 +95,6 @@
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	inhand_icon_state = "det"
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30, WOUND = 10)
-	strip_delay = 50
-	alt_covers_chest = TRUE
-	sensor_mode = 3
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/detective/skirt
 	name = "detective's suitskirt"
@@ -122,7 +110,6 @@
 	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
 	icon_state = "greydet"
 	inhand_icon_state = "greydet"
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/detective/grey/skirt
 	name = "noir suitskirt"
@@ -141,11 +128,8 @@
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "rhos"
 	inhand_icon_state = "r_suit"
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50, WOUND = 10)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50, WOUND = 10)
 	strip_delay = 60
-	alt_covers_chest = TRUE
-	sensor_mode = 3
-	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/security/head_of_security/skirt
 	name = "head of security's jumpskirt"
@@ -197,7 +181,6 @@
 	name = "head of security's formal uniform"
 	icon_state = "hosblueclothes"
 	inhand_icon_state = "hosblueclothes"
-	alt_covers_chest = TRUE
 
 /*
  *Spacepol

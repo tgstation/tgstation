@@ -1,13 +1,14 @@
 /obj/item/clothing/under/rank/rnd
 	icon = 'icons/obj/clothing/under/rnd.dmi'
 	worn_icon = 'icons/mob/clothing/under/rnd.dmi'
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/rnd/research_director
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
 	name = "research director's vest suit"
 	icon_state = "director"
 	inhand_icon_state = "lb_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 10, RAD = 0, FIRE = 0, ACID = 35)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, RAD = 0, FIRE = 0, ACID = 35)
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
@@ -21,7 +22,6 @@
 	icon_state = "director_skirt"
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -30,7 +30,6 @@
 	name = "research director's tan suit"
 	icon_state = "rdwhimsy"
 	inhand_icon_state = "rdwhimsy"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 
@@ -48,7 +47,6 @@
 	name = "research director's turtleneck"
 	icon_state = "rdturtle"
 	inhand_icon_state = "p_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 
@@ -67,7 +65,6 @@
 	icon_state = "toxins"
 	inhand_icon_state = "w_suit"
 	permeability_coefficient = 0.5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/rnd/scientist/skirt
 	name = "scientist's jumpskirt"
@@ -100,7 +97,6 @@
 	icon_state = "genetics"
 	inhand_icon_state = "w_suit"
 	permeability_coefficient = 0.5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/rnd/geneticist/skirt
 	name = "geneticist's jumpskirt"
