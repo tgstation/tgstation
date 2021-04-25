@@ -11,9 +11,9 @@
 		return FALSE
 
 
-	if(M.signature_status == SIGNATURE_INCORRECT)
+	if(manifest.signature_status == SIGNATURE_INCORRECT)
 		return FALSE
-	if(M.is_approved() && !M.errors)
+	if(manifest.is_approved() && !manifest.errors)
 		return TRUE
 	return FALSE
 
@@ -35,15 +35,15 @@
 		return FALSE
 
 
-	if(M.signature_status == SIGNATURE_INCORRECT)
+	if(manifest.signature_status == SIGNATURE_INCORRECT)
 		return FALSE
-	if(M.is_denied() && M.errors)
+	if(manifest.is_denied() && manifest.errors)
 		return TRUE
 	return FALSE
 
 /datum/export/manifest_error_denied/get_cost(var/obj/item/paper/fluff/jobs/cargo/manifest/manifest)
 
-	return ..() + M.order_cost
+	return ..() + manifest.order_cost
 
 
 // Erroneously approved manifest.
@@ -57,15 +57,15 @@
 		return FALSE
 
 
-	if(M.signature_status == SIGNATURE_INCORRECT)
+	if(manifest.signature_status == SIGNATURE_INCORRECT)
 		return FALSE
-	if(M.is_approved() && M.errors)
+	if(manifest.is_approved() && manifest.errors)
 		return TRUE
 	return FALSE
 
 /datum/export/manifest_error/get_cost(var/obj/item/paper/fluff/jobs/cargo/manifest/manifest)
 
-	return -M.order_cost
+	return -manifest.order_cost
 
 
 // Erroneously denied manifest.
@@ -80,15 +80,15 @@
 		return FALSE
 
 
-	if(M.signature_status == SIGNATURE_INCORRECT)
+	if(manifest.signature_status == SIGNATURE_INCORRECT)
 		return FALSE
-	if(M.is_denied() && !M.errors)
+	if(manifest.is_denied() && !manifest.errors)
 		return TRUE
 	return FALSE
 
 /datum/export/manifest_correct_denied/get_cost(var/obj/item/paper/fluff/jobs/cargo/manifest/manifest)
 
-	return ..() - M.order_cost
+	return ..() - manifest.order_cost
 
 // Someone who wasn't the recipient signed the manifest, ruining it entirely.
 // -80 credits flat.
@@ -100,6 +100,6 @@
 
 /datum/export/manifest_fucked_signature/applies_to(var/obj/item/paper/fluff/jobs/cargo/manifest/manifest)
 
-	if(M.signature_status == SIGNATURE_INCORRECT)
+	if(manifest.signature_status == SIGNATURE_INCORRECT)
 		return TRUE
 	return FALSE

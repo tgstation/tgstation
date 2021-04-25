@@ -344,7 +344,6 @@
 				log_paper("[key_name(ui.user)] writing to paper [name]")
 				if(info != in_paper)
 					to_chat(ui.user, "You have added to your paper masterpiece!");
-					info
 					info = in_paper
 					update_static_data(usr,ui)
 

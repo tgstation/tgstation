@@ -18,9 +18,9 @@
 	if(!signature_ckey_required || signature_status != SIGNATURE_NOT_FILLED)
 		return
 	if(signature_ckey_required == by_whom)
-		signature_fulfilled = SIGNATURE_CORRECT
+		signature_status = SIGNATURE_CORRECT
 	else
-		signature_fulfilled = SIGNATURE_INCORRECT
+		signature_status = SIGNATURE_INCORRECT
 
 /obj/item/paper/fluff/jobs/cargo/manifest/examine(mob/user)
 	. = ..()
@@ -96,7 +96,7 @@
  * * signature_requirement: ckey of owner, if the manifest should require signing.
  */
 /datum/supply_order/proc/generateManifest(obj/container, owner, packname, signature_requirement)
-	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest = new(container, src id, 0)
+	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest = new(container, src, id, 0)
 
 	var/station_name = (manifest.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
