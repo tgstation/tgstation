@@ -520,16 +520,48 @@
 	log_econ("Roundend service income: [tourist_income] credits.")
 	switch(tourist_income)
 		if(0)
-			parts += "<span class='redtext'>Service did not earn any credits...</span><br>"
+			parts += "<span class='neutraltext'>service did not interact with the tourist program enough for a grade.</span><br>"
 		if(1 to 2000)
 			parts += "<span class='redtext'>Centcom is displeased. Come on service, surely you can do better than that.</span><br>"
-			award_service(/datum/award/achievement/jobs/service_bad)
+			award_positions(GLOB.service_food_positions, /datum/award/achievement/jobs/service_bad)
 		if(2001 to 4999)
 			parts += "<span class='greentext'>Centcom is satisfied with service's job today.</span><br>"
-			award_service(/datum/award/achievement/jobs/service_okay)
+			award_positions(GLOB.service_food_positions, /datum/award/achievement/jobs/service_okay)
 		else
 			parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with service today! What a team!</span><br>"
-			award_service(/datum/award/achievement/jobs/service_good)
+			award_positions(GLOB.service_food_positions, /datum/award/achievement/jobs/service_good)
+
+
+///TODO: expected_signatures NEEDS TO BE AT LEAST 3 FOR ACHIEVEMENTS
+
+//1 to 50 shitty supply
+//50 to 99 okay supply
+//100 good supply
+
+	var/percentage_of_completed_signatures = (SSshuttle.correct_signatures / SSshuttle.expected_signatures) * 100
+
+	parts += "<span class='supply'>Supply Statistics:</span><br>"
+
+	if(SSshuttle.expected_signatures)
+		parts += "supply ordered [SSshuttle.expected_signatures] requested crates, and got signatures signed on [SSshuttle.correct_signatures] of their manifests.<br>"
+		parts += "That gives them a [percentage_of_completed_signatures] return rate[percentage_of_completed_signatures < 50 ? "..." : "!"]<br>"
+	else
+		parts += "Nothing was asked of supply today, and boy, did they deliver!<br>"
+	if(SSshuttle.expected_signatures <= 3)
+		parts += "<span class='neutraltext'>The station didn't make enough requests for Centcom to give a grade.</span><br>"
+	if(!SSshuttle.correct_signatures)
+		parts += "<span class='redtext'>supply did not return any signatures...</span><br>"
+	else
+		switch(percentage_of_completed_signatures)
+			if(0 to 49)
+				parts += "<span class='redtext'>Centcom is unimpressed with the sub-50 percent signature return rate.</span><br>"
+				award_positions(/datum/award/achievement/jobs/supply_bad)
+			if(2001 to 4999)
+				parts += "<span class='greentext'>Centcom is satisfied with supply's signature return rate today.</span><br>"
+				award_positions(/datum/award/achievement/jobs/supply_okay)
+			else
+				parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with supply today! What a team!</span><br>"
+				award_positions(/datum/award/achievement/jobs/supply_good)
 
 	parts += "<b>General Statistics:</b><br>"
 	parts += "There were [station_vault] credits collected by crew this shift.<br>"
@@ -542,38 +574,40 @@
 		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
 	return parts
 
+/datum/controller/subsystem/ticker/proc/award_service(award)
+
 /**
- * Awards the service department an achievement and updates the chef and bartender's highscore for tourists served.
+ * Awards the list of jobs an achievement and updates the chef and bartender's highscore for tourists served.
  *
  * Arguments:
- * * award: Achievement to give service department
+ * * award: Achievement to give this department
  */
-/datum/controller/subsystem/ticker/proc/award_service(award)
-	for(var/mob/living/carbon/human/service_member as anything in GLOB.human_list)
-		if(!service_member.mind)
+/datum/controller/subsystem/ticker/proc/award_positions(position_list, award)
+	for(var/mob/living/carbon/human/position_member as anything in GLOB.human_list)
+		if(!position_member.mind)
 			continue
-		var/datum/mind/service_mind = service_member.mind
-		if(!service_mind.assigned_role)
+		var/datum/mind/position_mind = position_member.mind
+		if(!position_mind.assigned_role)
 			continue
-		for(var/job in GLOB.service_food_positions)
-			if(service_mind.assigned_role != job)
+		for(var/job in position_list)
+			if(position_mind.assigned_role != job)
 				continue
-			//general awards
-			service_member.client?.give_award(award, service_member)
-			if(service_mind.assigned_role == "Cook")
+			position_member.client?.give_award(award, position_member)
+			//some specific role stuff, it'll be ignored unless these roles are in the position list
+			if(position_mind.assigned_role == "Cook")
 				var/datum/venue/restaurant = SSrestaurant.all_venues[/datum/venue/restaurant]
 				var/award_score = restaurant.total_income
-				var/award_status = service_member.client.get_award_status(/datum/award/score/chef_tourist_score)
+				var/award_status = position_member.client.get_award_status(/datum/award/score/chef_tourist_score)
 				if(award_score > award_status)
 					award_score -= award_status
-				service_member.client?.give_award(/datum/award/score/chef_tourist_score, service_member, award_score)
-			if(service_mind.assigned_role == "Bartender")
+				position_member.client?.give_award(/datum/award/score/chef_tourist_score, position_member, award_score)
+			if(position_mind.assigned_role == "Bartender")
 				var/datum/venue/bar = SSrestaurant.all_venues[/datum/venue/bar]
 				var/award_score = bar.total_income
-				var/award_status = service_member.client.get_award_status(/datum/award/score/bartender_tourist_score)
+				var/award_status = position_member.client.get_award_status(/datum/award/score/bartender_tourist_score)
 				if(award_score - award_status > 0)
 					award_score -= award_status
-				service_member.client?.give_award(/datum/award/score/bartender_tourist_score, service_member, award_score)
+				position_member.client?.give_award(/datum/award/score/bartender_tourist_score, position_member, award_score)
 
 /datum/controller/subsystem/ticker/proc/medal_report()
 	if(GLOB.commendations.len)

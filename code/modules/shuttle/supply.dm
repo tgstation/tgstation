@@ -154,6 +154,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		value += SO.pack.get_cost()
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
+		if(SO.reason)
+			SSshuttle.expected_signatures++
 		QDEL_NULL(SO.applied_coupon)
 
 		if(!SO.pack.goody) //we handle goody crates below

@@ -11,24 +11,37 @@
 	database_id = MEDAL_CHEM_TUT
 	icon = "chem_tut"
 
-//all of service! hip hip!
+//service members related to serving food! hip hip!
 
 /datum/award/achievement/jobs/service_bad
 	name = "Centcom Grade: Shitty Service"
-	desc = "Well, you at least tried. How about trying harder?"
+	desc = "You earned less than 2000 credits from tourists. Pretty bad job, but you at least tried!"
 	database_id = MEDAL_BAD_SERVICE
-	icon = "chem_tut"
 
 /datum/award/achievement/jobs/service_okay
 	name = "Centcom Grade: Acceptable Service"
-	desc = "Well, it'll do! You and your department did just fine."
+	desc = "More than 2000 makes for a decent day of service! You and your department did just fine."
 	database_id = MEDAL_OKAY_SERVICE
-	icon = "chem_tut"
 
 /datum/award/achievement/jobs/service_good
 	name = "Centcom Grade: Exemplary Service"
-	desc = "Centcom is very impressed with your department!"
+	desc = "More than 5000 credits, wow! Centcom is very impressed with your department!"
 	database_id = MEDAL_GOOD_SERVICE
-	icon = "chem_tut"
 
-//civilian achievies! while not recognized by the code, it is recognized by our hearts
+//for cargo techies, and the quartermaster!
+//note, the achievement for bad supply will only be given if you got any signatures at all (aka tried) and enough requests were made (look we got 100%! >only one request made)
+
+/datum/award/achievement/jobs/supply_bad
+	name = "Centcom Grade: Shitty Supply"
+	desc = "Less than half of your delivered requests got a signature. Very lackluster delivery!"
+	database_id = MEDAL_BAD_SUPPLY
+
+/datum/award/achievement/jobs/supply_okay
+	name = "Centcom Grade: Acceptable Supply"
+	desc = "At least half of your delivered requests collected signatures. Centcom is satisfied!"
+	database_id = MEDAL_OKAY_SUPPLY
+
+/datum/award/achievement/jobs/supply_good
+	name = "Centcom Grade: Exemplary Supply"
+	desc = "Every requested item was delivered WITH a signature! Amazing!"
+	database_id = MEDAL_GOOD_SUPPLY

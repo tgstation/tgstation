@@ -59,6 +59,11 @@ SUBSYSTEM_DEF(shuttle)
 	/// A listing of previously delivered supply packs
 	var/list/orderhistory = list()
 
+	///maximum amount of signatures based off of how many requests were made
+	var/expected_signatures = 0
+	///every correct signature sent back
+	var/correct_signatures = 0
+
 	/// A list of job accesses that are able to purchase any shuttles
 	var/list/has_purchase_shuttle_access
 

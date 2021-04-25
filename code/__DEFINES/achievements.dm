@@ -121,6 +121,10 @@
 #define MEDAL_OKAY_SERVICE "Okay Service"
 #define MEDAL_GOOD_SERVICE "Good Service"
 
+#define MEDAL_BAD_SUPPLY "Bad Supply"
+#define MEDAL_OKAY_SUPPLY "Okay Supply"
+#define MEDAL_GOOD_SUPPLY "Good Supply"
+
 //scores
 
 #define CHEF_TOURISTS_SERVED "Tourists Served As Chef"

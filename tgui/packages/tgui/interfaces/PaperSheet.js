@@ -168,7 +168,7 @@ const checkAllFields = (txt, font, color, user_name, bold=false) => {
   }
   if (replace.length > 0) {
     for (const o of replace) {
-
+      act("fieldwritten", { value: o.raw_text });
       txt = txt.replace(o.raw_text, o.value);
     }
   }

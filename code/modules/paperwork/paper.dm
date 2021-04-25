@@ -344,12 +344,19 @@
 				log_paper("[key_name(ui.user)] writing to paper [name]")
 				if(info != in_paper)
 					to_chat(ui.user, "You have added to your paper masterpiece!");
+					info
 					info = in_paper
 					update_static_data(usr,ui)
 
 
 			update_appearance()
 			. = TRUE
+		if("fieldwritten")
+			field_filled(params["value"], key_name(ui.user))
+
+///proc called whenever a field is written, for manifests mostly
+/obj/item/paper/proc/field_filled(with_what, by_whom)
+	return
 
 /**
  * Construction paper
