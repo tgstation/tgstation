@@ -191,6 +191,22 @@
 	to_chat(actor, "<span class='warning'>This bluespace source will be important to us later. Aborting.</span>")
 	return FALSE
 
+/obj/machinery/rnd/protolathe/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This mechanical lathe should be preserved, it will facilitate the creation of tools for our masters in the future. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/mineral/ore_redemption/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This industrial-degree smelter should be preserved, it will facilitate obtention of materials. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/rnd/production/circuit_imprinter/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This micro-circuit printer should be preserved, it will accelerate technological development. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/ore_silo/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>This dense storage unit should be preserved, it will make distribution of resources more efficient for our masters in the future. Aborting.</span>")
+	return FALSE
+
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(loc, /area/shuttle)
 	for(var/turf/turf_in_range as anything in RANGE_TURFS(1, src))
