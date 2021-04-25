@@ -8,7 +8,7 @@
 	info = "If anyone finds this, please, don't let my kids know I died a coward.."
 
 /datum/outfit/tradepostcoward
-	name = "derelict tradepost officer"
+	name = "Derelict Tradepost Officer"
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	accessory = /obj/item/clothing/accessory/armband/deputy
 	suit = /obj/item/clothing/suit/armor/vest
