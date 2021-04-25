@@ -351,7 +351,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explode()
 
 /obj/machinery/power/supermatter_crystal/proc/explode()
-	for(var/mob/living/victim in GLOB.alive_mob_list)
+	for(var/mob as anything in GLOB.alive_mob_list)
+		var/mob/living/victim = mob
 		if(!istype(victim) || victim.z != z)
 			continue
 		if(ishuman(victim))
@@ -378,9 +379,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
 		if(local_turf) //If something fucks up we blow anyhow. This fix is 4 years old and none ever said why it's here. help.
-			var/obj/singularity/singularity = new(local_turf)
-			singularity.energy = 800
-			singularity.consume(src)
+			var/obj/singularity/created_singularity = new(local_turf)
+			created_singularity.energy = 800
+			created_singularity.consume(src)
 			return //No boom for me sir
 	if(power > POWER_PENALTY_THRESHOLD)
 		investigate_log("has spawned additional energy balls.", INVESTIGATE_SUPERMATTER)
@@ -478,7 +479,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
 			//Check for holes in the SM inner chamber
-			for(var/turf in RANGE_TURFS(1, loc))
+			for(var/turf as anything in RANGE_TURFS(1, loc))
 				if(!isspaceturf(turf))
 					continue
 				var/turf/turf_to_check = turf
@@ -1188,10 +1189,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			zap_str = target.zap_act(zap_str, zap_flags)
 		//This gotdamn variable is a boomer and keeps giving me problems
-		var/turf/turf = get_turf(target)
+		var/turf/target_turf = get_turf(target)
 		var/pressure = 1
-		if(turf?.return_air())
-			pressure = max(1,turf.return_air().return_pressure())
+		if(target_turf?.return_air())
+			pressure = max(1,target_turf.return_air().return_pressure())
 		//We get our range with the strength of the zap and the pressure, the higher the former and the lower the latter the better
 		var/new_range = clamp(zap_str / pressure * 10, 2, 7)
 		var/zap_count = 1
