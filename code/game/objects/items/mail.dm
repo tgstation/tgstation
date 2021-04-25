@@ -1,5 +1,3 @@
-#define FULL_CRATE_LETTER_ODDS 70
-
 /// Mail is tamper-evident and unresealable, postmarked by CentCom for an individual recepient.
 /obj/item/mail
 	name = "mail"
@@ -205,7 +203,6 @@
 		icon_state = "[initial(icon_state)]open"
 		if(locate(/obj/item/mail) in src)
 			icon_state = initial(icon_state)
-			break
 	else
 		icon_state = "[initial(icon_state)]sealed"
 
@@ -278,5 +275,3 @@
 /obj/item/paper/fluff/junkmail_generic/Initialize()
 	. = ..()
 	info = pick(GLOB.junkmail_messages)
-
-#undef FULL_CRATE_LETTER_ODDS

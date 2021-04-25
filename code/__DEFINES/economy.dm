@@ -2,6 +2,8 @@
 #define STARTING_PAYCHECKS 7
 //How much mail the Economy SS will create per minute, regardless of firing time.
 #define MAX_MAIL_PER_MINUTE 3
+//Probability of using letters of envelope sprites on all letters.
+#define FULL_CRATE_LETTER_ODDS 70
 
 //Experimental change: These are subject to tweaking based on the /tg/ economy overhaul.
 //Current design direction: Higher paying jobs are vastly outnumbered by lower paying jobs, so anything above medium hurts inflation, common jobs help inflation
