@@ -61,7 +61,8 @@ GLOBAL_LIST_EMPTY(frill_objects)
 	src.icon = icon
 	icon_state = "frill-[junction]"
 	if(shadow)
-		vis_contents += get_frill_object(icon, junction, FALSE, 120, 0, 0, UNDER_FRILL_PLANE)
+		var/mutable_appearance/shadow = mutable_appearance(icon, junction, 0, UNDER_FRILL_PLANE, 120)
+		add_overlay(list(shadow))
 	if(!isnull(custom_alpha))
 		alpha = custom_alpha
 	if(!isnull(custom_pixel_x))
