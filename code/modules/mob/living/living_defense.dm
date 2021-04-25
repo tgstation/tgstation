@@ -403,7 +403,7 @@
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
-	if(get_eye_protection() < intensity && (override_blindness_check || !is_blind()))
+	if(get_eye_protection() < intensity && (affect_silicon || override_blindness_check || !is_blind()))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
 		return TRUE
