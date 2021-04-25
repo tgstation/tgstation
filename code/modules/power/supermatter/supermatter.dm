@@ -385,10 +385,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(T)
 			var/obj/energy_ball/E = new(T)
 			E.energy = 200 //Gets us about 9 balls
-	else if(power > EVENT_POWER_PENALTY_THRESHOLD && prob(power/50) && !istype(src, /obj/machinery/power/supermatter_crystal/shard))
-		var/datum/round_event_control/crystal_invasion/crystals = new/datum/round_event_control/crystal_invasion
-		crystals.runEvent()
-		return //No boom for me sir
 	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
 	qdel(src)
@@ -1198,14 +1194,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(zap_count > 1)
 				targets_hit = targets_hit.Copy() //Pass by ref begone
 			supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit)
-
-/obj/machinery/power/supermatter_crystal/proc/destabilize(portal_numbers)
-	var/turf/turf_loc = get_turf(src)
-	if(!turf_loc)
-		return
-	explosion(turf_loc,0,round(portal_numbers/5),round(portal_numbers),1,1,1)
-	. = new/obj/machinery/destabilized_crystal(turf_loc)
-	qdel(src)
 
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'
