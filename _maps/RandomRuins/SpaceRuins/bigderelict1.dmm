@@ -14,7 +14,7 @@
 "el" = (/obj/effect/turf_decal/trimline/yellow/warning{dir = 1},/obj/structure/spider/stickyweb,/obj/effect/decal/cleanable/blood/old{icon_state = "floor4-old"},/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost)
 "em" = (/obj/effect/turf_decal/trimline/yellow/warning{dir = 1},/obj/structure/spider/stickyweb,/obj/structure/extinguisher_cabinet/directional/east,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost)
 "eH" = (/obj/structure/spider/stickyweb,/obj/effect/turf_decal/siding/white{dir = 1},/turf/open/floor/glass/reinforced,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"eX" = (/obj/machinery/suit_storage_unit/open,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
+"eX" = (/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "fI" = (/obj/effect/turf_decal/siding/blue/corner{dir = 4},/obj/structure/spider/stickyweb,/obj/structure/sign/poster/official/random{pixel_y = 32},/obj/effect/turf_decal/siding/thinplating/dark/corner,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "fR" = (/obj/effect/turf_decal/siding/blue{dir = 1},/obj/effect/turf_decal/siding/thinplating/dark,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "gf" = (/obj/effect/turf_decal/siding/blue/corner{dir = 1},/obj/structure/spider/stickyweb,/obj/effect/turf_decal/trimline/red/filled/line{dir = 4},/obj/effect/turf_decal/trimline/white/line{dir = 4},/obj/effect/turf_decal/siding/thinplating/dark/corner{dir = 8},/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -63,7 +63,7 @@
 "uI" = (/obj/effect/turf_decal/delivery,/obj/structure/closet/crate/freezer,/obj/structure/cable,/obj/effect/spawner/lootdrop/maint_drugs,/obj/item/reagent_containers/blood/random,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/derelictoutpost)
 "uK" = (/obj/effect/turf_decal/delivery,/obj/machinery/icecream_vat,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/derelictoutpost)
 "vq" = (/obj/effect/turf_decal/delivery,/obj/structure/closet/crate/science,/obj/item/assembly/prox_sensor,/obj/item/bodypart/r_arm/robot/surplus,/obj/item/bodypart/l_arm/robot/surplus,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/derelictoutpost)
-"vE" = (/obj/effect/turf_decal/delivery,/obj/structure/closet/crate,/obj/item/firing_pin/paywall{multi_payment = 1; payment_amount = 200},/turf/open/floor/iron/dark,/area/ruin/space/has_grav/derelictoutpost)
+"vE" = (/obj/effect/turf_decal/delivery,/obj/structure/closet/crate,/obj/item/firing_pin/paywall{multi_payment = 1; payment_amount = 200},/obj/item/pda/clear,/turf/open/floor/iron/dark,/area/ruin/space/has_grav/derelictoutpost)
 "vI" = (/obj/structure/reagent_dispensers/water_cooler,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost)
 "vP" = (/obj/structure/spider/stickyweb,/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny,/obj/structure/cable,/obj/effect/turf_decal/siding/thinplating/dark/corner{dir = 1},/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "wn" = (/obj/structure/table,/obj/item/paper_bin,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -100,6 +100,7 @@
 "IK" = (/obj/effect/turf_decal/trimline/yellow/warning,/obj/structure/spider/cocoon,/obj/structure/spider/stickyweb,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost)
 "IM" = (/obj/machinery/door/airlock/maintenance,/obj/structure/cable,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "Jg" = (/obj/structure/lattice,/turf/template_noop,/area/template_noop)
+"Jv" = (/obj/structure/closet/wardrobe/cargotech,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "JV" = (/turf/closed/wall,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "Km" = (/obj/machinery/door/airlock/maintenance,/obj/structure/cable,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "Ly" = (/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 8},/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
@@ -134,7 +135,7 @@
 "Yy" = (/obj/structure/spider/cocoon,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "YD" = (/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "YJ" = (/obj/effect/decal/cleanable/blood/old{icon_state = "floor2-old"},/obj/structure/spider/stickyweb,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
-"YL" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"YL" = (/obj/machinery/light/small{dir = 8},/obj/machinery/suit_storage_unit/open,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "Zs" = (/obj/structure/spider/cocoon,/obj/structure/spider/stickyweb,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "Zt" = (/obj/machinery/portable_atmospherics/canister/air,/obj/effect/turf_decal/trimline/yellow/warning{dir = 1},/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "Zz" = (/obj/structure/reagent_dispensers/watertank,/obj/effect/turf_decal/trimline/yellow/warning{dir = 1},/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
@@ -148,7 +149,7 @@ WRWRWRWRWRWRWRWRWRWRWRWRWRWRmKmKdobMdomKmKmKWRWRWR
 WRWRWRWRbUbUbUbUbUmKmKWRWRmKmKBCBCcJBCdododoBCBCWR
 WRWRbUbUbUdwdEdGbUbUBCdododoBCBCEwdQefeheldMemBCBC
 WRbUbUeXfIfRfRfRgfhfhIhShVhWBCilixiCjrjGjQjRkokOdo
-WRQDNawAFjlCeHBoigbUmInbnJQCoRoYpfprpupzpCqnqJqMdo
+WRQDJvwAFjlCeHBoigbUmInbnJQCoRoYpfprpupzpCqnqJqMdo
 WRQDrLjZsnsGtbPXMcbUBCuhuudoBCuDpfuIuKpzvqvEqJvIdo
 WRbUwnwAFjBoPXwUwVxdxhxhxsxHykzfBiBlBSCgBSCMDWEFdo
 WRbUbUNaxjZVFEFRvPbUdododoBCBCBCFZGLGXFZIbIzIKBCBC
