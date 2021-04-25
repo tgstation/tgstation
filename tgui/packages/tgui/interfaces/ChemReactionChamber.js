@@ -1,7 +1,7 @@
 import { map } from 'common/collections';
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { AnimatedNumber, Box, Button, Input, LabeledList, NumberInput, Section, RoundGauge, Stack } from '../components';
+import { AnimatedNumber, Box, Button, Input, LabeledControls, LabeledList, NumberInput, Section, RoundGauge, Stack } from '../components';
 import { Window } from '../layouts';
 import { round, toFixed } from 'common/math';
 
@@ -56,42 +56,41 @@ export const ChemReactionChamber = (props, context) => {
                   </Stack.Item>
                 </Stack>
               )}>
-              <LabeledList>
-                <LabeledList.Item label="Current Temperature">
+              <Stack fill>
+                <Stack.Item textColor="label">
+                  Current Temperature:
+                </Stack.Item>
+                <Stack.Item grow>
                   <AnimatedNumber
                     value={temperature}
                     format={value => toFixed(value) + ' K'} />
-                </LabeledList.Item>
-                <LabeledList.Item label="pH">
-                  <AnimatedNumber value={ph}>
-                    {(_, value) => (
-                      <RoundGauge
-                        value={value}
-                        minValue={0}
-                        maxValue={14}
-                        format={() => null}
-                        left={-7.5}
-                        position="absolute"
-                        size={1.50}
-                        ranges={{
-                          "red": [-0.22, 1.5],
-                          "orange": [1.5, 3],
-                          "yellow": [3, 4.5],
-                          "olive": [4.5, 5],
-                          "good": [5, 6],
-                          "green": [6, 8.5],
-                          "teal": [8.5, 9.5],
-                          "blue": [9.5, 11],
-                          "purple": [11, 12.5],
-                          "violet": [12.5, 14],
-                        }} />
-                    )}
-                  </AnimatedNumber>
-                  <AnimatedNumber
+                </Stack.Item>
+                <Stack.Item textColor="label">
+                  {ph+ " ph:"}
+                </Stack.Item>
+                <Stack.Item grow={12}>
+                  <RoundGauge
                     value={ph}
-                    format={value => round(value, 3)} />
-                </LabeledList.Item>
-              </LabeledList>
+                    minValue={0}
+                    maxValue={14}
+                    format={() => null}
+                    position="absolute"
+                    size={1.50}
+                    top={0.25}
+                    ranges={{
+                      "red": [-0.22, 1.5],
+                      "orange": [1.5, 3],
+                      "yellow": [3, 4.5],
+                      "olive": [4.5, 5],
+                      "good": [5, 6],
+                      "green": [6, 8.5],
+                      "teal": [8.5, 9.5],
+                      "blue": [9.5, 11],
+                      "purple": [11, 12.5],
+                      "violet": [12.5, 14],
+                    }} />
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item grow>
