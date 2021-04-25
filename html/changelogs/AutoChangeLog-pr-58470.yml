@@ -1,0 +1,6 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - rscdel: "One-click antagonist has been removed. Consider executing midround rulesets or using the traitor panel instead."
+  - admin: "Calling an ERT is now its own verb."
+  - admin: "The N.E.R.D. has been moved to secrets."
