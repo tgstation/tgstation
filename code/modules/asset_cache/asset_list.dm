@@ -263,7 +263,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/changelog_item/proc/add_date(date)
 	if(!date)
 		return
-	var/filename = "[date].yml"
+	var/filename = sanitize_filename("[date].yml")
 	if(!(filename in assets))
 		SSassets.transport.register_asset(filename, file("html/changelogs/archive/" + filename))
 		assets += list(filename)
