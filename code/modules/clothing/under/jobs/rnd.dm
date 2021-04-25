@@ -1,7 +1,6 @@
 /obj/item/clothing/under/rank/rnd
 	icon = 'icons/obj/clothing/under/rnd.dmi'
 	worn_icon = 'icons/mob/clothing/under/rnd.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/rnd/research_director
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
@@ -97,6 +96,7 @@
 	icon_state = "genetics"
 	inhand_icon_state = "w_suit"
 	permeability_coefficient = 0.5
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/rnd/geneticist/skirt
 	name = "geneticist's jumpskirt"
