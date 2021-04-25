@@ -1,0 +1,6 @@
+author: "ArcaneMusic, Jaw-sh, Tralezab"
+delete-after: True
+changes: 
+  - rscadd: "The mail system from Kiwistation has been ported."
+  - rscadd: "Cargo will gradually recieve mail crates over time, which contains letters and packages to and for the crew. Cargo should make an attempt to deliver people's mail."
+  - rscadd: "The International Spess Mail Legion has finally convinced the universe of the evils of mail fraud."

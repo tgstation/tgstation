@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(vis_overlays)
 		if(MC_TICK_CHECK)
 			return
 
-//the "thing" var can be anything with vis_contents which includes images
+//the "thing" var can be anything with vis_contents which includes images - in the future someone should totally allow vis overlays to be passed in as an arg instead of all this bullshit
 /datum/controller/subsystem/vis_overlays/proc/add_vis_overlay(atom/movable/thing, icon, iconstate, layer, plane, dir, alpha = 255, add_appearance_flags = NONE, unique = FALSE)
 	var/obj/effect/overlay/vis/overlay
 	if(!unique)

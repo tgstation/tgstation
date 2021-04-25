@@ -343,7 +343,7 @@
 			return //aborts loading anything this category has no usable paintings
 		var/list/chosen = pick(painting_category)
 		if(!fexists("data/paintings/[persistence_id]/[chosen["md5"]].png")) //shitmin deleted this art, lets remove json entry to avoid errors
-			painting_category.Remove(chosen)
+			painting_category -= list(chosen)
 			continue //and try again
 		painting = chosen
 	var/title = painting["title"]

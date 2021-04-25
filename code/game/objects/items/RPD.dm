@@ -239,6 +239,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/examine(mob/user)
 	. = ..()
 	. += "You can scroll your mouse wheel to change the piping layer."
+	. += "You can right click a pipe to set the RPD to its color and layer."
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
@@ -263,6 +264,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		install_upgrade(target, user)
 		return TRUE
 	return ..()
+
+/obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
+	if(!istype(target, /obj/machinery/atmospherics))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(target.pipe_color && target.piping_layer)
+		paint_color = GLOB.pipe_color_name[target.pipe_color]
+		piping_layer = target.piping_layer
+		to_chat(user, "<span class='notice'>You change [src] to [paint_color] color and layer [piping_layer] pipes.</span>")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pipe_dispenser/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rpd_upgrade))
@@ -525,12 +535,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(source.incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
 		return
 
-	if(delta_y > 0)
+	if(delta_y < 0)
 		piping_layer = min(PIPING_LAYER_MAX, piping_layer + 1)
-	else if(delta_y < 0)
+	else if(delta_y > 0)
 		piping_layer = max(PIPING_LAYER_MIN, piping_layer - 1)
 	else
 		return
+	SStgui.update_uis(src)
 	to_chat(source, "<span class='notice'>You set the layer to [piping_layer].</span>")
 
 #undef ATMOS_CATEGORY
