@@ -1,4 +1,5 @@
 /datum/changelog
+	var/static/list/changelog_items = list()
 
 /datum/changelog/ui_state()
 	return GLOB.always_state
@@ -14,8 +15,10 @@
 	if(.)
 		return
 	if(action == "get_month")
-		var/datum/asset/changelog_item/changelog_item = get_asset_datum(/datum/asset/changelog_item)
-		changelog_item.add_date(params["date"])
+		var/datum/asset/changelog_item/changelog_item = changelog_items[params["date"]]
+		if (!changelog_item)
+			changelog_item = new /datum/asset/changelog_item(params["date"])
+			changelog_items[params["date"]] = changelog_item
 		return ui.send_asset(changelog_item)
 
 /datum/changelog/ui_static_data()

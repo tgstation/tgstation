@@ -250,24 +250,21 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/changelog_item
 	_abstract = /datum/asset/changelog_item
-	var/list/assets = list()
+	var/item_filename
+
+/datum/asset/changelog_item/New(date)
+	item_filename = sanitize_filename("[date].yml")
+	SSassets.transport.register_asset(item_filename, file("html/changelogs/archive/" + item_filename))
 
 /datum/asset/changelog_item/send(client)
-	. = SSassets.transport.send_assets(client, assets)
+	if (!item_filename)
+		return
+	. = SSassets.transport.send_assets(client, item_filename)
 
 /datum/asset/changelog_item/get_url_mappings()
-	. = list()
-	for(var/asset_name in assets)
-		.[asset_name] = SSassets.transport.get_asset_url(asset_name)
-
-/datum/asset/changelog_item/proc/add_date(date)
-	if(!date)
+	if (!item_filename)
 		return
-	var/filename = sanitize_filename("[date].yml")
-	if(!(filename in assets))
-		SSassets.transport.register_asset(filename, file("html/changelogs/archive/" + filename))
-		assets += list(filename)
-	return TRUE
+	. = list("[item_filename]" = SSassets.transport.get_asset_url(item_filename))
 
 /datum/asset/spritesheet/simple
 	_abstract = /datum/asset/spritesheet/simple
