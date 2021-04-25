@@ -100,13 +100,13 @@
 "IK" = (/obj/effect/turf_decal/trimline/yellow/warning,/obj/structure/spider/cocoon,/obj/structure/spider/stickyweb,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost)
 "IM" = (/obj/machinery/door/airlock/maintenance,/obj/structure/cable,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "Jg" = (/obj/structure/lattice,/turf/template_noop,/area/template_noop)
-"Jv" = (/obj/structure/closet/wardrobe/cargotech,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "JV" = (/turf/closed/wall,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "Km" = (/obj/machinery/door/airlock/maintenance,/obj/structure/cable,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"KT" = (/obj/structure/closet/wardrobe/cargotech,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "Ly" = (/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 8},/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "Mc" = (/obj/structure/spider/stickyweb,/obj/effect/turf_decal/siding/thinplating/dark{dir = 8},/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "Na" = (/obj/structure/spider/stickyweb,/turf/open/floor/iron,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"Nv" = (/obj/structure/cable,/obj/machinery/power/apc{pixel_y = 24; start_charge = 0},/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"Nv" = (/obj/structure/cable,/obj/machinery/power/apc/auto_name/north,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "NR" = (/obj/structure/cable,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "Om" = (/obj/structure/cable,/obj/structure/closet,/obj/item/wrench,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "Pg" = (/obj/structure/cable,/obj/structure/spider/stickyweb,/turf/open/floor/plating,/area/ruin/space/has_grav/derelictoutpost/powerstorage)
@@ -149,7 +149,7 @@ WRWRWRWRWRWRWRWRWRWRWRWRWRWRmKmKdobMdomKmKmKWRWRWR
 WRWRWRWRbUbUbUbUbUmKmKWRWRmKmKBCBCcJBCdododoBCBCWR
 WRWRbUbUbUdwdEdGbUbUBCdododoBCBCEwdQefeheldMemBCBC
 WRbUbUeXfIfRfRfRgfhfhIhShVhWBCilixiCjrjGjQjRkokOdo
-WRQDJvwAFjlCeHBoigbUmInbnJQCoRoYpfprpupzpCqnqJqMdo
+WRQDKTwAFjlCeHBoigbUmInbnJQCoRoYpfprpupzpCqnqJqMdo
 WRQDrLjZsnsGtbPXMcbUBCuhuudoBCuDpfuIuKpzvqvEqJvIdo
 WRbUwnwAFjBoPXwUwVxdxhxhxsxHykzfBiBlBSCgBSCMDWEFdo
 WRbUbUNaxjZVFEFRvPbUdododoBCBCBCFZGLGXFZIbIzIKBCBC
