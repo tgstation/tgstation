@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Clothing such as glasses will now appear over light variant lizard snouts properly instead of cutting into it."
