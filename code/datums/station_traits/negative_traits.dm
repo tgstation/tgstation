@@ -182,10 +182,10 @@
 			continue
 		area_open_turfs += location
 
-	for(var/i in 1 to 100) // It'll break long before this, this is just to be sure we have *some* limit to how much carnage happens
+	punpun.forceMove(pick(area_open_turfs))
+
+	for(var/i in 1 to rand(10, 40))
 		new /obj/effect/decal/cleanable/blood(pick(area_open_turfs))
-		if(prob(5))
-			break
 
 	var/list/blood_path = list()
 	for(var/i in 1 to 10) // Only 10 attempts
