@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(low_filtering_gases, list(
 
 /obj/item/gas_filter
 	name = "atmospheric gas filter"
-	desc = "piece of filtering cloth to be used with atmospheric gas masks and emergency gas masks"
+	desc = "A piece of filtering cloth to be used with atmospheric gas masks and emergency gas masks."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "gas_atmos_filter"
 	///Amount of filtering points available
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(low_filtering_gases, list(
 
 /obj/item/gas_filter/damaged
 	name = "damaged gas filter"
-	desc = "piece of filtering cloth to be used with atmospheric gas masks and emergency gas masks, it seems damaged"
+	desc = "A piece of filtering cloth to be used with atmospheric gas masks and emergency gas masks, it seems damaged."
 	filter_status = 50 //override on initialize
 
 /obj/item/gas_filter/damaged/Initialize()
