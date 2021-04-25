@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		else
 			new_mail.junk_mail()
 		if(new_mail)
-			SSeconomy.mail_waiting += 1
+			SSeconomy.mail_waiting -= 1
 	mailcrate.update_icon()
 	return mailcrate
 
