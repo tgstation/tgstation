@@ -9,9 +9,13 @@ type CharacterProfile = {
 type PreferencesMenuData = {
   character_preview_view: string,
   character_profiles: (CharacterProfile | null)[],
+
+  real_name: string,
 };
 
 const CharacterProfiles = (props: {
+  activeName: string,
+  onClick: (index: number) => void,
   profiles: (CharacterProfile | null)[],
 }) => {
   const { profiles } = props;
@@ -20,7 +24,12 @@ const CharacterProfiles = (props: {
     <Stack justify="center" wrap>
       {profiles.map((profile, index) => (
         <Stack.Item key={index}>
-          <Button fluid>{profile ? profile.name : "New Character"}</Button>
+          <Button
+            selected={profile && profile.name === props.activeName}
+            onClick={() => {
+              props.onClick(index);
+            }} fluid>{profile ? profile.name : "New Character"}
+          </Button>
         </Stack.Item>
       ))}
     </Stack>
@@ -35,16 +44,21 @@ export const PreferencesMenu = (props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <CharacterProfiles profiles={data.character_profiles} />
+            <CharacterProfiles activeName={data.real_name} onClick={(slot) => {
+              act("change_slot", {
+                slot: slot + 1,
+              });
+            }} profiles={data.character_profiles} />
           </Stack.Item>
 
           <Stack.Divider />
 
-          <Stack.Item height="200px">
+          <Stack.Item>
             <ByondUi
-              height="100%"
+              width="220px"
+              height="300px"
               params={{
-                zoom: 6,
+                zoom: 0,
                 id: data.character_preview_view,
                 type: "map",
               }}

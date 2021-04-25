@@ -149,6 +149,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///What outfit typepaths we've favorited in the SelectEquipment menu
 	var/list/favorite_outfits = list()
 
+	/// A preview of the current character
+	var/atom/movable/screen/character_preview_view/character_preview_view
+
+/datum/preferences/Destroy(force, ...)
+	QDEL_NULL(character_preview_view)
+	return ..()
+
 /datum/preferences/New(client/C)
 	parent = C
 
@@ -177,15 +184,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	menuoptions = list()
 	return
 
-#define APPEARANCE_CATEGORY_COLUMN "<td valign='top' width='14%'>"
-#define MAX_MUTANT_ROWS 4
-
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
 	CRASH("NYI: ShowChoices")
 
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
+	// If you leave and come back, re-register the character preview
+	if (!isnull(character_preview_view) && !(character_preview_view in user.client?.screen))
+		log_world("REREGISTER")
+		user.client.register_map_obj(character_preview_view)
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PreferencesMenu")
@@ -196,8 +205,103 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// `ui_status` needs to properly filter this.
 	return GLOB.always_state
 
-#undef APPEARANCE_CATEGORY_COLUMN
-#undef MAX_MUTANT_ROWS
+/datum/preferences/ui_data(mob/user)
+	var/list/data = list()
+
+	if (isnull(character_preview_view))
+		character_preview_view = create_character_preview_view(user)
+
+	data["character_profiles"] = create_character_profiles()
+
+	data["character_preview_view"] = character_preview_view.assigned_map
+
+	data["real_name"] = real_name
+
+	return data
+
+/datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
+		return
+
+	switch (action)
+		if ("change_slot")
+			// SAFETY: `load_character` performs sanitization the slot number
+			if (!load_character(params["slot"]))
+				random_character()
+				real_name = random_unique_name(gender)
+				// save_character()
+
+	return TRUE
+
+/datum/preferences/proc/create_character_preview_view(mob/user)
+	character_preview_view = new(null, src)
+	character_preview_view.setup_body()
+	user.client?.register_map_obj(character_preview_view)
+
+	// Re-register if they reconnect
+	RegisterSignal(user, COMSIG_MOB_CLIENT_LOGIN, .proc/register_character_preview)
+
+	return character_preview_view
+
+/datum/preferences/proc/register_character_preview(datum/source, client/client)
+	SIGNAL_HANDLER
+
+	client?.register_map_obj(character_preview_view)
+
+/// A preview of a character for use in the preferences menu
+/atom/movable/screen/character_preview_view
+	name = "character_preview"
+	del_on_map_removal = FALSE
+
+	/// The body that is displayed
+	var/mob/living/carbon/human/dummy/body
+
+	/// The preferences this refers to
+	var/datum/preferences/preferences
+
+/atom/movable/screen/character_preview_view/Initialize(mapload, datum/preferences/preferences)
+	. = ..()
+
+	assigned_map = "character_preview_[REF(src)]"
+	set_position(1, 1)
+
+	src.preferences = preferences
+
+/atom/movable/screen/character_preview_view/Destroy()
+	. = ..()
+
+	// vis_contents.Cut()
+	QDEL_NULL(body)
+
+	preferences = null
+
+/atom/movable/screen/character_preview_view/proc/setup_body()
+	body = new
+	preferences.update_preview_icon(body)
+	appearance = body.appearance
+
+/datum/preferences/proc/create_character_profiles()
+	var/list/profiles = list()
+
+	var/savefile/savefile = new(path)
+	for (var/index in 1 to max_save_slots)
+		// MOTHBLOCKS TODO: This cd's to root, is this even better?
+		savefile.cd = "/character[index]"
+
+		var/name
+		READ_FILE(savefile["real_name"], name)
+
+		if (isnull(name))
+			profiles += null
+			continue
+
+		// MOTHBLOCKS TODO: Cached profile shots
+		profiles += list(list(
+			"name" = name,
+		))
+
+	return profiles
 
 /datum/preferences/proc/SetJobPreferenceLevel(datum/job/job, level)
 	if (!job)
@@ -229,13 +333,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/validate_quirks()
 	if(GetQuirkBalance() < 0)
 		all_quirks = list()
-
-/datum/preferences/Topic(href, href_list, hsrc) //yeah, gotta do this I guess..
-	. = ..()
-	if(href_list["close"])
-		var/client/C = usr.client
-		if(C)
-			C.clear_character_previews()
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, is_latejoiner = TRUE)
 
