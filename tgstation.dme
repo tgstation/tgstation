@@ -679,7 +679,6 @@
 #include "code\datums\elements\selfknockback.dm"
 #include "code\datums\elements\skittish.dm"
 #include "code\datums\elements\snail_crawl.dm"
-#include "code\datums\elements\split_visibility.dm"
 #include "code\datums\elements\squashable.dm"
 #include "code\datums\elements\squish.dm"
 #include "code\datums\elements\strippable.dm"

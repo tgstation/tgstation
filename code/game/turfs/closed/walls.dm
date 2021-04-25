@@ -18,7 +18,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WALLS)
-	split_vis_icon = 'icons/turf/walls/wall.dmi'
+	frill_icon = 'icons/turf/walls/wall.dmi'
 
 	rcd_memory = RCD_MEMORY_WALL
 
