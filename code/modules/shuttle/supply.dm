@@ -242,7 +242,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	Then, fills the mail crate with mail, by picking applicable crew who can recieve mail at the time to sending.
 */
 /obj/docking_port/mobile/supply/proc/create_mail()
-
 	//Early return if there's no mail waiting to prevent taking up a slot.
 	if(!SSeconomy.mail_waiting)
 		return
