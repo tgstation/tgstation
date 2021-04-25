@@ -728,6 +728,7 @@ SUBSYSTEM_DEF(job)
 	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/hallway))
 
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
+	living_mob.Paralyze(54, TRUE) //54 is the added time of transit, falling, and opening. you're unparalyzed as soon as you land. needed to prevent fuckery in hyperspace
 	living_mob.forceMove(toLaunch)
 	new /obj/effect/pod_landingzone(spawn_turf, toLaunch)
 
