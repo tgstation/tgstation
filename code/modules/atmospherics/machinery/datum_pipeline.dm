@@ -198,36 +198,19 @@
 	target_temperature = modeled_location.GetTemperature()
 	target_heat_capacity = modeled_location.GetHeatCapacity()
 
+	var/delta_temperature = air.temperature - target_temperature
+	var/sharer_heat_capacity = target_heat_capacity
+
+	if((sharer_heat_capacity <= 0) || (partial_heat_capacity <= 0))
+		return TRUE
+	var/heat = thermal_conductivity * delta_temperature * (partial_heat_capacity * sharer_heat_capacity / (partial_heat_capacity + sharer_heat_capacity))
+
+	var/self_temperature_delta = - heat / total_heat_capacity
+	var/sharer_temperature_delta = heat / sharer_heat_capacity
+
+	air.temperature += self_temperature_delta
+	modeled_location.TakeTemperature(sharer_temperature_delta)
 	if(modeled_location.blocks_air)
-
-		if((modeled_location.heat_capacity > 0) && (partial_heat_capacity > 0))
-			var/delta_temperature = air.temperature - target_temperature
-
-			var/heat = thermal_conductivity * delta_temperature * (partial_heat_capacity * target_heat_capacity / (partial_heat_capacity + target_heat_capacity))
-
-			air.temperature -= heat/total_heat_capacity
-			modeled_location.TakeTemperature(heat / target_heat_capacity)
-			modeled_location.temperature_expose(air, modeled_location.temperature)
-
-	else
-		var/delta_temperature = 0
-		var/sharer_heat_capacity = 0
-
-		delta_temperature = (air.temperature - target_temperature)
-		sharer_heat_capacity = target_heat_capacity
-
-		var/self_temperature_delta = 0
-		var/sharer_temperature_delta = 0
-
-		if((sharer_heat_capacity <= 0) || (partial_heat_capacity <= 0))
-			return TRUE
-		var/heat = thermal_conductivity * delta_temperature * (partial_heat_capacity * sharer_heat_capacity / (partial_heat_capacity + sharer_heat_capacity))
-
-		self_temperature_delta = - heat / total_heat_capacity
-		sharer_temperature_delta = heat / sharer_heat_capacity
-
-		air.temperature += self_temperature_delta
-		modeled_location.TakeTemperature(sharer_temperature_delta)
 		modeled_location.temperature_expose(air, modeled_location.temperature)
 
 	update = TRUE
