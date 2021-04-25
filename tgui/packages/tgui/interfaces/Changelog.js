@@ -62,7 +62,7 @@ export class Changelog extends Component {
     this.setState({ selectedIndex });
   }
 
-  getData = (filename, attemptNumber = 0) => {
+  getData = (date, attemptNumber = 0) => {
     const { act } = useBackend(this.context);
     const self = this;
 
@@ -70,9 +70,9 @@ export class Changelog extends Component {
       return this.setData('Failed to load data after 3 attempts');
     }
 
-    act('get_month', { filename });
+    act('get_month', { date });
 
-    fetch(resolveAsset(filename))
+    fetch(resolveAsset(date + '.yml'))
       .then(async (changelogData) => {
         const result = await changelogData.text();
         const errorRegex = /^Cannot find/;
@@ -84,7 +84,7 @@ export class Changelog extends Component {
             'Loading changelog data' + '.'.repeat(attemptNumber + 3)
           );
           setTimeout(() => {
-            self.getData(filename, attemptNumber + 1);
+            self.getData(date, attemptNumber + 1);
           }, timeout);
         } else {
           self.setData(yaml.load(result, { schema: yaml.CORE_SCHEMA }));
@@ -100,8 +100,7 @@ export class Changelog extends Component {
         date => this.dateChoices.push(dateformat(date, 'mmmm yyyy'))
       );
       this.setSelectedDate(this.dateChoices[0]);
-      const filename = dates[0] + '.yml';
-      this.getData(filename);
+      this.getData(dates[0]);
     }
   }
 
@@ -128,7 +127,7 @@ export class Changelog extends Component {
                 document.body.scrollHeight
                 || document.documentElement.scrollHeight
               );
-              return this.getData(dates[index] + '.yml');
+              return this.getData(dates[index]);
             }} />
         </Stack.Item>
         <Stack.Item>
@@ -146,7 +145,7 @@ export class Changelog extends Component {
                 document.body.scrollHeight
                 || document.documentElement.scrollHeight
               );
-              return this.getData(dates[index] + '.yml');
+              return this.getData(dates[index]);
             }}
             selected={selectedDate}
             width={'150px'} />
@@ -167,7 +166,7 @@ export class Changelog extends Component {
                 document.body.scrollHeight
                 || document.documentElement.scrollHeight
               );
-              return this.getData(dates[index] + '.yml');
+              return this.getData(dates[index]);
             }} />
         </Stack.Item>
       </Stack>
