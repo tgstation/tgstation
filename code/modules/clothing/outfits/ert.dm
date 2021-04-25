@@ -354,6 +354,35 @@
 	l_hand = /obj/item/megaphone
 	head = /obj/item/clothing/head/intern
 
+/datum/outfit/centcom/overseer
+	name = "Overseer"
+	uniform = /obj/item/clothing/under/rank/centcom/administrator
+	suit = /obj/item/clothing/suit/corset
+	ears = /obj/item/radio/headset/headset_cent/alt/overseer
+	glasses = /obj/item/clothing/glasses/mystic_killer
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	belt = /obj/item/melee/classic_baton
+	back = /obj/item/storage/backpack/satchel/leather
+	id = /obj/item/card/id/centcom
+	backpack_contents = list(/obj/item/storage/box/survival = 1)
+
+/datum/outfit/centcom/overseer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/W = H.wear_id
+	W.access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_COURT, ACCESS_WEAPONS,
+			            ACCESS_MEDICAL, ACCESS_PSYCHOLOGY, ACCESS_ENGINE, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD, ACCESS_EVA, ACCESS_HEADS,
+			            ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_MAINT_TUNNELS, ACCESS_BAR, ACCESS_JANITOR, ACCESS_CONSTRUCTION, ACCESS_MORGUE,
+			            ACCESS_CREMATORIUM, ACCESS_KITCHEN, ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_QM, ACCESS_HYDROPONICS, ACCESS_LAWYER,
+			            ACCESS_THEATRE, ACCESS_CHAPEL_OFFICE, ACCESS_LIBRARY, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_VAULT, ACCESS_MINING_STATION,
+						ACCESS_MECH_MINING, ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY, ACCESS_MECH_MEDICAL,
+			            ACCESS_HOP, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM)
+	W.access += ACCESS_WEAPONS
+	W.assignment = name
+	W.registered_name = H.real_name
+	W.update_label()
+
 /datum/outfit/centcom/ert/janitor/party
 	name = "ERP Cleaning Service"
 

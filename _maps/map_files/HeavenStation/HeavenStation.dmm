@@ -5955,7 +5955,9 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "cKx" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -7978,7 +7980,9 @@
 	},
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "dBs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -9133,7 +9137,9 @@
 /area/maintenance/port)
 "dUI" = (
 /turf/closed/wall/r_wall,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "dVc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 6
@@ -10350,7 +10356,9 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "euT" = (
 /obj/structure/transit_tube/curved,
 /obj/structure/lattice/catwalk,
@@ -17255,7 +17263,9 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "hls" = (
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/fire{
@@ -23867,7 +23877,9 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "jZb" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -24293,7 +24305,9 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "khn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -25001,7 +25015,9 @@
 /area/quartermaster/sorting)
 "kvQ" = (
 /turf/open/floor/engine,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "kwe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel,
@@ -31022,7 +31038,9 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "mPL" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -31147,7 +31165,9 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "mTt" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -36131,7 +36151,9 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "oXn" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -38503,7 +38525,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "pOt" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -38692,7 +38716,9 @@
 "pSE" = (
 /obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "pSW" = (
 /obj/machinery/door/window/northright{
 	base_state = "left";
@@ -40321,7 +40347,9 @@
 	pixel_y = -8
 	},
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "qCN" = (
 /obj/machinery/conveyor{
 	dir = 6;
@@ -40814,7 +40842,9 @@
 	req_one_access_txt = "47"
 	},
 /turf/open/floor/engine,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "qQi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -42380,7 +42410,9 @@
 	},
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "rxe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -42939,7 +42971,9 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "rLi" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -43181,7 +43215,9 @@
 "rQQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "rQR" = (
 /obj/structure/sign/departments/holy{
 	pixel_x = -32
@@ -45357,7 +45393,9 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "sHX" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -45791,7 +45829,9 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "sPB" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/bar,
@@ -50127,7 +50167,9 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "uEm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -50539,7 +50581,9 @@
 "uOk" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/engine,
-/area/science/misc_lab/range)
+/area/science/misc_lab/range{
+	name = "Research Experiment Chamber"
+	})
 "uPS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9

@@ -290,6 +290,13 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
+/obj/item/radio/headset/headset_cent/alt/overseer
+	name = "Overseer Headset"
+	desc = "A heavy duty headset for long distance communication. It's state of the art tech."
+	icon_state = "admin_headset"
+	inhand_icon_state = "admin_headset"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+
 /obj/item/radio/headset/silicon/pai
 	name = "\proper mini Integrated Subspace Transceiver "
 	subspace_transmission = FALSE

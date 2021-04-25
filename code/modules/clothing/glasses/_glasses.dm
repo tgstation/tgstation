@@ -594,5 +594,5 @@
 /obj/item/clothing/glasses/mystic_killer
 	name = "Strange Glasses"
 	desc = "Mystic Eye Killers. They're more for everyone else's safety than your own. "
-	icon_state = "mystic killer"
+	icon_state = "mystic_killer"
 	inhand_icon_state = "mystic_killer"

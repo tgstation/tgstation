@@ -172,7 +172,28 @@
 
 /// If the pods are neither syndie or NT, picks a source location based on the number of pods that are sent.
 /datum/round_event/resource_pods/proc/get_company_sources()
-	return pick(list("TerraGov trade route", "Space Station [rand(1, 12)] supply shuttle", "Space Station [rand(14, 99)] supply shuttle", "Waffle Co. goods shuttle", "Donk Co. goods shuttle", "Spinward Stellar Coalition relief ship", "Lizard Empire trade route", "Ethereal trade caravan", "Mothperson trade caravan", "Civilian trade caravan"))
+	return pick(list(\
+		"TerraGov trade route", \
+		"Space Station [rand(1, 12)] supply shuttle", \
+		"Space Station [rand(14, 99)] supply shuttle", \
+		"Waffle Co. goods shuttle", \
+		"Donk Co. goods shuttle", \
+		"Spinward Stellar Coalition relief ship", \
+		"Lizard Empire trade route", \
+		"Ethereal trade caravan", \
+		"Mothperson trade caravan", \
+		"Civilian trade caravan", \
+		"Greatest Britain trade caravan", \
+		"Daevite supply caravan", \
+		"NeoTokyo trade route", \
+		"C'est La France route commerciale", \
+		"Jerusalem 2 apostle trade route", \
+		"Cyber Arabian space-camel caravan", \
+		"US^2 patriot route", \
+		"Allsign comemrcial vessel", \
+		"J4N3-X musical supply chain", \
+		"Germany III handelsroute"
+		))
 
 /// An adjective describing how many pods are being sent.
 /datum/round_event/resource_pods/proc/get_num_pod_identifier()
