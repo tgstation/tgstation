@@ -233,7 +233,7 @@
 
 				if(istype(A, /obj/machinery/duct))
 					var/obj/machinery/duct/duct = A
-					duct.safe_connect()
+					duct.attempt_connect()
 				else
 					for(var/plumber in A.GetComponents(/datum/component/plumbing))
 						if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
