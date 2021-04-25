@@ -72,7 +72,7 @@
 	buttons += new /atom/movable/screen/buildmode/quit(src)
 	// build the lists of switching buttons
 	build_options_grid(subtypesof(/datum/buildmode_mode), modeswitch_buttons, /atom/movable/screen/buildmode/modeswitch)
-	build_options_grid(list(SOUTH,EAST,WEST,NORTH,NORTHWEST), dirswitch_buttons, /atom/movable/screen/buildmode/dirswitch)
+	build_options_grid(list(SOUTH,NORTH,EAST,WEST,SOUTHEAST,SOUTHWEST,NORTHEAST,NORTHWEST), dirswitch_buttons, /atom/movable/screen/buildmode/dirswitch)
 
 // this creates a nice offset grid for choosing between buildmode options,
 // because going "click click click ah hell" sucks.
