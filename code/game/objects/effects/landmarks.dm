@@ -452,7 +452,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "hangover_spawn"
 
 /obj/effect/landmark/start/hangover/Initialize()
-	..()
+	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/landmark/start/hangover/LateInitialize()
