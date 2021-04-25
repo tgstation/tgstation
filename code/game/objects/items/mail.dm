@@ -70,10 +70,9 @@
 	// Icons
 	// Add some random stamps.
 	if(stamped == TRUE)
-		var/N = rand(1, stamp_max)
-		for(var/i = 1, i <= N, i++)
-			var/X = rand(2, 6)
-			stamps += list("stamp_[X]")
+		var/stamp_count = rand(1, stamp_max)
+		for(var/i = 1, i <= stamp_count, i++)
+			stamps += list("stamp_[rand(2, 6)]")
 	update_icon()
 
 /obj/item/mail/update_overlays()
