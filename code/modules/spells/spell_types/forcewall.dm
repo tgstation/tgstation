@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/forcewall
 	name = "Forcewall"
 	desc = "Create a magical barrier that only you can pass through."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 100
 	clothes_req = FALSE
 	invocation = "TARCOL MINTI ZHERI"

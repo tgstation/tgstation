@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "The Roulette Wheel interface should no longer bluescreen for bank account-less ID cards and observers."
