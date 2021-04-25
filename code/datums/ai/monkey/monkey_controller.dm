@@ -247,7 +247,9 @@ have ways of interacting with a specific mob and control it.
 	if(IS_EDIBLE(thing))
 		return TRUE
 	if(istype(thing, /obj/item/reagent_containers/food/drinks/drinkingglass))
-		return TRUE
+		var/obj/item/reagent_containers/food/drinks/drinkingglass/glass = thing
+		if(glass.reagents.total_volume) // The glass has something in it, time to drink the mystery liquid!
+			return TRUE
 	return FALSE
 
 //When idle just kinda fuck around.
