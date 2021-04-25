@@ -553,29 +553,30 @@
 ///This report has a centcom grade for supply, and shows how many signatures they got.
 /datum/controller/subsystem/ticker/proc/supply_report()
 	var/list/parts = list()
-	var/percentage_of_completed_signatures = (SSshuttle.correct_signatures / SSshuttle.expected_signatures) * 100
+
 	parts += "<span class='supply'>Supply Statistics:</span><br>"
 
-	if(SSshuttle.expected_signatures)
+	if(!SSshuttle.expected_signatures)
+		parts += "<span class='neutraltext'>Nothing was asked of supply today, and boy, did they deliver!</span><br>"
+	else
+		var/percentage_of_completed_signatures = (SSshuttle.correct_signatures / SSshuttle.expected_signatures) * 100
 		parts += "supply ordered [SSshuttle.expected_signatures] requested crates, and got signatures signed on [SSshuttle.correct_signatures] of their manifests.<br>"
 		parts += "That gives them a [percentage_of_completed_signatures] return rate[percentage_of_completed_signatures < 50 ? "..." : "!"]<br>"
-	else
-		parts += "Nothing was asked of supply today, and boy, did they deliver!<br>"
-	if(SSshuttle.expected_signatures <= 3)
-		parts += "<span class='neutraltext'>The station didn't make enough requests for Centcom to give a grade.</span><br>"
-	if(!SSshuttle.correct_signatures)
-		parts += "<span class='redtext'>supply did not return any signatures...</span><br>"
-	else
-		switch(percentage_of_completed_signatures)
-			if(0 to 49)
-				parts += "<span class='redtext'>Centcom is unimpressed with the sub-50 percent signature return rate.</span><br>"
-				award_positions(GLOB.supply_positions - "Shaft Miner", /datum/award/achievement/jobs/supply_bad)
-			if(50 to 99)
-				parts += "<span class='greentext'>Centcom is satisfied with supply's signature return rate today.</span><br>"
-				award_positions(GLOB.supply_positions - "Shaft Miner", /datum/award/achievement/jobs/supply_okay)
-			else
-				parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with supply today! What a team!</span><br>"
-				award_positions(GLOB.supply_positions - "Shaft Miner", /datum/award/achievement/jobs/supply_good)
+		if(SSshuttle.expected_signatures <= 3)
+			parts += "<span class='neutraltext'>The station didn't make enough requests for Centcom to give a grade.</span><br>"
+		else if(!SSshuttle.correct_signatures)
+			parts += "<span class='redtext'>supply did not return any signatures...</span><br>"
+		else
+			switch(percentage_of_completed_signatures)
+				if(0 to 49)
+					parts += "<span class='redtext'>Centcom is unimpressed with the sub-50 percent signature return rate.</span><br>"
+					award_positions(GLOB.supply_positions - "Shaft Miner", /datum/award/achievement/jobs/supply_bad)
+				if(50 to 99)
+					parts += "<span class='greentext'>Centcom is satisfied with supply's signature return rate today.</span><br>"
+					award_positions(GLOB.supply_positions - "Shaft Miner", /datum/award/achievement/jobs/supply_okay)
+				else
+					parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with supply today! What a team!</span><br>"
+					award_positions(GLOB.supply_positions - "Shaft Miner", /datum/award/achievement/jobs/supply_good)
 	return parts
 
 /**
