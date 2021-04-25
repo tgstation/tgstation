@@ -95,6 +95,11 @@
 		our_color = pick(carp_colors)
 		set_greyscale_colors(list(carp_colors[our_color]))
 
+/mob/living/simple_animal/hostile/carp/revive(full_heal = FALSE, admin_revive = FALSE)
+	. = ..()
+	if(.)
+		update_icon()
+
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
 	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in view(1, src)
 	if(tasty_plastic && Adjacent(tasty_plastic))
