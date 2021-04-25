@@ -827,13 +827,13 @@
 * Attack_self will pass for the stored item. 
 */
 /obj/item/borg/apparatus/attack_self(mob/living/silicon/robot/user)
-	if(!stored)
+	if(!stored || !issilicon(user))
 		return ..()
 	stored.attack_self(user)
 
 //Alt click drops the stored item.
 /obj/item/borg/apparatus/AltClick(mob/living/silicon/robot/user)
-	if(!stored)
+	if(!stored || !issilicon(user))
 		return ..()
 	stored.forceMove(user.drop_location())
 
@@ -873,11 +873,6 @@
 		return
 	. = ..()
 
-/// Parent proc for all apparatus, tells the player that they can alt-click to drop.
-/obj/item/borg/apparatus/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'><i>Alt-click</i> will drop the currently stored item.</span>"
-
 /////////////////
 //beaker holder//
 /////////////////
@@ -913,7 +908,8 @@
 		else
 			. += "Nothing."
 		
-		. += "<span class='notice'> <i>Right-clicking</i> will splash the beaker on the floor.</span>"
+		. += "<span class='notice'> <i>Right-clicking</i> will splash the beaker on the ground.</span>"
+	. += "<span class='notice'> <i>Alt+click</i> will drop the currently stored beaker. </span>"
 
 /obj/item/borg/apparatus/beaker/update_overlays()
 	. = ..()
@@ -935,8 +931,8 @@
 /// Secondary attack spills the content of the beaker.
 /obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
 	var/obj/item/reagent_containers/stored_beaker = stored
-	stored_beaker.SplashReagents(get_turf(user))
-	loc.visible_message("<span class='notice'>[user] spills the contents of [stored_beaker] all over the floor.</span>")
+	stored_beaker.SplashReagents(drop_location(user))
+	loc.visible_message("<span class='notice'>[user] spills the contents of [stored_beaker] all over the ground.</span>")
 	. = ..()
 
 /obj/item/borg/apparatus/beaker/extra
@@ -977,6 +973,7 @@
 		. += organ.name
 	else
 		. += "Nothing."
+	. += "<span class='notice'> <i>Alt+click</i> will drop the currently stored organ. </span>"
 
 /obj/item/borg/apparatus/organ_storage/update_overlays()
 	. = ..()
@@ -1040,6 +1037,7 @@
 	. = ..()
 	if(stored)
 		. += "The apparatus currently has [stored] secured."
+	. += "<span class='notice'> <i>Alt+click</i> will drop the currently stored circuit. </span>"
 
 /obj/item/borg/apparatus/circuit/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
