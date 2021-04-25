@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/shuttle_catastrophe
 	weight = 10
 	max_occurrences = 1
+	min_players = 20
 
 /datum/round_event_control/shuttle_catastrophe/canSpawnEvent(players, gamemode)
 	if(istype(SSshuttle.emergency, /obj/docking_port/mobile/emergency/shuttle_build))

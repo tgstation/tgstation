@@ -61,9 +61,9 @@
 	// Spawn some debris in based on the number of caches we're throwing.
 	switch(amt_debris)
 		if(MAJOR_DEBRIS)
-			spawn_meteors(num_caches * 3, GLOB.meteorsC)
-		if(MINOR_DEBRIS)
 			spawn_meteors(num_caches * 2, GLOB.meteorsC)
+		if(MINOR_DEBRIS)
+			spawn_meteors(num_caches, GLOB.meteorsC)
 
 	// Now, spawn the caches and yeet them out
 	for(var/crate in picked_crates)
@@ -95,7 +95,32 @@
 
 /// Get the source of the debris and resources - some event that happened.
 /datum/round_event/resource_drift/proc/get_source()
-	var/list/parties = list("TerraGov", "Space Station [rand(1, 12)]", "Space Station [rand(14, 99)]", "Waffle Co.", "Donk Co.", "Spinward Stellar Coalition", "Lizard Empire", "pirate", "raider", "Gorlex Marauder", "Cybersun Industry", "Nanotrasen", "Greatest Britain", "Wizard Federation", "Daevite")
+	var/list/parties = list(\
+		"TerraGov", \
+		"Space Station [rand(1, 12)]", \
+		"Space Station [rand(14, 99)]", \
+		"Waffle Co.", \
+		"Donk Co.", \
+		"Spinward Stellar Coalition", \
+		"Lizard Empire", \
+		"pirate", \
+		"raider", \
+		"Gorlex Marauder", \
+		"Cybersun Industry", \
+		"Nanotrasen", \
+		"Greatest Britain", \
+		"Wizard Federation", \
+		"Daevite", \
+		"NeoTokyo", \
+		"US^2", \
+		"Allsign", \
+		"J4N3-X", \
+		"Earth-28", \
+		"Cyber Arabia", \
+		"Jerusalem 2", \
+		"C'est La France", \
+		"Germany III"
+		)
 	var/party_one = pick_n_take(parties)
 	var/party_two = pick_n_take(parties)
 

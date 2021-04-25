@@ -6,6 +6,7 @@
 	max_occurrences = 5
 	weight = 20
 	alert_observers = FALSE
+	max_occurrences = 1
 
 /datum/round_event/electrical_storm
 	var/lightsoutAmount	= 1
