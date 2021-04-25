@@ -128,7 +128,6 @@
 	if(length(colors) != expected_colors)
 		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
 	var/icon/icon_bundle = new
-	icon_bundle.Scale(width, height)
 	for(var/icon_state in icon_states)
 		var/icon/generated_icon = GenerateLayerGroup(colors, icon_states[icon_state], render_steps)
 		// We read a pixel to force the icon to be fully generated before we let it loose into the world
