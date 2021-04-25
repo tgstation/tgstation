@@ -1,0 +1,4 @@
+author: "Celotajs"
+delete-after: True
+changes: 
+  - refactor: "Jumpsuits, jumpskirts and sneakers are now generated using GAGS"
