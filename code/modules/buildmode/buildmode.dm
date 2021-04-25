@@ -15,7 +15,7 @@
 
 	// Switching management
 	var/switch_state = BM_SWITCHSTATE_NONE
-	var/switch_width = 5
+	var/switch_width = 4
 	// modeswitch UI
 	var/atom/movable/screen/buildmode/mode/modebutton
 	var/list/modeswitch_buttons = list()
