@@ -32,23 +32,12 @@
 	playsound(get_turf(src), pop_sound_effect, 50, TRUE, -1)
 	qdel(src)
 
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
-// /obj/item/fun_balloon/attack_ghost(mob/user)
-// 	if(!user.client || !user.client.holder || popped)
-// 		return
-// 	var/confirmation = alert("Pop [src]?","Fun Balloon","Yes","No")
-// 	if(confirmation == "Yes" && !popped)
-// 		popped = TRUE
-// 		effect()
-// 		pop()
-
 /////////////////////////////Sentience Balloon/////////////////////////////
 /obj/item/fun_balloon/sentience
 	name = "sentience fun balloon"
 	desc = "When this pops, things are gonna get more aware around here."
-	var/effect_range = 3
 	var/group_name = "a bunch of giant spiders"
-	var/mob_type = new /mob/living
+	var/effect_range = 3
 
 /obj/item/fun_balloon/sentience/ui_interact(mob/user, datum/tgui/ui)
 	if(!check_rights(R_ADMIN))
@@ -63,11 +52,15 @@
 	data["group_name"] = group_name
 	data["pop_sound"] = pop_sound_effect
 	data["range"] = effect_range
-	data["mob_type"] = mob_type
 	return data
 
 /obj/item/fun_balloon/sentience/ui_state(mob/user)
 	return GLOB.admin_state
+
+/obj/item/fun_balloon/sentience/ui_status(mob/user)
+	if(popped)
+		return UI_CLOSE
+	return ..()
 
 /obj/item/fun_balloon/sentience/ui_act(action, list/params)
 	. = ..()
@@ -79,16 +72,34 @@
 			group_name = params["updated_name"]
 
 		if("effect_range")
-			effect_range = params["updated_range"] // todo: ensure it's a number
-
-		if("mob_type")
-			effect_range = params["updated_mob_type"] // todo: make this a search
+			effect_range = params["updated_range"]
 
 		if("pop_sound")
 			var/soundInput = input(src, "Please pick a sound file to play when the balloon pops!", "Pick a Sound File") as null|sound
-			if (isnull(soundInput))
-				return
-			pop_sound_effect = sound(soundInput)
+			if (!isnull(soundInput))
+				pop_sound_effect = soundInput
+			// var/soundInput = input(holder, "Please pick a sound file to play when the balloon pops!", "Pick a Sound File") as null|sound
+			// if (isnull(soundInput))
+			// 	return
+			// var/sound/tempSound = sound(soundInput)
+			// playsound(holder.mob, tempSound, 1)
+			// var/list/sounds_list = holder.SoundQuery()
+			// var/soundLen = 0
+			// for (var/playing_sound in sounds_list)
+			// 	if (isnull(playing_sound))
+			// 		stack_trace("client.SoundQuery() Returned a list containing a null sound! Somehow!")
+			// 		continue
+			// 	var/sound/found = playing_sound
+			// 	if (found.file == tempSound.file)
+			// 		soundLen = found.len
+			// if (!soundLen)
+			// 	soundLen =  input(holder, "Couldn't auto-determine sound file length. What is the exact length of the sound file, in seconds. This number will be used to line the sound up so that it finishes right as the pod lands!", "Pick a Sound File", 0.3) as null|num
+			// 	if (isnull(soundLen))
+			// 		return
+			// 	if (!isnum(soundLen))
+			// 		alert(usr, "That wasn't a number! Value set to default ([initial(temp_pod.fallingSoundLength)*0.1]) instead.")
+			// temp_pod.fallingSound = soundInput
+			// temp_pod.fallingSoundLength = 10 * soundLen
 
 		if("pop")
 			popped = TRUE
