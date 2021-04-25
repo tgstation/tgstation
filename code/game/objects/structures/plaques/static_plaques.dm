@@ -19,6 +19,27 @@
 /obj/structure/plaque/static_plaque/golden/captain
 	name = "The Most Robust Captain Award for Robustness"
 
+//Commission plaques, to give a little backstory to the stations. Commission dates are date of merge (or best approximation, in the case of Meta) + 540 years to convert to SS13 dates.
+
+/obj/structure/plaque/static_plaque/golden/commission
+	name = "Commission Plaque"
+	desc = "Spinward Sector Station SS-13\n'Runtime' Class Outpost\nCommissioned 11/03/2556\n'Dedicated to the Pioneers'"
+
+/obj/structure/plaque/static_plaque/golden/commission/icebox
+	desc = "Spinward Sector Station SS-13\n'Box' Class Outpost (Revivion 2.2: 'Icebox')\nCommissioned 05/22/2560\n'Cold Reliable'"
+
+/obj/structure/plaque/static_plaque/golden/commission/meta
+	desc = "Spinward Sector Station SS-13\n'Meta' Class Outpost\nCommissioned 08/11/2553\n'Theseus' Station'"
+
+/obj/structure/plaque/static_plaque/golden/commission/delta
+	desc = "Spinward Sector Station SS-13\n'Delta' Class Outpost\nCommissioned 12/17/2556\n'Heralding Change'"
+
+/obj/structure/plaque/static_plaque/golden/commission/kilo
+	desc = "Spinward Sector Station SS-13\n'Kilo' Class Outpost\nCommissioned 11/13/2559\n'Forever Different'"
+
+/obj/structure/plaque/static_plaque/golden/commission/tram
+	desc = "Spinward Sector Station SS-13\n'Tram' Class Outpost\nCommissioned 03/11/2561\n'Making Moves'"
+
 //These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic (default) or wood, not gold.
 //See: code>game>objects>structures>signs>_signs.dm
 
