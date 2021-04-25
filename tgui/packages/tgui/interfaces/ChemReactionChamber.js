@@ -1,7 +1,5 @@
-import { map } from 'common/collections';
-import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { AnimatedNumber, Box, Button, Input, LabeledControls, LabeledList, NumberInput, Section, RoundGauge, Stack } from '../components';
+import { AnimatedNumber, Box, Button, Input, LabeledList, NumberInput, Section, RoundGauge, Stack } from '../components';
 import { Window } from '../layouts';
 import { round, toFixed } from 'common/math';
 
@@ -56,39 +54,65 @@ export const ChemReactionChamber = (props, context) => {
                   </Stack.Item>
                 </Stack>
               )}>
-              <Stack fill>
-                <Stack.Item textColor="label">
-                  Current Temperature:
+              <Stack vertical>
+                <Stack.Item>
+                  <Stack fill>
+                    <Stack.Item textColor="label">
+                      Current Temperature:
+                    </Stack.Item>
+                    <Stack.Item grow>
+                      <AnimatedNumber
+                        value={temperature}
+                        format={value => toFixed(value) + ' K'} />
+                    </Stack.Item>
+                    <Stack.Item grow>
+                      <RoundGauge
+                        value={ph}
+                        minValue={0}
+                        maxValue={14}
+                        format={() => null}
+                        position="absolute"
+                        size={1.50}
+                        top={0.5}
+                        right={0.5}
+                        ranges={{
+                          "red": [-0.22, 1.5],
+                          "orange": [1.5, 3],
+                          "yellow": [3, 4.5],
+                          "olive": [4.5, 5],
+                          "good": [5, 6],
+                          "green": [6, 8.5],
+                          "teal": [8.5, 9.5],
+                          "blue": [9.5, 11],
+                          "purple": [11, 12.5],
+                          "violet": [12.5, 14],
+                        }} />
+                    </Stack.Item>
+                  </Stack>
                 </Stack.Item>
-                <Stack.Item grow>
-                  <AnimatedNumber
-                    value={temperature}
-                    format={value => toFixed(value) + ' K'} />
-                </Stack.Item>
-                <Stack.Item textColor="label">
-                  {ph+ " ph:"}
-                </Stack.Item>
-                <Stack.Item grow={12}>
-                  <RoundGauge
-                    value={ph}
-                    minValue={0}
-                    maxValue={14}
-                    format={() => null}
-                    position="absolute"
-                    size={1.50}
-                    top={0.25}
-                    ranges={{
-                      "red": [-0.22, 1.5],
-                      "orange": [1.5, 3],
-                      "yellow": [3, 4.5],
-                      "olive": [4.5, 5],
-                      "good": [5, 6],
-                      "green": [6, 8.5],
-                      "teal": [8.5, 9.5],
-                      "blue": [9.5, 11],
-                      "purple": [11, 12.5],
-                      "violet": [12.5, 14],
-                    }} />
+                <Stack.Item>
+                  <Stack fill>
+                    <Stack.Item textColor="label">
+                      {"ph:"}
+                    </Stack.Item>
+                    <Stack.Item grow={15}>
+                      {ph}
+                    </Stack.Item>
+                    <Stack.Item grow mt={1} mb={-0.5}>
+                      <Button
+                        color="transparent"
+                        icon="question"
+                        tooltip={multiline`
+                        In chemistry, pH is a scale used to specify
+                        the acidity or basicity of an aqueous solution.
+                        Acidic solutions are measured to have lower
+                        pH values than basic or alkaline solutions.
+                        The pH scale is logarithmic and inversely
+                        indicates the concentration of hydrogen ions
+                        in the solution.`}
+                        tooltipPosition="bottom-left" />
+                    </Stack.Item>
+                  </Stack>
                 </Stack.Item>
               </Stack>
             </Section>
@@ -108,6 +132,7 @@ export const ChemReactionChamber = (props, context) => {
                   </Box>
                 ) || (
                   <Box
+                    fontSize="16px"
                     inline
                     bold
                     color={emptying ? "bad" : "good"}>
