@@ -121,7 +121,9 @@
 	var/key = color_string
 	var/icon/new_icon = icon_cache[key]
 	if(new_icon && !render_steps)
-		return icon(new_icon)
+		var/icon/output = icon(new_icon)
+		output.Scale(width, height)
+		return output
 	var/list/colors = ParseColorString(color_string)
 	if(length(colors) != expected_colors)
 		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
@@ -135,7 +137,9 @@
 		icon_bundle.Insert(generated_icon, icon_state)
 	icon_bundle = fcopy_rsc(icon_bundle)
 	icon_cache[key] = icon_bundle
-	return icon(icon_bundle)
+	var/icon/output = icon(icon_bundle)
+	output.Scale(width, height)
+	return output
 
 /// Internal recursive proc to handle nested layer groups
 /datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
