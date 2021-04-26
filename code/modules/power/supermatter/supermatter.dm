@@ -351,8 +351,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explode()
 
 /obj/machinery/power/supermatter_crystal/proc/explode()
-	for(var/mob as anything in GLOB.alive_mob_list)
-		var/mob/living/victim = mob
+	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
 		if(!istype(victim) || victim.z != z)
 			continue
 		if(ishuman(victim))
