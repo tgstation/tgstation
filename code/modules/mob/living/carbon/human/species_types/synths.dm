@@ -4,7 +4,15 @@
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
 	species_traits = list(NOTRANSSTING) //all of these + whatever we inherit from the real species
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_VIRUSIMMUNE,
+		TRAIT_NODISMEMBER,
+		TRAIT_NOLIMBDISABLE,
+		TRAIT_NOHUNGER,
+		TRAIT_NOBREATH,
+	)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
 	damage_overlay_type = "synth"
@@ -60,6 +68,7 @@
 		species_traits |= S.species_traits
 		inherent_traits |= S.inherent_traits
 		attack_verb = S.attack_verb
+		attack_effect = S.attack_effect
 		attack_sound = S.attack_sound
 		miss_sound = S.miss_sound
 		meat = S.meat
@@ -78,6 +87,7 @@
 		species_traits = initial_species_traits.Copy()
 		inherent_traits = initial_inherent_traits.Copy()
 		attack_verb = initial(attack_verb)
+		attack_effect = initial(attack_verb)
 		attack_sound = initial(attack_sound)
 		miss_sound = initial(miss_sound)
 		mutant_bodyparts = list()

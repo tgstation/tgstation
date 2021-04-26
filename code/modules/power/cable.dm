@@ -519,10 +519,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			novariants = TRUE
 		if("Cable restraints")
 			if (amount >= CABLE_RESTRAINTS_COST)
-				use(CABLE_RESTRAINTS_COST)
-				var/obj/item/restraints/handcuffs/cable/restraints = new
-				restraints.color = color
-				user.put_in_hands(restraints)
+				if(use(CABLE_RESTRAINTS_COST))
+					var/obj/item/restraints/handcuffs/cable/restraints = new
+					restraints.color = color
+					user.put_in_hands(restraints)
 	update_appearance()
 
 
@@ -768,4 +768,6 @@ GLOBAL_LIST(hub_radial_layer_list)
 	to_chat(user, "<span class='warning'>You pust reset button.</span>")
 	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
 
-
+// This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active
+/obj/structure/cable/multilayer/connected
+		cable_layer = CABLE_LAYER_1 | CABLE_LAYER_2 | CABLE_LAYER_3

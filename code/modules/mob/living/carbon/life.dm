@@ -9,6 +9,7 @@
 
 	if(IS_IN_STASIS(src))
 		. = ..()
+		reagents.handle_stasis_chems(src, delta_time, times_fired)
 	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs(delta_time, times_fired)
@@ -36,7 +37,7 @@
 	//Updates the number of stored chemicals for powers
 	handle_changeling(delta_time, times_fired)
 
-	if(mind)
+	if(. && mind) //. == not dead
 		for(var/key in mind.addiction_points)
 			var/datum/addiction/addiction = SSaddiction.all_addictions[key]
 			addiction.process_addiction(src, delta_time, times_fired)
@@ -348,7 +349,7 @@
 			if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
 				organ.on_life(delta_time, times_fired)
 	else
-		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
+		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
@@ -488,20 +489,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
 
-	if(stuttering)
-		stuttering = max(stuttering - (0.5 * delta_time), 0)
-
-	if(slurring)
-		slurring = max(slurring - (0.5 * delta_time),0)
-
-	if(cultslurring)
-		cultslurring = max(cultslurring - (0.5 * delta_time), 0)
+	if(druggy)
+		adjust_drugginess(-0.5 * delta_time)
 
 	if(silent)
 		silent = max(silent - (0.5 * delta_time), 0)
-
-	if(druggy)
-		adjust_drugginess(-0.5 * delta_time)
 
 	if(hallucination)
 		handle_hallucinations(delta_time, times_fired)
@@ -735,27 +727,29 @@ All effects don't start immediately, but rather get worse over time; the rate is
 //LIVER//
 /////////
 
-///Decides if the liver is failing or not.
+///Check to see if we have the liver, if not automatically gives you last-stage effects of lacking a liver.
+
 /mob/living/carbon/proc/handle_liver(delta_time, times_fired)
 	if(!dna)
 		return
+
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(!liver)
-		liver_failure(delta_time, times_fired)
+	if(liver)
+		return
+
+	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
+	reagents.metabolize(src, delta_time, times_fired, can_overdose=FALSE, liverless = TRUE)
+
+	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
+		return
+
+	adjustToxLoss(0.6 * delta_time, TRUE,  TRUE)
+	adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS), 0.5* delta_time)
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && (liver.organ_flags & ORGAN_FAILING))
+	if(liver?.organ_flags & ORGAN_FAILING)
 		return TRUE
-
-/mob/living/carbon/proc/liver_failure(delta_time, times_fired)
-	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
-	reagents.metabolize(src, delta_time, times_fired, can_overdose=FALSE, liverless = TRUE)
-	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
-		return
-	adjustToxLoss(2 * delta_time, TRUE,  TRUE)
-	if(DT_PROB(15, delta_time))
-		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 
 /////////////
 //CREMATION//

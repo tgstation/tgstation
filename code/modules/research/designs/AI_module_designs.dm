@@ -113,7 +113,6 @@
 	name = "Core Module Design (P.A.L.A.D.I.N.)"
 	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
 	id = "paladin_module"
-	build_type = IMPRINTER
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/paladin
 	category = list("AI Modules")

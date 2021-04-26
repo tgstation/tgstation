@@ -531,7 +531,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	has_unique_girder = TRUE
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
-	if(!iscultist(user))
+	if(!IS_CULTIST(user))
 		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
 	var/turf/T = get_turf(user) //we may have moved. adjust as needed...
@@ -660,6 +660,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/food/drinks/waterbottle/large/empty, 3), \
 	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/food/drinks/colocup, 1), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2), \
+	new /datum/stack_recipe("warning cone", /obj/item/clothing/head/cone, 2), \
 	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1)))
 
 /obj/item/stack/sheet/plastic

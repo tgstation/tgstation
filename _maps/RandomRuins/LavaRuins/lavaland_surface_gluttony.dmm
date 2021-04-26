@@ -27,7 +27,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "j" = (
-/obj/item/trash/plate,
+/obj/item/plate,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "l" = (
@@ -72,7 +72,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "z" = (
-/obj/item/trash/plate,
+/obj/item/plate,
 /obj/machinery/light/small{
 	dir = 8
 	},

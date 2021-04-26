@@ -1,0 +1,5 @@
+author: "Ghilker, @tralezab"
+delete-after: True
+changes: 
+  - rscadd: "smart pipes connection toggle on the RPD menu, when the connection is active (in green) the pipe is allowed to find connection in that direction"
+  - rscadd: "T-Ray goggles new mode that allows you to see an overlay of the available connections."

@@ -61,21 +61,22 @@
 	return ..()
 
 /turf/open/floor/ex_act(severity, target)
-	var/shielded = is_shielded()
-	..()
-	if(severity != 1 && shielded && target != src)
-		return
+	. = ..()
+
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		return
-	if(target != null)
-		severity = 3
+		return TRUE
+	if(severity != EXPLODE_DEVASTATE && is_shielded())
+		return FALSE
+
+	if(target)
+		severity = EXPLODE_LIGHT
 
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
-		if(2)
-			switch(rand(1,3))
+		if(EXPLODE_HEAVY)
+			switch(rand(1, 3))
 				if(1)
 					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
 						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
@@ -94,7 +95,7 @@
 					hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33))
 						new /obj/item/stack/sheet/iron(src)
-		if(3)
+		if(EXPLODE_LIGHT)
 			if (prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
@@ -112,6 +113,13 @@
 
 /turf/open/floor/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
+
+/turf/open/floor/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers)
 
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
@@ -237,7 +245,10 @@
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
-			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)
+			return rcd_result_with_memory(
+				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 16),
+				src, RCD_MEMORY_WALL,
+			)
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
@@ -246,7 +257,10 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 33)
 		if(RCD_WINDOWGRILLE)
-			return list("mode" = RCD_WINDOWGRILLE, "delay" = 10, "cost" = 4)
+			return rcd_result_with_memory(
+				list("mode" = RCD_WINDOWGRILLE, "delay" = 1 SECONDS, "cost" = 4),
+				src, RCD_MEMORY_WINDOWGRILLE,
+			)
 		if(RCD_MACHINE)
 			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
 		if(RCD_COMPUTER)

@@ -74,7 +74,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
-	return
+	return FALSE
 
 /mob/living/simple_animal/hostile/cockroach/hauberoach
 	name = "hauberoach"
@@ -87,6 +87,7 @@
 	obj_damage = 20
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list("hostile")
 	sharpness = SHARP_POINTY
 	squish_chance = 0 // manual squish if relevant

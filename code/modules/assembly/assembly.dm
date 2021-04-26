@@ -58,15 +58,16 @@
 		return FALSE
 	return TRUE
 
-//Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
+///Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 /obj/item/assembly/proc/pulsed(radio = FALSE)
 	if(wire_type & WIRE_RECEIVE)
 		INVOKE_ASYNC(src, .proc/activate)
 	if(radio && (wire_type & WIRE_RADIO_RECEIVE))
 		INVOKE_ASYNC(src, .proc/activate)
+	SEND_SIGNAL(src, COMSIG_ASSEMBLY_PULSED)
 	return TRUE
 
-//Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
+///Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
 /obj/item/assembly/proc/pulse(radio = FALSE)
 	if(connected && wire_type)
 		connected.pulse_assembly(src)
@@ -77,7 +78,7 @@
 		holder.process_activation(src, 0, 1)
 	return TRUE
 
-// What the device does when turned on
+/// What the device does when turned on
 /obj/item/assembly/proc/activate()
 	if(QDELETED(src) || !secured || (next_activate > world.time))
 		return FALSE

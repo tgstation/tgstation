@@ -43,7 +43,7 @@ Behavior that's still missing from this component that original food items had t
 	///The flavortext for taste (haha get it flavor text)
 	var/list/tastes
 	///The type of atom this creates when the object is microwaved.
-	var/microwaved_type
+	var/atom/microwaved_type
 
 /datum/component/edible/Initialize(list/initial_reagents,
 								food_flags = NONE,
@@ -139,6 +139,9 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
+	if(microwaved_type)
+		examine_list += "[parent] could be <b>microwaved</b> into [initial(microwaved_type.name)]!"
+
 	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch (bitecount)
 			if (0)
@@ -194,19 +197,8 @@ Behavior that's still missing from this component that original food items had t
 
 	this_food.reagents.multiply_reagents(CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
 
-	for(var/obj/item/crafted_part in this_food.contents)
+	for(var/obj/item/food/crafted_part in parts_list)
 		crafted_part.reagents?.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER)
-
-	var/list/objects_to_delete = list()
-
-	// Remove all non recipe objects from the contents
-	for(var/content_object in this_food.contents)
-		for(var/recipe_object in recipe.real_parts)
-			if(istype(content_object, recipe_object))
-				continue
-		objects_to_delete += content_object
-
-	QDEL_LIST(objects_to_delete)
 
 	SSblackbox.record_feedback("tally", "food_made", 1, type)
 
@@ -459,3 +451,4 @@ Behavior that's still missing from this component that original food items had t
 		for (var/t in E.tastes)
 			tastes[t] += E.tastes[t]
 	foodtypes |= E.foodtypes
+

@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list()
 	///Generic traits tied to having the species.
-	var/list/inherent_traits = list(TRAIT_ADVANCEDTOOLUSER)
+	var/list/inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP)
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.
@@ -146,7 +146,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	///Punch-specific attack verb.
 	var/attack_verb = "punch"
-	///
+	/// The visual effect of the attack.
+	var/attack_effect = ATTACK_EFFECT_PUNCH
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
 
@@ -189,8 +190,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///For custom overrides for species ass images
 	var/icon/ass_image
 
+	/// List of family heirlooms this species can get with the family heirloom quirk. List of types.
+	var/list/family_heirlooms
+
 	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
 	var/list/knife_butcher_results
+
+	///List of visual overlays created by handle_body()
+	var/list/body_vis_overlays = list()
 
 ///////////
 // PROCS //
@@ -625,50 +632,67 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * Handles lipstick, having no eyes, eye color, undergarnments like underwear, undershirts, and socks, and body layers.
  * Calls [handle_mutant_bodyparts][/datum/species/proc/handle_mutant_bodyparts]
  * Arguments:
- * * H - Human, whoever we're handling the body for
+ * * species_human - Human, whoever we're handling the body for
  */
-/datum/species/proc/handle_body(mob/living/carbon/human/H)
-	H.remove_overlay(BODY_LAYER)
+/datum/species/proc/handle_body(mob/living/carbon/human/species_human)
+	species_human.remove_overlay(BODY_LAYER)
 
 	var/list/standing = list()
 
-	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
+	var/obj/item/bodypart/head/HD = species_human.get_bodypart(BODY_ZONE_HEAD)
 
-	if(HD && !(HAS_TRAIT(H, TRAIT_HUSK)))
+	if(HD && !(HAS_TRAIT(species_human, TRAIT_HUSK)))
 		// lipstick
-		if(H.lip_style && (LIPS in species_traits))
-			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
-			lip_overlay.color = H.lip_color
-			if(OFFSET_FACE in H.dna.species.offset_features)
-				lip_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-				lip_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+		if(species_human.lip_style && (LIPS in species_traits))
+			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[species_human.lip_style]", -BODY_LAYER)
+			lip_overlay.color = species_human.lip_color
+			if(OFFSET_FACE in species_human.dna.species.offset_features)
+				lip_overlay.pixel_x += species_human.dna.species.offset_features[OFFSET_FACE][1]
+				lip_overlay.pixel_y += species_human.dna.species.offset_features[OFFSET_FACE][2]
 			standing += lip_overlay
 
 		// eyes
 		if(!(NOEYESPRITES in species_traits))
-			var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-			var/mutable_appearance/eye_overlay
-			if(!E)
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
-			else
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)
-			if((EYECOLOR in species_traits) && E)
-				eye_overlay.color = "#" + H.eye_color
-			if(OFFSET_FACE in H.dna.species.offset_features)
-				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-			standing += eye_overlay
+			var/obj/item/organ/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
+			var/mutable_appearance/no_eyeslay
+			var/list/eye_overlays = list()
+			var/obscured = species_human.check_obscured_slots(TRUE) //eyes that shine in the dark shouldn't show when you have glasses
+			var/add_pixel_x = 0
+			var/add_pixel_y = 0
+			//cut any possible vis overlays
+			if(body_vis_overlays.len)
+				SSvis_overlays.remove_vis_overlay(species_human, body_vis_overlays)
+			if(OFFSET_FACE in species_human.dna.species.offset_features)
+				add_pixel_x = species_human.dna.species.offset_features[OFFSET_FACE][1]
+				add_pixel_y = species_human.dna.species.offset_features[OFFSET_FACE][2]
+			if(!eye_organ)
+				no_eyeslay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				no_eyeslay.pixel_x += add_pixel_x
+				no_eyeslay.pixel_y += add_pixel_y
+				standing += no_eyeslay
+			if(!no_eyeslay)//we need eyes
+				if(eye_organ.overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
+					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
+					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER, EMISSIVE_PLANE)
+				else
+					eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
+				for(var/mutable_appearance/eye_overlay as anything in eye_overlays)
+					eye_overlay.pixel_x += add_pixel_x
+					eye_overlay.pixel_y += add_pixel_y
+					if((EYECOLOR in species_traits) && eye_organ)
+						eye_overlay.color = "#" + species_human.eye_color
+					standing += eye_overlay
 
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)
-		var/obj/item/bodypart/chest/chest = H.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/r_arm/right_arm = H.get_bodypart(BODY_ZONE_R_ARM)
-		var/obj/item/bodypart/l_arm/left_arm = H.get_bodypart(BODY_ZONE_L_ARM)
-		var/obj/item/bodypart/r_leg/right_leg = H.get_bodypart(BODY_ZONE_R_LEG)
-		var/obj/item/bodypart/l_leg/left_leg = H.get_bodypart(BODY_ZONE_L_LEG)
-		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[H.dna.features["moth_markings"]]
+		var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)
+		var/obj/item/bodypart/r_arm/right_arm = species_human.get_bodypart(BODY_ZONE_R_ARM)
+		var/obj/item/bodypart/l_arm/left_arm = species_human.get_bodypart(BODY_ZONE_L_ARM)
+		var/obj/item/bodypart/r_leg/right_leg = species_human.get_bodypart(BODY_ZONE_R_LEG)
+		var/obj/item/bodypart/l_leg/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
+		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[species_human.dna.features["moth_markings"]]
 
-		if(!HAS_TRAIT(H, TRAIT_HUSK))
+		if(!HAS_TRAIT(species_human, TRAIT_HUSK))
 			if(HD && (HD.status != BODYPART_ROBOTIC))
 				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
 				standing += markings_head_overlay
@@ -695,36 +719,36 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
-		if(H.underwear)
-			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
+		if(species_human.underwear)
+			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
-				if(H.dna.species.sexes && H.body_type == FEMALE && (underwear.gender == MALE))
+				if(species_human.dna.species.sexes && species_human.body_type == FEMALE && (underwear.gender == MALE))
 					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
-					underwear_overlay.color = "#" + H.underwear_color
+					underwear_overlay.color = "#" + species_human.underwear_color
 				standing += underwear_overlay
 
-		if(H.undershirt)
-			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
+		if(species_human.undershirt)
+			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
-				if(H.dna.species.sexes && H.body_type == FEMALE)
+				if(species_human.dna.species.sexes && species_human.body_type == FEMALE)
 					standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 
-		if(H.socks && H.num_legs >= 2 && !(DIGITIGRADE in species_traits))
-			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
+		if(species_human.socks && species_human.num_legs >= 2 && !(DIGITIGRADE in species_traits))
+			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 
 	if(standing.len)
-		H.overlays_standing[BODY_LAYER] = standing
+		species_human.overlays_standing[BODY_LAYER] = standing
 
-	H.apply_overlay(BODY_LAYER)
-	handle_mutant_bodyparts(H)
+	species_human.apply_overlay(BODY_LAYER)
+	handle_mutant_bodyparts(species_human)
 
 /**
  * Handles the mutant bodyparts of a human
@@ -958,6 +982,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(BODY_FRONT_LAYER)
 			return "FRONT"
 
+///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
+/datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
+	human_mob.hairstyle = random_hairstyle(human_mob.gender)
+	human_mob.update_hair()
+
+///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob
+/datum/species/proc/randomize_active_underwear(mob/living/carbon/human/human_mob)
+	human_mob.undershirt = random_undershirt(human_mob.gender)
+	human_mob.underwear = random_underwear(human_mob.gender)
+	human_mob.socks = random_socks(human_mob.gender)
+	human_mob.update_body()
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
@@ -965,7 +1000,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.losebreath = 0
 
 		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_threshold) && takes_crit_damage)
+		if((H.health < H.crit_threshold) && takes_crit_damage && H.stat != DEAD)
 			H.adjustBruteLoss(0.5 * delta_time)
 	if(flying_species)
 		HandleFlight(H)
@@ -1323,7 +1358,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
 		return FALSE
-	if(attacker_style?.grab_act(user,target))
+	if(attacker_style?.grab_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	else
 		target.grabbedby(user)
@@ -1339,28 +1374,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='userdanger'>You block [user]'s attack!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your attack at [target] was blocked!</span>")
 		return FALSE
-	if(attacker_style?.harm_act(user,target))
+	if(attacker_style?.harm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	else
 
 		var/atk_verb = user.dna.species.attack_verb
+		var/atk_effect = user.dna.species.attack_effect
 		if(target.body_position == LYING_DOWN)
-			atk_verb = ATTACK_EFFECT_KICK
+			atk_verb = "kick"
+			atk_effect = ATTACK_EFFECT_KICK
 
-		switch(atk_verb)//this code is really stupid but some genius apparently made "claw" and "slash" two attack types but also the same one so it's needed i guess
-			if(ATTACK_EFFECT_KICK)
-				user.do_attack_animation(target, ATTACK_EFFECT_KICK)
-			if(ATTACK_EFFECT_SLASH || ATTACK_EFFECT_CLAW)//smh
-				user.do_attack_animation(target, ATTACK_EFFECT_CLAW)
-			if(ATTACK_EFFECT_SMASH)
-				user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-			if(ATTACK_EFFECT_BITE)
-				if(user.is_mouth_covered(FALSE, TRUE))
-					to_chat(user, "<span class='warning'>You can't bite with your mouth covered!</span>")
-					return FALSE
-				user.do_attack_animation(target, ATTACK_EFFECT_BITE)
-			else
-				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
+		if(atk_effect == ATTACK_EFFECT_BITE)
+			if(user.is_mouth_covered(mask_only = TRUE))
+				to_chat(user, "<span class='warning'>You can't [atk_verb] with your mouth covered!</span>")
+				return FALSE
+		user.do_attack_animation(target, atk_effect)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
@@ -1368,7 +1396,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
-			if(atk_verb == ATTACK_EFFECT_KICK || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
+			if(atk_effect == ATTACK_EFFECT_KICK || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
 			else
 				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
@@ -1396,7 +1424,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
 
-		if(atk_verb == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
+		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
 			target.apply_damage(damage*1.5, user.dna.species.attack_type, affecting, armor_block)
 			log_combat(user, target, "kicked")
 		else//other attacks deal full raw damage + 1.5x in stamina damage
@@ -1421,7 +1449,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='danger'>You block [user]'s shove!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your shove at [target] was blocked!</span>")
 		return FALSE
-	if(attacker_style?.disarm_act(user,target))
+	if(attacker_style?.disarm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	if(user.body_position != STANDING_UP)
 		return FALSE
@@ -1479,7 +1507,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone
 
-	var/armor_block = H.run_armor_check(affecting, MELEE, "<span class='notice'>Your armor has protected your [hit_area]!</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area]!</span>",I.armour_penetration)
+	var/armor_block = H.run_armor_check(affecting, MELEE, "<span class='notice'>Your armor has protected your [hit_area]!</span>", "<span class='warning'>Your armor has softened a hit to your [hit_area]!</span>",I.armour_penetration, weak_against_armour = I.weak_against_armour)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iwound_bonus = I.wound_bonus
 

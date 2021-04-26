@@ -146,7 +146,13 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 			return "ai-portrait" //just take this until they decide
 		return "ai-[lowertext(input)]"
 
-GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)))
+GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(
+	SEC_DEPT_NONE,
+	SEC_DEPT_ENGINEERING,
+	SEC_DEPT_MEDICAL,
+	SEC_DEPT_SCIENCE,
+	SEC_DEPT_SUPPLY,
+)))
 
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
@@ -253,3 +259,5 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
 GLOBAL_LIST_INIT(station_numerals, greek_letters + phonetic_alphabet + numbers_as_words + generate_number_strings())
 
 GLOBAL_LIST_INIT(admiral_messages, list("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>", "It's a good day to die!"))
+
+GLOBAL_LIST_INIT(junkmail_messages, world.file2list("strings/junkmail.txt"))

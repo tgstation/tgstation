@@ -77,6 +77,7 @@
 	name = "Machine Design (Teleportation Station Board)"
 	desc = "The circuit board for a teleportation station."
 	id = "tele_station"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/teleporter_station
 	category = list ("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
@@ -85,6 +86,7 @@
 	name = "Machine Design (Teleportation Hub Board)"
 	desc = "The circuit board for a teleportation hub."
 	id = "tele_hub"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/teleporter_hub
 	category = list ("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
@@ -93,6 +95,7 @@
 	name = "Machine Design (Quantum Pad Board)"
 	desc = "The circuit board for a quantum telepad."
 	id = "quantumpad"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/quantumpad
 	category = list ("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
@@ -101,6 +104,7 @@
 	name = "Machine Design (Bluespace Launchpad Board)"
 	desc = "The circuit board for a bluespace Launchpad."
 	id = "launchpad"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/launchpad
 	category = list ("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
@@ -109,6 +113,7 @@
 	name = "Machine Design (Bluespace Launchpad Console Board)"
 	desc = "The circuit board for a bluespace launchpad Console."
 	id = "launchpad_console"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/launchpad_console
 	category = list ("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
@@ -117,6 +122,7 @@
 	name = "Computer Design (Teleporter Console)"
 	desc = "Allows for the construction of circuit boards used to build a teleporter control console."
 	id = "teleconsole"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/teleporter
 	category = list("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
@@ -220,7 +226,17 @@
 	name = "Machine Design (Protolathe Board)"
 	desc = "The circuit board for a protolathe."
 	id = "protolathe"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/protolathe
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/protolathe/offstation
+	name = "Machine Design (Ancient Protolathe Board)"
+	desc = "The circuit board for an ancient protolathe."
+	id = "protolathe_offstation"
+	build_type = AWAY_IMPRINTER
+	build_path = /obj/item/circuitboard/machine/protolathe/offstation
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -228,7 +244,17 @@
 	name = "Machine Design (Circuit Imprinter Board)"
 	desc = "The circuit board for a circuit imprinter."
 	id = "circuit_imprinter"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/circuit_imprinter
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/circuit_imprinter/offstation
+	name = "Machine Design (Ancient Circuit Imprinter Board)"
+	desc = "The circuit board for an ancient circuit imprinter."
+	id = "circuit_imprinter_offstation"
+	build_type = AWAY_IMPRINTER
+	build_path = /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -485,6 +511,7 @@
 	name = "Machine Design (NTNet Relay Board)"
 	desc = "The circuit board for a wireless network relay."
 	id = "ntnet_relay"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/ntnet_relay
 	category = list("Subspace Telecomms")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
@@ -597,6 +624,7 @@
 	name = "Machine Design (Bluespace Navigation Gigabeacon)"
 	desc = "The circuit board for a Bluespace Navigation Gigabeacon."
 	id = "spaceship_navigation_beacon"
+	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/spaceship_navigation_beacon
 	category = list ("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
@@ -728,3 +756,19 @@
 	build_path = /obj/item/circuitboard/machine/crystallizer
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/exoscanner
+	name = "Machine Design (Scanner Array)"
+	desc = "The circuit board for scanner array."
+	id = "exoscanner"
+	build_path = /obj/item/circuitboard/machine/exoscanner
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/board/exodrone_launcher
+	name = "Machine Design (Exploration Drone Launcher)"
+	desc = "The circuit board for exodrone launcher."
+	id = "exodrone_launcher"
+	build_path = /obj/item/circuitboard/machine/exodrone_launcher
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO

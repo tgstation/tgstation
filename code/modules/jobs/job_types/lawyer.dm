@@ -9,6 +9,7 @@
 	var/lawyers = 0 //Counts lawyer amount
 
 	outfit = /datum/outfit/job/lawyer
+	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
@@ -18,6 +19,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_LAWYER
 	departments = DEPARTMENT_SERVICE
+
+	family_heirlooms = list(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"

@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_MEDICAL
 
 	outfit = /datum/outfit/job/cmo
+	plasmaman_outfit = /datum/outfit/plasmaman/chief_medical_officer
 	departments = DEPARTMENT_MEDICAL | DEPARTMENT_COMMAND
 
 	paycheck = PAYCHECK_COMMAND
@@ -24,6 +25,14 @@
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
 	bounty_types = CIV_JOB_MED
+
+	mail_goodies = list(
+		/obj/effect/spawner/lootdrop/organ_spawner = 10,
+		/obj/effect/spawner/lootdrop/memeorgans = 8,
+		/obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly = 4,
+		/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly = 1
+	)
+	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 
 /datum/job/chief_medical_officer/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
@@ -45,7 +54,7 @@
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
 
-	skillchips = list(/obj/item/skillchip/entrails_reader, /obj/item/skillchip/quickercarry)
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
@@ -63,4 +72,3 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/medical
 	suit_store = /obj/item/tank/internals/oxygen
 	r_pocket = /obj/item/flashlight/pen/paramedic
-

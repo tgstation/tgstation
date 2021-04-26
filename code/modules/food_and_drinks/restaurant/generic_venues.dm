@@ -1,10 +1,25 @@
+
 /////RESTAURANT/////
 /datum/venue/restaurant
 	name = "restaurant"
 	req_access = ACCESS_KITCHEN
+	min_time_between_visitor = 80 SECONDS
+	max_time_between_visitor = 100 SECONDS
+	customer_types = list(
+		/datum/customer_data/american = 50,
+		/datum/customer_data/italian = 30,
+		/datum/customer_data/french = 30,
+		/datum/customer_data/mexican = 30,
+		/datum/customer_data/japanese = 30,
+		/datum/customer_data/japanese/salaryman = 20,
+		/datum/customer_data/british/bobby = 20,
+		/datum/customer_data/british/gent = 20,
+		/datum/customer_data/moth = 1,
+		/datum/customer_data/malfunction = 1,
+	)
 
 /datum/venue/restaurant/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
-	var/obj/item/object_to_order = pickweight(customer_data.orderable_objects[type]) //Get what object we are ordering
+	var/obj/item/object_to_order = customer_data.get_order(src)
 
 	. = object_to_order
 
@@ -18,7 +33,7 @@
 		SSrestaurant.food_appearance_cache[object_to_order] = appearance //and cache it for future orders
 		qdel(temp_object)
 
-	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, layer = HUD_LAYER)
+	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn)
 
 	I.appearance = appearance
 	I.underlays += mutable_appearance(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
@@ -36,9 +51,11 @@
 
 /datum/venue/restaurant/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
 	. = ..()
-	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [order_item] into their mouth-shaped hole!</span>", "<span class='danger'>You push [order_item] into your mouth-shaped hole.</span>")
+	var/obj/item/food/ordered_food = order_item
+	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [ordered_food] into their mouth-shaped hole!</span>", "<span class='danger'>You push [ordered_food] into your mouth-shaped hole.</span>")
 	playsound(get_turf(customer_pawn),'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	qdel(order_item)
+	customers_served += 1
+	qdel(ordered_food)
 
 /obj/machinery/restaurant_portal/restaurant
 	linked_venue = /datum/venue/restaurant
@@ -59,6 +76,17 @@
 	req_access = ACCESS_BAR
 	min_time_between_visitor = 40 SECONDS
 	max_time_between_visitor = 60 SECONDS
+	customer_types = list(
+		/datum/customer_data/american = 50,
+		/datum/customer_data/italian = 30,
+		/datum/customer_data/french = 30,
+		/datum/customer_data/mexican = 30,
+		/datum/customer_data/japanese = 30,
+		/datum/customer_data/japanese/salaryman = 20,
+		/datum/customer_data/british/bobby = 20,
+		/datum/customer_data/british/gent = 20,
+		/datum/customer_data/malfunction = 1,
+	)
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[type])
@@ -76,7 +104,7 @@
 
 	customer_pawn.say(order_food_line(reagent_to_order))
 
-	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn, layer = HUD_LAYER)
+	var/image/I = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble", loc = customer_pawn)
 	I.add_overlay(mutable_appearance('icons/obj/drinks.dmi', glass_visual))
 	I.pixel_y = 32
 	I.pixel_x = 16
@@ -90,15 +118,16 @@
 	return "I'll take a glass of [initial(order.name)]"
 
 /datum/venue/bar/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
-	var/datum/reagent/ordered_reagent_type = customer_pawn.ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
+	var/datum/reagent/consumable/ordered_reagent_type = customer_pawn.ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
 
 	for(var/datum/reagent/reagent as anything in order_item.reagents.reagent_list)
 		if(reagent.type != ordered_reagent_type)
 			continue
-		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, order_item)
+		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
 
 	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] in one go.</span>")
 	playsound(get_turf(customer_pawn), 'sound/items/drink.ogg', 50, TRUE)
+	customers_served += 1
 	order_item.reagents.clear_reagents()
 
 

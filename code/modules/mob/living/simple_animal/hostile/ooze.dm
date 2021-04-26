@@ -26,7 +26,7 @@
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	mob_size = MOB_SIZE_LARGE
 	initial_language_holder = /datum/language_holder/slime
-
+	footstep_type = FOOTSTEP_MOB_SLIME
 	///Oozes have their own nutrition. Changes based on them eating
 	var/ooze_nutrition = 50
 	var/ooze_nutrition_loss = -0.15
@@ -36,8 +36,6 @@
 	. = ..()
 	create_reagents(300)
 	add_cell_sample()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
-
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
@@ -365,8 +363,9 @@
 		return
 
 	ooze.visible_message("<span class='nicegreen>[ooze] launches a mending globule!</span>", "<span class='notice'>You launch a mending globule.</span>")
+	var/modifiers = params2list(params)
 	var/obj/projectile/globule/globule = new (ooze.loc)
-	globule.preparePixelProjectile(target, ooze, params)
+	globule.preparePixelProjectile(target, ooze, modifiers)
 	globule.def_zone = ooze.zone_selected
 	globule.fire()
 	ooze.adjust_ooze_nutrition(-5)

@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_SERVICE
 
 	outfit = /datum/outfit/job/hop
+	plasmaman_outfit = /datum/outfit/plasmaman/head_of_personnel
 	departments = DEPARTMENT_COMMAND | DEPARTMENT_SERVICE
 
 	paycheck = PAYCHECK_COMMAND
@@ -24,6 +25,13 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
+
+	mail_goodies = list(
+		/obj/item/card/id/advanced/silver = 10,
+		/obj/item/stack/sheet/bone = 5
+	)
+
+	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
 
 /datum/job/head_of_personnel/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
@@ -52,6 +60,13 @@
 	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
 		undershirt = /datum/sprite_accessory/undershirt/ian
 
+//only pet worth reviving
+/datum/job/hop/get_mail_goodies(mob/recipient)
+	. = ..()
+	// Strange Reagent if the pet is dead.
+	for(var/mob/living/simple_animal/pet/dog/corgi/ian/staff_pet in GLOB.dead_mob_list)
+		. += list(/datum/reagent/medicine/strange_reagent = 20)
+		break
 
 /obj/item/paper/fluff/ids_for_dummies
 	name = "Memo: New IDs and You"
@@ -61,8 +76,8 @@
 <h2>The Basics</h2>
 <p>Card Trim - This is the job assigned to the card. The card's trim decides what Basic accesses the card can hold. Basic accesses cost nothing! Grey ID cards cannot hold Head of Staff or Captain trims. Silver ID cards can hold Head of Staff trims but not Captain trims and are in a box in the Head of Personnel's office and orderable from cargo. Gold ID cards can hold all access. The only guaranteed Gold ID card is the Captain's Spare, held in a golden safe on the bridge with access codes given to the station's highest ranking officer. All other gold ID cards are carried exclusively by Captains.</p>
 <p>Wildcards - These are any additional accesses a card has that are not part of the card's trim. Lower quality ID cards have fewer wildcards and the wildcards they do have are of lower rarity.</p>
-<p>Job Changes - To change a job, you need to go to the PDA & ID Painter that's in every Head of Personnel office. This can be used to apply a new trim to an ID card, but this will wipe all that card's accesses in the process. You then take this ID card to any modular computer with the Plexus Access Management app and when logged in with the appropriate Head of Staff or ID Console access can then select from Templates to quick-fill accesses or apply them manually.</p>
-<p>Firing Staff - Terminating a staff member's employment with wipe any trim from their card, remove all access and instantly set them as demoted.</p>
+<p>Job Changes - To change a job, you need to go to the PDA & ID Painter that's in every Head of Personnel office. This can be used to apply a new trim to an ID card, but this will wipe all that card's accesses in the process. You then take this ID card to any modular computer with the Plexagon Access Management app and when logged in with the appropriate Head of Staff or ID Console access can then select from Templates to quick-fill accesses or apply them manually.</p>
+<p>Firing Staff - Terminating a staff member's employment will wipe any trim from their card, remove all access and instantly set them as demoted.</p>
 <h2>Changing Jobs - Step by Step</h2>
 <ol>
 <li>Grab an appropriate ID card. Head of Staff jobs require a silver ID card. Captain requires a gold ID card.</li>

@@ -5,7 +5,10 @@
 	var/list/obj/machinery/atmospherics/pipe/members
 	var/list/obj/machinery/atmospherics/components/other_atmosmch
 
+	///Should we equalize air amoung all our members?
 	var/update = TRUE
+	///Is this pipeline being reconstructed?
+	var/building = FALSE
 
 /datum/pipeline/New()
 	other_airs = list()
@@ -15,6 +18,8 @@
 
 /datum/pipeline/Destroy()
 	SSair.networks -= src
+	if(building)
+		SSair.remove_from_expansion(src)
 	if(air?.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/considered_pipe in members)
@@ -27,22 +32,45 @@
 	return ..()
 
 /datum/pipeline/process()
+	if(building)
+		return
 	if(update)
 		update = FALSE
 		reconcile_air()
 	update = air.react(src)
 
+///Preps a pipeline for rebuilding, insterts it into the rebuild queue
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
+	building = TRUE
 	var/volume = 0
-	if(!istype(base, /obj/machinery/atmospherics/pipe))
-		addMachineryMember(base)
-	else
+	if(istype(base, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/considered_pipe = base
 		volume = considered_pipe.volume
 		members += considered_pipe
 		if(considered_pipe.air_temporary)
 			air = considered_pipe.air_temporary
 			considered_pipe.air_temporary = null
+	else
+		addMachineryMember(base)
+
+	if(!air)
+		air = new
+
+	air.volume = volume
+	SSair.add_to_expansion(src, base)
+
+///Has the same effect as build_pipeline(), but this doesn't queue its work, so overrun abounds. It's useful for the pregame
+/datum/pipeline/proc/build_pipeline_blocking(obj/machinery/atmospherics/base)
+	var/volume = 0
+	if(istype(base, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/considered_pipe = base
+		volume = considered_pipe.volume
+		members += considered_pipe
+		if(considered_pipe.air_temporary)
+			air = considered_pipe.air_temporary
+			considered_pipe.air_temporary = null
+	else
+		addMachineryMember(base)
 
 	if(!air)
 		air = new
@@ -84,10 +112,10 @@
 	air.volume = volume
 
 	/**
-	 *  For a machine to properly "connect" to a pipeline and share gases, 
+	 *  For a machine to properly "connect" to a pipeline and share gases,
 	 *  the pipeline needs to acknowledge a gas mixture as it's member.
 	 *  This is currently handled by the other_airs list in the pipeline datum.
-	 *  
+	 *
 	 *	Other_airs itself is populated by gas mixtures through the parents list that each machineries have.
 	 *	This parents list is populated when a machinery calls update_parents and is then added into the queue by the controller.
 	 */
@@ -264,6 +292,8 @@
 
 	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
 
+	total_gas_mixture.garbage_collect()
+	
 	if(total_gas_mixture.volume > 0)
 		//Update individual gas_mixtures by volume ratio
 		for(var/mixture in gas_mixture_list)

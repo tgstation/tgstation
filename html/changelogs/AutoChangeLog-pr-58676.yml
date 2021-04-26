@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - spellcheck: "Clarifies the keybinding conflict message (the new bindings are the ones being unbound) and makes the heading less alarmist"

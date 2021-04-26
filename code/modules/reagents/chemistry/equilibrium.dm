@@ -204,17 +204,18 @@
 * Checks overheated() and overly_impure() of a reaction
 * This was moved from the start, to the end - after a reaction, so post reaction temperature changes aren't ignored.
 * overheated() is first - so double explosions can't happen (i.e. explosions that blow up the holder)
+* step_volume_added is how much product (across all products) was added for this single step
 */
-/datum/equilibrium/proc/check_fail_states(vol_added)
+/datum/equilibrium/proc/check_fail_states(step_volume_added)
 	//Are we overheated?
 	if(reaction.is_cold_recipe)
 		if(holder.chem_temp < reaction.overheat_temp && reaction.overheat_temp != NO_OVERHEAT) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-			reaction.overheated(holder, src, vol_added)
+			reaction.overheated(holder, src, step_volume_added)
 	else
 		if(holder.chem_temp > reaction.overheat_temp)
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-			reaction.overheated(holder, src, vol_added)
+			reaction.overheated(holder, src, step_volume_added)
 
 	//is our product too impure?
 	for(var/product in reaction.results)
@@ -223,7 +224,7 @@
 			continue
 		if (reagent.purity < reaction.purity_min)//If purity is below the min, call the proc
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
-			reaction.overly_impure(holder, src, vol_added)
+			reaction.overly_impure(holder, src, step_volume_added)
 
 	//did we explode?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
@@ -302,7 +303,7 @@
 			return
 
 	//Call any special reaction steps BEFORE addition
-	if(reaction.reaction_step(src, holder, delta_t, delta_ph, step_target_vol) == END_REACTION)
+	if(reaction.reaction_step(holder, src, delta_t, delta_ph, step_target_vol) == END_REACTION)
 		to_delete = TRUE
 		return
 
@@ -379,10 +380,10 @@
 
 	//Apply thermal output of reaction to beaker
 	if(reaction.reaction_flags & REACTION_HEAT_ARBITARY)
-		holder.chem_temp += (reaction.thermic_constant* total_step_added*thermic_mod) //old method - for every bit added, the whole temperature is adjusted
+		holder.chem_temp += clamp((reaction.thermic_constant* total_step_added*thermic_mod), 0, CHEMICAL_MAXIMUM_TEMPERATURE) //old method - for every bit added, the whole temperature is adjusted
 	else //Standard mechanics
 		var/heat_energy = reaction.thermic_constant * total_step_added * thermic_mod * SPECIFIC_HEAT_DEFAULT
-		holder.adjust_thermal_energy(heat_energy, 0, 10000) //heat is relative to the beaker conditions
+		holder.adjust_thermal_energy(heat_energy, 0, CHEMICAL_MAXIMUM_TEMPERATURE) //heat is relative to the beaker conditions
 
 	//Give a chance of sounds
 	if(prob(5))

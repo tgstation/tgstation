@@ -96,6 +96,7 @@
 
 /obj/item/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
 	. = ..()
+	var/modifiers = params2list(clickparams)
 	if(!wielded)
 		return
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
@@ -106,7 +107,7 @@
 		for(var/t in trophies)
 			var/obj/item/crusher_trophy/T = t
 			T.on_projectile_fire(D, user)
-		D.preparePixelProjectile(target, user, clickparams)
+		D.preparePixelProjectile(target, user, modifiers)
 		D.firer = user
 		D.hammer_synced = src
 		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)

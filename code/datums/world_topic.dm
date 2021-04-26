@@ -98,6 +98,7 @@
 		return
 
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
+	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
 	for(var/obj/machinery/computer/communications/CM in GLOB.machines)
 		CM.override_cooldown()
 
@@ -143,7 +144,6 @@
 	.["mode"] = GLOB.master_mode
 	.["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
 	.["enter"] = GLOB.enter_allowed
-	.["vote"] = CONFIG_GET(flag/allow_vote_mode)
 	.["ai"] = CONFIG_GET(flag/allow_ai)
 	.["host"] = world.host ? world.host : null
 	.["round_id"] = GLOB.round_id

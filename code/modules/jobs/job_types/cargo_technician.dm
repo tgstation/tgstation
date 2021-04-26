@@ -8,12 +8,23 @@
 	selection_color = "#dcba97"
 
 	outfit = /datum/outfit/job/cargo_tech
+	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_CAR
 	display_order = JOB_DISPLAY_ORDER_CARGO_TECHNICIAN
 	bounty_types = CIV_JOB_RANDOM
 	departments = DEPARTMENT_CARGO
+
+	family_heirlooms = list(/obj/item/clipboard)
+
+	mail_goodies = list(
+		/obj/item/pizzabox = 10,
+		/obj/item/stack/sheet/mineral/gold = 5,
+		/obj/item/stack/sheet/mineral/uranium = 4,
+		/obj/item/stack/sheet/mineral/diamond = 3,
+		/obj/item/gun/ballistic/rifle/boltaction = 1
+	)
 
 /datum/outfit/job/cargo_tech
 	name = "Cargo Technician"

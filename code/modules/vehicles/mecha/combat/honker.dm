@@ -23,7 +23,7 @@
 	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
 	var/tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
 	var/cabin_pressure = round(return_pressure(),0.01)
-	var/output = {"[report_internal_damage()]
+	return {"[report_internal_damage()]
 						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font><br>":null]
 						[internal_damage&MECHA_INT_TEMP_CONTROL?"<font color='red'><b>CLOWN SUPPORT SYSTEM MALFUNCTION</b></font><br>":null]
 						[internal_damage&MECHA_INT_TANK_BREACH?"<font color='red'><b>GAS TANK HONK</b></font><br>":null]
@@ -38,10 +38,9 @@
 						<b>Lights: </b>[(mecha_flags & LIGHTS_ON)?"on":"off"]<br>
 						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=[REF(src)];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
-	return output
 
 /obj/vehicle/sealed/mecha/combat/honker/get_stats_html(mob/user)
-	var/output = {"<html>
+	return {"<html>
 						<head>
 						<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 						<title>[src.name] data</title>
@@ -95,7 +94,6 @@
 						</body>
 						</html>
 					"}
-	return output
 
 /obj/vehicle/sealed/mecha/combat/honker/get_commands()
 	var/output = {"<div class='wr'>
@@ -165,4 +163,41 @@
 				playsound(src, 'sound/magic/lightningbolt.ogg', 50)
 			if("explosionfar")
 				playsound(src, 'sound/effects/explosionfar.ogg', 50)
-	return
+
+
+//DARK H.O.N.K.
+
+/obj/vehicle/sealed/mecha/combat/honker/dark
+	desc = "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. This one has been painted black for maximum fun. HONK!"
+	name = "\improper Dark H.O.N.K"
+	icon_state = "darkhonker"
+	max_integrity = 300
+	deflect_chance = 15
+	armor = list(MELEE = 40, BULLET = 40, LASER = 50, ENERGY = 35, BOMB = 20, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	max_temperature = 35000
+	operation_req_access = list(ACCESS_SYNDICATE)
+	internals_req_access = list(ACCESS_SYNDICATE)
+	wreckage = /obj/structure/mecha_wreckage/honker/dark
+	max_equip = 4
+
+/obj/vehicle/sealed/mecha/combat/honker/dark/add_cell(obj/item/stock_parts/cell/C)
+	if(C)
+		C.forceMove(src)
+		cell = C
+		return
+	cell = new /obj/item/stock_parts/cell/hyper(src)
+
+/obj/vehicle/sealed/mecha/combat/honker/dark/loaded/Initialize()
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker()
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana()//Needed more offensive weapons.
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache()//The mousetrap mortar was not up-to-snuff.
+	ME.attach(src)
+
+/obj/structure/mecha_wreckage/honker/dark
+	name = "\improper Dark H.O.N.K wreckage"
+	icon_state = "darkhonker-broken"

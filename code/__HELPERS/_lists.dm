@@ -9,7 +9,7 @@
  * Misc
  */
 
-#define LAZYINITLIST(L) if (!L) L = list()
+#define LAZYINITLIST(L) if (!L) { L = list(); }
 #define UNSETEMPTY(L) if (L && !length(L)) L = null
 ///Like LAZYCOPY - copies an input list if the list has entries, If it doesn't the assigned list is nulled
 #define LAZYLISTDUPLICATE(L) (L ? L.Copy() : null )
@@ -33,6 +33,12 @@
 #define LAZYCLEARLIST(L) if(L) L.Cut() // Consider LAZYNULL instead
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 #define reverseList(L) reverseRange(L.Copy())
+
+/// Performs an insertion on the given lazy list with the given key and value. If the value already exists, a new one will not be made.
+#define LAZYORASSOCLIST(lazy_list, key, value) \
+	LAZYINITLIST(lazy_list); \
+	LAZYINITLIST(lazy_list[key]); \
+	lazy_list[key] |= value;
 
 /// Passed into BINARY_INSERT to compare keys
 #define COMPARE_KEY __BIN_LIST[__BIN_MID]

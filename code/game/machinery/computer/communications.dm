@@ -140,7 +140,7 @@
 			var/new_sec_level = seclevel2num(params["newSecurityLevel"])
 			if (new_sec_level != SEC_LEVEL_GREEN && new_sec_level != SEC_LEVEL_BLUE)
 				return
-			if (GLOB.security_level == new_sec_level)
+			if (SSsecurity_level.current_level == new_sec_level)
 				return
 
 			set_security_level(new_sec_level)
@@ -161,6 +161,12 @@
 			if (!message_index)
 				return
 			LAZYREMOVE(messages, LAZYACCESS(messages, message_index))
+		if ("emergency_meeting")
+			if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
+				return
+			if (!authenticated_as_silicon_or_captain(usr))
+				return
+			emergency_meeting(usr)
 		if ("makePriorityAnnouncement")
 			if (!authenticated_as_silicon_or_captain(usr))
 				return
@@ -195,6 +201,8 @@
 			var/list/shuttles = flatten_list(SSmapping.shuttle_templates)
 			var/datum/map_template/shuttle/shuttle = locate(params["shuttle"]) in shuttles
 			if (!istype(shuttle))
+				return
+			if (!can_purchase_this_shuttle(shuttle))
 				return
 			if (!shuttle.prerequisites_met())
 				to_chat(usr, "<span class='alert'>You have not met the requirements for purchasing this shuttle.</span>")
@@ -257,6 +265,7 @@
 			var/network_name = CONFIG_GET(string/cross_comms_network)
 			if (network_name)
 				payload["network"] = network_name
+			payload["sender_ckey"] = usr.ckey
 
 			send2otherserver(station_name(), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
 			minor_announce(message, title = "Outgoing message to allied station")
@@ -329,15 +338,53 @@
 				log_game("[key_name(usr)] enabled emergency maintenance access.")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] enabled emergency maintenance access.")
 				deadchat_broadcast(" enabled emergency maintenance access at <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type = DEADCHAT_ANNOUNCEMENT)
+		// Request codes for the Captain's Spare ID safe.
+		if("requestSafeCodes")
+			if(SSjob.assigned_captain)
+				to_chat(usr, "<span class='warning'>There is already an assigned Captain or Acting Captain on deck!</span>")
+				return
+
+			if(SSjob.safe_code_timer_id)
+				to_chat(usr, "<span class='warning'>The safe code has already been requested and is being delivered to your station!</span>")
+				return
+
+			if(SSjob.safe_code_requested)
+				to_chat(usr, "<span class='warning'>The safe code has already been requested and delivered to your station!</span>")
+				return
+
+			if(!SSid_access.spare_id_safe_code)
+				to_chat(usr, "<span class='warning'>There is no safe code to deliver to your station!</span>")
+				return
+
+			var/turf/pod_location = get_turf(src)
+
+			SSjob.safe_code_request_loc = pod_location
+			SSjob.safe_code_requested = TRUE
+			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, /datum/controller/subsystem/job.proc/send_spare_id_safe_code, pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
+			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
 		"authenticated" = FALSE,
 		"emagged" = FALSE,
-		"hasConnection" = has_communication(),
 	)
 
 	var/ui_state = issilicon(user) ? cyborg_state : state
+
+	var/has_connection = has_communication()
+	data["hasConnection"] = has_connection
+
+	if(!SSjob.assigned_captain && !SSjob.safe_code_requested && SSid_access.spare_id_safe_code && has_connection)
+		data["canRequestSafeCode"] = TRUE
+		data["safeCodeDeliveryWait"] = 0
+	else
+		data["canRequestSafeCode"] = FALSE
+		if(SSjob.safe_code_timer_id && has_connection)
+			data["safeCodeDeliveryWait"] = timeleft(SSjob.safe_code_timer_id)
+			data["safeCodeDeliveryArea"] = get_area(SSjob.safe_code_request_loc)
+		else
+			data["safeCodeDeliveryWait"] = 0
+			data["safeCodeDeliveryArea"] = null
 
 	if (authenticated || issilicon(user))
 		data["authenticated"] = TRUE
@@ -360,7 +407,7 @@
 				data["importantActionReady"] = COOLDOWN_FINISHED(src, important_action_cooldown)
 				data["shuttleCalled"] = FALSE
 				data["shuttleLastCalled"] = FALSE
-
+				data["aprilFools"] = SSevents.holidays && SSevents.holidays[APRIL_FOOLS]
 				data["alertLevel"] = get_security_level()
 				data["authorizeName"] = authorize_name
 				data["canLogOut"] = !issilicon(user)
@@ -417,8 +464,23 @@
 
 				for (var/shuttle_id in SSmapping.shuttle_templates)
 					var/datum/map_template/shuttle/shuttle_template = SSmapping.shuttle_templates[shuttle_id]
-					if (!shuttle_template.can_be_bought || shuttle_template.credit_cost == INFINITY)
+
+					if (shuttle_template.credit_cost == INFINITY)
 						continue
+
+					if (!can_purchase_this_shuttle(shuttle_template))
+						continue
+
+					var/has_access = FALSE
+
+					for (var/purchase_access in shuttle_template.who_can_purchase)
+						if (purchase_access in authorize_access)
+							has_access = TRUE
+							break
+
+					if (!has_access)
+						continue
+
 					shuttles += list(list(
 						"name" = shuttle_template.name,
 						"description" = shuttle_template.description,
@@ -465,8 +527,19 @@
 /obj/machinery/computer/communications/proc/can_buy_shuttles(mob/user)
 	if (!SSmapping.config.allow_custom_shuttles)
 		return FALSE
-	if (!authenticated_as_non_silicon_captain(user))
+	if (issilicon(user))
 		return FALSE
+
+	var/has_access = FALSE
+
+	for (var/access in SSshuttle.has_purchase_shuttle_access)
+		if (access in authorize_access)
+			has_access = TRUE
+			break
+
+	if (!has_access)
+		return FALSE
+
 	if (SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
 		return "The shuttle is already in transit."
 	if (SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_PURCHASED)
@@ -475,11 +548,40 @@
 		return "Due to unforseen circumstances, shuttle purchasing is no longer available."
 	return TRUE
 
+/// Returns whether we are authorized to buy this specific shuttle.
+/// Does not handle prerequisite checks, as those should still *show*.
+/obj/machinery/computer/communications/proc/can_purchase_this_shuttle(datum/map_template/shuttle/shuttle_template)
+	if (isnull(shuttle_template.who_can_purchase))
+		return FALSE
+
+	for (var/access in authorize_access)
+		if (access in shuttle_template.who_can_purchase)
+			return TRUE
+
+	return FALSE
+
 /obj/machinery/computer/communications/proc/can_send_messages_to_other_sectors(mob/user)
 	if (!authenticated_as_non_silicon_captain(user))
 		return
 
 	return length(CONFIG_GET(keyed_list/cross_server)) > 0
+
+/**
+ * Call an emergency meeting
+ *
+ * Comm Console wrapper for the Communications subsystem wrapper for the call_emergency_meeting world proc.
+ * Checks to make sure the proc can be called, and handles relevant feedback, logging and timing.
+ * See the SScommunications proc definition for more detail, in short, teleports the entire crew to
+ * the bridge for a meetup. Should only really happen during april fools.
+ * Arguments:
+ * * user - Mob who called the meeting
+ */
+/obj/machinery/computer/communications/proc/emergency_meeting(mob/living/user)
+	if(!SScommunications.can_make_emergency_meeting(user))
+		to_chat(user, "<span class='alert'>The emergency meeting button doesn't seem to work right now. Please stand by.</span>")
+		return
+	SScommunications.emergency_meeting(user)
+	deadchat_broadcast(" called an emergency meeting from <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = issilicon(user)

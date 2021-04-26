@@ -14,6 +14,7 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 	faction = list("creature")
 	robust_searching = 1
 	stat_attack = DEAD
@@ -61,7 +62,7 @@
 
 /obj/item/organ/body_egg/changeling_egg/egg_process(delta_time, times_fired)
 	// Changeling eggs grow in dead people
-	time += delta_time
+	time += delta_time * 10
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
 		Remove(owner)

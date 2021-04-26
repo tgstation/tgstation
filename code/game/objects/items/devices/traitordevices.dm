@@ -69,7 +69,6 @@ effective or pretty fucking useless.
 */
 
 /obj/item/healthanalyzer/rad_laser
-	custom_materials = list(/datum/material/iron=400)
 	var/irradiate = TRUE
 	var/stealth = FALSE
 	var/used = FALSE // is it cooling down?
@@ -89,16 +88,16 @@ effective or pretty fucking useless.
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
-		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M), (wavelength+(intensity*4))*5)
+		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M, intensity), (wavelength+(intensity*4))*5)
 	else
 		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
 
-/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M)
-	if(QDELETED(M))
+/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
+	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE))
 		return
-	if(intensity >= 5)
-		M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)
-	M.rad_act(intensity*10)
+	if(passed_intensity >= 5)
+		M.apply_effect(round(passed_intensity/0.075), EFFECT_UNCONSCIOUS) //to save you some math, this is a round(intensity * (4/3)) second long knockout
+	M.rad_act(passed_intensity*10)
 
 /obj/item/healthanalyzer/rad_laser/proc/get_cooldown()
 	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))

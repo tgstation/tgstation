@@ -123,99 +123,33 @@
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
 	value = -2
 	mood_quirk = TRUE
-	var/obj/item/heirloom
-	var/where
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	hardcore_value = 1
+	/// A reference to our heirloom.
+	var/obj/item/heirloom
+	/// Where our heirloom is spawning.
+	var/heirloom_spawn_loc
 
 /datum/quirk/family_heirloom/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
+	/// The quirk holder, casted to human
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	/// The heirloom we will spawn
 	var/obj/item/heirloom_type
 
-	if(ismoth(H) && prob(50))
-		heirloom_type = /obj/item/flashlight/lantern/heirloom_moth
-	else if(isfelinid(H) && prob(50))
-		heirloom_type = /obj/item/toy/cattoy
+	/// The quirk holder's species - we have a 50% chance, if we have a species with a set heirloom, to choose a species heirloom.
+	var/datum/species/holder_species = human_holder.dna?.species
+	if(holder_species && LAZYLEN(holder_species.family_heirlooms) && prob(50))
+		heirloom_type = pick(holder_species.family_heirlooms)
 	else
-		switch(quirk_holder.mind.assigned_role)
-			//Service jobs
-			if("Clown")
-				heirloom_type = /obj/item/bikehorn/golden
-			if("Mime")
-				heirloom_type = /obj/item/food/baguette
-			if("Janitor")
-				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket, /obj/item/paper/fluff/stations/soap)
-			if("Cook")
-				heirloom_type = pick(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
-			if("Botanist")
-				heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/toy/plush/beeplushie)
-			if("Bartender")
-				heirloom_type = pick(/obj/item/reagent_containers/glass/rag, /obj/item/clothing/head/that, /obj/item/reagent_containers/food/drinks/shaker)
-			if("Curator")
-				heirloom_type = pick(/obj/item/pen/fountain, /obj/item/storage/pill_bottle/dice)
-			if("Chaplain")
-				heirloom_type = pick(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
-			if("Assistant")
-				heirloom_type = pick(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
-			//Security/Command
-			if("Captain")
-				heirloom_type = /obj/item/reagent_containers/food/drinks/flask/gold
-			if("Head of Security")
-				heirloom_type = /obj/item/book/manual/wiki/security_space_law
-			if("Head of Personnel")
-				heirloom_type = /obj/item/reagent_containers/food/drinks/trophy/silver_cup
-			if("Warden")
-				heirloom_type = /obj/item/book/manual/wiki/security_space_law
-			if("Security Officer")
-				heirloom_type = pick(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/beret/sec)
-			if("Detective")
-				heirloom_type = /obj/item/reagent_containers/food/drinks/bottle/whiskey
-			if("Lawyer")
-				heirloom_type = pick(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
-			if("Prisoner")
-				heirloom_type = /obj/item/pen/blue
-			//RnD
-			if("Research Director")
-				heirloom_type = /obj/item/toy/plush/slimeplushie
-			if("Scientist")
-				heirloom_type = /obj/item/toy/plush/slimeplushie
-			if("Roboticist")
-				heirloom_type = pick(subtypesof(/obj/item/toy/prize) + /obj/item/toy/plush/pkplush) //look at this nerd
-			if("Geneticist")
-				heirloom_type = /obj/item/clothing/under/shorts/purple
-			//Medical
-			if("Chief Medical Officer")
-				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
-			if("Medical Doctor")
-				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
-			if("Paramedic")
-				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
-			if("Psychologist")
-				heirloom_type = /obj/item/storage/pill_bottle
-			if("Chemist")
-				heirloom_type = pick(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet)
-			if("Virologist")
-				heirloom_type = /obj/item/reagent_containers/syringe
-			//Engineering
-			if("Chief Engineer")
-				heirloom_type = pick(/obj/item/clothing/head/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
-			if("Station Engineer")
-				heirloom_type = pick(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
-			if("Atmospheric Technician")
-				heirloom_type = pick(/obj/item/lighter, /obj/item/lighter/greyscale, /obj/item/storage/box/matches)
-			//Supply
-			if("Quartermaster")
-				heirloom_type = pick(/obj/item/stamp, /obj/item/stamp/denied)
-			if("Cargo Technician")
-				heirloom_type = /obj/item/clipboard
-			if("Shaft Miner")
-				heirloom_type = pick(/obj/item/pickaxe/mini, /obj/item/shovel)
+		/// Our quirk holder's job
+		var/datum/job/holder_job = SSjob.GetJob(human_holder.mind?.assigned_role)
+		if(holder_job && LAZYLEN(holder_job.family_heirlooms))
+			heirloom_type = pick(holder_job.family_heirlooms)
 
+	// If we didn't find an heirloom somehow, throw them a generic one
 	if(!heirloom_type)
-		heirloom_type = pick(
-		/obj/item/toy/cards/deck,
-		/obj/item/lighter,
-		/obj/item/dice/d20)
+		heirloom_type = pick(/obj/item/toy/cards/deck, /obj/item/lighter, /obj/item/dice/d20)
+
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	var/list/slots = list(
 		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
@@ -223,14 +157,14 @@
 		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
 		LOCATION_HANDS = ITEM_SLOT_HANDS
 	)
-	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
+	heirloom_spawn_loc = human_holder.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
 /datum/quirk/family_heirloom/post_add()
-	if(where == LOCATION_BACKPACK)
+	if(heirloom_spawn_loc == LOCATION_BACKPACK)
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious family [heirloom.name] [heirloom_spawn_loc], passed down from generation to generation. Keep it safe!</span>")
 
 	var/list/names = splittext(quirk_holder.real_name, " ")
 	var/family_name = names[names.len]
@@ -452,7 +386,7 @@
 	name = "Reality Dissociation Syndrome"
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. <b>This is not a license to grief.</b>"
 	value = -8
-	//no mob trait because it's handled uniquely
+	mob_trait = TRAIT_INSANITY
 	gain_text = "<span class='userdanger'>...</span>"
 	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
@@ -585,7 +519,7 @@
 		for(var/i in 1 to 7)
 			var/obj/item/reagent_containers/pill/P = new(drug_instance)
 			P.icon_state = pill_state
-			P.reagents.add_reagent(reagent_type, 1)
+			P.reagents.add_reagent(reagent_type, 3)
 
 	var/obj/item/accessory_instance
 	if (accessory_type)

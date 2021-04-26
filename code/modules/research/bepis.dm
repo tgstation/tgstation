@@ -107,20 +107,6 @@
 	log_econ("[deposit_value] credits were inserted into [src] by [account.account_holder]")
 	banked_cash += deposit_value
 	use_power(1000 * power_saver)
-	say("Cash deposit successful. There is [banked_cash] in the chamber.")
-	update_appearance()
-	return
-
-/obj/machinery/rnd/bepis/proc/withdrawcash()
-	var/withdraw_value = 0
-	withdraw_value = banking_amount
-	if(withdraw_value > banked_cash)
-		say("Cannot withdraw more than stored funds. Aborting.")
-	else
-		banked_cash -= withdraw_value
-		new /obj/item/holochip(src.loc, withdraw_value)
-		say("Withdrawing [withdraw_value] credits from the chamber.")
-	update_appearance()
 	return
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
@@ -190,11 +176,14 @@
 		ui = new(user, src, "Bepis", name)
 		ui.open()
 	RefreshParts()
+	if(isliving(user))
+		var/mob/living/customer = user
+		account = customer.get_bank_account()
 
 /obj/machinery/rnd/bepis/ui_data(mob/user)
 	var/list/data = list()
 	var/powered = FALSE
-	var/zvalue = (banked_cash - (major_threshold - positive_cash_offset - negative_cash_offset))/(std)
+	var/zvalue = ((banking_amount + banked_cash) - (major_threshold - positive_cash_offset - negative_cash_offset))/(std)
 	var/std_success = 0
 	var/prob_success = 0
 	//Admittedly this is messy, but not nearly as messy as the alternative, which is jury-rigging an entire Z-table into the code, or making an adaptive z-table.
@@ -222,7 +211,7 @@
 		powered = TRUE
 	data["account_owner"] = account_name
 	data["amount"] = banking_amount
-	data["stored_cash"] = banked_cash
+	data["stored_cash"] = account?.account_balance
 	data["mean_value"] = (major_threshold - positive_cash_offset - negative_cash_offset)
 	data["error_name"] = error_cause
 	data["power_saver"] = power_saver
@@ -239,19 +228,12 @@
 	if(.)
 		return
 	switch(action)
-		if("deposit_cash")
-			if(use_power == IDLE_POWER_USE)
-				return
-			depositcash()
-		if("withdraw_cash")
-			if(use_power == IDLE_POWER_USE)
-				return
-			withdrawcash()
 		if("begin_experiment")
 			if(use_power == IDLE_POWER_USE)
 				return
+			depositcash()
 			if(banked_cash == 0)
-				say("Please deposit funds to begin testing.")
+				say("Please select funds to deposit to begin testing.")
 				return
 			calcsuccess()
 			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.

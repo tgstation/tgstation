@@ -267,12 +267,12 @@
 /datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "genetics")
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "genetics")
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/human/fire
 	name = "Fiery Sweat"

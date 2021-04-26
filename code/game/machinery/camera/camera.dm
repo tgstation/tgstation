@@ -101,15 +101,15 @@
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
 	GLOB.cameranet.cameras -= src
+	cancelCameraAlarm()
 	if(isarea(myarea))
-		LAZYREMOVE(myarea.cameras, src)
+		myarea.clear_camera(src)
 	QDEL_NULL(assembly)
 	if(bug)
-		bug.bugged_cameras -= src.c_tag
+		bug.bugged_cameras -= c_tag
 		if(bug.current == src)
 			bug.current = null
 		bug = null
-	cancelCameraAlarm()
 	return ..()
 
 /obj/machinery/camera/examine(mob/user)
@@ -173,8 +173,8 @@
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(invuln)
-		return
-	..()
+		return FALSE
+	return ..()
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num

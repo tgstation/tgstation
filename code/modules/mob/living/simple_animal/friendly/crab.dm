@@ -23,6 +23,11 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
+	///In the case 'melee_damage_upper' is somehow raised above 0
+	attack_verb_continuous = "snips"
+	attack_verb_simple = "snip"
+	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
 
 /mob/living/simple_animal/crab/Initialize()
 	. = ..()

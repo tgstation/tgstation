@@ -2,6 +2,8 @@
 
 /mob/living/carbon/get_eye_protection()
 	. = ..()
+	if(HAS_TRAIT(src, TRAIT_BLIND))
+		return INFINITY //For all my homies that can not see in the world
 	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		return INFINITY //Can't get flashed without eyes
@@ -16,6 +18,8 @@
 
 /mob/living/carbon/get_ear_protection()
 	. = ..()
+	if(HAS_TRAIT(src, TRAIT_DEAF))
+		return INFINITY //For all my homies that can not hear in the world
 	var/obj/item/organ/ears/E = getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
 		return INFINITY
@@ -46,7 +50,7 @@
 
 /mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
 	. = FALSE
-	if(!skip_throw_mode_check && !in_throw_mode)
+	if(!skip_throw_mode_check && !throw_mode)
 		return
 	if(get_active_held_item())
 		return
@@ -61,7 +65,7 @@
 		if(get_active_held_item() == I) //if our attack_hand() picks up the item...
 			visible_message("<span class='warning'>[src] catches [I]!</span>", \
 							"<span class='userdanger'>You catch [I] in mid-air!</span>")
-			throw_mode_off()
+			throw_mode_off(THROW_MODE_TOGGLE)
 			return TRUE
 	return ..()
 
@@ -165,9 +169,6 @@
 		if(W.try_handling(user))
 			return TRUE
 
-	if (user.apply_martial_art(src, modifiers))
-		return TRUE
-
 	return FALSE
 
 
@@ -245,16 +246,6 @@
  * or another carbon.
 */
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
-	if(zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		var/target_on_help_and_unarmed = !target.combat_mode && !target.get_active_held_item()
-		if(target_on_help_and_unarmed || HAS_TRAIT(target, TRAIT_RESTRAINED))
-			do_slap_animation(target)
-			playsound(target.loc, 'sound/weapons/slap.ogg', 50, TRUE, -1)
-			visible_message("<span class='danger'>[src] slaps [target] in the face!</span>",
-				"<span class='notice'>You slap [target] in the face! </span>",\
-			"You hear a slap.")
-			target.dna?.species?.stop_wagging_tail(target)
-			return
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	if (ishuman(target))
@@ -323,7 +314,8 @@
 			log_combat(src, target, "shoved", "onto [target_table] (table)")
 		else if(target_collateral_carbon)
 			target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
-			target_collateral_carbon.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+			if(!target_collateral_carbon.is_shove_knockdown_blocked())
+				target_collateral_carbon.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 			target.visible_message("<span class='danger'>[name] shoves [target.name] into [target_collateral_carbon.name]!</span>",
 				"<span class='userdanger'>You're shoved into [target_collateral_carbon.name] by [name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, "<span class='danger'>You shove [target.name] into [target_collateral_carbon.name]!</span>")

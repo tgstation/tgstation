@@ -128,21 +128,15 @@
 		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
 		SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
 
-/obj/item/pen/attack(mob/living/M, mob/user,stealth)
-	if(!istype(M))
-		return
-
-	if(!force)
-		if(M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
-			to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
-			if(!stealth)
-				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
-			. = 1
-
-		log_combat(user, M, "stabbed", src)
-
-	else
-		. = ..()
+/obj/item/pen/attack(mob/living/M, mob/user, params)
+	if(force) // If the pen has a force value, call the normal attack procs. Used for e-daggers and captain's pen mostly.
+		return ..()
+	if(!M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
+		return FALSE
+	to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
+	to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
+	log_combat(user, M, "stabbed", src)
+	return TRUE
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	. = ..()
@@ -195,15 +189,15 @@
  * Sleepypens
  */
 
-/obj/item/pen/sleepy/attack(mob/living/M, mob/user)
-	if(!istype(M))
+/obj/item/pen/sleepy/attack(mob/living/M, mob/user, params)
+	. = ..()
+	if(!.)
 		return
-
-	if(..())
-		if(reagents.total_volume)
-			if(M.reagents)
-
-				reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
+	if(!reagents.total_volume)
+		return
+	if(!M.reagents)
+		return
+	reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
 
 
 /obj/item/pen/sleepy/Initialize()

@@ -2836,7 +2836,6 @@
 /area/awaymission/academy/academycellar)
 "lk" = (
 /obj/structure/safe/floor,
-/obj/item/voodoo,
 /obj/item/gun/magic/wand/fireball,
 /obj/item/clothing/suit/space/hardsuit/wizard,
 /turf/open/floor/wood,

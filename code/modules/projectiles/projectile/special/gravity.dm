@@ -30,7 +30,7 @@
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
 		A.safe_throw_at(throwtarget,power+1,1, force = MOVE_FORCE_EXTREMELY_STRONG)
 		thrown_items[A] = A
-	for(var/turf/F in range(T,power))
+	for(var/turf/F in RANGE_TURFS(power, T))
 		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/projectile/gravityattract
@@ -64,7 +64,7 @@
 				continue
 		A.safe_throw_at(T, power+1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 		thrown_items[A] = A
-	for(var/turf/F in range(T,power))
+	for(var/turf/F in RANGE_TURFS(power, T))
 		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/projectile/gravitychaos
@@ -98,5 +98,5 @@
 				continue
 		A.safe_throw_at(get_edge_target_turf(A, pick(GLOB.cardinals)), power+1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 		thrown_items[A] = A
-	for(var/turf/Z in range(T,power))
+	for(var/turf/Z as anything in RANGE_TURFS(power,T))
 		new /obj/effect/temp_visual/gravpush(Z)

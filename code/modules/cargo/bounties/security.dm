@@ -17,7 +17,7 @@
 	description = "Terragov has been unable to source any new prisoner uniforms, so if you have any spares, we'll take them off your hands."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 4
-	wanted_types = list(/obj/item/clothing/under/rank/prisoner)
+	wanted_types = list(/obj/item/clothing/under/color/prisoner)
 
 /datum/bounty/item/security/plates
 	name = "License Plates"
@@ -59,7 +59,8 @@
 		/area/security/office,\
 		/area/security/prison,\
 		/area/security/range,\
-		/area/security/checkpoint)
+		/area/security/checkpoint,\
+		/area/security/interrogation)
 	demanded_area = pick(possible_areas)
 	name = name + ": [initial(demanded_area.name)]"
 	description = initial(description) + " [initial(demanded_area.name)]"

@@ -5,6 +5,23 @@
  */
 
 declare global {
+  // Webpack asset modules.
+  // Should match extensions used in webpack config.
+  declare module '*.png' {
+    const content: string;
+    export default content;
+  }
+
+  declare module '*.jpg' {
+    const content: string;
+    export default content;
+  }
+
+  declare module '*.svg' {
+    const content: string;
+    export default content;
+  }
+
   type ByondType = {
     /**
      * True if javascript is running in BYOND.

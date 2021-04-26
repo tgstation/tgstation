@@ -10,6 +10,7 @@
 	exp_requirements = 60
 
 	outfit = /datum/outfit/job/geneticist
+	plasmaman_outfit = /datum/outfit/plasmaman/genetics
 	departments = DEPARTMENT_MEDICAL
 
 	paycheck = PAYCHECK_MEDIUM
@@ -17,6 +18,12 @@
 
 	display_order = JOB_DISPLAY_ORDER_GENETICIST
 	bounty_types = CIV_JOB_SCI
+
+	mail_goodies = list(
+		/obj/item/storage/box/monkeycubes = 10
+	)
+
+	family_heirlooms = list(/obj/item/clothing/under/shorts/purple)
 
 /datum/outfit/job/geneticist
 	name = "Geneticist"

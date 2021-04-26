@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_RD = /obj/item/clothing/under/rank/rnd/research_director,
 		DYE_CMO = /obj/item/clothing/under/rank/medical/chief_medical_officer,
 		DYE_REDCOAT = /obj/item/clothing/under/costume/redcoat,
-		DYE_PRISONER = /obj/item/clothing/under/rank/prisoner,
+		DYE_PRISONER = /obj/item/clothing/under/color/prisoner,
 		DYE_SYNDICATE = /obj/item/clothing/under/syndicate,
 		DYE_CENTCOM = /obj/item/clothing/under/rank/centcom/commander
 	),
@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_CE = /obj/item/clothing/under/rank/engineering/chief_engineer/skirt,
 		DYE_RD = /obj/item/clothing/under/rank/rnd/research_director/skirt,
 		DYE_CMO = /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt,
-		DYE_PRISONER = /obj/item/clothing/under/rank/prisoner/skirt,
+		DYE_PRISONER = /obj/item/clothing/under/color/jumpskirt/prisoner,
 	),
 	DYE_REGISTRY_GLOVES = list(
 		DYE_RED = /obj/item/clothing/gloves/color/red,
@@ -148,24 +148,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /obj/machinery/washing_machine/examine(mob/user)
 	. = ..()
 	if(!busy)
-		. += "<span class='notice'><b>Alt-click</b> it to start a wash cycle.</span>"
-
-/obj/machinery/washing_machine/AltClick(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)))
-		return
-	if(busy)
-		return
-	if(state_open)
-		to_chat(user, "<span class='warning'>Close the door first!</span>")
-		return
-	if(bloody_mess)
-		to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
-		return
-	busy = TRUE
-	update_appearance()
-	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
-
-	START_PROCESSING(SSfastprocess, src)
+		. += "<span class='notice'><b>Right-click</b> with an empty hand to start a wash cycle.</span>"
 
 /obj/machinery/washing_machine/process(delta_time)
 	if(!busy)
@@ -350,6 +333,27 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	else
 		state_open = FALSE //close the door
 		update_appearance()
+
+/obj/machinery/washing_machine/attack_hand_secondary(mob/user, modifiers)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(busy)
+		to_chat(user, "<span class='warning'>[src] is busy!</span>")
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(state_open)
+		to_chat(user, "<span class='warning'>Close the door first!</span>")
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(bloody_mess)
+		to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	busy = TRUE
+	update_appearance()
+	addtimer(CALLBACK(src, .proc/wash_cycle), 20 SECONDS)
+	START_PROCESSING(SSfastprocess, src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/washing_machine/attack_ai_secondary(mob/user, modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
 	if (!(flags_1 & NODECONSTRUCT_1))

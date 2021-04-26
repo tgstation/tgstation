@@ -13,13 +13,14 @@
 	max_integrity = 300
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	circuit = /obj/item/circuitboard/machine/crystallizer
-	pipe_flags = PIPING_ONE_PER_TURF
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
+	vent_movement = NONE
 
 	///Base icon state for the machine to be used in update_icon()
 	var/base_icon = "crystallizer"
 	///Internal Gas mix used for processing the gases that have been put in
 	var/datum/gas_mixture/internal
-	///Var that controls how much gas gets injected in moles/S
+	///Var that controls how much gas gets injected in moles per tick
 	var/gas_input = 0
 	///Saves the progress during the processing of the items
 	var/progress_bar = 0
@@ -109,16 +110,15 @@
 
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
-	var/datum/gas_mixture/contents = airs[2]
-	if(contents.temperature >= selected_recipe.min_temp * MIN_DEVIATION_RATE && contents.temperature <= selected_recipe.max_temp * MAX_DEVIATION_RATE)
+	if(internal.temperature >= selected_recipe.min_temp * MIN_DEVIATION_RATE && internal.temperature <= selected_recipe.max_temp * MAX_DEVIATION_RATE)
 		return TRUE
 	return FALSE
 
 ///Injects the gases from the input inside the internal gasmix, the amount is dependant on the gas_input var
-/obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases(delta_time)
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases()
 	var/datum/gas_mixture/contents = airs[2]
 	for(var/gas_type in selected_recipe.requirements)
-		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * (gas_input  * delta_time)))
+		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * gas_input))
 
 ///Checks if the gases required are all inside
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
@@ -132,31 +132,31 @@
 
 ///Calculation for the heat of the various gas mixes and controls the quality of the item
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_calculations()
-	var/datum/gas_mixture/cooling_port = airs[1]
-	if(cooling_port.total_moles() * 0.25 > MINIMUM_MOLE_COUNT)
-		var/datum/gas_mixture/cooling_remove = cooling_port.remove_ratio(0.25)
-
-		if(internal.total_moles() > 0)
-			var/coolant_temperature_delta = cooling_remove.temperature - internal.temperature
-			var/cooling_heat_capacity = cooling_remove.heat_capacity()
-			var/internal_heat_capacity = internal.heat_capacity()
-			var/cooling_heat_amount = HIGH_CONDUCTIVITY_RATIO * coolant_temperature_delta * (cooling_heat_capacity * internal_heat_capacity / (cooling_heat_capacity + internal_heat_capacity))
-			cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_heat_capacity, TCMB)
-			internal.temperature = max(internal.temperature + cooling_heat_amount / internal_heat_capacity, TCMB)
-		cooling_port.merge(cooling_remove)
-
 	if(	(internal.temperature >= (selected_recipe.min_temp * MIN_DEVIATION_RATE) && internal.temperature <= selected_recipe.min_temp) || \
 		(internal.temperature >= selected_recipe.max_temp && internal.temperature <= (selected_recipe.max_temp * MAX_DEVIATION_RATE)))
 		quality_loss = min(quality_loss + 1.5, 100)
 
 	var/median_temperature = (selected_recipe.max_temp - selected_recipe.min_temp) * 0.5
 	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
-		quality_loss = max(quality_loss - 5.5, 100)
+		quality_loss = max(quality_loss - 5.5, -100)
 
 	if(selected_recipe.reaction_type == "endothermic")
 		internal.temperature = max(internal.temperature - (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
 	else if(selected_recipe.reaction_type == "exothermic")
 		internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
+
+///Conduction between the internal gasmix and the moderating (cooling/heating) gasmix.
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_conduction()
+	var/datum/gas_mixture/cooling_port = airs[1]
+	if(cooling_port.total_moles() > MINIMUM_MOLE_COUNT)
+		if(internal.total_moles() > 0)
+			var/coolant_temperature_delta = cooling_port.temperature - internal.temperature
+			var/cooling_heat_capacity = cooling_port.heat_capacity()
+			var/internal_heat_capacity = internal.heat_capacity()
+			var/cooling_heat_amount = HIGH_CONDUCTIVITY_RATIO * coolant_temperature_delta * (cooling_heat_capacity * internal_heat_capacity / (cooling_heat_capacity + internal_heat_capacity))
+			cooling_port.temperature = max(cooling_port.temperature - cooling_heat_amount / cooling_heat_capacity, TCMB)
+			internal.temperature = max(internal.temperature + cooling_heat_amount / internal_heat_capacity, TCMB)
+		update_parents()
 
 ///Calculate the total moles needed for the recipe
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/moles_calculations()
@@ -171,18 +171,18 @@
 	airs[2].merge(remove)
 	internal.garbage_collect()
 
-/obj/machinery/atmospherics/components/binary/crystallizer/process_atmos(delta_time)
+/obj/machinery/atmospherics/components/binary/crystallizer/process_atmos()
 	if(!on || !is_operational || selected_recipe == null)
 		return
 
-	if(!check_gas_requirements())
-		return
-
-	inject_gases(delta_time)
+	if(check_gas_requirements())
+		inject_gases()
 
 	if(!internal.total_moles())
 		update_parents()
 		return
+
+	heat_conduction()
 
 	if(internal_check())
 		if(check_temp_requirements())
@@ -262,7 +262,7 @@
 	if(selected_recipe)
 		data["selected"] = selected_recipe.id
 	else
-		data["selected"] = null
+		data["selected"] = ""
 
 	var/list/internal_gas_data = list()
 	if(internal.total_moles())
@@ -319,7 +319,7 @@
 				dump_gases()
 			quality_loss = 0
 			progress_bar = 0
-			if(recipe)
+			if(recipe && recipe.id != "")
 				selected_recipe = recipe
 				recipe_name = recipe.name
 				update_parents() //prevent the machine from stopping because of the recipe change and the pipenet not updating
@@ -328,7 +328,7 @@
 			. = TRUE
 		if("gas_input")
 			var/_gas_input = params["gas_input"]
-			gas_input = clamp(_gas_input, 0, 50)
+			gas_input = clamp(_gas_input, 0, 250)
 	update_icon()
 
 #undef MIN_PROGRESS_AMOUNT

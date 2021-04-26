@@ -9,6 +9,7 @@ Assistant
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
 	outfit = /datum/outfit/job/assistant
+	plasmaman_outfit = /datum/outfit/plasmaman
 	antag_rep = 7
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 	departments = DEPARTMENT_SERVICE
@@ -17,6 +18,17 @@ Assistant
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
+
+	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
+
+	mail_goodies = list(
+		/obj/effect/spawner/lootdrop/donkpockets = 10,
+		/obj/item/clothing/mask/gas = 10,
+		/obj/item/clothing/gloves/color/fyellow = 7,
+		/obj/item/choice_beacon/music = 5,
+		/obj/item/toy/sprayoncan = 3,
+		/obj/item/crowbar/large = 1
+	)
 
 /datum/outfit/job/assistant
 	name = "Assistant"

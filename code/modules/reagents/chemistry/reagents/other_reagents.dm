@@ -105,6 +105,12 @@
 	ph = 7.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/bone_dust
+	name = "bone dust"
+	color = "#dbcdcb"
+	description = "Ground up bones, gross!"
+	taste_description = "the most disgusting grain in existence"
+
 /datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
@@ -248,7 +254,7 @@
 
 /datum/reagent/water/holywater/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(iscultist(exposed_mob))
+	if(IS_CULTIST(exposed_mob))
 		to_chat(exposed_mob, "<span class='userdanger'>A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!</span>")
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -259,7 +265,7 @@
 
 	data["misc"] += delta_time SECONDS * REM
 	M.jitteriness = min(M.jitteriness + (2 * delta_time), 10)
-	if(iscultist(M))
+	if(IS_CULTIST(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
@@ -269,7 +275,7 @@
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering + (2 * delta_time), 10)
 		M.Dizzy(5)
-		if(iscultist(M) && DT_PROB(10, delta_time))
+		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
 			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
 			if(prob(10))
 				M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
@@ -277,8 +283,9 @@
 				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
 	if(data["misc"] >= (1 MINUTES)) // 24 units
-		if(iscultist(M))
-			SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
+		if(IS_CULTIST(M))
+			M.mind.remove_antag_datum(/datum/antagonist/cult)
+			M.Unconscious(100)
 		M.jitteriness = 0
 		M.stuttering = 0
 		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
@@ -351,7 +358,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(iscultist(M))
+	if(IS_CULTIST(M))
 		M.drowsyness = max(M.drowsyness - (5* REM * delta_time), 0)
 		M.AdjustAllImmobility(-40 *REM* REM * delta_time)
 		M.adjustStaminaLoss(-10 * REM * delta_time, 0)
@@ -737,7 +744,8 @@
 
 /datum/reagent/gluttonytoxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
-	exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
+	if(reac_volume >= 1)//This prevents microdosing from infecting masses of people
+		exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -1221,14 +1229,14 @@
 		M.emote("drool")
 	..()
 
-/datum/reagent/nanomachines
+/datum/reagent/cyborg_mutation_nanomachines
 	name = "Nanomachines"
 	description = "Microscopic construction robots."
 	color = "#535E66" // rgb: 83, 94, 102
 	taste_description = "sludge"
 	penetrates_skin = NONE
 
-/datum/reagent/nanomachines/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+/datum/reagent/cyborg_mutation_nanomachines/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		exposed_mob.ForceContractDisease(new /datum/disease/transformation/robot(), FALSE, TRUE)
@@ -2359,15 +2367,14 @@
 		to_chat(M, "You should sit down and take a rest...")
 	..()
 
-/datum/reagent/tranquility
+/datum/reagent/gondola_mutation_toxin
 	name = "Tranquility"
 	description = "A highly mutative liquid of unknown origin."
 	color = "#9A6750" //RGB: 154, 103, 80
 	taste_description = "inner peace"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	penetrates_skin = NONE
 
-/datum/reagent/tranquility/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+/datum/reagent/gondola_mutation_toxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
 		exposed_mob.ForceContractDisease(new /datum/disease/transformation/gondola(), FALSE, TRUE)

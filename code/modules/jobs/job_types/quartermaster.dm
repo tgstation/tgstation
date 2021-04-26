@@ -9,6 +9,7 @@
 	exp_type_department = EXP_TYPE_SUPPLY // This is so the jobs menu can work properly
 
 	outfit = /datum/outfit/job/quartermaster
+	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_CAR
@@ -18,6 +19,10 @@
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
 	bounty_types = CIV_JOB_RANDOM
 	departments = DEPARTMENT_CARGO
+	family_heirlooms = list(/obj/item/stamp, /obj/item/stamp/denied)
+	mail_goodies = list(
+		/obj/item/circuitboard/machine/emitter = 3
+	)
 
 /datum/job/quartermaster/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()

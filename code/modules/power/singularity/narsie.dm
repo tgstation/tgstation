@@ -15,7 +15,7 @@
 	appearance_flags = LONG_GLIDE
 	density = FALSE
 	gender = FEMALE
-	layer = MASSIVE_OBJ_LAYER
+	plane = MASSIVE_OBJ_PLANE
 	light_color = COLOR_RED
 	light_power = 0.7
 	light_range = 15
@@ -77,14 +77,13 @@
 		if(summon_objective)
 			summon_objective.summoned = TRUE
 
-	for (var/_cult_mind in SSticker.mode.cult)
-		var/datum/mind/cult_mind = _cult_mind
+	for (var/datum/mind/cult_mind as anything in get_antag_minds(/datum/antagonist/cult))
 		if (isliving(cult_mind.current))
 			var/mob/living/L = cult_mind.current
 			L.narsie_act()
 
 	for (var/mob/living/carbon/player in GLOB.player_list)
-		if (player.stat != DEAD && is_station_level(player.loc?.z) && !iscultist(player))
+		if (player.stat != DEAD && is_station_level(player.loc?.z) && !IS_CULTIST(player))
 			souls_needed[player] = TRUE
 
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.75)
@@ -132,7 +131,7 @@
 /obj/narsie/proc/mesmerize()
 	for (var/mob/living/carbon/victim in viewers(NARSIE_CONSUME_RANGE, src))
 		if (victim.stat == CONSCIOUS)
-			if (!iscultist(victim))
+			if (!IS_CULTIST(victim))
 				to_chat(victim, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src]...</span>")
 				victim.apply_effect(NARSIE_MESMERIZE_EFFECT, EFFECT_STUN)
 
@@ -146,7 +145,7 @@
 		if (!pos || (pos.z != z))
 			continue
 
-		if (iscultist(food))
+		if (IS_CULTIST(food))
 			cultists += food
 		else
 			noncultists += food
@@ -201,45 +200,73 @@
 	var/datum/component/singularity/singularity_component = singularity.resolve()
 	singularity_component?.roaming = TRUE
 
+/**
+ * Begins the process of ending the round via cult narsie win
+ * Consists of later called procs (in order of called):
+ *  * [/proc/narsie_end_begin_check()]
+ *  * [/proc/narsie_end_second_check()]
+ *  * [/proc/narsie_start_destroy_station()]
+ *  * [/proc/narsie_apocalypse()]
+ *  * [/proc/narsie_last_second_win()]
+ *  * [/proc/cult_ending_helper()]
+ */
 /proc/begin_the_end()
-	sleep(50)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_end_begin_check), 5 SECONDS)
+
+///First crew last second win check and flufftext for [/proc/begin_the_end()]
+/proc/narsie_end_begin_check()
 	if(QDELETED(GLOB.cult_narsie)) // uno
 		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
 		GLOB.cult_narsie = null
-		sleep(20)
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 2), 2 SECONDS)
 		return
 	priority_announce("An acausal dimensional event has been detected in your sector. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating solutions. SOLUTION ETA: 60 SECONDS.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
-	sleep(500)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_end_second_check), 50 SECONDS)
+
+///Second crew last second win check and flufftext for [/proc/begin_the_end()]
+/proc/narsie_end_second_check()
 	if(QDELETED(GLOB.cult_narsie)) // dos
 		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
 		GLOB.cult_narsie = null
-		sleep(20)
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 2), 2 SECONDS)
 		return
 	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: ONE MINUTE. ","Central Command Higher Dimensional Affairs")
-	sleep(50)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_start_destroy_station), 5 SECONDS)
+
+///security level and shuttle lockdowns for [/proc/begin_the_end()]
+/proc/narsie_start_destroy_station()
 	set_security_level("delta")
 	SSshuttle.registerHostileEnvironment(GLOB.cult_narsie)
 	SSshuttle.lockdown = TRUE
-	sleep(600)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_apocalypse), 1 MINUTES)
+
+///Third crew last second win check and flufftext for [/proc/begin_the_end()]
+/proc/narsie_apocalypse()
 	if(QDELETED(GLOB.cult_narsie)) // tres
 		priority_announce("Normalization detected! Abort the solution package!","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
 		GLOB.cult_narsie = null
-		sleep(20)
-		set_security_level("red")
-		SSshuttle.clearHostileEnvironment()
-		SSshuttle.lockdown = FALSE
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_last_second_win), 2 SECONDS)
 		return
 	if(GLOB.cult_narsie.resolved == FALSE)
 		GLOB.cult_narsie.resolved = TRUE
 		sound_to_playing_players('sound/machines/alarm.ogg')
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 12 SECONDS)
 
+///Called only if the crew managed to destroy narsie at the very last second for [/proc/begin_the_end()]
+/proc/narsie_last_second_win()
+	set_security_level("red")
+	SSshuttle.clearHostileEnvironment()
+	SSshuttle.lockdown = FALSE
+	INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
+
+///Helper to set the round to end asap. Current usage Cult round end code
 /proc/ending_helper()
 	SSticker.force_ending = 1
 
+/**
+ * Selects cinematic to play as part of the cult end depending on the outcome then ends the round afterward
+ * called either when narsie eats everyone, or when [/proc/begin_the_end()] reaches it's conclusion
+ */
 /proc/cult_ending_helper(ending_type = 0)
 	if(ending_type == 2) //narsie fukkin died
 		Cinematic(CINEMATIC_CULT_FAIL,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))

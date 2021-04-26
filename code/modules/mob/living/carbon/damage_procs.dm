@@ -83,11 +83,13 @@
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
 		amount = -amount
+		if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
+			amount = min(amount, 0)
 		if(amount > 0)
-			blood_volume -= 5*amount
+			blood_volume = max(blood_volume - (5*amount), 0)
 		else
-			blood_volume -= amount
-	if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
+			blood_volume = max(blood_volume - amount, 0)
+	else if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
 		amount = min(amount, 0)
 	return ..()
 

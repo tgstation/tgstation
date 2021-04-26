@@ -94,6 +94,13 @@ const setupApp = () => {
     'size': '0x0',
   });
 
+  // Resize the panel to match the non-browser output
+  Byond.winget('output').then(output => {
+    Byond.winset('browseroutput', {
+      'size': output.size,
+    });
+  });
+
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();

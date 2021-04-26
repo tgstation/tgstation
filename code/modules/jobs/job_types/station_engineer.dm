@@ -10,6 +10,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/engineer
+	plasmaman_outfit = /datum/outfit/plasmaman/engineering
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG
@@ -19,6 +20,15 @@
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
 	bounty_types = CIV_JOB_ENG
 	departments = DEPARTMENT_ENGINEERING
+
+	family_heirlooms = list(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+
+	mail_goodies = list(
+		/obj/item/storage/box/lights/mixed = 20,
+		/obj/item/lightreplacer = 10,
+		/obj/item/holosign_creator/engineering = 8,
+		/obj/item/clothing/head/hardhat/red/upgraded = 1
+	)
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"
@@ -37,7 +47,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced/engineering=1)
 
 	skillchips = list(/obj/item/skillchip/job/engineer)
 

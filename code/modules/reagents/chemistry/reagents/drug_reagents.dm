@@ -45,6 +45,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/nicotine = 18) // 7.2 per 2 seconds
 
 	//Nicotine is used as a pesticide IRL.
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -58,6 +59,7 @@
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
+	M.Jitter(0) //calms down any withdrawal jitters
 	M.AdjustStun(-50  * REM * delta_time)
 	M.AdjustKnockdown(-50 * REM * delta_time)
 	M.AdjustUnconscious(-50 * REM * delta_time)

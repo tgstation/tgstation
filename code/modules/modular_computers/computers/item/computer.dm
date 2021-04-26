@@ -78,6 +78,23 @@
 	physical = null
 	return ..()
 
+/obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
+	if(active_program?.tap(A, user, params))
+		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
+		addtimer(CALLBACK(src, .proc/play_ping), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
+
+
+/**
+ * Plays a ping sound.
+ *
+ * Timers runtime if you try to make them call playsound. Yep.
+ */
+/obj/item/modular_computer/proc/play_ping()
+	playsound(loc, 'sound/machines/ping.ogg', get_clamped_volume(), FALSE, -1)
+
 /obj/item/modular_computer/AltClick(mob/user)
 	..()
 	if(issilicon(user))
@@ -147,6 +164,10 @@
 
 	var/removed_id = (card_slot2?.try_eject() || card_slot?.try_eject())
 	if(removed_id)
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			if(human_wearer.wear_id == src)
+				human_wearer.sec_hud_set_ID()
 		update_slot_icon()
 		return removed_id
 
@@ -163,6 +184,10 @@
 		return FALSE
 
 	if((card_slot?.try_insert(inserting_id)) || (card_slot2?.try_insert(inserting_id)))
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			if(human_wearer.wear_id == src)
+				human_wearer.sec_hud_set_ID()
 		update_slot_icon()
 		return TRUE
 

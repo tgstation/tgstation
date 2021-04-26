@@ -80,7 +80,7 @@
 	parent_rune.attack_hand(user, modifiers)
 
 /obj/structure/emergency_shield/cult/barrier/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(iscultist(user))
+	if(IS_CULTIST(user))
 		parent_rune.attack_animal(user)
 	else
 		..()
@@ -137,7 +137,7 @@
 	update_appearance()
 	move_resist = INFINITY
 
-	for(var/turf/target_tile in range(shield_range, src))
+	for(var/turf/target_tile as anything in RANGE_TURFS(shield_range, src))
 		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
 			if(!(machine_stat & BROKEN) || prob(33))
 				deployed_shields += new /obj/structure/emergency_shield(target_tile)

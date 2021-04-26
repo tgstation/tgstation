@@ -102,19 +102,32 @@
 /obj/proc/check_access_ntnet(list/passkey)
 	return check_access_list(passkey)
 
-/obj/item/proc/GetJobName() //Used in secHUD icon generation
+/// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.
+/obj/item/proc/get_sechud_job_icon_state()
 	var/obj/item/card/id/id_card = GetID()
 
 	if(!id_card)
-		return
+		return "hudno_id"
 
-	var/card_assignment = id_card.trim?.assignment
+	var/card_assignment
+	if(istype(id_card, /obj/item/card/id/advanced))
+		var/obj/item/card/id/advanced/advanced_id_card = id_card
+		card_assignment = advanced_id_card.trim_assignment_override ? advanced_id_card.trim_assignment_override : advanced_id_card.trim?.assignment
+	else
+		card_assignment = id_card.trim?.assignment
 
 	if(!card_assignment)
 		card_assignment = id_card.assignment
 
-	if(card_assignment in (SSjob.station_jobs + SSjob.additional_jobs_with_icons)) //Check if the job has a hud icon
-		return card_assignment
-	if(card_assignment in SSjob.centcom_jobs) //Return with the NT logo if it is a CentCom job
-		return "CentCom"
-	return "Unknown" //Return unknown if none of the above apply
+	// Is this one of the jobs with dedicated HUD icons?
+	if(card_assignment in SSjob.station_jobs)
+		return "hud[ckey(card_assignment)]"
+	if(card_assignment in SSjob.additional_jobs_with_icons)
+		return "hud[ckey(card_assignment)]"
+
+	// If not, is it one of the jobs that should use the NT logo?
+	if(card_assignment in SSjob.centcom_jobs)
+		return "hudcentcom"
+
+	// If none of the above apply, job name is unknown.
+	return "hudunknown"

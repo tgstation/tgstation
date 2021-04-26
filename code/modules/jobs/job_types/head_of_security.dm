@@ -15,6 +15,7 @@
 	exp_type_department = EXP_TYPE_SECURITY
 
 	outfit = /datum/outfit/job/hos
+	plasmaman_outfit = /datum/outfit/plasmaman/head_of_security
 	departments = DEPARTMENT_SECURITY | DEPARTMENT_COMMAND
 
 	mind_traits = list(TRAIT_DONUT_LOVER)
@@ -25,6 +26,8 @@
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_SECURITY
 	bounty_types = CIV_JOB_SEC
+
+	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)
 
 /datum/job/head_of_security/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
@@ -67,4 +70,3 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/security/hos
 	suit_store = /obj/item/tank/internals/oxygen
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
-

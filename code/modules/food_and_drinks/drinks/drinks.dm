@@ -435,6 +435,9 @@
 	foodtype = GRAIN | ALCOHOL
 	custom_price = PAYCHECK_EASY
 
+/obj/item/reagent_containers/food/drinks/beer/almost_empty
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 1)
+
 /obj/item/reagent_containers/food/drinks/beer/light
 	name = "Carp Lite"
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
@@ -557,6 +560,8 @@
 			icon_state = "chocolatebox"
 		if(/datum/reagent/consumable/ethanol/eggnog)
 			icon_state = "nog2"
+		else
+			icon_state = "juicebox"
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)

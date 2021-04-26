@@ -190,9 +190,9 @@
 	GLOB.bots_list -= src
 	if(paicard)
 		ejectpai()
-	qdel(Radio)
-	qdel(access_card)
-	qdel(bot_core)
+	QDEL_NULL(Radio)
+	QDEL_NULL(access_card)
+	QDEL_NULL(bot_core)
 	return ..()
 
 /mob/living/simple_animal/bot/bee_friendly()
@@ -528,26 +528,26 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	if(step_count >= 1 && tries < BOT_STEP_MAX_RETRIES)
 		for(var/step_number = 0, step_number < step_count,step_number++)
-			addtimer(CALLBACK(src, .proc/bot_step, dest), BOT_STEP_DELAY*step_number)
+			addtimer(CALLBACK(src, .proc/bot_step), BOT_STEP_DELAY*step_number)
 	else
 		return FALSE
 	return TRUE
 
-
-/mob/living/simple_animal/bot/proc/bot_step(dest) //Step,increase tries if failed
-	if(!path)
+/// Performs a step_towards and increments the path if successful. Returns TRUE if the bot moved and FALSE otherwise.
+/mob/living/simple_animal/bot/proc/bot_step()
+	if(!length(path))
 		return FALSE
-	if(path.len > 1)
-		step_towards(src, path[1])
-		if(get_turf(src) == path[1]) //Successful move
-			increment_path()
-			tries = 0
-		else
-			tries++
-			return FALSE
-	else if(path.len == 1)
-		step_to(src, dest)
-		set_path(null)
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_BOT_PRE_STEP) & COMPONENT_MOB_BOT_BLOCK_PRE_STEP)
+		return FALSE
+
+	if(!step_towards(src, path[1]))
+		tries++
+		return FALSE
+
+	increment_path()
+	tries = 0
+	SEND_SIGNAL(src, COMSIG_MOB_BOT_STEP)
 	return TRUE
 
 
@@ -560,8 +560,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	//For giving the bot temporary all-access. This method is bad and makes me feel bad. Refactoring access to a component is for another PR.
 	var/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
-
 	set_path(get_path_to(src, waypoint, 200, id=all_access))
+	qdel(all_access)
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -569,9 +569,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 		var/end_area = get_area_name(waypoint)
 		if(!on)
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
-		access_card = all_access //Give the bot all-access while under the AI's command.
+		access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
 		if(client)
-			reset_access_timer_id = addtimer(CALLBACK (src, .proc/bot_reset), 600, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
+			reset_access_timer_id = addtimer(CALLBACK (src, .proc/bot_reset), 60 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
 			to_chat(src, "<span class='notice'><span class='big'>Priority waypoint set by [icon2html(calling_ai, src)] <b>[caller]</b>. Proceed to <b>[end_area]</b>.</span><br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds.</span>")
 		if(message)
 			to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination.</span>")
@@ -996,7 +996,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	access_card.add_access(player_access)
+	// If we have any bonus player accesses, add them to our internal ID card.
+	if(length(player_access))
+		access_card.add_access(player_access)
 	diag_hud_set_botmode()
 
 /mob/living/simple_animal/bot/Logout()
@@ -1073,12 +1075,15 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 
 /mob/living/simple_animal/bot/proc/increment_path()
-	if(!path || !path.len)
+	if(!length(path))
 		return
 	var/image/I = path[path[1]]
 	if(I)
 		I.icon_state = null
 	path.Cut(1, 2)
+
+	if(!length(path))
+		set_path(null)
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)

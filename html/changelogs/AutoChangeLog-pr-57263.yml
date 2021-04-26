@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "powersinks now should be centered on the tile when dropped/thrown"
-  - code_imp: "ontop flag now checks for mobs too"
-  - admin: "adds some flags to the admin bitflag menus"

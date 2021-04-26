@@ -1,4 +1,0 @@
-author: "Dex"
-delete-after: True
-changes: 
-  - bugfix: "Water bottles no longer splash you when you press left mouse button in combat mode."

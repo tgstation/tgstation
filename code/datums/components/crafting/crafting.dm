@@ -195,6 +195,10 @@
 	var/send_feedback = 1
 	if(check_contents(a, R, contents))
 		if(check_tools(a, R, contents))
+			if(R.one_per_turf)
+				for(var/content in get_turf(a))
+					if(istype(content, R.result))
+						return ", object already present."
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
 			if(ismob(a) && !do_after(a, R.time, target = a))
 				return "."

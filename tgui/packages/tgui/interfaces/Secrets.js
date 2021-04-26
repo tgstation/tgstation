@@ -252,12 +252,12 @@ const FunTab = (props, context) => {
       <Stack.Item>
         <Stack fill>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="robot"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Make N.E.R.D."
+              onClick={() => act("makeNerd")} />
           </Stack.Item>
           <Stack.Item>
             <NoticeBox
@@ -456,7 +456,7 @@ const FunForYouTab = (props, context) => {
             icon="hand-lizard"
             fluid
             content="Change everyone's species"
-            onClick={() => act("traitor_all")} />
+            onClick={() => act("allspecies")} />
         </NoticeBox>
       </Stack.Item>
       <Stack.Item>
