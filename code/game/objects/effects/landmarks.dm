@@ -465,12 +465,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		var/bottle_count = rand(1, 3)
 		for(var/index in 1 to bottle_count)
 			var/turf/turf_to_spawn_on = get_step(src, pick(GLOB.alldirs))
+          if(!isopenturf(turf_to_spawn_on))
+              continue
 			var/dense_object = FALSE
 			for(var/atom/content in turf_to_spawn_on.contents)
 				if(content.density)
 					dense_object = TRUE
 					break
-			if(!isopenturf(turf_to_spawn_on) || dense_object)
+			if(dense_object)
 				continue
 			new /obj/item/reagent_containers/food/drinks/beer/almost_empty(turf_to_spawn_on)
 
