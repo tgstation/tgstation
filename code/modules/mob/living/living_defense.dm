@@ -218,9 +218,10 @@
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	user.face_atom(src)
 	if(user.melee_damage_upper == 0)
-		visible_message("<span class='notice'>\The [user] [user.friendly_verb_continuous] [src]!</span>", \
-						"<span class='notice'>\The [user] [user.friendly_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, "<span class='notice'>You [user.friendly_verb_simple] [src]!</span>")
+		if(user != src)
+			visible_message("<span class='notice'>\The [user] [user.friendly_verb_continuous] [src]!</span>", \
+							"<span class='notice'>\The [user] [user.friendly_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, "<span class='notice'>You [user.friendly_verb_simple] [src]!</span>")
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to hurt anyone!</span>")
