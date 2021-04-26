@@ -21,7 +21,7 @@ export const SentienceFunBalloon = (props, context) => {
                   placeholder="Search for..."
                   value={group_name}
                   onChange={(e, value) => act("group_name", {
-                  updated_name: value,
+                    updated_name: value,
                   })} />
               </LabeledList.Item>
               <LabeledList.Item label="Effect range">
@@ -32,7 +32,7 @@ export const SentienceFunBalloon = (props, context) => {
                   maxValue={100}
                   stepPixelSize={15}
                   onDrag={(e, value) => act('effect_range', {
-                  updated_range: value,
+                    updated_range: value,
                   })} />
               </LabeledList.Item>
             </LabeledList>
