@@ -72,6 +72,7 @@
 	return force_give(new mutation_type (class, time, copymut = mutation))
 
 /datum/dna/proc/remove_mutation(mutation_type)
+	SEND_SIGNAL(holder, COMSIG_CARBON_LOSE_MUTATION, mutation_type)
 	return force_lose(get_mutation(mutation_type))
 
 /datum/dna/proc/check_mutation(mutation_type)

@@ -48959,7 +48959,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark,
 /area/service/library)
 "hdp" = (
@@ -80617,8 +80616,8 @@
 "pmV" = (
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/spawner/lootdrop/prison_contraband,
-/obj/item/clothing/under/rank/prisoner/skirt,
-/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/color/jumpskirt/prisoner,
+/obj/item/clothing/under/color/jumpskirt/prisoner,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -99517,6 +99516,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/engineering/supermatter/room)
+"uli" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/closed/wall,
+/area/service/library)
 "ulk" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -146454,7 +146457,7 @@ qkQ
 qvX
 nJo
 nJo
-nJo
+uli
 nJo
 nJo
 nJo
