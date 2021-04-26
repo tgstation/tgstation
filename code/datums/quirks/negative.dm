@@ -422,28 +422,68 @@
 /datum/quirk/social_anxiety/add()
 	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
 	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, .proc/looks_at_floor)
+	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/quirk/social_anxiety/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE))
 
-/datum/quirk/social_anxiety/on_process(delta_time)
+/datum/quirk/social_anxiety/proc/handle_speech(datum/source, list/speech_args)
 	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
+	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
 	var/nearby_people = 0
 	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
 		if(H.client)
 			nearby_people++
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		var/list/message_split = splittext(message, " ")
+		var/list/new_message = list()
+		var/mob/living/carbon/human/Q = quirk_holder
+		for(var/word in message_split)
+			if(prob(nearby_people+mood.sanity_level+(10-mood.mood_level)) && word != message_split[1])
+				new_message += pick("uh,","erm,","um,")
+				if(prob(max(1, (1+nearby_people)*mood.sanity_level*(10-mood.mood_level))))
+					to_chat(Q, "<span class='danger'>What a dumb thing to say! You need a moment to recover.</span>")
+					Q.silent = max(2, Q.silent)
+					break
+			if(prob(nearby_people+mood.sanity_level+(10-mood.mood_level)))
+				word = html_decode(word)
+				var/leng = length(word)
+				var/stuttered = ""
+				var/newletter = ""
+				var/rawchar = ""
+				var/static/regex/nostutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
+				for(var/i = 1, i <= leng, i += length(rawchar))
+					rawchar = newletter = word[i]
+					if(prob(80) && !nostutter.Find(rawchar))
+						if(prob(10))
+							newletter = "[newletter]-[newletter]-[newletter]-[newletter]"
+						else if(prob(20))
+							newletter = "[newletter]-[newletter]-[newletter]"
+						else
+							newletter = "[newletter]-[newletter]"
+					stuttered += newletter
+				sanitize(stuttered)
+				new_message += stuttered
+			else
+				new_message += word
+		message = jointext(new_message, " ")
 	var/mob/living/carbon/human/H = quirk_holder
-	if(DT_PROB(2 + nearby_people, delta_time))
-		H.stuttering = max(3, H.stuttering)
-	else if(DT_PROB(min(3, nearby_people), delta_time) && !H.silent)
-		to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
-		H.silent = max(10, H.silent)
-	else if(DT_PROB(0.5, delta_time) && dumb_thing)
-		to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
-		dumb_thing = FALSE //only once per life
-		if(prob(1))
-			new/obj/item/food/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+	if(prob(min(87.5, (nearby_people*(mood.sanity_level+(10-mood.mood_level))))))
+		if(dumb_thing)
+			to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
+			dumb_thing = FALSE //only once per life
+			if(prob(1))
+				new/obj/item/food/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+		else
+			to_chat(quirk_holder, "<span class='warning'>You think that wouldn't add much to the conversation and decide not to say it.</span>")
+			if(mood.mood_level < 5 && prob(100-(mood.mood_level*20)))
+				to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
+				H.silent = max(5, H.silent)
+		speech_args[SPEECH_MESSAGE] = pick("Uh.","Erm.","Um.")
+	else
+		speech_args[SPEECH_MESSAGE] = message
 
 // small chance to make eye contact with inanimate objects/mindless mobs because of nerves
 /datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)
