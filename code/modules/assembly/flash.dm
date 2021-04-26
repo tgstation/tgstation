@@ -85,11 +85,6 @@
 		loc?.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
 		update_appearance()
 
-/obj/item/assembly/flash/proc/fix()
-	if(burnt_out)
-		burnt_out = FALSE
-		update_appearance()
-
 /obj/item/assembly/flash/proc/flash_recharge(interval = 10)
 	var/deciseconds_passed = world.time - last_used
 	for(var/seconds = deciseconds_passed / 10, seconds >= interval, seconds -= interval) //get 1 charge every interval
