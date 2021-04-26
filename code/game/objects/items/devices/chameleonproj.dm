@@ -151,7 +151,7 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/living/user, direction)
-	if(!isturf(loc) || !direction)
+	if(!isturf(loc) || isspaceturf(loc) || !direction)
 		return //No magical movement! Trust me, this bad boy can do things like leap out of pipes if you're not careful
 
 	if(can_move < world.time)
