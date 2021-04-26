@@ -276,12 +276,26 @@
 
 /obj/machinery/door/airlock/titanium
 	name = "shuttle airlock"
+	icon = 'icons/obj/doors/airlocks/shuttle/wagon.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/rat_overlays.dmi'
+	normal_integrity = 350
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/titanium/erokez
+	icon = 'icons/obj/doors/airlocks/shuttle/erokez.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/rat_overlays.dmi'
+	normal_integrity = 400
+
+/obj/machinery/door/airlock/titanium/old
 	assemblytype = /obj/structure/door_assembly/door_assembly_titanium
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	normal_integrity = 400
+	opacity = TRUE
+	glass = FALSE
 
-/obj/machinery/door/airlock/titanium/glass
+/obj/machinery/door/airlock/titanium/old/glass
 	normal_integrity = 350
 	opacity = FALSE
 	glass = TRUE

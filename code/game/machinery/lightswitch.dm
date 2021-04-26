@@ -23,6 +23,11 @@
 
 	update_icon()
 
+/obj/machinery/light_switch/LateInitialize()
+	. = ..()
+	if(prob(20) && area.lightswitch) //20% chance for area to start with lights off.
+		turn_off()
+
 /obj/machinery/light_switch/update_icon_state()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	luminosity = 0
@@ -50,6 +55,7 @@
 		L.update_icon()
 
 	area.power_change()
+	playsound(src, 'sound/machines/lightswitch.ogg', 100, 1)
 
 /obj/machinery/light_switch/power_change()
 	SHOULD_CALL_PARENT(FALSE)
@@ -62,3 +68,14 @@
 		return
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()
+
+/obj/machinery/light_switch/proc/turn_off()
+	if(!area.lightswitch)
+		return
+	area.lightswitch = FALSE
+	area.update_icon()
+
+	for(var/obj/machinery/light_switch/L in area)
+		L.update_icon()
+
+	area.power_change()

@@ -71,9 +71,6 @@
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "i" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Mining Shuttle Airlock"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -91,6 +88,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Mining Shuttle Airlock"
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/mining)
@@ -121,9 +121,6 @@
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "m" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Mining Shuttle Airlock"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -132,6 +129,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
+	},
+/obj/machinery/door/airlock/titanium{
+	name = "Mining Shuttle Airlock"
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/mining)

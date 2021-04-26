@@ -13,3 +13,17 @@
 
 /obj/structure/chair/sofa/corner
 	icon_state = "sofacorner"
+
+/obj/structure/chair/sofa/bench
+	name = "bench"
+	desc = "Firm and uncomfortable."
+	icon_state = "benchmiddle"
+
+/obj/structure/chair/sofa/bench/left
+	icon_state = "bench_left"
+
+/obj/structure/chair/sofa/bench/right
+	icon_state = "bench_right"
+
+/obj/structure/chair/sofa/bench/corner
+	icon_state = "benchcorner"
