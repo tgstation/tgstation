@@ -54,7 +54,7 @@
 
 /datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
 	if(istype(affected_mob, /mob/living/carbon) && affected_mob.stat != DEAD)
-		if(length(stage5)
+		if(length(stage5))
 			to_chat(affected_mob, pick(stage5))
 		if(QDELETED(affected_mob))
 			return
