@@ -63,7 +63,7 @@
 
 /datum/objective_item/steal/hypo
 	name = "the hypospray."
-	targetitem = /obj/item/reagent_containers/hypospray/cmo
+	targetitem = /obj/item/hypospray/mkii/cmo
 	difficulty = 5
 	excludefromjob = list("Chief Medical Officer")
 

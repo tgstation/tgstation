@@ -120,7 +120,6 @@
 	build_path = /obj/item/extinguisher_refill
 	category = list("Medical Designs")
 
-
 /datum/design/crewpinpointer
 	name = "Crew Pinpointer"
 	desc = "Allows tracking of someone's location if their suit sensors are turned to tracking beacon."
@@ -290,6 +289,16 @@
 	materials = list(/datum/material/plastic = 5000, /datum/material/iron = 10000, /datum/material/glass = 3000)
 	build_path = /obj/item/storage/portable_chem_mixer
 	category = list("Equipment")
+
+/datum/design/hypomii
+	name = "Hypospray"
+	desc = "A device which allows either injecting or spraying of a patient."
+	id = "hyposprayII"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 3000, /datum/material/plasma = 1000, /datum/material/titanium = 2000,/datum/material/diamond = 2000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/hypospray/mkii
+	category = list("Medical Designs")
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////

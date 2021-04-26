@@ -13852,6 +13852,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_y = -26
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "fLD" = (
@@ -17639,7 +17642,7 @@
 /obj/structure/cable,
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = -26
+	pixel_x = -29
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -42950,6 +42953,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = -29
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "rCg" = (
@@ -47977,6 +47984,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
+"tGM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
 "tGS" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
@@ -89493,7 +89510,7 @@ gFa
 ycv
 ski
 nYZ
-fko
+tGM
 dNB
 vTU
 mTg
