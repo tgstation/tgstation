@@ -23192,6 +23192,12 @@
 	req_access_txt = "63"
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "eGF" = (
@@ -42646,7 +42652,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
-	id = "cargocell";
+	id = "crgcell";
 	name = "Cargo Cell";
 	req_access_txt = "63"
 	},
@@ -46872,6 +46878,11 @@
 	dir = 9
 	},
 /obj/effect/landmark/start/depsec/science,
+/obj/machinery/flasher{
+	id = "scicell";
+	pixel_x = 5;
+	pixel_y = -24
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "ohT" = (
@@ -46995,6 +47006,11 @@
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/flasher{
+	id = "crgcell";
+	pixel_x = 5;
+	pixel_y = -24
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
@@ -50887,6 +50903,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/flasher{
+	id = "medcell";
+	pixel_x = 24;
+	pixel_y = -5
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "pHH" = (
@@ -54258,7 +54279,7 @@
 "rdE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/brig{
-	id = "cargocell";
+	id = "crgcell";
 	name = "Cargo Cell Locker"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -58805,6 +58826,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/flasher{
+	id = "engcell";
+	pixel_x = -5;
+	pixel_y = 24
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "sUv" = (
@@ -65720,7 +65746,7 @@
 	dir = 4
 	},
 /obj/machinery/door_timer{
-	id = "cargocell";
+	id = "crgcell";
 	name = "Cargo Cell";
 	pixel_x = -32
 	},
@@ -72386,7 +72412,7 @@
 "xTb" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Post - Research Division";
-	req_access_txt = "63"
+	req_access_txt = "47;63"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
