@@ -647,8 +647,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			continue
 
 		// Everyone else gets hallucinations.
-		var/D = sqrt(1 / max(1, get_dist(seen_by_sm, src)))
-		seen_by_sm.hallucination += power * hallucination_power * D
+		var/dist = sqrt(1 / max(1, get_dist(seen_by_sm, src)))
+		seen_by_sm.hallucination += power * hallucination_power * dist
 		seen_by_sm.hallucination = clamp(seen_by_sm.hallucination, 0, 200)
 	psyCoeff = clamp(psyCoeff + psyCoeffDiff, 0, 1)
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
