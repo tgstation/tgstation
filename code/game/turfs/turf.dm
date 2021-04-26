@@ -653,5 +653,3 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/TakeTemperature(temp)
 	temperature += temp
-	if(!blocks_air)
-		air_update_turf(FALSE, FALSE)
