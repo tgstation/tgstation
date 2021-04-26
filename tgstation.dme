@@ -172,6 +172,7 @@
 #include "code\__HELPERS\icons.dm"
 #include "code\__HELPERS\jatum.dm"
 #include "code\__HELPERS\level_traits.dm"
+#include "code\__HELPERS\lighting.dm"
 #include "code\__HELPERS\matrices.dm"
 #include "code\__HELPERS\mobs.dm"
 #include "code\__HELPERS\mouse_control.dm"
