@@ -18,7 +18,6 @@ export const SentienceFunBalloon = (props, context) => {
               <LabeledList.Item label="Group name">
                 <Input
                   fluid
-                  placeholder="Search for..."
                   value={group_name}
                   onChange={(e, value) => act("group_name", {
                     updated_name: value,
