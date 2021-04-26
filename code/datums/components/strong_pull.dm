@@ -19,7 +19,7 @@ Basically, the items they pull cannot be pulled (except by the puller)
 	strongpulling = pulled
 	RegisterSignal(strongpulling, COMSIG_ATOM_CAN_BE_PULLED, .proc/reject_further_pulls)
 	RegisterSignal(strongpulling, COMSIG_ATOM_NO_LONGER_PULLED, .proc/lost_strong_grip)
-	if(istype(strongpulling, /obj/structure/closet))
+	if(istype(strongpulling, /obj/structure/closet) && !istype(strongpulling, /obj/structure/closet/body_bag))
 		var/obj/structure/closet/grabbed_closet = strongpulling
 		grabbed_closet.strong_grab = TRUE
 
