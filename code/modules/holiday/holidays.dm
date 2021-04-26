@@ -1,17 +1,30 @@
 /datum/holiday
+	///Name of the holiday itself. Visible to players.
 	var/name = "If you see this the holiday calendar code is broken"
 
+	///What day of begin_month does the holiday begin on?
 	var/begin_day = 1
+	///What month does the holiday begin on?
 	var/begin_month = 0
-	var/end_day = 0 // Default of 0 means the holiday lasts a single day
+	/// What day of end_month does the holiday end? Default of 0 means the holiday lasts a single.
+	var/end_day = 0
+	/// What month does the holiday end on?
 	var/end_month = 0
-	var/always_celebrate = FALSE // for christmas neverending, or testing.
+	/// for christmas neverending, or testing. Forces a holiday to be celebrated.
+	var/always_celebrate = FALSE
+	/// Held variable to better calculate when certain holidays may fall on, like easter.
 	var/current_year = 0
+	/// How many years are you offsetting your calculations for begin_day and end_day on. Used for holidays like easter.
 	var/year_offset = 0
-	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
+	///If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
+	var/obj/item/drone_hat
+	///When this holiday is active, does this prevent mail from arriving to cargo? Try not to use this for longer holidays.
+	var/mail_holiday = FALSE
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
+	if(mail_holiday)
+		SSeconomy.mail_blocked = TRUE
 	return
 
 // When the round starts, this proc is ran to get a text message to display to everyone to wish them a happy holiday
@@ -66,6 +79,7 @@
 	end_day = 2
 	end_month = JANUARY
 	drone_hat = /obj/item/clothing/head/festive
+	mail_holiday = TRUE
 
 /datum/holiday/new_year/getStationPrefix()
 	return pick("Party","New","Hangover","Resolution", "Auld")
@@ -172,6 +186,7 @@
 	end_day = 2
 
 /datum/holiday/april_fools/celebrate()
+	. = ..()
 	SSjob.set_overflow_role("Clown")
 	SSticker.login_music = 'sound/ambience/clown.ogg'
 	for(var/i in GLOB.new_player_list)
@@ -214,6 +229,7 @@
 	begin_day = 1
 	begin_month = MAY
 	drone_hat = /obj/item/clothing/head/hardhat
+	mail_holiday = TRUE
 
 /datum/holiday/firefighter
 	name = "Firefighter's Day"
@@ -257,6 +273,7 @@
 	name = "US Independence Day"
 	begin_day = 4
 	begin_month = JULY
+	mail_holiday = TRUE
 
 /datum/holiday/usa/getStationPrefix()
 	return pick("Independent","American","Burger","Bald Eagle","Star-Spangled", "Fireworks")
@@ -292,6 +309,7 @@
 	begin_day = 14
 	begin_month = JULY
 	drone_hat = /obj/item/clothing/head/beret
+	mail_holiday = TRUE
 
 /datum/holiday/france/getStationPrefix()
 	return pick("Francais","Fromage", "Zut", "Merde")
@@ -465,11 +483,13 @@
 	begin_month = DECEMBER
 	end_day = 27
 	drone_hat = /obj/item/clothing/head/santa
+	mail_holiday = TRUE
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
 
 /datum/holiday/xmas/celebrate()
+	. = ..()
 	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
 	GLOB.maintenance_loot += list(
 		list(
@@ -545,6 +565,7 @@
 	return ..()
 
 /datum/holiday/easter/celebrate()
+	. = ..()
 	GLOB.maintenance_loot += list(
 		list(
 			/obj/item/food/egg/loaded = 15,
