@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
-	if(time2text(world.timeofday, "DDD") == "Fri")
+	if(time2text(world.timeofday, "DDD") == SUNDAY)
 		mail_blocked = TRUE
 	for(var/A in department_accounts)
 		new /datum/bank_account/department(A, budget_to_hand_out)
