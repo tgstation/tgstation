@@ -21,7 +21,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
-/obj/item/zombie_hand/equipped(mob/user, slot)
+/obj/item/zombie_hand/visual_equipped(mob/user, slot)
 	. = ..()
 	//these are intentionally inverted
 	var/i = user.get_held_index_of_item(src)

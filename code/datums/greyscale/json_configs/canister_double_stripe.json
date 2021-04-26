@@ -1,5 +1,5 @@
 {
-	"layers": [
+	"": [
 		{
 			"type": "reference",
 			"reference_type": "/datum/greyscale_config/canister/base",

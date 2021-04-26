@@ -76,9 +76,11 @@
 /datum/strippable_item/proc/try_equip(atom/source, obj/item/equipping, mob/user)
 	if(SEND_SIGNAL(user, COMSIG_TRY_STRIP, source, equipping) & COMPONENT_CANT_STRIP)
 		return FALSE
+
 	if (HAS_TRAIT(equipping, TRAIT_NODROP))
 		to_chat(user, "<span class='warning'>You can't put [equipping] on [source], it's stuck to your hand!</span>")
 		return FALSE
+
 	return TRUE
 
 /// Start the equipping process. This is the proc you should yield in.
@@ -152,8 +154,8 @@
 	)
 
 	to_chat(user, "<span class='danger'>You try to remove [source]'s [item]...</span>")
-	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(src)]", LOG_ATTACK, color="red")
-	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(src)]", LOG_ATTACK, color="red", log_globally=FALSE)
+	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
+	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red", log_globally=FALSE)
 	item.add_fingerprint(src)
 
 	if(ishuman(source))
@@ -492,7 +494,9 @@
 /datum/strip_menu/ui_status(mob/user, datum/ui_state/state)
 	return min(
 		ui_status_only_living(user, owner),
+		ui_status_user_has_free_hands(user, owner),
 		ui_status_user_is_adjacent(user, owner),
+		HAS_TRAIT(user, TRAIT_CAN_STRIP) ? UI_INTERACTIVE : UI_UPDATE,
 		max(
 			ui_status_user_is_conscious_and_lying_down(user),
 			ui_status_user_is_abled(user, owner),

@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Stops bottles from spawning in walls when the hangover station trait is in effect."

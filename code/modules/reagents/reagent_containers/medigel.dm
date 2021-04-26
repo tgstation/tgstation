@@ -59,7 +59,7 @@
 		log_combat(user, M, "attempted to apply", src, reagents.log_list())
 		M.visible_message("<span class='danger'>[user] attempts to [apply_method] [src] on [M].</span>", \
 							"<span class='userdanger'>[user] attempts to [apply_method] [src] on you.</span>")
-		if(!do_mob(user, M))
+		if(!do_mob(user, M, CHEM_INTERACT_DELAY(3 SECONDS, user)))
 			return
 		if(!reagents || !reagents.total_volume)
 			return

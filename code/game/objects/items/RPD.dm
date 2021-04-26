@@ -568,12 +568,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(source.incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
 		return
 
-	if(delta_y > 0)
+	if(delta_y < 0)
 		piping_layer = min(PIPING_LAYER_MAX, piping_layer + 1)
-	else if(delta_y < 0)
+	else if(delta_y > 0)
 		piping_layer = max(PIPING_LAYER_MIN, piping_layer - 1)
 	else
 		return
+	SStgui.update_uis(src)
 	to_chat(source, "<span class='notice'>You set the layer to [piping_layer].</span>")
 
 #undef ATMOS_CATEGORY

@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Simplemobs can no longer use right-click verbs that they shouldn't be able to use."
