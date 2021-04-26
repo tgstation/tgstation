@@ -17,6 +17,15 @@
 
 // Wires for the airlock are located in the datum folder, inside the wires datum folder.
 
+//SKYRAT ADDITION BEGIN - AESTHETICS
+#define AIRLOCK_LIGHT_POWER 1
+#define AIRLOCK_LIGHT_RANGE 2
+#define AIRLOCK_POWERON_LIGHT_COLOR "#3aa7c2"
+#define AIRLOCK_BOLTS_LIGHT_COLOR "#c23b23"
+#define AIRLOCK_ACCESS_LIGHT_COLOR "#57e69c"
+#define AIRLOCK_EMERGENCY_LIGHT_COLOR "#d1d11d"
+#define AIRLOCK_DENY_LIGHT_COLOR "#c23b23"
+//SKYRAT ADDITION END
 #define AIRLOCK_CLOSED	1
 #define AIRLOCK_CLOSING	2
 #define AIRLOCK_OPEN	3
@@ -76,11 +85,11 @@
 	var/obj/item/seal
 	var/detonated = FALSE
 	var/abandoned = FALSE
-	var/doorOpen = 'sound/machines/airlock.ogg'
-	var/doorClose = 'sound/machines/airlockclose.ogg'
-	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
-	var/boltUp = 'sound/machines/boltsup.ogg'
-	var/boltDown = 'sound/machines/boltsdown.ogg'
+	var/doorOpen = 'sound/machines/airlocks/open.ogg'
+	var/doorClose = 'sound/machines/airlocks/close.ogg'
+	var/doorDeni = 'sound/machines/airlocks/access_denied.ogg' // i'm thinkin' Deni's
+	var/boltUp = 'sound/machines/airlocks/bolts_up.ogg'
+	var/boltDown = 'sound/machines/airlocks/bolts_down.ogg'
 	var/noPower = 'sound/machines/doorclick.ogg'
 	var/previous_airlock = /obj/structure/door_assembly //what airlock assembly mineral plating was applied to
 	var/airlock_material //material of inner filling; if its an airlock with glass, this should be set to "glass"
@@ -98,6 +107,18 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	var/static/list/airlock_overlays = list()
+
+	var/has_environment_lights = TRUE //Does this airlock emit a light?
+	var/light_color_poweron = AIRLOCK_POWERON_LIGHT_COLOR
+	var/light_color_bolts = AIRLOCK_BOLTS_LIGHT_COLOR
+	var/light_color_access = AIRLOCK_ACCESS_LIGHT_COLOR
+	var/light_color_emergency = AIRLOCK_EMERGENCY_LIGHT_COLOR
+	var/light_color_deny = AIRLOCK_DENY_LIGHT_COLOR
+	var/door_light_range = AIRLOCK_LIGHT_RANGE
+	var/door_light_power = AIRLOCK_LIGHT_POWER
+	var/obj/effect/overlay/vis_airlock/vis_overlay1
+	var/obj/effect/overlay/vis_airlock/vis_overlay2
+	var/airlock_state = null
 
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
@@ -1565,6 +1586,247 @@
 	var/area/source_area = get_area(src)
 	return new source_area.airlock_wires(src)
 
+/obj/effect/overlay/vis_airlock
+	layer = 0
+	plane = EMISSIVE_PLANE
+	vis_flags = VIS_INHERIT_ID
+
+/obj/machinery/door/airlock/Destroy()
+	. = ..()
+	vis_contents -= vis_overlay1
+	vis_contents -= vis_overlay2
+	QDEL_NULL(vis_overlay1)
+	QDEL_NULL(vis_overlay2)
+
+
+/obj/machinery/door/airlock/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/door/airlock/update_overlays()
+	. = ..()
+
+	var/mutable_appearance/frame_overlay
+	var/mutable_appearance/filling_overlay
+	var/lights_overlay = ""
+	var/mutable_appearance/panel_overlay
+	var/mutable_appearance/weld_overlay
+	var/mutable_appearance/damag_overlay
+	var/mutable_appearance/sparks_overlay
+	var/mutable_appearance/note_overlay
+	var/mutable_appearance/seal_overlay
+
+	var/notetype = note_type()
+	var/pre_light_range = 0
+	var/pre_light_power = 0
+	var/pre_light_color = ""
+
+	switch(airlock_state)
+		if(AIRLOCK_CLOSED)
+			frame_overlay = get_airlock_overlay("closed", icon)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_closed", icon)
+			if(panel_open)
+				if(security_level)
+					panel_overlay = get_airlock_overlay("panel_closed_protected", overlays_file)
+				else
+					panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
+			if(welded)
+				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(seal)
+				seal_overlay = get_airlock_overlay("sealed", overlays_file)
+			if(obj_integrity < integrity_failure * max_integrity)
+				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
+			else if(obj_integrity < (0.75 * max_integrity))
+				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
+			if(lights && hasPower())
+				pre_light_range = door_light_range
+				pre_light_power = door_light_power
+				if(locked)
+					lights_overlay = "lights_bolts"
+					pre_light_color = light_color_bolts
+				else if(emergency)
+					lights_overlay = "lights_emergency"
+					pre_light_color = light_color_emergency
+				else
+					lights_overlay = "lights_poweron"
+					pre_light_color = light_color_poweron
+			if(note)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
+
+		if(AIRLOCK_DENY)
+			if(!hasPower())
+				return
+			frame_overlay = get_airlock_overlay("closed", icon)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_closed", icon)
+			if(panel_open)
+				if(security_level)
+					panel_overlay = get_airlock_overlay("panel_closed_protected", overlays_file)
+				else
+					panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
+			if(obj_integrity < integrity_failure * max_integrity)
+				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
+			else if(obj_integrity < (0.75 * max_integrity))
+				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
+			if(welded)
+				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(seal)
+				seal_overlay = get_airlock_overlay("sealed", overlays_file)
+			if(lights && hasPower())
+				pre_light_range = door_light_range
+				pre_light_power = door_light_power
+				lights_overlay = "lights_denied"
+				pre_light_color = light_color_deny
+			if(note)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
+
+		if(AIRLOCK_EMAG)
+			frame_overlay = get_airlock_overlay("closed", icon)
+			sparks_overlay = get_airlock_overlay("sparks", overlays_file)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_closed", icon)
+			if(panel_open)
+				if(security_level)
+					panel_overlay = get_airlock_overlay("panel_closed_protected", overlays_file)
+				else
+					panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
+			if(obj_integrity < integrity_failure * max_integrity)
+				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
+			else if(obj_integrity < (0.75 * max_integrity))
+				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
+			if(welded)
+				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(seal)
+				seal_overlay = get_airlock_overlay("sealed", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
+
+		if(AIRLOCK_CLOSING)
+			frame_overlay = get_airlock_overlay("closing", icon)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closing", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_closing", icon)
+			if(lights && hasPower())
+				pre_light_range = door_light_range
+				pre_light_power = door_light_power
+				//lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
+				lights_overlay = "lights_closing"
+				pre_light_color = light_color_access
+			if(panel_open)
+				if(security_level)
+					panel_overlay = get_airlock_overlay("panel_closing_protected", overlays_file)
+				else
+					panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("[notetype]_closing", note_overlay_file)
+
+		if(AIRLOCK_OPEN)
+			frame_overlay = get_airlock_overlay("open", icon)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_open", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_open", icon)
+			if(panel_open)
+				if(security_level)
+					panel_overlay = get_airlock_overlay("panel_open_protected", overlays_file)
+				else
+					panel_overlay = get_airlock_overlay("panel_open", overlays_file)
+			if(obj_integrity < (0.75 * max_integrity))
+				damag_overlay = get_airlock_overlay("sparks_open", overlays_file)
+			if(lights && hasPower())
+				pre_light_range = door_light_range
+				pre_light_power = door_light_power
+				if(locked)
+					lights_overlay = "lights_bolts_open"
+					pre_light_color = light_color_bolts
+				else if(emergency)
+					lights_overlay = "lights_emergency_open"
+					pre_light_color = light_color_emergency
+				else
+					lights_overlay = "lights_poweron_open"
+					pre_light_color = light_color_poweron
+			if(note)
+				note_overlay = get_airlock_overlay("[notetype]_open", note_overlay_file)
+
+		if(AIRLOCK_OPENING)
+			frame_overlay = get_airlock_overlay("opening", icon)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_opening", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_opening", icon)
+			if(lights && hasPower())
+				pre_light_range = door_light_range
+				pre_light_power = door_light_power
+				//lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
+				lights_overlay = "lights_opening"
+				pre_light_color = light_color_access
+			if(panel_open)
+				if(security_level)
+					panel_overlay = get_airlock_overlay("panel_opening_protected", overlays_file)
+				else
+					panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("[notetype]_opening", note_overlay_file)
+
+	cut_overlays()
+
+	if(has_environment_lights)
+		set_light(pre_light_range, pre_light_power, pre_light_color)
+
+	. += frame_overlay
+	. += filling_overlay
+	. += panel_overlay
+	. += weld_overlay
+	. += sparks_overlay
+	. += damag_overlay
+	. += note_overlay
+	. += seal_overlay
+
+	update_vis_overlays(lights_overlay)
+
+	if(hasPower() && unres_sides)
+		if(unres_sides & NORTH)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
+			I.pixel_y = 32
+			. += I
+		if(unres_sides & SOUTH)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
+			I.pixel_y = -32
+			. += I
+		if(unres_sides & EAST)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
+			I.pixel_x = 32
+			. += I
+		if(unres_sides & WEST)
+			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
+			I.pixel_x = -32
+			. += I
+
+/obj/machinery/door/airlock/proc/update_vis_overlays(overlay_state)
+	if(QDELETED(src))
+		return
+	vis_overlay1.icon_state = overlay_state
+	vis_overlay2.icon_state = overlay_state
+
+
+//SKYRAT EDIT ADDITION BEGIN - AESTHETICS
+#undef AIRLOCK_LIGHT_POWER
+#undef AIRLOCK_LIGHT_RANGE
+
+#undef AIRLOCK_POWERON_LIGHT_COLOR
+#undef AIRLOCK_BOLTS_LIGHT_COLOR
+#undef AIRLOCK_ACCESS_LIGHT_COLOR
+#undef AIRLOCK_EMERGENCY_LIGHT_COLOR
+#undef AIRLOCK_DENY_LIGHT_COLOR
+//SKYRAT EDIT END
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING
 #undef AIRLOCK_OPEN

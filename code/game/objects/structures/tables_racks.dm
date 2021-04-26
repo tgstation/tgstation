@@ -695,3 +695,8 @@
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
+
+/obj/structure/rack/shelf
+	icon_state = "shelf"
+	name = "Shelf"
+	desc = "A shelf, for storing things on. Conveinent!"

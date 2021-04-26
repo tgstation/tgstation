@@ -315,6 +315,26 @@
 		set_light(l_power = 0)
 
 /*
+ * Rejoice, I made mapping a little easier - Wallem
+ */
+
+/obj/machinery/firealarm/north
+	dir = NORTH
+	pixel_y = 30
+
+/obj/machinery/firealarm/south
+	dir = SOUTH
+	pixel_y = -31
+
+/obj/machinery/firealarm/east
+	dir = EAST
+	pixel_x = 18
+
+/obj/machinery/firealarm/west
+	dir = WEST
+	pixel_x = -18
+
+/*
  * Return of Party button
  */
 
