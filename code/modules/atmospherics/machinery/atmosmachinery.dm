@@ -77,7 +77,7 @@
 		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
 
-/obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
+/obj/machinery/atmospherics/New(loc, process = TRUE, setdir, init_dir = ALL_CARDINALS)
 	if(!isnull(setdir))
 		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
@@ -88,7 +88,7 @@
 	..()
 	if(process)
 		SSair.start_processing_machine(src)
-	SetInitDirections()
+	SetInitDirections(init_dir)
 
 /obj/machinery/atmospherics/Destroy()
 	for(var/i in 1 to device_type)
@@ -223,7 +223,18 @@
  * * given_layer - the piping_layer we are checking
  */
 /obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	if(isConnectable(target, given_layer) && target.isConnectable(src, given_layer) && (target.initialize_directions & get_dir(target,src) || istype(target, /obj/machinery/atmospherics/pipe/multiz)))
+	if(isConnectable(target, given_layer) && target.isConnectable(src, given_layer) && check_init_directions(target))
+		return TRUE
+	return FALSE
+
+/**
+ * check if the initialized direction are the same on both sides (or if is a multiz adapter)
+ * returns TRUE or FALSE if the connection is possible or not
+ * Arguments:
+ * * obj/machinery/atmospherics/target - the machinery we want to connect to
+ */
+/obj/machinery/atmospherics/proc/check_init_directions(obj/machinery/atmospherics/target)
+	if((initialize_directions & get_dir(src, target) && target.initialize_directions & get_dir(target,src)) || istype(target, /obj/machinery/atmospherics/pipe/multiz))
 		return TRUE
 	return FALSE
 
@@ -274,7 +285,7 @@
 /**
  * Set the initial directions of the device (NORTH || SOUTH || EAST || WEST), called on New()
  */
-/obj/machinery/atmospherics/proc/SetInitDirections()
+/obj/machinery/atmospherics/proc/SetInitDirections(init_dir)
 	return
 
 /**
