@@ -2,7 +2,7 @@
 	dying_key = DYE_REGISTRY_GLOVES
 
 /obj/item/clothing/gloves/color/chief_engineer
-	desc = "These gloves excellent heat and electric insulation. They are so thin you can barely feel them."
+	desc = "These gloves provide excellent heat and electric insulation. They are so thin you can barely feel them."
 	name = "advanced insulated gloves"
 	icon_state = "ce_insuls"
 	inhand_icon_state = "lgloves"
