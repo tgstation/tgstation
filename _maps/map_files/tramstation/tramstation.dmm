@@ -3485,6 +3485,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
+/obj/effect/landmark/start/depsec/medical,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "alH" = (
@@ -6032,8 +6033,9 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
-/obj/item/kirbyplants/random,
 /obj/item/radio/intercom/directional/south,
+/obj/structure/closet/secure_closet/security/science,
+/obj/item/clothing/mask/whistle,
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "asT" = (
@@ -11453,6 +11455,10 @@
 	},
 /obj/effect/turf_decal/trimline/red/corner,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/directional/north{
+	name = "prison intercom";
+	prison_radio = 1
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "aLf" = (
@@ -16007,6 +16013,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/depsec/engineering,
+/obj/structure/chair/office,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "bRi" = (
@@ -18971,6 +18978,10 @@
 	},
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 1
+	},
+/obj/item/radio/intercom/directional/south{
+	name = "prison intercom";
+	prison_radio = 1
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
@@ -23195,7 +23206,6 @@
 /turf/open/floor/iron,
 /area/maintenance/tram/right)
 "eGO" = (
-/obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
@@ -26285,6 +26295,11 @@
 /obj/item/radio/intercom{
 	pixel_x = 28
 	},
+/obj/machinery/camera{
+	c_tag = "Medical - Security Outpost";
+	dir = 9;
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "fTg" = (
@@ -26805,9 +26820,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "gfX" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/effect/landmark/start/depsec/science,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -26815,6 +26827,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
+	},
+/obj/structure/chair/office{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
@@ -29304,6 +29319,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
+/obj/effect/landmark/start/depsec/science,
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "hfg" = (
@@ -29911,6 +29927,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
+/obj/effect/turf_decal/trimline/red/filled/warning,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "hnf" = (
@@ -41927,15 +41944,14 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/pen,
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engineering - Security Outpost";
 	network = list("ss13","engineering","Security")
 	},
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
+/obj/item/radio/off,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "mfy" = (
@@ -42482,6 +42498,10 @@
 /obj/item/clothing/mask/whistle,
 /obj/effect/turf_decal/trimline/red/filled/end{
 	dir = 8
+	},
+/obj/machinery/light_switch{
+	pixel_x = 11;
+	pixel_y = -24
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
@@ -48511,10 +48531,11 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /obj/structure/table,
-/obj/item/screwdriver{
-	pixel_y = 10
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
 	},
-/obj/item/radio/off,
+/obj/item/pen,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "oNv" = (
@@ -49436,9 +49457,6 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "pfS" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/effect/landmark/start/depsec/medical,
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -54569,6 +54587,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
+/obj/effect/turf_decal/trimline/red/filled/warning,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "rkb" = (
@@ -58087,6 +58106,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/depsec/medical,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "sDb" = (
@@ -63957,7 +63977,6 @@
 /turf/open/floor/iron,
 /area/cargo/miningdock)
 "uNO" = (
-/obj/structure/closet/secure_closet/security/science,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
@@ -63966,6 +63985,7 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -32
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "uNV" = (
@@ -65203,11 +65223,6 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -32
 	},
-/obj/machinery/camera{
-	c_tag = "Medical - Security Outpost";
-	dir = 4;
-	network = list("ss13","medbay")
-	},
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "vlx" = (
@@ -65305,6 +65320,7 @@
 /area/science/server)
 "vnU" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/warning,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "vnZ" = (
@@ -68635,6 +68651,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "wzO" = (
@@ -68689,11 +68706,11 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/effect/landmark/start/depsec/medical,
 /obj/machinery/power/apc/auto_name/east,
+/obj/structure/chair{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "wAv" = (
@@ -70629,6 +70646,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "xmj" = (
