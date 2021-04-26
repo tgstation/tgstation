@@ -428,6 +428,8 @@
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE, COMSIG_MOB_SAY))
 
 /datum/quirk/social_anxiety/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
 	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
