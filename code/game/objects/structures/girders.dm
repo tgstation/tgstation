@@ -422,7 +422,7 @@
 		to_chat(user, "<span class='notice'>You start slicing apart [src]...</span>")
 		if(W.use_tool(src, user, 40, volume=50))
 			to_chat(user, "<span class='notice'>You slice apart [src].</span>")
-			var/obj/item/stack/tile/bronze/B = new(drop_location(), 2)
+			var/obj/item/stack/sheet/bronze/B = new(drop_location(), 2)
 			transfer_fingerprints_to(B)
 			qdel(src)
 
