@@ -54,7 +54,7 @@
 /area/shuttle/escape)
 "ns" = (
 /obj/structure/table/wood/bar,
-/obj/item/fun_balloon/sentience/emergency_shuttle{
+/obj/effect/fun_balloon/sentience/emergency_shuttle{
 	group_name = "snack bar drone at Uncle Pete's Rollerdome"
 	},
 /turf/open/floor/wood,

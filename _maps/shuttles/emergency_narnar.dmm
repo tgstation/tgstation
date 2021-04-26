@@ -182,7 +182,7 @@
 /area/shuttle/escape)
 "I" = (
 /obj/effect/rune/narsie,
-/obj/item/fun_balloon/sentience/emergency_shuttle{
+/obj/effect/fun_balloon/sentience/emergency_shuttle{
 	effect_range = 5;
 	group_name = "horrible monsters on Shuttle 667"
 	},

@@ -1,4 +1,4 @@
-/obj/item/fun_balloon
+/obj/effect/fun_balloon
 	name = "fun balloon"
 	desc = "This is going to be a laugh riot."
 	icon = 'icons/obj/balloons.dmi'
@@ -7,59 +7,59 @@
 	var/popped = FALSE
 	var/pop_sound_effect = 'sound/items/party_horn.ogg'
 
-/obj/item/fun_balloon/Initialize()
+/obj/effect/fun_balloon/Initialize()
 	. = ..()
 	SSobj.processing |= src
 
-/obj/item/fun_balloon/Destroy()
+/obj/effect/fun_balloon/Destroy()
 	SSobj.processing -= src
 	. = ..()
 
-/obj/item/fun_balloon/process()
+/obj/effect/fun_balloon/process()
 	if(!popped && check() && !QDELETED(src))
 		popped = TRUE
 		effect()
 		pop()
 
-/obj/item/fun_balloon/proc/check()
+/obj/effect/fun_balloon/proc/check()
 	return FALSE
 
-/obj/item/fun_balloon/proc/effect()
+/obj/effect/fun_balloon/proc/effect()
 	return
 
-/obj/item/fun_balloon/proc/pop()
+/obj/effect/fun_balloon/proc/pop()
 	visible_message("<span class='notice'>[src] pops!</span>")
 	playsound(get_turf(src), pop_sound_effect, 50, TRUE, -1)
 	qdel(src)
 
 /////////////////////////////Sentience Balloon/////////////////////////////
-/obj/item/fun_balloon/sentience
+/obj/effect/fun_balloon/sentience
 	name = "sentience fun balloon"
 	desc = "When this pops, things are gonna get more aware around here."
 	var/group_name = "a bunch of giant spiders"
 	var/effect_range = 3
 
-/obj/item/fun_balloon/sentience/ui_interact(mob/user, datum/tgui/ui)
+/obj/effect/fun_balloon/sentience/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SentienceFunBalloon", name)
 		ui.open()
 
-/obj/item/fun_balloon/sentience/ui_data(mob/user)
+/obj/effect/fun_balloon/sentience/ui_data(mob/user)
 	var/list/data = list()
 	data["group_name"] = group_name
 	data["range"] = effect_range
 	return data
 
-/obj/item/fun_balloon/sentience/ui_state(mob/user)
+/obj/effect/fun_balloon/sentience/ui_state(mob/user)
 	return GLOB.admin_state
 
-/obj/item/fun_balloon/sentience/ui_status(mob/user)
+/obj/effect/fun_balloon/sentience/ui_status(mob/user)
 	if(popped)
 		return UI_CLOSE
 	return ..()
 
-/obj/item/fun_balloon/sentience/ui_act(action, list/params)
+/obj/effect/fun_balloon/sentience/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
@@ -79,7 +79,7 @@
 
 	return TRUE
 
-/obj/item/fun_balloon/sentience/effect()
+/obj/effect/fun_balloon/sentience/effect()
 	var/list/bodies = list()
 	for(var/mob/living/possessable in range(effect_range, get_turf(src)))
 		if (!possessable.ckey && possessable.stat == CONSCIOUS) // Only assign ghosts to living, non-occupied mobs!
@@ -97,22 +97,22 @@
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
 /////////////////////////////Emergency Shuttle Balloon/////////////////////////////
-/obj/item/fun_balloon/sentience/emergency_shuttle
+/obj/effect/fun_balloon/sentience/emergency_shuttle
 	name = "shuttle sentience fun balloon"
 	var/trigger_time = 60
 
-/obj/item/fun_balloon/sentience/emergency_shuttle/check()
+/obj/effect/fun_balloon/sentience/emergency_shuttle/check()
 	. = FALSE
 	if(SSshuttle.emergency && (SSshuttle.emergency.timeLeft() <= trigger_time) && (SSshuttle.emergency.mode == SHUTTLE_CALL))
 		. = TRUE
 
 /////////////////////////////Scatter Balloon/////////////////////////////
-/obj/item/fun_balloon/scatter
+/obj/effect/fun_balloon/scatter
 	name = "scatter fun balloon"
 	desc = "When this pops, you're not going to be around here anymore."
 	var/effect_range = 5
 
-/obj/item/fun_balloon/scatter/effect()
+/obj/effect/fun_balloon/scatter/effect()
 	for(var/mob/living/M in range(effect_range, get_turf(src)))
 		var/turf/T = find_safe_turf()
 		new /obj/effect/temp_visual/gravpush(get_turf(M))

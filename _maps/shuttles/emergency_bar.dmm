@@ -605,7 +605,7 @@
 /obj/structure/table/wood/bar{
 	boot_dir = 8
 	},
-/obj/item/fun_balloon/sentience/emergency_shuttle{
+/obj/effect/fun_balloon/sentience/emergency_shuttle{
 	group_name = "bar staff on the Emergency Escape Bar"
 	},
 /obj/effect/turf_decal/tile/bar,
