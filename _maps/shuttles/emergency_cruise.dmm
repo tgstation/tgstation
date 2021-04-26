@@ -1475,7 +1475,7 @@
 /obj/item/reagent_containers/glass/rag{
 	pixel_y = 7
 	},
-/obj/effect/fun_balloon/sentience/emergency_shuttle{
+/obj/item/fun_balloon/sentience/emergency_shuttle{
 	group_name = "bar staff on the NTSS Independence"
 	},
 /turf/open/floor/wood,
