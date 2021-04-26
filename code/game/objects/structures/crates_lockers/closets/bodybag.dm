@@ -65,6 +65,11 @@
 		density = FALSE
 		mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
+/obj/structure/closet/body_bag/container_resist_act(mob/living/user)
+	if (istype(src.loc, /obj/structure/bodycontainer))
+		var/obj/structure/bodycontainer/tray = src.loc
+		tray.open()
+
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
