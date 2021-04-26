@@ -91,7 +91,7 @@
 	if(!istype(I, /obj/item/stack))
 		return
 	var/obj/item/stack/stuff_stack = I
-	var/species = golem_shell_species_types[O.merge_type]
+	var/species = golem_shell_species_types[stuff_stack.merge_type]
 	if(!species)
 		to_chat(user, "<span class='warning'>You can't build a golem out of this kind of material!</span>")
 		return
