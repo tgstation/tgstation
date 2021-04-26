@@ -444,8 +444,8 @@
 			if(prob(nearby_people+mood.sanity_level+(10-mood.mood_level)) && word != message_split[1])
 				new_message += pick("uh,","erm,","um,")
 				if(prob(max(1, (1+nearby_people)*mood.sanity_level*(10-mood.mood_level))))
-					to_chat(Q, "<span class='danger'>What a dumb thing to say! You need a moment to recover.</span>")
-					Q.silent = max(2, Q.silent)
+					to_chat(Q, "<span class='danger'>You feel self-conscious and stop talking. You need a moment to recover!</span>")
+					Q.silent = max(3, Q.silent)
 					break
 			if(prob(nearby_people+mood.sanity_level+(10-mood.mood_level)))
 				word = html_decode(word)
