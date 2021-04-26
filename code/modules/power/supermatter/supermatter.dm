@@ -628,20 +628,29 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			env.merge(removed)
 			air_update_turf(FALSE, FALSE)
 
-	//Makes em go mad and accumulate rads.
-	var/toAdd = -0.05
+	// Defaults to a value less than 1. Over time the psyCoeff goes to 0 if
+	// no supermatter soothers are nearby.
+	var/psyCoeffDiff = -0.05
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power)))
-		// Someone (generally a Psychologist), when looking at the SM
+		// Someone (generally a Psychologist), when looking at the SMd
 		// within hallucination range makes it easier to manage.
 		if(HAS_TRAIT(l, TRAIT_SUPERMATTER_SOOTHER) || (l.mind && HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_SOOTHER)))
-			toAdd = 0.05
+			psyCoeffDiff = 0.05
 			psy_overlay = TRUE
-		// If they can see it without being immune (mesons, Psychologist)
-		if (!(HAS_TRAIT(l, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (l.mind && HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE))))
-			var/D = sqrt(1 / max(1, get_dist(l, src)))
-			l.hallucination += power * hallucination_power * D
-			l.hallucination = clamp(l.hallucination, 0, 200)
-	psyCoeff = clamp(psyCoeff + toAdd, 0, 1)
+
+		// If they are immune to supermatter hallucinations.
+		if (HAS_TRAIT(l, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (l.mind && HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+			continue
+
+		// Blind people don't get supermatter hallucinations.
+		if (l.is_blind())
+			continue
+
+		// Everyone else gets hallucinations.
+		var/D = sqrt(1 / max(1, get_dist(l, src)))
+		l.hallucination += power * hallucination_power * D
+		l.hallucination = clamp(l.hallucination, 0, 200)
+	psyCoeff = clamp(psyCoeff + psyCoeffDiff, 0, 1)
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.rad_act(rads)
