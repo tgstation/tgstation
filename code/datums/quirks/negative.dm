@@ -439,13 +439,13 @@
 	if(message)
 		var/list/message_split = splittext(message, " ")
 		var/list/new_message = list()
-		var/mob/living/carbon/human/Q = quirk_holder
+		var/mob/living/carbon/human/quirker = quirk_holder
 		for(var/word in message_split)
 			if(prob(nearby_people+mood.sanity_level+(10-mood.mood_level)) && word != message_split[1])
 				new_message += pick("uh,","erm,","um,")
 				if(prob(max(1, (1+nearby_people)*mood.sanity_level*(10-mood.mood_level))))
-					to_chat(Q, "<span class='danger'>You feel self-conscious and stop talking. You need a moment to recover!</span>")
-					Q.silent = max(3, Q.silent)
+					to_chat(quirker, "<span class='danger'>You feel self-conscious and stop talking. You need a moment to recover!</span>")
+					quirker.silent = max(3, quirker.silent)
 					break
 			if(prob(nearby_people+mood.sanity_level+(10-mood.mood_level)))
 				word = html_decode(word)
@@ -469,18 +469,18 @@
 			else
 				new_message += word
 		message = jointext(new_message, " ")
-	var/mob/living/carbon/human/H = quirk_holder
+	var/mob/living/carbon/human/quirker = quirk_holder
 	if(prob(min(87.5, (nearby_people*(mood.sanity_level+(10-mood.mood_level))))))
 		if(dumb_thing)
-			to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
+			to_chat(quirker, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
 			dumb_thing = FALSE //only once per life
 			if(prob(1))
-				new/obj/item/food/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+				new/obj/item/food/spaghetti/pastatomato(get_turf(quirker)) //now that's what I call spaghetti code
 		else
 			to_chat(quirk_holder, "<span class='warning'>You think that wouldn't add much to the conversation and decide not to say it.</span>")
 			if(mood.mood_level < 5 && prob(100-(mood.mood_level*20)))
-				to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
-				H.silent = max(5, H.silent)
+				to_chat(quirker, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
+				quirker.silent = max(5, quirker.silent)
 		speech_args[SPEECH_MESSAGE] = pick("Uh.","Erm.","Um.")
 	else
 		speech_args[SPEECH_MESSAGE] = message
