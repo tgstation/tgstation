@@ -632,7 +632,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// no supermatter soothers are nearby.
 	var/psyCoeffDiff = -0.05
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power)))
-		// Someone (generally a Psychologist), when looking at the SMd
+		// Someone (generally a Psychologist), when looking at the SM
 		// within hallucination range makes it easier to manage.
 		if(HAS_TRAIT(l, TRAIT_SUPERMATTER_SOOTHER) || (l.mind && HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_SOOTHER)))
 			psyCoeffDiff = 0.05
