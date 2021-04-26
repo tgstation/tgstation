@@ -236,10 +236,8 @@
 	if(!isliving(usr))
 		to_chat(usr, "<span class='warning'>You can't do that!</span>")
 		return
-	if(isanimal(usr))
-		var/mob/living/simple_animal/user_animal = usr
-		if (!user_animal.canUseTopic())
-			return
+	if (!usr.canUseTopic())
+		return
 	if(usr.incapacitated())
 		return
 	mode = !mode
