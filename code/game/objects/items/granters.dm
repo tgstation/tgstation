@@ -125,7 +125,7 @@
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == spell)
 			if(user.mind)
-				if(iswizard(user))
+				if(IS_WIZARD(user))
 					to_chat(user,"<span class='warning'>You're already far more versed in this spell than this flimsy how-to book can provide!</span>")
 				else
 					to_chat(user,"<span class='warning'>You've already read this one!</span>")

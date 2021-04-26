@@ -47,116 +47,6 @@
 			to_chat(usr, "<span class='danger'>ERROR: Mob not found.</span>", confidential = TRUE)
 			return
 		cmd_show_exp_panel(M.client)
-	else if(href_list["makeAntag"])
-		if(!check_rights(R_ADMIN))
-			return
-		if (!SSticker.mode)
-			to_chat(usr, "<span class='danger'>Not until the round starts!</span>", confidential = TRUE)
-			return
-		switch(href_list["makeAntag"])
-			if("traitors")
-				var/maxCount = input("Set number of Traitors","Set Traitor Count (max)",1) as num|null
-				if(src.makeTraitors(maxCount))
-					message_admins("[key_name_admin(usr)] created [maxCount] traitor(s).")
-					log_admin("[key_name(usr)] created [maxCount] traitor(s).")
-				else
-					message_admins("[key_name_admin(usr)] tried to create  [maxCount] traitor(s). Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create [maxCount] traitor(s).")
-			if("changelings")
-				var/maxCount = input("Set number of Changelings","Set Changeling Count (max)",1) as num|null
-				if(src.makeChangelings(maxCount))
-					message_admins("[key_name(usr)] created [maxCount] changelings.")
-					log_admin("[key_name(usr)] created [maxCount] changelings.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create [maxCount] changelings. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create [maxCount] changelings.")
-			if("revs")
-				var/maxCount = input("Set number of Revolutionaries","Set Revolutionaries Count (max)",1) as num|null
-				if(src.makeRevs(maxCount))
-					message_admins("[key_name(usr)] started a revolution with [maxCount] freedom fighters.")
-					log_admin("[key_name(usr)] started a [maxCount] freedom fighters.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a revolution with [maxCount] freedom fighters. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a revolution with [maxCount] freedom fighters.")
-			if("cult")
-				var/maxCount = input("Set number of Cultists","Set Cultist Count (max)",1) as num|null
-				if(src.makeCult(maxCount))
-					message_admins("[key_name(usr)] started a cult with [maxCount] cultists.")
-					log_admin("[key_name(usr)] started a cult with [maxCount] cultists.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a cult with [maxCount] cultists. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a cult with [maxCount] cultists.")
-			if("wizard")
-				message_admins("[key_name(usr)] is creating a wizard...")
-				if(src.makeWizard())
-					message_admins("[key_name(usr)] created a wizard.")
-					log_admin("[key_name(usr)] created a wizard.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a wizard. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create a wizard.")
-			if("nukeops")
-				message_admins("[key_name(usr)] is creating a nuke team...")
-				var/maxCount = input("Set number of Nuke OPs","Set Nuke OP Count (max)",5) as num|null
-				if(src.makeNukeTeam(maxCount))
-					message_admins("[key_name(usr)] created a nuke team with [maxCount] operatives")
-					log_admin("[key_name(usr)] created a nuke team with [maxCount] operatives")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a nuke team with [maxCount] operatives Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a nuke team with [maxCount] operatives.")
-			if("ninja")
-				message_admins("[key_name(usr)] spawned a ninja.")
-				log_admin("[key_name(usr)] spawned a ninja.")
-				src.makeSpaceNinja()
-			if("aliens")
-				message_admins("[key_name(usr)] started an alien infestation.")
-				log_admin("[key_name(usr)] started an alien infestation.")
-				src.makeAliens()
-			if("deathsquad")
-				message_admins("[key_name(usr)] is creating a death squad...")
-				if(src.makeDeathsquad())
-					message_admins("[key_name(usr)] created a death squad.")
-					log_admin("[key_name(usr)] created a death squad.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a death squad.")
-			if("blob")
-				var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1) as num|null
-				if(!strength)
-					return
-				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
-				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
-				new/datum/round_event/ghost_role/blob(TRUE, strength)
-			if("centcom")
-				message_admins("[key_name(usr)] is creating a CentCom response team...")
-				if(src.makeEmergencyresponseteam())
-					message_admins("[key_name(usr)] created a CentCom response team.")
-					log_admin("[key_name(usr)] created a CentCom response team.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a CentCom response team.")
-			if("abductors")
-				message_admins("[key_name(usr)] is creating an abductor team...")
-				if(src.makeAbductorTeam())
-					message_admins("[key_name(usr)] created an abductor team.")
-					log_admin("[key_name(usr)] created an abductor team.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunately there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create an abductor team.")
-			if("revenant")
-				if(src.makeRevenant())
-					message_admins("[key_name(usr)] created a revenant.")
-					log_admin("[key_name(usr)] created a revenant.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create a revenant.")
-			if("nerd")
-				if(src.makeNerd())
-					message_admins("[key_name(usr)] created a nanotrasen emergency response drone.")
-					log_admin("[key_name(usr)] created a nanotrasen emergency response drone.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a nanotrasen emergency response drone. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create a nanotrasen emergency response drone.")
-
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
 			return
@@ -620,12 +510,6 @@
 			return
 		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))
 
-	else if(href_list["c_mode"])
-		return HandleCMode()
-
-	else if(href_list["f_secret"])
-		return HandleFSecret()
-
 	else if(href_list["f_dynamic_roundstart"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -724,38 +608,6 @@
 		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
 		message_admins("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
 		dynamic_mode_options(usr)
-
-	else if(href_list["c_mode2"])
-		if(!check_rights(R_ADMIN|R_SERVER))
-			return
-
-		if (SSticker.HasRoundStarted())
-			if (tgui_alert(usr, "The game has already started. Would you like to save this as the default mode effective next round?", "Save mode", list("Yes", "Cancel"), timeout = 0) == "Yes")
-				SSticker.save_mode(href_list["c_mode2"])
-			HandleCMode()
-			return
-		GLOB.master_mode = href_list["c_mode2"]
-		log_admin("[key_name(usr)] set the mode as [GLOB.master_mode].")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the mode as [GLOB.master_mode].</span>")
-		to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>", confidential = TRUE)
-		Game() // updates the main game menu
-		if (tgui_alert(usr, "Would you like to save this as the default mode for the server?", "Save mode", list("Yes", "No"), timeout = 0) == "Yes")
-			SSticker.save_mode(GLOB.master_mode)
-		HandleCMode()
-
-	else if(href_list["f_secret2"])
-		if(!check_rights(R_ADMIN|R_SERVER))
-			return
-
-		if(SSticker.HasRoundStarted())
-			return alert(usr, "The game has already started.", null, null, null, null)
-		if(GLOB.master_mode != "secret")
-			return alert(usr, "The game mode has to be secret!", null, null, null, null)
-		GLOB.secret_force_mode = href_list["f_secret2"]
-		log_admin("[key_name(usr)] set the forced secret mode as [GLOB.secret_force_mode].")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the forced secret mode as [GLOB.secret_force_mode].</span>")
-		Game() // updates the main game menu
-		HandleFSecret()
 
 	else if(href_list["monkeyone"])
 		if(!check_rights(R_SPAWN))
@@ -2197,30 +2049,3 @@
 		if(!check_rights(R_ADMIN))
 			return
 		GLOB.interviews.ui_interact(usr)
-
-/datum/admins/proc/HandleCMode()
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/dat = {"<B>What mode do you wish to play?</B><HR>"}
-	for(var/mode in config.modes)
-		dat += {"<A href='?src=[REF(src)];[HrefToken()];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
-	dat += {"<A href='?src=[REF(src)];[HrefToken()];c_mode2=secret'>Secret</A><br>"}
-	dat += {"<A href='?src=[REF(src)];[HrefToken()];c_mode2=random'>Random</A><br>"}
-	dat += {"Now: [GLOB.master_mode]"}
-	usr << browse(dat, "window=c_mode")
-
-/datum/admins/proc/HandleFSecret()
-	if(!check_rights(R_ADMIN))
-		return
-
-	if(SSticker.HasRoundStarted())
-		return alert(usr, "The game has already started.", null, null, null, null)
-	if(GLOB.master_mode != "secret")
-		return alert(usr, "The game mode has to be secret!", null, null, null, null)
-	var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
-	for(var/mode in config.modes)
-		dat += {"<A href='?src=[REF(src)];[HrefToken()];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
-	dat += {"<A href='?src=[REF(src)];[HrefToken()];f_secret2=secret'>Random (default)</A><br>"}
-	dat += {"Now: [GLOB.secret_force_mode]"}
-	usr << browse(dat, "window=f_secret")
