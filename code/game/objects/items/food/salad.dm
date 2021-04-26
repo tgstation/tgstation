@@ -108,6 +108,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("rice" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/salad/eggbowl
 	name = "egg bowl"
