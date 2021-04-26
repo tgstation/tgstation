@@ -237,6 +237,7 @@
 	if((initialize_directions & get_dir(src, target) && target.initialize_directions & get_dir(target,src)) || istype(target, /obj/machinery/atmospherics/pipe/multiz))
 		return TRUE
 	return FALSE
+
 /**
  * check if the piping layer and color are the same on both sides (grey can connect to all colors)
  * returns TRUE or FALSE if the connection is possible or not
