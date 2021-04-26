@@ -39,13 +39,6 @@ export class AlertModal extends Component {
     setTimeout(() => button.focus(), 1);
   }
 
-  componentDidUpdate() {
-    const { current } = this.state;
-    const button = this.buttonRefs[current].current;
-
-    setTimeout(() => button.focus(), 1);
-  }
-
   setCurrent(current, isArrowKey) {
     const { data } = useBackend(this.context);
     const { buttons } = data;
@@ -57,6 +50,12 @@ export class AlertModal extends Component {
       current = isArrowKey ? 0 : buttons.length - 1;
     }
 
+    const button = this.buttonRefs[current].current;
+
+    // Prevents an error from occurring on close
+    if (button) {
+      setTimeout(() => button.focus(), 1);
+    }
     this.setState({ current });
   }
 
@@ -64,11 +63,18 @@ export class AlertModal extends Component {
     const { act, data } = useBackend(this.context);
     const { title, message, buttons, timeout } = data;
     const { current } = this.state;
+    const focusCurrentButton = () => this.setCurrent(current, false);
 
     return (
-      <Window title={title} width={350} height={150} canClose={timeout > 0}>
+      <Window
+        title={title}
+        width={350}
+        height={150}
+        canClose={timeout > 0}>
         {timeout && <Loader value={timeout} />}
-        <Window.Content>
+        <Window.Content
+          onFocus={focusCurrentButton}
+          onClick={focusCurrentButton}>
           <Section fill>
             <Flex direction="column" height="100%">
               <Flex.Item grow={1}>
