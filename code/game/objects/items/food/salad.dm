@@ -101,6 +101,14 @@
 	tastes = list("rice" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
 
+/obj/item/food/salad/risotto
+	name = "risotto"
+	desc = "Proof the Italians mastered every carb."
+	icon_state = "risotto"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("rice" = 1, "cheese" = 1)
+	foodtypes = GRAIN | DAIRY
+
 /obj/item/food/salad/eggbowl
 	name = "egg bowl"
 	desc = "A bowl of rice with a fried egg."
