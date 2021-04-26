@@ -113,7 +113,7 @@
 		to_chat(user, "<span class='notice'>You can't open somebody else's mail! That's <em>illegal</em>!</span>")
 		return
 
-	user.visible_message("<span class='notice'>You start to unwrap the package...</span>")
+	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
