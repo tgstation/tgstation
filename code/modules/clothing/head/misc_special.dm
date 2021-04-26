@@ -272,11 +272,28 @@
 
 /obj/item/clothing/head/wig/afterattack(mob/living/carbon/human/target, mob/user)
 	. = ..()
-	if (istype(target) && (HAIR in target.dna.species.species_traits) && target.hairstyle != "Bald")
-		to_chat(user, "<span class='notice'>You adjust the [src] to look just like [target.name]'s [target.hairstyle].</span>")
-		add_atom_colour("#[target.hair_color]", FIXED_COLOUR_PRIORITY)
-		hairstyle = target.hairstyle
-		update_appearance()
+	if(istype(target))
+		if(target.head)
+			var/obj/item/clothing/head = target.head
+			if((head.flags_inv & HIDEHAIR) && !istype(head, /obj/item/clothing/head/wig))
+				to_chat(user, "<span class='warning'>You can't get a good look at [target.p_their()] hair!</span>")
+				return
+
+		var/selected_hairstyle = null
+		var/selected_hairstyle_color = null
+		if(istype(target.head, /obj/item/clothing/head/wig))
+			var/obj/item/clothing/head/wig/wig = target.head
+			selected_hairstyle = wig.hairstyle
+			selected_hairstyle_color = wig.color
+		else if((HAIR in target.dna.species.species_traits) && target.hairstyle != "Bald")
+			selected_hairstyle = target.hairstyle
+			selected_hairstyle_color = "#[target.hair_color]"
+
+		if(selected_hairstyle)
+			to_chat(user, "<span class='notice'>You adjust the [src] to look just like [target.name]'s [selected_hairstyle].</span>")
+			add_atom_colour(selected_hairstyle_color, FIXED_COLOUR_PRIORITY)
+			hairstyle = selected_hairstyle
+			update_appearance()
 
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hairstyle = pick(GLOB.hairstyles_list - "Bald") //Don't want invisible wig
