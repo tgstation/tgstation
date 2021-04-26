@@ -24,3 +24,71 @@
 /datum/greyscale_config/wirecutters
 	icon_file = 'icons/obj/tools.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wirecutters.json'
+
+/datum/greyscale_config/screwdriver
+	icon_file = 'icons/obj/tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/screwdriver.json'
+
+/datum/greyscale_config/screwdriver_inhand_left
+	icon_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/screwdriver_worn.json'
+
+/datum/greyscale_config/screwdriver_inhand_right
+	icon_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/screwdriver_worn.json'
+
+/datum/greyscale_config/screwdriver_belt
+	icon_file = 'icons/obj/clothing/belt_overlays.dmi'
+	json_config = 'code/datums/greyscale/json_configs/screwdriver_worn.json'
+
+/datum/greyscale_config/jumpsuit
+	icon_file = 'icons/obj/clothing/under/color.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit.json'
+
+/datum/greyscale_config/jumpsuit_worn
+	icon_file = 'icons/mob/clothing/under/color.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_worn.json'
+
+/datum/greyscale_config/jumpsuit_inhand_left
+	icon_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_inhand.json'
+
+/datum/greyscale_config/jumpsuit_inhand_right
+	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_inhand.json'
+
+/datum/greyscale_config/jumpsuit_prison
+	icon_file = 'icons/obj/clothing/under/color.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison.json'
+
+/datum/greyscale_config/jumpsuit_prison_worn
+	icon_file = 'icons/mob/clothing/under/color.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_worn.json'
+
+/datum/greyscale_config/jumpsuit_prison_inhand_left
+	icon_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
+
+/datum/greyscale_config/jumpsuit_prison_inhand_right
+	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
+
+/datum/greyscale_config/sneakers
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers.json'
+
+/datum/greyscale_config/sneakers_worn
+	icon_file = 'icons/mob/clothing/feet.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers_worn.json'
+
+/datum/greyscale_config/sneakers_orange
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers_orange.json'
+
+/datum/greyscale_config/sneakers_orange_worn
+	icon_file = 'icons/mob/clothing/feet.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers_orange_worn.json'
+
+/datum/greyscale_config/sneakers_wheelys
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers_wheelys.json'

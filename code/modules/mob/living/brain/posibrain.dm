@@ -129,7 +129,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(C.mind)
 		C.mind.transfer_to(brainmob)
 
-	brainmob.mind.remove_all_antag()
+	brainmob.mind.remove_all_antag_datums()
 	brainmob.mind.wipe_memory()
 	update_appearance()
 

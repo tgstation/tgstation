@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Chameleon Projector Dummies escaping containers"
