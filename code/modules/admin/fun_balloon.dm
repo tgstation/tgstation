@@ -40,8 +40,6 @@
 	var/effect_range = 3
 
 /obj/item/fun_balloon/sentience/ui_interact(mob/user, datum/tgui/ui)
-	if(!check_rights(R_ADMIN))
-		return // todo: show examine description if not an admin
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SentienceFunBalloon", name)
@@ -50,7 +48,6 @@
 /obj/item/fun_balloon/sentience/ui_data(mob/user)
 	var/list/data = list()
 	data["group_name"] = group_name
-	data["pop_sound"] = pop_sound_effect
 	data["range"] = effect_range
 	return data
 
@@ -74,37 +71,11 @@
 		if("effect_range")
 			effect_range = params["updated_range"]
 
-		if("pop_sound")
-			var/soundInput = input(src, "Please pick a sound file to play when the balloon pops!", "Pick a Sound File") as null|sound
-			if (!isnull(soundInput))
-				pop_sound_effect = soundInput
-			// var/soundInput = input(holder, "Please pick a sound file to play when the balloon pops!", "Pick a Sound File") as null|sound
-			// if (isnull(soundInput))
-			// 	return
-			// var/sound/tempSound = sound(soundInput)
-			// playsound(holder.mob, tempSound, 1)
-			// var/list/sounds_list = holder.SoundQuery()
-			// var/soundLen = 0
-			// for (var/playing_sound in sounds_list)
-			// 	if (isnull(playing_sound))
-			// 		stack_trace("client.SoundQuery() Returned a list containing a null sound! Somehow!")
-			// 		continue
-			// 	var/sound/found = playing_sound
-			// 	if (found.file == tempSound.file)
-			// 		soundLen = found.len
-			// if (!soundLen)
-			// 	soundLen =  input(holder, "Couldn't auto-determine sound file length. What is the exact length of the sound file, in seconds. This number will be used to line the sound up so that it finishes right as the pod lands!", "Pick a Sound File", 0.3) as null|num
-			// 	if (isnull(soundLen))
-			// 		return
-			// 	if (!isnum(soundLen))
-			// 		alert(usr, "That wasn't a number! Value set to default ([initial(temp_pod.fallingSoundLength)*0.1]) instead.")
-			// temp_pod.fallingSound = soundInput
-			// temp_pod.fallingSoundLength = 10 * soundLen
-
 		if("pop")
-			popped = TRUE
-			effect()
-			pop()
+			if(!popped)
+				popped = TRUE
+				effect()
+				pop()
 
 	return TRUE
 
