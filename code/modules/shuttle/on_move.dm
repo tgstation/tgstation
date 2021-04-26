@@ -105,8 +105,7 @@ All ShuttleMove procs go here
 	if(loc != oldT) // This is for multi tile objects
 		return
 
-	loc = newT
-	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldT)
+	update_loc(newT)
 
 
 	return TRUE
@@ -387,8 +386,7 @@ All ShuttleMove procs go here
 	if(loc != oldT) // This is for multi tile objects
 		return
 
-	loc = newT
-	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldT)
+	update_loc(newT)
 
 	return TRUE
 

@@ -351,6 +351,18 @@
 		var/mob/buckled_mob = m
 		buckled_mob.set_glide_size(target)
 
+///meant for moves with zero side effects. only use for objects that arent supposed to interact with anything else (like camera mobs)
+/atom/movable/proc/abstract_move(atom/new_loc)
+	var/atom/old_loc = update_loc(new_loc)
+	Moved(old_loc)
+
+///meant to be used for all location changes. any instances of setting loc directly (for movables) should instead use this
+/atom/movable/proc/update_loc(atom/new_loc)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/old_loc = loc
+	loc = new_loc
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, old_loc)
+
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
@@ -380,8 +392,7 @@
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
 
-	loc = newloc
-	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldloc)
+	update_loc(newloc)
 
 	. = TRUE
 	oldloc.Exited(src, newloc)
@@ -645,9 +656,8 @@
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 
-		loc = destination
+		update_loc(destination)
 		moving_diagonally = 0
-		SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldloc)
 
 		if(!same_loc)
 			if(oldloc)
@@ -681,8 +691,7 @@
 			oldloc.Exited(src, null)
 			if(old_area)
 				old_area.Exited(src, null)
-		loc = null
-		SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, oldloc)
+		update_loc(null)
 
 /atom/movable/proc/onTransitZ(old_z,new_z)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
