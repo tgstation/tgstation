@@ -146,15 +146,7 @@
 			transform = transform.Scale(2)
 			color = COLOR_GREEN
 		user.do_attack_animation(the_table)
-		if(ishuman(user))
-			var/mob/living/carbon/human/human_user = user
-			if(istype(human_user.shoes, /obj/item/clothing/shoes/cowboy))
-				human_user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)
-				human_user.client?.give_award(/datum/award/achievement/misc/hot_damn, human_user)
-			else if(istype(human_user.w_uniform, /obj/item/clothing/under))
-				var/obj/item/clothing/under/uniform = human_user.w_uniform
-				if(istype(uniform.attached_accessory, /obj/item/clothing/accessory/lawyers_badge))
-					human_user.say("Objection!!", spans = list(SPAN_YELL), forced=TRUE)
+		SEND_SIGNAL(user, COMSIG_LIVING_TABLE_SLAM, the_table)
 		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 110, TRUE)
 		user.visible_message("<b><span class='danger'>[user] slams [user.p_their()] fist down on [the_table]!</span></b>", "<b><span class='danger'>You slam your fist down on [the_table]!</span></b>")
 		qdel(src)

@@ -653,6 +653,9 @@
 ///from base of mob/living/simple_animal/hostile/regalrat: (mob/living/simple_animal/hostile/regalrat/king)
 #define COMSIG_RAT_INTERACT "rat_interaction"
 
+///from /obj/item/slapper/attack_obj(obj/O, mob/living/user, params)
+#define COMSIG_LIVING_TABLE_SLAM "living_table_slam"
+
 // /obj signals
 
 ///from base of [/obj/proc/take_damage]: (damage_amount, damage_type, damage_flag, sound_effect, attack_dir, aurmor_penetration)
