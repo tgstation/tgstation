@@ -127,7 +127,8 @@
 		return
 	if(isanimal(usr))
 		var/mob/living/simple_animal/user_animal = usr
-		return user_animal.canUseTopic()
+		if (!user_animal.canUseTopic())
+			return
 	src.go_out()
 	add_fingerprint(usr)
 	return

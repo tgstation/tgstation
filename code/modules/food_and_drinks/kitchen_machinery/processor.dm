@@ -164,7 +164,8 @@
 		return
 	if(isanimal(usr))
 		var/mob/living/simple_animal/user_animal = usr
-		return user_animal.canUseTopic()
+		if (!user_animal.canUseTopic())
+			return
 	if(isliving(usr))
 		var/mob/living/L = usr
 		if(!(L.mobility_flags & MOBILITY_UI))

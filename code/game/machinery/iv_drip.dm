@@ -219,7 +219,8 @@
 		return
 	if(isanimal(usr))
 		var/mob/living/simple_animal/user_animal = usr
-		return user_animal.canUseTopic()
+		if (!user_animal.canUseTopic())
+			return
 	if(usr.incapacitated())
 		return
 	if(reagent_container)
@@ -237,7 +238,8 @@
 		return
 	if(isanimal(usr))
 		var/mob/living/simple_animal/user_animal = usr
-		return user_animal.canUseTopic()
+		if (!user_animal.canUseTopic())
+			return
 	if(usr.incapacitated())
 		return
 	mode = !mode
