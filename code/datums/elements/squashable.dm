@@ -1,4 +1,4 @@
-///This element allows something to be when crossed, for example for cockroaches.
+///This component allows something to be when crossed, for example for cockroaches.
 /datum/component/squashable
 	///Chance on crossed to be squashed
 	var/squash_chance = 50
@@ -8,6 +8,10 @@
 	var/squash_flags = NONE
 	///Special callback to call on squash instead, for things like hauberoach
 	var/datum/callback/on_squash_callback
+	var/static/list/loc_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/OnCrossed,
+	)
+
 
 /datum/component/squashable/Initialize(squash_chance, squash_damage, squash_flags, squash_callback)
 	. = ..()
@@ -22,9 +26,6 @@
 	if(!src.on_squash_callback && squash_callback)
 		on_squash_callback = CALLBACK(parent, squash_callback)
 
-	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/OnCrossed,
-	)
 	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
 ///Handles the squashing of the mob
@@ -64,3 +65,7 @@
 		target.gib()
 	else
 		target.adjustBruteLoss(squash_damage)
+
+/datum/component/squashable/UnregisterFromParent()
+	. = ..()
+	RemoveElement(/datum/element/connect_loc, parent, loc_connections)

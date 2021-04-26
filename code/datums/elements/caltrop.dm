@@ -32,8 +32,8 @@
 	if(ismovable(target))
 		var/atom/movable/movable_target = target
 		RegisterSignal(movable_target, COMSIG_MOVABLE_MOVED, .proc/re_register_crossed)
-		RegisterSignal(movable_target.loc, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
 		//override = TRUE because there could be multiple objects with the same caltrop element instance registering to the same loc
+		RegisterSignal(movable_target.loc, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, override = TRUE)
 	else
 		RegisterSignal(get_turf(target), COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
 

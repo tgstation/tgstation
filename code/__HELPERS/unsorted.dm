@@ -332,12 +332,12 @@ Turf and target are separate in case you want to teleport some distance from a t
 //For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
 //Optional arg 'type' to stop once it reaches a specific type instead of a turf.
 /proc/get_atom_on_turf(atom/movable/M, stop_type)
-	var/atom/super_loc = M
-	while(super_loc?.loc && !isturf(super_loc.loc))
-		super_loc = super_loc.loc
-		if(stop_type && istype(super_loc, stop_type))
+	var/atom/turf_to_check = M
+	while(turf_to_check?.loc && !isturf(turf_to_check.loc))
+		turf_to_check = turf_to_check.loc
+		if(stop_type && istype(turf_to_check, stop_type))
 			break
-	return super_loc
+	return turf_to_check
 
 //Returns a list of all locations (except the area) the movable is within.
 /proc/get_nested_locs(atom/movable/AM, include_turf = FALSE)
