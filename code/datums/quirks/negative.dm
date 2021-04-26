@@ -425,7 +425,7 @@
 	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/quirk/social_anxiety/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE))
+	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE, COMSIG_MOB_SAY))
 
 /datum/quirk/social_anxiety/proc/handle_speech(datum/source, list/speech_args)
 	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
