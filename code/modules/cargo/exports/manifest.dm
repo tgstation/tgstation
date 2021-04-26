@@ -100,6 +100,8 @@
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
 
 /datum/export/manifest_fucked_signature/applies_to(obj/item/paper/fluff/jobs/cargo/manifest/manifest)
+	if(!..())
+		return FALSE
 
 	if(manifest.signature_status == SIGNATURE_INCORRECT)
 		return TRUE
