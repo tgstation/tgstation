@@ -479,7 +479,7 @@
 	background_icon_state = "bg_demon"
 
 /datum/action/item_action/cult_dagger/Grant(mob/M)
-	if(iscultist(M))
+	if(IS_CULTIST(M))
 		..()
 		button.screen_loc = "6:157,4:-2"
 		button.moved = "6:157,4:-2"
@@ -675,7 +675,7 @@
 	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
-	
+
 /datum/action/item_action/bhop/brocket
 	name = "Activate Rocket Boots"
 	desc = "Activates the boot's rocket propulsion system, allowing the user to hurl themselves great distances."

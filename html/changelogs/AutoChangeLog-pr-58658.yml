@@ -1,0 +1,4 @@
+author: "Spookuni"
+delete-after: True
+changes: 
+  - bugfix: "Changeling eggs should no longer take the better part of an hour to hatch from dead bodies."

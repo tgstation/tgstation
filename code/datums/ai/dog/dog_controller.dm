@@ -192,7 +192,9 @@
 	if(carried_item)
 		examine_text += "<span class='notice'>[pawn.p_they(TRUE)] [pawn.p_are()] carrying [carried_item.get_examine_string(user)] in [pawn.p_their()] mouth.</span>"
 	if(blackboard[BB_DOG_FRIENDS][user])
-		examine_text += "<span class='notice'>[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!</span>"
+		var/mob/living/living_pawn = pawn
+		if(!IS_DEAD_OR_INCAP(living_pawn))
+			examine_text += "<span class='notice'>[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!</span>"
 
 /// If we died, drop anything we were carrying
 /datum/ai_controller/dog/proc/on_death(mob/living/ol_yeller)
@@ -250,6 +252,10 @@
 	if(!COOLDOWN_FINISHED(src, command_cooldown))
 		return
 
+	var/mob/living/living_pawn = pawn
+	if(IS_DEAD_OR_INCAP(living_pawn))
+		return
+
 	var/spoken_text = speech_args[SPEECH_MESSAGE] // probably should check for full words
 	var/command
 	if(findtext(spoken_text, "heel") || findtext(spoken_text, "sit") || findtext(spoken_text, "stay"))
@@ -300,6 +306,9 @@
 	if(pointed_movable == pawn || blackboard[BB_FETCH_TARGET] || !istype(pointed_movable) || blackboard[BB_DOG_ORDER_MODE] == DOG_COMMAND_NONE) // busy or no command
 		return
 	if(!can_see(pawn, pointing_friend, length=AI_DOG_VISION_RANGE) || !can_see(pawn, pointed_movable, length=AI_DOG_VISION_RANGE))
+		return
+	var/mob/living/living_pawn = pawn
+	if(IS_DEAD_OR_INCAP(living_pawn))
 		return
 
 	COOLDOWN_START(src, command_cooldown, AI_DOG_COMMAND_COOLDOWN)

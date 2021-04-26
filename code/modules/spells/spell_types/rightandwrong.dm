@@ -103,12 +103,10 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	if(H.stat == DEAD || !(H.client))
 		return
 	if(H.mind)
-		if(iswizard(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
+		if(IS_WIZARD(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
 			return
 	var/datum/summon_guns_controller/controller = GLOB.summon_guns
 	if(prob(controller.survivor_probability) && !(H.mind.has_antag_datum(/datum/antagonist)))
-		SSticker.mode.traitors += H.mind
-
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
 		H.log_message("was made into a survivalist, and trusts no one!", LOG_ATTACK, color="red")
 
@@ -126,7 +124,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	if(H.stat == DEAD || !(H.client))
 		return
 	if(H.mind)
-		if(iswizard(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
+		if(IS_WIZARD(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
 			return
 	if(!GLOB.summon_magic)
 		return

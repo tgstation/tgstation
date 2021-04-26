@@ -126,7 +126,7 @@
 
 	if(!current_wizard)
 		return
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, null, ROLE_WIZARD, 50, current_wizard, POLL_IGNORE_ACADEMY_WIZARD)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, ROLE_WIZARD, 50, current_wizard, POLL_IGNORE_ACADEMY_WIZARD)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
@@ -209,7 +209,7 @@
 	if(used)
 		return
 
-	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
+	if(!ishuman(user) || !user.mind || IS_WIZARD(user))
 		to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans!</span>")
 		return
 
@@ -224,7 +224,7 @@
 
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
 	. = ..()
-	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
+	if(!ishuman(user) || !user.mind || IS_WIZARD(user))
 		to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans! You should leave it alone.</span>")
 		user.dropItemToGround(src)
 
@@ -325,7 +325,7 @@
 			A.setup_master(user)
 			servant_mind.transfer_to(H)
 
-			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, null, ROLE_WIZARD, 50, H)
+			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, ROLE_WIZARD, 50, H)
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/C = pick(candidates)
 				message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Dice Servant")
@@ -405,5 +405,5 @@
 	user.visible_message("<span class='notice'>[user] activates \the [src].</span>", "<span class='notice'>You activate \the [src].</span>")
 
 /obj/structure/ladder/unbreakable/rune/use(mob/user, is_ghost=FALSE)
-	if(is_ghost || !(user.mind in SSticker.mode.wizards))
+	if(is_ghost || !IS_WIZARD(user))
 		..()
