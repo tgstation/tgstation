@@ -22,10 +22,11 @@
 		/obj/item/lighter,
 		/obj/item/lighter/greyscale,
 		/obj/item/storage/box/matches,
-		)
+	)
+	
 	liver_traits = list(
 		TRAIT_ENGINEER_METABOLISM,
-		)
+	)
 
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"
