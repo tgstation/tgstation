@@ -38,7 +38,7 @@ multiple modular subtrees with behaviors
 	///Delay between movements. This is on the controller so we can keep the movement datum singleton
 	var/movement_delay = 0.1 SECONDS
 
-	/////The variables below are fucking stupid and should be put into the blackboard at some point.
+	// The variables below are fucking stupid and should be put into the blackboard at some point.
 	///A list for the path we're currently following, if we're using JPS pathing
 	var/list/movement_path
 	///Cooldown for JPS movement, how often we're allowed to try making a new path
