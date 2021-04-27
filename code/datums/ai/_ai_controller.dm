@@ -30,7 +30,7 @@ multiple modular subtrees with behaviors
 	///All subtrees this AI has available, will run them in order, so make sure they're in the order you want them to run
 	var/list/planning_subtrees = list()
 
-	///Movement related things here
+	// Movement related things here
 	///Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.
 	var/datum/ai_movement/ai_movement = /datum/ai_movement/dumb
 	///Cooldown until next movement
