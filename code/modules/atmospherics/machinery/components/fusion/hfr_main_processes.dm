@@ -45,7 +45,7 @@
 		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1200) / 200, 0), 0)
 
 	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < 5e5) || power_level <= 4)
-		critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, coolant_temperature + 1) - 5, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, max(coolant_temperature, 1)) - 5, 0), 0)
 
 	critical_threshold_proximity += max(iron_content - 0.35, 0)
 
