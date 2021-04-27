@@ -1,5 +1,5 @@
 2010-11-02:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team
   - unknown: Finished work on the "cult" gamemode. I'll still add features to it later,
       but it is safe to be put on secret rotation now.
   - unknown: Added an energy cutlass and made a pirate version of the space suit in
@@ -10,7 +10,7 @@
   - unknown: Fixed missing sprite for monkeyburgers.
   - unknown: Fixed Beepsky automatically adding 2 treason points to EVERYONE.
 2010-11-05:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team
   - unknown: The ban appeals URL can now be set in config.txt
   - unknown: Secret mode default probabilities in config.txt made sane
   - unknown: Admin send-to-thunderdome command fixed to no longer send people to the
@@ -32,7 +32,7 @@
   - unknown: The use of DNA Injectors and fueltank detonations are now admin-logged.
   - unknown: Removed old debug code from gib()
 2010-11-14:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team
   - unknown: Major food/drink code overhaul. Food items heal for more but not instantly.
       Poison, Drug, and "Heat" effects from food items are also non-instant.
   - unknown: Preperation for one-way containers and condiments.
@@ -53,7 +53,7 @@
       charge of medbay. Has his/her own office and coat.'
   - unknown: Wizarditis Bottle no longer in virus crate.
 2010-11-16:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team
   - unknown: <b>Cruazy Guest's map is now live.</b>
   - unknown: Entire station has been rearranged.
   - unknown: Prison Station added, with Prison Shuttle to transport to and from.
@@ -65,7 +65,7 @@
       between uses. Mounted flashes have also been included.
   - unknown: Clown stamp added to clown's backpack.
 2010-11-21:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team
   - unknown: Bug fixes, not going into detail. Lots and lots of bug fixes, mostly
       regarding the new map
   - unknown: CMO has a more obvious lab coat, that looks nicer than the original

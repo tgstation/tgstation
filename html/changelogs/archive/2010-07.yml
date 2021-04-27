@@ -1,5 +1,5 @@
 2010-07-06:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: Prayer command added.
   - unknown: State Laws command for AI added.
   - unknown: Disabled Lockdown command for AI. Too server heavy.
@@ -9,7 +9,7 @@
       be nerfed heavily, but we'll give it a shot anyhow.
   - unknown: Fixed a bug with doors/airlocks. (Thanks Mport2004)
 2010-07-09:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: Tweaked crate costs for Quartermaster.
   - unknown: Increased metal available in Robotics.
   - unknown: <b>Added department-specific headsets.</b> Engineering, Medical, Command,
@@ -17,7 +17,7 @@
       frequency PLUS a secure frequency only available to headsets of the same type.
       Precede say messages with ":h" to use.
 2010-07-10:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: Examining a player will now tell you if their client has disconnected.
   - unknown: Examining a brain will now tell you if it's owner is still connected
       to the game.
@@ -25,7 +25,7 @@
       can grow into xenos! Xenos can become queens! The circle of life~
   - unknown: 'Some powernet bug fixes: Bad list and division by zero.'
 2010-07-13:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: <strong>Singularity Engine Added</strong> Oh God we're all going to die
       (All credit on this one goes to Mport2004)
   - unknown: '''Purge'' AI module added - purges ALL laws (except for law 0). Will

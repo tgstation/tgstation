@@ -1,5 +1,5 @@
 2010-09-02:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: Ghosts can no longer release the singularity.
   - unknown: Sprites added in preparation for a Hydroponics update
   - unknown: A decoy AI now spawns in the AI core during Malfunction rounds to reduce
@@ -17,7 +17,7 @@
       channels or robot talk with ':a'.</b>
   - unknown: Full donut boxes no longer eat whatever item is used on them and disappear.
 2010-09-12:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: "New kitchen stuff: New recipes (Meatbread, Cheese, Omelette Du Fromage,\
       \ Muffins), new chef's knife and trays (Spawn in the meat locker) and milk (spawns\
       \ in the fridge). Recipes are as follows:\n\t\t-Cheese: milk on food processor\n\
@@ -33,20 +33,20 @@
       trump inside the bar and choke the monkey.'
   - unknown: ' Prepping ground for Barman update (SPRITE ME SOME GODDAMN BOTTLES)'
 2010-09-13:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: ' Bunch of new announcer sounds added'
   - unknown: ' Minor lag fix implementation in the pipe system'
   - unknown: ' You can now hear ghosts... sometimes'
   - unknown: ' Seed bags and nutrients can now be pocketed'
 2010-09-16:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: Added the Lawyer job.
   - unknown: Doors can now be constructed and deconstructed.  This is being playtested,
       expect the specifics to change.
   - unknown: Fixed certain jobs which were supposed to have stuff spawning in their
       backpack that just wasn't getting spawned.
 2010-09-17:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: The Lawyer now starts in his snazzy new office.
   - unknown: Law Office accesslevel added.  Currently, the Lawyer and the HoP begin
       with this.
@@ -56,7 +56,7 @@
   - unknown: Toxins mixing room is now a separate area for power and fire alarm purposes,
       as it already had its own APC.
 2010-09-21:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: New experimental UI for humans by Skie. Voice out if it has problems
       or you don't like it.
   - unknown: 'Hydroponics: Now you can inject chemicals into plants with a syringe.
@@ -76,11 +76,11 @@
       items.
   - unknown: Monkeys now slip on wet floor.
 2010-09-26:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: Riot shields! One in every security closet, and a few in armory. Also
       orderable from QM.
 2010-09-29:
-  GoonStation 13 Development Team:
+  /tg/station ss13 team:
   - unknown: <b>Bartender update!</b>  Bartender now has a Booze-O-Mat vending machine
       dispensing spirits and glasses, which he can use to mix cocktails.  Recipes
       for cocktails are available on the wiki.
