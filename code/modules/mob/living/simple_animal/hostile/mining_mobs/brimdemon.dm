@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/asteroid/brimdemon
 	name = "brimdemon"
-	desc = "A beast from demonic flesh. Fires a blood laser barrage, known to humans as a \"brimbeam\"."
+	desc = "A misshapen demon with big, red eyes and a hinged mouth. Not much is known about the creatures \
+		due to their response to any unexpected stimulus being \"brimbeam\", a deadly blood-laser barrage."
 	icon = 'icons/mob/brimdemon.dmi'
 	icon_state = "brimdemon"
 	icon_living = "brimdemon"
@@ -29,7 +30,7 @@
 	loot = list()
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
-	deathmessage = "screams in agony as they get fcking OWNED."
+	deathmessage = "wails as infernal energy escapes from its wounds, leaving it an empty husk."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	/// Are we charging/firing? If yes stops our movement.
 	var/firing = FALSE
