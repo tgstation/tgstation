@@ -1,0 +1,60 @@
+2013-08-04:
+  Giacom:
+  - rscadd: Nanotrasen has re-arranged the station blueprint designs to have non-essential
+      APCs moved to the maintenance hallways. Non-essential rooms that aren't connected
+      to a maintenance hallway will have their APC remain. Station Engineers will
+      now have easy access to a room's APC without needing access themselves. Nanotrasen
+      also wishes to remind you that you should not sabotage these easy to access
+      APCs to cause distractions or to lockdown someone in a location. Thank you for
+      reading.
+2013-08-05:
+  Kaze Espada:
+  - rscadd: Nanotrasen has recentely had to change its provider of alcoholic beverages
+      to a provider of lower quality. Cases of the old ailment known as alcohol poisoning
+      have returned. Bar goers are to be weary of this new condition.
+2013-08-06:
+  Giacom:
+  - bugfix: NTSL no longer allows you to use a function within another function parameter.
+      This was changed to help prevent server crashes; if your working script no longer
+      compiles this is why.
+2013-08-10:
+  Malkevin:
+  - wip: 'Cargo Overhaul: Phase 1'
+  - rscadd: Ported Bay's cargo computer categoy system
+  - tweak: Crates have been tweaked significantly. Crates have been reduced to single
+      item types where possible, namely with expensive crates such as weapons and
+      armor. A total of 28 new crates have been added, including chemical and tracking
+      implants, and raw materials can also be bought from cargo for a significant
+      number of points (subject to change)
+  - bugfix: This was a pretty large edit of repetitive data, so no doubt I've made
+      a mistake or two. Please report any bugs to the usual place
+2013-08-12:
+  Giacom:
+  - tweak: Changed the blob balance to make the blob start strong but grow slower,
+      resulting in rounds where the blob doesn't instantly get killed off if found
+      out and doesn't immediately dominate after being left alone long enough. AIs
+      no longer have to quarantine the station.
+2013-08-13:
+  Giacom:
+  - rscadd: Malf AIs now have a new power which will spawn a "borging machine". This
+      machine will turn living humans into loyal cyborgs which the AI can use to take
+      over the station with. The AI will limit themselves by using this ability, such
+      as no shunting, and the machine will have a long cooldown usage.
+2013-08-18:
+  Delicious:
+  - tweak: Made time and date consistent across medical and security records, mecha
+      logs and detective scanner reports
+  - rscadd: Added date to PDA
+2013-08-21:
+  Dumpdavidson:
+  - rscadd: Replaced the EMP grenades from the uplink with an EMP kit. The kit contains
+      a grenade, an implant and a flashlight with 5 uses that can EMP any object or
+      mob in melee range.
+2013-08-30:
+  Cael_Aislinn:
+  - rscadd: 'Terbs Fun Week Day 1: Added ghost chilis as a mutation of chili plants.
+      Be careful, they''re one of the hottest foods in the galaxy!'
+2013-08-31:
+  Cael_Aislinn:
+  - rscadd: 'Terbs Fun Week Day 2: RD, lawyers and librarians now spawn with a laser
+      pointer. Don''t point them in anyone''s eyes!'

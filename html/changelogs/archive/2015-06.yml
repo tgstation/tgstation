@@ -1,0 +1,421 @@
+2015-06-04:
+  Cuboos:
+  - rscadd: Added casting and firing sounds for wizard spells and staves.
+  - rscadd: A new title theme has been added.
+  Gun Hog:
+  - rscadd: Nanotrasen has approved the designs for destination taggers and hand labelers
+      in the autolathe.
+  Palpatine213:
+  - tweak: Allows sechuds to have their id locks removed via emag as well as EMP
+2015-06-05:
+  CandyClown:
+  - tweak: Ointments, bruise packs, and gauze are now stacked to 6 instead of 5.
+  CorruptComputer:
+  - bugfix: Security lockers no longer spawn in front of each other on Box.
+  - bugfix: Hooked up the scrubbers in QM's office on Box.
+  - bugfix: Fixed bar disposals on Box
+  - bugfix: Fixed the stacked heater+freezer in expirementor maint on Box
+  - tweak: Made the turbine into Atmos and Engineering access only, and renamed the
+      doors to Turbine on Box.
+  Ikarrus:
+  - rscadd: Gang Bosses will now be able to discreetly send messages to everyone in
+      their gang for 5 influence a message.
+  - tweak: Conversion pens now use a flat 60sec cooldown rate.
+  KorPhaeron:
+  - rscadd: You can now lay tiles on the asteroid. Go nuts building forts.
+2015-06-06:
+  Incoming5643:
+  - rscadd: Antagonists with escape alone can now escape with others on the shuttle,
+      so long as they are also antagonists.
+  - rscadd: Antagonists with escape alone can also win if non-antagonists are on the
+      shuttle provided they are locked in the brig.
+  - rscadd: Escaping to syndicate space on board the nuke op shuttle is now a valid
+      way to escape the station.
+  Jordie0608:
+  - rscadd: Admin-delaying the round now works once it has finished.
+2015-06-07:
+  Aranclanos:
+  - rscadd: Malfunctioning AIs can preview placement of a Robotic Factory.
+  Iamgoofball:
+  - rscadd: Bicardine, Dexalin, Kelotane, Anti-toxin, Inaprovaline and Tricordrazine
+      have been re-added.
+  RemieRichards:
+  - rscadd: Lizards can now wag their tails, emote *wag to start and *stopwag to stop.
+  kingofkosmos:
+  - tweak: Mops can now be wet from normal buckets and sinks.
+2015-06-08:
+  AnturK:
+  - imageadd: Improved the interface of Spellbooks.
+  Cheridan:
+  - tweak: Push-force from Atmospherics now depends on an entity's weight, heavier
+      objects are less prone to being pushed.
+  - rscadd: Magboots and No-Slip shoes now prevent pushing from spacewind.
+  Firecage:
+  - rscadd: Protolathes can now build Experimental Welding Tools.
+2015-06-09:
+  Aranclanos:
+  - wip: Structures and machines can now be built on shuttles.
+  Iamgoofball:
+  - rscadd: 'Adds the Bluespace Rapid Part Exchange Device: holds up to 400 stock
+      parts and can be used to upgrade machines at range without needing to open their
+      maintenance panel.'
+  - rscadd: A new tier of stock parts have been added, they're very expensive to produce
+      but provide ample improvements.
+  - experiment: Many machines can now also be upgraded.
+  - tweak: 'Emitter: Lasers decrease firing delay and Capacitors decrease power consumption.'
+  - tweak: 'Gibber: Matter Bins increase yield of meat and Manipulators speed up operation
+      time, at high level can gib creatures with clothes.'
+  - tweak: 'Seed Extractor: Matter Bins increase storage and Manipulators multiply
+      seed production.'
+  - tweak: 'Monkey Recycler: Matter Bins increase the amount of monkey cubes produced
+      and Manipulators reduce the monkey-to-cubes ratio to a minimum of 1-to-1.'
+  - tweak: 'Crusher: Matter Bins increase material yield and Manipulators increase
+      chance to yield materials, at high level there is a chance for rarer materials.'
+  - tweak: 'Holopad: Capacitors increase an AI''s traversal range from the holopad.'
+  - tweak: 'Smartfridge: Matter Bins increase storage.'
+  - tweak: 'Processor: Matter Bins increase yield and Manipulators speed up operation
+      time.'
+  - tweak: 'Microwave: Matter Bins increase storage.'
+  - tweak: 'Ore Redemption Machine: Matter Bins increase yield per ore, Lasers increase
+      points per ore and Manipulators speed up operation time.'
+  - tweak: 'Hydroponics Tray: Manipulators improve water and nutrients efficiency.'
+  - tweak: 'Biogenerator: Matter Bins increase storage.'
+  bananacreampie:
+  - rscadd: Added several new options to the ghostform sprites
+2015-06-11:
+  Cheridan:
+  - rscdel: Removes the powerdrain for individiual active modules on cyborgs.
+2015-06-12:
+  Ikarrus:
+  - experiment: <B>Gang Updates</b>
+  - rscadd: 'New objective: To win, Gangs must now buy a Dominator machine (50 influence)
+      and defend it for a varying time frame.<br>* The location of the dominator is
+      broadcasted to the entire station the moment it is activated<br>* The more territories
+      the gang controls, the less time it will take<br>* Gangs no longer win by capturing
+      territories'
+  - rscadd: A choice of gang outfits are now purchasable for 1 influence each
+  - rscadd: Thompson SMGs aka "tommy guns" are now purchasable for 50 influence
+  - rscadd: Bulletproof armor vests are now purchasable for 10 influence
+  - tweak: Gang messages are now free to send
+  - tweak: Prices of pistols and pens reduced to 20 and 30, respectively
+  - tweak: Gang spraycans have been made a lot less obvious. They look nearly identical
+      to regular ones, now.
+  - rscdel: Gangs will no longer be notified how much territory the enemy controls
+  Incoming5643:
+  - rscadd: Growing tired of reports of slain members, the Wizard Federation has cautiously
+      sactioned the dark path of lichdom. Beware of the powerful lich who hides his
+      phylactery well, for he is immortal!
+  - rscadd: The trick to defeating liches is to destroy either their body or their
+      phylactery item before they can ressurect to it. The more a lich is slain the
+      longer it will take him to make use of his phylactery and the more likely the
+      crew is to catch him during a vunerable moment.
+  - rscremove: Due to the addition of proper liching, skeletons as a choosable race
+      from magic mirrors has been discontinued. My apologies to the powergamers. A
+      special admin version of the mirror that allows for skeletons has also been
+      added to the code.
+  Miauw:
+  - tweak: 'AIs have received several minor nerfs in order to increase antagonist
+      counterplay:'
+  - tweak: AI tracking is no longer instant, it takes an amount of time that increases
+      with distance from the AI eye, up to 4 seconds. The AI detector item will light
+      up when an AI begins tracking.
+  - tweak: A random camera failure event has been added, which will break one or two
+      random cameras.
+  - tweak: You can no longer keep tracking people that are outside of your camera
+      vision.
+  - tweak: Camera wires have been removed. Screwdriver a camera to open the panel,
+      then use wirecutters to disable it or a multitool to change the focus.
+  - tweak: You can now hit cameras with items to break them. To repair a camera, simply
+      open the panel and use wirecutters on it.
+  - tweak: Camera alerts now only happen after a camera is reactivated.
+  RemieRichards:
+  - rscadd: New optional explosion effect ported from /vg/'s DeityLink, Explosions
+      that are affected by Walls and Doors
+2015-06-14:
+  Ikarrus:
+  - rscadd: White suits added to gang outfits
+  - tweak: Gang outfits are now free, but are now limited in stock (that replenishes
+      over time)
+  - tweak: While attempting a Hostile Takeover, gangs do not gain influence. Instead,
+      the takeover timer will be reduced by how many territories they control.
+  - tweak: Spraycan cost reduced to 5 influence.
+  - tweak: Recruitment Pen cooldown increased to 2 minutes, but is reduced if the
+      enemy gang has more members than yours.
+  - tweak: Tommy guns no longer deal stamina damage.
+  - rscdel: Gangtools can no longer recall the shuttle if the game mode is not Gang
+      War
+2015-06-15:
+  Incoming5643:
+  - rscadd: Lizards can now choose from a wide varity of physical appearances in character
+      creation! Sprites made by WJohn. Hiss Responsibly.
+  Kor:
+  - rscadd: A terrible new creature stalks the halls of SS13.
+  - rscadd: The wizard has a new artefact related to said creature.
+  - rscadd: Added a new sepia slime plasma reaction. Try it out!
+  spasticVerbalizer:
+  - bugfix: Drones can now properly quick-equip.
+2015-06-18:
+  AnturK:
+  - rscadd: Added new photo-over-pda function. Apply the photo to PDA to send it with
+      your next message!
+  Ikarrus:
+  - rscadd: Department Management consoles have been added to Head of Staff offices.
+      These will enable heads to modify ID's access to their department, as well as
+      preform demotions.
+  Miauw:
+  - tweak: Bullets can now damage cameras.
+  - tweak: Camera alarms now trigger 90 seconds after the first EMP pulse, instead
+      of when all EMP pulses run out.
+  - tweak: Makes the force required to damage cameras greater than or equal to ten
+      instead of greater than ten.
+  - tweak: Camera alarms now trigger when cameras are disabled with brute force or
+      bullets.
+  Xhuis:
+  - rscadd: Nanotrasen scientists have determined that a delaminating supermatter
+      shard combining with a gravitational singularity is an extremely bad idea. They
+      advise keeping the two as far apart as possible.
+  phil235:
+  - rscdel: Nerfed the xray gun. Its range is now 15 tiles.
+2015-06-20:
+  Dorsisdwarf:
+  - tweak: Syndicate Bulldog Shotguns now use slug ammo instead of buckshot by default
+  - rscadd: Nuke Ops can now buy team grab-bags of bulldog ammo at a discount.
+  Ikarrus:
+  - rscadd: Wearing your gang's outfit now increases influence and shortens takeover
+      time faster.
+  - rscadd: Added several more options for gang outfits
+  - rscadd: Pinpointers will now point at active dominators.
+  - tweak: Gang outfits are now slightly armored
+  - tweak: Gang tags are now named 'graffiti' to make them harder to detect
+  - tweak: Initial takeover timer is now capped at 5 minutes (50% control)
+  - tweak: 'Server Operators: The default Delta Alert texts have changed. Please check
+      if your game_options.txt is up to date.'
+  - rscdel: Loyalty implants now treat gangs as it treats cultists. Implants can no
+      longer deconvert gangsters, but it can still prevent recruitments.
+  - tweak: Replaced tommy guns with 9mm 2-burst 32 mag uzis that costs 40 influence.
+      Unlike tommy guns gangs will be able to purchase ammo for uzis.
+  Jordie0608:
+  - tweak: 'For Admins: Jump-to-Mob (JMP) notification command replaced with Follow
+      (FLW).'
+  - rscadd: Message and Follow links added to many notifications.
+  - rscadd: New buttons to toggle nuke and set security level.
+  - spellcheck: Flamethrowers are logged in attack_log.
+  Thunder12345:
+  - rscadd: Combat shotguns are now semi automatic, and will be pumped automatically
+      after firing.
+  - tweak: Combat shotgun capacity has been reduced to six shells.
+  Xhuis:
+  - rscadd: You will now trip over securitrons if you run over them whilst they are
+      chasing a target.
+  - rscadd: An admin-spawnable drone dispenser has been added that will automatically
+      create drone shells when supplied with materials.
+  - rscadd: Airlock charges are available to traitors and will cause a lethal explosion
+      on the next person to open the door.
+  - rscadd: Nuclear operatives can now buy drum magazines for their Bulldog shotguns
+      filled with lethal poison-filled darts.
+  - rscadd: When a malfunctioning AI declares Delta, all blue tiles in its core will
+      begin flashing red.
+  - rscadd: Back-worn cloaks have been added for all heads except the HoP. LARPers
+      rejoice!
+  - rscadd: More suicide messages have been added for a few items.
+2015-06-21:
+  GunHog:
+  - tweak: The Hostile Lockdown ability for Malfunctioning AIs has been nerfed. It
+      now costs 30 CPU, is much more obvious, and automatically resets in 90 seconds.
+  - tweak: Buffed the Upgrade Turrets Malfunction ability. Turrets will now fire heavy
+      lasers instead of simply shooting faster.
+  - rscadd: Nanotrasen has released an Artificial Intelligence firmware upgrade under
+      the ID 41ST0L3MYB1K3. It contains drivers for interacting with all variants
+      of exosuit technology, from the Ripley APLU design to even experimental Phazon
+      units. Simply upload your AI to the exosuit's internal computer via the InteliCard
+      device. Per safety regulations, the exosuit must have maintenance protocols
+      enabled in order to remove an AI from it.
+  - rscadd: Malfunctioning AIs may wirelessly steal mechs via a new power, Mech Domination.
+      For 30 CPU, a Malf AI may permanently upload itself to a mech, ejecting any
+      pilots. Malf AIs will still lose if they leave the Z-level, and the Malf will
+      be gibbed if the mech is destroyed - they cannot be carded out of the mech or
+      shunt to an APC.
+  Iamgoofball:
+  - rscdel: Blobs can no longer have Morphine as their chemical.
+  duncathan:
+  - tweak: Heat exchangers now update their color to match that of the pipe connected
+      to them.
+  - tweak: Heat exchangers are on longer dense.
+2015-06-22:
+  Iamgoofball:
+  - rscdel: Removed failure chance and delay when emagging an APC.
+  KorPhaeron:
+  - tweak: Rebalanced armor to be less effective, reducing the melee, bullet and/or
+      laser damage reduction of all armor suits.
+  LaharlMontogmmery:
+  - rscadd: You can now click and drag a storage container to empty it's contents
+      into another container, disposal bin or floor tile.
+  Xhuis:
+  - experiment: Revenants have received a considerable overhaul.
+  - rscadd: Revenants will no longer share spawn points with space carp and will spawn
+      in locations like the morgue and prisoner transfer center.
+  - rscadd: Revenants can no longer cross tiles covered in holy water.
+  - rscadd: Revenants have a new ability called Defile for 30E. It will cause robots
+      to malfunction, holy water over tiles to evaporate, and a few other effects.
+  - rscadd: Upon death, revenants will appear and play a sound before rapidly fading
+      away and leaving behind glimmering residue as evidence of their demise.
+  - rscadd: This residue lingers with the essence of the revenant. If left unattended,
+      it may reform into a new revenant. Simply scattering it is enough to stop this,
+      but it also has high research levels.
+  - rscadd: Revenants now have fluff objectives as well as a set essence goal.
+  - tweak: Revenanants will be revealed for longer when using abilities and also receive
+      feedback on this revealing.
+  - tweak: Revenants can now only spawn via random event with a specific amount of
+      dead mobs on the station. The default for this is 10.
+  - bugfix: Revenants can no longer use abilities from inside walls.
+  - rscdel: Directly lethal abilities have been removed from revenants. In addition,
+      they can no longer harvest unconscious people, only the dead.
+2015-06-23:
+  Fayrik:
+  - rscadd: NanoUI is now Telekenesis aware, but due to other constraints, NanoUI
+      interfaces are read only at a distance.
+  - tweak: Refactored all NanoUI interfaces to use a more universal proc.
+  - tweak: Adjusted the refresh time of the NanoUI SubSystem. All interfaces will
+      update less, but register mouse clicks faster.
+  - bugfix: Removed automatic updates on atmospheric pumps, canisters and tanks, making
+      them respond to button clicks much faster.
+  - bugfix: Atmos alarm reset buttons work now. Probably.
+  Iamgoofball:
+  - rscadd: Adds a progress bar when performing actions.
+  Ikarrus:
+  - rscadd: New gang names with tags created by Joan
+  - rscadd: C4 explosive can be purchased by gangs for 10 influence.
+  - tweak: Recruitment pen cost increased to 50.
+  - rscadd: Lieutenants recieve one free recruitment pen.
+  - tweak: Recruitment pens are now stealthy and no longer give a tiny prick message.
+  - tweak: Increased chance of deconversion with head trauma
+  - tweak: Recalling the shuttle now takes about a minute to work, during which you
+      won't be able to use your gangtool.
+  - rscadd: Pinpointers no longer point at dominators. Instead, dominators will beep
+      while active.
+  - rscadd: Added puffer jackets and vests.
+  - tweak: Increased gang outfit armor. It is moderately resistant to bullets now.
+  - rscdel: Removed bulletproof vests from gangtool menu.
+  Jordie0608:
+  - rscadd: Admins can now flag ckeys to be alerted when they connect to the server.
+  MrStonedOne:
+  - rscadd: Admins can now reject poor adminhelps. This will tell the player how to
+      construct a useful adminhelp and give them back their adminhelp verb
+  RemieRichards:
+  - tweak: Cumulative armour damage resistance is now capped at 90%, you will now
+      always take at bare minimum, 10% of the incoming damage.
+  - rscadd: Added a system for Armour Penetration to items, it works by temporarily
+      (It does NOT damage the armour or anything) reducing the armour values by the
+      AP value during the attack instance.
+  - rscadd: 'The formula for AP is Armour-ArmourPenetration = AdjustedArmour and AdjustedArmour
+      is used for all the remaining calculations instead of Armour (Eg: 80 Melee -
+      15 AP = 65 Melee).'
+  - rscadd: The Ninja's Energy Katana has 15 AP, Xenomorphs have an inbuilt AP of
+      10.
+  - tweak: You can now unwrench pipes who's internal pressures are greater than that
+      of their environment...
+  - rscadd: However it will throw you away from the pipe at extreme speed! (You are
+      warned beforehand if the pipe will do this, allowing you to cancel)
+  Vekter:
+  - bugfix: Finally fixed immovable rods! They will now properly bisect the station
+      (and crit anyone unlucky enough to be in their path).
+  - tweak: Increased Meteor activity detected in the vicinity of the station. Be advised
+      that many storms may be more violent than they once were.
+  - rscadd: Gravitational anomalies will now throw items at mobs in their vicinity.
+      Take care while scanning them.
+  - rscadd: Flux anomalies explode much more violently now. Get there and destroy
+      them, or risk losing half a department.
+  xxalpha:
+  - rscadd: 'Added a new Reviver implant: now it revives you from unconsciousness
+      rather than death.'
+  - rscadd: Added cybernetic implants and a cybernetic implants bundle to the Nuke
+      Ops uplink.
+  - bugfix: Fixed Nutriment pump implant printing.
+  - tweak: Health Analyzers now have the ability to detect cybernetic implants.
+  - tweak: X-Ray implants are now much harder to unlock.
+2015-06-24:
+  Ikarrus:
+  - rscadd: Request Console message sent to major departments will now be broadcasted
+      on that department's radio.
+  - rscadd: Request Consoles can be used to quicly declare a security, medical, or
+      engineering emergency.
+2015-06-25:
+  Iamgoofball:
+  - rscadd: Changes up how Explosive Implants work.
+  - rscadd: They have become Microbomb Implants. They cost 1 TC each. Each implant
+      you inject increases the size of the explosion. You gib on usage, regardless
+      of explosion size.
+  - rscadd: A Macrobomb implant was added for 20 TC. It is the equivalent of injecting
+      20 microbombs.
+  - rscadd: Nuke Ops start with microbomb implants again.
+2015-06-26:
+  Ikarrus:
+  - imageadd: Added a couple of new gang tag resprites by Joan.
+  Kor:
+  - tweak: Summon Guns has returned to its former glory. The spell will once again
+      create antagonists, now with the objective to steal as many guns as possible.
+  - tweak: Summon Guns once again costs a spell point, rather than granting one.
+  phil235:
+  - tweak: Buffs traitor stimpack (and adrenalin implant) to be more efficient against
+      stuns/knockdowns.
+  pudl:
+  - rscadd: You can now play games of mastermind to unlock abandoned crates found
+      throughout space.
+2015-06-27:
+  Ikarrus:
+  - rscadd: Some objects can be burned now.
+  - rscadd: Bombs will shred your clothes, with respect to their layering and armor
+      values. Exterior clothing will shield clothing underneath. Storage items will
+      drop their contents when bombed this way.
+  Laharl Montogmmery:
+  - rscadd: 'Storage Content Transfer : Bluespace Boogaloo! You can now transfer the
+      content of the BoH/BRPED into tiles/bins/bags out of your reach. Range is 7
+      tiles.'
+  MrStonedOne:
+  - tweak: Admins will now receive a notification when one of them starts to reply
+      to an adminhelp to cut down on multiple responses to adminhelps and let admins
+      know when an adminhelp isn't getting replied to.
+  - rscadd: The keyword finder in admin helps (adds a (?) link next to player names
+      in the text of adminhelps) has been added for all player to admin pms, as well
+      as admin say.
+  NullQuery:
+  - wip: Introduces html_interface, a module to streamline the management of browser
+      windows.
+  - rscadd: Adds playing cards that utilize a new HTML window management system.
+  Vekter:
+  - rscadd: Added a new military jacket to the Autodrobe and ClothesMate.
+2015-06-28:
+  Ikarrus:
+  - rscadd: Gang Lieutenants can buy gang tools now, but at a higher cost than the
+      original boss
+  - rscadd: Gang leaders can register additional gangtools to themselves for use as
+      spares.
+  - tweak: Number of maximum lieutenants lowered to 2
+  - tweak: Pistol cost increased to 25 influence
+  - tweak: Uzi cost increased to 50 influence
+  - tweak: Uzi Ammo decreased to 20 influence
+  - rscadd: Overcoats added to items the biogenerator can produce.
+  - rscdel: Micro and Macro bomb implants are now restricted to the Nuclear game mode.
+  phil235:
+  - tweak: Smoke (and foam) no longer distribute more reagents than they have. The
+      amount of clouds in a smoke now depends on the amount of smoke created. Acid
+      no longer melts items on a mob at low volume, and the chances to melt them increases
+      with the amount applied on the mob. Sprays can now contain acid again.
+2015-06-29:
+  Ikarrus:
+  - rscadd: Clothing has been separated out of equipment lockers into wardrobes to
+      reduce clutter.
+  Incoming5643:
+  - rscadd: The secrets of the rainbow slimes have finally been revealed. To attain
+      this rare blob you must breed a slime with a 100% mutation chance!
+  - rscadd: Rainbow slime cores will generate a randomly colored slime when injected
+      with plasma. It's a good plan B if the slimes aren't cooperating in terms of
+      colors. You can get any color slime this way, pray to the RNG!
+  Xhuis:
+  - rscadd: The Sleeping Carp clan has made its presence known on Space Station 13.
+      Some gangs will name themselves after this group and practice martial arts rather
+      than using traditional gang weaponry. These shadowboxers are not to be taken
+      lightly.
+  oranges:
+  - tweak: Thanks to a breakthrough in directed vector thrusting, all nanotrasen brand
+      jetpacks have been greatly improved in speed and handling
