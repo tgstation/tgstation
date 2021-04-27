@@ -28,7 +28,7 @@
 		/datum/reagent/diethylamine = 20,
 		/obj/item/gun/energy/floragun = 10,
 		/obj/effect/spawner/lootdrop/space/rareseed = 5,// These are strong, rare seeds, so use sparingly.
-		/obj/item/food/monkeycube/bee = 2
+		/obj/item/food/monkeycube/bee = 2,
 	)
 
 /datum/outfit/job/botanist
