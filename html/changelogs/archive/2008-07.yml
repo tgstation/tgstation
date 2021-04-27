@@ -1,0 +1,86 @@
+2008-07-04:
+  /tg/station ss13 team:
+  - unknown: Added one minute long looping music file, togglable from charactersetup.
+  - unknown: Added obviously dead messages, including a deathgasp emote when you die.
+  - unknown: Added time of death popup when you die
+  - unknown: Made analyzers usable on plasma/oxygen/etc tanks, as well as bombs
+  - unknown: Examining a bomb without an analyzer will give you a rough estimate of
+      how hot it is (lukewarm, hot, really hot, dangerously hot)
+  - unknown: An announcement is made when someone arrives on station once the game
+      has started
+  - unknown: The intercept is no longer so accurate
+  - unknown: Fixed solar panels not generating power properly
+  - unknown: Fixed tasers shooting through windows
+  - unknown: All assistant occupations made into one job, assistant. Has external
+      airlock access and mtce hallway access.
+  - unknown: Station techs and Engineers combined into station engineer
+  - unknown: There can now be two toxin researchers
+  - unknown: Main engine no longer starts pre-lit
+  - unknown: Canister code fixed so max capacity/starting amount can be adjusted in
+      mapmaker
+  - unknown: AI killable by more then just fire now!
+  - unknown: Getting stuck in the readyroom shouldn't happen anymore
+  - unknown: Experimental engine now has batteries and can connect to the main powergrid.
+2008-07-09:
+  /tg/station ss13 team:
+  - unknown: Ported Be Syndicate button from unstable
+  - unknown: Lit welders in your hand now ignite plasma
+  - unknown: Meteors now REALLY come from all directions! (Blame Kurper okay)
+  - unknown: If you change zlevels, you become lost in space. There is no returning
+      to the station once you are lost in space
+  - unknown: Syndicate station is now mini and no longer requires power, and has relocated
+      back to zlevel 1
+2008-07-10:
+  /tg/station ss13 team:
+  - unknown: You can now buckle people to beds
+  - unknown: Lit welders not starting fires in plasma fixed
+  - unknown: Clicking on a locker with an object in hand will now open it instead
+      of placing the object on top of the locker
+2008-07-16:
+  /tg/station ss13 team:
+  - unknown: new walls/floors get the same air as the thing they replaced now, reverts
+      old hacky fix for the "getting pushed into space by the wall you build" problem.
+  - unknown: 'Various Airlock Changes:'
+  - unknown: ID scan wire now allows anyone to access the airlock, instead of nobody,
+      when cut
+  - unknown: Power assist and raising bolts with wrench removed
+  - unknown: Additional "open door" wire added. When pulsed, it attempts to open or
+      close the door
+  - unknown: (it will succeed only if the ID scan wire is cut or the door has no access
+      requirements). When cut, the door doesn't open or close.
+  - unknown: RSDs can be attached to airlock wires. When they receive a signal, they
+      pulse the wire they're attached to.
+  - unknown: (This allows remotely opening doors, in combination with the previous
+      changes.)
+  - unknown: New atmospherics system with pipe filters, pipe pumps, and a more important
+      atmospherics area.
+2008-07-20:
+  /tg/station ss13 team:
+  - unknown: Overlays for the pipe filter, plasma/n2o = red light, o2 = green, n2
+      = blue, co2 = yellow
+  - unknown: ID restriction- you need atmos access to tinker with the filter
+  - unknown: You can now switch cameras by using the arrowkeys as the AI
+  - unknown: Clicking on a turf as AI will switch you to the nearest camera
+2008-07-22:
+  /tg/station ss13 team:
+  - unknown: 'Making floor tiles in space shouldn''t shoot you in whatever direction
+      anymore. Same goes for walls. Fucking exadv1 :argh:'
+  - unknown: You can no longer throw objects or mobs through things
+  - unknown: Security computers can once again generate station maps if set to do
+      (None currently are)
+  - unknown: There are now three motd files, one for when you join, one for when you
+      authorize, and one for when you fail to authorize
+2008-07-23:
+  /tg/station ss13 team:
+  - unknown: You can tell when you're dragging (ie dragging a backpack to your hand)
+      things now
+2008-07-24:
+  /tg/station ss13 team:
+  - unknown: Teleporter change - instead of stupid telefragging + blue light zone
+      + sometimes you go to the wrong area stuff, now regular teles have a 5% chance
+      of putting you in deep space and hand teles have a 10% chance of it. much more
+      experimental.
+2008-07-29:
+  /tg/station ss13 team:
+  - unknown: Bio helmets etc now burn off.
+  - unknown: Burning animations for most things are implemented

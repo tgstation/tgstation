@@ -1,0 +1,272 @@
+2008-06-16:
+  /tg/station ss13 team:
+  - unknown: You are now told what your job is and are offered to change your name,
+      even if you aren't AI. This implementation is kind of kludgy and will be rolled
+      into a new character sheet in the future.
+  - unknown: Fixed the default state of req_access_txt to make things easier for mapmakers.
+  - unknown: Fixed a bug with how req_access_txt was being read
+  - unknown: Removed the "THROW" icon from the AI's HUD
+  - unknown: Shuttle arrival and holding times have been cleaned up to make them easier
+      to modify in the future.
+  - unknown: Fixed bug that would prevent rounds from ending.
+  - unknown: Meteors do more damage, but no longer blind/deafen/mute you.
+  - unknown: Meteors can now fly in from all directions, not just the East.
+  - unknown: ACCESS LEVEL REVAMP. The old 4>2-2-0 security cards are gone and have
+      been replaced with a permission-based system. That means you are given actual
+      permissions such as "Access security" or "access the bridge" or "eject engine
+      core". All items (computers, doors, etc.) check your security card for the required
+      permission to be set. As this changes how station equipment works, it breaks
+      all previous maps. There is a .txt in the root folder of the SVN detailing how
+      to convert old maps. All appropriate security computers and interfaces have
+      been updated for ease of use. The added benefit of this update is that adding
+      new and wild permissions is now VERY easy to implement, both on the map side
+      and code side.
+  - unknown: Asleep and unconscious people now hear muffled voices instead of clear
+      text.
+  - unknown: Fixed problems that occur when two people have the same name.
+  - unknown: Turning off your internals now generates a refresh (it only worked when
+      you turned them on before)
+  - unknown: Timer-igniter combinations now ignite things other than bombs.
+  - unknown: The Camera item has been removed from the forensics locker (it was broken
+      and lagged out servers anyway)
+  - unknown: Left clicking on the teleporter computer now brings up the command dialogue
+      (instead of having to right-click)
+  - unknown: The teleporter dialogue now lists only beacons, not all things with frequencies
+      (and you can only lock onto beacons)
+  - unknown: The AI can now operate the teleporter (with some difficulty, particularly
+      locking onto things - camera must be in follow mode)
+  - unknown: Left-clicking the teleportation hub now toggles it on and off.
+  - unknown: The teleportation target now follows the becaon (instead of the first
+      reported beacon location)
+  - unknown: Turrets now hit people lying down.
+  - unknown: Turrets now shoot you in random body parts, not just the chest (which
+      fixes the turrets-never-kill-you bug)
+  - unknown: Turrets now have a 3 second cooldown between shots so they don't spam
+      you to death in the first second
+  - unknown: RWalls now produce and consume the same amount of materials when building
+      or dismantling. No more free metal, kids.
+  - unknown: EMags now open (and break) secure closets. Added a new icon (by Judenhauer
+      and weasello) that shows FANCY SPARK EFFECTS!
+  - unknown: People wearing a face-obscuring mask and wearing no ID now show up as
+      "unknown"
+  - unknown: Gas masks no longer count as helmets (they used to shield from head damage)
+  - unknown: The nuclear disk can now be observed, so dead/admin can follow it
+  - unknown: The sandbox panel now requires authentication (pubbies were spawning
+      toolboxes in the start area and beating each other)
+  - unknown: The sandbox panel now appears even if you spawn in mid-round
+  - unknown: The "enter" verb has been removed and it's functionality has been rolled
+      into "ready" (you only have to type READY to spawn in now)
+  - unknown: You now spawn into the game with all the equipment associated with your
+      job assignment (toolbox in hand, clothes on, etc.)
+  - unknown: You no longer start mid-round naked
+  - unknown: Walls are now built directly under you, making your 'facing' direction
+      no longer important. To make this happen, girders are now passable tiles (you
+      can walk through them).
+  - unknown: \"Repair wall" is now gone, instead you use metal on the exposed girders.
+  - unknown: Time to build and dismantle walls has been increased to compensate for
+      the new ease of building them.
+  - unknown: Traitors no longer get the "Hijack" verb (there was no legitimate use
+      for it)
+  - unknown: The "Eject Engine" objective no longer appears for the Traitor, and has
+      been replaced with "Cut power to 80% of the station" (that figure can be easily
+      adjusted in the code)
+  - unknown: Added "Kill all monkeys on the station" traitor objective
+  - unknown: Added "Destroy 70% of plasma containers on the station" traitor objective
+      (value easily changed in code)
+  - unknown: Added "Destroy AI" traitor objective
+  - unknown: Fixed some traitor text to make more sense
+  - unknown: The Intercept now only prints on the bridge (no longer in engineering
+      or security)
+  - unknown: The AI mission of "kill everyone" was actually coded as a percentage
+      value. The mission now reflects the code (and defaults to 75% murder rate -
+      which is higher than before)
+  - unknown: Fixed the bug where it was impossible to steal a fully charged laser
+      (since laser charges were reduced below the threshold)
+  - unknown: Fixed issue where airlocks would attempt to close even if they were already
+      closed.
+  - unknown: Air tanks now start with a flow rate of 100 enabled (instead of 350),
+      oxygen in the tank is now 25% of what it used to be, and jetpacks have half
+      of THAT.
+  - unknown: Tasers have 4 charges instead of 8.
+  - unknown: Game Kit is now fixed (chessboard)
+  - unknown: Stacking large piles is fixed (previously clicking a pile of 50 on another
+      pile of 50 created one pile of 5 and another of 95. They now both stay at 50)
+  - unknown: 'Radio communications methods have changed. You would now use: "say "/words
+      words"" instead of: "say "\[h]words words". All other commands, such as \[r],
+      \[1], etc. have been replaced with :r and :1, etc.'
+  - unknown: Unauthenticated users can no longer vote.
+  - unknown: There is now an indicator if the person you are observing is dead.
+  - unknown: Rearranged the order of suffixes in the observe code.
+  - unknown: Regular batons are now replaced with stun batons. They look cooler, do
+      more damage, and stun people for 10-60 seconds with each hit. They can still
+      talk while stunned.
+  - unknown: The throwing system has been completely replaced. Now you can click throw,
+      then click on the square you want to try to throw to. Your facing direction
+      no longer has any effect.
+  - unknown: Throwing items no longer alters your direction of travel. If you slip
+      into space, throwing your shoes will move you one square backwards but you will
+      continue to float in the direction you slipped.
+  - unknown: Mass drivers can now drive anything, and they can (With some trivial
+      code changes) even drive diagonally.
+  - unknown: Only spacesuits protect you from the vacuum of space. Firesuits and biohazard
+      suits will now send you to the morgue.
+  - unknown: Suicide verb fixed so you can use it in the spawn area (in case you want
+      to observe), you can no longer suicide if you are dead (duh), and you can attempt
+      suicide once every 20 seconds now (in case some jerk doctor is healing you or
+      you are monkeyed back to life).
+  - unknown: Attacking people at spawn should now be disabled. You might be able to
+      hit people with ID cards but they do zero damage. Admin spawned weapons still
+      hurt.
+  - unknown: Personal lockers now have smarter stacking (headsets and backpacks on
+      the top)
+  - unknown: False walls now work properly whether you are holding a tool or not (it
+      doesn't auto-open if you are holding a tool)
+  - unknown: False wall display bug fixed
+  - unknown: A lot of code cleaning was done, making things niiice and pretty.
+2008-06-17:
+  /tg/station ss13 team:
+  - unknown: Removed random name code for now as it delayed spawning and caused some
+      problems
+  - unknown: Fixed exception error with empty pill cannister
+  - unknown: Fixed bug with sandbox that threw errors if you logged out or died with
+      the sandbox panel open
+  - unknown: Fixed bug in sandbox where non-admins could spawn
+  - unknown: Fixed bug where readying didn't spawn you
+  - unknown: Changed headset trigger from / to ; as / clears the chatbox when in chat
+      mode
+  - unknown: Added the Chaplain position
+  - unknown: Made some new access levels
+2008-06-19:
+  /tg/station ss13 team:
+  - unknown: Airlock access bug fixed
+  - unknown: Added chapel_office and tech_storage access levels
+  - unknown: Added the Chaplain job title
+  - unknown: Made the working skin the default skin
+  - unknown: Fixed bug where clicking on the belt slot without an active item would
+      cause an error
+  - unknown: Added Beer to the game (icons/items only at this time, no effects)
+  - unknown: Fixed bug where emags weren't working properly on doors
+  - unknown: Made doors not openable before the round starts
+  - unknown: emags now have a higher priority, so if you have access to a locker the
+      emag will still fry it
+  - unknown: Fixed windoor and airlock display where running into it multiple times
+      would restart the animation
+  - unknown: Secured closets are no longer anchorable (you can push them now)
+  - unknown: Teleporter now reports the area name instead of X/Y/Z coordinates
+  - unknown: Thrown objects are no longer dense (fixes issues with launching several
+      items at once)
+  - unknown: Moved engine Z-level definition to the main globals file for easier editing
+  - unknown: Random meteor spawn rate lowered by 80%
+  - unknown: Blob now hurts the AI computer
+  - unknown: Teleporter now pulls the default /area name from the name variable (instead
+      of just calling it 'unknown')
+  - unknown: The nuke in Blob mode is now bigger
+  - unknown: Fixed a bug that prevented security closets from verifying access levels
+  - unknown: Walking through girders is no longer allowed; you still build them directly
+      under you though so watch out which way you step off.
+  - unknown: Hitting an AI computer with an item caused an exception error. It now
+      behaves in a sane fashion (only checks for modules).
+  - unknown: Communications intercepts now print in any location (previous patch made
+      it only print in the 'bridge' area)
+  - unknown: Communications computers now have a prints_intercept attribute which
+      can be set to OFF in the map editor
+  - unknown: The SWAT helmet no longer hides your face, and is now organized into
+      a more logical class
+  - unknown: Stun baton stun time is now 5-20 seconds (instead of 20-60 seconds)
+  - unknown: Server code now using the Slurm.spacestation13 hub
+2008-06-24:
+  /tg/station ss13 team:
+  - unknown: 'Server crash where a non-player-human died has been resolved (ie: monkeys-turned-humans
+      or logged-off-humans)'
+  - unknown: You can now observe your own corpse
+  - unknown: Examining someone will now show what is on their belt and glove slots
+  - unknown: You can now examine yourself
+  - unknown: OOC and SAY verbs now have a character limit of 1024 (so you can type
+      long sonnets)
+  - unknown: Emptying Pockets before game start caused a server error; no longer the
+      case
+  - unknown: The FLOWRATE global constant has been changed to 0.99. This should speed
+      up gaseous flow in pipes (and therefore make the engine run smoother) but may
+      have big unforseen consequences. Keep eyes open for bugs.
+  - unknown: Fixed engine z-level definition preventing it from ejecting
+  - unknown: Access_Medical_Records permission has been set appropriately (nobody
+      could do it before)
+  - unknown: There are now 3 atmos techs and 3 station techs instead of 5 and 1
+  - unknown: CO2 now does 50 damage per second, and it takes 5 seconds to knock you
+      out (instead of just being an insta-kill)
+  - unknown: Added beer to the game, complete with HARM and HURT effects (when clicking
+      on both yourself and others). It'll need some tweaking in the damage-dishing
+      department before it becomes a common fixture on maps (it's a bit too powerful
+      right now)
+  - unknown: Admins can now manually authorize pubbies to enter the game (and to make
+      them monkeys)
+  - unknown: The traitor's radio is now hidden inside a normal radio device, so that
+      you cannot figure out who the traitor is just by looking at his inventory.
+  - unknown: Camera view now allows you to read papers one square away (AI and security
+      terminals)
+  - unknown: Camera view can papers more than one square away in a garbled state (similar
+      to monkey reading)
+  - unknown: Camera view can not see papers in people's hands, however, people can
+      now hold papers up to the cameras (by clicking on them) which pops up a window
+      on the AI's screen
+  - unknown: Camera views are now cancelled when the camera is cut (it used to stay
+      on until you switched)
+  - unknown: Level 3 Biohazard closets no longer come with gas masks, oxygen, gloves,
+      or lab coats.
+  - unknown: Medical closets no longer come with gloves.
+  - unknown: Fixed a bug that affected intercept-sending in traitor mode.
+  - unknown: Fixed a bug that threw errors server side when playing with your belt
+  - unknown: New area type - "AI Monitored" - with accompanying new "Motion Detection"
+      camera. This will throw a warning to the AI player if anybody enters (currently
+      in use in EVA storage)
+  - unknown: Motion cameras can be deactivated now (screwdriver for 10 seconds, then
+      wriecutters)
+  - unknown: The AI is now notified if Oxygen or FireAlarms are tripped.
+  - unknown: Monkeyizing sometimes threw an exception error - now fixed.
+  - unknown: Fixed bug that stopped DNA_ADD to work correctly (it tried to add the
+      data to the other disk)
+  - unknown: The radio is no longer lockable in Nuke mode
+  - unknown: Access levels are no longer reset when giving a custom job (to make it
+      easier to give yourself Captain access and rename it after)
+  - unknown: Fixed the ADMINHELP verb for this fork
+  - unknown: Fixed a bug where you would stop in space if you laid down
+  - unknown: Head of Research now has security access (so he can leave the bridge)
+  - unknown: Fixed a floating point error that made radios go to 148.2 instead of
+      148.1
+  - unknown: Made the endgame explosion in blob mode do more damage (to compensate
+      for the bigger map)
+  - unknown: Fire alarms no longer go off in space
+  - unknown: Re-added the ENTER Verb in case you have trouble spawning
+  - unknown: VOTE_NO_DEAD is now defaulted to OFF
+  - unknown: AI can no longer "Follow" people hiding in closets (or similarly hidden)
+  - unknown: Meteor mode now has 10x the meteors
+  - unknown: There are now 2 Engineering positions
+  - unknown: Clicking on closets with grab activated threw errors; now fixed
+  - unknown: All security and forensic officers now have security_records access
+  - unknown: The AI 'wander-off-camera' delay is now 5 seconds instead of 30
+  - unknown: You can now wirecut atmos alert panels
+  - unknown: Fixed a bug with AI cameras
+  - unknown: Chaplain job fixes
+  - unknown: APCs now have customizable cell capacities in the mapmaker(this will
+      break old map power grids but is an easy fix)
+  - unknown: APCs now have 3 "power draw" attributes in the mapmaker that allows you
+      to artificially pump up the rooms power consumption
+  - unknown: Added the most recent map changes to the SVN.
+2008-06-28:
+  /tg/station ss13 team:
+  - unknown: Fixed up a bug while moving and pulling items
+  - unknown: Fixed typo in airlock code
+  - unknown: Added power-drain variables to APCs in the mapmaker. This lets the mapmaker
+      cause artificial power drain in each room.
+  - unknown: PowerCells are now of custom-capacity (set in mapmaker)
+  - unknown: PowerCells with storage greater than 2500 units now count as high capacity
+      (was 1000)
+  - unknown: Because of the above changes, removed the artificial "powersink" object
+      from the game
+  - unknown: Fixed exception error thrown when cameras stop existing
+  - unknown: The AI camera no longer resets when using computers
+  - unknown: Added the Black Firesuit and Heavy Armor to the code so they can be used
+      in the map
+  - unknown: Added a Digital Valve object that the AI can control
+  - unknown: Fixed cannister storage capacities so their filled % can be set properly
+      in mapmaker

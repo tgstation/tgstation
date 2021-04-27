@@ -1,0 +1,36 @@
+2008-09-06:
+  /tg/station ss13 team:
+  - unknown: Blob_act and ex_act for doors now correctly sets updatecell=1 on the
+      turf they're on if it should do so.
+  - unknown: Related to the above, for less severe explosions doors now have a chance
+      to throw off sparks.
+  - unknown: Paperbins don't play their burn animation forever anymore.
+  - unknown: Set suicide verb to hidden. This mean's it's like the succumb verb, still
+      there, and you can still use it, but it doesn't clutter the verblist now.
+  - unknown: The AI can see what atmosphere panels and pipe meters read by clicking
+      them now.
+  - unknown: Can no longer examine pipe meters when they are unpowered.
+  - unknown: Monkey's use same aircheck as humans now.
+  - unknown: 'CO2 changes: Humans are knocked out by being in CO2 of a sufficient
+      concentration for 30 seconds. Monkeys in 25 seconds. CO2 will start to hurt
+      you after the concentration builds up more.'
+  - unknown: You properly receive the sandbox panel when you respawn in sandbox mode
+      now.
+2008-09-09:
+  /tg/station ss13 team:
+  - unknown: Corrected mistake that led to division by zero error in new aircheck.
+  - unknown: Admins can play sounds now for whatever reason this is a terrible feature-
+      Which is why it's disabled by default.
+  - unknown: Unpower secret uncharges cells and SMES's.
+  - unknown: Power secret charges cells and SMES's.
+  - unknown: Better ban system implemented. No changes visually.
+2008-09-11:
+  /tg/station ss13 team:
+  - unknown: Upon further consideration, CO2 knocks humans out in 18 seconds, and
+      monkeys in 15.
+  - unknown: Admins receive a message when another bans/boots someone.
+  - unknown: Removed sp_start obj, wasn't used.
+  - unknown: Related to the above, cleaned up ready verb.
+2008-09-23:
+  /tg/station ss13 team:
+  - unknown: Air properly flows to tiles with closed windoors now

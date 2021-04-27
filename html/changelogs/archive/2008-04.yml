@@ -1,0 +1,119 @@
+2008-04-24:
+  Gibbed:
+  - unknown: Prison (and prison jobs) removed.
+  - unknown: Athmospheric Technician job slots increased to 4 (was 1).
+  - unknown: '''Super battery cell'' used for AI Upload foyer energy decreased to
+      2500 (was 5000).'
+  - unknown: Command Station has been reduced to a Supply Station.
+  - unknown: AI Station has been redone.
+  - unknown: AI Upload area in Space Station 13 has been redone.
+  - unknown: Job picking code for game starting rewritten, should stop crashouts that
+      prevent people from spawning properly.
+  - unknown: Removed blob debug messages (this might make blob playable).
+  - unknown: AI can now hop to other cameras by clicking them.
+  - unknown: Camera lists (for AI, security console) now get sorted.
+  - unknown: Getting spaced on new game should no longer happen.
+  - unknown: Main solar panel array for Space Station 13 was redone.
+  - unknown: Minor tweaks to teleporter room.
+  - unknown: Fixed issue where if you are naked when the game starts you don't get
+      your ID.
+  - unknown: Character setup no longer opens by default if you have saved data.
+  - unknown: Syndicate radio will now spawn in the users backpack if they started
+      with one.
+  - unknown: Syndicate radio will now self-destruct in 10 seconds rather than 3.
+  - unknown: 'New traitor objective: eject engine.'
+  - unknown: Added OxygenIsToxicToHumans AI module, it can be obtained through a syndicate
+      radio.
+  - unknown: Decreased size of morgue and increased size of coffin storage.
+  - unknown: Changed some engine walls to rwall and lined the interior of the engine
+      with glass.
+  - unknown: Fixed a small harmless bug with job picking code that was preventing
+      selection of assistant jobs.
+  - unknown: 'Blob mode: when you are dead you no longer receive the ''The blob attacks
+      you!'' message.'
+  - unknown: 'Blob mode: blob should no longer expand to air tunnel / shuttle tiles.'
+  - unknown: 'Blob mode: blob should no longer propogate into space.'
+  - unknown: New toxin researcher locker.
+  - unknown: Default anesthetic mix changed.
+  - unknown: Added a security camera to the Toxin Research Lab Test Room.
+2008-04-25:
+  Gibbed:
+  - unknown: Anesthetic tanks now default to a rate of 250.
+  - unknown: 'Blob mode: blob in a tile with plasma is inhibited from propogating
+      to surrounding tiles.'
+  - unknown: Oxygen tank capacity has been reduced (roughly halved). Too much? let
+      me know!
+  - unknown: Removed insulated gloves from athmospherics and added a glove to engine
+      control.
+  - unknown: Taser charges reduced to 3.
+  - unknown: The map size has been expanded to 140x140 (was 100x100).
+  - unknown: The many engine areas have been moved around and reorganized.
+  - unknown: The airlock between medbay and engine has been broken up into two airlocks
+      that have some distance between them. This means to get to the engine from the
+      medbay you now have to spacewalk.
+  - unknown: The teleporter room has been moved to the south part of the station.
+  - unknown: Small aesthetical changes to the medbay and medlab.
+  - unknown: Redid chapel entrance.
+  - unknown: Northeast solar panel array has been redone. Note that it is damaged
+      by default and will need to be repaired to be usable.
+  - unknown: Northeast solar panel control room has been redone.
+  - unknown: Auxillary engine has been moved to north of the northeast solar panel
+      control room.
+2008-04-26:
+  Gibbed:
+  - unknown: Went through and all exterior floor tiles so they start out with no oxygen,
+      these can be identified by the fact that their name starts with 'airless'. If
+      you spot any exterior floor tiles that are not airless by default please let
+      me know so I can fix it.
+  - unknown: APCs can now be cut with wirecutters (only while open!) to disable AI
+      control of the APC. I plan to add a hack type deal (like airlock doors) into
+      them later.
+  - unknown: Fixed the chapel pod door controls (oops).
+  - unknown: 'Blob mode: removed some blob spawn points that might cause it to die
+      pretty much instantly.'
+2008-04-27:
+  Gibbed:
+  - unknown: 'AI''s #2 radio microphone now defaults to being on.'
+  - unknown: Fixed an issue where the captain could be assigned to another job.
+  - unknown: The airlocks for the shuttle bay and shuttle docking arm are no longer
+      infinitely powered.
+  - unknown: Fixed the nuke deployable verb not showing up.
+  - unknown: For most double airlocks, opening one will cause the other to close automatically
+      before opening (if it can).
+  - unknown: New coffin graphic thanks to NuclearMailman
+  - unknown: Small changes to closet code so it properly handles opened/closed graphics.
+  - unknown: Fixed the pod repair bay not allowing the pod in it to move.
+  - unknown: Reduced Athmospheric Technician to 2 slots (was 4).
+  - unknown: Fixed exploit with rechargers charging tasers to 10 charges.
+  - unknown: Added hologram generators that the AI can control to a few places around
+      the station.
+  - unknown: New graphic for the floor in the chapel thanks to NuclearMailman.
+  - unknown: Redid escape pod and recon pod code so that they share code.
+  - unknown: Escape pods can no longer rotate, except the one in the pod repair bay.
+  - unknown: Syndicate station now has recon pods instead of escape pods.
+  - unknown: Syndicate station now has syndicate personal lockers instead of everything
+      being on the ground.
+  - unknown: Syndicate station now starts with some breach bombs during nuclear mode.
+  - unknown: Instead of standard blank id cards, syndicate personal lockers spawn
+      syndicate cards which block AI tracking.
+  - unknown: Fixed up the handling of warping between maps, this means you should
+      no longer end up fucked from traveling too far to the west.
+  - unknown: Fixed an issue with the double airlocks unwelding a welded airlock when
+      the other opens.
+  - unknown: AI's Track With Camera and Observe should now properly handle duplicate
+      names and names with invalid characters in them.
+  - unknown: Nuked all verb admin commands except for variables and show_ctf.
+  - unknown: Administrator panel is now enabled for the host of a game (instead of
+      those stupid fucking verbs).
+  - unknown: Added Who command.
+  - unknown: Updated graphic for the floor in the chapel.
+  - unknown: Fixed several APCs that were not properly hooked up to power systems.
+  - unknown: Fixed the north solar array so that the battery could not feed power
+      from the main system.
+  - unknown: Fixed the APCs for north and south solar array.
+  - unknown: Moved the AI Upload Foyer onto its own power network using its own solar
+      array.
+  - unknown: Widened the south hallway.
+  - unknown: Added inner cameras to the AI satellite.
+  - unknown: Added APC to the external turret area of the AI satellite.
+  - unknown: Added turret controls to the external turret area of the AI satellite.

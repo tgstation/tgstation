@@ -78,7 +78,7 @@ export class Changelog extends Component {
         const errorRegex = /^Cannot find/;
 
         if (errorRegex.test(result)) {
-          const timeout = 250 + attemptNumber * 500;
+          const timeout = 50 + attemptNumber * 100;
 
           self.setData(
             'Loading changelog data' + '.'.repeat(attemptNumber + 3)
