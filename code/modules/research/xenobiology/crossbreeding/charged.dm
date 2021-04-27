@@ -224,7 +224,7 @@ Charged extracts:
 	addtimer(CALLBACK(src, .proc/boom), 50)
 
 /obj/item/slimecross/charged/oil/proc/boom()
-	explosion(get_turf(src), 2, 3, 4) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
+	explosion(src, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
 	qdel(src)
 
 /obj/item/slimecross/charged/black

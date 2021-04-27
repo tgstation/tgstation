@@ -607,7 +607,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	pixel_x = 0
 	pixel_y = 0
 
-/obj/item/stack/tile/bronze/thirty
+/obj/item/stack/sheet/bronze/thirty
 	amount = 30
 
 /*

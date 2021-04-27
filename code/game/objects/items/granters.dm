@@ -159,7 +159,7 @@
 
 /obj/item/book/granter/spell/fireball/recoil(mob/user)
 	..()
-	explosion(user.loc, 1, 0, 2, 3, FALSE, FALSE, 2)
+	explosion(user, devastation_range = 1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE)
 	qdel(src)
 
 /obj/item/book/granter/spell/sacredflame

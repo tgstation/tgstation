@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "fix exploit where H/E pipes on walls could cool indefinitely, now the walls will melt when reaching a certain temperature"
+  - code_imp: "improved datum_pipeline.dm proc's temperature_interact code"

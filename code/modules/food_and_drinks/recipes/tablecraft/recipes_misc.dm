@@ -86,19 +86,6 @@
 	result = /obj/item/food/eggplantparm
 	subcategory = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/melonfruitbowl
-	name ="Melon fruit bowl"
-	reqs = list(
-		/obj/item/food/grown/watermelon = 1,
-		/obj/item/food/grown/apple = 1,
-		/obj/item/food/grown/citrus/orange = 1,
-		/obj/item/food/grown/citrus/lemon = 1,
-		/obj/item/food/grown/banana = 1,
-		/obj/item/food/grown/ambrosia = 1
-	)
-	result = /obj/item/food/melonfruitbowl
-	subcategory = CAT_MISCFOOD
-
 /datum/crafting_recipe/food/melonkeg
 	name ="Melon keg"
 	reqs = list(
