@@ -87,7 +87,7 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
-	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
+	QDEL_IN(WEAKREF(src), 8 MINUTES) //Self-destruct after 8 min
 	SSeconomy.market_crashing = TRUE
 
 
@@ -158,7 +158,7 @@
 	stop_dumping()
 	STOP_PROCESSING(SSfastprocess, src)
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
-	explosion(src, 0,0,1, flame_range = 2)
+	explosion(src, light_impact_range = 1, flame_range = 2)
 	SSeconomy.market_crashing = FALSE
 	return ..()
 
@@ -213,9 +213,6 @@
 	var/obj/effect/dumpeet_fall/DF
 	var/obj/structure/checkoutmachine/dump
 	var/mob/living/bogdanoff
-
-/obj/effect/ex_act()
-	return
 
 /obj/effect/dumpeet_target/Initialize(mapload, user)
 	. = ..()

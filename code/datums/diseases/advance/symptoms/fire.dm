@@ -37,19 +37,21 @@ Bonus
 	)
 
 /datum/symptom/fire/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stage_rate"] >= 4)
+	if(A.totalStageSpeed() >= 4)
 		power = 1.5
-	if(A.properties["stage_rate"] >= 8)
+	if(A.totalStageSpeed() >= 8)
 		power = 2
-	if(A.properties["stealth"] >= 4)
+	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
-	if(A.properties["transmittable"] >= 8) //burning skin spreads the virus through smoke
+	if(A.totalTransmittable() >= 8) //burning skin spreads the virus through smoke
 		infective = TRUE
 
 /datum/symptom/fire/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
@@ -121,19 +123,21 @@ Bonus
 	)
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["resistance"] >= 9) //intense but sporadic effect
+	if(A.totalResistance() >= 9) //intense but sporadic effect
 		power = 2
 		symptom_delay_min = 50
 		symptom_delay_max = 140
-	if(A.properties["stage_rate"] >= 8) //serious boom when wet
+	if(A.totalStageSpeed() >= 8) //serious boom when wet
 		explosion_power = 2
-	if(A.properties["transmittable"] >= 8) //extra chemicals
+	if(A.totalTransmittable() >= 8) //extra chemicals
 		chems = TRUE
 
 /datum/symptom/alkali/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
@@ -143,7 +147,7 @@ Bonus
 		if(4)
 			if(M.fire_stacks < 0)
 				M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
-				explosion(get_turf(M),-1,(-1 + explosion_power),(2 * explosion_power))
+				explosion(M, devastation_range = -1, heavy_impact_range = (-1 + explosion_power), light_impact_range = (2 * explosion_power))
 			Alkali_fire_stage_4(M, A)
 			M.IgniteMob()
 			to_chat(M, "<span class='userdanger'>Your sweat bursts into flames!</span>")
@@ -151,7 +155,7 @@ Bonus
 		if(5)
 			if(M.fire_stacks < 0)
 				M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
-				explosion(get_turf(M),-1,(-1 + explosion_power),(2 * explosion_power))
+				explosion(M, devastation_range = -1, heavy_impact_range = (-1 + explosion_power), light_impact_range = (2 * explosion_power))
 			Alkali_fire_stage_5(M, A)
 			M.IgniteMob()
 			to_chat(M, "<span class='userdanger'>Your skin erupts into an inferno!</span>")

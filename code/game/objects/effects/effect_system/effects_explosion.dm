@@ -10,7 +10,7 @@
 
 /obj/effect/particle_effect/expl_particles/LateInitialize()
 	var/direct = pick(GLOB.alldirs)
-	var/steps_amt = pick(1;25,2;50,3,4;200)
+	var/steps_amt = pick(25;1,50;2,100;3,200;4)
 	for(var/j in 1 to steps_amt)
 		step(src, direct)
 		sleep(1)

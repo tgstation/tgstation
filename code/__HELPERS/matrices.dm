@@ -72,9 +72,9 @@
 
 //Dumps the matrix data in a matrix-grid format
 /*
-  a d 0
-  b e 0
-  c f 1
+a d 0
+b e 0
+c f 1
 */
 /matrix/proc/togrid()
 	. = list()

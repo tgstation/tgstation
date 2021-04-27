@@ -111,7 +111,7 @@ Chilling extracts:
 			G.gases[/datum/gas/plasma][MOLES] = 0
 			filtered = TRUE
 			G.garbage_collect()
-			T.air_update_turf()
+			T.air_update_turf(FALSE, FALSE)
 	if(filtered)
 		user.visible_message("<span class='notice'>Cracks spread throughout [src], and some air is sucked in!</span>")
 	else
@@ -137,7 +137,7 @@ Chilling extracts:
 	user.visible_message("<span class='notice'>[src] crumbles into icy powder, leaving behind several emergency food supplies!</span>")
 	var/amount = rand(5, 10)
 	for(var/i in 1 to amount)
-		new /obj/item/reagent_containers/food/snacks/rationpack(get_turf(user))
+		new /obj/item/food/rationpack(get_turf(user))
 	..()
 
 /obj/item/slimecross/chilling/bluespace
@@ -290,7 +290,7 @@ Chilling extracts:
 	addtimer(CALLBACK(src, .proc/boom), 50)
 
 /obj/item/slimecross/chilling/oil/proc/boom()
-	explosion(get_turf(src), -1, -1, 10, 0) //Large radius, but mostly light damage, and no flash.
+	explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 10) //Large radius, but mostly light damage, and no flash.
 	qdel(src)
 
 /obj/item/slimecross/chilling/black

@@ -25,9 +25,14 @@ SUBSYSTEM_DEF(adjacent_air)
 
 	while (length(queue))
 		var/turf/currT = queue[1]
+		var/goal = queue[currT]
 		queue.Cut(1,2)
 
 		currT.ImmediateCalculateAdjacentTurfs()
+		if(goal == MAKE_ACTIVE)
+			SSair.add_to_active(currT)
+		else if(goal == KILL_EXCITED)
+			SSair.add_to_active(currT, TRUE)
 
 		if(mc_check)
 			if(MC_TICK_CHECK)

@@ -30,8 +30,8 @@
 		alarm()
 
 /**
-  * Initiates launching sequence by checking if all components are functional, opening poddoors, firing mass drivers and then closing poddoors
-  */
+ * Initiates launching sequence by checking if all components are functional, opening poddoors, firing mass drivers and then closing poddoors
+ */
 /obj/machinery/computer/pod/proc/alarm()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
@@ -134,13 +134,13 @@
 	name = "\improper DoorMex control console"
 	icon_state = "oldcomp"
 	icon_screen = "library"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 
 /obj/machinery/computer/pod/old/mass_driver_controller
 	name = "\improper Mass Driver Controller"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	density = FALSE
 
 /obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver
@@ -155,6 +155,9 @@
 
 /obj/machinery/computer/pod/old/mass_driver_controller/trash
 	id = MASSDRIVER_DISPOSALS
+
+/obj/machinery/computer/pod/old/mass_driver_controller/shack
+	id = MASSDRIVER_SHACK
 
 /obj/machinery/computer/pod/old/syndicate
 	name = "\improper ProComp Executive IIc"

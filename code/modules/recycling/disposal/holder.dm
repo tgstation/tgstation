@@ -8,12 +8,12 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	dir = NONE
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
-	var/datum/gas_mixture/gas	// gas used to flush, will appear at exit point
-	var/active = FALSE			// true if the holder is moving, otherwise inactive
-	var/count = 1000			// can travel 1000 steps before going inactive (in case of loops)
-	var/destinationTag = NONE	// changes if contains a delivery container
-	var/tomail = FALSE			// contains wrapped package
-	var/hasmob = FALSE			// contains a mob
+	var/datum/gas_mixture/gas // gas used to flush, will appear at exit point
+	var/active = FALSE // true if the holder is moving, otherwise inactive
+	var/count = 1000 // can travel 1000 steps before going inactive (in case of loops)
+	var/destinationTag = NONE // changes if contains a delivery container
+	var/tomail = FALSE // contains wrapped package
+	var/hasmob = FALSE // contains a mob
 
 /obj/structure/disposalholder/Destroy()
 	QDEL_NULL(gas)
@@ -41,28 +41,22 @@
 	// now everything inside the disposal gets put into the holder
 	// note AM since can contain mobs or objs
 	for(var/A in D)
-		var/atom/movable/AM = A
-		if(AM == src)
+		var/atom/movable/atom_in_transit = A
+		if(atom_in_transit == src)
 			continue
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_DISPOSING, src, D)
-		AM.forceMove(src)
-		if(istype(AM, /obj/structure/big_delivery) && !hasmob)
-			var/obj/structure/big_delivery/T = AM
-			src.destinationTag = T.sortTag
-		else if(istype(AM, /obj/item/small_delivery) && !hasmob)
-			var/obj/item/small_delivery/T = AM
-			src.destinationTag = T.sortTag
-		else if(istype(AM, /mob/living/silicon/robot))
-			var/obj/item/dest_tagger/borg/tagger = locate() in AM
-			if (tagger)
-				src.destinationTag = tagger.currTag
+		SEND_SIGNAL(atom_in_transit, COMSIG_MOVABLE_DISPOSING, src, D, hasmob)
+		atom_in_transit.forceMove(src)
+		if(iscyborg(atom_in_transit))
+			var/obj/item/dest_tagger/borg/tagger = locate() in atom_in_transit
+			if(tagger)
+				destinationTag = tagger.currTag
 
 
 // start the movement process
 // argument is the disposal unit the holder started in
 /obj/structure/disposalholder/proc/start(obj/machinery/disposal/D)
 	if(!D.trunk)
-		D.expel(src)	// no trunk connected, so expel immediately
+		D.expel(src) // no trunk connected, so expel immediately
 		return
 	forceMove(D.trunk)
 	active = TRUE
@@ -108,9 +102,9 @@
 	if(!T)
 		return null
 
-	var/fdir = turn(dir, 180)	// flip the movement direction
+	var/fdir = turn(dir, 180) // flip the movement direction
 	for(var/obj/structure/disposalpipe/P in T)
-		if(fdir & P.dpdir)		// find pipe direction mask that matches flipped dir
+		if(fdir & P.dpdir) // find pipe direction mask that matches flipped dir
 			return P
 	// if no matching pipe, return null
 	return null
@@ -120,10 +114,10 @@
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
 	for(var/A in other)
 		var/atom/movable/AM = A
-		AM.forceMove(src)		// move everything in other holder to this one
+		AM.forceMove(src) // move everything in other holder to this one
 		if(ismob(AM))
 			var/mob/M = AM
-			M.reset_perspective(src)	// if a client mob, update eye to follow this holder
+			M.reset_perspective(src) // if a client mob, update eye to follow this holder
 	qdel(other)
 
 
@@ -138,10 +132,10 @@
 // called to vent all gas in holder to a location
 /obj/structure/disposalholder/proc/vent_gas(turf/T)
 	T.assume_air(gas)
-	T.air_update_turf()
+	T.air_update_turf(FALSE, FALSE)
 
 /obj/structure/disposalholder/AllowDrop()
 	return TRUE
 
 /obj/structure/disposalholder/ex_act(severity, target)
-	return
+	return FALSE

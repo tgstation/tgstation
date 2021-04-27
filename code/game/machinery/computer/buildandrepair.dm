@@ -3,7 +3,7 @@
 	icon_state = "0"
 	state = 0
 
-/obj/structure/frame/computer/attackby(obj/item/P, mob/user, params)
+/obj/structure/frame/computer/attackby(obj/item/P, mob/living/user, params)
 	add_fingerprint(user)
 	switch(state)
 		if(0)
@@ -21,7 +21,7 @@
 				to_chat(user, "<span class='notice'>You start deconstructing the frame...</span>")
 				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
-					var/obj/item/stack/sheet/metal/M = new (drop_location(), 5)
+					var/obj/item/stack/sheet/iron/M = new (drop_location(), 5)
 					M.add_fingerprint(user)
 					qdel(src)
 				return
@@ -154,7 +154,7 @@
 
 				qdel(src)
 				return
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return ..()
 
 
@@ -169,7 +169,7 @@
 
 /obj/structure/frame/computer/AltClick(mob/user)
 	..()
-	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 
 	if(anchored)

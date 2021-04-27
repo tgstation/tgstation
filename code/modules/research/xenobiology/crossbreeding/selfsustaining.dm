@@ -54,9 +54,9 @@ Self-sustaining extracts:
 		extract.reagents.add_reagent(secondary,amount)
 
 /obj/item/autoslime/examine(mob/user)
-  . = ..()
-  if(effect_desc)
-    . += "<span class='notice'>[effect_desc]</span>"
+	. = ..()
+	if(effect_desc)
+		. += "<span class='notice'>[effect_desc]</span>"
 
 //Different types.
 

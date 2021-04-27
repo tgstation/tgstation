@@ -1,5 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
-import { Button, Box, Section, Knob, Flex, LabeledControls, Divider } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Divider, Flex, Knob, LabeledControls, Section } from '../components';
 import { Window } from '../layouts';
 
 export const TrainingMachine = (props, context) => {

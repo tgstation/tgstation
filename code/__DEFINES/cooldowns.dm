@@ -26,7 +26,7 @@
 */
 
 //INDEXES
-#define COOLDOWN_BORG_SELF_REPAIR	"borg_self_repair"
+#define COOLDOWN_BORG_SELF_REPAIR "borg_self_repair"
 #define COOLDOWN_EXPRESSPOD_CONSOLE "expresspod_console"
 
 //Mecha cooldowns
@@ -35,6 +35,12 @@
 #define COOLDOWN_MECHA_ARMOR "mecha_armor"
 #define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
+
+//car cooldowns
+#define COOLDOWN_CAR_HONK "car_honk"
+
+//clown car cooldowns
+#define COOLDOWN_CLOWNCAR_RANDOMNESS "clown_car_randomness"
 
 //TIMER COOLDOWN MACROS
 

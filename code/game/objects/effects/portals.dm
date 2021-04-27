@@ -19,12 +19,12 @@
 	anchored = TRUE
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
-	var/hardlinked = TRUE			//Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	var/hardlinked = TRUE //Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
 	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
-	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
-	var/atmos_link = FALSE			//Link source/destination atmos.
-	var/turf/open/atmos_source		//Atmos link source
-	var/turf/open/atmos_destination	//Atmos link destination
+	var/turf/hard_target //For when a portal needs a hard target and isn't to be linked.
+	var/atmos_link = FALSE //Link source/destination atmos.
+	var/turf/open/atmos_source //Atmos link source
+	var/turf/open/atmos_destination //Atmos link destination
 	var/allow_anchored = FALSE
 	var/innate_accuracy_penalty = 0
 	var/last_effect = 0
@@ -62,7 +62,7 @@
 /obj/effect/portal/attack_tk(mob/user)
 	return
 
-/obj/effect/portal/attack_hand(mob/user)
+/obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -97,6 +97,7 @@
 	if(atmos_link)
 		link_atmos()
 
+//This proc breaks as soon as atmos turfs are reacalculated, someone fix it
 /obj/effect/portal/proc/link_atmos()
 	if(atmos_source || atmos_destination)
 		unlink_atmos()
@@ -116,12 +117,12 @@
 		return FALSE
 	LAZYINITLIST(atmos_source.atmos_adjacent_turfs)
 	LAZYINITLIST(atmos_destination.atmos_adjacent_turfs)
-	if(atmos_source.atmos_adjacent_turfs[atmos_destination] || atmos_destination.atmos_adjacent_turfs[atmos_source])	//Already linked!
+	if(atmos_source.atmos_adjacent_turfs[atmos_destination] || atmos_destination.atmos_adjacent_turfs[atmos_source]) //Already linked!
 		return FALSE
 	atmos_source.atmos_adjacent_turfs[atmos_destination] = TRUE
 	atmos_destination.atmos_adjacent_turfs[atmos_source] = TRUE
-	atmos_source.air_update_turf(FALSE)
-	atmos_destination.air_update_turf(FALSE)
+	atmos_source.air_update_turf(FALSE, FALSE)
+	atmos_destination.air_update_turf(FALSE, FALSE)
 
 /obj/effect/portal/proc/unlink_atmos()
 	if(istype(atmos_source))

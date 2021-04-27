@@ -5,19 +5,15 @@
 
 /mob/living/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if((mover.pass_flags & PASSMOB))
-		return TRUE
-	if(istype(mover, /obj/projectile))
-		var/obj/projectile/P = mover
-		return !P.can_hit_target(src, P.permutated, src == P.original, TRUE)
+	if(.)
+		return
 	if(mover.throwing)
-		return (!density || body_position == LYING_DOWN || (mover.throwing.thrower == src && !ismob(mover)))
+		return (!density || (body_position == LYING_DOWN) || (mover.throwing.thrower == src && !ismob(mover)))
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover) && (mover in buckled_mobs))
 		return TRUE
-	return . || !mover.density || body_position == LYING_DOWN
-
+	return !mover.density || body_position == LYING_DOWN
 
 /mob/living/toggle_move_intent()
 	. = ..()
@@ -55,9 +51,10 @@
 			return
 	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
-
-/mob/living/can_zFall(turf/T, levels)
-	return ..()
-
 /mob/living/canZMove(dir, turf/target)
 	return can_zTravel(target, dir) && (movement_type & FLYING | FLOATING)
+
+/mob/living/keybind_face_direction(direction)
+	if(stat > SOFT_CRIT)
+		return
+	return ..()

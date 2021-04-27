@@ -1,7 +1,7 @@
 /*******************************\
-|		  Slot Machines		  	|
-|	  Original code by Glloyd	|
-|	  Tgstation port by Miauw	|
+|   Slot Machines |
+|   Original code by Glloyd |
+|   Tgstation port by Miauw |
 \*******************************/
 
 #define SPIN_PRICE 5
@@ -17,8 +17,10 @@
 /obj/machinery/computer/slot_machine
 	name = "slot machine"
 	desc = "Gambling for the antisocial."
-	icon = 'icons/obj/economy.dmi'
-	icon_state = "slots1"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "slots"
+	icon_keyboard = null
+	icon_screen = "slots_screen"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
@@ -67,17 +69,18 @@
 	money += round(delta_time / 2) //SPESSH MAJICKS
 
 /obj/machinery/computer/slot_machine/update_icon_state()
-	if(machine_stat & NOPOWER)
-		icon_state = "slots0"
-
-	else if(machine_stat & BROKEN)
-		icon_state = "slotsb"
-
-	else if(working)
-		icon_state = "slots2"
-
+	if(machine_stat & BROKEN)
+		icon_state = "slots_broken"
 	else
-		icon_state = "slots1"
+		icon_state = "slots"
+	return ..()
+
+/obj/machinery/computer/slot_machine/update_overlays()
+	if(working)
+		icon_screen = "slots_screen_working"
+	else
+		icon_screen = "slots_screen"
+	return ..()
 
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/coin))
@@ -206,7 +209,7 @@
 	working = TRUE
 
 	toggle_reel_spin(1)
-	update_icon()
+	update_appearance()
 	updateDialog()
 
 	var/spin_loop = addtimer(CALLBACK(src, .proc/do_spin), 2, TIMER_LOOP|TIMER_STOPPABLE)
@@ -223,7 +226,7 @@
 	working = FALSE
 	deltimer(spin_loop)
 	give_prizes(the_name, user)
-	update_icon()
+	update_appearance()
 	updateDialog()
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)

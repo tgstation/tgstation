@@ -23,7 +23,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/door/airlock/shuttle,
@@ -43,7 +43,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cm" = (
 /obj/effect/turf_decal/tile/blue,
@@ -70,11 +70,11 @@
 /obj/item/storage/fancy/donut_box{
 	pixel_y = -7
 	},
-/obj/item/reagent_containers/food/snacks/donut{
+/obj/item/food/donut{
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cu" = (
 /obj/machinery/vending/cola/red,
@@ -82,8 +82,8 @@
 /area/shuttle/escape)
 "cz" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/nachos,
-/obj/item/reagent_containers/food/snacks/honeybun{
+/obj/item/food/nachos,
+/obj/item/food/honeybun{
 	pixel_x = 3;
 	pixel_y = 13
 	},
@@ -109,7 +109,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dR" = (
 /obj/structure/shuttle/engine/heater,
@@ -134,7 +134,7 @@
 	dir = 1;
 	name = "ship alert console"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "en" = (
 /obj/effect/spawner/structure/window/shuttle,
@@ -175,7 +175,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "gQ" = (
 /obj/structure/table/wood/fancy,
@@ -206,7 +206,7 @@
 /obj/item/camera{
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "jt" = (
 /turf/closed/wall/mineral/titanium,
@@ -218,7 +218,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "jP" = (
 /obj/effect/turf_decal/tile/red{
@@ -239,18 +239,18 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "jT" = (
 /obj/item/kirbyplants/photosynthetic,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "jW" = (
 /obj/structure/statue/diamond/ai2{
 	anchored = 1;
 	name = "statue of an AI core."
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "kd" = (
 /turf/template_noop,
@@ -260,7 +260,7 @@
 /obj/item/food/burger/baconburger{
 	pixel_x = 3
 	},
-/obj/item/reagent_containers/food/snacks/cracker{
+/obj/item/food/cracker{
 	pixel_x = -13;
 	pixel_y = 9
 	},
@@ -288,7 +288,7 @@
 	dir = 4
 	},
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "kQ" = (
 /obj/effect/turf_decal/tile/red,
@@ -307,7 +307,7 @@
 /obj/machinery/computer/secure_data{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "kZ" = (
 /obj/effect/turf_decal/tile/blue,
@@ -339,7 +339,7 @@
 	pixel_x = -9;
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "lh" = (
 /obj/effect/turf_decal/tile/blue,
@@ -365,7 +365,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "mv" = (
 /obj/effect/turf_decal/tile/blue{
@@ -386,16 +386,14 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "mw" = (
 /mob/living/simple_animal/hostile/alien/maid/barmaid,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ni" = (
-/turf/open/floor/light/colour_cycle{
-	name = "dancefloor"
-	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "nU" = (
 /obj/structure/chair/comfy/brown{
@@ -411,13 +409,13 @@
 /area/shuttle/escape)
 "oH" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "oZ" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/computer/crew,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "pk" = (
 /obj/effect/turf_decal/tile/blue,
@@ -437,7 +435,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qd" = (
 /obj/effect/turf_decal/tile/red{
@@ -454,7 +452,7 @@
 	dir = 8
 	},
 /obj/machinery/computer/warrant,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qr" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -474,7 +472,7 @@
 /obj/item/clothing/head/collectable/welding{
 	pixel_y = 5
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qE" = (
 /obj/machinery/door/airlock/shuttle,
@@ -512,7 +510,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "rs" = (
 /obj/effect/turf_decal/tile/blue{
@@ -532,7 +530,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "rt" = (
 /obj/effect/turf_decal/tile/blue,
@@ -558,7 +556,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "rX" = (
 /obj/effect/turf_decal/tile/blue{
@@ -575,7 +573,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "si" = (
 /obj/structure/table/wood/fancy,
@@ -594,7 +592,7 @@
 /obj/machinery/computer/med_data{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "sW" = (
 /obj/structure/shuttle/engine/huge,
@@ -605,7 +603,7 @@
 	anchored = 1;
 	name = "statue of an AI hologram"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uh" = (
 /obj/effect/turf_decal/tile/blue,
@@ -629,7 +627,7 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ut" = (
 /obj/effect/turf_decal/tile/blue,
@@ -656,7 +654,7 @@
 	dir = 1;
 	name = "Shuttle Captain seat"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uV" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -679,7 +677,7 @@
 	desc = "Used to monitor the shuttle's air alarms.";
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "vi" = (
 /obj/effect/turf_decal/tile/blue,
@@ -703,7 +701,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/emergency_shuttle,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "vS" = (
 /obj/effect/turf_decal/tile/blue,
@@ -735,7 +733,7 @@
 	pixel_x = -13;
 	pixel_y = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "wf" = (
 /obj/structure/table/wood/fancy,
@@ -756,11 +754,11 @@
 /area/shuttle/escape)
 "xf" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/donkpocket/warm{
+/obj/item/food/donkpocket/warm{
 	pixel_x = -5;
 	pixel_y = 14
 	},
-/obj/item/reagent_containers/food/snacks/fries{
+/obj/item/food/fries{
 	pixel_x = 16;
 	pixel_y = 11
 	},
@@ -784,7 +782,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "yq" = (
 /obj/machinery/vending/snack/green,
@@ -806,7 +804,7 @@
 	dir = 1
 	},
 /obj/item/reactive_armour_shell,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Aq" = (
 /obj/structure/table/wood/fancy,
@@ -814,7 +812,7 @@
 	pixel_x = 16;
 	pixel_y = -8
 	},
-/obj/item/reagent_containers/food/snacks/burrito{
+/obj/item/food/burrito{
 	pixel_x = -6;
 	pixel_y = -4
 	},
@@ -841,14 +839,14 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "BB" = (
 /obj/item/kirbyplants/photosynthetic,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Cw" = (
 /obj/machinery/vending/snack/orange,
@@ -857,7 +855,7 @@
 "CK" = (
 /obj/item/kirbyplants/photosynthetic,
 /obj/machinery/light,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "CR" = (
 /obj/machinery/door/airlock/shuttle,
@@ -893,7 +891,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Dq" = (
 /obj/structure/table/wood/fancy,
@@ -920,7 +918,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "EC" = (
 /obj/structure/chair/comfy/brown,
@@ -933,7 +931,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "FR" = (
 /obj/effect/turf_decal/tile/blue,
@@ -950,7 +948,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Hi" = (
 /obj/structure/table/wood/fancy,
@@ -973,7 +971,7 @@
 	dir = 1;
 	name = "shuttle CMO seat"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Hz" = (
 /obj/effect/turf_decal/tile/blue,
@@ -1020,7 +1018,7 @@
 /obj/item/cigbutt{
 	pixel_x = -8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "HA" = (
 /obj/effect/turf_decal/tile/blue,
@@ -1037,10 +1035,13 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Iu" = (
 /obj/machinery/computer/slot_machine,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "IL" = (
@@ -1059,7 +1060,7 @@
 	dir = 4;
 	name = "Shuttle CE seat"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "IX" = (
 /obj/effect/turf_decal/tile/blue,
@@ -1085,7 +1086,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Js" = (
 /obj/structure/showcase/mecha/marauder{
@@ -1098,20 +1099,20 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Kc" = (
 /obj/item/kirbyplants/photosynthetic,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Ki" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "KB" = (
 /obj/effect/turf_decal/tile/red,
@@ -1131,10 +1132,10 @@
 	dir = 1;
 	name = "Shuttle HoS seat"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "KD" = (
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "KM" = (
 /obj/effect/turf_decal/tile/blue,
@@ -1157,7 +1158,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Lo" = (
 /obj/structure/table/wood/fancy,
@@ -1193,7 +1194,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/communications,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Me" = (
 /obj/structure/chair/comfy/brown{
@@ -1228,7 +1229,7 @@
 	max_integrity = 99999;
 	name = "shuttle holographic display"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "NH" = (
 /obj/structure/chair/comfy/brown{
@@ -1243,7 +1244,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "On" = (
 /obj/effect/turf_decal/tile/blue,
@@ -1291,7 +1292,7 @@
 	pixel_x = -32;
 	pixel_y = 27
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Ov" = (
 /obj/effect/turf_decal/tile/blue,
@@ -1322,7 +1323,7 @@
 /obj/item/clothing/glasses/heat{
 	pixel_y = 5
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "OJ" = (
 /turf/open/floor/light/colour_cycle/dancefloor_a,
@@ -1337,13 +1338,13 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Pr" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "So" = (
 /obj/item/storage/cans/sixbeer,
@@ -1400,7 +1401,7 @@
 	pixel_x = 15;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "TH" = (
 /obj/effect/turf_decal/tile/blue,
@@ -1428,13 +1429,13 @@
 	pixel_x = 1;
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "TI" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Ud" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1454,7 +1455,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "UF" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1463,7 +1464,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "UJ" = (
 /obj/machinery/light,
@@ -1482,7 +1483,7 @@
 "Vk" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Vm" = (
 /turf/closed/wall/mineral/titanium/interior,
@@ -1492,7 +1493,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "VQ" = (
 /obj/effect/turf_decal/tile/blue,
@@ -1519,7 +1520,7 @@
 	dir = 1;
 	name = "Shuttle HoP seat"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "VV" = (
 /obj/machinery/vending/coffee,
@@ -1549,15 +1550,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "WT" = (
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"Xa" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Xd" = (
@@ -1590,7 +1585,7 @@
 	toysay = "Oxygen offline. Weapons charging. All systems nominal.";
 	toysound = 'sound/mecha/nominal.ogg'
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "YA" = (
 /obj/effect/turf_decal/tile/blue,
@@ -1617,7 +1612,7 @@
 	name = "Cockpit";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "YZ" = (
 /obj/machinery/light{
@@ -1649,7 +1644,7 @@
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -2008,7 +2003,7 @@ KD
 Vv
 Vm
 Vm
-Xa
+WT
 WT
 NH
 NH
@@ -2103,8 +2098,8 @@ qX
 WT
 WT
 OJ
-OJ
 ni
+OJ
 WT
 uV
 uV
@@ -2148,7 +2143,7 @@ jW
 Vm
 Iu
 WT
-OJ
+ni
 OJ
 ni
 WT
@@ -2194,8 +2189,8 @@ tB
 Vm
 Iu
 WT
-ni
 OJ
+ni
 OJ
 WT
 Sp
@@ -2242,7 +2237,7 @@ WT
 WT
 ni
 OJ
-OJ
+ni
 WT
 uV
 uV
@@ -2330,7 +2325,7 @@ KD
 Kc
 Vm
 Vm
-Xa
+WT
 WT
 nU
 nU

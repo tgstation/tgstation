@@ -15,48 +15,45 @@
 	//Ask and you shall receive
 	switch(rand(1, 3))
 		if(1)
-			stuttering = 1
+			stuttering += 30/severity //temporary, clears in a few ticks after silent is over.
 			to_chat(src, "<span class='danger'>Warning: Feedback loop detected in speech module.</span>")
 		if(2)
-			slurring = 1
+			slurring = INFINITY // permanent until speech is fixed through the pAI card UI by someone else.
 			to_chat(src, "<span class='danger'>Warning: Audio synthesizer CPU stuck.</span>")
 		if(3)
-			derpspeech = 1
+			derpspeech = 1 // Ditto.
 			to_chat(src, "<span class='danger'>Warning: Vocabulary databank corrupted.</span>")
 	if(prob(40))
 		mind.language_holder.selected_language = get_random_spoken_language()
 
 
 /mob/living/silicon/pai/ex_act(severity, target)
-	take_holo_damage(severity * 50)
+	take_holo_damage(50 * severity)
 	switch(severity)
-		if(1)	//RIP
+		if(EXPLODE_DEVASTATE) //RIP
 			qdel(card)
 			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			fold_in(force = 1)
 			Paralyze(400)
-		if(3)
+		if(EXPLODE_LIGHT)
 			fold_in(force = 1)
 			Paralyze(200)
 
-/mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
-	switch(user.a_intent)
-		if("help")
-			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
-		if("disarm")
-			visible_message("<span class='notice'>[user] boops [src] on the head!</span>")
-		if("harm")
-			user.do_attack_animation(src)
-			if (user.name == master)
-				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
-				if(do_after(user, 1 SECONDS, src))
-					fold_in()
-					if(user.put_in_hands(card))
-						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
-			else
-				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
-				take_holo_damage(2)
+/mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(user.combat_mode)
+		user.do_attack_animation(src)
+		if (user.name == master)
+			visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
+			if(do_after(user, 1 SECONDS, TRUE, src))
+				fold_in()
+				if(user.put_in_hands(card))
+					user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
+		else
+			visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
+			take_holo_damage(2)
+	else
+		visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
 
 /mob/living/silicon/pai/bullet_act(obj/projectile/Proj)
 	if(Proj.stun)

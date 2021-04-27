@@ -9,8 +9,8 @@
 		            /obj/item/reagent_containers/food/drinks/mug/coco = 3)
 	contraband = list(/obj/item/reagent_containers/food/drinks/ice = 12)
 	refill_canister = /obj/item/vending_refill/coffee
-	default_price = 45
-	extra_price = 150
+	default_price = PAYCHECK_PRISONER
+	extra_price = PAYCHECK_ASSISTANT
 	payment_department = ACCOUNT_SRV
 	light_mask = "coffee-light-mask"
 	light_color = COLOR_DARK_MODERATE_ORANGE

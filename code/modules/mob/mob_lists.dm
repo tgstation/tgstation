@@ -10,6 +10,8 @@
 
 ///Adds the mob reference to the list of all mobs alive. If mob is cliented, it adds it to the list of all living player-mobs.
 /mob/proc/add_to_alive_mob_list()
+	if(QDELETED(src))
+		return
 	GLOB.alive_mob_list |= src
 	if(client)
 		add_to_current_living_players()
@@ -23,6 +25,8 @@
 
 ///Adds the mob reference to the list of all the dead mobs. If mob is cliented, it adds it to the list of all dead player-mobs.
 /mob/proc/add_to_dead_mob_list()
+	if(QDELETED(src))
+		return
 	GLOB.dead_mob_list |= src
 	if(client)
 		add_to_current_dead_players()

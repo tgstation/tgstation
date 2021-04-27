@@ -1,6 +1,6 @@
 /**
-  * General proc used to expel a holder's contents through src (for bins holder is also the src).
-  */
+ * General proc used to expel a holder's contents through src (for bins holder is also the src).
+ */
 /obj/proc/pipe_eject(obj/holder, direction, throw_em = TRUE, turf/target, throw_range = 5, throw_speed = 1)
 	var/turf/src_T = get_turf(src)
 	for(var/A in holder)

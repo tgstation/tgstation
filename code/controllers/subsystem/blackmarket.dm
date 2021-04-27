@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(blackmarket)
-	name		 = "Blackmarket"
-	flags		 = SS_BACKGROUND
-	init_order	 = INIT_ORDER_DEFAULT
+	name  = "Blackmarket"
+	flags  = SS_BACKGROUND
+	init_order  = INIT_ORDER_DEFAULT
 
 	/// Descriptions for each shipping methods.
 	var/shipping_method_descriptions = list(
@@ -11,11 +11,11 @@ SUBSYSTEM_DEF(blackmarket)
 	)
 
 	/// List of all existing markets.
-	var/list/datum/blackmarket_market/markets		= list()
+	var/list/datum/blackmarket_market/markets = list()
 	/// List of existing ltsrbts.
-	var/list/obj/machinery/ltsrbt/telepads			= list()
+	var/list/obj/machinery/ltsrbt/telepads = list()
 	/// Currently queued purchases.
-	var/list/queued_purchases 						= list()
+	var/list/queued_purchases = list()
 
 /datum/controller/subsystem/blackmarket/Initialize(timeofday)
 	for(var/market in subtypesof(/datum/blackmarket_market))

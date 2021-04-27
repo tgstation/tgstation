@@ -18,7 +18,7 @@
 	max_occurrences = 10
 
 /datum/round_event/rabbitrelease/announce(fake)
-	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", 'sound/ai/aliens.ogg')
+	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", ANNOUNCER_ALIENS)
 
 
 /datum/round_event/rabbitrelease/start()
@@ -43,7 +43,7 @@
 	emote_see = list("hops around","bounces up and down")
 	butcher_results = list(/obj/item/food/meat/slab = 1)
 	egg_type = /obj/item/food/egg/loaded
-	food_type = /obj/item/reagent_containers/food/snacks/grown/carrot
+	food_type = /obj/item/food/grown/carrot
 	eggsleft = 10
 	eggsFertile = FALSE
 	icon_prefix = "rabbit"
@@ -51,6 +51,10 @@
 	layMessage = list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling.")
 	pet_bonus = TRUE
 	pet_bonus_emote = "hops around happily!"
+	can_be_held = TRUE
+
+/mob/living/simple_animal/chicken/rabbit/empty //top hats summon these kinds of rabbits instead of the normal kind
+	eggsleft = 0 //if you want to harvest toys and easter bunny gear from these guys, you're gonna need to feed them carrots first
 
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"
@@ -90,15 +94,17 @@
 	icon_state = "bunnyhead"
 	inhand_icon_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'."
-	slowdown = -1
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	slowdown = -0.3
+	clothing_flags = THICKMATERIAL | SNUG_FIT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/suit/bunnysuit
 	name = "Easter Bunny Suit"
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
 	inhand_icon_state = "bunnysuit"
-	slowdown = -1
+	slowdown = -0.3
+	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -125,7 +131,7 @@
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
 	/obj/item/storage/backpack/satchel/bunnysatchel,
-	/obj/item/reagent_containers/food/snacks/grown/carrot,
+	/obj/item/food/grown/carrot,
 	/obj/item/toy/balloon,
 	/obj/item/toy/gun,
 	/obj/item/toy/sword,
@@ -165,20 +171,24 @@
 		qdel(src)
 
 //Easter Recipes + food
-/obj/item/reagent_containers/food/snacks/hotcrossbun
-	bitesize = 2
-	name = "hot-cross bun"
-	desc = "The Cross represents the Assistants that died for your sins."
+/obj/item/food/hotcrossbun
+	name = "hot cross bun"
+	desc = "The cross represents the Assistants that died for your sins."
 	icon_state = "hotcrossbun"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/sugar = 1)
+	foodtypes = SUGAR | GRAIN | BREAKFAST
+	tastes = list("pastry" = 1, "easter" = 1)
+	bite_consumption = 2
 
 /datum/crafting_recipe/food/hotcrossbun
-	name = "Hot-Cross Bun"
+	name = "Hot Cross Bun"
 	reqs = list(
-		/obj/item/food/bread/plain = 1,
+		/obj/item/food/breadslice/plain = 1,
 		/datum/reagent/consumable/sugar = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/hotcrossbun
-	subcategory = CAT_MISCFOOD
+	result = /obj/item/food/hotcrossbun
+
+	subcategory = CAT_BREAD
 
 /datum/crafting_recipe/food/briochecake
 	name = "Brioche cake"
@@ -189,14 +199,12 @@
 	result = /obj/item/food/cake/brioche
 	subcategory = CAT_MISCFOOD
 
-/obj/item/reagent_containers/food/snacks/scotchegg
+/obj/item/food/scotchegg
 	name = "scotch egg"
 	desc = "A boiled egg wrapped in a delicious, seasoned meatball."
 	icon_state = "scotchegg"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	bitesize = 3
-	filling_color = "#FFFFF0"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	bite_consumption = 3
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 
 /datum/crafting_recipe/food/scotchegg
 	name = "Scotch egg"
@@ -206,32 +214,30 @@
 		/obj/item/food/boiledegg = 1,
 		/obj/item/food/meatball = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/scotchegg
-	subcategory = CAT_MISCFOOD
+	result = /obj/item/food/scotchegg
+	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/mammi
 	name = "Mammi"
 	reqs = list(
 		/obj/item/food/bread/plain = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/food/soup/mammi
 	subcategory = CAT_MISCFOOD
 
-/obj/item/reagent_containers/food/snacks/chocolatebunny
+/obj/item/food/chocolatebunny
 	name = "chocolate bunny"
 	desc = "Contains less than 10% real rabbit!"
 	icon_state = "chocolatebunny"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2)
-	filling_color = "#A0522D"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 
 /datum/crafting_recipe/food/chocolatebunny
 	name = "Chocolate bunny"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 2,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
+		/obj/item/food/chocolatebar = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/chocolatebunny
+	result = /obj/item/food/chocolatebunny
 	subcategory = CAT_MISCFOOD

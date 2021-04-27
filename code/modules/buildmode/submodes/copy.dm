@@ -13,16 +13,14 @@
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
 /datum/buildmode_mode/copy/handle_click(client/c, params, obj/object)
-	var/list/pa = params2list(params)
-	var/left_click = pa.Find("left")
-	var/right_click = pa.Find("right")
+	var/list/modifiers = params2list(params)
 
-	if(left_click)
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		var/turf/T = get_turf(object)
 		if(stored)
 			DuplicateObject(stored, perfectcopy=1, sameloc=0,newloc=T)
 			log_admin("Build Mode: [key_name(c)] copied [stored] to [AREACOORD(object)]")
-	else if(right_click)
+	else if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(ismovable(object)) // No copying turfs for now.
 			to_chat(c, "<span class='notice'>[object] set as template.</span>")
 			stored = object

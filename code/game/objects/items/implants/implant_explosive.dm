@@ -11,8 +11,14 @@
 	var/popup = FALSE // is the DOUWANNABLOWUP window open?
 	var/active = FALSE
 
-/obj/item/implant/explosive/on_mob_death(mob/living/L, gibbed)
-	activate("death")
+/obj/item/implant/explosive/proc/on_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+
+	// There may be other signals that want to handle mob's death
+	// and the process of activating destroys the body, so let the other
+	// signal handlers at least finish. Also, the "delayed explosion"
+	// uses sleeps, which is bad for signal handlers to do.
+	INVOKE_ASYNC(src, .proc/activate, "death")
 
 /obj/item/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -45,7 +51,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
-		explosion(src,heavy,medium,weak,weak, flame_range = weak)
+		explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak)
 		if(imp_in)
 			imp_in.gib(1)
 		qdel(src)
@@ -61,9 +67,11 @@
 			imp_e.weak += weak
 			imp_e.delay += delay
 			qdel(src)
-			return 1
+			return TRUE
 
-	return ..()
+	. = ..()
+	if(.)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
 
 /obj/item/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message("<span class='warning'>[imp_in] starts beeping ominously!</span>")
@@ -78,7 +86,7 @@
 	sleep(delay*0.25)
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
-	explosion(src,heavy,medium,weak,weak, flame_range = weak)
+	explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak)
 	if(imp_in)
 		imp_in.gib(1)
 	qdel(src)

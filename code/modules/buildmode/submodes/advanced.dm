@@ -1,6 +1,6 @@
 /datum/buildmode_mode/advanced
 	key = "advanced"
-	var/objholder = null
+	var/atom/objholder = null
 
 // FIXME: add logic which adds a button displaying the icon
 // of the currently selected path
@@ -30,10 +30,10 @@
 			return
 
 /datum/buildmode_mode/advanced/handle_click(client/c, params, obj/object)
-	var/list/pa = params2list(params)
-	var/left_click = pa.Find("left")
-	var/right_click = pa.Find("right")
-	var/alt_click = pa.Find("alt")
+	var/list/modifiers = params2list(params)
+	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
+	var/right_click = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/alt_click = LAZYACCESS(modifiers, ALT_CLICK)
 
 	if(left_click && alt_click)
 		if (istype(object, /turf) || istype(object, /obj) || istype(object, /mob))
@@ -45,7 +45,12 @@
 		if(ispath(objholder,/turf))
 			var/turf/T = get_turf(object)
 			log_admin("Build Mode: [key_name(c)] modified [T] in [AREACOORD(object)] to [objholder]")
-			T.ChangeTurf(objholder)
+			T = T.ChangeTurf(objholder)
+			T.setDir(BM.build_dir)
+		else if(ispath(objholder, /obj/effect/turf_decal))
+			var/turf/T = get_turf(object)
+			T.AddElement(/datum/element/decal, initial(objholder.icon), initial(objholder.icon_state), BM.build_dir, FALSE, initial(objholder.color), null, null, initial(objholder.alpha))
+			log_admin("Build Mode: [key_name(c)] in [AREACOORD(object)] added a [initial(objholder.name)] decal with dir [BM.build_dir] to [T]")
 		else if(!isnull(objholder))
 			var/obj/A = new objholder (get_turf(object))
 			A.setDir(BM.build_dir)

@@ -46,7 +46,7 @@
 		if(allowed(user) || !registered_name || (istype(I) && (registered_name == I.registered_name)))
 			//they can open all lockers, or nobody owns this, or they own this locker
 			locked = !locked
-			update_icon()
+			update_appearance()
 
 			if(!registered_name)
 				registered_name = I.registered_name

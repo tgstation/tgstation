@@ -1,7 +1,7 @@
-#define MONKEYS_ESCAPED		1
-#define MONKEYS_LIVED		2
-#define MONKEYS_DIED		3
-#define DISEASE_LIVED		4
+#define MONKEYS_ESCAPED 1
+#define MONKEYS_LIVED 2
+#define MONKEYS_DIED 3
+#define DISEASE_LIVED 4
 
 /datum/antagonist/monkey
 	name = "Monkey"
@@ -20,7 +20,6 @@
 
 /datum/antagonist/monkey/on_gain()
 	. = ..()
-	SSticker.mode.ape_infectees += owner
 	owner.special_role = "Infected Monkey"
 
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
@@ -39,7 +38,6 @@
 
 /datum/antagonist/monkey/on_removal()
 	owner.special_role = null
-	SSticker.mode.ape_infectees -= owner
 
 	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.diseases
 	if(D)
@@ -77,14 +75,14 @@
 	objectives |= monkey_team.objectives
 
 /datum/antagonist/monkey/admin_remove(mob/admin)
-	var/mob/living/carbon/monkey/M = owner.current
-	if(istype(M))
+	var/mob/living/carbon/human/M = owner.current
+	if(ismonkey(M))
 		switch(alert(admin, "Humanize?", "Humanize", "Yes", "No"))
 			if("Yes")
 				if(admin == M)
-					admin = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  | TR_KEEPSTUNS | TR_KEEPREAGENTS |  TR_DEFAULTMSG)
+					admin = M.humanize()
 				else
-					M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_KEEPSTUNS  |  TR_KEEPREAGENTS  |  TR_DEFAULTMSG)
+					M.humanize()
 			if("No")
 				//nothing
 			else
@@ -116,11 +114,9 @@
 	. = ..()
 	var/obj/item/organ/heart/freedom/F = new
 	F.Insert(owner.current, drop_if_replaced = FALSE)
-	SSticker.mode.ape_leaders += owner
 	owner.special_role = "Monkey Leader"
 
 /datum/antagonist/monkey/leader/on_removal()
-	SSticker.mode.ape_leaders -= owner
 	var/obj/item/organ/heart/H = new
 	H.Insert(owner.current, drop_if_replaced = FALSE) //replace freedom heart with normal heart
 
@@ -144,7 +140,9 @@
 
 /datum/objective/monkey/check_completion()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			continue
 		if (M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
 			escaped_monkeys++
 	if(escaped_monkeys >= monkeys_to_win)
@@ -162,14 +160,18 @@
 
 /datum/team/monkey/proc/infected_monkeys_alive()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			continue
 		if(M.HasDisease(D))
 			return TRUE
 	return FALSE
 
 /datum/team/monkey/proc/infected_monkeys_escaped()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			continue
 		if(M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
 			return TRUE
 	return FALSE
@@ -217,8 +219,8 @@
 
 	if(LAZYLEN(leaders))
 		parts += "<span class='header'>The monkey leaders were:</span>"
-		parts += printplayerlist(SSticker.mode.ape_leaders)
+		parts += printplayerlist(leaders)
 	if(LAZYLEN(monkeys))
 		parts += "<span class='header'>The monkeys were:</span>"
-		parts += printplayerlist(SSticker.mode.ape_infectees)
+		parts += printplayerlist(monkeys)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

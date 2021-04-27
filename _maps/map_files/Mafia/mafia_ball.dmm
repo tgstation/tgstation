@@ -52,21 +52,21 @@
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "o" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
@@ -78,21 +78,21 @@
 /turf/closed/indestructible/fakeglass,
 /area/mafia)
 "q" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "r" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "s" = (
 /turf/open/floor/fakespace,
 /area/mafia)
 "t" = (
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/iron/solarpanel,
 /area/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/iron/solarpanel,
 /area/mafia)
 "v" = (
 /obj/mafia_game_board,

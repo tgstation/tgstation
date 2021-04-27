@@ -2,7 +2,7 @@
 	form = "Virus"
 	name = "Cellular Degeneration"
 	max_stages = 5
-	stage_prob = 1
+	stage_prob = 0.5
 	cure_text = "Rezadone or death."
 	agent = "Severe Genetic Damage"
 	viable_mobtypes = list(/mob/living/carbon/human)
@@ -13,7 +13,7 @@
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	process_dead = TRUE
 
-/datum/disease/decloning/stage_act()
+/datum/disease/decloning/stage_act(delta_time, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -24,38 +24,38 @@
 
 	switch(stage)
 		if(2)
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				affected_mob.emote("itch")
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				affected_mob.emote("yawn")
 		if(3)
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				affected_mob.emote("itch")
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				affected_mob.emote("drool")
-			if(prob(3))
+			if(DT_PROB(1.5, delta_time))
 				affected_mob.adjustCloneLoss(1, FALSE)
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, "<span class='danger'>Your skin feels strange.</span>")
 
 		if(4)
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				affected_mob.emote("itch")
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				affected_mob.emote("drool")
-			if(prob(5))
+			if(DT_PROB(2.5, delta_time))
 				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 170)
 				affected_mob.adjustCloneLoss(2, FALSE)
-			if(prob(15))
+			if(DT_PROB(7.5, delta_time))
 				affected_mob.stuttering += 3
 		if(5)
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				affected_mob.emote("itch")
-			if(prob(2))
+			if(DT_PROB(1, delta_time))
 				affected_mob.emote("drool")
-			if(prob(5))
+			if(DT_PROB(2.5, delta_time))
 				to_chat(affected_mob, "<span class='danger'>Your skin starts degrading!</span>")
-			if(prob(10))
+			if(DT_PROB(5, delta_time))
 				affected_mob.adjustCloneLoss(5, FALSE)
 				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2, 170)
 			if(affected_mob.cloneloss >= 100)

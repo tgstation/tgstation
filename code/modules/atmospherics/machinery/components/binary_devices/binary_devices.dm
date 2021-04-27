@@ -5,6 +5,7 @@
 	use_power = IDLE_POWER_USE
 	device_type = BINARY
 	layer = GAS_PUMP_LAYER
+	pipe_flags = PIPING_BRIDGE
 
 /obj/machinery/atmospherics/components/binary/SetInitDirections()
 	switch(dir)
@@ -16,7 +17,11 @@
 /obj/machinery/atmospherics/components/binary/getNodeConnects()
 	return list(turn(dir, 180), dir)
 
-///Used by binary devices to set what the offset will be for each layer
+/**
+ * Used by binary devices to set what the offset will be for each layer, called in update_icon_nopipes()
+ * Arguments:
+ * * -pipe_layer: is the pipe layer the component should be set to
+ */
 /obj/machinery/atmospherics/components/binary/proc/set_overlay_offset(pipe_layer)
 	switch(pipe_layer)
 		if(1, 3, 5)

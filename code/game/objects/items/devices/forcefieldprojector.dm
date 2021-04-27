@@ -84,6 +84,7 @@
 	icon_state = "forcefield"
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
+	pass_flags_self = PASSGLASS
 	density = TRUE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	resistance_flags = INDESTRUCTIBLE
@@ -101,11 +102,6 @@
 	generator.current_fields -= src
 	generator = null
 	return ..()
-
-/obj/structure/projected_forcefield/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return TRUE
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)

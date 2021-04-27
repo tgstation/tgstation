@@ -1,14 +1,43 @@
 rules:
   ## Enforce a maximum cyclomatic complexity allowed in a program
-  complexity: [error, { max: 25 }]
+  # complexity: [warn, { max: 25 }]
   ## Enforce consistent brace style for blocks
-  brace-style: [error, stroustrup, { allowSingleLine: false }]
+  # brace-style: [warn, stroustrup, { allowSingleLine: false }]
   ## Enforce the consistent use of either backticks, double, or single quotes
-  quotes: [error, single, {
-    avoidEscape: true,
-    allowTemplateLiterals: true,
-  }]
-  react/jsx-closing-bracket-location: [error, {
-    selfClosing: after-props,
-    nonEmpty: after-props,
-  }]
+  # quotes: [warn, single, {
+  #   avoidEscape: true,
+  #   allowTemplateLiterals: true,
+  # }]
+  # react/jsx-closing-bracket-location: [warn, {
+  #   selfClosing: after-props,
+  #   nonEmpty: after-props,
+  # }]
+  # react/display-name: warn
+
+  ## Radar
+  ## ------------------------------------------------------
+  # radar/cognitive-complexity: warn
+  radar/max-switch-cases: warn
+  radar/no-all-duplicated-branches: warn
+  radar/no-collapsible-if: warn
+  radar/no-collection-size-mischeck: warn
+  radar/no-duplicate-string: warn
+  radar/no-duplicated-branches: warn
+  radar/no-element-overwrite: warn
+  radar/no-extra-arguments: warn
+  radar/no-identical-conditions: warn
+  radar/no-identical-expressions: warn
+  radar/no-identical-functions: warn
+  radar/no-inverted-boolean-check: warn
+  radar/no-one-iteration-loop: warn
+  radar/no-redundant-boolean: warn
+  radar/no-redundant-jump: warn
+  radar/no-same-line-conditional: warn
+  radar/no-small-switch: warn
+  radar/no-unused-collection: warn
+  radar/no-use-of-empty-return-value: warn
+  radar/no-useless-catch: warn
+  radar/prefer-immediate-return: warn
+  radar/prefer-object-literal: warn
+  radar/prefer-single-boolean-return: warn
+  radar/prefer-while: warn

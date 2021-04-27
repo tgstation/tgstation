@@ -1,4 +1,4 @@
-#define AIR_CONTENTS	((25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature))
+#define AIR_CONTENTS ((25*ONE_ATMOSPHERE)*(air_contents.volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature))
 /obj/machinery/atmospherics/components/unary/tank
 	icon = 'icons/obj/atmospherics/pipes/pressure_tank.dmi'
 	icon_state = "generic"
@@ -107,3 +107,9 @@
 
 /obj/machinery/atmospherics/components/unary/tank/zauker
 	gas_type = /datum/gas/zauker
+
+/obj/machinery/atmospherics/components/unary/tank/helium
+	gas_type = /datum/gas/helium
+
+/obj/machinery/atmospherics/components/unary/tank/antinoblium
+	gas_type = /datum/gas/antinoblium

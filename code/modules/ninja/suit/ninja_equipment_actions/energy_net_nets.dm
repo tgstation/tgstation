@@ -1,12 +1,12 @@
 /**
-  * # Energy Net
-  *
-  * Energy net which ensnares prey until it is destroyed.  Used by space ninjas.
-  *
-  * Energy net which keeps its target from moving until it is destroyed.  Used to send
-  * players to a holding area in which they could never leave, but such feature has since
-  * been removed.
-  */
+ * # Energy Net
+ *
+ * Energy net which ensnares prey until it is destroyed.  Used by space ninjas.
+ *
+ * Energy net which keeps its target from moving until it is destroyed.  Used to send
+ * players to a holding area in which they could never leave, but such feature has since
+ * been removed.
+ */
 /obj/structure/energy_net
 	name = "energy net"
 	desc = "It's a net made of green energy."
@@ -35,10 +35,10 @@
 	affecting = null
 	return ..()
 
-/obj/structure/energy_net/attack_paw(mob/user)
-	return attack_hand()
+/obj/structure/energy_net/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/energy_net/user_buckle_mob(mob/living/M, mob/living/user)
+/obj/structure/energy_net/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	return//We only want our target to be buckled
 
 /obj/structure/energy_net/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)

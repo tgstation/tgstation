@@ -1,17 +1,17 @@
 /* Station-Collision(sc) away mission map specific stuff
  *
  * Notes:
- *		Feel free to use parts of this map, or even all of it for your own project. Just include me in the credits :)
+ * Feel free to use parts of this map, or even all of it for your own project. Just include me in the credits :)
  *
- *		Some of this code unnecessary, but the intent is to add a little bit of everything to serve as examples
- *		for anyone who wants to make their own stuff.
+ * Some of this code unnecessary, but the intent is to add a little bit of everything to serve as examples
+ * for anyone who wants to make their own stuff.
  *
  * Contains:
- *		Landmarks
- *		Guns
- *		Safe code hints
- *		Captain's safe
- *		Modified Nar'Sie
+ * Landmarks
+ * Guns
+ * Safe code hints
+ * Captain's safe
+ * Modified Nar'Sie
  */
 
 
@@ -135,22 +135,3 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	new /obj/item/clothing/suit/space/hardsuit/cult(src)
 	//new /obj/item/teleportation_scroll(src)
 	new /obj/item/stack/ore/diamond(src)
-
-/*
- * Modified Nar'Sie
- */
-/obj/singularity/narsie/mini
-	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."
-	move_self = 0 //Contianed narsie does not move!
-	grav_pull = 0 //Contained narsie does not pull stuff in!
-//Override this to prevent no adminlog runtimes and admin warnings about a singularity without containment
-/obj/singularity/narsie/mini/admin_investigate_setup()
-	return
-
-/obj/singularity/narsie/mini/process(delta_time)
-	eat()
-	if(DT_PROB(13, delta_time))
-		mezzer()
-
-/obj/singularity/narsie/mini/ex_act()
-	return

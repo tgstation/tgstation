@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/pointed/mind_transfer
 	name = "Mind Transfer"
 	desc = "This spell allows the user to switch bodies with a target next to him."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "GIN'YU CAPAN"
@@ -50,7 +50,7 @@
 
 	ghost.mind.transfer_to(user)
 	if(ghost.key)
-		user.key = ghost.key	//have to transfer the key since the mind was not active
+		user.key = ghost.key //have to transfer the key since the mind was not active
 	qdel(ghost)
 	//MIND TRANSFER END
 

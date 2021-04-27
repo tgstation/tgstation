@@ -22,7 +22,7 @@
 	if((status == WAITING_FOR_SOMETHING))
 		if(retry >= MAX_SPAWN_ATTEMPT)
 			message_admins("[role_name] event has exceeded maximum spawn attempts. Aborting and refunding.")
-			if(control && control.occurrences > 0)	//Don't refund if it hasn't
+			if(control && control.occurrences > 0) //Don't refund if it hasn't
 				control.occurrences--
 			return
 		var/waittime = 300 * (2^retry)
@@ -56,14 +56,14 @@
 	// players could be found, and just runtime if anything else happens
 	return TRUE
 
-/datum/round_event/ghost_role/proc/get_candidates(jobban, gametypecheck, be_special)
+/datum/round_event/ghost_role/proc/get_candidates(jobban, be_special)
 	// Returns a list of candidates in priority order, with candidates from
 	// `priority_candidates` first, and ghost roles randomly shuffled and
 	// appended after
 	var/list/mob/dead/observer/regular_candidates
 	// don't get their hopes up
 	if(priority_candidates.len < minimum_required)
-		regular_candidates = pollGhostCandidates("Do you wish to be considered for the special role of '[role_name]'?", jobban, gametypecheck, be_special)
+		regular_candidates = pollGhostCandidates("Do you wish to be considered for the special role of '[role_name]'?", jobban, be_special)
 	else
 		regular_candidates = list()
 

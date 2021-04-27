@@ -21,7 +21,7 @@
 		return MAP_ERROR
 	var/turf/landing_turf = pick(possible_spawns)
 	var/list/possible_backstories = list()
-	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
+	var/list/candidates = get_candidates(ROLE_TRAITOR, ROLE_TRAITOR)
 	if(candidates.len >= 1) //solo refugees
 		if(prob(30))
 			possible_backstories.Add("waldo") //less common as it comes with magicks and is kind of immershun shattering
@@ -86,7 +86,7 @@
 	spawned_mobs += S
 	return S
 
- //special spawn for one member. it can be used for a special mob or simply to give one normal member special items.
+///special spawn for one member. it can be used for a special mob or simply to give one normal member special items.
 /datum/round_event/ghost_role/fugitives/proc/gear_fugitive_leader(mob/dead/leader, turf/landing_turf, backstory)
 	var/datum/mind/player_mind = new /datum/mind(leader.key)
 	player_mind.active = TRUE

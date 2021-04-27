@@ -30,7 +30,7 @@
 
 	if(SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE) && SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE))
 		to_chat(user, "<span class='warning'>No matter what way you try, you can't get [I] to fit inside [src].</span>")
-		return TRUE	//begone infinite storage ghosts, begone from me
+		return TRUE //begone infinite storage ghosts, begone from me
 
 	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, "<span class='warning'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
@@ -49,7 +49,7 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(SEND_SIGNAL(I.loc, COMSIG_CONTAINS_STORAGE))	//in a container.
+		if(SEND_SIGNAL(I.loc, COMSIG_CONTAINS_STORAGE)) //in a container.
 			SEND_SIGNAL(I.loc, COMSIG_TRY_STORAGE_TAKE, I, src)
 		if(!user.dropItemToGround(I))
 			return
@@ -65,7 +65,7 @@
 	in_evidence.pixel_x = 0
 	in_evidence.pixel_y = 0
 	add_overlay(in_evidence)
-	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
+	add_overlay("evidence") //should look nicer for transparent stuff. not really that important, but hey.
 
 	desc = "An evidence bag containing [I]. [I.desc]"
 	I.forceMove(src)
@@ -77,7 +77,7 @@
 		var/obj/item/I = contents[1]
 		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>",\
 		"<span class='hear'>You hear someone rustle around in a plastic bag, and remove something.</span>")
-		cut_overlays()	//remove the overlays
+		cut_overlays() //remove the overlays
 		user.put_in_hands(I)
 		w_class = WEIGHT_CLASS_TINY
 		icon_state = "evidenceobj"

@@ -22,6 +22,9 @@
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	light_on = FALSE
+	/// Whether we currently have the flashing overlay.
+	var/flashing = FALSE
+	/// The overlay we use for flashing.
 	var/flashing_overlay = "flash-f"
 	var/times_used = 0 //Number of times it's been used.
 	var/burnt_out = FALSE     //Is the flash burnt out?
@@ -30,6 +33,9 @@
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
+/obj/item/assembly/flash/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
@@ -42,18 +48,30 @@
 	attack(user,user)
 	return FIRELOSS
 
-/obj/item/assembly/flash/update_icon(flash = FALSE)
-	cut_overlays()
-	attached_overlays = list()
-	if(burnt_out)
-		add_overlay("flashburnt")
-		attached_overlays += "flashburnt"
+/obj/item/assembly/flash/update_icon(updates=ALL, flash = FALSE)
+	flashing = flash
+	. = ..()
 	if(flash)
-		add_overlay(flashing_overlay)
-		attached_overlays += flashing_overlay
 		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
-	if(holder)
-		holder.update_icon()
+	holder?.update_icon(updates)
+
+/obj/item/assembly/flash/update_overlays()
+	attached_overlays = list()
+	. = ..()
+	if(burnt_out)
+		. += "flashburnt"
+		attached_overlays += "flashburnt"
+	if(flashing)
+		. += flashing_overlay
+		attached_overlays += flashing_overlay
+
+/obj/item/assembly/flash/update_name()
+	name = "[burnt_out ? "burnt-out [initial(name)]" : "[initial(name)]"]"
+	return ..()
+
+/obj/item/assembly/flash/update_desc()
+	desc = "[burnt_out ? "[initial(desc)] It's burnt out." : "[initial(desc)]"]"
+	return ..()
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -64,13 +82,8 @@
 /obj/item/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	if(!burnt_out)
 		burnt_out = TRUE
-		update_icon()
-	if(ismob(loc))
-		var/mob/M = loc
-		M.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
-	else
-		var/turf/T = get_turf(src)
-		T.visible_message("<span class='danger'>[src] burns out!</span>")
+		loc?.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
+		update_appearance()
 
 /obj/item/assembly/flash/proc/flash_recharge(interval = 10)
 	var/deciseconds_passed = world.time - last_used
@@ -113,7 +126,7 @@
 	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
 	flash_recharge()
-	update_icon(TRUE)
+	update_icon(ALL, TRUE)
 	if(user && !clown_check(user))
 		return FALSE
 	return TRUE
@@ -123,16 +136,16 @@
 	set_light_on(FALSE)
 
 /**
-  * Handles actual flashing part of the attack
-  *
-  *	This proc is awful in every sense of the way, someone should definately refactor this whole code.
-  * Arguments:
-  * * M - Victim
-  * * user - Attacker
-  *	* power - handles the amount of confusion it gives you
-  * * targeted - determines if it was aoe or targeted
-  * * generic_message - checks if it should display default message.
-  */
+ * Handles actual flashing part of the attack
+ *
+ * This proc is awful in every sense of the way, someone should definately refactor this whole code.
+ * Arguments:
+ * * M - Victim
+ * * user - Attacker
+ * * power - handles the amount of confusion it gives you
+ * * targeted - determines if it was aoe or targeted
+ * * generic_message - checks if it should display default message.
+ */
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
@@ -157,25 +170,19 @@
 			if(M.get_confusion() < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 				M.add_confusion(min(power, diff))
-				// Special check for if we're a revhead. Special cases to attempt conversion.
-				if(converter)
-					// Did we try to flash them from behind?
-					if(deviation == DEVIATION_FULL)
-						// If we did and we're on help intent, fail with a feedback message and return.
-						if(converter.owner.current.a_intent == INTENT_HELP)
-							to_chat(user, "<span class='notice'>You try to use the tacticool tier, lean over the shoulder technique to blind [M] from behind but your poor combat stance causes you to stumble!</span>")
-							visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
-							return
-						// Otherwise, tacticool leaning technique engaged for sideways-stun power.
-						to_chat(user, "<span class='notice'>You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!</span>")
-						deviation = DEVIATION_PARTIAL
-					// Convert them. Terribly.
-					terrible_conversion_proc(M, user)
-					visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>","<span class='userdanger'>[user] blinds you with the flash!</span>")
+			// Special check for if we're a revhead. Special cases to attempt conversion.
+			if(converter)
+				// Did we try to flash them from behind?
+				if(deviation == DEVIATION_FULL)
+					// Headrevs can use a tacticool leaning technique so that they don't have to worry about facing for their conversions.
+					to_chat(user, "<span class='notice'>You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!</span>")
+					deviation = DEVIATION_PARTIAL
+				// Convert them. Terribly.
+				terrible_conversion_proc(M, user)
+				visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>","<span class='userdanger'>[user] blinds you with the flash!</span>")
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			M.adjustStaminaLoss(rand(80,120)*(1-(deviation*0.5)))
 			M.Paralyze(rand(25,50)*(1-(deviation*0.5)))
-
 		else if(user)
 			visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
 		else
@@ -186,18 +193,21 @@
 			M.add_confusion(min(power, diff))
 
 /**
-  * Handles the directionality of the attack
-  *
-  *	Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
-  * Arguments:
-  * * victim - Victim
-  * * attacker - Attacker
-  */
+ * Handles the directionality of the attack
+ *
+ * Returns the amount of 'deviation', 0 being facing eachother, 1 being sideways, 2 being facing away from eachother.
+ * Arguments:
+ * * victim - Victim
+ * * attacker - Attacker
+ */
 /obj/item/assembly/flash/proc/calculate_deviation(mob/victim, atom/attacker)
 	// Tactical combat emote-spinning should not counter intended gameplay mechanics.
 	// This trumps same-loc checks to discourage floor spinning in general to counter flashes.
 	// In short, combat spinning is silly and you should feel silly for doing it.
 	if(victim.flags_1 & IS_SPINNING_1)
+		return DEVIATION_NONE
+
+	if(HAS_TRAIT(victim, TRAIT_FLASH_SENSITIVE)) //Basically if you have Flypeople eyes
 		return DEVIATION_NONE
 
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down
@@ -233,19 +243,23 @@
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
 		return FALSE
+
+	. = TRUE
 	if(iscarbon(M))
-		flash_carbon(M, user, 5, 1)
-		return TRUE
-	else if(issilicon(M))
-		var/mob/living/silicon/robot/R = M
-		log_combat(user, R, "flashed", src)
-		update_icon(1)
-		R.Paralyze(rand(80,120))
+		flash_carbon(M, user, 5, TRUE)
+		return
+	if(issilicon(M))
+		var/mob/living/silicon/robot/flashed_borgo = M
+		log_combat(user, flashed_borgo, "flashed", src)
+		update_icon(ALL, TRUE)
+		if(!flashed_borgo.flash_act(affect_silicon = TRUE))
+			user.visible_message("<span class='warning'>[user] fails to blind [flashed_borgo] with the flash!</span>", "<span class='warning'>You fail to blind [flashed_borgo] with the flash!</span>")
+			return
+		flashed_borgo.Paralyze(rand(80,120))
 		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
-		R.add_confusion(min(5, diff))
-		R.flash_act(affect_silicon = 1)
-		user.visible_message("<span class='warning'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
-		return TRUE
+		flashed_borgo.add_confusion(min(5, diff))
+		user.visible_message("<span class='warning'>[user] overloads [flashed_borgo]'s sensors with the flash!</span>", "<span class='danger'>You overload [flashed_borgo]'s sensors with the flash!</span>")
+		return
 
 	user.visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
 
@@ -271,12 +285,12 @@
 	AOE_flash()
 
 /**
-  * Converts the victim to revs
-  *
-  * Arguments:
-  * * victim - Victim
-  * * aggressor - Attacker
-  */
+ * Converts the victim to revs
+ *
+ * Arguments:
+ * * victim - Victim
+ * * aggressor - Attacker
+ */
 /obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/victim, mob/aggressor)
 	if(!istype(victim) || victim.stat == DEAD)
 		return
@@ -344,7 +358,7 @@
 	overheat = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	update_icon(1)
+	update_icon(ALL, TRUE)
 	return TRUE
 
 

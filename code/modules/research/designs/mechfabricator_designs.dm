@@ -679,7 +679,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_transform_clown
-	name = "Cyborg Upgrade (Clown Module)"
+	name = "Cyborg Upgrade (Clown Model)"
 	id = "borg_transform_clown"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/transform/clown
@@ -850,4 +850,14 @@
 	materials = list(/datum/material/iron = 750, /datum/material/glass = 750)
 	construction_time = 100
 	build_path = /obj/item/assembly/flash/handheld
+	category = list("Misc")
+
+/datum/design/maint_drone
+	name = "Maintenance Drone"
+	desc = "\"Repairs the station without bothering you!\" is what the marketing says."
+	id = "maint_drone"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = 800, /datum/material/glass = 350)
+	construction_time = 150
+	build_path = /obj/effect/mob_spawn/drone
 	category = list("Misc")

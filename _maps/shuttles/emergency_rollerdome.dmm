@@ -130,7 +130,7 @@
 /area/shuttle/escape)
 "wf" = (
 /obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
-/turf/open/floor/plasteel/elevatorshaft,
+/turf/open/floor/iron/elevatorshaft,
 /area/shuttle/escape)
 "wn" = (
 /obj/structure/chair/comfy/brown{
@@ -182,7 +182,7 @@
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "Dh" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "DR" = (
@@ -200,7 +200,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "HA" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "HS" = (

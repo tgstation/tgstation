@@ -20,8 +20,8 @@ OOC_DURING_ROUND
 EMOJIS
 
 ## HEART COMMENDATIONS ###
-## Uncomment this if you'd like to enable commendation pollings for this percentage of players near the end of the round (5% default)
-## COMMENDATIONS 0.05
+## Uncomment this if you'd like to enable commendation pollings for this percentage of players near the end of the round (5% suggested)
+COMMENDATION_PERCENT_POLL 0.05
 
 ## MOB MOVEMENT ###
 
@@ -42,7 +42,6 @@ WALK_DELAY 4
 ## /mob/living/carbon/human on the last entry, the last entry will override the first.
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
 MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
@@ -270,11 +269,11 @@ ALLOW_AI
 ALLOW_AI_MULTICAM
 
 ## Secborg ###
-## Uncomment to prevent the security cyborg module from being chosen
+## Uncomment to prevent the security cyborg model from being chosen
 #DISABLE_SECBORG
 
 ## Peacekeeper Borg ###
-## Uncomment to prevent the peacekeeper cyborg module from being chosen
+## Uncomment to prevent the peacekeeper cyborg model from being chosen
 #DISABLE_PEACEBORG
 
 ## AWAY MISSIONS ###
@@ -313,7 +312,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 #EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this out this to make security officers spawn in departmental security posts
-SEC_START_BRIG
+#SEC_START_BRIG
 
 
 ## GHOST INTERACTION ###
@@ -564,3 +563,10 @@ RATCAP 64
 
 ## Maximum fine for a citation
 MAXFINE 2000
+
+## Which role is required of playtime to be eligible for Maintenance Drones
+## See code/__DEFINES/preferences.dm for available options, use the string portion without quotes
+#DRONE_REQUIRED_ROLE Silicon
+
+## How many played hours of DRONE_REQUIRED_ROLE required to be a Maintenance Done
+#DRONE_ROLE_PLAYTIME 40

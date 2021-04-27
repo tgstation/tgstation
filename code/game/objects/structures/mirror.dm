@@ -14,7 +14,7 @@
 	if(icon_state == "mirror_broke" && !broken)
 		obj_break(null, mapload)
 
-/obj/structure/mirror/attack_hand(mob/user)
+/obj/structure/mirror/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -31,7 +31,7 @@
 		if(H.gender != FEMALE)
 			var/new_style = input(user, "Select a facial hairstyle", "Grooming")  as null|anything in GLOB.facial_hairstyles_list
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-				return	//no tele-grooming
+				return //no tele-grooming
 			if(new_style)
 				H.facial_hairstyle = new_style
 		else
@@ -40,7 +40,7 @@
 		//handle normal hair
 		var/new_style = input(user, "Select a hairstyle", "Grooming")  as null|anything in GLOB.hairstyles_list
 		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-			return	//no tele-grooming
+			return //no tele-grooming
 		if(HAS_TRAIT(H, TRAIT_BALD))
 			to_chat(H, "<span class='notice'>If only growing back hair were that easy for you...</span>")
 		if(new_style)
@@ -53,14 +53,34 @@
 		return list()// no message spam
 	return ..()
 
+/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user)
+	if(broken || !istype(user) || !I.force)
+		return ..()
+
+	. = ..()
+	if(broken) // breaking a mirror truly gets you bad luck!
+		to_chat(user, "<span class='warning'>A chill runs down your spine as [src] shatters...</span>")
+		user.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
+
+/obj/structure/mirror/bullet_act(obj/projectile/P)
+	if(broken || !isliving(P.firer) || !P.damage)
+		return ..()
+
+	. = ..()
+	if(broken) // breaking a mirror truly gets you bad luck!
+		var/mob/living/unlucky_dude = P.firer
+		to_chat(unlucky_dude, "<span class='warning'>A chill runs down your spine as [src] shatters...</span>")
+		unlucky_dude.AddComponent(/datum/component/omen, silent=TRUE) // we have our own message
+
 /obj/structure/mirror/obj_break(damage_flag, mapload)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		icon_state = "mirror_broke"
-		if(!mapload)
-			playsound(src, "shatter", 70, TRUE)
-		if(desc == initial(desc))
-			desc = "Oh no, seven years of bad luck!"
-		broken = TRUE
+	if(broken || (flags_1 & NODECONSTRUCT_1))
+		return
+	icon_state = "mirror_broke"
+	if(!mapload)
+		playsound(src, "shatter", 70, TRUE)
+	if(desc == initial(desc))
+		desc = "Oh no, seven years of bad luck!"
+	broken = TRUE
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -70,7 +90,7 @@
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
 	..()
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return FALSE
 
 	if(!broken)
@@ -122,7 +142,7 @@
 			choosable_races += initial(S.id)
 	..()
 
-/obj/structure/mirror/magic/attack_hand(mob/user)
+/obj/structure/mirror/magic/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

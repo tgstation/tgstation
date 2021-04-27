@@ -4,23 +4,21 @@
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
 	key_type = /obj/item/key/janitor
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 	var/obj/item/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
+	movedelay = 1
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
-	update_icon()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
+	update_appearance()
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
 
 	if(floorbuffer)
 		AddElement(/datum/element/cleaning)
 
 /obj/vehicle/ridden/janicart/Destroy()
 	if(mybag)
-		qdel(mybag)
-		mybag = null
+		QDEL_NULL(mybag)
 	return ..()
 
 /obj/item/janiupgrade
@@ -43,7 +41,7 @@
 			return
 		to_chat(user, "<span class='notice'>You hook the trashbag onto [src].</span>")
 		mybag = I
-		update_icon()
+		update_appearance()
 	else if(istype(I, /obj/item/janiupgrade))
 		if(floorbuffer)
 			to_chat(user, "<span class='warning'>[src] already has a floor buffer!</span>")
@@ -52,7 +50,7 @@
 		qdel(I)
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
 		AddElement(/datum/element/cleaning)
-		update_icon()
+		update_appearance()
 	else if(mybag)
 		mybag.attackby(I, user)
 	else
@@ -65,15 +63,14 @@
 	if(floorbuffer)
 		. += "cart_buffer"
 
-/obj/vehicle/ridden/janicart/attack_hand(mob/user)
+/obj/vehicle/ridden/janicart/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. || !mybag)
 		return
-	else if(mybag)
-		mybag.forceMove(get_turf(user))
-		user.put_in_hands(mybag)
-		mybag = null
-		update_icon()
+	mybag.forceMove(get_turf(user))
+	user.put_in_hands(mybag)
+	mybag = null
+	update_appearance()
 
 /obj/vehicle/ridden/janicart/upgraded
 	floorbuffer = TRUE

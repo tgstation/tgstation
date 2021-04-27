@@ -1,14 +1,13 @@
 GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	/mob/living/carbon/human,
-	/mob/living/carbon/monkey,
 	/mob/living/simple_animal/pet/dog/corgi,
 	/mob/living/silicon/ai)))
 
 /**
-  * Creamed component
-  *
-  * For when you have pie on your face
-  */
+ * Creamed component
+ *
+ * For when you have pie on your face
+ */
 /datum/component/creamed
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
@@ -26,11 +25,11 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		var/mob/living/carbon/human/H = parent
 		if(H.dna.species.limbs_id == "lizard")
 			creamface.icon_state = "creampie_lizard"
+		else if(H.dna.species.limbs_id == "monkey")
+			creamface.icon_state = "creampie_monkey"
 		else
 			creamface.icon_state = "creampie_human"
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
-	else if(ismonkey(parent))
-		creamface.icon_state = "creampie_monkey"
 	else if(iscorgi(parent))
 		creamface.icon_state = "creampie_corgi"
 	else if(isAI(parent))
@@ -64,5 +63,6 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 	. = NONE
 	if(!(clean_types & CLEAN_TYPE_BLOOD))
-		qdel(src)
-		return COMPONENT_CLEANED
+		return
+	qdel(src)
+	return COMPONENT_CLEANED

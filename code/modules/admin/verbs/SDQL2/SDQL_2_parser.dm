@@ -5,44 +5,44 @@
 
 //////////
 //
-//	query				:	select_query | delete_query | update_query | call_query | explain
-//	explain				:	'EXPLAIN' query
-//	select_query		:	'SELECT' object_selectors
-//	delete_query		:	'DELETE' object_selectors
-//	update_query		:	'UPDATE' object_selectors 'SET' assignments
-//	call_query			:	'CALL' variable 'ON' object_selectors // Note here: 'variable' does function calls. This simplifies parsing.
+// query : select_query | delete_query | update_query | call_query | explain
+// explain : 'EXPLAIN' query
+// select_query : 'SELECT' object_selectors
+// delete_query : 'DELETE' object_selectors
+// update_query : 'UPDATE' object_selectors 'SET' assignments
+// call_query : 'CALL' variable 'ON' object_selectors // Note here: 'variable' does function calls. This simplifies parsing.
 //
-//	select_item			:	'*' | object_type
+// select_item : '*' | object_type
 //
 //  object_selectors    :   select_item [('FROM' | 'IN') from_item] [modifier_list]
 //  modifier_list       :   ('WHERE' bool_expression | 'MAP' expression) [modifier_list]
 //
-//	from_item			:	'world' | expression
+// from_item : 'world' | expression
 //
-//	call_function		:	<function name> '(' [expression_list] ')'
+// call_function : <function name> '(' [expression_list] ')'
 //
-//	object_type			:	<type path>
+// object_type : <type path>
 //
-//	assignments			:	assignment [',' assignments]
-//	assignment			:	<variable name> '=' expression
-//	variable			:	<variable name> | variable '.' variable | variable '[' <list index> ']' | '{' <ref as hex number> '}' | '(' expression ')' | call_function
+// assignments : assignment [',' assignments]
+// assignment : <variable name> '=' expression
+// variable : <variable name> | variable '.' variable | variable '[' <list index> ']' | '{' <ref as hex number> '}' | '(' expression ')' | call_function
 //
-//	bool_expression		:	expression comparator expression  [bool_operator bool_expression]
-//	expression			:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
-//	expression_list		:	expression [',' expression_list]
-//	unary_expression	:	unary_operator ( unary_expression | value )
+// bool_expression : expression comparator expression  [bool_operator bool_expression]
+// expression : ( unary_expression | '(' expression ')' | value ) [binary_operator expression]
+// expression_list : expression [',' expression_list]
+// unary_expression : unary_operator ( unary_expression | value )
 //
-//	comparator			:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
-//	value				:	variable | string | number | 'null' | object_type | array | selectors_array
-//	unary_operator		:	'!' | '-' | '~'
-//	binary_operator		:	comparator | '+' | '-' | '/' | '*' | '&' | '|' | '^' | '%'
-//	bool_operator		:	'AND' | '&&' | 'OR' | '||'
+// comparator : '=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
+// value : variable | string | number | 'null' | object_type | array | selectors_array
+// unary_operator : '!' | '-' | '~'
+// binary_operator : comparator | '+' | '-' | '/' | '*' | '&' | '|' | '^' | '%'
+// bool_operator : 'AND' | '&&' | 'OR' | '||'
 //
-//	array				:	'[' expression_list ']'
-//	selectors_array		:	'@[' object_selectors ']'
+// array : '[' expression_list ']'
+// selectors_array : '@[' object_selectors ']'
 //
-//	string				:	''' <some text> ''' | '"' <some text > '"'
-//	number				:	<some digits>
+// string : ''' <some text> ''' | '"' <some text > '"'
+// number : <some digits>
 //
 //////////
 
@@ -100,7 +100,7 @@
 	if(length(options))
 		node["options"] = options
 
-//option_assignment:	query_option '=' define
+//option_assignment: query_option '=' define
 /datum/sdql_parser/proc/option_assignment(i, list/node, list/assignment_list = list())
 	var/type = tokenl(i)
 	if(!(type in SDQL2_VALID_OPTION_TYPES))
@@ -122,7 +122,7 @@
 
 	return i
 
-//query:	select_query | delete_query | update_query
+//query: select_query | delete_query | update_query
 /datum/sdql_parser/proc/query(i, list/node)
 	query_type = tokenl(i)
 
@@ -145,7 +145,7 @@
 			query(i + 1, node["explain"])
 
 
-//	select_query:	'SELECT' object_selectors
+// select_query: 'SELECT' object_selectors
 /datum/sdql_parser/proc/select_query(i, list/node)
 	var/list/select = list()
 	i = object_selectors(i + 1, select)
@@ -154,7 +154,7 @@
 	return i
 
 
-//delete_query:	'DELETE' object_selectors
+//delete_query: 'DELETE' object_selectors
 /datum/sdql_parser/proc/delete_query(i, list/node)
 	var/list/select = list()
 	i = object_selectors(i + 1, select)
@@ -164,7 +164,7 @@
 	return i
 
 
-//update_query:	'UPDATE' object_selectors 'SET' assignments
+//update_query: 'UPDATE' object_selectors 'SET' assignments
 /datum/sdql_parser/proc/update_query(i, list/node)
 	var/list/select = list()
 	i = object_selectors(i + 1, select)
@@ -182,7 +182,7 @@
 	return i
 
 
-//call_query:	'CALL' call_function ['ON' object_selectors]
+//call_query: 'CALL' call_function ['ON' object_selectors]
 /datum/sdql_parser/proc/call_query(i, list/node)
 	var/list/func = list()
 	i = variable(i + 1, func) // Yes technically does anything variable() matches but I don't care, if admins fuck up this badly then they shouldn't be allowed near SDQL.
@@ -244,7 +244,7 @@
 
 	return i
 
-//assignments:	assignment, [',' assignments]
+//assignments: assignment, [',' assignments]
 /datum/sdql_parser/proc/assignments(i, list/node)
 	i = assignment(i, node)
 
@@ -254,7 +254,7 @@
 	return i
 
 
-//select_item:	'*' | select_function | object_type
+//select_item: '*' | select_function | object_type
 /datum/sdql_parser/proc/select_item(i, list/node)
 	if (token(i) == "*")
 		node += "*"
@@ -294,7 +294,7 @@
 
 	return i
 
-//from_item:	'world' | expression
+//from_item: 'world' | expression
 /datum/sdql_parser/proc/from_item(i, list/node)
 	if(token(i) == "world")
 		node += "world"
@@ -306,7 +306,7 @@
 	return i
 
 
-//bool_expression:	expression [bool_operator bool_expression]
+//bool_expression: expression [bool_operator bool_expression]
 /datum/sdql_parser/proc/bool_expression(i, list/node)
 
 	var/list/bool = list()
@@ -321,7 +321,7 @@
 	return i
 
 
-//assignment:	<variable name> '=' expression
+//assignment: <variable name> '=' expression
 /datum/sdql_parser/proc/assignment(i, list/node, list/assignment_list = list())
 	assignment_list += token(i)
 
@@ -340,7 +340,7 @@
 	return i
 
 
-//variable:	<variable name> | variable '.' variable | variable '[' <list index> ']' | '{' <ref as hex number> '}' | '(' expression ')' | call_function
+//variable: <variable name> | variable '.' variable | variable '[' <list index> ']' | '{' <ref as hex number> '}' | '(' expression ')' | call_function
 /datum/sdql_parser/proc/variable(i, list/node)
 	var/list/L = list(token(i))
 	node[++node.len] = L
@@ -388,7 +388,7 @@
 	return i
 
 
-//object_type:	<type path>
+//object_type: <type path>
 /datum/sdql_parser/proc/object_type(i, list/node)
 
 	if(token(i)[1] != "/")
@@ -403,7 +403,7 @@
 	return i + 1
 
 
-//comparator:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
+//comparator: '=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
 /datum/sdql_parser/proc/comparator(i, list/node)
 
 	if(token(i) in list("=", "==", "!=", "<>", "<", "<=", ">", ">="))
@@ -415,7 +415,7 @@
 	return i + 1
 
 
-//bool_operator:	'AND' | '&&' | 'OR' | '||'
+//bool_operator: 'AND' | '&&' | 'OR' | '||'
 /datum/sdql_parser/proc/bool_operator(i, list/node)
 
 	if(tokenl(i) in list("and", "or", "&&", "||"))
@@ -427,7 +427,7 @@
 	return i + 1
 
 
-//string:	''' <some text> ''' | '"' <some text > '"'
+//string: ''' <some text> ''' | '"' <some text > '"'
 /datum/sdql_parser/proc/string(i, list/node)
 
 	if(token(i)[1] in list("'", "\""))
@@ -438,7 +438,7 @@
 
 	return i + 1
 
-//array:	'[' expression_list ']'
+//array: '[' expression_list ']'
 /datum/sdql_parser/proc/array(i, list/node)
 	// Arrays get turned into this: list("[", list(exp_1a = exp_1b, ...), ...), "[" is to mark the next node as an array.
 	if(token(i)[1] != "\[")
@@ -491,7 +491,7 @@
 
 	return i + 1
 
-//selectors_array:	'@[' object_selectors ']'
+//selectors_array: '@[' object_selectors ']'
 /datum/sdql_parser/proc/selectors_array(i, list/node)
 	if(token(i) == "@\[")
 		node += token(i++)
@@ -508,7 +508,7 @@
 
 	return i + 1
 
-//call_function:	<function name> ['(' [arguments] ')']
+//call_function: <function name> ['(' [arguments] ')']
 /datum/sdql_parser/proc/call_function(i, list/node, list/arguments)
 	if(length(tokenl(i)))
 		var/procname = ""
@@ -538,7 +538,7 @@
 	return i + 1
 
 
-//expression:	( unary_expression | value ) [binary_operator expression]
+//expression: ( unary_expression | value ) [binary_operator expression]
 /datum/sdql_parser/proc/expression(i, list/node)
 
 	if(token(i) in unary_operators)
@@ -563,7 +563,7 @@
 	return i
 
 
-//unary_expression:	unary_operator ( unary_expression | value )
+//unary_expression: unary_operator ( unary_expression | value )
 /datum/sdql_parser/proc/unary_expression(i, list/node)
 
 	if(token(i) in unary_operators)
@@ -587,7 +587,7 @@
 	return i
 
 
-//binary_operator:	comparator | '+' | '-' | '/' | '*' | '&' | '|' | '^' | '%'
+//binary_operator: comparator | '+' | '-' | '/' | '*' | '&' | '|' | '^' | '%'
 /datum/sdql_parser/proc/binary_operator(i, list/node)
 
 	if(token(i) in (binary_operators + comparators))
@@ -599,7 +599,7 @@
 	return i + 1
 
 
-//value:	variable | string | number | 'null' | object_type | array | selectors_array
+//value: variable | string | number | 'null' | object_type | array | selectors_array
 /datum/sdql_parser/proc/value(i, list/node)
 	if(token(i) == "null")
 		node += "null"

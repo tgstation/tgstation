@@ -5,6 +5,8 @@
 
 	min_players = 10
 
+	dynamic_should_hijack = TRUE
+
 /datum/round_event_control/alien_infestation/canSpawnEvent()
 	. = ..()
 	if(!.)
@@ -15,7 +17,7 @@
 			return FALSE
 
 /datum/round_event/ghost_role/alien_infestation
-	announceWhen	= 400
+	announceWhen = 400
 
 	minimum_required = 1
 	role_name = "alien larva"
@@ -37,7 +39,7 @@
 			living_aliens = TRUE
 
 	if(living_aliens || fake)
-		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
+		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
 
 
 /datum/round_event/ghost_role/alien_infestation/spawn_role()
@@ -58,7 +60,7 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return MAP_ERROR
 
-	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
+	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
 
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS

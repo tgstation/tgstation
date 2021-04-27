@@ -1,8 +1,8 @@
 //defines the drill hat's yelling setting
-#define DRILL_DEFAULT	"default"
-#define DRILL_SHOUTING	"shouting"
-#define DRILL_YELLING	"yelling"
-#define DRILL_CANADIAN	"canadian"
+#define DRILL_DEFAULT "default"
+#define DRILL_SHOUTING "shouting"
+#define DRILL_YELLING "yelling"
+#define DRILL_CANADIAN "canadian"
 
 //Chef
 /obj/item/clothing/head/chefhat
@@ -99,16 +99,16 @@
 	. += "<span class='notice'>Alt-click to take a candy corn.</span>"
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		..()
-		if(loc == user)
-			if(candy_cooldown < world.time)
-				var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
-				user.put_in_hands(CC)
-				to_chat(user, "<span class='notice'>You slip a candy corn from your hat.</span>")
-				candy_cooldown = world.time+1200
-			else
-				to_chat(user, "<span class='warning'>You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.</span>")
+	. = ..()
+	if(loc != user || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		return
+	if(candy_cooldown < world.time)
+		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
+		user.put_in_hands(CC)
+		to_chat(user, "<span class='notice'>You slip a candy corn from your hat.</span>")
+		candy_cooldown = world.time+1200
+	else
+		to_chat(user, "<span class='warning'>You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.</span>")
 
 
 //Mime
@@ -233,7 +233,7 @@
 			if(DRILL_YELLING)
 				message += "!!"
 			if(DRILL_CANADIAN)
-				message = " [message]"
+				message = "[message]"
 				var/list/canadian_words = strings("canadian_replacement.json", "canadian")
 
 				for(var/key in canadian_words)

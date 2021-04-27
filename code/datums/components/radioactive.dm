@@ -67,24 +67,27 @@
 	else
 		strength = max(strength, _strength)
 
-/datum/component/radioactive/proc/rad_examine(datum/source, mob/user, atom/thing)
+/datum/component/radioactive/proc/rad_examine(datum/source, mob/user, list/out)
 	SIGNAL_HANDLER
 
 	var/atom/master = parent
-	var/list/out = list()
+
+	var/list/fragments = list()
 	if(get_dist(master, user) <= 1)
-		out += "The air around [master] feels warm"
+		fragments += "The air around [master] feels warm"
 	switch(strength)
+		if(0 to RAD_AMOUNT_LOW)
+			if(length(fragments))
+				fragments += "."
 		if(RAD_AMOUNT_LOW to RAD_AMOUNT_MEDIUM)
-			out += "[length(out) ? " and it " : "[master] "]feels weird to look at."
+			fragments += "[length(fragments) ? " and [master.p_they()] " : "[master] "]feel[master.p_s()] weird to look at."
 		if(RAD_AMOUNT_MEDIUM to RAD_AMOUNT_HIGH)
-			out += "[length(out) ? " and it " : "[master] "]seems to be glowing a bit."
+			fragments += "[length(fragments) ? " and [master.p_they()] " : "[master] "]seem[master.p_s()] to be glowing a bit."
 		if(RAD_AMOUNT_HIGH to INFINITY) //At this level the object can contaminate other objects
-			out += "[length(out) ? " and it " : "[master] "]hurts to look at."
-	if(!LAZYLEN(out))
-		return
-	out += "."
-	to_chat(user, "<span class ='warning'>[out.Join()]</span>")
+			fragments += "[length(fragments) ? " and [master.p_they()] " : "[master] "]hurt[master.p_s()] to look at."
+
+	if(length(fragments))
+		out += "<span class='warning'>[fragments.Join()]</span>"
 
 /datum/component/radioactive/proc/rad_attack(datum/source, atom/movable/target, mob/living/user)
 	SIGNAL_HANDLER

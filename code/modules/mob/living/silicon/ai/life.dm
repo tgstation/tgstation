@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/Life()
+/mob/living/silicon/ai/Life(delta_time = SSMOBS_DT, times_fired)
 	if (stat == DEAD)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
@@ -6,7 +6,9 @@
 
 		update_gravity(mob_has_gravity())
 
-		handle_status_effects()
+		handle_status_effects(delta_time, times_fired)
+
+		handle_traits()
 
 		if(malfhack?.aidisabled)
 			deltimer(malfhacking)
@@ -27,16 +29,16 @@
 				to_chat(src, "<span class='warning'>Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable.</span>")
 				adjustOxyLoss(200)
 			else
-				battery --
+				battery--
 		else
 			// Gain Power
 			if (battery < 200)
-				battery ++
+				battery++
 
 		if(!lacks_power())
 			var/area/home = get_area(src)
 			if(home.powered(AREA_USAGE_EQUIP))
-				home.use_power(1000, AREA_USAGE_EQUIP)
+				home.use_power(500 * delta_time, AREA_USAGE_EQUIP)
 
 			if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 				ai_restore_power()
@@ -144,9 +146,9 @@
 				sleep(50)
 				to_chat(src, "<span class='notice'>Receiving control information from APC.</span>")
 				sleep(2)
-				apc_override = 1
-				theAPC.ui_interact(src)
-				apc_override = 0
+				to_chat(src, "<A HREF=?src=[REF(src)];emergencyAPC=[TRUE]>APC ready for connection.</A>")
+				apc_override = theAPC
+				apc_override.ui_interact(src)
 				setAiRestorePowerRoutine(POWER_RESTORATION_APC_FOUND)
 		sleep(50)
 		theAPC = null
@@ -155,10 +157,13 @@
 	if(aiRestorePowerRoutine)
 		if(aiRestorePowerRoutine == POWER_RESTORATION_APC_FOUND)
 			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored.</span>")
+			if(apc_override)
+				to_chat(src, "<span class='notice'>APC backdoor has been closed.</span>") //Fluff for why we have to hack every time.
 		else
 			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored without our assistance.</span>")
 		setAiRestorePowerRoutine(POWER_RESTORATION_OFF)
 		set_blindness(0)
+		apc_override = null
 		update_sight()
 
 /mob/living/silicon/ai/proc/ai_lose_power()

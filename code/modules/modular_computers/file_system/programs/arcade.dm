@@ -32,7 +32,7 @@
 		game_active = FALSE
 		program_icon_state = "arcade_off"
 		if(istype(computer))
-			computer.update_icon()
+			computer.update_appearance()
 		ticket_count += 1
 		user?.mind?.adjust_experience(/datum/skill/gaming, 50)
 		sleep(10)
@@ -42,7 +42,7 @@
 		game_active = FALSE
 		program_icon_state = "arcade_off"
 		if(istype(computer))
-			computer.update_icon()
+			computer.update_appearance()
 		user?.mind?.adjust_experience(/datum/skill/gaming, 10)
 		sleep(10)
 
@@ -159,7 +159,7 @@
 				computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
 				if(ticket_count >= 1)
 					new /obj/item/stack/arcadeticket((get_turf(computer)), 1)
-					to_chat(usr, "<span class='notice'>[src] dispenses a ticket!</span>")
+					to_chat(usr, "<span class='notice'>[computer] dispenses a ticket!</span>")
 					ticket_count -= 1
 					printer.stored_paper -= 1
 				else
@@ -175,4 +175,4 @@
 			boss_id = rand(1,6)
 			pause_state = FALSE
 			if(istype(computer))
-				computer.update_icon()
+				computer.update_appearance()

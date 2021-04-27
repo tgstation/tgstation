@@ -9,6 +9,7 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	blood_state = BLOOD_STATE_XENO
 	beauty = -250
+	clean_type = CLEAN_TYPE_BLOOD
 
 /obj/effect/decal/cleanable/xenoblood/Initialize()
 	. = ..()
@@ -33,7 +34,7 @@
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions, mapload=FALSE)
 	set waitfor = FALSE
 	var/direction = pick(directions)
-	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
+	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4, 17; 50), i++) //the 3% chance of 50 steps is intentional and played for laughs.
 		if (!mapload)
 			sleep(2)
 		if(i > 0)
@@ -53,7 +54,7 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
-	return
+	return FALSE
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/up
 	icon_state = "xgibup1"

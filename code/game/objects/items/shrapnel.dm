@@ -1,7 +1,7 @@
 /obj/item/shrapnel // frag grenades
 	name = "shrapnel shard"
 	custom_materials = list(/datum/material/iron=50)
-	armour_penetration = -20
+	weak_against_armour = TRUE
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
 	w_class = WEIGHT_CLASS_TINY
@@ -11,11 +11,11 @@
 /obj/item/shrapnel/stingball // stingbang grenades
 	name = "stingball"
 	icon_state = "tiny"
-	sharpness = SHARP_NONE
+	sharpness = NONE
 
 /obj/item/shrapnel/bullet // bullets
 	name = "bullet"
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/guns/ammo.dmi'
 	icon_state = "s-casing"
 	embedding = null // embedding vars are taken from the projectile itself
 
@@ -24,7 +24,7 @@
 	name = "flying shrapnel shard"
 	damage = 14
 	range = 20
-	armour_penetration = -20
+	weak_against_armour = TRUE
 	dismemberment = 5
 	ricochets_max = 2
 	ricochet_chance = 70
@@ -87,5 +87,5 @@
 /obj/item/shrapnel/capmine
 	name = "\improper AP shrapnel shard"
 	custom_materials = list(/datum/material/iron=50)
-	armour_penetration = -30
+	weak_against_armour = TRUE
 

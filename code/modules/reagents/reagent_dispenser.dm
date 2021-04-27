@@ -19,7 +19,7 @@
 /obj/structure/reagent_dispensers/examine(mob/user)
 	. = ..()
 	if(can_be_tanked)
-		. += "<span class='notice'>Use a sheet of metal to convert this into a plumbing-compatible tank.</span>"
+		. += "<span class='notice'>Use a sheet of iron to convert this into a plumbing-compatible tank.</span>"
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -30,14 +30,14 @@
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
 	if(W.is_refillable())
 		return FALSE //so we can refill them via their afterattack.
-	if(istype(W, /obj/item/stack/sheet/metal) && can_be_tanked)
-		var/obj/item/stack/sheet/metal/metal_stack = W
+	if(istype(W, /obj/item/stack/sheet/iron) && can_be_tanked)
+		var/obj/item/stack/sheet/iron/metal_stack = W
 		metal_stack.use(1)
 		var/obj/structure/reagent_dispensers/plumbed/storage/new_tank = new /obj/structure/reagent_dispensers/plumbed/storage(drop_location())
 		new_tank.reagents.maximum_volume = reagents.maximum_volume
 		reagents.trans_to(new_tank, reagents.total_volume)
 		new_tank.name = "stationary [name]"
-		new_tank.update_overlays()
+		new_tank.update_appearance(UPDATE_OVERLAYS)
 		new_tank.anchored = anchored
 		qdel(src)
 		return FALSE
@@ -87,7 +87,7 @@
 	reagent_id = /datum/reagent/fuel
 
 /obj/structure/reagent_dispensers/fueltank/boom()
-	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
+	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
@@ -124,7 +124,7 @@
 			reagents.trans_to(W, W.max_fuel, transfered_by = user)
 			user.visible_message("<span class='notice'>[user] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>")
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
-			W.update_icon()
+			W.update_appearance()
 		else
 			user.visible_message("<span class='danger'>[user] catastrophically fails at refilling [user.p_their()] [I.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 			log_bomber(user, "detonated a", src, "via welding tool")
@@ -139,7 +139,7 @@
 	tank_volume = 5000
 
 /obj/structure/reagent_dispensers/fueltank/large/boom()
-	explosion(get_turf(src), 1, 2, 7, flame_range = 12)
+	explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/peppertank
@@ -174,7 +174,7 @@
 	else
 		. += "There are no paper cups left."
 
-/obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
+/obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -193,7 +193,7 @@
 	reagent_id = /datum/reagent/consumable/ethanol/beer
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
-	explosion(src.loc,0,3,5,7,10)
+	explosion(src, heavy_impact_range = 3, light_impact_range = 5, flame_range = 10, flash_range = 7)
 	if(!QDELETED(src))
 		qdel(src)
 
@@ -248,13 +248,15 @@
 
 /obj/structure/reagent_dispensers/plumbed/storage/update_overlays()
 	. = ..()
-	if(reagents)
-		if(reagents.total_volume)
-			var/mutable_appearance/tank_color = mutable_appearance('icons/obj/chemical_tanks.dmi', "tank_chem_overlay")
-			tank_color.color = mix_color_from_reagents(reagents.reagent_list)
-			add_overlay(tank_color)
-		else
-			cut_overlays()
+	if(!reagents)
+		return
+
+	if(!reagents.total_volume)
+		return
+
+	var/mutable_appearance/tank_color = mutable_appearance('icons/obj/chemical_tanks.dmi', "tank_chem_overlay")
+	tank_color.color = mix_color_from_reagents(reagents.reagent_list)
+	. += tank_color
 
 /obj/structure/reagent_dispensers/plumbed/storage/proc/can_be_rotated(mob/user, rotation_type)
 	if(anchored)

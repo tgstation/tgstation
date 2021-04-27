@@ -1,13 +1,13 @@
 /**
-  * # Ninja Suit
-  *
-  * Space ninja's suit.  Provides him with most of his powers.
-  *
-  * Space ninja's suit.  Gives space ninja all his iconic powers, which are mostly kept in
-  * the folder ninja_equipment_actions.  Has a lot of unique stuff going on, so make sure to check
-  * the variables.  Check suit_attackby to see radium interaction, disk copying, and cell replacement.
-  *
-  */
+ * # Ninja Suit
+ *
+ * Space ninja's suit.  Provides him with most of his powers.
+ *
+ * Space ninja's suit.  Gives space ninja all his iconic powers, which are mostly kept in
+ * the folder ninja_equipment_actions.  Has a lot of unique stuff going on, so make sure to check
+ * the variables.  Check suit_attackby to see radium interaction, disk copying, and cell replacement.
+ *
+ */
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
 	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
@@ -100,7 +100,7 @@
 			terminate() // Kills the suit and attached objects.
 		else if(cell.charge > 0)
 			if(s_coold > 0)
-				s_coold -= delta_time // Checks for ability s_cooldown first.
+				s_coold = max(s_coold - delta_time, 0) // Checks for ability s_cooldown first.
 			cell.charge -= s_cost * delta_time // s_cost is the default energy cost each ntick, usually 5.
 			if(stealth) // If stealth is active.
 				cell.charge -= s_acost * delta_time
@@ -142,7 +142,7 @@
 		toggle_stealth()
 		return TRUE
 	return FALSE
-	
+
 /obj/item/clothing/suit/space/space_ninja/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
 	if(stealth)
@@ -150,14 +150,14 @@
 		s_coold = 5
 
 /**
-  * Proc for changing the suit's appearance upon locking.
-  *
-  * Proc for when space ninja's suit locks.  If the user selects Original, gives it glowing lights, along with having an alternate sprite for female body types.
-  * Yes, we do have nipLEDs, how could you tell?
-  * If the user selects New Age, it applies new sprites to all the gear.
-  * Arguments:
-  * * ninja - The person wearing the suit.
-  */
+ * Proc for changing the suit's appearance upon locking.
+ *
+ * Proc for when space ninja's suit locks.  If the user selects Original, gives it glowing lights, along with having an alternate sprite for female body types.
+ * Yes, we do have nipLEDs, how could you tell?
+ * If the user selects New Age, it applies new sprites to all the gear.
+ * Arguments:
+ * * ninja - The person wearing the suit.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/ninja)
 	var/design_choice = alert(ninja, "Please choose your desired suit design.",,"Original","New Age")
 	switch(design_choice)
@@ -171,18 +171,18 @@
 			n_gloves.icon_state = "ninja_new"
 			if(n_mask)
 				n_mask.icon_state = "ninja_new"
-			
+
 
 /**
-  * Proc called to lock the important gear pieces onto space ninja's body.
-  *
-  * Called during the suit startup to lock all gear pieces onto space ninja.
-  * Terminates if a gear piece is not being worn.  Also gives the ninja the inability to use firearms.
-  * If the person in the suit isn't a ninja when this is called, this proc just gibs them instead.
-  * Arguments:
-  * * ninja - The person wearing the suit.
-  * * Returns false if the locking fails due to lack of all suit parts, and true if it succeeds.
-  */
+ * Proc called to lock the important gear pieces onto space ninja's body.
+ *
+ * Called during the suit startup to lock all gear pieces onto space ninja.
+ * Terminates if a gear piece is not being worn.  Also gives the ninja the inability to use firearms.
+ * If the person in the suit isn't a ninja when this is called, this proc just gibs them instead.
+ * Arguments:
+ * * ninja - The person wearing the suit.
+ * * Returns false if the locking fails due to lack of all suit parts, and true if it succeeds.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/ninja)
 	if(!istype(ninja))
 		return FALSE
@@ -205,7 +205,6 @@
 	ADD_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes = ninja.shoes
 	ADD_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	n_shoes.slowdown--
 	n_gloves = ninja.gloves
 	ADD_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_mask = ninja.wear_mask
@@ -214,13 +213,13 @@
 	return TRUE
 
 /**
-  * Proc called to unlock all the gear off space ninja's body.
-  *
-  * Proc which is essentially the opposite of lock_suit.  Lets you take off all the suit parts.
-  * Also gets rid of the objection to using firearms from the wearer.
-  * Arguments:
-  * * ninja - The person wearing the suit.
-  */
+ * Proc called to unlock all the gear off space ninja's body.
+ *
+ * Proc which is essentially the opposite of lock_suit.  Lets you take off all the suit parts.
+ * Also gets rid of the objection to using firearms from the wearer.
+ * Arguments:
+ * * ninja - The person wearing the suit.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit(mob/living/carbon/human/ninja)
 	affecting = null
 	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
@@ -230,11 +229,9 @@
 		n_hood.icon_state = "s-ninja"
 	if(n_shoes)
 		REMOVE_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "black"
 		REMOVE_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-		n_gloves.candrain = FALSE
 		n_gloves.draining = FALSE
 
 		REMOVE_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
@@ -242,10 +239,10 @@
 		n_mask.icon_state = "s-ninja"
 
 /**
-  * Proc used to delete all the attachments and itself.
-  *
-  * Can be called to entire rid of the suit pieces and the suit itself.
-  */
+ * Proc used to delete all the attachments and itself.
+ *
+ * Can be called to entire rid of the suit pieces and the suit itself.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
 	QDEL_NULL(n_hood)
 	QDEL_NULL(n_gloves)

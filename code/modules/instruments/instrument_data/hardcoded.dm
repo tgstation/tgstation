@@ -5,7 +5,7 @@
 	abstract_type = /datum/instrument/hardcoded
 	category = "Non-Synthesized"
 	instrument_flags = INSTRUMENT_LEGACY
-	volume_multiplier = 1		//not as loud as synth'd
+	volume_multiplier = 1 //not as loud as synth'd
 
 /datum/instrument/hardcoded/accordion
 	name = "Accordion"

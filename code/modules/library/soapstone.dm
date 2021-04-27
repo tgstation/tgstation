@@ -87,10 +87,10 @@
 		name = "dull [initial(name)]"
 
 /* Persistent engraved messages, etched onto the station turfs to serve
-   as instructions and/or memes for the next generation of spessmen.
+as instructions and/or memes for the next generation of spessmen.
 
-   Limited in location to station_z only. Can be smashed out or exploded,
-   but only permamently removed with the curator's soapstone.
+Limited in location to station_z only. Can be smashed out or exploded,
+but only permanently removed with the curator's soapstone.
 */
 
 /obj/item/soapstone/infinite
@@ -128,6 +128,9 @@
 
 	var/turf/original_turf
 
+	/// Total vote count at or below which we won't persist.
+	var/delete_at = -5
+
 /obj/structure/chisel_message/Initialize(mapload)
 	. = ..()
 	SSpersistence.chisel_messages += src
@@ -138,16 +141,19 @@
 		persists = FALSE
 		return INITIALIZE_HINT_QDEL
 
+	if(like_keys.len - dislike_keys.len <= delete_at)
+		persists = FALSE
+
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
 	creator_name = user.real_name
 	creator_key = user.ckey
 	realdate = world.realtime
 	map = SSmapping.config.map_name
-	update_icon()
+	update_appearance()
 
 /obj/structure/chisel_message/update_icon()
-	..()
+	. = ..()
 	var/hash = md5(hidden_message)
 	var/newcolor = copytext_char(hash, 1, 7)
 	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
@@ -189,7 +195,7 @@
 	var/turf/newloc = locate(x, y, z)
 	if(isturf(newloc))
 		forceMove(newloc)
-	update_icon()
+	update_appearance()
 
 /obj/structure/chisel_message/examine(mob/user)
 	. = ..()
@@ -270,3 +276,6 @@
 			if(confirm == "Yes")
 				persists = FALSE
 				qdel(src)
+				return
+
+	persists = like_keys.len - dislike_keys.len > delete_at

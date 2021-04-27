@@ -125,7 +125,7 @@
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == spell)
 			if(user.mind)
-				if(iswizard(user))
+				if(IS_WIZARD(user))
 					to_chat(user,"<span class='warning'>You're already far more versed in this spell than this flimsy how-to book can provide!</span>")
 				else
 					to_chat(user,"<span class='warning'>You've already read this one!</span>")
@@ -159,7 +159,7 @@
 
 /obj/item/book/granter/spell/fireball/recoil(mob/user)
 	..()
-	explosion(user.loc, 1, 0, 2, 3, FALSE, FALSE, 2)
+	explosion(user, devastation_range = 1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE)
 	qdel(src)
 
 /obj/item/book/granter/spell/sacredflame
@@ -430,3 +430,17 @@
 	icon_state = "cooking_learing_sweets"
 	oneuse = FALSE
 	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")
+
+/obj/item/book/granter/crafting_recipe/pipegun_prime
+	name = "diary of a dead assistant"
+	desc = "A battered journal. Looks like he had a pretty rough life."
+	crafting_recipe_types = list(
+		/datum/crafting_recipe/pipegun_prime
+	)
+	icon_state = "book1"
+	oneuse = TRUE
+	remarks = list("He apparently mastered some lost guncrafting technique.", "Why do I have to go through so many hoops to get this shitty gun?", "That much Grey Bull cannot be healthy...", "Did he drop this into a moisture trap? Yuck.", "Toolboxing techniques, huh? I kinda just want to know how to make the gun.", "What the hell does he mean by 'ancient warrior tradition'?")
+
+/obj/item/book/granter/crafting_recipe/pipegun_prime/recoil(mob/living/carbon/user)
+	to_chat(user, "<span class='warning'>The book turns to dust in your hands.</span>")
+	qdel(src)

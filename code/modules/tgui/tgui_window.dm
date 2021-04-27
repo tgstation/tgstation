@@ -1,4 +1,4 @@
-/**
+/*!
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  */
@@ -71,29 +71,30 @@
 	// Generate page html
 	var/html = SStgui.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
-	// Process inline assets
-	var/inline_styles = ""
-	var/inline_scripts = ""
+	// Inject inline assets
+	var/inline_assets_str = ""
 	for(var/datum/asset/asset in inline_assets)
 		var/mappings = asset.get_url_mappings()
 		for(var/name in mappings)
 			var/url = mappings[name]
-			// Not urlencoding since asset strings are considered safe
+			// Not encoding since asset strings are considered safe
 			if(copytext(name, -4) == ".css")
-				inline_styles += "<link rel=\"stylesheet\" type=\"text/css\" href=\"[url]\">\n"
+				inline_assets_str += "Byond.loadCss('[url]', true);\n"
 			else if(copytext(name, -3) == ".js")
-				inline_scripts += "<script type=\"text/javascript\" defer src=\"[url]\"></script>\n"
+				inline_assets_str += "Byond.loadJs('[url]', true);\n"
 		asset.send(client)
-	html = replacetextEx(html, "<!-- tgui:styles -->\n", inline_styles)
-	html = replacetextEx(html, "<!-- tgui:scripts -->\n", inline_scripts)
+	if(length(inline_assets_str))
+		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
+	html = replacetextEx(html, "<!-- tgui:assets -->\n", inline_assets_str)
 	// Inject custom HTML
 	html = replacetextEx(html, "<!-- tgui:html -->\n", inline_html)
 	// Open the window
 	client << browse(html, "window=[id];[options]")
-	// Instruct the client to signal UI when the window is closed.
-	winset(client, id, "on-close=\"uiclose [id]\"")
 	// Detect whether the control is a browser
 	is_browser = winexists(client, id) == "BROWSER"
+	// Instruct the client to signal UI when the window is closed.
+	if(!is_browser)
+		winset(client, id, "on-close=\"uiclose [id]\"")
 
 /**
  * public

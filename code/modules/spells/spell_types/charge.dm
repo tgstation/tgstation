@@ -2,7 +2,7 @@
 	name = "Charge"
 	desc = "This spell can be used to recharge a variety of things in your hands, from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."
 
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "DIRI CEL"
@@ -19,7 +19,7 @@
 		var/burnt_out = FALSE
 
 		if(L.pulling && isliving(L.pulling))
-			var/mob/living/M =	L.pulling
+			var/mob/living/M = L.pulling
 			if(LAZYLEN(M.mob_spell_list) || (LAZYLEN(M.mind?.spell_list)))
 				for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
 					S.charge_counter = S.charge_max
@@ -89,7 +89,7 @@
 						if(istype(C.loc, /obj/item/gun))
 							var/obj/item/gun/G = C.loc
 							G.process_chamber()
-						item.update_icon()
+						item.update_appearance()
 						charged_item = item
 						break
 		if(!charged_item)

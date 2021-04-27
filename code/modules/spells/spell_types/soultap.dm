@@ -7,7 +7,7 @@
 /obj/effect/proc_holder/spell/self/tap
 	name = "Soul Tap"
 	desc = "Fuel your spells using your own soul!"
-	school = "necromancy" //i could see why this wouldn't be necromancy but messing with souls or whatever. ectomancy?
+	school = SCHOOL_NECROMANCY //i could see why this wouldn't be necromancy but messing with souls or whatever. ectomancy?
 	charge_max = 10
 	invocation = "AT ANY COST!"
 	invocation_type = INVOCATION_SHOUT
@@ -27,4 +27,4 @@
 	for(var/obj/effect/proc_holder/spell/spell in user.mind.spell_list)
 		spell.charge_counter = spell.charge_max
 		spell.recharging = FALSE
-		spell.update_icon()
+		spell.update_appearance()

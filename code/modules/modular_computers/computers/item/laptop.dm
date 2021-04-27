@@ -17,8 +17,8 @@
 	// No running around with open laptops in hands.
 	item_flags = SLOWS_WHILE_IN_HAND
 
-	screen_on = FALSE 		// Starts closed
-	var/start_open = TRUE	// unless this var is set to 1
+	screen_on = FALSE // Starts closed
+	var/start_open = TRUE // unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
 	var/w_class_open = WEIGHT_CLASS_BULKY
 	var/slowdown_open = TRUE
@@ -37,15 +37,14 @@
 /obj/item/modular_computer/laptop/update_icon_state()
 	if(!screen_on)
 		icon_state = icon_state_closed
-	else
-		. = ..()
+		return
+	return ..()
 
 /obj/item/modular_computer/laptop/update_overlays()
-	if(screen_on)
-		return ..()
-	else
+	if(!screen_on)
 		cut_overlays()
-		icon_state = icon_state_closed
+		return
+	return ..()
 
 /obj/item/modular_computer/laptop/attack_self(mob/user)
 	if(!screen_on)
@@ -75,7 +74,7 @@
 			return
 		M.put_in_hand(src, H.held_index)
 
-/obj/item/modular_computer/laptop/attack_hand(mob/user)
+/obj/item/modular_computer/laptop/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -111,7 +110,7 @@
 
 	screen_on = !screen_on
 	display_overlays = screen_on
-	update_icon()
+	update_appearance()
 
 
 

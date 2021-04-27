@@ -4,17 +4,17 @@
 #define AOE_SQUARES 4
 
 /**
-  * # Pandora
-  *
-  * A box with a similar design to the Hierophant which trades large, single attacks for more frequent smaller ones.
-  * As it's health gets lower, the time between it's attacks decrease.
-  * It's attacks are as follows:
-  * - Fires hierophant blasts in a straight line.  Can only fire in a straight line in 8 directions, being the diagonals and cardinals.
-  * - Creates a box of hierophant blasts around the target.  If they try to run away to avoid it, they'll very likely get hit.
-  * - Teleports the pandora from one location to another, almost identical to Hierophant.
-  * - Spawns a 5x5 AOE at the location of choice, spreading out from the center.
-  * Pandora's fight mirrors Hierophant's closely, but has stark differences in attack effects.  Instead of long-winded dodge times and long cooldowns, Pandora constantly attacks the opponent, but leaves itself open for attack.
-  */
+ * # Pandora
+ *
+ * A box with a similar design to the Hierophant which trades large, single attacks for more frequent smaller ones.
+ * As it's health gets lower, the time between it's attacks decrease.
+ * It's attacks are as follows:
+ * - Fires hierophant blasts in a straight line.  Can only fire in a straight line in 8 directions, being the diagonals and cardinals.
+ * - Creates a box of hierophant blasts around the target.  If they try to run away to avoid it, they'll very likely get hit.
+ * - Teleports the pandora from one location to another, almost identical to Hierophant.
+ * - Spawns a 7x7 AOE at the location of choice, spreading out from the center.
+ * Pandora's fight mirrors Hierophant's closely, but has stark differences in attack effects.  Instead of long-winded dodge times and long cooldowns, Pandora constantly attacks the opponent, but leaves itself open for attack.
+ */
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora
 	name = "pandora"
@@ -33,7 +33,7 @@
 	attack_verb_simple = "smash into the side of"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	throw_message = "merely dinks off of the"
-	speed = 4
+	speed = 3
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathsound = 'sound/magic/repulse.ogg'
@@ -95,16 +95,16 @@
 		if(AOE_SQUARES)
 			aoe_squares(target)
 
-/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life()
+/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(health >= maxHealth * 0.5)
-		cooldown_time = 20
+		cooldown_time = 2 SECONDS
 		return
 	if(health < maxHealth * 0.5 && health > maxHealth * 0.25)
-		cooldown_time = 15
+		cooldown_time = 1.5 SECONDS
 		return
 	else
-		cooldown_time = 10
+		cooldown_time = 1 SECONDS
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/singular_shot(target)
 	ranged_cooldown = world.time + (cooldown_time * 0.5)
@@ -118,7 +118,7 @@
 	new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(T, src)
 	T = get_step(T, angleused)
 	procsleft = procsleft - 1
-	addtimer(CALLBACK(src, .proc/singular_shot_line, procsleft, angleused, T), 2)
+	addtimer(CALLBACK(src, .proc/singular_shot_line, procsleft, angleused, T), cooldown_time * 0.1)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/magic_box(target)
 	ranged_cooldown = world.time + cooldown_time
@@ -128,13 +128,15 @@
 			new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport(target)
+	var/turf/turf_target = get_turf(target)
+	if(!(turf_target in view(12, src)))
+		return
 	ranged_cooldown = world.time + (cooldown_time * 2)
-	var/turf/T = get_turf(target)
 	var/turf/source = get_turf(src)
-	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
+	new /obj/effect/temp_visual/hierophant/telegraph(turf_target, src)
 	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
 	playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
-	addtimer(CALLBACK(src, .proc/pandora_teleport_2, T, source), 2)
+	addtimer(CALLBACK(src, .proc/pandora_teleport_2, turf_target, source), 2)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_2(turf/T, turf/source)
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
@@ -158,7 +160,7 @@
 	ranged_cooldown = world.time + cooldown_time
 	var/turf/T = get_turf(target)
 	new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(T, src)
-	var/max_size = 2
+	var/max_size = 3
 	addtimer(CALLBACK(src, .proc/aoe_squares_2, T, 0, max_size), 2)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/aoe_squares_2(turf/T, ring, max_size)
@@ -167,11 +169,11 @@
 	for(var/t in spiral_range_turfs(ring, T))
 		if(get_dist(t, T) == ring)
 			new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
-	addtimer(CALLBACK(src, .proc/aoe_squares_2, T, (ring + 1), max_size), 2)
+	addtimer(CALLBACK(src, .proc/aoe_squares_2, T, (ring + 1), max_size), cooldown_time * 0.1)
 
 //The specific version of hiero's squares pandora uses
 /obj/effect/temp_visual/hierophant/blast/damaging/pandora
-	damage = 20
+	damage = 30
 	monster_damage_boost = FALSE
 
 //Pandora's loot: Hope

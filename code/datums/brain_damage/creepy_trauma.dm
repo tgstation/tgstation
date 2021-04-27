@@ -36,7 +36,7 @@
 	antagonist.greet()
 	RegisterSignal(owner, COMSIG_CARBON_HUG, .proc/on_hug)
 
-/datum/brain_trauma/special/obsessed/on_life()
+/datum/brain_trauma/special/obsessed/on_life(delta_time, times_fired)
 	if(!obsession || obsession.stat == DEAD)
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return
@@ -50,10 +50,10 @@
 		viewing = FALSE
 	if(viewing)
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creeping, obsession.name)
-		total_time_creeping += 20
+		total_time_creeping += delta_time SECONDS
 		time_spent_away = 0
 		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
-			attachedobsessedobj.timer -= 20 //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
+			attachedobsessedobj.timer -= delta_time SECONDS //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
 		out_of_view()
 
@@ -115,15 +115,28 @@
 	return COMSIG_BLOCK_EYECONTACT
 
 /datum/brain_trauma/special/obsessed/proc/find_obsession()
-	var/chosen_victim
-	var/list/possible_targets = list()
-	var/list/viable_minds = list()
+	var/list/viable_minds = list() //The first list, which excludes hijinks
+	var/list/possible_targets = list() //The second list, which filters out silicons and simplemobs
+	var/static/list/trait_obsessions = list("Mime" = TRAIT_FAN_MIME, "Clown" = TRAIT_FAN_CLOWN, "Chaplain" = TRAIT_SPIRITUAL) //Jobs and their corresponding quirks
+	var/list/special_pool = list() //The special list, for quirk-based
+	var/chosen_victim  //The obsession target
+
 	for(var/mob/Player in GLOB.player_list)//prevents crewmembers falling in love with nuke ops they never met, and other annoying hijinks
 		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client && Player != owner && SSjob.GetJob(Player.mind.assigned_role))
 			viable_minds += Player.mind
 	for(var/datum/mind/possible_target in viable_minds)
 		if(possible_target != owner && ishuman(possible_target.current))
+			var/job = possible_target.assigned_role
+			if (trait_obsessions[job] != null && HAS_TRAIT(owner, trait_obsessions[job]))
+				special_pool += possible_target.current
 			possible_targets += possible_target.current
+
+	//Do we have any special target?
+	if(length(special_pool))
+		chosen_victim = pick(special_pool)
+		return chosen_victim
+
+	//If not, pick any other ordinary target
 	if(possible_targets.len > 0)
 		chosen_victim = pick(possible_targets)
 	return chosen_victim

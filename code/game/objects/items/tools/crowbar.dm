@@ -53,6 +53,12 @@
 	worn_icon_state = "crowbar"
 	toolspeed = 0.7
 
+/obj/item/crowbar/large/heavy //from space ruin
+	name = "heavy crowbar"
+	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
+	force = 20
+	icon_state = "crowbar_powergame"
+
 /obj/item/crowbar/power
 	name = "jaws of life"
 	desc = "A set of jaws of life, compressed through the magic of science."
@@ -99,25 +105,27 @@
 		tool_behaviour = TOOL_WIRECUTTER
 		to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 		usesound = 'sound/items/jaws_cut.ogg'
-		update_icon()
+		update_appearance()
 
 	else
 		tool_behaviour = TOOL_CROWBAR
 		to_chat(user, "<span class='notice'>You attach the prying jaws to [src].</span>")
 		usesound = 'sound/items/jaws_pry.ogg'
-		update_icon()
+		update_appearance()
 
-/obj/item/crowbar/power/update_icon()
+/obj/item/crowbar/power/update_icon_state()
 	if(tool_behaviour == TOOL_WIRECUTTER)
 		icon_state = "jaws_cutter"
 	else
 		icon_state = "jaws_pry"
+	return ..()
 
-/obj/item/crowbar/power/syndicate/update_icon()
+/obj/item/crowbar/power/syndicate/update_icon_state()
 	if(tool_behaviour == TOOL_WIRECUTTER)
 		icon_state = "jaws_cutter_syndie"
 	else
 		icon_state = "jaws_pry_syndie"
+	return ..()
 
 /obj/item/crowbar/power/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && tool_behaviour == TOOL_WIRECUTTER)

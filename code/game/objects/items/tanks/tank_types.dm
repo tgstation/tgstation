@@ -1,11 +1,11 @@
 /* Types of tanks!
  * Contains:
- *		Oxygen
- *		Anesthetic
- *		Air
- *		Plasma
- *		Emergency Oxygen
- *		Generic
+ * Oxygen
+ * Anesthetic
+ * Air
+ * Plasma
+ * Emergency Oxygen
+ * Generic
  */
 
 /*
@@ -67,7 +67,7 @@
 	worn_icon_state = "plasmatank"
 	tank_holder_icon_state = null
 	flags_1 = CONDUCT_1
-	slot_flags = null	//they have no straps!
+	slot_flags = null //they have no straps!
 	force = 8
 
 
@@ -84,7 +84,7 @@
 			return
 		src.master = F
 		F.ptank = src
-		F.update_icon()
+		F.update_appearance()
 	else
 		return ..()
 
@@ -125,7 +125,7 @@
 	worn_icon = null
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
-	volume = 24	//enough so they need to refill but not that often to be a chore
+	volume = 24 //enough so they need to refill but not that often to be a chore
 	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
 
 /obj/item/tank/internals/plasmaman/belt/full/populate_gas()
@@ -177,8 +177,9 @@
 /obj/item/tank/internals/emergency_oxygen/double
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
-	tank_holder_icon_state = null
-	volume = 24
+	worn_icon_state = "emergency_engi"
+	tank_holder_icon_state = "holder_emergency_engi"
+	volume = 12 //If it's double of the above, shouldn't it be double the volume??
 
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return

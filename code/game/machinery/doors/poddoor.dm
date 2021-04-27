@@ -1,3 +1,9 @@
+
+//blast door (de)construction states
+#define BLASTDOOR_NEEDS_WIRES 0
+#define BLASTDOOR_NEEDS_ELECTRONICS 1
+#define BLASTDOOR_FINISHED 2
+
 /obj/machinery/door/poddoor
 	name = "blast door"
 	desc = "A heavy duty blast door that opens mechanically."
@@ -14,7 +20,63 @@
 	armor = list(MELEE = 50, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
-	poddoor = TRUE
+	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
+	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
+
+/obj/machinery/door/poddoor/attackby(obj/item/W, mob/user, params)
+	. = ..()
+
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		if(density)
+			to_chat(user, "<span class='warning'>You need to open [src] before opening its maintenance panel.</span>")
+			return
+		else if(default_deconstruction_screwdriver(user, icon_state, icon_state, W))
+			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
+			return TRUE
+
+	if(panel_open)
+		if(W.tool_behaviour == TOOL_MULTITOOL && deconstruction == BLASTDOOR_FINISHED)
+			var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
+			if(change_id)
+				id = clamp(round(change_id, 1), 1, 100)
+				to_chat(user, "<span class='notice'>You change the ID to [id].</span>")
+
+		else if(W.tool_behaviour == TOOL_CROWBAR && deconstruction == BLASTDOOR_FINISHED)
+			to_chat(user, "<span class='notice'>You start to remove the airlock electronics.</span>")
+			if(do_after(user, 10 SECONDS, target = src))
+				new /obj/item/electronics/airlock(loc)
+				id = null
+				deconstruction = BLASTDOOR_NEEDS_ELECTRONICS
+
+		else if(W.tool_behaviour == TOOL_WIRECUTTER && deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
+			to_chat(user, "<span class='notice'>You start to remove the internal cables.</span>")
+			if(do_after(user, 10 SECONDS, target = src))
+				var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
+				var/amount = recipe.reqs[/obj/item/stack/cable_coil]
+				new /obj/item/stack/cable_coil(loc, amount)
+				deconstruction = BLASTDOOR_NEEDS_WIRES
+
+		else if(W.tool_behaviour == TOOL_WELDER && deconstruction == BLASTDOOR_NEEDS_WIRES)
+			if(!W.tool_start_check(user, amount=0))
+				return
+
+			to_chat(user, "<span class='notice'>You start tearing apart the [src].</span>")
+			playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+			if(do_after(user, 15 SECONDS, target = src))
+				var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
+				var/amount = recipe.reqs[/obj/item/stack/sheet/plasteel]
+				new /obj/item/stack/sheet/plasteel(loc, amount)
+				qdel(src)
+
+/obj/machinery/door/poddoor/examine(mob/user)
+	. = ..()
+	if(panel_open)
+		if(deconstruction == BLASTDOOR_FINISHED)
+			. += "<span class='notice'>The maintenance panel is opened and the electronics could be <b>pried</b> out.</span>"
+		else if(deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
+			. += "<span class='notice'>The <i>electronics</i> are missing and there are some <b>wires</b> sticking out.</span>"
+		else if(deconstruction == BLASTDOOR_NEEDS_WIRES)
+			. += "<span class='notice'>The <i>wires</i> have been removed and it's ready to be <b>sliced apart</b>.</span>"
 
 /obj/machinery/door/poddoor/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.id]_[id]"
@@ -31,7 +93,7 @@
 
 //special poddoors that open when emergency shuttle docks at centcom
 /obj/machinery/door/poddoor/shuttledock
-	var/checkdir = 4	//door won't open if turf in this dir is `turftype`
+	var/checkdir = 4 //door won't open if turf in this dir is `turftype`
 	var/turftype = /turf/open/space
 
 /obj/machinery/door/poddoor/shuttledock/proc/check()
@@ -52,6 +114,14 @@
 /obj/machinery/door/poddoor/incinerator_atmos_aux
 	name = "combustion chamber vent"
 	id = INCINERATOR_ATMOS_AUXVENT
+
+/obj/machinery/door/poddoor/atmos_test_room_mainvent_1
+	name = "test chamber 1 vent"
+	id = TEST_ROOM_ATMOS_MAINVENT_1
+
+/obj/machinery/door/poddoor/atmos_test_room_mainvent_2
+	name = "test chamber 2 vent"
+	id = TEST_ROOM_ATMOS_MAINVENT_2
 
 /obj/machinery/door/poddoor/incinerator_syndicatelava_main
 	name = "turbine vent"
@@ -79,14 +149,11 @@
 	else
 		return ..()
 
-/obj/machinery/door/poddoor/shutters/bumpopen()
-	return
-
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
-	if(severity == 3)
-		return
-	..()
+	if(severity <= EXPLODE_LIGHT)
+		return FALSE
+	return ..()
 
 /obj/machinery/door/poddoor/do_animate(animation)
 	switch(animation)
@@ -98,10 +165,8 @@
 			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
 
 /obj/machinery/door/poddoor/update_icon_state()
-	if(density)
-		icon_state = "closed"
-	else
-		icon_state = "open"
+	. = ..()
+	icon_state = density ? "closed" : "open"
 
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
 	return
@@ -110,7 +175,7 @@
 	if(machine_stat & NOPOWER)
 		open(TRUE)
 
-/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user)
+/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))
 		add_fingerprint(user)
 		user.visible_message("<span class='warning'>[user] begins prying open [src].</span>",\

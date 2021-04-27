@@ -78,11 +78,11 @@
 	return data
 
 /**
-  * Checks if we are allowed to launch the shuttle, for special cases
-  *
-  * Arguments:
-  * * user - The mob trying to initiate the launch
-  */
+ * Checks if we are allowed to launch the shuttle, for special cases
+ *
+ * Arguments:
+ * * user - The mob trying to initiate the launch
+ */
 /obj/machinery/computer/shuttle/proc/launch_check(mob/user)
 	return TRUE
 

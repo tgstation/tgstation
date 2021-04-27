@@ -6,13 +6,13 @@
 	icon_icon = 'icons/obj/device.dmi'
 
 /**
-  * Proc called to put a status readout to the ninja in chat.
-  *
-  * Called put some information about the ninja's current status into chat.
-  * This information used to be displayed constantly on the status tab screen
-  * when the suit was on, but was turned into this as to remove the code from
-  * human.dm
-  */
+ * Proc called to put a status readout to the ninja in chat.
+ *
+ * Called put some information about the ninja's current status into chat.
+ * This information used to be displayed constantly on the status tab screen
+ * when the suit was on, but was turned into this as to remove the code from
+ * human.dm
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjastatus()
 	var/mob/living/carbon/human/ninja = affecting
 	var/list/info_list = list()
@@ -35,5 +35,5 @@
 		info_list += "Viruses:"
 		for(var/datum/disease/ninja_disease in ninja.diseases)
 			info_list += "<span class='info'>* [ninja_disease.name], Type: [ninja_disease.spread_text], Stage: [ninja_disease.stage]/[ninja_disease.max_stages], Possible Cure: [ninja_disease.cure_text]</span>\n"
-		
+
 	to_chat(ninja, "[info_list.Join()]")

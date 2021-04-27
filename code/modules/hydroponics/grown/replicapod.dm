@@ -31,42 +31,64 @@
 
 	create_reagents(volume, INJECTABLE|DRAWABLE)
 
-/obj/item/seeds/replicapod/on_reagent_change(changetype)
-	if(changetype == ADD_REAGENT)
-		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
-		if(B)
-			if(B.data["mind"] && B.data["cloneable"])
-				mind = B.data["mind"]
-				ckey = B.data["ckey"]
-				realName = B.data["real_name"]
-				blood_gender = B.data["gender"]
-				blood_type = B.data["blood_type"]
-				features = B.data["features"]
-				factions = B.data["factions"]
-				quirks = B.data["quirks"]
-				sampleDNA = B.data["blood_DNA"]
-				contains_sample = TRUE
-				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
-				log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
-			else
-				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
+/obj/item/seeds/replicapod/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT), .proc/on_reagent_add)
+	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, .proc/on_reagent_del)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
 
-	if(!reagents.has_reagent(/datum/reagent/blood))
-		mind = null
-		ckey = null
-		realName = null
-		blood_gender = null
-		blood_type = null
-		features = null
-		factions = null
-		sampleDNA = null
-		contains_sample = FALSE
+/// Handles the seeds' reagents datum getting deleted.
+/obj/item/seeds/replicapod/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_PARENT_QDELETING))
+	return NONE
 
-/obj/item/seeds/replicapod/get_analyzer_text()
-	var/text = ..()
+/// Handles reagents getting added to this seed.
+/obj/item/seeds/replicapod/proc/on_reagent_add(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
+	if(!B)
+		return
+
+	if(B.data["mind"] && B.data["cloneable"])
+		mind = B.data["mind"]
+		ckey = B.data["ckey"]
+		realName = B.data["real_name"]
+		blood_gender = B.data["gender"]
+		blood_type = B.data["blood_type"]
+		features = B.data["features"]
+		factions = B.data["factions"]
+		quirks = B.data["quirks"]
+		sampleDNA = B.data["blood_DNA"]
+		contains_sample = TRUE
+		visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+		log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
+	else
+		visible_message("<span class='warning'>The [src] rejects the sample!</span>")
+	return NONE
+
+/// Handles reagents being deleted from these seeds.
+/obj/item/seeds/replicapod/proc/on_reagent_del(changetype)
+	SIGNAL_HANDLER
+	if(reagents.has_reagent(/datum/reagent/blood))
+		return
+
+	mind = null
+	ckey = null
+	realName = null
+	blood_gender = null
+	blood_type = null
+	features = null
+	factions = null
+	sampleDNA = null
+	contains_sample = FALSE
+	return NONE
+
+/obj/item/seeds/replicapod/get_unique_analyzer_text()
 	if(contains_sample)
-		text += "\n It contains a blood sample with blood DNA (UE) \"sampleDNA\"." //blood DNA (UE) shows in medical records and is readable by forensics scanners
-	return text
+		return "It contains a blood sample with blood DNA (UE) \"[sampleDNA]\"." //blood DNA (UE) shows in medical records and is readable by forensics scanners
+	else
+		return null
 
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
@@ -111,8 +133,8 @@
 			return result
 
 		// Make sure they can still interact with the parent hydroponics tray.
-		if(!parent.can_interact(user))
-			to_chat(user, text = "You are no longer able to harvets the seeds from [parent]!", type = MESSAGE_TYPE_INFO)
+		if(!user.canUseTopic(parent, BE_CLOSE))
+			to_chat(user, text = "You are no longer able to harvest the seeds from [parent]!", type = MESSAGE_TYPE_INFO)
 			return result
 
 		var/seed_count = 1

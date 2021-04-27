@@ -8,7 +8,7 @@
 	var/list/hit_sounds = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg',\
 	'sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
-/obj/structure/punching_bag/attack_hand(mob/user as mob)
+/obj/structure/punching_bag/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -29,7 +29,7 @@
 /obj/structure/weightmachine/proc/AnimateMachine(mob/living/user)
 	return
 
-/obj/structure/weightmachine/attack_hand(mob/living/user)
+/obj/structure/weightmachine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

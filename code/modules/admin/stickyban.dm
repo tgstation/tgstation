@@ -337,7 +337,7 @@
 			log_admin_private("[key_name(usr)] has reverted [ckey]'s sticky ban to its state at round start.")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has reverted [ckey]'s sticky ban to its state at round start.</span>")
 			//revert is mostly used when shit goes rouge, so we have to set it to null
-			//	and wait a byond tick before assigning it to ensure byond clears its shit.
+			// and wait a byond tick before assigning it to ensure byond clears its shit.
 			sleep(world.tick_lag)
 			world.SetConfig("ban",ckey,list2stickyban(cached_ban))
 

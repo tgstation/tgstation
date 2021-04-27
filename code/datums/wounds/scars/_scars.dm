@@ -1,11 +1,11 @@
 /**
-  * scars are cosmetic datums that are assigned to bodyparts once they recover from wounds. Each wound type and severity have their own descriptions for what the scars
-  * look like, and then each body part has a list of "specific locations" like your elbow or wrist or wherever the scar can appear, to make it more interesting than "right arm"
-  *
-  *
-  * Arguments:
-  * *
-  */
+ * scars are cosmetic datums that are assigned to bodyparts once they recover from wounds. Each wound type and severity have their own descriptions for what the scars
+ * look like, and then each body part has a list of "specific locations" like your elbow or wrist or wherever the scar can appear, to make it more interesting than "right arm"
+ *
+ *
+ * Arguments:
+ * *
+ */
 /datum/scar
 	var/obj/item/bodypart/limb
 	var/mob/living/carbon/victim
@@ -32,20 +32,24 @@
 		LAZYREMOVE(limb.scars, src)
 	if(victim)
 		LAZYREMOVE(victim.all_scars, src)
+	limb = null
+	victim = null
 	. = ..()
 
 /**
-  * generate() is used to actually fill out the info for a scar, according to the limb and wound it is provided.
-  *
-  * After creating a scar, call this on it while targeting the scarred bodypart with a given wound to apply the scar.
-  *
-  * Arguments:
-  * * BP- The bodypart being targeted
-  * * W- The wound being used to generate the severity and description info
-  * * add_to_scars- Should always be TRUE unless you're just storing a scar for later usage, like how cuts want to store a scar for the highest severity of cut, rather than the severity when the wound is fully healed (probably demoted to moderate)
-  */
+ * generate() is used to actually fill out the info for a scar, according to the limb and wound it is provided.
+ *
+ * After creating a scar, call this on it while targeting the scarred bodypart with a given wound to apply the scar.
+ *
+ * Arguments:
+ * * BP- The bodypart being targeted
+ * * W- The wound being used to generate the severity and description info
+ * * add_to_scars- Should always be TRUE unless you're just storing a scar for later usage, like how cuts want to store a scar for the highest severity of cut, rather than the severity when the wound is fully healed (probably demoted to moderate)
+ */
 /datum/scar/proc/generate(obj/item/bodypart/BP, datum/wound/W, add_to_scars=TRUE)
 	limb = BP
+	RegisterSignal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
+
 	severity = W.severity
 	if(limb.owner)
 		victim = limb.owner
@@ -88,6 +92,7 @@
 		return
 
 	limb = BP
+	RegisterSignal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
 	if(limb.owner)
 		victim = limb.owner
 		if(victim.get_biological_state() != biology)
@@ -112,6 +117,10 @@
 		if(WOUND_SEVERITY_LOSS)
 			visibility = 7
 	return src
+
+/datum/scar/proc/limb_gone()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /// What will show up in examine_more() if this scar is visible
 /datum/scar/proc/get_examine_description(mob/viewer)

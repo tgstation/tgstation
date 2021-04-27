@@ -6,6 +6,7 @@
 	range = 7
 	var/list/effects
 	var/ready = TRUE
+	school = SCHOOL_EVOCATION
 	centcom_cancast = FALSE
 	sound = 'sound/effects/magic.ogg'
 	cooldown_min = 300
@@ -113,10 +114,10 @@
 		walk_link(user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/cross_action/spacetime_dist/attack_hand(mob/user)
+/obj/effect/cross_action/spacetime_dist/attack_hand(mob/user, list/modifiers)
 	walk_link(user)
 
-/obj/effect/cross_action/spacetime_dist/attack_paw(mob/user)
+/obj/effect/cross_action/spacetime_dist/attack_paw(mob/user, list/modifiers)
 	walk_link(user)
 
 /obj/effect/cross_action/spacetime_dist/Destroy()

@@ -121,7 +121,7 @@ This section is for the event controller
 		var/area/center_area = get_area(center_turf)
 		center_areas += center_area
 
-		explosion(center_turf,0,0,5,7,7)
+		explosion(center_turf, light_impact_range = 5, flame_range = 7, flash_range = 7)
 
 		new /obj/structure/crystal_portal/huge(center_turf)
 
@@ -249,7 +249,7 @@ This section is for the event controller
 			spawners += temp
 	for(var/i in 1 to rand(15, 25))
 		spawn_portal(GLOB.crystal_invasion_waves["huge wave"], spawners)
-	explosion(dest_crystal.loc, 15, 26, 33, 35, 1, 1) //a bit smaller than max supermatter explosion
+	explosion(dest_crystal, devastation_range = 15, heavy_impact_range = 26, light_impact_range = 33, flash_range = 35, adminlog = TRUE, ignorecap = TRUE) //a bit smaller than max supermatter explosion
 	priority_announce("WARNING - Portal are appearing everywhere, you failed to contain the event. You people should feel ashamed of yourselves!","Alarm")
 	QDEL_NULL(dest_crystal)
 
@@ -373,7 +373,7 @@ This section is for the destabilized SM
 	removed.gases[/datum/gas/bz][MOLES] += 15.5
 	removed.gases[/datum/gas/miasma][MOLES] += 5.5
 	env.merge(removed)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
 /obj/machinery/destabilized_crystal/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(user))
@@ -477,6 +477,7 @@ This section is for the crystal stabilizer item and the crystal from the closed 
 	singular_name = "otherworld crystal"
 	icon = 'icons/obj/stack_objects.dmi'
 	material_type = /datum/material/otherworld_crystal
+	merge_type = /obj/item/stack/sheet/otherworld_crystal
 
 /*
 This section is for the signaler part of the crystal portals
@@ -549,13 +550,13 @@ This section is for the crystal portals variations
 	if(!closed)
 		switch(name)
 			if("Small Portal")
-				explosion(loc, 0,1,3)
+				explosion(src, heavy_impact_range = 1, light_impact_range = 3)
 			if("Medium Portal")
-				explosion(loc, 0,3,5)
+				explosion(src, heavy_impact_range = 3, light_impact_range = 5)
 			if("Big Portal")
-				explosion(loc, 1,3,5)
+				explosion(src, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5)
 			if("Huge Portal")
-				explosion(loc, 2,5,7)
+				explosion(src, devastation_range = 2, heavy_impact_range = 5, light_impact_range = 7)
 	new/obj/item/stack/sheet/otherworld_crystal(loc)
 	return ..()
 
@@ -563,8 +564,8 @@ This section is for the crystal portals variations
 	. = ..()
 	. += "<span class='notice'>The [src] seems to be releasing some sort or high frequency wavelength, maybe it could be closed if another signal is sent back or if an equivalent device is used on it.</span>"
 
-/obj/structure/crystal_portal/attack_animal(mob/living/simple_animal/M)
-	if(faction_check(faction, M.faction, FALSE) && !M.client)
+/obj/structure/crystal_portal/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(faction_check(faction, user.faction, FALSE) && !user.client)
 		return ..()
 
 /obj/structure/crystal_portal/attackby(obj/item/W, mob/living/user, params)
@@ -652,7 +653,7 @@ This section is for the crystal monsters variations
 	turns_per_move = 1
 	speak_emote = list("resonates")
 	emote_see = list("resonates")
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	minbodytemp = 0
 	maxbodytemp = 1500
 	healable = 0 //they're crystals how would bruise packs help them??
@@ -660,7 +661,7 @@ This section is for the crystal monsters variations
 	attack_verb_simple = "smash"
 	attack_sound = 'sound/effects/supermatter.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 10
+	unsuitable_atmos_damage = 5
 	robust_searching = 1
 	stat_attack = HARD_CRIT
 	faction = list("crystal")

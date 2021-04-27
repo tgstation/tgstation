@@ -1,0 +1,15 @@
+{
+	"": [
+		{
+			"type": "icon_state",
+			"icon_state": "outline",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "lights",
+			"blend_mode": "overlay"
+		}
+	]
+}

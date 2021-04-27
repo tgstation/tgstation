@@ -82,7 +82,7 @@
 	if(!T)
 		return
 	T.assume_air(gasused)
-	T.air_update_turf()
+	T.air_update_turf(FALSE, FALSE)
 	if(!gasused)
 		to_chat(user, "<span class='warning'>\The [src]'s tank is empty!</span>")
 		target.apply_damage((force / 5), BRUTE)

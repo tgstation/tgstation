@@ -33,6 +33,9 @@
 	Overwriting of base procs
 */
 /datum/wound/blunt/wound_injury(datum/wound/old_wound = null)
+	// hook into gaining/losing gauze so crit bone wounds can re-enable/disable depending if they're slung or not
+	RegisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), .proc/update_inefficiencies)
+
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group)
 		processes = TRUE
 		active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
@@ -52,11 +55,13 @@
 /datum/wound/blunt/remove_wound(ignore_limb, replaced)
 	limp_slowdown = 0
 	QDEL_NULL(active_trauma)
+	if(limb)
+		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
 	if(victim)
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	return ..()
 
-/datum/wound/blunt/handle_process()
+/datum/wound/blunt/handle_process(delta_time, times_fired)
 	. = ..()
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
 		if(active_trauma)
@@ -70,12 +75,12 @@
 
 	regen_ticks_current++
 	if(victim.body_position == LYING_DOWN)
-		if(prob(50))
+		if(DT_PROB(30, delta_time))
 			regen_ticks_current += 0.5
-		if(victim.IsSleeping() && prob(50))
+		if(victim.IsSleeping() && DT_PROB(30, delta_time))
 			regen_ticks_current += 0.5
 
-	if(prob(severity * 3))
+	if(DT_PROB(severity * 1.5, delta_time))
 		victim.take_bodypart_damage(rand(1, severity * 2), stamina=rand(2, severity * 2.5), wound_bonus=CANT_WOUND)
 		if(prob(33))
 			to_chat(victim, "<span class='danger'>You feel a sharp pain in your body as your bones are reforming!</span>")
@@ -91,7 +96,7 @@
 /datum/wound/blunt/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
 	SIGNAL_HANDLER
 
-	if(victim.get_active_hand() != limb || victim.a_intent == INTENT_HELP || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
+	if(victim.get_active_hand() != limb || !victim.combat_mode || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
 		return
 
 	// With a severe or critical wound, you have a 15% or 30% chance to proc pain on hit
@@ -146,15 +151,15 @@
 	else
 		var/sling_condition = ""
 		// how much life we have left in these bandages
-		switch(limb.current_gauze.obj_integrity / limb.current_gauze.max_integrity * 100)
-			if(0 to 25)
-				sling_condition = "just barely "
-			if(25 to 50)
-				sling_condition = "loosely "
-			if(50 to 75)
-				sling_condition = "mostly "
-			if(75 to INFINITY)
-				sling_condition = "tightly "
+		switch(limb.current_gauze.absorption_capacity)
+			if(0 to 1.25)
+				sling_condition = "just barely"
+			if(1.25 to 2.75)
+				sling_condition = "loosely"
+			if(2.75 to 4)
+				sling_condition = "mostly"
+			if(4 to INFINITY)
+				sling_condition = "tightly"
 
 		msg += "[victim.p_their(TRUE)] [limb.name] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
 
@@ -222,7 +227,7 @@
 		remove_wound()
 
 /datum/wound/blunt/moderate/try_handling(mob/living/carbon/human/user)
-	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
+	if(user.pulling != victim || user.zone_selected != limb.body_zone)
 		return FALSE
 
 	if(user.grab_state == GRAB_PASSIVE)
@@ -232,7 +237,7 @@
 	if(user.grab_state >= GRAB_AGGRESSIVE)
 		user.visible_message("<span class='danger'>[user] begins twisting and straining [victim]'s dislocated [limb.name]!</span>", "<span class='notice'>You begin twisting and straining [victim]'s dislocated [limb.name]...</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[user] begins twisting and straining your dislocated [limb.name]!</span>")
-		if(user.a_intent == INTENT_HELP)
+		if(!user.combat_mode)
 			chiropractice(user)
 		else
 			malpractice(user)
@@ -290,7 +295,7 @@
 		victim.visible_message("<span class='danger'>[user] finishes resetting [victim.p_their()] [limb.name]!</span>", "<span class='userdanger'>You reset your [limb.name]!</span>")
 	else
 		limb.receive_damage(brute=10, wound_bonus=CANT_WOUND)
-		user.visible_message("<span class='danger'>[user] finishes resetting [victim]'s [limb.name]!</span>", "<span class='nicegreen'>You finish resetting [victim]'s [limb.name]!</span>", victim)
+		user.visible_message("<span class='danger'>[user] finishes resetting [victim]'s [limb.name]!</span>", "<span class='nicegreen'>You finish resetting [victim]'s [limb.name]!</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[user] resets your [limb.name]!</span>")
 
 	victim.emote("scream")
@@ -372,13 +377,13 @@
 		var/painkiller_bonus = 0
 		if(victim.drunkenness > 10)
 			painkiller_bonus += 10
-		if(victim.has_reagent(/datum/reagent/medicine/morphine))
+		if(victim.reagents.has_reagent(/datum/reagent/medicine/morphine))
 			painkiller_bonus += 20
-		if(victim.has_reagent(/datum/reagent/determination))
+		if(victim.reagents.has_reagent(/datum/reagent/determination))
 			painkiller_bonus += 10
-		if(victim.has_reagent(/datum/reagent/consumable/ethanol/painkiller))
+		if(victim.reagents.has_reagent(/datum/reagent/consumable/ethanol/painkiller))
 			painkiller_bonus += 5
-		if(victim.has_reagent(/datum/reagent/medicine/mine_salve))
+		if(victim.reagents.has_reagent(/datum/reagent/medicine/mine_salve))
 			painkiller_bonus += 20
 
 		if(prob(25 + (20 * (severity - 2)) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by painkillers

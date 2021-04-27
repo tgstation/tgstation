@@ -35,8 +35,8 @@
 
 /datum/bioware/muscled_veins/on_gain()
 	..()
-	ADD_TRAIT(owner, TRAIT_STABLEHEART, "muscled_veins")
+	ADD_TRAIT(owner, TRAIT_STABLEHEART, EXPERIMENTAL_SURGERY_TRAIT)
 
 /datum/bioware/muscled_veins/on_lose()
 	..()
-	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, "muscled_veins")
+	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, EXPERIMENTAL_SURGERY_TRAIT)

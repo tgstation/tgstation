@@ -5,10 +5,10 @@
 
 #define LINKED_SERVER_NONRESPONSIVE  (!linkedServer || (linkedServer.machine_stat & (NOPOWER|BROKEN)))
 
-#define MSG_MON_SCREEN_MAIN 		0
-#define MSG_MON_SCREEN_LOGS 		1
-#define MSG_MON_SCREEN_HACKED 		2
-#define MSG_MON_SCREEN_CUSTOM_MSG 	3
+#define MSG_MON_SCREEN_MAIN 0
+#define MSG_MON_SCREEN_LOGS 1
+#define MSG_MON_SCREEN_HACKED 2
+#define MSG_MON_SCREEN_CUSTOM_MSG 3
 #define MSG_MON_SCREEN_REQUEST_LOGS 4
 
 // The monitor itself.
@@ -28,16 +28,16 @@
 	var/defaultmsg = "<span class='notice'>Welcome. Please select an option.</span>"
 	var/rebootmsg = "<span class='warning'>%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
 	//Computer properties
-	var/screen = MSG_MON_SCREEN_MAIN 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
-	var/hacking = FALSE		// Is it being hacked into by the AI/Cyborg
-	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>"	// The message that shows on the main menu.
+	var/screen = MSG_MON_SCREEN_MAIN // 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
+	var/hacking = FALSE // Is it being hacked into by the AI/Cyborg
+	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>" // The message that shows on the main menu.
 	var/auth = FALSE // Are they authenticated?
 	var/optioncount = 7
 	// Custom Message Properties
 	var/customsender = "System Administrator"
 	var/obj/item/pda/customrecepient = null
-	var/customjob		= "Admin"
-	var/custommessage 	= "This is a test, please ignore."
+	var/customjob = "Admin"
+	var/custommessage = "This is a test, please ignore."
 
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
@@ -202,7 +202,7 @@
 					<td width='20%'><A href='?src=[REF(src)];select=Recepient'>Recipient</a></td>
 					<td width='300px' word-wrap: break-word><A href='?src=[REF(src)];select=Message'>Message</a></td></tr>"}
 				//Sender  - Sender's Job  - Recepient - Message
-				//Al Green- Your Dad	  - Your Mom  - WHAT UP!?
+				//Al Green- Your Dad   - Your Mom  - WHAT UP!?
 
 			dat += {"<tr><td width='20%'>[customsender]</td>
 			<td width='20%'>[customjob]</td>
@@ -214,14 +214,14 @@
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
 
 			var/index = 0
-			/* 	data_rc_msg
-				X												 - 5%
+			/* data_rc_msg
+				X  - 5%
 				var/rec_dpt = "Unspecified" //name of the person - 15%
 				var/send_dpt = "Unspecified" //name of the sender- 15%
-				var/message = "Blank" //transferred message		 - 300px
-				var/stamp = "Unstamped"							 - 15%
-				var/id_auth = "Unauthenticated"					 - 15%
-				var/priority = "Normal"							 - 10%
+				var/message = "Blank" //transferred message  - 300px
+				var/stamp = "Unstamped"  - 15%
+				var/id_auth = "Unauthenticated"  - 15%
+				var/priority = "Normal"  - 10%
 			*/
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += {"<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sending Dep.</th><th width='15%'>Receiving Dep.</th>
@@ -254,10 +254,10 @@
 	obj_flags &= ~EMAGGED
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
-	customsender 	= "System Administrator"
+	customsender = "System Administrator"
 	customrecepient = null
-	custommessage 	= "This is a test, please ignore."
-	customjob 		= "Admin"
+	custommessage = "This is a test, please ignore."
+	customjob = "Admin"
 
 /obj/machinery/computer/message_monitor/Topic(href, href_list)
 	if(..())

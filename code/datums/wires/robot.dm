@@ -7,7 +7,7 @@
 	wires = list(
 		WIRE_AI, WIRE_CAMERA,
 		WIRE_LAWSYNC, WIRE_LOCKDOWN,
-		WIRE_RESET_MODULE
+		WIRE_RESET_MODEL
 	)
 	add_duds(2)
 	..()
@@ -24,7 +24,7 @@
 	status += "The intelligence link display shows [R.connected_ai ? R.connected_ai.name : "NULL"]."
 	status += "The camera light is [!isnull(R.builtInCamera) && R.builtInCamera.status ? "on" : "off"]."
 	status += "The lockdown indicator is [R.lockcharge ? "on" : "off"]."
-	status += "There is a star symbol above the [get_color_of_wire(WIRE_RESET_MODULE)] wire."
+	status += "There is a star symbol above the [get_color_of_wire(WIRE_RESET_MODEL)] wire."
 	return status
 
 /datum/wires/robot/on_pulse(wire, user)
@@ -56,9 +56,9 @@
 				R.show_laws()
 		if(WIRE_LOCKDOWN)
 			R.SetLockdown(!R.lockcharge) // Toggle
-		if(WIRE_RESET_MODULE)
-			if(R.has_module())
-				R.visible_message("<span class='notice'>[R]'s module servos twitch.</span>", "<span class='notice'>Your module display flickers.</span>")
+		if(WIRE_RESET_MODEL)
+			if(R.has_model())
+				R.visible_message("<span class='notice'>[R]'s model servos twitch.</span>", "<span class='notice'>Your model display flickers.</span>")
 
 /datum/wires/robot/on_cut(wire, mend)
 	var/mob/living/silicon/robot/R = holder
@@ -86,9 +86,9 @@
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)
 			R.logevent("Motor Controller fault [mend?"cleared":"detected"]")
-		if(WIRE_RESET_MODULE)
-			if(R.has_module() && !mend)
-				R.ResetModule()
+		if(WIRE_RESET_MODEL)
+			if(R.has_model() && !mend)
+				R.ResetModel()
 
 /datum/wires/robot/can_reveal_wires(mob/user)
 	if(HAS_TRAIT(user, TRAIT_KNOW_CYBORG_WIRES))
@@ -97,8 +97,8 @@
 	return ..()
 
 /datum/wires/robot/always_reveal_wire(color)
-	// Always reveal the reset module wire.
-	if(color == get_color_of_wire(WIRE_RESET_MODULE))
+	// Always reveal the reset model wire.
+	if(color == get_color_of_wire(WIRE_RESET_MODEL))
 		return TRUE
 
 	return ..()

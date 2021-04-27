@@ -2,9 +2,9 @@
 	name = "lockbox"
 	desc = "A locked box."
 	icon_state = "lockbox+l"
-	inhand_icon_state = "syringe_kit"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	inhand_icon_state = "lockbox"
+	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	req_access = list(ACCESS_ARMORY)
 	var/broken = FALSE
@@ -60,12 +60,12 @@
 /obj/item/storage/lockbox/Entered()
 	. = ..()
 	open = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/lockbox/Exited()
 	. = ..()
 	open = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/lockbox/loyalty
 	name = "lockbox of mindshield implants"
@@ -114,7 +114,7 @@
 	if(user.canUseTopic(src, BE_CLOSE))
 		if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 			open = (open ? FALSE : TRUE)
-			update_icon()
+			update_appearance()
 		..()
 
 /obj/item/storage/lockbox/medal/PopulateContents()
@@ -132,12 +132,14 @@
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(locked)
 		icon_state = "medalbox+l"
-	else
-		icon_state = "medalbox"
-		if(open)
-			icon_state += "open"
-		if(broken)
-			icon_state += "+b"
+		return ..()
+
+	icon_state = "medalbox"
+	if(open)
+		icon_state += "open"
+	if(broken)
+		icon_state += "+b"
+	return ..()
 
 /obj/item/storage/lockbox/medal/update_overlays()
 	. = ..()

@@ -1,6 +1,6 @@
-#define BM_SWITCHSTATE_NONE	0
-#define BM_SWITCHSTATE_MODE	1
-#define BM_SWITCHSTATE_DIR	2
+#define BM_SWITCHSTATE_NONE 0
+#define BM_SWITCHSTATE_MODE 1
+#define BM_SWITCHSTATE_DIR 2
 
 /datum/buildmode
 	var/build_dir = SOUTH
@@ -15,7 +15,7 @@
 
 	// Switching management
 	var/switch_state = BM_SWITCHSTATE_NONE
-	var/switch_width = 5
+	var/switch_width = 4
 	// modeswitch UI
 	var/atom/movable/screen/buildmode/mode/modebutton
 	var/list/modeswitch_buttons = list()
@@ -72,7 +72,7 @@
 	buttons += new /atom/movable/screen/buildmode/quit(src)
 	// build the lists of switching buttons
 	build_options_grid(subtypesof(/datum/buildmode_mode), modeswitch_buttons, /atom/movable/screen/buildmode/modeswitch)
-	build_options_grid(list(SOUTH,EAST,WEST,NORTH,NORTHWEST), dirswitch_buttons, /atom/movable/screen/buildmode/dirswitch)
+	build_options_grid(GLOB.alldirs, dirswitch_buttons, /atom/movable/screen/buildmode/dirswitch)
 
 // this creates a nice offset grid for choosing between buildmode options,
 // because going "click click click ah hell" sucks.
@@ -130,12 +130,12 @@
 	close_switchstates()
 	mode = new newmode(src)
 	mode.enter_mode(src)
-	modebutton.update_icon()
+	modebutton.update_appearance()
 
 /datum/buildmode/proc/change_dir(newdir)
 	build_dir = newdir
 	close_dirswitch()
-	dirbutton.update_icon()
+	dirbutton.update_appearance()
 	return 1
 
 /datum/buildmode/proc/InterceptClickOn(mob/user, params, atom/object)

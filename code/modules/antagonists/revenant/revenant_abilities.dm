@@ -1,10 +1,10 @@
 
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"])
+	if(LAZYACCESS(modifiers, ALT_CLICK))
 		AltClickNoInteract(src, A)
 		return
 
@@ -35,9 +35,12 @@
 		if(target.ckey)
 			to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul burns with intelligence.</span>")
 			essence_drained += rand(20, 30)
-		if(target.stat != DEAD)
+		if(target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
 			to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul blazes with life!</span>")
 			essence_drained += rand(40, 50)
+		if(HAS_TRAIT(target, TRAIT_WEAK_SOUL) && !target.ckey)
+			to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul is weak and underdeveloped. They won't be worth very much.</span>")
+			essence_drained = 5
 		else
 			to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul is weak and faltering.</span>")
 		if(do_after(src, rand(15, 20), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted NOW?
@@ -71,10 +74,10 @@
 											   "<span class='revenwarning'>Violet lights, dancing in your vision, receding--</span>")
 					draining = FALSE
 					return
-				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
+				var/datum/beam/B = Beam(target,icon_state="drain_life")
 				if(do_after(src, 46, target, timed_action_flags = IGNORE_HELD_ITEM)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, FALSE, target)
-					if(essence_drained <= 90 && target.stat != DEAD)
+					if(essence_drained <= 90 && target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
 						essence_regen_cap += 5
 						to_chat(src, "<span class='revenboldnotice'>The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>")
 					if(essence_drained > 90)
@@ -214,7 +217,7 @@
 	for(var/mob/living/carbon/human/M in view(shock_range, L))
 		if(M == user)
 			continue
-		L.Beam(M,icon_state="purple_lightning",time=5)
+		L.Beam(M,icon_state="purple_lightning", time = 5)
 		if(!M.anti_magic_check(FALSE, TRUE))
 			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 		do_sparks(4, FALSE, M)

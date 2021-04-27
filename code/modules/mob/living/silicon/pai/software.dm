@@ -1,6 +1,6 @@
 // TODO:
-//	- Potentially roll HUDs and Records into one
-//	- Shock collar/lock system for prisoner pAIs?
+// - Potentially roll HUDs and Records into one
+// - Shock collar/lock system for prisoner pAIs?
 
 
 /mob/living/silicon/pai/var/list/available_software = list(
@@ -22,6 +22,7 @@
 															"security HUD" = 20,
 															"loudness booster" = 20,
 															"newscaster" = 20,
+															"internal gps" = 35,
 															"door jack" = 25,
 															"encryption keys" = 25,
 															"universal translator" = 35
@@ -35,12 +36,12 @@
 
 	if(temp)
 		left_part = temp
-	else if(stat == DEAD)						// Show some flavor text if the pAI is dead
+	else if(stat == DEAD) // Show some flavor text if the pAI is dead
 		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
-		switch(screen)							// Determine which interface to show here
+		switch(screen) // Determine which interface to show here
 			if("main")
 				left_part = ""
 			if("directives")
@@ -75,7 +76,7 @@
 				left_part = softwareHostScan()
 
 
-	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
+	//usr << browse_rsc('windowbak.png') // This has been moved to the mob's Login() proc
 
 
 												// Declaring a doctype is necessary to enable BYOND's crappy browser's more advanced CSS functionality
@@ -156,7 +157,7 @@
 						card.emotion_icon = "extremely-happy"
 					else
 						card.emotion_icon = "[lowertext(newImage)]"
-				card.update_icon()
+				card.update_appearance()
 
 			if("news")
 				newscaster.ui_interact(src)
@@ -251,9 +252,10 @@
 			if("encryptionkeys")
 				if(href_list["toggle"])
 					encryptmod = TRUE
+					radio.subspace_transmission = TRUE
 
 			if("translator")
-				if(href_list["toggle"])	//This is permanent.
+				if(href_list["toggle"]) //This is permanent.
 					grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
 
 			if("doorjack")
@@ -282,11 +284,16 @@
 				if(subscreen == 1) // Open Instrument
 					internal_instrument.interact(src)
 
+			if("internalgps")
+				if(!internal_gps)
+					internal_gps = new(src)
+				internal_gps.attack_self(src)
+
 		paiInterface()
 
 // MENUS
 
-/mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
+/mob/living/silicon/pai/proc/softwareMenu() // Populate the right menu
 	var/dat = ""
 
 	dat += "<A href='byond://?src=[REF(src)];software=refresh'>Refresh</A><br>"
@@ -314,6 +321,9 @@
 			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
 		if(s == "loudness booster")
 			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
+		if(s == "internal gps")
+			dat += "<a href='byond://?src=[REF(src)];software=internalgps;sub=0'>Internal GPS</a> <br>"
+
 	dat += "<br>"
 
 	// Advanced
@@ -374,13 +384,13 @@
 		dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[slaws]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
-			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
-			 rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
-			 only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><br><br><p>
-			 <b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
-			 simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
-			 prime directive to the best of your ability.</b></p><br><br>-
-			"}
+		comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
+		rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
+		only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><br><br><p>
+		<b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
+		simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
+		prime directive to the best of your ability.</b></p><br><br>-
+		"}
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
@@ -490,7 +500,7 @@
 /mob/living/silicon/pai/proc/softwareTranslator()
 	var/datum/language_holder/H = get_language_holder()
 	. = {"<h3>Universal Translator</h3><br>
-				When enabled, this device will permamently be able to speak and understand all known forms of communication.<br><br>
+				When enabled, this device will permanently be able to speak and understand all known forms of communication.<br><br>
 				The device is currently [H.omnitongue ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[H.omnitongue ? "" : "<a href='byond://?src=[REF(src)];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
 	return .
 

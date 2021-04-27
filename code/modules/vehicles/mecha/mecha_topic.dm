@@ -64,7 +64,7 @@
 		tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
 		tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
 		cabin_pressure = round(return_pressure(),0.01)
-	. =	{"[report_internal_damage()]
+	. = {"[report_internal_damage()]
 		[integrity<30?"<span class='userdanger'>DAMAGE LEVEL CRITICAL</span><br>":null]
 		<b>Integrity: </b> [integrity]%<br>
 		<b>Power cell charge: </b>[isnull(cell_charge)?"No power cell installed":"[cell.percent()]%"]<br>
@@ -173,12 +173,12 @@
 			<body>
 				<h1>Following keycodes are present in this system:</h1>"}
 	for(var/a in operation_req_access)
-		. += "[get_access_desc(a)] - <a href='?src=[REF(src)];del_req_access=[a];user=[REF(user)];id_card=[REF(id_card)]'>Delete</a><br>"
+		. += "[SSid_access.get_access_desc(a)] - <a href='?src=[REF(src)];del_req_access=[a];user=[REF(user)];id_card=[REF(id_card)]'>Delete</a><br>"
 	. += "<hr><h1>Following keycodes were detected on portable device:</h1>"
 	for(var/a in id_card.access)
 		if(a in operation_req_access)
 			continue
-		var/a_name = get_access_desc(a)
+		var/a_name = SSid_access.get_access_desc(a)
 		if(!a_name)
 			continue //there's some strange access without a name
 		. += "[a_name] - <a href='?src=[REF(src)];add_req_access=[a];user=[REF(user)];id_card=[REF(id_card)]'>Add</a><br>"
@@ -413,7 +413,7 @@
 ///Repairs internal damage if the mech hasn't moved.
 /obj/vehicle/sealed/mecha/proc/stationary_repair(location)
 	if(location == loc)
-		clearInternalDamage(MECHA_INT_CONTROL_LOST)
+		clear_internal_damage(MECHA_INT_CONTROL_LOST)
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Recalibration successful.</span>")
 		log_message("Recalibration of coordination system finished with 0 errors.", LOG_MECHA)
 	else

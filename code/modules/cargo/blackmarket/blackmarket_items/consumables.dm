@@ -44,7 +44,7 @@
 /datum/blackmarket_item/consumable/floor_pill
 	name = "Strange Pill"
 	desc = "The Russian Roulette of the Maintenance Tunnels."
-	item = /obj/item/reagent_containers/pill/floorpill
+	item = /obj/item/reagent_containers/pill/maintenance
 
 	stock_min = 5
 	stock_max = 35

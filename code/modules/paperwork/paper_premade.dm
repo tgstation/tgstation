@@ -1,5 +1,5 @@
 /*
- *	Premade paper
+ * Premade paper
  */
 
 /obj/item/paper/fluff/sop
@@ -21,7 +21,7 @@
 	<br>-Love, <i>Your Dearest</i>"}
 
 
-////////////	Job guides n' fluff
+//////////// Job guides n' fluff
 
 /obj/item/paper/guides/jobs/hydroponics
 	name = "paper- 'Greetings from Billy Bob'"
@@ -92,11 +92,11 @@
 	</i>"}
 
 	/*
-	*	Stations
+	* Stations
 	*/
 
 
-///////////	CentCom
+/////////// CentCom
 
 /obj/item/paper/fluff/stations/centcom/disk_memo
 	name = "memo"
@@ -110,7 +110,7 @@
 	info = "<BR>CentCom Security<BR>Port Division<BR>Official Bulletin<BR><BR>Inspector,<BR>There is an emergency shuttle arriving today.<BR><BR>Approval is restricted to Nanotrasen employees only. Deny all other entrants.<BR><BR>CentCom Port Commissioner"
 
 
-///////////	Lavaland
+/////////// Lavaland
 
 /obj/item/paper/fluff/stations/lavaland/orm_notice
 	name = "URGENT!"

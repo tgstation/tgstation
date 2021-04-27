@@ -28,7 +28,7 @@
 
 /obj/structure/lavaland/ash_walker/deconstruct(disassembled)
 	new /obj/item/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
-	new	/obj/effect/collapse(loc)
+	new /obj/effect/collapse(loc)
 	return ..()
 
 /obj/structure/lavaland/ash_walker/process()
@@ -86,6 +86,7 @@
 	M.real_name = oldname
 	M.underwear = "Nude"
 	M.update_body()
+	M.remove_language(/datum/language/common)
 	oldmind.transfer_to(M)
 	M.mind.grab_ghost()
 	to_chat(M, "<b>You have been pulled back from beyond the grave, with a new body and renewed purpose. Glory to the Necropolis!</b>")

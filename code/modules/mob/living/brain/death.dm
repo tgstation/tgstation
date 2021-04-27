@@ -7,7 +7,7 @@
 		var/obj/item/mmi = container
 		mmi.visible_message("<span class='warning'>[src]'s MMI flatlines!</span>", \
 					"<span class='hear'>You hear something flatline.</span>")
-		mmi.update_icon()
+		mmi.update_appearance()
 
 	return ..()
 

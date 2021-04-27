@@ -5,7 +5,7 @@
 	/// the limbs have no wound resistance like the chest and head do, so let's go with the r_arm
 	var/obj/item/bodypart/tested_part = victim.get_bodypart(BODY_ZONE_R_ARM)
 	/// In order of the wound types we're trying to inflict, what sharpness do we need to deal them?
-	var/list/sharps = list(SHARP_NONE, SHARP_EDGED, SHARP_POINTY, SHARP_NONE)
+	var/list/sharps = list(NONE, SHARP_EDGED, SHARP_POINTY, NONE)
 	/// Since burn wounds need burn damage, duh
 	var/list/dam_types = list(BRUTE, BRUTE, BRUTE, BURN)
 
@@ -44,7 +44,7 @@
 	/// the limbs have no wound resistance like the chest and head do, so let's go with the r_arm
 	var/obj/item/bodypart/tested_part = victim.get_bodypart(BODY_ZONE_R_ARM)
 	/// In order of the wound types we're trying to inflict, what sharpness do we need to deal them?
-	var/list/sharps = list(SHARP_NONE, SHARP_EDGED, SHARP_POINTY, SHARP_NONE)
+	var/list/sharps = list(NONE, SHARP_EDGED, SHARP_POINTY, NONE)
 	/// Since burn wounds need burn damage, duh
 	var/list/dam_types = list(BRUTE, BRUTE, BRUTE, BURN)
 

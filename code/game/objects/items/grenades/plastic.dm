@@ -42,7 +42,7 @@
 	else
 		return ..()
 
-/obj/item/grenade/c4/prime(mob/living/lanced_by)
+/obj/item/grenade/c4/detonate(mob/living/lanced_by)
 	if(QDELETED(src))
 		return
 
@@ -59,14 +59,14 @@
 	if(location)
 		if(directional && target?.density)
 			var/turf/T = get_step(location, aim_dir)
-			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
+			explosion(get_step(T, aim_dir), devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3])
 		else
-			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
+			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3])
 	qdel(src)
 
 //assembly stuff
 /obj/item/grenade/c4/receive_signal()
-	prime()
+	detonate()
 
 /obj/item/grenade/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num|null
@@ -97,7 +97,7 @@
 
 		notify_ghosts("[user] has planted \a [src] on [target] with a [det_time] second fuse!", source = target, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Explosive Planted")
 
-		moveToNullspace()	//Yep
+		moveToNullspace() //Yep
 
 		if(istype(AM, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
 			var/obj/item/I = AM
@@ -111,7 +111,7 @@
 
 		target.add_overlay(plastic_overlay)
 		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>")
-		addtimer(CALLBACK(src, .proc/prime), det_time*10)
+		addtimer(CALLBACK(src, .proc/detonate), det_time*10)
 
 /obj/item/grenade/c4/proc/shout_syndicate_crap(mob/M)
 	if(!M)
@@ -148,7 +148,7 @@
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
 	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	shout_syndicate_crap(user)
-	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
+	explosion(user, heavy_impact_range = 2) //Cheap explosion imitation because putting detonate() here causes runtimes
 	user.gib(1, 1)
 	qdel(src)
 

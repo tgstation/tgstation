@@ -30,3 +30,10 @@
 		log_game("Protolathe of type [type] constructed by [key_name(usr)] at [get_area_name(src, TRUE)]")
 
 	return ..()
+
+/// Special subtype protolathe for offstation use. Has a more limited available design selection.
+/obj/machinery/rnd/production/protolathe/offstation
+	name = "ancient protolathe"
+	desc = "Converts raw materials into useful objects. Its ancient construction may limit its ability to print all known technology."
+	circuit = /obj/item/circuitboard/machine/protolathe/offstation
+	allowed_buildtypes = AWAY_LATHE

@@ -51,8 +51,9 @@ SUBSYSTEM_DEF(machines)
 			return
 
 /datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
-	for(var/A in cables)
-		var/obj/structure/cable/PC = A
+	var/obj/structure/cable/PC
+	for(var/A in 1 to cables.len)
+		PC = cables[A]
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)

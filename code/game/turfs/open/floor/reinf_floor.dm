@@ -3,6 +3,7 @@
 	name = "reinforced floor"
 	desc = "Extremely sturdy."
 	icon_state = "engine"
+	holodeck_compatible = TRUE
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
@@ -11,6 +12,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+
 
 /turf/open/floor/engine/examine(mob/user)
 	. += ..()
@@ -27,7 +29,7 @@
 
 /turf/open/floor/engine/make_plating(force = FALSE)
 	if(force)
-		..()
+		return ..()
 	return //unplateable
 
 /turf/open/floor/engine/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
@@ -51,16 +53,16 @@
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
 	return ..()
 
-/turf/open/floor/engine/ex_act(severity,target)
-	var/shielded = is_shielded()
+/turf/open/floor/engine/ex_act(severity, target)
 	contents_explosion(severity, target)
-	if(severity != 1 && shielded && target != src)
-		return
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		return
+		return TRUE
+	if(severity < EXPLODE_DEVASTATE && is_shielded())
+		return FALSE
+
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			if(prob(80))
 				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
 					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
@@ -71,7 +73,7 @@
 				ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 			else
 				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -85,10 +87,10 @@
 		else if(prob(30))
 			ReplaceWithLattice()
 
-/turf/open/floor/engine/attack_paw(mob/user)
-	return attack_hand(user)
+/turf/open/floor/engine/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/turf/open/floor/engine/attack_hand(mob/user)
+/turf/open/floor/engine/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -177,6 +179,14 @@
 	name = "\improper Zauker floor"
 	initial_gas_mix = ATMOS_TANK_ZAUKER
 
+/turf/open/floor/engine/helium
+	name = "\improper Helium floor"
+	initial_gas_mix = ATMOS_TANK_HELIUM
+
+/turf/open/floor/engine/antinoblium
+	name = "\improper Antinoblium floor"
+	initial_gas_mix = ATMOS_TANK_ANTINOBLIUM
+
 /turf/open/floor/engine/air
 	name = "air floor"
 	initial_gas_mix = ATMOS_TANK_AIRMIX
@@ -215,3 +225,6 @@
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/engine/telecomms
+	initial_gas_mix = TCOMMS_ATMOS

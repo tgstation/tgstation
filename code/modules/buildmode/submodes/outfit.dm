@@ -21,15 +21,13 @@
 	dressuptime = c.robust_dress_shop()
 
 /datum/buildmode_mode/outfit/handle_click(client/c, params, object)
-	var/list/pa = params2list(params)
-	var/left_click = pa.Find("left")
-	var/right_click = pa.Find("right")
+	var/list/modifiers = params2list(params)
 
 	if(!ishuman(object))
 		return
 	var/mob/living/carbon/human/dollie = object
 
-	if(left_click)
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		if(isnull(dressuptime))
 			to_chat(c, "<span class='warning'>Pick an outfit first.</span>")
 			return
@@ -39,6 +37,6 @@
 		if(dressuptime != "Naked")
 			dollie.equipOutfit(dressuptime)
 
-	if(right_click)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		for (var/item in dollie.get_equipped_items(TRUE))
 			qdel(item)

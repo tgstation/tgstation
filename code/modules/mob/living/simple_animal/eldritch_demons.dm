@@ -14,7 +14,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/eldritch_mobs.dmi'
 	speed = 0
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	stop_automated_movement = 1
 	AIStatus = AI_OFF
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -39,10 +39,10 @@
 	add_spells()
 
 /**
-  * Add_spells
-  *
-  * Goes through spells_to_add and adds each spell to the mind.
-  */
+ * Add_spells
+ *
+ * Goes through spells_to_add and adds each spell to the mind.
+ */
 /mob/living/simple_animal/hostile/eldritch/proc/add_spells()
 	for(var/spell in spells_to_add)
 		AddSpell(new spell())
@@ -316,24 +316,24 @@
 	spells_to_add = list(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small,/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/setDir(newdir)
-    . = ..()
-    if(newdir == NORTH)
-        icon_state = "rust_walker_n"
-    else if(newdir == SOUTH)
-        icon_state = "rust_walker_s"
-    update_icon()
+	. = ..()
+	if(newdir == NORTH)
+		icon_state = "rust_walker_n"
+	else if(newdir == SOUTH)
+		icon_state = "rust_walker_s"
+	update_appearance()
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Moved()
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
-/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life()
+/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life(delta_time = SSMOBS_DT, times_fired)
 	if(stat == DEAD)
 		return ..()
 	var/turf/T = get_turf(src)
 	if(istype(T,/turf/open/floor/plating/rust))
-		adjustBruteLoss(-3, FALSE)
-		adjustFireLoss(-3, FALSE)
+		adjustBruteLoss(-1.5 * delta_time, FALSE)
+		adjustFireLoss(-1.5 * delta_time, FALSE)
 	return ..()
 
 /mob/living/simple_animal/hostile/eldritch/ash_spirit

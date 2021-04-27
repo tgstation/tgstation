@@ -39,7 +39,7 @@
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Life()
+/mob/living/simple_animal/hostile/asteroid/goliath/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	handle_preattack()
 
@@ -102,31 +102,25 @@
 	loot = list()
 	stat_attack = HARD_CRIT
 	robust_searching = 1
-	food_type = list(/obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad, /obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup, /obj/item/reagent_containers/food/snacks/grown/ash_flora)//use lavaland plants to feed the lavaland monster
+	food_type = list(/obj/item/food/grown/ash_flora)//use lavaland plants to feed the lavaland monster
 	tame_chance = 10
 	bonus_tame_chance = 5
 	var/saddled = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/saddle) && !saddled)
-		if(tame && do_after(user,55,target=src))
-			user.visible_message("<span class='notice'>You manage to put [O] on [src], you can now ride [p_them()].</span>")
-			qdel(O)
-			saddled = TRUE
-			can_buckle = TRUE
-			buckle_lying = 0
-			add_overlay("goliath_saddled")
-			var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-			D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
-			D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-			D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-			D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-			D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-			D.keytype = /obj/item/key/lasso
-			D.drive_verb = "ride"
-		else
-			user.visible_message("<span class='warning'>[src] is rocking around! You can't put the saddle on!</span>")
-		return
+	if(!istype(O, /obj/item/saddle) || saddled)
+		return ..()
+
+	if(tame && do_after(user,55,target=src))
+		user.visible_message("<span class='notice'>You manage to put [O] on [src], you can now ride [p_them()].</span>")
+		qdel(O)
+		saddled = TRUE
+		can_buckle = TRUE
+		buckle_lying = 0
+		add_overlay("goliath_saddled")
+		AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
+	else
+		user.visible_message("<span class='warning'>[src] is rocking around! You can't put the saddle on!</span>")
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize()
@@ -156,7 +150,7 @@
 	var/turf/last_location
 	var/tentacle_recheck_cooldown = 100
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) // dead
 		return

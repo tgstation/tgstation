@@ -3,41 +3,48 @@
 	desc = "A grand creation of meat, cheese, bread, and several leaves of lettuce! Arthur Dent would be proud."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "sandwich"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 1)
-	microwaved_type = /obj/item/food/toastedsandwich
 	tastes = list("meat" = 2, "cheese" = 1, "bread" = 2, "lettuce" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/toastedsandwich
-	name = "toasted sandwich"
-	desc = "Now if you only had a pepper bar."
+/obj/item/food/grilled_cheese_sandwich
+	name = "grilled cheese sandwich"
+	desc = "A warm, melty sandwich that goes perfectly with tomato soup."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "toastedsandwich"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/carbon = 4)
-	tastes = list("toast" = 1)
+	tastes = list("toast" = 2, "cheese" = 3, "butter" = 1)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
 
-/obj/item/food/grilledcheese
+/obj/item/food/cheese_sandwich
 	name = "cheese sandwich"
-	desc = "Goes great with Tomato soup!"
+	desc = "A light snack for a warm day. ...but what if you grilled it?"
 	icon = 'icons/obj/food/burgerbread.dmi'
-	icon_state = "toastedsandwich"
-	trash_type = /obj/item/trash/plate
+	icon_state = "sandwich"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("toast" = 1, "cheese" = 1)
+	tastes = list("bread" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/cheese_sandwich/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese_sandwich, rand(30 SECONDS, 60 SECONDS), TRUE)
 
 /obj/item/food/jellysandwich
 	name = "jelly sandwich"
 	desc = "You wish you had some peanut butter to go with this..."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "jellysandwich"
-	trash_type = /obj/item/trash/plate
+
 	bite_consumption = 3
 	tastes = list("bread" = 1, "jelly" = 1)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jellysandwich/slime
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/slimejelly = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -52,20 +59,22 @@
 	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "notasandwich"
-	trash_type = /obj/item/trash/plate
+
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("nothing suspicious" = 1)
 	foodtypes = GRAIN | GROSS
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jelliedtoast
 	name = "jellied toast"
 	desc = "A slice of toast covered with delicious jam."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "jellytoast"
-	trash_type = /obj/item/trash/plate
+
 	bite_consumption = 3
 	tastes = list("toast" = 1, "jelly" = 1)
 	foodtypes = GRAIN | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jelliedtoast/cherry
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cherryjelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -84,6 +93,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "toast" = 1)
 	foodtypes = GRAIN | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/twobread
 	name = "two bread"
@@ -93,3 +103,18 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bread" = 2)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/hotdog
+	name = "hotdog"
+	desc = "Fresh footlong ready to go down on."
+	icon_state = "hotdog"
+	bite_consumption = 3
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("bun" = 3, "meat" = 2)
+	foodtypes = GRAIN | MEAT | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
+
+/obj/item/food/hotdog/debug
+	eat_time = 0

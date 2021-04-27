@@ -21,7 +21,7 @@
 			continue
 		if(H.z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))//not for admin/ooc stuff
 			continue
-		var/foundAlready = FALSE	//don't infect someone that already has appendicitis
+		var/foundAlready = FALSE //don't infect someone that already has appendicitis
 		for(var/datum/disease/appendicitis/A in H.diseases)
 			foundAlready = TRUE
 			break

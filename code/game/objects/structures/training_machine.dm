@@ -7,11 +7,11 @@
 #define MAX_ATTACK_DELAY 15
 
 /**
-  * Machine that runs around wildly so people can practice clickin on things
-  *
-  * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess,
-  * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
-  */
+ * Machine that runs around wildly so people can practice clickin on things
+ *
+ * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess,
+ * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
+ */
 /obj/structure/training_machine
 	name = "AURUMILL-Brand MkII. Personnel Training Machine"
 	desc = "Used for combat training simulations. Accepts standard training targets. A pair of buckling straps are attached."
@@ -49,7 +49,7 @@
  */
 /obj/structure/training_machine/obj_destruction(damage_flag)
 	remove_attached_item(throwing = TRUE)
-	explosion(src, 0,0,1, flame_range = 2)
+	explosion(src, light_impact_range = 1, flash_range = 2)
 	return ..()
 
 /obj/structure/training_machine/ui_state(mob/user)
@@ -98,7 +98,7 @@
 			move_speed = clamp(range_input, MIN_SPEED, MAX_SPEED)
 			. = TRUE
 
-/obj/structure/training_machine/attack_hand(mob/user)
+/obj/structure/training_machine/attack_hand(mob/user, list/modifiers)
 	ui_interact(user)
 
 /**
@@ -107,8 +107,8 @@
  * Meant for attaching an item to the machine, should only be a training toolbox or target. If emagged, the
  * machine will gain an auto-attached syndicate toolbox, so in that case we shouldn't be able to swap it out
  */
-/obj/structure/training_machine/attackby(obj/item/target, mob/user)
-	if (user.a_intent != INTENT_HELP)
+/obj/structure/training_machine/attackby(obj/item/target, mob/living/user)
+	if (user.combat_mode)
 		return ..()
 	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
 		return ..()
@@ -335,14 +335,15 @@
 	. += "<span class='notice'><b>Click to open control interface.</b></span>"
 
 /**
-  * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
-  *
-  * Also has a 'Lap' function for keeping track of hits made at a certain point. Also, looks kinda like his grace for laughs and pranks.
-  */
+ * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
+ *
+ * Also has a 'Lap' function for keeping track of hits made at a certain point. Also, looks kinda like his grace for laughs and pranks.
+ */
 /obj/item/training_toolbox
 	name = "Training Toolbox"
 	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"
-	icon_state = "his_grace_ascended"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
@@ -357,9 +358,9 @@
 	///Number of hits made since the Lap button (alt-click) was last pushed
 	var/lap_hits = 0
 
-/obj/item/training_toolbox/afterattack(atom/target, mob/user, proximity)
+/obj/item/training_toolbox/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
-	if (!proximity || target == user || user.a_intent == INTENT_HELP)
+	if (!proximity || target == user || !user.combat_mode)
 		return
 	if (check_hit(target))
 		user.changeNext_move(CLICK_CD_MELEE)

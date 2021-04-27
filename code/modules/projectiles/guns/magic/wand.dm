@@ -4,6 +4,7 @@
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	inhand_icon_state = "wand"
+	base_icon_state = "nothingwand"
 	w_class = WEIGHT_CLASS_SMALL
 	can_charge = FALSE
 	max_charges = 100 //100, 50, 50, 34 (max charge distribution by 25%ths)
@@ -22,7 +23,8 @@
 	. += "Has [charges] charge\s remaining."
 
 /obj/item/gun/magic/wand/update_icon_state()
-	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"
+	icon_state = "[base_icon_state][charges ? null : "-drained"]"
+	return ..()
 
 /obj/item/gun/magic/wand/attack(atom/target, mob/living/user)
 	if(target == user)
@@ -44,7 +46,7 @@
 		zap_self(user)
 	else
 		. = ..()
-	update_icon()
+	update_appearance()
 
 
 /obj/item/gun/magic/wand/proc/zap_self(mob/living/user)
@@ -60,9 +62,11 @@
 /obj/item/gun/magic/wand/death
 	name = "wand of death"
 	desc = "This deadly wand overwhelms the victim's body with pure energy, slaying them without fail."
+	school = SCHOOL_NECROMANCY
 	fire_sound = 'sound/magic/wandodeath.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/death
 	icon_state = "deathwand"
+	base_icon_state = "deathwand"
 	max_charges = 3 //3, 2, 2, 1
 
 /obj/item/gun/magic/wand/death/zap_self(mob/living/user)
@@ -97,9 +101,11 @@
 /obj/item/gun/magic/wand/resurrection
 	name = "wand of healing"
 	desc = "This wand uses healing magics to heal and revive. They are rarely utilized within the Wizard Federation for some reason."
+	school = SCHOOL_RESTORATION
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	fire_sound = 'sound/magic/staff_healing.ogg'
 	icon_state = "revivewand"
+	base_icon_state = "revivewand"
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/gun/magic/wand/resurrection/zap_self(mob/living/user)
@@ -133,8 +139,10 @@
 /obj/item/gun/magic/wand/polymorph
 	name = "wand of polymorph"
 	desc = "This wand is attuned to chaos and will radically alter the victim's form."
+	school = SCHOOL_TRANSMUTATION
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "polywand"
+	base_icon_state = "polywand"
 	fire_sound = 'sound/magic/staff_change.ogg'
 	max_charges = 10 //10, 5, 5, 4
 
@@ -151,9 +159,11 @@
 /obj/item/gun/magic/wand/teleport
 	name = "wand of teleportation"
 	desc = "This wand will wrench targets through space and time to move them somewhere else."
+	school = SCHOOL_TRANSLOCATION
 	ammo_type = /obj/item/ammo_casing/magic/teleport
 	fire_sound = 'sound/magic/wand_teleport.ogg'
 	icon_state = "telewand"
+	base_icon_state = "telewand"
 	max_charges = 10 //10, 5, 5, 4
 	no_den_usage = TRUE
 
@@ -168,9 +178,11 @@
 /obj/item/gun/magic/wand/safety
 	name = "wand of safety"
 	desc = "This wand will use the lightest of bluespace currents to gently place the target somewhere safe."
+	school = SCHOOL_TRANSLOCATION
 	ammo_type = /obj/item/ammo_casing/magic/safety
 	fire_sound = 'sound/magic/wand_teleport.ogg'
 	icon_state = "telewand"
+	base_icon_state = "telewand"
 	max_charges = 10 //10, 5, 5, 4
 	no_den_usage = FALSE
 
@@ -200,8 +212,10 @@
 /obj/item/gun/magic/wand/door
 	name = "wand of door creation"
 	desc = "This particular wand can create doors in any wall for the unscrupulous wizard who shuns teleportation magics."
+	school = SCHOOL_TRANSMUTATION
 	ammo_type = /obj/item/ammo_casing/magic/door
 	icon_state = "doorwand"
+	base_icon_state = "doorwand"
 	fire_sound = 'sound/magic/staff_door.ogg'
 	max_charges = 20 //20, 10, 10, 7
 	no_den_usage = 1
@@ -218,14 +232,16 @@
 /obj/item/gun/magic/wand/fireball
 	name = "wand of fireball"
 	desc = "This wand shoots scorching balls of fire that explode into destructive flames."
+	school = SCHOOL_EVOCATION
 	fire_sound = 'sound/magic/fireball.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/fireball
 	icon_state = "firewand"
+	base_icon_state = "firewand"
 	max_charges = 8 //8, 4, 4, 3
 
 /obj/item/gun/magic/wand/fireball/zap_self(mob/living/user)
 	..()
-	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
+	explosion(user, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE)
 	charges--
 
 /////////////////////////////////////

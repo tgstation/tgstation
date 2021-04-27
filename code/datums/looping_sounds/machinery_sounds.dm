@@ -28,6 +28,15 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/datum/looping_sound/hypertorus
+	mid_sounds = list('sound/machines/hypertorus/loops/hypertorus_nominal.ogg' = 1)
+	mid_length = 60
+	volume = 55
+	extra_range = 15
+	vary = TRUE
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/looping_sound/generator
 	start_sound = 'sound/machines/generator/generator_start.ogg'
 	start_length = 4
@@ -49,7 +58,15 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 /datum/looping_sound/grill
+	mid_sounds = list('sound/machines/grill/grillsizzle.ogg' = 1)
+	mid_length = 18
+	volume = 50
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/deep_fryer
 	mid_length = 2
 	mid_sounds = list('sound/machines/fryer/deep_fryer_1.ogg' = 1, 'sound/machines/fryer/deep_fryer_2.ogg' = 1)
 	volume = 30
@@ -99,6 +116,6 @@
 	mid_sounds = list('sound/machines/gravgen/gravgen_mid1.ogg'=1,'sound/machines/gravgen/gravgen_mid2.ogg'=1,'sound/machines/gravgen/gravgen_mid3.ogg'=1,'sound/machines/gravgen/gravgen_mid4.ogg'=1,)
 	mid_length = 1.8 SECONDS
 	extra_range = 10
-	volume = 70
+	volume = 40
 	falloff_distance = 5
 	falloff_exponent = 20

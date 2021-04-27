@@ -5,7 +5,7 @@
 	icon_state = "seed-grass"
 	species = "grass"
 	plantname = "Grass"
-	product = /obj/item/reagent_containers/food/snacks/grown/grass
+	product = /obj/item/food/grown/grass
 	lifespan = 40
 	endurance = 40
 	maturation = 2
@@ -19,21 +19,20 @@
 	mutatelist = list(/obj/item/seeds/grass/carpet, /obj/item/seeds/grass/fairy)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05)
 
-/obj/item/reagent_containers/food/snacks/grown/grass
+/obj/item/food/grown/grass
 	seed = /obj/item/seeds/grass
 	name = "grass"
 	desc = "Green and lush."
 	icon_state = "grassclump"
-	filling_color = "#32CD32"
-	bitesize_mod = 2
+	bite_consumption_mod = 2
 	var/stacktype = /obj/item/stack/tile/grass
 	var/tile_coefficient = 0.02 // 1/50
 	wine_power = 15
 
-/obj/item/reagent_containers/food/snacks/grown/grass/attack_self(mob/user)
+/obj/item/food/grown/grass/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You prepare the astroturf.</span>")
 	var/grassAmt = 1 + round(seed.potency * tile_coefficient) // The grass we're holding
-	for(var/obj/item/reagent_containers/food/snacks/grown/grass/G in user.loc) // The grass on the floor
+	for(var/obj/item/food/grown/grass/G in user.loc) // The grass on the floor
 		if(G.type != type)
 			continue
 		grassAmt += 1 + round(G.seed.potency * tile_coefficient)
@@ -48,19 +47,18 @@
 	icon_state = "seed-fairygrass"
 	species = "fairygrass"
 	plantname = "Fairygrass"
-	product = /obj/item/reagent_containers/food/snacks/grown/grass/fairy
+	product = /obj/item/food/grown/grass/fairy
 	icon_grow = "fairygrass-grow"
 	icon_dead = "fairygrass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/blue)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05, /datum/reagent/drug/space_drugs = 0.15)
 	graft_gene = /datum/plant_gene/trait/glow/blue
 
-/obj/item/reagent_containers/food/snacks/grown/grass/fairy
+/obj/item/food/grown/grass/fairy
 	seed = /obj/item/seeds/grass/fairy
 	name = "fairygrass"
 	desc = "Blue, glowing, and smells fainly of mushrooms."
 	icon_state = "fairygrassclump"
-	filling_color = "#3399ff"
 	stacktype = /obj/item/stack/tile/fairygrass
 
 // Carpet
@@ -70,11 +68,11 @@
 	icon_state = "seed-carpet"
 	species = "carpet"
 	plantname = "Carpet"
-	product = /obj/item/reagent_containers/food/snacks/grown/grass/carpet
+	product = /obj/item/food/grown/grass/carpet
 	mutatelist = list()
 	rarity = 10
 
-/obj/item/reagent_containers/food/snacks/grown/grass/carpet
+/obj/item/food/grown/grass/carpet
 	seed = /obj/item/seeds/grass/carpet
 	name = "carpet"
 	desc = "The textile industry's dark secret."

@@ -1,13 +1,13 @@
 /**
-  * Proc called to check if the ninja can afford an ability's cost.
-  *
-  * Proc which determine whether or not a space ninja can afford to use a specific ability.
-  * It can also cancel stealth if the ability requested it.
-  * Arguments:
-  * * cost - the energy cost of the ability
-  * * specificCheck - Determines if the check is a normal one, an adrenaline one, or a stealth cancel check.
-  * * Returns TRUE or the current cooldown timer if we can't perform the ability, and FALSE if we can.
-  */
+ * Proc called to check if the ninja can afford an ability's cost.
+ *
+ * Proc which determine whether or not a space ninja can afford to use a specific ability.
+ * It can also cancel stealth if the ability requested it.
+ * Arguments:
+ * * cost - the energy cost of the ability
+ * * specificCheck - Determines if the check is a normal one, an adrenaline one, or a stealth cancel check.
+ * * Returns TRUE or the current cooldown timer if we can't perform the ability, and FALSE if we can.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjacost(cost = 0, specificCheck = 0)
 	var/mob/living/carbon/human/ninja = affecting
 	var/actualCost = cost*10

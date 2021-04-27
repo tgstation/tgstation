@@ -16,6 +16,6 @@
 
 /obj/item/ammo_casing/energy/wormhole/throw_proj()
 	. = ..()
-	if(istype(BB, /obj/projectile/beam/wormhole))
-		var/obj/projectile/beam/wormhole/WH = BB
+	if(istype(loaded_projectile, /obj/projectile/beam/wormhole))
+		var/obj/projectile/beam/wormhole/WH = loaded_projectile
 		WH.gun = gun

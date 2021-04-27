@@ -27,7 +27,7 @@
 	/// Current recharge progress.
 	var/recharge_cooldown = 0
 	/// Base recharge time in seconds which is used to get recharge_time.
-	var/base_recharge_time = 200
+	var/base_recharge_time = 100
 	/// Current /datum/blackmarket_purchase being received.
 	var/receiving
 	/// Current /datum/blackmarket_purchase being sent to the target uplink.

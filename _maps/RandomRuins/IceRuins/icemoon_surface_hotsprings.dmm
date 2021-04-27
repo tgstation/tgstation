@@ -3,7 +3,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "b" = (
-/turf/closed/mineral/random/snow/more_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors/unexplored)
 "c" = (
 /turf/open/water/cursed_spring,

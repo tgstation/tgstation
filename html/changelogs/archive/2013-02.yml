@@ -1,0 +1,28 @@
+2013-02-11:
+  SuperSayu:
+  - rscadd: Signallers, prox sensors, mouse traps and infrared beams can now be attacheed
+      to grenades to create a variety of mines.
+  - rscadd: A slime core can be placed in a large grenade in place of a beaker. When
+      the grenade goes off, the chemicals from the second container will be transfered
+      to the slime core, triggering the usual reaction.
+2013-02-13:
+  Petethegoat:
+  - rscadd: Traitors with the station blueprints steal objective can now use a photo
+      of the blueprints instead!
+2013-02-14:
+  Petethegoat:
+  - rscadd: 'Updated surgery: you now initiate surgery with surgical drapes or a bedsheet.
+      Most procedures have changed, check the wiki for details. Currently it''s pretty
+      boring, but this paves the way for exciting new stuff- new procedures are very
+      simple to add. Report any bugs directly to me, or on the issue tracker.'
+2013-02-18:
+  Kor:
+  - tweak: The RD has lost access to telecomms, and basic engineers have gained it.
+2013-02-22:
+  Petethegoat:
+  - rscadd: Added cavity implant surgery.
+  - tweak: "Additionally, surgery must now be performed with help intent. Some procedures\
+      \ have also been updated.\n\t\tAs always, check the wiki for details."
+2013-02-24:
+  Faerdan:
+  - rscadd: Competely new UI overhaul! Most user interface have been converted.

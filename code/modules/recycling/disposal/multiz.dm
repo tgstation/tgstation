@@ -13,7 +13,7 @@
 	multiz_dir = MULTIZ_PIPE_DOWN
 
 /obj/structure/disposalpipe/trunk/multiz/transfer(obj/structure/disposalholder/H)
-	if(H.dir == DOWN)		//Since we're a trunk, you can still place a chute / bin over us. If theyve entered from there, treat this as a normal trunk
+	if(H.dir == DOWN) //Since we're a trunk, you can still place a chute / bin over us. If theyve entered from there, treat this as a normal trunk
 		return ..()
 	// otherwise, go to the linked object
 	if(multiz_dir) //Are we a trunk that goes up? Or down?
@@ -37,10 +37,10 @@
 	else
 		var/obj/structure/disposaloutlet/O = linked
 		if(istype(O))
-			O.expel(H)	// expel at outlet
+			O.expel(H) // expel at outlet
 		else
 			var/obj/machinery/disposal/D = linked
-			D.expel(H)	// expel at disposal
+			D.expel(H) // expel at disposal
 
 	// Returning null without expelling holder makes the holder expell itself
 	return null

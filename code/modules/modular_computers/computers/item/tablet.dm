@@ -2,9 +2,10 @@
 	name = "tablet computer"
 	icon = 'icons/obj/modular_tablet.dmi'
 	icon_state = "tablet-red"
-	icon_state_unpowered = "tablet"
-	icon_state_powered = "tablet"
+	icon_state_unpowered = "tablet-red"
+	icon_state_powered = "tablet-red"
 	icon_state_menu = "menu"
+	base_icon_state = "tablet"
 	worn_icon_state = "tablet"
 	hardware_flag = PROGRAM_TABLET
 	max_hardware_size = 1
@@ -21,8 +22,9 @@
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants)
 		if(!finish_color)
-			finish_color = pick("red","blue","brown","green","black")
-		icon_state = icon_state_powered = icon_state_unpowered = "tablet-[finish_color]"
+			finish_color = pick("red", "blue", "brown", "green", "black")
+		icon_state = icon_state_powered = icon_state_unpowered = "[base_icon_state]-[finish_color]"
+	return ..()
 
 /obj/item/modular_computer/tablet/syndicate_contract_uplink
 	name = "contractor tablet"
@@ -39,6 +41,8 @@
 /// Given to Nuke Ops members.
 /obj/item/modular_computer/tablet/nukeops
 	icon_state = "tablet-syndicate"
+	icon_state_powered = "tablet-syndicate"
+	icon_state_unpowered = "tablet-syndicate"
 	comp_light_luminosity = 6.3
 	has_variants = FALSE
 	device_theme = "syndicate"
@@ -55,6 +59,9 @@
 /obj/item/modular_computer/tablet/integrated
 	name = "modular interface"
 	icon_state = "tablet-silicon"
+	icon_state_powered = "tablet-silicon"
+	icon_state_unpowered = "tablet-silicon"
+	base_icon_state = "tablet-silicon"
 	has_light = FALSE //tablet light button actually enables/disables the borg lamp
 	comp_light_luminosity = 0
 	has_variants = FALSE
@@ -84,15 +91,15 @@
 	return FALSE
 
 /**
-  * Returns a ref to the RoboTact app, creating the app if need be.
-  *
-  * The RoboTact app is important for borgs, and so should always be available.
-  * This proc will look for it in the tablet's robotact var, then check the
-  * hard drive if the robotact var is unset, and finally attempt to create a new
-  * copy if the hard drive does not contain the app. If the hard drive rejects
-  * the new copy (such as due to lack of space), the proc will crash with an error.
-  * RoboTact is supposed to be undeletable, so these will create runtime messages.
-  */
+ * Returns a ref to the RoboTact app, creating the app if need be.
+ *
+ * The RoboTact app is important for borgs, and so should always be available.
+ * This proc will look for it in the tablet's robotact var, then check the
+ * hard drive if the robotact var is unset, and finally attempt to create a new
+ * copy if the hard drive does not contain the app. If the hard drive rejects
+ * the new copy (such as due to lack of space), the proc will crash with an error.
+ * RoboTact is supposed to be undeletable, so these will create runtime messages.
+ */
 /obj/item/modular_computer/tablet/integrated/proc/get_robotact()
 	if(!borgo)
 		return null
@@ -130,8 +137,17 @@
 	borgo.toggle_headlamp(FALSE, TRUE)
 	return TRUE
 
+/obj/item/modular_computer/tablet/integrated/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
+	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
+		return
+	borgo.playsound_local(src, sound, 50, TRUE)
+	to_chat(borgo, "<span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
+
+
 /obj/item/modular_computer/tablet/integrated/syndicate
 	icon_state = "tablet-silicon-syndicate"
+	icon_state_powered = "tablet-silicon-syndicate"
+	icon_state_unpowered = "tablet-silicon-syndicate"
 	device_theme = "syndicate"
 
 

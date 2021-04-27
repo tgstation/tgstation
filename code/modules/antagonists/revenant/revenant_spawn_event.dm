@@ -6,6 +6,7 @@
 	weight = 7
 	max_occurrences = 1
 	min_players = 5
+	dynamic_should_hijack = TRUE
 
 
 /datum/round_event/ghost_role/revenant
@@ -25,7 +26,7 @@
 			message_admins("Event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
 			return WAITING_FOR_SOMETHING
 
-	var/list/candidates = get_candidates(ROLE_REVENANT, null, ROLE_REVENANT)
+	var/list/candidates = get_candidates(ROLE_REVENANT, ROLE_REVENANT)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

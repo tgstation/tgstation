@@ -22,7 +22,7 @@
 
 	update_multiz(our_turf, TRUE, TRUE)
 
-/datum/element/turf_z_transparency/Detach(datum/source, force)
+/datum/element/turf_z_transparency/Detach(datum/source)
 	. = ..()
 	var/turf/our_turf = source
 	our_turf.vis_contents.len = 0
@@ -48,13 +48,13 @@
 	return TRUE
 
 /datum/element/turf_z_transparency/proc/on_multiz_turf_del(turf/our_turf, turf/T, dir)
-	SIGNAL_HANDLER 
+	SIGNAL_HANDLER
 	if(dir != DOWN)
 		return
 	update_multiz(our_turf)
 
 /datum/element/turf_z_transparency/proc/on_multiz_turf_new(turf/our_turf, turf/T, dir)
-	SIGNAL_HANDLER 
+	SIGNAL_HANDLER
 	if(dir != DOWN)
 		return
 	update_multiz(our_turf)

@@ -12,11 +12,17 @@
 	var/load_audio = 'sound/weapons/gun/general/mag_bullet_insert.ogg'
 	var/ammo_type
 
-/obj/item/mecha_ammo/proc/update_name()
-	if(!rounds)
-		name = "empty ammo box"
-		desc = "An exosuit ammuniton box that has since been emptied. Please recycle."
-		icon_state = "empty"
+/obj/item/mecha_ammo/update_name()
+	. = ..()
+	name = "[rounds ? null : "empty "][initial(name)]"
+
+/obj/item/mecha_ammo/update_desc()
+	. = ..()
+	desc = rounds ? initial(desc) : "An exosuit ammuniton box that has since been emptied. Please recycle."
+
+/obj/item/mecha_ammo/update_icon_state()
+	icon_state = rounds ? initial(icon_state) : "empty"
+	return ..()
 
 /obj/item/mecha_ammo/attack_self(mob/user)
 	..()
@@ -25,7 +31,7 @@
 		return
 
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
-	var/trash = new /obj/item/stack/sheet/metal(user.loc)
+	var/trash = new /obj/item/stack/sheet/iron(user.loc)
 	qdel(src)
 	user.put_in_hands(trash)
 
@@ -35,21 +41,21 @@
 		. += "There [rounds > 1?"are":"is"] [rounds] [round_term][rounds > 1?"s":""] left."
 
 /obj/item/mecha_ammo/incendiary
-	name = "incendiary ammo"
+	name = "incendiary ammo box"
 	desc = "A box of incendiary ammunition for use with exosuit weapons."
 	icon_state = "incendiary"
 	rounds = 24
 	ammo_type = "incendiary"
 
 /obj/item/mecha_ammo/scattershot
-	name = "scattershot ammo"
+	name = "scattershot ammo box"
 	desc = "A box of scaled-up buckshot, for use in exosuit shotguns."
 	icon_state = "scattershot"
 	rounds = 40
 	ammo_type = "scattershot"
 
 /obj/item/mecha_ammo/lmg
-	name = "machine gun ammo"
+	name = "machine gun ammo box"
 	desc = "A box of linked ammunition, designed for the Ultra AC 2 exosuit weapon."
 	icon_state = "lmg"
 	rounds = 300

@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "c" = (
 /turf/open/floor/plating/asteroid/airless,
@@ -35,7 +35,7 @@
 /area/ruin/unpowered/no_grav)
 "i" = (
 /obj/structure/light_prism,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/iron/airless/dark,
 /area/ruin/unpowered/no_grav)
 "j" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -47,7 +47,7 @@
 /area/ruin/unpowered/no_grav)
 "l" = (
 /obj/structure/closet/crate/coffin,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/iron/airless/dark,
 /area/ruin/unpowered/no_grav)
 "m" = (
 /turf/open/floor/plating/airless,
@@ -98,7 +98,7 @@
 /area/ruin/unpowered/no_grav)
 "x" = (
 /obj/structure/bonfire,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/iron/airless/dark,
 /area/ruin/unpowered/no_grav)
 "y" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -156,7 +156,7 @@
 /obj/structure/rack,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/breath,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/iron/airless/dark,
 /area/ruin/unpowered/no_grav)
 "K" = (
 /obj/structure/grille,
@@ -190,7 +190,7 @@
 "R" = (
 /obj/structure/closet/crate/coffin,
 /obj/item/gps/spaceruin,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/iron/airless/dark,
 /area/ruin/unpowered/no_grav)
 "S" = (
 /obj/effect/decal/cleanable/blood/drip,

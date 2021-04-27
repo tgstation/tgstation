@@ -16,6 +16,7 @@
 	wound_resistance = 5
 	disabled_wound_penalty = 25
 	scars_covered_by_clothes = FALSE
+	grind_results = null
 
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/obj/item/organ/brain/brain = null //The brain organ
@@ -36,6 +37,8 @@
 
 	var/lip_style = null
 	var/lip_color = "white"
+
+	var/stored_lipstick_trait
 
 
 /obj/item/bodypart/head/Destroy()
@@ -74,7 +77,7 @@
 		else if(brainmob?.health <= HEALTH_THRESHOLD_DEAD)
 			. += "<span class='info'>It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.</span>"
 		else if(brainmob)
-			if(brainmob.get_ghost(FALSE, TRUE))
+			if(brainmob.key || brainmob.get_ghost(FALSE, TRUE))
 				. += "<span class='info'>Its muscles are twitching slightly... It seems to have some life still in it.</span>"
 			else
 				. += "<span class='info'>It's completely lifeless. Perhaps there'll be a chance for them later.</span>"
@@ -139,6 +142,7 @@
 		hairstyle = "Bald"
 		facial_hairstyle = "Shaved"
 		lip_style = null
+		stored_lipstick_trait = null
 
 	else if(!animal_origin)
 		var/mob/living/carbon/human/H = C

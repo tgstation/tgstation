@@ -223,6 +223,11 @@
 
 /datum/ai_laws/proc/set_laws_config()
 	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
+
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		pick_weighted_lawset()
+		return
+
 	switch(CONFIG_GET(number/default_laws))
 		if(0)
 			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
@@ -424,13 +429,13 @@
 		owner = M
 
 /**
-  * Generates a list of all laws on this datum, including rendered HTML tags if required
-  *
-  * Arguments:
-  * * include_zeroth - Operator that controls if law 0 or law 666 is returned in the set
-  * * show_numbers - Operator that controls if law numbers are prepended to the returned laws
-  * * render_html - Operator controlling if HTML tags are rendered on the returned laws
-  */
+ * Generates a list of all laws on this datum, including rendered HTML tags if required
+ *
+ * Arguments:
+ * * include_zeroth - Operator that controls if law 0 or law 666 is returned in the set
+ * * show_numbers - Operator that controls if law numbers are prepended to the returned laws
+ * * render_html - Operator controlling if HTML tags are rendered on the returned laws
+ */
 /datum/ai_laws/proc/get_law_list(include_zeroth = FALSE, show_numbers = TRUE, render_html = TRUE)
 	var/list/data = list()
 

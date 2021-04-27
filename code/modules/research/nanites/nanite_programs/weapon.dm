@@ -88,11 +88,7 @@
 	addtimer(CALLBACK(src, .proc/boom), clamp((nanites.nanite_volume * 0.35), 25, 150))
 
 /datum/nanite_program/explosive/proc/boom()
-	var/nanite_amount = nanites.nanite_volume
-	var/dev_range = FLOOR(nanite_amount/200, 1) - 1
-	var/heavy_range = FLOOR(nanite_amount/100, 1) - 1
-	var/light_range = FLOOR(nanite_amount/50, 1) - 1
-	explosion(host_mob, dev_range, heavy_range, light_range)
+	dyn_explosion(host_mob, nanites.nanite_volume / 50)
 	qdel(nanites)
 
 //TODO make it defuse if triggered again
@@ -176,6 +172,7 @@
 		sent_directive = ES.get_value()
 	brainwash(host_mob, sent_directive)
 	log_game("A mind control nanite program brainwashed [key_name(host_mob)] with the objective '[sent_directive]'.")
+	host_mob.log_message("has been brainwashed with the objective '[sent_directive]' triggered by a mind control nanite program.", LOG_ATTACK)
 	addtimer(CALLBACK(src, .proc/end_brainwashing), 600)
 
 /datum/nanite_program/comm/mind_control/proc/end_brainwashing()

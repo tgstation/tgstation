@@ -35,8 +35,8 @@
 	possible_gear = get_abductor_gear()
 
 /**
-  * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
-  */
+ * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
+ */
 /obj/machinery/abductor/console/proc/get_abductor_gear()
 	var/list/filtered_modules = list()
 	for(var/path in GLOB.abductor_gear)
@@ -46,7 +46,7 @@
 		filtered_modules[AG.category][AG] = AG
 	return filtered_modules
 
-/obj/machinery/abductor/console/attack_hand(mob/user)
+/obj/machinery/abductor/console/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -212,7 +212,7 @@
 	entry.name = target.name
 	entry.icon = target.icon
 	entry.icon_state = target.icon_state
-	entry.overlays = target.get_overlays_copy(list(HANDS_LAYER))	//ugh
+	entry.overlays = target.get_overlays_copy(list(HANDS_LAYER)) //ugh
 	//Update old disguise instead of adding new one
 	if(disguises[entry.name])
 		disguises[entry.name] = entry

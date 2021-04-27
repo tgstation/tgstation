@@ -287,13 +287,13 @@
 		var/list/candidates = list()
 		for(var/mob/M in GLOB.player_list)
 			if(M.stat != DEAD)
-				continue	//we are not dead!
+				continue //we are not dead!
 			if(!(ROLE_ALIEN in M.client.prefs.be_special))
-				continue	//we don't want to be an alium
+				continue //we don't want to be an alium
 			if(M.client.is_afk())
-				continue	//we are afk
+				continue //we are afk
 			if(M.mind && M.mind.current && M.mind.current.stat != DEAD)
-				continue	//we have a live body we are tied to
+				continue //we have a live body we are tied to
 			candidates += M.ckey
 		if(candidates.len)
 			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in sortKey(candidates)
@@ -355,7 +355,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "<font color='red'>There is no active key like that in the game or the person is not currently a ghost.</font>", confidential = TRUE)
 		return
 
-	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
+	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
 		//Check if they were an alien
 		if(G_found.mind.assigned_role == ROLE_ALIEN)
 			if(alert("This character appears to have been an alien. Would you like to respawn them as such?",,"Yes","No")=="Yes")
@@ -383,34 +383,34 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					SSjob.SendToLateJoin(new_xeno, FALSE)
 
 				//Now to give them their mind back.
-				G_found.mind.transfer_to(new_xeno)	//be careful when doing stuff like this! I've already checked the mind isn't in use
+				G_found.mind.transfer_to(new_xeno) //be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_xeno.key = G_found.key
 				to_chat(new_xeno, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
 				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_xeno.key] as a filthy xeno.</span>"
 				message_admins(msg)
 				admin_ticket_log(new_xeno, msg)
-				return	//all done. The ghost is auto-deleted
+				return //all done. The ghost is auto-deleted
 
 		//check if they were a monkey
 		else if(findtext(G_found.real_name,"monkey"))
 			if(alert("This character appears to have been a monkey. Would you like to respawn them as such?",,"Yes","No")=="Yes")
-				var/mob/living/carbon/monkey/new_monkey = new
+				var/mob/living/carbon/human/species/monkey/new_monkey = new
 				SSjob.SendToLateJoin(new_monkey)
-				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
+				G_found.mind.transfer_to(new_monkey) //be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_monkey.key = G_found.key
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
-				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_monkey.key] as a filthy xeno.</span>"
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_monkey.key] as a filthy monkey.</span>"
 				message_admins(msg)
 				admin_ticket_log(new_monkey, msg)
-				return	//all done. The ghost is auto-deleted
+				return //all done. The ghost is auto-deleted
 
 
 	//Ok, it's not a xeno or a monkey. So, spawn a human.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.SendToLateJoin(new_character)
 
-	var/datum/data/record/record_found			//Referenced to later to either randomize or not randomize the character.
-	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
+	var/datum/data/record/record_found //Referenced to later to either randomize or not randomize the character.
+	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
 		/*Try and locate a record for the person being respawned through GLOB.data_core.
 		This isn't an exact science but it does the trick more often than not.*/
 		var/id = md5("[G_found.real_name][G_found.mind.assigned_role]")
@@ -431,7 +431,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
-		G_found.mind.transfer_to(new_character)	//be careful when doing stuff like this! I've already checked the mind isn't in use
+		G_found.mind.transfer_to(new_character) //be careful when doing stuff like this! I've already checked the mind isn't in use
 	else
 		new_character.mind_initialize()
 	if(!new_character.mind.assigned_role)
@@ -545,46 +545,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	admin_ticket_log(M, msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Rejuvenate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_create_centcom_report()
-	set category = "Admin.Events"
-	set name = "Create Command Report"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/input = input(usr, "Enter a Command Report. Ensure it makes sense IC. Command's name is currently set to [command_name()].", "What?", "") as message|null
-	if(!input)
-		return
-
-	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No", "Cancel")
-	var/announce_command_report = TRUE
-	switch(confirm)
-		if("Yes")
-			priority_announce(input, null, 'sound/ai/commandreport.ogg')
-			announce_command_report = FALSE
-		if("Cancel")
-			return
-
-	print_command_report(input, "[announce_command_report ? "Classified " : ""][command_name()] Update", announce_command_report)
-
-	log_admin("[key_name(src)] has created a command report: [input]")
-	message_admins("[key_name_admin(src)] has created a command report")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Create Command Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/cmd_change_command_name()
-	set category = "Admin.Events"
-	set name = "Change Command Name"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
-	if(!input)
-		return
-	change_command_name(input)
-	message_admins("[key_name_admin(src)] has changed Central Command's name to [input]")
-	log_admin("[key_name(src)] has changed the Central Command name to: [input]")
-
 /client/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)
 	set category = "Debug"
 	set name = "Delete"
@@ -631,7 +591,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if (alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", "Yes", "No") == "No")
 				return
 
-		explosion(O, devastation, heavy, light, flash, null, null,flames)
+		explosion(O, devastation, heavy, light, flames, flash)
 		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(O)]")
 		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(O)]")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Explosion") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -728,7 +688,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		view_size.resetToDefault(getScreenSize(prefs.widescreenpref))
 
 	log_admin("[key_name(usr)] changed their view range to [view].")
-	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].")	//why? removed by order of XSI
+	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].") //why? removed by order of XSI
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Change View Range", "[view]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -1116,249 +1076,35 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING,
-									ADMIN_PUNISHMENT_BRAINDAMAGE,
-									ADMIN_PUNISHMENT_GIB,
-									ADMIN_PUNISHMENT_BSA,
-									ADMIN_PUNISHMENT_FIREBALL,
-									ADMIN_PUNISHMENT_ROD,
-									ADMIN_PUNISHMENT_SUPPLYPOD_QUICK,
-									ADMIN_PUNISHMENT_SUPPLYPOD,
-									ADMIN_PUNISHMENT_MAZING,
-									ADMIN_PUNISHMENT_IMMERSE,
-									ADMIN_PUNISHMENT_FAT,
-									ADMIN_PUNISHMENT_FAKEBWOINK,
-									ADMIN_PUNISHMENT_NUGGET,
-									ADMIN_PUNISHMENT_CRACK,
-									ADMIN_PUNISHMENT_BLEED,
-									ADMIN_PUNISHMENT_PERFORATE,
-									ADMIN_PUNISHMENT_SCARIFY,
-									ADMIN_PUNISHMENT_SHOES,
-									ADMIN_PUNISHMENT_DOCK,
-									ADMIN_PUNISHMENT_BREAD,
-									ADMIN_PUNISHMENT_BADLUCK
-									)
 
-	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in sortList(punishment_list)
+	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in GLOB.smites
 
 	if(QDELETED(target) || !punishment)
 		return
 
-	switch(punishment)
-		if(ADMIN_PUNISHMENT_LIGHTNING)
-			var/turf/T = get_step(get_step(target, NORTH), NORTH)
-			T.Beam(target, icon_state="lightning[rand(1,12)]", time = 5)
-			target.adjustFireLoss(75)
-			if(ishuman(target))
-				var/mob/living/carbon/human/H = target
-				H.electrocution_animation(40)
-			to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>", confidential = TRUE)
-		if(ADMIN_PUNISHMENT_BRAINDAMAGE)
-			target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 199, 199)
-		if(ADMIN_PUNISHMENT_GIB)
-			target.gib(FALSE)
-		if(ADMIN_PUNISHMENT_BSA)
-			bluespace_artillery(target)
-		if(ADMIN_PUNISHMENT_FIREBALL)
-			new /obj/effect/temp_visual/target(get_turf(target))
-		if(ADMIN_PUNISHMENT_ROD)
-			var/turf/T = get_turf(target)
-			var/startside = pick(GLOB.cardinals)
-			var/turf/startT = spaceDebrisStartLoc(startside, T.z)
-			var/turf/endT = spaceDebrisFinishLoc(startside, T.z)
-			new /obj/effect/immovablerod(startT, endT,target)
-		if(ADMIN_PUNISHMENT_SUPPLYPOD_QUICK)
-			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell") as null|text
-			var/obj/structure/closet/supplypod/centcompod/pod = new()
-			pod.damage = 40
-			pod.explosionSize = list(0,0,0,2)
-			pod.effectStun = TRUE
-			if (isnull(target_path)) //The user pressed "Cancel"
-				return
-			if (target_path != "empty")//if you didn't type empty, we want to load the pod with a delivery
-				var/delivery = text2path(target_path)
-				if(!ispath(delivery))
-					delivery = pick_closest_path(target_path)
-					if(!delivery)
-						alert("ERROR: Incorrect / improper path given.")
-						return
-				new delivery(pod)
-			new /obj/effect/pod_landingzone(get_turf(target), pod)
-		if(ADMIN_PUNISHMENT_SUPPLYPOD)
-			var/datum/centcom_podlauncher/plaunch  = new(usr)
-			if(!holder)
-				return
-			plaunch.specificTarget = target
-			plaunch.launchChoice = 0
-			plaunch.damageChoice = 1
-			plaunch.explosionChoice = 1
-			plaunch.temp_pod.damage = 40//bring the mother fuckin ruckus
-			plaunch.temp_pod.explosionSize = list(0,0,0,2)
-			plaunch.temp_pod.effectStun = TRUE
-			return //We return here because punish_log() is handled by the centcom_podlauncher datum
-		if(ADMIN_PUNISHMENT_MAZING)
-			if(!puzzle_imprison(target))
-				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>", confidential = TRUE)
-				return
-		if(ADMIN_PUNISHMENT_IMMERSE)
-			immerse_player(target)
-		if(ADMIN_PUNISHMENT_FAT)
-			target.set_nutrition(NUTRITION_LEVEL_FAT*2)
-		if(ADMIN_PUNISHMENT_FAKEBWOINK)
-			SEND_SOUND(target, 'sound/effects/adminhelp.ogg')
-		if(ADMIN_PUNISHMENT_NUGGET)
-			if(!iscarbon(target))
-				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
-				return
-			var/mob/living/carbon/C = target
-			var/timer = 2 SECONDS
-			for(var/obj/item/bodypart/thing in C.bodyparts)
-				if(thing.body_part == HEAD || thing.body_part == CHEST)
-					continue
-				addtimer(CALLBACK(thing, /obj/item/bodypart/.proc/dismember), timer)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, C, 'sound/effects/cartoon_pop.ogg', 70), timer)
-				addtimer(CALLBACK(C, /mob/living/.proc/spin, 4, 1), timer - 0.4 SECONDS)
-				timer += 2 SECONDS
-		if(ADMIN_PUNISHMENT_CRACK)
-			if(!iscarbon(target))
-				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
-				return
-			var/mob/living/carbon/C = target
-			for(var/i in C.bodyparts)
-				var/obj/item/bodypart/squish_part = i
-				var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
-				squish_part.force_wound_upwards(type_wound, smited=TRUE)
-		if(ADMIN_PUNISHMENT_BLEED)
-			if(!iscarbon(target))
-				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
-				return
-			var/mob/living/carbon/C = target
-			for(var/i in C.bodyparts)
-				var/obj/item/bodypart/slice_part = i
-				var/type_wound = pick(list(/datum/wound/slash/severe, /datum/wound/slash/moderate))
-				slice_part.force_wound_upwards(type_wound, smited=TRUE)
-				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate))
-				slice_part.force_wound_upwards(type_wound, smited=TRUE)
-				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe))
-				slice_part.force_wound_upwards(type_wound, smited=TRUE)
-		if(ADMIN_PUNISHMENT_PERFORATE)
-			if(!iscarbon(target))
-				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
-				return
-
-			var/list/how_fucked_is_this_dude = list("A little", "A lot", "So fucking much", "FUCK THIS DUDE")
-			var/hatred = input("How much do you hate this guy?") in how_fucked_is_this_dude
-			var/repetitions
-			var/shots_per_limb_per_rep = 2
-			var/damage
-			switch(hatred)
-				if("A little")
-					repetitions = 1
-					damage = 5
-				if("A lot")
-					repetitions = 2
-					damage = 8
-				if("So fucking much")
-					repetitions = 3
-					damage = 10
-				if("FUCK THIS DUDE")
-					repetitions = 4
-					damage = 10
-
-			var/mob/living/carbon/dude = target
-			var/list/open_adj_turfs = get_adjacent_open_turfs(dude)
-			var/list/wound_bonuses = list(15, 70, 110, 250)
-
-			var/delay_per_shot = 1
-			var/delay_counter = 1
-
-			dude.Immobilize(5 SECONDS)
-			for(var/wound_bonus_rep in 1 to repetitions)
-				for(var/i in dude.bodyparts)
-					var/obj/item/bodypart/slice_part = i
-					var/shots_this_limb = 0
-					for(var/t in shuffle(open_adj_turfs))
-						var/turf/iter_turf = t
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/firing_squad, dude, iter_turf, slice_part.body_zone, wound_bonuses[wound_bonus_rep], damage), delay_counter)
-						delay_counter += delay_per_shot
-						shots_this_limb++
-						if(shots_this_limb > shots_per_limb_per_rep)
-							break
-
-		if(ADMIN_PUNISHMENT_SCARIFY)
-			if(!iscarbon(target))
-				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
-				return
-			var/mob/living/carbon/dude = target
-			dude.generate_fake_scars(rand(1, 4))
-			to_chat(dude, "<span class='warning'>You feel your body grow jaded and torn...</span>")
-		if(ADMIN_PUNISHMENT_SHOES)
-			if(!iscarbon(target))
-				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
-				return
-			var/mob/living/carbon/dude = target
-			var/obj/item/clothing/shoes/sick_kicks = dude.shoes
-			if(!sick_kicks?.can_be_tied)
-				to_chat(usr,"<span class='warning'>[dude] does not have knottable shoes!</span>", confidential = TRUE)
-				return
-			sick_kicks.adjust_laces(SHOES_KNOTTED)
-		if(ADMIN_PUNISHMENT_DOCK)
-			if(!iscarbon(target))
-				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
-				return
-			var/mob/living/carbon/dude = target
-			var/obj/item/card/id/card = dude.get_idcard(TRUE)
-			if(!card)
-				to_chat(usr,"<span class='warning'>[dude] does not have an ID card on!</span>", confidential = TRUE)
-				return
-			if(!card.registered_account)
-				to_chat(usr,"<span class='warning'>[dude] does not have an ID card with an account!</span>", confidential = TRUE)
-				return
-			if(card.registered_account.account_balance == 0)
-				to_chat(usr, "<span class='warning'>ID Card lacks any funds. No pay to dock.</span>")
-				return
-			var/new_cost = input("How much pay are we docking? Current balance: [card.registered_account.account_balance] credits.","BUDGET CUTS") as num|null
-			if(!new_cost)
-				return
-			if(!(card.registered_account.has_money(new_cost)))
-				to_chat(usr, "<span class='warning'>ID Card lacked funds. Emptying account.</span>")
-				card.registered_account.bank_card_talk("[new_cost] credits deducted from your account based on performance review.")
-				card.registered_account.account_balance = 0
-			else
-				card.registered_account.account_balance = card.registered_account.account_balance - new_cost
-				card.registered_account.bank_card_talk("[new_cost] credits deducted from your account based on performance review.")
-			SEND_SOUND(target, 'sound/machines/buzz-sigh.ogg')
-		if(ADMIN_PUNISHMENT_BREAD)
-			var/mutable_appearance/bread_appearance = mutable_appearance('icons/obj/food/burgerbread.dmi',"bread")
-			var/mutable_appearance/transform_scanline = mutable_appearance('icons/effects/effects.dmi',"transform_effect")
-			target.transformation_animation(bread_appearance,time= 5 SECONDS,transform_overlay=transform_scanline,reset_after=TRUE)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/breadify, target), 5 SECONDS)
-		if(ADMIN_PUNISHMENT_BADLUCK)
-			if(!isliving(target))
-				to_chat(usr, "<span class='warning'>This must be used on a /mob/living type of mob.</span>", confidential = TRUE)
-				return
-			var/silent = alert("Do you want to apply the omen with a player notification?", "Notify Player?", "Notify", "Silent") == "Silent"
-			var/permanent = alert("Would you like this to be permanent or removed automatically after the first accident?", "Permanent?", "Permanent", "Temporary") == "Permanent"
-			target.AddComponent(/datum/component/omen, silent, null, permanent)
-
-	punish_log(target, punishment)
+	var/smite_path = GLOB.smites[punishment]
+	var/datum/smite/smite = new smite_path
+	var/configuration_success = smite.configure(usr)
+	if (configuration_success == FALSE)
+		return
+	smite.effect(src, target)
 
 /proc/breadify(atom/movable/target)
 	var/obj/item/food/bread/plain/bread = new(get_turf(target))
 	target.forceMove(bread)
 
 /**
-  * firing_squad is a proc for the :B:erforate smite to shoot each individual bullet at them, so that we can add actual delays without sleep() nonsense
-  *
-  * Hilariously, if you drag someone away mid smite, the bullets will still chase after them from the original spot, possibly hitting other people. Too funny to fix imo
-  *
-  * Arguments:
-  * * target- guy we're shooting obviously
-  * * source_turf- where the bullet begins, preferably on a turf next to the target
-  * * body_zone- which bodypart we're aiming for, if there is one there
-  * * wound_bonus- the wounding power we're assigning to the bullet, since we don't care about the base one
-  * * damage- the damage we're assigning to the bullet, since we don't care about the base one
-  */
+ * firing_squad is a proc for the :B:erforate smite to shoot each individual bullet at them, so that we can add actual delays without sleep() nonsense
+ *
+ * Hilariously, if you drag someone away mid smite, the bullets will still chase after them from the original spot, possibly hitting other people. Too funny to fix imo
+ *
+ * Arguments:
+ * * target- guy we're shooting obviously
+ * * source_turf- where the bullet begins, preferably on a turf next to the target
+ * * body_zone- which bodypart we're aiming for, if there is one there
+ * * wound_bonus- the wounding power we're assigning to the bullet, since we don't care about the base one
+ * * damage- the damage we're assigning to the bullet, since we don't care about the base one
+ */
 /proc/firing_squad(mob/living/carbon/target, turf/source_turf, body_zone, wound_bonus, damage)
 	if(!target.get_bodypart(body_zone))
 		return
@@ -1373,10 +1119,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	divine_wrath.fire()
 
 /client/proc/punish_log(whom, punishment)
-	var/msg = "[key_name_admin(usr)] punished [key_name_admin(whom)] with [punishment]."
+	var/msg = "[key_name_admin(src)] punished [key_name_admin(whom)] with [punishment]."
 	message_admins(msg)
 	admin_ticket_log(whom, msg)
-	log_admin("[key_name(usr)] punished [key_name(whom)] with [punishment].")
+	log_admin("[key_name(src)] punished [key_name(whom)] with [punishment].")
 
 /client/proc/trigger_centcom_recall()
 	if(!check_rights(R_ADMIN))
@@ -1391,7 +1137,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
 
-/client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
+/client/proc/cmd_admin_check_player_exp() //Allows admins to determine who the newer players are.
 	set category = "Admin"
 	set name = "Player Playtime"
 	if(!check_rights(R_ADMIN))
@@ -1474,6 +1220,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/source = "adminabuse"
 	switch(add_or_remove)
 		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
+			if(GLOB.movement_type_trait_to_flag[chosen_trait]) //include the required element.
+				D.AddElement(/datum/element/movetype_handler)
 			ADD_TRAIT(D,chosen_trait,source)
 		if("Remove")
 			var/specific = input("All or specific source ?", "Trait Remove/Add") as null|anything in list("All","Specific")

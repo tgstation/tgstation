@@ -9,7 +9,7 @@
 				/datum/surgery_step/fold_cortex,
 				/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_HEAD)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	bioware_target = BIOWARE_CORTEX
 
 /datum/surgery/advanced/bioware/cortex_folding/can_start(mob/user, mob/living/carbon/target)
@@ -53,8 +53,8 @@
 
 /datum/bioware/cortex_fold/on_gain()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, "cortex_fold")
+	ADD_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, EXPERIMENTAL_SURGERY_TRAIT)
 
 /datum/bioware/cortex_fold/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, "cortex_fold")
+	REMOVE_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, EXPERIMENTAL_SURGERY_TRAIT)
 	return ..()

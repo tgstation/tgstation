@@ -1,18 +1,18 @@
 // the SMES
 // stores power
 
-#define SMESRATE 0.05			// rate of internal charge to external power
+#define SMESRATE 0.05 // rate of internal charge to external power
 
 //Cache defines
-#define SMES_CLEVEL_1		1
-#define SMES_CLEVEL_2		2
-#define SMES_CLEVEL_3		3
-#define SMES_CLEVEL_4		4
-#define SMES_CLEVEL_5		5
-#define SMES_OUTPUTTING		6
+#define SMES_CLEVEL_1 1
+#define SMES_CLEVEL_2 2
+#define SMES_CLEVEL_3 3
+#define SMES_CLEVEL_4 4
+#define SMES_CLEVEL_5 5
+#define SMES_OUTPUTTING 6
 #define SMES_NOT_OUTPUTTING 7
-#define SMES_INPUTTING		8
-#define SMES_INPUT_ATTEMPT	9
+#define SMES_INPUTTING 8
+#define SMES_INPUT_ATTEMPT 9
 
 /obj/machinery/power/smes
 	name = "power storage unit"
@@ -58,7 +58,7 @@
 		obj_break()
 		return
 	terminal.master = src
-	update_icon()
+	update_appearance()
 
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0
@@ -81,7 +81,7 @@
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-		update_icon()
+		update_appearance()
 		return
 
 	//changing direction using wrench
@@ -98,7 +98,7 @@
 			to_chat(user, "<span class='alert'>No power terminal found.</span>")
 			return
 		set_machine_stat(machine_stat & ~BROKEN)
-		update_icon()
+		update_appearance()
 		return
 
 	//building and linking a terminal
@@ -211,18 +211,11 @@
 	if(panel_open)
 		return
 
-	if(outputting)
-		. += "smes-op1"
-	else
-		. += "smes-op0"
-
-	if(inputting)
-		. += "smes-oc1"
-	else if(input_attempt)
-		. += "smes-oc0"
+	. += "smes-op[outputting ? 1 : 0]"
+	. += "smes-oc[inputting ? 1 : 0]"
 
 	var/clevel = chargedisplay()
-	if(clevel>0)
+	if(clevel > 0)
 		. += "smes-og[clevel]"
 
 
@@ -243,16 +236,16 @@
 		input_available = terminal.surplus()
 
 		if(inputting)
-			if(input_available > 0)		// if there's power available, try to charge
+			if(input_available > 0) // if there's power available, try to charge
 
-				var/load = min(min((capacity-charge)/SMESRATE, input_level), input_available)		// charge at set rate, limited to spare capacity
+				var/load = min(min((capacity-charge)/SMESRATE, input_level), input_available) // charge at set rate, limited to spare capacity
 
-				charge += load * SMESRATE	// increase the charge
+				charge += load * SMESRATE // increase the charge
 
 				terminal.add_load(load) // add the load to the terminal side network
 
-			else					// if not enough capcity
-				inputting = FALSE		// stop inputting
+			else // if not enough capcity
+				inputting = FALSE // stop inputting
 
 		else
 			if(input_attempt && input_available > 0)
@@ -263,14 +256,14 @@
 	//outputting
 	if(output_attempt)
 		if(outputting)
-			output_used = min( charge/SMESRATE, output_level)		//limit output to that stored
+			output_used = min( charge/SMESRATE, output_level) //limit output to that stored
 
-			if (add_avail(output_used))				// add output to powernet if it exists (smes side)
-				charge -= output_used*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
+			if (add_avail(output_used)) // add output to powernet if it exists (smes side)
+				charge -= output_used*SMESRATE // reduce the storage (may be recovered in /restore() if excessive)
 			else
 				outputting = FALSE
 
-			if(output_used < 0.0001)		// either from no charge or set to 0
+			if(output_used < 0.0001) // either from no charge or set to 0
 				outputting = FALSE
 				investigate_log("lost power and turned <font color='red'>off</font>", INVESTIGATE_SINGULO)
 		else if(output_attempt && charge > output_level && output_level > 0)
@@ -282,7 +275,7 @@
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
-		update_icon()
+		update_appearance()
 
 
 
@@ -296,23 +289,23 @@
 		output_used = 0
 		return
 
-	var/excess = powernet.netexcess		// this was how much wasn't used on the network last ptick, minus any removed by other SMESes
+	var/excess = powernet.netexcess // this was how much wasn't used on the network last ptick, minus any removed by other SMESes
 
-	excess = min(output_used, excess)				// clamp it to how much was actually output by this SMES last ptick
+	excess = min(output_used, excess) // clamp it to how much was actually output by this SMES last ptick
 
-	excess = min((capacity-charge)/SMESRATE, excess)	// for safety, also limit recharge by space capacity of SMES (shouldn't happen)
+	excess = min((capacity-charge)/SMESRATE, excess) // for safety, also limit recharge by space capacity of SMES (shouldn't happen)
 
 	// now recharge this amount
 
 	var/clev = chargedisplay()
 
-	charge += excess * SMESRATE			// restore unused power
-	powernet.netexcess -= excess		// remove the excess from the powernet, so later SMESes don't try to use it
+	charge += excess * SMESRATE // restore unused power
+	powernet.netexcess -= excess // remove the excess from the powernet, so later SMESes don't try to use it
 
 	output_used -= excess
 
 	if(clev != chargedisplay() ) //if needed updates the icons overlay
-		update_icon()
+		update_appearance()
 	return
 
 
@@ -350,12 +343,12 @@
 		if("tryinput")
 			input_attempt = !input_attempt
 			log_smes(usr)
-			update_icon()
+			update_appearance()
 			. = TRUE
 		if("tryoutput")
 			output_attempt = !output_attempt
 			log_smes(usr)
-			update_icon()
+			update_appearance()
 			. = TRUE
 		if("input")
 			var/target = params["target"]
@@ -411,7 +404,7 @@
 	charge -= 1e6/severity
 	if (charge < 0)
 		charge = 0
-	update_icon()
+	update_appearance()
 	log_smes()
 
 /obj/machinery/power/smes/engineering

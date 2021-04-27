@@ -11,14 +11,14 @@ GLOBAL_PROTECT(href_token)
 
 	var/target
 	var/name = "nobody's admin datum (no rank)" //Makes for better runtimes
-	var/client/owner	= null
-	var/fakekey			= null
+	var/client/owner = null
+	var/fakekey = null
 
 	var/datum/marked_datum
 
 	var/spamcooldown = 0
 
-	var/admincaster_screen = 0	//TODO: remove all these 5 variables, they are completly unacceptable
+	var/admincaster_screen = 0 //TODO: remove all these 5 variables, they are completly unacceptable
 	var/datum/newscaster/feed_message/admincaster_feed_message = new /datum/newscaster/feed_message
 	var/datum/newscaster/wanted_message/admincaster_wanted_message = new /datum/newscaster/wanted_message
 	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
@@ -27,6 +27,8 @@ GLOBAL_PROTECT(href_token)
 	var/href_token
 
 	var/deadmined
+
+	var/datum/filter_editor/filteriffic
 
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
@@ -76,7 +78,7 @@ GLOBAL_PROTECT(href_token)
 	GLOB.admin_datums[target] = src
 	deadmined = FALSE
 	if (GLOB.directory[target])
-		associate(GLOB.directory[target])	//find the client for a ckey if they are connected and associate them with us
+		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
 
 
 /datum/admins/proc/deactivate()
@@ -110,7 +112,7 @@ GLOBAL_PROTECT(href_token)
 			activate()
 		owner = C
 		owner.holder = src
-		owner.add_admin_verbs()	//TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
+		owner.add_admin_verbs() //TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
 		remove_verb(owner, /client/proc/readmin)
 		owner.init_verbs() //re-initialize the verb list
 		GLOB.admins |= C

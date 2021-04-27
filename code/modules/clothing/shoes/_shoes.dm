@@ -61,13 +61,16 @@
 	else if(tied == SHOES_KNOTTED)
 		. += "The shoelaces are all knotted together."
 
-/obj/item/clothing/shoes/equipped(mob/user, slot)
-	. = ..()
+/obj/item/clothing/shoes/visual_equipped(mob/user, slot)
+	..()
 	if(offset && (slot_flags & slot))
 		user.pixel_y += offset
 		worn_y_dimension -= (offset * 2)
 		user.update_inv_shoes()
 		equipped_before_drop = TRUE
+
+/obj/item/clothing/shoes/equipped(mob/user, slot)
+	. = ..()
 	if(can_be_tied && tied == SHOES_UNTIED)
 		our_alert = user.throw_alert("shoealert", /atom/movable/screen/alert/shoes/untied)
 		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_trip, override=TRUE)
@@ -94,15 +97,15 @@
 	return FALSE
 
 /**
-  * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
-  *
-  * In addition to setting the state, it will deal with getting rid of alerts if they exist, as well as registering and unregistering the stepping signals
-  *
-  * Arguments:
-  * *
-  * * state: SHOES_UNTIED, SHOES_TIED, or SHOES_KNOTTED, depending on what you want them to become
-  * * user: used to check to see if we're the ones unknotting our own laces
-  */
+ * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
+ *
+ * In addition to setting the state, it will deal with getting rid of alerts if they exist, as well as registering and unregistering the stepping signals
+ *
+ * Arguments:
+ * *
+ * * state: SHOES_UNTIED, SHOES_TIED, or SHOES_KNOTTED, depending on what you want them to become
+ * * user: used to check to see if we're the ones unknotting our own laces
+ */
 /obj/item/clothing/shoes/proc/adjust_laces(state, mob/user)
 	if(!can_be_tied)
 		return
@@ -122,18 +125,25 @@
 		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_trip, override=TRUE)
 
 /**
-  * handle_tying deals with all the actual tying/untying/knotting, inferring your intent from who you are in relation to the state of the laces
-  *
-  * If you're the wearer, you want them to move towards tied-ness (knotted -> untied -> tied). If you're not, you're pranking them, so you're moving towards knotted-ness (tied -> untied -> knotted)
-  *
-  * Arguments:
-  * *
-  * * user: who is the person interacting with the shoes?
-  */
+ * handle_tying deals with all the actual tying/untying/knotting, inferring your intent from who you are in relation to the state of the laces
+ *
+ * If you're the wearer, you want them to move towards tied-ness (knotted -> untied -> tied). If you're not, you're pranking them, so you're moving towards knotted-ness (tied -> untied -> knotted)
+ *
+ * Arguments:
+ * *
+ * * user: who is the person interacting with the shoes?
+ */
 /obj/item/clothing/shoes/proc/handle_tying(mob/user)
 	///our_guy here is the wearer, if one exists (and he must exist, or we don't care)
 	var/mob/living/carbon/human/our_guy = loc
 	if(!istype(our_guy))
+		return
+
+	if (!isliving(user))
+		return
+
+	var/mob/living/living_user = user
+	if (!(living_user.mobility_flags & MOBILITY_USE))
 		return
 
 	if(!in_range(user, our_guy))
@@ -141,7 +151,7 @@
 		return
 
 	if(user == loc && tied != SHOES_TIED) // if they're our own shoes, go tie-wards
-		if(INTERACTING_WITH(user, our_guy))
+		if(DOING_INTERACTION_WITH_TARGET(user, our_guy))
 			to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] begins [tied ? "unknotting" : "tying"] the laces of [user.p_their()] [src.name].</span>", "<span class='notice'>You begin [tied ? "unknotting" : "tying"] the laces of your [src.name]...</span>")
@@ -161,7 +171,7 @@
 		if(tied == SHOES_KNOTTED)
 			to_chat(user, "<span class='warning'>The laces on [loc]'s [src.name] are already a hopelessly tangled mess!</span>")
 			return
-		if(INTERACTING_WITH(user, our_guy))
+		if(DOING_INTERACTION_WITH_TARGET(user, our_guy))
 			to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 			return
 
@@ -236,7 +246,7 @@
 			our_alert = our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/untied)
 
 
-/obj/item/clothing/shoes/attack_hand(mob/living/carbon/human/user)
+/obj/item/clothing/shoes/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!istype(user))
 		return ..()
 	if(loc == user && tied != SHOES_TIED && (user.mobility_flags & MOBILITY_USE))
@@ -247,7 +257,7 @@
 /obj/item/clothing/shoes/attack_self(mob/user)
 	. = ..()
 
-	if(INTERACTING_WITH(user, src))
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 		return
 
