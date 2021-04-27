@@ -1,5 +1,5 @@
 2008-09-06:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Blob_act and ex_act for doors now correctly sets updatecell=1 on the
       turf they're on if it should do so.
   - unknown: Related to the above, for less severe explosions doors now have a chance
@@ -17,7 +17,7 @@
   - unknown: You properly receive the sandbox panel when you respawn in sandbox mode
       now.
 2008-09-09:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Corrected mistake that led to division by zero error in new aircheck.
   - unknown: Admins can play sounds now for whatever reason this is a terrible feature-
       Which is why it's disabled by default.
@@ -25,12 +25,12 @@
   - unknown: Power secret charges cells and SMES's.
   - unknown: Better ban system implemented. No changes visually.
 2008-09-11:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Upon further consideration, CO2 knocks humans out in 18 seconds, and
       monkeys in 15.
   - unknown: Admins receive a message when another bans/boots someone.
   - unknown: Removed sp_start obj, wasn't used.
   - unknown: Related to the above, cleaned up ready verb.
 2008-09-23:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Air properly flows to tiles with closed windoors now

@@ -1,12 +1,12 @@
 2010-08-06:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: <strong>Hydroponics/Botany Added</strong> Credit goes to Skie and the
       folks over at the independent opensource SS13 branch, this is their code. It's
       lacking a lot, but it's a great start!
   - unknown: Way more tweaks than I can remember. Shouldn't wait so long between changelog
       updates.
 2010-08-26:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: <strong>Open Source Release</strong>  Thanks to Mport for releasable
       singularity code.
   - unknown: <strong>Cyborgs redone</strong> Thanks again to Mport for this, cyborgs
@@ -37,7 +37,7 @@
   - unknown: InteliCards are available in various locations to allow the retrieval
       of valuable AI personality data in the event of catastrophic station damage.
 2010-08-29:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: The Robotics Crate no longer exists.  Quartermasters can now order a
       MULEbot crate for 20 points, or a Robotics Assembly crate for 10 points.  The
       latter provides 4 flashes, 3 proximity sensors, two 10k charge power cells and
@@ -51,7 +51,7 @@
       Storage vending machine.
   - unknown: AI status display density adjusted.
 2010-08-30:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: <b>PDA user interface has been given a graphical overhaul.</b>  Please
       report any problems with it on the issue tracker.
   - unknown: Personal lockers are once again available in the lockerroom

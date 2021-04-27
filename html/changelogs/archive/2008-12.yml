@@ -1,5 +1,5 @@
 2008-12-03:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Changed the way cold affects your movement speed, you now have a body
       temperature that will regulate itself unless the outside temperatures difference
       from yours is too high, in which case you will get hotter or colder. Being cold
@@ -18,7 +18,7 @@
   - unknown: You can no longer use a dropper or syringe on someone if it is empty.
   - unknown: Admins can call prison shuttle.
 2008-12-13:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Can no longer click things through windows ect. Fixes bug where prisoners
       could take items off of security officers in brig.
   - unknown: Admins can now check the ai's laws.
@@ -26,7 +26,7 @@
   - unknown: 'The stat window in restructuring now shows the Target in format "Target:
       realname (as name)".'
 2008-12-16:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: The murder all monkeys objective will now only count monkeys on z1 (the
       station) when it reports how many you have to kill. The end calculation is still
       a check for live monkeys on the station, so if more monkeys are made or brought
@@ -40,7 +40,7 @@
   - unknown: Hand teleporter will function without the main teleporter being active,
       albeit in an erratic manner.
 2008-12-24:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Hand teleporters have a maximum of 3 portals open at a time. Attempting
       to create any more will give you a it's recharging message.
   - unknown: The bug where you would die from bodyheat/burning lungs and not drop

@@ -1,5 +1,5 @@
 2008-10-05:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Cloaking devices no longer do large amounts of damage when they are active.
   - unknown: Digital valves now turn black when unpowered.
   - unknown: Guns can destroy AI turrets now.
@@ -15,7 +15,7 @@
   - unknown: You can no longer leave z1 if it's nuclear mode.
   - unknown: APC's require APC access now ( Kurper! )
 2008-10-06:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Pipe filters now display what gases are currently passing through them.
   - unknown: Pipe filters and pipe pumps now respect environment power instead of
       equipment.
@@ -26,12 +26,12 @@
   - unknown: Added Target name & current location to stat panel during Restructuring.
   - unknown: Can no longer walk through autolathe.
 2008-10-09:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Grid floors now have a burned icon_state.
   - unknown: Filter_control's now show an overlay dependent on what they are filtering.
   - unknown: Fixed bug with putting things on tables and racks.
 2008-10-10:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: AI can use arrowkeys anytime (current camera not required).
   - unknown: Sound is now played to all clients at end of round to signify restart.
   - unknown: Removed legacy Arm verb from proximity bombs.
@@ -42,11 +42,11 @@
   - unknown: Pipe filters and Filter_control's now emag-able.
   - unknown: Pipe filters are now bypassable with screwdriver + wires.
 2008-10-11:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Admins can input a reason for bans now. Time of ban is also saved.
   - unknown: Added ex_act for morgue.
 2008-10-12:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Admin object spawn search improved. You can search individual words IE
       'canister' will bring up /obj/machinery/atmoalter/canister.
   - unknown: Monkey's are unable to chimper if they have no tongue or are dead.
@@ -54,7 +54,7 @@
       have the effect of making the sun easier to track.
   - unknown: Solar panel icons update with what direction they're facing.
 2008-10-18:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Added panel opened icon for pipe_filter.
   - unknown: Fixed display of emag sparks for pipe_filter.
   - unknown: Admins receive multikey alerts, autoban alerts, alerts when another admin
@@ -67,7 +67,7 @@
   - unknown: 'Instead of being named Unknown #(), genetic experiments will be given
       a random name.'
 2008-10-19:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: False walls/False rwalls will now reveal what floor they were built on
       top of when destroyed.
   - unknown: Fix for if there were two players, and one of them was a human and the
@@ -81,7 +81,7 @@
   - unknown: Racks can be placed in all 4 dir's from the map editor.
   - unknown: Proximity sensors can now have their arm time adjusted.
 2008-10-28:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Added jumpsuits for individual jobs.
   - unknown: Added burn animation for dark green and grey jumpsuits.
   - unknown: Improved fire damage model.

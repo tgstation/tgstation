@@ -1,5 +1,5 @@
 2010-10-05:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Fixes to various nonworking cocktails.
   - unknown: More map and runtime error fixes.
   - unknown: Nuke operative headsets should be on an unreachable frequency like department
@@ -27,7 +27,7 @@
   - unknown: <b>The chameleon jumpsuit should now be more useful - it includes job-specific
       jumpsuits as well as flat colours.</b>
 2010-10-06:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Fixed the Librarian's suit - its worn iconstate wasn't set.
   - unknown: Fixed some typos.
   - unknown: Monkey crates are now available from the quartermasters for 20 points.
@@ -38,7 +38,7 @@
   - unknown: Changed the ban appeals link to point to our forums for now - this'll
       be a config file setting soon.
 2010-10-10:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Scrubbers in the area can be controlled by air alarms. Air alarm interface
       must be unlocked with an ID card (minimum access level - atmospheric technician),
       usable only by humans and AI. Panic syphon drains the air from affected room
@@ -62,7 +62,7 @@
       Aft Primary Hallway, just connect them to the port. Target pressure is set by
       Mixed Air Supply console in Atmospherics (defaults to 4000kPa).
 2010-10-13:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Crawling through vents (alien) now takes time. The farther destination
       vent is, the more time it takes.
   - unknown: Cryo cell healing ability depends on wound severity. Grave wounds will
@@ -74,7 +74,7 @@
       \           <li>- Fixed placement bug with container contents window. Also,\
       \ utility belt window now doesn't obscure view.</li>\n\t\t</ul>    \n    "
 2010-10-18:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Added virology profession with a cosy lab in northwestern part of medbay.
   - unknown: Virology related things, like taking blood samples, making vaccines,
       splashing contagious blood all over the station and so on.
@@ -87,7 +87,7 @@
       reasons unknown.
   - unknown: Some map-related changes.
 2010-10-28:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Sleepers and disposals now require two seconds to climb inside
   - unknown: Hydroponics crate ordered in QMs doesnt spawn too many items
   - unknown: Replacement lights crate can be ordered in QM.

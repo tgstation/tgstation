@@ -1,5 +1,5 @@
 2008-06-16:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: You are now told what your job is and are offered to change your name,
       even if you aren't AI. This implementation is kind of kludgy and will be rolled
       into a new character sheet in the future.
@@ -124,7 +124,7 @@
   - unknown: False wall display bug fixed
   - unknown: A lot of code cleaning was done, making things niiice and pretty.
 2008-06-17:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Removed random name code for now as it delayed spawning and caused some
       problems
   - unknown: Fixed exception error with empty pill cannister
@@ -137,7 +137,7 @@
   - unknown: Added the Chaplain position
   - unknown: Made some new access levels
 2008-06-19:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Airlock access bug fixed
   - unknown: Added chapel_office and tech_storage access levels
   - unknown: Added the Chaplain job title
@@ -175,7 +175,7 @@
   - unknown: Stun baton stun time is now 5-20 seconds (instead of 20-60 seconds)
   - unknown: Server code now using the Slurm.spacestation13 hub
 2008-06-24:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: 'Server crash where a non-player-human died has been resolved (ie: monkeys-turned-humans
       or logged-off-humans)'
   - unknown: You can now observe your own corpse
@@ -253,7 +253,7 @@
       to artificially pump up the rooms power consumption
   - unknown: Added the most recent map changes to the SVN.
 2008-06-28:
-  /tg/station ss13 team:
+  GoonStation 13 Development Team:
   - unknown: Fixed up a bug while moving and pulling items
   - unknown: Fixed typo in airlock code
   - unknown: Added power-drain variables to APCs in the mapmaker. This lets the mapmaker
