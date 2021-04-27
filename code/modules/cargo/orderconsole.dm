@@ -24,15 +24,15 @@
 	var/list/loaded_coupons
 	/// var that makes express console use rockets
 	var/is_express = FALSE
-	//The name of the shuttle template being used as the cargo shuttle. 'supply' is default and contains critical code. Don't change this unless you know what you're doing.
+	///The name of the shuttle template being used as the cargo shuttle. 'supply' is default and contains critical code. Don't change this unless you know what you're doing.
 	var/cargo_shuttle = "supply"
-	//The docking port called when returning to the station.
+	///The docking port called when returning to the station.
 	var/docking_home = "supply_home"
-	//The docking port called when leaving the station.
+	///The docking port called when leaving the station.
 	var/docking_away = "supply_away"
-	//If this console can loan the cargo shuttle. Set to false to disable.
+	///If this console can loan the cargo shuttle. Set to false to disable.
 	var/stationcargo = TRUE
-	//The account this console processes and displays. Independent from the account the shuttle processes.
+	///The account this console processes and displays. Independent from the account the shuttle processes.
 	var/cargo_account = ACCOUNT_CAR
 
 
