@@ -44,7 +44,7 @@
 	icon_state = "brimdemon_firing"
 	move_resist = MOVE_FORCE_VERY_STRONG
 	visible_message("<span class='danger'>[src] starts charging!</span>", "<span class='notice'>You start charging...</span>")
-	addtimer(CALLBACK(src, .proc/fire_laser), 1.6 SECONDS)
+	addtimer(CALLBACK(src, .proc/fire_laser), 1.5 SECONDS)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/death()
