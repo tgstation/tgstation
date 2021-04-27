@@ -19,7 +19,7 @@
 	family_heirlooms = list(
 		/obj/item/pickaxe/mini,
 		/obj/item/shovel,
-		)
+	)
 
 /datum/outfit/job/miner
 	name = "Shaft Miner"
