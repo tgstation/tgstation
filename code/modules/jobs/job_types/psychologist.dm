@@ -17,15 +17,16 @@
 
 	family_heirlooms = list(
 		/obj/item/storage/pill_bottle,
-		)
+	)
+		
 	liver_traits = list(
 		TRAIT_MEDICAL_METABOLISM,
-		)
+	)
 
 	mail_goodies =  list(
 		/obj/item/storage/pill_bottle/mannitol = 30,
 		/obj/item/storage/pill_bottle/happy = 5,
-		/obj/item/gun/syringe = 1
+		/obj/item/gun/syringe = 1,
 	)
 
 /datum/outfit/job/psychologist
