@@ -18,8 +18,8 @@ SUBSYSTEM_DEF(ai_controllers)
 
 /datum/controller/subsystem/ai_controllers/proc/setup_subtrees()
 	ai_subtrees = list()
-	for(var/i in subtypesof(/datum/ai_planning_subtree))
-		var/datum/ai_planning_subtree/subtree = new i
+	for(var/subtree_type in subtypesof(/datum/ai_planning_subtree))
+		var/datum/ai_planning_subtree/subtree = new subtree_type
 		ai_subtrees[i] = subtree
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
