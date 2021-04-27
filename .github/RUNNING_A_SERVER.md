@@ -125,7 +125,7 @@ It is highly recommended to reference AWS support documentation while reading th
 1. Install the required software
 	* AWSCL2 you will need to run the configuration using the IAM User you created above.
 	* TGS4: Make sure the TGS4 scripts from /tools/ are installed per tgs 4 instructions after you have set up your repository and done your first fetch. You will need to Also install a batch file similar to what i have provided into the event scripts folder. You can manually run the batch file to test connection to your S3 bucket.
-	* Copy compile_options.dm into code overrides preserving the directory structure and altering the code as mentioned in the above CDN instructions.
+	* Copy `compile_options.dm` into code overrides preserving the directory structure and altering the code as mentioned in the above CDN instructions.
 	* Filename: DeploymentComplete.bat
 ```Batch
 @echo off
