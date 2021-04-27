@@ -8,8 +8,8 @@
 	var/always_celebrate = FALSE // for christmas neverending, or testing.
 	var/current_year = 0
 	var/year_offset = 0
-	///Timezones this holiday is celebrated in
-	var/list/timezones = list(TIMEZONE_UTC)
+	///Timezones this holiday is celebrated in (defaults to three timezones spanning a 50 hour window covering all timezones)
+	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_AoE)
 	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
@@ -168,10 +168,8 @@
 
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
-	begin_month = MARCH
-	begin_day = 31
-	end_month = APRIL
-	end_day = 2
+	begin_day = 1
+	begin_month = APRIL
 
 /datum/holiday/april_fools/celebrate()
 	SSjob.set_overflow_role("Clown")
@@ -371,10 +369,8 @@
 
 /datum/holiday/halloween
 	name = HALLOWEEN
-	begin_day = 28
+	begin_day = 31
 	begin_month = OCTOBER
-	end_day = 2
-	end_month = NOVEMBER
 
 /datum/holiday/halloween/greet()
 	return "Have a spooky Halloween!"
@@ -467,9 +463,9 @@
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 22
+	begin_day = 24 //Christmas Eve
 	begin_month = DECEMBER
-	end_day = 27
+	end_day = 26 //Boxing Day
 	drone_hat = /obj/item/clothing/head/santa
 
 /datum/holiday/xmas/greet()

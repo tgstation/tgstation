@@ -53,6 +53,9 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 
 /*Timezones*/
 
+/// Line Islands Time
+#define TIMEZONE_LINT 14
+
 /// Tokelau Time
 #define TIMEZONE_TKT 13
 
@@ -124,3 +127,6 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 
 /// Niue Time
 #define TIMEZONE_NUT -11
+
+/// Anywhere on Earth
+#define TIMEZONE_AoE -12
