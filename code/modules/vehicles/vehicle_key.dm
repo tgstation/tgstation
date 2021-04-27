@@ -4,6 +4,21 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "key"
 	w_class = WEIGHT_CLASS_TINY
+	/// How long we have to wait between jingles to jangle again
+	var/jingle_delay = 5 SECONDS
+	/// The cooldown for jingling
+	COOLDOWN_DECLARE(jingle_cd)
+
+/obj/item/key/attack_self(mob/user, modifiers)
+	. = ..()
+	user.visible_message("<span class='notice'>[user] jingles [user.p_their()] keys around in an enticing fashion.</span>")
+	playsound(src, pick('sound/items/key_jingle01.ogg', 'sound/items/key_jingle02.ogg'), 50)
+	for(var/mob/living/iter_living in view(5, get_turf(user)))
+		if(HAS_TRAIT(iter_living, TRAIT_DUMB))
+			testing("s")
+		else if(prob(50) && (isfelinid(iter_living) || ismoth(iter_living)))
+			testing("p")
+			iter_living.AddComponent(/datum/component/tackler/one_shot, target=user)
 
 /obj/item/key/atv
 	name = "ATV key"

@@ -14,7 +14,7 @@
 /datum/component/tackler
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	///If we're currently tackling or are on cooldown. Actually, shit, if I use this to handle cooldowns, then getting thrown by something while on cooldown will count as a tackle..... whatever, i'll fix that next commit
+	///If TRUE, we're either actively flying through the air or on cooldown, if FALSE we're ready to tackle again
 	var/tackling = TRUE
 	///How much stamina it takes to launch a tackle
 	var/stamina_cost
@@ -30,6 +30,8 @@
 	var/min_distance
 	///The throwdatum we're currently dealing with, if we need it
 	var/datum/thrownthing/tackle
+	///If we tell the parent we're being destroyed (so one-shot tackles don't bother them)
+	var/warn_destroy = TRUE
 
 /datum/component/tackler/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance)
 	if(!iscarbon(parent))
@@ -45,12 +47,13 @@
 	var/mob/P = parent
 	to_chat(P, "<span class='notice'>You are now able to launch tackles! You can do so by activating throw intent, and clicking on your target with an empty hand.</span>")
 
-	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
+	addtimer(VARSET_CALLBACK(src, tackling, FALSE), base_knockdown, TIMER_STOPPABLE)
 
 /datum/component/tackler/Destroy()
 	var/mob/P = parent
-	to_chat(P, "<span class='notice'>You can no longer tackle.</span>")
-	..()
+	if(warn_destroy)
+		to_chat(P, "<span class='notice'>You can no longer tackle.</span>")
+	. = ..()
 
 /datum/component/tackler/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/checkTackle)
@@ -67,7 +70,7 @@
 	tackle = TT
 	tackle.thrower = user
 
-///See if we can tackle or not. If we can, leap!
+///See if we can tackle or not. If we can, go to [/datum/component/tackler/proc/launchTackle]!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
 	SIGNAL_HANDLER
 
@@ -103,24 +106,28 @@
 	if(LAZYACCESS(modifiers, ALT_CLICK) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
 
+	INVOKE_ASYNC(src, .proc/launchTackle, user, A)
+	return COMSIG_MOB_CANCEL_CLICKON
+
+/// For actually launching ourselves at our target
+/datum/component/tackler/proc/launchTackle(mob/living/carbon/user, atom/tackle_target, params)
 	tackling = TRUE
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
 	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
-	if(can_see(user, A, 7))
-		user.visible_message("<span class='warning'>[user] [leap_word]s at [A]!</span>", "<span class='danger'>You [leap_word] at [A]!</span>")
+	if(can_see(user, tackle_target, 7))
+		user.visible_message("<span class='warning'>[user] [leap_word]s at [tackle_target]!</span>", "<span class='danger'>You [leap_word] at [tackle_target]!</span>")
 	else
 		user.visible_message("<span class='warning'>[user] [leap_word]s!</span>", "<span class='danger'>You [leap_word]!</span>")
 
-	if(get_dist(user, A) < min_distance)
-		A = get_ranged_target_turf(user, get_dir(user, A), min_distance) //TODO: this only works in cardinals/diagonals, make it work with in-betweens too!
+	if(get_dist(user, tackle_target) < min_distance)
+		tackle_target = get_ranged_target_turf(user, get_dir(user, tackle_target), min_distance) //TODO: this only works in cardinals/diagonals, make it work with in-betweens too!
 
 	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
 	user.adjustStaminaLoss(stamina_cost)
-	user.throw_at(A, range, speed, user, FALSE)
-	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
-	return(COMSIG_MOB_CANCEL_CLICKON)
+	user.throw_at(tackle_target, range, speed, user, FALSE)
+	finishTackle(base_knockdown)
 
 /**
  * sack() is called when you actually smack into something, assuming we're mid-tackle. First it deals with smacking into non-carbons, in two cases:
@@ -141,7 +148,7 @@
  * Finally, we return a bitflag to [COMSIG_MOVABLE_IMPACT] that forces the hitpush to false so that we don't knock them away.
 */
 /datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(!tackling || !tackle)
 		return
@@ -447,9 +454,10 @@
 
 	playsound(user, 'sound/weapons/smash.ogg', 70, TRUE)
 
-
-/datum/component/tackler/proc/resetTackle()
-	tackling = FALSE
+/// We've resolved our tackle, get ready for the next one (or just delete this all if this was a one-shot)
+/datum/component/tackler/proc/finishTackle(delay_to_next_tackle)
+	if(delay_to_next_tackle)
+		addtimer(VARSET_CALLBACK(src, tackling, FALSE), delay_to_next_tackle, TIMER_STOPPABLE)
 	QDEL_NULL(tackle)
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
@@ -533,6 +541,64 @@
 
 	playsound(owner, 'sound/weapons/smash.ogg', 70, TRUE)
 	tackle.finalize(hit=TRUE)
-	resetTackle()
+	finishTackle()
 
 #undef MAX_TABLE_MESSES
+
+/**
+ * If you want to make someone launch just one tackle without their input, give them this component with the target var set to whatever you want to launch them at.
+ *
+ * If said person already has a normal tackler component this won't affect them, but that's benign enough that it shouldn't cause problems in gameplay.
+ */
+/datum/component/tackler/one_shot
+	warn_destroy = FALSE
+
+/datum/component/tackler/one_shot/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance, atom/target)
+	if(!iscarbon(parent) || !target)
+		return COMPONENT_INCOMPATIBLE
+
+	src.stamina_cost = stamina_cost
+	src.base_knockdown = base_knockdown
+	src.range = range
+	src.speed = speed
+	src.skill_mod = skill_mod
+	src.min_distance = min_distance
+
+	INVOKE_ASYNC(src, .proc/launchTackle, parent, target)
+
+// Does nothing because the parent is not allowed to try initiating its own tackles
+/datum/component/tackler/one_shot/checkTackle(mob/living/carbon/user, atom/A, params)
+	return
+
+// This is a boiled down combination of [/datum/component/tackler/proc/checkTackle] and [/datum/component/tackler/proc/launchTackle]
+/datum/component/tackler/one_shot/launchTackle(mob/living/carbon/user, atom/tackle_target, params)
+	// we can leave out most of the controls related checks since this is assumed to be forced, controls wise
+	if(user.buckled || user.incapacitated() || !tackle_target || !(isturf(tackle_target) || isturf(tackle_target.loc)) || HAS_TRAIT(user, TRAIT_HULK) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || user.body_position == LYING_DOWN)
+		finishTackle()
+		return
+
+	tackling = TRUE
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
+	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
+
+	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
+	if(can_see(user, tackle_target, 7))
+		user.visible_message("<span class='warning'>[user] [leap_word]s at [tackle_target]!</span>", "<span class='danger'>You [leap_word] at [tackle_target]!</span>")
+	else
+		user.visible_message("<span class='warning'>[user] [leap_word]s!</span>", "<span class='danger'>You [leap_word]!</span>")
+
+	if(get_dist(user, tackle_target) < min_distance)
+		tackle_target = get_ranged_target_turf(user, get_dir(user, tackle_target), min_distance) //TODO: this only works in cardinals/diagonals, make it work with in-betweens too!
+
+	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
+	user.adjustStaminaLoss(stamina_cost)
+	user.throw_at(tackle_target, range, speed, user, FALSE)
+
+/datum/component/tackler/one_shot/sack(mob/living/carbon/user, atom/hit)
+	. = ..()
+	finishTackle()
+
+/datum/component/tackler/one_shot/finishTackle(delay_to_next_tackle)
+	// even if we fail the basic checks to tackle (like if we're buckled), we can't just immediately delete ourselves because the only proper way to "fail" adding a component is by
+	// returning COMPONENT_INCOMPATIBLE in Initialize(), which is interpreted as a coding error and causes a runtime. So instead, we simply wait half a second to delete ourselves.
+	QDEL_IN(src, 0.5 SECONDS)
