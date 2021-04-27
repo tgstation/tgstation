@@ -70,7 +70,7 @@
 		var/obj/structure/bodycontainer/tray = src.loc
 		to_chat(user, "<span class='notice'>You attempt to breakout of the [src.loc]... (This will take around 30 seconds.)</span>")
 		if(do_after(user, 30 SECONDS))
-			tray.open()
+			tray?.open()
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
 	. = ..()
