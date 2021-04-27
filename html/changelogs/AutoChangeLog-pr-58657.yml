@@ -1,4 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - admin: "Admins get a new Show Hiddenprints drop-down option in View Variables. This allows them to easily view a log of who touched something."

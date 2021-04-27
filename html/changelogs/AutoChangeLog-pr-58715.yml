@@ -1,7 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - admin: "Build Mode Update!"
-  - qol: "You can now choose any from the eight dirs, not just cardinals and northwest."
-  - qol: "Decals are now supported by build mode! This means that they can have any dir you want instead of always being south."
-  - qol: "Areas are now filled in by default, you can still paint them manually with altclick."
