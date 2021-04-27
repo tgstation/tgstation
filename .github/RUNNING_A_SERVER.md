@@ -124,21 +124,19 @@ It is highly recommended to reference AWS support documentation while reading th
 1. In Route 53 you will register a domain name. The you will create a hosted zone and tell your domain to use the IP address you used for your EC2 instance.
 1. Install the required software
 	* AWSCL2 you will need to run the configuration using the IAM User you created above.
-	* TGS4: Make sure the tgs4 scripts from /tools/ are installed per tgs 4 instructions after you have set up your repository and done your first fetch. You will need to Also install a batch file similar to what i have provided into the event scripts folder. You can manually run the batch file to test connection to your S3 bucket.
-
+	* TGS4: Make sure the TGS4 scripts from /tools/ are installed per tgs 4 instructions after you have set up your repository and done your first fetch. You will need to Also install a batch file similar to what i have provided into the event scripts folder. You can manually run the batch file to test connection to your S3 bucket.
+	* Copy compile_options.dm into code overrides preserving the directory structure and altering the code as mentioned in the above CDN instructions.
+	* Filename: DeploymentComplete.bat
 ```Batch
-	Filename: DeploymentComplete.bat
-	@echo off
-	cd "C:\Program Files\Amazon\AWSCLIV2"
-
-	aws s3 cp "C:\Instance_Path\Game\Live\tgstation.rsc" s3://BucketName/tgstation.rsc --acl public-read
+@echo off
+cd "C:\Program Files\Amazon\AWSCLIV2"
+aws s3 cp "C:\Instance_Path\Game\Live\tgstation.rsc" s3://BucketName/tgstation.rsc --acl public-read
 ```
 
-	* Copy compile_options.dm into code overrides preserving the directory structure and altering the code as mentioned in the above CDN instructions.
-1. In your tgs4's instance's static config files edit resources.txt to point to the resource file uploaded by the batch file. it should resemble `http://BucketName.s3.AWSRegion.amazonaws.com/tgstation.rsc` You can get this url from the S3 object management page after its been uploaded for the first time. *Make sure you do not use use HTTPS. Byond can not do encryption*
-1. Tell TGS4 to fetch and deploy. If everything goes according to plan, your server will be compiled and the resource uploaded automatically to amazon S3. You can verify that by checking on the file your bucket via aws web management.
-1. Test your client side connection.
-	* Tell tgs 4 to run the compiled server
+7. In your TGS4's instance's static config files edit resources.txt to point to the resource file uploaded by the batch file. it should resemble `http://BucketName.s3.AWSRegion.amazonaws.com/tgstation.rsc` You can get this url from the S3 object management page after its been uploaded for the first time. *Make sure you do not use use HTTPS. Byond can not do encryption*
+7. Tell TGS4 to fetch and deploy. If everything goes according to plan, your server will be compiled and the resource uploaded automatically to amazon S3. You can verify that by checking on the file your bucket via aws web management.
+7. Test your client side connection.
+	* Tell TGS4 to run the compiled server
 	* Attempt to log in. AWS has a stupid fast transfer speed. you should download client side data faster than you can recognize it happened.
 
 ## IRC BOT SETUP
