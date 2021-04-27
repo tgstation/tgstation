@@ -98,13 +98,13 @@ It is highly recommended to reference AWS support documentation while reading th
 
 **Required AWS Services**
 1. Elastic Computer 2 (EC2)
-2. What size and class is up to you but 4GB of ram is a minimum.
+	* What size and class is up to you but 4GB of ram is a minimum.
 1. Route53
-2. Domain registration and assigning "Elastic" IP addresses to said web addresses
+	* Domain registration and assigning "Elastic" IP addresses to said web addresses
 1. S3
-2. This will be your storage point and distrobution point for your .RSC file
+	* This will be your storage point and distrobution point for your .RSC file
 1. Identity and Access Management (IAM)
-2. Required for EC2 to S3 file transfers
+	* Required for EC2 to S3 file transfers
 
 **Required Software**
 1. Microsoft Windows
@@ -115,29 +115,31 @@ It is highly recommended to reference AWS support documentation while reading th
 
 **Instructions**
 1. After you go through setting up an AWS account you will need to create an IAM role and an IAM user. the IAM user will be made for debug testing. The IAM role will be used as an internal credential for the EC2 instance to talk with S3
-2. The role and user creation are almost identical. give them names, select programatic access, then you will click atatych existing policey, Here you can use admin access or S3 full access. both can be found via search. the difference for roles is that you will on the first step declare it for use with EC2 and this one will need full admin access
+	* The role and user creation are almost identical. give them names, select programatic access, then you will click atatych existing policey, Here you can use admin access or S3 full access. both can be found via search. the difference for roles is that you will on the first step declare it for use with EC2 and this one will need full admin access
 1. Create your Amazon EC2 instance. There will be a config option asking for an IAM role. use the IAM role created in the previous step.
-2. A blank Windows Server is recommended
-2. You will also need to define a security policey. 3 are recommended. a Remote Desktop Protocol Policey, a Maria DB Policey, and an SS13 policey. the Latter will use the port(s) of your dream demon settings. Make sure the SS13 policey whitelists all IP addresses.
+	* A blank Windows Server is recommended
+	* You will also need to define a security policey. 3 are recommended. a Remote Desktop Protocol Policey, a Maria DB Policey, and an SS13 policey. the Latter will use the port(s) of your dream demon settings. Make sure the SS13 policey whitelists all IP addresses.
 1. Creat your S3 bucket. this is a very simple process. only thing you need to edit is making the bucket public and making sure its in the same region as your EC2 instance.
 1. In the EC2 control panel, go to Elastic IP's. get one and assign it to your EC2 instance. This will result in the server IP address not changing and is required for joining the game via url instead of ip address
 1. In Route 53 you will register a domain name. The you will create a hosted zone and tell your domain to use the IP address you used for your EC2 instance.
 1. Install the required software
-2. AWSCL2 you will need to run the configuration using the IAM User you created above.
-2. TGS4: Make sure the tgs4 scripts from /tools/ are installed per tgs 4 instructions after you have set up your repository and done your first fetch. You will need to Also install a batch file similar to what i have provided into the event scripts folder. You can manually run the batch file to test connection to your S3 bucket.
-Filename: DeploymentComplete.bat
-`
-@echo off
-cd "C:\Program Files\Amazon\AWSCLIV2"
+	* AWSCL2 you will need to run the configuration using the IAM User you created above.
+	* TGS4: Make sure the tgs4 scripts from /tools/ are installed per tgs 4 instructions after you have set up your repository and done your first fetch. You will need to Also install a batch file similar to what i have provided into the event scripts folder. You can manually run the batch file to test connection to your S3 bucket.
 
-aws s3 cp "C:\Instance_Path\Game\Live\tgstation.rsc" s3://BucketName/tgstation.rsc --acl public-read
-`
-2. Copy compile_options.dm into code overrides preserving the directory structure and altering the code as mentioned in the above CDN instructions.
+```Batch
+	Filename: DeploymentComplete.bat
+	@echo off
+	cd "C:\Program Files\Amazon\AWSCLIV2"
+
+	aws s3 cp "C:\Instance_Path\Game\Live\tgstation.rsc" s3://BucketName/tgstation.rsc --acl public-read
+```
+
+	* Copy compile_options.dm into code overrides preserving the directory structure and altering the code as mentioned in the above CDN instructions.
 1. In your tgs4's instance's static config files edit resources.txt to point to the resource file uploaded by the batch file. it should resemble `http://BucketName.s3.AWSRegion.amazonaws.com/tgstation.rsc` You can get this url from the S3 object management page after its been uploaded for the first time. *Make sure you do not use use HTTPS. Byond can not do encryption*
 1. Tell TGS4 to fetch and deploy. If everything goes according to plan, your server will be compiled and the resource uploaded automatically to amazon S3. You can verify that by checking on the file your bucket via aws web management.
 1. Test your client side connection.
-2. Tell tgs 4 to run the compiled server
-2. Attempt to log in. AWS has a stupid fast transfer speed. you should download client side data faster than you can recognize it happened.
+	* Tell tgs 4 to run the compiled server
+	* Attempt to log in. AWS has a stupid fast transfer speed. you should download client side data faster than you can recognize it happened.
 
 ## IRC BOT SETUP
 
