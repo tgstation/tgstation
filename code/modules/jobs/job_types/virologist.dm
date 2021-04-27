@@ -20,17 +20,18 @@
 
 	family_heirlooms = list(
 		/obj/item/reagent_containers/syringe,
-		)
+	)
+		
 	liver_traits = list(
 		TRAIT_MEDICAL_METABOLISM,
-		)
+	)
 
 	mail_goodies = list(
 		/obj/item/reagent_containers/glass/bottle/random_virus = 15,
 		/obj/item/reagent_containers/glass/bottle/formaldehyde = 10,
 		/obj/item/reagent_containers/glass/bottle/synaptizine = 10,
 		/obj/item/stack/sheet/mineral/plasma = 10,
-		/obj/item/stack/sheet/mineral/uranium = 5
+		/obj/item/stack/sheet/mineral/uranium = 5,
 	)
 
 
