@@ -37,22 +37,29 @@
 	icon_state = "darkfull"
 /turf/open/floor/plasteel/dark/side
 	icon_state = "dark"
+/turf/open/floor/plasteel/dark/hallway
+	icon_state = "darkhallway"
 /turf/open/floor/plasteel/dark/corner
 	icon_state = "darkcorner"
 /turf/open/floor/plasteel/checker
 	icon_state = "checker"
-
+/turf/open/floor/plasteel/checker/light
+	icon_state = "lightchecker"
 
 /turf/open/floor/plasteel/white
 	icon_state = "white"
 /turf/open/floor/plasteel/white/side
 	icon_state = "whitehall"
+/turf/open/floor/plasteel/white/hall
+	icon_state = "whitehallway"
 /turf/open/floor/plasteel/white/corner
 	icon_state = "whitecorner"
 /turf/open/floor/plasteel/airless/white
 	icon_state = "white"
 /turf/open/floor/plasteel/airless/white/side
 	icon_state = "whitehall"
+/turf/open/floor/plasteel/airless/white/hall
+	icon_state = "whitehallway"
 /turf/open/floor/plasteel/airless/white/corner
 	icon_state = "whitecorner"
 /turf/open/floor/plasteel/white/telecomms
@@ -93,6 +100,11 @@
 /turf/open/floor/plasteel/freezer/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/plasteel/freezer/shower
+	icon_state = "shower"
+
+/turf/open/floor/plasteel/freezer/shower/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/plasteel/kitchen_coldroom
 	name = "cold room floor"

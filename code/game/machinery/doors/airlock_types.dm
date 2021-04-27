@@ -8,9 +8,13 @@
 	normal_integrity = 450
 
 /obj/machinery/door/airlock/security
-	icon = 'icons/obj/doors/airlocks/station/security.dmi'
+	icon = 'icons/obj/doors/airlocks/station/security2.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
+
+/obj/machinery/door/airlock/security/alt
+	icon = 'icons/obj/doors/airlocks/station/security.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_sec/alt
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
@@ -94,6 +98,11 @@
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
 
 /obj/machinery/door/airlock/security/glass
+	opacity = FALSE
+	glass = TRUE
+	normal_integrity = 400
+
+/obj/machinery/door/airlock/security/alt/glass
 	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 400

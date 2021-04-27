@@ -5086,6 +5086,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/stasis,
+/obj/machinery/light_switch{
+	pixel_x = -22;
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "coF" = (
@@ -5267,6 +5271,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/light_switch{
+	pixel_x = 25;
+	pixel_y = 16
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "csb" = (
@@ -5467,7 +5475,7 @@
 /area/ai_monitored/turret_protected/aisat/foyer)
 "cwN" = (
 /obj/machinery/door/airlock{
-	name = "Godzilla's Cabin";
+	name = "Bartender's Cabin";
 	req_access_txt = "25"
 	},
 /obj/effect/turf_decal/tile/bar{
@@ -7301,9 +7309,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
+/obj/machinery/firealarm/north,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "dne" = (
@@ -7588,6 +7594,10 @@
 	department = "Security";
 	departmentType = 5;
 	pixel_y = -30
+	},
+/obj/machinery/light_switch{
+	pixel_x = 25;
+	pixel_y = 17
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
@@ -11489,6 +11499,10 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_x = 22;
+	pixel_y = 25
+	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "eSt" = (
@@ -12261,24 +12275,6 @@
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
-"ffy" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/cable,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -27
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "ffF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -12752,7 +12748,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar/atrium)
 "frC" = (
-/obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -13851,9 +13846,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
-	},
-/obj/machinery/light_switch{
-	pixel_y = -26
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -23145,6 +23137,18 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
+"jGm" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light_switch{
+	pixel_x = 25
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/storage)
 "jGJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -27624,6 +27628,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/firealarm/south,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "lsJ" = (
@@ -30028,7 +30033,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/freezer/shower,
 /area/security/prison)
 "mrO" = (
 /obj/item/radio/intercom{
@@ -34849,13 +34854,13 @@
 /turf/open/floor/plating,
 /area/medical/storage)
 "oqg" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Cell 1";
-	req_one_access_txt = "2"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
+	},
+/obj/machinery/door/airlock/security/alt/glass{
+	name = "Cell 1";
+	req_one_access_txt = "2"
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -38013,10 +38018,6 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 22
-	},
-/obj/machinery/light_switch{
-	pixel_x = -23;
-	pixel_y = -29
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -42953,10 +42954,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/light_switch{
-	pixel_x = -23;
-	pixel_y = -29
-	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "rCg" = (
@@ -43528,11 +43525,11 @@
 /area/maintenance/starboard/fore)
 "rRC" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/closet/crate/freezer/blood,
 /obj/machinery/camera{
 	c_tag = "Mecial Secondary Storage";
 	network = list("ss13","medbay")
 	},
+/obj/machinery/vending/blood,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "rRF" = (
@@ -46905,6 +46902,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light_switch{
+	pixel_x = 25;
+	pixel_y = 18
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "tht" = (
@@ -59059,13 +59060,13 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "ylm" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Cell 2";
-	req_one_access_txt = "2"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
+	},
+/obj/machinery/door/airlock/security/alt/glass{
+	name = "Cell 2";
+	req_one_access_txt = "2"
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -87766,7 +87767,7 @@ hMm
 sic
 ieE
 qyr
-ffy
+nEb
 nrk
 dna
 nOS
@@ -88765,7 +88766,7 @@ iHH
 qYc
 qvH
 fbB
-rAp
+jGm
 cDU
 ieE
 ieE

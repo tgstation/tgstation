@@ -291,12 +291,12 @@
 	category = list("Equipment")
 
 /datum/design/hypomii
-	name = "Hypospray"
-	desc = "A device which allows either injecting or spraying of a patient."
+	name = "Experimental Hypospray"
+	desc = "A device which enables the rapid injecting or spraying of a patient."
 	id = "hyposprayII"
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 3000, /datum/material/plasma = 1000, /datum/material/titanium = 2000,/datum/material/diamond = 2000, /datum/material/bluespace = 1000)
+	materials = list(/datum/material/titanium = 1000, /datum/material/glass = 3000, /datum/material/diamond = 2000)
 	build_path = /obj/item/hypospray/mkii
 	category = list("Medical Designs")
 

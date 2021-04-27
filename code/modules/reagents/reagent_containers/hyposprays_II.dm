@@ -1,8 +1,8 @@
 #define HYPO_SPRAY 0
 #define HYPO_INJECT 1
 
-#define WAIT_SPRAY 25
-#define WAIT_INJECT 25
+#define WAIT_SPRAY 20
+#define WAIT_INJECT 20
 #define SELF_SPRAY 15
 #define SELF_INJECT 15
 
@@ -16,16 +16,23 @@
 #define COMBAT_SELF_SPRAY 0
 #define COMBAT_SELF_INJECT 0
 
+#define STANDARD_WAIT_SPRAY 30
+#define STANDARD_WAIT_INJECT 30
+#define STANDARD_SELF_SPRAY 20
+#define STANDARD_SELF_INJECT 20
+
 /obj/item/hypospray/mkii
-	name = "hypospray mk.II"
+	name = "experimental hypospray mk.II"
 	icon_state = "hypo2"
 	icon = 'icons/obj/syringe.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	inhand_icon_state = "hypo"
 	worn_icon_state = "hypo"
-	desc = "A new development from DeForest Medical, this hypospray takes 60-unit vials as the drug supply for easy swapping."
-	w_class = WEIGHT_CLASS_TINY
+	desc = "Much faster than its standard counterpart, this hypospray takes 60-unit vials as the drug supply for easy swapping."
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	custom_price = 600
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/bottle/vial/small)
 	//Inject or spray?
 	var/mode = HYPO_INJECT
@@ -78,6 +85,17 @@
 	inhand_icon_state = "nanite_hypo"
 	desc = "An air-needle autoinjector for use in combat situations. Vial prefilled with experimental medical nanites and a stimulant for rapid healing and a combat boost."
 	start_vial = /obj/item/reagent_containers/glass/bottle/vial/large/combat/nanite
+
+/obj/item/hypospray/mkii/standard
+	name = "standard hypospray mk.II"
+	icon_state = "standard2"
+	desc = "A new development from DeForest Medical, this hypospray takes 60-unit vials as the drug supply for easy swapping."
+	start_vial = /obj/item/reagent_containers/glass/bottle/vial/small/epinephrine
+	inject_wait = STANDARD_WAIT_INJECT
+	spray_wait = STANDARD_WAIT_SPRAY
+	spray_self = STANDARD_SELF_SPRAY
+	inject_self = STANDARD_SELF_INJECT
+	custom_price = 150
 
 /obj/item/hypospray/mkii/Initialize()
 	. = ..()
@@ -251,3 +269,7 @@
 #undef COMBAT_WAIT_INJECT
 #undef COMBAT_SELF_SPRAY
 #undef COMBAT_SELF_INJECT
+#undef STANDARD_WAIT_SPRAY
+#undef STANDARD_WAIT_INJECT
+#undef STANDARD_SELF_SPRAY
+#undef STANDARD_SELF_INJECT

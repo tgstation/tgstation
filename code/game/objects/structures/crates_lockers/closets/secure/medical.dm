@@ -38,6 +38,7 @@
 /obj/structure/closet/secure_closet/medical3/PopulateContents()
 	..()
 	new /obj/item/radio/headset/headset_med(src)
+	new /obj/item/storage/hypospraykit/regular(src)
 	new /obj/item/defibrillator/loaded(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)

@@ -14,10 +14,13 @@
 
 /obj/structure/door_assembly/door_assembly_sec
 	name = "security airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/security.dmi'
+	icon = 'icons/obj/doors/airlocks/station/security2.dmi'
 	base_name = "security airlock"
 	glass_type = /obj/machinery/door/airlock/security/glass
 	airlock_type = /obj/machinery/door/airlock/security
+
+/obj/structure/door_assembly/door_assembly_sec/alt
+	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 
 /obj/structure/door_assembly/door_assembly_eng
 	name = "engineering airlock assembly"
