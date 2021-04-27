@@ -46,7 +46,7 @@
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
-	icon_state = "black"
+	icon_state = "marisa"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
 	species_exception = null
 
