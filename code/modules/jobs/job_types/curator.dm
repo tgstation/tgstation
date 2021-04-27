@@ -18,7 +18,7 @@
 	family_heirlooms = list(
 		/obj/item/pen/fountain,
 		/obj/item/storage/pill_bottle/dice,
-		)
+	)
 
 /datum/outfit/job/curator
 	name = "Curator"
