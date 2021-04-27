@@ -1,3 +1,5 @@
+#define BRIMBEAM_RANGE 10
+
 /mob/living/simple_animal/hostile/asteroid/brimdemon
 	name = "brimdemon"
 	desc = "A misshapen demon with big, red eyes and a hinged mouth. Not much is known about the creatures \
@@ -8,9 +10,10 @@
 	icon_dead = "brimdemon_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_emote = list("cackles")
+	emote_taunt = list("screeches")
 	emote_hear = list("cackles","screeches")
 	combat_mode = TRUE
-	ranged = TRUE
+	stat_attack = HARD_CRIT
 	ranged_cooldown_time = 5 SECONDS
 	vision_range = 9
 	retreat_distance = 2
@@ -32,6 +35,9 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	deathmessage = "wails as infernal energy escapes from its wounds, leaving it an empty husk."
 	deathsound = 'sound/magic/demon_dies.ogg'
+	light_color = LIGHT_COLOR_BLOOD_MAGIC
+	light_power = 5
+	light_range = 1.4
 	/// Are we charging/firing? If yes stops our movement.
 	var/firing = FALSE
 	/// A list of all the beam parts.
@@ -41,7 +47,6 @@
 	if(firing)
 		to_chat(src, "<span class='warning'>You are already firing!</span>")
 		return
-	face_atom(target)
 	firing = TRUE
 	icon_state = "brimdemon_firing"
 	move_resist = MOVE_FORCE_VERY_STRONG
@@ -49,6 +54,16 @@
 	visible_message("<span class='danger'>[src] starts charging!</span>", "<span class='notice'>You start charging...</span>")
 	addtimer(CALLBACK(src, .proc/fire_laser), 1.5 SECONDS)
 	ranged_cooldown = world.time + ranged_cooldown_time
+	stoplag()
+	face_atom(target)
+
+/mob/living/simple_animal/hostile/asteroid/brimdemon/Login()
+	ranged = TRUE
+	return ..()
+
+/mob/living/simple_animal/hostile/asteroid/brimdemon/Logout()
+	ranged = FALSE
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/death()
 	firing = FALSE
@@ -59,23 +74,28 @@
 /mob/living/simple_animal/hostile/asteroid/brimdemon/Goto(target, delay, minimum_distance)
 	if(firing)
 		return FALSE
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/MoveToTarget(list/possible_targets)
 	if(firing)
 		return FALSE
-	if((target in possible_targets) && ISDIAGONALDIR(get_dir(src, target)))
-		if(get_dist(src, target) == minimum_distance)
-			sidestep()
-		else
-			Goto(target,move_to_delay,minimum_distance)
-		possible_targets -= target
-	..()
+	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/brimdemon/Move(list/possible_targets)
+/mob/living/simple_animal/hostile/asteroid/brimdemon/AttackingTarget(atom/attacked_target)
 	if(firing)
 		return FALSE
 	return ..()
+
+/mob/living/simple_animal/hostile/asteroid/brimdemon/Move(atom/newloc, dir , step_x , step_y)
+	if(firing)
+		return FALSE
+	. = ..()
+	check_fire()
+
+/mob/living/simple_animal/hostile/asteroid/brimdemon/proc/check_fire()
+	if(firing || key || QDELETED(target) || ranged_cooldown > world.time || get_dist(src, target) > BRIMBEAM_RANGE || !(get_dir(src, target) in GLOB.cardinals))
+		return
+	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/fire_laser()
 	if(stat == DEAD)
@@ -83,7 +103,7 @@
 	visible_message("<span class='danger'>[src] fires a brimbeam!</span>", "<span class='notice'>You fire a brimbeam!</span>")
 	playsound(src, 'sound/creatures/brimdemon.ogg', 100, FALSE, 0, 3)
 	cut_overlay("brimdemon_telegraph_dir")
-	var/turf/target_turf = get_ranged_target_turf(src, dir, 10)
+	var/turf/target_turf = get_ranged_target_turf(src, dir, BRIMBEAM_RANGE)
 	var/turf/origin_turf = get_turf(src)
 	var/list/affected_turfs = getline(origin_turf, target_turf) - origin_turf
 	for(var/turf/affected_turf in affected_turfs)
