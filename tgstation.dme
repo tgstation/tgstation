@@ -58,6 +58,7 @@
 #include "code\__DEFINES\events.dm"
 #include "code\__DEFINES\exosuit_fab.dm"
 #include "code\__DEFINES\experisci.dm"
+#include "code\__DEFINES\explosions.dm"
 #include "code\__DEFINES\exports.dm"
 #include "code\__DEFINES\fantasy_affixes.dm"
 #include "code\__DEFINES\flags.dm"

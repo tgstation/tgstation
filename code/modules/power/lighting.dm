@@ -818,7 +818,7 @@
 	zap_flags &= ~(ZAP_MACHINE_EXPLOSIVE | ZAP_OBJ_DAMAGE)
 	. = ..()
 	if(explosive)
-		explosion(src,0,0,0,flame_range = 5, adminlog = FALSE)
+		explosion(src, flame_range = 5, adminlog = FALSE)
 		qdel(src)
 
 // called when area power state changes
@@ -840,10 +840,9 @@
 
 /obj/machinery/light/proc/explode()
 	set waitfor = 0
-	var/turf/T = get_turf(src.loc)
 	break_light_tube() // break it first to give a warning
 	sleep(2)
-	explosion(T, 0, 0, 2, 2)
+	explosion(src, light_impact_range = 2, flash_range = -1)
 	sleep(1)
 	qdel(src)
 

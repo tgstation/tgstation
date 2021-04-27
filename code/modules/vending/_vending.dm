@@ -1169,7 +1169,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(T)
 		for(var/obj/item/I in contents)
 			I.forceMove(T)
-		explosion(T, -1, 0, 3)
+		explosion(src, devastation_range = -1, light_impact_range = 3)
 	return ..()
 
 /obj/machinery/vending/custom/unbreakable

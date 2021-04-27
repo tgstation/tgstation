@@ -481,7 +481,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		var/pressure_dif = expelled_pressure - pressure_limit
 		var/max_pressure_difference = 20000
 		var/explosion_range = CEILING(min(pressure_dif, max_pressure_difference) / 1000, 1)
-		explosion(T, 0, 0, explosion_range, 0, smoke = FALSE)
+		explosion(T, light_impact_range = explosion_range, smoke = FALSE)
 
 	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
