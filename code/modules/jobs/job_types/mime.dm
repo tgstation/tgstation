@@ -17,7 +17,7 @@
 
 	family_heirlooms = list(
 		/obj/item/food/baguette,
-		)
+	)
 
 	mail_goodies = list(
 		/obj/item/food/baguette = 15,
