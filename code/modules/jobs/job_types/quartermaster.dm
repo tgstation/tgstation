@@ -17,19 +17,23 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_CAR
 
+	family_heirlooms = list(
+		/obj/item/stamp,
+		/obj/item/stamp/denied,
+	)
+
 	liver_traits = list(
 		TRAIT_PRETENDER_ROYAL_METABOLISM,
-		)
+	)
+
+	mail_goodies = list(
+		/obj/item/circuitboard/machine/emitter = 3,
+	)
 
 /datum/job/quartermaster/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
 	if(announce_captaincy)
 		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Due to extreme staffing shortages, newly promoted Acting Captain [H.real_name] on deck!"))
-
-	family_heirlooms = list(
-		/obj/item/stamp,
-		/obj/item/stamp/denied,
-		)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"

@@ -15,7 +15,12 @@
 
 	family_heirlooms = list(
 		/obj/item/pen/blue,
-		)
+	)
+
+	exclusive_mail_goodies = TRUE
+	mail_goodies = list (
+		/obj/effect/spawner/lootdrop/prison_contraband = 1,
+	)
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"
@@ -23,7 +28,7 @@
 
 	id = /obj/item/card/id/advanced/prisoner
 	id_trim = /datum/id_trim/job/prisoner
-	uniform = /obj/item/clothing/under/rank/prisoner
+	uniform = /obj/item/clothing/under/color/prisoner
 	belt = null
 	ears = null
 	shoes = /obj/item/clothing/shoes/sneakers/orange

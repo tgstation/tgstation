@@ -36,6 +36,15 @@
 		TRAIT_ROYAL_METABOLISM,
 		)
 
+	mail_goodies = list(
+		/obj/item/food/cracker = 25, //you know. for poly
+		/obj/item/stack/sheet/mineral/diamond = 15,
+		/obj/item/stack/sheet/mineral/uranium/five = 15,
+		/obj/item/stack/sheet/mineral/plasma/five = 15,
+		/obj/item/stack/sheet/mineral/gold = 15,
+		/obj/effect/spawner/lootdrop/space/fancytool/engineonly = 3
+	)
+
 /datum/job/chief_engineer/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
 	if(announce_captaincy)

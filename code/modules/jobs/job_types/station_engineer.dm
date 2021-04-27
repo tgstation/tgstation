@@ -30,6 +30,13 @@
 		TRAIT_ENGINEER_METABOLISM,
 		)
 
+	mail_goodies = list(
+		/obj/item/storage/box/lights/mixed = 20,
+		/obj/item/lightreplacer = 10,
+		/obj/item/holosign_creator/engineering = 8,
+		/obj/item/clothing/head/hardhat/red/upgraded = 1
+	)
+
 /datum/outfit/job/engineer
 	name = "Station Engineer"
 	jobtype = /datum/job/station_engineer

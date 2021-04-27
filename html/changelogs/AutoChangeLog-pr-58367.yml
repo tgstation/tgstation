@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - rscadd: "You can now change the name of your chaplain bible in the Setup Character menu. If left as its default value of \"Default Bible Name\", your bible will use the old naming scheme."

@@ -1,0 +1,6 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - refactor: "The explosive compressor and blastcannon now actually use the bombs they are given. Both have experienced slight changes to their response times as a result."
+  - code_imp: "The explosion severity definitions are now the right way round."
+  - code_imp: "Most explosions now use named arguments and occur at the exploding object instead of its turf."

@@ -1,6 +1,6 @@
-#define COOLDOWN_STUN 12 SECONDS
-#define COOLDOWN_DAMAGE 6 SECONDS
-#define COOLDOWN_MEME 3 SECONDS
+#define COOLDOWN_STUN 120 SECONDS
+#define COOLDOWN_DAMAGE 60 SECONDS
+#define COOLDOWN_MEME 30 SECONDS
 #define COOLDOWN_NONE 1 SECONDS
 
 /// Used to stop listeners with silly or clown-esque (first) names such as "Honk" or "Flip" from screwing up certain commands.
@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
  */
 /proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE)
 	var/log_message = uppertext(message)
-	var/is_cultie = iscultist(user)
+	var/is_cultie = IS_CULTIST(user)
 	if(LAZYLEN(span_list))
 		if(is_cultie)
 			span_list = list("narsiesmall")
@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/stun/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	// Ensure 'as anything' is not used for loops that don't target all living mob types.
 	for(var/mob/living/target as anything in listeners)
-		target.Stun(60 * power_multiplier)
+		target.Stun(4 SECONDS * power_multiplier)
 
 /// This command knocks the listeners down.
 /datum/voice_of_god_command/paralyze
@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/paralyze/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		target.Paralyze(60 * power_multiplier)
+		target.Paralyze(4 SECONDS * power_multiplier)
 
 /// This command puts carbon listeners to sleep.
 /datum/voice_of_god_command/sleeping
@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/sleeping/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/carbon/target as anything in listeners)
-		target.Sleeping(40 * power_multiplier)
+		target.Sleeping(2 SECONDS * power_multiplier)
 
 /// This command makes carbon listeners throw up like Mr. Creosote.
 /datum/voice_of_god_command/vomit

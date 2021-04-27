@@ -25,10 +25,17 @@
 
 	family_heirlooms = list(
 		/obj/item/toy/plush/slimeplushie,
-		)
+	)
+    
 	liver_traits = list(
 		TRAIT_ROYAL_METABOLISM,
-		)
+	)
+
+	mail_goodies = list(
+		/obj/item/borg/upgrade/ai = 2,
+		/obj/item/circuitboard/machine/sleeper/party = 3,
+		/obj/item/storage/box/monkeycubes = 30,
+	)
 
 /datum/job/research_director/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()

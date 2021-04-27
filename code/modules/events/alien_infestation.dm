@@ -60,7 +60,7 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return MAP_ERROR
 
-	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
+	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
 
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS

@@ -1,0 +1,4 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - bugfix: "fixes the misplaced fire extuingisher in the quiet room of delta."

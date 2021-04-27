@@ -30,6 +30,15 @@
 		TRAIT_DONUT_LOVER,
 		)
 
+	mail_goodies = list(
+		/obj/item/storage/fancy/cigarettes = 15,
+		/obj/item/storage/box/handcuffs = 10,
+		/obj/item/storage/box/teargas = 10,
+		/obj/item/storage/box/flashbangs = 10,
+		/obj/item/storage/box/rubbershot = 10,
+		/obj/item/storage/box/lethalshot = 5
+	)
+
 /datum/outfit/job/warden
 	name = "Warden"
 	jobtype = /datum/job/warden

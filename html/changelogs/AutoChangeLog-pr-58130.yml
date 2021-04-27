@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - refactor: "Emissive overlays and blockers now use BYONDs native image layering."

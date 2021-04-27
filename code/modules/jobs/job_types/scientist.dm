@@ -22,6 +22,12 @@
 		/obj/item/toy/plush/slimeplushie,
 		)
 
+	mail_goodies = list(
+		/obj/item/raw_anomaly_core/random = 10,
+		/obj/item/disk/tech_disk/spaceloot = 2,
+		/obj/item/camera_bug = 1
+	)
+
 /datum/outfit/job/scientist
 	name = "Scientist"
 	jobtype = /datum/job/scientist

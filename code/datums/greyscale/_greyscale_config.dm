@@ -8,14 +8,20 @@
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// Do not set any further vars, the json file specified above is what generates the object
 
+	/// Spritesheet width of the icon_file
+	var/width
+
+	/// Spritesheet height of the icon_file
+	var/height
+
 	/// String path to the json file, used for reloading
 	var/string_json_config
 
 	/// String path to the icon file, used for reloading
 	var/string_icon_file
 
-	/// Layer objects that the sprite is made up of
-	var/list/layers
+	/// A list of icon states and their layers
+	var/list/icon_states
 
 	/// How many colors are expected to be given when building the sprite
 	var/expected_colors = 0
@@ -40,10 +46,17 @@
 		json_config = file(string_json_config)
 		icon_file = file(string_icon_file)
 
+	var/icon/source = icon(icon_file)
+	height = source.Height()
+	width = source.Width()
+
+	icon_states = list()
+
 	var/list/raw = json_decode(file2text(json_config))
-	layers = ReadLayersFromJson(raw["layers"])
-	if(!length(layers))
-		CRASH("The json configuration [DebugName()] is missing any layers.")
+	ReadIconStateConfiguration(raw)
+
+	if(!length(icon_states))
+		CRASH("The json configuration [DebugName()] is missing any icon_states.")
 
 	icon_cache = list()
 
@@ -52,6 +65,17 @@
 /// Gets the name used for debug purposes
 /datum/greyscale_config/proc/DebugName()
 	return "([icon_file]|[json_config])"
+
+/// Takes the json icon state configuration and puts it into a more processed format
+/datum/greyscale_config/proc/ReadIconStateConfiguration(list/data)
+	for(var/state in data)
+		var/list/raw_layers = data[state]
+		if(!length(raw_layers))
+			stack_trace("The json configuration [DebugName()] for icon state '[state]' is missing any layers.")
+			continue
+		if(icon_states[state])
+			stack_trace("The json configuration [DebugName()] has a duplicate icon state '[state]' and is being overriden.")
+		icon_states[state] = ReadLayersFromJson(raw_layers)
 
 /// Takes the json layers configuration and puts it into a more processed format
 /datum/greyscale_config/proc/ReadLayersFromJson(list/data)
@@ -74,7 +98,9 @@
 /// Reads layer configurations to take out some useful overall information
 /datum/greyscale_config/proc/ReadMetadata()
 	var/list/datum/greyscale_layer/all_layers = list()
-	var/list/to_process = list(layers)
+	var/list/to_process = list()
+	for(var/state in icon_states)
+		to_process += icon_states[state]
 	while(length(to_process))
 		var/current = to_process[length(to_process)]
 		to_process.len--
@@ -91,21 +117,28 @@
 	expected_colors = length(color_groups)
 
 /// Actually create the icon and color it in, handles caching
-/datum/greyscale_config/proc/Generate(color_string)
+/datum/greyscale_config/proc/Generate(color_string, list/render_steps)
 	var/key = color_string
 	var/icon/new_icon = icon_cache[key]
-	if(new_icon)
-		return icon(new_icon)
+	if(new_icon && !render_steps)
+		var/icon/output = icon(new_icon)
+		output.Scale(width, height)
+		return output
 	var/list/colors = ParseColorString(color_string)
 	if(length(colors) != expected_colors)
 		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
-	new_icon = GenerateLayerGroup(colors, layers)
-	// We read a pixel to force the icon to be fully generated before we let it loose into the world
-	// I hate this
-	new_icon.GetPixel(1, 1)
-	new_icon = fcopy_rsc(new_icon)
-	icon_cache[key] = new_icon
-	return icon(new_icon)
+	var/icon/icon_bundle = new
+	for(var/icon_state in icon_states)
+		var/icon/generated_icon = GenerateLayerGroup(colors, icon_states[icon_state], render_steps)
+		// We read a pixel to force the icon to be fully generated before we let it loose into the world
+		// I hate this
+		generated_icon.GetPixel(1, 1)
+		icon_bundle.Insert(generated_icon, icon_state)
+	icon_bundle = fcopy_rsc(icon_bundle)
+	icon_cache[key] = icon_bundle
+	var/icon/output = icon(icon_bundle)
+	output.Scale(width, height)
+	return output
 
 /// Internal recursive proc to handle nested layer groups
 /datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
@@ -125,20 +158,15 @@
 
 		// These are so we can see the result of every step of the process in the preview ui
 		if(render_steps)
-			var/icon/new_icon_copy = new(new_icon)
-			var/icon/layer_icon_copy = new(layer_icon)
-			render_steps[layer_icon_copy] = icon(new_icon_copy)
+			render_steps[image(layer_icon)] = image(new_icon)
 	return new_icon
 
-/datum/greyscale_config/proc/GenerateDebug(list/colors)
-	if(length(colors) != expected_colors)
-		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
-
+/datum/greyscale_config/proc/GenerateDebug(colors)
 	var/list/output = list()
 	var/list/debug_steps = list()
 	output["steps"] = debug_steps
 
-	output["icon"] = GenerateLayerGroup(colors, layers, debug_steps)
+	output["icon"] = Generate(colors, debug_steps)
 	return output
 
 /datum/greyscale_config/proc/ParseColorString(color_string)

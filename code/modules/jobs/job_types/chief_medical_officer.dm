@@ -25,11 +25,19 @@
 
 	family_heirlooms = list(
 		/obj/item/storage/firstaid/ancient/heirloom,
-		)
+	)
+    
 	liver_traits = list(
 		TRAIT_MEDICAL_METABOLISM,
 		TRAIT_ROYAL_METABOLISM,
-		)
+	)
+
+	mail_goodies = list(
+		/obj/effect/spawner/lootdrop/memeorgans = 8,
+		/obj/effect/spawner/lootdrop/organ_spawner = 10,
+		/obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly = 4,
+		/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly = 1,
+	)
 
 /datum/job/chief_medical_officer/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()

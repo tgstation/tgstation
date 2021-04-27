@@ -176,17 +176,17 @@
 	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return
 	if(panel_open)
-		. += mutable_appearance(icon, "[base_icon_state]-open", layer, plane, alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-open", alpha = src.alpha)
 		return
 
 	if(!charging)
-		. += mutable_appearance(icon, "[base_icon_state]-empty", layer, plane, alpha)
-		. += mutable_appearance(icon, "[base_icon_state]-empty", 0, EMISSIVE_PLANE, alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-empty", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-empty", alpha = src.alpha)
 		return
 	if(using_power)
-		. += mutable_appearance(icon, "[base_icon_state]-charging", layer, plane, alpha)
-		. += mutable_appearance(icon, "[base_icon_state]-charging", 0, EMISSIVE_PLANE, alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-charging", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-charging", alpha = src.alpha)
 		return
 
-	. += mutable_appearance(icon, "[base_icon_state]-full", layer, plane, alpha)
-	. += mutable_appearance(icon, "[base_icon_state]-full", 0, EMISSIVE_PLANE, alpha)
+	. += mutable_appearance(icon, "[base_icon_state]-full", alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]-full", alpha = src.alpha)

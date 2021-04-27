@@ -31,6 +31,14 @@
 		TRAIT_DONUT_LOVER,
 		)
 
+	mail_goodies = list(
+		/obj/item/food/donut/caramel = 10,
+		/obj/item/food/donut/matcha = 10,
+		/obj/item/food/donut/blumpkin = 5,
+		/obj/item/clothing/mask/whistle = 5,
+		/obj/item/melee/baton/boomerang/loaded = 1
+	)
+
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
 /**
