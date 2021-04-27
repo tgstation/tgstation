@@ -11,6 +11,7 @@
 	junkiness = 25
 	tastes = list("candy" = 1)
 	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/candy/bronx
@@ -98,6 +99,7 @@
 	junkiness = 25
 	tastes = list("dried raisins" = 1)
 	foodtypes = JUNKFOOD | FRUIT | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	custom_price = PAYCHECK_ASSISTANT * 0.7
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -116,6 +118,7 @@
 	food_reagents = list(/datum/reagent/consumable/sugar = 4)
 	junkiness = 25
 	foodtypes = JUNKFOOD | GRAIN | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	custom_price = PAYCHECK_PRISONER
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -127,6 +130,7 @@
 	food_reagents = list(/datum/reagent/consumable/sugar = 4, /datum/reagent/ash = 3)
 	junkiness = 10 //powergame trash food by buying candy cigs in bulk and eating them when they extinguish
 	foodtypes = JUNKFOOD | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/candy_trash/nicotine
@@ -162,4 +166,5 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity/enriched = 3)
 	tastes = list("pure electricity" = 3, "fitness" = 2)
 	foodtypes = TOXIC
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL

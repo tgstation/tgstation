@@ -168,6 +168,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
@@ -279,6 +280,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | BREAKFAST
+	food_flags = FOOD_FINGER_FOOD
 	eatverbs = list("bite","chew","nibble","deep throat","gobble","chomp")
 	var/roasted = FALSE
 	w_class = WEIGHT_CLASS_SMALL
@@ -301,6 +303,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 1)
 	tastes = list("meat" = 1, "smoke" = 1)
 	foodtypes = MEAT
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/rawkhinkali
@@ -334,6 +337,7 @@
 	food_reagents = list(/datum/reagent/monkey_powder = 30)
 	tastes = list("the jungle" = 1, "bananas" = 1)
 	foodtypes = MEAT | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 	var/faction
 	var/spawned_mob = /mob/living/carbon/human/species/monkey
@@ -451,6 +455,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("\"chicken\"" = 1)
 	foodtypes = MEAT
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_CHEAP
 
