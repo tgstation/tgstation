@@ -43,20 +43,6 @@
 	/// A list of all the beam parts.
 	var/list/beamparts = list()
 
-/mob/living/simple_animal/hostile/asteroid/brimdemon/OpenFire()
-	if(firing)
-		to_chat(src, "<span class='warning'>You are already firing!</span>")
-		return
-	firing = TRUE
-	icon_state = "brimdemon_firing"
-	move_resist = MOVE_FORCE_VERY_STRONG
-	add_overlay("brimdemon_telegraph_dir")
-	visible_message("<span class='danger'>[src] starts charging!</span>", "<span class='notice'>You start charging...</span>")
-	addtimer(CALLBACK(src, .proc/fire_laser), 1.5 SECONDS)
-	ranged_cooldown = world.time + ranged_cooldown_time
-	stoplag()
-	face_atom(target)
-
 /mob/living/simple_animal/hostile/asteroid/brimdemon/Login()
 	ranged = TRUE
 	return ..()
@@ -89,12 +75,29 @@
 /mob/living/simple_animal/hostile/asteroid/brimdemon/Move(atom/newloc, dir , step_x , step_y)
 	if(firing)
 		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/asteroid/brimdemon/OpenFire()
+	if(firing)
+		to_chat(src, "<span class='warning'>You are already firing!</span>")
+		return
+	firing = TRUE
+	set_dir_on_move = FALSE
+	icon_state = "brimdemon_firing"
+	move_resist = MOVE_FORCE_VERY_STRONG
+	add_overlay("brimdemon_telegraph_dir")
+	visible_message("<span class='danger'>[src] starts charging!</span>", "<span class='notice'>You start charging...</span>")
+	addtimer(CALLBACK(src, .proc/fire_laser), 1.5 SECONDS)
+	ranged_cooldown = world.time + ranged_cooldown_time
+
+/mob/living/simple_animal/hostile/asteroid/brimdemon/Moved()
 	. = ..()
 	check_fire()
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/check_fire()
 	if(firing || key || QDELETED(target) || ranged_cooldown > world.time || get_dist(src, target) > BRIMBEAM_RANGE || !(get_dir(src, target) in GLOB.cardinals))
 		return
+	face_atom(target)
 	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/fire_laser()
@@ -135,6 +138,7 @@
 	if(stat != DEAD)
 		icon_state = initial(icon_state)
 	move_resist = initial(move_resist)
+	set_dir_on_move = initial(set_dir_on_move)
 	firing = FALSE
 	for(var/obj/effect/brimbeam/beam in beamparts)
 		animate(beam, time = 0.5 SECONDS, alpha = 0)
