@@ -19,13 +19,15 @@
 	family_heirlooms = list(
 		/obj/item/book/manual/wiki/security_space_law,
 		/obj/item/gavelhammer,
-		)
+	)
+	
 	liver_traits = list(
 		TRAIT_LAW_ENFORCEMENT_METABOLISM,
-		)
+	)
+	
 	mind_traits = list(
 		TRAIT_DONUT_LOVER,
-		)
+	)
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
