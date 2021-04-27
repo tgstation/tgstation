@@ -29,13 +29,13 @@
   
 	mail_goodies = list(
 		/obj/item/ammo_box/c38 = 25,
+		/obj/item/storage/fancy/cigarettes = 25,
 		/obj/item/ammo_box/c38/dumdum = 5,
 		/obj/item/ammo_box/c38/hotshot = 5,
 		/obj/item/ammo_box/c38/iceblox = 5,
 		/obj/item/ammo_box/c38/match = 5,
 		/obj/item/ammo_box/c38/trac = 5,
 		/obj/item/storage/belt/holster/detective/full = 1,
-		/obj/item/storage/fancy/cigarettes = 25,
 	)    
   
 	mind_traits = list(
