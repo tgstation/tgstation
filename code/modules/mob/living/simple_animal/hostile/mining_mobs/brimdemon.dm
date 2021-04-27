@@ -11,7 +11,9 @@
 	combat_mode = TRUE
 	ranged = TRUE
 	ranged_cooldown_time = 5 SECONDS
-	vision_range = 7
+	vision_range = 9
+	minimum_distance = 3
+	retreat_distance = 5
 	speed = 5
 	move_to_delay = 5
 	maxHealth = 200
@@ -43,12 +45,14 @@
 	firing = TRUE
 	icon_state = "brimdemon_firing"
 	move_resist = MOVE_FORCE_VERY_STRONG
+	add_overlay("brimdemon_telegraph_dir")
 	visible_message("<span class='danger'>[src] starts charging!</span>", "<span class='notice'>You start charging...</span>")
 	addtimer(CALLBACK(src, .proc/fire_laser), 1.5 SECONDS)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/death()
 	firing = FALSE
+	cut_overlay("brimdemon_telegraph_dir")
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/Goto(target, delay, minimum_distance)
@@ -75,17 +79,27 @@
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/fire_laser()
 	visible_message("<span class='danger'>[src] fires a brimbeam!</span>", "<span class='notice'>You fire a brimbeam!</span>")
 	playsound(src, 'sound/creatures/brimdemon.ogg', 100, TRUE)
+	cut_overlay("brimdemon_telegraph_dir")
 	var/turf/target_turf = get_ranged_target_turf(src, dir, 10)
 	var/turf/origin_turf = get_turf(src)
 	var/list/affected_turfs = getline(origin_turf, target_turf) - origin_turf
 	for(var/turf/affected_turf in affected_turfs)
+		var/blocked = FALSE
 		if(affected_turf.opacity)
+			blocked = TRUE
+		for(var/obj/potential_block in affected_turf.contents)
+			if(potential_block.opacity)
+				blocked = TRUE
+				break
+		if(blocked)
 			break
 		var/atom/new_brimbeam = new /obj/effect/brimbeam(affected_turf)
 		new_brimbeam.dir = dir
 		beamparts += new_brimbeam
 		for(var/mob/living/hit_mob in affected_turf.contents)
-			hit_mob.adjustFireLoss(20)
+			if(istype(hit_mob, /mob/living/simple_animal/hostile/asteroid/brimdemon))
+				continue
+			hit_mob.adjustFireLoss(25)
 			to_chat(hit_mob, "<span class='userdanger'>You're hit by [src]'s brimbeam!</span>")
 	if(length(beamparts))
 		var/atom/last_brimbeam = beamparts[length(beamparts)]
@@ -95,8 +109,9 @@
 	addtimer(CALLBACK(src, .proc/end_laser), 2 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/end_laser()
+	if(stat != DEAD)
+		icon_state = initial(icon_state)
 	move_resist = initial(move_resist)
-	icon_state = initial(icon_state)
 	firing = FALSE
 	for(var/obj/effect/brimbeam/beam in beamparts)
 		animate(beam, time = 0.5 SECONDS, alpha = 0)
@@ -128,6 +143,7 @@
 		damage(AM)
 
 /obj/effect/brimbeam/proc/damage(mob/living/hit_mob)
-	if(istype(hit_mob, ))
+	if(istype(hit_mob, /mob/living/simple_animal/hostile/asteroid/brimdemon))
+		return
 	hit_mob.adjustFireLoss(5)
 	to_chat(hit_mob, "<span class='danger'>You're damaged by [src]!</span>")
