@@ -4,7 +4,7 @@ reset_label = "GBP: Reset"
 [points]
 "Atomic" = 2
 "Balance/Rebalance" = -8
-"Code Improvement" = 2
+"Code Improvement" = 3
 "Feature" = -10
 "Feedback" = 2
 "Fix" = 3
