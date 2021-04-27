@@ -19,9 +19,9 @@
 	throw_speed = 1
 	throw_range = 2
 	custom_materials = list(/datum/material/iron=750)
-	var/drain_rate = 2000000 // amount of power to drain per tick
+	var/drain_rate = 2e6 // amount of power to drain per tick
 	var/power_drained = 0 // has drained this much power
-	var/max_power = 6e8 // maximum power that can be drained before exploding
+	var/max_power = 1e8 // maximum power that can be drained before exploding
 	var/mode = 0 // 0 = off, 1=clamped (off), 2=operating
 	var/admins_warned = FALSE // stop spam, only warn the admins once that we are about to boom
 
@@ -123,6 +123,8 @@
 			set_mode(CLAMPED_OFF)
 
 /obj/item/powersink/process()
+	var/old_drain = power_drained
+
 	if(!attached)
 		set_mode(DISCONNECTED)
 		return
@@ -150,6 +152,10 @@
 							A.charging = 1 // It's no longer full
 				if(drained >= drain_rate)
 					break
+
+	if(old_drain < power_drained)
+		//add heat sharing
+
 
 	if(power_drained > max_power * 0.98)
 		if (!admins_warned)
