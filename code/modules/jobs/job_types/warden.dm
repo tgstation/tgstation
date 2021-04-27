@@ -22,13 +22,15 @@
 
 	family_heirlooms = list(
 		/obj/item/book/manual/wiki/security_space_law,
-		)
+	)
+		
 	liver_traits = list(
 		TRAIT_LAW_ENFORCEMENT_METABOLISM,
-		)
+	)
+		
 	mind_traits = list(
 		TRAIT_DONUT_LOVER,
-		)
+	)
 
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 15,
@@ -36,7 +38,7 @@
 		/obj/item/storage/box/teargas = 10,
 		/obj/item/storage/box/flashbangs = 10,
 		/obj/item/storage/box/rubbershot = 10,
-		/obj/item/storage/box/lethalshot = 5
+		/obj/item/storage/box/lethalshot = 5,
 	)
 
 /datum/outfit/job/warden
