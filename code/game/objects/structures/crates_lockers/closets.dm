@@ -100,7 +100,7 @@
 	if(opened)
 		. += "<span class='notice'>The parts are <b>welded</b> together.</span>"
 	else if(secure && !opened)
-		. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
+		. += "<span class='notice'>Right-click to [locked ? "unlock" : "lock"].</span>"
 
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
 		. += "<span class='notice'>If you bump into [p_them()] while running, you will jump inside.</span>"
@@ -448,14 +448,11 @@
 	broken = TRUE //applies to secure lockers only
 	open()
 
-/obj/structure/closet/AltClick(mob/user)
-	..()
-	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
-		return
+/obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
 	if(opened || !secure)
-		return
-	else
-		togglelock(user)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
