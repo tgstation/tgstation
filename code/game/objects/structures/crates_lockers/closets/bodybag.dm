@@ -68,7 +68,7 @@
 /obj/structure/closet/body_bag/container_resist_act(mob/living/user)
 	if (istype(src.loc, /obj/structure/bodycontainer))
 		var/obj/structure/bodycontainer/tray = src.loc
-		to_chat(user, "<span class='notice'>You attempt to breakout of the [src.loc]... (This will take around 30 seconds.)</span>")
+		to_chat(user, "<span class='notice'>You attempt to breakout of the [tray]... (This will take around 30 seconds.)</span>")
 		if(do_after(user, 30 SECONDS))
 			tray?.open()
 
