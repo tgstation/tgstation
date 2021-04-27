@@ -26,7 +26,7 @@
 	family_heirlooms = list(
 		/obj/item/toy/plush/slimeplushie,
 	)
-    
+
 	liver_traits = list(
 		TRAIT_ROYAL_METABOLISM,
 	)

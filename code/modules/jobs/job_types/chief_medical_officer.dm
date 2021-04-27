@@ -26,7 +26,7 @@
 	family_heirlooms = list(
 		/obj/item/storage/firstaid/ancient/heirloom,
 	)
-    
+
 	liver_traits = list(
 		TRAIT_MEDICAL_METABOLISM,
 		TRAIT_ROYAL_METABOLISM,

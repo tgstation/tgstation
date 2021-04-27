@@ -18,7 +18,7 @@
 	family_heirlooms = list(
 		/obj/item/bikehorn/golden,
 	)
-    
+
 	liver_traits = list(
 		TRAIT_COMEDY_METABOLISM,
 	)

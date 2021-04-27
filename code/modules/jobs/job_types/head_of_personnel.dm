@@ -26,7 +26,7 @@
 	family_heirlooms = list(
 		/obj/item/reagent_containers/food/drinks/trophy/silver_cup,
 	)
-    
+
 	liver_traits = list(
 		TRAIT_ROYAL_METABOLISM,
 	)
