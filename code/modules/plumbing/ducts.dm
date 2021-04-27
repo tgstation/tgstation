@@ -170,31 +170,6 @@ All the important duct code:
 		new drop_on_wrench(drop_location())
 		qdel(src)
 
-///''''''''''''''''optimized''''''''''''''''' proc for quickly reconnecting after a duct net was destroyed
-/obj/machinery/duct/proc/reconnect()
-	if(neighbours.len && !duct)
-		create_duct()
-	for(var/atom/movable/AM in neighbours)
-		if(istype(AM, /obj/machinery/duct))
-			var/obj/machinery/duct/D = AM
-			if(D.duct)
-				if(D.duct == duct) //we're already connected
-					continue
-				else
-					duct.assimilate(D.duct)
-					continue
-			else
-				duct.add_duct(D)
-				D.reconnect()
-		else
-			if(AM in get_step(src, neighbours[AM])) //did we move?
-				for(var/plumber in AM.GetComponents(/datum/component/plumbing))
-					if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
-						return
-					connect_plumber(plumber, neighbours[AM])
-			else
-				neighbours -= AM //we moved
-
 ///Special proc to draw a new connect frame based on neighbours. not the norm so we can support multiple duct kinds
 /obj/machinery/duct/proc/generate_connects()
 	if(lock_connects)
