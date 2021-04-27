@@ -1,6 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "now mail doesn't get sent to... BAD recipients."
-  - bugfix: "fixes incorrect unwrapping message (bad usage of a visible message)"
-  - bugfix: "mail recipients wasn't shuffling either. I'm fairly certain this was leading to some people always getting mail and some never getting it."
