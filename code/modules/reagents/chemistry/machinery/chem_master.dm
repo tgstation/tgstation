@@ -65,7 +65,7 @@
 		reagents.maximum_volume += B.reagents.maximum_volume
 
 /obj/machinery/chem_master/ex_act(severity, target)
-	if(severity >= EXPLODE_LIGHT) // This actually makes the dispenser immune to explosions at least as weak as [EXPLODE_LIGHT]. Don't ask me why the defines are inverted. I don't know.
+	if(severity <= EXPLODE_LIGHT)
 		return FALSE
 	return ..()
 

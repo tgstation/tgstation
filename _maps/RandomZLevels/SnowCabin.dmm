@@ -325,7 +325,7 @@
 /obj/structure/janitorialcart,
 /obj/item/mop,
 /obj/item/reagent_containers/glass/bucket,
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)

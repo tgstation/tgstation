@@ -46,6 +46,21 @@
 
 	var/static/list/all_powers = typecacheof(/datum/action/changeling,TRUE)
 
+	var/static/list/slot2type = list(
+		"head" = /obj/item/clothing/head/changeling,
+		"wear_mask" = /obj/item/clothing/mask/changeling,
+		"back" = /obj/item/changeling,
+		"wear_suit" = /obj/item/clothing/suit/changeling,
+		"w_uniform" = /obj/item/clothing/under/changeling,
+		"shoes" = /obj/item/clothing/shoes/changeling,
+		"belt" = /obj/item/changeling,
+		"gloves" = /obj/item/clothing/gloves/changeling,
+		"glasses" = /obj/item/clothing/glasses/changeling,
+		"ears" = /obj/item/changeling,
+		"wear_id" = /obj/item/changeling/id,
+		"s_store" = /obj/item/changeling,
+	)
+
 /datum/antagonist/changeling/New()
 	. = ..()
 	for(var/datum/antagonist/changeling/C in GLOB.antagonists)
@@ -476,6 +491,120 @@
 		C.real_name = first_prof.name
 		C.updateappearance(mutcolor_update=1)
 		C.domutcheck()
+
+/datum/antagonist/changeling/proc/transform(mob/living/carbon/human/user, datum/changelingprofile/chosen_prof)
+	var/static/list/slot2slot = list(
+		"head" = ITEM_SLOT_HEAD,
+		"wear_mask" = ITEM_SLOT_MASK,
+		"neck" = ITEM_SLOT_NECK,
+		"back" = ITEM_SLOT_BACK,
+		"wear_suit" = ITEM_SLOT_OCLOTHING,
+		"w_uniform" = ITEM_SLOT_ICLOTHING,
+		"shoes" = ITEM_SLOT_FEET,
+		"belt" = ITEM_SLOT_BELT,
+		"gloves" = ITEM_SLOT_GLOVES,
+		"glasses" = ITEM_SLOT_EYES,
+		"ears" = ITEM_SLOT_EARS,
+		"wear_id" = ITEM_SLOT_ID,
+		"s_store" = ITEM_SLOT_SUITSTORE,
+	)
+
+	var/datum/dna/chosen_dna = chosen_prof.dna
+	user.real_name = chosen_prof.name
+	user.underwear = chosen_prof.underwear
+	user.undershirt = chosen_prof.undershirt
+	user.socks = chosen_prof.socks
+
+	chosen_dna.transfer_identity(user, 1)
+	user.updateappearance(mutcolor_update=1)
+	user.update_body()
+	user.domutcheck()
+
+	// get rid of any scars from previous changeling-ing
+	for(var/i in user.all_scars)
+		var/datum/scar/iter_scar = i
+		if(iter_scar.fake)
+			qdel(iter_scar)
+
+	// Do skillchip code after DNA code.
+	// There's a mutation that increases max chip complexity available, even though we force-implant skillchips.
+
+	// Remove existing skillchips.
+	user.destroy_all_skillchips(silent = FALSE)
+
+	// Add new set of skillchips.
+	for(var/chip in chosen_prof.skillchips)
+		var/chip_type = chip["type"]
+		var/obj/item/skillchip/skillchip = new chip_type(user)
+
+		if(!istype(skillchip))
+			stack_trace("Failure to implant changeling from [chosen_prof] with skillchip [skillchip]. Tried to implant with non-skillchip type [chip_type]")
+			qdel(skillchip)
+			continue
+
+		// Try force-implanting and activating. If it doesn't work, there's nothing much we can do. There may be some
+		// incompatibility out of our hands
+		var/implant_msg = user.implant_skillchip(skillchip, TRUE)
+		if(implant_msg)
+			// Hopefully recording the error message will help debug it.
+			stack_trace("Failure to implant changeling from [chosen_prof] with skillchip [skillchip]. Error msg: [implant_msg]")
+			qdel(skillchip)
+			continue
+
+		// Time to set the metadata. This includes trying to activate the chip.
+		var/set_meta_msg = skillchip.set_metadata(chip)
+
+		if(set_meta_msg)
+			// Hopefully recording the error message will help debug it.
+			stack_trace("Failure to activate changeling skillchip from [chosen_prof] with skillchip [skillchip] using [chip] metadata. Error msg: [set_meta_msg]")
+			continue
+
+	//vars hackery. not pretty, but better than the alternative.
+	for(var/slot in slot2type)
+		if(istype(user.vars[slot], slot2type[slot]) && !(chosen_prof.exists_list[slot])) //remove unnecessary flesh items
+			qdel(user.vars[slot])
+			continue
+
+		if((user.vars[slot] && !istype(user.vars[slot], slot2type[slot])) || !(chosen_prof.exists_list[slot]))
+			continue
+
+		if(istype(user.vars[slot], slot2type[slot]) && slot == "wear_id") //always remove old flesh IDs, so they get properly updated
+			qdel(user.vars[slot])
+
+		var/obj/item/C
+		var/equip = 0
+		if(!user.vars[slot])
+			var/thetype = slot2type[slot]
+			equip = 1
+			C = new thetype(user)
+
+		else if(istype(user.vars[slot], slot2type[slot]))
+			C = user.vars[slot]
+
+		C.appearance = chosen_prof.appearance_list[slot]
+		C.name = chosen_prof.name_list[slot]
+		C.flags_cover = chosen_prof.flags_cover_list[slot]
+		C.lefthand_file = chosen_prof.lefthand_file_list[slot]
+		C.righthand_file = chosen_prof.righthand_file_list[slot]
+		C.inhand_icon_state = chosen_prof.inhand_icon_state_list[slot]
+		C.worn_icon = chosen_prof.worn_icon_list[slot]
+		C.worn_icon_state = chosen_prof.worn_icon_state_list[slot]
+
+		if(istype(C, /obj/item/changeling/id) && chosen_prof.id_icon)
+			var/obj/item/changeling/id/flesh_id = C
+			flesh_id.hud_icon = chosen_prof.id_icon
+
+		if(equip)
+			user.equip_to_slot_or_del(C, slot2slot[slot])
+			if(!QDELETED(C))
+				ADD_TRAIT(C, TRAIT_NODROP, CHANGELING_TRAIT)
+
+	for(var/stored_scar_line in chosen_prof.stored_scars)
+		var/datum/scar/attempted_fake_scar = user.load_scar(stored_scar_line)
+		if(attempted_fake_scar)
+			attempted_fake_scar.fake = TRUE
+
+	user.regenerate_icons()
 
 // Profile
 

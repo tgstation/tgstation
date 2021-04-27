@@ -419,7 +419,7 @@
 	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
 	anchored = FALSE
 	icon_state = "brass_chair"
-	buildstacktype = /obj/item/stack/tile/bronze
+	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 	item_chair = null
 	var/turns = 0

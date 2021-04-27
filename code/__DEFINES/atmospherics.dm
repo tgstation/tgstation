@@ -142,6 +142,14 @@
 #define REACTING 1
 #define STOP_REACTIONS 2
 
+//Fusion
+///Max amount of radiation that can be emitted per reaction cycle
+#define FUSION_RAD_MAX 5000
+///Maximum instability before the reaction goes endothermic
+#define FUSION_INSTABILITY_ENDOTHERMALITY 4
+///Maximum reachable fusion temperature
+#define FUSION_MAXIMUM_TEMPERATURE 1e8
+
 // Pressure limits.
 /// This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define HAZARD_HIGH_PRESSURE 550

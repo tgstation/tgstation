@@ -126,7 +126,7 @@
 	. += "<span class='notice'>It feels [descriptive].</span>"
 
 /obj/item/tank/deconstruct(disassembled = TRUE)
-	var/turf/location = get_turf(src)
+	var/atom/location = loc
 	if(location)
 		location.assume_air(air_contents)
 		location.air_update_turf(FALSE, FALSE)
@@ -251,7 +251,7 @@
 	handle_tolerances(delta_time)
 	if(QDELETED(src) || !leaking || !air_contents)
 		return
-	var/turf/location = get_turf(src)
+	var/atom/location = loc
 	if(!location)
 		return
 	var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
@@ -298,10 +298,6 @@
 	if(!air_contents)
 		return ..()
 
-	var/turf/location = get_turf(src)
-	if(!location)
-		return ..()
-
 	/// Handle fragmentation
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
@@ -312,7 +308,7 @@
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 
-		explosion(location, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		explosion(src, devastation_range = round(range*0.25), heavy_impact_range = round(range*0.5), light_impact_range = round(range), flash_range = round(range*1.5))
 	return ..()
 
 /obj/item/tank/rad_act(strength)

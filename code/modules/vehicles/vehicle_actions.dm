@@ -238,8 +238,8 @@
 			passtable_off(rider, VEHICLE_TRAIT)
 			vehicle.pass_flags &= ~PASSTABLE
 		if((locate(/obj/structure/table) in vehicle.loc.contents) || (locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents))
-			/*if(locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents)
-				rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)*/
+			if(locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents)
+				rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)
 			vehicle.grinding = TRUE
 			vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
 			addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)

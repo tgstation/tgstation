@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "Fixes misc js and py issues in the codebase (TGUI, CBT, mapmerge) (closes every issue made by ZeWaka, bye felicia)"

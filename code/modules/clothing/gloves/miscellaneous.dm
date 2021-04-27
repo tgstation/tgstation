@@ -23,6 +23,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+	clothing_traits = list(TRAIT_PLANT_SAFE)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
 
 /obj/item/clothing/gloves/combat
@@ -121,7 +122,7 @@
 	icon_state = "explorerplasma"
 	inhand_icon_state = "explorerplasma"
 
-/obj/item/clothing/gloves/color/botanic_leather/plasmaman
+/obj/item/clothing/gloves/botanic_leather/plasmaman
 	name = "botany envirogloves"
 	desc = "Covers up those scandalous boney hands."
 	icon_state = "botanyplasma"

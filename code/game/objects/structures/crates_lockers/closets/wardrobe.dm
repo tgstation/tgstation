@@ -75,9 +75,9 @@
 
 /obj/structure/closet/wardrobe/orange/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/under/rank/prisoner(src)
+		new /obj/item/clothing/under/color/prisoner(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/under/rank/prisoner/skirt(src)
+		new /obj/item/clothing/under/color/jumpskirt/prisoner(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/orange(src)
 	return

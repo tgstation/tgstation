@@ -286,11 +286,6 @@
 			return FALSE
 	return TRUE
 
-/datum/team/nuclear/proc/syndies_escaped()
-	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")
-	var/obj/docking_port/stationary/transit/T = locate() in S.loc
-	return S && (is_centcom_level(S.z) || T)
-
 /datum/team/nuclear/proc/get_result()
 	var/evacuation = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/disk_rescued = disk_rescued()
@@ -405,3 +400,9 @@
 
 /datum/team/nuclear/is_gamemode_hero()
 	return SSticker.mode.name == "nuclear emergency"
+
+/// Returns whether or not syndicate operatives escaped.
+/proc/syndies_escaped()
+	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")
+	var/obj/docking_port/stationary/transit/T = locate() in S.loc
+	return S && (is_centcom_level(S.z) || T)
