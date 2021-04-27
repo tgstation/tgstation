@@ -190,7 +190,6 @@
 		"Jerusalem 2 apostle trade route", \
 		"Cyber Arabian space-camel caravan", \
 		"US^2 patriot route", \
-		"Allsign comemrcial vessel", \
 		"J4N3-X musical supply chain", \
 		"Germany III handelsroute"
 		))

@@ -203,7 +203,7 @@
 /obj/structure/fluff/lightbulb/attackby(obj/item/O, mob/user)
 	var/turf/T = get_turf(src)
 	if(istype(O, /obj/item/light/bulb) && !replaced_light)
-		if(do_after(user, 25, TRUE))
+		if(do_after(user, 2.5 SECONDS, TRUE))
 			to_chat(user, "<span class='warning'>The red bulb shatters as you place the new bulb into the space it occupied. A key falls among the shards.</span>")
 			qdel(O)
 			playsound(loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
@@ -309,7 +309,7 @@
 
 /obj/structure/fluff/palacechest/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/britevidence/blue_key) && !opened)
-		if(do_after(user, 25, TRUE))
+		if(do_after(user, 2.5 SECONDS, TRUE))
 			to_chat(user, "<span class='notice'>The key falls apart in the slot as you lift the lid off the chest. There's a single ribbon inside.</span>")
 			qdel(O)
 			playsound(loc, 'sound/machines/wooden_closet_open.ogg', 50, TRUE)
@@ -344,7 +344,7 @@
 
 /obj/structure/fluff/vent/north/palace/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/crowbar) && soap_present)
-		if(do_after(user, 25, TRUE))
+		if(do_after(user, 3.5 SECONDS, TRUE))
 			to_chat(user, "<span class='notice'>You carefully use the crowbar to drag the object close enough to grab.</span>")
 			desc = "An old wall vent."
 			new /obj/item/soap/homemade/palace(loc)

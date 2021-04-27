@@ -181,6 +181,13 @@
 	floor_tile = /obj/item/stack/tile/eighties
 	broken_states = list("damaged")
 
+/turf/open/floor/children
+	name = "children's carpet"
+	desc = "Just like the one you used to drool on."
+	icon_state = "children"
+	floor_tile = /obj/item/stack/tile/children
+	broken_states = list("damaged")
+
 /turf/open/floor/plating/rust
 	name = "rusted plating"
 	desc = "Corrupted steel."

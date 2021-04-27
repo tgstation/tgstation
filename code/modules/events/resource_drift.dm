@@ -113,7 +113,6 @@
 		"Daevite", \
 		"NeoTokyo", \
 		"US^2", \
-		"Allsign", \
 		"J4N3-X", \
 		"Earth-28", \
 		"Cyber Arabia", \

@@ -33,39 +33,61 @@
 			name = "blood pack"
 
 /obj/item/reagent_containers/blood/random
+	labelled = TRUE
+	name = "random blood pack"
 	icon_state = "random_bloodpack"
 
 /obj/item/reagent_containers/blood/random/Initialize()
+	labelled = FALSE
+	name = "blood pack"
 	icon_state = "bloodpack"
 	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
 	return ..()
 
 /obj/item/reagent_containers/blood/a_plus
+	labelled = TRUE
+	name = "blood pack - A+"
 	blood_type = "A+"
 
 /obj/item/reagent_containers/blood/a_minus
+	labelled = TRUE
+	name = "blood pack - A-"
 	blood_type = "A-"
 
 /obj/item/reagent_containers/blood/b_plus
+	labelled = TRUE
+	name = "blood pack - B+"
 	blood_type = "B+"
 
 /obj/item/reagent_containers/blood/b_minus
+	labelled = TRUE
+	name = "blood pack - B-"
 	blood_type = "B-"
 
 /obj/item/reagent_containers/blood/o_plus
+	labelled = TRUE
+	name = "blood pack - O+"
 	blood_type = "O+"
 
 /obj/item/reagent_containers/blood/o_minus
+	labelled = TRUE
+	name = "blood pack - O-"
 	blood_type = "O-"
 
 /obj/item/reagent_containers/blood/lizard
+	labelled = TRUE
+	name = "blood pack - L"
 	blood_type = "L"
 
 /obj/item/reagent_containers/blood/ethereal
+	labelled = TRUE
+	name = "blood pack - LE"
 	blood_type = "LE"
 	unique_blood = /datum/reagent/consumable/liquidelectricity
 
 /obj/item/reagent_containers/blood/universal
+	labelled = TRUE
+	name = "blood pack - U"
 	blood_type = "U"
 
 /obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)

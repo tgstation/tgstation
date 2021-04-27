@@ -514,7 +514,7 @@
 	id = "exp_tools"
 	display_name = "Experimental Tools"
 	description = "Highly advanced tools."
-	design_ids = list("exwelder", "jawsoflife", "handdrill", "laserscalpel", "mechanicalpinches", "searingtool", "gene_shears")
+	design_ids = list("exwelder", "jawsoflife", "handdrill", "laserscalpel", "mechanicalpinches", "searingtool", "gene_shears", "hyposprayII")
 	prereq_ids = list("adv_engi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

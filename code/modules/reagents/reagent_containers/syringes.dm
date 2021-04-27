@@ -5,6 +5,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "syringe_0"
+	base_icon_state = "syringe"
 	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()

@@ -156,3 +156,36 @@
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/engine/alt
+	icon_state = "engine_alt"
+
+/turf/open/floor/engine/alt/n2o
+	article = "an"
+	name = "\improper N2O floor"
+	initial_gas_mix = ATMOS_TANK_N2O
+
+/turf/open/floor/engine/alt/co2
+	name = "\improper CO2 floor"
+	initial_gas_mix = ATMOS_TANK_CO2
+
+/turf/open/floor/engine/alt/plasma
+	name = "plasma floor"
+	initial_gas_mix = ATMOS_TANK_PLASMA
+
+/turf/open/floor/engine/alt/o2
+	name = "\improper O2 floor"
+	initial_gas_mix = ATMOS_TANK_O2
+
+/turf/open/floor/engine/alt/n2
+	article = "an"
+	name = "\improper N2 floor"
+	initial_gas_mix = ATMOS_TANK_N2
+
+/turf/open/floor/engine/alt/air
+	name = "air floor"
+	initial_gas_mix = ATMOS_TANK_AIRMIX
+
+/turf/open/floor/engine/alt/vacuum
+	name = "vacuum floor"
+	initial_gas_mix = AIRLESS_ATMOS
