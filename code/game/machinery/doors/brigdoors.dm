@@ -2,11 +2,11 @@
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Small Fonts"
-#define MAX_TIMER 9000
+#define MAX_TIMER 15 MINUTES
 
-#define PRESET_SHORT 1200
-#define PRESET_MEDIUM 1800
-#define PRESET_LONG 3000
+#define PRESET_SHORT 2 MINUTES
+#define PRESET_MEDIUM 3 MINUTES
+#define PRESET_LONG 5 MINUTES
 
 
 
@@ -197,7 +197,7 @@
 	data["timing"] = timing
 	data["flash_charging"] = FALSE
 	for(var/obj/machinery/flasher/F in targets)
-		if(F.last_flash && (F.last_flash + 150) > world.time)
+		if(F.last_flash && (F.last_flash + 15 SECONDS) > world.time)
 			data["flash_charging"] = TRUE
 			break
 	return data
@@ -210,6 +210,8 @@
 
 	. = TRUE
 
+	var/mob/user = usr
+
 	if(!allowed(usr))
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE
@@ -219,11 +221,19 @@
 			var/value = text2num(params["adjust"])
 			if(value)
 				. = set_timer(time_left()+value)
+				investigate_log("[key_name(usr)] modified the timer by [value/10] seconds for cell [id], currently [time_left(seconds = TRUE)]", INVESTIGATE_RECORDS)
+				user.log_message("modified the timer by [value/10] seconds for cell [id], currently [time_left(seconds = TRUE)]", LOG_ATTACK)
 		if("start")
 			timer_start()
+			investigate_log("[key_name(usr)] has started [id]'s timer of [time_left(seconds = TRUE)] seconds", INVESTIGATE_RECORDS)
+			user.log_message("has started [id]'s timer of [time_left(seconds = TRUE)] seconds", LOG_ATTACK)
 		if("stop")
+			investigate_log("[key_name(usr)] has stopped [id]'s timer of [time_left(seconds = TRUE)] seconds", INVESTIGATE_RECORDS)
+			user.log_message("[key_name(usr)] has stopped [id]'s timer of [time_left(seconds = TRUE)] seconds", LOG_ATTACK)
 			timer_end(forced = TRUE)
 		if("flash")
+			investigate_log("[key_name(usr)] has flashed cell [id]", INVESTIGATE_RECORDS)
+			user.log_message("[key_name(usr)] has flashed cell [id]", LOG_ATTACK)
 			for(var/obj/machinery/flasher/F in targets)
 				F.flash()
 		if("preset")
@@ -237,6 +247,8 @@
 				if("long")
 					preset_time = PRESET_LONG
 			. = set_timer(preset_time)
+			investigate_log("[key_name(usr)] set cell [id]'s timer to [preset_time/10] seconds", INVESTIGATE_RECORDS)
+			user.log_message("set cell [id]'s timer to [preset_time/10] seconds", LOG_ATTACK)
 			if(timing)
 				activation_time = world.time
 		else

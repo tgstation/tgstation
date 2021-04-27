@@ -1,0 +1,70 @@
+2009-07-29:
+  /tg/station ss13 team:
+  - unknown: Multitools can now be used to measure the power in cables.
+  - unknown: "Fixed a bug where the canister message would repeat and spam the user\
+      \ when \n        attackby analyzer. Fixed an admin formatting error."
+  - unknown: "Replaced all range checks with a in_range proc. pretty good chance I\
+      \ broke \n        something or everything."
+  - unknown: Mutations use bitfields
+  - unknown: Fixed a bug with my traitor panel.
+  - unknown: "Fixed the turrets, ruined Pantaloons map (test map). Did some things\
+      \ with \n        turrets and added a few areas."
+  - unknown: Some stuff in here you know the usual shit. Bugfixes, formatting etc.
+  - unknown: Stunbaton nerf.
+  - unknown: Tempban longer than 1 year -&amp;gt; permaban.
+  - unknown: Turfs &amp;gt; spawnable.
+  - unknown: Shaking someone now slowly removes paralysis, stuns and the &amp;#39;weakened&amp;#39;
+      stuff.
+  - unknown: "CTF flags now check if someone has them equipped every 20 seconds, if\
+      \ they are \n        not then they delete themselves and respawn. "
+  - unknown: Fixed the r-wall-welder-message-thing.
+  - unknown: "Change to the CTF code, flag captures can now only happen if your team\
+      \ has their \n        flag in the starting position."
+  - unknown: Pruning my test room.
+  - unknown: Instead of the red and green team its now the American and Irish teams!
+  - unknown: "BACKUP BACKUP TELL ME WHAT YOU GONNA DO NOW Changed the monkey name\
+      \ code. Re-did \n        my antimatter engine code so it actually puts out power\
+      \ now"
+  - unknown: "dumb as fuck change, whoever did that, it already spawn ()&amp;#39;s\
+      \ inside the proc \n        code, whoever did that, you are a fool and should\
+      \ read code before you modify \n        it"
+  - unknown: Fixed a bug that gave everyone modify ticker variables you silly sausage.
+  - unknown: Sorted the AIs track list.
+  - unknown: Constructable filter inlets and filter controls.
+  - unknown: Added in admin messages for when someone is banned.
+  - unknown: Bannana and honk honk.
+2009-07-31:
+  /tg/station ss13 team:
+  - unknown: I&amp;#39;m really sorry everyone I just HAD to add a gib all verb.
+  - unknown: Decided to add the creation of bombs to bombers list
+  - unknown: Made the new bombing list EVEN BETTER!!!
+  - unknown: Fixed a bug with admin jumping AND the traitor death message
+  - unknown: "Oops, fixed a bug that returned the right click pm thing thinking the\
+      \ admin was \n            muted."
+  - unknown: 'Made a new improved way of tracking who bombs shit. '
+  - unknown: 'More formatting shit. '
+  - unknown: "Fixed up some mute code and made it so that if a player is muted they\
+      \ cannot PM \n            us."
+  - unknown: Adminhelps now logged in the admin file not ooc
+  - unknown: "Changed the way admin reviving is dealt with. (It was coded kind of\
+      \ weirdly \n            before)"
+  - unknown: "Added a few areas to the observe teleport. Fixed some adminjump things.\
+      \ Modified \n            the paths of some areas."
+  - unknown: "You can now ban people who have logged out and admins can now jump to\
+      \ people \n            using the player panel."
+  - unknown: Added in jump to key coded in a much better way than showtime originally
+      did it.
+  - unknown: Fixed magical wind when laying pipes. They start out empty!!
+  - unknown: Made blink safer. Fixed the crew-quarters to ai sattelite teleport problem.
+  - unknown: Forgot the message again. Added an emp spell. thanks copy&amp;amp;paste.
+  - unknown: OH MY GOD I HAVE RUINED ASAY
+  - unknown: 'Added electronic items to the pipe dispenser '
+  - unknown: fixed a formatting error with the changelog (I didn&amp;#39;t break it,
+      it was showtime)
+  - unknown: Fixed a formatting error
+  - unknown: Cleaned up sandbox object spawn code
+  - unknown: New and improved admin log so we can keep an eye on these fuckers
+  - unknown: Fixed adminjump because I realise most people use it for the right click
+      option
+  - unknown: Mushed together jump to mob and jump to key
+  - unknown: Fixed a compilation error and made my test room more secure!

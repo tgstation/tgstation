@@ -6,7 +6,15 @@
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(NOBLOOD,NOTRANSSTING, HAS_BONE)
 	// plasmemes get hard to wound since they only need a severe bone wound to dismember, but unlike skellies, they can't pop their bones back into place
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_GENELESS, TRAIT_NOHUNGER, TRAIT_HARDLY_WOUNDED)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_RESISTCOLD,
+		TRAIT_RADIMMUNE,
+		TRAIT_GENELESS,
+		TRAIT_NOHUNGER,
+		TRAIT_HARDLY_WOUNDED,
+	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutantlungs = /obj/item/organ/lungs/plasmaman
@@ -20,7 +28,7 @@
 	breathid = "tox"
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
-	disliked_food = FRUIT
+	disliked_food = FRUIT | CLOTH
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	outfit_important_for_life = /datum/outfit/plasmaman
@@ -71,100 +79,8 @@
 	. = ..()
 
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
-	var/current_job = J.title
-	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
-	switch(current_job)
-		if("Chaplain")
-			O = new /datum/outfit/plasmaman/chaplain
-
-		if("Curator")
-			O = new /datum/outfit/plasmaman/curator
-
-		if("Janitor")
-			O = new /datum/outfit/plasmaman/janitor
-
-		if("Botanist")
-			O = new /datum/outfit/plasmaman/botany
-
-		if("Bartender", "Lawyer")
-			O = new /datum/outfit/plasmaman/bar
-
-		if("Psychologist")
-			O = new /datum/outfit/plasmaman/psychologist
-
-		if("Cook")
-			O = new /datum/outfit/plasmaman/chef
-
-		if("Prisoner")
-			O = new /datum/outfit/plasmaman/prisoner
-
-		if("Security Officer")
-			O = new /datum/outfit/plasmaman/security
-
-		if("Detective")
-			O = new /datum/outfit/plasmaman/detective
-
-		if("Warden")
-			O = new /datum/outfit/plasmaman/warden
-
-		if("Cargo Technician", "Quartermaster")
-			O = new /datum/outfit/plasmaman/cargo
-
-		if("Shaft Miner")
-			O = new /datum/outfit/plasmaman/mining
-
-		if("Medical Doctor")
-			O = new /datum/outfit/plasmaman/medical
-
-		if("Paramedic")
-			O = new /datum/outfit/plasmaman/paramedic
-
-		if("Chemist")
-			O = new /datum/outfit/plasmaman/chemist
-
-		if("Geneticist")
-			O = new /datum/outfit/plasmaman/genetics
-
-		if("Roboticist")
-			O = new /datum/outfit/plasmaman/robotics
-
-		if("Virologist")
-			O = new /datum/outfit/plasmaman/viro
-
-		if("Scientist")
-			O = new /datum/outfit/plasmaman/science
-
-		if("Station Engineer")
-			O = new /datum/outfit/plasmaman/engineering
-
-		if("Atmospheric Technician")
-			O = new /datum/outfit/plasmaman/atmospherics
-
-		if("Mime")
-			O = new /datum/outfit/plasmaman/mime
-
-		if("Clown")
-			O = new /datum/outfit/plasmaman/clown
-
-		if("Captain")
-			O = new /datum/outfit/plasmaman/captain
-
-		if("Head of Personnel")
-			O = new /datum/outfit/plasmaman/head_of_personnel
-
-		if("Head of Security")
-			O = new /datum/outfit/plasmaman/head_of_security
-
-		if("Chief Engineer")
-			O = new /datum/outfit/plasmaman/chief_engineer
-
-		if("Chief Medical Officer")
-			O = new /datum/outfit/plasmaman/chief_medical_officer
-
-		if("Research Director")
-			O = new /datum/outfit/plasmaman/research_director
-
-	H.equipOutfit(O, visualsOnly)
+	if(J.plasmaman_outfit)
+		H.equipOutfit(J.plasmaman_outfit, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
 

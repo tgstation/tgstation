@@ -73,8 +73,6 @@
 
 	/// What status effect we assign on application
 	var/status_effect_type
-	/// The status effect we're linked to
-	var/datum/status_effect/linked_status_effect
 	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
 	var/datum/surgery/attached_surgery
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
@@ -129,12 +127,13 @@
 			return
 
 	victim = L.owner
+	RegisterSignal(victim, COMSIG_PARENT_QDELETING, .proc/null_victim)
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
 	limb.update_wounds()
 	if(status_effect_type)
-		linked_status_effect = victim.apply_status_effect(status_effect_type, src)
+		victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
 	if(!victim.alerts["wound"]) // only one alert is shared between all of the wounds
 		victim.throw_alert("wound", /atom/movable/screen/alert/status_effect/wound)
@@ -161,6 +160,14 @@
 	if(!demoted)
 		wound_injury(old_wound)
 		second_wind()
+
+/datum/wound/proc/null_victim()
+	SIGNAL_HANDLER
+	victim = null
+
+/datum/wound/proc/source_died()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
@@ -206,7 +213,10 @@
 	if(limb == new_value)
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
 	. = limb
+	if(limb)
+		UnregisterSignal(limb, COMSIG_PARENT_QDELETING)
 	limb = new_value
+	RegisterSignal(new_value, COMSIG_PARENT_QDELETING, .proc/source_died)
 	if(. && disabling)
 		var/obj/item/bodypart/old_limb = .
 		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, src)

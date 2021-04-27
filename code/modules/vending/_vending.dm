@@ -263,7 +263,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(!light_mask)
 		return
 	if(!(machine_stat & BROKEN) && powered())
-		SSvis_overlays.add_vis_overlay(src, icon, light_mask, EMISSIVE_LAYER, EMISSIVE_PLANE)
+		. += emissive_appearance(icon, light_mask)
 
 /obj/machinery/vending/obj_break(damage_flag)
 	. = ..()
@@ -1001,9 +1001,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/proc/canLoadItem(obj/item/I, mob/user)
 	return FALSE
 
-/obj/machinery/vending/onTransitZ()
-	return
-
 /obj/machinery/vending/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/mob/living/L = AM
@@ -1011,6 +1008,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	tilt(L)
+
+/obj/machinery/vending/attack_tk_grab(mob/user)
+	to_chat(user, "<span class='warning'>[src] seems to resist your mental grasp!</span>")
 
 ///Crush the mob that the vending machine got thrown at
 /obj/machinery/vending/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -1169,7 +1169,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(T)
 		for(var/obj/item/I in contents)
 			I.forceMove(T)
-		explosion(T, -1, 0, 3)
+		explosion(src, devastation_range = -1, light_impact_range = 3)
 	return ..()
 
 /obj/machinery/vending/custom/unbreakable
@@ -1202,3 +1202,22 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/obj/item/I = target
 		I.custom_price = price
 		to_chat(user, "<span class='notice'>You set the price of [I] to [price] cr.</span>")
+
+/obj/machinery/vending/custom/greed //name and like decided by the spawn
+	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
+	material_flags = MATERIAL_COLOR //it's grey anyway, let's bling out
+
+/obj/machinery/vending/custom/greed/Initialize(mapload)
+	. = ..()
+	//starts in a state where you can move it
+	panel_open = TRUE
+	anchored = FALSE
+	add_overlay("[initial(icon_state)]-panel")
+	//and references the deity
+	name = "[GLOB.deity]'s Consecrated Vendor"
+	desc = "A vending machine created by [GLOB.deity]."
+	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
+	add_filter("vending_outline", 9, list("type" = "outline", "color" = "#FFFFFF"))
+	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35))
+
+

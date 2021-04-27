@@ -35,14 +35,6 @@
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
 	foodtypes = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT
 
-/obj/item/food/salad/oatmeal
-	name = "oatmeal"
-	desc = "A nice bowl of oatmeal."
-	icon_state = "oatmeal"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
-	tastes = list("oats" = 1, "milk" = 1)
-	foodtypes = DAIRY | GRAIN | BREAKFAST
-
 /obj/item/food/salad/fruit
 	name = "fruit salad"
 	desc = "Your standard fruit salad."
@@ -82,7 +74,7 @@
 	icon_state = "boiledrice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("rice" = 1)
-	foodtypes = GRAIN
+	foodtypes = GRAIN | BREAKFAST
 
 /obj/item/food/salad/ricepudding
 	name = "rice pudding"
@@ -91,6 +83,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("rice" = 1, "sweetness" = 1)
 	foodtypes = GRAIN | DAIRY
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/salad/ricepork
 	name = "rice and pork"

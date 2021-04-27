@@ -66,6 +66,7 @@
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
 		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
+	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
@@ -121,15 +122,14 @@
 	else
 		qdel(src)
 
-/obj/item/clothing/attack(mob/attacker, mob/living/user, params)
-	if(!user.combat_mode && ismoth(attacker))
-		if (isnull(moth_snack))
-			moth_snack = new
-			moth_snack.name = name
-			moth_snack.clothing = WEAKREF(src)
-		moth_snack.attack(attacker, user, params)
-	else
+/obj/item/clothing/attack(mob/living/M, mob/living/user, params)
+	if(user.combat_mode || !ismoth(M))
 		return ..()
+	if(isnull(moth_snack))
+		moth_snack = new
+		moth_snack.name = name
+		moth_snack.clothing = WEAKREF(src)
+	moth_snack.attack(M, user, params)
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, repairable_by))

@@ -1453,4 +1453,70 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	set waitfor = FALSE
 	return call(source, proctype)(arglist(arguments))
 
+/// Returns the name of the mathematical tuple of same length as the number arg (rounded down).
+/proc/make_tuple(number)
+	var/static/list/units_prefix = list("", "un", "duo", "tre", "quattuor", "quin", "sex", "septen", "octo", "novem")
+	var/static/list/tens_prefix = list("", "decem", "vigin", "trigin", "quadragin", "quinquagin", "sexagin", "septuagin", "octogin", "nongen")
+	var/static/list/one_to_nine = list("monuple", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple", "octuple", "nonuple")
+	number = round(number)
+	switch(number)
+		if(0)
+			return "empty tuple"
+		if(1 to 9)
+			return one_to_nine[number]
+		if(10 to 19)
+			return "[units_prefix[(number%10)+1]]decuple"
+		if(20 to 99)
+			return "[units_prefix[(number%10)+1]][tens_prefix[round((number % 100)/10)+1]]tuple"
+		if(100)
+			return "centuple"
+		else //It gets too tedious to use latin prefixes from here.
+			return "[number]-tuple"
+
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
+
+
+/**
+ * One proc for easy spawning of pods in the code to drop off items before whizzling (please don't proc call this in game, it will destroy you)
+ *
+ * Arguments:
+ * * specifications: special mods to the pod, see non var edit specifications for details on what you should fill this with
+ * Non var edit specifications:
+ * * target = where you want the pod to drop
+ * * path = a special specific pod path if you want, this can save you a lot of var edits
+ * * style = style of the pod, defaults to the normal pod
+ * * spawn = spawned path or a list of the paths spawned, what you're sending basically
+ * Returns the pod spawned, in case you want to spawn items yourself and modify them before putting them in.
+ */
+/proc/podspawn(specifications)
+	//get non var edit specifications
+	var/turf/landing_location = specifications["target"]
+	var/spawn_type = specifications["path"]
+	var/style = specifications["style"]
+	var/list/paths_to_spawn = specifications["spawn"]
+
+	//setup pod, add contents
+	if(!isturf(landing_location))
+		landing_location = get_turf(landing_location)
+	if(!spawn_type)
+		spawn_type = /obj/structure/closet/supplypod/podspawn
+	var/obj/structure/closet/supplypod/podspawn/pod = new spawn_type(null, style)
+	if(paths_to_spawn && !islist(paths_to_spawn))
+		paths_to_spawn = list(paths_to_spawn)
+	for(var/atom/path as anything in paths_to_spawn)
+		path = new path(pod)
+
+	//remove non var edits from specifications
+	specifications -= landing_location
+	specifications -= style
+	specifications -= spawn_type
+	specifications -= "paths_to_spawn" //list, we remove the key
+
+	//rest of specificiations are edits on the pod
+	for(var/variable_name in specifications)
+		var/variable_value = specifications[variable_name]
+		if(!pod.vv_edit_var(variable_name, variable_value))
+			stack_trace("WARNING! podspawn vareditting \"[variable_name]\" to \"[variable_value]\" was rejected by the pod!")
+	new /obj/effect/pod_landingzone(landing_location, pod)
+	return pod
+

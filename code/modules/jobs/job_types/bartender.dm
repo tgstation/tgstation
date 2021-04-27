@@ -8,6 +8,7 @@
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/bartender
+	plasmaman_outfit = /datum/outfit/plasmaman/bar
 
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
@@ -16,6 +17,13 @@
 	departments = DEPARTMENT_SERVICE
 
 	family_heirlooms = list(/obj/item/reagent_containers/glass/rag, /obj/item/clothing/head/that, /obj/item/reagent_containers/food/drinks/shaker)
+
+	mail_goodies = list(
+		/obj/item/storage/box/rubbershot = 30,
+		/datum/reagent/consumable/clownstears = 10,
+		/obj/item/stack/sheet/mineral/plasma = 10,
+		/obj/item/stack/sheet/mineral/uranium = 10,
+	)
 
 /datum/outfit/job/bartender
 	name = "Bartender"

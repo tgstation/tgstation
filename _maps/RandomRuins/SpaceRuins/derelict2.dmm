@@ -72,10 +72,10 @@
 /obj/item/candle{
 	pixel_y = 5
 	},
-/obj/item/trash/plate{
+/obj/item/plate{
 	pixel_x = 10
 	},
-/obj/item/trash/plate{
+/obj/item/plate{
 	pixel_x = -10
 	},
 /turf/open/floor/iron,

@@ -35,6 +35,12 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	gold_core_spawnable = HOSTILE_SPAWN
 
+/mob/living/simple_animal/hostile/asteroid/lobstrosity/ranged_secondary_attack(atom/target, modifiers)
+	if(COOLDOWN_FINISHED(src, charge_cooldown))
+		INVOKE_ASYNC(src, /mob/living/simple_animal/hostile/.proc/enter_charge, target)
+	else
+		to_chat(src, "<span class='notice'>Your charge is still on cooldown!</span>")
+
 /mob/living/simple_animal/hostile/asteroid/lobstrosity/lava
 	name = "tropical lobstrosity"
 	desc = "A marvel of evolution gone wrong, the sulfur lakes of lavaland have given them a vibrant, red hued shell. Beware its charge."

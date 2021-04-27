@@ -557,7 +557,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	for(var/sharp_color in GLOB.contrast_colors)
 		var/obj/effect/overlay/atmos_excited/suger_high = new()
 		GLOB.colored_turfs += suger_high
-		var/image/shiny = new('icons/effects/effects.dmi', suger_high, "atmos_top", ATMOS_GROUP_LAYER)
+		var/image/shiny = new('icons/effects/effects.dmi', suger_high, "atmos_top")
 		shiny.plane = ATMOS_GROUP_PLANE
 		shiny.color = sharp_color
 		GLOB.colored_images += shiny
@@ -577,16 +577,20 @@ GLOBAL_LIST_EMPTY(colored_images)
 		CHECK_TICK
 
 
-/datum/controller/subsystem/air/proc/get_init_dirs(type, dir)
+/datum/controller/subsystem/air/proc/get_init_dirs(type, dir, init_dir)
+
 	if(!pipe_init_dirs_cache[type])
 		pipe_init_dirs_cache[type] = list()
 
-	if(!pipe_init_dirs_cache[type]["[dir]"])
-		var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir)
-		pipe_init_dirs_cache[type]["[dir]"] = temp.GetInitDirections()
+	if(!pipe_init_dirs_cache[type]["[init_dir]"])
+		pipe_init_dirs_cache[type]["[init_dir]"] = list()
+
+	if(!pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"])
+		var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir, init_dir)
+		pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"] = temp.GetInitDirections()
 		qdel(temp)
 
-	return pipe_init_dirs_cache[type]["[dir]"]
+	return pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"]
 
 /datum/controller/subsystem/air/proc/generate_atmos()
 	atmos_gen = list()

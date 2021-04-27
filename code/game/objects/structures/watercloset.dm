@@ -84,6 +84,8 @@
 
 /obj/structure/toilet/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
+		for(var/obj/toilet_item in contents)
+			toilet_item.forceMove(drop_location())
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 		else

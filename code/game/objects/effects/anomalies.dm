@@ -75,7 +75,7 @@
 	return
 
 /obj/effect/anomaly/ex_act(severity, target)
-	if(severity == 1)
+	if(severity >= EXPLODE_DEVASTATE)
 		qdel(src)
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
@@ -192,7 +192,7 @@
 
 /obj/effect/anomaly/flux/detonate()
 	if(explosive)
-		explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
+		explosion(src, devastation_range = 1, heavy_impact_range = 4, light_impact_range = 16, flash_range = 18) //Low devastation, but hits a lot of stuff.
 	else
 		new /obj/effect/particle_effect/sparks(loc)
 
@@ -307,7 +307,7 @@
 	var/datum/action/innate/slime/reproduce/A = new
 	A.Grant(S)
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a pyroclastic anomaly slime?", ROLE_SENTIENCE, null, null, 100, S, POLL_IGNORE_PYROSLIME)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a pyroclastic anomaly slime?", ROLE_SENTIENCE, null, 100, S, POLL_IGNORE_PYROSLIME)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/chosen = pick(candidates)
 		S.key = chosen.key

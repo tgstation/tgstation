@@ -142,8 +142,9 @@
 
 /mob/living/simple_animal/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
-		return
-	..()
+		return FALSE
+
+	. = ..()
 	if(QDELETED(src))
 		return
 	var/bomb_armor = getarmor(null, BOMB)
@@ -160,7 +161,7 @@
 				bloss = bloss / 1.5
 			adjustBruteLoss(bloss)
 
-		if(EXPLODE_LIGHT)
+		if (EXPLODE_LIGHT)
 			var/bloss = 30
 			if(prob(bomb_armor))
 				bloss = bloss / 1.5

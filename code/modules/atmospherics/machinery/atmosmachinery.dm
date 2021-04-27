@@ -25,7 +25,7 @@
 	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
 	var/initialize_directions = 0
 	///The color of the pipe
-	var/pipe_color
+	var/pipe_color = COLOR_VERY_LIGHT_GRAY
 	///What layer the pipe is in (from 1 to 5, default 3)
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	///The flags of the pipe/component (PIPING_ALL_LAYER | PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE)
@@ -54,19 +54,30 @@
 	var/on = FALSE
 
 	///Whether it can be painted
-	var/paintable = FALSE
+	var/paintable = TRUE
 
-	///Is the thing being rebuilt by SSair or not. Prevents list blaot
+	///Is the thing being rebuilt by SSair or not. Prevents list bloat
 	var/rebuilding = FALSE
+
+	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
+	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
+
+	///Store the smart pipes connections, used for pipe construction
+	var/connection_num = 0
+
+/obj/machinery/atmospherics/LateInitialize()
+	. = ..()
+	name = "[GLOB.pipe_color_name[pipe_color]] [name]"
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
-	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
+	. += "<span class='notice'>[src] is on layer [piping_layer].</span>"
+	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
 
-/obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
+/obj/machinery/atmospherics/New(loc, process = TRUE, setdir, init_dir = ALL_CARDINALS)
 	if(!isnull(setdir))
 		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
@@ -77,7 +88,7 @@
 	..()
 	if(process)
 		SSair.start_processing_machine(src)
-	SetInitDirections()
+	SetInitDirections(init_dir)
 
 /obj/machinery/atmospherics/Destroy()
 	for(var/i in 1 to device_type)
@@ -196,10 +207,11 @@
  * * prompted_layer - the piping_layer we are inside
  */
 /obj/machinery/atmospherics/proc/findConnecting(direction, prompted_layer)
-	for(var/obj/machinery/atmospherics/target in get_step(src, direction))
-		if(target.initialize_directions & get_dir(target,src))
-			if(connection_check(target, prompted_layer))
-				return target
+	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
+		if(!(target.initialize_directions & get_dir(target,src)) && !istype(target, /obj/machinery/atmospherics/pipe/multiz))
+			continue
+		if(connection_check(target, prompted_layer))
+			return target
 
 /**
  * Check the connection between two nodes
@@ -211,12 +223,23 @@
  * * given_layer - the piping_layer we are checking
  */
 /obj/machinery/atmospherics/proc/connection_check(obj/machinery/atmospherics/target, given_layer)
-	if(isConnectable(target, given_layer) && target.isConnectable(src, given_layer) && (target.initialize_directions & get_dir(target,src)))
+	if(isConnectable(target, given_layer) && target.isConnectable(src, given_layer) && check_init_directions(target))
 		return TRUE
 	return FALSE
 
 /**
- * check if the piping layer are the same on both sides
+ * check if the initialized direction are the same on both sides (or if is a multiz adapter)
+ * returns TRUE or FALSE if the connection is possible or not
+ * Arguments:
+ * * obj/machinery/atmospherics/target - the machinery we want to connect to
+ */
+/obj/machinery/atmospherics/proc/check_init_directions(obj/machinery/atmospherics/target)
+	if((initialize_directions & get_dir(src, target) && target.initialize_directions & get_dir(target,src)) || istype(target, /obj/machinery/atmospherics/pipe/multiz))
+		return TRUE
+	return FALSE
+
+/**
+ * check if the piping layer and color are the same on both sides (grey can connect to all colors)
  * returns TRUE or FALSE if the connection is possible or not
  * Arguments:
  * * obj/machinery/atmospherics/target - the machinery we want to connect to
@@ -225,7 +248,31 @@
 /obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target, given_layer)
 	if(isnull(given_layer))
 		given_layer = piping_layer
-	if((target.piping_layer == given_layer) || (target.pipe_flags & PIPING_ALL_LAYER))
+	if(check_connectable_layer(target, given_layer) && target.loc != loc && check_connectable_color(target))
+		return TRUE
+	return FALSE
+
+/**
+ * check if the piping layer are the same on both sides or one of them has the PIPING_ALL_LAYER flag
+ * returns TRUE if one of the parameters is TRUE
+ * called by isConnectable()
+ * Arguments:
+ * * obj/machinery/atmospherics/target - the machinery we want to connect to
+ * * given_layer - the piping_layer we are connecting to
+ */
+/obj/machinery/atmospherics/proc/check_connectable_layer(obj/machinery/atmospherics/target, given_layer)
+	if(target.piping_layer == given_layer || target.pipe_flags & PIPING_ALL_LAYER)
+		return TRUE
+	return FALSE
+
+/**
+ * check if the color are the same on both sides or if one of the pipes are grey or have the PIPING_ALL_COLORS flag
+ * returns TRUE if one of the parameters is TRUE
+ * Arguments:
+ * * obj/machinery/atmospherics/target - the machinery we want to connect to
+ */
+/obj/machinery/atmospherics/proc/check_connectable_color(obj/machinery/atmospherics/target)
+	if(lowertext(target.pipe_color) == lowertext(pipe_color) || ((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) || lowertext(target.pipe_color) == lowertext(COLOR_VERY_LIGHT_GRAY) || lowertext(pipe_color) == lowertext(COLOR_VERY_LIGHT_GRAY))
 		return TRUE
 	return FALSE
 
@@ -238,7 +285,7 @@
 /**
  * Set the initial directions of the device (NORTH || SOUTH || EAST || WEST), called on New()
  */
-/obj/machinery/atmospherics/proc/SetInitDirections()
+/obj/machinery/atmospherics/proc/SetInitDirections(init_dir)
 	return
 
 /**
@@ -367,7 +414,7 @@
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(can_unwrench)
-			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src)
+			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
 			stored.setPipingLayer(piping_layer)
 			if(!disassembled)
 				stored.obj_integrity = stored.max_integrity * 0.5
@@ -404,6 +451,14 @@
 		if(trinary == TRUE && (piping_layer == 1 || piping_layer == 5))
 			PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
 
+///Similar to getpipeimage(); will create an image from the set_icon and set_state; mostly used to create overlays for connections.
+/obj/machinery/atmospherics/proc/pipe_overlay(set_icon, set_state, direction, color = COLOR_VERY_LIGHT_GRAY, piping_layer = 3, set_layer = PIPE_VISIBLE_LEVEL)
+	var/image/pipe_overlay
+	pipe_overlay = image(icon = set_icon, icon_state = set_state, layer = set_layer, dir = direction)
+	pipe_overlay.color = color
+	PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
+	return pipe_overlay
+
 /obj/machinery/atmospherics/on_construction(obj_color, set_layer)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
@@ -429,49 +484,39 @@
 
 #define VENT_SOUND_DELAY 30
 
+// Handles mob movement inside a pipenet
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
-	direction &= initialize_directions
-	if(!direction || !(direction in GLOB.cardinals)) //cant go this way.
-		return
 
+	if(!direction || !(direction in GLOB.cardinals_multiz)) //cant go this way.
+		return
 	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
 		return
-
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction, user.ventcrawl_layer)
-	if(target_move)
-		if(target_move.can_crawl_through())
-			if(is_type_in_typecache(target_move, GLOB.ventcrawl_machinery))
-				user.forceMove(target_move.loc) //handle entering and so on.
-				user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.</span>")
-			else
-				var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
-				if(pipenetdiff.len)
-					user.update_pipe_vision(target_move)
-				user.forceMove(target_move)
-				user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
-				if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
-					user.last_played_vent = world.time
-					playsound(src, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
-	else if(is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
-		user.forceMove(loc)
-		user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.</span>")
 
-	//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
+	if(!target_move)
+		return
+	if(target_move.vent_movement & VENTCRAWL_ALLOWED)
+		user.forceMove(target_move)
+		user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
+		var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
+		if(pipenetdiff.len)
+			user.update_pipe_vision()
+		if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
+			user.last_played_vent = world.time
+			playsound(src, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
+
+	//Would be great if this could be implemented when someone alt-clicks the image.
+	if (target_move.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
+		user.handle_ventcrawl(target_move)
+		//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(istype(L) && is_type_in_list(src, GLOB.ventcrawl_machinery))
+	if(!(vent_movement & VENTCRAWL_ALLOWED)) // Early return for machines which does not allow ventcrawling at all.
+		return
+	if(istype(L))
 		L.handle_ventcrawl(src)
 		return
 	..()
-
-/**
- * Getter for vent crawling
- *
- * returns TRUE or FALSE, many devices overrides this (like cryo, or vents)
- * called by relaymove()
- */
-/obj/machinery/atmospherics/proc/can_crawl_through()
-	return TRUE
 
 /**
  * Getter of a list of pipenets
@@ -494,7 +539,7 @@
  * Update the layer in which the pipe/device is in, that way pipes have consistent layer depending on piping_layer
  */
 /obj/machinery/atmospherics/proc/update_layer()
-	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE
+	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.01)
 
 /**
  * Called by the RPD.dm pre_attack(), overriden by pipes.dm

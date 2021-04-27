@@ -28,11 +28,17 @@
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_PARENT_EXAMINE, .proc/on_examined)
 	RegisterSignal(new_pawn, COMSIG_CLICK_ALT, .proc/check_altclicked)
+	RegisterSignal(new_pawn, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/on_death)
 	RegisterSignal(SSdcs, COMSIG_GLOB_CARBON_THROW_THING, .proc/listened_throw)
 	return ..() //Run parent at end
 
 /datum/ai_controller/dog/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_GLOB_CARBON_THROW_THING, COMSIG_CLICK_ALT))
+	var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
+	if(carried_item)
+		pawn.visible_message("<span='danger'>[pawn] drops [carried_item].</span>")
+		carried_item.forceMove(pawn.drop_location())
+		blackboard[BB_SIMPLE_CARRY_ITEM] = null
+	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_LIVING_DEATH, COMSIG_GLOB_CARBON_THROW_THING, COMSIG_PARENT_QDELETING))
 	return ..() //Run parent at end
 
 /datum/ai_controller/dog/able_to_run()
@@ -186,7 +192,9 @@
 	if(carried_item)
 		examine_text += "<span class='notice'>[pawn.p_they(TRUE)] [pawn.p_are()] carrying [carried_item.get_examine_string(user)] in [pawn.p_their()] mouth.</span>"
 	if(blackboard[BB_DOG_FRIENDS][user])
-		examine_text += "<span class='notice'>[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!</span>"
+		var/mob/living/living_pawn = pawn
+		if(!IS_DEAD_OR_INCAP(living_pawn))
+			examine_text += "<span class='notice'>[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!</span>"
 
 /// If we died, drop anything we were carrying
 /datum/ai_controller/dog/proc/on_death(mob/living/ol_yeller)
@@ -197,7 +205,7 @@
 		return
 
 	ol_yeller.visible_message("<span='danger'>[ol_yeller] drops [carried_item] as [ol_yeller.p_they()] die[ol_yeller.p_s()].</span>")
-	carried_item.forceMove(get_turf(ol_yeller))
+	carried_item.forceMove(ol_yeller.drop_location())
 	blackboard[BB_SIMPLE_CARRY_ITEM] = null
 
 // next section is regarding commands
@@ -242,6 +250,10 @@
 		return
 
 	if(!COOLDOWN_FINISHED(src, command_cooldown))
+		return
+
+	var/mob/living/living_pawn = pawn
+	if(IS_DEAD_OR_INCAP(living_pawn))
 		return
 
 	var/spoken_text = speech_args[SPEECH_MESSAGE] // probably should check for full words
@@ -294,6 +306,9 @@
 	if(pointed_movable == pawn || blackboard[BB_FETCH_TARGET] || !istype(pointed_movable) || blackboard[BB_DOG_ORDER_MODE] == DOG_COMMAND_NONE) // busy or no command
 		return
 	if(!can_see(pawn, pointing_friend, length=AI_DOG_VISION_RANGE) || !can_see(pawn, pointed_movable, length=AI_DOG_VISION_RANGE))
+		return
+	var/mob/living/living_pawn = pawn
+	if(IS_DEAD_OR_INCAP(living_pawn))
 		return
 
 	COOLDOWN_START(src, command_cooldown, AI_DOG_COMMAND_COOLDOWN)

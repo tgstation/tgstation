@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/total_moles()
 	var/cached_gases = gases
 	TOTAL_MOLES(cached_gases, .)
-
+	
 /// Checks to see if gas amount exists in mixture.
 /// Do NOT use this in code where performance matters!
 /// It's better to batch calls to garbage_collect(), especially in places where you're checking many gastypes
@@ -178,13 +178,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	amount = min(amount, sum) //Can not take more air than tile has!
 	if(amount <= 0)
 		return null
+	var/ratio = amount / sum
 	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
-		removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
+		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
 
@@ -512,7 +513,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 **/
 
 /// Pumps gas from src to output_air. Amount depends on target_pressure
-/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure)
+/datum/gas_mixture/proc/pump_gas_to(datum/gas_mixture/output_air, target_pressure, specific_gas = null)
 	var/output_starting_pressure = output_air.return_pressure()
 
 	if((target_pressure - output_starting_pressure) < 0.01)
@@ -525,6 +526,10 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
+		if(specific_gas)
+			var/datum/gas_mixture/removed = remove_specific(specific_gas, transfer_moles)
+			output_air.merge(removed)
+			return TRUE
 		var/datum/gas_mixture/removed = remove(transfer_moles)
 		output_air.merge(removed)
 		return TRUE

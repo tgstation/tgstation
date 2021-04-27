@@ -20,6 +20,10 @@
 	ion_trail.auto_process = FALSE
 	ion_trail.set_up(src)
 
+/obj/item/tank/jetpack/Destroy()
+	QDEL_NULL(ion_trail)
+	return ..()
+
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)
 		air_contents.assert_gas(gas_type)

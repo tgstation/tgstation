@@ -58,15 +58,15 @@
 	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return
 	if(panel_open)
-		SSvis_overlays.add_vis_overlay(src, icon, "recharger-open", layer, plane, dir, alpha)
+		. += mutable_appearance(icon, "recharger-open", alpha = src.alpha)
 		return
 	if(inserted_id)
-		SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", layer, plane, dir, alpha)
-		SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+		. += mutable_appearance(icon, "recharger-full", alpha = src.alpha)
+		. += emissive_appearance(icon, "recharger-full", alpha = src.alpha)
 		return
 
-	SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", layer, plane, dir, alpha)
-	SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+	. += mutable_appearance(icon, "recharger-empty", alpha = src.alpha)
+	. += emissive_appearance(icon, "recharger-empty", alpha = src.alpha)
 
 /obj/machinery/accounting/update_appearance(updates)
 	. = ..()

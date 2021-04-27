@@ -126,8 +126,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		addtimer(CALLBACK(src, .proc/announce_conflict, notadded), 5 SECONDS)
 
 /datum/preferences/proc/announce_conflict(list/notadded)
-	to_chat(parent, "<span class='alertwarning'>KEYBINDING CONFLICT</span>\n\
-					<span class='alertwarning'>There are new <a href='?_src_=prefs;preference=tab;tab=3'>keybindings</a> that default to keys you've already bound. These will be unbound.</span>")
+	to_chat(parent, "<span class='alertwarning'><u>Keybinding Conflict</u></span>\n\
+					<span class='alertwarning'>There are new <a href='?_src_=prefs;preference=tab;tab=3'>keybindings</a> that default to keys you've already bound. The new ones will be unbound.</span>")
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, "<span class='danger'>[conflicted.category]: [conflicted.full_name] needs updating</span>")
@@ -214,6 +214,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["hearted_until"], hearted_until)
 	if(hearted_until > world.realtime)
 		hearted = TRUE
+	//favorite outfits
+	READ_FILE(S["favorite_outfits"], favorite_outfits)
+
+	var/list/parsed_favs = list()
+	for(var/typetext in favorite_outfits)
+		var/datum/outfit/path = text2path(typetext)
+		if(ispath(path)) //whatever typepath fails this check probably doesn't exist anymore
+			parsed_favs += path
+	favorite_outfits = uniqueList(parsed_favs)
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -262,6 +271,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_style = sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color = sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings = sanitize_keybindings(key_bindings)
+	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 
 	if(needs_update >= 0) //save the updated version
 		var/old_default_slot = default_slot
@@ -339,6 +349,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pda_color"], pda_color)
 	WRITE_FILE(S["key_bindings"], key_bindings)
 	WRITE_FILE(S["hearted_until"], (hearted_until > world.realtime ? hearted_until : null))
+	WRITE_FILE(S["favorite_outfits"], favorite_outfits)
 	return TRUE
 
 /datum/preferences/proc/load_character(slot)
@@ -419,6 +430,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	READ_FILE(S["preferred_ai_core_display"], preferred_ai_core_display)
 	READ_FILE(S["prefered_security_department"], prefered_security_department)
+
+	// This is the version when the random security department was removed.
+	// When the minimum is higher than that version, it's impossible for someone to have the "Random" department.
+	#if SAVEFILE_VERSION_MIN > 40
+	#warn The prefered_security_department check in preferences_savefile.dm is no longer necessary.
+	#endif
+
+	if (!(prefered_security_department in GLOB.security_depts_prefs))
+		prefered_security_department = SEC_DEPT_NONE
 
 	//Jobs
 	READ_FILE(S["joblessrole"], joblessrole)

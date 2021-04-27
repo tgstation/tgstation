@@ -24,7 +24,7 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/damage_slowdown_flying
-	movetypes = FLOATING
+	movetypes = FLYING
 	variable = TRUE
 
 /datum/movespeed_modifier/equipment_speedmod
@@ -117,3 +117,9 @@
 
 /datum/movespeed_modifier/metabolicboost
 	multiplicative_slowdown = -1.5
+
+/datum/movespeed_modifier/dragon_rage
+	multiplicative_slowdown = -0.5
+
+/datum/movespeed_modifier/dragon_depression
+	multiplicative_slowdown = 5

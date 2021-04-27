@@ -13,6 +13,8 @@
 #define AMOUNT_VISIBLE (1<<6) // For non-transparent containers that still have the general amount of reagents in them visible.
 #define NO_REACT (1<<7) // Applied to a reagent holder, the contents will not react with each other.
 #define REAGENT_HOLDER_INSTANT_REACT (1<<8)  // Applied to a reagent holder, all of the reactions in the reagents datum will be instant. Meant to be used for things like smoke effects where reactions aren't meant to occur
+///If the holder is "alive" (i.e. mobs and organs) - If this flag is applied to a holder it will cause reagents to split upon addition to the object
+#define REAGENT_HOLDER_ALIVE (1<<9)
 
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER (REFILLABLE | DRAINABLE | TRANSPARENT)
@@ -61,7 +63,7 @@
 #define CHEMICAL_MAXIMUM_TEMPERATURE 99999
 
 ///The default purity of all non reacted reagents
-#define REAGENT_STANDARD_PUIRTY 0.75
+#define REAGENT_STANDARD_PURITY 0.75
 
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
@@ -102,16 +104,18 @@
 ////Used to force an equlibrium to end a reaction in reaction_step() (i.e. in a reaction_step() proc return END_REACTION to end it)
 #define END_REACTION "end_reaction"
 
-///Minimum requirement for addiction buzz to be met
-#define MIN_ADDICTION_REAGENT_AMOUNT 2
+///Minimum requirement for addiction buzz to be met. Addiction code only checks this once every two seconds, so this should generally be low
+#define MIN_ADDICTION_REAGENT_AMOUNT 1
+///Nicotine requires much less in your system to be happy
+#define MIN_NICOTINE_ADDICTION_REAGENT_AMOUNT 0.1
 #define MAX_ADDICTION_POINTS 1000
 
 ///Addiction start/ends
-#define WITHDRAWAL_STAGE1_START_CYCLE 1
-#define WITHDRAWAL_STAGE1_END_CYCLE 60
-#define WITHDRAWAL_STAGE2_START_CYCLE 61
-#define WITHDRAWAL_STAGE2_END_CYCLE 120
-#define WITHDRAWAL_STAGE3_START_CYCLE 121
+#define WITHDRAWAL_STAGE1_START_CYCLE 60
+#define WITHDRAWAL_STAGE1_END_CYCLE 120
+#define WITHDRAWAL_STAGE2_START_CYCLE 121
+#define WITHDRAWAL_STAGE2_END_CYCLE 180
+#define WITHDRAWAL_STAGE3_START_CYCLE 181
 
 ///reagent tags - used to look up reagents for specific effects. Feel free to add to but comment it
 /// This reagent does brute effects (BOTH damaging and healing)
@@ -163,3 +167,8 @@
 /// For the pH meter flashing method
 #define ENABLE_FLASHING -1
 #define DISABLE_FLASHING 14
+
+#define GOLDSCHLAGER_VODKA (10)
+#define GOLDSCHLAGER_GOLD (1)
+
+#define GOLDSCHLAGER_GOLD_RATIO (GOLDSCHLAGER_GOLD/(GOLDSCHLAGER_VODKA+GOLDSCHLAGER_GOLD))

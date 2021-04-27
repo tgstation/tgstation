@@ -262,12 +262,13 @@ Burning extracts:
 	user.visible_message("<span class='warning'>[user] activates [src]. It's going to explode!</span>", "<span class='danger'>You activate [src]. It crackles in anticipation</span>")
 	addtimer(CALLBACK(src, .proc/boom), 50)
 
+/// Inflicts a blastwave upon every mob within a small radius.
 /obj/item/slimecross/burning/oil/proc/boom()
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/effects/explosion2.ogg', 200, TRUE)
-	for(var/mob/living/M in range(2, T))
-		new /obj/effect/temp_visual/explosion(get_turf(M))
-		M.ex_act(EXPLODE_HEAVY)
+	for(var/mob/living/target in range(2, T))
+		new /obj/effect/temp_visual/explosion(get_turf(target))
+		SSexplosions.med_mov_atom += target
 	qdel(src)
 
 /obj/item/slimecross/burning/black

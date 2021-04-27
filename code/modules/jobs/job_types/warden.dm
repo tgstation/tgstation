@@ -12,6 +12,7 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/warden
+	plasmaman_outfit = /datum/outfit/plasmaman/warden
 
 	paycheck = PAYCHECK_HARD
 	paycheck_department = ACCOUNT_SEC
@@ -24,6 +25,15 @@
 	departments = DEPARTMENT_SECURITY
 
 	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)
+
+	mail_goodies = list(
+		/obj/item/storage/fancy/cigarettes = 15,
+		/obj/item/storage/box/handcuffs = 10,
+		/obj/item/storage/box/teargas = 10,
+		/obj/item/storage/box/flashbangs = 10,
+		/obj/item/storage/box/rubbershot = 10,
+		/obj/item/storage/box/lethalshot = 5
+	)
 
 /datum/outfit/job/warden
 	name = "Warden"

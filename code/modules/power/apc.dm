@@ -258,6 +258,7 @@
 	area.power_equip = FALSE
 	area.power_environ = FALSE
 	area.power_change()
+	area.poweralert(FALSE, src)
 	if(occupier)
 		malfvacate(1)
 	qdel(wires)
@@ -400,19 +401,19 @@
 	if((machine_stat & (BROKEN|MAINT)) || update_state)
 		return
 
-	SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, EMISSIVE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, EMISSIVE_PLANE, dir)
+	. += mutable_appearance(icon, "apcox-[locked]")
+	. += emissive_appearance(icon, "apcox-[locked]")
+	. += mutable_appearance(icon, "apco3-[charging]")
+	. += emissive_appearance(icon, "apco3-[charging]")
 	if(!operating)
 		return
 
-	SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, EMISSIVE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, EMISSIVE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, EMISSIVE_PLANE, dir)
+	. += mutable_appearance(icon, "apco0-[equipment]")
+	. += emissive_appearance(icon, "apco0-[equipment]")
+	. += mutable_appearance(icon, "apco1-[lighting]")
+	. += emissive_appearance(icon, "apco1-[lighting]")
+	. += mutable_appearance(icon, "apco2-[environ]")
+	. += emissive_appearance(icon, "apco2-[environ]")
 
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()
@@ -581,6 +582,24 @@
 			return TRUE
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/living/user, params)
+	if(HAS_TRAIT(W, TRAIT_APC_SHOCKING))
+		var/metal = 0
+		var/shock_source = null
+		metal += LAZYACCESS(W.custom_materials, GET_MATERIAL_REF(/datum/material/iron))//This prevents wooden rolling pins from shocking the user
+
+		if(cell || terminal) //The mob gets shocked by whichever powersource has the most electricity
+			if(cell && terminal)
+				shock_source = cell.charge > terminal.powernet.avail ? cell : terminal.powernet
+			else
+				shock_source = terminal?.powernet || cell
+
+		if(shock_source && metal && (panel_open || opened)) //Now you're cooking with electricity
+			if(electrocute_mob(user, shock_source, src, siemens_coeff = 1, dist_check = TRUE))//People with insulated gloves just attack the APC normally. They're just short of magical anyway
+				do_sparks(5, TRUE, src)
+				user.visible_message("<span class='notice'>[user.name] shoves [W] into the internal components of [src], erupting into a cascade of sparks!</span>")
+				if(shock_source == cell)//If the shock is coming from the cell just fully discharge it, because it's funny
+					cell.use(cell.charge)
+				return
 
 	if(issilicon(user) && get_dist(src,user)>1)
 		return attack_hand(user)

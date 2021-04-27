@@ -339,7 +339,7 @@
 	inhand_icon_state = "blindfoldwhite"
 	var/colored_before = FALSE
 
-/obj/item/clothing/glasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/glasses/blindfold/white/visual_equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == ITEM_SLOT_EYES)
 		update_icon(ALL, user)
 		user.update_inv_glasses() //Color might have been changed by update_icon.
@@ -450,6 +450,18 @@
 	desc = "Hey, you're looking good, senpai!"
 	icon_state = "redglasses"
 	inhand_icon_state = "redglasses"
+	glass_colour_type = /datum/client_colour/glass_colour/red
+
+/obj/item/clothing/glasses/geist_gazers
+	name = "geist gazers"
+	icon_state = "geist_gazers"
+	worn_icon_state = "geist_gazers"
+	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/psych
+	name = "psych glasses"
+	icon_state = "psych_glasses"
+	worn_icon_state = "psych_glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/godeye

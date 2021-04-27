@@ -33,7 +33,10 @@
 			continue
 		recipe = new recipe
 		var/list/typecache = list()
-		for(var/input_type in typesof(recipe.input))
+		var/list/bad_types
+		for(var/bad_type in recipe.blacklist)
+			LAZYADD(bad_types, typesof(bad_type))
+		for(var/input_type in typesof(recipe.input) - bad_types)
 			typecache[input_type] = recipe
 		for(var/machine_type in typesof(recipe.required_machine))
 			LAZYADD(processor_inputs[machine_type], typecache)
@@ -158,6 +161,8 @@
 	set name = "Eject Contents"
 	set src in oview(1)
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+		return
+	if (!usr.canUseTopic())
 		return
 	if(isliving(usr))
 		var/mob/living/L = usr

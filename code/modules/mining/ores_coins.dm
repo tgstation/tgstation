@@ -131,9 +131,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	qdel(src)
 
 /obj/item/stack/ore/glass/ex_act(severity, target)
-	if (severity == EXPLODE_NONE)
-		return
-	qdel(src)
+	if(severity)
+		qdel(src)
 
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
@@ -322,11 +321,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(primed)
 		switch(quality)
 			if(GIBTONITE_QUALITY_HIGH)
-				explosion(src,2,4,9,adminlog = notify_admins)
+				explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 9, adminlog = notify_admins)
 			if(GIBTONITE_QUALITY_MEDIUM)
-				explosion(src,1,2,5,adminlog = notify_admins)
+				explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, adminlog = notify_admins)
 			if(GIBTONITE_QUALITY_LOW)
-				explosion(src,0,1,3,adminlog = notify_admins)
+				explosion(src, heavy_impact_range = 1, light_impact_range = 3, adminlog = notify_admins)
 		qdel(src)
 
 /obj/item/stack/ore/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
@@ -335,9 +334,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	pixel_y = base_pixel_y + rand(0, 8) - 8
 
 /obj/item/stack/ore/ex_act(severity, target)
-	if (!severity || severity >= 2)
-		return
-	qdel(src)
+	if(severity >= EXPLODE_DEVASTATE)
+		qdel(src)
 
 
 /*****************************Coin********************************/

@@ -121,7 +121,7 @@ This section is for the event controller
 		var/area/center_area = get_area(center_turf)
 		center_areas += center_area
 
-		explosion(center_turf,0,0,5,7,7)
+		explosion(center_turf, light_impact_range = 5, flame_range = 7, flash_range = 7)
 
 		new /obj/structure/crystal_portal/huge(center_turf)
 
@@ -249,7 +249,7 @@ This section is for the event controller
 			spawners += temp
 	for(var/i in 1 to rand(15, 25))
 		spawn_portal(GLOB.crystal_invasion_waves["huge wave"], spawners)
-	explosion(dest_crystal.loc, 15, 26, 33, 35, 1, 1) //a bit smaller than max supermatter explosion
+	explosion(dest_crystal, devastation_range = 15, heavy_impact_range = 26, light_impact_range = 33, flash_range = 35, adminlog = TRUE, ignorecap = TRUE) //a bit smaller than max supermatter explosion
 	priority_announce("WARNING - Portal are appearing everywhere, you failed to contain the event. You people should feel ashamed of yourselves!","Alarm")
 	QDEL_NULL(dest_crystal)
 
@@ -550,13 +550,13 @@ This section is for the crystal portals variations
 	if(!closed)
 		switch(name)
 			if("Small Portal")
-				explosion(loc, 0,1,3)
+				explosion(src, heavy_impact_range = 1, light_impact_range = 3)
 			if("Medium Portal")
-				explosion(loc, 0,3,5)
+				explosion(src, heavy_impact_range = 3, light_impact_range = 5)
 			if("Big Portal")
-				explosion(loc, 1,3,5)
+				explosion(src, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5)
 			if("Huge Portal")
-				explosion(loc, 2,5,7)
+				explosion(src, devastation_range = 2, heavy_impact_range = 5, light_impact_range = 7)
 	new/obj/item/stack/sheet/otherworld_crystal(loc)
 	return ..()
 

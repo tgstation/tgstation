@@ -157,6 +157,9 @@
 /datum/component/deadchat_control/proc/on_examine(atom/A, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
+	if(!isobserver(user))
+		return
+
 	examine_list += "<span class='notice'>[A.p_theyre(TRUE)] currently under deadchat control using the [deadchat_mode] ruleset!</span>"
 
 	if(deadchat_mode == DEMOCRACY_MODE)

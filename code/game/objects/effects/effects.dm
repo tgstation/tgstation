@@ -27,7 +27,7 @@
 	return
 
 /obj/effect/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/effect/singularity_act()
 	qdel(src)

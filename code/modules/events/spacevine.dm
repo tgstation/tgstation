@@ -115,7 +115,7 @@
 		QDEL_IN(holder, 5)
 
 /datum/spacevine_mutation/explosive/on_death(obj/structure/spacevine/holder, mob/hitter, obj/item/I)
-	explosion(holder.loc, 0, 0, severity, 0, 0)
+	explosion(holder, light_impact_range = severity, adminlog = FALSE)
 
 /datum/spacevine_mutation/fire_proof
 	name = "fire proof"
@@ -570,7 +570,7 @@
 	var/i
 	for(var/datum/spacevine_mutation/SM in mutations)
 		i += SM.on_explosion(severity, target, src)
-	if(!i && prob(100/severity))
+	if(!i && prob(34 * severity))
 		qdel(src)
 
 /obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
