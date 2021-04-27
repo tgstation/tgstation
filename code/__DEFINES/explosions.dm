@@ -9,23 +9,24 @@
 #define EXPLODE_NONE 0
 
 // Internal explosion argument list keys.
+// Must match the arguments to [/datum/controller/subsystem/explosions/proc/propagate_blastwave]
 /// The origin atom of the explosion.
 #define EXARG_KEY_ORIGIN "origin"
 /// The devastation range of the explosion.
-#define EXARG_KEY_DEV_RANGE "devastation_range"
+#define EXARG_KEY_DEV_RANGE STRINGIFY(devastation_range)
 /// The heavy impact range of the explosion.
-#define EXARG_KEY_HEAVY_RANGE "heavy_range"
+#define EXARG_KEY_HEAVY_RANGE STRINGIFY(heavy_impact_range)
 /// The light impact range of the explosion.
-#define EXARG_KEY_LIGHT_RANGE "light_range"
-/// The flash range of the explosion.
-#define EXARG_KEY_FLASH_RANGE "flash_range"
-/// Whether or not the explosion should be logged.
-#define EXARG_KEY_ADMIN_LOG "admin_log"
-/// Whether or not the explosion should ignore the bombcap.
-#define EXARG_KEY_IGNORE_CAP "ignore_cap"
+#define EXARG_KEY_LIGHT_RANGE STRINGIFY(light_impact_range)
 /// The flame range of the explosion.
-#define EXARG_KEY_FLAME_RANGE "flame_range"
+#define EXARG_KEY_FLAME_RANGE STRINGIFY(flame_range)
+/// The flash range of the explosion.
+#define EXARG_KEY_FLASH_RANGE STRINGIFY(flash_range)
+/// Whether or not the explosion should be logged.
+#define EXARG_KEY_ADMIN_LOG STRINGIFY(adminlog)
+/// Whether or not the explosion should ignore the bombcap.
+#define EXARG_KEY_IGNORE_CAP STRINGIFY(ignorecap)
 /// Whether or not the explosion should produce sound effects and screenshake if it is large enough to warrant it.
-#define EXARG_KEY_SILENT "silent"
+#define EXARG_KEY_SILENT STRINGIFY(silent)
 /// Whether or not the explosion should produce smoke if it is large enough to warrant it.
-#define EXARG_KEY_SMOKE "smoke"
+#define EXARG_KEY_SMOKE STRINGIFY(smoke)
