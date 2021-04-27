@@ -25,14 +25,16 @@
 
 	family_heirlooms = list(
 		/obj/item/book/manual/wiki/security_space_law,
-		)
+	)
+		
 	liver_traits = list(
 		TRAIT_LAW_ENFORCEMENT_METABOLISM,
 		TRAIT_ROYAL_METABOLISM,
-		)
+	)
+		
 	mind_traits = list(
 		TRAIT_DONUT_LOVER,
-		)
+	)
 
 /datum/job/head_of_security/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
 	..()
