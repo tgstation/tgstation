@@ -2464,6 +2464,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
+/obj/machinery/light_switch{
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "beC" = (
@@ -2679,7 +2682,7 @@
 	},
 /obj/machinery/light_switch{
 	pixel_x = 25;
-	pixel_y = -5
+	pixel_y = -8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -5273,7 +5276,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/light_switch{
 	pixel_x = 25;
-	pixel_y = 16
+	pixel_y = -16
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -21139,6 +21142,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/light_switch{
+	pixel_x = 25
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "iOX" = (
@@ -22773,6 +22779,10 @@
 /obj/machinery/camera{
 	c_tag = "Cytology Lab";
 	network = list("ss13","rd")
+	},
+/obj/machinery/light_switch{
+	pixel_x = 3;
+	pixel_y = 25
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -31319,6 +31329,21 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"mQY" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/light_switch{
+	pixel_x = 25
+	},
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "mRa" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
@@ -51630,6 +51655,10 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	pixel_x = 25;
+	pixel_y = 26
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -82669,7 +82698,7 @@ pBM
 wLj
 kcI
 ebM
-wMK
+mQY
 wLj
 mDN
 wLj
