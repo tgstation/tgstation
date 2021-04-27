@@ -12,8 +12,7 @@
 	ranged = TRUE
 	ranged_cooldown_time = 5 SECONDS
 	vision_range = 9
-	minimum_distance = 3
-	retreat_distance = 5
+	retreat_distance = 2
 	speed = 5
 	move_to_delay = 5
 	maxHealth = 200
@@ -30,7 +29,7 @@
 	loot = list()
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
-	deathmessage = "screams in agony as it falls in battle."
+	deathmessage = "screams in agony as they get fcking OWNED."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	/// Are we charging/firing? If yes stops our movement.
 	var/firing = FALSE
@@ -53,6 +52,7 @@
 /mob/living/simple_animal/hostile/asteroid/brimdemon/death()
 	firing = FALSE
 	cut_overlay("brimdemon_telegraph_dir")
+	move_resist = initial(move_resist)
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/Goto(target, delay, minimum_distance)
@@ -77,8 +77,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/fire_laser()
+	if(stat == DEAD)
+		return
 	visible_message("<span class='danger'>[src] fires a brimbeam!</span>", "<span class='notice'>You fire a brimbeam!</span>")
-	playsound(src, 'sound/creatures/brimdemon.ogg', 100, TRUE)
+	playsound(src, 'sound/creatures/brimdemon.ogg', 100, FALSE, 0, 3)
 	cut_overlay("brimdemon_telegraph_dir")
 	var/turf/target_turf = get_ranged_target_turf(src, dir, 10)
 	var/turf/origin_turf = get_turf(src)
@@ -124,6 +126,9 @@
 	icon_state = "brimbeam_mid"
 	layer = ABOVE_MOB_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	light_color = LIGHT_COLOR_BLOOD_MAGIC
+	light_power = 3
+	light_range = 2
 
 /obj/effect/brimbeam/Initialize()
 	. = ..()
