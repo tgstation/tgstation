@@ -128,7 +128,7 @@
 	if(recipient)
 		msg += "\t<span class='info'>Certified NT mail for [recipient].</span>"
 	else
-		msg += "\t<span class='info'>Certified mail for any 13th class space station.</span>"
+		msg += "\t<span class='info'>Certified mail for [GLOB.station_name].</span>"
 	msg += "\t<span class='info'>Distribute by hand or via destination tagger using the certified NT disposal system.</span>"
 	return msg
 
