@@ -127,6 +127,8 @@ have ways of interacting with a specific mob and control it.
 		for(var/atom/thing in view(2, living_pawn))
 			if(!thing.mouse_opacity)
 				continue
+			if(thing.IsObscured())
+				continue
 			possible_targets += thing
 		var/atom/target = pick(possible_targets)
 		if(target)
