@@ -18,10 +18,11 @@
 
 	family_heirlooms = list(
 		/obj/item/storage/firstaid/ancient/heirloom,
-		)
+	)
+		
 	liver_traits = list(
 		TRAIT_MEDICAL_METABOLISM,
-		)
+	)
 
 	mail_goodies = list(
 		/obj/item/healthanalyzer/advanced = 15,
@@ -30,7 +31,7 @@
 		/obj/item/cautery/advanced = 6,
 		/datum/reagent/toxin/formaldehyde = 6,
 		/obj/effect/spawner/lootdrop/organ_spawner = 5,
-		/obj/effect/spawner/lootdrop/memeorgans = 1
+		/obj/effect/spawner/lootdrop/memeorgans = 1,
 	)
 
 /datum/outfit/job/doctor
