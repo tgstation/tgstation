@@ -116,7 +116,7 @@
 
 /datum/asset/simple/irv
 	assets = list(
-		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
+		"jquery-ui.custom-core-widgit-mouse-sortable.min.js" = 'html/jquery/jquery-ui.custom-core-widgit-mouse-sortable.min.js',
 	)
 
 /datum/asset/group/irv
@@ -128,7 +128,7 @@
 /datum/asset/simple/jquery
 	legacy = TRUE
 	assets = list(
-		"jquery.min.js" = 'html/jquery.min.js',
+		"jquery.min.js" = 'html/jquery/jquery.min.js',
 	)
 
 /datum/asset/simple/namespaced/fontawesome
@@ -170,7 +170,7 @@
 	)
 
 /datum/asset/simple/namespaced/common
-	assets = list("padlock.png" = 'html/padlock.png')
+	assets = list("padlock.png" = 'icons/UI_Icons/common/padlock.png')
 	parents = list("common.css" = 'html/browser/common.css')
 
 /datum/asset/simple/permissions
@@ -187,10 +187,10 @@
 
 /datum/asset/simple/notes
 	assets = list(
-		"high_button.png" = 'html/high_button.png',
-		"medium_button.png" = 'html/medium_button.png',
-		"minor_button.png" = 'html/minor_button.png',
-		"none_button.png" = 'html/none_button.png',
+		"high_button.png" = 'icons/UI_Icons/notes/high_button.png',
+		"medium_button.png" = 'icons/UI_Icons/notes/medium_button.png',
+		"minor_button.png" = 'icons/UI_Icons/notes/minor_button.png',
+		"none_button.png" = 'icons/UI_Icons/notes/none_button.png',
 	)
 
 /datum/asset/simple/arcade
@@ -431,14 +431,14 @@
 
 /datum/asset/simple/genetics
 	assets = list(
-		"dna_discovered.gif" = 'html/dna_discovered.gif',
-		"dna_undiscovered.gif" = 'html/dna_undiscovered.gif',
-		"dna_extra.gif" = 'html/dna_extra.gif'
+		"dna_discovered.gif" = 'icons/UI_Icons/dna/dna_discovered.gif',
+		"dna_undiscovered.gif" = 'icons/UI_Icons/dna/dna_undiscovered.gif',
+		"dna_extra.gif" = 'icons/UI_Icons/dna/dna_extra.gif'
 	)
 
 /datum/asset/simple/orbit
 	assets = list(
-		"ghost.png" = 'html/ghost.png'
+		"ghost.png" = 'icons/UI_Icons/orbit/ghost.png'
 	)
 
 /datum/asset/simple/vv
@@ -489,7 +489,7 @@
 
 /datum/asset/simple/safe
 	assets = list(
-		"safe_dial.png" = 'html/safe_dial.png'
+		"safe_dial.png" = 'icons/UI_Icons/safe/safe_dial.png'
 	)
 
 /datum/asset/spritesheet/fish
