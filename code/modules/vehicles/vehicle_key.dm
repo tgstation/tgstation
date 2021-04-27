@@ -4,21 +4,42 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "key"
 	w_class = WEIGHT_CLASS_TINY
-	/// How long we have to wait between jingles to jangle again
-	var/jingle_delay = 5 SECONDS
-	/// The cooldown for jingling
-	COOLDOWN_DECLARE(jingle_cd)
+	/// You can only do a big jingle that affects people this often, otherwise it just plays the jingle sound more quietly
+	var/big_jingle_delay = 5 SECONDS
+	/// The cooldown for big jingles
+	COOLDOWN_DECLARE(big_jingle_cd)
 
 /obj/item/key/attack_self(mob/user, modifiers)
+	if(!COOLDOWN_FINISHED(src, big_jingle_cd))
+		to_chat(user, "<span class='smallnotice'>You jingle the keys in your hand softly...</span>")
+		playsound(src, pick('sound/items/key_jingle01.ogg', 'sound/items/key_jingle02.ogg'), 30)
+		return
+
 	. = ..()
-	user.visible_message("<span class='notice'>[user] jingles [user.p_their()] keys around in an enticing fashion.</span>")
-	playsound(src, pick('sound/items/key_jingle01.ogg', 'sound/items/key_jingle02.ogg'), 50)
+
+	COOLDOWN_START(src, big_jingle_cd, big_jingle_delay)
+	user.visible_message("<span class='notice'>[user] jingles [user.p_their()] keys around in an enticing fashion.</span>", "<span class='notice'>You jingle the keys around in an enticing fashion.</span>")
+	playsound(src, pick('sound/items/key_jingle01.ogg', 'sound/items/key_jingle02.ogg'), 60)
+
 	for(var/mob/living/iter_living in view(5, get_turf(user)))
-		if(HAS_TRAIT(iter_living, TRAIT_DUMB))
-			testing("s")
-		else if(prob(50) && (isfelinid(iter_living) || ismoth(iter_living)))
-			testing("p")
-			iter_living.AddComponent(/datum/component/tackler/one_shot, target=user)
+		if(iter_living.stat > CONSCIOUS)
+			continue
+
+		if(prob(50) && HAS_TRAIT(iter_living, TRAIT_DUMB)) // 50% chance to freeze those with simple minds
+			iter_living.visible_message("<span class='danger'>[iter_living] freezes in [iter_living.p_their()] tracks, transfixed by the jingling keys...</span>",\
+				"<span class='userdanger'>Is that-... are those... jingle jingle jingle... beautiful...</span>", vision_distance = COMBAT_MESSAGE_RANGE)
+			iter_living.Stun(rand(1 SECONDS, 3 SECONDS))
+		else if(prob(20) && (isfelinid(iter_living) || ismoth(iter_living)))
+			if(prob(50)) // 50% chance for felinids/moths to instantly pounce, to add some risk to the jingler
+				iter_living.visible_message("<span class='danger'>[iter_living] snaps [iter_living.p_their()] attention to the jingling keys and, with the reflexes of a trained hunter, pounces!<span>",\
+				"<span class='userdanger'>Can't... resist... KEYS!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
+				iter_living.AddComponent(/datum/component/tackler/one_shot, skill_mod = 2, target=user)
+			else // otherwise, wait a moment...
+				var/delay = rand(1 SECONDS, 3 SECONDS)
+				iter_living.visible_message("<span class='danger'>[iter_living] freezes in place, tensing up at the jingling keys, waiting to strike...<span>",\
+				"<span class='userdanger'>Must have... jingles... wait for it...</span>", vision_distance = COMBAT_MESSAGE_RANGE)
+				iter_living.Stun(delay - 2)
+				iter_living.AddComponent(/datum/component/tackler/one_shot, skill_mod = 2, target = user, delay = delay)
 
 /obj/item/key/atv
 	name = "ATV key"

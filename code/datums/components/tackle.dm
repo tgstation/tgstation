@@ -549,11 +549,12 @@
  * If you want to make someone launch just one tackle without their input, give them this component with the target var set to whatever you want to launch them at.
  *
  * If said person already has a normal tackler component this won't affect them, but that's benign enough that it shouldn't cause problems in gameplay.
+ * Also comes with a delay var, in case you want to make the person tackle after a second or something like that.
  */
 /datum/component/tackler/one_shot
 	warn_destroy = FALSE
 
-/datum/component/tackler/one_shot/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance, atom/target)
+/datum/component/tackler/one_shot/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance, atom/target, delay = 0 SECONDS)
 	if(!iscarbon(parent) || !target)
 		return COMPONENT_INCOMPATIBLE
 
@@ -564,7 +565,10 @@
 	src.skill_mod = skill_mod
 	src.min_distance = min_distance
 
-	INVOKE_ASYNC(src, .proc/launchTackle, parent, target)
+	if(delay)
+		addtimer(CALLBACK(src, .proc/launchTackle, parent, target), delay)
+	else
+		INVOKE_ASYNC(src, .proc/launchTackle, parent, target)
 
 // Does nothing because the parent is not allowed to try initiating its own tackles
 /datum/component/tackler/one_shot/checkTackle(mob/living/carbon/user, atom/A, params)
