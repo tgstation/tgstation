@@ -23,9 +23,9 @@
 	)
 
 	mail_goodies = list(
-		/obj/item/modular_computer/tablet/preset/advanced = 5,
-		/obj/item/stack/sheet/iron/twenty = 15,
 		/obj/item/storage/box/flashes = 20,
+		/obj/item/stack/sheet/iron/twenty = 15,
+		/obj/item/modular_computer/tablet/preset/advanced = 5,
 	)
 
 /datum/job/roboticist/New()
