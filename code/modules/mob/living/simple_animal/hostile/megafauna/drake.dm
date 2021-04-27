@@ -311,7 +311,7 @@
 	if(stat || swooping)
 		return
 	if(manual_target)
-		target = manual_target
+		GiveTarget(manual_target)
 	if(!target)
 		return
 	stop_automated_movement = TRUE
