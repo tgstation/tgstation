@@ -63,7 +63,7 @@
 
 /datum/holiday/new_year
 	name = NEW_YEAR
-	begin_day = 30
+	begin_day = 31
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
@@ -83,7 +83,7 @@
 
 /datum/holiday/valentines
 	name = VALENTINES
-	begin_day = 13
+	begin_day = 14
 	end_day = 15
 	begin_month = FEBRUARY
 
@@ -168,8 +168,9 @@
 
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
-	begin_day = 1
 	begin_month = APRIL
+	begin_day = 1
+	end_day = 2
 
 /datum/holiday/april_fools/celebrate()
 	SSjob.set_overflow_role("Clown")
@@ -369,8 +370,10 @@
 
 /datum/holiday/halloween
 	name = HALLOWEEN
-	begin_day = 31
+	begin_day = 29
 	begin_month = OCTOBER
+	end_day = 2
+	end_month = NOVEMBER
 
 /datum/holiday/halloween/greet()
 	return "Have a spooky Halloween!"
@@ -463,9 +466,9 @@
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 24 //Christmas Eve
+	begin_day = 23
 	begin_month = DECEMBER
-	end_day = 26 //Boxing Day
+	end_day = 27
 	drone_hat = /obj/item/clothing/head/santa
 
 /datum/holiday/xmas/greet()
