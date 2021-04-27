@@ -2,7 +2,7 @@ name: Compile changelogs
 
 on:
   schedule:
-  - cron: "0 0 * * *"
+  - cron: "0 5 * * *"
 
 jobs:
   compile:
@@ -37,10 +37,6 @@ jobs:
         if: steps.value_holder.outputs.CL_ENABLED
         run: |
           python tools/ss13_genchangelog.py html/changelogs
-      - name: "Convert Lineendings"
-        if: steps.value_holder.outputs.CL_ENABLED
-        run: |
-          unix2dos html/changelogs/.all_changelog.yml
       - name: Commit
         if: steps.value_holder.outputs.CL_ENABLED
         run: |
