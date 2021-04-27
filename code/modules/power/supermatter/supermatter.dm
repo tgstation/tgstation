@@ -478,10 +478,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
 			//Check for holes in the SM inner chamber
-			for(var/turf as anything in RANGE_TURFS(1, loc))
-				if(!isspaceturf(turf))
-					continue
-				var/turf/turf_to_check = turf
+			for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
 				if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
 					var/integrity = get_integrity()
 					if(integrity < 10)
