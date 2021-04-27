@@ -108016,7 +108016,6 @@
 	dir = 1
 	},
 /obj/item/stack/sheet/plasteel/fifty,
-/obj/item/crowbar/power,
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
@@ -109303,7 +109302,6 @@
 "wUz" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical,
-/obj/item/screwdriver/power,
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
