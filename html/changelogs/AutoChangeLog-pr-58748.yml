@@ -1,0 +1,4 @@
+author: "ORCACommander"
+delete-after: True
+changes: 
+  - bugfix: "Anesthetic Tank holders will now always render when loaded with an anesthetic tank and upon round load."
