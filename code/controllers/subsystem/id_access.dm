@@ -389,6 +389,7 @@ SUBSYSTEM_DEF(id_access)
 		return FALSE
 
 	id_card.clear_access()
+	id_card.clear_account()
 	id_card.trim = trim
 
 	if(copy_access)
