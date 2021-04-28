@@ -790,14 +790,11 @@ class PresetsPage extends Component {
 
   deletePreset(deleteID) {
     const { presets } = this.state;
-    for (let i = 0; i < presets.length; i++) {
-      if (presets[i].id === deleteID) {
-        presets.splice(i, 1);
-        i--;
-      }
-    }
-    storage.set("podlauncher_presetlist", presets);
+    storage.set("podlauncher_presetlist", presets.filter(preset => (
+      preset.id === deleteID
+    ));
   }
+
   render() {
     const { presets } = this.state;
     const { act, data } = useBackend(this.context);
