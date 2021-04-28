@@ -8271,7 +8271,7 @@
 "aFL" = (
 /obj/item/radio/off,
 /obj/item/crowbar,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -14452,12 +14452,12 @@
 	amount = 10
 	},
 /obj/item/stack/cable_coil,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = 24
@@ -35386,8 +35386,8 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /obj/machinery/status_display/ai{
 	pixel_x = -32
 	},
@@ -47448,8 +47448,8 @@
 /area/engineering/supermatter)
 "rsQ" = (
 /obj/structure/table/reinforced,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /obj/machinery/bounty_board{
 	dir = 4;
 	pixel_x = -28
@@ -47572,7 +47572,7 @@
 /area/service/janitor)
 "rxB" = (
 /obj/structure/table,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /turf/open/floor/iron,
 /area/security/office)
 "rxV" = (

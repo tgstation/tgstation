@@ -1892,7 +1892,7 @@
 "eV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -3927,8 +3927,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /obj/item/storage/box/firingpins,
 /obj/structure/closet/crate/secure/weapon{
 	req_access_txt = "203"

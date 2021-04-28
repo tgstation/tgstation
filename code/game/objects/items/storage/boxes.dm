@@ -311,7 +311,7 @@
 
 /obj/item/storage/box/flashes/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/assembly/flash/handheld(src)
+		new /obj/item/assembly/flash(src)
 
 /obj/item/storage/box/wall_flash
 	name = "wall-mounted flash kit"
@@ -329,7 +329,7 @@
 	remote.id = id
 	var/obj/item/wallframe/flasher/frame = new(src)
 	frame.id = id
-	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/assembly/flash(src)
 	new /obj/item/screwdriver(src)
 
 

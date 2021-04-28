@@ -1091,8 +1091,8 @@
 	pixel_y = 6
 	},
 /obj/item/assembly/infra,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "cj" = (

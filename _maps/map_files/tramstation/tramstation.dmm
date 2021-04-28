@@ -35617,7 +35617,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/storage/secure/briefcase,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "jKR" = (
@@ -35921,7 +35921,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "jSw" = (
 /obj/structure/table,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/security/office)
@@ -38752,8 +38752,8 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 10
 	},
@@ -49337,12 +49337,12 @@
 /area/medical/medbay/central)
 "pjl" = (
 /obj/structure/table,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)
 "pjm" = (

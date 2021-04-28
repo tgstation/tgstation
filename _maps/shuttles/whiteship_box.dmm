@@ -1981,7 +1981,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
 /obj/item/storage/box/zipties,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/item/melee/classic_baton/telescopic,
 /obj/machinery/light/small/built{
 	dir = 8

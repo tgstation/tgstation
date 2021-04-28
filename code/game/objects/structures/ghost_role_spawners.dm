@@ -510,7 +510,7 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	id = /obj/item/card/id/away/old/sec
 	r_pocket = /obj/item/restraints/handcuffs
-	l_pocket = /obj/item/assembly/flash/handheld
+	l_pocket = /obj/item/assembly/flash
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()

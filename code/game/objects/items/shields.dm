@@ -125,7 +125,7 @@
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
 	icon_state = "flashshield"
 	inhand_icon_state = "flashshield"
-	var/obj/item/assembly/flash/handheld/embedded_flash
+	var/obj/item/assembly/flash/embedded_flash
 
 /obj/item/shield/riot/flash/Initialize()
 	. = ..()
@@ -151,8 +151,8 @@
 
 
 /obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/flash = W
+	if(istype(W, /obj/item/assembly/flash))
+		var/obj/item/assembly/flash/flash = W
 		if(flash.burnt_out)
 			to_chat(user, "<span class='warning'>No sense replacing it with a broken bulb!</span>")
 			return

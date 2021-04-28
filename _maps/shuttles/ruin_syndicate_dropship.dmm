@@ -235,7 +235,7 @@
 "vw" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
 	dir = 1

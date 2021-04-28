@@ -638,7 +638,7 @@
 "adW" = (
 /obj/structure/rack,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
@@ -8398,7 +8398,7 @@
 	},
 /obj/structure/closet,
 /obj/item/crowbar,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/item/radio,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -26876,7 +26876,7 @@
 	pixel_x = -3
 	},
 /obj/item/storage/fancy/cigarettes,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/item/reagent_containers/spray/pepper,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -30415,7 +30415,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/assembly/flash/handheld{
+/obj/item/assembly/flash{
 	pixel_x = 6;
 	pixel_y = 13
 	},
@@ -32312,23 +32312,23 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/item/assembly/flash/handheld{
+/obj/item/assembly/flash{
 	pixel_x = -1;
 	pixel_y = -1
 	},
-/obj/item/assembly/flash/handheld{
+/obj/item/assembly/flash{
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/assembly/flash/handheld{
+/obj/item/assembly/flash{
 	pixel_x = 1;
 	pixel_y = 4
 	},
-/obj/item/assembly/flash/handheld{
+/obj/item/assembly/flash{
 	pixel_x = -4;
 	pixel_y = 5
 	},
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/item/bodypart/r_arm/robot{
 	pixel_x = 3
 	},
@@ -52331,7 +52331,7 @@
 /obj/structure/table/wood,
 /obj/item/folder/blue,
 /obj/item/storage/secure/briefcase,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/machinery/computer/security/telescreen/vault{
 	pixel_y = 30
 	},
@@ -66282,8 +66282,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /obj/item/radio/intercom{
 	pixel_y = 28
 	},
@@ -76387,7 +76387,7 @@
 	pixel_y = -30
 	},
 /obj/item/stack/sheet/glass,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/item/assembly/signaler,
 /obj/item/assembly/timer{
 	pixel_x = 3;

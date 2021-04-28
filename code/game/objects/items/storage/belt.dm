@@ -230,7 +230,7 @@
 		/obj/item/grenade,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
-		/obj/item/assembly/flash/handheld,
+		/obj/item/assembly/flash,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
@@ -248,7 +248,7 @@
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/restraints/handcuffs(src)
 	new /obj/item/grenade/flashbang(src)
-	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/assembly/flash(src)
 	new /obj/item/melee/baton/loaded(src)
 	update_appearance()
 

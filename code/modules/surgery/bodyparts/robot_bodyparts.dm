@@ -225,8 +225,8 @@
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
-	var/obj/item/assembly/flash/handheld/flash1 = null
-	var/obj/item/assembly/flash/handheld/flash2 = null
+	var/obj/item/assembly/flash/flash1 = null
+	var/obj/item/assembly/flash/flash2 = null
 
 
 /obj/item/bodypart/head/robot/handle_atom_del(atom/A)
@@ -256,8 +256,8 @@
 		. += "<span class='notice'>You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.</span>"
 
 /obj/item/bodypart/head/robot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/F = W
+	if(istype(W, /obj/item/assembly/flash))
+		var/obj/item/assembly/flash/F = W
 		if(flash1 && flash2)
 			to_chat(user, "<span class='warning'>You have already inserted the eyes!</span>")
 			return

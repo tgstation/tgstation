@@ -92,7 +92,7 @@
 				/obj/item/clothing/mask/cigarette/rollie/cannabis = 4,
 				/obj/item/toy/crayon/spraycan = 2,
 				/obj/item/crowbar = 1,
-				/obj/item/assembly/flash/handheld = 1,
+				/obj/item/assembly/flash = 1,
 				/obj/item/restraints/handcuffs/cable/zipties = 1,
 				/obj/item/restraints/handcuffs = 1,
 				/obj/item/radio/off = 1,

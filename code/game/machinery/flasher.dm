@@ -11,7 +11,7 @@
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	damage_deflection = 10
-	var/obj/item/assembly/flash/handheld/bulb
+	var/obj/item/assembly/flash/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
@@ -67,7 +67,7 @@
 				bulb = null
 				power_change()
 
-	else if (istype(W, /obj/item/assembly/flash/handheld))
+	else if (istype(W, /obj/item/assembly/flash))
 		if (!bulb)
 			if(!user.transferItemToLoc(W, src))
 				return

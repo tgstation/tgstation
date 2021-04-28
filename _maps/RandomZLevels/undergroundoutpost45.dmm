@@ -410,7 +410,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bf" = (
 /obj/item/storage/belt/security,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
@@ -5666,7 +5666,7 @@
 "lu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/item/reagent_containers/spray/pepper,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";

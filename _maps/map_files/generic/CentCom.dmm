@@ -311,7 +311,7 @@
 "iy" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/control)
@@ -1047,7 +1047,7 @@
 "kd" = (
 /obj/item/wrench,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1653,7 +1653,7 @@
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -2410,7 +2410,7 @@
 "mX" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4153,7 +4153,7 @@
 /obj/item/folder/red,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -5093,7 +5093,7 @@
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5859,7 +5859,7 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/red,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9023,7 +9023,7 @@
 "BA" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9331,7 +9331,7 @@
 "Ce" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9413,7 +9413,7 @@
 /obj/item/folder/red,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13223,7 +13223,7 @@
 /obj/item/folder/red,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13647,7 +13647,7 @@
 /area/centcom/evac)
 "Ln" = (
 /obj/structure/table,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
 "Lo" = (

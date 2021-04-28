@@ -1272,7 +1272,7 @@
 /area/ruin/space/derelict/bridge/access)
 "fy" = (
 /obj/structure/table,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
 "fz" = (

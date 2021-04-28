@@ -332,8 +332,6 @@
 	icon_state = "memorizer"
 	inhand_icon_state = "nullrod"
 
-/obj/item/assembly/flash/handheld //this is now the regular pocket flashes
-
 /obj/item/assembly/flash/armimplant
 	name = "photon projector"
 	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocols fix the flashbulb if it ever burns out."
@@ -363,7 +361,7 @@
 /obj/item/assembly/flash/armimplant/proc/cooldown()
 	overheat = FALSE
 
-/obj/item/assembly/flash/handheld/hypnotic
+/obj/item/assembly/flash/hypnotic
 	desc = "A modified flash device, programmed to emit a sequence of subliminal flashes that can send a vulnerable target into a hypnotic trance."
 	flashing_overlay = "flash-hypno"
 	light_color = LIGHT_COLOR_PINK

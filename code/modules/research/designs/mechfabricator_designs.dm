@@ -849,7 +849,7 @@
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 750, /datum/material/glass = 750)
 	construction_time = 100
-	build_path = /obj/item/assembly/flash/handheld
+	build_path = /obj/item/assembly/flash
 	category = list("Misc")
 
 /datum/design/maint_drone

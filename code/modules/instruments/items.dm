@@ -8,7 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/instruments_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/instruments_righthand.dmi'
 	/// Our song datum.
-	var/datum/song/handheld/song
+	var/datum/song/song
 	/// Our allowed list of instrument ids. This is nulled on initialize.
 	var/list/allowed_instrument_ids
 	/// How far away our song datum can be heard.

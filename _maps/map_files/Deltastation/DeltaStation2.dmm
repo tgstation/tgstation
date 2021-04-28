@@ -7517,7 +7517,7 @@
 /obj/item/restraints/handcuffs,
 /obj/item/restraints/handcuffs,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11855,7 +11855,7 @@
 "bJN" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/blue,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -16710,7 +16710,7 @@
 "cgZ" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -31240,17 +31240,17 @@
 /obj/item/bodypart/l_arm/robot{
 	pixel_x = -3
 	},
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /obj/structure/table/reinforced,
 /obj/machinery/light_switch{
 	pixel_x = -38;
 	pixel_y = 26
 	},
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/science/robotics/lab)
@@ -38372,7 +38372,7 @@
 /obj/structure/table,
 /obj/item/restraints/handcuffs,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -47739,7 +47739,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -67582,7 +67582,7 @@
 	pixel_y = 32
 	},
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "mam" = (
@@ -76252,7 +76252,7 @@
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/science/research/abandoned)
@@ -81470,7 +81470,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/structure/disposalpipe/segment,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/iron/white,
 /area/hallway/primary/central/aft)
@@ -107035,8 +107035,8 @@
 "wnJ" = (
 /obj/structure/table/reinforced,
 /obj/item/ai_module/reset,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
@@ -107552,7 +107552,7 @@
 "wva" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

@@ -73,7 +73,7 @@
 	name = "Strobe Shield"
 	result = /obj/item/shield/riot/flash
 	reqs = list(/obj/item/wallframe/flasher = 1,
-				/obj/item/assembly/flash/handheld = 1,
+				/obj/item/assembly/flash = 1,
 				/obj/item/shield/riot = 1)
 	time = 40
 	category = CAT_WEAPONRY

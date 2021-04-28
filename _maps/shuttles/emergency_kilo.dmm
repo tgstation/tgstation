@@ -90,7 +90,7 @@
 /obj/item/restraints/handcuffs,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "ao" = (
