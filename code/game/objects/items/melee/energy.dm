@@ -154,7 +154,7 @@
 	return 0
 
 /obj/item/melee/transforming/energy/sword/saber
-	var/list/possible_colors = list("red" = COLOR_SOFT_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
+	var/list/possible_colors = list("red" = COLOR_SOFT_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER, "white" = COLOR_WHITE, "pink" = LIGHT_COLOR_PINK, "darkblue" = LIGHT_COLOR_DARK_BLUE, "orange" = LIGHT_COLOR_ORANGE)
 	var/hacked = FALSE
 
 /obj/item/melee/transforming/energy/sword/saber/Initialize(mapload)
@@ -181,6 +181,18 @@
 
 /obj/item/melee/transforming/energy/sword/saber/purple
 	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
+
+/obj/item/melee/transforming/energy/sword/saber/pink
+	possible_colors = list("pink" = LIGHT_COLOR_PINK)
+
+/obj/item/melee/transforming/energy/sword/saber/darkblue
+	possible_colors = list("darkblue" = LIGHT_COLOR_DARK_BLUE)
+
+/obj/item/melee/transforming/energy/sword/saber/white
+	possible_colors = list("white" = COLOR_WHITE)
+
+/obj/item/melee/transforming/energy/sword/saber/orange
+	possible_colors = list("orange" = LIGHT_COLOR_ORANGE)
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
 	if(W.tool_behaviour == TOOL_MULTITOOL)

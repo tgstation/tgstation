@@ -302,6 +302,27 @@
 	title = "Singularity and Tesla for Dummies"
 	page_link = "Singularity_and_Tesla_engines"
 
+/obj/item/book/manual/customrecipes
+	name = "Heavenly Eats"
+	icon_state ="bookcc"
+	author = "Heaven Catering Services"
+	title = "Heavenly Eats"
+
+/obj/item/book/manual/customrecipes/attack_self()
+	if(!dat)
+		opencustom()
+	return ..()
+
+/obj/item/book/manual/customrecipes/proc/opencustom(mob/user)
+	var/custwikiurl = CONFIG_GET(string/custwikiurl)
+	if(custwikiurl)
+		if(alert("You are about to open a new window.",,"Ok","No")!="Ok")
+			return
+		usr << link(custwikiurl)
+	else
+		to_chat(src, "<span class='danger'>The URL is not set in the server configuration.</span>")
+	return
+
 /obj/item/book/manual/wiki/security_space_law
 	name = "Space Law"
 	desc = "A set of Nanotrasen guidelines for keeping law and order on their space stations."

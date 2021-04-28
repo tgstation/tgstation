@@ -967,7 +967,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "awD" = (
-/obj/structure/chair/sofa/bench{
+/obj/structure/chair/sofa/bench/goon{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -8658,7 +8658,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/chair/sofa/bench,
+/obj/structure/chair/sofa/bench/goon,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "dLK" = (
@@ -11001,7 +11001,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "eFR" = (
-/obj/structure/chair/sofa/bench/left{
+/obj/structure/chair/sofa/bench/goon/left{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -34768,7 +34768,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
-/obj/structure/chair/sofa/bench/left,
+/obj/structure/chair/sofa/bench/goon/left,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "omX" = (
@@ -43371,7 +43371,7 @@
 /area/hallway/secondary/entry)
 "rLm" = (
 /obj/effect/landmark/start/assistant,
-/obj/structure/chair/sofa/bench/right{
+/obj/structure/chair/sofa/bench/goon/right{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -52284,7 +52284,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/chair/sofa/bench/right,
+/obj/structure/chair/sofa/bench/goon/right,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "vpn" = (

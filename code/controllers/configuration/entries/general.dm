@@ -225,6 +225,9 @@
 /datum/config_entry/string/britnoteurl
 	config_entry_value = "https://docs.google.com/document/d/1F6Jm6Gt8p1BvBIaByPZY6iF4OgA76OK8IHj9f-bnPVI/edit?usp=sharing"
 
+/datum/config_entry/string/custwikiurl
+	config_entry_value = "https://docs.google.com/document/d/1FZuCkv9--Kz0DXauVb2CV47XLTF-dmJyE4ZrtPnMv7Q/edit?usp=sharing"
+
 /datum/config_entry/string/roundstatsurl
 
 /datum/config_entry/string/gamelogurl
