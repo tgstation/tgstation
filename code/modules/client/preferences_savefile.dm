@@ -381,7 +381,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
-
 	//Character
 	READ_FILE(S["real_name"], real_name)
 	READ_FILE(S["gender"], gender)
@@ -393,7 +392,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["skin_tone"], skin_tone)
 	READ_FILE(S["hairstyle_name"], hairstyle)
 	READ_FILE(S["facial_style_name"], facial_hairstyle)
-	READ_FILE(S["underwear"], underwear)
 	READ_FILE(S["underwear_color"], underwear_color)
 	READ_FILE(S["undershirt"], undershirt)
 	READ_FILE(S["socks"], socks)
@@ -477,17 +475,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(gender == MALE)
 		hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_male_list)
 		facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_male_list)
-		underwear = sanitize_inlist(underwear, GLOB.underwear_m)
 		undershirt = sanitize_inlist(undershirt, GLOB.undershirt_m)
 	else if(gender == FEMALE)
 		hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_female_list)
 		facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_female_list)
-		underwear = sanitize_inlist(underwear, GLOB.underwear_f)
 		undershirt = sanitize_inlist(undershirt, GLOB.undershirt_f)
 	else
 		hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_list)
 		facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_list)
-		underwear = sanitize_inlist(underwear, GLOB.underwear_list)
 		undershirt = sanitize_inlist(undershirt, GLOB.undershirt_list)
 
 	socks = sanitize_inlist(socks, GLOB.socks_list)
@@ -537,6 +532,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return FALSE
 	S.cd = "/character[default_slot]"
 
+	for (var/preference_type in GLOB.preference_entries)
+		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+		var/data = preference.serialize(
+			read_preference(GLOB.preference_entries[preference_type]),
+			src,
+		)
+
+		WRITE_FILE(S[preference.savefile_key], data)
+
 	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX) //load_character will sanitize any bad data, so assume up-to-date.)
 
 	//Character
@@ -550,7 +554,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["skin_tone"] , skin_tone)
 	WRITE_FILE(S["hairstyle_name"] , hairstyle)
 	WRITE_FILE(S["facial_style_name"] , facial_hairstyle)
-	WRITE_FILE(S["underwear"] , underwear)
 	WRITE_FILE(S["underwear_color"] , underwear_color)
 	WRITE_FILE(S["undershirt"] , undershirt)
 	WRITE_FILE(S["socks"] , socks)

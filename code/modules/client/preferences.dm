@@ -67,7 +67,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/real_name //our character's name
 	var/gender = MALE //gender of character (well duh)
 	var/age = 30 //age of character
-	var/underwear = "Nude" //underwear type
 	var/underwear_color = "000" //underwear color
 	var/undershirt = "Nude" //undershirt type
 	var/socks = "Nude" //socks type
@@ -192,7 +191,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/ui_interact(mob/user, datum/tgui/ui)
 	// If you leave and come back, re-register the character preview
 	if (!isnull(character_preview_view) && !(character_preview_view in user.client?.screen))
-		log_world("REREGISTER")
 		user.client.register_map_obj(character_preview_view)
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -231,6 +229,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				random_character()
 				real_name = random_unique_name(gender)
 				// save_character()
+
+			character_preview_view.update_body()
 
 	return TRUE
 
@@ -271,13 +271,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /atom/movable/screen/character_preview_view/Destroy()
 	. = ..()
 
-	// vis_contents.Cut()
 	QDEL_NULL(body)
-
 	preferences = null
 
 /atom/movable/screen/character_preview_view/proc/setup_body()
 	body = new
+	update_body()
+
+/// Updates the currently displayed body
+/atom/movable/screen/character_preview_view/proc/update_body()
 	preferences.update_preview_icon(body)
 	appearance = body.appearance
 
@@ -363,10 +365,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else if(firstspace == name_length)
 				real_name += "[pick(GLOB.last_names)]"
 
+	for (var/preference_type in GLOB.preference_entries)
+		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+		preference.apply(character, read_preference(preference_type))
+
 	character.real_name = real_name
 	character.name = character.real_name
 
-	character.gender = gender
 	character.age = age
 	if(gender == MALE || gender == FEMALE)
 		character.body_type = gender
@@ -385,7 +390,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.skin_tone = skin_tone
 	character.hairstyle = hairstyle
 	character.facial_hairstyle = facial_hairstyle
-	character.underwear = underwear
 	character.underwear_color = underwear_color
 	character.undershirt = undershirt
 	character.socks = socks

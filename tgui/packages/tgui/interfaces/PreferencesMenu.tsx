@@ -36,6 +36,26 @@ const CharacterProfiles = (props: {
   );
 };
 
+const CharacterPreview = (props: {
+  id: string,
+}) => {
+  return (
+    <Stack>
+      <Stack.Item>
+        <ByondUi
+          width="220px"
+          height="300px"
+          params={{
+            zoom: 0,
+            id: props.id,
+            type: "map",
+          }}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 export const PreferencesMenu = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
 
@@ -54,15 +74,9 @@ export const PreferencesMenu = (props, context) => {
           <Stack.Divider />
 
           <Stack.Item>
-            <ByondUi
-              width="220px"
-              height="300px"
-              params={{
-                zoom: 0,
-                id: data.character_preview_view,
-                type: "map",
-              }}
-            />
+            <Stack fill>
+              <CharacterPreview id={data.character_preview_view} />
+            </Stack>
           </Stack.Item>
         </Stack>
       </Window.Content>
