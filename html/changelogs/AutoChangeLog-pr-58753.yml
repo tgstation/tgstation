@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscdel: "removed delta roundstart power tools, the room no longer made sense being what it was without that so i turned it into a smoking room style."

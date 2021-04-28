@@ -1,0 +1,111 @@
+2011-10-01:
+  Knognob Lungsparkle:
+  - unknown: Xenomorphic aliens can now shape resin membranes (organic windows basically).
+  - unknown: The AI can no longer see runes. Instead, they will see blood splatters.
+2011-10-02:
+  Errorage:
+  - unknown: Opening a storage item on your belt will now display the proper number
+      of slots even if the number is different from 7.
+  - unknown: Less ponies, gryphons, and Tohou.
+  Petethegoat:
+  - unknown: Pandemic recharge speed is affected by the number of different types
+      of antibodies in the blood sample. For maximum efficiency, use blood samples
+      with only a single type of antibody. (Blood samples with two types of antibodies
+      will still let the Pandemic recharge slightly faster than it used to.)
+2011-10-08:
+  Doohl:
+  - unknown: You can put things on trays and mass-transport them now. To put stuff
+      on trays, simply pick up a tray with items underneath/on top of it and they'll
+      be automatically carried on top of the tray. Be careful not to make a mess~!
+  Mport:
+  - unknown: Telekenesis now only allows you to <i>pick up</i> objects.
+  - unknown: Stun gloves ignore intent.
+  - unknown: Moved the loyalty implants to the HoS' locker.
+  - unknown: Job system redone, remember to setup your prefs.
+2011-10-11:
+  ConstantA:
+  - unknown: Added radios to exosuits. Setting can be found in 'Electronics' menu.
+  - unknown: Exosuit maintenance can be initiated even if it's occupied. The pilot
+      must permit maintenance through 'Permissions &amp;amp; Logging' - 'Permit maintenance
+      protocols'. For combat exosuits it's disabled by default. While in maintenance
+      mode, exosuit can't move or use equipment.
+2011-10-15:
+  /tg/station team:
+  - unknown: ' White Cane Safety Day:'
+  Agouri:
+  - unknown: There has been a tidal wave of bugfixes over the last 5 or so days. If
+      you had previously tried something on the station, saw that it was bugged and
+      never tried it again, chances are it got fixed. I don't want you to neglect
+      using stuff because you think it was bugged, which it was at one point, but
+      no longer is. Thanks, happy new semester to everyone~
+  Doohl:
+  - unknown: New hairstyles! <i>YOU</i> never asked for this!
+  Errorage:
+  - unknown: When you're unconscious, paralyzed, sleeping, etc. you will still see
+      the same blackness as always, but it will rarely flicker a bit to allow you
+      to see a little of your surroundings.
+2011-10-18:
+  Errorage:
+  - unknown: "<font color=\"red\">You can now move diagonally!</font> To do so, use\
+      \ the numpad. The keybaord has been remapped to make this possible:\n\t\t<ul>\n\
+      \t\t\t<li>CTRL + A = throw</li>\n\t\t\t<li>CTRL + S = swap hands</li>\n\t\t\t\
+      <li>CTRL + D = drop</li>\n\t\t\t<li>CTRL + W = use item in hand on itself</li>\n\
+      \t\t\t<li>Numpad divide (/) = throw</li>\n\t\t\t<li>Numpad multiply (*) = swap\
+      \ hands</li>\n\t\t\t<li>Numpad subtract (-) = drop</li>\n\t\t\t<li>Numpad add\
+      \ (+) = use item in hand on itself</li>\n\t\t</ul>\n\t"
+2011-10-21:
+  /tg/station team:
+  - unknown: ' Tuesday:'
+  Errorage:
+  - unknown: "<font color=\"red\">Old keyboard hotkey layout option available again!</font>\
+      \ home, end, page down and page up now once again do what they did before by\
+      \ default. To use diagonal movement you will need to use your numpad with NUM\
+      \ LOCK enabled.<br/>\n\t\tThe new list of hotkeys is as follows: (Valid as of\
+      \ 21.10.2011)\n\t\t<ul>\n\t\t\t<li>Numpad with Num Lock enabled = movement in\
+      \ wanted direction.</li>\n\t\t\t<li>Numpad with Num Lock disabled = as it was\
+      \ before. movement north-south-east-west and throw, drop, swap hands, use item\
+      \ on itself.</li>\n\t\t\t<li>Page up (also numpad 9 with num lock disabled)\
+      \ = swap hands</li>\n\t\t\t<li>Page down (also numpad 3 with num lock disabled)\
+      \ = use item in hand on itself</li>\n\t\t\t<li>home (also numpad 7 with num\
+      \ lock disabled) = drop</li>\n\t\t\t<li>end (also numpad 1 with num lock disabled)\
+      \ = throw</li>\n\t\t\t<li>CTRL + A = throw</li>\n\t\t\t<li>CTRL + S = swap hands</li>\n\
+      \t\t\t<li>CTRL + D = drop</li>\n\t\t\t<li>CTRL + W = use item in hand on itself</li>\n\
+      \t\t\t<li>Numpad divide (/) = throw</li>\n\t\t\t<li>Numpad multiply (*) = swap\
+      \ hands</li>\n\t\t\t<li>Numpad subtract (-) = drop</li>\n\t\t\t<li>Numpad add\
+      \ (+) = use item in hand on itself</li>\n\t\t</ul>\n\t\tIn short, use <font\
+      \ color=\"red\">Num Lock</font> to swap between the two layouts.\n\t"
+2011-10-27:
+  Mport:
+  - unknown: New WIP TK system added.  To activate your TK click the throw button
+      with an empty hand.  This will bring up a tkgrab item.  Click on a non-anchored
+      (currently) non mob Object to select it as your "focus".  Once a focus is selected
+      so long as you are in range of the focus you can now click somewhere to throw
+      the focus at the target.  To quit using TK just drop the tkgrab item.
+2011-10-29:
+  ConstantA:
+  - unknown: Added step and turn sounds for mechs
+  - unknown: Added another mecha equipment - plasma converter. Works similar to portable
+      generator. Uses solid plasma as fuel. Can be refueled either by clicking on
+      it with plasma in hand, or directly from mecha - selecting it and clicking on
+      plasma.
+  - unknown: Added mecha laser cannon.
+  - unknown: Added damage absorption for mechs. Different mechs have different absorption
+      for different types of damage.
+  - unknown: Metal foam now blocks air movement.
+  Doohl:
+  - unknown: More hairs added and a very long beard.
+  - unknown: Finally fixed the request console announcements going <font color="red"><b>AMP
+      AMP AMP</b></font> all the time when you use punctuation.
+  Petethegoat:
+  - unknown: 'Stunglove overhaul: part one. Stun gloves are now made by wiring a pair
+      of gloves, and then attaching a battery- this shows up on the object sprite,
+      but not on your character. Stungloves use 2500 charge per stun! This means that
+      some low capacity batteries will make <i>useless</i> stungloves. To get your
+      old inconspicous gloves back, simply cut away the wire and battery. <font color="red">Note
+      that insulated gloves lose their insulation when you wire them up!</font> <b>Yet
+      to come:</b> stungloves taking extra damage from shocked doors.'
+  - unknown: "<font color=\"red\">Removed sleepypens!</font> Paralysis pens have been\
+      \ changed to look like normal pens instead of penlights, and have been slightly\
+      \ nerfed. They will paralyse for about fifteen seconds, and cause minor brain\
+      \ damage and dizziness.\n\t"
+  - unknown: "Uplink Implants now have five telecrystals instead of four.\n  "

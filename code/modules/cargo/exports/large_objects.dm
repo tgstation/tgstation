@@ -138,4 +138,4 @@
 
 /datum/export/large/gas_canister/proc/get_gas_value(datum/gas/gasType, moles)
 	var/baseValue = initial(gasType.base_value)
-	return round((baseValue/k_elasticity) * 1 - NUM_E**(-1 * k_elasticity * moles))
+	return round((baseValue/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * moles)))

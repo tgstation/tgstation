@@ -1,0 +1,101 @@
+2012-10-01:
+  Cheridan:
+  - experiment: Wizards have a new artifact added to their spellbooks.
+2012-10-03:
+  Agouri:
+  - tweak: <img src="http://www.kamletos.si/VV1IK.gif"/>
+2012-10-05:
+  Aranclanos:
+  - bugfix: <strike>A buncha crud nobody cares about lol</strike> Added a light to
+      the airlock wiring interface to show the status of the timing.
+  - bugfix: You can't fill sprays without being next to the dispenser.
+  - bugfix: Simple animals no longer freeze to death in places with normal temperature.
+  - bugfix: Mechs no longer freeze on the spot when they are using the Energy Relay
+      on powerless areas.
+  - bugfix: Improvements to showers, they now clean gear on beltslot, back, ears and
+      eyes. Showers only clean visible gear.
+  - bugfix: Replica pods works again! But you can't make potato people without a key
+      or clone people who ghosted alive (Catatonic).
+  - bugfix: Engiborgs can deconstruct airlocks with their RCDs once again.
+  - bugfix: You can construct airlocks while standing on another airlock with RCDs.
+2012-10-08:
+  Kor:
+  - tweak: A pen no longer spawns in your pocket. Instead, each PDA will spawn with
+      a pen already in it.
+2012-10-10:
+  Giacom:
+  - tweak: Larva grow a little bit faster when on weeds or when breathing in plasma.
+2012-10-13:
+  Giacom:
+  - imageadd: Facehuggers have a new animation, thanks to Sly.
+  - rscadd: Firelocks, glass-less airlocks and walls will stop heat.
+  - rscadd: Fires are now more deadly, especially the flames.
+  - tweak: Fires will now break windows.
+2012-10-16:
+  Giacom:
+  - rscadd: New changeling powers!
+  - rscadd: Hive Channel/Hive Absorb. Allows you to share your DNA with other changelings,
+      very expensive chemical wise to absorb (download), not so much to channel (upload)!
+      You cannot achieve your objective by sharing DNA.
+  - rscadd: Mimic Voice! You can form your voice of a name you enter. You won't look
+      like them but when you talk, people will hear the name of who you selected.
+      While you're mimicing, you can't regenerate chemicals.
+  - rscadd: Extract DNA! A power that allows you to silently sting someone and take
+      their DNA! Meaning you do not have to absorb someone to become them. Extracting
+      their DNA doesn't count towards completing your objectives.
+  - rscadd: You can now get flares from red emergency toolboxes. Has a 50% chance
+      of a flash-light or a flare spawning.
+  - imageadd: Flare icon by Ausops!
+  - rscadd: Thanks to RavingManiac (Smoke Carter), Roros now lay eggs which can grow
+      into baby roros or be used for cooking recipes. Scientists will need to expose
+      the egg to plasma for it to hatch; while it is orange (grown).
+  - imageadd: A new icon for the map spawned x-ray cameras. Icon by Krutchen.
+2012-10-18:
+  Giacom:
+  - tweak: As an AI, you can type in the "track with camera" command and get a list
+      of names to show up there. This also works with "list camera" verb. Remember
+      to use space to auto-fill.
+  - rscadd: Welding goggles have been added. They are like welding helmets but they
+      are for the glasses equipment slot. Science and the assembly line are given
+      a pair.
+  - imageadd: Thanks to WJohnston for the welding goggle icons.
+  - tweak: Small change to the Assembly Line. Instead of six normal flashes, the Assembly
+      Line will instead have two normal flashes and eight synthetic flashes. Synthetic
+      flashes only work once but are designed to be used in construction of Cyborgs.
+  - tweak: Nar-Sie put on a few pounds. Thanks HornyGranny.
+2012-10-24:
+  Giacom:
+  - rscadd: Throwing eggs will result in the reagents of the egg reacting to the target.
+      (Which can be a turf, object or mob) This creates possibilities like chloral
+      eggs, lube eggs, and many more.
+  - rscadd: Aliens can now acid walls and floors! Not R-Walls though.
+  - tweak: Facehugger throw range reduced to 5, so aim at humans that are 2 tiles
+      apart from the edge of your screen.
+  - tweak: Making eggs is a little more expensive but secreting resin is cheaper.
+      (Both cost 75 now)
+  - tweak: Aliens no longer have a random duration of stunning humans, it's a constant
+      value now of the lower based value.
+  - tweak: Acid is less random and will be more reliable. Don't bother aciding stuff
+      more than once, as it will waste plasma.
+  - rscadd: You can now target non-dense items (such as facehuggers) with a gun.
+  - rscadd: You can now shoot canisters, computers and windoors to break them.
+2012-10-25:
+  Flashkirby99:
+  - imageadd: Added 18 new hairstyles!
+2012-10-27:
+  Nodrak:
+  - rscadd: The CE has a new pet!
+  Petethegoat:
+  - rscadd: Mousetraps are now assemblies.
+  - rscadd: Added a new crate for cargo to order.
+2012-10-28:
+  Errorage:
+  - tweak: You can now set your character's age up to 85. This used to be 45.
+2012-10-31:
+  Giacom:
+  - rscadd: 'Advance evolving diseases! Virology can now create, mutate and mix advance
+      diseases together. I replaced the two bottles of blood in Virology with the
+      advance disease. I''ll write a wiki article soon enough. Here''s a tip: Putting
+      mutagen or virus food (a mixture of milk, water and oxygen) in blood with an
+      existing disease will mutate it to gain symptoms. It can potentially lose old
+      symptoms in the process, so keep backups!'
