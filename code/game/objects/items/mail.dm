@@ -53,7 +53,7 @@
 /obj/item/mail/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
-	AddElement(/datum/element/item_scaling, 0.5, 1)
+	AddElement(/datum/element/item_scaling, 0.75, 1)
 	if(isnull(department_colors))
 		department_colors = list(
 			ACCOUNT_CIV = COLOR_WHITE,
@@ -121,6 +121,16 @@
 		user.put_in_hands(contents[1])
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
+
+/obj/item/mail/examine_more(mob/user)
+	. = ..()
+	var/list/msg = list("<span class='notice'><i>You notice the postmarking on the front of the mail...</i></span>")
+	if(recipient)
+		msg += "\t<span class='info'>Certified NT mail for [recipient].</span>"
+	else
+		msg += "\t<span class='info'>Certified mail for [GLOB.station_name].</span>"
+	msg += "\t<span class='info'>Distribute by hand or via destination tagger using the certified NT disposal system.</span>"
+	return msg
 
 /// Accepts a mob to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(mob/new_recipient)

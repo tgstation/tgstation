@@ -385,12 +385,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(power > POWER_PENALTY_THRESHOLD)
 		investigate_log("has spawned additional energy balls.", INVESTIGATE_SUPERMATTER)
 		if(local_turf)
-			var/obj/energy_ball/tesla = new(local_turf)
-			tesla.energy = 200 //Gets us about 9 balls
-	else if(power > EVENT_POWER_PENALTY_THRESHOLD && prob(power/50) && !istype(src, /obj/machinery/power/supermatter_crystal/shard))
-		var/datum/round_event_control/crystal_invasion/crystals = new/datum/round_event_control/crystal_invasion
-		crystals.runEvent()
-		return //No boom for me sir
+			var/obj/energy_ball/created_tesla = new(local_turf)
+			created_tesla.energy = 200 //Gets us about 9 balls
 	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(origin = src,
 		devastation_range = explosion_power * max(gasmix_power_ratio, 0.205) * 0.5,
@@ -634,23 +630,32 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			env.merge(removed)
 			air_update_turf(FALSE, FALSE)
 
-	//Makes em go mad and accumulate rads.
-	var/to_add = -0.05
-	for(var/mob/living/carbon/human/living in view(src, HALLUCINATION_RANGE(power)))
+	// Defaults to a value less than 1. Over time the psyCoeff goes to 0 if
+	// no supermatter soothers are nearby.
+	var/psy_coeff_diff = -0.05
+	for(var/mob/living/carbon/human/seen_by_sm in view(src, HALLUCINATION_RANGE(power)))
 		// Someone (generally a Psychologist), when looking at the SM
 		// within hallucination range makes it easier to manage.
-		if(HAS_TRAIT(living, TRAIT_SUPERMATTER_SOOTHER) || (living.mind && HAS_TRAIT(living.mind, TRAIT_SUPERMATTER_SOOTHER)))
-			to_add = 0.05
+		if(HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_SOOTHER) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_SOOTHER)))
+			psy_coeff_diff = 0.05
 			psy_overlay = TRUE
-		// If they can see it without being immune (mesons, Psychologist)
-		if (!(HAS_TRAIT(living, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (living.mind && HAS_TRAIT(living.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE))))
-			var/distance = sqrt(1 / max(1, get_dist(living, src)))
-			living.hallucination += power * hallucination_power * distance
-			living.hallucination = clamp(living.hallucination, 0, 200)
-	psyCoeff = clamp(psyCoeff + to_add, 0, 1)
-	for(var/mob/living/rad_victim in range(src, round((power / 100) ** 0.25)))
-		var/rads = (power / 10) * sqrt( 1 / max(get_dist(rad_victim, src),1) )
-		rad_victim.rad_act(rads)
+
+		// If they are immune to supermatter hallucinations.
+		if (HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+			continue
+
+		// Blind people don't get supermatter hallucinations.
+		if (seen_by_sm.is_blind())
+			continue
+
+		// Everyone else gets hallucinations.
+		var/dist = sqrt(1 / max(1, get_dist(seen_by_sm, src)))
+		seen_by_sm.hallucination += power * hallucination_power * dist
+		seen_by_sm.hallucination = clamp(seen_by_sm.hallucination, 0, 200)
+	psyCoeff = clamp(psyCoeff + psy_coeff_diff, 0, 1)
+	for(var/mob/living/in_range_living in range(src, round((power * 0.01) ** 0.25)))
+		var/rad_amount = (power * 0.1) * sqrt(1 / max(get_dist(in_range_living, src), 1))
+		in_range_living.rad_act(rad_amount)
 
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
@@ -1206,14 +1211,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(zap_count > 1)
 				targets_hit = targets_hit.Copy() //Pass by ref begone
 			supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit, zap_cutoff, power_level, zap_icon)
-
-/obj/machinery/power/supermatter_crystal/proc/destabilize(portal_numbers)
-	var/turf/turf_loc = get_turf(src)
-	if(!turf_loc)
-		return
-	explosion(turf_loc, heavy_impact_range = round(portal_numbers/5), light_impact_range = round(portal_numbers), flash_range = 1, adminlog = TRUE, ignorecap = TRUE)
-	. = new/obj/machinery/destabilized_crystal(turf_loc)
-	qdel(src)
 
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'

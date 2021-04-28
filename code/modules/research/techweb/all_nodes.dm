@@ -171,14 +171,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/random/material/medium/one = 4000)
 
-/datum/techweb_node/anomaly
-	id = "anomaly_research"
-	display_name = "Anomaly Research"
-	description = "Unlock the potential of the mysterious anomalies that appear on station."
-	prereq_ids = list("adv_engi", "practical_bluespace")
-	design_ids = list("reactive_armour", "anomaly_neutralizer", "crystal_stabilizer")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-
 /datum/techweb_node/high_efficiency
 	id = "high_efficiency"
 	display_name = "High Efficiency Parts"

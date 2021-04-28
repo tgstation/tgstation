@@ -1,5 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Mechs can move in space if near a wall again."
-  - bugfix: "Mech thrusters no longer incorrectly fail if the mech is near a wall."
