@@ -50,7 +50,7 @@
 		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 		eject()
 		return
-	var/gasdrained = min(powerproduction_drain * drainratio * delta_time, tank_mix.gases[/datum/gas/plasma][MOLES])
+	var/gasdrained = min(power_production_drain * drain_ratio * delta_time, tank_mix.gases[/datum/gas/plasma][MOLES])
 	tank_mix.gases[/datum/gas/plasma][MOLES] -= gasdrained
 	tank_mix.assert_gas(/datum/gas/tritium)
 	tank_mix.gases[/datum/gas/tritium][MOLES] += gasdrained

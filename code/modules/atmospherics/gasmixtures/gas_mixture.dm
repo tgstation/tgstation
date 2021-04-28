@@ -443,58 +443,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return ""
 
-GLOBAL_LIST_INIT(react_chances, list(1,2))
-
-/datum/gas_mixture/proc/react(datum/holder)
-	var/rand_output = pick(GLOB.react_chances)
-	if(rand_output == 1)
-		return react_old(holder)
-	else if (rand_output == 2)
-		return react_hybrid(holder)
-
-///Performs various reactions such as combustion or fusion (LOL)
+///Performs various reactions such as combustion and fabrication
 ///Returns: 1 if any reaction took place; 0 otherwise
-/datum/gas_mixture/proc/react_old(datum/holder)
-	. = NO_REACTION
-	var/list/cached_gases = gases
-	if(!length(cached_gases))
-		return
-	var/list/reactions = list()
-	for(var/datum/gas_reaction/reaction as anything in SSair.all_reactions)
-		if(cached_gases[reaction.major_gas])
-			reactions += reaction
-
-	if(!length(reactions))
-		return
-
-	reaction_results = new
-	//It might be worth looking into updating these after each reaction, but it changes things a lot, so be careful
-	var/temp = temperature
-
-	reaction_loop:
-		for(var/datum/gas_reaction/reaction as anything in reactions)
-
-			var/list/min_reqs = reaction.requirements
-			if((min_reqs["MIN_TEMP"] && temp < min_reqs["MIN_TEMP"]) || (min_reqs["MAX_TEMP"] && temp > min_reqs["MAX_TEMP"]))
-				continue
-
-			for(var/id in min_reqs)
-				if (id == "MIN_TEMP" || id == "MAX_TEMP")
-					continue
-				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
-					continue reaction_loop
-
-			//at this point, all requirements for the reaction are satisfied. we can now react()
-
-			. |= reaction.react(src, holder)
-
-			if (. & STOP_REACTIONS)
-				break
-
-	if(.) //If we changed the mix to any degree, or if we stopped reacting
-		garbage_collect()
-
-/datum/gas_mixture/proc/react_hybrid(datum/holder)
+/datum/gas_mixture/proc/react(datum/holder)
 	. = NO_REACTION
 	var/list/cached_gases = gases
 	if(!length(cached_gases))
@@ -504,7 +455,7 @@ GLOBAL_LIST_INIT(react_chances, list(1,2))
 	var/list/mid_formation = list()
 	var/list/post_formation = list()
 	var/list/fires = list()
-	var/list/gas_reactions = SSair.sorted_reactions
+	var/list/gas_reactions = SSair.gas_reactions
 	for(var/gas_id in cached_gases)
 		var/list/reaction_set = gas_reactions[gas_id]
 		if(!reaction_set)

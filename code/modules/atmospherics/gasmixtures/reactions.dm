@@ -31,9 +31,9 @@ nobiliumsuppression = INFINITY
 #define PRIORITY_FIRE 4
 
 /proc/init_gas_reactions()
-	var/list/all_reactions = list()
 	var/list/priority_reactions = list()
 
+	//Builds a list of gas id to reaction group
 	for(var/gas_id in GLOB.meta_gas_info)
 		priority_reactions[gas_id] = list(
 			PRIORITY_PRE_FORMATION = list(),
@@ -53,12 +53,9 @@ nobiliumsuppression = INFINITY
 				if (!reaction_key || initial(reaction_key.rarity) > initial(req_gas.rarity))
 					reaction_key = req_gas
 		reaction.major_gas = reaction_key
+		priority_reactions[reaction_key][reaction.priority_group] += reaction
 
-		if(!reaction.blocks_reactions)
-			priority_reactions[reaction_key][reaction.priority_group] += reaction
-
-		all_reactions += reaction
-
+	//Culls empty gases
 	for(var/gas_id in GLOB.meta_gas_info)
 		var/passed = FALSE
 		for(var/list/priority_grouping in priority_reactions[gas_id])
@@ -68,8 +65,8 @@ nobiliumsuppression = INFINITY
 		if(passed)
 			continue
 		priority_reactions[gas_id] = null
-	sortTim(all_reactions, /proc/cmp_gas_reaction)
-	return list(all_reactions, priority_reactions)
+
+	return priority_reactions
 
 /proc/cmp_gas_reaction(datum/gas_reaction/a, datum/gas_reaction/b) // compares lists of reactions by the maximum priority contained within the list
 	return b.priority - a.priority
@@ -80,7 +77,6 @@ nobiliumsuppression = INFINITY
 	var/list/requirements
 	var/major_gas //the highest rarity gas used in the reaction.
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
-	var/blocks_reactions = FALSE
 	var/priority_group
 	var/priority = 100 //lower numbers are checked/react later than higher numbers. if two reactions have the same priority they may happen in either order
 	var/name = "reaction"
@@ -93,22 +89,7 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/proc/react(datum/gas_mixture/air, atom/location)
 	return NO_REACTION
-
-/datum/gas_reaction/nobliumsupression
-	priority_group = "fuck you"
-	priority = INFINITY
-	blocks_reactions = TRUE
-	name = "Hyper-Noblium Reaction Suppression"
-	id = "nobstop"
-
-/datum/gas_reaction/nobliumsupression/init_reqs()
-	requirements = list(
-		/datum/gas/hypernoblium = REACTION_OPPRESSION_THRESHOLD,
-		"TEMP" = 20
 	)
-
-/datum/gas_reaction/nobliumsupression/react()
-	return STOP_REACTIONS
 
 //water vapor: puts out fires?
 /datum/gas_reaction/water_vapor

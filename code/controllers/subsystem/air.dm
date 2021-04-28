@@ -30,8 +30,7 @@ SUBSYSTEM_DEF(air)
 	var/list/pipe_init_dirs_cache = list()
 
 	//atmos singletons
-	var/list/sorted_reactions = list()
-	var/list/all_reactions = list()
+	var/list/gas_reactions = list()
 	var/list/atmos_gen
 	var/list/planetary = list() //Lets cache static planetary mixes
 
@@ -77,9 +76,8 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/Initialize(timeofday)
 	map_loading = FALSE
-	var/list/reaction_output = init_gas_reactions()
-	all_reactions = reaction_output[1]
-	sorted_reactions = reaction_output[2]
+	gas_reactions = init_gas_reactions()
+
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
