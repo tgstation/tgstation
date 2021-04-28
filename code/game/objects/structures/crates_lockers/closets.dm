@@ -449,9 +449,8 @@
 	open()
 
 /obj/structure/closet/attack_hand_secondary(mob/user, modifiers)
-	if(opened || !secure)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	togglelock(user)
+	if(!opened && secure)
+		togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
