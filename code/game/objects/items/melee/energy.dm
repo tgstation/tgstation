@@ -189,7 +189,7 @@
 	possible_colors = list("darkblue" = LIGHT_COLOR_DARK_BLUE)
 
 /obj/item/melee/transforming/energy/sword/saber/white
-	possible_colors = list("white" = COLOR_WHITE)
+	possible_colors = list("white" = LIGHT_COLOR_HALOGEN)
 
 /obj/item/melee/transforming/energy/sword/saber/orange
 	possible_colors = list("orange" = LIGHT_COLOR_ORANGE)
