@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Wizard shielded hardsuit recharge runes are now properly consumed upon use"
