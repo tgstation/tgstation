@@ -184,7 +184,8 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	#endif
 	/datum/admins/proc/create_or_modify_area,
 	/client/proc/check_timer_sources,
-	/client/proc/toggle_cdn
+	/client/proc/toggle_cdn,
+	/client/proc/cmd_give_sdql_spell
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
