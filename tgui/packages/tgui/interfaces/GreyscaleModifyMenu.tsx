@@ -52,8 +52,8 @@ const ConfigDisplay = (props, context) => {
         </LabeledList.Item>
       </LabeledList>
     </Section>
-  )
-}
+  );
+};
 
 const ColorDisplay = (props, context) => {
   const { act, data } = useBackend<GreyscaleMenuData>(context);
