@@ -6,7 +6,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 60, ACID = 30)
 	anchored = FALSE
 
-	///Stores the gas mixture of the portable component
+	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
 	///Stores the reference of the connecting port
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
@@ -28,8 +28,7 @@
 	SSair.stop_processing_machine(src)
 
 	disconnect()
-	qdel(air_contents)
-	air_contents = null
+	QDEL_NULL(air_contents)
 
 	return ..()
 

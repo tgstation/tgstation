@@ -66,12 +66,13 @@
 	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 	. += "Move Mode: [m_intent]"
 	if (internal)
-		if (!internal.return_air())
-			qdel(internal)
+		var/datum/gas_mixture/internal_air = internal.return_air()
+		if (!internal_air)
+			QDEL_NULL(internal)
 		else
 			. += ""
 			. += "Internal Atmosphere Info: [internal.name]"
-			. += "Tank Pressure: [internal.air_contents.return_pressure()]"
+			. += "Tank Pressure: [internal_air.return_pressure()]"
 			. += "Distribution Pressure: [internal.distribute_pressure]"
 	if(istype(wear_suit, /obj/item/clothing/suit/space))
 		var/obj/item/clothing/suit/space/S = wear_suit
