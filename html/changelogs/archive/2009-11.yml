@@ -1,0 +1,70 @@
+2009-11-03:
+  /tg/station ss13 team:
+  - unknown: "\n    <strong>Bug fix:</strong> Made most pop-up windows respect the\
+      \ close button.\n  "
+2009-11-27:
+  /tg/station ss13 team:
+  - unknown: "\n\t<strong>Monkey AI 2.0:</strong> Monkeys will now get angry, going\
+      \ after random human targets with the ability to wield weapons, throw random\
+      \ objects, open doors, and break through glass/grilles. They're basically terminators.\n\
+      \  "
+  - unknown: "\n\t<strong>New gamemode: Monkey Survival</strong>\n\t<ul>\n\t  <li>\n\
+      \        Survive a horde of angry monkeys busting through the station's airvents\
+      \ and rampaging through the station for 25 minutes.\n\t  </li>\n\t</ul>\n  "
+  - unknown: "\n\t<strong>New robots: Cleanbot and Floorbot</strong>\n\t<ul>\n\t \
+      \ <li>\n        Cleanbots automatically clean up messes and Floorbots repair\
+      \ floors.\n\t  </li>\n\t</ul>\n  "
+  - unknown: "\n\t<strong>New spell: Mindblast</strong>\n\t<ul>\n\t  <li>\n      \
+      \  Causes brain damage, progressively causing other players to become even more\
+      \ brain damaged.\n\t  </li>\n\t</ul>\n  "
+  - unknown: "\n\t<strong>Alien Races</strong>\n\t<ul>\n\t  <li>\n        Wizards\
+      \ may randomly spawn as illithids, who gain Mind Blast for free, and nuke agents\
+      \ may randomly spawn as lizardmen.\n\t  </li>\n\t</ul>\n  "
+  - unknown: "\n\t<strong>Station shields:</strong> The station now has a toggleable\
+      \ forcefield that can only be destroyed by meteors or bombs. Takes a lot of\
+      \ station power to use.\n  "
+  - unknown: "\n\t<strong>Traitor scaling:</strong> Number of traitors/wizards/agents\
+      \ now scales to number of players.\n  "
+  - unknown: "\n\t<strong>New food item: Donk pockets</strong>\n\t<ul>\n\t <li>\n\t\
+      Delicious and microwavable, gives a bigger health boost for traitors.\n\t </li>\n\
+      \t</ul>\n  "
+  - unknown: "\n\t<strong>Cigarettes:</strong> Now you can fulfill your horrible nicotine\
+      \ cravings. The detective starts with a zippo lighter and pack of cigarettes.\
+      \ Other packs can be be obtained via vending machines.\n  "
+  - unknown: "\n\t<strong>Warning signs:</strong> The station is now filled with various\
+      \ warning signs and such.\n  "
+  - unknown: "\n\t<strong>Updated graphics:</strong> Many, many objects have had their\
+      \ graphics updated including pipes, windows, tables, and closets. HUD graphics\
+      \ have been updated to be easier to understand.\n  "
+  - unknown: "\n\t<strong>Lighting fixes:</strong> New turf is now correctly lit instead\
+      \ of being completely dark.\n  "
+  - unknown: "\n\t<strong>Meteor fixes:</strong> The code and graphics for meteors\
+      \ has been fixed so the meteor gametype is more playable, sort of.\n  "
+  - unknown: "\n\t<strong>Escape shuttle fix:</strong> The shuttle can now be called\
+      \ in Revolution and Malfunction, but the shuttle will be recalled before it\
+      \ arrives. This way players can no longer call the shuttle to figure out the\
+      \ game mode during secret.\n  "
+  - unknown: "\n\t<strong>Changelog updated:</strong> New changelog entry for Thanksgiving\
+      \ thanks to Haruhi who will probably update the changelog from now on after\
+      \ almost a month of neglect.\n  "
+2009-11-30:
+  /tg/station ss13 team:
+  - unknown: "\n\t<strong>Supply Shuttle 1.0:</strong> Now you can order new supplies\
+      \ using Cargo Bay north of the autolathe.\n  "
+  - unknown: "\n\t<strong>New containers:</strong> The game now features a variety\
+      \ of crates to hold all sorts of imaginary space supplies.\n  "
+  - unknown: "\n\t<strong>New position: Quartermaster</strong>\n\t<ul>\n\t  <li>\n\
+      \        A master of supplies. Manages the cargo bay by taking shipments and\
+      \ distributing them to the crew.\n\t  </li>\n\t</ul>\n  "
+  - unknown: "\n\t<strong>New position: Research Director</strong>\n\t<ul>\n\t  <li>\n\
+      \        The head of the SS13 research department. He directs research and makes\
+      \ sure that the research crew are working.\n\t  </li>\n\t</ul>\n  "
+  - unknown: "\n\t<strong>New position: Chief Engineer</strong>\n\t<ul>\n\t  <li>\n\
+      \        Boss of all the engineers. Makes sure the engine is loaded and that\
+      \ the station has the necessary amount of power to run.\n\t  </li>\n\t</ul>\n\
+      \  "
+  - unknown: "\n\t<strong>New robot: Securibot</strong>\n\t<ul>\n\t  <li>\n      \
+      \  Automatically stuns and handcuffs criminals listed in the security records.\
+      \ It's also really goddamn slow.\n\t  </li>\n\t</ul>\n  "
+  - unknown: "\n\t<strong>New jumpsuits:</strong> Engineers and Atmos Techs have new\
+      \ jumpsuits to distinguish between them easier.\n  "

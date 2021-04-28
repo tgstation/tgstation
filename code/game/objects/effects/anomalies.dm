@@ -75,7 +75,7 @@
 	return
 
 /obj/effect/anomaly/ex_act(severity, target)
-	if(severity == EXPLODE_DEVASTATE)
+	if(severity >= EXPLODE_DEVASTATE)
 		qdel(src)
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
@@ -192,7 +192,7 @@
 
 /obj/effect/anomaly/flux/detonate()
 	if(explosive)
-		explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
+		explosion(src, devastation_range = 1, heavy_impact_range = 4, light_impact_range = 16, flash_range = 18) //Low devastation, but hits a lot of stuff.
 	else
 		new /obj/effect/particle_effect/sparks(loc)
 

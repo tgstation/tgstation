@@ -1,0 +1,4 @@
+author: "Urumasi"
+delete-after: True
+changes: 
+  - bugfix: "Gas canisters now sell for the correct value."

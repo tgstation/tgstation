@@ -1,0 +1,544 @@
+2016-04-01:
+  Erwgd:
+  - bugfix: Weed Killer bottles and Pest Killer bottles now contain 50 units.
+  - rscadd: The biogenerator can now make empty bottles and black pepper.
+  Isratosh:
+  - rscadd: Added an admin jump button to explosion logs.
+  Joan:
+  - rscadd: Traitors can now buy charger holoparasites.
+  - rscadd: Charger holoparasites move extremely fast, do medium damage, and can charge
+      at a location, damaging the first target it hits and forcing them to drop any
+      items they're holding.
+  Kor:
+  - rscadd: Mechas are now storm proof
+  - rscadd: Kinetic Accelerators now require two hands to fire, but are free standard
+      gear for miners.
+  - rscadd: All mining scanners are now automatic, with the advanced version having
+      longer range.
+  - rscadd: The QM and HoP no longer have spare vouchers.
+  - rscadd: You can buy a pack of two survival capsules with your mining voucher.
+  - rscadd: Mining Bots will no longer cause friendly fire incidents. They'll hold
+      fire if you are between them and their target
+  - rscadd: There are now four different mining drone upgrades available in the vendor.
+  - rscadd: Resonators can now have more fields and deal more melee damage.
+  - rscadd: Lavaland miners now have explorer's suits instead of hardsuits. Sprites
+      by Ausops.
+  - rscadd: You can now butcher Goliath's for their meat. It cooks well in lava.
+  Shadowlight213:
+  - rscadd: Clients now have a volume preference for admin-played sounds.
+  TehZombehz:
+  - rscadd: The 'Plasteel Chef' program has provided station chefs with complimentary
+      ingredient packages. There are several package themes, and chefs are provided
+      a random package on arrival.
+  coiax:
+  - rscadd: Free Golems on Lavaland have been naming their newborn siblings with a
+      wider range of geology terms
+2016-04-02:
+  Eaglendia:
+  - rscadd: Central Command has released a new, more functional run of their most
+      stylish fashion line.
+  - rscadd: Head of Staff cloaks can now hold specific items - the antique laser gun
+      for the Captain, the replica energy gun for the Head of Security, the hypospray
+      for the Chief Medical Officer, the Hand Teleporter or RPED for the Research
+      Director, and the RCD or RPD for the Chief Engineer.
+2016-04-03:
+  Erwgd:
+  - rscadd: Our valued colleagues in the security department are reminded to search
+      boots for hidden items (such as knives or syringes) as part of standard search
+      procedures. Alt-click a pair of boots to remove any hidden items.
+  Isratosh:
+  - bugfix: Fixed rudimentary transform not working properly on ghosts with minds.
+  - rscadd: Admin logs for bluespace capsules not activated on the mining Z level.
+2016-04-04:
+  TechnoAlchemisto:
+  - rscadd: The recipes for some Trekchems are now back in the game
+  - rscadd: Bicaridine can be made with carbon, oxygen, and sugar.
+  - rscadd: Kelotane can be made with silicon and carbon.
+  - rscadd: Antitoxin can be made with nitrogen, silicon, and potassium
+  - rscadd: tricordrazine can be made by combining all three.
+2016-04-05:
+  Erwgd:
+  - rscadd: Utility belts of all kinds can now accept gloves. Most belts, except janitorial
+      belts, may now also hold station bounced radios.
+  - rscadd: Hazard vests and most jackets can carry a station bounced radio as well.
+      Labcoats can be used to store a handheld crew monitor.
+  - rscadd: The autolathe can now make toolboxes.
+  Joan:
+  - rscadd: Adds protector holoparasites to traitor holoparasite injectors.
+  - rscadd: Protector holoparasites cause the summoner to teleport to them when out
+      of range, instead of the other way around.
+  - rscadd: Protector holoparasites have two modes; Combat, where they do and take
+      medium damage, and Protection, where they do and take almost no damage, but
+      move slightly slower.
+  - tweak: Explosive Holoparasites no longer teleport non-mobs when attacking, but
+      have a higher chance to teleport mobs.
+  - rscdel: Explosive Holoparasite bombs no longer trigger on their summoner or any
+      other parasites their summoner has.
+  - bugfix: Ranged Holoparasites no longer have nightvision active by default. It
+      can still be toggled on.
+  - tweak: Ranged Holoparasite snares no longer alert if the crossing mob is their
+      summoner or one of the parasites their summoner has.
+  - tweak: Ranged Holoparasites are slightly less visible in scout mode.
+  - tweak: Standard Holoparasites attack 20% faster than other parasite types.
+  - rscdel: Support Holoparasite beacons no longer require safe atmospheric conditions,
+      but the warp channel takes slightly longer, and is preceded with a visible message.
+  - tweak: Zombies can no longer destroy more than one airlock at a time.
+  - rscadd: The mining station has been updated.
+  MrStonedOne:
+  - bugfix: Centcom is glad to announce the end of sending workers to our control
+      group for space exposure testing, a fake station in "space" that noticeably
+      had air in "space".
+  TechnoAlchemisto:
+  - tweak: Detective scanners are now smaller.
+  - tweak: Pickaxes now fit in explorer suit exosuit slots.
+  bgobandit:
+  - rscadd: Alt-clicking a fire extinguisher cabinet opens and closes it. That is
+      all.
+2016-04-06:
+  CoreOverload:
+  - rscadd: You can now put slimes in stasis by exposing them to room temp CO2. Useful
+      for both fighting the slimes and safely storing them.
+  Erwgd:
+  - rscadd: The autolathe can now make hydroponics tools! Access the design routines
+      in the Misc. category of the machine.
+  LanCartwright:
+  - tweak: Custom viruses with stealth values of 3 or above are now invisible on the
+      PANDEMIC and no longer visible on health huds.
+  MrStonedOne:
+  - bugfix: Centcom is happy to report that our single sided windows and our windoors
+      should once again create an airtight seal.
+  bgobandit:
+  - rscadd: Honk! Nanotrasen's clowning and development department has invented the
+      clown megaphone, standard in all clowning loadouts! Honk honk!
+2016-04-07:
+  Kor:
+  - rscadd: The Laser Cannon in RD has been replaced with the Accelerator Laser Cannon.
+      Try it out!
+  - rscadd: Mechas now have armour facings. Attacking the front will deal far less
+      damage, while attacking the back will deal massive bonus damage.
+  - rscadd: EMPs now deal far less damage/drain to mechas.
+  Kor and Ausops:
+  - rscadd: Survival pod interiors have been redone.
+  - rscadd: Survival pods now contain a stationary GPS computer.
+  - rscadd: You can now toggle your GPS off with alt+click.
+  bgobandit:
+  - rscadd: Due to budget cuts, Nanotrasen is no longer utilizing copy-protected paper
+      for its classified documents. Fortunately, our world-class security team has
+      always prevented any thefts or photocopies from being made!
+  - rscadd: Secret documents can be photocopied. If you have an objective to steal
+      any set of documents, a photocopy will be accepted. If you must steal red or
+      blue documents, a photocopy will NOT be accepted. Enterprising traitors can
+      forge the red/blue seal with a crayon to take advantage of this.
+2016-04-09:
+  GunHog:
+  - rscadd: Aliens may now force open unbolted, unwelded airlocks. Unpowered airlocks
+      open faster than powered ones. Has a cool sound provided by @Ultimate-Chimera!
+  - tweak: Alien Drone health increased to 125 hp.
+  - tweak: Alien drone is now faster!
+  - tweak: Alien egg and larva maturation times halved.
+  - tweak: Resin membrane health increased to 160 hp.
+  - rscadd: Aliens may now open firelocks.
+  - rscadd: Aliens may now unweld scrubbers and vents. (From the outside!)
+  - tweak: Droppers no longer affect aliens.
+  Joan:
+  - rscdel: You can no longer drop survival capsules on top of dense objects, such
+      as the windows in the emergency shuttle. You can still drop them on non-dense
+      objects and mobs, however.
+  - tweak: Swarmers can now deconstruct objects simply by clicking.
+  - rscadd: Swarmers can still teleport mobs away via ctrl-click.
+  - bugfix: Emps will now properly damage swarmers.
+  Kor:
+  - rscadd: Added wisp lanterns to necropolis chests.
+  - rscadd: Added red/blue cube pairs to necropolis chests.
+  - rscadd: Added meat hooks to necropolis chests.
+  - rscadd: Added immortality talismans to necropolis chests.
+  - rscadd: Added paradox bags to necropolis chests.
+  - rscadd: Ripley drills work again. Go tear up lavaland.
+  PKPenguin321:
+  - tweak: Goofball's grab nerf has been reverted.
+  TechnoAlchemisto:
+  - tweak: Pickaxe upgrades are now better.
+  coiax:
+  - tweak: Efficiency Station Testing Lab now has a Drone Shell Dispenser
+  - tweak: Fixed an issue with a door on the Golem Ship
+  - rscadd: The unfathomable entity Carp'sie has blessed vir followers with mysterious
+      carp guardians.
+  - rscadd: Nanotrasen Cyborgs are now able to empty ore boxes without human assistance
+  - rscadd: Ore boxes are now craftable with 4 planks of wood
+  - tweak: Ore boxes now drop their contents when destroyed, or dismantled with a
+      crowbar
+  coiax, bobdobbington, Core0verload:
+  - rscadd: An experimental plant DNA manipulator, based on machinery recovered from
+      ancient seed vaults, has been installed in the Botany department.
+2016-04-11:
+  Joan:
+  - rscadd: Blob cores will take slight brute damage from explosions.
+  RandomMarine:
+  - rscadd: Additional luxuries have been added to golem ships. Including new rewards.
+      Praise be to The Liberator!
+  - rscdel: However, jaunters are no longer easily obtained by free golems.
+  RemieRichards:
+  - rscadd: The Station Blueprints now display the piping/wiring and some of the machinery
+      the station started with, to assist in repairs
+  coiax:
+  - rscadd: Emagging the cargo console also unlocks regular contraband, in addition
+      to syndicate gear
+  - rscadd: A working drone shell dispenser is now on display in MetaStation's museum,
+      displaying the virtue of the tireless little workers!
+  - rscadd: Dreamstation now has a drone shell dispenser in the Toxins Launch Room
+2016-04-12:
+  Incoming5643:
+  - rscadd: Leading scientists have finally proven that humans (and xenos) in fact
+      have tongues in their mouths.
+  - rscadd: Swapping out tongues allows the various races to change their speech impediments.
+      Putting a xeno tongue in someone allows them to make the hissing sound like
+      a xeno whenever they speak.
+  - rscdel: There are no erp mechanics tied to this feature.
+  - experiment: Remember that tongues are stored in the MOUTH, selecting the head
+      isn't good enough.
+  Kor:
+  - rscadd: Ash walker starting gear has been rebalanced.
+  - rscadd: Ash walkers can no longer use guns.
+  TrustyGun:
+  - rscadd: After carefully investing in the market, the Captain had enough money
+      to replace his silver flask with a golden one!
+  - rscadd: The Detective is now bringing his personalized flask to work, due to the
+      grim work he has to do.
+  - rscadd: The Booze-O-Mat now stocks 3 flasks.
+2016-04-16:
+  Bawhoppen:
+  - tweak: Cryo is no longer god-awful.
+  CoreOverload:
+  - rscadd: A lot of items are now exportable in cargo.
+  - rscadd: Use Export Scanner to check any item's export value.
+  Erwgd:
+  - rscadd: Forks, bowls, drinking glasses, shot glasses and shakers can now be made
+      and recycled in the autolathe! Access the designs in the new 'Dinnerware' category.
+  - tweak: Kitchen knives have been moved to the Dinnerware category of the autolathe.
+  - rscadd: Butcher's cleavers can now be made in a hacked autolathe.
+  Fox McCloud:
+  - rscadd: Slime batteries now self-recharge.
+  - rscadd: Adds transference potion. A potion that allows the user to transfer their
+      consciousness to a simple mob.
+  - rscadd: Adds rainbow slime core reaction that generates a consciousness transference
+      potion when injected with blood.
+  Iamgoofball, Lati, Geo_Jerkal, Tanquetsunami25:
+  - rscadd: Lati requested that the Slime Processor will now automatically scoop up
+      any dead slimes into itself for processing.
+  - rscadd: Geo_Jerkal requested that you be able to mix Arnold Palmers with Tea and
+      Lemon Juice.
+  - rscadd: Tanquetsunami25 requested that cyborg be able to boop.
+  Incoming5643:
+  - rscdel: Removed the horrible meme skeletons, please don't sue us.
+  Kor:
+  - rscadd: Adrenals, no slips, surplus crates and SUHTANDOS now have minimum population
+      requirements before they can be purchased.
+  KorPhaeron:
+  - rscadd: You now need to butcher goliaths and watchers on lavaland to receive their
+      loot. Use the combat knives to do so.
+  Lati:
+  - rscadd: Custom floor tiles can now be added to floorbots. They will start replacing
+      other tiles with these tiles if the option is toggled on.
+  coiax:
+  - rscadd: Boxstation, not to be outdone by all the other competing station designs,
+      has installed a drone shell dispenser in the Testing Lab, which makes automated
+      drones to help fix the station.
+  - rscadd: Toy fans, rejoyce! The famous skeleton brothers from the beloved game
+      Belowyarn now have toys that you can win from the arcade machines!
+  - rscadd: Airlock painters can be printed at your local autolathe
+  - rscadd: Please do not attempt suicide with the airlock painter or the medical
+      wrench.
+  - rscadd: Metastation now has a plant DNA manipulator in Botany.
+  - rscadd: Using the fire extinguisher on yourself or others while in HELP intent
+      will spray you or them, rather than beat their probably flaming body with a
+      metal object.
+  - tweak: Alt-clicking extinguishers to empty them now wets the floor underneath
+      them.
+  lordpidey:
+  - rscadd: Meth labs can now blow up if you don't purify the ingredients or over-heat
+      the end product.
+  nullbear:
+  - rscadd: Added attack verbs for heart and tongue organs
+  - tweak: Maximum output of air pumps has been raised.
+2016-04-18:
+  Joan:
+  - rscdel: Crates are now dense even when open.
+  - rscadd: You can now climb onto crates in the same way as table and sandbags, though
+      climbing onto crates is very fast and does not stun you.
+  - wip: You can walk on crates, provided both are closed/open or the crate you're
+      on is closed.
+  - rscdel: You can't close or open a crate if there's a large mob on top of it.
+  - rscadd: Stuffing items into a closet or crate is now instant and does not close
+      the closet or crate. Stuffing mobs into a closet or crate still takes time and
+      closes the closet/crate in question.
+  - imageadd: Crowbars and wirecutters have new inhand sprites. Crowbars can now be
+      distinguished from wrenches in-hand.
+  RandomMarine:
+  - tweak: Cloth items removed from biogenerator. Instead, it can create stacking
+      cloth that crafts those items.
+  - rscadd: In addition, cloth can be used to create grey jumpsuits, backpacks, dufflebags,
+      bio bags, black shoes, bedsheets, and bandages.
+  - tweak: Bedsheets now tear into cloth instead of directly into bandages.
+  Shadowlight213:
+  - tweak: AI will be notified when one of their cyborgs is detonated.
+  coiax:
+  - bugfix: Fixed slime grinders not sucking up more than one slime
+  - rscadd: Drones now start with a spacious dufflebag full of tools, so they will
+      stop stealing the captain's
+  - bugfix: Fixed issues with drones wearing chameleon headgear.
+  - rscadd: Added admin-only "snowflake drone" (also known as drone camogear) headgear.
+  nullbear:
+  - bugfix: Fixes air canisters being silent when bashed.
+2016-04-20:
+  Erwgd:
+  - rscadd: The autolathe can now make trays.
+  Fox McCloud:
+  - bugfix: Fixes abductor vests having no cooldown between uses
+  Kor:
+  - rscadd: You can now craft boats and oars out of goliath hides. These boats can
+      move in lava.
+  - rscadd: Added a spooky, upgraded boat to necropolis chests.
+  coiax:
+  - tweak: Slime grinders now cease suction of new slimes while grinding
+  coiax, Joan:
+  - rscadd: Drone dufflebags now have their own sprite.
+  kevinz000:
+  - rscadd: 'Admin Detection Multitool: A multitool that shows when administrators
+      are watching you! Now you can grief in safety!'
+  - tweak: Syndicate R&D scientists have significantly increased the range of their
+      "AI detection multitools", making them turn yellow when an AI's tracking is
+      near, but not on you just yet!
+2016-04-21:
+  Kor:
+  - rscadd: Mechas can now toggle strafing mode.
+2016-04-22:
+  Bawhoppen:
+  - rscadd: Security belts can now hold any type of grenade. This includes barrier
+      grenades.
+  - rscadd: Janitorial belts are now able to store chem grenades.
+  - rscadd: Military belts have been given a size upgrade, so they can now hold larger
+      items.
+  - rscadd: Bandoliers have been given a buff and now can hold a much larger amount
+      of ammunition.
+  nullbear:
+  - bugfix: xenobio console is deconstructable again.
+  - tweak: syndibomb recipe calls for any matter bin, scaling effectiveness with tier.
+2016-04-23:
+  Joan:
+  - bugfix: Aliens can now open crates and lockers.
+  - bugfix: Aliens and monkeys can now climb climbable objects, such as crates and
+      sandbags.
+  - rscadd: Aliens climb very, very fast.
+  Kor:
+  - rscadd: Running HE pipes over lava will now heat the gas inside.
+  - rscadd: Alt+clicking on your mecha (while inside it) will toggle strafing mode.
+  Mercenaryblue:
+  - rscadd: Allowed all corgis to wear red wizard hats.
+  TechnoAlchemisto:
+  - rscadd: Goliaths now drop bones, and Watchers drop sinews.
+  - rscadd: You can craft primitive gear from bone and sinew.
+  coiax:
+  - bugfix: Non-humans are now able to interact with bee boxes.
+2016-04-25:
+  Joan:
+  - bugfix: You can once again hit a closet or crate with an item to open it.
+  Kor Razharas:
+  - rscadd: Adds support for autoclicking.
+  - rscadd: The Shock Revolver has been added to RnD.
+  - rscadd: The Laser Gatling Gun has been added to RnD. The Gatling Gun uses autoclick
+      to fire as you hold down the mouse.
+  - rscadd: The Research Director now starts with a box of firing pins.
+  - rscadd: The SABR and Stun Revolver recipes have been removed from RnD
+  coiax:
+  - rscadd: Laughter demons are like slaughter demons, but they tickle people to death
+  - tweak: Slaughter demons are no longer able to cast spells while phased.
+  - tweak: Wizards can now speak while ethereal, but still cannot cast spells while
+      ethereal.
+  - rscadd: 'Centcom''s "drone expert" reports that drones vision filters have been
+      upgraded to include the option of making all beings appear as harmless animals.
+      info: As always, all drone filters are togglable.'
+  - rscadd: As a sign of friendship between the Free Golems and Centcom, they have
+      modified Centcom's jaunter to be worn around a user's waist, which will save
+      them from falling to their death in a chasm.
+  - experiment: The Golems warn that these modifications have created a risk of accidental
+      activation when exposed to heavy electromagnetic fields.
+  - tweak: Renamed hivelord stabilizer to stabilizing serum.
+  - rscadd: Centcom regret to inform you that new instabilities with nearby gas giants
+      are causing exospheric bubbles to affect the telecommunications processors.
+      Please contact your supervisor for further instructions.
+  - rscadd: The Janitor's Union has mandated additional features to station light
+      replacer devices.
+  - rscadd: The light replacer now can be used on the floor to replace the bulbs of
+      any lights on that tile.
+  - rscadd: The light replacer now eats replaced bulbs, and after a certain number
+      of bulb fragments (four) will recycle them into a new bulb.
+  - tweak: The description of the light replacer is now more informative.
+  - rscadd: Clown mask appearance toggle now has an action button.
+2016-04-26:
+  Iamgoofball & Super Aggro Crag:
+  - tweak: Fluorosulfuric Acid now has doubled acid power.
+  - experiment: Fluorosulfuric Acid now does BONUS burn damage scaling on the time
+      it's been inside the consumer.
+  Joan:
+  - tweak: Blobbernauts now spawn at half health.
+  - tweak: Blobbernauts regeneration on blob is now 2.5 health per tick, from 5.
+  - tweak: Blobbernauts now cost 40 resources to produce, from 30.
+  - rscdel: Factories supporting blobbernauts do not spawn spores.
+  Lati:
+  - tweak: Syndicate bomb can be only delayed once by pulsing the delay wire. Time
+      gained from this is changed from 10 seconds to 30 seconds.
+  TechnoAlchemisto:
+  - tweak: Goliath plates can now be stacked.
+  phil235:
+  - rscadd: More structures and machines are now breakable and/or destroyable with
+      melee weapon. Additionally, Some structures and machines that are already breakable/destroyable
+      are now affected by more attack methods (gun projectiles, thrown items, melee
+      weapons, xeno/animal attacks, explosions).
+  - rscadd: Hitting any machine now always makes a sound.
+  - rscadd: You can hit closed closets/crates and doors by using an item on harm intent
+      (but it doesn't actually hurt them).
+  - rscadd: you can now burst filled water balloons with sharp items.
+  - bugfix: Wooden barricade drops wood when destroyed.
+  - bugfix: Slot machines with coins inside are deconstructable now.
+2016-04-27:
+  TechnoAlchemisto:
+  - rscadd: Miners can now select explorer belts from the mining vendor using their
+      vouchers, or mining points.
+2016-04-28:
+  Bawhoppen:
+  - tweak: Sandbags are no longer tablecrafted. Now you just put in sand (or ash)
+      by hand to make them.
+  - rscadd: Miners and Engis now get boxes of empty sandbags in their lockers. Miners
+      also get a few premade aswell.
+  - rscadd: You can now break sandstone down into normal sand.
+  Joan:
+  - rscadd: Attacking a blob with an analyzer will tell you what its chemical does,
+      its health, and a small fact about the blob analyzed.
+  - rscdel: 'NERFS:'
+  - tweak: Zombifying Feelers does less toxin damage.
+  - tweak: Adaptive Nexuses does slightly less brute damage.
+  - tweak: Replicating Foam does slightly less brute damage.
+  - tweak: Blob Sorium does slightly less brute damage.
+  - tweak: Blob Dark Matter does slightly less brute damage.
+  - tweak: Cyrogenic Liquid injects slightly less frost oil and ice and does slightly
+      less stamina damage.
+  - tweak: Pressurized Slime does less brute, oxygen, and stamina damage, and extinguishes
+      objects and people on turfs it wets.
+  - rscdel: Blob core strong blobs no longer give points when removed.
+  - wip: 'PROBABLY BUFFS:'
+  - tweak: Flammable Goo now does slightly more burn damage and applies more firestacks,
+      but applies fire to blob tiles that don't share its chemical.
+  - tweak: Energized Fibers does slightly more burn damage, slightly less stamina
+      damage, and now takes damage from EMPs.
+  - rscadd: 'BUFFS:'
+  - tweak: Boiling Oil does slightly more burn damage and applies more firestacks.
+  - tweak: Reactive Gelatin does slightly more damage on average.
+  - tweak: Penetrating Spines now also ignores bio resistance in addition to armor.
+  - tweak: Hallucinogenic Nectar causes more hallucinations.
+  - tweak: Normal strong blobs now refund 4 points when removed, from 2.
+  - rscadd: Charger holoparasites now play a sound when hitting a target, as well
+      as shaking the target's camera.
+  PKPenguin321:
+  - rscadd: The warden's locker now contains krav maga gloves.
+  TechnoAlchemisto:
+  - rscadd: You can now craft skull helmets from bones.
+  - rscadd: Syndicate bombs are now harder to detect
+2016-04-29:
+  Bawhoppen:
+  - rscadd: Several lesser-used uplink's TC cost have been rebalanced.
+  - tweak: Steckhin down from 9TC to 7TC.
+  - tweak: Tactical medkit down from 9TC to 4TC.
+  - tweak: Syndicate magboots from 3TC to 2TC.
+  - tweak: Powersinks down from 10TC to 6TC.
+  - tweak: Stealth rad-laser down from 5TC to 3TC.
+  - tweak: Bundles have been updated accordingly.
+  Incoming5643:
+  - rscadd: The staff/wand of door creation can now also be used to open airlock doors.
+  - rscadd: Doors spawned by the staff/wand now start open. Keep this in mind the
+      next time you try to turn every wall on the escape shuttle into a door.
+  Robustin:
+  - rscdel: The Teleport Other, Veil, Imbue, Reveal, Disguise, Blood Drain, Timestop,
+      Stun, Deafen, Blind, Armaments, Construct Shell and Summon Tome runes are gone.
+  - rscadd: Disguise, Veil/Reveal, Construct Shell and Armaments are now talismans.
+      The Construction talisman requires 25 sheets of metal.
+  - rscadd: Cultists will now receive a warning when attempting to use emergency communion
+      or create the Nar-Sie rune
+  - rscadd: Cultists can now create talismans with a super-simple Talisman-Creation
+      rune. It takes about 10 seconds to invoke and will present a menu of all the
+      talisman choices available. Its as simple as tossing the paper on, clicking
+      the rune, and selecting your talisman.
+  - rscadd: Cultists now have a proc, "How to Play" that will give a basic explanation
+      of how to succeed as a cultist.
+  - rscadd: The new Talisman of Horror is a stealthy talisman that will cause hallucinations
+      in the victim. Great for undermining security without having to commit to murder
+      them in middle of the hall.
+  - rscadd: Creating the Summon Nar-Sie rune does takes slightly less time, but now
+      adds a 3x3 square of red barrier shields (60hp each) to prevent the rune-scriber
+      from being bumped by other idiots. This works in conjunction with the rune's
+      warning to give crew a chance to stop the summoning. Manifest ghost has a weaker
+      1x1 shield to prevent bumps as well.
+  - rscadd: Talismans are now color-coded by their effect so you can easily organize
+      and deploy talismans.
+  - rscadd: You can now make colored paper in the washing machine using crayons or
+      stamps, honk.
+  - rscadd: The Electromagnetic Disruption rune will now scale with the number of
+      cultists invoking the rune. **A full 9-cultist invocation will EMP the entire
+      station!**
+  - rscadd: Armaments will now give the recipient a new cult bola.
+  - rscadd: The new Talisman of Shackling will apply handcuffs directly to the victim.
+      These cuffs will disappear when removed.
+  - tweak: Cult slur is a little less potent so victims might be able to squeeze in
+      a coherent word or two if you let them keep jabbering on the radio, stun talismans
+      now have less of a health cost and the stun is back to 10 seconds, from 9.
+  - tweak: Rune and Talisman names now give a much clearer idea of what they do.
+  - experiment: The following changes are courtesy of ChangelingRain
+  - rscadd: The Teleport rune now allows cultists to select which rune to teleport
+      to, and teleports everything on it.
+  - rscadd: Veil and Reveal are merged into Talisman of Veiling. Veiling has two uses,
+      the first use will hide and the second use will reveal.
+  - rscadd: New icons for the cult bola
+  - tweak: You can now attack fellow cultists with a Talisman of Arming to arm them
+      with robes and a sword.
+  - tweak: You can now only place one rune per tile.
+  - tweak: Ghosts are notified when a new manifest rune is created.
+  TechnoAlchemisto:
+  - rscadd: Sinew can now be fashioned into restraints.
+  coiax:
+  - tweak: Internals Crate now contains breath masks and small tanks.
+  - rscadd: Metal foam grenade box crate added for 1000 points
+  - rscadd: Added two Engineering Mesons to Engineering Gear Crate
+  - tweak: Engineering Gear now costs 1300
+  - rscadd: Breach Shield Generator Crate added for 2500 points
+  - rscadd: Grounding Rod Crate added for 1700 points
+  - rscadd: PACMAN Generator Crate added for 2500
+  - rscadd: Defibrillator Crate added for 2500
+  - rscadd: Added more helmets to the Laser Tag Crate.
+  - rscadd: Nanotrasen Customs report that some wide band suppliers have been providing
+      "alternative" firing pins. Nanotrasen reminds all crewmembers that contraband
+      is contraband.
+  - rscadd: Contraband crates now appear visually similar to legitimate crates.
+  - bugfix: The cargo shuttle's normal transit time has been restored.
+  nullbear:
+  - rscadd: Adds a preference option, allowing players to toggle whether recipes with
+      no matching components should be hidden.
+2016-04-30:
+  Joan:
+  - rscadd: Blobs attempting to attack the supermatter will instead be eaten by it.
+  - experiment: This doesn't mean throwing a supermatter shard at the blob is a good
+      idea; blobs attacking it will gradually damage it, eventually resulting in a
+      massive explosion, and it will not consume blobs if on a space turf.
+  - tweak: Hitting a locker or crate with an ID, PDA with ID, or wallet with ID will
+      try to toggle the lock instead of trying to open it.
+  - imageadd: Cable coils, cablecuffs, and zipties now all have properly colored inhands.
+  Kor:
+  - rscadd: Megafauna have been added to lavaland.
+  - rscadd: Ash Drakes have been spotted roaming the wastes. Use your GPS to track
+      their fiery signals.
+  - rscadd: You can now knock on the Necropolis door, but it's probably best that
+      you don't.
+  Mercenaryblue:
+  - rscadd: Adds a basic paper plane to the game. Fold paper with alt-clicking.
+  - rscadd: Paper planes are now fully compatible with every stamps on station.
+  bgobandit:
+  - rscadd: 'Nanotrasen has released Cards Against Spess! Visit your local library
+      for a copy. Warning: may cause breakage of the fourth wall.'

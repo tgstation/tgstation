@@ -1,0 +1,4 @@
+author: "Pepsiman0"
+delete-after: True
+changes: 
+  - bugfix: "fixed the ce gloves having no mob icons"

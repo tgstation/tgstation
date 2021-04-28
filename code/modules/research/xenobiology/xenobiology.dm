@@ -457,7 +457,7 @@
 			user.visible_message("<span class='warning'>[user]'s skin starts pulsing and glowing ominously...</span>", "<span class='userdanger'>You feel unstable...</span>")
 			if(do_after(user, 60, target = user))
 				to_chat(user, "<span class='userdanger'>You explode!</span>")
-				explosion(get_turf(user), 1 ,3, 6)
+				explosion(user, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6)
 				user.gib()
 				return
 			to_chat(user, "<span class='notice'>You stop feeding [src], and the feeling passes.</span>")
