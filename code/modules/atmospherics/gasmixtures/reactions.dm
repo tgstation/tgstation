@@ -38,9 +38,6 @@
 
 	return priority_reactions
 
-/proc/cmp_gas_reaction(datum/gas_reaction/a, datum/gas_reaction/b) // compares lists of reactions by the maximum priority contained within the list
-	return b.priority - a.priority
-
 /datum/gas_reaction
 	//regarding the requirements list: the minimum or maximum requirements must be non-zero.
 	//when in doubt, use MINIMUM_MOLE_COUNT.
