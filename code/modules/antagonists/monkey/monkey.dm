@@ -20,7 +20,6 @@
 
 /datum/antagonist/monkey/on_gain()
 	. = ..()
-	SSticker.mode.ape_infectees += owner
 	owner.special_role = "Infected Monkey"
 
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
@@ -39,7 +38,6 @@
 
 /datum/antagonist/monkey/on_removal()
 	owner.special_role = null
-	SSticker.mode.ape_infectees -= owner
 
 	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.diseases
 	if(D)
@@ -116,11 +114,9 @@
 	. = ..()
 	var/obj/item/organ/heart/freedom/F = new
 	F.Insert(owner.current, drop_if_replaced = FALSE)
-	SSticker.mode.ape_leaders += owner
 	owner.special_role = "Monkey Leader"
 
 /datum/antagonist/monkey/leader/on_removal()
-	SSticker.mode.ape_leaders -= owner
 	var/obj/item/organ/heart/H = new
 	H.Insert(owner.current, drop_if_replaced = FALSE) //replace freedom heart with normal heart
 
@@ -223,8 +219,8 @@
 
 	if(LAZYLEN(leaders))
 		parts += "<span class='header'>The monkey leaders were:</span>"
-		parts += printplayerlist(SSticker.mode.ape_leaders)
+		parts += printplayerlist(leaders)
 	if(LAZYLEN(monkeys))
 		parts += "<span class='header'>The monkeys were:</span>"
-		parts += printplayerlist(SSticker.mode.ape_infectees)
+		parts += printplayerlist(monkeys)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

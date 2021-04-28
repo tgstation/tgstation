@@ -19,6 +19,17 @@
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
 
+/obj/item/transfer_valve/handle_atom_del(atom/deleted_atom)
+	. = ..()
+	if(deleted_atom == tank_one)
+		tank_one = null
+		update_appearance()
+		return
+	if(deleted_atom == tank_two)
+		tank_two = null
+		update_appearance()
+		return
+
 /obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))
 		if(tank_one && tank_two)

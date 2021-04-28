@@ -385,12 +385,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(T)
 			var/obj/energy_ball/E = new(T)
 			E.energy = 200 //Gets us about 9 balls
-	else if(power > EVENT_POWER_PENALTY_THRESHOLD && prob(power/50) && !istype(src, /obj/machinery/power/supermatter_crystal/shard))
-		var/datum/round_event_control/crystal_invasion/crystals = new/datum/round_event_control/crystal_invasion
-		crystals.runEvent()
-		return //No boom for me sir
 	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
-	explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
+	explosion(src, devastation_range = explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , heavy_impact_range = explosion_power * max(gasmix_power_ratio, 0.205) + 2, light_impact_range = explosion_power * max(gasmix_power_ratio, 0.205) + 4 , flash_range = explosion_power * max(gasmix_power_ratio, 0.205) + 6, adminlog = TRUE, ignorecap = TRUE)
 	qdel(src)
 
 
@@ -597,7 +593,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		if(prob(gas_comp[/datum/gas/zauker]))
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
-			supermatter_zap(src, 6, clamp(power*2, 4000, 20000), ZAP_MOB_STUN)
+			supermatter_zap(src, 6, clamp(power*2, 4000, 20000), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
 
 		if(gas_comp[/datum/gas/bz] >= 0.4 && prob(30 * gas_comp[/datum/gas/bz]))
 			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
@@ -628,20 +624,29 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			env.merge(removed)
 			air_update_turf(FALSE, FALSE)
 
-	//Makes em go mad and accumulate rads.
-	var/toAdd = -0.05
-	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power)))
+	// Defaults to a value less than 1. Over time the psyCoeff goes to 0 if
+	// no supermatter soothers are nearby.
+	var/psyCoeffDiff = -0.05
+	for(var/mob/living/carbon/human/seen_by_sm in view(src, HALLUCINATION_RANGE(power)))
 		// Someone (generally a Psychologist), when looking at the SM
 		// within hallucination range makes it easier to manage.
-		if(HAS_TRAIT(l, TRAIT_SUPERMATTER_SOOTHER) || (l.mind && HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_SOOTHER)))
-			toAdd = 0.05
+		if(HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_SOOTHER) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_SOOTHER)))
+			psyCoeffDiff = 0.05
 			psy_overlay = TRUE
-		// If they can see it without being immune (mesons, Psychologist)
-		if (!(HAS_TRAIT(l, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (l.mind && HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE))))
-			var/D = sqrt(1 / max(1, get_dist(l, src)))
-			l.hallucination += power * hallucination_power * D
-			l.hallucination = clamp(l.hallucination, 0, 200)
-	psyCoeff = clamp(psyCoeff + toAdd, 0, 1)
+
+		// If they are immune to supermatter hallucinations.
+		if (HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+			continue
+
+		// Blind people don't get supermatter hallucinations.
+		if (seen_by_sm.is_blind())
+			continue
+
+		// Everyone else gets hallucinations.
+		var/dist = sqrt(1 / max(1, get_dist(seen_by_sm, src)))
+		seen_by_sm.hallucination += power * hallucination_power * dist
+		seen_by_sm.hallucination = clamp(seen_by_sm.hallucination, 0, 200)
+	psyCoeff = clamp(psyCoeff + psyCoeffDiff, 0, 1)
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.rad_act(rads)
@@ -688,7 +693,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(zap_count >= 1)
 			playsound(src.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 			for(var/i in 1 to zap_count)
-				supermatter_zap(src, range, clamp(power*2, 4000, 20000), flags)
+				supermatter_zap(src, range, clamp(power*2, 4000, 20000), flags, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
 
 		if(prob(5))
 			supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
@@ -1063,7 +1068,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(PYRO_ANOMALY)
 				new /obj/effect/anomaly/pyro(L, 200, FALSE)
 
-/obj/machinery/power/supermatter_crystal/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list())
+/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE)
 	if(QDELETED(zapstart))
 		return
 	. = zapstart.dir
@@ -1162,7 +1167,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//In the best situation we can expect this to grow up to 2120kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
 			//The formula for power gen is zap_str * zap_mod / 2 * capacitor rating, between 1 and 4
 			var/multi = 10
-			switch(power)//Between 7k and 9k it's 20, above that it's 40
+			switch(power_level)//Between 7k and 9k it's 20, above that it's 40
 				if(SEVERE_POWER_PENALTY_THRESHOLD to CRITICAL_POWER_PENALTY_THRESHOLD)
 					multi = 20
 				if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
@@ -1177,7 +1182,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//3 shots a human with no resistance. 2 to crit, one to death. This is at at least 10000 power.
 			//There's no increase after that because the input power is effectivly capped at 10k
 			//Does 1.5 damage at the least
-			var/shock_damage = ((zap_flags & ZAP_MOB_DAMAGE) ? (power / 200) - 10 : rand(5,10))
+			var/shock_damage = ((zap_flags & ZAP_MOB_DAMAGE) ? (power_level / 200) - 10 : rand(5,10))
 			creature.electrocute_act(shock_damage, "Supermatter Discharge Bolt", 1,  ((zap_flags & ZAP_MOB_STUN) ? SHOCK_TESLA : SHOCK_NOSTUN))
 			zap_str /= 1.5 //Meatsacks are conductive, makes working in pairs more destructive
 
@@ -1197,15 +1202,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		for(var/j in 1 to zap_count)
 			if(zap_count > 1)
 				targets_hit = targets_hit.Copy() //Pass by ref begone
-			supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit)
-
-/obj/machinery/power/supermatter_crystal/proc/destabilize(portal_numbers)
-	var/turf/turf_loc = get_turf(src)
-	if(!turf_loc)
-		return
-	explosion(turf_loc,0,round(portal_numbers/5),round(portal_numbers),1,1,1)
-	. = new/obj/machinery/destabilized_crystal(turf_loc)
-	qdel(src)
+			supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit, zap_cutoff, power_level, zap_icon)
 
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'

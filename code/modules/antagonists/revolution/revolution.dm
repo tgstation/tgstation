@@ -389,11 +389,11 @@
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
 				if(!charter_given && rev_mind.current && rev_mind.current.stat == CONSCIOUS)
 					charter_given = TRUE
-					var/obj/structure/closet/supplypod/bluespacepod/syndicate/pod = new()
-					pod.explosionSize = list(0,0,0,0)
-					new /obj/item/station_charter/revolution(pod)
-					var/turf/landing_location = get_turf(rev_mind.current)
-					new /obj/effect/pod_landingzone(landing_location, pod)
+					podspawn(list(
+						"target" = get_turf(rev_mind.current),
+						"style" = STYLE_SYNDICATE,
+						"spawn" = /obj/item/station_charter/revolution
+					))
 					to_chat(rev_mind.current, "<span class='hear'>You hear something crackle in your ears for a moment before a voice speaks. \
 						\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 						<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\"</span>")

@@ -162,13 +162,13 @@
 		strength = (fuel_moles/15)
 
 		if(strength >=2)
-			explosion(ground_zero, round(strength,1), round(strength*2,1), round(strength*3,1), round(strength*4,1))
+			explosion(src, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1))
 		else if(strength >=1)
-			explosion(ground_zero, round(strength,1), round(strength*2,1), round(strength*2,1), round(strength*3,1))
+			explosion(src, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1))
 		else if(strength >=0.5)
-			explosion(ground_zero, 0, 1, 2, 4)
+			explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4)
 		else if(strength >=0.2)
-			explosion(ground_zero, -1, 0, 1, 2)
+			explosion(src, devastation_range = -1, light_impact_range = 1, flash_range = 2)
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
@@ -177,9 +177,9 @@
 		strength = (fuel_moles/20)
 
 		if(strength >=1)
-			explosion(ground_zero, 0, round(strength,1), round(strength*2,1), round(strength*3,1))
+			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1))
 		else if(strength >=0.5)
-			explosion(ground_zero, -1, 0, 1, 2)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2)
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
@@ -188,7 +188,7 @@
 		strength = (fuel_moles/25)
 
 		if(strength >=1)
-			explosion(ground_zero, -1, 0, round(strength,1), round(strength*3,1))
+			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1))
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)

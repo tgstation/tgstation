@@ -14,6 +14,9 @@
 
 /datum/greyscale_layer/New(icon_file, list/json_data)
 	color_ids = json_data["color_ids"]
+	for(var/i in color_ids)
+		if(!isnum(i))
+			CRASH("Color ids must be a positive integer starting from 1, '[i]' is not valid. Make sure it is not quoted in the json configuration.")
 	blend_mode = blend_modes[lowertext(json_data["blend_mode"])]
 	if(isnull(blend_mode))
 		CRASH("Greyscale config for [icon_file] is missing a blend mode on a layer.")
@@ -26,7 +29,7 @@
 		processed_colors += colors[i]
 	return InternalGenerate(processed_colors, render_steps)
 
-/datum/greyscale_layer/proc/InternalGenerate(list/colors)
+/datum/greyscale_layer/proc/InternalGenerate(list/colors, list/render_steps)
 
 ////////////////////////////////////////////////////////
 // Subtypes
@@ -66,9 +69,4 @@
 		CRASH("An unknown greyscale configuration was given to a reference layer: [json_data["reference_type"]]")
 
 /datum/greyscale_layer/reference/InternalGenerate(list/colors, list/render_steps)
-	if(render_steps)
-		// We're debugging
-		var/list/debug_data = reference_config.GenerateDebug(colors)
-		render_steps += debug_data["steps"]
-		return debug_data["icon"]
-	return reference_config.Generate(colors)
+	return reference_config.Generate(colors.Join(), render_steps)

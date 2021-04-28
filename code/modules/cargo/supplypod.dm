@@ -17,6 +17,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	density = FALSE
+	divable = FALSE
 	///List of bitflags for supply pods, see: code\__DEFINES\obj_flags.dm
 	var/pod_flags = NONE
 
@@ -64,8 +65,10 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 
-/obj/structure/closet/supplypod/bluespacepod/syndicate
-	style = STYLE_SYNDICATE
+//type used for one drop spawning items. doesn't have a style as style is set by the helper that creates this
+/obj/structure/closet/supplypod/podspawn
+	bluespace = TRUE
+	explosionSize = list(0,0,0,0)
 
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"

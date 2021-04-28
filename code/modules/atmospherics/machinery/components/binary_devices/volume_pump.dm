@@ -18,6 +18,7 @@
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
+	vent_movement = NONE
 	///Transfer rate of the component in L/s
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked

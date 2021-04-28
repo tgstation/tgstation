@@ -193,7 +193,7 @@
 	name = "Biological Battery"
 	id = "etherealstomach"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity = 20)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity/enriched = 20)
 	build_path = /obj/item/organ/stomach/ethereal
 	category = list("ethereal")
 
@@ -201,7 +201,7 @@
 	name = "Electrical Discharger"
 	id = "etherealtongue"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity = 20)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity/enriched = 20)
 	build_path = /obj/item/organ/tongue/ethereal
 	category = list("ethereal")
 
@@ -210,7 +210,7 @@
 	name = "Crystal Core"
 	id = "etherealheart"
 	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity = 20)
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity/enriched = 20)
 	build_path = /obj/item/organ/heart/ethereal
 	category = list("ethereal")
 

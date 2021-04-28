@@ -397,23 +397,23 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/isBroken = machine_stat & BROKEN
 	///Function is used to actually set the overlays
 	if(mode)
-		. += icon(canister_overlay_file, "tier[mode]")
+		. += mutable_appearance(canister_overlay_file, "tier[mode]")
 	if(isBroken)
-		. += icon(canister_overlay_file, "broken")
+		. += mutable_appearance(canister_overlay_file, "broken")
 	if(holding)
-		. += icon(canister_overlay_file, "can-open")
+		. += mutable_appearance(canister_overlay_file, "can-open")
 	if(connected_port)
-		. += icon(canister_overlay_file, "can-connector")
+		. += mutable_appearance(canister_overlay_file, "can-connector")
 
 	switch(air_contents.return_pressure())
 		if((40 * ONE_ATMOSPHERE) to INFINITY)
-			. += icon(canister_overlay_file, "can-3")
+			. += mutable_appearance(canister_overlay_file, "can-3")
 		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
-			. += icon(canister_overlay_file, "can-2")
+			. += mutable_appearance(canister_overlay_file, "can-2")
 		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
-			. += icon(canister_overlay_file, "can-1")
+			. += mutable_appearance(canister_overlay_file, "can-1")
 		if((10) to (5 * ONE_ATMOSPHERE))
-			. += icon(canister_overlay_file, "can-0")
+			. += mutable_appearance(canister_overlay_file, "can-0")
 
 
 /obj/machinery/portable_atmospherics/canister/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
@@ -484,7 +484,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		var/pressure_dif = expelled_pressure - pressure_limit
 		var/max_pressure_difference = 20000
 		var/explosion_range = CEILING(min(pressure_dif, max_pressure_difference) / 1000, 1)
-		explosion(T, 0, 0, explosion_range, 0, smoke = FALSE)
+		explosion(T, light_impact_range = explosion_range, smoke = FALSE)
 
 	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
@@ -617,6 +617,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					desc = initial(replacement.desc)
 					icon_state = initial(replacement.icon_state)
 					base_icon_state = icon_state
+					set_greyscale_config(initial(replacement.greyscale_config), update=FALSE)
+					set_greyscale_colors(initial(replacement.greyscale_colors))
 		if("restricted")
 			restricted = !restricted
 			if(restricted)

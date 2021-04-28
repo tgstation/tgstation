@@ -1,6 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - rscadd: "Maintenance Drones are once again constructable in Robotics."
-  - rscdel: "The Drone Dispenser has not made a return."
-  - config: "New settings DRONE_REQUIRED_ROLE, and DRONE_ROLE_PLAYTIME, which determine the playtime exp required for playing drones."

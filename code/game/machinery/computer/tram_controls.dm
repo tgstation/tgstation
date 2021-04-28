@@ -6,6 +6,8 @@
 	icon_screen = "tram"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/tram_controls
+	flags_1 = NODECONSTRUCT_1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/obj/structure/industrial_lift/tram/tram_part
 	light_color = LIGHT_COLOR_GREEN
@@ -55,7 +57,7 @@
 /**
  * Finds the destinations for the tram console gui
  *
- * Pulls tram landmarks from the landmark gobal list 
+ * Pulls tram landmarks from the landmark gobal list
  * and uses those to show the proper icons and destination
  * names for the tram console gui.
  */
