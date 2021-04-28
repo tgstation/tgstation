@@ -91,14 +91,20 @@ Web delivery of game resources makes it quicker for players to join and reduces 
 
 ### All In One Amazon Web Services Hosting and Content delivery network.
 **Important Note**
-It is very Importat to note that since AWS is all highly integrated its "easier" than some solutions. However the Price to Performance Ratio is terrible.
-This also may not be the best AWS set up but it works
+It is very Importat to note that since AWS is all highly integrated its "easier" than some solutions. However the Price to ***Performance Ratio is terrible***.
+
+/tg/ Using around 7TB of bandwidth a month. These costs add up. So AWS is probly only a solution for low to mid pop servers
+
+**Please use [AWS Cost Estimator](https://calculator.s3.amazonaws.com/index.html) to determine if this solution is right for you.**
+
+This also may not be the best AWS set up but it works.
+
 This guide is also assuming you are setting up a production server and not a server that you bring up and down on weekends.
 It is highly recommended to reference AWS support documentation while reading this guide. This guide is not a How to AWS.
 
 **Required AWS Services**
 1. Elastic Computer 2 (EC2)
-	* What size and class is up to you but 4GB of ram is a minimum.
+	* What size and class is up to you but 4GB of RAM is a minimum.
 1. Route53
 	* Domain registration and assigning "Elastic" IP addresses to said web addresses
 1. S3
