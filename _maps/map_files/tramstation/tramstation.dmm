@@ -43265,6 +43265,14 @@
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/iron/white,
 /area/science/explab)
+"mCw" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/mob/living/carbon/human/species/monkey/punpun,
+/turf/open/floor/iron,
+/area/service/bar)
 "mDh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/cable_coil/cut,
@@ -95474,7 +95482,7 @@ amm
 aej
 tdQ
 ahV
-ahV
+mCw
 ayI
 atF
 ulk
