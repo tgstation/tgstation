@@ -225,17 +225,75 @@
 	var/alert
 
 	//This list contains all the vars that it should be okay to edit from the menu
-	var/static/list/editable_spell_vars = list("name", "desc", "query", "action_icon", "action_icon_state", "action_background_icon_state", "sound",
-	"charge_type", "charge_max", "still_recharging_message", "holder_var_type", "holder_var_amount", "clothes_req", "cult_req", "human_req", "nonabstract_req",
-	"stat_allowed", "phase_allowed", "antimagic_allowed", "invocation", "invocation_emote_self", "invocation_type", "range", "message", "selection_type",
-	"player_lock", "overlay", "overlay_icon", "overlay_icon_state", "overlay_lifespan", "sparks_spread", "sparks_amt", "smoke_spread", "smoke_amt",
-	"centcom_cancast", "max_targets", "target_ignore_prev", "include_user", "random_target", "random_target_priority", "inner_radius", "base_icon_state",
-	"ranged_mousepointer", "deactive_msg", "active_msg", "projectile_amount", "projectiles_per_fire", "projectile_var_overrides", "cone_level", "respect_density",
-	"self_castable", "aim_assist", "drawmessage", "dropmessage", "hand_var_overrides")
+	var/static/list/editable_spell_vars = list(
+		"action_background_icon_state",
+		"action_icon_state",
+		"action_icon",
+		"active_msg",
+		"aim_assist",
+		"antimagic_allowed",
+		"base_icon_state",
+		"centcom_cancast",
+		"charge_max",
+		"charge_type",
+		"clothes_req",
+		"cone_level",
+		"cult_req",
+		"deactive_msg",
+		"desc",
+		"drawmessage",
+		"dropmessage",
+		"hand_var_overrides",
+		"holder_var_amount",
+		"holder_var_type",
+		"human_req",
+		"include_user",
+		"inner_radius",
+		"invocation_emote_self",
+		"invocation_type",
+		"invocation",
+		"max_targets",
+		"message",
+		"name",
+		"nonabstract_req",
+		"overlay_icon_state",
+		"overlay_icon",
+		"overlay_lifespan",
+		"overlay",
+		"phase_allowed",
+		"player_lock",
+		"projectile_amount",
+		"projectile_var_overrides",
+		"projectiles_per_fire",
+		"query",
+		"random_target_priority",
+		"random_target",
+		"range",
+		"ranged_mousepointer",
+		"respect_density",
+		"selection_type",
+		"self_castable",
+		"smoke_amt",
+		"smoke_spread",
+		"sound",
+		"sparks_amt",
+		"sparks_spread",
+		"stat_allowed",
+		"still_recharging_message",
+		"target_ignore_prev",
+	)
 	
 	//If a spell creates a datum with vars it overrides, this list should contain an association with the supertype of the created datum
-	var/static/list/special_list_vars = list("projectile_var_overrides" = list("supertype" = /obj/projectile, "type" = /obj/projectile/sdql), 
-		"hand_var_overrides" = list("supertype" = /obj/item/melee/touch_attack, "type" = /obj/item/melee/touch_attack/sdql))
+	var/static/list/special_list_vars = list(
+		"projectile_var_overrides" = list(
+			"supertype" = /obj/projectile,
+			"type" = /obj/projectile/sdql,
+		), 
+		"hand_var_overrides" = list(
+			"supertype" = /obj/item/melee/touch_attack,
+			"type" = /obj/item/melee/touch_attack/sdql,
+		),
+	)
 	
 	var/static/list/static_data
 	
@@ -292,82 +350,85 @@
 
 /datum/give_sdql_spell/ui_static_data(mob/user)
 	if(!static_data)
-		static_data = list("types" = list("aimed", "aoe_turf", "cone", "cone/staggered", "pointed", "self", "targeted", "targeted/touch"),
+		static_data = list(
+			"types" = list("aimed", "aoe_turf", "cone", "cone/staggered", "pointed", "self", "targeted", "targeted/touch"),
 			"tooltips" = list(
-			"query" = "The SDQL query that is executed. Certain keywords are specific to SDQL spell queries.\n\
-				$type\n\
-				USER is replaced with a reference to the user of the spell.\n\
-				TARGETS_AND_USER is replaced with the combined references from TARGETS and USER.\n\
-				SOURCE is replaced with a reference to this spell, allowing you to refer to and edit variables within it.\n\
-				You can use the list variable \"scratchpad\" to store variables between individual queries within the same cast or between multiple casts.",
-			"query_aimed" = "TARGETS is replaced with a list containing a reference to the atom hit by the fired projectile.",
-			"query_aoe_turf" = "TARGETS is replaced with a list containing references to every atom in the spell's area of effect.",
-			"query_cone" = "TARGETS is replaced with a list containing references to every atom in the cone produced by the spell.",
-			"query_cone/staggered" = "The query will be executed once for every level of the cone produced by the spell.\n\
-				TARGETS is replaced with a list containing references to every atom in the given level of the cone.",
-			"query_pointed" = "TARGETS is replaced with a list containing a reference to the targeted atom.",
-			"query_self" = "TARGETS is replaced with a list containing a reference to the caster.",
-			"query_targeted" = "TARGETS is replaced with a list containing a reference(s) to the targeted mob(s).",
-			"query_targeted_touch" = "TARGETS is replaced with a list containing a reference to the atom hit with the touch attack.",
-			"charge_type" = "How the spell's charge works. This affects how charge_max is used.\n\
-				When set to \"recharge\", charge_max is the time in deciseconds between casts of the spell.\n\
-				When set to \"charges\", the user can only use the spell a number of times equal to charge_max.\n\
-				When set to \"holder_var\", charge_max is not used. holder_var_type and holder_var_amount are used instead.\n",
-			"holder_var_type" = "When charge_type is set to \"holder_var\", this is the name of the var that is modified each time the spell is cast.\n\
-				If this is set to \"bruteloss\", \"fireloss\", \"toxloss\", or \"oxyloss\", the user will take the corresponding damage.\n\
-				If this is set to \"stun\", \"knockdown\", \"paralyze\", \"immobilize\", or \"unconscious\", the user will suffer the corresponding status effect.\n\
-				If this is set to anything else, the variable with the appropriate name will be modified.",
-			"holder_var_amount" = "The amount of damage taken, the duration of status effect inflicted, or the change made to any other variable.",
-			"clothes_req" = "Whether the user has to be wearing wizard robes to cast the spell.",
-			"cult_req" = "Whether the user has to be wearing cult robes to cast the spell.",
-			"human_req" = "Whether the user has to be a human to cast the spell. Redundant when clothes_req is true.",
-			"nonabstract_req" = "If this is true, the spell cannot be cast by brains and pAIs.",
-			"stat_allowed" = "Whether the spell can be cast if the user is unconscious or dead.",
-			"phase_allowed" = "Whether the spell can be cast while the user is jaunting or bloodcrawling.",
-			"antimagic_allowed" = "Whether the spell can be cast while the user is affected by anti-magic effects.",
-			"invocation_type" = "How the spell is invoked.\n\
-				When set to \"whisper\", the user whispers the invocation, as if with the whisper verb.\n\
-				When set to \"shout\", the user says the invocation, as if with the say verb.\n\
-				When set to \"emote\", a visible message is produced.",
-			"invocation" = "What the user says, whispers, or emotes when using the spell.",
-			"invocation_emote_self" = "What the user sees in their own chat when they use the spell.",
-			"selection_type" = "Whether the spell can target any mob in range, or only visible mobs in range.",
-			"range" = "The spell's range, in tiles.",
-			"message" = "What mobs affected by the spell see in their chat.\n\
-				Keep in mind, just because a mob is affected by the spell doesn't mean the query will have any effect on them.",
-			"player_lock" = "If false, simple mobs can use the spell.",
-			"overlay" = "Whether an overlay is drawn atop atoms affectecd by the spell.\n\
-				Keep in mind, just because an atom is affected by the spell doesn't mean the query will have any effect on it.",
-			"overlay_lifetime" = "The amount of time in deciseconds the overlay will persist.",
-			"sparks_spread" = "Whether the spell produces sparks when cast.",
-			"smoke_spread" = "The kind of smoke, if any, the spell produces when cast.",
-			"centcom_cancast" = "If true, the spell can be cast on the centcom Z-level.",
-			"max_targets" = "The maximum number of mobs the spell can target.",
-			"target_ignore_prev" = "If false, the same mob can be targeted multiple times.",
-			"include_user" = "If true, the user can target themselves with the spell.",
-			"random_target" = "If true, the spell will target a random mob(s) in range.",
-			"random_target_priority" = "Whether the spell will target random mobs in range or the closest mobs in range.",
-			"inner_radius" = "If this is a non-negative number, the spell will not affect atoms within that many tiles of the user.",
-			"ranged_mousepointer" = "The icon used for the mouse when aiming the spell.",
-			"deactive_mesg" = "The message the user sees when canceling the spell.",
-			"active_msg" = "The message the user sees when activating the spell.",
-			"projectile_amount" = "The maximum number of projectiles the user can fire with each cast of the spell.",
-			"projectiles_per_fire" = "The amount of projectiles fired with each click of the mouse.",
-			"projectile_var_overrides" = "The fired projectiles will have the appropriate variables overridden by the corresponding values in this associative list.\n\
-				You should probably set \"name\", \"icon\", and \"icon_state\".\n\
-				Refer to code/modules/projectiles/projectile.dm to see what other vars you can override.",
-			"cone_level" = "How many tiles out the cone will extend.",
-			"respect_density" = "If true, the cone produced by the spell is blocked by walls.",
-			"self_castable" = "If true, the user can cast the spell on themselves.",
-			"aim_assist" = "If true, the spell has turf-based aim assist.",
-			"drawmessage" = "The message the user sees when activating the spell.",
-			"dropmessage" = "The message the user sees when canceling the spell.",
-			"hand_var_overrides" = "The touch attack will have the appropriate variables overridden by the corresponding values in this associative list.\n\
-				You should probably set \"name\", \"desc\", \"catchphrase\", \"on_use_sound\" \"icon\", \"icon_state\", and \"inhand_icon_state\".\n\
-				Refer to code/modules/spells/spell_types/godhand.dm for see what other vars you can override.",
-			"scratchpad" = "This list can be used to store variables between individual queries within the same cast or between casts.\n\
-			You can declare variables from this menu for convenience. To access this list in a query, use the identifier \"SOURCE.scratchpad\".\n\
-			Refer to the _list procs defined in code/modules/admin/verbs/SDQL2/SDQL_2_wrappers.dm for information on how to modify and edit list vars from within a query."))
+				"query" = "The SDQL query that is executed. Certain keywords are specific to SDQL spell queries.\n\
+					$type\n\
+					USER is replaced with a reference to the user of the spell.\n\
+					TARGETS_AND_USER is replaced with the combined references from TARGETS and USER.\n\
+					SOURCE is replaced with a reference to this spell, allowing you to refer to and edit variables within it.\n\
+					You can use the list variable \"scratchpad\" to store variables between individual queries within the same cast or between multiple casts.",
+				"query_aimed" = "TARGETS is replaced with a list containing a reference to the atom hit by the fired projectile.",
+				"query_aoe_turf" = "TARGETS is replaced with a list containing references to every atom in the spell's area of effect.",
+				"query_cone" = "TARGETS is replaced with a list containing references to every atom in the cone produced by the spell.",
+				"query_cone/staggered" = "The query will be executed once for every level of the cone produced by the spell.\n\
+					TARGETS is replaced with a list containing references to every atom in the given level of the cone.",
+				"query_pointed" = "TARGETS is replaced with a list containing a reference to the targeted atom.",
+				"query_self" = "TARGETS is replaced with a list containing a reference to the caster.",
+				"query_targeted" = "TARGETS is replaced with a list containing a reference(s) to the targeted mob(s).",
+				"query_targeted_touch" = "TARGETS is replaced with a list containing a reference to the atom hit with the touch attack.",
+				"charge_type" = "How the spell's charge works. This affects how charge_max is used.\n\
+					When set to \"recharge\", charge_max is the time in deciseconds between casts of the spell.\n\
+					When set to \"charges\", the user can only use the spell a number of times equal to charge_max.\n\
+					When set to \"holder_var\", charge_max is not used. holder_var_type and holder_var_amount are used instead.\n",
+				"holder_var_type" = "When charge_type is set to \"holder_var\", this is the name of the var that is modified each time the spell is cast.\n\
+					If this is set to \"bruteloss\", \"fireloss\", \"toxloss\", or \"oxyloss\", the user will take the corresponding damage.\n\
+					If this is set to \"stun\", \"knockdown\", \"paralyze\", \"immobilize\", or \"unconscious\", the user will suffer the corresponding status effect.\n\
+					If this is set to anything else, the variable with the appropriate name will be modified.",
+				"holder_var_amount" = "The amount of damage taken, the duration of status effect inflicted, or the change made to any other variable.",
+				"clothes_req" = "Whether the user has to be wearing wizard robes to cast the spell.",
+				"cult_req" = "Whether the user has to be wearing cult robes to cast the spell.",
+				"human_req" = "Whether the user has to be a human to cast the spell. Redundant when clothes_req is true.",
+				"nonabstract_req" = "If this is true, the spell cannot be cast by brains and pAIs.",
+				"stat_allowed" = "Whether the spell can be cast if the user is unconscious or dead.",
+				"phase_allowed" = "Whether the spell can be cast while the user is jaunting or bloodcrawling.",
+				"antimagic_allowed" = "Whether the spell can be cast while the user is affected by anti-magic effects.",
+				"invocation_type" = "How the spell is invoked.\n\
+					When set to \"whisper\", the user whispers the invocation, as if with the whisper verb.\n\
+					When set to \"shout\", the user says the invocation, as if with the say verb.\n\
+					When set to \"emote\", a visible message is produced.",
+				"invocation" = "What the user says, whispers, or emotes when using the spell.",
+				"invocation_emote_self" = "What the user sees in their own chat when they use the spell.",
+				"selection_type" = "Whether the spell can target any mob in range, or only visible mobs in range.",
+				"range" = "The spell's range, in tiles.",
+				"message" = "What mobs affected by the spell see in their chat.\n\
+					Keep in mind, just because a mob is affected by the spell doesn't mean the query will have any effect on them.",
+				"player_lock" = "If false, simple mobs can use the spell.",
+				"overlay" = "Whether an overlay is drawn atop atoms affectecd by the spell.\n\
+					Keep in mind, just because an atom is affected by the spell doesn't mean the query will have any effect on it.",
+				"overlay_lifetime" = "The amount of time in deciseconds the overlay will persist.",
+				"sparks_spread" = "Whether the spell produces sparks when cast.",
+				"smoke_spread" = "The kind of smoke, if any, the spell produces when cast.",
+				"centcom_cancast" = "If true, the spell can be cast on the centcom Z-level.",
+				"max_targets" = "The maximum number of mobs the spell can target.",
+				"target_ignore_prev" = "If false, the same mob can be targeted multiple times.",
+				"include_user" = "If true, the user can target themselves with the spell.",
+				"random_target" = "If true, the spell will target a random mob(s) in range.",
+				"random_target_priority" = "Whether the spell will target random mobs in range or the closest mobs in range.",
+				"inner_radius" = "If this is a non-negative number, the spell will not affect atoms within that many tiles of the user.",
+				"ranged_mousepointer" = "The icon used for the mouse when aiming the spell.",
+				"deactive_mesg" = "The message the user sees when canceling the spell.",
+				"active_msg" = "The message the user sees when activating the spell.",
+				"projectile_amount" = "The maximum number of projectiles the user can fire with each cast of the spell.",
+				"projectiles_per_fire" = "The amount of projectiles fired with each click of the mouse.",
+				"projectile_var_overrides" = "The fired projectiles will have the appropriate variables overridden by the corresponding values in this associative list.\n\
+					You should probably set \"name\", \"icon\", and \"icon_state\".\n\
+					Refer to code/modules/projectiles/projectile.dm to see what other vars you can override.",
+				"cone_level" = "How many tiles out the cone will extend.",
+				"respect_density" = "If true, the cone produced by the spell is blocked by walls.",
+				"self_castable" = "If true, the user can cast the spell on themselves.",
+				"aim_assist" = "If true, the spell has turf-based aim assist.",
+				"drawmessage" = "The message the user sees when activating the spell.",
+				"dropmessage" = "The message the user sees when canceling the spell.",
+				"hand_var_overrides" = "The touch attack will have the appropriate variables overridden by the corresponding values in this associative list.\n\
+					You should probably set \"name\", \"desc\", \"catchphrase\", \"on_use_sound\" \"icon\", \"icon_state\", and \"inhand_icon_state\".\n\
+					Refer to code/modules/spells/spell_types/godhand.dm for see what other vars you can override.",
+				"scratchpad" = "This list can be used to store variables between individual queries within the same cast or between casts.\n\
+					You can declare variables from this menu for convenience. To access this list in a query, use the identifier \"SOURCE.scratchpad\".\n\
+					Refer to the _list procs defined in code/modules/admin/verbs/SDQL2/SDQL_2_wrappers.dm for information on how to modify and edit list vars from within a query.",
+			),
+		)
 	return static_data
 
 #define LIST_VAR_FLAGS_TYPED 1
