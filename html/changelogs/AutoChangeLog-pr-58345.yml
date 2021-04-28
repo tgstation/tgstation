@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - qol: "Added keybinds for moving up/down z-levels, useful as a ghost on multi-z maps! These default to the page up/page down buttons (previously used as the secondary binds for switching hands and activating items in hand)."
