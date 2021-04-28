@@ -1,34 +1,4 @@
 //All defines used in reactions are located in ..\__DEFINES\reactions.dm
-/*priority so far, check this list to see what are the numbers used. Please use a different priority for each reaction(higher number are done first)
-miaster = -10 (this should always be under all other fires)
-freonfire = -5
-plasmafire = -4
-h2fire = -3
-tritfire = -2
-halon_o2removal = -1
-nitrous_decomp = 0
-water_vapor = 1
-nitryl_decomp = 21
-pluox_formation = 2
-nitrylformation = 3
-bzformation = 4
-freonformation = 5
-stimformation = 6
-nobliumformation = 7
-zauker_decomp = 8
-healium_formation = 9
-proto_nitrate_formation = 10
-zauker_formation = 11
-halon_formation = 12
-proto_nitrate_response = 13 - 18
-fusion = 19
-metallic_hydrogen = 20
-nobiliumsuppression = INFINITY
-*/
-#define PRIORITY_PRE_FORMATION 1
-#define PRIORITY_FORMATION 2
-#define PRIORITY_POST_FORMATION 3
-#define PRIORITY_FIRE 4
 
 /proc/init_gas_reactions()
 	var/list/priority_reactions = list()
@@ -77,8 +47,8 @@ nobiliumsuppression = INFINITY
 	var/list/requirements
 	var/major_gas //the highest rarity gas used in the reaction.
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
+	///The priority group this reaction is a part of. You can think of these as processing in batches, put your reaction into the one that's most fitting
 	var/priority_group
-	var/priority = 100 //lower numbers are checked/react later than higher numbers. if two reactions have the same priority they may happen in either order
 	var/name = "reaction"
 	var/id = "r"
 
@@ -89,12 +59,10 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/proc/react(datum/gas_mixture/air, atom/location)
 	return NO_REACTION
-	)
 
 //water vapor: puts out fires?
 /datum/gas_reaction/water_vapor
 	priority_group = PRIORITY_POST_FORMATION
-	priority = 1
 	name = "Water Vapor"
 	id = "vapor"
 
@@ -115,7 +83,6 @@ nobiliumsuppression = INFINITY
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/nitrous_decomp
 	priority_group = PRIORITY_POST_FORMATION
-	priority = 0
 	name = "Nitrous Oxide Decomposition"
 	id = "nitrous_decomp"
 
@@ -155,7 +122,6 @@ nobiliumsuppression = INFINITY
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/tritfire
 	priority_group = PRIORITY_FIRE
-	priority = -2 //fire should ALWAYS be last, but tritium fires happen before plasma fires
 	name = "Tritium Combustion"
 	id = "tritfire"
 
@@ -218,7 +184,6 @@ nobiliumsuppression = INFINITY
 //plasma combustion: combustion of oxygen and plasma (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/plasmafire
 	priority_group = PRIORITY_FIRE
-	priority = -4 //fire should ALWAYS be last, but plasma fires happen after tritium fires
 	name = "Plasma Combustion"
 	id = "plasmafire"
 
@@ -292,7 +257,6 @@ nobiliumsuppression = INFINITY
 //freon reaction (is not a fire yet)
 /datum/gas_reaction/freonfire
 	priority_group = PRIORITY_FIRE
-	priority = -5
 	name = "Freon combustion"
 	id = "freonfire"
 
@@ -351,7 +315,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/h2fire
 	priority_group = PRIORITY_FIRE
-	priority = -3 //fire should ALWAYS be last, but tritium fires happen before plasma fires
 	name = "Hydrogen Combustion"
 	id = "h2fire"
 
@@ -408,7 +371,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/nitrousformation //formationn of n2o, esothermic, requires bz as catalyst
 	priority_group = PRIORITY_FORMATION
-	priority = 3
 	name = "Nitrous Oxide formation"
 	id = "nitrousformation"
 
@@ -444,7 +406,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/nitryl_decomposition //The decomposition of nitryl. Exothermic. Requires oxygen as catalyst.
 	priority_group = PRIORITY_PRE_FORMATION
-	priority = 21
 	name = "Nitryl Decomposition"
 	id = "nitryl_decomp"
 
@@ -478,7 +439,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires bz.
 	priority_group = PRIORITY_FORMATION
-	priority = 3
 	name = "Nitryl formation"
 	id = "nitrylformation"
 
@@ -516,7 +476,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/bzformation //Formation of BZ by combining plasma and tritium at low pressures. Exothermic.
 	priority_group = PRIORITY_FORMATION
-	priority = 4
 	name = "BZ Gas formation"
 	id = "bzformation"
 
@@ -553,7 +512,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/freonformation
 	priority_group = PRIORITY_FORMATION
-	priority = 5
 	name = "Freon formation"
 	id = "freonformation"
 
@@ -588,7 +546,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
 	priority_group = PRIORITY_FORMATION
-	priority = 6
 	name = "Stimulum formation"
 	id = "stimformation"
 
@@ -620,7 +577,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/nobliumformation //Hyper-Noblium formation is extrememly endothermic, but requires high temperatures to start. Due to its high mass, hyper-nobelium uses large amounts of nitrogen and tritium. BZ can be used as a catalyst to make it less endothermic.
 	priority_group = PRIORITY_FORMATION
-	priority = 7
 	name = "Hyper-Noblium condensation"
 	id = "nobformation"
 
@@ -654,7 +610,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/miaster //dry heat sterilization: clears out pathogens in the air
 	priority_group = PRIORITY_POST_FORMATION
-	priority = -10 //after all the heating from fires etc. is done
 	name = "Dry Heat Sterilization"
 	id = "sterilization"
 
@@ -683,7 +638,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/halon_formation
 	priority_group = PRIORITY_FORMATION
-	priority = 12
 	name = "Halon formation"
 	id = "halon_formation"
 
@@ -716,7 +670,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/healium_formation
 	priority_group = PRIORITY_FORMATION
-	priority = 9
 	name = "Healium formation"
 	id = "healium_formation"
 
@@ -749,7 +702,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/proto_nitrate_formation
 	priority_group = PRIORITY_FORMATION
-	priority = 10
 	name = "Proto Nitrate formation"
 	id = "proto_nitrate_formation"
 
@@ -782,7 +734,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/zauker_formation
 	priority_group = PRIORITY_FORMATION
-	priority = 11
 	name = "Zauker formation"
 	id = "zauker_formation"
 
@@ -815,7 +766,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/halon_o2removal
 	priority_group = PRIORITY_PRE_FORMATION
-	priority = -1
 	name = "Halon o2 removal"
 	id = "halon_o2removal"
 
@@ -847,7 +797,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/zauker_decomp
 	priority_group = PRIORITY_POST_FORMATION
-	priority = 8
 	name = "Zauker decomposition"
 	id = "zauker_decomp"
 
@@ -884,7 +833,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/proto_nitrate_bz_response
 	priority_group = PRIORITY_PRE_FORMATION
-	priority = 13
 	name = "Proto Nitrate bz response"
 	id = "proto_nitrate_bz_response"
 
@@ -925,7 +873,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/proto_nitrate_tritium_response
 	priority_group = PRIORITY_PRE_FORMATION
-	priority = 16
 	name = "Proto Nitrate tritium response"
 	id = "proto_nitrate_tritium_response"
 
@@ -962,7 +909,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/proto_nitrate_hydrogen_response
 	priority_group = PRIORITY_PRE_FORMATION
-	priority = 17
 	name = "Proto Nitrate hydrogen response"
 	id = "proto_nitrate_hydrogen_response"
 
@@ -991,7 +937,6 @@ nobiliumsuppression = INFINITY
 
 /datum/gas_reaction/pluox_formation
 	priority_group = PRIORITY_FORMATION
-	priority = 2
 	name = "Pluoxium formation"
 	id = "pluox_formation"
 
