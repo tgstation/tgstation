@@ -484,7 +484,7 @@
 					B.title = title
 					B.author = author
 					B.dat = content
-					B.icon_state = "book[rand(1,8)]"
+					B.icon_state = "book[rand(1,13)]"
 					visible_message("<span class='notice'>[src]'s printer hums as it produces a completely bound book. How did it do that?</span>")
 				break
 			qdel(query_library_print)
@@ -603,7 +603,7 @@
 			var/obj/item/book/B = new(src.loc)
 			B.dat = P.info
 			B.name = "Print Job #" + "[rand(100, 999)]"
-			B.icon_state = "book[rand(1,7)]"
+			B.icon_state = "book[rand(1,13)]"
 			qdel(P)
 		else
 			P.forceMove(drop_location())

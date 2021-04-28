@@ -27,3 +27,23 @@
 
 /obj/structure/chair/sofa/bench/corner
 	icon_state = "benchcorner"
+
+/obj/structure/chair/sofa/bench/goon
+	name = "bench"
+	desc = "Firm and uncomfortable."
+	icon_state = "goonbenchmiddle"
+
+/obj/structure/chair/sofa/bench/goon/left
+	icon_state = "goonbench_left"
+
+/obj/structure/chair/sofa/bench/goon/right
+	icon_state = "goonbench_right"
+
+/obj/structure/chair/sofa/bench/goon/corner
+	icon_state = "goonbenchcorner"
+
+/obj/structure/chair/sofa/bench/goon/junction
+	icon_state = "goonbench_j"
+
+/obj/structure/chair/sofa/bench/goon/crossjunction
+	icon_state = "goonbench_cj"

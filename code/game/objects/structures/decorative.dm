@@ -87,6 +87,10 @@
 	desc = "Purely aesthetic ever since the implimentation of time-telling nanochips in everyone's brains."
 	icon_state = "clock"
 
+/obj/structure/fluff/decorative/wall/clock/examine(mob/user)
+	. = ..()
+	. += "<span class='info'>Station Time: [station_time_timestamp()]</span>"
+
 /obj/structure/fluff/decorative/wall/clock/north
 	pixel_y = 28
 /obj/structure/fluff/decorative/wall/clock/east

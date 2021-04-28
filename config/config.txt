@@ -247,6 +247,9 @@ CHECK_RANDOMIZER
 ## Registry address
 # REGISTRYURL https://docs.google.com/document/d/1LAwmv4AzD_yQuWM0rkXUSGAyWDO9aQ31yhCBNVTaZGw/edit?usp=sharing
 
+## Custom Wiki address
+# CUSTWIKIURL https://docs.google.com/document/d/1FZuCkv9--Kz0DXauVb2CV47XLTF-dmJyE4ZrtPnMv7Q/edit?usp=sharing
+
 ## Round specific stats address
 ## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
 ## This will take priority over the game logs address during reboot.

@@ -8,34 +8,40 @@
 	name = "department techfab (Engineering)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_ENGINEERING
 	department_tag = "Engineering"
+	icon_state = "protolathe-e"
 	circuit = /obj/item/circuitboard/machine/techfab/department/engineering
 
 /obj/machinery/rnd/production/techfab/department/service
 	name = "department techfab (Service)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_SERVICE
 	department_tag = "Service"
+	icon_state = "protolathe-se"
 	circuit = /obj/item/circuitboard/machine/techfab/department/service
 
 /obj/machinery/rnd/production/techfab/department/medical
 	name = "department techfab (Medical)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_MEDICAL
 	department_tag = "Medical"
+	icon_state = "protolathe-m"
 	circuit = /obj/item/circuitboard/machine/techfab/department/medical
 
 /obj/machinery/rnd/production/techfab/department/cargo
 	name = "department techfab (Cargo)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_CARGO
 	department_tag = "Cargo"
+	icon_state = "protolathe-c"
 	circuit = /obj/item/circuitboard/machine/techfab/department/cargo
 
 /obj/machinery/rnd/production/techfab/department/science
 	name = "department techfab (Science)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_SCIENCE
 	department_tag = "Science"
+	icon_state = "protolathe-re"
 	circuit = /obj/item/circuitboard/machine/techfab/department/science
 
 /obj/machinery/rnd/production/techfab/department/security
 	name = "department techfab (Security)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_SECURITY
 	department_tag = "Security"
+	icon_state = "protolathe-s"
 	circuit = /obj/item/circuitboard/machine/techfab/department/security
