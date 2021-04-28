@@ -1,0 +1,4 @@
+author: "SgtHunk"
+delete-after: True
+changes: 
+  - bugfix: "Silverscale pirates can now access their turrets."
