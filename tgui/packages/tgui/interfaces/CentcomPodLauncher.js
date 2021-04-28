@@ -792,7 +792,7 @@ class PresetsPage extends Component {
     const { presets } = this.state;
     storage.set("podlauncher_presetlist", presets.filter(preset => (
       preset.id === deleteID
-    ));
+    )));
   }
 
   render() {
