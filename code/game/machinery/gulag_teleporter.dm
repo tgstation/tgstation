@@ -14,6 +14,7 @@ The console is located at computer/gulag_teleporter.dm
 	base_icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
+	obj_flags = NO_BUILD // Becomes undense when the door is open
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
