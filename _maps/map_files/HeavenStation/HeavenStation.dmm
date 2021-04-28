@@ -20938,10 +20938,18 @@
 /area/security/main)
 "iKN" = (
 /obj/structure/table,
-/obj/item/storage/bag/tray,
-/obj/item/book/manual/wiki/cooking_to_serve_man,
+/obj/item/storage/bag/tray{
+	pixel_y = -4
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
+	},
+/obj/item/book/manual/customrecipes{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/book/manual/wiki/cooking_to_serve_man{
+	pixel_x = -3
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -36974,6 +36982,10 @@
 /area/hallway/primary/port)
 "peF" = (
 /obj/structure/table/glass,
+/obj/item/book/manual/customrecipes{
+	pixel_x = -9;
+	pixel_y = 8
+	},
 /obj/item/book/manual/wiki/chemistry{
 	pixel_x = -4;
 	pixel_y = 4
@@ -56496,9 +56508,13 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/structure/table,
+/obj/item/book/manual/customrecipes{
+	pixel_x = 3;
+	pixel_y = 6
+	},
 /obj/item/book/manual/wiki/barman_recipes{
 	pixel_x = -4;
-	pixel_y = 7
+	pixel_y = -1
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)

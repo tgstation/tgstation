@@ -303,10 +303,10 @@
 	page_link = "Singularity_and_Tesla_engines"
 
 /obj/item/book/manual/customrecipes
-	name = "Heavenly Eats"
+	name = "Heavenly Creations"
 	icon_state ="bookcc"
 	author = "Heaven Catering Services"
-	title = "Heavenly Eats"
+	title = "Heavenly Creations"
 
 /obj/item/book/manual/customrecipes/attack_self()
 	if(!dat)
