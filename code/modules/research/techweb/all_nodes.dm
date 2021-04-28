@@ -295,7 +295,7 @@
 	display_name = "Cyborg Upgrades: Engineering & Mining"
 	description = "Engineering and Mining upgrades for cyborgs."
 	prereq_ids = list("adv_engi", "basic_mining")
-	design_ids = list("borg_upgrade_rped", "borg_upgrade_circuitapp", "borg_upgrade_diamonddrill", "borg_upgrade_lavaproof", "borg_upgrade_holding")
+	design_ids = list("borg_upgrade_rped", "borg_upgrade_circuitapp", "borg_upgrade_diamonddrill", "borg_upgrade_lavaproof", "borg_upgrade_holding", "borg_upgrade_powertools")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
 /datum/techweb_node/cyborg_upg_med
@@ -303,7 +303,7 @@
 	display_name = "Cyborg Upgrades: Medical"
 	description = "Medical upgrades for cyborgs."
 	prereq_ids = list("adv_biotech")
-	design_ids = list("borg_upgrade_defibrillator", "borg_upgrade_piercinghypospray", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer", "borg_upgrade_surgicalprocessor", "borg_upgrade_beakerapp")
+	design_ids = list("borg_upgrade_defibrillator", "borg_upgrade_piercinghypospray", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer", "borg_upgrade_surgicalprocessor", "borg_upgrade_beakerapp", "borg_upgrade_surgicaltools")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
 /datum/techweb_node/ai

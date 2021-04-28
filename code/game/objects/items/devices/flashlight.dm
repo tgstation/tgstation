@@ -544,6 +544,10 @@
 	name = "pink glowstick"
 	color = LIGHT_COLOR_PINK
 
+/obj/item/flashlight/glowstick/white
+	name = "white glowstick"
+	color = COLOR_ASSEMBLY_WHITE
+
 /obj/effect/spawner/lootdrop/glowstick
 	name = "random colored glowstick"
 	icon = 'icons/obj/lighting.dmi'
