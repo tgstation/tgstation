@@ -61,8 +61,7 @@ export const PaintingMachine = (props, context) => {
                 disabled={!hasID}
                 content="Reset ID Account"
                 confirmContent="Confirm?"
-                onClick={() =>  act("reset_card")}
-                />
+                onClick={() => act("reset_card")} />
               <Button.Confirm
                 disabled={!hasID}
                 content="Imprint ID Trim"
