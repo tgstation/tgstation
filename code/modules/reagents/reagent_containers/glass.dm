@@ -259,6 +259,13 @@
 		ITEM_SLOT_DEX_STORAGE
 	)
 
+/obj/item/reagent_containers/glass/bucket/Initialize()
+	. = ..()
+	if(prob(50))
+		icon_state = "bucket-r"
+		inhand_icon_state = "bucket-r"
+
+
 /obj/item/reagent_containers/glass/bucket/wooden
 	name = "wooden bucket"
 	icon_state = "woodbucket"

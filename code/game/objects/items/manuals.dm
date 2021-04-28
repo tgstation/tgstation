@@ -47,7 +47,7 @@
 
 /obj/item/book/manual/ripley_build_and_repair
 	name = "APLU \"Ripley\" Construction and Operation Manual"
-	icon_state ="book"
+	icon_state ="booktth"
 	author = "Weyland-Yutani Corp"
 	title = "APLU \"Ripley\" Construction and Operation Manual"
 	dat = {"<html>
@@ -394,28 +394,28 @@
 
 /obj/item/book/manual/wiki/medicine
 	name = "Medical Space Compendium, Volume 638"
-	icon_state = "book8"
+	icon_state = "bookmedicine"
 	author = "Medical Journal"
 	title = "Medical Space Compendium, Volume 638"
 	page_link = "Guide_to_medicine"
 
 /obj/item/book/manual/wiki/surgery
 	name = "Brain Surgery for Dummies"
-	icon_state = "book4"
+	icon_state = "booksurgery"
 	author = "Dr. F. Fran"
 	title = "Brain Surgery for Dummies"
 	page_link = "Surgery"
 
 /obj/item/book/manual/wiki/grenades
 	name = "DIY Chemical Grenades"
-	icon_state = "book2"
+	icon_state = "bookgrenade"
 	author = "W. Powell"
 	title = "DIY Chemical Grenades"
 	page_link = "Grenade"
 
 /obj/item/book/manual/wiki/toxins
 	name = "Toxins or: How I Learned to Stop Worrying and Love the Maxcap"
-	icon_state = "book6"
+	icon_state = "booktoxins"
 	author = "Cuban Pete"
 	title = "Toxins or: How I Learned to Stop Worrying and Love the Maxcap"
 	page_link = "Guide_to_toxins"

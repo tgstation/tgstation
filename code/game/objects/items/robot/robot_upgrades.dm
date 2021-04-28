@@ -577,6 +577,46 @@
 			R.resize = 0.5
 			R.update_transform()
 
+/obj/item/borg/upgrade/shrink
+	name = "borg shrinker"
+	desc = "A cyborg resizer, it makes a cyborg small."
+	icon_state = "cyborg_upgrade3"
+
+/obj/item/borg/upgrade/shrink/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+
+		if(R.hasShrunk)
+			to_chat(usr, "<span class='warning'>This unit already has a shrink module installed!</span>")
+			return FALSE
+
+		R.notransform = TRUE
+		var/prev_lockcharge = R.lockcharge
+		R.SetLockdown(1)
+		R.set_anchored(TRUE)
+		var/datum/effect_system/smoke_spread/smoke = new
+		smoke.set_up(1, R.loc)
+		smoke.start()
+		sleep(2)
+		for(var/i in 1 to 4)
+			playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+			sleep(12)
+		if(!prev_lockcharge)
+			R.SetLockdown(0)
+		R.set_anchored(FALSE)
+		R.notransform = FALSE
+		R.resize = 0.75
+		R.hasShrunk = TRUE
+		R.update_transform()
+
+/obj/item/borg/upgrade/shrink/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		if (R.hasShrunk)
+			R.hasShrunk = FALSE
+			R.resize = (4/3)
+			R.update_transform()
+
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
 	desc = "A rapid part exchange device for the engineering cyborg."
@@ -605,6 +645,74 @@
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R.module
 		if (RPED)
 			R.module.remove_module(RPED, TRUE)
+
+/obj/item/borg/upgrade/surgerytools
+	name = "medical cyborg advanced surgery tools"
+	desc = "An upgrade to the Medical model cyborg's surgery loadout, replacing non-advanced tools with their advanced counterpart."
+	icon_state = "cyborg_upgrade3"
+	require_module = TRUE
+	module_type = list(/obj/item/robot_module/medical, /obj/item/robot_module/syndicate_medical)
+	module_flags = BORG_MODULE_MEDICAL
+
+/obj/item/borg/upgrade/surgerytools/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/scalpel/advanced/AS = locate() in R.module
+		if(AS)
+			to_chat(user, "<span class='warning'>This unit is already equipped with advanced surgical tools!</span>")
+			return FALSE
+
+		for(var/obj/item/retractor/RT in R.module)
+			R.module.remove_module(RT, TRUE)
+		for(var/obj/item/hemostat/HS in R.module)
+			R.module.remove_module(HS, TRUE)
+		for(var/obj/item/cautery/CT in R.module)
+			R.module.remove_module(CT, TRUE)
+		for(var/obj/item/surgicaldrill/SD in R.module)
+			R.module.remove_module(SD, TRUE)
+		for(var/obj/item/scalpel/SP in R.module)
+			R.module.remove_module(SP, TRUE)
+		for(var/obj/item/circular_saw/CS in R.module)
+			R.module.remove_module(CS, TRUE)
+
+		AS = new(R.module)
+		R.module.basic_modules += AS
+		R.module.add_module(AS, FALSE, TRUE)
+		var/obj/item/retractor/advanced/AR = new /obj/item/retractor/advanced(R.module)
+		R.module.basic_modules += AR
+		R.module.add_module(AR, FALSE, TRUE)
+		var/obj/item/cautery/advanced/AC = new /obj/item/cautery/advanced(R.module)
+		R.module.basic_modules += AC
+		R.module.add_module(AC, FALSE, TRUE)
+
+/obj/item/borg/upgrade/surgerytools/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/scalpel/advanced/AS in R.module)
+			R.module.remove_module(AS, TRUE)
+		for(var/obj/item/retractor/advanced/AR in R.module)
+			R.module.remove_module(AR, TRUE)
+		for(var/obj/item/cautery/advanced/AC in R.module)
+			R.module.remove_module(AC, TRUE)
+
+		var/obj/item/retractor/RT = new (R.module)
+		R.module.basic_modules += RT
+		R.module.add_module(RT, FALSE, TRUE)
+		var/obj/item/hemostat/HS = new (R.module)
+		R.module.basic_modules += HS
+		R.module.add_module(HS, FALSE, TRUE)
+		var/obj/item/cautery/CT = new (R.module)
+		R.module.basic_modules += CT
+		R.module.add_module(CT, FALSE, TRUE)
+		var/obj/item/surgicaldrill/SD = new (R.module)
+		R.module.basic_modules += SD
+		R.module.add_module(SD, FALSE, TRUE)
+		var/obj/item/scalpel/SP = new (R.module)
+		R.module.basic_modules += SP
+		R.module.add_module(SP, FALSE, TRUE)
+		var/obj/item/circular_saw/CS = new (R.module)
+		R.module.basic_modules += CS
+		R.module.add_module(CS, FALSE, TRUE)
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
@@ -648,6 +756,58 @@
 	var/mob/living/silicon/robot/Cyborg = usr
 	GLOB.crewmonitor.show(Cyborg,Cyborg)
 
+/obj/item/borg/upgrade/powertools
+	name = "engineering cyborg advanced power tools"
+	desc = "An upgrade to the Engineering model cyborg's tool loadout, replacing non-advanced tools with their advanced counterpart."
+	icon_state = "cyborg_upgrade3"
+	require_module = TRUE
+	module_type = list(/obj/item/robot_module/engineering, /obj/item/robot_module/saboteur)
+	module_flags = BORG_MODULE_ENGINEERING
+
+/obj/item/borg/upgrade/powertools/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/crowbar/cyborg/power/ACR = locate() in R.module
+		if(ACR)
+			to_chat(user, "<span class='warning'>This unit is already equipped with powertools!</span>")
+			return FALSE
+
+		for(var/obj/item/screwdriver/cyborg/SC in R.module)
+			R.module.remove_module(SC, TRUE)
+		for(var/obj/item/wrench/cyborg/WR in R.module)
+			R.module.remove_module(WR, TRUE)
+		for(var/obj/item/crowbar/cyborg/CR in R.module)
+			R.module.remove_module(CR, TRUE)
+		for(var/obj/item/wirecutters/cyborg/WC in R.module)
+			R.module.remove_module(WC, TRUE)
+
+		ACR = new(R.module)
+		R.module.basic_modules += ACR
+		R.module.add_module(ACR, FALSE, TRUE)
+		var/obj/item/screwdriver/cyborg/power/ASC = new /obj/item/screwdriver/cyborg/power(R.module)
+		R.module.basic_modules += ASC
+		R.module.add_module(ASC, FALSE, TRUE)
+
+/obj/item/borg/upgrade/powertools/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/crowbar/cyborg/power/ACR in R.module)
+			R.module.remove_module(ACR, TRUE)
+		for(var/obj/item/screwdriver/cyborg/power/ASC in R.module)
+			R.module.remove_module(ASC, TRUE)
+
+		var/obj/item/screwdriver/cyborg/SC = new (R.module)
+		R.module.basic_modules += SC
+		R.module.add_module(SC, FALSE, TRUE)
+		var/obj/item/wrench/cyborg/WR = new (R.module)
+		R.module.basic_modules += WR
+		R.module.add_module(WR, FALSE, TRUE)
+		var/obj/item/crowbar/cyborg/CR = new (R.module)
+		R.module.basic_modules += CR
+		R.module.add_module(CR, FALSE, TRUE)
+		var/obj/item/wirecutters/cyborg/WC = new (R.module)
+		R.module.basic_modules += WC
+		R.module.add_module(WC, FALSE, TRUE)
 
 /obj/item/borg/upgrade/transform
 	name = "borg module picker (Standard)"

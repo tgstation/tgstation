@@ -43,7 +43,7 @@
 /obj/item/grenade/spawnergrenade/buzzkill
 	name = "Buzzkill grenade"
 	desc = "The label reads: \"WARNING: DEVICE WILL RELEASE LIVE SPECIMENS UPON ACTIVATION. SEAL SUIT BEFORE USE.\" It is warm to the touch and vibrates faintly."
-	icon_state = "holy_grenade"
+	icon_state = "wasp"
 	spawner_type = /mob/living/simple_animal/hostile/poison/bees/toxin
 	deliveryamt = 10
 

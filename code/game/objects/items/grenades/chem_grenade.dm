@@ -312,6 +312,7 @@
 /obj/item/grenade/chem_grenade/metalfoam
 	name = "metal foam grenade"
 	desc = "Used for emergency sealing of hull breaches."
+	icon_state = "metalfoam"
 	stage = GRENADE_READY
 
 /obj/item/grenade/chem_grenade/metalfoam/Initialize()
@@ -330,6 +331,7 @@
 /obj/item/grenade/chem_grenade/smart_metal_foam
 	name = "smart metal foam grenade"
 	desc = "Used for emergency sealing of hull breaches, while keeping areas accessible."
+	icon_state = "metalfoam"
 	stage = GRENADE_READY
 
 /obj/item/grenade/chem_grenade/smart_metal_foam/Initialize()
@@ -385,6 +387,7 @@
 /obj/item/grenade/chem_grenade/cleaner
 	name = "cleaner grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
+	icon_state = "cleaner"
 	stage = GRENADE_READY
 
 /obj/item/grenade/chem_grenade/cleaner/Initialize()

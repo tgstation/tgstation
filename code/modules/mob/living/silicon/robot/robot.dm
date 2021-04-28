@@ -90,6 +90,7 @@
 	var/list/upgrades = list()
 
 	var/hasExpanded = FALSE
+	var/hasShrunk = FALSE
 	var/obj/item/hat
 	var/hat_offset = -3
 

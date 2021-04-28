@@ -78,4 +78,10 @@
 	infinite = TRUE
 	start_lit = TRUE
 
+/obj/item/candle/infinite/fancy
+	icon_state = "candlefancy"
+
+/obj/item/candle/infinite/fancy/update_icon_state()
+	icon_state = "candlefancy_lit"
+
 #undef CANDLE_LUMINOSITY
