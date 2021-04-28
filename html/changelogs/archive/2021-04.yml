@@ -883,3 +883,7 @@
   - bugfix: fixes incorrect unwrapping message (bad usage of a visible message)
   - bugfix: mail recipients wasn't shuffling either. I'm fairly certain this was leading
       to some people always getting mail and some never getting it.
+2021-04-28:
+  tralezab:
+  - bugfix: Fixes misc js and py issues in the codebase (TGUI, CBT, mapmerge) (closes
+      every issue made by ZeWaka, bye felicia)
