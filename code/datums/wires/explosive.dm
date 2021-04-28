@@ -26,6 +26,18 @@
 	if(G.stage == GRENADE_WIRED)
 		return TRUE
 
+/datum/wires/explosive/chem_grenade/on_pulse(index)
+	var/obj/item/grenade/chem_grenade/grenade = holder
+	if(grenade.stage != GRENADE_READY)
+		return
+	. = ..()
+
+/datum/wires/explosive/chem_grenade/on_cut(index, mend)
+	var/obj/item/grenade/chem_grenade/grenade = holder
+	if(grenade.stage != GRENADE_READY)
+		return
+	. = ..()
+
 /datum/wires/explosive/chem_grenade/attach_assembly(color, obj/item/assembly/S)
 	if(istype(S,/obj/item/assembly/timer))
 		var/obj/item/grenade/chem_grenade/G = holder
