@@ -95,7 +95,7 @@
 	say("Ouch.")
 	//An inexplicable explosion is never not funny plus it kind of explains why the machine just disappears
 	if(!isnull(loc))
-		explosion(get_turf(src), devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE)
+		explosion(src, light_impact_range = 1, flame_range = 1, flash_range = 3, smoke = TRUE)
 	return ..()
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user, list/modifiers)
@@ -237,6 +237,7 @@
 	name = "wayfinding pinpointer"
 	desc = "A handheld tracking device that points to useful places."
 	icon_state = "pinpointer_way"
+	worn_icon_state = "pinpointer_way"
 	var/owner = null
 	var/list/beacons = list()
 	var/roundstart = FALSE

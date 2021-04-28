@@ -12,6 +12,8 @@
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "rev"
 	var/datum/team/revolution/rev_team
+	///when this antagonist is being de-antagged, this is why
+	var/deconversion_reason
 
 	/// What message should the player receive when they are being demoted, and the revolution has won?
 	var/victory_message = "The revolution has overpowered the command staff! Viva la revolution! Execute any head of staff and security should you find them alive."
@@ -229,9 +231,8 @@
 		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you.</span>")
 
 /datum/antagonist/rev/head/farewell()
-	if (announce_victorious())
+	if (announce_victorious() || deconversion_reason == DECONVERTER_STATION_WIN)
 		return
-
 	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
 			owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
@@ -251,12 +252,18 @@
 	if(iscarbon(owner.current) && deconverter != DECONVERTER_REVS_WIN)
 		var/mob/living/carbon/C = owner.current
 		C.Unconscious(100)
+	deconversion_reason = deconverter
 	owner.remove_antag_datum(type)
 
-/datum/antagonist/rev/head/remove_revolutionary(borged,deconverter)
+/datum/antagonist/rev/head/remove_revolutionary(borged, deconverter)
+	var/re_antag = FALSE
+	var/datum/mind/old_owner = owner //owner gets nulled when rev antag removed
 	if(borged || deconverter == DECONVERTER_STATION_WIN || deconverter == DECONVERTER_REVS_WIN)
+		if(owner.current.stat != DEAD && deconverter == DECONVERTER_STATION_WIN)
+			re_antag = TRUE
 		. = ..()
-
+		if(re_antag)
+			old_owner.add_antag_datum(/datum/antagonist/enemy_of_the_state) //needs to be post ..() so old antag status is cleaned up
 /datum/antagonist/rev/head/equip_rev()
 	var/mob/living/carbon/C = owner.current
 	if(!ishuman(C))
@@ -279,21 +286,6 @@
 		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new()
 		S.Insert(C)
 		to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
-
-/// "Enemy of the Revolutionary", given to heads and security when the revolution wins
-/datum/antagonist/revolution_enemy
-	name = "Enemy of the Revolution"
-	show_in_antagpanel = FALSE
-
-/datum/antagonist/revolution_enemy/on_gain()
-	owner.special_role = "revolution enemy"
-
-	var/datum/objective/survive/survive = new /datum/objective/survive
-	survive.owner = owner
-	survive.explanation_text = "The station has been overrun by revolutionaries, stay alive until the end."
-	objectives += survive
-
-	return ..()
 
 /datum/team/revolution
 	name = "Revolution"
@@ -397,11 +389,11 @@
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
 				if(!charter_given && rev_mind.current && rev_mind.current.stat == CONSCIOUS)
 					charter_given = TRUE
-					var/obj/structure/closet/supplypod/bluespacepod/syndicate/pod = new()
-					pod.explosionSize = list(0,0,0,0)
-					new /obj/item/station_charter/revolution(pod)
-					var/turf/landing_location = get_turf(rev_mind.current)
-					new /obj/effect/pod_landingzone(landing_location, pod)
+					podspawn(list(
+						"target" = get_turf(rev_mind.current),
+						"style" = STYLE_SYNDICATE,
+						"spawn" = /obj/item/station_charter/revolution
+					))
 					to_chat(rev_mind.current, "<span class='hear'>You hear something crackle in your ears for a moment before a voice speaks. \
 						\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 						<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\"</span>")
@@ -429,7 +421,7 @@
 
 			var/mob/living/carbon/target_body = mind.current
 
-			mind.add_antag_datum(/datum/antagonist/revolution_enemy)
+			mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
 
 			if (!istype(target_body))
 				continue

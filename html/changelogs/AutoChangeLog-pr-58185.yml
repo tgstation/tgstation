@@ -1,5 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - balance: "Venus human traps no longer take damage from being in a cold environment."
-  - balance: "Venus human traps now take twice as long to die from being in a hot environment."

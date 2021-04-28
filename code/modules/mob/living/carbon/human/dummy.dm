@@ -17,6 +17,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/attach_rot(mapload)
 	return
 
+/mob/living/carbon/human/dummy/has_equipped(obj/item/item, slot, initial = FALSE)
+	return item.visual_equipped(src, slot, initial)
+
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
 	cut_overlays(TRUE)
@@ -44,6 +47,28 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 		D.regenerate_icons() //they were cut in wipe_state()
 	D.in_use = TRUE
 	return D
+
+/proc/generate_dummy_lookalike(slotkey, mob/target)
+	if(!istype(target))
+		return generate_or_wait_for_human_dummy(slotkey)
+
+	var/mob/living/carbon/human/dummy/copycat = generate_or_wait_for_human_dummy(slotkey)
+
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.dna.transfer_identity(copycat, transfer_SE = TRUE)
+
+		if(ishuman(target))
+			var/mob/living/carbon/human/human_target = target
+			human_target.copy_clothing_prefs(copycat)
+
+		copycat.updateappearance(icon_update=TRUE, mutcolor_update=TRUE, mutations_overlay_update=TRUE)
+	else
+		//even if target isn't a carbon, if they have a client we can make the
+		//dummy look like what their human would look like based on their prefs
+		target?.client?.prefs?.copy_to(copycat, icon_updates=TRUE, roundstart_checks=FALSE, character_setup=TRUE)
+
+	return copycat
 
 /proc/unset_busy_human_dummy(slotkey)
 	if(!slotkey)

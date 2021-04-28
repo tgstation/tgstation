@@ -6,9 +6,13 @@
 	density = TRUE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/giftwrapped = FALSE
-	var/sortTag = 0
+	var/sort_tag = 0
 	var/obj/item/paper/note
 	var/obj/item/barcode/sticker
+
+/obj/structure/big_delivery/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
 /obj/structure/big_delivery/interact(mob/user)
 	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
@@ -49,10 +53,10 @@
 	if(istype(W, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/O = W
 
-		if(sortTag != O.currTag)
+		if(sort_tag != O.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
-			sortTag = O.currTag
+			sort_tag = O.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 	else if(istype(W, /obj/item/pen))
@@ -164,6 +168,11 @@
 	for(var/obj/I in src.GetAllContents())
 		SEND_SIGNAL(I, COMSIG_STRUCTURE_UNWRAPPED)
 
+/obj/structure/big_delivery/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
+	SIGNAL_HANDLER
+	if(!hasmob)
+		disposal_holder.destinationTag = sort_tag
+
 /obj/item/small_delivery
 	name = "parcel"
 	desc = "A brown paper delivery parcel."
@@ -171,9 +180,13 @@
 	icon_state = "deliverypackage3"
 	inhand_icon_state = "deliverypackage"
 	var/giftwrapped = 0
-	var/sortTag = 0
+	var/sort_tag = 0
 	var/obj/item/paper/note
 	var/obj/item/barcode/sticker
+
+/obj/item/small_delivery/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
 /obj/item/small_delivery/contents_explosion(severity, target)
 	switch(severity)
@@ -231,10 +244,10 @@
 	if(istype(W, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/O = W
 
-		if(sortTag != O.currTag)
+		if(sort_tag != O.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
 			to_chat(user, "<span class='notice'>*[tag]*</span>")
-			sortTag = O.currTag
+			sort_tag = O.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 	else if(istype(W, /obj/item/pen))
@@ -323,6 +336,11 @@
 		return
 	for(var/obj/I in src.GetAllContents())
 		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
+
+/obj/item/small_delivery/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
+	SIGNAL_HANDLER
+	if(!hasmob)
+		disposal_holder.destinationTag = sort_tag
 
 /obj/item/dest_tagger
 	name = "destination tagger"

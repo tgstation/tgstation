@@ -254,7 +254,7 @@
 	name = "popsicle stick"
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "popsicle_stick"
-	desc = "This humble little stick usually carries a frozen treat, at the moment it seems freed from this atlassian burden."
+	desc = "This humble little stick usually carries a frozen treat, at the moment it seems freed from this Atlassian burden." 
 	custom_materials = list(/datum/material/wood=20)
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
@@ -274,13 +274,13 @@
 
 /obj/item/food/popsicle/jumbo
 	name = "jumbo icecream"
-	desc = "A luxurius icecream covered in rich chocolate. It seems smaller than you remember it being."
+	desc = "A luxurious icecream covered in rich chocolate. It seems smaller than you remember it being."
 	food_reagents = list(/datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 3, /datum/reagent/consumable/sugar = 2)
 	overlay_state = "jumbo"
 
 /obj/item/food/popsicle/nogga_black
 	name = "nogga black"
-	desc = "A salty licorice icecream recently reintroduced due to all the records of the controversy being lost to time. Those who cannot remember the past are doomed to repeat it."
+	desc = "A salty licorice icecream recently reintroduced due to all records of the controversy being lost to time. Those who cannot remember the past are doomed to repeat it."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/salt = 1,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
 	tastes = list("salty liquorice")
 	overlay_state = "nogga_black"

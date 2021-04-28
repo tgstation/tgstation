@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - qol: "Thermomachines can now be moved around. To do this, open up the panel with a screwdriver, then Right-Click on the machine with a wrench, after a delay the machine will be un-anchored; use ctrl-click to move the machine around. Then set the rotation of the machine by Left-Click with a wrench, screwdriver to close the panel, and the machine is functional again."
-  - qol: "thermomachines can change the piping layer while constructed by hitting them when un-anchored with a multitool"

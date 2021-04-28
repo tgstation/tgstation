@@ -35,13 +35,26 @@
 
 	current_turf.ChangeTurf(/turf/closed/wall)
 
-	current_turf = get_turf(watcher)
 	SEND_SIGNAL(current_turf, COMSIG_MOCK_SIGNAL)
 	TEST_ASSERT_EQUAL(watcher.times_called, 2, "After changing turf, connect_loc didn't reconnect it")
+
+	current_turf.ChangeTurf(/turf/open/floor/carpet)
+	SEND_SIGNAL(current_turf, COMSIG_MOCK_SIGNAL)
+	TEST_ASSERT_EQUAL(watcher.times_called, 3, "After changing turf a second time, connect_loc didn't reconnect it")
 
 /datum/unit_test/connect_loc_change_turf/Destroy()
 	run_loc_floor_bottom_left.ChangeTurf(old_turf_type)
 	return ..()
+
+/// Tests that multiple objects can have connect_loc on the same turf without runtimes.
+/datum/unit_test/connect_loc_multiple_on_turf
+
+/datum/unit_test/connect_loc_multiple_on_turf/Run()
+	var/obj/item/watches_mock_calls/watcher_one = allocate(/obj/item/watches_mock_calls, run_loc_floor_bottom_left)
+	qdel(watcher_one)
+
+	var/obj/item/watches_mock_calls/watcher_two = allocate(/obj/item/watches_mock_calls, run_loc_floor_bottom_left)
+	qdel(watcher_two)
 
 /obj/item/watches_mock_calls
 	var/times_called
@@ -53,7 +66,7 @@
 		COMSIG_MOCK_SIGNAL = .proc/on_receive_mock_signal,
 	)
 
-	AddElement(/datum/element/connect_loc, connections)
+	AddElement(/datum/element/connect_loc, src, connections)
 
 /obj/item/watches_mock_calls/proc/on_receive_mock_signal(datum/source)
 	SIGNAL_HANDLER

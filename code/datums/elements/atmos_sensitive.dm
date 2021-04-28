@@ -19,7 +19,7 @@
 
 	return ..()
 
-/datum/element/atmos_sensitive/Detach(datum/source, force)
+/datum/element/atmos_sensitive/Detach(datum/source)
 	var/atom/us = source
 	us.RemoveElement(/datum/element/connect_loc, pass_on)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)

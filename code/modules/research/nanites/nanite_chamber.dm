@@ -9,6 +9,7 @@
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
+	obj_flags = NO_BUILD // Becomes undense when the door is open
 	idle_power_usage = 50
 	active_power_usage = 300
 

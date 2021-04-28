@@ -29,7 +29,7 @@ This element is used in vat growing to allow for the object to be
 	src.virus_chance = virus_chance
 
 ///Stops listening to the swab signal; you can no longer be swabbed.
-/datum/element/swabable/Detach(datum/source, force)
+/datum/element/swabable/Detach(datum/source)
 	. = ..()
 	if(!isatom(source) || isarea(source))
 		return ELEMENT_INCOMPATIBLE
