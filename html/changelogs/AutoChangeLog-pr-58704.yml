@@ -1,4 +1,0 @@
-author: "SyncMercy"
-delete-after: True
-changes: 
-  - bugfix: "Ice Box Station Telecommunication APC shouldn't drain so much at roundstart anymore"

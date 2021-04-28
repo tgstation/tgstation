@@ -883,3 +883,33 @@
   - bugfix: fixes incorrect unwrapping message (bad usage of a visible message)
   - bugfix: mail recipients wasn't shuffling either. I'm fairly certain this was leading
       to some people always getting mail and some never getting it.
+2021-04-28:
+  ArcaneMusic:
+  - bugfix: Due to a stabilization in mail uncertainty, crew should see SIGNIFIGANTLY
+      less mail per minute arriving in cargo.
+  - qol: Close Examine text has been added to letters to inform players they can be
+      used with destination taggers.
+  Ghilker:
+  - balance: HFR has more interactions with different gases, meltdown slighly more
+      dangerous
+  - qol: damage is now calculated using cooling temperature to make it easier to control
+  Pepsiman0:
+  - bugfix: fixed the ce gloves having no mob icons
+  SyncMercy:
+  - bugfix: Ice Box Station Telecommunication APC shouldn't drain so much at roundstart
+      anymore
+  Urumasi:
+  - spellcheck: The Kelvin scale is no longer regarded in degrees
+  - bugfix: Gas canisters now sell for the correct value.
+  Xen:
+  - rscadd: Blind people no longer get hallucinations from supermatter crystals.
+  - refactor: Refactored the code responsible for supermatter causing hallucinations
+      and psychologists calming the supermatter crystal.
+  carshalash, Sprites borrowed/stolen from Aurora's Synnono:
+  - rscadd: Risotto is now a cookable recipe in the misc category.
+  tralezab:
+  - bugfix: Fixes misc js and py issues in the codebase (TGUI, CBT, mapmerge) (closes
+      every issue made by ZeWaka, bye felicia)
+  zxaber:
+  - bugfix: Mechs can move in space if near a wall again.
+  - bugfix: Mech thrusters no longer incorrectly fail if the mech is near a wall.

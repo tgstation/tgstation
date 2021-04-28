@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "HFR has more interactions with different gases, meltdown slighly more dangerous"
-  - qol: "damage is now calculated using cooling temperature to make it easier to control"

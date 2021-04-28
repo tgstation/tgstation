@@ -1,5 +1,0 @@
-author: "Xen"
-delete-after: True
-changes: 
-  - rscadd: "Blind people no longer get hallucinations from supermatter crystals."
-  - refactor: "Refactored the code responsible for supermatter causing hallucinations and psychologists calming the supermatter crystal."

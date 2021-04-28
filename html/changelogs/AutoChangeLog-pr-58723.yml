@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Due to a stabilization in mail uncertainty, crew should see SIGNIFIGANTLY less mail per minute arriving in cargo."
-  - qol: "Close Examine text has been added to letters to inform players they can be used with destination taggers."
