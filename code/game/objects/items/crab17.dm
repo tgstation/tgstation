@@ -158,7 +158,7 @@
 	stop_dumping()
 	STOP_PROCESSING(SSfastprocess, src)
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
-	explosion(src, 0,0,1, flame_range = 2)
+	explosion(src, light_impact_range = 1, flame_range = 2)
 	SSeconomy.market_crashing = FALSE
 	return ..()
 

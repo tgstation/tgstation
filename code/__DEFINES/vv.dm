@@ -79,7 +79,9 @@
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
+#define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
 #define VV_HK_ADD_REAGENT "addreagent"
+#define VV_HK_SHOW_HIDDENPRINTS "show_hiddenprints"
 #define VV_HK_TRIGGER_EMP "empulse"
 #define VV_HK_TRIGGER_EXPLOSION "explode"
 #define VV_HK_AUTO_RENAME "auto_rename"
@@ -134,6 +136,9 @@
 
 // paintings
 #define VV_HK_REMOVE_PAINTING "remove_painting"
+
+//outfits
+#define VV_HK_TO_OUTFIT_EDITOR "outfit_editor"
 
 // /obj/effect/proc_holder/spell
 /// Require casting_clothes to cast spell.

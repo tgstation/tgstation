@@ -202,13 +202,10 @@
 /obj/item/clothing/head/helmet/constable
 	name = "constable helmet"
 	desc = "A british looking helmet."
-	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "constable"
 	inhand_icon_state = "constable"
-	worn_x_dimension = 64
-	worn_y_dimension = 64
-	clothing_flags = LARGE_WORN_ICON
 	custom_price = PAYCHECK_HARD * 1.5
+	worn_y_offset = 4
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
@@ -421,8 +418,6 @@
 	. = ..()
 	if(slot != ITEM_SLOT_HEAD)
 		return
-	if(istype(user, /mob/living/carbon/human/dummy)) //Prevents ghosts from being polled when the helmet is put on a dummy.
-		return
 	if(!ismonkey(user) || user.ckey)
 		var/mob/living/something = user
 		to_chat(something, "<span class='boldnotice'>You feel a stabbing pain in the back of your head for a moment.</span>")
@@ -437,7 +432,7 @@
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
 	polling = TRUE
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, ROLE_SENTIENCE, 50, magnification, POLL_IGNORE_SENTIENCE_POTION)
 	polling = FALSE
 	if(!magnification)
 		return

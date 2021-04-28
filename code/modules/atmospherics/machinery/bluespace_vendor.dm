@@ -112,6 +112,14 @@
 	if(!selected_gas)
 		return
 	var/gas_path = gas_id2path(selected_gas)
+
+	if(!connected_machine.bluespace_network.gases[gas_path])
+		pumping = FALSE
+		selected_gas = null
+		mode = BS_MODE_IDLE
+		update_appearance()
+		return
+
 	connected_machine.bluespace_network.pump_gas_to(internal_tank.air_contents, (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
 
 /obj/machinery/bluespace_vendor/multitool_act(mob/living/user, obj/item/multitool/multitool)
