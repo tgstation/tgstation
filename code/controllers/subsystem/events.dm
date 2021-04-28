@@ -157,7 +157,7 @@ SUBSYSTEM_DEF(events)
 		var/datum/holiday/holiday = new H()
 		var/delete_holiday = TRUE
 		for(var/timezone in holiday.timezones)
-			var/time_in_timezone = world.realtime + timezone * 36000
+			var/time_in_timezone = world.realtime + timezone HOURS
 
 			var/YYYY = text2num(time2text(time_in_timezone, "YYYY")) // get the current year
 			var/MM = text2num(time2text(time_in_timezone, "MM")) // get the current month
