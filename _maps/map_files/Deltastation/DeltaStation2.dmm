@@ -109102,7 +109102,7 @@
 "wSL" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/aft)
 "wSM" = (
 /obj/structure/disposalpipe/segment,

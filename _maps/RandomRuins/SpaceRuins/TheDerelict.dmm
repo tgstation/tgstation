@@ -3844,7 +3844,7 @@
 	dir = 8
 	},
 /obj/item/storage/box/lights/mixed,
-/turf/open/floor/iron/airless/white,
+/turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
 "Uz" = (
 /turf/open/floor/plating/airless,
