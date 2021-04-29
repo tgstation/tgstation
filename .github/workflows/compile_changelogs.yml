@@ -36,17 +36,14 @@ jobs:
       - name: "Compile"
         if: steps.value_holder.outputs.CL_ENABLED
         run: |
-          python tools/ss13_genchangelog.py html/changelog.html html/changelogs
-      - name: "Convert Lineendings"
-        if: steps.value_holder.outputs.CL_ENABLED
-        run: |
-          unix2dos html/changelogs/.all_changelog.yml
+          python tools/ss13_genchangelog.py html/changelogs
       - name: Commit
         if: steps.value_holder.outputs.CL_ENABLED
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "Changelogs"
           git pull origin master
+          git add html/changelogs
           git commit -m "Automatic changelog compile [ci skip]" -a || true
       - name: "Push"
         if: steps.value_holder.outputs.CL_ENABLED

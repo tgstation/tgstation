@@ -88,6 +88,11 @@ Passive gate is similar to the regular pump except:
 	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
+/obj/machinery/atmospherics/components/binary/passive_gate/relaymove(mob/living/user, direction)
+	if(!on || direction != dir)
+		return
+	. = ..()
+
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

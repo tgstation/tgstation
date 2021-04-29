@@ -392,7 +392,7 @@
 
 /datum/chemical_reaction/slime/slimeexplosion/proc/boom(datum/reagents/holder)
 	if(holder?.my_atom)
-		explosion(get_turf(holder.my_atom), 1 ,3, 6)
+		explosion(holder.my_atom, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6)
 
 
 /datum/chemical_reaction/slime/slimecornoil

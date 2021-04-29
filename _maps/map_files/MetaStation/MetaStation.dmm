@@ -1289,10 +1289,10 @@
 	},
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/spawner/lootdrop/prison_contraband,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner/skirt,
-/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/color/prisoner,
+/obj/item/clothing/under/color/prisoner,
+/obj/item/clothing/under/color/jumpskirt/prisoner,
+/obj/item/clothing/under/color/jumpskirt/prisoner,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -4955,11 +4955,11 @@
 /area/hallway/primary/fore)
 "aGr" = (
 /obj/structure/rack,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/color/prisoner,
+/obj/item/clothing/under/color/prisoner,
+/obj/item/clothing/under/color/prisoner,
+/obj/item/clothing/under/color/prisoner,
+/obj/item/clothing/under/color/prisoner,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
@@ -7316,11 +7316,12 @@
 /obj/structure/window/reinforced,
 /obj/structure/table,
 /obj/machinery/button/door{
-	id = "xenobio5";
+	id = "xenobio4";
 	layer = 3.3;
-	name = "Xenobio Pen 5 Blast Doors";
+	name = "Xenobio Pen 4 Blast Doors";
 	pixel_y = 4;
-	req_access_txt = "55"
+	req_access_txt = "55";
+	sync_doors = 4
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
@@ -41918,10 +41919,10 @@
 "kHA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/clothing/shoes/wheelys/rollerskates{
+/obj/item/clothing/shoes/sneakers/wheelys/rollerskates{
 	pixel_y = 5
 	},
-/obj/item/clothing/shoes/wheelys/rollerskates,
+/obj/item/clothing/shoes/sneakers/wheelys/rollerskates,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
@@ -54117,7 +54118,7 @@
 	pixel_x = -6;
 	pixel_y = -8
 	},
-/obj/item/clothing/under/rank/prisoner{
+/obj/item/clothing/under/color/prisoner{
 	pixel_x = 8;
 	pixel_y = 5
 	},
@@ -57305,15 +57306,15 @@
 /area/hallway/secondary/exit/departure_lounge)
 "pOr" = (
 /obj/structure/table,
-/obj/item/clothing/under/rank/prisoner/skirt{
+/obj/item/clothing/under/color/jumpskirt/prisoner{
 	pixel_x = -13;
 	pixel_y = 5
 	},
-/obj/item/clothing/under/rank/prisoner/skirt{
+/obj/item/clothing/under/color/jumpskirt/prisoner{
 	pixel_x = 9;
 	pixel_y = 5
 	},
-/obj/item/clothing/under/rank/prisoner{
+/obj/item/clothing/under/color/prisoner{
 	pixel_x = -2;
 	pixel_y = 5
 	},

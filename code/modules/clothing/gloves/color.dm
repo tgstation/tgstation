@@ -2,11 +2,15 @@
 	dying_key = DYE_REGISTRY_GLOVES
 
 /obj/item/clothing/gloves/color/chief_engineer
-	desc = "These gloves provide protection against electric shock. They are so thin you can barely feel them."
+	desc = "These gloves provide excellent heat and electric insulation. They are so thin you can barely feel them."
 	name = "advanced insulated gloves"
 	icon_state = "ce_insuls"
 	inhand_icon_state = "lgloves"
 	siemens_coefficient = 0
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 
 /obj/item/clothing/gloves/color/yellow
 	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger."

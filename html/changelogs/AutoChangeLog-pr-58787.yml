@@ -1,0 +1,4 @@
+author: "Foxtrot (Funce)"
+delete-after: True
+changes: 
+  - bugfix: "Changelog no longer runtimes when it force opens on join."

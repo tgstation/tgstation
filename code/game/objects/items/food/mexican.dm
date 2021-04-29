@@ -96,6 +96,16 @@
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 
+/obj/item/food/enchiladas
+	name = "enchiladas"
+	desc = "Viva La Mexico!"
+	icon_state = "enchiladas"
+	bite_consumption = 4
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/capsaicin = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("hot peppers" = 1, "meat" = 3, "cheese" = 1, "sour cream" = 1)
+	foodtypes = MEAT | GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/food/stuffedlegion
 	name = "stuffed legion"
 	desc = "The former skull of a damned human, filled with goliath meat. It has a decorative lava pool made of ketchup and hotsauce."

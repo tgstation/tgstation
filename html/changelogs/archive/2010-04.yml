@@ -1,0 +1,33 @@
+2010-04-19:
+  /tg/station ss13 team:
+  - unknown: "\n\t<strong>New features:</strong>\n\t<ul>\n\t  <li>\n    \t  <strong>Disposal\
+      \ System:</strong> The station now has a fully functional disposal system for\
+      \ throwing away nuclear authentication disks and old, dirty clowns.\n  \t  </li>\n\
+      \t  <li>\n\t  <strong>Breakable Windows:</strong> Windows are breakable by projectiles\
+      \ and thrown items (including people), shards hurt your feet.\n  \t  </li>\n\
+      \  \t  <li>\n\t  <strong>Status Display:</strong> Station escape shuttle timers\
+      \ now function as status displays modifiable from the bridge.\n  \t  </li>\n\
+      \  \t  <li>\n\t  <strong>Space Heater:</strong> Space heaters for heating up\
+      \ cold spaces, in space.\n\t</li></ul>\n  "
+  - unknown: "\n\t<strong>New items:</strong>\n\t<ul>\n\t  <li> \n\t  <strong>Welding\
+      \ Mask:</strong> Helps engineers shield their eyes when welding.\n  \t  </li>\n\
+      \  \t  <li>\n\t  <strong>Utility Belt:</strong> Function as toolboxes equippable\
+      \ in the belt slot.\n  \t  </li>\n        <li>\n\t  <strong>Mouse Trap:</strong>\
+      \ Hurt your feet, especially if you aren't wearing shoes!\n  \t  </li>\n\t \
+      \ <li>\n\t  <strong>Power Sink:</strong> Traitor item that rapidly drains power.\n\
+      \t  </li>\n\t</ul>\n  "
+  - unknown: "\n\t<strong>New graphics:</strong>\n\t<ul>\n\t  <li>\n\t  <strong>North\
+      \ Facing Sprites:</strong> Player sprites will now face north when moving north.\n\
+      \t  </li>\n\t  <li>\n\t  <strong>Hidden Pipes:</strong> Pipes are now hidden\
+      \ underneath floor tiles.\n\t  </li>\n\t</ul>\n  "
+  - unknown: "\n\t<strong>New robot: Medibot</strong>\n\t<ul>\n\t  <li>\n        Automatically\
+      \ attempts to keep crewmembers alive by injecting them with stuff.\n\t  </li>\n\
+      \t</ul>\n  "
+  - unknown: "\n\t<strong>New robot: Mulebot</strong>\n\t<ul>\n\t  <li>\n        Allows\
+      \ quartermasters to automatically ship crates to different parts of the station.\n\
+      \t  </li>\n\t</ul>\n  "
+2010-04-25:
+  /tg/station ss13 team:
+  - unknown: "\n\t<strong>New graphics:</strong>\n<ul>\n\t  <li>\n\t  <strong>Side\
+      \ Facing Sprites:</strong> Player sprites will now face in all directions when\
+      \ moving. Holy shit!\n\t  </li>\n\t</ul>\n  "
