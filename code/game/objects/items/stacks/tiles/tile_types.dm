@@ -125,12 +125,39 @@
 /obj/item/stack/tile/wood
 	name = "wood floor tile"
 	singular_name = "wood floor tile"
-	desc = "An easy to fit wood floor tile."
+	desc = "An easy to fit wood floor tile. Use while in your hand to change what pattern you want."
 	icon_state = "tile-wood"
 	inhand_icon_state = "tile-wood"
 	turf_type = /turf/open/floor/wood
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/tile/wood
+	tile_reskin_types = list(
+		/obj/item/stack/tile/wood,
+		/obj/item/stack/tile/wood/large,
+		/obj/item/stack/tile/wood/tile,
+		/obj/item/stack/tile/wood/parquet,
+	)
+
+/obj/item/stack/tile/wood/parquet
+	name = "parquet wood floor tile"
+	singular_name = "parquet wood floor tile"
+	icon_state = "tile-wood_parquet"
+	turf_type = /turf/open/floor/wood/parquet
+	merge_type = /obj/item/stack/tile/wood/parquet
+
+/obj/item/stack/tile/wood/large
+	name = "large wood floor tile"
+	singular_name = "large wood floor tile"
+	icon_state = "tile-wood_large"
+	turf_type = /turf/open/floor/wood/large
+	merge_type = /obj/item/stack/tile/wood/large
+
+/obj/item/stack/tile/wood/tile
+	name = "tiled wood floor tile"
+	singular_name = "tiled wood floor tile"
+	icon_state = "tile-wood_tile"
+	turf_type = /turf/open/floor/wood/tile
+	merge_type = /obj/item/stack/tile/wood/tile
 
 //Basalt
 /obj/item/stack/tile/basalt
@@ -440,6 +467,17 @@
 	merge_type = /obj/item/stack/tile/eighties
 
 /obj/item/stack/tile/eighties/loaded
+	amount = 15
+
+/obj/item/stack/tile/eighties/red
+	name = "red retro tile"
+	singular_name = "red retro floor tile"
+	desc = "A stack of REDICAL floor tiles!" //i am so sorry
+	icon_state = "tile_eightiesred"
+	turf_type = /turf/open/floor/eighties/red
+	merge_type = /obj/item/stack/tile/eighties/red
+
+/obj/item/stack/tile/eighties/red/loaded
 	amount = 15
 
 /obj/item/stack/tile/bronze
