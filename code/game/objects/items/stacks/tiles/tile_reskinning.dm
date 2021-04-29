@@ -48,6 +48,7 @@ GLOBAL_LIST_EMPTY(tile_dir_lists)
 				return tile_reskin(user)
 			if("Rotate")
 				return tile_rotate(user)
+		return
 	if(tile_reskin_types)
 		return tile_reskin(user)
 	if(tile_rotate_dirs)

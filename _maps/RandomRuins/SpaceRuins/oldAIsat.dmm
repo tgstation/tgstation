@@ -904,7 +904,7 @@
 "AX" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/spawner/lootdrop/space/fancytool,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/tcommsat/oldaisat)
 
 (1,1,1) = {"

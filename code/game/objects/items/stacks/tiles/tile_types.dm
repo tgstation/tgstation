@@ -114,6 +114,33 @@
 	resistance_flags = FLAMMABLE
 	tableVariant = /obj/structure/table/wood/fancy
 	merge_type = /obj/item/stack/tile/carpet
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet,
+		/obj/item/stack/tile/carpet/symbol,
+		/obj/item/stack/tile/carpet/star,
+		/obj/item/stack/tile/carpet/black,
+		/obj/item/stack/tile/carpet/blue,
+		/obj/item/stack/tile/carpet/cyan,
+		/obj/item/stack/tile/carpet/green,
+		/obj/item/stack/tile/carpet/orange,
+		/obj/item/stack/tile/carpet/purple,
+		/obj/item/stack/tile/carpet/red,
+	)
+
+/obj/item/stack/tile/carpet/symbol
+	name = "symbol carpet"
+	singular_name = "symbol carpet tile"
+	icon_state = "tile-carpet-symbol"
+	desc = "A piece of carpet. This one has a symbol on it."
+	turf_type = /turf/open/floor/carpet/lone
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST, SOUTHEAST)
+
+/obj/item/stack/tile/carpet/star
+	name = "star carpet"
+	singular_name = "star carpet tile"
+	icon_state = "tile-carpet-star"
+	desc = "A piece of carpet. This one has a star on it."
+	turf_type = /turf/open/floor/carpet/lone/star
 
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
@@ -399,14 +426,22 @@
 	tile_reskin_types = list(
 		/obj/item/stack/tile/bronze,
 		/obj/item/stack/tile/bronze/flat,
+		/obj/item/stack/tile/bronze/filled,
 		)
 
 /obj/item/stack/tile/bronze/flat
 	name = "flat bronze tile"
 	singular_name = "flat bronze floor tile"
-	icon_state = "tile_brass"
+	icon_state = "tile_reebe"
 	turf_type = /turf/open/floor/bronze/flat
 	merge_type = /obj/item/stack/tile/bronze/flat
+
+/obj/item/stack/tile/bronze/filled
+	name = "filled bronze tile"
+	singular_name = "filled bronze floor tile"
+	icon_state = "tile_brass_filled"
+	turf_type = /turf/open/floor/bronze/filled
+	merge_type = /obj/item/stack/tile/bronze/filled
 
 /obj/item/stack/tile/cult
 	name = "engraved tile"

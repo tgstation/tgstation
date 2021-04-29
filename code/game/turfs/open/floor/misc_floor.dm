@@ -141,21 +141,24 @@
 /turf/open/floor/bronze
 	name = "bronze floor"
 	desc = "Some heavy bronze tiles."
-	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "clockwork_floor"
 	floor_tile = /obj/item/stack/tile/bronze
-
-/turf/open/floor/bronze/lavaland
-	planetary_atmos = TRUE
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-
-/turf/open/floor/bronze/icemoon
-	planetary_atmos = TRUE
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/bronze/flat
 	icon_state = "reebe"
 	floor_tile = /obj/item/stack/tile/bronze/flat
+
+/turf/open/floor/bronze/filled
+	icon = 'icons/obj/clockwork_objects.dmi'
+	floor_tile = /obj/item/stack/tile/bronze/filled
+
+/turf/open/floor/bronze/filled
+	planetary_atmos = TRUE
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/floor/bronze/filled
+	planetary_atmos = TRUE
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/white
 	name = "white floor"
