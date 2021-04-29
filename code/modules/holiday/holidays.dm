@@ -9,7 +9,7 @@
 	var/current_year = 0
 	var/year_offset = 0
 	///Timezones this holiday is celebrated in (defaults to three timezones spanning a 50 hour window covering all timezones)
-	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_AoE)
+	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_ANYWHERE_ON_EARTH)
 	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
