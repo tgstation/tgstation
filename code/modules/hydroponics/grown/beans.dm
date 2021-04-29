@@ -46,7 +46,6 @@
 	name = "koibean"
 	desc = "Something about these seems fishy."
 	icon_state = "koibeans"
-
 	foodtypes = VEGETABLES
 	tastes = list("koi" = 1)
 	wine_power = 40

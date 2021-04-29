@@ -105,7 +105,6 @@
 	name = "Combustible Lemon"
 	desc = "Made for burning houses down."
 	icon_state = "firelemon"
-
 	foodtypes = FRUIT
 	wine_power = 70
 

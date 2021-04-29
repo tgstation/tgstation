@@ -52,7 +52,6 @@
 	name = "parsnip"
 	desc = "Closely related to carrots."
 	icon_state = "parsnip"
-
 	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/parsnipjuice = 0)
 	wine_power = 35
