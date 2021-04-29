@@ -465,6 +465,10 @@
 	icon_state = "tile_eighties"
 	turf_type = /turf/open/floor/eighties
 	merge_type = /obj/item/stack/tile/eighties
+	tile_reskin_types = list(
+		/obj/item/stack/tile/eighties,
+		/obj/item/stack/tile/eighties/red,
+	)
 
 /obj/item/stack/tile/eighties/loaded
 	amount = 15
@@ -476,9 +480,6 @@
 	icon_state = "tile_eightiesred"
 	turf_type = /turf/open/floor/eighties/red
 	merge_type = /obj/item/stack/tile/eighties/red
-
-/obj/item/stack/tile/eighties/red/loaded
-	amount = 15
 
 /obj/item/stack/tile/bronze
 	name = "bronze tile"
