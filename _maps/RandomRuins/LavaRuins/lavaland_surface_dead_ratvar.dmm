@@ -121,7 +121,7 @@
 /area/ruin/unpowered/ratvar)
 "F" = (
 /obj/structure/dead_ratvar,
-/turf/open/floor/bronze/lavaland,
+/turf/open/floor/bronze/filled/lavaland,
 /area/ruin/unpowered/ratvar)
 "G" = (
 /obj/item/stack/sheet/bronze/thirty,

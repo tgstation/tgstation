@@ -30,7 +30,9 @@ GLOBAL_LIST_EMPTY(tile_dir_lists)
 	if(.)
 		return
 	for(var/set_dir in values)
-		values[set_dir] = image(icon = initial(type_cast_path.icon), icon_state = initial(type_cast_path.icon_state), dir = text2dir(set_dir))
+		var/image/turf_image = image(icon = initial(type_cast_path.icon), icon_state = initial(type_cast_path.icon_state), dir = text2dir(set_dir))
+		turf_image.transform = turf_image.transform.Scale(0.5, 0.5)
+		values[set_dir] = turf_image
 	return GLOB.tile_dir_lists[type] = values
 
 /obj/item/stack/tile/attack_self(mob/user)
