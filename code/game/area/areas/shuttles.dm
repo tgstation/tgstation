@@ -212,7 +212,7 @@
 /area/shuttle/caravan/freighter3
 	name = "Tiny Freighter"
 
-////////////////////////////Arena Shuttle////////////////////////////
+// ----------- Arena Shuttle
 /area/shuttle_arena
 	name = "arena"
 	has_gravity = STANDARD_GRAVITY
