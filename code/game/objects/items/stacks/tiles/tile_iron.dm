@@ -140,8 +140,8 @@
 	name = "solar panel tile"
 	singular_name = "solar panel floor tile"
 	icon_state = "tile_solarpanel"
-	turf_type = /turf/open/floor/iron/showroomfloor
-	merge_type = /obj/item/stack/tile/iron/showroomfloor
+	turf_type = /turf/open/floor/iron/solarpanel
+	merge_type = /obj/item/stack/tile/iron/solarpanel
 
 /obj/item/stack/tile/iron/freezer
 	name = "freezer floor tile"
