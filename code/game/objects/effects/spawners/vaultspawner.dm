@@ -22,7 +22,6 @@
 			if(i == lowBoundX || i == hiBoundX || j == lowBoundY || j == hiBoundY)
 				T.PlaceOnTop(/turf/closed/wall/vault)
 			else
-				T.PlaceOnTop(/turf/open/floor/vault)
-			T.icon_state = "[type]vault"
+				T.PlaceOnTop(text2path("/turf/open/floor/vault/[type]"))
 
 	qdel(src)

@@ -14,9 +14,12 @@
 	novariants = TRUE
 	/// What type of turf does this tile produce.
 	var/turf_type = null
+	/// What dir will the turf have?
+	var/turf_dir = SOUTH
 	/// Cached associative lazy list to hold the radial options for tile reskinning. See tile_reskinning.dm for more information. Pattern: list[type] -> image
 	var/list/tile_reskin_types
-
+	/// Cached associative lazy list to hold the radial options for tile dirs. See tile_reskinning.dm for more information.
+	var/list/tile_rotate_dirs
 
 /obj/item/stack/tile/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
@@ -24,10 +27,14 @@
 	pixel_y = rand(-3, 3) //randomize a little
 	if(tile_reskin_types)
 		tile_reskin_types = tile_reskin_list(tile_reskin_types)
+	if(tile_rotate_dirs)
+		tile_rotate_dirs = tile_dir_list(tile_rotate_dirs, turf_type)
 
 
 /obj/item/stack/tile/examine(mob/user)
 	. = ..()
+	if(tile_reskin_types || tile_rotate_dirs)
+		. += "<span class='notice'>Use while in your hand to change what type of [src] you want.</span>"
 	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
 		var/verb
 		switch(CEILING(MAX_LIVING_HEALTH / throwforce, 1)) //throws to crit a human
@@ -49,7 +56,9 @@
 /obj/item/stack/tile/proc/place_tile(turf/open/T)
 	if(!turf_type || !use(1))
 		return
-	. = T.PlaceOnTop(turf_type, flags = CHANGETURF_INHERIT_AIR)
+	var/turf/placed_turf = T.PlaceOnTop(turf_type, flags = CHANGETURF_INHERIT_AIR)
+	placed_turf.setDir(turf_dir)
+	return placed_turf
 
 //Grass
 /obj/item/stack/tile/grass
@@ -387,3 +396,23 @@
 	turf_type = /turf/open/floor/bronze
 	mats_per_unit = list(/datum/material/bronze=500)
 	merge_type = /obj/item/stack/tile/bronze
+	tile_reskin_types = list(
+		/obj/item/stack/tile/bronze,
+		/obj/item/stack/tile/bronze/flat,
+		)
+
+/obj/item/stack/tile/bronze/flat
+	name = "flat bronze tile"
+	singular_name = "flat bronze floor tile"
+	icon_state = "tile_brass"
+	turf_type = /turf/open/floor/bronze/flat
+	merge_type = /obj/item/stack/tile/bronze/flat
+
+/obj/item/stack/tile/cult
+	name = "engraved tile"
+	singular_name = "engraved floor tile"
+	desc = "A strange tile made from runed metal. Doesn't seem to actually have any paranormal powers."
+	icon_state = "tile_cult"
+	turf_type = /turf/open/floor/cult
+	mats_per_unit = list(/datum/material/runedmetal=500)
+	merge_type = /obj/item/stack/tile/cult
