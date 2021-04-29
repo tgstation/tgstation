@@ -166,9 +166,7 @@ SUBSYSTEM_DEF(events)
 
 			if(holiday.shouldCelebrate(DD, MM, YYYY, DDD))
 				holiday.celebrate()
-				if(!holidays)
-					holidays = list()
-				holidays[holiday.name] = holiday
+				LAZYSET(holidays, holiday.name, holiday)
 				delete_holiday = FALSE
 				break
 		if(delete_holiday)
