@@ -32,7 +32,7 @@
 	playsound(get_turf(src), pop_sound_effect, 50, TRUE, -1)
 	qdel(src)
 
-/////////////////////////////Sentience Balloon/////////////////////////////
+//Sentience Balloon
 /obj/effect/fun_balloon/sentience
 	name = "sentience fun balloon"
 	desc = "When this pops, things are gonna get more aware around here."
@@ -96,7 +96,7 @@
 		body.key = C.key
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
-/////////////////////////////Emergency Shuttle Balloon/////////////////////////////
+//Emergency Shuttle Balloon
 /obj/effect/fun_balloon/sentience/emergency_shuttle
 	name = "shuttle sentience fun balloon"
 	var/trigger_time = 60
@@ -106,7 +106,7 @@
 	if(SSshuttle.emergency && (SSshuttle.emergency.timeLeft() <= trigger_time) && (SSshuttle.emergency.mode == SHUTTLE_CALL))
 		. = TRUE
 
-/////////////////////////////Scatter Balloon/////////////////////////////
+//Scatter Balloon
 /obj/effect/fun_balloon/scatter
 	name = "scatter fun balloon"
 	desc = "When this pops, you're not going to be around here anymore."
@@ -119,7 +119,7 @@
 		M.forceMove(T)
 		to_chat(M, "<span class='notice'>Pop!</span>", confidential = TRUE)
 
-/////////////////////////////Station Crash/////////////////////////////
+//Station Crash
 // Can't think of anywhere better to put it right now
 /obj/effect/station_crash
 	name = "station crash"
