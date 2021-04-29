@@ -59,17 +59,17 @@
 /turf/open/floor/iron/dark/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/iron/dark/telecomms
+	initial_gas_mix = TCOMMS_ATMOS
+
 /turf/open/floor/iron/dark/side/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/dark/corner/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/floor/iron/dark/checker/airless
+/turf/open/floor/iron/checker/airless
 	initial_gas_mix = AIRLESS_ATMOS
-
-/turf/open/floor/iron/dark/telecomms
-	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/iron/white
 	icon_state = "white"
@@ -94,18 +94,17 @@
 /turf/open/floor/iron/white/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/iron/white/telecomms
+	initial_gas_mix = TCOMMS_ATMOS
+
 /turf/open/floor/iron/white/side/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/white/corner/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/floor/iron/white/cafeteria/airless
+/turf/open/floor/iron/cafeteria/airless
 	initial_gas_mix = AIRLESS_ATMOS
-
-/turf/open/floor/iron/white/telecomms
-	initial_gas_mix = TCOMMS_ATMOS
-
 
 /turf/open/floor/iron/recharge_floor
 	icon_state = "recharge_floor"

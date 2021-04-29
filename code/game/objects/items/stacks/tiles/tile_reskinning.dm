@@ -26,16 +26,13 @@ GLOBAL_LIST_EMPTY(tile_dir_lists)
 	return GLOB.tile_reskin_lists[string_id] = values
 
 /obj/item/stack/tile/proc/tile_dir_list(list/values, atom/type_cast_path)
-	var/list/text_values = list()
-	for(var/dir in values)
-		text_values += text2dir(dir)
-	var/string_id = text_values.Join("-")
+	var/string_id = values.Join("-")
 	. = GLOB.tile_dir_lists[string_id]
 	if(.)
 		return
-	for(var/set_dir in text_values)
-		values[text_values] = image(icon = initial(type_cast_path.icon), icon_state = initial(type_cast_path.icon_state), dir = set_dir)
-	return GLOB.tile_dir_lists[string_id] = text_values
+	for(var/set_dir in values)
+		values[values] = image(icon = initial(type_cast_path.icon), icon_state = initial(type_cast_path.icon_state), dir = set_dir)
+	return GLOB.tile_dir_lists[string_id] = values
 
 /obj/item/stack/tile/attack_self(mob/user)
 	var/list/radial_options = list()
@@ -66,7 +63,7 @@ GLOBAL_LIST_EMPTY(tile_dir_lists)
 	qdel(src)
 
 /obj/item/stack/tile/proc/tile_rotate(mob/user)
-	var/choice = show_radial_menu(user, src, tile_rotate_dirs, radius = 48, require_near = TRUE)
+	var/choice = show_radial_menu(user, src, tile_rotate_dirs, radius = 56, require_near = TRUE)
 	if(!choice)
 		return
 	turf_dir = text2dir(choice)

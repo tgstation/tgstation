@@ -28,7 +28,10 @@
 	if(tile_reskin_types)
 		tile_reskin_types = tile_reskin_list(tile_reskin_types)
 	if(tile_rotate_dirs)
-		tile_rotate_dirs = tile_dir_list(tile_rotate_dirs, turf_type)
+		var/list/values = list()
+		for(var/set_dir in tile_rotate_dirs)
+			values += dir2text(set_dir)
+		tile_rotate_dirs = tile_dir_list(values, turf_type)
 
 
 /obj/item/stack/tile/examine(mob/user)
@@ -118,13 +121,6 @@
 		/obj/item/stack/tile/carpet,
 		/obj/item/stack/tile/carpet/symbol,
 		/obj/item/stack/tile/carpet/star,
-		/obj/item/stack/tile/carpet/black,
-		/obj/item/stack/tile/carpet/blue,
-		/obj/item/stack/tile/carpet/cyan,
-		/obj/item/stack/tile/carpet/green,
-		/obj/item/stack/tile/carpet/orange,
-		/obj/item/stack/tile/carpet/purple,
-		/obj/item/stack/tile/carpet/red,
 	)
 
 /obj/item/stack/tile/carpet/symbol
@@ -133,6 +129,7 @@
 	icon_state = "tile-carpet-symbol"
 	desc = "A piece of carpet. This one has a symbol on it."
 	turf_type = /turf/open/floor/carpet/lone
+	merge_type = /obj/item/stack/tile/carpet/symbol
 	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST, SOUTHEAST)
 
 /obj/item/stack/tile/carpet/star
@@ -141,6 +138,7 @@
 	icon_state = "tile-carpet-star"
 	desc = "A piece of carpet. This one has a star on it."
 	turf_type = /turf/open/floor/carpet/lone/star
+	merge_type = /obj/item/stack/tile/carpet/star
 
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
