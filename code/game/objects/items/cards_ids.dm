@@ -376,6 +376,11 @@
 	// Hard reset access
 	access.Cut()
 
+/// Clears the economy account from the ID card.
+/obj/item/card/id/proc/clear_account()
+	registered_account = null
+
+
 /**
  * Helper proc. Creates access lists for the access procs.
  *
