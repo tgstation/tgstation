@@ -213,6 +213,7 @@
 
 /turf/open/floor/vault
 	name = "strange floor"
+	desc = "You feel a strange nostalgia from looking at this..."
 	icon_state = "rockvault"
 	base_icon_state = "rockvault"
 

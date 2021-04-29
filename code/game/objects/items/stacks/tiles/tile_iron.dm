@@ -181,7 +181,7 @@
 	icon_state = "tile-bluespace"
 	turf_type = /turf/open/floor/iron/bluespace
 	merge_type = /obj/item/stack/tile/iron/bluespace
-	tile_reskin_types = list()
+	tile_reskin_types = null
 
 /obj/item/stack/tile/iron/goonplaque
 	name = "plaqued floor tile"
@@ -190,7 +190,7 @@
 	icon_state = "tile_plaque"
 	turf_type = /turf/open/floor/iron/goonplaque
 	merge_type = /obj/item/stack/tile/iron/goonplaque
-	tile_reskin_types = list()
+	tile_reskin_types = null
 
 /obj/item/stack/tile/iron/vaporwave
 	name = "vaporwave floor tile"
@@ -198,4 +198,4 @@
 	icon_state = "tile_vaporwave"
 	turf_type = /turf/open/floor/iron/vaporwave
 	merge_type = /obj/item/stack/tile/iron/vaporwave
-	tile_reskin_types = list()
+	tile_reskin_types = null

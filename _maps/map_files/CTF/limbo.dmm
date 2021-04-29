@@ -1232,7 +1232,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/ctf)
 
 (1,1,1) = {"

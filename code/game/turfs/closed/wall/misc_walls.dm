@@ -50,6 +50,7 @@
 
 /turf/closed/wall/vault/rock
 	name = "rocky wall"
+	desc = "You feel a strange nostalgia from looking at this..."
 
 /turf/closed/wall/vault/alien
 	name = "alien wall"
