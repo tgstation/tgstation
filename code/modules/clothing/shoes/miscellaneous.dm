@@ -447,7 +447,7 @@
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_TABLE_SLAM, .proc/table_slam)
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
 	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in occupants)
 			occupant.forceMove(user.drop_location())
@@ -460,11 +460,11 @@
 
 /obj/item/clothing/shoes/cowboy/dropped(mob/living/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_LIVING_TABLE_SLAM)
+	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
 
-/obj/item/clothing/shoes/cowboy/proc/table_slam(datum/source, mob/living/user, obj/structure/table/the_table)
+/obj/item/clothing/shoes/cowboy/proc/table_slam(mob/living/source, obj/structure/table/the_table)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/handle_table_slam, user)
+	INVOKE_ASYNC(src, .proc/handle_table_slam, source)
 
 /obj/item/clothing/shoes/cowboy/proc/handle_table_slam(mob/living/user)
 	user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)

@@ -300,16 +300,16 @@
 	user.visible_message("<span class='notice'>[user] shows [user.p_their()] attorney's badge.</span>", "<span class='notice'>You show your attorney's badge.</span>")
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, mob/living/user)
-	RegisterSignal(user, COMSIG_LIVING_TABLE_SLAM, .proc/table_slam)
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
 	user.bubble_icon = "lawyer"
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U, mob/living/user)
-	UnregisterSignal(user, COMSIG_LIVING_TABLE_SLAM)
+	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
 	user.bubble_icon = initial(user.bubble_icon)
 
-/obj/item/clothing/accessory/lawyers_badge/proc/table_slam(datum/source, mob/living/user, obj/structure/table/the_table)
+/obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/handle_table_slam, user)
+	INVOKE_ASYNC(src, .proc/handle_table_slam, source)
 
 /obj/item/clothing/accessory/lawyers_badge/proc/handle_table_slam(mob/living/user)
 	user.say("Objection!!", spans = list(SPAN_YELL), forced=TRUE)
