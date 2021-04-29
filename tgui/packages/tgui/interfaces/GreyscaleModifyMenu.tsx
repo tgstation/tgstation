@@ -35,16 +35,16 @@ enum Direction {
   NorthWest = "northwest"
 }
 
-const DirectionAbbreviation : Map<Direction, string> = new Map([
-  [Direction.North, "N"],
-  [Direction.NorthEast, "NE"],
-  [Direction.East, "E"],
-  [Direction.SouthEast, "SE"],
-  [Direction.South, "S"],
-  [Direction.SouthWest, "SW"],
-  [Direction.West, "W"],
-  [Direction.NorthWest, "NW"],
-]);
+const DirectionAbbreviation : Record<Direction, string> = {
+  [Direction.North]: "N",
+  [Direction.NorthEast]: "NE",
+  [Direction.East]: "E",
+  [Direction.SouthEast]: "SE",
+  [Direction.South]: "S",
+  [Direction.SouthWest]: "SW",
+  [Direction.West]: "W",
+  [Direction.NorthWest]: "NW",
+};
 
 const ConfigDisplay = (props, context) => {
   const { act, data } = useBackend<GreyscaleMenuData>(context);
@@ -115,7 +115,7 @@ const PreviewCompassSelect = (props, context) => {
       </Flex>
       <Flex mx="25%">
         <SingleDirection dir={Direction.West} />
-        <Flex.Item width="33%"><Button content={<Icon name="arrows-alt" size={1.5} m="20%" />} lineHeight={3} m={-0.2} fluid /></Flex.Item>
+        <Flex.Item><Button content={<Icon name="arrows-alt" size={1.5} m="20%" />} lineHeight={3} m={-0.2} fluid /></Flex.Item>
         <SingleDirection dir={Direction.East} />
       </Flex>
       <Flex mx="25%">
@@ -131,9 +131,9 @@ const SingleDirection = (props, context) => {
   const { dir } = props;
   const { data, act } = useBackend<GreyscaleMenuData>(context);
   return (
-    <Flex.Item width="33%">
+    <Flex.Item>
       <Button
-        content={DirectionAbbreviation.get(dir)}
+        content={DirectionAbbreviation[dir]}
         disabled={`${dir}` === data.sprites_dir ? true : false}
         textAlign="center"
         onClick={() => act("change_dir", { new_sprite_dir: dir })}
