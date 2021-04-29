@@ -5201,7 +5201,7 @@
 	name = "Fore-Port Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/space/nearstation)
 "alb" = (
 /obj/structure/sign/warning/electricshock{
@@ -6417,7 +6417,7 @@
 /obj/machinery/power/tracker,
 /obj/effect/turf_decal/box,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/space/nearstation)
 "anu" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -44059,7 +44059,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/turf/open/floor/goonplaque,
+/turf/open/floor/iron/goonplaque,
 /area/security/brig)
 "cmD" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -56371,7 +56371,7 @@
 "ePG" = (
 /obj/structure/cable,
 /obj/machinery/power/tracker,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/port/aft)
 "eRf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -58036,7 +58036,7 @@
 	name = "Fore-Port Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/port/fore)
 "fES" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -65577,7 +65577,7 @@
 	name = "Aft-Port Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/port/aft)
 "jOl" = (
 /obj/structure/cable,
@@ -66676,7 +66676,7 @@
 /obj/machinery/power/tracker,
 /obj/effect/turf_decal/box,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/fore)
 "krN" = (
 /obj/structure/table,
@@ -73275,7 +73275,7 @@
 	},
 /obj/effect/turf_decal/box,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/aft)
 "nRA" = (
 /obj/effect/turf_decal/tile/red,
@@ -80492,7 +80492,7 @@
 /obj/machinery/power/tracker,
 /obj/effect/turf_decal/box,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/aft)
 "rHf" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -91596,7 +91596,7 @@
 	name = "Fore-Starboard Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/fore)
 "xMa" = (
 /obj/effect/turf_decal/stripes/line,

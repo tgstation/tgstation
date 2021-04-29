@@ -483,7 +483,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/shuttle/pirate/flying_dutchman)
 "vi" = (
 /obj/structure/railing{
@@ -876,7 +876,7 @@
 "RY" = (
 /obj/machinery/power/solar/fake,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Sp" = (
 /obj/effect/turf_decal/siding/wood{

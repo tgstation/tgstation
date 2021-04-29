@@ -8124,7 +8124,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/service/chapel/main)
 "bdr" = (
 /obj/structure/rack,
@@ -25152,7 +25152,7 @@
 	id = "foreport";
 	name = "Fore-Port Solar Array"
 	},
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/port/fore)
 "eMz" = (
 /obj/structure/chair/office,
@@ -34971,7 +34971,7 @@
 /area/maintenance/starboard)
 "iit" = (
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/aft)
 "iiI" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -44917,7 +44917,7 @@
 /obj/machinery/door/morgue{
 	name = "Chapel Garden"
 	},
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/service/chapel/main)
 "lIr" = (
 /obj/structure/cable,
@@ -59429,7 +59429,7 @@
 	},
 /obj/item/organ/heart,
 /obj/item/soulstone/anybody/chaplain,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/service/chapel/office)
 "qAD" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -68011,7 +68011,7 @@
 	id = "aftport";
 	name = "Aft-Port Solar Array"
 	},
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/port/aft)
 "tig" = (
 /obj/machinery/door/window/northleft{
@@ -73133,7 +73133,7 @@
 	name = "Relic Closet";
 	req_access_txt = "22"
 	},
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/service/chapel/office)
 "uTb" = (
 /obj/machinery/door/window/westright,
@@ -73694,7 +73694,7 @@
 /area/maintenance/port/fore)
 "vaT" = (
 /obj/structure/cable,
-/turf/open/floor/goonplaque,
+/turf/open/floor/iron/goonplaque,
 /area/hallway/primary/port)
 "vaY" = (
 /obj/structure/table,
@@ -74621,7 +74621,7 @@
 /area/security/brig)
 "vsN" = (
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/port/aft)
 "vsV" = (
 /obj/structure/disposalpipe/segment,
@@ -79629,7 +79629,7 @@
 	id = "forestarboard";
 	name = "Fore-Starboard Solar Array"
 	},
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/fore)
 "xfM" = (
 /obj/effect/turf_decal/stripes/line{

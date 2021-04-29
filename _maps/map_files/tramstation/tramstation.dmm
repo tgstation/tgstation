@@ -8101,7 +8101,7 @@
 /area/service/janitor)
 "azj" = (
 /obj/structure/cable,
-/turf/open/floor/goonplaque,
+/turf/open/floor/iron/goonplaque,
 /area/hallway/secondary/entry)
 "azk" = (
 /obj/structure/reagent_dispensers/fueltank/large,
@@ -57683,7 +57683,7 @@
 	name = "AI Core Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/space/nearstation)
 "sBn" = (
 /obj/structure/fireaxecabinet{
