@@ -265,7 +265,7 @@
 
 /datum/holiday/nz
 	name = "Waitangi Day"
-	timezones = list(TIMEZONE_NZDT)
+	timezones = list(TIMEZONE_NZDT, TIMEZONE_CHADT)
 	begin_day = 6
 	begin_month = FEBRUARY
 

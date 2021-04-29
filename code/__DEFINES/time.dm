@@ -56,6 +56,9 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 /// Line Islands Time
 #define TIMEZONE_LINT 14
 
+// Chatham Daylight Time
+#define TIMEZONE_CHADT 13.75
+
 /// Tokelau Time
 #define TIMEZONE_TKT 13
 
