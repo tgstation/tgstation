@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(tile_dir_lists)
 	if(.)
 		return
 	for(var/set_dir in values)
-		values[values] = image(icon = initial(type_cast_path.icon), icon_state = initial(type_cast_path.icon_state), dir = set_dir)
+		values[set_dir] = image(icon = initial(type_cast_path.icon), icon_state = initial(type_cast_path.icon_state), dir = text2dir(set_dir))
 	return GLOB.tile_dir_lists[string_id] = values
 
 /obj/item/stack/tile/attack_self(mob/user)
