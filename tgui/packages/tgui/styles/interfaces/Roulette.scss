@@ -2,99 +2,103 @@
 @use '../colors.scss';
 
 .Roulette {
-  font-family: Palatino;
-}
-
-.Roulette__board {
-  display: table;
-  width: 100%;
-  border-collapse: collapse;
-  border: 2px solid white;
-  margin: 0;
-}
-
-.Roulette__board-row {
-  padding: 0;
-  margin: 0;
-}
-
-.Roulette__board-cell {
-  display: table-cell;
-  padding: 0;
-  margin: 0;
-  border: 2px solid white;
-  font-family: Palatino;
-
-  &:first-child {
-    padding-left: 0;
+  &__container {
+    display: flex;
   }
 
-  &:last-child {
-    padding-right: 0;
+  &__board {
+    &-cell {
+      display: table-cell;
+      padding: 0;
+      margin: 0;
+      border: 1px solid colors.$white;
+      vertical-align: bottom;
+
+      &-number {
+        width: 35px;
+
+        &--colspan-2 {
+          width: 71px;
+        }
+
+        &--colspan-4 {
+          width: 143px;
+        }
+      }
+    }
+
+    &-button {
+      display: table-cell !important;
+      border: none !important;
+      width: inherit;
+      height: 40px;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+      vertical-align: middle;
+      color: colors.$white !important;
+
+      &--rowspan-3 {
+        height: 122px;
+      }
+
+      &-text {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
   }
-}
 
-.Roulette__board-extrabutton {
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  height: 28px;
-  border: none !important;
-  margin: 0 !important;
-  padding-top: 4px !important;
-  color: #FFFFFF !important;
-}
+  &__lowertable {
+    margin-top: 8px;
+    border-collapse: collapse;
+    border: 1px solid colors.$white;
+    border-spacing: 0;
 
-.Roulette__lowertable {
-  margin-top: 8px;
-  margin-left: 80px;
-  margin-right: 80px;
-  border-collapse: collapse;
-  border: 2px solid white;
-  border-spacing: 0;
-}
+    &--cell {
+      border: 2px solid colors.$white;
+      padding: 0px;
+      margin: 0px;
+    }
 
-.Roulette__lowertable--cell {
-  border: 2px solid white;
-  padding: 0px;
-  margin: 0px;
-}
+    &--betscell {
+      vertical-align: top;
+    }
 
-.Roulette__lowertable--betscell {
-  vertical-align: top;
-}
+    &--spinresult {
+      text-align: center;
+      font-size: 100px;
+      font-weight: bold;
+      vertical-align: middle;
 
-.Roulette__lowertable--spinresult {
-  text-align: center;
-  font-size: 100px;
-  font-weight: bold;
-  vertical-align: middle;
-}
+      &-black {
+        background-color: colors.$black;
+      }
 
-.Roulette__lowertable--spinresult-black {
-  background-color: colors.$black;
-}
+      &-red {
+        background-color: colors.$red;
+      }
 
-.Roulette__lowertable--spinresult-red {
-  background-color: colors.$red;
-}
+      &-green {
+        background-color: colors.$green;
+      }
+    }
 
-.Roulette__lowertable--spinresult-green {
-  background-color: colors.$green;
-}
+    &--spinbutton {
+      margin: 0 !important;
+      border: none !important;
+      font-size: 50px;
+      line-height: 60px !important;
+      text-align: center;
+      font-weight: bold;
+    }
 
-.Roulette__lowertable--spinbutton {
-  margin: 0 !important;
-  border: none !important;
-  font-size: 50px;
-  line-height: 60px !important;
-  text-align: center;
-  font-weight: bold;
-}
-
-.Roulette__lowertable--header {
-  width: 1%;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
+    &--header {
+      width: 1%;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
 }
