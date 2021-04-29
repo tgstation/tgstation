@@ -139,7 +139,7 @@
 /obj/item/stack/tile/iron/solarpanel
 	name = "solar panel tile"
 	singular_name = "solar panel floor tile"
-	icon_state = "tile_showroom"
+	icon_state = "tile_solarpanel"
 	turf_type = /turf/open/floor/iron/showroomfloor
 	merge_type = /obj/item/stack/tile/iron/showroomfloor
 
@@ -168,7 +168,7 @@
 	name = "sepia floor tile"
 	singular_name = "sepia floor tile"
 	desc = "Well, the flow of time is normal on these tiles, weird."
-	icon_state = "tile-sepia"
+	icon_state = "tile_sepia"
 	turf_type = /turf/open/floor/iron/sepia
 	merge_type = /obj/item/stack/tile/iron/sepia
 
@@ -178,7 +178,7 @@
 	name = "bluespace floor tile"
 	singular_name = "bluespace floor tile"
 	desc = "Sadly, these don't seem to make you faster..."
-	icon_state = "tile-bluespace"
+	icon_state = "tile_bluespace"
 	turf_type = /turf/open/floor/iron/bluespace
 	merge_type = /obj/item/stack/tile/iron/bluespace
 	tile_reskin_types = null
