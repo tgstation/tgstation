@@ -1,0 +1,6 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - code_imp: "Universal holidays will cover every timezone by default. This means they'll start 14 hours earlier and last 26 hours longer"
+  - code_imp: "Shortens Christmas, Halloween, April Fool's Day, New Year's and Valentine's Day periods by one day. They will start 14 hours earlier but only last 2 hours longer"
+  - code_imp: "US Independence Day, ANZAC Day, Bastille Day and Waitangi Day will begin and end when they do in the countries that celebrate them"
