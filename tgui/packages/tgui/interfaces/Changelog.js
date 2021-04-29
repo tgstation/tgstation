@@ -217,6 +217,15 @@ export class Changelog extends Component {
           I Said No
         </p>
         <p>
+          Traditional Games Space Station 13 is thankful to the
+          GoonStation 13 Development Team for its work on the game up to the
+          {' r4407 release. The changelog for changes up to r4407 can be seen '}
+          <a href="https://wiki.ss13.co/Changelog#April_2010">
+            here
+          </a>
+          .
+        </p>
+        <p>
           {'Except where otherwise noted, Goon Station 13 is licensed under a '}
           <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">
             Creative Commons Attribution-Noncommercial-Share Alike 3.0 License
