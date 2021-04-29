@@ -119,19 +119,6 @@
 "aw" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
-"ax" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/machinery/bounty_board{
-	dir = 4;
-	pixel_x = -32
-	},
-/turf/open/floor/iron,
-/area/mine/production)
 "ay" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -279,13 +266,12 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/button/door{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/north{
 	id = "labor";
 	name = "Labor Camp Lockdown";
-	pixel_y = 28;
 	req_access_txt = "2"
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "ba" = (
@@ -415,10 +401,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/mine/eva)
 "bt" = (
@@ -432,9 +415,6 @@
 /turf/open/floor/iron,
 /area/mine/eva)
 "bu" = (
-/obj/machinery/light_switch{
-	pixel_x = 27
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -443,6 +423,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron,
 /area/mine/eva)
 "bv" = (
@@ -467,11 +448,7 @@
 /area/mine/laborcamp)
 "by" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Labor Camp APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "bB" = (
@@ -484,9 +461,6 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "bC" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
 /obj/machinery/computer/shuttle/mining{
 	req_access = null
 	},
@@ -496,6 +470,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/production)
 "bD" = (
@@ -550,14 +525,11 @@
 /turf/open/floor/iron,
 /area/mine/eva)
 "bK" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
 /obj/machinery/shower{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
 /area/mine/eva)
 "bL" = (
@@ -753,11 +725,6 @@
 /turf/open/floor/iron,
 /area/mine/production)
 "co" = (
-/obj/machinery/power/apc{
-	name = "Mining EVA APC";
-	pixel_x = 1;
-	pixel_y = -23
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -767,6 +734,7 @@
 /obj/item/stack/package_wrap,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/iron,
 /area/mine/eva)
 "cp" = (
@@ -885,27 +853,21 @@
 /turf/closed/wall,
 /area/mine/living_quarters)
 "cO" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = -28
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/mine/production)
 "cP" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 30
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
 /area/mine/production)
 "cQ" = (
@@ -946,12 +908,6 @@
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cX" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Mining Station Starboard Wing APC";
-	pixel_x = -25;
-	pixel_y = 2
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -962,6 +918,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/iron,
 /area/mine/production)
 "cZ" = (
@@ -984,20 +941,15 @@
 /area/mine/production)
 "dc" = (
 /obj/structure/closet/crate,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
 /obj/effect/turf_decal/bot,
 /obj/item/food/mint,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/production)
 "dd" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
 /obj/structure/table,
 /obj/item/paper/fluff/stations/lavaland/orm_notice,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
 /area/mine/production)
 "de" = (
@@ -1013,14 +965,9 @@
 /turf/open/floor/circuit,
 /area/mine/maintenance)
 "dh" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Communications APC";
-	pixel_x = 1;
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "di" = (
@@ -1045,17 +992,12 @@
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "dk" = (
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/circuit,
 /area/mine/maintenance)
 "dl" = (
 /obj/machinery/light/small{
 	dir = 8
-	},
-/obj/machinery/airalarm{
-	pixel_y = 23
 	},
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue{
@@ -1064,6 +1006,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "dm" = (
@@ -1170,12 +1113,10 @@
 /turf/open/floor/iron/dark,
 /area/mine/maintenance)
 "dz" = (
-/obj/machinery/light_switch{
-	pixel_y = -25
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/circuit,
 /area/mine/maintenance)
 "dA" = (
@@ -1270,14 +1211,11 @@
 	dir = 8;
 	network = list("mine")
 	},
-/obj/machinery/newscaster{
-	pixel_x = 30;
-	pixel_y = 1
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/mine/production)
 "dM" = (
@@ -1290,15 +1228,11 @@
 	dir = 8;
 	network = list("mine")
 	},
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = 28
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/mine/production)
 "dO" = (
@@ -1418,9 +1352,7 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "ee" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "ef" = (
@@ -1435,20 +1367,12 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "eg" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Station Port Wing APC";
-	pixel_x = 1;
-	pixel_y = 23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "eh" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "ei" = (
@@ -1701,11 +1625,8 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "eS" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/machinery/mineral/equipment_vendor,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/mine/production)
 "eT" = (
@@ -1768,17 +1689,11 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "fa" = (
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
 /obj/structure/chair,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fb" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
@@ -1786,15 +1701,14 @@
 	dir = 1
 	},
 /obj/structure/chair,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fc" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fd" = (
@@ -1817,9 +1731,7 @@
 "fe" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
 "ff" = (
@@ -1828,6 +1740,11 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 6
+	},
+/obj/machinery/button/door/directional/north{
+	id = "miningdorm1";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
@@ -1885,13 +1802,11 @@
 /area/mine/living_quarters)
 "fm" = (
 /obj/machinery/vending/cigarette,
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fn" = (
@@ -1912,34 +1827,14 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fq" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = 28
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fr" = (
 /obj/structure/table,
-/turf/open/floor/carpet,
-/area/mine/living_quarters)
-"fs" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "miningdorm1";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
 "ft" = (
@@ -2069,15 +1964,11 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fI" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = -28
-	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fJ" = (
@@ -2097,14 +1988,11 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fK" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fL" = (
@@ -2117,22 +2005,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/mine/living_quarters)
-"fM" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "miningdorm2";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/carpet,
 /area/mine/living_quarters)
 "fN" = (
 /obj/machinery/light{
@@ -2160,13 +2032,6 @@
 "fP" = (
 /obj/machinery/light/small{
 	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "miningdorm3";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 25;
-	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -3477,10 +3342,6 @@
 /area/lavaland/surface/outdoors)
 "nj" = (
 /obj/structure/chair/stool,
-/obj/machinery/flasher{
-	id = "GulagCell 1";
-	pixel_x = -28
-	},
 /obj/structure/sign/poster/official/obey{
 	pixel_y = 32
 	},
@@ -3488,6 +3349,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/flasher/directional/west,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "nm" = (
@@ -3505,11 +3367,7 @@
 "nA" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Station Mech Bay APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/iron,
 /area/mine/mechbay)
 "nF" = (
@@ -3641,6 +3499,16 @@
 	},
 /turf/open/floor/iron,
 /area/mine/mechbay)
+"pH" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/bounty_board/directional/west,
+/turf/open/floor/iron,
+/area/mine/production)
 "pR" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3771,18 +3639,16 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "ss" = (
-/obj/machinery/button/door{
-	id = "miningbathroom";
-	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_y = -25;
-	specialfunctions = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
+	},
+/obj/machinery/button/door/directional/south{
+	id = "miningbathroom";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
@@ -3948,9 +3814,6 @@
 	req_access = list(54)
 	},
 /obj/structure/cable,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -3958,6 +3821,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/mechbay)
 "wE" = (
@@ -3972,6 +3836,20 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"wZ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/obj/machinery/button/door/directional/north{
+	id = "miningdorm2";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/carpet,
+/area/mine/living_quarters)
 "xi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
@@ -4048,12 +3926,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Labor Camp Security APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "zn" = (
@@ -4478,6 +4352,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"Kc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/obj/machinery/button/door/directional/north{
+	id = "miningdorm3";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/carpet,
+/area/mine/living_quarters)
 "Kv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -4755,10 +4643,7 @@
 /area/mine/laborcamp/security)
 "QX" = (
 /obj/structure/chair/stool,
-/obj/machinery/flasher{
-	id = "GulagCell 3";
-	pixel_x = -28
-	},
+/obj/machinery/flasher/directional/west,
 /obj/structure/sign/poster/official/obey{
 	pixel_y = 32
 	},
@@ -4776,12 +4661,10 @@
 /obj/machinery/shower{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 30
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
 /area/mine/production)
 "RO" = (
@@ -4794,10 +4677,6 @@
 /area/mine/living_quarters)
 "RY" = (
 /obj/structure/chair/stool,
-/obj/machinery/flasher{
-	id = "GulagCell 2";
-	pixel_x = -28
-	},
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_y = 32
 	},
@@ -4805,6 +4684,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/flasher/directional/west,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Sd" = (
@@ -4831,13 +4711,8 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "Tb" = (
-/obj/item/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	name = "Prison Intercom (General)";
-	pixel_y = 24;
-	prison_radio = 1
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Tn" = (
@@ -4972,15 +4847,13 @@
 /area/mine/living_quarters)
 "UV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "UX" = (
@@ -14459,12 +14332,12 @@ YA
 dZ
 cM
 ff
-fs
+fP
 cM
-ff
-fM
+wZ
+fP
 cM
-ff
+Kc
 fP
 cM
 aj
@@ -20362,7 +20235,7 @@ cl
 cH
 cO
 cX
-ax
+pH
 dJ
 ia
 cn

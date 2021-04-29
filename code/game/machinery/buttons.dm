@@ -18,6 +18,23 @@
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+// Cardinal buttons for ease of mapping
+/obj/machinery/button/directional/north
+	dir = SOUTH
+	pixel_y = 24
+
+/obj/machinery/button/directional/south
+	dir = NORTH
+	pixel_y = -24
+
+/obj/machinery/button/directional/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/button/directional/west
+	dir = EAST
+	pixel_x = -24
+
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
 	. = ..()
 	if(built)
@@ -188,6 +205,22 @@
 	var/normaldoorcontrol = FALSE
 	var/specialfunctions = OPEN // Bitflag, see assembly file
 	var/sync_doors = TRUE
+
+/obj/machinery/button/door/directional/north
+	dir = SOUTH
+	pixel_y = 24
+
+/obj/machinery/button/door/directional/south
+	dir = NORTH
+	pixel_y = -24
+
+/obj/machinery/button/door/directional/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/button/door/directional/west
+	dir = EAST
+	pixel_x = -24
 
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
