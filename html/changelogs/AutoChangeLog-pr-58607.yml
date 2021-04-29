@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - code_imp: "Examining a human should be less stuttery"
-  - qol: "Examining a window will show the \"cannon\" window rather then a half cut off thing"

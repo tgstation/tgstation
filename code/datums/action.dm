@@ -485,7 +485,7 @@
 	background_icon_state = "bg_demon"
 
 /datum/action/item_action/cult_dagger/Grant(mob/M)
-	if(iscultist(M))
+	if(IS_CULTIST(M))
 		..()
 		button.screen_loc = "6:157,4:-2"
 		button.moved = "6:157,4:-2"

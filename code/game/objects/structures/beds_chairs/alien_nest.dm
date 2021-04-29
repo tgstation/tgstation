@@ -65,12 +65,14 @@
 			"<span class='hear'>You hear squelching...</span>")
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
+	ADD_TRAIT(M, TRAIT_RESTRAINED, type)
 	M.pixel_y = M.base_pixel_y
 	M.pixel_x = M.base_pixel_x + 2
 	M.layer = BELOW_MOB_LAYER
 	add_overlay(nest_overlay)
 
 /obj/structure/bed/nest/post_unbuckle_mob(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_RESTRAINED, type)
 	M.pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset
 	M.pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
 	M.layer = initial(M.layer)

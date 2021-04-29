@@ -19,7 +19,7 @@
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "slots"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	icon_screen = "slots_screen"
 	density = TRUE
 	use_power = IDLE_POWER_USE

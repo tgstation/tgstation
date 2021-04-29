@@ -1,0 +1,5 @@
+author: "Celotajs"
+delete-after: True
+changes: 
+  - qol: "The changelog re-request delay has been heavily reduced"
+  - qol: "Changelogs from r4407 (April 2010) and earlier have been removed, and a link to the GoonStation 13 wiki page for the old changelogs has been added to the footer in the changelog popup. This means we finally won't claim GoonStation13's changes as our own."
