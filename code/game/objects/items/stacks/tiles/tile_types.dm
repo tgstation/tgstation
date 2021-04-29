@@ -461,7 +461,7 @@
 /obj/item/stack/tile/eighties
 	name = "retro tile"
 	singular_name = "retro floor tile"
-	desc = "A stack of floor tiles that remind you of an age of funk."
+	desc = "A stack of floor tiles that remind you of an age of funk. Use in your hand to pick between a black or red pattern."
 	icon_state = "tile_eighties"
 	turf_type = /turf/open/floor/eighties
 	merge_type = /obj/item/stack/tile/eighties
@@ -476,7 +476,7 @@
 /obj/item/stack/tile/eighties/red
 	name = "red retro tile"
 	singular_name = "red retro floor tile"
-	desc = "A stack of REDICAL floor tiles!" //i am so sorry
+	desc = "A stack of REDICAL floor tiles! Use in your hand to pick between a black or red pattern!" //i am so sorry
 	icon_state = "tile_eightiesred"
 	turf_type = /turf/open/floor/eighties/red
 	merge_type = /obj/item/stack/tile/eighties/red
