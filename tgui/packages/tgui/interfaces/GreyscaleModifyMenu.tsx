@@ -24,7 +24,7 @@ type GreyscaleMenuData = {
   sprites_dir: string;
 }
 
-enum Directions {
+enum Direction {
   North = "north",
   NorthEast = "northeast",
   East = "east",
@@ -34,6 +34,17 @@ enum Directions {
   West = "west",
   NorthWest = "northwest"
 }
+
+const DirectionAbbreviation : Map<Direction, string> = new Map([
+  [Direction.North, "N"],
+  [Direction.NorthEast, "NE"],
+  [Direction.East, "E"],
+  [Direction.SouthEast, "SE"],
+  [Direction.South, "S"],
+  [Direction.SouthWest, "SW"],
+  [Direction.West, "W"],
+  [Direction.NorthWest, "NW"],
+]);
 
 const ConfigDisplay = (props, context) => {
   const { act, data } = useBackend<GreyscaleMenuData>(context);
@@ -99,86 +110,39 @@ const PreviewCompassSelect = (props, context) => {
     <Section>
       <Table width="51%" mx="25%">
         <Table.Row key="top" height="33%">
-          <Table.Cell width="33%">
-            <Button
-              content="NW"
-              textAlign="center"
-              onClick={() => act("change_dir", { new_sprite_dir: Directions.NorthWest })}
-              fluid
-              m={1}
-            />
-          </Table.Cell>
-          <Table.Cell width="33%">
-            <Button
-              content="N"
-              textAlign="center"
-              onClick={() => act("change_dir", { new_sprite_dir: Directions.North })}
-              fluid
-              m={1}
-            />
-          </Table.Cell>
-          <Table.Cell width="33%">
-            <Button
-              content="NE"
-              textAlign="center"
-              onClick={() => act("change_dir", { new_sprite_dir: Directions.NorthEast })}
-              fluid
-              m={1}
-            />
-          </Table.Cell>
+          <SingleDirection dir={Direction.NorthWest} />
+          <SingleDirection dir={Direction.North} />
+          <SingleDirection dir={Direction.NorthEast} />
         </Table.Row>
         <Table.Row key="middle" height="33%">
-          <Table.Cell width="33%">
-            <Button
-              content="W"
-              textAlign="center"
-              onClick={() => act("change_dir", { new_sprite_dir: Directions.West })}
-              fluid
-              m={1}
-            />
-          </Table.Cell>
+          <SingleDirection dir={Direction.West} />
           <Table.Cell width="33%"><Box textAlign="center" ><Icon name="arrows-alt" size={1.5} /></Box></Table.Cell>
-          <Table.Cell width="33%">
-            <Button
-              content="E"
-              textAlign="center"
-              onClick={() => act("change_dir", { new_sprite_dir: Directions.East })}
-              fluid
-              m={1}
-            />
-          </Table.Cell>
+          <SingleDirection dir={Direction.East} />
         </Table.Row>
         <Table.Row key="bottom" height="33%">
-          <Table.Cell width="33%">
-            <Button
-              content="SW"
-              textAlign="center"
-              onClick={() => act("change_dir", { new_sprite_dir: Directions.SouthWest })}
-              fluid
-              m={1}
-            />
-          </Table.Cell>
-          <Table.Cell width="33%">
-            <Button
-              content="S"
-              textAlign="center"
-              onClick={() => act("change_dir", { new_sprite_dir: Directions.South })}
-              fluid
-              m={1}
-            />
-          </Table.Cell>
-          <Table.Cell width="33%">
-            <Button
-              content="SE"
-              textAlign="center"
-              onClick={() => act("change_dir", { new_sprite_dir: Directions.SouthEast })}
-              fluid
-              m={1}
-            />
-          </Table.Cell>
+          <SingleDirection dir={Direction.SouthWest} />
+          <SingleDirection dir={Direction.South} />
+          <SingleDirection dir={Direction.SouthEast} />
         </Table.Row>
       </Table>
     </Section>
+  );
+};
+
+const SingleDirection = (props, context) => {
+  const { dir } = props;
+  const { data, act } = useBackend<GreyscaleMenuData>(context);
+  return (
+    <Table.Cell width="33%">
+      <Button
+        content={DirectionAbbreviation.get(dir)}
+        disabled={`${dir}` === data.sprites_dir ? true : false}
+        textAlign="center"
+        onClick={() => act("change_dir", { new_sprite_dir: dir })}
+        fluid
+        m={1}
+      />
+    </Table.Cell>
   );
 };
 
