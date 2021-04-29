@@ -43,12 +43,18 @@
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/shoes/sandal/marisa
+/obj/item/clothing/shoes/sneakers/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
-	icon_state = "marisa"
+	worn_icon_state = "marisa"
+	greyscale_colors = "#545454#ffffff"
+	greyscale_config = /datum/greyscale_config/sneakers_marisa
+	greyscale_config_worn = null
+	strip_delay = 5
+	equip_delay_other = 50
+	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-	species_exception = null
 
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"

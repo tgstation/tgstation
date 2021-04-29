@@ -92,3 +92,7 @@
 /datum/greyscale_config/sneakers_wheelys
 	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_wheelys.json'
+
+/datum/greyscale_config/sneakers_marisa
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers_marisa.json'
