@@ -9,8 +9,11 @@ SUBSYSTEM_DEF(title)
 	var/turf/closed/indestructible/splashscreen/splash_turf
 
 /datum/controller/subsystem/title/Initialize()
-	if(file_path && icon)
-		return
+	generate_new_screen()
+
+/datum/controller/subsystem/title/proc/generate_new_screen()
+//	if(file_path && icon)
+//		return
 
 	if(fexists("data/previous_title.dat"))
 		var/previous_path = file2text("data/previous_title.dat")

@@ -68,6 +68,12 @@
 	if(SStitle.icon)
 		icon = SStitle.icon
 	..()
+	addtimer(CALLBACK(src, /turf/closed/indestructible/splashscreen/proc/screen_swap), 15 SECONDS)
+
+/turf/closed/indestructible/splashscreen/proc/screen_swap()
+	SStitle.generate_new_screen()
+	icon = SStitle.icon
+	addtimer(CALLBACK(src, /turf/closed/indestructible/splashscreen/proc/screen_swap), 15 SECONDS)
 
 /turf/closed/indestructible/splashscreen/vv_edit_var(var_name, var_value)
 	. = ..()

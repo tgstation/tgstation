@@ -265,9 +265,9 @@
 				if(!antispam)
 					to_chat(L, "<span class='notice'>You feel safe under the light.</span>")
 					antispam = TRUE
-					addtimer(CALLBACK(src, /obj/structure/fluff/lightbulb_light/proc/spam_check), 600)
+					addtimer(CALLBACK(src, /obj/structure/fluff/lightbulb_light/proc/spam_check), 10 SECONDS)
 		if(burnt)
-			if(DT_PROB(15, delta_time))
+			if(DT_PROB(30, delta_time))
 				L.adjustBruteLoss(3, 0)
 				L.adjustFireLoss(3, 0)
 				L.updatehealth()
@@ -280,7 +280,7 @@
 				if(!antispam)
 					to_chat(L, "<span class='notice'>You can't stand being in this light!</span>")
 					antispam = TRUE
-					addtimer(CALLBACK(src, /obj/structure/fluff/lightbulb_light/proc/spam_check), 600)
+					addtimer(CALLBACK(src, /obj/structure/fluff/lightbulb_light/proc/spam_check), 10 SECONDS)
 
 //Would be annoying if the game kept telling you it on repeat
 /obj/structure/fluff/lightbulb_light/proc/spam_check()
@@ -298,7 +298,7 @@
 
 /obj/structure/fluff/palacechest
 	name = "scratched chest"
-	desc = "A heavy steel chest, covered in deep inhuman scratches. You see something moving inside of it through the keyhole."
+	desc = "A heavy steel chest, covered in deep scratches. You see something moving inside of it through the keyhole."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "palacechest"
 	layer = TURF_LAYER
