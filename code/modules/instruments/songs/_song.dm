@@ -378,12 +378,12 @@
 				set_linear_falloff_duration(var_value)
 
 // subtype for handheld instruments, like violin
-/datum/song
+/datum/song/handheld
 
-/datum/song/updateDialog(mob/user)
+/datum/song/handheld/updateDialog(mob/user)
 	parent.ui_interact(user || usr)
 
-/datum/song/should_stop_playing(mob/user)
+/datum/song/handheld/should_stop_playing(mob/user)
 	. = ..()
 	if(.)
 		return TRUE
