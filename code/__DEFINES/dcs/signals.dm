@@ -653,7 +653,7 @@
 ///from base of mob/living/simple_animal/hostile/regalrat: (mob/living/simple_animal/hostile/regalrat/king)
 #define COMSIG_RAT_INTERACT "rat_interaction"
 
-///from /obj/item/slapper/attack_obj(): (obj/structure/table/slammed_table)
+///from /obj/item/slapper/attack_obj(): (mob/living/user, obj/structure/table/slammed_table)
 #define COMSIG_LIVING_TABLE_SLAM "living_table_slam"
 
 // /obj signals

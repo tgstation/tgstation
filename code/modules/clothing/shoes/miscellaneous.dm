@@ -462,9 +462,9 @@
 	. = ..()
 	UnregisterSignal(user, COMSIG_LIVING_TABLE_SLAM)
 
-/obj/item/clothing/shoes/cowboy/proc/table_slam(mob/living/source, obj/structure/table/the_table)
+/obj/item/clothing/shoes/cowboy/proc/table_slam(datum/source, mob/living/user, obj/structure/table/the_table)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/handle_table_slam, source)
+	INVOKE_ASYNC(src, .proc/handle_table_slam, user)
 
 /obj/item/clothing/shoes/cowboy/proc/handle_table_slam(mob/living/user)
 	user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)

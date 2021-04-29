@@ -146,7 +146,7 @@
 			transform = transform.Scale(2)
 			color = COLOR_GREEN
 		user.do_attack_animation(the_table)
-		SEND_SIGNAL(user, COMSIG_LIVING_TABLE_SLAM, the_table)
+		SEND_SIGNAL(user, COMSIG_LIVING_TABLE_SLAM, user, the_table)
 		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 110, TRUE)
 		user.visible_message("<b><span class='danger'>[user] slams [user.p_their()] fist down on [the_table]!</span></b>", "<b><span class='danger'>You slam your fist down on [the_table]!</span></b>")
 		qdel(src)
