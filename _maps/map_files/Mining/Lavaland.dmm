@@ -4157,9 +4157,7 @@
 	dir = 4;
 	pixel_x = -12
 	},
-/obj/structure/mirror{
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
 "FF" = (

@@ -21,11 +21,11 @@ GLOBAL_LIST_EMPTY(request_list)
 
 /obj/machinery/bounty_board/directional/north
 	dir = SOUTH
-	pixel_y = -32
+	pixel_y = 32
 
 /obj/machinery/bounty_board/directional/south
 	dir = NORTH
-	pixel_y = 32
+	pixel_y = -32
 
 /obj/machinery/bounty_board/directional/east
 	dir = WEST
