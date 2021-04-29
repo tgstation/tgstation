@@ -26,13 +26,12 @@ GLOBAL_LIST_EMPTY(tile_dir_lists)
 	return GLOB.tile_reskin_lists[string_id] = values
 
 /obj/item/stack/tile/proc/tile_dir_list(list/values, atom/type_cast_path)
-	var/string_id = values.Join("-")
-	. = GLOB.tile_dir_lists[string_id]
+	. = GLOB.tile_dir_lists[type]
 	if(.)
 		return
 	for(var/set_dir in values)
 		values[set_dir] = image(icon = initial(type_cast_path.icon), icon_state = initial(type_cast_path.icon_state), dir = text2dir(set_dir))
-	return GLOB.tile_dir_lists[string_id] = values
+	return GLOB.tile_dir_lists[type] = values
 
 /obj/item/stack/tile/attack_self(mob/user)
 	var/list/radial_options = list()

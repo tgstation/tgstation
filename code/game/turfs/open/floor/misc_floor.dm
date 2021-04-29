@@ -152,11 +152,11 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	floor_tile = /obj/item/stack/tile/bronze/filled
 
-/turf/open/floor/bronze/filled
+/turf/open/floor/bronze/filled/lavaland
 	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
-/turf/open/floor/bronze/filled
+/turf/open/floor/bronze/filled/icemoon
 	planetary_atmos = TRUE
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
