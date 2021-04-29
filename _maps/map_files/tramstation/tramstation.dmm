@@ -22745,8 +22745,8 @@
 "ewN" = (
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/spawner/lootdrop/prison_contraband,
-/obj/item/clothing/under/color/prisoner,
-/obj/item/clothing/under/color/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
 /turf/open/floor/iron/cafeteria,
@@ -68775,9 +68775,9 @@
 /area/commons/dorms)
 "wIw" = (
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/item/clothing/under/color/jumpskirt/prisoner,
-/obj/item/clothing/under/color/jumpskirt/prisoner,
-/obj/item/clothing/under/color/jumpskirt/prisoner,
+/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/rank/prisoner/skirt,
 /obj/item/clothing/shoes/sneakers/orange,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
