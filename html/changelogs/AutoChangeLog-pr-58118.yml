@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes: 
-  - admin: "There is now a menu that allows admins to give players spells that execute SDQL queries. New users of this menu should study it and its tooltips to figure out how to make the most of it."
