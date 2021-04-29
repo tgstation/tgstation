@@ -14,6 +14,7 @@ The console is located at computer/gulag_teleporter.dm
 	base_icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
+	obj_flags = NO_BUILD // Becomes undense when the door is open
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
@@ -21,8 +22,8 @@ The console is located at computer/gulag_teleporter.dm
 	var/locked = FALSE
 	var/message_cooldown
 	var/breakout_time = 600
-	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
-	var/jumpskirt_type = /obj/item/clothing/under/rank/prisoner/skirt
+	var/jumpsuit_type = /obj/item/clothing/under/color/prisoner
+	var/jumpskirt_type = /obj/item/clothing/under/color/jumpskirt/prisoner
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
 	var/emergency_plasglove_type = /obj/item/clothing/gloves/color/plasmaman
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer

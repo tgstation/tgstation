@@ -1,0 +1,63 @@
+2009-01-05:
+  /tg/station ss13 team:
+  - unknown: You can choose to be a nudist now.
+  - unknown: Facial hair!
+  - unknown: Added constructable flamethrowers.
+  - unknown: Redid internal naming scheme for human/uniform sprites.
+  - unknown: Helmet visors are now translucent.
+  - unknown: Held item graphics corrected for basically everything, internally only
+      uses one dmi file instead of two.
+  - unknown: Config settings reorganized for.. organization.
+  - unknown: Seperated male and female names.
+  - unknown: Females have pink underwear.
+  - unknown: Guests can no longer save/load profiles, as this just created useless
+      profiles that weren't used again.
+2009-01-07:
+  /tg/station ss13 team:
+  - unknown: Syndicate Uplink has been changed up, allowing traitor more freedom in
+      his ability to be... traitorus.
+  - unknown: Syndicate Uplink can now spawn a ammo-357, syndicate card, energy sword,
+      or timer bomb.
+  - unknown: Fixed an issue where Syndicate Uplink looked different than a normal
+      radio.
+2009-01-10:
+  /tg/station ss13 team:
+  - unknown: Freedom implant has been changed so that it will have a random emote
+      associated with it to activate it rather than always chuckle.
+  - unknown: There is now a pinpointer tool for use in Nuclear Emergency. It works
+      similar to the existing locator, in that it will detect the presence of nuclear
+      disks and in what direction it is.
+  - unknown: The nuke being detonated in Nuclear Emergency should now properly end
+      the game.
+  - unknown: Spacesuits now cause you to move slower when not in space.
+  - unknown: Syndicate in Nuclear Emergency now have syndicate-themed spacesuits.
+  - unknown: Blob mode should properly end now.
+2009-01-29:
+  /tg/station ss13 team:
+  - unknown: Added traitor menu for admins - The ability to turn people into "traitors"
+      as well as keep track of their objectives.
+  - unknown: Implemented Keelins revive system - Primary Admins can now revive people.
+  - unknown: Moved and redid security to prevent clusterfucks and everyone just crowding
+      around security.
+  - unknown: Redid the brig to make it bigger and so that people can break others
+      more easily out since it isn't right in security.
+  - unknown: Moved and redid captains quarters/heads quarters. Captains made much
+      smaller and heads is now more of a meeting room.
+  - unknown: Added Stungloves and an axe - right now only admin spawnable.
+  - unknown: Implemented Persh's adminjump back in - admins can now jump to set locations.
+  - unknown: Added a feature that if someone logs off their character moves around
+      and says things - Change what they say from the config/names/loggedsay.txt file.
+  - unknown: Added in adminwho verb - tells the user if there are any admins on and
+      who they are.
+2009-01-31:
+  /tg/station ss13 team:
+  - unknown: Added a bartender job + Bar
+  - unknown: Captains panic room
+  - unknown: Voice changer traitor item
+  - unknown: Bartender suit
+  - unknown: Made taking a table apart take longer
+  - unknown: Balanced beer a bit more.
+  - unknown: Assistants can no longer open external air locks and maint tunnels, sorry
+      guys. Get a job you bums.
+  - unknown: Engineers CAN access external air locks and maint tunnels.
+  - unknown: Fixed traitor AI bug

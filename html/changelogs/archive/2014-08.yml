@@ -1,0 +1,79 @@
+2014-08-11:
+  Ikarrus:
+  - tweak: "<b>Boxstation map updates:</b><br/>\n\t\t-Singularity engine walled from\
+      \ from outer space<br/>\n\t\t-Shutters for exterior Science windows<br/>\n\t\
+      \t-Teleporter board moved from RD's Office to Tech Storage now that the teleporter\
+      \ can be built again.<br/>\n\t\t-Security Deputy Armbands (red) added in HoS's\
+      \ Office<br/><br/><br/><br/>"
+2014-08-15:
+  AndroidSFV:
+  - rscadd: AI photography has been extended to Cyborgs. While connected to an AI,
+      all images taken by cyborgs will be placed in the AI's album, and viewable by
+      the AI and all linked Cyborgs.
+  - rscadd: When a Cyborgs AI link wire is pulsed, the images from the Cyborgs image
+      album will be synced with the AI it gets linked to.
+  - rscadd: Additonally, Cyborgs are able to attach images to newscaster feeds from
+      whichever album is active for them. Cyborgs are also mobile, inefficent, printers
+      of same images.
+2014-08-18:
+  Iamgoofball:
+  - rscadd: 25 new hairstyles have been added.
+2014-08-19:
+  Ikarrus:
+  - rscadd: Brig cells and labour shuttle have both been modified to send a message
+      to all security HUDs whenever a prisoner is automatically released.
+  - rscadd: The labour camp has been outfitted with a points checking console to allow
+      prisoners to check their quota progress easier and better explain the punishment
+      system of forced labour.
+2014-08-20:
+  Cheridan:
+  - rscadd: Three new shotgun shells added. Create them by first researching and printing
+      an unloaded tech shell in R&amp;D.; Afterwards, use table-crafting with the
+      appropriate components with a screwdriver in-hand.
+  - rscadd: 'Meteorshot: tech shell + compressed matter cartridge +  micro(or better)
+      manipulator.'
+  - rscadd: 'Pulse Slug: tech shell + advanced capacitor + ultra micro-laser.'
+  - rscadd: 'Dragonsbreath: tech shell + 5 phosphorus (in container).'
+  - tweak: Incendiary rounds now leave a blazing trail as they pass. This includes
+      existing incendiary rounds, new dragonsbreath rounds, and the Dark Gygax's carbine.
+2014-08-21:
+  Ikarrus:
+  - tweak: The Phase Shift ability will no longer instantly gib players. Instead,
+      they will be knocked out for a few seconds. Mechas will be damaged.
+  - tweak: The Phase Slayer ability will no longer instantly gib players. Instead,
+      they will be dealt 190 brute damage. Mechas will be dealt 380 damage.
+  - tweak: 'ADMIN: Most Event buttons have been moved out of the secrets menu and
+      into a Fun verb.'
+2014-08-24:
+  Ikarrus:
+  - rscadd: Ore redemption machine can now smelt plasteel.
+  - tweak: Mulebot speed has been vastly increased by up to 300%.
+  - bugfix: Removed exploit where false walls can be used to cheese the AI chamber's
+      defenses
+2014-08-26:
+  Ikarrus:
+  - rscadd: "Security forces are advised to increase scrutiny on personnel coming\
+      \ into contact with AI systems. Central Intelligence suggests that Syndicate\
+      \ terrorist groups may have begun targeting our AIs for destruction.\n\t\t"
+  - rscadd: "For the preservation of corporate assets, Central Command would like\
+      \ to remind all personnel that evacuating during an emergency is mandatory.\
+      \ We suspect that terrorist groups may be attempting to abduct marooned personnel\
+      \ who failed to evacuate.\n\t\t"
+  - rscadd: "R&amp;D; teams have released an urgent update to station teleporters.\
+      \ To eliminate the risk of mutation, personnel are advised to calibrate teleporters\
+      \ before attempting each use.\n\t\t"
+  - rscadd: "Centcom has approved the Captain's request to rig the display case in\
+      \ his office with a burglar alarm. Any attempts to breach the case will now\
+      \ trigger a lockdown of the room.\n\t\t"
+  - bugfix: "**Crew Monitoring Consoles now scan their own Z-level for suit sensors,\
+      \ instead of only scanning Z1.\n\t\t"
+  - rscadd: '**Server operators can now set a name for the station in config.txt.
+      Simply add the line "STATIONNAME Space Station 13" anywhere on the text file.
+      Replace Space Station 13 with your station name of choice.'
+2014-08-30:
+  Ikarrus:
+  - rscadd: Space Station 13 has been authorized to requisition additional Tank Transfer
+      Valves from Centcom's supply lines for the price of 60 cargo points.
+2014-08-31:
+  Tokiko1:
+  - rscadd: Adds two new hairstyles.

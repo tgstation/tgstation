@@ -141,6 +141,9 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	. = ..()
 	. += GLOB.uranium_recipes
 
+/obj/item/stack/sheet/mineral/uranium/five
+	amount = 5
+
 /*
  * Plasma
  */
@@ -184,6 +187,12 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 /obj/item/stack/sheet/mineral/plasma/fire_act(exposed_temperature, exposed_volume)
 	atmos_spawn_air("plasma=[amount*10];TEMP=[exposed_temperature]")
 	qdel(src)
+
+/obj/item/stack/sheet/mineral/plasma/five
+	amount = 5
+
+/obj/item/stack/sheet/mineral/plasma/thirty
+	amount = 30
 
 /*
  * Gold

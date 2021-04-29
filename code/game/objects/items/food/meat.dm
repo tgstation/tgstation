@@ -326,6 +326,16 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 
+/obj/item/food/meatbun
+	name = "meat bun"
+	desc = "Has the potential to not be Dog."
+	icon_state = "meatbun"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("bun" = 3, "meat" = 2)
+	foodtypes = GRAIN | MEAT | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
+
 /obj/item/food/monkeycube
 	name = "monkey cube"
 	desc = "Just add water!"
@@ -388,15 +398,21 @@
 	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
 	spawned_mob = /mob/living/simple_animal/hostile/gorilla
 
-/obj/item/food/enchiladas
-	name = "enchiladas"
-	desc = "Viva La Mexico!"
-	icon_state = "enchiladas"
-	bite_consumption = 4
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/capsaicin = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("hot peppers" = 1, "meat" = 3, "cheese" = 1, "sour cream" = 1)
-	foodtypes = MEAT
-	w_class = WEIGHT_CLASS_SMALL
+/obj/item/food/monkeycube/chicken
+	name = "chicken cube"
+	desc = "A new Nanotrasen classic, the chicken cube. Tastes like everything!"
+	bite_consumption = 20
+	food_reagents = list(/datum/reagent/consumable/eggyolk = 30, /datum/reagent/medicine/strange_reagent = 1)
+	tastes = list("chicken" = 1, "the country" = 1, "chicken bouillon" = 1)
+	spawned_mob = /mob/living/simple_animal/chicken
+
+/obj/item/food/monkeycube/bee
+	name = "bee cube"
+	desc = "We were sure it was a good idea. Just add water."
+	bite_consumption = 20
+	food_reagents = list(/datum/reagent/consumable/honey = 10, /datum/reagent/toxin = 5, /datum/reagent/medicine/strange_reagent = 1)
+	tastes = list("buzzing" = 1, "honey" = 1, "regret" = 1)
+	spawned_mob = /mob/living/simple_animal/hostile/poison/bees
 
 /obj/item/food/stewedsoymeat
 	name = "stewed soy meat"
