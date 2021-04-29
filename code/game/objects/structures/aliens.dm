@@ -95,7 +95,7 @@
 /// meant for one lavaland ruin or anywhere that has simplemobs who can push aside structures
 /obj/structure/alien/resin/wall/immovable
 	desc = "Dense resin solidified into a wall."
-	move_resist = 3000
+	move_resist = MOVE_FORCE_VERY_STRONG
 
 /obj/structure/alien/resin/wall/creature
 	name = "gelatinous wall"
