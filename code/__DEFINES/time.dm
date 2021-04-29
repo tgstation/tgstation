@@ -129,4 +129,4 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define TIMEZONE_NUT -11
 
 /// Anywhere on Earth
-#define TIMEZONE_AoE -12
+#define TIMEZONE_ANYWHERE_ON_EARTH -12
