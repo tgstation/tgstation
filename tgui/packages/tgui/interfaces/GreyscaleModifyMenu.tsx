@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, ColorBox, Flex, Icon, Input, LabeledList, Section, Stack, Table } from '../components';
+import { Box, Button, ColorBox, Flex, Icon, Input, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 type ColorEntry = {
@@ -108,23 +108,21 @@ const PreviewCompassSelect = (props, context) => {
   const { act, data } = useBackend<GreyscaleMenuData>(context);
   return (
     <Section>
-      <Table width="51%" mx="25%">
-        <Table.Row key="top" height="33%">
-          <SingleDirection dir={Direction.NorthWest} />
-          <SingleDirection dir={Direction.North} />
-          <SingleDirection dir={Direction.NorthEast} />
-        </Table.Row>
-        <Table.Row key="middle" height="33%">
-          <SingleDirection dir={Direction.West} />
-          <Table.Cell width="33%"><Box textAlign="center" ><Icon name="arrows-alt" size={1.5} /></Box></Table.Cell>
-          <SingleDirection dir={Direction.East} />
-        </Table.Row>
-        <Table.Row key="bottom" height="33%">
-          <SingleDirection dir={Direction.SouthWest} />
-          <SingleDirection dir={Direction.South} />
-          <SingleDirection dir={Direction.SouthEast} />
-        </Table.Row>
-      </Table>
+      <Flex mx="25%" fluid>
+        <SingleDirection dir={Direction.NorthWest} />
+        <SingleDirection dir={Direction.North} />
+        <SingleDirection dir={Direction.NorthEast} />
+      </Flex>
+      <Flex mx="25%">
+        <SingleDirection dir={Direction.West} />
+        <Flex.Item width="33%"><Button content={<Icon name="arrows-alt" size={1.5} m="20%" />} lineHeight={3} m={-0.2} fluid /></Flex.Item>
+        <SingleDirection dir={Direction.East} />
+      </Flex>
+      <Flex mx="25%">
+        <SingleDirection dir={Direction.SouthWest} />
+        <SingleDirection dir={Direction.South} />
+        <SingleDirection dir={Direction.SouthEast} />
+      </Flex>
     </Section>
   );
 };
@@ -133,16 +131,17 @@ const SingleDirection = (props, context) => {
   const { dir } = props;
   const { data, act } = useBackend<GreyscaleMenuData>(context);
   return (
-    <Table.Cell width="33%">
+    <Flex.Item width="33%">
       <Button
         content={DirectionAbbreviation.get(dir)}
         disabled={`${dir}` === data.sprites_dir ? true : false}
         textAlign="center"
         onClick={() => act("change_dir", { new_sprite_dir: dir })}
+        lineHeight={3}
+        m={-0.2}
         fluid
-        m={1}
       />
-    </Table.Cell>
+    </Flex.Item>
   );
 };
 
