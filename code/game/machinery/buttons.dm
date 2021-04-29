@@ -18,23 +18,6 @@
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-// Cardinal buttons for ease of mapping
-/obj/machinery/button/directional/north
-	dir = SOUTH
-	pixel_y = 24
-
-/obj/machinery/button/directional/south
-	dir = NORTH
-	pixel_y = -24
-
-/obj/machinery/button/directional/east
-	dir = WEST
-	pixel_x = 24
-
-/obj/machinery/button/directional/west
-	dir = EAST
-	pixel_x = -24
-
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
 	. = ..()
 	if(built)
@@ -43,7 +26,6 @@
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		panel_open = TRUE
 		update_appearance()
-
 
 	if(!built && !device && device_type)
 		device = new device_type(src)
