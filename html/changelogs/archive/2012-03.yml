@@ -1,0 +1,88 @@
+2012-03-01:
+  Petethegoat:
+  - experiment: Head revolutionaries no longer spawn with traitor uplinks.
+  SkyMarshal:
+  - rscadd: Ported BS12 Detective Work System
+2012-03-02:
+  Carn:
+  - bugfix: 'Fixed a number of issues with mob examining. Including: not being able
+      to see burns unless they were bruised; vast amounts of grammar; and icons. Updated  them
+      to use stylesheet classes.'
+  - bugfix: Borgs can no-longer drop their module items on conveyor belts.
+  - bugfix: Names input into the setup screen are now lower-cased and then have their
+      first letters capitalised. This is to fix problems with BYOND's text-parsing
+      system.
+  - bugfix: Runtime fix for lighting.
+  - bugfix: Over the next few commits I will be updating a tonne of item names to
+      fix text-parsing. Please inform me if I've typoed anything.
+2012-03-03:
+  Petethegoat:
+  - experiment: Removed cloakers. Removed Security's thermals. Added disguised thermals
+      as a traitor item.
+2012-03-08:
+  Nodrak and Carnwennan:
+  - bugfix: 'Nodrak: Fixed crayon boxes and stuff getting stuck in pockets.'
+  - bugfix: 'Nodrak: ''Steal item'' objectives will report correctly when wrapped
+      up in paper now.'
+  - bugfix: 'Carn: fixed the vent in the freezer...poor chef kept suffocating.'
+2012-03-11:
+  Carnwennan:
+  - rscadd: You can now request AI presence at a holopad for immediate private communication
+      with the AI anywhere. AIs can click a quick button to zoom to the holopad.
+2012-03-12:
+  PolymorphBlue:
+  - rscadd: PDA messages now require an active messaging server to be properly sent.
+2012-03-13:
+  Doohl:
+  - rscadd: Ablative Armor now has a high chance of reflecting energy-based projectiles.
+  - rscadd: Riot shields were buffed; they now block more attacks and they will prevent
+      their wielder from being pushed (most of the time).
+2012-03-14:
+  Carn:
+  - imageadd: Added 6 female hairstyles -- credits go to Erthilo of Baystation. Added
+      a male hairstyle -- credits go to WJohnston of TG. If you can sprite some unique
+      and decent-looking hair sprites, feel free to PM me on the TG forums.
+  Nodrak:
+  - rscadd: You can now choose whether to spawn with a backpack, satchel, or nothing.
+      Excess items will spawn in your hands if necessary.
+  - rscadd: You can now choose what kind of underwear you'd like to wear, per a request.
+2012-03-18:
+  Quarxink:
+  - rscadd: The medical record computers can finally search for DNA and not just name
+      and ID.
+2012-03-19:
+  PolymorphBlue:
+  - rscadd: Added LSD sting to modular changeling by popular demand.
+  - tweak: 'Silence sting no longer provides a message to the victim.  '
+  - bugfix: Tensioner will no longer assign dead people as assassination targets.
+2012-03-20:
+  Kor:
+  - rscadd: Lasertag vests and guns have been added to fitness.
+  - rscadd: Art storage has replaced the emergency storage near arrivals. Emergency
+      storage has replaced chem storage (has anyone ever used that?)
+  - tweak: Wraiths can now see in the dark
+2012-03-22:
+  PolymorphBlue:
+  - rscadd: Added a prototype holodeck to fitness!
+  - bugfix: Assorted tensioner fixes
+2012-03-23:
+  Donkieyo:
+  - rscadd: A bunch new standard-namespace NTSL functions added! Check them out at
+      the NT Script wiki page!
+2012-03-27:
+  Nodrak:
+  - experiment: Security borgs now have modified tasers.
+  - experiment: Security borgs have gone back to having the same movement speed as
+      all other borgs.
+2012-03-28:
+  Donkie:
+  - tweak: Updated air alarm's GUI.
+2012-03-29:
+  PolymorphBlue:
+  - tweak: Exosuits now provide a message when someone is getting in, someone getting
+      in must remain stationary and unstunned, and getting in takes four seconds.
+2012-03-30:
+  Doohl:
+  - rscadd: Gave pill bottles the ability to scoop up pills like ore satchels scoop
+      ore. (There you go, /vg/ Anon.)
+  - tweak: Security Officers and Wardens now start with maintenance acceess.

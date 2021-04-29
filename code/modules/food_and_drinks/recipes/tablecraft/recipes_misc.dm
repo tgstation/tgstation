@@ -138,6 +138,17 @@
 	result = /obj/item/food/salad/ricepudding
 	subcategory = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/risotto
+	name = "Risotto"
+	reqs = list(
+		/obj/item/food/cheese = 1,
+		/datum/reagent/consumable/ethanol/wine = 5,
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/grown/mushroom/chanterelle = 1
+	)
+	result = /obj/item/food/salad/risotto
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!
 	name = "Living bear/butter hybrid"
 	reqs = list(

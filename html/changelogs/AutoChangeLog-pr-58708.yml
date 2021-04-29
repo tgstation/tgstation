@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "fixes stuff made with bronze sheets deconstructing into tiles or not being able to make bronze golems"

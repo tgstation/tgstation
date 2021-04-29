@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - qol: "screwdrivers no longer randomize their pixel_y on initialize"
