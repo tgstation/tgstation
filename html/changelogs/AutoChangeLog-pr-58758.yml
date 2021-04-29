@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Disco's Dead, Baby- and by that I mean, the Shuttle Catastrophe random event will no longer select Disco Inferno every single time it triggers (or selecting it at all, in fact, as it was before)"

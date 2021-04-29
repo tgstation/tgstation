@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - admin: "reagent transferring now logs purity"

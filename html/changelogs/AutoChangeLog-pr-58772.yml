@@ -1,4 +1,0 @@
-author: "Balky Goat"
-delete-after: True
-changes: 
-  - rscdel: "Removed unused sprites in robots.dmi."
