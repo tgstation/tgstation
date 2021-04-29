@@ -26,14 +26,10 @@
 			COMSIG_MOVABLE_CROSSED = .proc/play_squeak_crossed,
 		)
 
-	///what we set another connect_loc to if parent is an item equipped by a mob
-	var/static/list/holder_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/play_squeak_crossed,
-	)
-
 /datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override, extrarange, falloff_exponent, fallof_distance)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
+	ADD_TRAIT(parent, SQUEAKY_COMPONENT_TRAIT, src)
 	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
 	if(ismovable(parent))
 		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT, COMSIG_PROJECTILE_BEFORE_FIRE), .proc/play_squeak)
@@ -111,21 +107,16 @@
 /datum/component/squeak/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 	holder = equipper
-	RegisterSignal(holder, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, TRUE)
-	RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted, TRUE)
+	RegisterSignal(holder, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, override=TRUE)
+	RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted, override=TRUE)
 	//override for the preqdeleted is necessary because putting parent in hands sends the signal that this proc is registered towards,
 	//so putting an object in hands and then equipping the item on a clothing slot (without dropping it first)
 	//will always runtime without override = TRUE
-	AddElement(/datum/element/connect_loc, holder, holder_connections)
 
 /datum/component/squeak/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
-	var/obj/parent_as_obj = parent
-	if(parent_as_obj.loc == holder)
-		return
-	RemoveElement(/datum/element/connect_loc, holder, holder_connections)
-	UnregisterSignal(holder, COMSIG_MOVABLE_DISPOSING)
-	UnregisterSignal(holder, COMSIG_PARENT_PREQDELETED)
+	UnregisterSignal(user, COMSIG_MOVABLE_DISPOSING)
+	UnregisterSignal(user, COMSIG_PARENT_PREQDELETED)
 	holder = null
 
 ///just gets rid of the reference to holder in the case that theyre qdeleted
@@ -134,7 +125,7 @@
 	if(possible_holder == holder)
 		holder = null
 
-// Disposal pipes related shit
+// Disposal pipes related shits
 /datum/component/squeak/proc/disposing_react(datum/source, obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 	SIGNAL_HANDLER
 

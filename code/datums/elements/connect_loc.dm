@@ -24,7 +24,7 @@
 
 	src.connections = connections
 
-	RegisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE, .proc/on_moved, TRUE)
+	RegisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE, .proc/on_moved)
 	update_signals(listener, tracked)
 
 /datum/element/connect_loc/Detach(datum/listener, atom/movable/tracked, list/connections)
@@ -48,16 +48,19 @@
 		return
 
 	for (var/signal in connections)
-		listener.RegisterSignal(tracked.loc, signal, connections[signal], TRUE)
+		listener.RegisterSignal(tracked.loc, signal, connections[signal], override=TRUE)
+		//override=TRUE because more than one connect_loc element instance tracked object can be on the same loc
 
 	if (!existing && isturf(tracked.loc))
-		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, TRUE)
+		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, override=TRUE)
+		//same as above
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
 	targets[old_loc] -= tracked
 	if (length(targets[old_loc]) == 0)
-		targets -= (old_loc)
+		targets -= old_loc
 
+	// Yes this is after the above because we use null as a key when objects are in nullspace
 	if(isnull(old_loc))
 		return
 
