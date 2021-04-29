@@ -42,7 +42,7 @@
 
 	var/list/color_data = list()
 	data["colors"] = color_data
-	for(var/i in 1 to length(split_colors))
+	for(var/i in 1 to config.expected_colors)
 		color_data += list(list(
 			"index" = i,
 			"value" = split_colors[i]
@@ -116,12 +116,9 @@
 		split_colors += "#[raw_colors[i]]"
 
 /datum/greyscale_modify_menu/proc/refresh_preview()
-	if(config.expected_colors < length(split_colors))
-		split_colors.len = config.expected_colors
-	else
-		for(var/i in length(split_colors) + 1 to config.expected_colors)
-			split_colors += rgb(100, 100, 100)
-	var/list/data = config.GenerateDebug(split_colors.Join())
+	for(var/i in length(split_colors) + 1 to config.expected_colors)
+		split_colors += rgb(100, 100, 100)
+	var/list/data = config.GenerateDebug(split_colors.Copy(1, config.expected_colors+1).Join())
 
 	sprite_data = list()
 	var/list/steps = list()

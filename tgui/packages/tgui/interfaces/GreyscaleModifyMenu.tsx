@@ -115,7 +115,7 @@ const PreviewCompassSelect = (props, context) => {
       </Flex>
       <Flex mx="25%">
         <SingleDirection dir={Direction.West} />
-        <Flex.Item><Button content={<Icon name="arrows-alt" size={1.5} m="20%" />} lineHeight={3} m={-0.2} fluid /></Flex.Item>
+        <Flex.Item grow={1} basis={0}><Button content={<Icon name="arrows-alt" size={1.5} m="20%" />} lineHeight={3} m={-0.2} fluid /></Flex.Item>
         <SingleDirection dir={Direction.East} />
       </Flex>
       <Flex mx="25%">
@@ -131,7 +131,7 @@ const SingleDirection = (props, context) => {
   const { dir } = props;
   const { data, act } = useBackend<GreyscaleMenuData>(context);
   return (
-    <Flex.Item>
+    <Flex.Item grow={1} basis={0}>
       <Button
         content={DirectionAbbreviation[dir]}
         disabled={`${dir}` === data.sprites_dir ? true : false}
