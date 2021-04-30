@@ -192,13 +192,13 @@
 /obj/machinery/bluespace_vendor/proc/check_price(mob/user)
 	var/temp_price = 0
 	var/datum/gas_mixture/working_mix = internal_tank.return_air()
-	var/list/gases = holding_mix.gases
+	var/list/gases = working_mix.gases
 	for(var/gas_id in gases)
 		temp_price += gases[gas_id][MOLES] * connected_machine.base_prices[gas_id]
 	gas_price = temp_price
 
 	if(attempt_charge(src, user, gas_price) & COMPONENT_OBJ_CANCEL_CHARGE)
-		var/datum/gas_mixture/remove = internal_tank.remove_air(working_mix.total_moles())
+		var/datum/gas_mixture/remove = working_mix.remove_ratio(1)
 		connected_machine.bluespace_network.merge(remove)
 		return
 	connected_machine.credits_gained += gas_price + tank_cost

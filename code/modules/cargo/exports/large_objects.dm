@@ -111,7 +111,7 @@
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = cost
 	var/datum/gas_mixture/canister_mix = C.return_air()
-	var/canister_mix = canister_mix.gases
+	var/canister_gas = canister_mix.gases
 	var/list/gases_to_check = list(
 								/datum/gas/bz,
 								/datum/gas/stimulum,
@@ -131,8 +131,8 @@
 
 	for(var/gasID in gases_to_check)
 		canister_mix.assert_gas(gasID)
-		if(canister_mix[gasID][MOLES] > 0)
-			worth += get_gas_value(gasID, canister_mix[gasID][MOLES])
+		if(canister_gas[gasID][MOLES] > 0)
+			worth += get_gas_value(gasID, canister_gas[gasID][MOLES])
 
 	canister_mix.garbage_collect()
 	return worth

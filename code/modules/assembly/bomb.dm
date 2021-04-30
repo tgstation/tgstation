@@ -58,7 +58,7 @@
 		return
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
-		var/datum/gas_mixture/bomb_mix = bomb.return_air()
+		var/datum/gas_mixture/bomb_mix = bombtank.return_air()
 		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bomb_mix.temperature-T0C]")
 		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		add_fingerprint(user)
