@@ -206,8 +206,6 @@
 	fixture_type = "bulb"
 	sheets_refunded = 1
 
-
-
 // the standard tube light fixture
 /obj/machinery/light
 	name = "light fixture"
@@ -252,6 +250,19 @@
 	var/bulb_emergency_colour = "#FF3232" // determines the colour of the light while it's in emergency mode
 	var/bulb_emergency_pow_mul = 0.75 // the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5 // the minimum value for the light's power in emergency mode
+
+// The directions are backwards on the lights we have now
+/obj/machinery/light/directional/north
+	dir = NORTH
+
+/obj/machinery/light/directional/south
+	dir = SOUTH
+
+/obj/machinery/light/directional/east
+	dir = EAST
+
+/obj/machinery/light/directional/west
+	dir = WEST
 
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
@@ -312,6 +323,19 @@
 	bulb_colour = "#FFD6AA"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/light/bulb
+
+// The directions are backwards on the lights we have now
+/obj/machinery/light/small/directional/north
+	dir = NORTH
+
+/obj/machinery/light/small/directional/south
+	dir = SOUTH
+
+/obj/machinery/light/small/directional/east
+	dir = EAST
+
+/obj/machinery/light/small/directional/west
+	dir = WEST
 
 /obj/machinery/light/small/broken
 	status = LIGHT_BROKEN
