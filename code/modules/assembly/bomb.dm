@@ -153,10 +153,6 @@
 
 	var/turf/ground_zero = get_turf(loc)
 
-	if(master)
-		qdel(master)
-	qdel(src)
-
 	if(bomb_mixture.temperature > (T0C + 400))
 		strength = (fuel_moles/15)
 
@@ -197,6 +193,10 @@
 		ground_zero.hotspot_expose(1000, 125)
 
 	ground_zero.air_update_turf(FALSE, FALSE)
+
+	if(master)
+		qdel(master)
+	qdel(src)
 
 /obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
 	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
