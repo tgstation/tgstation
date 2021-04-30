@@ -168,6 +168,8 @@ GLOBAL_PROTECT(exp_to_update)
 			play_records["Unknown"] = minutes
 		else
 			play_records |= mob_exp_list
+
+		play_records[EXP_TYPE_LIVING] = minutes
 	// Lobby surfing? /mob/dead/new_player? Not worth any exp!
 	else
 		return
