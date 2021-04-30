@@ -207,4 +207,6 @@
 /mob/living/silicon/ai/get_exp_list(minutes)
 	. = ..()
 
-	.[EXP_TYPE_JOB_AI] = minutes
+	var/static/datum/job/ai/ai_job_ref = SSjob.GetJobType(/datum/job/ai)
+
+	.[ai_job_ref.title] = minutes

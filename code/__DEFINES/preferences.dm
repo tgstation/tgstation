@@ -85,9 +85,6 @@
 #define EXP_TYPE_GHOST "Ghost"
 #define EXP_TYPE_ADMIN "Admin"
 
-#define EXP_TYPE_JOB_CYBORG "Cyborg"
-#define EXP_TYPE_JOB_AI "AI"
-
 ///Screentip settings
 #define SCREENTIP_OFF 0
 #define SCREENTIP_SMALL 1
