@@ -755,6 +755,11 @@
 			// GUARD CHECK - This should not be possible. Unexpected result
 			if(!HM)
 				return
+			
+			// Checks for things that should not be copied my any means- wizard spells, holy mutations, etc
+			if(initial(HM.class) == MUT_OTHER)
+				say("ERROR: This mutation is anomalous, and cannot be made into an injector.")
+				injectorready = world.time + INJECTOR_TIMEOUT
 
 			// Create a new DNA Injector and add the appropriate mutations to it
 			var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
@@ -1436,9 +1441,23 @@
 
 			// Run through each mutation in our Advanced Injector and add them to a
 			//  new injector
+			
+			var/bad_mutation_alert = FALSE
+			
+			
 			for(var/A in injector)
 				var/datum/mutation/human/HM = A
+				if(initial(HM.class) == MUT_OTHER)
+					bad_mutation_alert = TRUE
+					continue //skip this one
 				I.add_mutations += new HM.type(copymut=HM)
+
+			//if only bad mutations were tried
+			if(!I.mutations)
+				qdel(I)
+			
+			if(bad_mutation_alert)
+				say("ERROR: At least one mutation was anomalous, and had to be skipped.")
 
 			// Force apply any mutations, this is functionality similar to mutators
 			I.doitanyway = TRUE
