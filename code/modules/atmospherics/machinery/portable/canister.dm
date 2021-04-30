@@ -300,6 +300,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	air_contents.gases[/datum/gas/hydrogen][MOLES] = 300
 	air_contents.gases[/datum/gas/tritium][MOLES] = 300
 	air_contents.temperature = 10000
+	SSair.start_processing_machine(src)
 
 /**
  * Getter for the amount of time left in the timer of prototype canisters
@@ -378,11 +379,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(starter_temp)
 		air_contents.temperature = starter_temp
 	air_contents.gases[gas_type][MOLES] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
 	if(machine_stat & BROKEN)
@@ -505,7 +508,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
-	. = ..()
 	if(machine_stat & BROKEN)
 		return PROCESS_KILL
 	if(timing && valve_timer < world.time)
@@ -516,7 +518,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	var/mix_air = FALSE
 	var/pressure = release_pressure
-	var/gas_mix = holding?.air_contents
+	var/gas_mix = holding?.return_air()
 	var/air_update = FALSE
 
 	if(valve_open)
@@ -525,6 +527,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	// When at least 10% of integrity is lost it starts checking for leaking
 	if(obj_integrity < max_integrity * 0.9)
 		var/leak_chance = (1 - obj_integrity / max_integrity) * 100
+		excited = TRUE
 		if(prob(leak_chance))
 			mix_air = TRUE
 			pressure = air_contents.return_pressure() / 10
@@ -534,6 +537,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	// Handle gas transfer.
 	if(mix_air)
 		var/datum/gas_mixture/target_air = gas_mix || location.return_air()
+		excited = TRUE
 
 		if(air_contents.release_gas_to(target_air, pressure) && (!holding || air_update))
 			air_update_turf(FALSE, FALSE)
@@ -544,7 +548,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	///function used to check the limit of the canisters and also set the amount of damage that the canister can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(our_temperature > heat_limit || our_pressure > pressure_limit)
 		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
+		excited = TRUE
 	update_appearance()
+
+	return ..()
 
 /obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
 	return GLOB.physical_state
@@ -587,10 +594,11 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		)
 
 	if (holding)
+		var/datum/gas_mixture/holding_mix = holding.return_air()
 		. += list(
 			"holdingTank" = list(
 				"name" = holding.name,
-				"tankPressure" = round(holding.air_contents.return_pressure())
+				"tankPressure" = round(holding_mix.return_pressure())
 			)
 		)
 
@@ -644,6 +652,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			var/logmsg
 			valve_open = !valve_open
 			if(valve_open)
+				SSair.start_processing_machine(src)
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
 					var/list/danger = list()
