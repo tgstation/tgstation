@@ -127,6 +127,14 @@
 	var/list/drone_area_blacklist_flat = list(/area/engineering/atmos, /area/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
 	var/list/drone_area_blacklist_recursive = list(/area/engineering/supermatter)
+	/// blacklisted drone machines, direct
+	var/list/drone_machinery_blacklist_flat
+	/// blacklisted drone machines, recursive/includes descendants
+	var/list/drone_machinery_blacklist_recursive = list(
+		/obj/machinery/airalarm,
+	)
+	/// blacklisted drone machines, compiled from [var/drone_machinery_blacklist_flat] and [var/list/drone_machinery_blacklist_recursive]
+	var/list/drone_machinery_blacklist_compiled
 	/// whitelisted drone items, direct
 	var/list/drone_item_whitelist_flat = list(
 		/obj/item/chisel,
@@ -348,6 +356,19 @@
 		if(cleared)
 			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
+/mob/living/simple_animal/drone/proc/blacklist_on_try_use_machine(datum/source, obj/machinery/machine)
+	SIGNAL_HANDLER
+	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
+		to_chat(src, "<span class='warning'>Using [machine] could break your laws.</span>")
+		return COMPONENT_CANT_USE_MACHINE_INTERACT | COMPONENT_CANT_USE_MACHINE_TOOLS
+
+/mob/living/simple_animal/drone/proc/blacklist_on_try_wires_interact(datum/source, atom/machine)
+	SIGNAL_HANDLER
+	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
+		to_chat(src, "<span class='warning'>Using [machine] could break your laws.</span>")
+		return COMPONENT_CANT_INTERACT_WIRES
+
+
 /mob/living/simple_animal/drone/proc/set_shy(new_shy)
 	shy = new_shy
 	shy_update()
@@ -355,6 +376,7 @@
 /mob/living/simple_animal/drone/proc/shy_update()
 	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
 	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
+	drone_machinery_blacklist_compiled = make_associative(drone_machinery_blacklist_flat) + typecacheof(drone_machinery_blacklist_recursive)
 	var/static/list/not_shy_of = typecacheof(list(/mob/living/simple_animal/drone, /mob/living/simple_animal/bot))
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
@@ -362,12 +384,15 @@
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 		LoadComponent(/datum/component/technoshy, 5 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
+		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, .proc/blacklist_on_try_use_machine)
+		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		qdel(GetComponent(/datum/component/shy))
 		qdel(GetComponent(/datum/component/shy_in_room))
 		qdel(GetComponent(/datum/component/technoshy))
 		qdel(GetComponent(/datum/component/itempicky))
+		UnregisterSignal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
