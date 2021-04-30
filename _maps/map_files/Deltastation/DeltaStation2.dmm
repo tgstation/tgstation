@@ -102312,10 +102312,7 @@
 /turf/open/floor/iron,
 /area/medical/virology)
 "uYQ" = (
-/obj/structure/displaycase/captain{
-	req_access = null;
-	req_access_txt = "20"
-	},
+/obj/structure/displaycase/captain,
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/captain)
 "uZi" = (
