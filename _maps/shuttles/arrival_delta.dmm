@@ -475,10 +475,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
-"W" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/arrival)
 
 (1,1,1) = {"
 a
@@ -534,7 +530,7 @@ p
 H
 g
 g
-W
+h
 g
 "}
 (4,1,1) = {"
@@ -554,7 +550,7 @@ I
 N
 Q
 U
-W
+h
 "}
 (5,1,1) = {"
 c
@@ -573,7 +569,7 @@ J
 O
 R
 V
-W
+h
 "}
 (6,1,1) = {"
 b
@@ -592,7 +588,7 @@ K
 P
 S
 U
-W
+h
 "}
 (7,1,1) = {"
 b
@@ -610,7 +606,7 @@ p
 L
 g
 g
-W
+h
 g
 "}
 (8,1,1) = {"
