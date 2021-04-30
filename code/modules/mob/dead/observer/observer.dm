@@ -682,11 +682,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	GLOB.crew_manifest_tgui.ui_interact(src)
 
 //this is called when a ghost is drag clicked to something.
-/mob/dead/observer/MouseDrop(atom/over)
+/mob/dead/observer/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	if(!usr || !over)
 		return
 	if (isobserver(usr) && usr.client.holder && (isliving(over) || iscameramob(over)) )
-		if (usr.client.holder.cmd_ghost_drag(src,over))
+		if (usr.client.holder.cmd_ghost_drag(src, over, params))
 			return
 
 	return ..()

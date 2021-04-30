@@ -917,7 +917,7 @@
 
 //returns TRUE to let the dragdrop code know we are trapping this event
 //returns FALSE if we don't plan to trap the event
-/datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/tomob)
+/datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/tomob, params)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
 	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
@@ -926,14 +926,16 @@
 	if (!frommob.ckey)
 		return FALSE
 
-	var/question = ""
-	if (tomob.ckey)
-		question = "This mob already has a user ([tomob.key]) in control of it! "
-	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
+	var/modifiers = params2list(params)
+	if(!LAZYACCESS(modifiers, SHIFT_CLICK))
+		var/question = ""
+		if (tomob.ckey)
+			question = "This mob already has a user ([tomob.key]) in control of it! "
+		question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
 
-	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
-	if (ask != "Yes")
-		return TRUE
+		var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+		if (ask != "Yes")
+			return TRUE
 
 	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
 		return TRUE
