@@ -3349,7 +3349,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/flasher/directional/west,
+/obj/machinery/flasher/directional/west{
+	id = "GulagCell 1"
+	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "nm" = (
@@ -4641,7 +4643,9 @@
 /area/mine/laborcamp/security)
 "QX" = (
 /obj/structure/chair/stool,
-/obj/machinery/flasher/directional/west,
+/obj/machinery/flasher/directional/west{
+	id = "GulagCell 3"
+	},
 /obj/structure/sign/poster/official/obey{
 	pixel_y = 32
 	},
@@ -4682,7 +4686,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/flasher/directional/west,
+/obj/machinery/flasher/directional/west{
+	id = "GulagCell 2"
+	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Sd" = (
