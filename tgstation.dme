@@ -525,7 +525,6 @@
 #include "code\datums\components\payment.dm"
 #include "code\datums\components\pellet_cloud.dm"
 #include "code\datums\components\pricetag.dm"
-#include "code\datums\components\projectile_shooter.dm"
 #include "code\datums\components\punchcooldown.dm"
 #include "code\datums\components\radioactive.dm"
 #include "code\datums\components\religious_tool.dm"
