@@ -139,10 +139,7 @@
 
 
 /turf/open/proc/update_visuals()
-
 	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
-	var/list/new_overlay_types = list()
-	var/static/list/nonoverlaying_gases = typecache_of_gases_with_no_overlays()
 
 	if(!air) // 2019-05-14: was not able to get this path to fire in testing. Consider removing/looking at callers -Naksu
 		if (atmos_overlay_types)
@@ -153,14 +150,8 @@
 
 	var/list/gases = air.gases
 
-	for(var/id in gases)
-		if (nonoverlaying_gases[id])
-			continue
-		var/gas = gases[id]
-		var/gas_meta = gas[GAS_META]
-		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-			new_overlay_types += gas_overlay[min(TOTAL_VISIBLE_STATES, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
+	var/list/new_overlay_types
+	GAS_OVERLAYS(gases, new_overlay_types)
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
