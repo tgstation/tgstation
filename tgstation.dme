@@ -48,6 +48,7 @@
 #include "code\__DEFINES\construction.dm"
 #include "code\__DEFINES\cooldowns.dm"
 #include "code\__DEFINES\cult.dm"
+#include "code\__DEFINES\devices.dm"
 #include "code\__DEFINES\diseases.dm"
 #include "code\__DEFINES\DNA.dm"
 #include "code\__DEFINES\do_afters.dm"
