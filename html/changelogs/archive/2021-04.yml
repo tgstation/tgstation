@@ -913,3 +913,78 @@
   zxaber:
   - bugfix: Mechs can move in space if near a wall again.
   - bugfix: Mech thrusters no longer incorrectly fail if the mech is near a wall.
+2021-04-29:
+  Balky Goat:
+  - rscdel: Removed unused sprites in robots.dmi.
+  ORCACommander:
+  - bugfix: Anesthetic Tank holders will now always render when loaded with an anesthetic
+      tank and upon round load.
+  PositiveEntropy:
+  - imageadd: Holding a chemistry/science plumbing device and a Rapid Service Fabricator
+      now displays actual in-hand icons for them!
+  RandomGamer123:
+  - bugfix: The sheetifier now accepts photos containing hauntium.
+  Ryll/Shaps:
+  - bugfix: Disco's Dead, Baby- and by that I mean, the Shuttle Catastrophe random
+      event will no longer select Disco Inferno every single time it triggers (or
+      selecting it at all, in fact, as it was before)
+  - bugfix: Wizard shielded hardsuit recharge runes are now properly consumed upon
+      use
+  SgtHunk:
+  - bugfix: Silverscale pirates can now access their turrets.
+  SuperNovaa41:
+  - bugfix: Fixes lithium glitching you out of mechs, and more!
+  - bugfix: Fixes building things on top of objects that shouldn't be built upon.
+  Twaticus, maxymax13:
+  - imageadd: Resprites x-large & metamaterial beaker. Normal beaker & reagent color
+      sprite tweaks. Adds 1u reagent sprites back to beakers.
+  Urumasi:
+  - qol: You can copy other people's wigs with a wig.
+  Y0SH1M4S73R:
+  - admin: There is now a menu that allows admins to give players spells that execute
+      SDQL queries. New users of this menu should study it and its tooltips to figure
+      out how to make the most of it.
+  tralezab:
+  - rscdel: No more crystal invasion event
+  - admin: reagent transferring now logs purity
+  - rscdel: removed delta roundstart power tools, the room no longer made sense being
+      what it was without that so i turned it into a smoking room style.
+2021-04-30:
+  ArcaneDefence:
+  - rscadd: Some foods from sandwiches to donk pockets to candies and snowcones can
+      now be eaten while walking.
+  ArcaneMusic:
+  - imageadd: Some hidden debug content got some new sprites, should you ever find
+      it.
+  Celotajs:
+  - qol: The changelog re-request delay has been heavily reduced
+  - qol: Changelogs from r4407 (April 2010) and earlier have been removed, and a link
+      to the GoonStation 13 wiki page for the old changelogs has been added to the
+      footer in the changelog popup. This means we finally won't claim GoonStation13's
+      changes as our own.
+  Foxtrot (Funce):
+  - bugfix: Changelog no longer runtimes when it force opens on join.
+  Helianthus00:
+  - rscadd: MetaStation now has some plumbing water tanks scattered around in high-demand
+      areas for water
+  - rscadd: MetaStation chem lab now has two empty plumbing storage tanks
+  Imaginos16:
+  - rscdel: Nanotrasen, after receiving many complaints, removed the flash that used
+      to sit at the entrance of the science department.
+  LemonInTheDark:
+  - server: the Total Hard Deletes section of garbage logging is now separated by
+      a :, in the same format as all the other qdel log items. Be made aware
+  OmegaDarkPotato:
+  - balance: Multiplies corazargh's metabolization by 100x so it's no longer hilariously
+      overpowered and only slightly overpowered now. No more 4u deathmixes.
+  cacogen:
+  - code_imp: Universal holidays will cover every timezone by default. This means
+      they'll start 14 hours earlier and last 26 hours longer
+  - code_imp: Shortens Christmas, Halloween, April Fool's Day, New Year's and Valentine's
+      Day periods by one day. They will start 14 hours earlier but only last 2 hours
+      longer
+  - code_imp: US Independence Day, ANZAC Day, Bastille Day and Waitangi Day will begin
+      and end when they do in the countries that celebrate them
+  itseasytosee:
+  - balance: The hallucination virus symptom has had its stats buffed, check the wiki
+      if you are interested.

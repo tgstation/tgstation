@@ -18,9 +18,9 @@ Bonus
 /datum/symptom/hallucigen
 	name = "Hallucigen"
 	desc = "The virus stimulates the brain, causing occasional hallucinations."
-	stealth = -1
-	resistance = -3
-	stage_speed = -3
+	stealth = 1
+	resistance = -4
+	stage_speed = 1
 	transmittable = -1
 	level = 5
 	severity = 2
