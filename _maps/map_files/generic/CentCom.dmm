@@ -3050,7 +3050,11 @@
 "ol" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
-/obj/machinery/requests_console/directional/north,
+/obj/machinery/requests_console/directional/north{
+	announcementConsole = 1;
+	department = "Captain's Desk";
+	departmentType = 5
+	},
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "om" = (
@@ -3065,7 +3069,9 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9380,7 +9386,9 @@
 /area/centcom/ferry)
 "CC" = (
 /obj/structure/closet/secure_closet/ert_med,
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/vending/wallmed/directional/south{
+	use_power = 0
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
