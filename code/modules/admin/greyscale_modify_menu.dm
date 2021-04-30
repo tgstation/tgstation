@@ -118,7 +118,8 @@
 /datum/greyscale_modify_menu/proc/refresh_preview()
 	for(var/i in length(split_colors) + 1 to config.expected_colors)
 		split_colors += rgb(100, 100, 100)
-	var/list/data = config.GenerateDebug(split_colors.Copy(1, config.expected_colors+1).Join())
+	var/list/used_colors = split_colors.Copy(1, config.expected_colors+1)
+	var/list/data = config.GenerateDebug(used_colors.Join())
 
 	sprite_data = list()
 	var/list/steps = list()
