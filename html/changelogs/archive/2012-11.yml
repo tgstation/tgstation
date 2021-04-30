@@ -1,0 +1,142 @@
+2012-11-01:
+  Giacom:
+  - tweak: Aliens now take x2 as much damage from fire based weaponary, instead of
+      x1.5.
+  - tweak: Doors are now weaker than walls; so normal weapons can destroy them much
+      more easily.
+2012-11-02:
+  Errorage:
+  - rscadd: You can once again travel to the station, derelict, satellite and mining
+      z-levels through space. You will also never loop into the same level on transition
+      - So if you are exiting the derelict z-level, you will enter one of the other
+      z-levels.
+2012-11-03:
+  Giacom:
+  - tweak: Airborne diseases will not spread through walls now.
+  - tweak: Reduced queen healing rate to 5. The maximum health will be enough.
+  - tweak: Aliens can now clear hatched eggs by clicking on them.
+  TankNut:
+  - imageadd: New APC sprite.
+  - imageadd: New Wraith sprite and jaunting animation.
+  WJohnston:
+  - imageadd: New Ablative Armor sprite.
+2012-11-05:
+  Errorage:
+  - rscadd: Being in an area with extremely low pressure will now deal some damage,
+      if you're not protected.
+  - rscadd: Space suits and the captain's armor now protect against pressure damage
+  - tweak: Slightly lowered all environment damage intakes (temperature, oxygen deprevation)
+      to make up for low pressure damage.
+  - bugfix: Pressure protection finally works properly. Items that protect from pressure
+      (firesuits, space suits, fire helmets, ...) will now properly protect. The pressure
+      damage indicator will update properly based on the pressure effects on you.
+      Black (low) and red (high) mean you are taking damage.
+  - tweak: Slightly slowed down the speed at which your body temperature changes if
+      you are in a very hot or very cold area. The speed at which you recover from
+      an abnormal body temperature remains the same.
+  Giacom:
+  - tweak: 'AIs can now tweak with a bot''s setting like a human who unlocked the
+      bot. '
+2012-11-09:
+  Giacom:
+  - rscadd: Cyborgs can now ping and beep! (Say "*beep" and "*ping") Thanks to Rahlzel
+      for the proposal.
+  - tweak: HULKS WILL NOW TALK IN ALL CAPS AND WILL RANDOMLY SAY HULK THINGS. Thanks
+      to Brotemis for the proposal.
+  - wip: Sorry for the inconveniences with advance diseases. They are working much
+      better now!
+  - imageadd: An improved APC sprite by TankNut!
+2012-11-11:
+  Carn:
+  - wip: "<font color=\"purple\"><u>Admin-ranks changes</u><br/>\n\t\tLots of changes.\
+      \ This is just a brief summary of the most recent changes; still working on\
+      \ proper documentation.<br/>\n\t\tAll admins have access to view-vars, player-panel(for\
+      \ individual mobs), game panel and secrets panel. Most of the things on those\
+      \ pages have their own rights requirements. For instance, you can only use event\
+      \ orientated secrets in the secret panel if you have FUN rights. Debug secrets\
+      \ if you have DEBUG rights. etc.<br/>\n\t\tSpawn xeno and toggle gravity procs\
+      \ were moved into the secrets panel (fun).<br/>\n\t\t<a href=\"http://code.google.com/p/tgstation13/source/browse/trunk/config/admin_ranks.txt\"\
+      >This</a> may help with understanding which flags do what. Unfortuanately it's\
+      \ still somewhat vague.<br/>\n\t\tIf you have any problems, feel free to PM\
+      \ me at irc.rizon.net #coderbus. I go by the username carn or carnie.\n\t\t\
+      </font>"
+  Kor:
+  - rscadd: New cyborg upgrade available for production that requires illegal and
+      combat tech
+  - tweak: Summon Guns has a new gun type created by Ausops. It also lets the user
+      know when its been cast now to prevent people trying to buy it multiple times
+  - tweak: Grilles are no longer immortal in regards to solid projectiles, you can
+      now shoot out windows.
+2012-11-13:
+  Nodrak:
+  - bugfix: Wizards can no longer cast spells when muzzled. It iss now actually possible
+      to capture a live wizard without constantly injecting them with chloral.
+  - rscdel: You can no longer take bags of holding or mechs to the clown planet.
+2012-11-15:
+  Giacom:
+  - rscadd: You can now name your advance diseases! You can't name already known diseases
+      though.
+  - tweak: Chemical implants can now hold 50 units instead of 10 units.
+2012-11-16:
+  Kor:
+  - bugfix: Fixed the syndicate teleporter door, making teleport assaults possible.
+      It will once again open when you open the outter door.
+2012-11-17:
+  Giacom:
+  - rscadd: Medical Cyborgs no longer lose the reagents in their hypospray when switching
+      modes.
+  - rscadd: Spaceacillin will now help stop the spread of diseases.
+  - tweak: You can once again make floors slippery by spraying water. This was done
+      by increasing the amount the sprayer uses, which is from 5 to 10. You can also
+      empty your sprayer's contents onto the floor with a verb in the Object tab.
+2012-11-18:
+  Petethegoat:
+  - rscadd: Ported over BS12 style cameras. They now take a photo of a 3x3 area!
+  - tweak: Catatonic people (those that have ghosted while alive) now count as dead
+      for assasinate objectives.
+2012-11-19:
+  Giacom:
+  - rscadd: Malf AIs can only shunt to APCs from their core. Meaning their core needs
+      to be alive before they can shunt to another APC. Malf AIs can start a takeover
+      inside an APC now.
+  - rscadd: When taking damage, the next sequence of the overlay will show for a bit
+      before reverting to the overlay you should have. This allows you to know you
+      are taking damage without having to check the text screen.
+2012-11-20:
+  Kor:
+  - rscadd: Added Exile Implants to the Gateway room. Someone implanted with an Exile
+      Implant will be able to enter the away mission, but unable to return from it.
+      Not only can they be used for getting rid of dangerous criminals, but revs/stationheads
+      count as dead while on the away mission, and traitor/changeling/wizard assassination
+      targets count as dead if they're on the away mission at round end, allowing
+      for those objectives to be completed peacefully.
+  - rscadd: Added medical hardsuits, sprited by Majorsephiroth. Two of them spawn
+      in EVA. Their most unique/medical oriented feature is being able to hold a medkit
+      in the suit storage slot, allowing you to easily access medicine while keeping
+      your hands free.
+2012-11-21:
+  Cheridan:
+  - rscadd: SSU manufacturers have issued a product recall! It seems old models shipped
+      with faulty wiring, causing them to short-circuit.
+2012-11-23:
+  Zelacks:
+  - rscadd: Plant Analysers now work on seed bags.
+2012-11-25:
+  Ikarrus:
+  - rscadd: Added Gateway access. Only the RD, HoP, and Captain start with this.
+  - tweak: 'New access levels in the brig: <br/>-Brig access now opens the front doors
+      of the brig, as well as other lower-risk security areas. <br/>-Security access
+      allows you into the break room and equipment lockers. <br/>-Holding Cells allows
+      you to use brig timers and lets you in the Prison Wing. <br/>-The Detective
+      no longer has Security Equipment access.'
+  - tweak: Significantly increased max cloneloss penalty for fresh clones to 40%.
+2012-11-28:
+  Kor:
+  - rscadd: Slimes have replaced roros (finally)! Right now they are functionally
+      identical, but massive expansion of slimes and xenobio is planned. Sprites are
+      by Cheridan.
+2012-11-30:
+  Ikarrus:
+  - tweak: Swapped the locations of the Vault and Tech Storage.
+  - rscdel: Cargo Techs, Miners, and Roboticists no longer start with gloves. They
+      are still available from their lockers.

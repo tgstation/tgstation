@@ -376,6 +376,11 @@
 	// Hard reset access
 	access.Cut()
 
+/// Clears the economy account from the ID card.
+/obj/item/card/id/proc/clear_account()
+	registered_account = null
+
+
 /**
  * Helper proc. Creates access lists for the access procs.
  *
@@ -423,7 +428,10 @@
 					SSid_access.apply_trim_to_card(src, trim)
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/holochip))
+	if(istype(W, /obj/item/rupee))
+		to_chat(user, "<span class='warning'>Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!</span>")
+		return
+	else if(istype(W, /obj/item/holochip))
 		insert_money(W, user)
 		return
 	else if(istype(W, /obj/item/stack/spacecash))
@@ -435,9 +443,7 @@
 	else if(istype(W, /obj/item/storage/bag/money))
 		var/obj/item/storage/bag/money/money_bag = W
 		var/list/money_contained = money_bag.contents
-
 		var/money_added = mass_insert_money(money_contained, user)
-
 		if (money_added)
 			to_chat(user, "<span class='notice'>You stuff the contents into the card! They disappear in a puff of bluespace smoke, adding [money_added] worth of credits to the linked account.</span>")
 		return

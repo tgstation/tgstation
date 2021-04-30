@@ -2,9 +2,16 @@
 	name = "Principle of Hunger"
 	desc = "Opens up the Path of Flesh to you. Allows you to transmute a pool of blood with a kitchen knife, or its derivatives, into a Flesh Blade."
 	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
-	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/base_void)
+	banned_knowledge = list(
+		/datum/eldritch_knowledge/base_ash,
+		/datum/eldritch_knowledge/base_rust,
+		/datum/eldritch_knowledge/final/ash_final,
+		/datum/eldritch_knowledge/final/rust_final,
+		/datum/eldritch_knowledge/final/void_final,
+		/datum/eldritch_knowledge/base_void
+	)
 	next_knowledge = list(/datum/eldritch_knowledge/flesh_grasp)
-	required_atoms = list(/obj/item/kitchen/knife,/obj/effect/decal/cleanable/blood)
+	required_atoms = list(/obj/item/kitchen/knife, /obj/effect/decal/cleanable/blood)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
 	cost = 1
 	route = PATH_FLESH
@@ -14,36 +21,37 @@
 	desc = "Allows you to resurrect the dead as voiceless dead by sacrificing them on the transmutation rune with a poppy. Voiceless dead are mute and have 50 HP. You can only have 2 at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	cost = 1
-	required_atoms = list(/mob/living/carbon/human,/obj/item/food/grown/poppy)
-	next_knowledge = list(/datum/eldritch_knowledge/flesh_mark,/datum/eldritch_knowledge/void_cloak,/datum/eldritch_knowledge/ashen_eyes)
+	required_atoms = list(/mob/living/carbon/human, /obj/item/food/grown/poppy)
+	next_knowledge = list(
+		/datum/eldritch_knowledge/flesh_mark,
+		/datum/eldritch_knowledge/void_cloak,
+		/datum/eldritch_knowledge/ashen_eyes
+	)
 	route = PATH_FLESH
 	var/max_amt = 2
 	var/current_amt = 0
 	var/list/ghouls = list()
 
-/datum/eldritch_knowledge/flesh_ghoul/on_finished_recipe(mob/living/user,list/atoms,loc)
+/datum/eldritch_knowledge/flesh_ghoul/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/humie = locate() in atoms
 	if(QDELETED(humie) || humie.stat != DEAD)
 		return
-
 	if(length(ghouls) >= max_amt)
 		return
-
 	if(HAS_TRAIT(humie,TRAIT_HUSK))
 		return
-
 	humie.grab_ghost()
 
 	if(!humie.mind || !humie.client)
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [humie.real_name], a voiceless dead", ROLE_HERETIC, null, ROLE_HERETIC, 50,humie)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [humie.real_name], a voiceless dead", ROLE_HERETIC, ROLE_HERETIC, 50,humie)
 		if(!LAZYLEN(candidates))
 			return
-		var/mob/dead/observer/C = pick(candidates)
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(humie)]) to replace an AFK player.")
+		var/mob/dead/observer/chosen_candidate = pick(candidates)
+		message_admins("[key_name_admin(chosen_candidate)] has taken control of ([key_name_admin(humie)]) to replace an AFK player.")
 		humie.ghostize(0)
-		humie.key = C.key
+		humie.key = chosen_candidate.key
 
-	ADD_TRAIT(humie,TRAIT_MUTE,MAGIC_TRAIT)
+	ADD_TRAIT(humie, TRAIT_MUTE, MAGIC_TRAIT)
 	log_game("[key_name_admin(humie)] has become a voiceless dead, their master is [user.real_name]")
 	humie.revive(full_heal = TRUE, admin_revive = TRUE)
 	humie.setMaxHealth(50)
@@ -55,7 +63,7 @@
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	heretic_monster.set_owner(master)
 	atoms -= humie
-	RegisterSignal(humie,COMSIG_LIVING_DEATH,.proc/remove_ghoul)
+	RegisterSignal(humie,COMSIG_LIVING_DEATH, .proc/remove_ghoul)
 	ghouls += humie
 
 /datum/eldritch_knowledge/flesh_ghoul/proc/remove_ghoul(datum/source)
@@ -79,25 +87,18 @@
 	if(!ishuman(target) || target == user)
 		return
 	var/mob/living/carbon/human/human_target = target
-
-
 	if(QDELETED(human_target) || human_target.stat != DEAD)
 		return
-
 	human_target.grab_ghost()
-
 	if(!human_target.mind || !human_target.client)
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
-
 	if(HAS_TRAIT(human_target, TRAIT_HUSK))
 		to_chat(user, "<span class='warning'>You cannot revive a dead ghoul!</span>")
 		return
-
 	if(LAZYLEN(spooky_scaries) >= ghoul_amt)
 		to_chat(user, "<span class='warning'>Your patron cannot support more ghouls on this plane!</span>")
 		return
-
 	LAZYADD(spooky_scaries, human_target)
 	log_game("[key_name_admin(human_target)] has become a ghoul, their master is [user.real_name]")
 	//we change it to true only after we know they passed all the checks
@@ -111,7 +112,6 @@
 	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	heretic_monster.set_owner(master)
-	return
 
 /datum/eldritch_knowledge/flesh_grasp/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -173,7 +173,11 @@
 	cost = 1
 	required_atoms = list(/obj/item/organ/eyes,/obj/effect/decal/cleanable/blood,/obj/item/bodypart/l_arm)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/raw_prophet
-	next_knowledge = list(/datum/eldritch_knowledge/flesh_blade_upgrade,/datum/eldritch_knowledge/rune_carver,/datum/eldritch_knowledge/curse/paralysis)
+	next_knowledge = list(
+		/datum/eldritch_knowledge/flesh_blade_upgrade,
+		/datum/eldritch_knowledge/rune_carver,
+		/datum/eldritch_knowledge/curse/paralysis
+	)
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/summon/stalker
@@ -183,7 +187,11 @@
 	cost = 1
 	required_atoms = list(/obj/item/pen,/obj/item/organ/eyes,/obj/item/candle,/obj/item/paper)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/stalker
-	next_knowledge = list(/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/summon/rusty,/datum/eldritch_knowledge/final/flesh_final)
+	next_knowledge = list(
+		/datum/eldritch_knowledge/summon/ashy,
+		/datum/eldritch_knowledge/summon/rusty,
+		/datum/eldritch_knowledge/final/flesh_final
+	)
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/summon/ashy
@@ -226,12 +234,12 @@
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shed_human_form)
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = user
-	H.physiology.brute_mod *= 0.5
-	H.physiology.burn_mod *= 0.5
-	H.client?.give_award(/datum/award/achievement/misc/flesh_ascension, H)
-	var/datum/antagonist/heretic/heretic = user.mind.has_antag_datum(/datum/antagonist/heretic)
-	var/datum/eldritch_knowledge/flesh_grasp/ghoul1 = heretic.get_knowledge(/datum/eldritch_knowledge/flesh_grasp)
-	ghoul1.ghoul_amt *= 3
-	var/datum/eldritch_knowledge/flesh_ghoul/ghoul2 = heretic.get_knowledge(/datum/eldritch_knowledge/flesh_ghoul)
-	ghoul2.max_amt *= 3
+	var/mob/living/carbon/human/lord_of_arms = user
+	lord_of_arms.physiology.brute_mod *= 0.5
+	lord_of_arms.physiology.burn_mod *= 0.5
+	lord_of_arms.client?.give_award(/datum/award/achievement/misc/flesh_ascension, lord_of_arms)
+	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/eldritch_knowledge/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/eldritch_knowledge/flesh_grasp)
+	grasp_ghoul.ghoul_amt *= 3
+	var/datum/eldritch_knowledge/flesh_ghoul/better_ghoul = heretic_datum.get_knowledge(/datum/eldritch_knowledge/flesh_ghoul)
+	better_ghoul.max_amt *= 3

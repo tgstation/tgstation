@@ -131,10 +131,10 @@
 
 	return ..()
 
-/obj/item/reagent_containers/ex_act()
+/obj/item/reagent_containers/ex_act(severity)
 	if(reagents)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			R.on_ex_act()
+			R.on_ex_act(severity)
 	if(!QDELETED(src))
 		return ..()
 
