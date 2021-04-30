@@ -347,3 +347,49 @@ Versioning
 	if(query_report_death)
 		query_report_death.Execute(async = TRUE)
 		qdel(query_report_death)
+
+/datum/controller/subsystem/blackbox/proc/ReportCitation(citation, sender, sender_ic, recipient, message, fine = 0, paid = 0)
+	var/datum/db_query/query_report_citation = SSdbcore.NewQuery({"INSERT INTO [format_table_name("citation")]
+	(server_ip,
+	server_port,
+	round_id,
+	citation,
+	action,
+	sender,
+	sender_ic,
+	recipient,
+	crime,
+	fine,
+	paid,
+	timestamp) VALUES (
+	INET_ATON(:server_ip),
+	:port,
+	:round_id,
+	:citation,
+	:action,
+	:sender,
+	:sender_ic,
+	:recipient,
+	:message,
+	:fine,
+	:paid,
+	:timestamp
+	) ON DUPLICATE KEY UPDATE
+	paid = paid + :paid"}, list(
+		"server_ip" = world.internet_address || "0",
+		"port" = "[world.port]",
+		"round_id" = GLOB.round_id,
+		"citation" = citation,
+		"action" = "Citation Created",
+		"sender" = sender,
+		"sender_ic" = sender_ic,
+		"recipient" = recipient,
+		"message" = message,
+		"fine" = fine,
+		"paid" = paid,
+		"timestamp" = SQLtime(),
+		"paid" = paid
+	))
+	if(query_report_citation)
+		query_report_citation.Execute(async = TRUE)
+		qdel(query_report_citation)
