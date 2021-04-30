@@ -110,10 +110,8 @@
 
 	if(!unanchored_items_on_tile)
 		return TRUE
-	else if(unanchored_items_on_tile == 1)
-		to_chat(user, "<span class='notice'>You move [last_item_moved] out of the way.</span>")
-	else if(unanchored_items_on_tile > 1)
-		to_chat(user, "<span class='notice'>You move some things out of the way.</span>")
+
+	to_chat(user, "<span class='notice'>You move [unanchored_items_on_tile == 1 ? "[last_item_moved]" : "some things"] out of the way.</span>")
 
 	if(unanchored_items_on_tile - CLEAR_TILE_MOVE_LIMIT > 0)
 		to_chat(user, "<span class ='warning'>There's still too much stuff in the way!</span>")
