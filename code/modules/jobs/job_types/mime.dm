@@ -18,6 +18,13 @@
 
 	family_heirlooms = list(/obj/item/food/baguette)
 
+	mail_goodies = list(
+		/obj/item/food/baguette = 15,
+		/obj/item/food/cheese/wheel = 10,
+		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 10,
+		/obj/item/book/mimery = 1,
+	)
+
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.apply_pref_name("mime", M.client)
 

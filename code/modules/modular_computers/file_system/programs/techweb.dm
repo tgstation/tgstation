@@ -7,7 +7,7 @@
 	size = 16
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
-	required_access = ACCESS_RND
+	required_access = ACCESS_HEADS
 	transfer_access = ACCESS_RD
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
@@ -208,7 +208,7 @@
 					var/obj/item/card/id/id_card_of_human_user = worn.GetID()
 					if(istype(id_card_of_human_user))
 						logname = "User: [id_card_of_human_user.registered_name]"
-			stored_research.research_logs = list(list(tech_node.display_name, price["General Research"], logname, "[get_area(src)] ([computer.x],[computer.y],[computer.z])"))
+			stored_research.research_logs += list(list(tech_node.display_name, price["General Research"], logname, "[get_area(computer)] ([user.x],[user.y],[user.z])"))
 			return TRUE
 		else
 			computer.say("Failed to research node: Internal database error!")

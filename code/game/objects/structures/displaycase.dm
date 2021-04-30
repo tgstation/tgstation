@@ -301,6 +301,8 @@
 		return
 	if(user.combat_mode)
 		return ..()
+	if(W.tool_behaviour == TOOL_WELDER && !broken)
+		return ..()
 
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
 		if(added_roundstart)
@@ -555,7 +557,7 @@
 			else
 				to_chat(user, "<span class='notice'>You secure [src].</span>")
 			set_anchored(!anchored)
-			return
+			return TRUE
 	else if(!open && !user.combat_mode)
 		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
 		return

@@ -22,7 +22,6 @@
 	if(owner.current && isAI(owner.current))
 		traitor_kind = TRAITOR_AI
 
-	SSticker.mode.traitors += owner
 	owner.special_role = special_role
 	if(give_objectives)
 		forge_traitor_objectives()
@@ -36,7 +35,6 @@
 		A.set_zeroth_law("")
 		A.remove_malf_abilities()
 		QDEL_NULL(A.malf_picker)
-	SSticker.mode.traitors -= owner
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null

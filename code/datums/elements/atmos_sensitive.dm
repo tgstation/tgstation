@@ -14,7 +14,7 @@
 	RegisterSignal(to_track, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 	return ..()
 
-/datum/element/atmos_sensitive/Detach(datum/source, force)
+/datum/element/atmos_sensitive/Detach(datum/source)
 	var/atom/us = source
 	us.UnregisterSignal(get_turf(us), COMSIG_TURF_EXPOSE)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
