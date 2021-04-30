@@ -3,6 +3,7 @@
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
+	///The current target of our attacks, use GiveTarget and LoseTarget to set this var
 	var/atom/target
 	var/ranged = FALSE
 	var/rapid = 0 //How many shots per volley.
@@ -46,6 +47,7 @@
 	var/stat_attack = CONSCIOUS
 	var/stat_exclusive = FALSE //Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction
+	//Use set_targets_from to modify this var
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
 	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
 	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
@@ -73,12 +75,9 @@
 
 
 /mob/living/simple_animal/hostile/Destroy()
-	if(targets_from)
-		UnregisterSignal(targets_from, COMSIG_PARENT_QDELETING)
-		targets_from = null
-	if(target)
-		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
-		target = null
+	set_targets_from(null)
+	//We can't use losetarget here because fucking cursed blobs override it to do nothing the motherfuckers
+	GiveTarget(null)
 	return ..()
 
 /mob/living/simple_animal/hostile/Life(delta_time = SSMOBS_DT, times_fired)

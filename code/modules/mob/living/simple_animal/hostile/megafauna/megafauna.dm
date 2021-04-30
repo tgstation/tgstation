@@ -183,7 +183,7 @@
 	var/chosen_attack_num = 0
 
 /datum/action/innate/megafauna_attack/Grant(mob/living/L)
-	if(!istype(L, /mob/living/simple_animal/hostile/megafauna))
+	if(!ismegafauna(L))
 		return FALSE
 	return ..()
 

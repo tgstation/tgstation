@@ -900,8 +900,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /obj/machinery/bot_core/Initialize()
 	. = ..()
-	var/mob/living/simple_animal/bot/owner = loc
-	if(!istype(owner))
+	if(!isbot(loc))
 		return INITIALIZE_HINT_QDEL
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
