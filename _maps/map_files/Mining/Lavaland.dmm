@@ -4972,7 +4972,8 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "YY" = (
-/obj/machinery/camera/autoname/directional/south{
+/obj/machinery/camera/autoname{
+	dir = 1;
 	network = list("mine")
 	},
 /turf/open/floor/iron,
