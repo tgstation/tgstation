@@ -96,20 +96,20 @@
 	user_mob.adjustOrganLoss(ORGAN_SLOT_EYES, eye_damage)
 
 ///X-ray Vision lets you see through walls.
-/datum/mutation/human/thermal/x_ray
+/datum/mutation/human/xray
 	name = "X Ray Vision"
 	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, wich might be fun for later //hmb
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 	instability = 35
 	locked = TRUE
 
-/datum/mutation/human/thermal/xray/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/human/xray/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
 	owner.update_sight()
 
-/datum/mutation/human/thermal/xray/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/human/xray/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
