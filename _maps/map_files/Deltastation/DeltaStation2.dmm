@@ -81482,7 +81482,6 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/structure/disposalpipe/segment,
-/obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/iron/white,
 /area/hallway/primary/central/aft)

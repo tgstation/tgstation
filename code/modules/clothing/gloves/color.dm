@@ -213,7 +213,7 @@
 
 /obj/item/clothing/gloves/color/infiltrator
 	name = "infiltrator gloves"
-	desc = "Specialized combat gloves for carrying people around. Transfers tactical kidnapping knowledge into the user via nanochips."
+	desc = "Specialized tactical gloves for carrying people around. Has tactical rubber grips for tactical ease of kidnapping. Tactically."
 	icon_state = "infiltrator"
 	inhand_icon_state = "infiltrator"
 	siemens_coefficient = 0

@@ -1,0 +1,4 @@
+author: "KathyRyals"
+delete-after: True
+changes: 
+  - balance: "Thermal is now an active mutation, that has a cooldown and deals damage to your eyes."
