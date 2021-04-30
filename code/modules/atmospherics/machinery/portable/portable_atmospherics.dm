@@ -7,7 +7,7 @@
 	anchored = FALSE
 
 	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
-	var/datum/gas_mixture/_air_contents
+	var/datum/gas_mixture/air_contents
 	///Stores the reference of the connecting port
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 	///Stores the reference of the tank the machine is holding
@@ -19,16 +19,16 @@
 
 /obj/machinery/portable_atmospherics/Initialize()
 	. = ..()
-	_air_contents = new
-	_air_contents.volume = volume
-	_air_contents.temperature = T20C
+	air_contents = new
+	air_contents.volume = volume
+	air_contents.temperature = T20C
 	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/Destroy()
 	SSair.stop_processing_machine(src)
 
 	disconnect()
-	QDEL_NULL(_air_contents)
+	QDEL_NULL(air_contents)
 
 	return ..()
 
@@ -39,24 +39,24 @@
 	if(severity == EXPLODE_DEVASTATE || target == src)
 		//This explosion will destroy the can, release its air.
 		var/turf/T = get_turf(src)
-		T.assume_air(_air_contents)
+		T.assume_air(air_contents)
 		T.air_update_turf(FALSE, FALSE)
 
 	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
 	if(!connected_port) // Pipe network handles reactions if connected, and we can't stop processing if there's a port effecting our mix
-		excited = (excited | _air_contents.react(src))
+		excited = (excited | air_contents.react(src))
 		if(!excited)
 			return PROCESS_KILL
 	excited = FALSE
 
 /obj/machinery/portable_atmospherics/return_air()
 	SSair.start_processing_machine(src)
-	return _air_contents
+	return air_contents
 
 /obj/machinery/portable_atmospherics/return_analyzable_air()
-	return _air_contents
+	return air_contents
 
 /**
  * Allow the portable machine to be connected to a connector
@@ -196,13 +196,13 @@
 /obj/machinery/portable_atmospherics/rad_act(strength)
 	. = ..()
 	var/gas_change = FALSE
-	var/list/cached_gases = _air_contents.gases
-	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide] && _air_contents.temperature <= PLUOXIUM_TEMP_CAP)
+	var/list/cached_gases = air_contents.gases
+	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide] && air_contents.temperature <= PLUOXIUM_TEMP_CAP)
 		gas_change = TRUE
 		var/pulse_strength = min(strength, cached_gases[/datum/gas/oxygen][MOLES] * 1000, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 2000)
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= pulse_strength / 2000
 		cached_gases[/datum/gas/oxygen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/pluoxium, _air_contents)
+		ASSERT_GAS(/datum/gas/pluoxium, air_contents)
 		cached_gases[/datum/gas/pluoxium][MOLES] += pulse_strength / 4000
 		strength -= pulse_strength
 
@@ -210,10 +210,10 @@
 		gas_change = TRUE
 		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
 		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/tritium, _air_contents)
+		ASSERT_GAS(/datum/gas/tritium, air_contents)
 		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
 		strength -= pulse_strength
 
 	if(gas_change)
-		_air_contents.garbage_collect()
+		air_contents.garbage_collect()
 		SSair.start_processing_machine(src)
