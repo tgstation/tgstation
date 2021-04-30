@@ -276,9 +276,7 @@
 	pixel_y = 5
 	},
 /obj/item/radio,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/control)
@@ -302,9 +300,7 @@
 /obj/item/grenade/c4/x4,
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/peppertank/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/control)
@@ -456,10 +452,7 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "iS" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -581,9 +574,7 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "jg" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/peppertank/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -609,10 +600,7 @@
 /turf/open/floor/iron,
 /area/centcom/control)
 "jj" = (
-/obj/structure/extinguisher_cabinet{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -748,10 +736,7 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "jz" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
+/obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -765,10 +750,7 @@
 /turf/open/floor/holofloor/hyperspace,
 /area/space)
 "jB" = (
-/obj/structure/noticeboard{
-	dir = 8;
-	pixel_x = 32
-	},
+/obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -889,10 +871,7 @@
 /area/centcom/supply)
 "jQ" = (
 /obj/structure/closet/secure_closet/quartermaster,
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/supply)
@@ -927,10 +906,7 @@
 /turf/open/floor/iron,
 /area/centcom/control)
 "jV" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -1292,10 +1268,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1371,10 +1344,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1612,10 +1582,7 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "lp" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -1676,9 +1643,7 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/control)
 "lx" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1711,10 +1676,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "lA" = (
-/obj/structure/noticeboard{
-	dir = 8;
-	pixel_x = 32
-	},
+/obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1831,10 +1793,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -2009,23 +1968,16 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supply)
 "mh" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/structure/filingcabinet/filingcabinet,
-/obj/effect/turf_decal/tile/neutral{
+/obj/structure/chair,
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/supply)
+/obj/machinery/newscaster/security_unit/directional/north,
+/turf/open/floor/iron,
+/area/centcom/control)
 "mi" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -2039,10 +1991,7 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "mj" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -2121,9 +2070,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
+/obj/machinery/newscaster/directional/east,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -2235,10 +2182,7 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "mJ" = (
-/obj/structure/noticeboard{
-	dir = 8;
-	pixel_x = 32
-	},
+/obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -2396,9 +2340,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "mW" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/structure/reagent_dispensers/peppertank/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -2449,9 +2391,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/grimy,
 /area/centcom/control)
 "nb" = (
@@ -2683,9 +2623,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror{
-	pixel_x = 28
-	},
+/obj/structure/mirror/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
@@ -2712,9 +2650,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supply)
 "nE" = (
-/obj/machinery/keycard_auth{
-	pixel_y = -24
-	},
+/obj/machinery/keycard_auth/directional/south,
 /obj/structure/table/reinforced,
 /obj/item/stack/package_wrap,
 /obj/item/stack/cable_coil,
@@ -2768,14 +2704,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supply)
 "nI" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/structure/closet/crate/bin,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 24
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -2789,10 +2720,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supply)
 "nJ" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -2866,10 +2794,7 @@
 	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -2888,10 +2813,7 @@
 	name = "CentCom Stand";
 	req_access_txt = "109"
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3030,9 +2952,7 @@
 /obj/item/taperecorder,
 /obj/item/storage/box/handcuffs,
 /obj/item/flashlight/seclite,
-/obj/structure/noticeboard{
-	pixel_y = 28
-	},
+/obj/structure/noticeboard/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3049,9 +2969,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
 /obj/item/camera,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/peppertank/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3132,13 +3050,7 @@
 "ol" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Captain's Desk";
-	departmentType = 5;
-	name = "Captain RC";
-	pixel_y = 32
-	},
+/obj/machinery/requests_console/directional/north,
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "om" = (
@@ -3153,11 +3065,7 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	pixel_y = 32;
-	use_power = 0
-	},
+/obj/machinery/vending/wallmed/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3296,10 +3204,7 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3477,10 +3382,7 @@
 	},
 /obj/item/storage/secure/briefcase,
 /obj/structure/table/wood,
-/obj/structure/noticeboard{
-	dir = 8;
-	pixel_x = 32
-	},
+/obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3628,15 +3530,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/light_switch{
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "pf" = (
-/obj/machinery/light_switch{
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "pg" = (
@@ -3649,9 +3547,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/mirror{
-	pixel_x = 28
-	},
+/obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3775,10 +3671,7 @@
 /area/centcom/control)
 "pq" = (
 /obj/structure/bookcase/random,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3810,10 +3703,7 @@
 /area/centcom/control)
 "ps" = (
 /obj/structure/bookcase/random,
-/obj/structure/noticeboard{
-	dir = 1;
-	pixel_y = -32
-	},
+/obj/structure/noticeboard/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3828,9 +3718,7 @@
 /area/centcom/control)
 "pt" = (
 /obj/machinery/vending/coffee,
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
+/obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3861,9 +3749,6 @@
 /area/centcom/control)
 "pv" = (
 /obj/machinery/vending/cigarette,
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3880,9 +3765,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -32
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3991,10 +3874,7 @@
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "pM" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -4018,19 +3898,13 @@
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/glasses/eyepatch,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "pO" = (
 /obj/structure/destructible/cult/tome,
 /obj/item/book/codex_gigas,
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4154,10 +4028,7 @@
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash/handheld,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4174,10 +4045,7 @@
 /obj/structure/table/wood,
 /obj/item/folder/red,
 /obj/item/lighter,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4200,9 +4068,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/machinery/light_switch{
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "qf" = (
@@ -4327,10 +4193,7 @@
 /area/centcom/supply)
 "qn" = (
 /obj/structure/filingcabinet/filingcabinet,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -4351,10 +4214,7 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "qp" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4566,9 +4426,7 @@
 /turf/open/floor/iron/freezer,
 /area/syndicate_mothership/control)
 "qP" = (
-/obj/structure/mirror{
-	pixel_x = 28
-	},
+/obj/structure/mirror/directional/east,
 /obj/item/mop,
 /turf/open/floor/iron/freezer,
 /area/syndicate_mothership/control)
@@ -4664,9 +4522,7 @@
 /area/syndicate_mothership)
 "re" = (
 /obj/item/paper/fluff/stations/centcom/disk_memo,
-/obj/structure/noticeboard{
-	pixel_x = -32
-	},
+/obj/structure/noticeboard/directional/west,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -4702,9 +4558,7 @@
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
 "rj" = (
-/obj/structure/mirror{
-	pixel_x = 28
-	},
+/obj/structure/mirror/directional/east,
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = 11
@@ -4795,10 +4649,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
 "rq" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
 /obj/structure/filingcabinet/filingcabinet,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4842,9 +4693,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/machinery/newscaster{
-	pixel_x = -32
-	},
+/obj/machinery/newscaster/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4858,9 +4707,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
 "ru" = (
-/obj/machinery/light_switch{
-	pixel_y = 24
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "rv" = (
@@ -4953,9 +4800,7 @@
 /obj/item/crowbar/red,
 /obj/item/crowbar/power,
 /obj/item/storage/belt/security/full,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 26
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/ferry)
@@ -5027,9 +4872,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5129,12 +4972,8 @@
 	},
 /obj/item/storage/box/silver_ids,
 /obj/structure/table/reinforced,
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/machinery/newscaster/security_unit/directional/north,
+/obj/structure/reagent_dispensers/peppertank/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5363,10 +5202,7 @@
 /turf/open/floor/iron,
 /area/centcom/ferry)
 "sv" = (
-/obj/structure/noticeboard{
-	dir = 8;
-	pixel_x = 32
-	},
+/obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -5895,9 +5731,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
+/obj/machinery/newscaster/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5915,10 +5749,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
@@ -5947,10 +5778,7 @@
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/centcom/ferry)
 "tG" = (
@@ -5959,10 +5787,7 @@
 /obj/item/ammo_box/a357,
 /obj/item/gun/ballistic/revolver/mateba,
 /obj/structure/table/reinforced,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -5972,10 +5797,7 @@
 /obj/item/gun/energy/pulse/carbine/loyalpin,
 /obj/item/flashlight/seclite,
 /obj/structure/table/reinforced,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -5992,9 +5814,7 @@
 /obj/item/grenade/c4/x4,
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/peppertank/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -6174,9 +5994,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
 "uk" = (
-/obj/machinery/keycard_auth{
-	pixel_y = -24
-	},
+/obj/machinery/keycard_auth/directional/south,
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /obj/machinery/button/door/indestructible{
@@ -6233,14 +6051,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
 "uo" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/structure/closet/crate/bin,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 24
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6293,10 +6106,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "uu" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6361,10 +6171,7 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6487,10 +6294,7 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6551,9 +6355,7 @@
 /area/centcom/ferry)
 "uW" = (
 /obj/structure/closet/crate/bin,
-/obj/machinery/light_switch{
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6578,10 +6380,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6629,8 +6428,15 @@
 /turf/open/floor/grass,
 /area/centcom/ferry)
 "vc" = (
-/obj/machinery/newscaster,
-/turf/closed/indestructible/riveted,
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/machinery/newscaster/security_unit/directional/south,
+/turf/open/floor/iron,
 /area/centcom/control)
 "vd" = (
 /obj/structure/table/reinforced,
@@ -6786,15 +6592,11 @@
 /turf/open/floor/iron,
 /area/centcom/ferry)
 "vE" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 24
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -8092,9 +7894,7 @@
 /obj/item/clothing/mask/cigarette/cigar{
 	pixel_x = 4.5
 	},
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
+/obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -8168,9 +7968,7 @@
 /area/centcom/ferry)
 "zf" = (
 /obj/structure/closet/secure_closet/ert_engi,
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -8180,9 +7978,7 @@
 /obj/structure/table/reinforced,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/item/flashlight/seclite,
-/obj/structure/noticeboard{
-	pixel_y = 28
-	},
+/obj/structure/noticeboard/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/ferry)
@@ -8194,9 +7990,7 @@
 /obj/item/grenade/c4{
 	pixel_x = -4
 	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/ferry)
@@ -8415,10 +8209,7 @@
 /obj/machinery/computer/med_data{
 	dir = 8
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -8607,9 +8398,7 @@
 /turf/open/floor/iron,
 /area/centcom/ferry)
 "Al" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 26
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -8678,9 +8467,7 @@
 /obj/machinery/computer/communications{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 24
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -8811,11 +8598,7 @@
 /turf/open/floor/iron,
 /area/centcom/ferry)
 "AS" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Briefing Area APC";
-	pixel_x = 24
-	},
+/obj/machinery/power/apc/auto_name/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9139,10 +8922,7 @@
 /area/centcom/control)
 "BI" = (
 /obj/machinery/light,
-/obj/structure/noticeboard{
-	dir = 1;
-	pixel_y = -32
-	},
+/obj/structure/noticeboard/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -9179,10 +8959,7 @@
 	pixel_y = 3
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -9430,9 +9207,7 @@
 /obj/structure/table/wood,
 /obj/item/folder/red,
 /obj/item/lighter,
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
+/obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9506,10 +9281,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/machinery/power/apc{
-	name = "Briefing Room APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9524,10 +9296,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
 "Cx" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9545,10 +9314,7 @@
 	icon_state = "plant-22"
 	},
 /obj/machinery/light,
-/obj/structure/noticeboard{
-	dir = 1;
-	pixel_y = -32
-	},
+/obj/structure/noticeboard/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9565,9 +9331,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -32
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9616,11 +9380,7 @@
 /area/centcom/ferry)
 "CC" = (
 /obj/structure/closet/secure_closet/ert_med,
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	pixel_y = -32;
-	use_power = 0
-	},
+/obj/machinery/vending/wallmed/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -9642,9 +9402,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/syringes,
 /obj/item/gun/syringe/rapidsyringe,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -32
-	},
+/obj/structure/reagent_dispensers/peppertank/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -9672,10 +9430,7 @@
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/taperecorder,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9739,10 +9494,7 @@
 /area/centcom/control)
 "CM" = (
 /obj/structure/filingcabinet/medical,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9805,9 +9557,7 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
+/obj/machinery/newscaster/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9958,9 +9708,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10126,9 +9874,7 @@
 	},
 /obj/item/storage/box/silver_ids,
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 32
-	},
+/obj/structure/reagent_dispensers/peppertank/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10287,10 +10033,7 @@
 	id = "XCCsec3";
 	name = "CC Main Access Control"
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10307,9 +10050,7 @@
 /obj/machinery/computer/security{
 	dir = 1
 	},
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
+/obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10339,9 +10080,7 @@
 /turf/open/floor/iron,
 /area/centcom/control)
 "DX" = (
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
+/obj/machinery/newscaster/directional/south,
 /obj/machinery/computer/med_data{
 	dir = 1
 	},
@@ -10362,10 +10101,7 @@
 /obj/item/clipboard,
 /obj/item/folder/white,
 /obj/item/pen/blue,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -11588,9 +11324,7 @@
 "GS" = (
 /obj/structure/table/wood,
 /obj/structure/reagent_dispensers/beerkeg,
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
+/obj/machinery/newscaster/security_unit/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -11680,9 +11414,7 @@
 	dir = 4;
 	pixel_x = -12
 	},
-/obj/structure/mirror{
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -11734,9 +11466,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror{
-	pixel_x = 28
-	},
+/obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
@@ -11764,9 +11494,7 @@
 	dir = 4;
 	pixel_x = -12
 	},
-/obj/structure/mirror{
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /turf/open/floor/iron/white,
 /area/tdome/tdomeobserve)
 "Ho" = (
@@ -11779,9 +11507,7 @@
 	pixel_x = -8
 	},
 /obj/item/kitchen/knife,
-/obj/machinery/newscaster{
-	pixel_x = -32
-	},
+/obj/machinery/newscaster/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -11809,10 +11535,7 @@
 /turf/open/floor/iron,
 /area/tdome/tdomeobserve)
 "Hq" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/white,
 /area/tdome/tdomeobserve)
 "Hr" = (
@@ -11852,10 +11575,7 @@
 /turf/open/floor/iron/grimy,
 /area/tdome/tdomeobserve)
 "Hu" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -11874,10 +11594,7 @@
 /obj/machinery/chem_master/condimaster{
 	name = "HoochMaster 2000"
 	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -11895,9 +11612,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror{
-	pixel_x = 28
-	},
+/obj/structure/mirror/directional/east,
 /turf/open/floor/iron/white,
 /area/tdome/tdomeobserve)
 "HA" = (
@@ -11905,9 +11620,7 @@
 	dir = 4;
 	pixel_x = -12
 	},
-/obj/structure/mirror{
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -11964,9 +11677,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror{
-	pixel_x = 28
-	},
+/obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron/white,
 /area/tdome/tdomeobserve)
@@ -11986,9 +11697,7 @@
 	dir = 4;
 	pixel_x = -12
 	},
-/obj/structure/mirror{
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -12110,9 +11819,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror{
-	pixel_x = 28
-	},
+/obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -12245,10 +11952,7 @@
 "Ic" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/structure/noticeboard{
-	dir = 1;
-	pixel_y = -32
-	},
+/obj/structure/noticeboard/directional/south,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/tdome/tdomeobserve)
@@ -12322,10 +12026,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -12422,9 +12123,7 @@
 /obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/item/reagent_containers/glass/rag,
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
+/obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13108,10 +12807,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13268,10 +12964,7 @@
 /obj/item/clothing/mask/cigarette/cigar{
 	pixel_x = 4.5
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13346,9 +13039,7 @@
 /obj/structure/table/wood,
 /obj/item/folder/red,
 /obj/item/lighter,
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
+/obj/machinery/newscaster/security_unit/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -14798,9 +14489,7 @@
 /area/centcom/holding)
 "TK" = (
 /obj/structure/table/wood/bar,
-/obj/structure/mirror{
-	pixel_y = 28
-	},
+/obj/structure/mirror/directional/north,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "TT" = (
@@ -14826,11 +14515,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
 "Uf" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Commander's Office APC";
-	pixel_x = -25
-	},
+/obj/machinery/power/apc/auto_name/west,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
@@ -14909,9 +14594,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supplypod)
 "UJ" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "UM" = (
@@ -14983,11 +14666,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/centcom/holding)
 "Vz" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	pixel_y = 28;
-	use_power = 0
-	},
+/obj/machinery/vending/wallmed/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/holding)
 "VA" = (
@@ -15178,9 +14857,7 @@
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Yh" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Ym" = (
@@ -56374,7 +56051,7 @@ kw
 iY
 lo
 iF
-mh
+qm
 mJ
 lq
 nI
@@ -61529,13 +61206,13 @@ rM
 sK
 mX
 nw
+io
+mh
+nq
+nq
+nq
 vc
-mO
-nq
-nq
-nq
-qs
-vc
+io
 zI
 nq
 Ar
