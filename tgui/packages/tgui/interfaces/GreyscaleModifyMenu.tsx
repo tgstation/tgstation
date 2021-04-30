@@ -115,7 +115,11 @@ const PreviewCompassSelect = (props, context) => {
       </Flex>
       <Flex mx="25%">
         <SingleDirection dir={Direction.West} />
-        <Flex.Item grow={1} basis={0}><Button content={<Icon name="arrows-alt" size={1.5} m="20%" />} lineHeight={3} m={-0.2} fluid /></Flex.Item>
+        <Flex.Item grow={1} basis={0}>
+          <Button lineHeight={3} m={-0.2} fluid>
+            <Icon name="arrows-alt" size={1.5} m="20%" />
+          </Button>
+        </Flex.Item>
         <SingleDirection dir={Direction.East} />
       </Flex>
       <Flex mx="25%">
