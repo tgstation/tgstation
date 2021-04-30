@@ -1,0 +1,7 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - code_imp: "Space carps now use a new greyscaling system."
+  - bugfix: "Fixed an issue where space carps turned grey for a moment when attacking something."
+  - qol: "Light purple space carp variant is now more close to the original. Nostalgia!"
+  - qol: "Replaced beige space carp variant with a light red one."
