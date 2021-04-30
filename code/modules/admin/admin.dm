@@ -926,8 +926,7 @@
 	if (!frommob.ckey)
 		return FALSE
 
-	var/modifiers = params2list(params)
-	if(!LAZYACCESS(modifiers, SHIFT_CLICK))
+	if(!owner.confirmation_override)
 		var/question = ""
 		if (tomob.ckey)
 			question = "This mob already has a user ([tomob.key]) in control of it! "

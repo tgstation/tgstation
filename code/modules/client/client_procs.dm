@@ -933,6 +933,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return FALSE
 		if (NAMEOF(src, key))
 			return FALSE
+		if(NAMEOF(src, confirmation_override))
+			return FALSE
 		if(NAMEOF(src, view))
 			view_size.setDefault(var_value)
 			return TRUE

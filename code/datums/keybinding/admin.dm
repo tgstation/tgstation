@@ -130,3 +130,18 @@
 		return
 	user.readmin()
 	return TRUE
+
+/datum/keybinding/admin/confirm_override
+	name = "confirm_override"
+	full_name = "Confirmation Override Mode"
+	description = "Override confirmation prompts for admin actions (Hold)"
+	keybind_signal = COMSIG_KB_ADMIN_CONF_OVERRIDE_DOWN
+
+/datum/keybinding/admin/confirm_override/down(client/user)
+	. = ..()
+	if(.)
+		return
+	user.confirmation_override = TRUE
+
+/datum/keybinding/admin/confirm_override/up(client/user)
+	user.confirmation_override = FALSE

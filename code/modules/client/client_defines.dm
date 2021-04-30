@@ -209,3 +209,6 @@
 
 	/// If the client is currently under the restrictions of the interview system
 	var/interviewee = FALSE
+
+	/// For admins: override confirmation prompts
+	var/confirmation_override = FALSE
