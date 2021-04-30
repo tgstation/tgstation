@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - server: "the Total Hard Deletes section of garbage logging is now separated by a :, in the same format as all the other qdel log items. Be made aware"
