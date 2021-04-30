@@ -134,7 +134,8 @@
 	if(holding)
 		data["holding"] = list()
 		data["holding"]["name"] = holding.name
-		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+		var/datum/gas_mixture/holding_mix = holding.return_air()
+		data["holding"]["pressure"] = round(holding_mix.return_pressure())
 	else
 		data["holding"] = null
 	return data

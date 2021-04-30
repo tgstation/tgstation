@@ -96,7 +96,7 @@
 	ion_trail.oldposition = get_turf(src)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
-	if((num < 0.005 || air_contents.total_moles() < num))
+	if((num < 0.005 || _air_contents.total_moles() < num))
 		turn_off(user)
 		return
 
@@ -203,7 +203,7 @@
 /obj/item/tank/jetpack/suit/Initialize()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	temp_air_contents = air_contents
+	temp_air_contents = _air_contents
 
 /obj/item/tank/jetpack/suit/attack_self()
 	return
@@ -224,14 +224,14 @@
 		return
 	var/mob/living/carbon/human/H = user
 	tank = H.s_store
-	air_contents = tank.return_air()
+	_air_contents = tank.return_air()
 	START_PROCESSING(SSobj, src)
 	cur_user = user
 	..()
 
 /obj/item/tank/jetpack/suit/turn_off(mob/user)
 	tank = null
-	air_contents = temp_air_contents
+	_air_contents = temp_air_contents
 	STOP_PROCESSING(SSobj, src)
 	cur_user = null
 	..()

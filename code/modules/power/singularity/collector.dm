@@ -69,9 +69,10 @@
 	toggle_power()
 	user.visible_message("<span class='notice'>[user.name] turns the [src.name] [active? "on":"off"].</span>", \
 	"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
+	var/datum/gas_mixture/tank_mix = loaded_tank.return_air()
 	var/fuel
 	if(loaded_tank)
-		fuel = loaded_tank.air_contents.gases[/datum/gas/plasma]
+		fuel = tank_mix.gases[/datum/gas/plasma]
 	fuel = fuel ? fuel[MOLES] : 0
 	investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
 

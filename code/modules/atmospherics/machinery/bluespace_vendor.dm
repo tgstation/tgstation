@@ -191,13 +191,14 @@
 ///Check the price of the current tank, if the user doesn't have the money the gas will be merged back into the network
 /obj/machinery/bluespace_vendor/proc/check_price(mob/user)
 	var/temp_price = 0
-	var/list/gases = internal_tank.air_contents.gases
+	var/datum/gas_mixture/working_mix = internal_tank.return_air()
+	var/list/gases = holding_mix.gases
 	for(var/gas_id in gases)
 		temp_price += gases[gas_id][MOLES] * connected_machine.base_prices[gas_id]
 	gas_price = temp_price
 
 	if(attempt_charge(src, user, gas_price) & COMPONENT_OBJ_CANCEL_CHARGE)
-		var/datum/gas_mixture/remove = internal_tank.remove_air(internal_tank.air_contents.total_moles())
+		var/datum/gas_mixture/remove = internal_tank.remove_air(working_mix.total_moles())
 		connected_machine.bluespace_network.merge(remove)
 		return
 	connected_machine.credits_gained += gas_price + tank_cost
@@ -241,7 +242,8 @@
 	data["inserted_tank"] = inserted_tank
 	var/total_tank_pressure
 	if(internal_tank)
-		total_tank_pressure = internal_tank.air_contents.return_pressure()
+		var/datum/gas_mixture/working_mix = internal_tank.return_air()
+		total_tank_pressure = working_mix.return_pressure()
 	else
 		total_tank_pressure = 0
 	data["tank_full"] = total_tank_pressure
