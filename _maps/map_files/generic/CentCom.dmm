@@ -1901,9 +1901,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supply)
 "mc" = (
-/obj/machinery/computer/auxiliary_base{
-	pixel_y = 32
-	},
+/obj/machinery/computer/auxiliary_base/directional/north,
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/folder/yellow,
@@ -2135,10 +2133,6 @@
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "mD" = (
-/turf/closed/indestructible/riveted,
-/area/centcom/ferry)
-"mE" = (
-/obj/machinery/computer/security/telescreen/entertainment,
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "mF" = (
@@ -2439,6 +2433,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/iron/white,
 /area/centcom/ferry)
 "nk" = (
@@ -3082,6 +3077,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
 "op" = (
@@ -3788,9 +3784,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -28
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
@@ -4096,6 +4090,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
 "qh" = (
@@ -4588,9 +4583,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
 "rl" = (
-/obj/machinery/computer/auxiliary_base{
-	pixel_y = 32
-	},
+/obj/machinery/computer/auxiliary_base/directional/north,
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/radio/headset/headset_cent,
@@ -5233,9 +5226,7 @@
 /area/centcom/ferry)
 "sx" = (
 /obj/structure/chair/comfy/black,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -32
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -6076,9 +6067,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -32
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "uq" = (
@@ -6383,9 +6372,7 @@
 /obj/item/dice/d10{
 	pixel_x = -3
 	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -52976,7 +52963,7 @@ aa
 aa
 aa
 aa
-mE
+mD
 nj
 nB
 nS
@@ -53242,7 +53229,7 @@ oG
 pc
 oI
 qg
-mE
+mD
 rw
 sA
 tA
@@ -54008,7 +53995,7 @@ aa
 aa
 aa
 mD
-mE
+mD
 oJ
 mD
 mD
