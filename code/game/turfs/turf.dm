@@ -644,3 +644,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(turf_to_check.density || LinkBlockedWithAccess(turf_to_check, caller, ID))
 			continue
 		. += turf_to_check
+
+/turf/proc/GetHeatCapacity()
+	. = heat_capacity
+
+/turf/proc/GetTemperature()
+	. = temperature
+
+/turf/proc/TakeTemperature(temp)
+	temperature += temp

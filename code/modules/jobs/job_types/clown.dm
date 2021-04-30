@@ -18,6 +18,14 @@
 	display_order = JOB_DISPLAY_ORDER_CLOWN
 	departments = DEPARTMENT_SERVICE
 
+	mail_goodies = list(
+		/obj/item/food/grown/banana = 100,
+		/obj/item/food/pie/cream = 50,
+		/obj/item/clothing/shoes/clown_shoes/combat = 10,
+		/obj/item/reagent_containers/spray/waterflower/lube = 20, // lube
+		/obj/item/reagent_containers/spray/waterflower/superlube = 1 // Superlube, good lord.
+	)
+
 	family_heirlooms = list(/obj/item/bikehorn/golden)
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)

@@ -1,0 +1,705 @@
+2020-11-01:
+  EOBGames:
+  - bugfix: pea soup now requires a bowl, and obeys the laws of conservation of kitchenware
+  Inept:
+  - bugfix: a few wee issues on Delta
+  Skoglol:
+  - bugfix: Vampire blood level status no longer has excess spans.
+  XDTM:
+  - bugfix: Fixed nanite comm remotes not working at all.
+  cacogen:
+  - spellcheck: Lifeform stasis units have all lowercase names now
+2020-11-02:
+  Inept:
+  - spellcheck: the pettiest errata ever in the chisel description
+  Rohesie:
+  - bugfix: The infinite table stacking exploit is fixed. One table per turf allowed
+      only.
+  cacogen:
+  - code_imp: StartProcessingAtom() uses drop_location() instead of get_turf(src)
+2020-11-03:
+  81Denton:
+  - admin: Added logging for handcuff attempts and renaming GPS devices
+  ArcaneMusic:
+  - imageadd: added damaged icons for the retro arcade flooring,
+  - imageadd: The Rod of Asclepius and mini-meteors now have unique inhand sprites.
+  - bugfix: Cargo consoles can once again accept crewmember's purchase requests.
+  Dennok:
+  - bugfix: CENTCOM cleaning staff remembered that it would be nice to clean hangars
+      from remains of the catastrophed shuttles. Fixed shuttle catastrophe. Now shuttle
+      catastrophes propertly.
+  Fikou:
+  - bugfix: adds kitchen tools to omnitool
+  Ghommie:
+  - tweak: Assessing the impressiveness of artwork (such as painting) can now only
+      be done through examine and takes a few seconds, just like how attack_hand (structures)
+      and attack_self (items) used to.
+  IndieanaJones:
+  - rscadd: Dynamic Mode can now spawn Swarmers
+  - balance: Swarmers have received a software update, changing some of their capabilities.  Nanotrasen
+      reports a slight increase in strange objects in the neighboring sector.
+  InvalidArgument3:
+  - rscadd: new Ripley movement sounds!
+  - rscadd: new hydraulic clamp interaction sounds!
+  Jared-Fogle:
+  - rscadd: The View Tracked Playtime has been updated to be made easier to read.
+  Krysonism:
+  - rscadd: You can now cook fried chicken.
+  Owai-Seek:
+  - rscadd: Garbage Bags and Paint Remover now available in service protolathe.
+  - tweak: Light Replacer is now in "Equipment" tab of service protolathe.
+  - bugfix: Push Broom can be printed at Service Lathe
+  ShizCalev:
+  - bugfix: Meta's tool storage APC is now connected to the powergrid.
+  Skoglol:
+  - bugfix: Onetank bombs icon no longer shows a tank holder.
+  Timberpoes:
+  - bugfix: You can once again place hats on the heads of cyborgs in an ordinary and
+      everyday manner, without having to throw them like you're playing a drunken
+      party game.
+  TiviPlus:
+  - bugfix: Fixes mecha rotate sounds
+  - code_imp: makes mech silence flag instead of null based
+  Tlaltecuhtli:
+  - bugfix: The chemical bottler no longer clears reagents when its settings are changed.
+  - tweak: Chemical bottlers can now fill reagents into dart shotgun rounds.
+  XDTM:
+  - bugfix: Fixes psychologists and unknown job titles being incorrectly bolded in
+      the crew monitor UI.
+  actioninja:
+  - bugfix: lighting rotates properly with client.dir
+  cacogen:
+  - bugfix: Fixes ChemMaster not outputting pills to inserted pill bottle
+  necromanceranne:
+  - bugfix: Mechs no longer explode upon deletion. This was a reversion from previous
+      mech code.
+  - bugfix: Fixes null rods that replace your hand being able to be placed into storage
+      slots on accident.
+  nightred:
+  - rscadd: Meta now has more access to great coffee products and coffee accessories,
+      we all need more latte's and maccha's, and cold brews in our lives.
+  - tweak: Moved mule bots to the cargo storage
+  - tweak: Moved all the tools in to the smallest room in the area, it is a mess
+  - bugfix: Fly people will not become full on eating that vomit
+  - bugfix: Vomiting now removes reagents properly
+2020-11-04:
+  Qustinnus:
+  - rscadd: All turfs now support transparency
+  - rscadd: Datum material floors and walls now support transparency
+  - bugfix: Glass floors are now destructible
+  necromanceranne:
+  - rscdel: Removes the now depreciated high-priority cargo bounty event, that does
+      nothing.
+2020-11-05:
+  Ghilker:
+  - tweak: Hypernoblium stops reaction only from 20 K and up
+  - tweak: Hypernoblium formation has been changed to be under 15 K and it requires
+      a lot of BZ as catalyst to lower the energy released by the reaction.
+  - tweak: Lowered research points amount per moles from 1000 to 30
+  - tweak: Hypernobilium export price lowered to 5
+  Ghommie:
+  - bugfix: Ripley mechas will now display the right overlays for their armor plates.
+  IndieanaJones:
+  - balance: Networked Fiber blobs can now place down tiles with their nodes along
+      with their cores and have the same movement effect as well.
+  Krysonism:
+  - bugfix: fixed a gulag stacking machine exploit that would let you farm points
+      with minimal or no ores mined.
+  Skoglol:
+  - bugfix: Immovable rods should more consistently hit the station, will reset target
+      if adminbused, and added more logs.
+  - bugfix: Stuffing people into crates, closets and pods works again.
+  XDTM:
+  - bugfix: Spreading nanite programs (Exo-locomotion and Nanite Sting) now properly
+      transfer the infector's cloud ID to the infectee.
+2020-11-07:
+  ATH1909:
+  - bugfix: An issue with the UNREAL SORD's suicide text and effect has been fixed.
+  ArcaneMusic:
+  - bugfix: Newscasters internal scanners have been updated, and now correctly obtain
+      crewmembers  ID cards from their wallets/ID holding devices.
+  - bugfix: Floorbots had had a software update, preventing them from dogpiling on
+      their target as easily as they did before.
+  - soundadd: Floorbots will now play a small chime when stacked on top of each other
+      to indicate that they're moving apart.
+  - bugfix: Syndicate drones no longer have references to their removed mechanics.
+  Fikou:
+  - bugfix: You will no longer lose the mission if you go to water plants on Ice Box,
+      comrade.
+  Ghommie:
+  - bugfix: You can now unbuckle others from the toolbox training machine with altclick.
+  - bugfix: Fixing GBJ cases where the disposal holder (the sctructure holding and
+      moving all that was flushed around the pipenet) is forcemoved outside a disposal
+      pipe.
+  - tweak: Non-human mobs now also benefit from held id cards and some economy features
+      (dexterity checks still apply).
+  - bugfix: Mechas will once again fall/walk downstair.
+  - bugfix: No more clickdragging one person to another that isn't you doesn't opening
+      inventory windows.
+  IndieanaJones:
+  - balance: The Spider Clan has recently taken up the Space Ninja project again along
+      with the Syndicate.  Space Ninjas have been drastically changed as a result,
+      becoming much weaker and more stealth oriented.  As a result of cutting costs
+      per ninja, more ninjas were able to be hired.  Expect to see them around more
+      often.
+  LemonInTheDark:
+  - bugfix: Catwalks will now properly only smooth with other catwalks
+  Ryll/Shaps:
+  - bugfix: Improvised bone wound treatments with bone gel and surgical tape applied
+      outside of surgery no longer take ridiculous amounts of time, down from 10/20
+      minutes for severe/critical bone wounds to 4/8 minutes.
+  - balance: Sleeping while an improvised bone wound treatment is processing will
+      cause it to heal about 50% faster, while laying down while awake will heal it
+      about 25% faster. Your bones will spike with pain a bit more frequently during
+      the healing though.
+  Skoglol:
+  - spellcheck: Proper capitalization of RCD/RPD techs
+  Timberpoes:
+  - bugfix: Gondolas no longer turn invisible when given a pet collar.
+  - bugfix: Fixes weird lighting issues when crafting items with component parts that
+      have lighting components.
+  - bugfix: Personal AI emitters now regenerate at their properly intended speed instead
+      of 1/10th of that speed.
+  alphanerdd:
+  - tweak: Made Nothing the cure for Gluttony's Blessing instead of Adminordazine.
+  - bugfix: Fixed the cure text so it both no longer displays a DM path, and also
+      displays the correct cure.
+  cacogen:
+  - tweak: Anyone can now download BotKeeper (tablet app). Only bots your current
+      ID can unlock will be listed to control.
+  dragomagol:
+  - bugfix: Added lights to Metastation telecomms storage
+  necromanceranne:
+  - tweak: Reworks the speargun BACK to being a gun! Complete with embedding harpoons!
+      How exciting.
+  - imageadd: Adds new mob sprites for the harpoon gun and a suit storage sprite for
+      the mosin nagant. Also adds a new quiver sprite.
+  prodirus:
+  - bugfix: Roundstart Centcomm reports on communication consoles should no longer
+      be word soup!
+2020-11-08:
+  ArcaneMusic:
+  - tweak: A large derelict space ruin has had a few new doors to keep the air in
+      a bit better.
+  - bugfix: Bounty boards now face the correct direction and exist everywhere that
+      they're intended to exist.
+2020-11-09:
+  Dennok:
+  - bugfix: fixed space under placed tiles
+  IndieanaJones:
+  - bugfix: Fixed a bug where Space Ninja could go into infinite cooldown
+  - bugfix: Fixed a bug where Space Ninja could reroll an already hijacked cyborg
+      endlessly
+  Jared-Fogle:
+  - rscadd: Observing now broadcasts to deadchat.
+  Owai-Seek:
+  - tweak: medipen boxes have their own box icon.
+  - imageadd: You can tell first aid, blood clot, and formaldehyde medipens apart.
+  Qustinnus:
+  - rscadd: The clown PDA has been fitted with a B.A.Z.I.N.G.A. module which allows
+      it to detect comedy occurring to the owner, and plays a sound to really capture
+      the comedy of the occurrence.
+  Skoglol:
+  - bugfix: Ghost role spawners will no longer screw up if you stop existing before
+      hitting yes.
+  TemporalOroboros:
+  - code_imp: Repathed screen objects
+  bobbahbrown:
+  - bugfix: Valid interview configurations no longer cause errors in the config error
+      log
+  dragomagol:
+  - bugfix: Reactive table teleport armor now respects noteleport zones
+  prodirus:
+  - bugfix: New cryomix formulation ensures crewmember's bodies stay vertical during
+      cryostasis!
+  - tweak: Luminescent eyes can now alter their color and distance while on without
+      turning themselves off.
+  - bugfix: Luminescent eyes should now stop turning on again on movement!
+  zxaber:
+  - bugfix: Mechs no longer bump open shutters and blast doors.
+2020-11-10:
+  Ghommie:
+  - bugfix: multiz disposal pipes now have construction icon states.
+  - bugfix: Fixed extradimensional blades not randomizing their damage output when
+      hitting objects.
+  - bugfix: Poker table dismantling now respects carpet subtypes.
+  - bugfix: You can't perform CPR on yourself anymore.
+  dragomagol:
+  - bugfix: Removed a couple of stacked tables on Delta
+2020-11-11:
+  ATHATH:
+  - bugfix: The code for the mutant organs of flypeople has been slightly cleaned
+      up. This shouldn't have any effects on actual gameplay.
+  ArcaneMusic:
+  - refactor: Pies use the new food refactor and processing component.
+  - bugfix: Cell rechargers now actually attempt to fill the power cell with the amount
+      of power necessary to fill the cell, based on the APC's charge, preventing infinite
+      energy.
+  Ghommie:
+  - rscadd: Added "beautiful" and "ugly" (plus synonyms) fantasy prefixes. They all
+      affect the beauty of the item.
+  - bugfix: Player monkeys can now wield chairs through clickdrag and be given items
+      to.
+  - bugfix: The head of Armsies and Armsy Primes is no longer invincible.
+  - bugfix: radial menus now ignore the anchor's current alpha, color and transform.
+  Gogo9001:
+  - bugfix: fixes yellow slime cores being consumed for nothing
+  IndieanaJones:
+  - rscadd: New spider subtype - Flesh Spider.  Unique to changeling.
+  - balance: Changeling's spider ability now creates a bloody egg cluster, which produces
+      a singular player-controlled flesh spider per cluster.
+  - balance: Spiders have been rebalanced.
+  Jared-Fogle:
+  - bugfix: Vehicles bumping into doors will now check access on all occupants at
+      the same time. This means that clown cars now correctly open doors immediately.
+  Melbert:
+  - bugfix: Fixed being unable to put scooped up mobs (ian, bees, etc) in storage
+      containers
+  TemporalOroboros:
+  - bugfix: Fixed various bugs involving generic material floortiles. They're actually
+      usable now.
+  dragomagol:
+  - bugfix: Removed a stacked suit storage unit in mining base
+  spessbro:
+  - tweak: The rats have removed and added things to maintenance
+  zxaber:
+  - balance: Cyborgs synced to a Malf AI that activates Doomsday will now have their
+      lamps forced to a red color and enabled to at least light level one. Stealth
+      is no longer an option. Lamp options return to normal upon Doomsday deactivation,
+      no matter the reason, or if the borg somehow loses sync with the AI.
+2020-11-12:
+  wesoda25:
+  - bugfix: Bathhouse ruin now has proper walls
+2020-11-13:
+  prodirus:
+  - bugfix: Old Medibot on the Authorship space ruin should now heal all damage types
+      properly.
+2020-11-14:
+  ATHATH:
+  - bugfix: The shocks from the shock touch mutation now ignore insulated gloves.
+  - bugfix: The shocks from punching or running into charged energy fields now DON'T
+      ignore insulated gloves.
+  - bugfix: The shocks from liquid electricity now ignore insulated gloves.
+  ArcaneMusic:
+  - rscadd: The Medical NanoMed vending machine has been split into two, with the
+      all new NanoDrug vending machine taking most chemical medicines.
+  - balance: Literally everything purchasable in a vending machine has had it's prices
+      adjusted to better suit players to buy more things, while still enabling them
+      to interact with each other using money.
+  - rscdel: Player passive income has been removed.
+  - balance: Departmental budgets income has been thoroughly reworked, as they no
+      longer need to balance the whole of the crew's income off of them, making them
+      a more reasonable resource pool scaled to the station's size or efforts.
+  - balance: Departmental income is a static value for every department, getting more
+      funds every 5 minutes (Plus whatever's added from vending machines!)
+  - balance: Buying goods through your department's vendors now provides an 80% discount
+      as opposed to being completely free.
+  - bugfix: Butchering mobs with embedded objects inside of them will now drop the
+      embedded objects as well.
+  Cartographer-D:
+  - bugfix: fixed the meatball emoji
+  EOBGames:
+  - tweak: Heretic has received a minor textual facelift.
+  IndieanaJones:
+  - bugfix: Fixed Space Ninja's console hack occasionally doing nothing.
+  UnderARock:
+  - bugfix: Hardcore random characters will now receive points for surviving.
+  itseasytosee:
+  - bugfix: fixed some intentional garbling in a hijacking message
+  nightred:
+  - bugfix: Stomachs no longer metabolize reagents, they process them to the body
+  stylemistake:
+  - refactor: TGUI will keep trying to load for 10 seconds in case of a network problem
+      and will show a bluescreen if it completely fails.
+  - bugfix: This hopefully fixes the whitescreen problem.
+2020-11-15:
+  ArcaneDefence:
+  - bugfix: Condiments work with food items more consistently, and packets don't give
+      useless feedback.
+  ArcaneMusic:
+  - bugfix: Vending Uis work once again with no ID/viewing as a ghost.
+  - bugfix: Rats and Regal Rats now properly trigger mouse traps when crossed.
+  - bugfix: Vending machines now properly apply inflation across the market crash
+      event.
+  Fikou:
+  - bugfix: adds a training machine to delta firing range
+2020-11-16:
+  ArcaneDefence:
+  - bugfix: Used first aid and hypovolemic autoinjectors aren't invisible any more
+  - bugfix: Things made of edible materials are more consistently edible, and can
+      no longer be eaten multiple times over by spam clicking them. One serving per
+      pizza floor only, please.
+  ArcaneMusic:
+  - bugfix: Snail's shells, if removed from their body, are now destroyed as appropriate.
+  Qustinnus:
+  - code_imp: Movement now works even if client dir is changed
+  uomo91:
+  - bugfix: Fixed "Show All" tab in player panel logs being broken.
+  - bugfix: Whispers display differently in logs, distinguishing them from say logs
+      in display.
+  - refactor: Player panel logs will now show all logs chronologically, so you'll
+      see commingled say and attack logs if you're on the "Show All" tab, etc...
+2020-11-17:
+  Ghommie:
+  - spellcheck: fixed a typo on the description of McGriff the pug.
+  Ryll/Shaps:
+  - bugfix: Organic bodyparts once again cannot be disabled by reaching maximum damage,
+      and are back to being disabled by compound fracture, burn wound infections,
+      and paralysis.
+  - bugfix: Limbs disabled by compound fractures can be temporarily restored to working
+      order by applying gauze to the limb as a sling.
+  - tweak: Robotic bodyparts can still be disabled by pure damage, as they cannot
+      be wounded.
+  prodirus:
+  - bugfix: Multiple input fields on paper should no longer lead to fields disappearing
+      when filled. Bureaucrats rejoice!
+2020-11-18:
+  ArcaneMusic:
+  - bugfix: Spraycans check and only use a charge AFTER their cooldown timer is complete.
+  - imageadd: Basic wooden texture is visible to wood, material crafted objects.
+  - bugfix: Food trays may deposit old and new foods into the microwave and food processor
+      again.
+  - bugfix: Food trays give you the switch gathering mode button when bought from
+      a vending machine again.
+  EdgeLordExe:
+  - rscadd: 'New heretic path - Path of Void- it specializes in being extremely stealthy.
+      tweak : Removed curse of blindness replaced with mask of madness. hey it even
+      rhymes.'
+  - bugfix: makes void work
+  Fikou:
+  - bugfix: makes wendigo screech use its name in one attack text
+  Ghilker:
+  - rscdel: remove fusion from reactions
+  - rscadd: hypertorus fusion machine
+  Qustinnus:
+  - code_imp: misc food is now using newfood code
+  jaw-sh:
+  - bugfix: Pizza can now be cut with a scalpel.
+  maxymax13:
+  - imageadd: Issued new design for budget cards
+  nightred:
+  - bugfix: fixed math in reagent holder exposure
+  - bugfix: fixed stomach vomit damage on food reagents
+  - bugfix: fixed cyber stomachs being able to eat
+  uomo91:
+  - tweak: Some things are better labeled for admin readability in player logs now.
+  zxaber:
+  - rscadd: NT CIMS will now send notifications if the app is closed with a supermatter
+      selected, and the selected supermatter starts delaminating.
+2020-11-19:
+  Ghilker:
+  - bugfix: fixed some atmos reaction from having negative temperature
+  LemonInTheDark:
+  - admin: Stuff with pockets is now properly logged
+  Qustinnus:
+  - bugfix: 'Whoever the damn bastard is who tried to take our grills. know this:
+      we will not bend over while you take the only thing that still makes us happy.
+      We just want to drink energy drinks and grill some hamburgers in peace. This
+      is your final warning, try doing this again and we will assemble a lawn mower
+      squad outside of your house at the early hours of 6AM to make sure you cannot
+      enjoy your sunday morning in peace.'
+  Zytolg:
+  - rscadd: Cargo, Permabrig, and some other areas now properly certified against
+      Fires with some additional Firelocks
+  - rscadd: Nanotrasen has added new lightswitches as a part of the Corperate-Wide
+      power awareness campaign
+  - rscdel: In an effort to cut costs for the new certifications, firelocks have been
+      removed from Maint Doors (why were these there?)
+  - rscdel: Deleted some wall'D'cals leftover from when the chemfactory was located
+      in the Mogue.
+  - tweak: Adjusted firelock placement in some hallways to be more sensable
+  - tweak: Relocated the Water and Fuel tanks in Tool Storage at the request of EOBGames
+  - tweak: Very Minor Adjustments to Permabrig
+2020-11-20:
+  ArcaneMusic:
+  - bugfix: Hardsuit Thermal regulators will tell you if your cell is keeping you
+      warm, if the internal cell is dead, or when the cell turns itself off.
+  Caldony:
+  - rscadd: The sect of the Ever-Burning Candle has been officially recognised by
+      NT and can now be practiced legally in the chapel.
+  EdgeLordExe:
+  - bugfix: fixes the cursed heart being unable to track people inside containers.
+  - bugfix: fixes influence vision getting broken by replacing someone's eyes.
+  Ghommie:
+  - bugfix: You can now put stuff in someone else's hand through the stripping menu
+      again.
+  - admin: Admins now have the option to remove a language from the blocked_languages
+      list when granting it to a mob through the language menu.
+  - bugfix: Fixed a 18.18% chance of gibs streaking 50 tiles away... by canonizing
+      it into an intentional 3% chance upon the request of the bunch of you on github.
+  - bugfix: You can't defy lack of gravity through the power of love.
+  Ryll/Shaps:
+  - bugfix: Plasmamen who are gulag'd via the teleporter with non-plasmaman gloves
+      will now be given a free pair of basic plasmaman gloves so they don't die.
+  ThePotato97:
+  - refactor: Rotating stamps on paper by holding shift and moving your mouse.
+  - bugfix: Fixed chat message for stamping paper.
+  qustinnus:
+  - bugfix: instruments work again
+  tralezab:
+  - rscadd: AIs can now select art from the gallery as their display!
+  wesoda25:
+  - rscadd: 'You can now craft ladders using 15 rods. Note: crafted ladders can only
+      be connected to other crafter ladders.'
+2020-11-21:
+  EdgeLordExe:
+  - code_imp: No more shittery with inaccessible nodes getting merged.
+  - bugfix: Fixes heretic brews being permanent.
+  - bugfix: Fixes void storm breaking after resurrecting.
+  Ghommie:
+  - bugfix: Being species-swapped to a species without reagent metabolism (such as
+      android and skeleton) will set you free of any chemical addiction your previously
+      fleshy body may have had.
+  - bugfix: Mk-honk banana shoes can now be refilled with bananium even if not on
+      help intent.
+  Timberpoes:
+  - bugfix: Nanotrasen bounty boards no longer leave behind 95% of the machine when
+      tasked with selling one! (Special thanks to ArcaneMusic)
+  - bugfix: The BSA will no longer refund all of its component parts and circuitboard
+      when constructed.
+  - bugfix: Xenomorph drones and higher will once again generate plasma, allowing
+      them to use abilities and evolve once more.
+  - bugfix: Things with the Xenomorph plasma vessel organ will once again heal on
+      alien weeds.
+  XDTM:
+  - rscadd: Added Nanite Storage Protocols, unlockable through B.E.P.I.S. research.
+      They can modify nanite max volume, increasing the cap or sacrificing some for
+      extra replication rate.
+  - rscdel: Removed the Nanite Tinker Replication Protocol.
+  - rscadd: Added the Nanite Pyramid Replication Protocol to replace it. It increases
+      replication rate if the volume is above 80% of the maximum.
+  - tweak: Renamed the Nanite Offline Production Protocol into Eclipse Protocol. Functionality
+      unchanged.
+  - balance: The Chain Detonation nanite program now scales more gradually in power
+      with nanite volume.
+  itseasytosee:
+  - bugfix: The hydrogen ax is now visible in both hands
+2020-11-23:
+  ArcaneDefence:
+  - bugfix: The chef's food cart can no longer store an infinite amount of food stuff.
+  ArcaneMusic:
+  - bugfix: Paystands now properly signal out when attached to a paystand and their
+      pay threshold is met.
+  - bugfix: The Nanodrug Plus now correctly deconstructs and can be refilled by it's
+      own refill.
+  - imageadd: The NanoDrug Plus vendor now has a unique coat of paint to distinguish
+      it from the NanoMed Plus.
+  - bugfix: Dirt graves now sound like dirt being shoveled in/out when being closed
+      up by hand.
+  - bugfix: Hydroponics trays growing replica pod seeds will now correctly harvest
+      into seeds if depowered when there's nobody being cloned..
+  - bugfix: False walls will only flash their opening/closing animations once when
+      being toggled, as opposed to being a glitchy nightmare amalgam when pressed.
+  Fikou:
+  - refactor: moves dough to newfood
+  Ghommie:
+  - bugfix: Fixed pocket spaghetti.
+  - bugfix: Fixed the arena shuttle not being unlockable if medals are disabled.
+  Jared-Fogle:
+  - bugfix: You will no longer get a warning when checking your mood with telekinesis.
+  - bugfix: You can no longer quick swap another pair of glasses with nearsighted
+      to see perfectly.
+  XDTM:
+  - imageadd: Nanite machinery's screens now turn off if they're broken or are unpowered,
+      and are visible through darkness when on.
+  dragomagol:
+  - bugfix: ghosts are no longer able to empty gibbers
+2020-11-24:
+  ArcaneMusic:
+  - bugfix: Lockers/Closets/Bodybags close all open inventories of items and internal
+      items enclosed inside of itself. For real this time.
+  - bugfix: Hygiene Robots are now craftable and deconstructable in the same way as
+      other simple robots.
+  - bugfix: Hygiene Robots must be opened in order to be emagged just like the rest.
+  - bugfix: Living crates now properly behave like crates when faced against plastic
+      flaps.
+  Fikou:
+  - bugfix: shuttle catastrophe now cant trigger if it already happened
+  - bugfix: fixes active turfs on away missions
+  Ghommie:
+  - bugfix: squeaking objects should no longer squeak when crossed by abstract or
+      floating objects such as directional lights.
+  - bugfix: All forms of phasings shouldn't be able to pass through certain restricted
+      turfs now, not just wiz jaunts.
+  Jared-Fogle:
+  - bugfix: The verb panel is now more consistently correct.
+  Maurukas:
+  - bugfix: Fixed infinite gas consumption by cryogenics pods
+  Mickyan:
+  - bugfix: Picture frames no longer always appear empty
+  Qustinnus:
+  - code_imp: Moves grown food to newfood
+  - code_imp: Gives trash element support for callbacks for item creation override
+  Ryll/Shaps:
+  - bugfix: Foam darts and other unembeddable bullet subtypes will no longer leave
+      ghost shrapnel when hitting people
+  zxaber:
+  - bugfix: Cell chargers will no longer powersink the room they're in, as they now
+      draw all the power for the cell from the powernet directly through the APC.
+      They still require a trickle of power on the equipment breaker, though.
+2020-11-25:
+  ArcaneDefence:
+  - bugfix: Regenerative black slime extracts won't duplicate megafauna any more.
+  - bugfix: Flat dough and pie doughs cut into the proper results again
+  ArcaneMusic:
+  - bugfix: Stasis beds will now properly glow right above the bed, not inbetween
+      structures.
+  Arkatos, original by dearmochi:
+  - refactor: Safe now uses tgui.
+  CoffeeDragon16:
+  - bugfix: You can no longer inject infinite plasma into a light bulb with no addition
+      effect
+  Ghommie:
+  - bugfix: Fixing the point emote outputting the "unusable emote" message even if
+      actually usable.
+  Jared-Fogle:
+  - bugfix: Quick swapping items no longer deletes them.
+  Qustinnus:
+  - code_imp: removes a direct use of Destroy()
+  TheBonded:
+  - bugfix: PDAs with manifest access now properly have more protection against PDA
+      bombs
+  Timberpoes:
+  - bugfix: Disassembling computers will now correctly drop the circuitboard.
+  - bugfix: Mecha drills can no longer infinitely stack up actions as fast as the
+      player can click their mouse.
+  antropod:
+  - bugfix: Examinining head without body shows proper message if client has reentered
+      corpse.
+  cacogen:
+  - bugfix: Most objects renamable with a pen can no longer have their labels erased
+      or duplicated or names and descriptions blanked
+  - tweak: Most objects renamable with a pen can now have their names and descriptions
+      reset to default
+  prodirus:
+  - bugfix: More robust dish drive construction no longer allows user to simply pull
+      out components bare handed!
+  - tweak: Updated dish drive software now lets the user know if it is empty or trying
+      to beam non-disposable items.
+  - bugfix: Support holoparasite should no longer have missing bluespace beacon sprites.
+  - bugfix: Signature macros within papercode should now work properly
+  zxaber:
+  - bugfix: You can no longer store tool implant tools in boxes or other container
+      items.
+  - bugfix: Admins placing an APC in space will no longer create a runtime factory
+      that breaks everything
+2020-11-26:
+  ArcaneMusic:
+  - refactor: Pastries have been refactored for new foods.
+  Ghommie:
+  - bugfix: Jungle fever monkeys will now pass canUseTopic() dexterity checks and
+      be able to use tgui machineries.
+  Timberpoes:
+  - bugfix: Mecha Diamond Drills can now properly gib and butcher all simple mobs.
+  bobbahbrown:
+  - rscadd: Alerts windows have gotten a fancy new overhaul and now use modern TGUI.
+  - bugfix: Fixed the in-game 'Report Issue' button to use the template properly.
+      Now more easier than ever to report a bug, try it today!
+  - tweak: The show-server-revision verb, as well as the bug reporting, will now show
+      [s]-flagged testmerged PRs to non-admins and admins alike.
+  - refactor: Cleaned up the crew console code, moved sorting of sensor entries to
+      clientside.
+  nightred:
+  - refactor: Humans body temperature stabilization overhauled
+  - refactor: Humans will now receive temperature alerts before they taking damage
+  - refactor: Humans now take wounds and burn damage based on body temperature
+  - refactor: Watchers temperature shot reworked
+  - refactor: Fever and Shivers have a more reasonable cap
+  prodirus:
+  - bugfix: Health analyzer chemical scan should now work again.
+  - bugfix: Medical kiosks should no longer reset loop.
+  - bugfix: Crew with the smoker quirk are addicted to nicotine on shift start again.
+2020-11-27:
+  Arkatos:
+  - refactor: Stacking Machine Console now uses tgui.
+  - bugfix: Fixed a case where certain materials could not be released via Stacking
+      Machine Console.
+  - bugfix: Fixed a case where some buttons in the Safe UI could be hard to press.
+  - bugfix: Fixed a case where certain materials could have problematic or missing
+      behavior when interacting with stacking machines.
+  - bugfix: Fixed a case where certain materials could not be merged together even
+      if they were the same.
+  CoffeeDragon16:
+  - bugfix: Forced speech nanites can no longer make people faint.
+  Ghommie:
+  - bugfix: Nightmares and some other critters no longer delete themselves once they
+      stop phasing.
+  - bugfix: Added a few pixels to the left and right sprites of the galaxy suits.
+  LemonInTheDark:
+  - bugfix: Dog beds are now properly tagged, and if your pet bites the dust, the
+      bed will be kept in their memory.
+  - bugfix: McGriff's bed actually has flavor text now
+  LordVollkorn:
+  - bugfix: The improvised jetpack has been fixed. Don't forget that it still has
+      to be filled with gas before usage.
+  - imageadd: New custom icons for the improvised jetpack
+  Melbert:
+  - bugfix: Fixed bees being unable to enter bags when scooped up
+  - code_imp: updated accidental consumption to a post-food refactor world
+  Ryll/Shaps:
+  - bugfix: Fixed an issue with underwear sometimes showing through clothes
+  TemporalOroboros:
+  - bugfix: Engineering borgs can now replenish their stock of floor tiles from external
+      sources.
+  kriskog:
+  - bugfix: Admin PM replies to an admin who has deadminned while you were typing
+      will no longer be thrown into the void. If everything fails, the message gets
+      printed in chat.
+  nightred:
+  - bugfix: Donk pockets now fit in donk pocket boxes
+  - bugfix: Donuts are no longer bigger than the box they came in
+  - bugfix: Many food items have been resized
+  qustinnus:
+  - bugfix: cleric mace handles are no longer affected by textures or opacity
+2020-11-28:
+  ArcaneMusic:
+  - bugfix: Mobs immune to cockroaches with spikey hats now properly display that
+      they're immune to impalement of the foot.
+  - bugfix: Mech ammo containers now update their material totals after refilling.
+  CoffeeDragon16:
+  - bugfix: Morphs and Swarmers now have their own categories in the orbit menu.
+  - tweak: Delta supermatter now has N2 canisters.
+  Fikou:
+  - code_imp: improves taming code
+  - imageadd: adds broken states to grass
+  - imageadd: recolored skeleton sprites
+  Ghilker:
+  - bugfix: reaction no longer runtime
+  - bugfix: division by zero runtime fix
+  - rscadd: add showers to atmos of icebox and pubby stations
+  - bugfix: fixed pubby's incinerator pipe not connected and injector not in proper
+      area (no power)
+  - tweak: moved meta's Atmospheric testing room space walls to allow smooth outside
+      movements
+  IndieanaJones:
+  - rscadd: You can now find swarmer beacons and spider egg clusters using the ghost
+      orbit menu.
+  - bugfix: Fixed being unable to teleport to spider egg clusters using the pop-up
+      notification.
+  - bugfix: Fixed abductors being listed at round end on Dynamic despite none existing
+  LemonInTheDark:
+  - bugfix: Improvised jetpacks can no longer be used when empty for short bursts
+      of airtime.
+  dragomagol:
+  - tweak: xenomorphs, monkeys, dogs, and parrots' strip menus are updated to be like
+      humans'
+  - tweak: humans now have matching remove handcuff/legcuff buttons in strip menu
+  - tweak: parrots' inventory will now reflect headsets worn immediately after adding/removing
+      them
+  prodirus:
+  - bugfix: Ageusia trait should allow you to eat with impunity again.
+2020-11-30:
+  CoffeeDragon16:
+  - spellcheck: Fixes a single typo with TB
+  Ryll/Shaps:
+  - rscdel: The quickswap hotkey and functionality has been removed
+  - tweak: Updated the discord verify verb text to tell you to use "?verify" instead
+      of ".verify", as that is the new command
+  - bugfix: You can no longer attempt to hijack BYOS shuttles before they have "docked"
+      with the station
+  Timberpoes:
+  - bugfix: Cyborgs upgrades can be installed properly again.
+  nightred:
+  - bugfix: Body temperature stabilizes to the room temp in statis beds
+  - bugfix: Body warms up a bit faster on the cold moon of ice
+  - bugfix: The cryo pod now cools human core temperature

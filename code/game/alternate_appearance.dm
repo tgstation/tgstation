@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 			add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/noncult/mobShouldSee(mob/M)
-	if(!iscultist(M))
+	if(!IS_CULTIST(M))
 		return TRUE
 	return FALSE
 
@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 			add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/cult/mobShouldSee(mob/M)
-	if(iscultist(M))
+	if(IS_CULTIST(M))
 		return TRUE
 	return FALSE
 
@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	if (istype(M, /mob/living/simple_animal/hostile/construct/wraith))
 		return TRUE
-	if(isrevenant(M) || iswizard(M))
+	if(isrevenant(M) || IS_WIZARD(M))
 		return TRUE
 	return FALSE
 

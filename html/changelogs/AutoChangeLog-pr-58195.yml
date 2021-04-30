@@ -1,6 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - qol: "Miner winter coat can carry mining equipment on their exo slot like the explorer suits can."
-  - bugfix: "Items that winter coats can carry on their exo slot are more consistent with their job and now you carry tablets on them too!"
-  - balance: "Labcoats and wintercoats that aren't from a head of staff can't carry batons anymore."
