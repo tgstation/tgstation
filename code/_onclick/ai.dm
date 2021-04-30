@@ -203,10 +203,3 @@
 
 /mob/living/silicon/ai/TurfAdjacent(turf/T)
 	return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(T))
-
-/mob/living/silicon/ai/get_exp_list(minutes)
-	. = ..()
-
-	var/static/datum/job/ai/ai_job_ref = SSjob.GetJobType(/datum/job/ai)
-
-	.[ai_job_ref.title] = minutes
