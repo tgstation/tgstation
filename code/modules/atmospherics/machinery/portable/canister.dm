@@ -103,10 +103,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	pressure_limit = initial(pressure_limit) * (1 + 0.2 * random_quality)
 
 	update_appearance()
-
-/obj/machinery/portable_atmospherics/canister/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	. = ..()
