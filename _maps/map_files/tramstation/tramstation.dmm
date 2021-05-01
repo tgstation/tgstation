@@ -20031,7 +20031,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/effect/landmark/start/paramedic,
 /obj/effect/landmark/event_spawn,
 /obj/machinery/holopad,
@@ -20569,7 +20568,6 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "dFW" = (
-/obj/structure/cable,
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white,
 /area/medical/storage)
@@ -22760,8 +22758,8 @@
 "ewN" = (
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/spawner/lootdrop/prison_contraband,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/color/prisoner,
+/obj/item/clothing/under/color/prisoner,
 /obj/item/clothing/shoes/sneakers/orange,
 /obj/item/clothing/shoes/sneakers/orange,
 /turf/open/floor/iron/cafeteria,
@@ -45280,6 +45278,10 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
+"nEg" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/medical/storage)
 "nEr" = (
 /obj/effect/turf_decal/arrows/white{
 	dir = 4
@@ -68802,9 +68804,9 @@
 /area/commons/dorms)
 "wIw" = (
 /obj/structure/closet/crate/trashcart/laundry,
-/obj/item/clothing/under/rank/prisoner/skirt,
-/obj/item/clothing/under/rank/prisoner/skirt,
-/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/color/jumpskirt/prisoner,
+/obj/item/clothing/under/color/jumpskirt/prisoner,
+/obj/item/clothing/under/color/jumpskirt/prisoner,
 /obj/item/clothing/shoes/sneakers/orange,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
@@ -167632,7 +167634,7 @@ bOQ
 fCO
 ofE
 mJp
-xZg
+nEg
 mhz
 ozN
 aIK

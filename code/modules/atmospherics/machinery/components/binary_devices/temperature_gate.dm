@@ -51,7 +51,6 @@
 
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/process_atmos()
-
 	if(!on || !is_operational)
 		return
 
@@ -73,6 +72,11 @@
 		else
 			is_gas_flowing = FALSE
 	update_icon_nopipes()
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/relaymove(mob/living/user, direction)
+	if(!on || direction != dir)
+		return
+	. = ..()
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

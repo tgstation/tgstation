@@ -100,7 +100,7 @@
 /datum/outfit/mafia/fugitive
 	name = "Mafia Fugitive"
 
-	uniform = /obj/item/clothing/under/rank/prisoner
+	uniform = /obj/item/clothing/under/color/prisoner
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 
 /datum/outfit/mafia/obsessed

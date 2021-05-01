@@ -10,8 +10,8 @@
 	var/admin_notes
 	/// How much does this shuttle cost the cargo budget to purchase? Put in terms of CARGO_CRATE_VALUE to properly scale the cost with the current balance of cargo's income.
 	var/credit_cost = INFINITY
-	/// Can the  be legitimately purchased by the station? Used by hardcoded or pre-mapped shuttles like the lavaland or cargo shuttle.
-	var/can_be_bought = TRUE
+	/// What job accesses can buy this shuttle? If null, this shuttle cannot be bought.
+	var/list/who_can_purchase = list(ACCESS_CAPTAIN)
 	/// If set, overrides default movement_force on shuttle
 	var/list/movement_force
 
@@ -113,7 +113,7 @@
 /datum/map_template/shuttle/cargo
 	port_id = "cargo"
 	name = "Base Shuttle Template (Cargo)"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/ferry
 	port_id = "ferry"
@@ -124,58 +124,58 @@
 
 /datum/map_template/shuttle/labour
 	port_id = "labour"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/mining
 	port_id = "mining"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/mining_common
 	port_id = "mining_common"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/arrival
 	port_id = "arrival"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/infiltrator
 	port_id = "infiltrator"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/aux_base
 	port_id = "aux_base"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/escape_pod
 	port_id = "escape_pod"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/assault_pod
 	port_id = "assault_pod"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/pirate
 	port_id = "pirate"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/hunter
 	port_id = "hunter"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/ruin //For random shuttles in ruins
 	port_id = "ruin"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/snowdin
 	port_id = "snowdin"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
 	name = "Backup Shuttle"
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"
@@ -183,6 +183,7 @@
 	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials. Unlocks the ability to buy shuttle engine crates from cargo."
 	admin_notes = "No brig, no medical facilities, no shuttle console."
 	credit_cost = CARGO_CRATE_VALUE * 5
+	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
 
 /datum/map_template/shuttle/emergency/airless/post_load()
 	. = ..()
@@ -210,7 +211,7 @@
 	name = "Emergency Pods"
 	description = "We did not expect an evacuation this quickly. All we have available is two escape pods."
 	admin_notes = "For player punishment."
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/emergency/russiafightpit
 	suffix = "russiafightpit"
@@ -259,7 +260,7 @@
 	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
 	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
 	credit_cost = CARGO_CRATE_VALUE * 20
-	can_be_bought = FALSE
+	who_can_purchase = null
 
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
@@ -401,7 +402,7 @@
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
 	admin_notes = "Tiny, with a single airlock and wooden walls. What could go wrong?"
-	can_be_bought = FALSE
+	who_can_purchase = null
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/goon

@@ -18,9 +18,9 @@
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
 
-/obj/structure/grille/ComponentInitialize()
+/obj/structure/grille/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/grille/Destroy()
 	update_cable_icons_on_turf(get_turf(src))
