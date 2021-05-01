@@ -113,6 +113,7 @@
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
+	offensive_notes += get_notes() /// Formulates the offensive notes on initialization
 	if (!spawnwithmagazine)
 		bolt_locked = TRUE
 		update_appearance()
@@ -458,7 +459,7 @@
 	rack(user)
 	return
 
-
+/// Adding on to the original examine function to get offensive notes
 /obj/item/gun/ballistic/examine(mob/user)
 	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
@@ -474,6 +475,13 @@
 		. += "<span class='danger'>You get the feeling this might explode if you fire it....</span>"
 		if(misfire_probability > 0)
 			. += "<span class='danger'>Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.</span>"
+
+/// Creates a new mag object to draw bullet data from, since you cannot draw data from something that doesn't exist
+/obj/item/gun/ballistic/proc/get_notes()
+	if(!mag_type)
+		return
+	var/obj/item/ammo_box/magazine/exam_mag = new src.mag_type
+	return uppertext("AMMO: [exam_mag.caliber]")
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)

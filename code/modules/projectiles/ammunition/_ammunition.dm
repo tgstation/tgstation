@@ -4,6 +4,7 @@
 	icon = 'icons/obj/guns/ammo.dmi'
 	icon_state = "s-casing"
 	worn_icon_state = "bullet"
+	note_override = 1
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
@@ -33,12 +34,28 @@
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
 
+/// Creates a new projectile in order to retrieve offensive data, adding on relevant stamina or pellet count information as needed
+/obj/item/ammo_casing/proc/get_notes()
+	if(projectile_type)
+		/// Output added to the offensive notes variable
+		var/note_builder = ""
+		var/obj/projectile/exam_proj = new src.projectile_type
+		note_builder = uppertext("[exam_proj.damage_type]: [exam_proj.damage]\n")
+		if(exam_proj.stamina)
+			note_builder += "STAM: [exam_proj.stamina]\n"
+		if(pellets > 1)
+			note_builder += "COUNT: [pellets]\n"
+		return note_builder
+	else
+		return
+
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
 	loaded_projectile = null
 
 /obj/item/ammo_casing/Initialize()
 	. = ..()
+	offensive_notes += get_notes() /// Formulates the offensive notes on initialization
 	if(projectile_type)
 		loaded_projectile = new projectile_type(src)
 	pixel_x = base_pixel_x + rand(-10, 10)

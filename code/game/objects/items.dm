@@ -195,6 +195,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/canMouseDown = FALSE
 
+	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
+	var/offensive_notes
+	/// Used in obj/item/examine to skip some of the default notes, for items that do not need them
+	var/note_override = 0
+
 /obj/item/Initialize()
 
 	if(attack_verb_continuous)
@@ -299,6 +304,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
 
+	/// Code for showing offensive statistics via a hyperlinked tag
+	if(force >= 5 || throwforce >= 5 || note_override || offensive_notes) /// Only show this tag for items that could feasibly be weapons, shields, or those that have special notes
+		. += "<span class='notice'>It has a <a href='?src=[REF(src)];examine=s'>tag</a> detailing its offensive capabilities.</span>"
+
 	if(!user.research_scanner)
 		return
 
@@ -336,6 +345,34 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		research_msg += "None"
 	research_msg += "."
 	. += research_msg.Join()
+
+/**
+ *
+ * Details the stats of the examined weapon
+ *
+ * This function is called when the user clicks the hyperlink in
+ * /obj/item/examine. This function simply compiles some relevant
+ * weapon data and outputs it to the user.
+ * Arguments:
+ *  * href - Unused
+ *  * href-list - List provided by the href of input values, used to know what hyperlinked action is being attempted
+ */
+
+/obj/item/Topic(href, href_list)
+	if(href_list["examine"])
+		var/readout = "" /// Readout is used to store the text block output to the user so it all can be sent in one message
+		/// Override to disable standard outputs for items that dont need it. See: Ammo
+		if(!note_override)
+			readout += "DMG: [force]\n" /// Standard attack damage
+			readout += "THRW: [throwforce]\n" /// Throwing damage
+			readout += uppertext("TYPE: [damtype]\n") /// Damage type
+			readout += "AP: [armour_penetration]%\n" /// Armour pen
+			readout += "BLOC: [block_chance]%\n" /// Block Chance
+		/// Add on the offensive notes
+		if(offensive_notes)
+			readout += offensive_notes
+		to_chat(usr, "<span class='notice'>[readout]</span>")
+
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)

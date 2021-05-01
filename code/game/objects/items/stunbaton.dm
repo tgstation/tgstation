@@ -119,6 +119,7 @@
 	return ..()
 
 /obj/item/melee/baton/examine(mob/user)
+	offensive_notes = "STAM: [stamina_loss_amt]" /// Manually adding stamina damage notes to the stun baton, since the classic and stun batons do not share the same variable names
 	. = ..()
 	if(cell)
 		. += "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>"

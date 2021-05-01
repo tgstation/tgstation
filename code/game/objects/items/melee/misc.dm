@@ -174,6 +174,7 @@
 /obj/item/melee/classic_baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum. Left click to stun, right click to harm."
+
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "classic_baton"
 	inhand_icon_state = "classic_baton"
@@ -204,6 +205,12 @@
 	var/weight_class_on // What is the new size class when turned on
 
 	wound_bonus = 15
+
+/// Manually adding stamina damage notes to the classic baton, since the classic and stun batons do not share the same variable names
+/obj/item/melee/classic_baton/examine(mob/user)
+	offensive_notes = "STAM: [stamina_damage]"
+	. = ..()
+
 
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()

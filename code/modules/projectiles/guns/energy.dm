@@ -20,6 +20,18 @@
 	var/use_cyborg_cell = FALSE //whether the gun's cell drains the cyborg user's cell to recharge
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
+/// Creates an energy ammo case and various projectiles in order to retrieve combat information
+/obj/item/gun/energy/proc/get_notes()
+	if(!ammo_type)
+		return
+	/// Output added to the offensive notes variable
+	var/notebuilder = ""
+	for(var/ammo_obj in ammo_type)
+		var/obj/item/ammo_casing/energy/pew = new ammo_obj(src) /// Need to make a new case...
+		var/obj/projectile/pew_beam = new pew.projectile_type /// ...And laser, for every type
+		notebuilder += uppertext("[pew.select_name]: [pew_beam.damage] [pew_beam.damage_type]\n")
+	return notebuilder
+
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
 	if(!(. & EMP_PROTECT_CONTENTS))
@@ -33,6 +45,7 @@
 
 /obj/item/gun/energy/Initialize()
 	. = ..()
+	offensive_notes += get_notes() /// Formulates the offensive notes on initialization
 	if(cell_type)
 		cell = new cell_type(src)
 	else
