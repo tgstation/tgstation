@@ -58317,7 +58317,7 @@
 /area/maintenance/starboard/aft)
 "qfL" = (
 /obj/machinery/button/door{
-	id = "Head of Personnel";
+	id = "hop";
 	name = "Privacy Shutters Control";
 	pixel_x = -24;
 	pixel_y = -6;
