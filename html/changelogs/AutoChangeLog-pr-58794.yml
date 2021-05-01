@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - admin: "The greyscale debug menu now has improved functionality involving dirs and changing config types."

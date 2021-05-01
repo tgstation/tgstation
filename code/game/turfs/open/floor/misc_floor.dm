@@ -190,6 +190,15 @@
 /turf/open/floor/eighties/setup_broken_states()
 	return list("eighties_damaged")
 
+/turf/open/floor/eighties/red
+	name = "red retro floor"
+	desc = "Totally RED-ICAL!"
+	icon_state = "eightiesred"
+	floor_tile = /obj/item/stack/tile/eighties/red
+
+/turf/open/floor/eighties/red/setup_broken_states()
+	return list("eightiesred_damaged")
+
 /turf/open/floor/plating/rust
 	name = "rusted plating"
 	desc = "Corrupted steel."
