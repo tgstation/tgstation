@@ -37,7 +37,7 @@
 	get_timer()
 	START_PROCESSING(SSobj, src)
 
-///This is what actually "drys" the blood. Returns true if it's all out of blood to dry, and false otherwise
+///This is what actually "dries" the blood. Returns true if it's all out of blood to dry, and false otherwise
 /obj/effect/decal/cleanable/blood/proc/dry()
 	if(bloodiness > 20)
 		bloodiness -= BLOOD_AMOUNT_PER_DECAL
