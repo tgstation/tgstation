@@ -826,7 +826,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cx" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cy" = (
@@ -1001,7 +1001,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ms" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)

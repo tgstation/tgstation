@@ -249,9 +249,11 @@
 /turf/open/floor/carpet/lone
 	icon_state = "carpetsymbol"
 	smoothing_flags = NONE
+	floor_tile = /obj/item/stack/tile/carpet/symbol
 
 /turf/open/floor/carpet/lone/star
 	icon_state = "carpetstar"
+	floor_tile = /obj/item/stack/tile/carpet/star
 
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'

@@ -6384,7 +6384,7 @@
 /area/ai_monitored/turret_protected/ai)
 "aSd" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/goonplaque,
+/turf/open/floor/iron/goonplaque,
 /area/hallway/primary/fore)
 "aSh" = (
 /obj/structure/disposalpipe/segment{
@@ -48302,7 +48302,7 @@
 	name = "Aft-Starboard Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/aft)
 "gTH" = (
 /obj/structure/disposalpipe/segment{
@@ -50733,7 +50733,7 @@
 "hDg" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/port/fore)
 "hDA" = (
 /obj/machinery/light_switch{
@@ -52010,7 +52010,7 @@
 "hVc" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/fore)
 "hVi" = (
 /obj/machinery/shower{
@@ -67886,7 +67886,7 @@
 	name = "Aft-Port Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/port/aft)
 "mef" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible{
@@ -72418,7 +72418,7 @@
 "nnf" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/port/aft)
 "nnn" = (
 /obj/item/kirbyplants/random,
@@ -81092,7 +81092,7 @@
 	name = "Fore-Port Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/port/fore)
 "pvh" = (
 /obj/structure/chair{
@@ -96905,7 +96905,7 @@
 	name = "Fore-Starboard Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/fore)
 "tEy" = (
 /obj/machinery/photocopier,
@@ -109124,7 +109124,7 @@
 "wSL" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/solars/starboard/aft)
 "wSM" = (
 /obj/structure/disposalpipe/segment,

@@ -8101,7 +8101,7 @@
 /area/service/janitor)
 "azj" = (
 /obj/structure/cable,
-/turf/open/floor/goonplaque,
+/turf/open/floor/iron/goonplaque,
 /area/hallway/secondary/entry)
 "azk" = (
 /obj/structure/reagent_dispensers/fueltank/large,
@@ -26227,7 +26227,7 @@
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "fSF" = (
-/turf/open/floor/iron/elevatorshaft,
+/turf/open/floor/plating/elevatorshaft,
 /area/security/prison)
 "fSO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -57685,7 +57685,7 @@
 	name = "AI Core Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/space/nearstation)
 "sBn" = (
 /obj/structure/fireaxecabinet{

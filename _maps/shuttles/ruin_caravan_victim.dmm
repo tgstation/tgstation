@@ -15,7 +15,7 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 25
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "aP" = (
 /obj/machinery/door/airlock{
@@ -59,7 +59,7 @@
 /obj/item/stack/sheet/mineral/diamond{
 	amount = 5
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "bR" = (
 /obj/structure/toilet{
@@ -180,7 +180,7 @@
 /area/shuttle/caravan/freighter1)
 "hk" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "if" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -305,10 +305,10 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "oS" = (
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "pR" = (
 /obj/machinery/light/small,
@@ -345,7 +345,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "rF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -396,7 +396,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "ur" = (
 /obj/effect/decal/cleanable/dirt,
@@ -527,7 +527,7 @@
 /obj/machinery/door/airlock/command{
 	name = "Bridge"
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "AX" = (
 /obj/effect/turf_decal/box/white/corners,
@@ -535,7 +535,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "Bu" = (
 /obj/item/stack/sheet/mineral/titanium,
@@ -630,7 +630,7 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 25
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "El" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -899,7 +899,7 @@
 	amount = 10
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "PM" = (
 /obj/machinery/light/small,
@@ -989,7 +989,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "RN" = (
 /obj/effect/turf_decal/bot,
@@ -1017,7 +1017,7 @@
 	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/iron/fifty,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "Ut" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1130,7 +1130,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "XI" = (
 /obj/effect/turf_decal/bot_white,
@@ -1174,7 +1174,7 @@
 /obj/item/stack/sheet/rglass{
 	amount = 20
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 
 (1,1,1) = {"
