@@ -321,9 +321,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "bj" = (
-/obj/machinery/status_display/evac{
-	pixel_y = 32
-	},
+/obj/machinery/status_display/evac/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -1941,9 +1939,7 @@
 	dir = 1;
 	network = list("mine")
 	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
