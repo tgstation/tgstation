@@ -1,0 +1,12 @@
+2021-05-01:
+  ATHATH:
+  - spellcheck: The shivering symptom has been renamed to be the "chills" symptom,
+      per Cobby's request.
+  - bugfix: The shivering/chills symptom now actually chills you like it says it does
+      instead of heating you up. fix Safe chills and safe fever should now use an
+      infectee's species's body temperature's actual cold and heat damage thresholds,
+      instead of just using the default ones.
+  - balance: Maxed out, unsafe chills and maxed out, unsafe fevers can now make you
+      slightly colder or hotter than they could before, respectively.
+  Mothblocks:
+  - bugfix: Midround events will now properly poll again.
