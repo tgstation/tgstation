@@ -169,3 +169,13 @@
 #define LIGHT_COLOR_TUNGSTEN   "#FAE1AF"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN    "#F0FAFA"
+
+//The GAGS greyscale_colors for each department's computer/machine circuits
+#define CIRCUIT_COLOR_GENERIC list("#1A7A13")
+#define CIRCUIT_COLOR_COMMAND list("#1B4594")
+#define CIRCUIT_COLOR_SECURITY list("#9A151E")
+#define CIRCUIT_COLOR_SCIENCE list("#BC4A9B")
+#define CIRCUIT_COLOR_SERVICE list("#92DCBA")
+#define CIRCUIT_COLOR_MEDICAL list("#00CCFF")
+#define CIRCUIT_COLOR_ENGINEERING list("#FF9933")
+#define CIRCUIT_COLOR_SUPPLY list("#C47749")
