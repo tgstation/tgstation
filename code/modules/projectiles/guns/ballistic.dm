@@ -459,7 +459,7 @@
 	rack(user)
 	return
 
-/// Adding on to the original examine function to get offensive notes
+
 /obj/item/gun/ballistic/examine(mob/user)
 	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
