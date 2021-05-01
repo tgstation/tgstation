@@ -242,8 +242,6 @@
 			return
 		var/obj/item/reagent_containers/beaker_out
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
-			return
 			beaker_out = eject_beaker() //now with 100% more swapping
 		if(!user.transferItemToLoc(I, src))
 			return
