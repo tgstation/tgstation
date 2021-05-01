@@ -375,7 +375,7 @@ Versioning
 	:paid,
 	:timestamp
 	) ON DUPLICATE KEY UPDATE
-	paid = paid + :paid"}, list(
+	paid = paid + VALUES(paid)"}, list(
 		"server_ip" = world.internet_address || "0",
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,
@@ -387,8 +387,7 @@ Versioning
 		"message" = message,
 		"fine" = fine,
 		"paid" = paid,
-		"timestamp" = SQLtime(),
-		"paid" = paid
+		"timestamp" = SQLtime()
 	))
 	if(query_report_citation)
 		query_report_citation.Execute(async = TRUE)
