@@ -31,9 +31,9 @@ GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 /// what the value is.
 /// This is useful either for more optimal data saving or for migrating
 /// older data.
-/datum/preference/proc/deserialize(input, datum/preferences/preferences)
+/datum/preference/proc/deserialize(input)
 	SHOULD_NOT_SLEEP(TRUE)
-	return input
+	return sanitize_inlist(input, get_choices())
 
 /// Called on the input while saving.
 /// Input is the current value, output is what to save in the savefile.
@@ -43,14 +43,11 @@ GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 
 /// Produce a potentially random value for when no value for this preference is
 /// found in the savefile.
-/// Preferences is passed in case it is needed to produce a good random value,
-/// such as using gender.
 /// If not overridden, will choose a random filtered value.
-/datum/preference/proc/create_default_value(datum/preferences/preferences)
+/datum/preference/proc/create_default_value()
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
-
-	return pick(get_filtered_values(preferences))
+	return pick(get_choices())
 
 /// Returns a list of every possible value.
 /// The first time this is called, will run `init_values()`.
@@ -63,7 +60,7 @@ GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 /// Due to the need to send icons, this proc is NOT pure.
 /// Its calling should be deferred when possible.
 // MOTHBLOCKS TODO: Let preferences be text-only.
-/datum/preference/proc/generate_possible_values(mob/user)
+/datum/preference/proc/generate_pos1sible_values(mob/user)
 	// Override `init_values()` instead.
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -93,20 +90,14 @@ GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 
 	return cached_values
 
-/// Returns a flat list of all possible values.
+/// Returns a flat list of all choices.
 /// This should be preferred when icon generation isn't necessary.
-/datum/preference/proc/get_all_possible_values()
+/datum/preference/proc/get_choices()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if (isnull(cached_values))
 		cached_values = init_possible_values()
 		ASSERT(cached_values.len)
-
-	if (should_generate_icons)
-		var/list/flat_list = list()
-		for (var/key in cached_values)
-			flat_list += cached_values[key]
-		return flat_list
 
 	return cached_values
 
@@ -121,30 +112,17 @@ GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 	SHOULD_NOT_SLEEP(TRUE)
 	CRASH("`init_possible_values()` was not implemented for [type]!")
 
-/// Returns a flat list of every value that this savefile can actually choose.
-/// Override this in the case of, for instance, gender-specific clothing.
-/datum/preference/proc/get_filtered_values(datum/preferences/preferences)
-	var/list/values = get_all_possible_values()
-
-	if (should_generate_icons)
-		var/list/names = list()
-		for (var/key in values)
-			names += key
-		return names
-
-	return values
-
 /// Given a savefile, return either the saved data or an acceptable default.
-/datum/preference/proc/read(datum/preferences/preferences, savefile/savefile)
+/datum/preference/proc/read(savefile/savefile)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/value
 	READ_FILE(savefile[savefile_key], value)
 
 	if (isnull(value))
-		return create_default_value(preferences)
+		return create_default_value()
 	else
-		return deserialize(value, preferences)
+		return deserialize(value)
 
 /// Apply this preference onto the given human.
 /// Must be overriden by subtypes.
@@ -152,7 +130,6 @@ GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 /datum/preference/proc/apply(mob/living/carbon/human/target, value)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
-
 	CRASH("`apply()` was not implemented for [type]!")
 
 /// Read a /datum/preference type and return its value
@@ -162,4 +139,4 @@ GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
 		CRASH("Preference type `[preference_type]` is invalid!")
 
 	var/savefile/savefile = new /savefile(path)
-	return preference_entry.read(src, savefile)
+	return preference_entry.read(savefile)

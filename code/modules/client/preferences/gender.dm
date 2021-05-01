@@ -5,8 +5,5 @@
 /datum/preference/gender/apply(mob/living/carbon/human/target, value)
 	target.gender = value
 
-/datum/preference/gender/get_all_possible_values()
+/datum/preference/gender/get_choices()
 	return list(MALE, FEMALE, PLURAL)
-
-/datum/preference/gender/deserialize(value)
-	return sanitize_gender(value)

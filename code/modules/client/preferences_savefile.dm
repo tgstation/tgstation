@@ -532,14 +532,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return FALSE
 	S.cd = "/character[default_slot]"
 
-	for (var/preference_type in GLOB.preference_entries)
-		var/datum/preference/preference = GLOB.preference_entries[preference_type]
-		var/data = preference.serialize(
-			read_preference(GLOB.preference_entries[preference_type]),
-			src,
-		)
+	// for (var/preference_type in GLOB.preference_entries)
+	// 	var/datum/preference/preference = GLOB.preference_entries[preference_type]
+	// 	var/data = preference.serialize(
+	// 		read_preference(GLOB.preference_entries[preference_type]),
+	// 		src,
+	// 	)
 
-		WRITE_FILE(S[preference.savefile_key], data)
+	// 	WRITE_FILE(S[preference.savefile_key], data)
 
 	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX) //load_character will sanitize any bad data, so assume up-to-date.)
 
