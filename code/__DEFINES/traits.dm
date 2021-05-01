@@ -526,7 +526,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define DO_NOT_SPLASH "do_not_splash"
 
 // unique trait sources, still defines
-#define SQUEAKY_COMPONENT_TRAIT "squeaky_component_trait"
 #define CLONING_POD_TRAIT "cloning-pod"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"

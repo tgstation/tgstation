@@ -29,7 +29,6 @@
 /datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override, extrarange, falloff_exponent, fallof_distance)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	ADD_TRAIT(parent, SQUEAKY_COMPONENT_TRAIT, INNATE_TRAIT)
 	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
 	if(ismovable(parent))
 		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT, COMSIG_PROJECTILE_BEFORE_FIRE), .proc/play_squeak)
@@ -65,6 +64,10 @@
 		sound_falloff_exponent = falloff_exponent
 	if(isnum(fallof_distance))
 		sound_falloff_distance = fallof_distance
+
+/datum/component/squeak/UnregisterFromParent()
+	. = ..()
+	RemoveElement(/datum/element/connect_loc, parent, item_connections)
 
 /datum/component/squeak/proc/play_squeak()
 	SIGNAL_HANDLER
