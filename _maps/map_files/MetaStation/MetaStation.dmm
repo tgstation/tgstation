@@ -59889,6 +59889,9 @@
 /obj/item/multitool,
 /obj/item/clothing/head/welding,
 /obj/item/clothing/glasses/welding,
+/obj/machinery/posialert{
+	pixel_x = -30
+	},
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "qFb" = (

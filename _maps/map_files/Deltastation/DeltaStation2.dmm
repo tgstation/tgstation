@@ -30843,7 +30843,9 @@
 /obj/item/clothing/glasses/welding,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
-/obj/machinery/firealarm/directional/west,
+/obj/machinery/posialert{
+	pixel_x = -30
+	},
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "dAK" = (
@@ -32541,7 +32543,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/newscaster/directional/west,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "dHw" = (
@@ -32800,6 +32802,7 @@
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "dIN" = (

@@ -62333,6 +62333,9 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
+/obj/machinery/newscaster{
+	pixel_x = 30
+	},
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "ukM" = (
@@ -66997,9 +67000,8 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/clothing/head/welding,
 /obj/item/clothing/glasses/welding,
-/obj/machinery/newscaster{
-	pixel_x = -4;
-	pixel_y = 32
+/obj/machinery/posialert{
+	pixel_y = 30
 	},
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)

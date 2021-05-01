@@ -13275,6 +13275,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/status_display/evac{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/white,
 /area/science/robotics/lab)
 "biQ" = (
@@ -13701,10 +13704,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/status_display/evac{
-	pixel_x = 32
-	},
 /obj/machinery/aug_manipulator,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /turf/open/floor/iron/white,
 /area/science/robotics/lab)
 "bkq" = (
@@ -14792,11 +14795,11 @@
 /obj/item/stock_parts/cell/high/plus,
 /obj/item/stock_parts/cell/high/plus,
 /obj/item/crowbar,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
 /obj/item/radio/headset/headset_sci{
 	pixel_x = -3
+	},
+/obj/machinery/posialert{
+	pixel_x = 30
 	},
 /turf/open/floor/iron,
 /area/science/robotics/lab)
