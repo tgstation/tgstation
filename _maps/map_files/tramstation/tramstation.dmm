@@ -30093,6 +30093,11 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/machinery/camera{
+	c_tag = "Cargo - Drone Bay";
+	dir = 1;
+	pixel_x = 14
+	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "hrP" = (

@@ -13792,7 +13792,7 @@
 /area/ai_monitored/security/armory)
 "bTl" = (
 /obj/machinery/camera/motion{
-	c_tag = "Armoury - Exterior";
+	c_tag = "Armory - Exterior";
 	dir = 4
 	},
 /turf/open/space,
@@ -66262,6 +66262,11 @@
 "lJM" = (
 /obj/structure/tank_holder/extinguisher,
 /obj/machinery/light,
+/obj/machinery/camera{
+	c_tag = "Cargo - Drone Bay";
+	dir = 1;
+	pixel_x = 14
+	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "lJZ" = (
