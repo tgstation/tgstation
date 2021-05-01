@@ -1,0 +1,4 @@
+author: "sergeirocks100"
+delete-after: True
+changes: 
+  - rscadd: "Adds cryopod areas to every in-rotation map. Expect to find them in dorms or recreation areas."
