@@ -77,6 +77,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/Initialize(timeofday)
 	map_loading = FALSE
 	gas_reactions = init_gas_reactions()
+
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
@@ -253,8 +254,10 @@ SUBSYSTEM_DEF(air)
 	while(currentrun.len)
 		var/obj/machinery/M = currentrun[currentrun.len]
 		currentrun.len--
-		if(!M || (M.process_atmos() == PROCESS_KILL))
-			atmos_machinery.Remove(M)
+		if(!M)
+			atmos_machinery -= M
+		if(M.process_atmos() == PROCESS_KILL)
+			stop_processing_machine(M)
 		if(MC_TICK_CHECK)
 			return
 
@@ -609,26 +612,25 @@ GLOBAL_LIST_EMPTY(colored_images)
 /**
  * Adds a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
  *
- * This should be fast, so no error checking is done.
- * If you start adding in things you shouldn't, you'll cause runtimes every 2 seconds for every
- * object you added. Do not use irresponsibly.
  * Arguments:
  * * machine - The machine to start processing. Can be any /obj/machinery.
  */
 /datum/controller/subsystem/air/proc/start_processing_machine(obj/machinery/machine)
+	if(machine.atmos_processing)
+		return
+	machine.atmos_processing = TRUE
 	atmos_machinery += machine
 
 /**
  * Removes a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
  *
- * This should be fast, so no error checking is done.
- * If you call this proc when your machine isn't processing, you're likely attempting to
- * remove something that isn't in a list with over 1000 objects, twice. Do not use
- * irresponsibly.
  * Arguments:
  * * machine - The machine to stop processing.
  */
 /datum/controller/subsystem/air/proc/stop_processing_machine(obj/machinery/machine)
+	if(!machine.atmos_processing)
+		return
+	machine.atmos_processing = FALSE
 	atmos_machinery -= machine
 
 	// If we're currently processing atmos machines, there's a chance this machine is in

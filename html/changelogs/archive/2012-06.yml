@@ -1,0 +1,101 @@
+2012-06-01:
+  Nodrak:
+  - rscadd: Windoor's are now constructable! Steps are found <a href="http://nanotrasen.com/wiki/index.php/Guide_to_construction#Window-door_.28Windoor.29">here</a>.
+  SkyMarshal:
+  - rscadd: Readded fingerprints and detective work, after lots of debugging and optimization.
+  - rscadd: Any PDA with access to the Security Records can now, by the normal forensic
+      scanner function, store data the same way as the detective's scanner.  Scanning
+      the PDA in the detective's computer will copy all scanned data into the database.
+  - wip: 'If something goes wrong, please contact SkyMarshal on the #bs12 channel
+      on irc.sorcery.net'
+2012-06-03:
+  Donkie:
+  - rscadd: You can now Drag-Drop disposal pipes and machinery into the dispenser,
+      in order to remove them.
+  - bugfix: You must now use wrench before welding a pipe to the ground
+  - bugfix: You can no longer remove a trunk untill the machinery ontop is unwelded
+      and unwrenched
+  - bugfix: You are now forced to eject the disposal bin before unwelding it.
+2012-06-06:
+  Willox:
+  - tweak: You can now click individual blocks/subblocks in the genetics console instead
+      of having to scroll through the blocks with a forward/back button!
+2012-06-07:
+  Icarus:
+  - rscadd: Added a second ZIS suit to engineering.
+  - tweak: Remapped CE office and surrounding areas.
+2012-06-09:
+  Errorage:
+  - rscadd: You can now make restraints from cable. It takes 15 lengths of cable to
+      make a pair of restraints, they are applied the same way as handcuffs and have
+      the same effects. It however only takes 30s to remove them by using the resist
+      verb or button. You can also remove them from someone by using wirecutters on
+      the handcuffed person.
+  - rscadd: 'Added four new cable colors: pink, orange, cyan and white. Engineer belts
+      spawn with yellow, red or orange cables while toolboxes and tool closets spawn
+      with all 8 colors.'
+2012-06-10:
+  Agouri:
+  - rscadd: Cyborgs and AIs can now use the newscaster. It was a mistake on my part,
+      forgetting to finish that part of them.
+2012-06-11:
+  Errorage:
+  - rscadd: You can now use the resist verb or UI button when welded or locked in
+      a closet. Takes 2 minutes to get out tho (Same as getting out of handcuffs or
+      unbuckling yourself)
+  - rscadd: Making single-pane windows will now make the window in the direction you're
+      facing. If a window already exists in that direction it will make it 90 degrees
+      to your left and so on.
+2012-06-13:
+  Cheridan:
+  - rscadd: -Added Lezowski's overalls to hydroponic supply closets. 50% chance per
+      closet for them to replace the apron. -Removed some covers tags from things
+      that made no sense to have them.
+2012-06-14:
+  Carn:
+  - rscadd: FEAR NOT! You can now store a pen in your pda. <i>(aka Best commit all
+      commits)</i>
+2012-06-15:
+  Icarus:
+  - imageadd: Ported over ponytail sprites from Baystation
+2012-06-18:
+  Icarus:
+  - imageadd: New afro hairstyles. Big Afro by Intigracy.
+2012-06-20:
+  Cheridan:
+  - bugfix: -Both Ambrosia forms have had their reagent contents modified to prevent
+      going over the 50-unit cap at high potencies. Ambrosia Deus now contains space
+      drugs instead of poison.
+  - tweak: -Drinking milk removes capsaicin from your body. REALISM!
+  - tweak: -Frost oil hurts less upon consumption.
+  - rscadd: -Liquid plasma can be converted into solid plasma sheets, by mixing 20
+      plasma, 5 iron, and 5 frost oil.
+  - rscadd: -Added effects for holy water injection on hydroponics plants.
+2012-06-23:
+  Icarus:
+  - tweak: Medical storage now requires Surgery access (Medical Doctors only)
+2012-06-26:
+  Errorage:
+  - tweak: Changeling parasting now only weakens for 10 game ticks. It no longer silences
+      your target.
+2012-06-27:
+  Donkie:
+  - rscadd: Pizza boxes! Fully stackable, tagable (with pen), and everythingelse-able.
+      Fantastic icons by supercrayon!<br/>Created with a sheet of cardboard.
+2012-06-28:
+  Carn:
+  - rscadd: Alien hunters will now cloak when using the 'stalk' movement intent. Whilst
+      cloaked they will use up their plasma reserves. They can however cloak as long
+      as they like. Using the Lay-down verb will allow them to remain cloaked without
+      depleting their plasma reserves,  hence allowing them to lay ambushes for unsuspecting
+      prey. Should a hunter attack anybody, or get knocked down in any way,  they
+      will become visible. Hopefully this allows for more strategic/stealthy gameplay
+      from aliens. On the other hand, I may have totally  screwed the balance so feedback/other-ideas
+      are welcome.
+  - rscdel: 'Removed the invisibility verb from the alien hunter caste. '
+2012-06-30:
+  Icarus:
+  - rscadd: Added Petethegoat's basic mirrors to the map. They allow you to change
+      hairstyles.
+  - tweak: Remapped Bar, Theatre, and Hydroponics. Bar and Kitchen are now more integrated
+      with each other.

@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
 	var/temporary_total = 0
-	var/delta_time = wait * 0.2
+	var/delta_time = wait / (5 MINUTES)
 	departmental_payouts()
 	station_total = 0
 	station_target_buffer += STATION_TARGET_BUFFER

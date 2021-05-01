@@ -4284,10 +4284,10 @@
 	},
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/spawner/lootdrop/prison_contraband,
-/obj/item/clothing/under/color/prisoner,
-/obj/item/clothing/under/color/prisoner,
-/obj/item/clothing/under/color/jumpskirt/prisoner,
-/obj/item/clothing/under/color/jumpskirt/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/rank/prisoner/skirt,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
 "anP" = (
@@ -8511,7 +8511,7 @@
 	pixel_x = -6;
 	pixel_y = -8
 	},
-/obj/item/clothing/under/color/prisoner{
+/obj/item/clothing/under/rank/prisoner{
 	pixel_x = 8;
 	pixel_y = 5
 	},
@@ -8519,15 +8519,15 @@
 /area/security/prison)
 "aGL" = (
 /obj/structure/table,
-/obj/item/clothing/under/color/jumpskirt/prisoner{
+/obj/item/clothing/under/rank/prisoner/skirt{
 	pixel_x = -13;
 	pixel_y = 5
 	},
-/obj/item/clothing/under/color/jumpskirt/prisoner{
+/obj/item/clothing/under/rank/prisoner/skirt{
 	pixel_x = 9;
 	pixel_y = 5
 	},
-/obj/item/clothing/under/color/prisoner{
+/obj/item/clothing/under/rank/prisoner{
 	pixel_x = -2;
 	pixel_y = 5
 	},
@@ -41343,7 +41343,7 @@
 /obj/item/clothing/head/beanie/orange{
 	pixel_y = 8
 	},
-/obj/item/clothing/shoes/sneakers/wheelys/skishoes{
+/obj/item/clothing/shoes/wheelys/skishoes{
 	pixel_y = -8
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -82941,7 +82941,7 @@ bVI
 bWD
 bXA
 bYB
-bYz
+cSE
 cai
 bvy
 ccg
@@ -83199,8 +83199,8 @@ bWC
 bXz
 bYA
 bXC
-bXC
 bWB
+bXC
 ccf
 cdc
 cdZ
@@ -83457,7 +83457,7 @@ bXC
 bXC
 bXC
 cak
-bWB
+bXC
 bWB
 bWB
 cec
@@ -83712,9 +83712,9 @@ bVI
 bWE
 bXB
 bYC
+bWB
+bWB
 bXC
-bWB
-bWB
 cch
 cde
 ceb
@@ -83969,9 +83969,9 @@ bVI
 bWG
 bXD
 bYz
-cSE
-bWB
 bYz
+bWB
+cSE
 bYz
 cdf
 ced
@@ -84226,7 +84226,7 @@ bVI
 bWB
 bWB
 bYz
-bWI
+bZv
 cal
 bWI
 bYz

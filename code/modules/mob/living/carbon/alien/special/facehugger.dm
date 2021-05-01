@@ -41,7 +41,7 @@
 
 /obj/item/clothing/mask/facehugger/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"

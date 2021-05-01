@@ -1,0 +1,625 @@
+2017-12-02:
+  BeeSting12:
+  - spellcheck: Occupand ---> Occupant on opened cryogenic pods.
+  - spellcheck: Cyrogenic ---> Cryogenic on opened cryogenic pods.
+  CosmicScientist:
+  - rscadd: You can make plushies kiss one another!
+  Frozenguy5:
+  - tweak: The Particle Accelerator's wires can no longer be EMP'd
+  Naksu:
+  - code_imp: Cleans up some loc assignments
+  Robustin:
+  - tweak: Damage examinations now include a "moderate" classification. Before minor
+      was <30 and severe was anything 30 or above. Now minor is <25, moderate is 25
+      to <50, and severe is 50+.
+  - balance: Clockwork magicks will now prevent Bags of Holding from being combined
+      on Reebe.
+  - bugfix: Flashes will now burn out AFTER flashing when they fail instead of being
+      a ticking time bomb that waits to screw you over on your next attempt.
+  SpaceManiac:
+  - tweak: The R&D Console has been given a much prettier interface.
+  - tweak: Research scanner goggles now show materials and technology prospects in
+      a nicer way.
+  uraniummeltdown:
+  - imageadd: Construct shells have a new animated sprite
+2017-12-03:
+  ExcessiveUseOfCobblestone:
+  - bugfix: You can now lay (buckle!) yourself to a bed to avoid being burnt to a
+      crisp during "the floor is lava" event.
+  Robustin:
+  - tweak: Igniting plasma statues no longer ignores ignition temperature and only
+      creates as much plasma as was used in its creation.
+  Xhuis:
+  - rscadd: Light fixtures now turn an ominous, dim red color when they lose power,
+      and draw from an internal power cell to maintain it until either the cell dies
+      (usually after 10 minutes) or power is restored.
+  - rscadd: You can override emergency light functionality from an APC. You can also
+      click on individual lights as a cyborg or AI to override them individually.
+      Traitor AIs also have a new ability that disables emergency lights across the
+      entire station.
+  zennerx:
+  - spellcheck: fixed some typos in the weapon firing mechanism description
+2017-12-04:
+  AnturK:
+  - rscadd: You can now record and replay holopad messages using holodisks.
+  - rscadd: Holodisks are printable in autolathes.
+  Xhuis:
+  - bugfix: You now need fuel in your welder to repair mechs.
+2017-12-05:
+  Cyberboss:
+  - sounddel: Reduced the volume of showers
+  Dax Dupont:
+  - rscadd: Nanotrasen is happy to announce the pinnacle in plasma research! The Disco
+      Inferno shuttle design is the result of decades of plasma research. Burn, baby,
+      burn!
+  MrPerson & ninjanomnom:
+  - refactor: Completely changed how keyboard input is read.
+  - rscadd: Holding two directions at the same time will now move you diagonally.
+      This works with the arrow keys, wasd, and the numpad.
+  - tweak: Moving diagonally takes twice as long as moving a cardinal direction.
+  - bugfix: You can use control to turn using wasd and the numpad instead of just
+      the arrow keys.
+  - rscdel: 'Some old non-hotkey mode behaviors, especially in relation to chatbox
+      interaction, can''t be kept with the new system. Of key note: You can''t type
+      while walking. This is due to limitations of byond and the work necessary to
+      overcome it is better done as another overhaul allowing custom controls.'
+  Robustin:
+  - rscdel: Reverted changes in 3d sound system that tripled the distance that sound
+      would carry.
+  SpaceManiac:
+  - spellcheck: Energy values are now measured in joules. What was previously 1 unit
+      is now 1 kJ.
+  - bugfix: Syndicate uplink implants now work again.
+  Xhuis:
+  - tweak: Stethoscopes now inform the user if the target can be defibrillated; the
+      user will hear a "faint, fluttery pulse."
+  coiax:
+  - rscadd: Quiet areas of libraries on station have now been equipped with a vending
+      machine containing suitable recreational activities.
+2017-12-06:
+  Dax Dupont & Alek2ander:
+  - tweak: Binary chat messages been made more visible.
+  Revenant Defile ability:
+  - bugfix: Revenant's Defile now removes salt piles
+  XDTM:
+  - rscadd: 'Brain damage has been completely reworked! remove: Brain damage now no
+      longer simply makes you dumb. Although most of its effects have been shifted
+      into a brain trauma.'
+  - rscadd: Every time you take brain damage, there's a chance you'll suffer a brain
+      trauma. There are many variations of brain traumas, split in mild, severe, and
+      special.
+  - rscadd: Mild brain traumas are the easiest to get, can be lightly to moderately
+      annoying, and can be cured with mannitol and time.
+  - rscadd: Severe brain traumas are much rarer and require extensive brain damage
+      before you have a chance to get them; they are usually very debilitating. Unlike
+      mild traumas, they require surgery to cure. A new surgery procedure has been
+      added for this, the aptly named Brain Surgery. It can also heal minor traumas.
+  - rscadd: 'Special brain traumas are rarely gained in place of Severe traumas: they
+      are either complex or beneficial. However, they are also even easier to cure
+      than mild traumas, which means that keeping these will usually mean keeping
+      a mild trauma along with it.'
+  - rscadd: Mobs can only naturally have one mild trauma and one severe or special
+      trauma.
+  - balance: Brain damage will now kill and ruin the brain if it goes above 200. If
+      it somehow goes above 400, the brain will melt and be destroyed completely.
+  - balance: Many brain-damaging effects have been given a damage cap, making them
+      non-lethal.
+  - rscdel: The Unintelligible mutation has been removed and made into a brain trauma.
+  - rscdel: Brain damage no longer makes using machines a living hell.
+  - rscadd: Abductors give minor traumas to people they experiment on.
+  coiax:
+  - rscadd: The drone dispenser on Metastation has been moved to the maintenance by
+      Robotics.
+2017-12-07:
+  ShizCalev:
+  - bugfix: Games vending machines can now properly be rebuilt.
+  - bugfix: Games vending machines can now be refilled via supply crates.
+  - rscadd: Games Supply Crates have been added to the cargo console.
+  SpaceManiac:
+  - bugfix: Radio frequency 148.9 is once again serviced by the telecomms system.
+  Xhuis:
+  - rscadd: Added the Eminence role to clockcult! Players can elect themselves or
+      ghosts as the Eminence from the eminence spire structure on Reebe.
+  - rscadd: The Eminence is incorporeal and invisible, and directs the entire cult.
+      Anything they say is heard over the Hierophant network, and they can issue commands
+      by middle-clicking themselves or different turfs.
+  - rscadd: The Eminence also has a single-use mass recall that warps all servants
+      to the Ark chamber.
+  - rscadd: Added traps, triggers, and brass filaments to link them. They can all
+      be constructed from brass sheets, and do different things and trigger in different
+      ways. Current traps include the brass skewer and steam vent, and triggers include
+      the pressure sensor, lever, and repeater.
+  - rscadd: The Eminence can activate trap triggers by clicking on them!
+  - rscadd: Servants can deconstruct traps instantly with a wrench.
+  - rscdel: Mending Mantra has been removed.
+  - tweak: Clockwork scriptures have been recolored and sorted based on their functions;
+      yellow scriptures are for construction, red for offense, blue for defense, and
+      purple for niche.
+  - balance: Servants now spawn with a PDA and black shoes to make disguise more feasible.
+  - balance: The Eminence can superheat up to 20 clockwork walls at a time. Superheated
+      walls are immune to hulk and mech punches, but can still be broken conventionally.
+  - balance: Clockwork walls are slightly faster to build before the Ark activates,
+      taking an extra second less.
+  - bugfix: Poly no longer continually undergoes binary fission when Ratvar is in
+      range.
+  - code_imp: The global records alert for servants will no longer display info that
+      doesn't affect them since the rework.
+  coiax:
+  - rscadd: The drone dispenser on Box Station has been moved from the Testing Lab
+      to the Morgue/Robotics maintenance tunnel.
+  deathride58:
+  - config: The default view range can now be defined in the config. The default is
+      15x15, which is simplified to 7 by BYOND. For reference, Goonstation's widescreen
+      range is 21x15. Do note that changing this value will affect the title screen.
+      The title screen images and the title screen area on the Centcom z-level will
+      have to be updated if the default view range is changed.
+2017-12-08:
+  Dax Dupont:
+  - bugfix: Fixed observer chat flavor of silicon chat.
+  - bugfix: Grilles now no longer revert to a pre-broken icon state when you hit them
+      after they broke.
+  Dorsisdwarf:
+  - tweak: Minor fixes to some techweb nodes
+  - balance: Made flight suits, combat implants, and combat modules require more nodes
+  Fox McCloud:
+  - tweak: Slime blueprints can now make an area compatible with Xenobio consoles,
+      regardless of the name of the new area
+  MrDoomBringer:
+  - imageadd: All stations have been outfitted with brand new Smoke Machines! They
+      have nicer sprites now!
+  Shadowlight213:
+  - rscadd: You now can get a medal for wasting hours talking to the secret debug
+      tile.
+  - bugfix: Fixed runtime for the tile when poly's speech file doesn't exist.
+  Xhuis:
+  - rscadd: You can now make pet carriers from the autolathe, to carry around chef
+      meat and other small animals without having to drag them. The HoP, captain,
+      and CMO also start with carriers in their lockers for their pets.
+  YPOQ:
+  - bugfix: Fixed the camera failure, race swap, cursed items, and imposter wizard
+      random events
+  - tweak: The cursed items event no longer nullspaces items
+  jammer312:
+  - rscadd: Action buttons now remember positions where you locked.
+  - tweak: Now locking action buttons prevents them from being reset.
+2017-12-10:
+  SpaceManiac:
+  - bugfix: External airlocks of the mining base and gulag are now cycle-linked.
+  - tweak: The pAI software interface is now accessible via an action button.
+  Swindly:
+  - rscadd: You can kill yourself with a few more items.
+  XDTM:
+  - tweak: Instead of activating randomly on speech, Godwoken Syndrome randomly grants
+      inspiration, causing the next message to be a Voice of God.
+  Xhuis:
+  - tweak: Flickering lights will now actually flicker and not go between emergency
+      lights and normal lighting.
+  - bugfix: Emergency lights no longer stay on forever in some cases.
+  kevinz000:
+  - rscadd: Nanotrasen would like to remind crewmembers and especially medical personnel
+      to stand clear of cadeavers before applying a defibrillator shock. (You get
+      shocked if you're pulling/grabbing someone being defibbed.)
+  - tweak: defib shock/charge sounds upped from 50% to 75%.
+2017-12-11:
+  Anonmare:
+  - bugfix: Booze-o-mats have beer
+  Cruix:
+  - tweak: The white ship navigation computer now takes 10 seconds to designate a
+      landing spot, and users can no longer see the syndicate shuttle or its custom
+      landing location. If the white ship landing location would intersect the syndicate
+      shuttle or its landing location, it will fail after the 10 seconds have elapsed.
+  Frozenguy5:
+  - balance: Some hardsuits have had their melee, fire and rad armor ratings tweaked.
+  Improvedname:
+  - tweak: cats now drop their ears and tail when butchered.
+  Robustin:
+  - bugfix: Modes not in rotation have had their "false report" weights for the Command
+      Report standardized
+  SpaceManiac:
+  - bugfix: The MULEbots that the station starts with now show their ID numbers.
+  - bugfix: The dependency by Advanced Cybernetic Implants and Experimental Flight
+      Equipment on Integrated HUDs has been restored.
+  kevinz000:
+  - bugfix: flightsuits should no longer disappear when you take them off involuntarily
+  - bugfix: beam rifles actually fire striaght now
+  - bugfix: click catchers now actually work
+  - bugfix: you no longer see space in areas you normally can't see, instead of black.
+      in reality you can still see space but it's faint enough that you can't tell
+      so I'll say I fixed it.
+  uraniummeltdown:
+  - rscadd: Added MANY new types of airlock assembly that can be built with metal.
+      Use metal in hand to see the new airlock assembly recipes.
+  - rscadd: Added new airlock types to the RCD and airlock painter
+  - rscadd: Vault door assemblies can be built with 8 plasteel, high security assemblies
+      with 6 plasteel
+  - rscadd: Glass mineral airlocks are finally constructible. Use glass and mineral
+      sheets on an airlock assembly in any order to make them.
+  - tweak: Glass and mineral sheets are now able to be welded out of door assemblies
+      rather than having to deconstruct the whole thing
+  - rscdel: Airlock painter no longer works on airlock assemblies (still works on
+      airlocks)
+  - bugfix: Titanium airlocks no longer have any missing overlays
+2017-12-12:
+  Mark9013100:
+  - rscadd: Medical Wardrobes now contain an additional standard and EMT labcoat.
+  Robustin:
+  - rscadd: The blood cult revive rune will now replace the souls of braindead or
+      inactive cultists/constructs when properly invoked. These "revivals" will not
+      count toward the revive limit.
+  - rscadd: The clock cult healing rune will now replace the souls of braindead or
+      inactive cultists/constructs when left atop the rune. These "revivals" will
+      not drain the rune's energy.
+  Swindly:
+  - bugfix: Swarmers can no longer deconstruct objects with living things in them.
+  kevinz000:
+  - bugfix: You can now print telecomms equipment again.
+2017-12-13:
+  Naksu:
+  - bugfix: glass shards and bananium floors no longer make a sound when "walked"
+      over by a camera or a ghost
+  SpaceManiac:
+  - bugfix: Nonstandard power cells found in MULEbots, cyborgs, and elsewhere now
+      have the correct description.
+  deathride58:
+  - bugfix: Genetics will no longer have a random block completely disappear each
+      round
+2017-12-15:
+  AverageJoe82:
+  - rscadd: drones now have night vision
+  - rscdel: drones no longer have lights
+  Cruix:
+  - bugfix: Shuttles now place hyperspace ripples where they are about to land again.
+  Cyberboss:
+  - config: Added "$include" directives to config files. These are recursive. Only
+      config.txt will be default loaded if they are specified inside it
+  - config: Added multi string list entry CROSS_SERVER. e.g. CROSS_SERVER Server+Name
+      byond://server.net:1337
+  - config: CROSS_SERVER_ADDRESS removed
+  Epoc:
+  - bugfix: Adds Cybernetic Lungs to the Cyber Organs research node
+  JStheguy:
+  - rscadd: Added 10 new assembly designs to the integrated circuit printer, the difference
+      from current designs is purely aesthetics.
+  - imageadd: Added the icons for said new assembly designs to electronic_setups.dmi,
+      changed the current electronic mechanism and electronic machine sprites.
+  MrStonedOne:
+  - server: Added new admin flag, AUTOLOGIN, to control if admins start with admin
+      powers. this defaults to on, and can be removed with -AUTOLOGIN
+  - admin: Admins with +PERMISSION may now deadmin or readmin other admins via the
+      permission panel.
+  Naksu:
+  - code_imp: Preliminary work on tracking cliented living mobs across Z-levels to
+      facilitate mob AI changes later
+  - code_imp: Tidied up some loc assignments
+  - code_imp: fixes the remaining loc assignments
+  ShizCalev:
+  - soundadd: Revamped gun dry-firing sounds.
+  - tweak: Everyone around you will now hear when your gun goes click. You don't want
+      to hear click when you want to hear bang!
+  SpaceManiac:
+  - code_imp: Remote signaler and other non-telecomms radio code has been cleaned
+      up.
+  Xhuis:
+  - rscadd: Grinding runed metal and brass now produces iron/blood and iron/teslium,
+      respectively.
+  - balance: As part of some code-side improvements, the amount of reagents you get
+      from grinding some objects might be slightly different.
+  - bugfix: Some grinding recipes that didn't work, like dead mice and glowsticks,
+      now do.
+  - bugfix: All-In-One grinders now correctly grind up everything, instead of one
+      thing at a time.
+  nicbn:
+  - imageadd: Closet sprites changed.
+2017-12-16:
+  Armhulen and lagnas2000 (+his team of amazing spriters):
+  - rscadd: Mi-go have entered your realm!
+  Robustin:
+  - balance: Marauder shields now take twice as long to regenerate and only recharge
+      one charge at a time.
+  - balance: Marauders now have 120hp down from 150hp.
+  - bugfix: The wizard event "race swap" should now stick to "safer" species.
+  - bugfix: Zombies are now properly stunned for a maximum of 2 seconds instead of
+      2/10ths of a second.
+  - tweak: Zombie slowdown adjusted from -2 to -1.6.
+  SpaceManiac:
+  - bugfix: The shuttle will no longer be autocalled if the round has already ended.
+  Xhuis:
+  - tweak: Vitality matrices don't have visible messages when someone crosses them
+      anymore.
+2017-12-17:
+  More Robust Than You:
+  - code_imp: Changed roundend sounds and lobby music to use one proc for choosing
+      sounds
+  - server: You can now easily host roundstart sounds without changing the code!
+  - config: RIP in shit round_start_sounds.txt
+  XDTM:
+  - rscadd: A few new traumas have been added.
+  - balance: Thresholds to get brain traumas have been lowered, as they currently
+      pretty much only trigger if you intentionally chug impedrezene.
+  - tweak: Melee head hits deal minor brain damage. Crits still do a significant amount.
+  - tweak: Nuke Op implants no longer trigger on deathgasp. (They still explode on
+      death)
+  - tweak: You'll now receive messages when crossing certain brain damage thresholds.
+  - tweak: Split Personalities are instructed not to suicide while in control.
+  - tweak: Godwoken Syndrome now randomly sends Voice of God commands, instead of
+      being controllable.
+  Xhuis:
+  - bugfix: Clockcult power alerts will no longer show outside of the clockcult gamemode
+      (they could be triggered by scarabs.)
+  ninjanomnom:
+  - bugfix: You can use the old non-hotkey mode text input behavior (keyboard input
+      automatically directed at the text input box) by changing your hotkey mode in
+      preferences
+  - rscadd: You can use Shift+E or Shift+B for belt/backpack respectively to quickly
+      put in your held item or take out the most recently added item.
+2017-12-18:
+  AnturK:
+  - rscadd: Repeated messages will now be squashed in the chat.
+  Cyberboss:
+  - bugfix: Allied station communications are back, now with potentially multiple
+      stations
+  Naksu:
+  - tweak: Hostile mobs on z-levels without living players will now conserve their
+      efforts and simply not run AI routines at all. Also, idling mob routines should
+      be significantly cheaper on non-station Z-levels.
+  ShizCalev:
+  - soundadd: Added new sounds to guns when reloading.
+  - bugfix: Cartridges and casings ejected from guns will now make the proper sound!
+  Xhuis:
+  - bugfix: Microwave sound loops now correctly stop when it breaks or is otherwise
+      interrupted mid-cook.
+  coiax:
+  - rscadd: A lollipop dispenser in "dispense lollipops" mode can push the lollipop
+      straight into the targets hand, rather than getting it dirty on the floor first.
+  - tweak: Aliens (and humans with alien organs) will have a prompt if they try to
+      create resin structures or lay eggs atop vents or scrubbers.
+  nicbn:
+  - bugfix: Now the chem smoke machine uses stock parts for volume and range.
+  ninjanomnom:
+  - bugfix: Decals should now rotate the correct way around.
+  oranges:
+  - tweak: Dance machine will not play tracks to you if you have instruments turned
+      off
+2017-12-19:
+  More Robust Than You:
+  - tweak: Jungle Fever cannot be cured anymore
+  - bugfix: The Monkey Leaders' virus are now un-detectable by health scanners and
+      to the PANDEMIC now.
+  Shadowlight213:
+  - bugfix: Fixed captain's PDA showing unusable Toggle Remote Door menu option
+  XDTM:
+  - rscadd: Abductors can now see if people already have glands! Never worry about
+      abducting the same guy twice again.
+  - rscadd: Added the Mind Interface Device to the abductor shop for 2 Credits. Only
+      scientists can use it.
+  - rscadd: 'The MID has two modes: Transmit and Control.'
+  - rscadd: Transmit will allow you to send a message anytime, anywhere to the mind
+      of a target of your choice, regardless of language barriers. The message will
+      be anonymous, but abductor-like.
+  - rscadd: Control allows you to give a temporary directive to a target with an implanted
+      gland, that they MUST follow. Duration and amount of uses varies by gland type.
+      When a gland is spent, it will no longer respond to Control signals. The target
+      forgets ever receiving the objective when the duration ends.
+  coiax:
+  - balance: The codespeak manual now has unlimited uses and costs 3 TC.
+  - bugfix: Nuke ops can now purchase the codespeak manual, as was intended.
+  - rscadd: Golems can now wear labcoats.
+  kevinz000:
+  - rscadd: You can now joust with spears if you are riding on another mob, whether
+      it's a hapless cyborg or otherwise! Additional damage and stunchance will be
+      added per tile moved!
+  ninjanomnom:
+  - bugfix: Non movement keys pressed while moving no longer stop movement.
+2017-12-20:
+  AnturK:
+  - rscadd: You can enforce no smoking zones with a disarm aimed at the smokers mouth.
+  coiax:
+  - rscadd: A changeling will learn all languages from anyone they absorb.
+2017-12-21:
+  Fox McCloud:
+  - bugfix: Fixes arm implants being immune to EMPs
+  SpaceManiac:
+  - refactor: Telecomms and radio code has been cleaned up.
+  - tweak: The PDA message server is now a real piece of telecomms machinery.
+  - tweak: PDA logs now include the job as well as name of the participants.
+  - bugfix: The Syndicate frequency no longer hears its own messages twice.
+  - bugfix: Talking directly into a radio which is also hot-miked no longer double-talks.
+  - bugfix: Passing a space transition no longer interrupts pulls.
+  Xhuis:
+  - bugfix: You can no longer elect two Eminences simultaneously.
+  - bugfix: The Eminence no longer drifts in space.
+  - tweak: The Eminence's mass recall now works on unconscious servants.
+  - tweak: The Eminence's messages now have follow links for observers.
+  - balance: Floors blessed with holy water prevent servants from warping in and the
+      Eminence from crossing them.
+  - balance: The Eminence can never enter the Chapel.
+  coiax:
+  - rscadd: At the end of the round, all players can see who the antagonists are.
+  improvedname:
+  - bugfix: Corrects 357. speedloader in the autolathe
+  kevinz000:
+  - rscdel: Integrated circuit smoke circuits now require 10 units of reagents to
+      fire.
+  uraniummeltdown:
+  - rscadd: You can adjust line height in chat settings
+  - tweak: Default chat line height is slightly shorter, from 1.4 to 1.2
+2017-12-22:
+  Awesine:
+  - rscadd: added some things which happen to be mining scanner things to that gulag
+      thing
+  Kor:
+  - rscadd: During Christmas you will be able to click on the tree in the Chapel to
+      receive one present per round. That present can contain any item in the game.
+  Naksu:
+  - bugfix: frying oil actually works
+  WJohnston:
+  - tweak: Syndicate nuke op infiltrator shuttle is no longer lopsided.
+  kevinz000:
+  - rscadd: 'Clown modules have been added for cyborgs! Modules: Bikehorn, Airhorn,
+      instrumental bikehorn, clown stamp, multicolor paint, rainbow crayon, soap,
+      razor, purple lipstick, nonstunning selfcharging creampie cannon, nonslipping
+      selfcharging water sprayer, lollipop fabricator, metallic picket sign, mini
+      extinguisher, laughter reagent hypospray, and the ability to hug. experimental:
+      When emagged they get a fire spray, "super" laughter injector, and shocking
+      or crushing hugs. Also, the module is adminspawn only at the moment.'
+  - bugfix: Projectiles that pierce objects will no longer be thrown off course when
+      doing so!
+  - code_imp: Projectiles now use /datum/point/vectors for trajectory calculations.
+  - bugfix: Beam rifle reflections will no longer glitch out.
+2017-12-23:
+  Dax Dupont:
+  - bugfix: Borgs will no longer have their metal/glass/etc stacks commit sudoku when
+      it runs out of metal. They will also show the correct amount instead of a constant
+      of "1" on menu interaction.
+  Kor:
+  - rscadd: During Christmas you will be able to click on the tree in the Chapel to
+      receive one present per round. That present can contain any item in the game.
+  Robustin:
+  - tweak: The EMP door shocking effect has a new formula. Heavy EMP's will no longer
+      shock doors while light EMP's have a 10% chance (down from 13.33%).
+  coiax:
+  - balance: The kitchen gibber must be anchored in order to use.
+  - balance: The gibber requires bodies to have no external items or equipment.
+2017-12-24:
+  Frozenguy5:
+  - bugfix: Soapstones now give the correct time they were placed down.
+  More Robust Than You:
+  - tweak: Vending machines now use TGUI
+  SpaceManiac:
+  - bugfix: '"Download N research nodes" objective is now checked correctly again.'
+2017-12-25:
+  SpaceManiac:
+  - bugfix: The Syndicate radio channel works on the station properly again.
+  coiax:
+  - rscadd: Ghosts can now use the *spin and *flip emotes.
+  uraniummeltdown:
+  - rscadd: Examine a door assembly to check what custom name is set.
+2017-12-26:
+  Cyberboss:
+  - tweak: Objects that can have materials inserted into them only will do so on help
+      intent
+  PsyKzz:
+  - rscadd: Jaws of life can now cut handcuffs
+  SpaceManiac:
+  - admin: Play Internet Sound now has an option to show the song title to players.
+  XDTM:
+  - balance: Rebalanced healing symptoms.
+  - balance: Cellular Molding was replaced by Nocturnal Regeneration, which only works
+      in darkness.
+  - balance: All healing symptoms now heal both brute and burn damage, although the
+      basic ones will still be more effective on one damage type.
+  - balance: Plasma Fixation and Radioactive Metabolism heal toxin damage, offsetting
+      the damage done by their healing sources.
+  - balance: Changed healing symptoms' stats, generally making them less punishing.
+  Xhuis:
+  - balance: Medical supplies on all normal maps (Box, Meta, Delta, Omega, and Pubby)
+      are now behind ID-locked windoors. These windoors will become all-access during
+      red alert!
+  YPOQ:
+  - bugfix: Emagged cleanbots can acid people again
+  - bugfix: Headgear worn by monkeys can be affected by acid
+  ninjanomnom:
+  - bugfix: The auxiliary mining base can no longer be placed on top of lava, indestructible
+      turfs, or inside particularly large ruins.
+  - bugfix: The backup shuttle has it's own area now and you should no longer occasionally
+      be teleported there by the arena shuttle.
+  - bugfix: Cycling airlocks on shuttles should work correctly when rotated now.
+  - bugfix: Things like thermite which burned through walls straight to space now
+      stop on plating. You'll have to thermite it again to get to space.
+2017-12-27:
+  More Robust Than You:
+  - code_imp: Changed roundend sounds and lobby music to use one proc for choosing
+      sounds
+  - server: You can now easily host roundstart sounds without changing the code!
+  - config: RIP in shit round_start_sounds.txt
+  Nero1024:
+  - soundadd: blast doors and shutters will now play a sound when they open and close.
+  Robustin:
+  - bugfix: Hallucinations will no longer show open doors "bolting".
+  SpaceManiac:
+  - code_imp: The R&D console has been made more responsive by tweaking how design
+      icons are loaded.
+  Xhuis:
+  - rscadd: Maintenance drones and cogscarabs can now spawn with holiday-related hats
+      on some holidays!
+  coiax:
+  - rscadd: Deltastation now has christmas trees during seasonally appropriate times.
+  deathride58:
+  - bugfix: Praise the lord! The shift+scroll hotkey to zoom in/out as a ghost works
+      properly again!
+  kevinz000:
+  - rscadd: you can now pick up corgi's and pAIs, how disgustingly cute
+  - code_imp: Forensics is now a datum component.
+  - balance: NPC humans will now start leaving fingerprints on things they touch!
+2017-12-28:
+  Cyberboss:
+  - bugfix: Ghost lights will follow the ghost while orbiting
+  Robustin:
+  - bugfix: Splashing a book with ethanol should no longer produce errant messages.
+  - balance: Dead cultists can now be moved across the "line" on Reebe.
+2017-12-29:
+  CosmicScientist:
+  - rscadd: timestop now inverts the colours of those frozen in time!
+  Dax Dupont:
+  - bugfix: APCs and other wall mounted objects are no longer blocked by the secure
+      medbay storage parts.
+  - bugfix: Removed a duplicate radiation collector on Deltastation.
+  More Robust Than You:
+  - bugfix: The Radiance can now enter the chapel
+  - bugfix: Monkey chat should no longer have .k prefixed
+  - bugfix: Monkey leaders should actually get jungle fever now
+  Robustin:
+  - bugfix: The action button for spells should now accurately reflect when the spell
+      is on cooldown
+  - bugfix: You can now reliably use the button for "touch" spells to "recall" the
+      spell
+  SpaceManiac:
+  - code_imp: Explicit z-level checks have been changed to use defines.
+  XDTM:
+  - rscadd: 'Added a new reagent: Pax.'
+  - rscadd: Pax is made with Mindbreaker, Synaptizine and Water, and those affected
+      by it are forced to be nonviolent against living beings. At least, not directly.
+  coiax:
+  - rscadd: Adds an internal radio implant, allowing the use of the radio if you expect
+      to have your headset removed. Or if you don't have any ears or hands. It can
+      be purchased for 4 TC from any Syndicate uplink.
+  - rscadd: Nuke ops now buy special "syndicate intelligence potions" that automatically
+      insert an internal radio implant when used successfully. Cayenne can now participate
+      in your high level discussions.
+2017-12-30:
+  Cyberboss:
+  - tweak: Burial jumpsuits no longer have suit sensors
+  - tweak: The chemistry job has been removed from Omegastation. Medical doctors still
+      have full chemistry access
+  MrDoomBringer:
+  - imageadd: NanoTrasen has sent the station new spaceheaters! They look nicer now!
+  Xhuis:
+  - balance: Vitality matrices now apply Ichorial Stain when reviving a dead servant,
+      which prevents that servant from being revived again by vitality matrices for
+      a full minute.
+  - balance: Vitality matrices can't be placed adjacent to one another.
+  - balance: Brass skewers now damage and stun cyborgs.
+  - balance: Vitality matrices no longer drain people impaled on brass skewers.
+  - balance: Pressure sensors have 5 health again (down from 25.)
+  ninjanomnom:
+  - bugfix: Some changes to turfs like shuttles would result in un-initialized space
+      tiles being created. This has been fixed.
+2017-12-31:
+  Cyberboss:
+  - rscadd: Explosions now cause camera shake based on intensity and distance
+  F-OS:
+  - bugfix: Last resort now requires a confirmation
+  Naksu:
+  - code_imp: loot drop spawners now assign their pixel offsets to the items they
+      spawn, also have a "fanout" setting to distribute items in a neat fashion like
+      in omega/delta's core and some tech storages.
+  - tweak: replaced several law boards in uploads with spawners, the net result being
+      one more board in uploads that may be a duplicate asimov (but hopefully isn't)
+  SpaceManiac:
+  - bugfix: Viewing photos sent by PDA message works again.
+  WJohnston:
+  - rscadd: Redesigned the entire syndicate lavaland base to be more stylish, have
+      functioning power and atmos as well as a turbine to play with.
+  XDTM:
+  - bugfix: Fixed a hallucination that would say [target.first_name()] instead of
+      the actual name.

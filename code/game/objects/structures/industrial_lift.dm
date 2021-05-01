@@ -209,7 +209,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		tram_part.travel_distance = 0
 		tram_part.travelling = FALSE
 		if(prob(15) || locate(/mob/living) in tram_part.lift_load) //always go boom on people on the track
-			explosion(get_turf(tram_part),rand(0,1),2,3) //50% chance of gib
+			explosion(tram_part, devastation_range = rand(0,1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
 		qdel(tram_part)
 
 /obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/lift_master_datum)

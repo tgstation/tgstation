@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "fixes heretics being given an incorrect spell path, leading to heretic being given \"spell\" spells"

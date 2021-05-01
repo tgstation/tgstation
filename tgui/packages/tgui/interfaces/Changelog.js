@@ -78,7 +78,7 @@ export class Changelog extends Component {
         const errorRegex = /^Cannot find/;
 
         if (errorRegex.test(result)) {
-          const timeout = 250 + attemptNumber * 500;
+          const timeout = 50 + attemptNumber * 100;
 
           self.setData(
             'Loading changelog data' + '.'.repeat(attemptNumber + 3)
@@ -215,6 +215,15 @@ export class Changelog extends Component {
           <b>Spriters: </b>
           Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange,
           I Said No
+        </p>
+        <p>
+          Traditional Games Space Station 13 is thankful to the
+          GoonStation 13 Development Team for its work on the game up to the
+          {' r4407 release. The changelog for changes up to r4407 can be seen '}
+          <a href="https://wiki.ss13.co/Changelog#April_2010">
+            here
+          </a>
+          .
         </p>
         <p>
           {'Except where otherwise noted, Goon Station 13 is licensed under a '}
