@@ -1352,28 +1352,47 @@
  *
  * Must return  parent proc ..() in the end if overridden
  */
-/atom/proc/tool_act(mob/living/user, obj/item/I, tool_type)
-	var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
-	var/signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, I, processing_recipes)
-	if(processing_recipes.len)
-		process_recipes(user, I, processing_recipes)
-	if(QDELETED(I))
-		return TRUE
-	switch(tool_type)
-		if(TOOL_CROWBAR)
-			. = crowbar_act(user, I)
-		if(TOOL_MULTITOOL)
-			. = multitool_act(user, I)
-		if(TOOL_SCREWDRIVER)
-			. = screwdriver_act(user, I)
-		if(TOOL_WRENCH)
-			. = wrench_act(user, I)
-		if(TOOL_WIRECUTTER)
-			. = wirecutter_act(user, I)
-		if(TOOL_WELDER)
-			. = welder_act(user, I)
-		if(TOOL_ANALYZER)
-			. = analyzer_act(user, I)
+/atom/proc/tool_act(mob/living/user, obj/item/I, tool_type, is_right_clicking)
+	var/signal_result
+	if(!is_right_clicking) // Left click first for sensibility
+		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
+		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, I, processing_recipes)
+		if(processing_recipes.len)
+			process_recipes(user, I, processing_recipes)
+		if(QDELETED(I))
+			return TRUE
+		switch(tool_type)
+			if(TOOL_CROWBAR)
+				. = crowbar_act(user, I,)
+			if(TOOL_MULTITOOL)
+				. = multitool_act(user, I)
+			if(TOOL_SCREWDRIVER)
+				. = screwdriver_act(user, I)
+			if(TOOL_WRENCH)
+				. = wrench_act(user, I)
+			if(TOOL_WIRECUTTER)
+				. = wirecutter_act(user, I)
+			if(TOOL_WELDER)
+				. = welder_act(user, I)
+			if(TOOL_ANALYZER)
+				. = analyzer_act(user, I)
+	else
+		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, I)
+		switch(tool_type)
+			if(TOOL_CROWBAR)
+				. = secondary_crowbar_act(user, I,)
+			if(TOOL_MULTITOOL)
+				. = secondary_multitool_act(user, I)
+			if(TOOL_SCREWDRIVER)
+				. = secondary_screwdriver_act(user, I)
+			if(TOOL_WRENCH)
+				. = secondary_wrench_act(user, I)
+			if(TOOL_WIRECUTTER)
+				. = secondary_wirecutter_act(user, I)
+			if(TOOL_WELDER)
+				. = secondary_welder_act(user, I)
+			if(TOOL_ANALYZER)
+				. = secondary_analyzer_act(user, I)
 	if(. || signal_result & COMPONENT_BLOCK_TOOL_ATTACK) //Either the proc or the signal handled the tool's events in some way.
 		return TRUE
 
@@ -1430,12 +1449,20 @@
 //! Tool-specific behavior procs.
 ///
 
-///Crowbar act
-/atom/proc/crowbar_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with crowbar capabilities is used to left click an object
+/atom/proc/crowbar_act(mob/living/user, obj/item/tool)
 	return
 
-///Multitool act
-/atom/proc/multitool_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with crowbar capabilities is used to right click an object
+/atom/proc/secondary_crowbar_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with multitool capabilities is used to left click an object
+/atom/proc/multitool_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with multitool capabilities is used to right click an object
+/atom/proc/secondary_multitool_act(mob/living/user, obj/item/tool)
 	return
 
 ///Check if the multitool has an item in it's data buffer
@@ -1446,24 +1473,44 @@
 		return FALSE
 	return TRUE
 
-///Screwdriver act
-/atom/proc/screwdriver_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with screwdriver capabilities is used to left click an object
+/atom/proc/screwdriver_act(mob/living/user, obj/item/tool)
 	return
 
-///Wrench act
-/atom/proc/wrench_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with screwdriver capabilities is used to right click an object
+/atom/proc/secondary_screwdriver_act(mob/living/user, obj/item/tool)
 	return
 
-///Wirecutter act
-/atom/proc/wirecutter_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with wrench capabilities is used to left click an object
+/atom/proc/wrench_act(mob/living/user, obj/item/tool)
 	return
 
-///Welder act
-/atom/proc/welder_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with wrench capabilities is used to right click an object
+/atom/proc/secondary_wrench_act(mob/living/user, obj/item/tool)
 	return
 
-///Analyzer act
-/atom/proc/analyzer_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with wirecutter capabilities is used to left click an object
+/atom/proc/wirecutter_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with wirecutter capabilities is used to right click an object
+/atom/proc/secondary_wirecutter_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with welder capabilities is used to left click an object
+/atom/proc/welder_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with welder capabilities is used to right click an object
+/atom/proc/secondary_welder_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with analyzer capabilities is used to left click an object
+/atom/proc/analyzer_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with analyzer capabilities is used to right click an object
+/atom/proc/secondary_analyzer_act(mob/living/user, obj/item/tool)
 	return
 
 ///Generate a tag for this atom
