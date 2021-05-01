@@ -64,7 +64,7 @@ export const MESSAGE_TYPES = [
     type: MESSAGE_TYPE_INFO,
     name: 'Info',
     description: 'Non-urgent messages from the game and items',
-    selector: '.notice:not(.pm), .adminnotice, .info, .sinister, .cult, .infoplain, .announce, .hear, .smallnotice, .motd',
+    selector: '.notice:not(.pm), .adminnotice, .info, .sinister, .cult, .infoplain, .announce, .hear, .smallnotice, .motd, .holoparasite',
   },
   {
     type: MESSAGE_TYPE_WARNING,
