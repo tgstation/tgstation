@@ -92,8 +92,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/mode = CANISTER_TIER_1
 	///Window overlay showing the gas inside the canister
 	var/image/window
-	///The value the pressure was at last check, if it changes refresh the window
-	var/window_pressure_check
 
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
@@ -423,9 +421,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		if((10) to (5 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-0")
 
-	if(air_pressure != window_pressure_check)
-		window_pressure_check = air_pressure
-		update_window()
+	update_window()
 
 /obj/machinery/portable_atmospherics/canister/update_greyscale()
 	. = ..()
