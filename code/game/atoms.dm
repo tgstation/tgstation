@@ -1380,19 +1380,19 @@
 		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, I)
 		switch(tool_type)
 			if(TOOL_CROWBAR)
-				. = secondary_crowbar_act(user, I,)
+				. = crowbar_act_secondary(user, I,)
 			if(TOOL_MULTITOOL)
-				. = secondary_multitool_act(user, I)
+				. = multitool_act_secondary(user, I)
 			if(TOOL_SCREWDRIVER)
-				. = secondary_screwdriver_act(user, I)
+				. = screwdriver_act_secondary(user, I)
 			if(TOOL_WRENCH)
-				. = secondary_wrench_act(user, I)
+				. = wrench_act_secondary(user, I)
 			if(TOOL_WIRECUTTER)
-				. = secondary_wirecutter_act(user, I)
+				. = wirecutter_act_secondary(user, I)
 			if(TOOL_WELDER)
-				. = secondary_welder_act(user, I)
+				. = welder_act_secondary(user, I)
 			if(TOOL_ANALYZER)
-				. = secondary_analyzer_act(user, I)
+				. = analyzer_act_secondary(user, I)
 	if(. || signal_result & COMPONENT_BLOCK_TOOL_ATTACK) //Either the proc or the signal handled the tool's events in some way.
 		return TRUE
 
@@ -1454,7 +1454,7 @@
 	return
 
 /// Called on an object when a tool with crowbar capabilities is used to right click an object
-/atom/proc/secondary_crowbar_act(mob/living/user, obj/item/tool)
+/atom/proc/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	return
 
 /// Called on an object when a tool with multitool capabilities is used to left click an object
@@ -1462,7 +1462,7 @@
 	return
 
 /// Called on an object when a tool with multitool capabilities is used to right click an object
-/atom/proc/secondary_multitool_act(mob/living/user, obj/item/tool)
+/atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return
 
 ///Check if the multitool has an item in it's data buffer
@@ -1478,7 +1478,7 @@
 	return
 
 /// Called on an object when a tool with screwdriver capabilities is used to right click an object
-/atom/proc/secondary_screwdriver_act(mob/living/user, obj/item/tool)
+/atom/proc/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	return
 
 /// Called on an object when a tool with wrench capabilities is used to left click an object
@@ -1486,7 +1486,7 @@
 	return
 
 /// Called on an object when a tool with wrench capabilities is used to right click an object
-/atom/proc/secondary_wrench_act(mob/living/user, obj/item/tool)
+/atom/proc/wrench_act_secondary(mob/living/user, obj/item/tool)
 	return
 
 /// Called on an object when a tool with wirecutter capabilities is used to left click an object
@@ -1494,7 +1494,7 @@
 	return
 
 /// Called on an object when a tool with wirecutter capabilities is used to right click an object
-/atom/proc/secondary_wirecutter_act(mob/living/user, obj/item/tool)
+/atom/proc/wirecutter_act_secondary(mob/living/user, obj/item/tool)
 	return
 
 /// Called on an object when a tool with welder capabilities is used to left click an object
@@ -1502,7 +1502,7 @@
 	return
 
 /// Called on an object when a tool with welder capabilities is used to right click an object
-/atom/proc/secondary_welder_act(mob/living/user, obj/item/tool)
+/atom/proc/welder_act_secondary(mob/living/user, obj/item/tool)
 	return
 
 /// Called on an object when a tool with analyzer capabilities is used to left click an object
@@ -1510,7 +1510,7 @@
 	return
 
 /// Called on an object when a tool with analyzer capabilities is used to right click an object
-/atom/proc/secondary_analyzer_act(mob/living/user, obj/item/tool)
+/atom/proc/analyzer_act_secondary(mob/living/user, obj/item/tool)
 	return
 
 ///Generate a tag for this atom
