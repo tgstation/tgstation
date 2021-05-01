@@ -122,7 +122,7 @@
 /turf/open/floor/oldshuttle
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "floor"
-	floor_tile = /obj/item/stack/tile/iron
+	floor_tile = /obj/item/stack/tile/iron/base
 
 /turf/open/floor/bluespace
 	slowdown = -1

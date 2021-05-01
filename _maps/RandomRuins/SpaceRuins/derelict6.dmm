@@ -124,7 +124,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
 "ay" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -146,7 +146,7 @@
 /turf/template_noop,
 /area/template_noop)
 "aB" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
@@ -245,7 +245,7 @@
 	},
 /area/ruin/unpowered)
 "aQ" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "aR" = (
@@ -380,7 +380,7 @@
 	},
 /area/ruin/unpowered)
 "bq" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},

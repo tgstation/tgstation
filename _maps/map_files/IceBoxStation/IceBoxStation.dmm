@@ -43,7 +43,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "aan" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "aao" = (
