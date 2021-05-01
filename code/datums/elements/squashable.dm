@@ -8,6 +8,7 @@
 	var/squash_flags = NONE
 	///Special callback to call on squash instead, for things like hauberoach
 	var/datum/callback/on_squash_callback
+	///signal list given to connect_loc
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/OnCrossed,
 	)

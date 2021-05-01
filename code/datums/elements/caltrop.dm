@@ -19,6 +19,11 @@
 	///Miscelanous caltrop flags; shoe bypassing, walking interaction, silence
 	var/flags
 
+	///given to connect_loc to listen for something moving over target
+	var/static/list/crossed_connections = list(
+		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+	)
+
 /datum/element/caltrop/Attach(datum/target, min_damage = 0, max_damage = 0, probability = 100, flags = NONE)
 	. = ..()
 	if(!isatom(target))
@@ -30,18 +35,9 @@
 	src.flags = flags
 
 	if(ismovable(target))
-		var/atom/movable/movable_target = target
-		RegisterSignal(movable_target, COMSIG_MOVABLE_MOVED, .proc/re_register_crossed)
-		//override = TRUE because there could be multiple objects with the same caltrop element instance registering to the same loc
-		RegisterSignal(movable_target.loc, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, override = TRUE)
+		AddElement(/datum/element/connect_loc, target, crossed_connections)
 	else
-		RegisterSignal(get_turf(target), COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
-
-/datum/element/caltrop/proc/re_register_crossed(atom/movable/target, atom/oldloc, dir, forced)
-	SIGNAL_HANDLER
-	if(oldloc)
-		UnregisterSignal(oldloc, COMSIG_MOVABLE_CROSSED)
-	RegisterSignal(target.loc, COMSIG_MOVABLE_CROSSED, .proc/on_crossed, TRUE)
+		RegisterSignal(get_turf(target), COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
 
 /datum/element/caltrop/proc/on_crossed(atom/caltrop, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -93,3 +89,8 @@
 
 	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
 	H.Paralyze(60)
+
+/datum/element/caltrop/Detach(datum/target)
+	. = ..()
+	if(ismovable(target))
+		RemoveElement(/datum/element/connect_loc, target, crossed_connections)

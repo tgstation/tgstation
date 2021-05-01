@@ -107,7 +107,6 @@ All ShuttleMove procs go here
 
 	update_loc(newT)
 
-
 	return TRUE
 
 // Called on atoms after everything has been moved

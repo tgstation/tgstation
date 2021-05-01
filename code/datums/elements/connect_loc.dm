@@ -52,8 +52,7 @@
 		//override=TRUE because more than one connect_loc element instance tracked object can be on the same loc
 
 	if (!existing && isturf(tracked.loc))
-		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change, override=TRUE)
-		//same as above
+		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change)
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
 	targets[old_loc] -= tracked

@@ -584,6 +584,12 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	CRASH("Uncross() should not be being called, please read the doc-comment for it for why.")
 
+/**
+ * default byond proc that is normally called on everything inside the previous turf
+ * a movable was in after moving to its current turf
+ * this is wasteful since the vast majority of objects do not use Uncrossed
+ * use connect_loc to register to COMSIG_MOVABLE_UNCROSSED instead
+ */
 /atom/movable/Uncrossed(atom/movable/AM)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	CRASH("/atom/movable/Uncrossed() was called")

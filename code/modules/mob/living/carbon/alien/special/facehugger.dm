@@ -32,15 +32,12 @@
 
 	var/attached = 0
 
-/obj/item/clothing/mask/facehugger/Initialize()
+/obj/item/clothing/mask/facehugger/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
-
-/obj/item/clothing/mask/facehugger/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/item/clothing/mask/facehugger/lamarr
