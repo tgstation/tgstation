@@ -250,8 +250,10 @@
 				user.put_in_hands(beaker_out)
 		beaker = I
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		if(beaker_out) to_chat(user, "<span class='notice'>You remove [beaker_out] and insert [I] into [src].</span>")
-		else to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		if(beaker_out)
+			to_chat(user, "<span class='notice'>You remove [beaker_out] and insert [I] into [src].</span>")
+		else
+			to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		update_appearance()
 	else
 		return ..()
