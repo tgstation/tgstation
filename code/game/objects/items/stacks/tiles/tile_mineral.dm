@@ -119,7 +119,7 @@
 	name = "titanium tile"
 	singular_name = "titanium floor tile"
 	desc = "Sleek titanium tiles, used for shuttles."
-	icon_state = "tile_shuttle"
+	icon_state = "tile_titanium"
 	inhand_icon_state = "tile-shuttle"
 	turf_type = /turf/open/floor/mineral/titanium
 	mineralType = "titanium"
