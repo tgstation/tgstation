@@ -246,7 +246,8 @@
 		if(!user.transferItemToLoc(I, src))
 			return
 		if(beaker_out)
-			eject_beaker()
+			if(user && Adjacent(user) && user.can_hold_items())
+				user.put_in_hands(beaker_out)
 		beaker = I
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		if(beaker_out) to_chat(user, "<span class='notice'>You remove [beaker_out] and insert [I] into [src].</span>")
