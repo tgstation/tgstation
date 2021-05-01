@@ -949,7 +949,3 @@
   - admin: reagent transferring now logs purity
   - rscdel: removed delta roundstart power tools, the room no longer made sense being
       what it was without that so i turned it into a smoking room style.
-2021-04-30:
-  OmegaDarkPotato:
-  - balance: Multiplies corazargh's metabolization by 100x so it's no longer hilariously
-      overpowered and only slightly overpowered now. No more 4u deathmixes.
