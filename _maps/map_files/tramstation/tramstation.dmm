@@ -1591,6 +1591,9 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/machinery/computer/cryopod{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "afH" = (
@@ -18181,6 +18184,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
+"cKs" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/commons/locker)
 "cKC" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -58980,6 +58995,18 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/commons/dorms)
+"tfY" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/commons/locker)
 "tfZ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Library"
@@ -93851,9 +93878,9 @@ aSb
 gmg
 arc
 suF
-aDH
-aDH
-aDH
+cKs
+cKs
+cKs
 aUD
 wGT
 aRW
@@ -94108,9 +94135,9 @@ aSd
 joB
 aBx
 suF
-aDH
-aDH
-aDH
+tfY
+tfY
+tfY
 aUD
 aks
 aRW
