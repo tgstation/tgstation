@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Midround events will now properly poll again."
