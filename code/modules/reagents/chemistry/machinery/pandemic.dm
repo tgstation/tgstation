@@ -138,9 +138,12 @@
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
 	if(beaker)
+		var/obj/item/reagent_containers/beaker_out = beaker
 		try_put_in_hand(beaker, usr)
-		beaker = null
-		update_appearance()
+	    beaker = null
+        update_appearance()
+		return beaker_out
+	return null
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -236,18 +239,24 @@
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
 		if(machine_stat & (NOPOWER|BROKEN))
-			return
-		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-
-		beaker = I
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		update_appearance()
+            return
+		var/obj/item/reagent_containers/beaker_out
+        if(beaker)
+            to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
+            return
+		    beaker_out = eject_beaker() //now with 100% more swapping
+        if(!user.transferItemToLoc(I, src))
+            return
+        if(beaker_out)
+            if(user && Adjacent(user) && user.can_hold_items())
+                user.put_in_hands(beaker_out)
+        beaker = I
+        to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		if(beaker_out) to_chat(user, "<span class='notice'>You remove [beaker_out] and insert [I] into [src].</span>")
+		else to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+        update_appearance()
 	else
-		return ..()
+        return ..()
 
 /obj/machinery/computer/pandemic/on_deconstruction()
 	eject_beaker()
