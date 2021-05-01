@@ -58321,7 +58321,7 @@
 	name = "Privacy Shutters Control";
 	pixel_x = -24;
 	pixel_y = -6;
-	req_access_txt = list(57)
+	req_access_txt = "list(57)"
 	},
 /obj/machinery/light_switch{
 	pixel_x = -25;
