@@ -1,0 +1,4 @@
+author: "Celotajs"
+delete-after: True
+changes: 
+  - qol: "The roulette TGUI now looks a bit better"

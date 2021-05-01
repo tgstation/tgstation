@@ -1,0 +1,306 @@
+2015-09-01:
+  Dorsidwarf:
+  - tweak: Changelings' Digital Camoflague ability now renders them totally invisible
+      to the AI
+  ExcessiveUseOfCobblestone:
+  - rscadd: Added health analyzer to the autolathe.
+  - tweak: Moved Cloning board to Medical Machinery section.
+  - tweak: Moved Telesci stuff to Teleporter section.
+  Fox P McCloud:
+  - tweak: Adds the emitter board to to the circuit imprinter for R&D.
+  Gun Hog:
+  - tweak: The Disable RCD Malfunction power is now Destroy RCDs! It costs 25 CPU
+      (down from 50), causes RCDs to explode, can be used multiple times, and no longer
+      affects cyborgs.
+  Kor:
+  - rscadd: Revheads and Gang leaders now spawn with chameleon security HUDs, for
+      keeping track of loyalty implanted crew.
+  - rscadd: Syndicate thermals now have a chameleon function as well, allowing you
+      to disguise the goggles to match your job.
+  Miauw:
+  - tweak: Edaggers actually work now and have been buffed to 18 brute and 2 TC.
+  Oisin100:
+  - rscadd: Nanotransen discover ancient human knowledge confirming that trees produce
+      Oxygen From Carbon Dioxide
+  - tweak: Trees now require Oxygen to live. And will die in extreme temperatures
+  Xhuis:
+  - rscadd: The arcade machines have been stocked with a xenomorph action figure that
+      comes with realistic sounds!
+  - rscadd: Darksight now has its own icon.
+  - rscadd: Empowered thralls have been added. While obvious, they are more powerful
+      and can resist dethralling while conscious. Only 5 can exist at one time.
+  - rscadd: Shadowlings can now change their night vision radius by using the action
+      button their eyes (glasses) now provide.
+  - tweak: Torches are dimmer, being as bright as flashlights, and no longer fit on
+      belts.
+  - tweak: Black Recuperation now has a 1 minute cooldown, down from 5. It can also
+      be used to empower living thralls.
+  - tweak: Guise can now be used outside of darkness and makes the user more invisible
+      than before.
+  - bugfix: Enthrall now functions properly when a shadowling is not hatched, allowing
+      them to enthrall up to 5 people before hatching.
+  xxalpha:
+  - tweak: Blood crawling is now a spell.
+  - rscadd: Engineering cyborgs now have a constant magpulse.
+  - tweak: Changed foam spreading to be like gas spreading.
+2015-09-05:
+  Shadowlight213:
+  - rscadd: The syndicate have taken notice of the camera bug's woeful underuse, and
+      have managed to combine all of its upgrades into one!
+2015-09-06:
+  Fox P McCloud:
+  - bugfix: Fixes gold sheets having plasma as their material.
+  Xhuis:
+  - bugfix: Nanotrasen inspectors have discovered a fault in the buckles of chairs
+      and beds. This has been fixed and you are now able to buckle again.
+2015-09-07:
+  xxalpha:
+  - tweak: Changed xeno weed spread to be like gas spread.
+2015-09-09:
+  Joan:
+  - rscadd: New blob chemical; Cryogenic Liquid. Cools down targets.
+  - tweak: Tweaked names, colors, and effects of remaining blob chemicals;
+  - tweak: Skin Ripper is now Ripping Tendrils and does minor stamina damage, in addition
+      to the brute damage.
+  - tweak: Toxic Goop is now Envenomed Filaments and injects targets with spore toxin
+      and causes hallucinations, in addition to the toxin damage.
+  - tweak: Lung Destroying Toxin is now Lexorin Jelly and does brute damage instead
+      of toxin damage. The oxygen loss it causes can also no longer crit you in one
+      hit.
+  - tweak: Explosive Gelatin is now Kinetic Gelatin and does random brute damage,
+      instead of randomly exploding targets.
+  - rscdel: Skin Melter, Radioactive Liquid, Omnizine, and Space Drugs blob chemicals
+      are gone.
+  bgobandit:
+  - rscadd: Nanotrasen has commissioned two new corporate motivational posters for
+      your perusal and edification.
+  - rscadd: Nanotrasen also wishes to remind the crew that non-authorized posters
+      ARE CONTRABAND. Especially those new ones with Rule 34. Perverts.
+2015-09-11:
+  CosmicScientist:
+  - tweak: Drone dispenser now has a var for its cooldown, get var editing.
+2015-09-13:
+  Fox P McCloud:
+  - bugfix: Fixes an exploit and inconsistency issue with a few material amounts on
+      a few items and designs.
+  - bugfix: Fixes Bibles/holy books not properly revealing runes.
+  - bugfix: fixes stimulants not properly applying its speedbuff.
+  Gun Hog:
+  - tweak: Nanotrasen scientists have proposed a refined prototype design for the
+      nuclear powered Advanced Energy guns to include a taser function along with
+      the disable and kill modes. Addtionally, they have modified the chassis blueprint
+      to include a hardpoint for attachable seclites.
+  Iamgoofball:
+  - tweak: Reduced the cost of changeling armor to 1 and increased it's armor values.
+  Jordie0608:
+  - rscadd: You can now view the reason of a jobban from character setup.
+  xxalpha:
+  - rscadd: Drying agent splashed on galoshes will turn them into absorbent galoshes
+      that dry wet floors they walk on.
+  - rscadd: Drying agent can be made with ethanol, sodium and stable plasma.
+2015-09-14:
+  Fox P McCloud:
+  - tweak: Adds a mining voucher to the Quartermaster's locker.
+  Thunder12345:
+  - rscadd: The captain has been issued with a new jacket for formal occasions.
+  - tweak: Research has shown that is is possible to build technological shotshells
+      without the need for silver. The design blueprints supplied to your station
+      have been updated accordingly.
+  xxalpha:
+  - bugfix: Fixed not being able to grab things from storage while inside aliens.
+  - bugfix: Fixed two progress bars when devouring.
+  - rscadd: Shields will now block alien hunter pounces.
+  - tweak: Alien hunters health reduced to 125 from 150. Alien sentinels health increased
+      to 150 from 125.
+  - tweak: Alien hunters will no longer be transparent when stalking, this ability
+      was given to alien sentinels.
+  - tweak: Alien slashing now deals constant 20 damage but has a chance to miss.
+  - tweak: Reduced alien disarm stun duration vs cyborgs, from 7 seconds to 2 seconds.
+  - tweak: Alien sentinels now move as fast as humans.
+  - tweak: Facehuggers and alien eggs layers increased to be higher than resin walls.
+2015-09-16:
+  Razharas:
+  - tweak: Replaces the space cube with space torus. Space levels are now each round
+      randomly placed on the grid with at least one neigbour, any side of the space
+      level that doesnt have neigbour will loop either onto itself or onto the opposite
+      side of the furthest straight-connected space level on the same axis.
+  Supermichael777:
+  - tweak: The detomax pda cartridge no longer blows its user up.
+  Xhuis:
+  - experimental: Cultists will now be able to create all runes without needing to
+      research or collect words. This is subject to change.
+  - tweak: Cult code has been significantly improved and will run much faster and
+      be more responsive.
+  - tweak: Conversion runes can now be invoked with less than three cultists, but
+      take a small amount of time to convert the target.
+  - tweak: Armor runes will only outfit the user with standard armor, rather than
+      having different loadouts for different worn clothing items.
+  - tweak: Astral Journey runes will now pull the user back to the rune if they are
+      moved. The user also has a different color while on the rune.
+  - tweak: Free Cultist has been removed. Summon Cultist now works even if the target
+      is restrained.
+  - tweak: Sacrifice and Raise Dead runes now offer more precise target selection.
+  - soundadd: Sacrifice runes now have different sounds, and gib rather than dust
+      (assuming the target is not a silicon).
+  - tweak: There is no longer a maximum cap on active runes.
+  - tweak: Runes have been renamed to Rites. For instance, the Teleport rune is now
+      the Rite of Translocation. The only exception to this is the rune to summon
+      Nar-Sie, which is a Ritual.
+  - tweak: Nar-Sie now has a new summon sound.
+  - tweak: The Nar-Sie summon rune has a new 3x3 sprite.
+  - tweak: The stun rune no longer stuns cultists.
+  - rscadd: The Rite of False Truths had been added, that will make all nearby runes
+      appear as if they were drawn in crayon.
+  - rscadd: Runes can now be examined by cultists to determine their name, function,
+      and words.
+  phil235:
+  - tweak: Riot and energy shield users now have a chance to block things thrown at
+      them as well as xeno leaping at them.
+2015-09-17:
+  bgobandit:
+  - rscadd: Meatspikes can now be constructed and deconstructed with metal and rods,
+      as well as wrenched and unwrenched! Humans and corgis can be used on them as
+      well.
+  xxalpha:
+  - tweak: 'Reworked nuke deconstruction: Standardized steps, partial reparation (use
+      metal) to contain radiation.'
+  - rscadd: New portable nuke, self-destruct terminal, syndie screwdriver sprites
+      by WJohnston.
+2015-09-19:
+  Xhuis:
+  - rscadd: Shadowlings are now able to sacrifice a thrall to extend the shuttle timer
+      by 15 minutes. This will not stack.
+  - bugfix: Additional abilities granted by Collective Mind will now properly have
+      icons.
+  - bugfix: Shadowlings now have their antagonism removed if turned into a silicon.
+  - tweak: The order of abilities unlocked by Collective Mind has been changed. It
+      now starts with Sonic Screech.
+  - tweak: Veil now destroys glowshrooms in a much larger radius than before.
+2015-09-20:
+  Xhuis:
+  - tweak: Rites have been renamed to their old runes, which reflect their functionality.
+  - tweak: Examining a talisman no longer opens the paper GUI.
+  - tweak: Armor talismans have been re-added.
+  - tweak: EMP talismans now have the same range as their rune counterpart.
+  - tweak: Some talismans now cost health to use, costing more or less depending on
+      their effect.
+  - tweak: Scribing runes now deals 0.1 brute damage instead of 1.
+  - tweak: Bind Talisman runes no longer deal 5 brute damage when invoking.
+  - tweak: Rune shapes and colors are now identical to their old versions.
+  - tweak: Conversion runes can no longer be used by yourself, and require a static
+      2 cultists.
+2015-09-22:
+  Kor:
+  - rscadd: A new admin command, Offer Control to Ghosts, can be found in the view
+      variables menu. It will randomly select a willing candidate from among dead
+      players, providing a fair method of replacing antagonists.
+  Xhuis:
+  - tweak: When a morph changes form, a message is shown to nearby people. This also
+      happens upon undisguising.
+  - tweak: Morphs now have an attack sound and message.
+  - tweak: The Spawn Morph event now plays a sound to the chosen candidate.
+  - tweak: Slaughter demons (and other creatures with blood crawl) now take two seconds
+      to emerge from blood pools. Entering is still instantaneous.
+  - tweak: The demon heart's sprite has been updated.
+  - tweak: Eating a demon heart now surgically implants the heart into your chest.
+      If the heart is removed from you, you lose the ability. Someone else can eat
+      the heart to gain the ability.
+  - tweak: Blood Crawl no longer has a 1-second cooldown, instead having none.
+  - tweak: You can no longer hold items when attempting to Blood Crawl, nor can you
+      use any items while Blood Crawling.
+  - tweak: Creatures that can Blood Crawl now take two seconds to emerge from blood
+      pools.
+  - tweak: Slaughter demons now store devoured creatures, and will drop them upon
+      death.
+  - tweak: Revenants now have the ability to speak to the dead.
+  - tweak: Revenant abilities now have icons.
+  - tweak: Malfunction no longer EMPs a specific area - it will instead EMP nearby
+      machines directly and stun cyborgs. Dominators are immune to this.
+  - tweak: Revenants now have directional sprites.
+  - tweak: Overload Lights now has a smaller radius.
+  - tweak: Defile no longer corrupts tiles.
+  - tweak: When glimmering residue reforms, the game will attempt to place the old
+      revenant in control of the new one. If this cannot be done, it will find a random
+      candidate.
+  - tweak: Revenants can no longer see ghosts. They can see other revenants, however,
+      and ghosts can still see revenants.
+  - tweak: The Spawn Slaughter Demon event now plays a sound to the chosen candidate.
+  phil235:
+  - rscdel: Lizards and other non human species can no longer acquire the hulk mutation.
+      Hulks no longer have red eyes
+  - bugfix: Monkeys now always have dna and a blood type (compatible with humans).
+  - bugfix: Monkey transformation no longer deletes the human's clothes.
+  - bugfix: Space Retrovirus now correctly transfers dna SE to the infected human.
+  - bugfix: Changeling's Anatomic Panacea removes alien embryo again.
+  - bugfix: Cloning someone now correctly sets up their dna UE.
+  - bugfix: Fixes the laser eyes mutation not giving glowing red eyes to the human.
+  - bugfix: Using changeling readaptation now properly removes all evolutions bought
+      (arm blade, chameleon skin, organic suit).
+  xxalpha:
+  - rscadd: Added a researchable cyborg self-repair module to the robotics fabricator.
+2015-09-23:
+  Xhuis:
+  - rscadd: Syndicate medical cyborgs have been added.
+  - rscadd: The Dart Pistol is now available from the uplink for 4 telecrystals. It
+      functions as a pocket-sized syringe gun with a quieter firing sound.
+  - tweak: Boxes of riot foam darts now cost 2 telecrystals, down from 10, and are
+      available to traitors.
+  - tweak: Foam dart pistols now cost 3 telecrystals, down from 6.
+  - tweak: Syndicate cyborg teleporters now allow a choice between Assault and Medical
+      cyborgs.
+  - tweak: Syndicate cyborgs are now distinguished as Syndicate Assault.
+  - tweak: Syndicate cyborg energy swords now cost 50 energy per use, down from 500.
+  - tweak: Airlock charges now cost 2 telecrystals, down from 5.
+  - tweak: Airlock charges are much more powerful.
+  - tweak: There is no longer a 25% chance to detonate an airlock charge while removing
+      it.
+  - tweak: The description of many uplink items has been changed to better reflect
+      their use.
+2015-09-24:
+  Jordie0608:
+  - tweak: Advanced energy guns now only critically fail after successive minor failures.
+      Cease firing after multiple recent minor failures to avoid critical ones.
+  Kor:
+  - rscadd: Guardian Spirit types and powers have been heavily reworked. Full details
+      of each type are available on the wiki.
+  - rscadd: Guardian damage transfer to users now deals cloneloss if their user is
+      in crit.
+  - rscadd: Guardians are now undergoing a trial run in the traitor uplink, under
+      the name of Holoparasites.
+  - rscadd: You can now hang human mobs (dead or alive) from meatspikes. Escaping
+      the meatspike will further damage the victim.
+  - rscdel: You can no longer slam humans into the meatspike as an attack.
+2015-09-25:
+  Xhuis:
+  - rscadd: Changelings have a new ablity, Biodegrade. Costing 30 chemicals and having
+      an unlock cost of 1, it allows them to dissolve handcuffs and straight jackets
+      in 3 seconds, and escape from lockers in 7.
+  - tweak: Fleshmend's effectiveness is now halved each time it is used in a short
+      time span.
+  - tweak: Last Resort now blinds and confuses nearby humans and briefly disables
+      silicons upon use.
+  - tweak: Headslugs now have 50 health, up from 20.
+2015-09-26:
+  MMMiracles:
+  - rscadd: Nanotrasen's genetic researchers have rediscovered the inactive dwarfism
+      genetic defect inside all bipedal humanoids. Suffer not the short to live.
+  WJohnston:
+  - tweak: Repiped the entire station. Atmosia and the disposals loop were not touched.
+  - tweak: Moved mulebot delivery from misc lab to RnD.
+2015-09-28:
+  Feemjmeem:
+  - bugfix: Rechargers can now be wrenched and unwrenched by cyborgs.
+  - bugfix: Rechargers no longer stop working forever if you move them from an unpowered
+      area to a powered area, and now actually look powered off when they are.
+  - bugfix: Guns and batons can no longer be placed in unwrenched chargers.
+  Razharas:
+  - rscadd: Added button to preferences menu that kills all currently playing sounds
+      when pressed, now you can kill midis and any other sounds for real.
+  phil235:
+  - bugfix: Fixed the syndicate cyborg's grenade launcher.
+  - tweak: You can modify the dna of corpses again.
+2015-09-29:
+  Kor:
+  - bugfix: The Chaos holoparasite can now actually set people on fire properly.
+  - tweak: Guardian powers are now used via alt+click rather than shift+click.
+  - tweak: Added an alert chime for ghosts when someone is summoning a Guardian.

@@ -8,6 +8,12 @@
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// Do not set any further vars, the json file specified above is what generates the object
 
+	/// Spritesheet width of the icon_file
+	var/width
+
+	/// Spritesheet height of the icon_file
+	var/height
+
 	/// String path to the json file, used for reloading
 	var/string_json_config
 
@@ -39,6 +45,10 @@
 	if(loadFromDisk)
 		json_config = file(string_json_config)
 		icon_file = file(string_icon_file)
+
+	var/icon/source = icon(icon_file)
+	height = source.Height()
+	width = source.Width()
 
 	icon_states = list()
 
@@ -111,7 +121,9 @@
 	var/key = color_string
 	var/icon/new_icon = icon_cache[key]
 	if(new_icon && !render_steps)
-		return icon(new_icon)
+		var/icon/output = icon(new_icon)
+		output.Scale(width, height)
+		return output
 	var/list/colors = ParseColorString(color_string)
 	if(length(colors) != expected_colors)
 		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
@@ -124,7 +136,9 @@
 		icon_bundle.Insert(generated_icon, icon_state)
 	icon_bundle = fcopy_rsc(icon_bundle)
 	icon_cache[key] = icon_bundle
-	return icon(icon_bundle)
+	var/icon/output = icon(icon_bundle)
+	output.Scale(width, height)
+	return output
 
 /// Internal recursive proc to handle nested layer groups
 /datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
@@ -144,7 +158,7 @@
 
 		// These are so we can see the result of every step of the process in the preview ui
 		if(render_steps)
-			render_steps[image(layer_icon)] = image(new_icon)
+			render_steps[icon(layer_icon)] = icon(new_icon)
 	return new_icon
 
 /datum/greyscale_config/proc/GenerateDebug(colors)

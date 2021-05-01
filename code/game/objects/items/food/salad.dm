@@ -35,14 +35,6 @@
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
 	foodtypes = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT
 
-/obj/item/food/salad/oatmeal
-	name = "oatmeal"
-	desc = "A nice bowl of oatmeal."
-	icon_state = "oatmeal"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
-	tastes = list("oats" = 1, "milk" = 1)
-	foodtypes = DAIRY | GRAIN | BREAKFAST
-
 /obj/item/food/salad/fruit
 	name = "fruit salad"
 	desc = "Your standard fruit salad."
@@ -100,6 +92,15 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("rice" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
+
+/obj/item/food/salad/risotto
+	name = "risotto"
+	desc = "Proof the Italians mastered every carb."
+	icon_state = "risotto"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("rice" = 1, "cheese" = 1)
+	foodtypes = GRAIN | DAIRY
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/salad/eggbowl
 	name = "egg bowl"

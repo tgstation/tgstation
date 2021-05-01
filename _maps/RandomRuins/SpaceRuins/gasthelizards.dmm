@@ -18,7 +18,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "e" = (
 /obj/structure/window/reinforced{
@@ -27,7 +27,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "f" = (
 /obj/structure/window/reinforced{
@@ -41,7 +41,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "g" = (
 /obj/structure/window/reinforced{
@@ -54,19 +54,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "h" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "i" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "j" = (
 /obj/structure/window/reinforced{
@@ -76,7 +76,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "k" = (
 /obj/structure/window/reinforced{
@@ -85,14 +85,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "l" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "m" = (
 /obj/structure/closet/crate/freezer,
@@ -103,7 +103,7 @@
 /obj/item/food/meat/slab/human/mutant/lizard,
 /obj/item/food/meat/slab/human/mutant/lizard,
 /obj/item/food/meat/slab/human/mutant/lizard,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "n" = (
 /obj/structure/closet/crate/freezer,
@@ -117,7 +117,7 @@
 	},
 /obj/item/food/meat/slab/human/mutant/lizard,
 /obj/item/food/meat/slab/human/mutant/lizard,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "o" = (
 /obj/structure/closet/crate/freezer,
@@ -129,7 +129,7 @@
 /obj/item/food/meat/slab/human/mutant/lizard,
 /obj/item/food/meat/slab/human/mutant/lizard,
 /obj/item/food/meat/slab/human/mutant/lizard,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "p" = (
 /obj/structure/window/reinforced{
@@ -158,7 +158,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/gasthelizard)
 "r" = (
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "s" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -198,14 +198,14 @@
 /area/ruin/space/has_grav/gasthelizard)
 "x" = (
 /obj/structure/kitchenspike,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "y" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/knife/butcher,
 /obj/item/restraints/handcuffs,
 /obj/item/reagent_containers/spray/pepper,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "z" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -225,14 +225,14 @@
 /area/ruin/space/has_grav/gasthelizard)
 "C" = (
 /obj/machinery/gibber,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "D" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/reagent_containers/syringe/lethal,
 /obj/item/reagent_containers/syringe/lethal/choral,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "E" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -253,7 +253,7 @@
 /area/ruin/space/has_grav/gasthelizard)
 "H" = (
 /obj/machinery/door/airlock/security,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "I" = (
 /obj/item/reagent_containers/glass/bottle/morphine{
@@ -275,7 +275,7 @@
 	pixel_y = 6
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "J" = (
 /obj/structure/rack,
@@ -322,12 +322,12 @@
 /obj/item/cautery,
 /obj/item/circular_saw,
 /obj/machinery/light,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "Q" = (
 /obj/structure/table/optable,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "R" = (
 /obj/structure/table/reinforced,
@@ -336,7 +336,7 @@
 /obj/item/reagent_containers/glass/bottle/mutagen,
 /obj/item/reagent_containers/glass/bottle/mutagen,
 /obj/item/razor,
-/turf/open/floor/iron/airless/dark,
+/turf/open/floor/iron/dark/airless,
 /area/ruin/space/has_grav/gasthelizard)
 "S" = (
 /obj/machinery/suit_storage_unit/standard_unit,

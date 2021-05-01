@@ -1591,6 +1591,9 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/machinery/computer/cryopod{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "afH" = (
@@ -8100,7 +8103,7 @@
 /area/service/janitor)
 "azj" = (
 /obj/structure/cable,
-/turf/open/floor/goonplaque,
+/turf/open/floor/iron/goonplaque,
 /area/hallway/secondary/entry)
 "azk" = (
 /obj/structure/reagent_dispensers/fueltank/large,
@@ -18191,6 +18194,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
+"cKs" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/commons/locker)
 "cKC" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -20029,7 +20044,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/effect/landmark/start/paramedic,
 /obj/effect/landmark/event_spawn,
 /obj/machinery/holopad,
@@ -20575,7 +20589,6 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "dFW" = (
-/obj/structure/cable,
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white,
 /area/medical/storage)
@@ -26263,7 +26276,7 @@
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "fSF" = (
-/turf/open/floor/iron/elevatorshaft,
+/turf/open/floor/plating/elevatorshaft,
 /area/security/prison)
 "fSO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -45338,6 +45351,10 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
+"nEg" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/medical/storage)
 "nEr" = (
 /obj/effect/turf_decal/arrows/white{
 	dir = 4
@@ -57815,7 +57832,7 @@
 	name = "AI Core Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/space/nearstation)
 "sBn" = (
 /obj/structure/fireaxecabinet{
@@ -59109,6 +59126,18 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/commons/dorms)
+"tfY" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/commons/locker)
 "tfZ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Library"
@@ -94060,9 +94089,9 @@ aSb
 gmg
 arc
 suF
-aDH
-aDH
-aDH
+cKs
+cKs
+cKs
 aUD
 wGT
 aRW
@@ -94317,9 +94346,9 @@ aSd
 joB
 aBx
 suF
-aDH
-aDH
-aDH
+tfY
+tfY
+tfY
 aUD
 aks
 aRW
@@ -167816,7 +167845,7 @@ bOQ
 fCO
 ofE
 mJp
-xZg
+nEg
 mhz
 ozN
 aIK
@@ -184870,7 +184899,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (181,1,2) = {"
 aYr
@@ -185127,7 +185156,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (182,1,2) = {"
 aYr
@@ -185384,7 +185413,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (183,1,2) = {"
 aYr
@@ -185641,7 +185670,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (184,1,2) = {"
 aYr
@@ -185898,7 +185927,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (185,1,2) = {"
 aYr
@@ -186155,7 +186184,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (186,1,2) = {"
 aYr
@@ -186412,7 +186441,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (187,1,2) = {"
 aYr
@@ -186669,7 +186698,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (188,1,2) = {"
 aYr
@@ -186926,7 +186955,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (189,1,2) = {"
 aYr
@@ -187183,7 +187212,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (190,1,2) = {"
 aYr
@@ -187440,7 +187469,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (191,1,2) = {"
 aYr
@@ -187697,7 +187726,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (192,1,2) = {"
 aYr
@@ -187954,7 +187983,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (193,1,2) = {"
 aYr
@@ -188211,7 +188240,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (194,1,2) = {"
 aYr
@@ -188468,7 +188497,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (195,1,2) = {"
 aYr
@@ -188725,7 +188754,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (196,1,2) = {"
 aYr
@@ -188982,7 +189011,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (197,1,2) = {"
 aYr
@@ -189239,7 +189268,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (198,1,2) = {"
 aYr
@@ -189496,7 +189525,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (199,1,2) = {"
 aYr
@@ -189753,7 +189782,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (200,1,2) = {"
 aYr
@@ -190010,7 +190039,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (201,1,2) = {"
 aYr
@@ -190267,7 +190296,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (202,1,2) = {"
 aYr
@@ -190524,7 +190553,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (203,1,2) = {"
 aYr
@@ -190781,7 +190810,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (204,1,2) = {"
 aYr
@@ -191038,7 +191067,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (205,1,2) = {"
 aYr
@@ -191295,7 +191324,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (206,1,2) = {"
 aYr
@@ -191552,7 +191581,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (207,1,2) = {"
 aYr
@@ -191809,7 +191838,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (208,1,2) = {"
 aYr
@@ -192066,7 +192095,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (209,1,2) = {"
 aYr
@@ -192323,7 +192352,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (210,1,2) = {"
 aYr
@@ -192580,7 +192609,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (211,1,2) = {"
 aYr
@@ -192837,7 +192866,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (212,1,2) = {"
 aYr
@@ -193094,7 +193123,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (213,1,2) = {"
 aYr
@@ -193351,7 +193380,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (214,1,2) = {"
 aYr
@@ -193608,7 +193637,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (215,1,2) = {"
 aYr
@@ -193865,7 +193894,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (216,1,2) = {"
 aYr
@@ -194122,7 +194151,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (217,1,2) = {"
 aYr
@@ -194379,7 +194408,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (218,1,2) = {"
 aYr
@@ -194636,7 +194665,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (219,1,2) = {"
 aYr
@@ -194893,7 +194922,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (220,1,2) = {"
 aYr
@@ -195150,7 +195179,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (221,1,2) = {"
 aYr
@@ -195407,7 +195436,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (222,1,2) = {"
 aYr
@@ -195664,7 +195693,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (223,1,2) = {"
 aYr
@@ -195921,7 +195950,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (224,1,2) = {"
 aYr
@@ -196178,7 +196207,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (225,1,2) = {"
 aYr
@@ -196435,7 +196464,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (226,1,2) = {"
 aYr
@@ -196692,7 +196721,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (227,1,2) = {"
 aYr
@@ -196949,7 +196978,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (228,1,2) = {"
 aYr
@@ -197206,7 +197235,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (229,1,2) = {"
 aYr
@@ -197463,7 +197492,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (230,1,2) = {"
 aYr
@@ -197720,7 +197749,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (231,1,2) = {"
 aYr
@@ -197977,7 +198006,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (232,1,2) = {"
 aYr
@@ -198234,7 +198263,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (233,1,2) = {"
 aYr
@@ -198491,7 +198520,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (234,1,2) = {"
 aYr
@@ -198748,7 +198777,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (235,1,2) = {"
 aYr
@@ -199005,7 +199034,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (236,1,2) = {"
 aYr
@@ -199262,7 +199291,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (237,1,2) = {"
 aYr
@@ -199519,7 +199548,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (238,1,2) = {"
 aYr
@@ -199776,7 +199805,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (239,1,2) = {"
 aYr
@@ -200033,7 +200062,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (240,1,2) = {"
 aYr
@@ -200290,7 +200319,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (241,1,2) = {"
 aYr
@@ -200547,7 +200576,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (242,1,2) = {"
 aYr
@@ -200804,7 +200833,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (243,1,2) = {"
 aYr
@@ -201061,7 +201090,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (244,1,2) = {"
 aYr
@@ -201318,7 +201347,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (245,1,2) = {"
 aYr
@@ -201575,7 +201604,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (246,1,2) = {"
 aYr
@@ -201832,7 +201861,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (247,1,2) = {"
 aYr
@@ -202089,7 +202118,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (248,1,2) = {"
 aYr
@@ -202346,7 +202375,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (249,1,2) = {"
 aYr
@@ -202603,7 +202632,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (250,1,2) = {"
 aYr
@@ -202860,7 +202889,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (251,1,2) = {"
 aYr
@@ -203117,7 +203146,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (252,1,2) = {"
 aYr
@@ -203374,7 +203403,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (253,1,2) = {"
 aYr
@@ -203631,7 +203660,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (254,1,2) = {"
 aYr
@@ -203888,7 +203917,7 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}
 (255,1,2) = {"
 aYr
@@ -204145,5 +204174,5 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
 "}

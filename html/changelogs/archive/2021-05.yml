@@ -1,0 +1,47 @@
+2021-05-01:
+  ATHATH:
+  - spellcheck: The shivering symptom has been renamed to be the "chills" symptom,
+      per Cobby's request.
+  - bugfix: The shivering/chills symptom now actually chills you like it says it does
+      instead of heating you up. fix Safe chills and safe fever should now use an
+      infectee's species's body temperature's actual cold and heat damage thresholds,
+      instead of just using the default ones.
+  - balance: Maxed out, unsafe chills and maxed out, unsafe fevers can now make you
+      slightly colder or hotter than they could before, respectively.
+  Arkatos:
+  - code_imp: Space carps now use a new greyscaling system.
+  - bugfix: Fixed an issue where space carps turned grey for a moment when attacking
+      something.
+  - qol: Light purple space carp variant is now more close to the original. Nostalgia!
+  - qol: Replaced beige space carp variant with a light red one.
+  KathyRyals:
+  - balance: Thermal is now an active mutation, that has a cooldown and deals damage
+      to your eyes.
+  LemonInTheDark:
+  - bugfix: Prayers will show a little book next to them again
+  LemonInTheDark, duncathan:
+  - refactor: Gas reactions should be cheaper in the standard case
+  - refactor: Moves canisters, pipelines, and tanks to event based processing, if
+      you see something fail to "update" when it really should let me know yeah?
+  Mothblocks:
+  - bugfix: Midround events will now properly poll again.
+  RandomGamer123:
+  - bugfix: Anomaly research can now be researched again.
+  Ryll/Shaps:
+  - bugfix: You can no longer shoot yourself in the foot with gunboots
+  Yakumochen:
+  - spellcheck: Removes nanochips from infiltrator gloves. Makes them more tacticool.
+  itseastosee:
+  - spellcheck: The unknown narrator now properly talks in second person
+  maxymax13, /vg/station, Citadel Station:
+  - imageadd: 3 new variations for wooden tiles are available (large, parquet, and
+      tiled), the same way you color titanium tiles! Remember, use a screwdriver and
+      not a crowbar!
+  - imageadd: A new red planetary pattern design is available for arcade carpet!
+  unit0016:
+  - refactor: Cargo Shuttle consoles now rely a lot more on variables instead of hardcoding.
+  vincentiusvin:
+  - bugfix: The hotkey for dumping borg apparatus is now moved to Alt+Click instead
+      of the nonfunctional Alt+Z. Right click for beaker apparatus spills reagent,
+      just like with regular beakers. Z and self attack keeps the old interaction,
+      it changes transfer volume.

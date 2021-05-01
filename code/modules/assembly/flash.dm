@@ -33,6 +33,9 @@
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
+/obj/item/assembly/flash/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
@@ -62,6 +65,14 @@
 		. += flashing_overlay
 		attached_overlays += flashing_overlay
 
+/obj/item/assembly/flash/update_name()
+	name = "[burnt_out ? "burnt-out [initial(name)]" : "[initial(name)]"]"
+	return ..()
+
+/obj/item/assembly/flash/update_desc()
+	desc = "[burnt_out ? "[initial(desc)] It's burnt out." : "[initial(desc)]"]"
+	return ..()
+
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		flash_carbon(user, user, 15, 0)
@@ -71,13 +82,8 @@
 /obj/item/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	if(!burnt_out)
 		burnt_out = TRUE
+		loc?.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
 		update_appearance()
-	if(ismob(loc))
-		var/mob/M = loc
-		M.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
-	else
-		var/turf/T = get_turf(src)
-		T.visible_message("<span class='danger'>[src] burns out!</span>")
 
 /obj/item/assembly/flash/proc/flash_recharge(interval = 10)
 	var/deciseconds_passed = world.time - last_used

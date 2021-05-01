@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(garbage)
 		dellog += "\tqdel() Count: [I.qdels]"
 		dellog += "\tDestroy() Cost: [I.destroy_time]ms"
 		if (I.hard_deletes)
-			dellog += "\tTotal Hard Deletes [I.hard_deletes]"
+			dellog += "\tTotal Hard Deletes: [I.hard_deletes]"
 			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
 		if (I.slept_destroy)
 			dellog += "\tSleeps: [I.slept_destroy]"

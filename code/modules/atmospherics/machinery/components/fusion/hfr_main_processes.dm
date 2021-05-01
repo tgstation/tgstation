@@ -39,13 +39,13 @@
 
 	critical_threshold_proximity_archived = critical_threshold_proximity
 	if(power_level == 6)
-		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 9e5 + internal_fusion.temperature) / 9e5, 1) - 2700) / 400, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + max((round((internal_fusion.total_moles() * 9e5 + coolant_temperature) / 9e5, 1) - 2700) / 400, 0), 0)
 
 	if(internal_fusion.total_moles() < 2000 || power_level <= 5)
 		critical_threshold_proximity = max(critical_threshold_proximity + min((internal_fusion.total_moles() - 1200) / 200, 0), 0)
 
-	if(internal_fusion.total_moles() > 0 && internal_fusion.temperature < 5e5 && power_level <= 4)
-		critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, internal_fusion.temperature) - 5, 0), 0)
+	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < 5e5) || power_level <= 4)
+		critical_threshold_proximity = max(critical_threshold_proximity + min(log(10, max(coolant_temperature, 1)) - 5, 0), 0)
 
 	critical_threshold_proximity += max(iron_content - 0.35, 0)
 
@@ -494,6 +494,46 @@
 	if(iron_content > 0 && power_level <= 4 && prob(25 / (power_level + 1)))
 		iron_content = max(iron_content - 0.01 * delta_time, 0)
 	iron_content = clamp(iron_content, 0, 1)
+
+	if(power_level >= 4)
+		if(moderator_list[/datum/gas/bz] > (150 / power_level))
+			var/obj/machinery/hypertorus/corner/picked_corner = pick(corners)
+			picked_corner.loc.fire_nuclear_particle(turn(picked_corner.dir, 180))
+
+		if(moderator_list[/datum/gas/antinoblium] > 50 || critical_threshold_proximity > 500)
+			var/zap_number = power_level - 2
+
+			if(critical_threshold_proximity > 650 && prob(20))
+				zap_number += 1
+
+			var/cutoff = 1500
+			cutoff = clamp(3000 - (power_level * (internal_fusion.total_moles() * 0.45)), 450, 3000)
+
+			var/zaps_aspect = DEFAULT_ZAP_ICON_STATE
+			var/flags = ZAP_SUPERMATTER_FLAGS
+			switch(power_level)
+				if(5)
+					zaps_aspect = SLIGHTLY_CHARGED_ZAP_ICON_STATE
+					flags |= (ZAP_MOB_DAMAGE)
+				if(6)
+					zaps_aspect = OVER_9000_ZAP_ICON_STATE
+					flags |= (ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
+
+			playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+			for(var/i in 1 to zap_number)
+				supermatter_zap(src, 5, power_level * 300, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
+
+	if(moderator_list[/datum/gas/oxygen] > 150)
+		if(iron_content > 0)
+			iron_content = max(iron_content - 0.5, 0)
+			moderator_internal.gases[/datum/gas/oxygen] -= 10
+
+	if(prob(critical_threshold_proximity / 15))
+		var/grav_range = round(log(2.5, critical_threshold_proximity))
+		for(var/mob/alive_mob in GLOB.alive_mob_list)
+			if(alive_mob.z != z || get_dist(alive_mob, src) > grav_range || alive_mob.mob_negates_gravity())
+				continue
+			step_towards(alive_mob, loc)
 
 	//Gases can be removed from the moderator internal by using the interface. Helium and antinoblium inside the fusion mix will get always removed at a fixed rate
 	if(waste_remove && power_level <= 5)
