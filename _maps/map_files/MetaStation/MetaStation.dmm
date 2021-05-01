@@ -58317,7 +58317,7 @@
 /area/maintenance/starboard/aft)
 "qfL" = (
 /obj/machinery/button/door{
-	id = "Head of Personnel";
+	id = "hop";
 	name = "Privacy Shutters Control";
 	pixel_x = -24;
 	pixel_y = -6;
@@ -78248,11 +78248,6 @@
 "wFh" = (
 /obj/machinery/computer/exoscanner_control{
 	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "Cargo - Drone Bay";
-	dir = 1;
-	pixel_x = 14
 	},
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
