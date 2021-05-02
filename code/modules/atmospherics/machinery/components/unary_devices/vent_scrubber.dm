@@ -191,6 +191,7 @@
 			air_contents.merge(filtered_out)
 			tile.assume_air(removed)
 			tile.air_update_turf(FALSE, FALSE)
+			update_parents()
 
 	else //Just siphoning all air
 
@@ -200,8 +201,7 @@
 
 		air_contents.merge(removed)
 		tile.air_update_turf(FALSE, FALSE)
-
-	update_parents()
+		update_parents()
 
 	return TRUE
 

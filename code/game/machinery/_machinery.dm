@@ -128,6 +128,8 @@
 
 	// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
+	///Is this machine currently in the atmos machinery queue?
+	var/atmos_processing = FALSE
 
 /obj/machinery/Initialize()
 	if(!armor)

@@ -1006,7 +1006,7 @@
 	name = "bluespace floor tile"
 	singular_name = "floor tile"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
-	icon_state = "tile-bluespace"
+	icon_state = "tile_bluespace"
 	inhand_icon_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
@@ -1023,7 +1023,7 @@
 	name = "sepia floor tile"
 	singular_name = "floor tile"
 	desc = "Time seems to flow very slowly around these tiles."
-	icon_state = "tile-sepia"
+	icon_state = "tile_sepia"
 	inhand_icon_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6

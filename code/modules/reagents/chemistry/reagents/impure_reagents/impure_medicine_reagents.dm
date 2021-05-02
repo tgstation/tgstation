@@ -648,7 +648,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	self_consuming = TRUE
 	ph = 13.5
 	addiction_types = list(/datum/addiction/medicine = 2.5)
-	metabolization_rate = 0.01 * REM
+	metabolization_rate = REM
 	chemical_flags = REAGENT_DEAD_PROCESS
 	tox_damage = 0
 	///The old heart we're swapping for
