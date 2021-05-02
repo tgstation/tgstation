@@ -27,8 +27,9 @@
 	seenby += eye
 	if(changed)
 		update()
+	var/obj/effect/overlay/camera_static/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque
 	for(var/turf/obscured_turf as anything in obscuredTurfs)
-		obscured_turf.vis_contents |= GLOB.cameranet.vis_contents_objects
+		obscured_turf.vis_contents |= vis_contents_opaque
 
 /// Remove an AI eye from the chunk, then update if changed.
 /datum/camerachunk/proc/remove(mob/camera/ai_eye/eye, remove_static_with_last_chunk = TRUE)
@@ -36,20 +37,14 @@
 	seenby -= eye
 
 	if(!length(seenby))
-		var/list/vis_contents_objects = GLOB.cameranet.vis_contents_objects
+		var/obj/effect/overlay/camera_static/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque
 		for(var/turf/obscured_turf as anything in obscuredTurfs)
-			obscured_turf.vis_contents -= vis_contents_objects
-		if(!length(cameras))
-			qdel(src)
+			obscured_turf.vis_contents -= vis_contents_opaque
 
 	if(remove_static_with_last_chunk && !eye.visibleCameraChunks.len)
 		var/client/client = eye.GetViewerClient()
-		if(client)
-			switch(eye.use_static)
-				if(USE_STATIC_TRANSPARENT)
-					client.images -= GLOB.cameranet.obscured_transparent
-				if(USE_STATIC_OPAQUE)
-					client.images -= GLOB.cameranet.obscured
+		if(client && eye.use_static)
+			client.images -= GLOB.cameranet.obscured
 
 /// Called when a chunk has changed. I.E: A wall was deleted.
 /datum/camerachunk/proc/visibilityChanged(turf/loc)
@@ -95,13 +90,13 @@
 	//turfs that are included in the chunks normal turfs list minus the turfs the cameras CAN see
 	obscuredTurfs = turfs - newVisibleTurfs
 
-	var/list/vis_contents_objects = GLOB.cameranet.vis_contents_objects
+	var/list/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque
 	for(var/turf/added_turf as anything in visAdded)
-		added_turf.vis_contents -= vis_contents_objects
+		added_turf.vis_contents -= vis_contents_opaque
 
 	for(var/turf/removed_turf as anything in visRemoved)
 		if(obscuredTurfs[removed_turf] && !istype(removed_turf, /turf/open/ai_visible))
-			removed_turf.vis_contents += vis_contents_objects
+			removed_turf.vis_contents += vis_contents_opaque
 
 	changed = FALSE
 
@@ -138,9 +133,9 @@
 
 	obscuredTurfs = turfs - visibleTurfs
 
-	var/list/vis_contents_objects = GLOB.cameranet.vis_contents_objects
+	var/list/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque
 	for(var/turf/obscured_turf as anything in obscuredTurfs)
-		obscured_turf.vis_contents += vis_contents_objects
+		obscured_turf.vis_contents += vis_contents_opaque
 
 #undef UPDATE_BUFFER_TIME
 #undef CHUNK_SIZE

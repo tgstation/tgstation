@@ -18,24 +18,17 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
-	// The objects used in vis_contents of obscured turfs
-	var/list/vis_contents_objects
+	///this object is the static that ais see on obscured turfs, added to the turfs vis_contents
 	var/obj/effect/overlay/camera_static/vis_contents_opaque
-	var/obj/effect/overlay/camera_static/vis_contents_transparent
-	// The image given to the effect in vis_contents on AI clients
+
+	///The image given to the effect in vis_contents on AI clients
 	var/image/obscured
-	var/image/obscured_transparent
 
 /datum/cameranet/New()
 	vis_contents_opaque = new /obj/effect/overlay/camera_static()
-	vis_contents_transparent = new /obj/effect/overlay/camera_static/transparent()
-	vis_contents_objects = list(vis_contents_opaque, vis_contents_transparent)
 
 	obscured = new('icons/effects/cameravis.dmi', vis_contents_opaque, null)
 	obscured.plane = CAMERA_STATIC_PLANE
-
-	obscured_transparent = new('icons/effects/cameravis.dmi', vis_contents_transparent, null)
-	obscured_transparent.plane = CAMERA_STATIC_PLANE
 
 /// Checks if a chunk has been Generated in x, y, z.
 /datum/cameranet/proc/chunkGenerated(x, y, z)
@@ -54,7 +47,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		chunks[key] = . = new /datum/camerachunk(x, y, z)
 
 /// Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
-/datum/cameranet/proc/visibility(list/moved_eyes, client/C, list/other_eyes, use_static = USE_STATIC_OPAQUE)
+/datum/cameranet/proc/visibility(list/moved_eyes, client/C, list/other_eyes, use_static = TRUE)
 	if(!islist(moved_eyes))
 		moved_eyes = moved_eyes ? list(moved_eyes) : list()
 	if(islist(other_eyes))
@@ -62,12 +55,8 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	else
 		other_eyes = list()
 
-	if(C)
-		switch(use_static)
-			if(USE_STATIC_TRANSPARENT)
-				C.images += obscured_transparent
-			if(USE_STATIC_OPAQUE)
-				C.images += obscured
+	if(C && use_static)
+		C.images += obscured
 
 	for(var/mob/camera/ai_eye/eye as anything in moved_eyes)
 		var/list/visibleChunks = list()
@@ -95,12 +84,8 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 		if(!eye.visibleCameraChunks.len)
 			var/client/client = eye.GetViewerClient()
-			if(client)
-				switch(eye.use_static)
-					if(USE_STATIC_TRANSPARENT)
-						client.images -= GLOB.cameranet.obscured_transparent
-					if(USE_STATIC_OPAQUE)
-						client.images -= GLOB.cameranet.obscured
+			if(client && eye.use_static)
+				client.images -= obscured
 
 /// Updates the chunks that the turf is located in. Use this when obstacles are destroyed or when doors open.
 /datum/cameranet/proc/updateVisibility(atom/A, opacity_check = 1)
@@ -184,6 +169,3 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	invisibility = INVISIBILITY_ABSTRACT
 
 	plane = CAMERA_STATIC_PLANE
-
-/obj/effect/overlay/camera_static/transparent
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
