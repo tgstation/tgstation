@@ -771,7 +771,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/verb
 	switch(CEILING(MAX_LIVING_HEALTH / forcenumber, 1)) //blows to crit a human
 		if(1 to 3)
-			verb = "superb"
+			verb = "excellent"
 		if(4 to 6)
 			verb = "great"
 		if(7 to 9)
