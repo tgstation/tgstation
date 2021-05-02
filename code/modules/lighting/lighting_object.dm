@@ -1,3 +1,7 @@
+#define LIGHTING_OBJECT_TRANSPARENT 1
+#define LIGHTING_OBJECT_DARK 2
+#define LIGHTING_OBJECT_COLOR 3
+
 /atom/movable/lighting_object
 	name          = ""
 
@@ -10,6 +14,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility     = INVISIBILITY_LIGHTING
 	vis_flags = VIS_HIDE
+	var/mutable_appearance/current_underlay
+	var/current_state = LIGHTING_OBJECT_TRANSPARENT
 
 	var/needs_update = FALSE
 	var/turf/myturf
@@ -20,6 +26,10 @@
 	//We avoid setting this in the base as if we do then the parent atom handling will add_atom_color it and that
 	//is totally unsuitable for this object, as we are always changing it's colour manually
 	color = LIGHTING_BASE_MATRIX
+
+	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", layer + 1, LIGHTING_PLANE, alpha)
+	current_underlay.color = LIGHTING_BASE_MATRIX
+	current_underlay.invisibility = INVISIBILITY_LIGHTING
 
 	myturf = loc
 	if (myturf.lighting_object)
@@ -108,15 +118,34 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
-	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
+	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8) && current_state != LIGHTING_OBJECT_TRANSPARENT)
+		myturf.underlays -= current_underlay
+		current_underlay.icon_state = "transparent"
+		current_underlay.color = null
 	//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
-		icon_state = "transparent"
-		color = null
-	else if(!set_luminosity)
-		icon_state = "dark"
-		color = null
-	else
-		icon_state = null
+		//icon_state = "transparent"
+		//color = null
+		myturf.underlays += current_underlay
+		current_state = LIGHTING_OBJECT_TRANSPARENT
+	else if(!set_luminosity && current_state != LIGHTING_OBJECT_DARK)
+		myturf.underlays -= current_underlay
+		current_underlay.icon_state = "dark"
+		current_underlay.color = null
+		//icon_state = "dark"
+		//color = null
+		myturf.underlays += current_underlay
+		current_state = LIGHTING_OBJECT_DARK
+	else if(current_state != LIGHTING_OBJECT_COLOR)
+		myturf.underlays -= current_underlay
+		current_underlay.icon_state = null
+		current_underlay.color = list(
+			rr, rg, rb, 00,
+			gr, gg, gb, 00,
+			br, bg, bb, 00,
+			ar, ag, ab, 00,
+			00, 00, 00, 01
+		)
+		/*icon_state = null
 		color = list(
 			rr, rg, rb, 00,
 			gr, gg, gb, 00,
@@ -124,6 +153,9 @@
 			ar, ag, ab, 00,
 			00, 00, 00, 01
 		)
+		*/
+		myturf.underlays += current_underlay
+		current_state = LIGHTING_OBJECT_COLOR
 
 	luminosity = set_luminosity
 
@@ -152,3 +184,7 @@
 /atom/movable/lighting_object/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
 	if(harderforce)
 		. = ..()
+
+#undef LIGHTING_OBJECT_TRANSPARENT
+#undef LIGHTING_OBJECT_DARK
+#undef LIGHTING_OBJECT_COLOR
