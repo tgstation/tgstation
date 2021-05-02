@@ -14,6 +14,12 @@ SUBSYSTEM_DEF(greyscale)
 		var/datum/greyscale_config/config = new greyscale_type()
 		configurations["[greyscale_type]"] = config
 
+	// We do this after all the types have been loaded into the listing so reference layers don't care about init order
+	for(var/greyscale_type in configurations)
+		CHECK_TICK
+		var/datum/greyscale_config/config = configurations[greyscale_type]
+		config.Refresh()
+
 	return ..()
 
 /datum/controller/subsystem/greyscale/proc/RefreshConfigsFromFile()

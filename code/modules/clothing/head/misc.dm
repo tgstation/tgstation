@@ -288,13 +288,21 @@
 
 	dog_fashion = /datum/dog_fashion/head/sombrero
 
+	greyscale_config = /datum/greyscale_config/sombrero
+
+/obj/item/clothing/head/sombrero/Initialize()
+	. = ..()
+	if(greyscale_colors)
+		lefthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/sombrero/lefthand, greyscale_colors)
+		righthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/sombrero/righthand, greyscale_colors)
+		worn_icon = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/sombrero/worn, greyscale_colors)
+
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
-	icon_state = "greensombrero"
-	inhand_icon_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	dog_fashion = null
+	greyscale_colors = "#13d968#ffffff"
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
@@ -302,6 +310,7 @@
 	inhand_icon_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	dog_fashion = null
+	greyscale_colors = "#d565d3#f8db18"
 
 /obj/item/clothing/head/sombrero/shamebrero/Initialize()
 	. = ..()
