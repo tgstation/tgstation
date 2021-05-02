@@ -70,11 +70,16 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "o" = (
-/obj/item/radio/intercom/directional/south,
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "p" = (
@@ -93,8 +98,8 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "s" = (
-/obj/machinery/status_display/evac/directional/north,
-/turf/open/floor/cult,
+/obj/machinery/status_display/evac,
+/turf/closed/wall/mineral/cult,
 /area/shuttle/escape)
 "t" = (
 /obj/structure/closet/emcloset,
@@ -163,7 +168,9 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "G" = (
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /obj/item/extinguisher{
 	safety = 0
 	},
@@ -200,7 +207,9 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "M" = (
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "N" = (
@@ -222,7 +231,9 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
-/obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /obj/item/stack/sheet/iron,
 /turf/open/floor/cult,
 /area/shuttle/escape)
@@ -250,10 +261,6 @@
 "V" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"X" = (
-/obj/machinery/status_display/evac/directional/south,
-/turf/open/floor/cult,
 /area/shuttle/escape)
 "Z" = (
 /obj/machinery/stasis,
@@ -396,8 +403,8 @@ j
 C
 z
 j
-X
-b
+j
+s
 b
 b
 b
@@ -433,8 +440,8 @@ c
 g
 k
 k
-b
 s
+j
 j
 A
 D
