@@ -41,7 +41,9 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "l" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "m" = (
@@ -52,7 +54,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "n" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "o" = (

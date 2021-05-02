@@ -3,8 +3,8 @@
 /turf/closed/wall/mineral/wood,
 /area/shuttle/escape)
 "b" = (
-/obj/machinery/light_switch/directional/north,
-/turf/open/floor/wood,
+/obj/machinery/light_switch,
+/turf/closed/wall/mineral/wood,
 /area/shuttle/escape)
 "c" = (
 /obj/docking_port/mobile/emergency{
@@ -20,7 +20,9 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "e" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "f" = (
@@ -48,7 +50,9 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "k" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/machinery/vending/boozeomat{
 	req_access = null
 	},
@@ -121,7 +125,9 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "u" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "v" = (
@@ -134,7 +140,9 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/mob_spawn/human/corpse,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /obj/item/food/cakeslice/birthday,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
@@ -159,7 +167,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "B" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen,
@@ -192,8 +200,8 @@ a
 a
 "}
 (2,1,1) = {"
-a
 b
+d
 d
 d
 d

@@ -4,7 +4,9 @@
 /area/shuttle/supply)
 "d" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "ShuttleLoad"
@@ -58,13 +60,17 @@
 	},
 /area/shuttle/supply)
 "o" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
 /area/shuttle/supply)
 "q" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/supply)
 "r" = (
@@ -157,7 +163,9 @@
 	},
 /area/shuttle/supply)
 "N" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},

@@ -103,6 +103,11 @@
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/hunter)
+"hJ" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
 "ku" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/hunter)
@@ -185,20 +190,20 @@ ku
 "}
 (6,1,1) = {"
 Pq
-An
+hJ
 ag
 RO
 RO
-An
+hJ
 Pq
 "}
 (7,1,1) = {"
 Pq
-An
+hJ
 ah
 RO
 aj
-An
+hJ
 Pq
 "}
 (8,1,1) = {"

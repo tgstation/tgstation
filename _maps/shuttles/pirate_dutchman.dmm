@@ -165,7 +165,9 @@
 	pixel_x = 2;
 	pixel_y = -1
 	},
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "be" = (
@@ -322,14 +324,16 @@
 /obj/item/restraints/legcuffs/bola,
 /obj/item/restraints/legcuffs/bola,
 /obj/item/restraints/legcuffs/bola,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "gS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/structure/fermenting_barrel/gunpowder,
 /obj/item/reagent_containers/glass/bucket/wooden,
 /obj/item/reagent_containers/glass/bucket/wooden,
@@ -339,7 +343,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "hV" = (
@@ -457,7 +463,7 @@
 	name = "wooden railing"
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "uw" = (
@@ -575,7 +581,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/structure/fermenting_barrel/gunpowder,
 /obj/item/reagent_containers/glass/bucket/wooden,
 /obj/item/reagent_containers/glass/bucket/wooden,
@@ -692,7 +698,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Gr" = (
@@ -790,7 +798,9 @@
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Ms" = (
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "NG" = (
@@ -799,7 +809,7 @@
 	color = "#4C3117";
 	name = "wooden railing"
 	},
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Oe" = (

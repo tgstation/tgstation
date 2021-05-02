@@ -11,6 +11,11 @@
 "c" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
+"d" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/transport)
 "e" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -94,11 +99,11 @@ p
 c
 "}
 (5,1,1) = {"
-e
+d
 j
 l
 q
-e
+d
 "}
 (6,1,1) = {"
 c
@@ -144,8 +149,8 @@ c
 "}
 (12,1,1) = {"
 c
-e
+d
 m
-e
+d
 c
 "}

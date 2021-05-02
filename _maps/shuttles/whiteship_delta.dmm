@@ -60,7 +60,7 @@
 	},
 /obj/item/soap,
 /obj/structure/curtain,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/built,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/crew)
@@ -72,13 +72,17 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror/directional/east,
+/obj/structure/mirror{
+	pixel_x = 28
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/freezer,
 /area/shuttle/abandoned/crew)
 "al" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/built{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/bed,
 /obj/item/bedsheet/centcom,
@@ -93,7 +97,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/bed,
 /obj/item/bedsheet/centcom,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
@@ -110,7 +116,9 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
 	},
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "ap" = (
@@ -153,7 +161,9 @@
 /area/shuttle/abandoned/bar)
 "as" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -162,9 +172,15 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "at" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/built{
+	dir = 8
+	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Frigate Bar APC";
+	pixel_x = -25
+	},
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -350,7 +366,9 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "aL" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
@@ -398,11 +416,14 @@
 /area/shuttle/abandoned/crew)
 "aT" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -415,7 +436,11 @@
 /area/shuttle/abandoned/crew)
 "aU" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Frigate Crew Quarters APC";
+	pixel_y = 23
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -426,7 +451,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "aV" = (
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/built,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -454,7 +479,9 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
 	},
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/built{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -479,7 +506,9 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
 	},
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/built{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
@@ -525,7 +554,9 @@
 /area/shuttle/abandoned/bar)
 "bd" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /obj/structure/chair,
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/bar,
@@ -618,7 +649,9 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bl" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -634,7 +667,9 @@
 "bn" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/built{
+	dir = 8
+	},
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -734,7 +769,9 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "bx" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
@@ -771,7 +808,10 @@
 	pixel_x = -2;
 	pixel_y = 1
 	},
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bB" = (
@@ -972,14 +1012,16 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "bV" = (
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/built,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -997,7 +1039,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/firealarm/directional/west,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /obj/item/stack/spacecash/c200{
 	pixel_x = 7;
 	pixel_y = 4
@@ -1086,8 +1131,14 @@
 /obj/item/camera,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/west,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Frigate Bridge APC";
+	pixel_x = -25
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -1141,7 +1192,9 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "ck" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/built{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -1154,7 +1207,11 @@
 /area/shuttle/abandoned/engine)
 "cl" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Frigate Engineering APC";
+	pixel_x = 24
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1292,9 +1349,14 @@
 "cv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /obj/structure/spider/stickyweb,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1341,7 +1403,10 @@
 /area/shuttle/abandoned/engine)
 "cD" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stack/cable_coil,
@@ -1498,7 +1563,9 @@
 /area/shuttle/abandoned/engine)
 "cP" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/built{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -1583,7 +1650,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/cargo)
 "cX" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/built{
+	dir = 8
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron,
@@ -1644,7 +1713,9 @@
 /area/shuttle/abandoned/cargo)
 "db" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
@@ -1714,10 +1785,14 @@
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "dj" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/built{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
-/obj/machinery/firealarm/directional/north,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -1746,7 +1821,9 @@
 /area/shuttle/abandoned/medbay)
 "dm" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -1759,7 +1836,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/built,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -1781,7 +1858,7 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /obj/structure/spider/stickyweb,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
@@ -1945,7 +2022,9 @@
 /area/shuttle/abandoned/medbay)
 "dE" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /obj/machinery/airalarm/all_access{
 	dir = 8;
 	pixel_x = 24
@@ -1984,9 +2063,15 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
 "dJ" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/built{
+	dir = 8
+	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Frigate Cargo APC";
+	pixel_x = -25
+	},
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/cargo)
@@ -2025,7 +2110,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
 "dM" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 6
@@ -2071,7 +2158,10 @@
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc{
+	name = "Frigate Medbay APC";
+	pixel_y = -23
+	},
 /obj/structure/spider/stickyweb,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -2097,7 +2187,9 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
 	},
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
@@ -2182,7 +2274,10 @@
 	pixel_y = 4
 	},
 /obj/item/healthanalyzer,
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

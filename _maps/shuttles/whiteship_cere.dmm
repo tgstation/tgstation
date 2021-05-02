@@ -37,7 +37,9 @@
 /area/shuttle/abandoned)
 "af" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ag" = (
@@ -126,7 +128,9 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "au" = (
@@ -152,7 +156,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ax" = (
@@ -279,7 +285,7 @@
 	icon_state = "crateopen";
 	name = "spare equipment crate"
 	},
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aK" = (
@@ -295,7 +301,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aM" = (
@@ -322,7 +328,9 @@
 "aP" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aQ" = (
@@ -345,7 +353,9 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/storage/firstaid/regular,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aU" = (

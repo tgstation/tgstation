@@ -18,7 +18,7 @@
 /obj/machinery/door/airlock/silver{
 	name = "First Class"
 	},
-/turf/open/floor/carpet/blue,
+/turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "ae" = (
 /obj/docking_port/mobile/emergency{
@@ -34,7 +34,7 @@
 /obj/machinery/door/airlock/silver{
 	name = "First Class"
 	},
-/turf/open/floor/carpet/blue,
+/turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "af" = (
 /obj/machinery/door/airlock/security/glass{
@@ -50,9 +50,14 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
+"ai" = (
+/turf/closed/indestructible/riveted/plastinum,
+/area/shuttle/escape)
 "aj" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/large,
@@ -65,9 +70,18 @@
 "al" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape/luxury)
+"am" = (
+/turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
 "ao" = (
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
+"ap" = (
+/obj/structure/chair/comfy/teal{
+	dir = 4
+	},
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape)
 "aq" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/reagent_dispensers/fueltank,
@@ -112,7 +126,9 @@
 /area/shuttle/escape/luxury)
 "ax" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ay" = (
@@ -128,6 +144,7 @@
 /obj/machinery/button/door{
 	id = "ohnopoors";
 	name = "window shutters";
+	pixel_x = -5;
 	pixel_y = 26
 	},
 /turf/open/floor/carpet/blue,
@@ -240,7 +257,10 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aR" = (
-/obj/structure/mirror/directional/west,
+/obj/structure/mirror{
+	pixel_x = -23;
+	pixel_y = -2
+	},
 /obj/structure/sink/greyscale{
 	dir = 4;
 	pixel_x = -12
@@ -342,11 +362,15 @@
 /area/shuttle/escape/luxury)
 "bj" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bk" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "bl" = (
@@ -361,7 +385,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape)
 "bn" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/engineering/electrical,
@@ -481,9 +505,11 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bE" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape)
 "bF" = (
 /obj/item/bikehorn/rubberducky,
 /obj/item/bikehorn/rubberducky,
@@ -556,7 +582,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
 "bQ" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
 "bR" = (
@@ -608,6 +636,9 @@
 /area/shuttle/escape/luxury)
 "bZ" = (
 /obj/machinery/vending/boozeomat,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "ca" = (
@@ -637,7 +668,9 @@
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "ce" = (
-/obj/machinery/vending/wallmed/directional/east{
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_x = 26;
 	use_power = 0
 	},
 /turf/open/floor/carpet/cyan,
@@ -689,7 +722,9 @@
 /area/shuttle/escape/luxury)
 "ck" = (
 /obj/item/stack/tile/iron/base,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cl" = (
@@ -759,7 +794,9 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "cv" = (
@@ -791,7 +828,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cz" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
 "cA" = (
@@ -812,21 +849,29 @@
 /obj/structure/frame/machine,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cE" = (
 /obj/structure/chair/comfy/brown,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "cF" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "cG" = (
 /obj/machinery/stasis,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "cH" = (
@@ -860,16 +905,20 @@
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "cI" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "cJ" = (
 /obj/item/stack/tile/iron/base,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "cK" = (
@@ -879,18 +928,20 @@
 	},
 /obj/item/hatchet,
 /obj/item/kitchen/knife,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "cL" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "cM" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "cN" = (
@@ -903,7 +954,9 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "Lt" = (
@@ -1221,7 +1274,7 @@ ag
 "}
 (20,1,1) = {"
 ag
-ao
+am
 ao
 ao
 bO
@@ -1252,7 +1305,7 @@ cM
 ag
 "}
 (22,1,1) = {"
-ag
+ai
 bm
 aw
 aw
@@ -1268,7 +1321,7 @@ aS
 ag
 "}
 (23,1,1) = {"
-ag
+ai
 bE
 aw
 aw
@@ -1284,8 +1337,8 @@ aS
 ag
 "}
 (24,1,1) = {"
-ag
-aM
+ai
+ap
 aM
 aM
 aM

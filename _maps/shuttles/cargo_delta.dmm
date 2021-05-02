@@ -20,7 +20,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "e" = (
@@ -124,7 +126,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "r" = (

@@ -95,7 +95,9 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "cargoshuttle"
 	},
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "q" = (
@@ -149,11 +151,15 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "B" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "G" = (

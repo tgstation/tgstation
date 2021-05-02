@@ -58,7 +58,9 @@
 /area/shuttle/escape/brig)
 "m" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "n" = (
@@ -67,7 +69,9 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "o" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "p" = (
@@ -105,14 +109,15 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "v" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "w" = (
-/obj/machinery/vending/wallmed/directional/south{
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
 	use_power = 0
 	},
-/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "x" = (
 /obj/structure/table,
@@ -160,7 +165,9 @@
 /area/shuttle/escape)
 "F" = (
 /obj/structure/table,
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "G" = (
@@ -183,7 +190,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "J" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "K" = (
@@ -219,7 +226,9 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "P" = (
@@ -231,7 +240,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "Q" = (
-/obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "R" = (
@@ -253,7 +264,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "U" = (
@@ -263,11 +274,15 @@
 	pixel_y = 5
 	},
 /obj/item/storage/firstaid/brute,
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "V" = (
-/obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -32
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "W" = (
@@ -491,8 +506,8 @@ b
 b
 h
 C
+C
 w
-h
 b
 A
 c

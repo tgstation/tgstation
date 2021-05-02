@@ -10,7 +10,9 @@
 /obj/machinery/computer/shuttle/labor{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = -31
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "d" = (
@@ -35,7 +37,7 @@
 	pixel_y = -26;
 	req_access_txt = "1"
 	},
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "h" = (
@@ -71,7 +73,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
 "m" = (
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
 "n" = (
@@ -85,8 +89,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/flasher/directional/east{
-	id = "gulagshuttleflasher"
+/obj/machinery/flasher{
+	id = "gulagshuttleflasher";
+	pixel_x = 25
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)

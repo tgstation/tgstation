@@ -21,10 +21,6 @@
 "k" = (
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
-"r" = (
-/obj/machinery/computer/auxiliary_base/directional/north,
-/turf/open/floor/plating,
-/area/shuttle/auxiliary_base)
 "t" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -49,7 +45,9 @@
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "z" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "P" = (
@@ -57,6 +55,7 @@
 	dir = 2
 	},
 /obj/machinery/bluespace_beacon,
+/obj/machinery/computer/auxiliary_base,
 /turf/closed/wall,
 /area/shuttle/auxiliary_base)
 "U" = (
@@ -67,7 +66,9 @@
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "W" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "X" = (
@@ -130,7 +131,7 @@ k
 k
 X
 P
-r
+k
 k
 k
 x
