@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - qol: "You can repair canisters now by left clicking with an active welder. Deconstruction, which previously took this slot, has been moved to right click instead."
