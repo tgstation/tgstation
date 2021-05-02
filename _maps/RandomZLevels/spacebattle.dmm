@@ -2347,7 +2347,7 @@
 /turf/closed/wall/mineral/plasma,
 /area/awaymission/spacebattle/secret)
 "jm" = (
-/turf/open/floor/iron/rockvault/alien,
+/turf/open/floor/vault/alien,
 /area/awaymission/spacebattle/secret)
 "jn" = (
 /obj/machinery/door/airlock/plasma,
@@ -2355,7 +2355,7 @@
 /area/awaymission/spacebattle/secret)
 "jo" = (
 /obj/item/clothing/suit/space/hardsuit/wizard,
-/turf/open/floor/iron/rockvault/alien,
+/turf/open/floor/vault/alien,
 /area/awaymission/spacebattle/secret)
 "jp" = (
 /obj/vehicle/sealed/mecha/combat/gygax,

@@ -194,7 +194,7 @@
 		var/client/client = GET_CLIENT(P)
 		if (!client || !P.mind) // Are they connected?
 			candidates.Remove(P)
-		else if(!mode.check_age(client, minimum_required_age))
+		else if(client.get_remaining_days(minimum_required_age) > 0)
 			candidates.Remove(P)
 		else if(P.mind.special_role) // We really don't want to give antag to an antag.
 			candidates.Remove(P)
