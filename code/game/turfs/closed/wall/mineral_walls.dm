@@ -13,6 +13,7 @@
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
 	icon = 'icons/turf/walls/gold_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_gold_frill.dmi'
 	icon_state = "gold_wall-0"
 	base_icon_state = "gold_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
@@ -25,6 +26,7 @@
 	name = "silver wall"
 	desc = "A wall with silver plating. Shiny!"
 	icon = 'icons/turf/walls/silver_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_silver_frill.dmi'
 	icon_state = "silver_wall-0"
 	base_icon_state = "silver_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/silver
@@ -80,6 +82,7 @@
 	name = "uranium wall"
 	desc = "A wall with uranium plating. This is probably a bad idea."
 	icon = 'icons/turf/walls/uranium_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_uranium_frill.dmi'
 	icon_state = "uranium_wall-0"
 	base_icon_state = "uranium_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
@@ -161,6 +164,7 @@
 	name = "wooden wall"
 	desc = "A wall with wooden plating. Stiff."
 	icon = 'icons/turf/walls/wood_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_wood_frill.dmi'
 	icon_state = "wood_wall-0"
 	base_icon_state = "wood_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/wood
@@ -193,6 +197,7 @@
 	name = "rough iron wall"
 	desc = "A wall with rough iron plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_iron_frill.dmi'
 	icon_state = "iron_wall-0"
 	base_icon_state = "iron_wall"
 	sheet_type = /obj/item/stack/rods
@@ -241,13 +246,14 @@
 	name = "wall"
 	desc = "A light-weight titanium wall used in shuttles."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_shuttle_frill.dmi'
 	icon_state = "shuttle_wall-0"
 	base_icon_state = "shuttle_wall"
 	explosion_block = 3
 	flags_1 = CAN_BE_DIRTY_1
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_TITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 	custom_materials = list(/datum/material/titanium = 4000)
@@ -319,6 +325,7 @@
 	name = "wall"
 	desc = "A durable wall made of an alloy of plasma and titanium."
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_plastitanium_frill.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
 	explosion_block = 4

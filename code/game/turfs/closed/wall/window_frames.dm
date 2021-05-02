@@ -1,9 +1,9 @@
 /turf/closed/wall/window_frame
 	name = "window frame"
 	desc = "A frame section to place a window on top.."
-	icon = 'icons/turf/walls/windowframe_normal.dmi'
-	icon_state = "windowframe_normal-0"
-	base_icon_state = "windowframe_normal"
+	icon = 'icons/turf/walls/low_walls/low_wall_normal.dmi'
+	icon_state = "low_wall_normal-0"
+	base_icon_state = "low_wall_normal"
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WINDOWS)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOWS)
@@ -47,3 +47,80 @@
 
 /turf/closed/wall/window_frame/grille_and_window
 	window_state = WINDOW_FRAME_WITH_GRILLES | WINDOW_FRAME_WITH_WINDOW
+
+/turf/closed/wall/window_frame/titanium
+	name = "shuttle window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_shuttle.dmi'
+	icon_state = "low_wall_shuttle-0"
+	base_icon_state = "low_wall_shuttle"
+	custom_materials = list(/datum/material/titanium = 2000)
+
+/turf/closed/wall/window_frame/plastitanium
+	name = "plastitanium window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_plastitanium.dmi'
+	icon_state = "low_wall_plastitanium-0"
+	base_icon_state = "low_wall_plastitanium"
+	custom_materials = list(/datum/material/alloy/plastitanium = 2000)
+
+/turf/closed/wall/window_frame/wood
+	name = "wooden platform"
+	icon = 'icons/turf/walls/low_walls/low_wall_wood.dmi'
+	icon_state = "low_wall_wood-0"
+	base_icon_state = "low_wall_wood"
+	custom_materials = list(/datum/material/wood = 2000)
+
+/turf/closed/wall/window_frame/uranium
+	name = "uranium window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_uranium.dmi'
+	icon_state = "low_wall_uranium-0"
+	base_icon_state = "low_wall_uranium"
+	custom_materials = list(/datum/material/uranium = 2000)
+
+/turf/closed/wall/window_frame/iron
+	name = "rough iron window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_iron.dmi'
+	icon_state = "low_wall_iron-0"
+	base_icon_state = "low_wall_iron"
+	custom_materials = list(/datum/material/iron = 2000)
+
+/turf/closed/wall/window_frame/silver
+	name = "silver window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_silver.dmi'
+	icon_state = "low_wall_silver-0"
+	base_icon_state = "low_wall_silver"
+	custom_materials = list(/datum/material/silver = 2000)
+
+/turf/closed/wall/window_frame/gold
+	name = "gold window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_gold.dmi'
+	icon_state = "low_wall_gold-0"
+	base_icon_state = "low_wall_gold"
+	custom_materials = list(/datum/material/gold = 2000)
+
+/turf/closed/wall/window_frame/bronze
+	name = "clockwork window mount"
+	icon = 'icons/turf/walls/low_walls/low_wall_bronze.dmi'
+	icon_state = "low_wall_bronze-0"
+	base_icon_state = "low_wall_bronze"
+	custom_materials = list(/datum/material/bronze = 2000)
+
+/turf/closed/wall/window_frame/cult
+	name = "rune-scarred window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_cult.dmi'
+	icon_state = "low_wall_cult-0"
+	base_icon_state = "low_wall_cult"
+	custom_materials = list(/datum/material/runedmetal = 2000)
+
+/turf/closed/wall/window_frame/hotel
+	name = "hotel window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_hotel.dmi'
+	icon_state = "low_wall_hotel-0"
+	base_icon_state = "low_wall_hotel"
+	custom_materials = list(/datum/material/wood = 2000)
+
+/turf/closed/wall/window_frame/material
+	name = "material window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_material.dmi'
+	icon_state = "low_wall_material-0"
+	base_icon_state = "low_wall_material"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS

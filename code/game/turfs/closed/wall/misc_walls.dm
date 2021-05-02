@@ -2,6 +2,7 @@
 	name = "runed metal wall"
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_cult_frill.dmi'
 	icon_state = "cult_wall-0"
 	base_icon_state = "cult_wall"
 	smoothing_flags = SMOOTH_BITMASK
@@ -88,6 +89,7 @@
 	name = "clockwork wall"
 	desc = "A huge chunk of bronze, decorated like gears and cogs."
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_clockwork_frill.dmi'
 	icon_state = "clockwork_wall-0"
 	base_icon_state = "clockwork_wall"
 	smoothing_flags = SMOOTH_BITMASK
