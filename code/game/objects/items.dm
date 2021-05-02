@@ -765,7 +765,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/on_juice()
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
 
-/obj/item/proc/return_strength_string(var/forcenumber)
+/obj/item/proc/return_strength_string(forcenumber)
 	if(!forcenumber)
 		return
 	var/verb
