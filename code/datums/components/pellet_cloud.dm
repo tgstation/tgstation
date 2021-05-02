@@ -325,7 +325,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/grenade_dropped)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/grenade_moved)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_UNCROSSED = .proc/grenade_uncrossed,
+		COMSIG_ATOM_EXITED =.proc/grenade_uncrossed,
 	)
 	AddElement(/datum/element/connect_loc, parent, loc_connections)
 

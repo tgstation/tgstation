@@ -57,7 +57,7 @@
 	wires = new /datum/wires/scanner_gate(src)
 	set_scanline("passive")
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -73,7 +73,7 @@
 	else
 		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
 
-/obj/machinery/scanner_gate/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/machinery/scanner_gate/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, .proc/auto_scan, AM)
 

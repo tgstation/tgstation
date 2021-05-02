@@ -13,7 +13,7 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -35,7 +35,7 @@
 	if(move_dir == eat_dir)
 		return TRUE
 
-/obj/machinery/plumbing/grinder_chemical/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/machinery/plumbing/grinder_chemical/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	grind(AM)
 

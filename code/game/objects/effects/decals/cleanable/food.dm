@@ -42,7 +42,7 @@
 	if(is_species(AM, /datum/species/snail))
 		to_chat(AM, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
 
-/obj/effect/decal/cleanable/food/salt/on_crossed(datum/source, atom/movable/AM)
+/obj/effect/decal/cleanable/food/salt/on_entered(datum/source, atom/movable/AM)
 	. = ..()
 	if(!isliving(AM))
 		return

@@ -4,8 +4,8 @@
 	var/is_swarming = FALSE
 	var/list/swarm_members = list()
 	var/static/list/swarming_loc_connections = list(
-		COMSIG_MOVABLE_UNCROSSED = .proc/leave_swarm,
-		COMSIG_MOVABLE_CROSSED = .proc/join_swarm
+		COMSIG_ATOM_EXITED =.proc/leave_swarm,
+		COMSIG_ATOM_ENTERED = .proc/join_swarm
 	)
 
 /datum/component/swarming/Initialize(max_x = 24, max_y = 24)

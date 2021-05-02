@@ -105,7 +105,7 @@
 /obj/effect/anomaly/grav/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -130,7 +130,7 @@
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
-/obj/effect/anomaly/grav/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/effect/anomaly/grav/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	gravShock(AM)
 
@@ -176,7 +176,7 @@
 	. = ..()
 	explosive = _explosive
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -186,7 +186,7 @@
 	for(var/mob/living/M in range(0, src))
 		mobShock(M)
 
-/obj/effect/anomaly/flux/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/effect/anomaly/flux/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	mobShock(AM)
 

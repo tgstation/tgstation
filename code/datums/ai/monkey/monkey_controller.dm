@@ -40,7 +40,7 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, .proc/on_attempt_cuff)
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, .proc/update_movespeed)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_Crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, new_pawn, loc_connections)
 	movement_delay = living_pawn.cached_multiplicative_slowdown
@@ -195,7 +195,7 @@ have ways of interacting with a specific mob and control it.
 			var/mob/living/carbon/human/H = I.thrownby
 			retaliate(H)
 
-/datum/ai_controller/monkey/proc/on_Crossed(datum/source, atom/movable/AM)
+/datum/ai_controller/monkey/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
 	if(!IS_DEAD_OR_INCAP(living_pawn) && ismob(AM))

@@ -78,7 +78,7 @@
 	update_weight()
 	update_appearance()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -441,7 +441,7 @@
 	S.add(transfer)
 	return transfer
 
-/obj/item/stack/proc/on_crossed(datum/source, atom/movable/crossing)
+/obj/item/stack/proc/on_entered(datum/source, atom/movable/crossing)
 	SIGNAL_HANDLER
 	if(!crossing.throwing && can_merge(crossing))
 		INVOKE_ASYNC(src, .proc/merge, crossing)

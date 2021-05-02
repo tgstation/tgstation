@@ -35,7 +35,7 @@
 /obj/item/clothing/mask/facehugger/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -99,7 +99,7 @@
 	. = ..()
 	Attach(M)
 
-/obj/item/clothing/mask/facehugger/proc/on_crossed(datum/source, atom/target)
+/obj/item/clothing/mask/facehugger/proc/on_entered(datum/source, atom/target)
 	SIGNAL_HANDLER
 	HasProximity(target)
 

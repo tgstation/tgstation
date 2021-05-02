@@ -114,7 +114,7 @@
 	prefixes = list(command, security, engineering)
 	suffixes = list(research, medical, legal)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -148,7 +148,7 @@
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
-/mob/living/simple_animal/bot/cleanbot/proc/on_crossed(datum/source, atom/movable/AM)
+/mob/living/simple_animal/bot/cleanbot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 
 	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)

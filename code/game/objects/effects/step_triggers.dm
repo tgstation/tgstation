@@ -10,14 +10,14 @@
 /obj/effect/step_trigger/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
 
-/obj/effect/step_trigger/proc/on_crossed(datum/source, H as mob|obj)
+/obj/effect/step_trigger/proc/on_entered(datum/source, H as mob|obj)
 	SIGNAL_HANDLER
 	if(!H)
 		return

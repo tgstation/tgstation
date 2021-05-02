@@ -83,7 +83,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
 	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/consume)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/consume,
+		COMSIG_ATOM_ENTERED = .proc/consume,
 	)
 	AddElement(/datum/element/connect_loc, parent, loc_connections)
 

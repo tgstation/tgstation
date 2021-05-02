@@ -18,7 +18,7 @@
 	var/blockers = NONE
 
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/rot_react,
+		COMSIG_ATOM_ENTERED = .proc/rot_react,
 	)
 
 /datum/component/rot/Initialize(delay, scaling, severity)

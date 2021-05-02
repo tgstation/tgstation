@@ -16,12 +16,12 @@
 	var/list/slot_whitelist = list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_BELT, ITEM_SLOT_NECK)
 	///what we give to connect_loc by default, makes slippable mobs moving over us slip
 	var/static/list/default_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/Slip,
+		COMSIG_ATOM_ENTERED = .proc/Slip,
 	)
 
 	///what we give to connect_loc if we're an item and get equipped by a mob. makes slippable mobs moving over our holder slip
 	var/static/list/holder_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/Slip_on_wearer,
+		COMSIG_ATOM_ENTERED = .proc/Slip_on_wearer,
 	)
 
 /datum/component/slippery/Initialize(knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)

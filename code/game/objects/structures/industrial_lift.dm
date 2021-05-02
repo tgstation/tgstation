@@ -162,8 +162,8 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_UNCROSSED = .proc/UncrossedRemoveItemFromLift,
-		COMSIG_MOVABLE_CROSSED = .proc/AddItemOnLift,
+		COMSIG_ATOM_EXITED =.proc/UncrossedRemoveItemFromLift,
+		COMSIG_ATOM_ENTERED = .proc/AddItemOnLift,
 		COMSIG_ATOM_CREATED = .proc/AddItemOnLift,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)

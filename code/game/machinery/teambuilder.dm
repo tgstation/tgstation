@@ -18,7 +18,7 @@
 	. = ..()
 	add_filter("teambuilder", 2, list("type" = "outline", "color" = team_color, "size" = 2))
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -26,7 +26,7 @@
 	. = ..()
 	. += "<span class='notice'>You see a hastily written note on the side, it says '1215-1217, PICK A SIDE'.</span>"
 
-/obj/machinery/teambuilder/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/machinery/teambuilder/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(AM.get_filter("teambuilder"))
 		return

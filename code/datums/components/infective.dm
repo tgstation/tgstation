@@ -16,7 +16,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/static/list/disease_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/try_infect_crossed,
+		COMSIG_ATOM_ENTERED = .proc/try_infect_crossed,
 	)
 	AddElement(/datum/element/connect_loc, parent, disease_connections)
 

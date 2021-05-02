@@ -174,7 +174,7 @@
 	if(embedding)
 		updateEmbedding()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -551,7 +551,7 @@
 /**
  * Projectile crossed: When something enters a projectile's tile, make sure the projectile hits it if it should be hitting it.
  */
-/obj/projectile/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/projectile/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	scan_crossed_hit(AM)
 

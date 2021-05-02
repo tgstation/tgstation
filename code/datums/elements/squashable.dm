@@ -10,7 +10,7 @@
 	var/datum/callback/on_squash_callback
 	///signal list given to connect_loc
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/OnCrossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
 
@@ -30,7 +30,7 @@
 	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
 ///Handles the squashing of the mob
-/datum/component/squashable/proc/OnCrossed(turf/source_turf, atom/movable/crossing_movable)
+/datum/component/squashable/proc/on_entered(turf/source_turf, atom/movable/crossing_movable)
 	SIGNAL_HANDLER
 
 	var/mob/living/parent_as_living = parent

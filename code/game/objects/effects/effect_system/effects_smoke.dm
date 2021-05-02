@@ -128,7 +128,7 @@
 /obj/effect/particle_effect/smoke/bad/Initialize()
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -140,7 +140,7 @@
 		M.emote("cough")
 		return TRUE
 
-/obj/effect/particle_effect/smoke/bad/proc/on_crossed(datum/source, atom/movable/AM, oldloc)
+/obj/effect/particle_effect/smoke/bad/proc/on_entered(datum/source, atom/movable/AM, oldloc)
 	SIGNAL_HANDLER
 	if(istype(AM, /obj/projectile/beam))
 		var/obj/projectile/beam/B = AM

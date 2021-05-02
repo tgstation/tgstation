@@ -47,7 +47,7 @@
 	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -60,7 +60,7 @@
 
 	..()
 
-/mob/living/simple_animal/bot/hygienebot/proc/on_crossed(datum/source, atom/movable/AM)
+/mob/living/simple_animal/bot/hygienebot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(washing)
 		do_wash(AM)

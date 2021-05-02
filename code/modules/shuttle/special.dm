@@ -198,11 +198,11 @@
 /obj/structure/table/wood/bar/Initialize(mapload, _buildstack)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
-/obj/structure/table/wood/bar/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/structure/table/wood/bar/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	var/mob/living/M = AM
 	if(istype(M) && !M.incorporeal_move && !is_barstaff(M))

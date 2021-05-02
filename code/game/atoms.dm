@@ -1319,8 +1319,6 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
 	SEND_SIGNAL(AM, COMSIG_ATOM_ENTERING, src, oldLoc)
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM, oldLoc)
-
 /**
  * An atom is attempting to exit this atom's contents
  *
@@ -1332,8 +1330,6 @@
 
 	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
 		return FALSE
-
-	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
 
 	return TRUE
 

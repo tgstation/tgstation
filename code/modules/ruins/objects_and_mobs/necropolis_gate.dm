@@ -262,7 +262,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -275,7 +275,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/stone_tile/singularity_pull()
 	return
 
-/obj/structure/stone_tile/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/structure/stone_tile/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(falling || fallen)
 		return

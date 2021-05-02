@@ -379,10 +379,6 @@
 #define COMSIG_MOVABLE_LOCATION_CHANGE "location_changed"
 ///from base of atom/movable/Cross(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS "movable_cross"
-///from base of atom/Entered(): (/atom/movable/AM, /atom/oldloc)
-#define COMSIG_MOVABLE_CROSSED "movable_crossed"
-///from base of atom/Exited(): (/atom/movable/AM)
-#define COMSIG_MOVABLE_UNCROSSED "movable_uncrossed"
 ///from base of atom/movable/Move(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS_OVER "movable_cross_am"
 ///from base of atom/movable/Bump(): (/atom)
@@ -952,7 +948,7 @@
 
 ///from Edible component: (mob/living/eater, mob/feeder, bitecount, bitesize)
 #define COMSIG_FOOD_EATEN "food_eaten"
-///from base of datum/component/edible/oncrossed: (mob/crosser, bitecount)
+///from base of datum/component/edible/on_entered: (mob/crosser, bitecount)
 #define COMSIG_FOOD_CROSSED "food_crossed"
 
 ///from base of Component/edible/On_Consume: (mob/living/eater, mob/living/feeder)

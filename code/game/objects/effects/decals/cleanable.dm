@@ -34,7 +34,7 @@
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -87,7 +87,7 @@
 
 //Add "bloodiness" of this blood's type, to the human's shoes
 //This is on /cleanable because fuck this ancient mess
-/obj/effect/decal/cleanable/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/effect/decal/cleanable/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(iscarbon(AM) && blood_state && bloodiness >= 40)
 		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)

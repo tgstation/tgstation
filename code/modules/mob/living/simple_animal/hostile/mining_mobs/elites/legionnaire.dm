@@ -282,11 +282,11 @@
 /obj/structure/legionnaire_bonfire/Initialize()
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
-/obj/structure/legionnaire_bonfire/proc/on_crossed(datum/source, atom/movable/mover)
+/obj/structure/legionnaire_bonfire/proc/on_entered(datum/source, atom/movable/mover)
 	SIGNAL_HANDLER
 	if(isobj(mover))
 		var/obj/object = mover

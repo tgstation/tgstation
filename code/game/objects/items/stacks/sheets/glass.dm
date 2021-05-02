@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		qdel(src)
 	return TRUE
 
-/obj/item/shard/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/item/shard/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM

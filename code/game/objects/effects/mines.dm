@@ -19,7 +19,7 @@
 		icon_state = "uglymine-inactive"
 		addtimer(CALLBACK(src, .proc/now_armed), arm_delay)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -39,7 +39,7 @@
 	playsound(src, 'sound/machines/nuke/angry_beep.ogg', 40, FALSE, -2)
 	visible_message("<span class='danger'>\The [src] beeps softly, indicating it is now active.<span>", vision_distance = COMBAT_MESSAGE_RANGE)
 
-/obj/effect/mine/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/effect/mine/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 
 	if(triggered || !isturf(loc) || !armed)

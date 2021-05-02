@@ -17,7 +17,7 @@
 /mob/living/simple_animal/hostile/guardian/fire/Initialize(mapload, theme)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -32,7 +32,7 @@
 	if(. && ishuman(target) && target != summoner)
 		new /datum/hallucination/delusion(target,TRUE,"custom",200,0, icon_state,icon)
 
-/mob/living/simple_animal/hostile/guardian/fire/proc/on_crossed(datum/source, AM as mob|obj)
+/mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
 	collision_ignite(AM)
 

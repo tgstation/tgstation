@@ -1325,7 +1325,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/danger/lava/Initialize(mapload, _target)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -1334,7 +1334,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(target.client)
 		target.client.images += image
 
-/obj/effect/hallucination/danger/lava/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/effect/hallucination/danger/lava/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(AM == target)
 		target.adjustStaminaLoss(20)
@@ -1346,7 +1346,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/danger/chasm/Initialize(mapload, _target)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -1356,7 +1356,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(target.client)
 		target.client.images += image
 
-/obj/effect/hallucination/danger/chasm/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/effect/hallucination/danger/chasm/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(AM == target)
 		if(istype(target, /obj/effect/dummy/phased_mob))
@@ -1373,7 +1373,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -1390,7 +1390,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(target.client)
 		target.client.images += image
 
-/obj/effect/hallucination/danger/anomaly/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/effect/hallucination/danger/anomaly/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(AM == target)
 		new /datum/hallucination/shock(target)

@@ -232,11 +232,11 @@
 /obj/effect/beam/i_beam/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
-/obj/effect/beam/i_beam/proc/on_crossed(datum/source, atom/movable/AM as mob|obj)
+/obj/effect/beam/i_beam/proc/on_entered(datum/source, atom/movable/AM as mob|obj)
 	SIGNAL_HANDLER
 	if(istype(AM, /obj/effect/beam))
 		return

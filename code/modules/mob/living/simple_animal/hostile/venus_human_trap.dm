@@ -75,11 +75,11 @@
 /obj/effect/ebeam/vine/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
-/obj/effect/ebeam/vine/proc/on_crossed(datum/source, atom/movable/AM)
+/obj/effect/ebeam/vine/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM

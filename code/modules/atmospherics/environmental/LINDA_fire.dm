@@ -73,7 +73,7 @@
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(FALSE, FALSE)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -217,7 +217,7 @@
 		T.active_hotspot = null
 	return ..()
 
-/obj/effect/hotspot/proc/on_crossed(datum/source, atom/movable/AM, oldLoc)
+/obj/effect/hotspot/proc/on_entered(datum/source, atom/movable/AM, oldLoc)
 	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM

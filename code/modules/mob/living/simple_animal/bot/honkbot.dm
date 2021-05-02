@@ -47,7 +47,7 @@
 	access_card.add_access(clown_trim.access + clown_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -354,7 +354,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		target = user
 		mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/honkbot/proc/on_crossed(datum/source, atom/movable/AM)
+/mob/living/simple_animal/bot/honkbot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(ismob(AM) && (on)) //only if its online
 		if(prob(30)) //you're far more likely to trip on a honkbot

@@ -21,7 +21,7 @@
 
 	///given to connect_loc to listen for something moving over target
 	var/static/list/crossed_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
 /datum/element/caltrop/Attach(datum/target, min_damage = 0, max_damage = 0, probability = 100, flags = NONE)
@@ -37,9 +37,9 @@
 	if(ismovable(target))
 		AddElement(/datum/element/connect_loc, target, crossed_connections)
 	else
-		RegisterSignal(get_turf(target), COMSIG_MOVABLE_CROSSED, .proc/on_crossed)
+		RegisterSignal(get_turf(target), COMSIG_ATOM_ENTERED, .proc/on_entered)
 
-/datum/element/caltrop/proc/on_crossed(atom/caltrop, atom/movable/AM)
+/datum/element/caltrop/proc/on_entered(atom/caltrop, atom/movable/AM)
 	SIGNAL_HANDLER
 
 	if(!prob(probability))

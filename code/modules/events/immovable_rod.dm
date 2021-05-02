@@ -117,7 +117,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(istype(ghost))
 			ghost.ManualFollow(src)
 
-/obj/effect/immovablerod/proc/on_crossed_over_movable(datum/source, atom/movable/atom_crossed_over)
+/obj/effect/immovablerod/proc/on_entered_over_movable(datum/source, atom/movable/atom_crossed_over)
 	SIGNAL_HANDLER
 	if((atom_crossed_over.density || isliving(atom_crossed_over)) && !QDELETED(atom_crossed_over))
 		Bump(atom_crossed_over)

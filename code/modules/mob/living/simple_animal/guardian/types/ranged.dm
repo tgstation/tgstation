@@ -113,11 +113,11 @@
 /obj/effect/snare/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
-/obj/effect/snare/proc/on_crossed(datum/source, AM as mob|obj)
+/obj/effect/snare/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
 	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
 		to_chat(spawner.summoner, "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>")

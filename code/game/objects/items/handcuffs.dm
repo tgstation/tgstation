@@ -321,7 +321,7 @@
 	. = ..()
 	update_appearance()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/spring_trap,
+		COMSIG_ATOM_ENTERED = .proc/spring_trap,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 

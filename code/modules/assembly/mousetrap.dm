@@ -11,13 +11,13 @@
 
 	///if we are attached to an assembly holder, we attach a connect_loc element to ourselves that listens to this from the holder
 	var/static/list/holder_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
 /obj/item/assembly/mousetrap/Initialize()
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -126,7 +126,7 @@
 	return ..()
 
 
-/obj/item/assembly/mousetrap/proc/on_crossed(datum/source, atom/movable/AM as mob|obj)
+/obj/item/assembly/mousetrap/proc/on_entered(datum/source, atom/movable/AM as mob|obj)
 	SIGNAL_HANDLER
 	if(armed)
 		if(ismob(AM))

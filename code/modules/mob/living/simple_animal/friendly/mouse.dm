@@ -43,7 +43,7 @@
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_CROSSED = .proc/on_crossed,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
@@ -79,7 +79,7 @@
 	if(.)
 		SSmobs.cheeserats += src
 
-/mob/living/simple_animal/mouse/proc/on_crossed(datum/source, AM as mob|obj)
+/mob/living/simple_animal/mouse/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
 	if(ishuman(AM))
 		if(!stat)
