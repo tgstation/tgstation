@@ -57,6 +57,7 @@
 	new_dna.blood_type = blood_type
 	new_dna.features = features.Copy()
 	new_dna.species = new species.type
+	new_dna.species.species_traits = species.species_traits
 	new_dna.real_name = real_name
 	new_dna.mutations = mutations.Copy()
 
