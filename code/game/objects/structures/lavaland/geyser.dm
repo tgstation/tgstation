@@ -24,7 +24,7 @@
 	///Have we been discovered with a mining scanner?
 	var/discovered = FALSE
 	///How many points we grant to whoever discovers us
-	var/point_value = CARGO_CRATE_VALUE * 0.20
+	var/point_value = 100
 	///what's our real name that will show upon discovery? null to do nothing
 	var/true_name
 	///the message given when you discover this geyser.
@@ -83,13 +83,13 @@
 				var/mob/living/living = user
 
 				var/obj/item/card/id/card = living.get_idcard()
-				if(card?.registered_account)
-					to_chat(user, "<span class='notice'>[point_value] credits have been paid out!</span>")
-					card.registered_account.adjust_money(point_value)
+				if(card)
+					to_chat(user, "<span class='notice'>[point_value] mining points have been paid out!</span>")
+					card.mining_points = point_value
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel
-	point_value = CARGO_CRATE_VALUE
+	point_value = 250
 	true_name = "wittel geyser"
 	discovery_message = "It's a rare wittel geyser! This could be very powerful in the right hands... "
 
@@ -101,8 +101,12 @@
 	reagent_id = /datum/reagent/medicine/omnizine/protozine
 	true_name = "protozine geyser"
 
+/obj/structure/geyser/hollowwater
+	reagent_id = /datum/reagent/water/hollowwater
+	true_name = "hollow water geyser"
+
 /obj/structure/geyser/random
-	point_value = CARGO_CRATE_VALUE * 2
+	point_value = 500
 	true_name = "strange geyser"
 	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
 
