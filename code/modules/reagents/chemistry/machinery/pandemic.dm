@@ -39,7 +39,7 @@
 /obj/machinery/computer/pandemic/AltClick(mob/user)
 	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE))
-		eject_beaker()
+		replace_beaker()
 
 /obj/machinery/computer/pandemic/handle_atom_del(atom/A)
 	if(A == beaker)
@@ -136,14 +136,16 @@
 	if(wait)
 		. += "waitlight"
 
-/obj/machinery/computer/pandemic/proc/eject_beaker()
+/obj/machinery/computer/pandemic/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(!user)
+		return FALSE
 	if(beaker)
-		var/obj/item/reagent_containers/beaker_out = beaker
-		try_put_in_hand(beaker, usr)
+		try_put_in_hand(beaker, user)
 		beaker = null
-		update_appearance()
-		return beaker_out
-	return null
+	if(new_beaker)
+		beaker = new_beaker
+	update_appearance()
+	return TRUE
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -179,7 +181,7 @@
 		return
 	switch(action)
 		if("eject_beaker")
-			eject_beaker()
+			replace_beaker(usr)
 			. = TRUE
 		if("empty_beaker")
 			if(beaker)
@@ -188,7 +190,7 @@
 		if("empty_eject_beaker")
 			if(beaker)
 				beaker.reagents.clear_reagents()
-				eject_beaker()
+				replace_beaker(usr)
 			. = TRUE
 		if("rename_disease")
 			var/id = get_virus_id_by_index(text2num(params["index"]))
@@ -240,24 +242,16 @@
 		. = TRUE //no afterattack
 		if(machine_stat & (NOPOWER|BROKEN))
 			return
-		var/obj/item/reagent_containers/beaker_out
-		if(beaker)
-			beaker_out = eject_beaker() //now with 100% more swapping
+		var/obj/item/reagent_containers/B = I
 		if(!user.transferItemToLoc(I, src))
 			return
-		if(beaker_out)
-			if(user && Adjacent(user) && user.can_hold_items())
-				user.put_in_hands(beaker_out)
-		beaker = I
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		if(beaker_out)
-			to_chat(user, "<span class='notice'>You remove [beaker_out] and insert [I] into [src].</span>")
-		else
-			to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		replace_beaker(user, B)
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
 		update_appearance()
 	else
 		return ..()
 
 /obj/machinery/computer/pandemic/on_deconstruction()
-	eject_beaker()
+	replace_beaker()
 	. = ..()
