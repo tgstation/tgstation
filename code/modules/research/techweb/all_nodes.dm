@@ -176,7 +176,7 @@
 	display_name = "Anomaly Research"
 	description = "Unlock the potential of the mysterious anomalies that appear on station."
 	prereq_ids = list("adv_engi", "practical_bluespace")
-	design_ids = list("reactive_armour", "anomaly_neutralizer", "crystal_stabilizer")
+	design_ids = list("reactive_armour", "anomaly_neutralizer")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 /datum/techweb_node/high_efficiency

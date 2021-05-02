@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "Issues with Reaction Chamber tgui buttons being out of reach are gone"
-  - refactor: "Refactors Reaction Chamber Code (jesus christ it was so bad)"

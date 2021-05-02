@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "fixed exploit of thermomachines going over fusion temperatures and breaking atmos with INF temperature. the machine now has safeties to not go over 500000 on the red port, with safeties off it can go over but it has a chance of explosion (safeties can only be disabled after emag or EMP)"

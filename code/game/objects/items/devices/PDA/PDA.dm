@@ -398,6 +398,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 							dat += "<br><a href='byond://?src=[REF(src)];choice=SkillReward;skill=[type]'>Contact the Professional [S.title] Association</a>"
 						dat += "</li></ul>"
 			if(21)
+				if(icon_alert)
+					cut_overlay(icon_alert)
+
 				dat += "<h4>[PDAIMG(mail)] SpaceMessenger V3.9.6</h4>"
 				dat += "<a href='byond://?src=[REF(src)];choice=Clear'>[PDAIMG(blank)]Clear Messages</a>"
 
