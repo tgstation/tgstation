@@ -460,7 +460,6 @@
 
 
 /obj/item/gun/ballistic/examine(mob/user)
-	offensive_notes += get_notes()
 	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
 	. += "It has [get_ammo(count_chambered)] round\s remaining."
@@ -476,12 +475,14 @@
 		if(misfire_probability > 0)
 			. += "<span class='danger'>Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.</span>"
 
-/// Creates a new mag object to draw bullet data from, since you cannot draw data from something that doesn't exist
-/obj/item/gun/ballistic/proc/get_notes()
-	if(!mag_type)
-		return
-	var/obj/item/ammo_box/magazine/exam_mag = initial(mag_type)
-	return uppertext("You'll have to load this with <span class'warning'>[exam_mag.caliber]</span> rounds.")
+/// Warning label override for bullet caliber information
+/obj/item/gun/ballistic/warning_label(list/readout = list(""))
+	. = ..()
+	if(magazine) /// Make sure you have a magazine, thats where the warning is!
+		readout += "Please remind yourself to keep the <span class='warning'>[magazine.caliber]</span> rounds that this device uses away from your co-workers"
+	else
+		readout += "The warning attached to the magazine is missing..."
+	. += readout.Join("\n")
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)

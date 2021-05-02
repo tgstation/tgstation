@@ -4,12 +4,12 @@
 	icon = 'icons/obj/guns/ammo.dmi'
 	icon_state = "s-casing"
 	worn_icon_state = "bullet"
-	note_override = 1
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 500)
+	override_notes = TRUE
 	///What sound should play when this ammo is fired
 	var/fire_sound = null
 	///Which kind of guns it can be loaded into
@@ -34,26 +34,20 @@
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
 
-/// Creates a new projectile in order to retrieve offensive data, adding on relevant stamina or pellet count information as needed
-/obj/item/ammo_casing/proc/get_notes()
-	if(projectile_type)
-		/// Output added to the offensive notes variable
-		var/note_builder = ""
-		var/obj/projectile/exam_proj = initial(projectile_type)
-		var/exam_dmg = initial(exam_proj.damage)
-		var/exam_stam = initial(exam_proj.stamina)
-		if(exam_dmg)
-			note_builder = "You can take down a motherfucker with <span class='warning'>[round(100 / exam_dmg, 1)]</span> bullets, with <span class ='warning'>[pellets]</span> shot(s) per round.\n"
-		if(exam_stam)
-			note_builder += "If you wanna be nice, you'll knock someone out with <span class ='warning'>[round(100 / (exam_dmg + exam_stam * pellets), 1)]</span> rounds."
-		return note_builder
-	else
-		return
-
-/obj/item/ammo_casing/examine(mob/user)
-	offensive_notes += get_notes()
+/// Warning label override for bullet damage and count information
+/obj/item/ammo_casing/warning_label(list/readout = list(""))
 	. = ..()
-
+	/// Make sure there is actually something IN the casing
+	if(loaded_projectile)
+		/// No dividing by 0
+		if(loaded_projectile.damage > 0)
+			readout += "Most monkeys our legal team subjected to these rounds succumbed to their wounds after <span class='warning'>[round(100 / (loaded_projectile.damage * pellets), 0.1)]</span> point-blank discharges, taking <span class='warning'>[pellets]</span> shots per round"
+		if(loaded_projectile.stamina > 0)
+			readout += "More fortunate monkeys simply collapsed from pain after <span class='warning'>[round(100 / ((loaded_projectile.damage + loaded_projectile.stamina) * pellets), 0.1)]</span> rounds"
+	else
+		/// Holograms don't do well with extreme forces
+		readout += "\nThe warning label was blown away..."
+	. += readout.Join("\n")
 
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"

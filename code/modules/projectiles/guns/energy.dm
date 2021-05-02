@@ -20,27 +20,20 @@
 	var/use_cyborg_cell = FALSE //whether the gun's cell drains the cyborg user's cell to recharge
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
-/obj/item/gun/energy/examine(mob/user)
-	offensive_notes += get_notes() /// Formulates the offensive notes on initialization
+/// Warning label override to display the various modes on laser guns and their associated damage
+/obj/item/gun/energy/warning_label(list/readout = list(""))
 	. = ..()
-
-/// Creates an energy ammo case and various projectiles in order to retrieve combat information
-/obj/item/gun/energy/proc/get_notes()
+	/// Make sure there is something to actually retrieve
 	if(!ammo_type)
 		return
-	/// Output added to the offensive notes variable
-
-	var/notebuilder = ""
 	var/obj/item/ammo_casing/energy/exam_ammo
 	var/obj/projectile/exam_proj
-	notebuilder += "This bad baby has <span class='warning'>[ammo_type.len]</span> mode(s)\n"
-	for(var/for_ammo in ammo_type)
-		exam_ammo = initial(for_ammo)
-		exam_proj = initial(exam_ammo.projectile_type)
-		notebuilder += "This sum'bitches [exam_ammo.select_name] mode will deal <span class='warning'>[exam_proj.damage] [exam_proj.damage_type]</class> damage"
-
-	return notebuilder
-
+	readout += "Standard models of this dangerous tool have <span class='warning'>[ammo_type.len]</span> mode(s)"
+	for(var/obj/item/ammo_casing/energy/for_ammo in ammo_type)
+		exam_ammo = for_ammo
+		exam_proj = for_ammo.loaded_projectile
+		readout += "Our heroic interns braved <span class='warning'>[round(100 / exam_proj.damage, 0.1)]</span> shots on <span class='warning'>[exam_ammo.select_name]</span> mode before collapsing from [exam_proj.damage_type == STAMINA ? "immense pain" : "their wounds"]."
+	. += readout.Join("\n")
 
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()

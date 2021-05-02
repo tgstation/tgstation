@@ -119,7 +119,7 @@
 	return ..()
 
 /obj/item/melee/baton/examine(mob/user)
-	offensive_notes = "Various security forces report being able to beat criminals into exhaustion with only [round(100 / stamina_loss_amt, 1)] hit(s)!"
+	offensive_notes = "Various interviewed security forces report being able to beat criminals into exhaustion with only [round(100 / stamina_loss_amt, 1)] hit(s)!"
 	. = ..()
 	if(cell)
 		. += "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>"
