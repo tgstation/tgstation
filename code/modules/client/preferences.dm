@@ -210,9 +210,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character_preview_view = create_character_preview_view(user)
 
 	data["character_profiles"] = create_character_profiles()
-
+	data["character_preferences"] = compile_character_preferences(user)
 	data["character_preview_view"] = character_preview_view.assigned_map
-
 	data["real_name"] = real_name
 
 	return data
@@ -248,6 +247,29 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	SIGNAL_HANDLER
 
 	client?.register_map_obj(character_preview_view)
+
+/datum/preferences/proc/compile_character_preferences(mob/user)
+	var/list/preferences = list()
+
+	for (var/preference_type in GLOB.preference_entries)
+		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+
+		LAZYINITLIST(preferences[preference.category])
+
+		var/value = read_preference(preference_type)
+		var/data
+
+		if (preference.should_generate_icons)
+			data = list(
+				"icon" = preference.get_icon_for(user, value),
+				"value" = value,
+			)
+		else
+			data = value
+
+		preferences[preference.category][preference.savefile_key] = data
+
+	return preferences
 
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/character_preview_view

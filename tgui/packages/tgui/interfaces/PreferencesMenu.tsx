@@ -2,15 +2,37 @@ import { useBackend } from "../backend";
 import { Box, Button, ByondUi, Icon, Stack } from "../components";
 import { Window } from "../layouts";
 
+const CLOTHING_CELL_SIZE = 32;
+const CLOTHING_ROWS = 9;
+
+enum Gender {
+  Male = "male",
+  Female = "female",
+  Other = "plural",
+}
+
 type CharacterProfile = {
   name: string;
 };
 
-type PreferencesMenuData = {
-  character_preview_view: string,
-  character_profiles: (CharacterProfile | null)[],
+type AssetWithIcon = {
+  icon: string;
+  value: string;
+};
 
-  real_name: string,
+type PreferencesMenuData = {
+  character_preview_view: string;
+  character_profiles: (CharacterProfile | null)[];
+
+  real_name: string;
+
+  character_preferences: {
+    clothing: Record<string, AssetWithIcon>;
+
+    misc: {
+      gender: Gender;
+    };
+  };
 };
 
 const CharacterProfiles = (props: {
@@ -44,7 +66,7 @@ const CharacterPreview = (props: {
       <Stack.Item>
         <ByondUi
           width="220px"
-          height="300px"
+          height={`${CLOTHING_ROWS * CLOTHING_CELL_SIZE}px`}
           params={{
             zoom: 0,
             id: props.id,
@@ -75,7 +97,42 @@ export const PreferencesMenu = (props, context) => {
 
           <Stack.Item>
             <Stack fill>
-              <CharacterPreview id={data.character_preview_view} />
+              <Stack.Item>
+                <Stack
+                  vertical
+                  fill
+                  style={{ width: `${CLOTHING_CELL_SIZE}px` }}
+                >
+                  {Object.entries(data.character_preferences.clothing)
+                    .map(([clothingKey, clothing]) => {
+                      // MOTHBLOCKS TODO: Better nude icons, rather than X
+                      return (
+                        <Stack.Item key={clothingKey}>
+                          <Button style={{
+                            height: `${CLOTHING_CELL_SIZE}px`,
+                            width: `${CLOTHING_CELL_SIZE}px`,
+                          }} tooltip={clothing.value}>
+                            <Box as="img" src={clothing.icon} style={{
+                              // CODE REVIEW: This is copied and pasted from
+                              // StripMenu, should this be a class? What would
+                              // it be called?
+                              position: "absolute",
+                              height: "100%",
+                              left: "50%",
+                              top: "50%",
+                              transform:
+                                "translateX(-50%) translateY(-50%) scale(0.8)",
+                            }} />
+                          </Button>
+                        </Stack.Item>
+                      );
+                    })}
+                </Stack>
+              </Stack.Item>
+
+              <Stack.Item>
+                <CharacterPreview id={data.character_preview_view} />
+              </Stack.Item>
             </Stack>
           </Stack.Item>
         </Stack>
