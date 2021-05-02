@@ -111,7 +111,7 @@
 	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		user.put_in_hands(inserted_key)
 	else
-		inserted_key.equip_to_best_slot(user, check_hand = FALSE)
+		inserted_key.equip_to_best_slot(user)
 	inserted_key = null
 
 /obj/vehicle/sealed/Destroy()

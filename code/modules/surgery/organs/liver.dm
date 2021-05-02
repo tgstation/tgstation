@@ -176,7 +176,7 @@
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
 			examine_list += "<span class='danger'>[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they()] don't look like they will be alive for much longer.</span>"
 
-/obj/item/organ/liver/on_death()
+/obj/item/organ/liver/on_death(delta_time, times_fired)
 	. = ..()
 	var/mob/living/carbon/carbon_owner = owner
 	if(!owner)//If we're outside of a mob
@@ -189,7 +189,7 @@
 		return
 	for(var/reagent in carbon_owner.reagents.reagent_list)
 		var/datum/reagent/R = reagent
-		R.on_mob_dead(carbon_owner)
+		R.on_mob_dead(carbon_owner, delta_time)
 
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN

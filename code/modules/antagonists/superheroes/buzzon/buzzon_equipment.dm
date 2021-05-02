@@ -24,14 +24,19 @@
 /obj/item/clothing/shoes/sneakers/buzzon
 	name = "BuzzOn shoes"
 	desc = "Shoes of a bee that became human, rumors say that they buzz when you walk in them."
-	icon_state = "buzz"
-	worn_icon_state = "buzz"
+	greyscale_colors = "#f6c61a#ffffff"
 
 	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
 
 /obj/item/clothing/shoes/sneakers/buzzon/cryo
 	icon_state = "buzz_cryo"
 	worn_icon_state = "buzz_cryo"
+
+	greyscale_colors = null
+	dying_key = null
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 
 /obj/item/clothing/suit/hooded/bee_costume/buzzon
 	name = "cybernetic bee suit"
@@ -79,7 +84,7 @@
 			current_owner.visible_message("<span class='warning'>[linked_sword]'s small rocket engine suddenly activates and rips it out of your hand!</span>")
 		linked_sword.throw_at(owner, 10, 2)
 
-/obj/item/clothing/head/hooded/bee_hood/full //It's not a helmet because I want tackles to fuck you up. Oh and yeah, flashbangs
+/obj/item/clothing/head/hooded/bee_hood/full //It's not a helmet because I want tackles and flashbangs to fuck you up
 	name = "cybernetic bee helmet"
 	desc = "A cybernetic helmet attached to a suit. All hail the Queen!"
 	icon_state = "bee_full"
@@ -216,6 +221,32 @@
 	on = FALSE
 
 	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/buzzon/equipped(mob/user, slot, initial)
+	. = ..()
+	if(!ishuman(user))
+		return
+
+	if(slot != ITEM_SLOT_HEAD)
+		return
+
+	var/mob/living/carbon/human/buzzon = user
+
+	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
+	hud.add_hud_to(buzzon)
+	ADD_TRAIT(buzzon, TRAIT_DIAGNOSTIC_HUD, CLOTHING_TRAIT)
+	ADD_TRAIT(buzzon, TRAIT_ROBOTIC_FRIEND, CLOTHING_TRAIT)
+
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/buzzon/dropped(mob/user)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/buzzon = user
+
+	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
+	hud.remove_hud_from(buzzon)
+	REMOVE_TRAIT(buzzon, TRAIT_DIAGNOSTIC_HUD, CLOTHING_TRAIT)
+	REMOVE_TRAIT(buzzon, TRAIT_ROBOTIC_FRIEND, CLOTHING_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/syndi/buzzon
 	name = "bee hardsuit"

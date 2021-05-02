@@ -2,6 +2,7 @@
 	name = "Emplosion"
 	desc = "This spell emplodes an area."
 
+	school = SCHOOL_EVOCATION
 	var/emp_heavy = 2
 	var/emp_light = 3
 

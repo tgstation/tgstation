@@ -90,9 +90,13 @@
 	//We cannot call it for items that have not been handled as they are not yet correctly
 	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
 	if(!not_handled)
-		I.equipped(src, slot)
+		has_equipped(I, slot, initial)
 
 	return not_handled
+
+/// This proc is called after an item has been successfully handled and equipped to a slot.
+/mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
+	return item.equipped(src, slot, initial)
 
 /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //Sets the default return value to what the parent returns.

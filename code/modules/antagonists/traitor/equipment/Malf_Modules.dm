@@ -14,11 +14,13 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/syndicatebomb/empty,
 		/obj/machinery/syndicatebomb/self_destruct,
 		/obj/machinery/syndicatebomb/training,
-		/obj/machinery/atmospherics/pipe/simple,
 		/obj/machinery/atmospherics/pipe/layer_manifold,
-		/obj/machinery/atmospherics/pipe/manifold,
-		/obj/machinery/atmospherics/pipe/manifold4w,
 		/obj/machinery/atmospherics/pipe/multiz,
+		/obj/machinery/atmospherics/pipe/smart,
+		/obj/machinery/atmospherics/pipe/smart/manifold, //mapped one
+		/obj/machinery/atmospherics/pipe/smart/manifold4w, //mapped one
+		/obj/machinery/atmospherics/pipe/color_adapter,
+		/obj/machinery/atmospherics/pipe/bridge_pipe,
 		/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 		/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
@@ -513,7 +515,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		var/turf/T = get_turf(M)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] overloaded [M.name] ([M.type]) at [ADMIN_VERBOSEJMP(T)].")
 		log_game("[key_name(usr)] overloaded [M.name] ([M.type]) at [AREACOORD(T)].")
-		explosion(get_turf(M), 0, 2, 3, 0)
+		explosion(M, heavy_impact_range = 2, light_impact_range = 3)
 		if(M) //to check if the explosion killed it before we try to delete it
 			qdel(M)
 

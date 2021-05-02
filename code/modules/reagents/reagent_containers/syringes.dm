@@ -3,10 +3,9 @@
 	desc = "A syringe that can hold up to 15 units."
 	icon = 'icons/obj/syringe.dmi'
 	base_icon_state = "syringe"
-	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	icon_state = "0"
+	icon_state = "syringe_0"
 	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5, 10, 15)
@@ -17,6 +16,10 @@
 	reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_EASY * 0.5
 	sharpness = SHARP_POINTY
+
+/obj/item/reagent_containers/syringe/Initialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
@@ -66,7 +69,7 @@
 		if(living_target != user)
 			living_target.visible_message("<span class='danger'>[user] is trying to inject [living_target]!</span>", \
 									"<span class='userdanger'>[user] is trying to inject you!</span>")
-			if(!do_mob(user, living_target, 3 SECONDS, extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
+			if(!do_mob(user, living_target, CHEM_INTERACT_DELAY(3 SECONDS, user), extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
 				return
 			if(!reagents.total_volume)
 				return
@@ -97,7 +100,7 @@
 			target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 							"<span class='userdanger'>[user] is trying to take a blood sample from you!</span>")
 			busy = TRUE
-			if(!do_mob(user, target, 3 SECONDS, extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
+			if(!do_mob(user, target, CHEM_INTERACT_DELAY(3 SECONDS, user), extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
 				busy = FALSE
 				return SECONDARY_ATTACK_CONTINUE_CHAIN
 			if(reagents.total_volume >= reagents.maximum_volume)
@@ -138,8 +141,7 @@
 
 /obj/item/reagent_containers/syringe/update_icon_state()
 	var/rounded_vol = get_rounded_vol()
-	icon_state = "[rounded_vol]"
-	inhand_icon_state = "[base_icon_state]_[rounded_vol]"
+	icon_state = "[base_icon_state]_[rounded_vol]"
 	return ..()
 
 /obj/item/reagent_containers/syringe/update_overlays()
@@ -219,6 +221,8 @@
 /obj/item/reagent_containers/syringe/bluespace
 	name = "bluespace syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals."
+	icon_state = "bluespace_0"
+	base_icon_state = "bluespace"
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10, 20, 30, 40, 50, 60)
 	volume = 60
@@ -226,6 +230,8 @@
 /obj/item/reagent_containers/syringe/piercing
 	name = "piercing syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
+	icon_state = "piercing_0"
+	base_icon_state = "piercing"
 	volume = 10
 	possible_transfer_amounts = list(5, 10)
 	proj_piercing = 1

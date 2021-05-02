@@ -1,3 +1,5 @@
+#define THERMOMACHINE_SAFE_TEMPERATURE 500000
+
 /obj/machinery/atmospherics/components/binary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "freezer"
@@ -11,6 +13,10 @@
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
 
+	hide = TRUE
+
+	move_resist = MOVE_RESIST_DEFAULT
+	vent_movement = NONE
 	pipe_flags = PIPING_ONE_PER_TURF
 
 	var/icon_state_off = "freezer"
@@ -28,28 +34,23 @@
 	var/obj/item/tank/holding
 	var/use_enviroment_heat = FALSE
 	var/skipping_work = FALSE
+	var/auto_thermal_regulator = FALSE
+	var/safeties = TRUE
+	var/lastwarning
+	var/color_index = 1
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
 	RefreshParts()
 	update_appearance()
 
+/obj/machinery/atmospherics/components/binary/thermomachine/isConnectable()
+	if(!anchored || panel_open)
+		return FALSE
+	. = ..()
+
 /obj/machinery/atmospherics/components/binary/thermomachine/getNodeConnects()
 	return list(dir, turn(dir, 180))
-
-/obj/machinery/atmospherics/components/binary/thermomachine/proc/swap_function()
-	cooling = !cooling
-	if(cooling)
-		icon_state_off = "freezer"
-		icon_state_on = "freezer_1"
-		icon_state_open = "freezer-o"
-	else
-		icon_state_off = "heater"
-		icon_state_on = "heater_1"
-		icon_state_open = "heater-o"
-	target_temperature = T20C
-	RefreshParts()
-	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/on_construction(obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
@@ -57,10 +58,7 @@
 		piping_layer = board.pipe_layer
 		set_layer = piping_layer
 
-	for(var/obj/machinery/atmospherics/device in get_turf(src))
-		if(device.piping_layer != piping_layer || device == src)
-			continue
-		visible_message("<span class='warning'>A pipe is hogging the output, remove the obstruction or change the machine piping layer.</span>")
+	if(check_pipe_on_turf())
 		deconstruct(TRUE)
 		return
 	return..()
@@ -72,18 +70,22 @@
 	heat_capacity = 7500 * ((calculated_bin_rating - 1) ** 2)
 	min_temperature = T20C
 	max_temperature = T20C
-	if(cooling)
-		var/calculated_laser_rating
-		for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-			calculated_laser_rating += laser.rating
-		min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
-	else
-		var/calculated_laser_rating
-		for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-			calculated_laser_rating += laser.rating
-		max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
+	var/calculated_laser_rating
+	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
+		calculated_laser_rating += laser.rating
+	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
+	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
+
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_icon_state()
+	if(cooling)
+		icon_state_off = "freezer"
+		icon_state_on = "freezer_1"
+		icon_state_open = "freezer-o"
+	else
+		icon_state_off = "heater"
+		icon_state_on = "heater_1"
+		icon_state_open = "heater-o"
 	if(panel_open)
 		icon_state = icon_state_open
 		return ..()
@@ -100,14 +102,17 @@
 	if(holding)
 		var/mutable_appearance/holding = mutable_appearance(icon, "holding")
 		. += holding
-	if(showpipe)
-		. += getpipeimage(icon, "scrub_cap", initialize_directions)
 	if(skipping_work && on)
 		var/mutable_appearance/skipping = mutable_appearance(icon, "blinking")
 		. += skipping
 
 /obj/machinery/atmospherics/components/binary/thermomachine/examine(mob/user)
 	. = ..()
+	if(obj_flags & EMAGGED)
+		. += "<span class='notice'>Something seems wrong with [src]'s thermal safeties.</span>"
+	. += "<span class='notice'>With the panel open:</span>"
+	. += "<span class='notice'>-use a wrench with left-click to rotate [src] and right-click to unanchor it.</span>"
+	. += "<span class='notice'>-use a multitool with left-click to change the piping layer and right-click to change the piping color.</span>"
 	. += "<span class='notice'>The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).</span>"
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Efficiency <b>[(heat_capacity/7500)*100]%</b>.</span>"
@@ -143,7 +148,10 @@
 	var/main_heat_capacity = main_port.heat_capacity()
 	var/thermal_heat_capacity = thermal_exchange_port.heat_capacity()
 	var/temperature_delta = main_port.temperature - target_temperature
-	temperature_delta = cooling ? max(temperature_delta, 0) : min(temperature_delta, 0) //no cheesy strats
+	if(auto_thermal_regulator)
+		cooling = temperature_delta > 0
+	else
+		temperature_delta = cooling ? max(temperature_delta, 0) : min(temperature_delta, 0) //no cheesy strats
 
 	var/motor_heat = 2500
 	if(abs(temperature_delta) < 1.5) //allow the machine to work more finely
@@ -153,23 +161,57 @@
 	var/efficiency = 1
 	var/temperature_difference = 0
 	var/skip_tick = TRUE
-	if(!use_enviroment_heat && main_port.total_moles() > 0.01 && thermal_exchange_port.total_moles() > 0.01 && nodes[2])
-		if(cooling)
+	if(!use_enviroment_heat && main_port.total_moles() > 0.01)
+		if(cooling && thermal_exchange_port.total_moles() > 0.01 && nodes[2] && (thermal_exchange_port.temperature <= THERMOMACHINE_SAFE_TEMPERATURE || !safeties))
 			thermal_exchange_port.temperature = max(thermal_exchange_port.temperature + heat_amount / thermal_heat_capacity + motor_heat / thermal_heat_capacity, TCMB)
+		else if(cooling && (!thermal_exchange_port.total_moles() || !nodes[2]))
+			skipping_work = skip_tick
+			update_appearance()
+			update_parents()
+			return
+		if(thermal_exchange_port.temperature > THERMOMACHINE_SAFE_TEMPERATURE && safeties)
+			on = FALSE
+			visible_message("<span class='warning'>The thermal exchange port's temperature has reached critical levels, shutting down...</span>")
+			update_appearance()
+			return
+		else if(thermal_exchange_port.temperature > THERMOMACHINE_SAFE_TEMPERATURE && !safeties)
+			if((REALTIMEOFDAY - lastwarning) / 5 >= WARNING_DELAY)
+				lastwarning = REALTIMEOFDAY
+				visible_message("<span class='warning'>The thermal exchange port's temperature has reached critical levels!</span>")
+				if(check_explosion(thermal_exchange_port.temperature))
+					explode()
+					return PROCESS_KILL //we dying anyway, so let's stop processing
 		temperature_difference = thermal_exchange_port.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
 			efficiency = max(1 - log(10, temperature_difference) * 0.08, 0.65)
 		main_port.temperature = max(main_port.temperature - (heat_amount * efficiency)/ main_heat_capacity + motor_heat / main_heat_capacity, TCMB)
 		skip_tick = FALSE
-	if(use_enviroment_heat && main_port.total_moles() > 0.01 && enviroment.total_moles() > 0.01)
-		var/enviroment_efficiency = 0
-		if(cooling)
+	if(use_enviroment_heat && main_port.total_moles() > 0.01)
+		var/enviroment_efficiency = 1
+		if(cooling && enviroment.total_moles() > 0.01 && (thermal_exchange_port.temperature <= THERMOMACHINE_SAFE_TEMPERATURE || !safeties))
 			var/enviroment_heat_capacity = enviroment.heat_capacity()
 			if(enviroment.total_moles())
 				enviroment_efficiency = clamp(log(1.55, enviroment.total_moles()) * 0.15, 0.65, 1)
 			enviroment.temperature = max(enviroment.temperature + heat_amount / enviroment_heat_capacity, TCMB)
 			air_update_turf(FALSE, FALSE)
+		else if(cooling && !enviroment.total_moles())
+			skipping_work = skip_tick
+			update_appearance()
+			update_parents()
+			return
+		if(enviroment.temperature > THERMOMACHINE_SAFE_TEMPERATURE && safeties)
+			on = FALSE
+			visible_message("<span class='warning'>The enviroment's temperature has reached critical levels, shutting down...</span>")
+			update_appearance()
+			return
+		else if(enviroment.temperature > THERMOMACHINE_SAFE_TEMPERATURE && !safeties)
+			if((REALTIMEOFDAY - lastwarning) / 5 >= WARNING_DELAY)
+				lastwarning = REALTIMEOFDAY
+				visible_message("<span class='warning'>The enviroment's temperature has reached critical levels!</span>")
+				if(check_explosion(enviroment.temperature))
+					explode()
+					return PROCESS_KILL //we dying anyway, so let's stop processing
 		temperature_difference = enviroment.temperature - main_port.temperature
 		temperature_difference = cooling ? temperature_difference : 0
 		if(temperature_difference > 0)
@@ -192,8 +234,12 @@
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/item, mob/user, params)
-	if(!on && !holding)
+	if(!on && !holding && item.tool_behaviour == TOOL_SCREWDRIVER)
+		if(!anchored)
+			to_chat(user, "<span class='notice'>Anchor [src] first!</span>")
+			return
 		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, item))
+			change_pipe_connection(panel_open)
 			return
 	if(default_change_direction_wrench(user, item))
 		return
@@ -208,38 +254,30 @@
 		investigate_log("had its internal [holding] swapped with [tank] by [key_name(user)].", INVESTIGATE_ATMOS)
 		replace_tank(user, tank)
 		update_appearance()
+		return
 
+	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL)
+		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
+		to_chat(user, "<span class='notice'>You change the circuitboard to layer [piping_layer].</span>")
+		update_appearance()
+		return
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
 	if(!..())
 		return FALSE
 	SetInitDirections()
-	var/turf/local_turf = get_turf(src)
-	var/datum/gas_mixture/enviroment = local_turf.return_air()
+	return TRUE
+
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/change_pipe_connection(disconnect)
+	if(disconnect)
+		disconnect_pipes()
+		return
+	connect_pipes()
+
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/connect_pipes()
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	var/obj/machinery/atmospherics/node2 = nodes[2]
-	if(airs[1].total_moles())
-		var/datum/gas_mixture/remove = airs[1].remove(airs[1].total_moles())
-		enviroment.merge(remove)
-	if(airs[2].total_moles())
-		var/datum/gas_mixture/remove = airs[2].remove(airs[2].total_moles())
-		enviroment.merge(remove)
-	air_update_turf(FALSE, FALSE)
-	if(node1)
-		if(src in node1.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node1.disconnect(src)
-		nodes[1] = null
-	if(node2)
-		if(src in node2.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node2.disconnect(src)
-		nodes[2] = null
-
-	if(parents[1])
-		nullifyPipenet(parents[1])
-	if(parents[2])
-		nullifyPipenet(parents[2])
-
 	atmosinit()
 	node1 = nodes[1]
 	if(node1)
@@ -250,7 +288,75 @@
 		node2.atmosinit()
 		node2.addMember(src)
 	SSair.add_to_rebuild_queue(src)
-	return TRUE
+
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/disconnect_pipes()
+	var/obj/machinery/atmospherics/node1 = nodes[1]
+	var/obj/machinery/atmospherics/node2 = nodes[2]
+	if(node1)
+		if(src in node1.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+			node1.disconnect(src)
+		nodes[1] = null
+	if(node2)
+		if(src in node2.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+			node2.disconnect(src)
+		nodes[2] = null
+	if(parents[1])
+		nullifyPipenet(parents[1])
+	if(parents[2])
+		nullifyPipenet(parents[2])
+
+/obj/machinery/atmospherics/components/binary/thermomachine/attackby_secondary(obj/item/item, mob/user, params)
+	. = ..()
+	if(panel_open && item.tool_behaviour == TOOL_WRENCH && !check_pipe_on_turf())
+		if(default_unfasten_wrench(user, item))
+			return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL)
+		color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
+		pipe_color = GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]]
+		visible_message("<span class='notice'>You set [src] pipe color to [GLOB.pipe_color_name[pipe_color]].")
+		update_appearance()
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/check_pipe_on_turf()
+	for(var/obj/machinery/atmospherics/device in get_turf(src))
+		if(device == src)
+			continue
+		if(device.piping_layer == piping_layer)
+			visible_message("<span class='warning'>A pipe is hogging the ports, remove the obstruction or change the machine piping layer.</span>")
+			return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/components/binary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
+	if(!istype(multitool))
+		return
+	if(panel_open && !anchored)
+		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
+		to_chat(user, "<span class='notice'>You change the circuitboard to layer [piping_layer].</span>")
+		update_appearance()
+
+/obj/machinery/atmospherics/components/binary/thermomachine/emag_act(mob/user)
+	. = ..()
+	if(!(obj_flags & EMAGGED))
+		if(!do_after(user, 1 SECONDS, src))
+			return
+		var/datum/effect_system/spark_spread/sparks = new
+		sparks.set_up(5, 0, src)
+		sparks.attach(src)
+		sparks.start()
+		obj_flags |= EMAGGED
+		user.visible_message("<span class='warning'>You emag [src], overwriting thermal safety restrictions.</span>")
+		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal safety restrictions.")
+
+/obj/machinery/atmospherics/components/binary/thermomachine/emp_act()
+	. = ..()
+	if(!(obj_flags & EMAGGED))
+		var/datum/effect_system/spark_spread/sparks = new
+		sparks.set_up(5, 0, src)
+		sparks.attach(src)
+		sparks.start()
+		obj_flags |= EMAGGED
+		safeties = FALSE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/replace_tank(mob/living/user, obj/item/tank/new_tank)
 	if(!user)
@@ -263,12 +369,31 @@
 	update_appearance()
 	return TRUE
 
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/check_explosion(temperature)
+	if(temperature < THERMOMACHINE_SAFE_TEMPERATURE + 2000)
+		return FALSE
+	if(prob(log(6, temperature) * 10)) //75% at 500000, 100% at 1e8
+		return TRUE
+
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/explode()
+	explosion(loc, 0, 0, 3, 3, TRUE)
+	var/datum/gas_mixture/main_port = airs[1]
+	var/datum/gas_mixture/thermal_exchange_port = airs[2]
+	if(main_port)
+		loc.assume_air(main_port.remove_ratio(1))
+	if(thermal_exchange_port)
+		loc.assume_air(thermal_exchange_port.remove_ratio(1))
+	air_update_turf(FALSE, FALSE)
+	qdel(src)
+
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_status(mob/user)
 	if(interactive)
 		return ..()
 	return UI_CLOSE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_interact(mob/user, datum/tgui/ui)
+	if(panel_open)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ThermoMachine", name)
@@ -290,10 +415,15 @@
 
 	data["holding"] = holding ? TRUE : FALSE
 	data["tank_gas"] = FALSE
-	if(holding && holding.air_contents.total_moles())
-		data["tank_gas"] = TRUE
+	if(holding)
+		var/datum/gas_mixture/holding_mix = holding.return_air()
+		data["tank_gas"] = !!holding_mix.total_moles()
 	data["use_env_heat"] = use_enviroment_heat
 	data["skipping_work"] = skipping_work
+	data["auto_thermal_regulator"] = auto_thermal_regulator
+	data["safeties"] = safeties
+	var/hacked = (obj_flags & EMAGGED) ? TRUE : FALSE
+	data["hacked"] = hacked
 	return data
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_act(action, params)
@@ -308,7 +438,7 @@
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("cooling")
-			swap_function()
+			cooling = !cooling
 			investigate_log("was changed to [cooling ? "cooling" : "heating"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("target")
@@ -330,7 +460,8 @@
 		if("pumping")
 			if(holding && nodes[2])
 				var/datum/gas_mixture/thermal_exchange_port = airs[2]
-				var/datum/gas_mixture/remove = holding.air_contents.remove(holding.air_contents.total_moles())
+				var/datum/gas_mixture/holding_mix = holding.return_air()
+				var/datum/gas_mixture/remove = holding_mix.remove_ratio(1)
 				thermal_exchange_port.merge(remove)
 				. = TRUE
 		if("eject")
@@ -340,15 +471,25 @@
 		if("use_env_heat")
 			use_enviroment_heat = !use_enviroment_heat
 			. = TRUE
+		if("auto_thermal_regulator")
+			auto_thermal_regulator = !auto_thermal_regulator
+			. = TRUE
+		if("safeties")
+			safeties = !safeties
+			investigate_log("[key_name(usr)] turned off the [src] safeties", INVESTIGATE_ATMOS)
+			. = TRUE
 
 	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/CtrlClick(mob/living/user)
-	if(!can_interact(user))
+	if(!panel_open)
+		if(!can_interact(user))
+			return
+		on = !on
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		update_appearance()
 		return
-	on = !on
-	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	. = ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer
 	icon_state = "freezer"
@@ -383,3 +524,5 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/heater/on
 	on = TRUE
 	icon_state = "heater_1"
+
+#undef THERMOMACHINE_SAFE_TEMPERATURE

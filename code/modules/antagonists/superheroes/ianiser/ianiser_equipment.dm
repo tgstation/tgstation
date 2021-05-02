@@ -13,6 +13,7 @@
 	name = "corgi hood"
 	desc = "An insulated corgi hood with a mask attached to it. It has some strange glowy aura around it."
 	worn_icon_state = "ian_man"
+	worn_y_offset = 7
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 

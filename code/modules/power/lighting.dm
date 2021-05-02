@@ -357,6 +357,7 @@
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()
@@ -371,10 +372,6 @@
 			if(prob(5))
 				break_light_tube(1)
 	addtimer(CALLBACK(src, .proc/update, 0), 1)
-
-/obj/machinery/light/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
@@ -407,12 +404,12 @@
 
 	var/area/A = get_area(src)
 	if(emergency_mode || (A?.fire))
-		SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
+		. += mutable_appearance(overlayicon, "[base_state]_emergency", layer, plane)
 		return
 	if(nightshift_enabled)
-		SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
+		. += mutable_appearance(overlayicon, "[base_state]_nightshift", layer, plane)
 		return
-	SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
+	. += mutable_appearance(overlayicon, base_state, layer, plane)
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
@@ -818,7 +815,7 @@
 	zap_flags &= ~(ZAP_MACHINE_EXPLOSIVE | ZAP_OBJ_DAMAGE)
 	. = ..()
 	if(explosive)
-		explosion(src,0,0,0,flame_range = 5, adminlog = FALSE)
+		explosion(src, flame_range = 5, adminlog = FALSE)
 		qdel(src)
 
 // called when area power state changes
@@ -840,10 +837,9 @@
 
 /obj/machinery/light/proc/explode()
 	set waitfor = 0
-	var/turf/T = get_turf(src.loc)
 	break_light_tube() // break it first to give a warning
 	sleep(2)
-	explosion(T, 0, 0, 2, 2)
+	explosion(src, light_impact_range = 2, flash_range = -1)
 	sleep(1)
 	qdel(src)
 

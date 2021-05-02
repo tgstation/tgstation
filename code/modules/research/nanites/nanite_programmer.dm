@@ -15,8 +15,8 @@
 	. = ..()
 	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
 		return
-	SSvis_overlays.add_vis_overlay(src, icon, "nanite_programmer_on", layer, plane)
-	SSvis_overlays.add_vis_overlay(src, icon, "nanite_programmer_on", EMISSIVE_LAYER, EMISSIVE_PLANE)
+	. += mutable_appearance(icon, "nanite_programmer_on")
+	. += emissive_appearance(icon, "nanite_programmer_on")
 
 /obj/machinery/nanite_programmer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))

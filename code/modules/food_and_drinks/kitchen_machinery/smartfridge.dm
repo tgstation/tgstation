@@ -63,7 +63,7 @@
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 	if(!machine_stat)
-		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+		. += emissive_appearance(icon, "smartfridge-light-mask", alpha = src.alpha)
 
 
 

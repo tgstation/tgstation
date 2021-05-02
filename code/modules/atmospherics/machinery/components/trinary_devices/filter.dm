@@ -45,8 +45,7 @@
 		if(!(direction & initialize_directions))
 			continue
 
-		var/obj/machinery/atmospherics/node = findConnecting(direction)
-		. += getpipeimage(icon, "cap", direction, node?.pipe_color, piping_layer, TRUE)
+		. += getpipeimage(icon, "cap", direction, pipe_color, piping_layer, TRUE)
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
 	var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
@@ -80,7 +79,7 @@
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
-	if(!removed)
+	if(!removed || !removed.total_moles())
 		return
 
 	var/filtering = TRUE

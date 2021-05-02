@@ -118,6 +118,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else
 		inserted_item = new /obj/item/pen(src)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+
 	update_appearance()
 
 /obj/item/pda/equipped(mob/user, slot)
@@ -397,6 +398,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 							dat += "<br><a href='byond://?src=[REF(src)];choice=SkillReward;skill=[type]'>Contact the Professional [S.title] Association</a>"
 						dat += "</li></ul>"
 			if(21)
+				if(icon_alert)
+					cut_overlay(icon_alert)
+
 				dat += "<h4>[PDAIMG(mail)] SpaceMessenger V3.9.6</h4>"
 				dat += "<a href='byond://?src=[REF(src)];choice=Clear'>[PDAIMG(blank)]Clear Messages</a>"
 
@@ -798,7 +802,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
 		else
 			playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-		audible_message("[icon2html(src, hearers(src))] *[ttone]*", null, 3)
+		audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *[ttone]*</span>", null, 3)
 	//Search for holder of the PDA.
 	var/mob/living/L = null
 	if(loc && isliving(loc))
@@ -1118,9 +1122,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(T)
 		T.hotspot_expose(700,125)
 		if(istype(cartridge, /obj/item/cartridge/virus/syndicate))
-			explosion(T, -1, 1, 3, 4)
+			explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 4)
 		else
-			explosion(T, -1, -1, 2, 3)
+			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
 	qdel(src)
 	return
 

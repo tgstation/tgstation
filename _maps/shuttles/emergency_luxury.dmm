@@ -526,7 +526,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "bI" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bJ" = (
@@ -592,7 +592,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "bS" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "bT" = (
@@ -721,7 +721,7 @@
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "ck" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -915,7 +915,7 @@
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "cJ" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/machinery/light/small{
 	dir = 8
 	},

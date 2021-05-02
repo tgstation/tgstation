@@ -8,8 +8,8 @@
 	///buttons to pick in response to the event. Don't worry, orion js will handle the rest
 	var/list/event_responses = list()
 	///default emag effect of events is to play an audible message and sound
-	var/emag_message = "<span class='userdanger'>Coders forgot to set this!</span>"
-	var/emag_sound = 'sound/effects/bamf.ogg'
+	var/emag_message
+	var/emag_sound
 	///gaming skill level of the player
 	var/gamer_skill_level = 0
 	///gaming skill of the player
