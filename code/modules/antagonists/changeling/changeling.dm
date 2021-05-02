@@ -516,6 +516,7 @@
 	user.socks = chosen_prof.socks
 
 	chosen_dna.transfer_identity(user, 1)
+	user.Digitigrade_Leg_Swap((DIGITIGRADE in chosen_dna.species.species_traits))
 	user.updateappearance(mutcolor_update=1)
 	user.update_body()
 	user.domutcheck()
