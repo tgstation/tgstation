@@ -1,0 +1,6 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - qol: "RPD can destroy broken disposal pipes"
+  - qol: "Securing a disposal pipe over a broken disposal pipe will delete it"
+  - balance: "Securing a disposal pipe over a floor tile with a crowbar in your offhand will remove the floor tile before trying to secure it"

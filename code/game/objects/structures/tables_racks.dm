@@ -534,7 +534,7 @@
 	icon_state = "brass_table-0"
 	base_icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	buildstack = /obj/item/stack/tile/bronze
+	buildstack = /obj/item/stack/sheet/bronze
 	smoothing_groups = list(SMOOTH_GROUP_BRONZE_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = list(SMOOTH_GROUP_BRONZE_TABLES)
 

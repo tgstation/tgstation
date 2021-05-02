@@ -119,7 +119,7 @@
 	if(!objectives.len)
 		return
 	for (var/objective_ in objectives)
-		if(!(istype(objective_, /datum/objective/escape)||istype(objective_, /datum/objective/survive/malf)))
+		if(!(istype(objective_, /datum/objective/escape) || istype(objective_, /datum/objective/survive/malf)))
 			continue
 		remove_objective(objective_)
 
@@ -139,6 +139,9 @@
 
 /datum/antagonist/traitor/internal_affairs/reinstate_escape_objective()
 	..()
+	for (var/datum/objective/martyr/martyr_objective in objectives)
+		remove_objective(martyr_objective)
+
 	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive/malf
 	var/datum/objective/escape_objective = new objtype
 	escape_objective.owner = owner

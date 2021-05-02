@@ -956,7 +956,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !isspaceturf(M.loc))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !isspaceturf(M.loc) && isturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(DT_PROB(2.5, delta_time))
 		M.emote(pick("twitch","drool","moan"))

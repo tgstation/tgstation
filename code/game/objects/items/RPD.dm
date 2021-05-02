@@ -196,23 +196,39 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
+	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
-	var/working = 0
+	///Direction of the device we are going to spawn, set up in the UI
 	var/p_dir = NORTH
+	///Initial direction of the smart pipe we are going to spawn, set up in the UI
+	var/p_init_dir = ALL_CARDINALS
+	///Is the device of the flipped type?
 	var/p_flipped = FALSE
+	///Color of the device we are going to spawn
 	var/paint_color = "grey"
-	var/atmos_build_speed = 5 //deciseconds (500ms)
-	var/disposal_build_speed = 5
-	var/transit_build_speed = 5
-	var/destroy_speed = 5
-	var/paint_speed = 5
+	///Speed of building atmos devices
+	var/atmos_build_speed = 0.5 SECONDS
+	///Speed of building disposal devices
+	var/disposal_build_speed = 0.5 SECONDS
+	///Speed of building transit devices
+	var/transit_build_speed = 0.5 SECONDS
+	///Speed of removal of unwrenched devices
+	var/destroy_speed = 0.5 SECONDS
+	///Category currently active (Atmos, disposal, transit)
 	var/category = ATMOS_CATEGORY
+	///Piping layer we are going to spawn the atmos device in
 	var/piping_layer = PIPING_LAYER_DEFAULT
+	///Layer for disposal ducts
 	var/ducting_layer = DUCT_LAYER_DEFAULT
+	///Stores the current device to spawn
 	var/datum/pipe_info/recipe
+	///Stores the first atmos device
 	var/static/datum/pipe_info/first_atmos
+	///Stores the first disposal device
 	var/static/datum/pipe_info/first_disposal
+	///Stores the first transit device
 	var/static/datum/pipe_info/first_transit
+	///The modes that are allowed for the RPD
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
@@ -344,6 +360,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers))
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
+	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
+	for(var/direction in GLOB.cardinals)
+		if(p_init_dir & direction)
+			init_directions[dir2text(direction)] = TRUE
+	data["init_directions"] = init_directions
 	return data
 
 /obj/item/pipe_dispenser/ui_act(action, params)
@@ -390,6 +411,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				mode &= ~n
 			else
 				mode |= n
+		if("init_dir_setting")
+			p_init_dir ^= text2dir(params["dir_flag"])
+		if("init_reset")
+			p_init_dir = ALL_CARDINALS
 	if(playeffect)
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
@@ -422,7 +447,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	. = TRUE
 
-	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter))
+	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
 		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 		if(do_after(user, destroy_speed, target = attack_target))
@@ -456,19 +481,25 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						activate()
 						var/obj/machinery/atmospherics/path = queued_p_type
 						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
-						var/obj/item/pipe/P = new pipe_item_type(get_turf(attack_target), queued_p_type, queued_p_dir, null, GLOB.pipe_paint_colors[paint_color])
-
-						if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
-							var/obj/item/pipe/trinary/flippable/F = P
+						var/obj/item/pipe/pipe_type = new pipe_item_type(
+							get_turf(attack_target),
+							queued_p_type,
+							queued_p_dir,
+							null,
+							GLOB.pipe_paint_colors[paint_color],
+							ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart) ? p_init_dir : null,
+						)
+						if(queued_p_flipped && istype(pipe_type, /obj/item/pipe/trinary/flippable))
+							var/obj/item/pipe/trinary/flippable/F = pipe_type
 							F.flipped = queued_p_flipped
 
-						P.update()
-						P.add_fingerprint(usr)
-						P.setPipingLayer(piping_layer)
+						pipe_type.update()
+						pipe_type.add_fingerprint(usr)
+						pipe_type.setPipingLayer(piping_layer)
 						if(ispath(queued_p_type, /obj/machinery/atmospherics) && !ispath(queued_p_type, /obj/machinery/atmospherics/pipe/color_adapter))
-							P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+							pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 						if(mode & WRENCH_MODE)
-							P.wrench_act(user, src)
+							pipe_type.wrench_act(user, src)
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)

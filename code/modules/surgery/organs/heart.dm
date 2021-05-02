@@ -356,8 +356,16 @@
 
 ///Actually spawns the crystal which puts the ethereal in it.
 /obj/item/organ/heart/ethereal/proc/crystalize(mob/living/ethereal)
+
+	var/location = ethereal.loc
+
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
+
+	if(ismob(location) || isitem(location)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
+		to_chat(ethereal, "<span class='userwarning'>You were unable to finish your crystallization, for obvious reasons.</span>")
+		stop_crystalization_process(ethereal, FALSE)
+		return
 	COOLDOWN_START(src, crystalize_cooldown, INFINITY) //Prevent cheeky double-healing until we get out, this is against stupid admemery
 	current_crystal = new(get_turf(ethereal), src)
 	stop_crystalization_process(ethereal, TRUE)
