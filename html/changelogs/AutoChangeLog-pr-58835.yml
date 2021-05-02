@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - imageadd: "Changes the CE Insulated gloves sprite into a unique appearance, and not just infiltrator gloves but blood orange."

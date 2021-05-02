@@ -75,7 +75,7 @@
 	add_occupant(kidnapped, VEHICLE_CONTROL_KIDNAPPED)
 
 /obj/vehicle/sealed/car/obj_destruction(damage_flag)
-	explosion(loc, 0, 1, 2, 3, 0)
+	explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 3, adminlog = FALSE)
 	log_message("[src] exploded due to destruction", LOG_ATTACK)
 	return ..()
 

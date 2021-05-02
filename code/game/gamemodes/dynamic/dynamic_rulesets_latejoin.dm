@@ -8,7 +8,7 @@
 	for(var/mob/P in candidates)
 		if(!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
 			candidates.Remove(P)
-		else if(!mode.check_age(P.client, minimum_required_age))
+		else if (P.client.get_remaining_days(minimum_required_age) > 0)
 			candidates.Remove(P)
 		else if(P.mind.assigned_role in restricted_roles) // Does their job allow for it?
 			candidates.Remove(P)

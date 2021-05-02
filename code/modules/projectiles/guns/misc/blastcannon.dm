@@ -15,16 +15,18 @@
 	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
+
+	// Firing data.
+	/// The person who opened the valve on the TTV loaded into this.
+	var/datum/weakref/cached_firer
+	/// The target from the last click.
+	var/datum/weakref/cached_target
+	/// The modifiers from the last click.
+	var/cached_modifiers
+
+	// Explosion data:
 	/// The TTV this contains that will be used to create the projectile
 	var/obj/item/transfer_valve/bomb
-	/// Additional volume added to the gasmixture used to calculate the bombs power.
-	var/reaction_volume_mod = 0
-	/// Whether the gases are reacted once before calculating the range
-	var/prereaction = TRUE
-	/// How many times gases react() before calculation. Very finnicky value, do not mess with without good reason.
-	var/reaction_cycles = 3
-	/// The maximum power the blastcannon is capable of reaching
-	var/max_power = INFINITY
 
 	// For debugging/badminry
 	/// Whether you can fire this without a bomb.
@@ -33,24 +35,34 @@
 	var/debug_power = 0
 
 
-/obj/item/gun/blastcannon/debug
-	debug_power = 80
-	bombcheck = FALSE
+/obj/item/gun/blastcannon/Initialize()
+	. = ..()
+	if(!pin)
+		pin = new
+	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/channel_blastwave)
+
+/obj/item/gun/blastcannon/Destroy()
+	if(bomb)
+		QDEL_NULL(bomb)
+	UnregisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION)
+	cached_firer = null
+	cached_target = null
+	return ..()
+
+/obj/item/gun/blastcannon/handle_atom_del(atom/A)
+	if(A == bomb)
+		bomb = null
+		update_appearance()
+	return ..()
+
+/obj/item/gun/blastcannon/assume_air(datum/gas_mixture/giver)
+	qdel(giver)
+	return null // Required to make the TTV not vent gas directly into the firer.
 
 /obj/item/gun/blastcannon/examine(mob/user)
 	. = ..()
 	if(bomb)
 		. += "<span class='notice'>A bomb is loaded inside.</span>"
-
-/obj/item/gun/blastcannon/Initialize()
-	. = ..()
-	if(!pin)
-		pin = new
-
-/obj/item/gun/blastcannon/Destroy()
-	if(bomb)
-		QDEL_NULL(bomb)
-	return ..()
 
 /obj/item/gun/blastcannon/attack_self(mob/user)
 	if(bomb)
@@ -69,6 +81,9 @@
 	if(!istype(bomb_to_attach))
 		return ..()
 
+	if(bomb)
+		to_chat(user, "<span class='warning'>[bomb] is already attached to [src]!</span>")
+		return
 	if(!bomb_to_attach.ready())
 		to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 		return FALSE
@@ -81,52 +96,177 @@
 	update_appearance()
 	return TRUE
 
-/// Handles the bomb power calculations
-/obj/item/gun/blastcannon/proc/calculate_bomb()
-	if(!istype(bomb) || !bomb.ready())
-		return 0
-
-	var/datum/gas_mixture/temp = new(max(reaction_volume_mod, 0))
-	bomb.merge_gases(temp)
-
-	if(prereaction)
-		temp.react(src)
-		var/prereaction_pressure = temp.return_pressure()
-		if(prereaction_pressure < TANK_FRAGMENT_PRESSURE)
-			return 0
-	for(var/i in 1 to reaction_cycles)
-		temp.react(src)
-
-	var/pressure = temp.return_pressure()
-	if(pressure < TANK_FRAGMENT_PRESSURE)
-		return 0
-	return ((pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE)
-
-
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
-	if((!bomb && bombcheck) || (!target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
+	if((!bomb && bombcheck) || !target || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
 
-	var/power =  bomb ? calculate_bomb() : debug_power
-	power = min(power, max_power)
-	QDEL_NULL(bomb)
-	update_appearance()
+	cached_target = WEAKREF(target)
+	cached_modifiers = params
+	if(bomb?.valve_open)
+		user.visible_message(
+			"<span class='danger'>[user] points [src] at [target]!</span>",
+			"<span class='danger'>You point [src] at [target]!</span>"
+		)
+		return
 
-	var/heavy = power * 0.25
-	var/medium = power * 0.5
-	var/light = power
-	user.visible_message("<span class='danger'>[user] opens [bomb] on [user.p_their()] [name] and fires a blast wave at [target]!</span>","<span class='danger'>You open [bomb] on your [name] and fire a blast wave at [target]!</span>")
-	playsound(user, "explosion", 100, TRUE)
-	var/turf/starting = get_turf(user)
-	var/turf/targturf = get_turf(target)
-	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(starting)] at [ADMIN_VERBOSEJMP(targturf)] ([target.name]) by [ADMIN_LOOKUPFLW(user)] with power [heavy]/[medium]/[light].")
-	log_game("Blast wave fired from [AREACOORD(starting)] at [AREACOORD(targturf)] ([target.name]) by [key_name(user)] with power [heavy]/[medium]/[light].")
-	var/obj/projectile/blastwave/BW = new(loc, heavy, medium, light)
-	var/modifiers = params2list(params)
-	BW.preparePixelProjectile(target, get_turf(src), modifiers, 0)
-	BW.fire()
-	name = initial(name)
-	desc = initial(desc)
+	cached_firer = WEAKREF(user)
+	if(!bomb)
+		fire_debug(target, user, flag, params)
+		return
+
+	playsound(src, dry_fire_sound, 30, TRUE) // *click
+	user.visible_message(
+		"<span class='danger'>[user] opens [bomb] on [user.p_their()] [src] and points [p_them()] at [target]!</span>",
+		"<span class='danger'>You open [bomb] on your [src] and point [p_them()] at [target]!</span>"
+	)
+	var/turf/current_turf = get_turf(src)
+	var/turf/target_turf = get_turf(target)
+	message_admins("Blastcannon transfer valve opened by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(current_turf)] while aiming at [ADMIN_VERBOSEJMP(target_turf)] (target).")
+	log_game("Blastcannon transfer valve opened by [key_name(user)] at [AREACOORD(current_turf)] while aiming at [AREACOORD(target_turf)] (target).")
+	bomb.toggle_valve()
+	return
+
+
+/**
+ * Channels an internal explosion into a blastwave projectile.
+ *
+ * Arguments:
+ * - [blastwave_data][/list]: A list containing all of the data for the blastwave.
+ */
+/obj/item/gun/blastcannon/proc/channel_blastwave(atom/source, list/arguments)
+	. = COMSIG_CANCEL_EXPLOSION
+
+	var/heavy = arguments[EXARG_KEY_DEV_RANGE]
+	var/medium = arguments[EXARG_KEY_HEAVY_RANGE]
+	var/light = arguments[EXARG_KEY_LIGHT_RANGE]
+	var/range = max(heavy, medium, light, 0)
+	if(!range)
+		visible_message("<span class='warning'>[src] lets out a little \"phut\".</span>")
+		return
+
+	if(!ismob(loc))
+		fire_dropped(heavy, medium, light)
+		return
+
+	var/mob/holding = loc
+	var/target = cached_target?.resolve()
+	if(target && (holding.get_active_held_item() == src) && cached_firer && (holding == cached_firer.resolve()))
+		fire_intentionally(target, holding, heavy, medium, light, cached_modifiers)
+	else
+		fire_accidentally(holding, heavy, medium, light)
+	return
+
+/**
+ * Prepares and fires a blastwave.
+ *
+ * Arguments:
+ * - [target][/atom]: The thing that the blastwave is being fired at.
+ * - heavy: The devastation range of the blastwave.
+ * - medium: The heavy impact range of the blastwave.
+ * - light: The light impact range of the blastwave.
+ * - modifiers: Modifiers as a string used while firing this.
+ * - spread: How inaccurate the blastwave is.
+ */
+/obj/item/gun/blastcannon/proc/fire_blastwave(atom/target, heavy, medium, light, modifiers, spread = 0)
+	var/turf/start_turf = get_turf(src)
+
+	var/cap_multiplier = SSmapping.level_trait(start_turf.z, ZTRAIT_BOMBCAP_MULTIPLIER)
+	if(isnull(cap_multiplier))
+		cap_multiplier = 1
+	var/capped_heavy = min(GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier, heavy)
+	var/capped_medium = min(GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier, medium)
+	SSexplosions.shake_the_room(start_turf, max(heavy, medium, light, 0), (capped_heavy * 15) + (capped_medium * 20), capped_heavy, capped_medium)
+
+	var/obj/projectile/blastwave/blastwave = new(loc, heavy, medium, light)
+	blastwave.preparePixelProjectile(target, start_turf, params2list(modifiers), spread)
+	blastwave.fire()
+	cached_firer = null
+	cached_target = null
+	cached_modifiers = null
+	return
+
+
+/**
+ * Handles firing the blastcannon intentionally at a specific target.
+ *
+ * Arguments:
+ * - [firer][/mob]: The mob who is firing this weapon.
+ * - [target][/atom]: The target we are firing the
+ * - heavy: The devastation range of the blastwave.
+ * - medium: The heavy impact range of the blastwave.
+ * - light: The light impact range of the blastwave.
+ * - modifiers: The modifier string to use when preparing the blastwave.
+ */
+/obj/item/gun/blastcannon/proc/fire_intentionally(atom/target, mob/firer, heavy, medium, light, modifiers)
+	firer.visible_message(
+		"<span class='danger'>[firer] fires a blast wave at [target]!</span>",
+		"<span class='danger'>You fire a blast wave at [target]!</span>"
+	)
+	var/turf/start_turf = get_turf(src)
+	var/turf/target_turf = get_turf(target)
+	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(start_turf)] at [ADMIN_VERBOSEJMP(target_turf)] ([target]) by [ADMIN_LOOKUPFLW(firer)] with power [heavy]/[medium]/[light].")
+	log_game("Blast wave fired from [AREACOORD(start_turf)] at [AREACOORD(target_turf)] ([target]) by [key_name(firer)] with power [heavy]/[medium]/[light].")
+	fire_blastwave(target, heavy, medium, light, modifiers)
+	return
+
+/**
+ * Handles firing the blastcannon if it was handed to someone else between opening the valve and the bomb exploding.
+ *
+ * Arguments:
+ * - [holder][/mob]: The person who happened to be holding the cannon when it went off.
+ * - heavy: The devastation range of the blastwave.
+ * - medium: The heavy impact range of the blastwave.
+ * - light: The light impact range of the blastwave.
+ */
+/obj/item/gun/blastcannon/proc/fire_accidentally(mob/holder, heavy, medium, light)
+	var/turf/target
+	var/holding
+	if(holder.is_holding(src))
+		target = get_edge_target_turf(holder, holder.dir)
+		holding = TRUE
+	else
+		target = get_edge_target_turf(holder, dir)
+		holding = FALSE
+
+	var/mob/firer = cached_firer?.resolve()
+	var/turf/start_turf = get_turf(src)
+	holder.visible_message(
+		"<span class='danger'>[src] suddenly goes off[holding ? " in [holder]'s hands" : null]!</span>",
+		"<span class='danger'>[src] suddenly goes off[holding ? " in your hands" : null]!</span>"
+	)
+	message_admins("Blast wave primed by [ADMIN_LOOKUPFLW(firer)] fired from [ADMIN_VERBOSEJMP(start_turf)] roughly towards [ADMIN_VERBOSEJMP(target)] while being held by [ADMIN_LOOKUPFLW(holder)] with power [heavy]/[medium]/[light].")
+	log_game("Blast wave primed by [key_name(firer)] fired from [AREACOORD(start_turf)] roughly towards [AREACOORD(target)] while being held by [key_name(holder)] with power [heavy]/[medium]/[light].")
+	return fire_blastwave(target, heavy, medium, light, null, (90 * (rand() - 0.5))) // +- anywhere between 0 and 45 degrees
+
+/**
+ * Handles firing the blastcannon if it was dropped on the ground or shoved into a backpack.
+ *
+ * Arguments:
+ * - heavy: The devastation range of the blastwave.
+ * - medium: The heavy impact range of the blastwave.
+ * - light: The light impact range of the blastwave.
+ */
+/obj/item/gun/blastcannon/proc/fire_dropped(heavy, medium, light)
+	src.visible_message("<span class='danger'>[src] suddenly goes off!")
+	var/turf/target = get_edge_target_turf(src, dir)
+	var/mob/firer = cached_firer.resolve()
+	var/turf/start_turf = get_turf(src)
+	message_admins("Blast wave primed by [ADMIN_LOOKUPFLW(firer)] fired from [ADMIN_VERBOSEJMP(start_turf)] roughly towards [ADMIN_VERBOSEJMP(target)] at [ADMIN_VERBOSEJMP(loc)] ([loc]) with power [heavy]/[medium]/[light].")
+	log_game("Blast wave primed by [key_name(firer)] fired from [AREACOORD(start_turf)] roughly towards [AREACOORD(target)] at [AREACOORD(loc)] ([loc]) with power [heavy]/[medium]/[light].")
+	return fire_blastwave(target, heavy, medium, light, null, 360 * rand())
+
+/**
+ * Handles firing the blastcannon with debug power.
+ *
+ * Arguments:
+ * - [target][/atom]: The thing the blastcannon is being fired at.
+ * - [user][/mob]: The person firing the blastcannon.
+ * - modifiers: A string containing click data.
+ */
+/obj/item/gun/blastcannon/proc/fire_debug(atom/target, mob/user, modifiers)
+	fire_intentionally(target, user, debug_power * 0.25, debug_power * 0.5, debug_power, modifiers)
+	return
+
 
 /// The projectile used by the blastcannon
 /obj/projectile/blastwave
@@ -137,17 +277,17 @@
 	movement_type = FLYING
 	projectile_phasing = ALL // just blows up the turfs lmao
 	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
-	var/heavyr = 0
+	var/heavy_ex_range = 0
 	/// The maximum distance this will inflict [EXPLODE_HEAVY]
-	var/mediumr = 0
+	var/medium_ex_range = 0
 	/// The maximum distance this will inflict [EXPLODE_LIGHT]
-	var/lightr = 0
+	var/light_ex_range = 0
 
-/obj/projectile/blastwave/Initialize(mapload, _heavy, _medium, _light)
-	range = max(_heavy, _medium, _light, 0)
-	heavyr = _heavy
-	mediumr = _medium
-	lightr = _light
+/obj/projectile/blastwave/Initialize(mapload, heavy_ex_range, medium_ex_range, light_ex_range)
+	range = max(heavy_ex_range, medium_ex_range, light_range, 0)
+	src.heavy_ex_range = heavy_ex_range
+	src.medium_ex_range = medium_ex_range
+	src.light_ex_range = light_ex_range
 	return ..()
 
 /obj/projectile/blastwave/Range()
@@ -155,15 +295,15 @@
 	if(QDELETED(src))
 		return
 
-	heavyr = max(heavyr - 1, 0)
-	mediumr = max(mediumr - 1, 0)
-	lightr = max(lightr - 1, 0)
+	heavy_ex_range = max(heavy_ex_range - 1, 0)
+	medium_ex_range = max(medium_ex_range - 1, 0)
+	light_ex_range = max(light_ex_range - 1, 0)
 
-	if(heavyr)
+	if(heavy_ex_range)
 		SSexplosions.highturf += loc
-	else if(mediumr)
+	else if(medium_ex_range)
 		SSexplosions.medturf += loc
-	else if(lightr)
+	else if(light_range)
 		SSexplosions.lowturf += loc
 	else
 		qdel(src)

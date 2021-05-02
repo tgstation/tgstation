@@ -1,0 +1,6 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - qol: "Shattering a heretic blade as a heretic or a heretic monster to teleport a random, mostly safe location is now done by activating the blade in-hand instead of by pressing an action button. This information will be given to a heretic or a heretic monster if they examine a heretic blade."
+  - soundadd: "Teleporting using a heretic blade now plays a glass shattering noise and produces a slightly different message (that factors in whether or not the teleportation attempt was successful)."
+  - bugfix: "Teleporting using a heretic blade is now considered to be a magical teleportation method by the game."

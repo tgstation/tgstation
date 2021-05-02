@@ -686,15 +686,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					return TRUE
 	return FALSE
 
-/// Checks if client age is age or older.
-/datum/game_mode/dynamic/proc/check_age(client/C, age)
-	enemy_minimum_age = age
-	if(get_remaining_days(C) == 0)
-		enemy_minimum_age = initial(enemy_minimum_age)
-		return TRUE // Available in 0 days = available right now = player is old enough to play.
-	enemy_minimum_age = initial(enemy_minimum_age)
-	return FALSE
-
 /datum/game_mode/dynamic/make_antag_chance(mob/living/carbon/human/newPlayer)
 	if (GLOB.dynamic_forced_extended)
 		return

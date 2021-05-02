@@ -92,6 +92,16 @@
 	result = /obj/item/food/taco/plain
 	subcategory = CAT_MEXICAN
 
+/datum/crafting_recipe/food/enchiladas
+	name = "Enchiladas"
+	reqs = list(
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/food/grown/chili = 2,
+		/obj/item/food/tortilla = 2
+	)
+	result = /obj/item/food/enchiladas
+	subcategory = CAT_MEXICAN
+
 /datum/crafting_recipe/food/stuffedlegion
 	name = "Stuffed legion"
 	time = 40
