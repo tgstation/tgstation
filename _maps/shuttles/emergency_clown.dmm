@@ -74,22 +74,17 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "ap" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
+/obj/item/radio/intercom/directional/south,
 /obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aq" = (
 /obj/item/toy/snappop/phoenix,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "ar" = (
@@ -105,16 +100,14 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "at" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/titanium,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "au" = (
 /turf/open/chasm,
 /area/shuttle/escape)
 "av" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "ay" = (
@@ -155,18 +148,12 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	use_power = 0
-	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aG" = (
 /obj/structure/table,
 /obj/item/toy/sword,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aH" = (
@@ -191,17 +178,12 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aK" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aL" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/item/toy/snappop/phoenix,
 /obj/machinery/light/small{
 	dir = 4
@@ -249,9 +231,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aS" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
@@ -271,9 +251,7 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aW" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aX" = (
@@ -301,9 +279,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -339,6 +315,19 @@
 "bg" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"dP" = (
+/obj/item/toy/snappop/phoenix,
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
+	},
+/turf/open/floor/bluespace,
+/area/shuttle/escape)
+"XH" = (
+/obj/item/toy/snappop/phoenix,
+/obj/machinery/light/directional/south,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/bluespace,
 /area/shuttle/escape)
 "Zf" = (
 /obj/structure/closet/emcloset,
@@ -452,7 +441,7 @@ ac
 aA
 ac
 aF
-ak
+dP
 aO
 aO
 aO
@@ -482,8 +471,8 @@ ak
 ak
 ak
 ak
-aq
-at
+XH
+ab
 ab
 ab
 ab
@@ -519,8 +508,8 @@ ac
 ah
 al
 al
+ab
 at
-aV
 ak
 aE
 aH

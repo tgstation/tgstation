@@ -121,9 +121,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "hT" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /turf/open/floor/iron/dark,
@@ -288,10 +286,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/firstaid/fire,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/caravan/pirate)
 "na" = (
@@ -303,9 +298,7 @@
 	},
 /area/shuttle/caravan/pirate)
 "nD" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
 	},
@@ -322,9 +315,7 @@
 /obj/item/cautery{
 	pixel_x = 4
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -414,9 +405,7 @@
 /area/shuttle/caravan/pirate)
 "pZ" = (
 /obj/structure/tank_dispenser/oxygen,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -525,6 +514,12 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/caravan/pirate)
+"uX" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
 "vd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
@@ -535,18 +530,13 @@
 "vq" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
 /area/shuttle/caravan/pirate)
 "vW" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
@@ -567,9 +557,7 @@
 	},
 /area/shuttle/caravan/pirate)
 "wX" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -683,8 +671,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/caravan/pirate)
 "Bi" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
 /obj/machinery/door/poddoor{
 	id = "caravanpirate_bridge"
 	},
@@ -692,10 +679,7 @@
 /area/shuttle/caravan/pirate)
 "BI" = (
 /obj/structure/table,
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/item/stack/spacecash/c200,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
@@ -789,9 +773,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "GQ" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
@@ -896,9 +878,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/pirate)
 "NM" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/structure/closet/crate/secure/loot,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -959,9 +939,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Sd" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
@@ -989,10 +967,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "UP" = (
@@ -1005,7 +980,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "Wb" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /turf/open/floor/iron/dark,
@@ -1023,6 +998,13 @@
 	faction = list("pirate")
 	},
 /turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
+"Yk" = (
+/obj/machinery/door/poddoor{
+	id = "caravanpirate_bridge"
+	},
+/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Yo" = (
 /obj/structure/table,
@@ -1122,7 +1104,7 @@ vW
 fh
 Cb
 hI
-vW
+uX
 Zo
 BL
 af
@@ -1215,7 +1197,7 @@ iX
 vd
 GQ
 Ld
-Bi
+Yk
 Jv
 "}
 (11,1,1) = {"
@@ -1358,7 +1340,7 @@ Jv
 Jv
 Jv
 Jv
-Bi
+Yk
 oO
 EB
 bd
