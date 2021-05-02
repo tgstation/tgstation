@@ -38,23 +38,6 @@
 	. = ..()
 	if(tile_reskin_types || tile_rotate_dirs)
 		. += "<span class='notice'>Use while in your hand to change what type of [src] you want.</span>"
-	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
-		var/verb
-		switch(CEILING(MAX_LIVING_HEALTH / throwforce, 1)) //throws to crit a human
-			if(1 to 3)
-				verb = "superb"
-			if(4 to 6)
-				verb = "great"
-			if(7 to 9)
-				verb = "good"
-			if(10 to 12)
-				verb = "fairly decent"
-			if(13 to 15)
-				verb = "mediocre"
-		if(!verb)
-			return
-		. += "<span class='notice'>Those could work as a [verb] throwing weapon.</span>"
-
 
 /obj/item/stack/tile/proc/place_tile(turf/open/T)
 	if(!turf_type || !use(1))

@@ -452,7 +452,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	attack_cooldown = 0 SECONDS
 	confusion_amt = 0
-	stamina_loss_amt = 0
+	stamina_damage = 0
 	apply_stun_delay = 0 SECONDS
 	stun_time = 14 SECONDS
 

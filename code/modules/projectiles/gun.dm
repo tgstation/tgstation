@@ -720,5 +720,9 @@
 		azoom = new()
 		azoom.gun = src
 
+/obj/item/gun/return_damage_rundown()
+	. += chambered?.return_damage_rundown()
+	. += ..()
+
 #undef FIRING_PIN_REMOVAL_DELAY
 #undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

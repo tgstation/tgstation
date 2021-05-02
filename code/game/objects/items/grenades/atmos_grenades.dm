@@ -27,7 +27,7 @@
 	desc = "A crystal made from the Healium gas, it's cold to the touch."
 	icon_state = "healium_crystal"
 	///Amount of stamina damage mobs will take if in range
-	var/stamina_damage = 30
+	stamina_damage = 30
 	///Range of the grenade that will cool down and affect mobs
 	var/freeze_range = 4
 	///Amount of gas released if the state is optimal

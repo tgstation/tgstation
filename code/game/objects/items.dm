@@ -201,6 +201,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/canMouseDown = FALSE
 
+	var/list/damage_rundown_message = list()
+
 /obj/item/Initialize()
 
 	if(attack_verb_continuous)
@@ -304,8 +306,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
 
-	. += "[gender == PLURAL ? "They are" : "It is"] a [weightclass2text(w_class)] item."
-
 	if(resistance_flags & INDESTRUCTIBLE)
 		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
 	else
@@ -317,6 +317,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			. += "[src] is made of cold-resistant materials."
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
+
+	if(HAS_TRAIT(user, TRAIT_SECURITY_HUD) && return_damage_rundown())
+		. += return_damage_rundown()
+
+	. += "[gender == PLURAL ? "They are" : "It is"] a [weightclass2text(w_class)] item."
 
 	if(!user.research_scanner)
 		return
@@ -759,6 +764,41 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /obj/item/proc/on_juice()
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
+
+/obj/item/proc/return_strength_string(var/forcenumber)
+	if(!forcenumber)
+		return
+	var/verb
+	switch(CEILING(MAX_LIVING_HEALTH / forcenumber, 1)) //blows to crit a human
+		if(1 to 3)
+			verb = "superb"
+		if(4 to 6)
+			verb = "great"
+		if(7 to 9)
+			verb = "good"
+		if(10 to 12)
+			verb = "mediocre"
+	return verb
+
+/obj/item/proc/return_damage_rundown()
+	if(return_strength_string(throwforce))
+		damage_rundown_message += "a [return_strength_string(throwforce)] throwing weapon"
+	if(return_strength_string(force))
+		damage_rundown_message += "a [return_strength_string(force)] melee weapon"
+	if(return_strength_string(stamina_damage))
+		damage_rundown_message += "a [return_strength_string(stamina_damage)] incapacitating weapon"
+
+	if(LAZYLEN(damage_rundown_message))
+		var/start_of_message = "<span class='danger'>[gender == PLURAL ? "They" : "It"] would make "
+		var/middle_of_message
+		var/end_of_message = "[damage_rundown_message[LAZYLEN(damage_rundown_message)]].</span>"
+		if(LAZYLEN(damage_rundown_message) > 1)
+			damage_rundown_message -= damage_rundown_message[LAZYLEN(damage_rundown_message)]
+			damage_rundown_message += "and "
+			middle_of_message = damage_rundown_message.Join(", ")
+		LAZYCLEARLIST(damage_rundown_message)
+
+		. += "[start_of_message][middle_of_message][end_of_message]"
 
 /obj/item/proc/set_force_string()
 	switch(force)
