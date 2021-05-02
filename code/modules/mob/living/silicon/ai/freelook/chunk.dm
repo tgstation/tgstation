@@ -27,10 +27,8 @@
 	seenby += eye
 	if(changed)
 		update()
-	else
-		var/list/vis_contents_objects = GLOB.cameranet.vis_contents_objects
-		for(var/turf/obscured_turf as anything in obscuredTurfs)
-			obscured_turf.vis_contents += vis_contents_objects
+	for(var/turf/obscured_turf as anything in obscuredTurfs)
+		obscured_turf.vis_contents |= GLOB.cameranet.vis_contents_objects
 
 /// Remove an AI eye from the chunk, then update if changed.
 /datum/camerachunk/proc/remove(mob/camera/ai_eye/eye, remove_static_with_last_chunk = TRUE)
