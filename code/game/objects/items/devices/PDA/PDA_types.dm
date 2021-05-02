@@ -3,8 +3,9 @@
 	name = "clown PDA"
 	default_cartridge = /obj/item/cartridge/virus/clown
 	inserted_item = /obj/item/toy/crayon/rainbow
-	greyscale_config = /datum/greyscale_config/pda/clown
-	greyscale_colors = "#ff75ff#a92323"
+	icon_state = "pda-clown"
+	greyscale_config = null
+	greyscale_config = null
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
