@@ -132,6 +132,8 @@
 	/// blacklisted drone machines, recursive/includes descendants
 	var/list/drone_machinery_blacklist_recursive = list(
 		/obj/machinery/airalarm,
+		/obj/machinery/computer,
+		/obj/machinery/modular_computer,
 	)
 	/// blacklisted drone machines, compiled from [var/drone_machinery_blacklist_flat] and [var/list/drone_machinery_blacklist_recursive]
 	var/list/drone_machinery_blacklist_compiled
