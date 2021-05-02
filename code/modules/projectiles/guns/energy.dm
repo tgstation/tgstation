@@ -32,7 +32,10 @@
 	for(var/obj/item/ammo_casing/energy/for_ammo in ammo_type)
 		exam_ammo = for_ammo
 		exam_proj = for_ammo.loaded_projectile
-		readout += "Our heroic interns braved <span class='warning'>[round(100 / exam_proj.damage, 0.1)]</span> shots on <span class='warning'>[exam_ammo.select_name]</span> mode before collapsing from [exam_proj.damage_type == STAMINA ? "immense pain" : "their wounds"]."
+		if(exam_proj.damage > 0) /// Don't divide by 0!!!!!
+			readout += "Our heroic interns braved <span class='warning'>[round(100 / exam_proj.damage, 0.1)]</span> shots on <span class='warning'>[exam_ammo.select_name]</span> mode before collapsing from [exam_proj.damage_type == STAMINA ? "immense pain" : "their wounds"]."
+		else
+			readout += "Given the right circumstances, our heroic interns found a way to brave the <span class='warning'>[exam_ammo.select_name]</span> mode indefinitely. They have now been put on permanent vacation."
 	. += readout.Join("\n")
 
 /obj/item/gun/energy/emp_act(severity)

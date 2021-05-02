@@ -391,15 +391,22 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			readout += "If you decide to throw this object instead, it will take <span class='warning'>[round((100 / throwforce), 0.1)]</span> hits."
 		else
 			readout += "If you decide to throw this object instead, then nice job, fuckwit. It doesn't hurt at all."
-
-		readout += "This item has demonstrated a(n) <span class='warning'>[weapon_tag_convert(armour_penetration)]</span> ability to pierce armor, and <span class='warning'>[weapon_tag_convert(block_chance)]</span> blocking capabilities."
+		if(armour_penetration > 0 || block_chance > 0)
+			readout += "This item has demonstrated a(n) <span class='warning'>[weapon_tag_convert(armour_penetration)]</span> ability to pierce armor, and <span class='warning'>[weapon_tag_convert(block_chance)]</span> blocking capabilities."
 	/// Custom manual notes
 	if(offensive_notes)
 		readout += offensive_notes
 	/// Finally bringing the fields together
 	return readout.Join("\n")
 
-
+/*
+ *
+ * Converts percentile based stats to an adjective appropriate for the
+ * examined warning label
+ *
+ * Arguments:
+ *  * tag_val: The value of the item to be added to the tag
+ */
 /obj/item/proc/weapon_tag_convert(var/tag_val)
 	switch(tag_val)
 		if(0)

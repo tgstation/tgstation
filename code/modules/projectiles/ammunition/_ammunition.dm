@@ -43,7 +43,7 @@
 		if(loaded_projectile.damage > 0)
 			readout += "Most monkeys our legal team subjected to these rounds succumbed to their wounds after <span class='warning'>[round(100 / (loaded_projectile.damage * pellets), 0.1)]</span> point-blank discharges, taking <span class='warning'>[pellets]</span> shots per round"
 		if(loaded_projectile.stamina > 0)
-			readout += "More fortunate monkeys simply collapsed from pain after <span class='warning'>[round(100 / ((loaded_projectile.damage + loaded_projectile.stamina) * pellets), 0.1)]</span> rounds"
+			readout += "More fortunate monkeys simply collapsed from exhaustion after <span class='warning'>[round(100 / ((loaded_projectile.damage + loaded_projectile.stamina) * pellets), 0.1)]</span> rounds"
 	else
 		/// Holograms don't do well with extreme forces
 		readout += "\nThe warning label was blown away..."
