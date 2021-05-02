@@ -28,10 +28,11 @@
 	///what's our real name that will show upon discovery? null to do nothing
 	var/true_name
 	///the message given when you discover this geyser.
-	var/discovery_message = "<span class'notice'>It's a standard oil geyser, not worth much</span>"
+	var/discovery_message = null
 
 /obj/structure/geyser/Initialize(mapload) //if xenobio wants to bother, nethermobs are around geysers.
 	. = ..()
+
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC, 1, 5)
 
 ///start producing chems, should be called just once
@@ -66,10 +67,11 @@
 /obj/structure/geyser/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner))
 		if(discovered)
-			to_chat(user, "<span class='warning'>This geyser has already been discovered!")
+			to_chat(user, "<span class='warning'>This geyser has already been discovered!</span>")
 		else
-			to_chat(user, "<span class='notice'>You discovered the geyser and mark it on the gps system!")
-			to_chat(user, discovery_message)
+			to_chat(user, "<span class='notice'>You discovered the geyser and mark it on the GPS system!</span>")
+			if(discovery_message)
+				to_chat(user, discovery_message)
 
 			discovered = TRUE
 			if(true_name)
@@ -81,14 +83,15 @@
 				var/mob/living/living = user
 
 				var/obj/item/card/id/card = living.get_idcard()
-				if(card?.bank_account)
-					to_chat(user, "<span class='notice'>[point_value] has been paid out!")
-					bank_account.adjust_money(point_value)
+				if(card?.registered_account)
+					to_chat(user, "<span class='notice'>[point_value] credits have been paid out!</span>")
+					card.registered_account.adjust_money(point_value)
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel
 	point_value = CARGO_CRATE_VALUE
 	true_name = "wittel geyser"
+	discovery_message = "It's a rare wittel geyser! This could be very powerful in the right hands... "
 
 /obj/structure/geyser/plasma_oxide
 	reagent_id = /datum/reagent/plasma_oxide
@@ -101,6 +104,7 @@
 /obj/structure/geyser/random
 	point_value = CARGO_CRATE_VALUE * 2
 	true_name = "strange geyser"
+	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()
