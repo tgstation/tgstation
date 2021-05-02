@@ -21,8 +21,7 @@
 /datum/ductnet/proc/remove_duct(obj/machinery/duct/ducting)
 	destroy_network(FALSE)
 	for(var/obj/machinery/duct/D in ducting.neighbours)
-		addtimer(CALLBACK(D, /obj/machinery/duct/proc/reconnect), 0) //all needs to happen after the original duct that was destroyed finishes destroying itself
-		addtimer(CALLBACK(D, /obj/machinery/duct/proc/generate_connects), 0)
+		addtimer(CALLBACK(D, /obj/machinery/duct/proc/attempt_connect)) //needs to happen after qdel
 	qdel(src)
 
 ///add a plumbing object to either demanders or suppliers
