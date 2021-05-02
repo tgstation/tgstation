@@ -7,7 +7,7 @@
 	worn_icon_state = "buzz"
 	inhand_icon_state = "ygloves"
 
-	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 
 	tackle_stam_cost = 5 //Very light and fast tackles. However, if you fly into a wall or an enemy, well, you're fucked.
 	base_knockdown = 0.2 SECONDS
@@ -26,7 +26,7 @@
 	desc = "Shoes of a bee that became human, rumors say that they buzz when you walk in them."
 	greyscale_colors = "#f6c61a#ffffff"
 
-	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 
 /obj/item/clothing/shoes/sneakers/buzzon/cryo
 	icon_state = "buzz_cryo"
@@ -43,7 +43,7 @@
 	desc = "A complex cybernetic suit with black and yellow stripes. All hail the Queen!"
 	icon_state = "bee_full"
 
-	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	clothing_flags = THICKMATERIAL
 
@@ -92,7 +92,7 @@
 	body_parts_covered = HEAD
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
-	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	v
 
 /obj/item/clothing/head/hooded/bee_hood/full/cryo
 	icon_state = "bee_full_cryo"
@@ -220,7 +220,7 @@
 	visor_flags = 0
 	on = FALSE
 
-	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/buzzon/equipped(mob/user, slot, initial)
 	. = ..()
@@ -257,7 +257,7 @@
 	hardsuit_type = "bee"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/buzzon
 
-	armor = list(MELEE = 30, BULLET = 40, LASER = 35, ENERGY = 35, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 
 	var/obj/item/melee/beesword/buzzon/linked_sword
 	var/sword_cooldown = 0

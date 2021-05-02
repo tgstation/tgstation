@@ -6,7 +6,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	clothing_flags = THICKMATERIAL
 
-	armor = list(MELEE = 40, BULLET = 45, LASER = 25, ENERGY = 25, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 
 /obj/item/clothing/suit/armor/skeledoom/cryo
 	icon_state = "skeleton_cryo"
@@ -28,7 +28,7 @@
 /obj/item/clothing/head/beret/black/skeledoom
 	name = "armored black beret"
 	desc = "An armored black beret, perfect for badass snipers."
-	armor = list(MELEE = 40, BULLET = 45, LASER = 25, ENERGY = 25, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 	clothing_flags = THICKMATERIAL
 
 /obj/item/clothing/head/beret/black/skeledoom/cryo
@@ -53,7 +53,7 @@
 	visor_flags = 0
 	on = FALSE
 
-	armor = list(MELEE = 40, BULLET = 45, LASER = 25, ENERGY = 25, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 
 /obj/item/clothing/suit/space/hardsuit/syndi/skeledoom
 	name = "skeleton hardsuit"
@@ -64,8 +64,7 @@
 	hardsuit_type = "skeleton"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/skeledoom
 
-	armor = list(MELEE = 40, BULLET = 45, LASER = 25, ENERGY = 25, BOMB = 15, BIO = 50, RAD = 0, FIRE = 90, ACID = 90, WOUND = 15)
-
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/skeledoom
 	name = "modified sniper rifle"
