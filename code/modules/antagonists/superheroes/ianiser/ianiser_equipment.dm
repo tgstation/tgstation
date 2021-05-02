@@ -11,8 +11,7 @@
 
 /obj/item/clothing/head/hooded/ian_hood/ianiser
 	name = "corgi hood"
-	desc = "An insulated corgi hood with a mask attached to it. Not for furry use!"
-	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	desc = "An insulated corgi hood with a mask attached to it. It has some strange glowy aura around it."
 	worn_icon_state = "ian_man"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
@@ -21,7 +20,3 @@
 
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-
-
-	worn_x_dimension = 64
-	worn_y_dimension = 64

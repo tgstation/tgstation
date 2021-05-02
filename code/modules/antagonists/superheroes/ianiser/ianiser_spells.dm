@@ -2,7 +2,7 @@
 	name = "Lesser Lightning Bolt"
 	desc = "Fire a lightning bolt at your foes! It will jump between targets, but can't knock them down."
 	charge_max = 10 SECONDS
-	invocation = "Let the power out!"
+	invocation = "LET THE POWER FLOW!!"
 	clear_invocation = TRUE
 	invocation_type = INVOCATION_SHOUT
 	cooldown_min = 20
