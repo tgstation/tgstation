@@ -113,7 +113,6 @@
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
-	offensive_notes += get_notes() /// Formulates the offensive notes on initialization
 	if (!spawnwithmagazine)
 		bolt_locked = TRUE
 		update_appearance()
@@ -461,6 +460,7 @@
 
 
 /obj/item/gun/ballistic/examine(mob/user)
+	offensive_notes += get_notes()
 	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
 	. += "It has [get_ammo(count_chambered)] round\s remaining."
@@ -480,8 +480,8 @@
 /obj/item/gun/ballistic/proc/get_notes()
 	if(!mag_type)
 		return
-	var/obj/item/ammo_box/magazine/exam_mag = new src.mag_type
-	return uppertext("AMMO: [exam_mag.caliber]")
+	var/obj/item/ammo_box/magazine/exam_mag = initial(mag_type)
+	return uppertext("You'll have to load this with <span class'warning'>[exam_mag.caliber]</span> rounds.")
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)

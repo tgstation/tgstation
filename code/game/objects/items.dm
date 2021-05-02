@@ -198,7 +198,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
 	var/offensive_notes
 	/// Used in obj/item/examine to skip some of the default notes, for items that do not need them
-	var/note_override = 0
+	var/note_override = FALSE
 
 /obj/item/Initialize()
 
@@ -306,7 +306,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	/// Code for showing offensive statistics via a hyperlinked tag
 	if(force >= 5 || throwforce >= 5 || note_override || offensive_notes) /// Only show this tag for items that could feasibly be weapons, shields, or those that have special notes
-		. += "<span class='notice'>It has a <a href='?src=[REF(src)];examine=s'>tag</a> detailing its offensive capabilities.</span>"
+		. += "<span class='notice'>It appears to have an ever-shifting holographic <a href='?src=[REF(src)];examine=s'>warning label.</a></span>"
 
 	if(!user.research_scanner)
 		return
@@ -359,20 +359,45 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
  */
 
 /obj/item/Topic(href, href_list)
+	/// Authors Note: If I have to rewrite this whole topic, Im gonna have fun with it
 	if(href_list["examine"])
+		var/list/crimes = list("Assaults", "Murders", "Robberies", "Terrorist Attacks", "Felonies", "Felinies", "Counts of Tax Evasion", "Mutinies")
+		var/list/victims = list("Human", "Moth", "Felinid", "Lizard", "Particularly Resilient Slime", "Syndicate Agent", "Clown", "Mortal Foe", "Innocent Bystander", "Man Known as John Willard")
 		var/readout = "" /// Readout is used to store the text block output to the user so it all can be sent in one message
 		/// Override to disable standard outputs for items that dont need it. See: Ammo
 		if(!note_override)
-			readout += "DMG: [force]\n" /// Standard attack damage
-			readout += "THRW: [throwforce]\n" /// Throwing damage
-			readout += uppertext("TYPE: [damtype]\n") /// Damage type
-			readout += "AP: [armour_penetration]%\n" /// Armour pen
-			readout += "BLOC: [block_chance]%\n" /// Block Chance
-		/// Add on the offensive notes
-		if(offensive_notes)
-			readout += offensive_notes
+			readout += "<span class='warning'>WARNING:</span> This item has been marked as dangerous because of its use in <span class='warning'>[rand(2,99)] [crimes[rand(1, crimes.len)]].</span>\n"
+
+			if(force > 0)
+				readout += "Our EXTENSIVE research has shown that it takes a(n) mere <span class='warning'>[round((100 / force), 1)]</span> hits to down a [victims[rand(1, victims.len)]].\n"
+			else
+				readout += "Our EXTENSIVE research found that you couldn't beat yourself to death with this if you tried."
+
+			if(throwforce > 0)
+				readout += "If you decide to throw this object instead, it will take <span class='warning'>[round((100 / throwforce), 1)]</span> hits.\n"
+			else
+				readout += "If you decide to throw this object instead, then nice job, fuckwit. It doesn't do anything."
+
+			readout += "This item has demonstrated a(n) <span class='warning'>[weapon_tag_convert(armour_penetration)]</span> ability to pierce armor, and <span class='warning'>[weapon_tag_convert(block_chance)]</span> blocking capabilities.\n"
+
+			if(offensive_notes)
+				readout += offensive_notes
 		to_chat(usr, "<span class='notice'>[readout]</span>")
 
+/obj/item/proc/weapon_tag_convert(var/tag_val)
+	switch(tag_val)
+		if(0)
+			return "NONEXISTANT"
+		if(1 to 25)
+			return "SLIGHT"
+		if(26 to 50)
+			return "MODERATE"
+		if(51 to 75)
+			return "EXTREME"
+		if(76 to INFINITY)
+			return "TOTALLY BONKERS"
+		else
+			return "STRANGE"
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)

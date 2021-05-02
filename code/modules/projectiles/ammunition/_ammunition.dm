@@ -39,15 +39,21 @@
 	if(projectile_type)
 		/// Output added to the offensive notes variable
 		var/note_builder = ""
-		var/obj/projectile/exam_proj = new src.projectile_type
-		note_builder = uppertext("[exam_proj.damage_type]: [exam_proj.damage]\n")
-		if(exam_proj.stamina)
-			note_builder += "STAM: [exam_proj.stamina]\n"
-		if(pellets > 1)
-			note_builder += "COUNT: [pellets]\n"
+		var/obj/projectile/exam_proj = initial(projectile_type)
+		var/exam_dmg = initial(exam_proj.damage)
+		var/exam_stam = initial(exam_proj.stamina)
+		if(exam_dmg)
+			note_builder = "You can take down a motherfucker with <span class='warning'>[round(100 / exam_dmg, 1)]</span> bullets, with <span class ='warning'>[pellets]</span> shot(s) per round.\n"
+		if(exam_stam)
+			note_builder += "If you wanna be nice, you'll knock someone out with <span class ='warning'>[round(100 / (exam_dmg + exam_stam * pellets), 1)]</span> rounds."
 		return note_builder
 	else
 		return
+
+/obj/item/ammo_casing/examine(mob/user)
+	offensive_notes += get_notes()
+	. = ..()
+
 
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
@@ -55,7 +61,6 @@
 
 /obj/item/ammo_casing/Initialize()
 	. = ..()
-	offensive_notes += get_notes() /// Formulates the offensive notes on initialization
 	if(projectile_type)
 		loaded_projectile = new projectile_type(src)
 	pixel_x = base_pixel_x + rand(-10, 10)

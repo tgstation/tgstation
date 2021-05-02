@@ -5,7 +5,7 @@
 /obj/item/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
-	offensive_notes = "GUN: YES\n" /// It's a gun.
+	offensive_notes = "In case it wasn't obvious, <span class='warning'>THIS IS A FIREARM!</span>\n" /// It's a gun.
 	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "detective"
 	inhand_icon_state = "gun"
