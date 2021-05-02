@@ -950,6 +950,41 @@
   - rscdel: removed delta roundstart power tools, the room no longer made sense being
       what it was without that so i turned it into a smoking room style.
 2021-04-30:
+  ArcaneDefence:
+  - rscadd: Some foods from sandwiches to donk pockets to candies and snowcones can
+      now be eaten while walking.
+  ArcaneMusic:
+  - imageadd: Some hidden debug content got some new sprites, should you ever find
+      it.
+  Celotajs:
+  - qol: The changelog re-request delay has been heavily reduced
+  - qol: Changelogs from r4407 (April 2010) and earlier have been removed, and a link
+      to the GoonStation 13 wiki page for the old changelogs has been added to the
+      footer in the changelog popup. This means we finally won't claim GoonStation13's
+      changes as our own.
+  Foxtrot (Funce):
+  - bugfix: Changelog no longer runtimes when it force opens on join.
+  Helianthus00:
+  - rscadd: MetaStation now has some plumbing water tanks scattered around in high-demand
+      areas for water
+  - rscadd: MetaStation chem lab now has two empty plumbing storage tanks
+  Imaginos16:
+  - rscdel: Nanotrasen, after receiving many complaints, removed the flash that used
+      to sit at the entrance of the science department.
+  LemonInTheDark:
+  - server: the Total Hard Deletes section of garbage logging is now separated by
+      a :, in the same format as all the other qdel log items. Be made aware
   OmegaDarkPotato:
   - balance: Multiplies corazargh's metabolization by 100x so it's no longer hilariously
       overpowered and only slightly overpowered now. No more 4u deathmixes.
+  cacogen:
+  - code_imp: Universal holidays will cover every timezone by default. This means
+      they'll start 14 hours earlier and last 26 hours longer
+  - code_imp: Shortens Christmas, Halloween, April Fool's Day, New Year's and Valentine's
+      Day periods by one day. They will start 14 hours earlier but only last 2 hours
+      longer
+  - code_imp: US Independence Day, ANZAC Day, Bastille Day and Waitangi Day will begin
+      and end when they do in the countries that celebrate them
+  itseasytosee:
+  - balance: The hallucination virus symptom has had its stats buffed, check the wiki
+      if you are interested.

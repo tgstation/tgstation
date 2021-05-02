@@ -415,8 +415,9 @@
 
 	data["holding"] = holding ? TRUE : FALSE
 	data["tank_gas"] = FALSE
-	if(holding && holding.air_contents.total_moles())
-		data["tank_gas"] = TRUE
+	if(holding)
+		var/datum/gas_mixture/holding_mix = holding.return_air()
+		data["tank_gas"] = !!holding_mix.total_moles()
 	data["use_env_heat"] = use_enviroment_heat
 	data["skipping_work"] = skipping_work
 	data["auto_thermal_regulator"] = auto_thermal_regulator
@@ -459,7 +460,8 @@
 		if("pumping")
 			if(holding && nodes[2])
 				var/datum/gas_mixture/thermal_exchange_port = airs[2]
-				var/datum/gas_mixture/remove = holding.air_contents.remove(holding.air_contents.total_moles())
+				var/datum/gas_mixture/holding_mix = holding.return_air()
+				var/datum/gas_mixture/remove = holding_mix.remove_ratio(1)
 				thermal_exchange_port.merge(remove)
 				. = TRUE
 		if("eject")

@@ -32,11 +32,10 @@
 	return ..()
 
 /datum/pipeline/process()
-	if(building)
+	if(!update || building)
 		return
-	if(update)
-		update = FALSE
-		reconcile_air()
+	reconcile_air()
+	//Only react if the mix has changed, and don't keep updating if it hasn't
 	update = air.react(src)
 
 ///Preps a pipeline for rebuilding, insterts it into the rebuild queue

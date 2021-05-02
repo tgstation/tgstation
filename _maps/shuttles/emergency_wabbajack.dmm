@@ -85,7 +85,7 @@
 "aj" = (
 /obj/structure/barricade/wooden,
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/chair/comfy/shuttle{
@@ -105,14 +105,14 @@
 "an" = (
 /obj/structure/table/wood,
 /obj/item/candle/infinite,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "ao" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "ap" = (
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "aq" = (
 /turf/open/floor/mineral/titanium,
@@ -149,7 +149,7 @@
 /area/shuttle/escape/brig)
 "au" = (
 /obj/structure/chair/wood,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair/comfy/shuttle,
@@ -478,7 +478,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "bl" = (
 /obj/machinery/light{

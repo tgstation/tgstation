@@ -73,7 +73,7 @@
 	suit = null
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
-		/obj/item/stack/tile/iron = 6,
+		/obj/item/stack/tile/iron/base = 6,
 )
 	head = null
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
