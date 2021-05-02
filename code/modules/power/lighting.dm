@@ -1160,7 +1160,20 @@
 /obj/machinery/light/small/built/directional/west
 	dir = WEST
 
-// ---- Bulb frames
+// ---- Broken bulbs
+/obj/machinery/light/small/broken/directional/north
+	dir = NORTH
+
+/obj/machinery/light/small/broken/directional/south
+	dir = SOUTH
+
+/obj/machinery/light/small/broken/directional/east
+	dir = EAST
+
+/obj/machinery/light/small/broken/directional/west
+	dir = WEST
+
+// ---- Red bulbs
 /obj/machinery/light/small/red/directional/north
 	dir = NORTH
 
@@ -1173,7 +1186,7 @@
 /obj/machinery/light/small/red/directional/west
 	dir = WEST
 
-// ---- Bulb frames
+// ---- Blacklight bulbs
 /obj/machinery/light/small/blacklight/directional/north
 	dir = NORTH
 
