@@ -351,12 +351,19 @@
 		var/mob/buckled_mob = m
 		buckled_mob.set_glide_size(target)
 
-///meant for moves with zero side effects. only use for objects that arent supposed to interact with anything else (like camera mobs)
+/**
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
+ * most of the time you want forceMove()
+ */
 /atom/movable/proc/abstract_move(atom/new_loc)
 	var/atom/old_loc = update_loc(new_loc)
 	Moved(old_loc)
 
-///meant to be used for all location changes. any instances of setting loc directly (for movables) should instead use this
+/**
+ * meant to be used for all location changes. any instances of setting loc directly (for movables) should instead use this
+ * do NOT use this directly, use either Move() or abstract_move() or forceMove()
+ */
 /atom/movable/proc/update_loc(atom/new_loc)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	var/old_loc = loc
