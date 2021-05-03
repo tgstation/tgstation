@@ -136,7 +136,17 @@
 		/obj/machinery/computer,
 		/obj/machinery/modular_computer,
 	)
-	/// blacklisted drone machines, compiled from [var/drone_machinery_blacklist_flat] and [var/list/drone_machinery_blacklist_recursive]
+	/// cancels out blacklisted machines, direct
+	var/list/drone_machinery_whitelist_flat
+	/// cancels out blacklisted machines, recursive/includes descendants
+	var/list/drone_machinery_whitelist_recursive = list(
+		/obj/machinery/computer/arcade,
+		/obj/machinery/computer/monitor,
+		/obj/machinery/computer/pod,
+		/obj/machinery/computer/station_alert,
+		/obj/machinery/computer/teleporter,
+	)
+	/// blacklisted drone machine typecache, compiled from [var/drone_machinery_blacklist_flat], [var/list/drone_machinery_blacklist_recursive], negated by their whitelist counterparts
 	var/list/drone_machinery_blacklist_compiled
 	/// whitelisted drone items, direct
 	var/list/drone_item_whitelist_flat = list(
@@ -379,7 +389,11 @@
 /mob/living/simple_animal/drone/proc/shy_update()
 	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
 	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
-	drone_machinery_blacklist_compiled = make_associative(drone_machinery_blacklist_flat) + typecacheof(drone_machinery_blacklist_recursive)
+
+	var/list/drone_bad_machinery = make_associative(drone_machinery_blacklist_flat) + typecacheof(drone_machinery_blacklist_recursive)
+	var/list/drone_good_machinery = LAZYCOPY(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive) // not a valid typecache, only intended for negation against drone_bad_machinery
+	drone_machinery_blacklist_compiled = drone_bad_machinery - drone_good_machinery
+
 	var/static/list/not_shy_of = typecacheof(list(/mob/living/simple_animal/drone, /mob/living/simple_animal/bot))
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
