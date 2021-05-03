@@ -99,7 +99,7 @@
 
 /obj/item/food/grown/tomato/blue/bluespace/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/tomato/blue/bluespace.proc/splat_user)
+	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/tomato/blue/bluespace.proc/splat_user, extra_genes = list(/datum/plant_gene/trait/squash))
 
 /*
  * Splat our tomato on our user. Called from [/datum/element/plant_backfire]
@@ -138,7 +138,7 @@
 
 /obj/item/food/grown/tomato/killer/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/tomato/killer.proc/early_awaken, extra_genes = list(/datum/plant_gene/trait/squash))
+	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/tomato/killer.proc/early_awaken)
 
 /obj/item/food/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)
