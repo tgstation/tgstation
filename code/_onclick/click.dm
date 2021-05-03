@@ -304,10 +304,23 @@
 
 /**
  * Right click
+ *
+ * Used for Rightclick interactions, in similar fashion of AltClick.
+ * Returns RightClick().
+ * Arguments:
+ * * atom/target - The atom being rightclicked.
  */
-/mob/proc/RightClickOn(atom/target, params)
+/mob/proc/RightClickOn(atom/target)
 	return target.RightClick(src)
 
+/**
+ * Proc used for right-clicking
+ *
+ * Used for Rightclick interactions, called by RightClickOn().
+ * Returns TRUE upon checking if a right-click has happened.
+ * Arguments:
+ * * mob/user - The mob right-clicking.
+ */
 /atom/proc/RightClick(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_CLICK_RIGHT, user) & COMPONENT_CANCEL_CLICK_RIGHT)
 		return TRUE
