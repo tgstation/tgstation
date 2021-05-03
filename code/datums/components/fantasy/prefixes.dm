@@ -92,3 +92,19 @@
 /datum/fantasy_affix/ugly/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
 	master.AddElement(/datum/element/beauty, min(comp.quality, -1) * 250)
+
+/datum/fantasy_affix/venomous
+	placement = AFFIX_PREFIX
+	alignment = AFFIX_EVIL
+
+/datum/fantasy_affix/venomous/apply(datum/component/fantasy/comp, newName)
+	var/obj/item/master = comp.parent
+
+
+
+	master.AddElement(/datum/element/beauty, min(comp.quality, -1) * 250)
+	return "venomous [newName]"
+
+/datum/fantasy_affix/venomous/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.AddElement(/datum/element/beauty, min(comp.quality, -1) * 250)

@@ -26,9 +26,11 @@
 		return
 	do_lifesteal(user, target)
 
-/datum/component/lifesteal/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target)
+/datum/component/lifesteal/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER
 
+	if(!success)
+		return
 	do_lifesteal(attacker, target)
 
 /datum/component/lifesteal/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)

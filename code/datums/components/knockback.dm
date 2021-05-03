@@ -34,9 +34,10 @@
 	do_knockback(target, user, get_dir(source, target))
 
 /// triggered after a hostile simplemob attacks something
-/datum/component/knockback/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target)
+/datum/component/knockback/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER
-
+	if(!success)
+		return
 	do_knockback(target, attacker, get_dir(attacker, target))
 
 /// triggered after a projectile hits something

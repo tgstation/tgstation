@@ -684,6 +684,7 @@
 #include "code\datums\elements\obj_regen.dm"
 #include "code\datums\elements\plant_backfire.dm"
 #include "code\datums\elements\point_of_interest.dm"
+#include "code\datums\elements\poisonous.dm"
 #include "code\datums\elements\rad_insulation.dm"
 #include "code\datums\elements\ridable.dm"
 #include "code\datums\elements\selfknockback.dm"
