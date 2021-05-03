@@ -64,20 +64,19 @@
 
 /obj/item/ammo_casing/return_damage_rundown()
 	if(loaded_projectile)
-		if(return_strength_string(loaded_projectile.stamina*pellets))
-			damage_rundown_message += "[return_strength_string(loaded_projectile.stamina*pellets)] stamina damage"
-		if(return_strength_string(loaded_projectile.damage*pellets))
-			damage_rundown_message += "[return_strength_string(loaded_projectile.damage*pellets)] [loaded_projectile.damage_type] damage"
+		if(return_blows2crit_rating_string(loaded_projectile.stamina*pellets))
+			damage_rundown_message += "[return_blows2crit_rating_string(loaded_projectile.stamina*pellets)] stamina damage"
+		if(return_blows2crit_rating_string(loaded_projectile.damage*pellets))
+			damage_rundown_message += "[return_blows2crit_rating_string(loaded_projectile.damage*pellets)] [loaded_projectile.damage_type] damage"
 
 		if(LAZYLEN(damage_rundown_message))
-			var/start_of_message = "<span class='danger'>If fired, it would do "
+			var/start_of_message = "<span class='danger'>Firing it would do "
 			var/middle_of_message
 			var/end_of_message = "[damage_rundown_message[LAZYLEN(damage_rundown_message)]].</span>"
 
 			if(LAZYLEN(damage_rundown_message) > 1)
 				damage_rundown_message -= damage_rundown_message[LAZYLEN(damage_rundown_message)]
-				damage_rundown_message += "and "
-				middle_of_message = damage_rundown_message.Join(", ")
+				middle_of_message = damage_rundown_message.Join(", ") + " and "
 
 			LAZYCLEARLIST(damage_rundown_message)
 

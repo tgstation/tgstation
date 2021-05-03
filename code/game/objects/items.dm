@@ -318,7 +318,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
 
-	if(HAS_TRAIT(user, TRAIT_SECURITY_HUD) && return_damage_rundown())
+	if(return_damage_rundown())
 		. += return_damage_rundown()
 
 	. += "[gender == PLURAL ? "They are" : "It is"] a [weightclass2text(w_class)] item."
@@ -765,13 +765,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/on_juice()
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
 
-/obj/item/proc/return_strength_string(forcenumber)
+/obj/item/proc/return_blows2crit_rating_string(forcenumber)
 	if(!forcenumber)
 		return
 	var/verb
 	switch(CEILING(MAX_LIVING_HEALTH / forcenumber, 1)) //blows to crit a human
 		if(1 to 3)
-			verb = "excellent"
+			verb = "incredible"
 		if(4 to 6)
 			verb = "great"
 		if(7 to 9)
@@ -780,13 +780,32 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			verb = "mediocre"
 	return verb
 
+/obj/item/proc/return_percentile_rating_string(percentile)
+	if(!percentile)
+		return
+	var/verb
+	switch(percentile)
+		if(1 to 25)
+			verb = "mediocre"
+		if(26 to 50)
+			verb = "good"
+		if(51 to 75)
+			verb = "great"
+		if(76 to INFINITY)
+			verb = "incredible"
+	return verb
+
 /obj/item/proc/return_damage_rundown()
-	if(return_strength_string(throwforce))
-		damage_rundown_message += "a [return_strength_string(throwforce)] throwing weapon"
-	if(return_strength_string(force))
-		damage_rundown_message += "a [return_strength_string(force)] melee weapon"
-	if(return_strength_string(stamina_damage))
-		damage_rundown_message += "a [return_strength_string(stamina_damage)] incapacitating weapon"
+	if(return_blows2crit_rating_string(throwforce))
+		damage_rundown_message += "a [return_blows2crit_rating_string(throwforce)] throwing weapon"
+	if(return_blows2crit_rating_string(force))
+		damage_rundown_message += "a [return_blows2crit_rating_string(force)] melee weapon"
+	if(return_blows2crit_rating_string(stamina_damage))
+		damage_rundown_message += "a [return_blows2crit_rating_string(stamina_damage)] incapacitating melee weapon"
+	if(return_percentile_rating_string(block_chance))
+		damage_rundown_message += "a [return_percentile_rating_string(block_chance)] blocking weapon"
+	if(return_percentile_rating_string(armour_penetration))
+		damage_rundown_message += "a [return_percentile_rating_string(armour_penetration)] armour penetrating weapon"
 
 	if(LAZYLEN(damage_rundown_message))
 		var/start_of_message = "<span class='danger'>[gender == PLURAL ? "They" : "It"] would make "
@@ -794,8 +813,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		var/end_of_message = "[damage_rundown_message[LAZYLEN(damage_rundown_message)]].</span>"
 		if(LAZYLEN(damage_rundown_message) > 1)
 			damage_rundown_message -= damage_rundown_message[LAZYLEN(damage_rundown_message)]
-			damage_rundown_message += "and "
-			middle_of_message = damage_rundown_message.Join(", ")
+			middle_of_message = damage_rundown_message.Join(", ") + " and "
 		LAZYCLEARLIST(damage_rundown_message)
 
 		. += "[start_of_message][middle_of_message][end_of_message]"
