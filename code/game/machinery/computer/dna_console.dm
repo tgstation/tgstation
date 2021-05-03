@@ -815,6 +815,11 @@
 			if(!HM)
 				return
 
+			// Saving temporary or unobtainable mutations leads to gratuitous abuse
+			if(HM.class == MUT_OTHER)
+				say("ERROR: This mutation is anomalous, and cannot be saved.")
+				return
+
 			var/datum/mutation/human/A = new HM.type()
 			A.copy_mutation(HM)
 			stored_mutations += A

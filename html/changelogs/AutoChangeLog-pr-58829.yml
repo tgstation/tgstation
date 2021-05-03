@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Fixed hitting a canister not cause it to leak until it's interacted with in some other wa"

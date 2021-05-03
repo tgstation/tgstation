@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - rscadd: "Gases with visuals can now be seen inside canisters"

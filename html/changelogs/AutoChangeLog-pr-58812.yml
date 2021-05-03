@@ -1,0 +1,6 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - qol: "RCD repairs grilles when adding windows"
+  - balance: "If a grille's tile has unanchored items on it, adding a window will fail"
+  - qol: "Attempting to add a window to a grille with unanchored items on the tile will move 20 of them to your tile"
