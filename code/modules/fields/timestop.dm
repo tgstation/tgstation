@@ -30,7 +30,7 @@
 		if(locate(/obj/effect/proc_holder/spell/aoe_turf/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
 			immune[L] = TRUE
 	for(var/mob/living/simple_animal/hostile/guardian/G in GLOB.parasites)
-		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/timestop) in G.summoner.mind.spell_list) //It would only make sense that a person's stand would also be immune.
+		if(G.summoner && immune[G.summoner]) //It would only make sense that a person's stand would also be immune.
 			immune[G] = TRUE
 	if(start)
 		INVOKE_ASYNC(src, .proc/timestop)
@@ -79,6 +79,12 @@
 		if(M.anti_magic_check(check_anti_magic, check_holy))
 			immune[A] = TRUE
 			return
+		if(istype(A, /mob/living/simple_animal/hostile/guardian))
+			var/mob/living/simple_animal/hostile/guardian/starplatinum = A
+			if(starplatinum.summoner && (immune[starplatinum.summoner] || starplatinum.summoner.anti_magic_check(check_anti_magic, check_holy))) //your antimagic will also protect your stand(s)
+				immune[starplatinum] = TRUE
+				immune[starplatinum.summoner] = TRUE //so that the order in which a stand and its owner enter an antimagic field won't affect the number of antimagic charges that are expended
+				return
 	var/frozen = TRUE
 	if(isliving(A))
 		freeze_mob(A)
