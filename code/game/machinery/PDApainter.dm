@@ -324,7 +324,7 @@
 				stored_pda.desc = initial(pda_path.desc)
 				to_standard = FALSE
 
-			if(to_standard):
+			if(to_standard)
 				var/obj/item/pda/pda_path = /obj/item/pda
 				stored_pda.icon_state = initial(pda_path.icon_state)
 				stored_pda.desc = initial(pda_path.desc)
