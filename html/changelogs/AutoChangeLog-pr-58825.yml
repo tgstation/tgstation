@@ -1,0 +1,4 @@
+author: "Celotajs"
+delete-after: True
+changes: 
+  - admin: "Moved Give SDQL Spell to Debug tab"
