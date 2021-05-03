@@ -441,7 +441,7 @@
 /obj/item/clothing/shoes/cowboy/Initialize()
 	. = ..()
 	if(prob(2))
-		var/mob/living/simple_animal/hostile/retaliate/poison/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/poison/snake(src)
+		var/mob/living/simple_animal/hostile/retaliate/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/snake(src)
 		occupants += bootsnake
 
 
@@ -453,7 +453,7 @@
 			user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'>You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
 			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
+			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate))
 				user.reagents.add_reagent(/datum/reagent/toxin, 7)
 		occupants.Cut()
 
@@ -464,7 +464,7 @@
 	if(occupants.len >= max_occupants)
 		to_chat(user, "<span class='warning'>[src] are full!</span>")
 		return
-	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
 		occupants += target
 		target.forceMove(src)
 		to_chat(user, "<span class='notice'>[target] slithers into [src].</span>")

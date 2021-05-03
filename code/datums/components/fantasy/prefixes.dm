@@ -99,12 +99,27 @@
 
 /datum/fantasy_affix/venomous/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
-
-
-
-	master.AddElement(/datum/element/beauty, min(comp.quality, -1) * 250)
-	return "venomous [newName]"
-
-/datum/fantasy_affix/venomous/remove(datum/component/fantasy/comp)
-	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/beauty, min(comp.quality, -1) * 250)
+	var/picked_poison = pick(
+		/datum/reagent/toxin/plantbgone,
+		/datum/reagent/toxin/mutetoxin,
+		/datum/reagent/toxin/amanitin,
+		/datum/reagent/toxin/lipolicide,
+		/datum/reagent/toxin/spewium,
+		/datum/reagent/toxin/heparin,
+		/datum/reagent/toxin/rotatium,
+		/datum/reagent/toxin/histamine
+		)
+	var/list/names = list(
+		/datum/reagent/toxin/plantbgone = "Plantbane",
+		/datum/reagent/toxin/mutetoxin = "Mimemind",
+		/datum/reagent/toxin/amanitin = "Dormant Death",
+		/datum/reagent/toxin/lipolicide = "Famineblood",
+		/datum/reagent/toxin/spewium = "Gulchergut",
+		/datum/reagent/toxin/heparin = "Jabberwound",
+		/datum/reagent/toxin/rotatium = "Spindown",
+		/datum/reagent/toxin/histamine = "Creeping Malaise"
+	)
+	var/poisonname = names[picked_poison]
+	comp.appliedComponents += master.AddComponent(/datum/component/poisonous, picked_poison, 5)
+	//seriously don't @ me about the correct use of venom vs poison and toxin. shut up.
+	return "[poisonname] [pick("toxin", "poison", "venom")] [newName]"

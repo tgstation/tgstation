@@ -64,7 +64,7 @@
 	///Declares a cooldown for potential charges right off the bat.
 	COOLDOWN_DECLARE(charge_cooldown)
 
-/mob/living/simple_animal/hostile/Initialize()
+/mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()
 
 	if(!targets_from)

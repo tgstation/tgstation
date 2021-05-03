@@ -58,7 +58,7 @@
  * * set a random nutrition level
  * * Intialize the movespeed of the mob
  */
-/mob/Initialize()
+/mob/Initialize(mapload)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_CREATED, src)
 	add_to_mob_list()
 	if(stat == DEAD)
