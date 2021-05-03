@@ -451,7 +451,7 @@
 /obj/structure/closet/RightClick(mob/user, modifiers)
 	if(!opened && secure)
 		togglelock(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return TRUE
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
