@@ -240,7 +240,7 @@
 			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
 				var/obj/machinery/atmospherics/components/unary/portables_connector/considered_connector = atmosmch
 				if(considered_connector.connected_device)
-					gas_mixture_list += considered_connector.connected_device.air_contents
+					gas_mixture_list += considered_connector.connected_device.return_air()
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
