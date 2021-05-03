@@ -175,6 +175,10 @@
 	to_chat(actor, "<span class='warning'>An inhospitable area may be created as a result of destroying this object. Aborting.</span>")
 	return FALSE
 
+/obj/structure/shuttle/engine/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
 /obj/machinery/telecomms/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	to_chat(actor, "<span class='warning'>This communications relay should be preserved, it will be a useful resource to our masters in the future. Aborting.</span>")
 	return FALSE
