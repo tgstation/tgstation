@@ -3,17 +3,18 @@
 #define LIGHTING_OBJECT_COLOR 3
 
 /atom/movable/lighting_object
-	name          = ""
+	name = ""
 
-	anchored      = TRUE
+	anchored = TRUE
 
-	icon             = LIGHTING_ICON
-	icon_state       = "transparent"
-	color            = null //we manually set color in init instead
-	plane            = LIGHTING_PLANE
+	icon = LIGHTING_ICON
+	icon_state = null
+	color = null //we manually set color in init instead
+	plane = LIGHTING_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	invisibility     = INVISIBILITY_LIGHTING
+	invisibility = INVISIBILITY_LIGHTING
 	vis_flags = VIS_HIDE
+
 	var/mutable_appearance/current_underlay
 	var/current_state = LIGHTING_OBJECT_TRANSPARENT
 
@@ -29,7 +30,6 @@
 
 	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", layer + 1, LIGHTING_PLANE, alpha)
 	current_underlay.color = LIGHTING_BASE_MATRIX
-	current_underlay.invisibility = INVISIBILITY_LIGHTING
 
 	myturf = loc
 	if (myturf.lighting_object)
@@ -37,8 +37,10 @@
 	myturf.lighting_object = src
 	myturf.luminosity = 0
 
-	for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+	for(var/turf/open/space/S in RANGE_TURFS(1, myturf))
 		S.update_starlight()
+
+	loc = null
 
 	needs_update = TRUE
 	SSlighting.objects_queue += src
@@ -46,10 +48,6 @@
 /atom/movable/lighting_object/Destroy(force)
 	if (force)
 		SSlighting.objects_queue -= src
-		if (loc != myturf)
-			var/turf/oldturf = get_turf(myturf)
-			var/turf/newturf = get_turf(loc)
-			stack_trace("A lighting object was qdeleted with a different loc then it is suppose to have ([COORD(oldturf)] -> [COORD(newturf)])")
 		if (isturf(myturf))
 			myturf.lighting_object = null
 			myturf.luminosity = 1
@@ -61,14 +59,6 @@
 		return QDEL_HINT_LETMELIVE
 
 /atom/movable/lighting_object/proc/update()
-	if (loc != myturf)
-		if (loc)
-			var/turf/oldturf = get_turf(myturf)
-			var/turf/newturf = get_turf(loc)
-			warning("A lighting object realised it's loc had changed in update() ([myturf]\[[myturf ? myturf.type : "null"]]([COORD(oldturf)]) -> [loc]\[[ loc ? loc.type : "null"]]([COORD(newturf)]))!")
-
-		qdel(src, TRUE)
-		return
 
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
@@ -118,24 +108,21 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
+
 	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8) && current_state != LIGHTING_OBJECT_TRANSPARENT)
 		myturf.underlays -= current_underlay
 		current_underlay.icon_state = "transparent"
 		current_underlay.color = null
-	//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
-		//icon_state = "transparent"
-		//color = null
+		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
 		myturf.underlays += current_underlay
 		current_state = LIGHTING_OBJECT_TRANSPARENT
 	else if(!set_luminosity && current_state != LIGHTING_OBJECT_DARK)
 		myturf.underlays -= current_underlay
 		current_underlay.icon_state = "dark"
 		current_underlay.color = null
-		//icon_state = "dark"
-		//color = null
 		myturf.underlays += current_underlay
 		current_state = LIGHTING_OBJECT_DARK
-	else if(current_state != LIGHTING_OBJECT_COLOR)
+	else
 		myturf.underlays -= current_underlay
 		current_underlay.icon_state = null
 		current_underlay.color = list(
@@ -145,19 +132,11 @@
 			ar, ag, ab, 00,
 			00, 00, 00, 01
 		)
-		/*icon_state = null
-		color = list(
-			rr, rg, rb, 00,
-			gr, gg, gb, 00,
-			br, bg, bb, 00,
-			ar, ag, ab, 00,
-			00, 00, 00, 01
-		)
-		*/
+
 		myturf.underlays += current_underlay
 		current_state = LIGHTING_OBJECT_COLOR
 
-	luminosity = set_luminosity
+	myturf.luminosity = set_luminosity
 
 // Variety of overrides so the overlays don't get affected by weird things.
 
