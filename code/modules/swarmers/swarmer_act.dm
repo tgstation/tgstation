@@ -129,6 +129,68 @@
 	actor.dis_integrate(src)
 	return TRUE
 
+	/obj/structure/shuttle/engine/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+    /obj/structure/shuttle/engine/heater/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/propulsion/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/propulsion/right/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/propulsion/left/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/propulsion/burst/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/propulsion/burst/right/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/propulsion/burst/left/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/propulsion/burst/cargo/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/router/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/platform/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/large/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/huge/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+	/obj/structure/shuttle/engine/heater/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
+	to_chat(actor, "<span class='warning'Destroying this object has the potential to cause a hull breach. Aborting.</span>")
+	return FALSE
+
+
+
+
+
+
+
 /obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	actor.dis_integrate(src)
 	if(!QDELETED(actor)) //If it got blown up no need to turn it off.
