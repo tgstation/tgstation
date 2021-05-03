@@ -195,58 +195,6 @@
 	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
 	return FALSE
 
-/obj/structure/shuttle/engine/heater/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/propulsion/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-    to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-    return FALSE
-
-/obj/structure/shuttle/engine/propulsion/right/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/propulsion/left/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/propulsion/burst/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/propulsion/burst/right/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/propulsion/burst/left/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/propulsion/burst/cargo/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/router/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/platform/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/large/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/huge/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
-/obj/structure/shuttle/engine/heater/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	to_chat(actor, "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>")
-	return FALSE
-
 /turf/closed/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
 	var/isonshuttle = istype(loc, /area/shuttle)
 	for(var/turf/turf_in_range as anything in RANGE_TURFS(1, src))
