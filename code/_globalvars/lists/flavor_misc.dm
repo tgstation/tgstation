@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(jumpsuitlist, list(PREF_SUIT, PREF_SKIRT))
 #define UPLINK_PDA "PDA"
 #define UPLINK_RADIO "Radio"
 #define UPLINK_PEN "Pen" //like a real spy!
-#define UPLINK_IMPLANT  "Implant"
+#define UPLINK_IMPLANT  "Implant (-4 TC)"
 GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT))
 
 	//Female Uniforms
