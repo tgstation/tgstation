@@ -207,7 +207,7 @@
 
 /// Manually adding stamina damage notes to the classic baton, since the classic and stun batons do not share the same variable names
 /obj/item/melee/classic_baton/examine(mob/user)
-	offensive_notes = "Various interviewed security forces report being able to beat criminals into exhaustion with only [round(100 / stamina_damage, 1)] hit(s)!"
+	offensive_notes = "Various interviewed security forces report being able to beat criminals into exhaustion with only [round(100 / stamina_damage, 0.1)] hit(s)!"
 	. = ..()
 
 
