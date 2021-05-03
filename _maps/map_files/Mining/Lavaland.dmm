@@ -4644,7 +4644,9 @@
 /area/mine/living_quarters)
 "Tb" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/radio/intercom/directional/north,
+/obj/item/radio/intercom/directional/north{
+	prison_radio = 1
+	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Tn" = (
