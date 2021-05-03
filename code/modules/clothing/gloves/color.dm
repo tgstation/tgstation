@@ -1,17 +1,6 @@
 /obj/item/clothing/gloves/color
 	dying_key = DYE_REGISTRY_GLOVES
 
-/obj/item/clothing/gloves/color/chief_engineer
-	desc = "These gloves provide excellent heat and electric insulation. They are so thin you can barely feel them."
-	name = "advanced insulated gloves"
-	icon_state = "ce_insuls"
-	inhand_icon_state = "lgloves"
-	siemens_coefficient = 0
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-
 /obj/item/clothing/gloves/color/yellow
 	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger."
 	name = "insulated gloves"
@@ -191,6 +180,19 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 60
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 50)
+	resistance_flags = NONE
+
+/obj/item/clothing/gloves/color/chief_engineer
+	desc = "These gloves provide excellent heat and electric insulation. They are so thin you can barely feel them."
+	name = "advanced insulated gloves"
+	icon_state = "ce_insuls"
+	inhand_icon_state = "lgloves"
+	siemens_coefficient = 0
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
