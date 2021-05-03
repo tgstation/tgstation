@@ -70,7 +70,7 @@
 			damage_rundown_message += "[return_blows2crit_rating_string(loaded_projectile.damage*pellets)] [loaded_projectile.damage_type] damage"
 
 		if(LAZYLEN(damage_rundown_message))
-			var/start_of_message = "<span class='danger'>Firing it would do "
+			var/start_of_message = "<span class='danger'>Firing it[pellets > 1 ? "s [pellets] pellets" : ""] would do "
 			var/middle_of_message
 			var/end_of_message = "[damage_rundown_message[LAZYLEN(damage_rundown_message)]].</span>"
 
