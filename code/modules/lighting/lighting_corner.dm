@@ -75,11 +75,8 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 
 /datum/lighting_corner/proc/update_active()
 	active = FALSE
-	var/turf/T
-	var/thing
-	for (thing in masters)
-		T = thing
-		if (T.lighting_object)
+	for (var/turf/master_turf as anything in masters)
+		if (master_turf.lighting_object)
 			active = TRUE
 			return
 
@@ -120,8 +117,7 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	#endif
 	cache_mx = round(mx, LIGHTING_ROUND_VALUE)
 
-	for (var/TT in masters)
-		var/turf/T = TT
+	for (var/turf/T as anything in masters)
 		if (T.lighting_object && !T.lighting_object.needs_update)
 			T.lighting_object.needs_update = TRUE
 			SSlighting.objects_queue += T.lighting_object

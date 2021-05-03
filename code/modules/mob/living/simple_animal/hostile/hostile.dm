@@ -204,7 +204,7 @@
 
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+	if(isturf(the_target) || !the_target) // bail out on invalids
 		return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.

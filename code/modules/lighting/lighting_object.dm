@@ -2,36 +2,23 @@
 #define LIGHTING_OBJECT_DARK 2
 #define LIGHTING_OBJECT_COLOR 3
 
-/atom/movable/lighting_object
-	name = ""
-
-	anchored = TRUE
-
-	icon = LIGHTING_ICON
-	icon_state = null
-	color = null //we manually set color in init instead
-	plane = LIGHTING_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	invisibility = INVISIBILITY_LIGHTING
-	vis_flags = VIS_HIDE
-
+/datum/lighting_object
 	var/mutable_appearance/current_underlay
 	var/current_state = LIGHTING_OBJECT_TRANSPARENT
 
 	var/needs_update = FALSE
 	var/turf/myturf
 
-/atom/movable/lighting_object/Initialize(mapload)
+/datum/lighting_object/New(turf/source)
+	if(!isturf(source))
+		qdel(src)
+		return
 	. = ..()
-	verbs.Cut()
-	//We avoid setting this in the base as if we do then the parent atom handling will add_atom_color it and that
-	//is totally unsuitable for this object, as we are always changing it's colour manually
-	color = LIGHTING_BASE_MATRIX
 
-	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", layer + 1, LIGHTING_PLANE, alpha)
+	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", 100, LIGHTING_PLANE)
 	current_underlay.color = LIGHTING_BASE_MATRIX
 
-	myturf = loc
+	myturf = source
 	if (myturf.lighting_object)
 		qdel(myturf.lighting_object, force = TRUE)
 	myturf.lighting_object = src
@@ -40,12 +27,10 @@
 	for(var/turf/open/space/S in RANGE_TURFS(1, myturf))
 		S.update_starlight()
 
-	loc = null
-
 	needs_update = TRUE
 	SSlighting.objects_queue += src
 
-/atom/movable/lighting_object/Destroy(force)
+/datum/lighting_object/Destroy(force)
 	if (force)
 		SSlighting.objects_queue -= src
 		if (isturf(myturf))
@@ -58,7 +43,7 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
-/atom/movable/lighting_object/proc/update()
+/datum/lighting_object/proc/update()
 
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
@@ -108,7 +93,6 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
-
 	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8) && current_state != LIGHTING_OBJECT_TRANSPARENT)
 		myturf.underlays -= current_underlay
 		current_underlay.icon_state = "transparent"
@@ -137,32 +121,6 @@
 		current_state = LIGHTING_OBJECT_COLOR
 
 	myturf.luminosity = set_luminosity
-
-// Variety of overrides so the overlays don't get affected by weird things.
-
-/atom/movable/lighting_object/ex_act(severity)
-	return FALSE
-
-/atom/movable/lighting_object/singularity_act()
-	return
-
-/atom/movable/lighting_object/singularity_pull()
-	return
-
-/atom/movable/lighting_object/blob_act()
-	return
-
-/atom/movable/lighting_object/onTransitZ()
-	return
-
-/atom/movable/lighting_object/wash(clean_types)
-	SHOULD_CALL_PARENT(FALSE) // lighting objects are dirty, confirmed
-	return
-
-// Override here to prevent things accidentally moving around overlays.
-/atom/movable/lighting_object/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
-	if(harderforce)
-		. = ..()
 
 #undef LIGHTING_OBJECT_TRANSPARENT
 #undef LIGHTING_OBJECT_DARK

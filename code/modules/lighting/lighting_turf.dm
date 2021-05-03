@@ -30,7 +30,7 @@
 	if (!lighting_corners_initialised)
 		generate_missing_corners()
 
-	new/atom/movable/lighting_object(src)
+	new/datum/lighting_object(src)
 
 	var/thing
 	var/datum/lighting_corner/C
@@ -75,7 +75,7 @@
 	if (!lighting_object)
 		return FALSE
 
-	return !(lighting_object.luminosity || dynamic_lumcount)
+	return !(luminosity || dynamic_lumcount)
 
 
 ///Proc to add movable sources of opacity on the turf and let it handle lighting code.
