@@ -59,7 +59,7 @@
 	var/list/corners = myturf.corners
 	var/datum/lighting_corner/cr = dummy_lighting_corner
 	var/datum/lighting_corner/cg = dummy_lighting_corner
-	var/datum/lighting_corner/cb = dummy_lighting_corner
+	var/datum/lighting_corner/cb = dummy_lighting_corner//TODOKYLER: this is dumb and wasteful figure out a way to make this not happen
 	var/datum/lighting_corner/ca = dummy_lighting_corner
 	if (corners) //done this way for speed
 		cr = corners[3] || dummy_lighting_corner
@@ -110,12 +110,20 @@
 		myturf.underlays -= current_underlay
 		current_underlay.icon_state = null
 		current_underlay.color = list(
-			rr, rg, rb, 00,
-			gr, gg, gb, 00,
-			br, bg, bb, 00,
+		//	nr	ng	nb	na   =
+			rr, rg, rb, 00,//  r*x
+			gr, gg, gb, 00,//+ g*x
+			br, bg, bb, 00,//+ b*x
+			ar, ag, ab, 00,//+ a*x
+			00, 00, 00, 01 //+ c*x
+		)
+		/*current_underlay.color = list(
+			rr, gr, br, 00,
+			rg, gg, bg, 00,
+			rb, gb, bb, 00,
 			ar, ag, ab, 00,
 			00, 00, 00, 01
-		)
+		)*/
 
 		myturf.underlays += current_underlay
 		current_state = LIGHTING_OBJECT_COLOR
