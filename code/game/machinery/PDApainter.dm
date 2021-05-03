@@ -314,6 +314,7 @@
 				return TRUE
 
 			var/selection = params["selection"]
+			var/to_standard = TRUE
 			for(var/path in pda_types)
 				if(!(pda_types[path] == selection))
 					continue
@@ -321,6 +322,13 @@
 				var/obj/item/pda/pda_path = path
 				stored_pda.icon_state = initial(pda_path.icon_state)
 				stored_pda.desc = initial(pda_path.desc)
+				to_standard = FALSE
+
+			if(to_standard):
+				var/obj/item/pda/pda_path = /obj/item/pda
+				stored_pda.icon_state = initial(pda_path.icon_state)
+				stored_pda.desc = initial(pda_path.desc)
+
 			return TRUE
 		if("trim_card")
 			if((machine_stat & BROKEN) || !stored_id_card)
