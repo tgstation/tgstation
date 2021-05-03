@@ -446,14 +446,14 @@
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 20 * B.rating
-		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1) * 0.5)
+		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1) * 2)
 
 /obj/machinery/smartfridge/organ/process(delta_time)
 	for(var/organ in contents)
 		var/obj/item/organ/O = organ
 		if(!istype(O))
-			return
-		O.applyOrganDamage(-repair_rate * delta_time)
+			continue
+		O.applyOrganDamage(-repair_rate * O.maxHealth * delta_time)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
