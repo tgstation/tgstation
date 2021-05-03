@@ -224,7 +224,7 @@
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
 	name = "atmospherics hardsuit helmet"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has thermal shielding."
+	desc = "A modified engineering hardsuit helmet. The radiation shielding plates were removed to allow for improved thermal protection instead."
 	icon_state = "hardsuit0-atmospherics"
 	inhand_icon_state = "atmo_helm"
 	hardsuit_type = "atmospherics"
@@ -234,7 +234,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	name = "atmospherics hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has thermal shielding."
+	desc = "A modified engineering hardsuit. The radiation shielding plates were removed to allow for improved thermal protection instead."
 	icon_state = "hardsuit-atmospherics"
 	inhand_icon_state = "atmo_hardsuit"
 	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 25, FIRE = 100, ACID = 75, WOUND = 10)
