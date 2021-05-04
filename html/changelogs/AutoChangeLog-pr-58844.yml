@@ -1,0 +1,4 @@
+author: "Celotajs"
+delete-after: True
+changes: 
+  - imageadd: "PDA icons are now generated with GAGS"
