@@ -101,9 +101,10 @@
 /client/verb/changelog()
 	set name = "Changelog"
 	set category = "OOC"
-	var/datum/asset/simple/namespaced/changelog = get_asset_datum(/datum/asset/simple/namespaced/changelog)
-	changelog.send(src)
-	src << browse(changelog.get_htmlloader("changelog.html"), "window=changes;size=675x650")
+	if(!GLOB.changelog_tgui)
+		GLOB.changelog_tgui = new /datum/changelog()
+
+	GLOB.changelog_tgui.ui_interact(mob)
 	if(prefs.lastchangelog != GLOB.changelog_hash)
 		prefs.lastchangelog = GLOB.changelog_hash
 		prefs.save_preferences()

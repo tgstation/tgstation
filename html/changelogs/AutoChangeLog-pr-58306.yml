@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - balance: "Radiation related pluoxium will now only generate in gasmixes under 200K, remember to keep that sm cold"

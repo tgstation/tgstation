@@ -386,7 +386,7 @@
 	name = "Reality Dissociation Syndrome"
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. <b>This is not a license to grief.</b>"
 	value = -8
-	//no mob trait because it's handled uniquely
+	mob_trait = TRAIT_INSANITY
 	gain_text = "<span class='userdanger'>...</span>"
 	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
@@ -519,7 +519,7 @@
 		for(var/i in 1 to 7)
 			var/obj/item/reagent_containers/pill/P = new(drug_instance)
 			P.icon_state = pill_state
-			P.reagents.add_reagent(reagent_type, 1)
+			P.reagents.add_reagent(reagent_type, 3)
 
 	var/obj/item/accessory_instance
 	if (accessory_type)

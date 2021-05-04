@@ -122,7 +122,7 @@
 
 	SEND_SIGNAL(src, COMSIG_GRENADE_DETONATE, lanced_by)
 	if(ex_dev || ex_heavy || ex_light || ex_flame)
-		explosion(loc, ex_dev, ex_heavy, ex_light, flame_range = ex_flame)
+		explosion(src, ex_dev, ex_heavy, ex_light, ex_flame)
 
 /obj/item/grenade/proc/update_mob()
 	if(ismob(loc))

@@ -21,6 +21,7 @@
 /datum/addiction/opiods/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.remove_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
+	affected_carbon.set_disgust(affected_carbon.disgust * 0.5) //half their disgust to help
 
 ///Stimulants
 

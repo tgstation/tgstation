@@ -18,6 +18,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/atom/current_movement_target
 	///This is a list of variables the AI uses and can be mutated by actions. When an action is performed you pass this list and any relevant keys for the variables it can mutate.
 	var/list/blackboard = list()
+	///Stored arguments for behaviors given during their initial creation
+	var/list/behavior_args = list()
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
 	var/pathing_attempts
 	///Can the AI remain in control if there is a client?
@@ -34,6 +36,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/list/movement_path
 	///Cooldown for JPS movement, how often we're allowed to try making a new path
 	COOLDOWN_DECLARE(repath_cooldown)
+	///AI paused time
+	var/paused_until = 0
 
 /datum/ai_controller/New(atom/new_pawn)
 	ai_movement = SSai_movement.movement_types[ai_movement]
@@ -85,6 +89,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 
 ///Returns TRUE if the ai controller can actually run at the moment.
 /datum/ai_controller/proc/able_to_run()
+	if(world.time < paused_until)
+		return FALSE
 	return TRUE
 
 /// Generates a plan and see if our existing one is still valid.
@@ -92,12 +98,12 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	if(!able_to_run())
 		walk(pawn, 0) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
+
 	if(!current_behaviors?.len)
 		SelectBehaviors(delta_time)
 		if(!current_behaviors?.len)
 			PerformIdleBehavior(delta_time) //Do some stupid shit while we have nothing to do
 			return
-
 
 	if(current_movement_target && get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
 		CancelActions()
@@ -118,19 +124,18 @@ have ways of interacting with a specific atom and control it. They posses a blac
 			if(current_behavior.required_distance >= get_dist(pawn, current_movement_target)) ///Are we close enough to engage?
 				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.else
 					ai_movement.stop_moving_towards(src)
-				current_behavior.perform(action_delta_time, src)
+				ProcessBehavior(action_delta_time, current_behavior)
 				return
 
 			else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
 				ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
 
 			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
-				current_behavior.perform(action_delta_time, src)
+				ProcessBehavior(action_delta_time, current_behavior)
 				return
 		else //No movement required
-			current_behavior.perform(action_delta_time, src)
+			ProcessBehavior(action_delta_time, current_behavior)
 			return
-
 
 ///Perform some dumb idle behavior.
 /datum/ai_controller/proc/PerformIdleBehavior(delta_time)
@@ -153,6 +158,29 @@ have ways of interacting with a specific atom and control it. They posses a blac
 		if(AI_STATUS_OFF)
 			STOP_PROCESSING(SSai_controllers, src)
 			CancelActions()
+
+/datum/ai_controller/proc/PauseAi(time)
+	paused_until = world.time + time
+
+/datum/ai_controller/proc/AddBehavior(behavior_type, ...)
+	var/datum/ai_behavior/behavior = GET_AI_BEHAVIOR(behavior_type)
+	if(!behavior)
+		CRASH("Behavior [behavior_type] not found.")
+	var/list/arguments = args.Copy()
+	arguments[1] = src
+	if(!behavior.setup(arglist(arguments)))
+		return
+	current_behaviors += behavior
+	arguments.Cut(1, 2)
+	if(length(arguments))
+		behavior_args[behavior_type] = arguments
+
+/datum/ai_controller/proc/ProcessBehavior(delta_time, datum/ai_behavior/behavior)
+	var/list/arguments = list(delta_time, src)
+	var/list/stored_arguments = behavior_args[behavior.type]
+	if(stored_arguments)
+		arguments += stored_arguments
+	behavior.perform(arglist(arguments))
 
 /datum/ai_controller/proc/CancelActions()
 	for(var/i in current_behaviors)

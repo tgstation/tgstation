@@ -6,7 +6,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 60, ACID = 30)
 	anchored = FALSE
 
-	///Stores the gas mixture of the portable component
+	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
 	///Stores the reference of the connecting port
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
@@ -14,6 +14,8 @@
 	var/obj/item/tank/holding
 	///Volume (in L) of the inside of the machine
 	var/volume = 0
+	///Used to track if anything of note has happen while running process_atmos()
+	var/excited = TRUE
 
 /obj/machinery/portable_atmospherics/Initialize()
 	. = ..()
@@ -26,8 +28,7 @@
 	SSair.stop_processing_machine(src)
 
 	disconnect()
-	qdel(air_contents)
-	air_contents = null
+	QDEL_NULL(air_contents)
 
 	return ..()
 
@@ -44,10 +45,14 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
-	if(!connected_port) // Pipe network handles reactions if connected.
-		air_contents.react(src)
+	if(!connected_port) // Pipe network handles reactions if connected, and we can't stop processing if there's a port effecting our mix
+		excited = (excited | air_contents.react(src))
+		if(!excited)
+			return PROCESS_KILL
+	excited = FALSE
 
 /obj/machinery/portable_atmospherics/return_air()
+	SSair.start_processing_machine(src)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/return_analyzable_air()
@@ -76,6 +81,8 @@
 	anchored = TRUE //Prevent movement
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
+
+	SSair.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -95,6 +102,8 @@
 	connected_port = null
 	pixel_x = 0
 	pixel_y = 0
+
+	SSair.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -129,13 +138,14 @@
 		holding = null
 	if(new_tank)
 		holding = new_tank
+
+	SSair.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/W, mob/user, params)
-	. = ..()
 	if(!istype(W, /obj/item/tank))
-		return FALSE
+		return ..()
 	if(machine_stat & BROKEN)
 		return FALSE
 	var/obj/item/tank/T = W
@@ -206,3 +216,4 @@
 
 	if(gas_change)
 		air_contents.garbage_collect()
+		SSair.start_processing_machine(src)

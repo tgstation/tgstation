@@ -1,0 +1,523 @@
+2016-07-01:
+  Flavo:
+  - bugfix: fixed a bug where lights would not update.
+  Joan:
+  - rscadd: Clockwork Slabs now use an action button to communicate instead of the
+      "Report" option in the menu after using a slab.
+  - tweak: Clockwork Slabs now fit in pockets, the belt slot, or in the suit storage
+      slot(if wearing clockwork armor), where they can be used as hands-free communication.
+  - imageadd: Clockwork items with action buttons have a new, clockwork-y background.
+  - rscadd: Judicial Visors now tell the user how many targets the Judicial Blast
+      struck.
+  - soundadd: Judicial Markers now have sounds when appearing and exploding.
+  - tweak: Wet turfs should remain that way for slightly longer than 5 seconds now.
+  - rscadd: Drones and Swarmers should now sound more robotic.
+  - tweak: Ratvarian Spears will stun cyborgs and cultists for twice as long when
+      thrown; on cyborgs, this should be long enough to use Guvax on them.
+  - rscdel: Removed the Justicar's Gavel application scripture.
+  - tweak: Vitality Matrices will drain and heal 50% faster, and the base cost to
+      revive is 20% lower; 20, from 25.
+  - rscadd: Vitality Matrices will not revive or heal corpses unless they can grab
+      the ghost of the corpse, and will immediately grab the ghost when reviving.
+  - rscadd: Swarmers consuming swarmer shells now refunds the swarmer the entire cost
+      of the shell instead of 2% of the shell's cost.
+  - experiment: Application scriptures require at least 75 CV, from 50.
+  - experiment: Revenant scriptures require at least 4 Caches, from 3, and at least
+      150 CV, from 100.
+  - experiment: Judgement scripture requires at least 12 servants, from 10, 5 Caches,
+      from 3, and at least 250 CV, from 100.
+  - experiment: Script and Application scripture have had their component costs and
+      requirements tweaked to reduce overuse of certain components.
+  - wip: Invoke times for a few scriptures that were instant are now very short instead.
+  Kor:
+  - rscdel: Holoparasites are no longer in the uplink
+  NikNak:
+  - tweak: Showcases are now movable and deconstructable.  Wrench them to unanchor
+      and then screwdriver and crowbar to deconstruct.
+  Papa Bones:
+  - tweak: Security now has energy bolas available to them in their vending machines,
+      check them out!
+  bobdobbington:
+  - rscadd: Added skub to the AutoDrobe as a premium item.
+  coiax:
+  - rscadd: The CTF arena regenerates every round, and the blue team now shoot blue
+      lasers.
+  - rscadd: Adds some descriptions to alien surgery tools
+  - rscadd: The agent vest can be locked and unlocked (toggling the NODROP flag)
+  - rscadd: An abductor team can spend data points to purchase an agent vest (note
+      that only abductor agents are trained in their use)
+  - rscadd: The nuke disk reappears on the station in far more random locations, but
+      tends to re-materialise in safe pressurised areas that aren't on fire.
+  'name: Lzimann':
+  - tweak: Mulebots with pAI cards no longer stun people
+2016-07-02:
+  Joan:
+  - rscadd: Clockwork Proselytizers can now reform stored alloy into usable component
+      alloy when used in-hand.
+  - rscdel: Mending motors start with 2500W of power in alloy, from 5000. Sigils of
+      Transmission start with 2500W of power, from 4000. Clockwork Proselytizers start
+      with 90 alloy, from 100.
+  - rscdel: Umbras have been removed.
+  - rscadd: Revenants have been readded, though they are now vulnerable to salt piles.
+  MMMiracles:
+  - rscadd: Added the power fist, a gauntlet with a piston-powered ram attached to
+      the top for traitors to punch people across the station. Punch people into walls
+      for added fun.
+  incoming5643:
+  - rscadd: 'Nuke ops can now harness the power of METAL BOXES: special versions of
+      cardboard boxes that can take a lot of abuse and can fit the whole team if need
+      be. They''re not nearly as light as their cardboard brothers though...'
+  kevinz000:
+  - rscadd: Some new emojis have been added to OOC for your enjoyment. Try them out.
+  - rscadd: 'New emojis are : coffee, trophy, tea, gear, supermatter, forceweapon,
+      gift, kudzu, dosh, chrono, nya, and tophat. Type :nameofemoji: in OOC to use.'
+2016-07-03:
+  Cruix:
+  - bugfix: Hand labelers can now label storage containers.
+  - bugfix: You can now properly resist out of wrapped lockers.
+  - bugfix: You can now resist out of morgues if you are in a bodybag.
+  - bugfix: Mechs can no longer spam doors they do not have access to.
+  Joan:
+  - tweak: Clock Cult can now happen at 24 players, same as cult.
+  - tweak: Clock Cult player scaling is lower; 3 people, plus one for every 15 players
+      above 30, from 1 for every 10 players with a player minimum of 30.
+  - experiment: Guvax now invokes 1 second faster(5 seconds), but is 0.75 seconds
+      slower for each scripture-valid servant above 5, up to a maximum of 15 seconds.
+  - experiment: Clockwork Slabs generate components 20 seconds slower for each scripture-valid
+      servant above 5, up to a maximum of 1 component every 5 minutes.
+  - tweak: Tinkerer's Daemons that would be useless cannot be made.
+2016-07-04:
+  Gun Hog:
+  - rscadd: The Space Wizard Federation has finally begun teaching its pupils how
+      to properly aim the Fireball spell!
+  - tweak: Fireball spells, including the Devil version, are now aimed via mouse click.
+      It is recommended to avoid firing at anything too close, as the user can still
+      blow himself up!
+  Joan:
+  - rscdel: Mecha are no longer immune to ocular wardens.
+  Lzimann:
+  - rscadd: Throwing active stunbatons now has a chance to stun whoever it hits!
+  MMMiracles:
+  - rscadd: Adds space ruins. Balance not included.
+  - tweak: Simple mob ghosts actually work now.
+  - rscdel: Puzzle1 ruin removed due to issues with projectiles.
+  X-TheDark:
+  - rscadd: Switching mobs/ghosting/etc related actions during the round will now
+      no longer reset your hotkey settings.
+  Xhuis:
+  - bugfix: Ash storms can now occur again.
+  bgobandit:
+  - rscadd: Bluespace polycrystals, basically stacks of bluespace crystals, have been
+      added. The ore redemptor accepts them now.
+  - tweak: The ore redemptor machine should be less spammy now.
+  coiax:
+  - rscadd: The zone of hyperspace that a shuttle travels in is dynamically determined
+      when a shuttle begins charging its engines. This is signified by the shuttle
+      mode IGN. All shuttles must now charge engines before launching. This time is
+      already included in the emergency shuttle timer.
+  - rscdel: The cargo shuttle can only be loaned to Centcom while at Centcom.
+  - rscadd: Immovable rods now notify ghosts when created, allowing them to orbit
+      it and follow their path of destruction through the station.
+  - bugfix: Fixed bugs where no meteors would come or go from the south. Seriously,
+      that was a real bug. Meteor showers are now about 33% stronger as a result.
+2016-07-06:
+  Cruix:
+  - bugfix: Vending machine restocking units now work.
+  Joan:
+  - rscadd: Servants should now be more aware of when scripture tiers are locked or
+      unlocked.
+  - experiment: Judicial Explosions from a Judicial Visor now mute for about 10 seconds.
+  MrStonedOne:
+  - rscadd: Instant Runoff Voting polls are now available.
+  RemieRichards:
+  - tweak: Fixes accidental buff to botany, all modifiers should now be at the point
+      they were at pre-bees (this does not remove, nerf or alter bees)
+  Xhuis:
+  - rscadd: The Necropolis gate now looks as regal as it should. Credit goes to KorPhaeron
+      for turf and wall sprites.
+  - bugfix: Ash storms are actually damaging now.
+  coiax:
+  - bugfix: Gulag prisoners can no longer duplicate their mining efforts through window
+      breaking on the shuttle.
+  - bugfix: Fixes pickaxes inside walls on lavaland, along with lava having eaten
+      one of the storage units.
+  - rscadd: More fire extinguishers for lavaland mining base.
+  - bugfix: You can now reload your gun in CTF.
+  - rscadd: Dying in CTF will spawn a short lived ammo pickup, which you can walk
+      over to reload all your weapons.
+  - rscadd: If reduced to critical status in CTF, you will automatically die, so you
+      no longer have to succumb or be coup de graced. If you are conscious, you will
+      now heal slowly if some damage got through your shield and didn't crit you.
+  - bugfix: The tesla now dusts all carbon mobs on the turf that it moves to, grounding
+      rod or no.
+  coiax, Niknakflak:
+  - rscadd: Added fireplaces, fuel with logs or paper and set on fire and enjoy that
+      warm comforting glow.
+  - bugfix: Cardboard cutouts are now flammable.
+  - rscadd: Cigarettes, fireplaces and candles now share a pool of possible igniters.
+      So you can now esword that candle on, but turn it on first.
+  - rscadd: Eswords will ignite plasma in the air if turned on.
+  kevinz000:
+  - tweak: Kudzu is no longer unstoppable
+  optional name here:
+  - bugfix: Suit Storage Units can now disinfect items other than living and dead
+      creatures.
+2016-07-09:
+  CoreOverload:
+  - rscadd: You can remove jetpack from a hardsuit by using screwdriver on it.
+  Crazylemon:
+  - bugfix: The map loader no longer resets when reading another map mid-load
+  Goofball Sanders:
+  - rscadd: Added a new plant to the game to encourage the Chef to be a more relevant
+      job, alongside a recipe for a food related to it. Throw a cannabis leaf on a
+      table and check the recipes list to find it.
+  Gun Hog:
+  - rscdel: Malf (Traitor) AI's Fireproof Core ability has been removed, as it was
+      entirely obsolete.
+  - rscadd: Nanotrasen is proud to announce that conveyor belts can now be fabricated
+      at your station's autolathes!
+  Iamgoofball:
+  - bugfix: Fixes the Atheist's Fedora's throw damage.
+  Joan:
+  - rscadd: Tips for Clock Cult may now show up.
+  - experiment: The global component cache can only be accessed by clockwork slabs
+      if there is at least one Tinkerer's Cache active.
+  - rscadd: Ratvarian Spears are now sharp and can be used to cut off limbs or butcher
+      mobs.
+  - rscadd: Clock Cult silicons get an action button to communicate with other servants.
+  - tweak: Clockwork Slabs now produce a component every 1 minute, 30 seconds, from
+      every 1 minute.
+  - experiment: The slab production time gain from each servant above 5 has been increased
+      from 20 seconds to 30 seconds, and the maximum production time has been increased
+      from 5 minutes to 6 minutes.
+  - rscadd: You can now transfer components between two clockwork slabs by attacking
+      one slab, or a person holding a slab, with the other; this will transfer the
+      attacking slab's components into the target slab.
+  - tweak: Application scripture now requires 100 CV, from 75, Revenant scripture
+      now requires 200 CV, from 150, and Judgment scripture now requires 300 CV, from
+      250.
+  - experiment: However, converted windows, windoors, airlocks, and grilles will all
+      provide some CV.
+  Lzimann & Keekenox:
+  - rscadd: You can now craft a baseball bat with 5 sheets of wood!
+  MrStonedOne:
+  - experiment: Atmos on planets is now more realistic. There is an unseen upper atmosphere
+      that gas changes get carried away into, causing planet turfs to revert back
+      to their original gas mixture.
+  - tweak: This should massively improve atmos run speed as all of lavaland won't
+      be processing the moment somebody opens a door anymore
+  MrStonedOne, coiax:
+  - rscadd: View Variables can expand on associated lists with type keys. Only 90s
+      admins will truely understand.
+  RemieRichards:
+  - rscadd: Added a Compact mode to the crafting tgui
+  - tweak: Modified the back end of the crafting tgui so that it has well let's just
+      say "a lot less" calls to certain functions, should lag a little less but don't
+      expect miracles (you'd have to wait till we get a new version of ractive for
+      those!)
+  coiax:
+  - rscadd: Podpeople (and venus human traps) are now no longer damaged, poisoned
+      or obstructed by space vines. Explosive vines still damage them, because there's
+      an actual explosion.
+  - rscadd: During a meteor shower, observers can automatically orbit threatening
+      meteors via an action button and watch them hit the station.
+  - rscadd: Added Major Space Dust event, which is a meteor shower containing only
+      space dust.
+  - bugfix: Fixes bug where meteors wouldn't move when spawned.
+  - rscadd: Meteor Shower split into three different events, Normal, Threatening and
+      Catastrophic. They all have the same crew messages, but admins can tell the
+      difference.
+  - bugfix: Damage to a shuttle while it is moving will now correctly make transit
+      space turfs, rather than non-moving space.
+  - rscadd: AIs get a notification when hacking an APC, which can be clicked to jump
+      your camera to the APC's location. AIs also get notification sounds when a hack
+      has completed or failed.
+  - rscadd: Nuclear bombs now use a more accurate timer system, the same as gang dominators
+      and shuttles.
+  - rscadd: Nuclear bombs now have a TGUI interface.
+  - rscdel: Fleshmend no longer regrows lost limbs.
+  - rscadd: Added free Regenerate power to changelings, which regrows all external
+      limbs and internal organs (including the tongue if you lost your head). It costs
+      10 chemicals to use.
+  - rscadd: Fleshmend now costs 20 chemicals, down from 25.
+  - tweak: Changeling revive power name changed from Regenerate to Revive.
+  - rscadd: When a player uses a communication console to ask for the codes to the
+      self destruct, for better or for worse, the admins can set them with a single
+      click. Whether the admins a) click the button b) actually give the random person
+      the codes, is another thing entirely.
+  - rscadd: Servants of Ratvar get an alert if they have no tinkerer's caches constructed.
+      Because it's important that they should.
+2016-07-11:
+  Iamgoofball:
+  - bugfix: Fixes Nicotine's stun reduction
+  Joan:
+  - tweak: The Function Call action that summons a Ratvarian Spear is no longer one-use;
+      instead, it can be reused once every five minutes.
+  - experiment: Clockwork Walls and Floors will appear as normal walls and plating
+      to mesons, respectively.
+  coiax:
+  - tweak: Syndicate bombs now use a more accurate timer.
+  - bugfix: Fixed a separate bug that caused bomb timers to take twice as long (ie.
+      60 seconds took 120 seconds)
+  - tweak: The AI doomsday device timer is more accurate.
+  - bugfix: Fixes a bug where the doomsday device would take twice as long as it should.
+  optional name here:
+  - bugfix: The search function on security records consoles now works.
+2016-07-12:
+  MMMiracles:
+  - bugfix: Hotel staff can now actually use their own lockers.
+  RemieRichards:
+  - bugfix: fixed Kor's plant disguises
+  - bugfix: fixed some issues with Alternate Appearances not being added/removed
+  hornygranny:
+  - bugfix: Attacks will no longer miss missing limbs
+2016-07-14:
+  Basilman:
+  - rscadd: Added a new hairstyle "Boddicker"
+  Bawhoppen:
+  - rscadd: Added two new materials, Titanium and plastitanium. Titanium is naturally
+      occuring, and plastitanium is an alloy made of plasma and titanium.
+  - rscadd: These materials can be used to build shuttle walls and floors, though
+      this serves no current purpose.
+  CoreOverload:
+  - rscadd: Some clothing has pockets now.
+  Firecage:
+  - tweak: Mechas can no longer pass through Plastic Flaps
+  Fox McCloud:
+  - bugfix: Fixes borg stun arm not having a hitsound, bypassing shields, and not
+      doing an attack animation
+  - bugfix: Fixes simple mobs not properly having armor penetration
+  Joan:
+  - rscadd: Added dextrous guardians to the code, able to hold and use items and store
+      a single item within themselves.
+  - experiment: Dextrous guardians do low damage on punches, have medium damage resist,
+      and recalling or leashing will force them to drop any items in their hands.
+  Kor:
+  - tweak: Shuttle travel time has been shortened from 25 seconds to 6 seconds
+  Lzimann:
+  - tweak: Alt clicking a jumpsuit now removes the accessories(if there's any)!
+  Papa Bones:
+  - tweak: Security's lethal injections are actually lethal now.
+  Xhuis:
+  - rscadd: Nanotrasen electricians have introduced a software update to all licensed
+      pinpointers. The new pinpointers are more responsive and automatically switch
+      modes based on the current crisis.
+  - rscadd: It should be noted that some of these pinpointers have been reported as
+      missing from their distribution warehouse and are presumed to have been stolen.
+      This is likely nothing to worry about.
+  lordpidey:
+  - tweak: Infernal jaunt now has a cooldown, to prevent trying to jaunt while already
+      jaunting.  This should have no practical changes.
+  - bugfix: Infernal jaunt no longer occasionally leaves you permanently on fire.
+  - bugfix: Pitchforks no longer burn devils and soul-sellers, as intended.
+2016-07-15:
+  Cheridan:
+  - rscadd: Added an aesthetic new space ruin
+2016-07-16:
+  Gun Hog and WJohnston:
+  - rscadd: Aliens (Xenos) now have the ability to sense the direction and rough distance
+      of their queen!
+  Iamgoofball:
+  - bugfix: Fixed the lag when opening the foodcrafting menu by splitting everything
+      up into categories.
+  Joan:
+  - rscadd: Cogscarabs(and other nonhuman mobs able to hold clockwork slabs) can now
+      check the stats of the clockwork cult by using a clockwork slab. They remain
+      unable to use slabs under normal conditions.
+  MrStonedOne:
+  - experiment: Added a system to detect when stickybans go rogue and revert all recent
+      matches.
+2016-07-18:
+  CoreOverload:
+  - rscadd: Sterilizine now reduces probability of step failure if you apply it after
+      starting surgery. Useful while operating in less-than-perfect conditions.
+  - rscadd: Potent alcohol can be used as replacement for sterilizine.
+  Joan:
+  - experiment: The Vanguard scripture no longer prevents you from using slabs while
+      active, but you cannot reactivate it if it is currently active.
+  - tweak: It now only lasts 20 seconds, instead of 30.
+  - tweak: When Vanguard deactivates, it now stuns for half the time of all stuns
+      absorbed, instead of all of them.
+  - tweak: Invoking Sevtug is less potent at long ranges, and slightly more potent
+      if extremely close.
+  - experiment: Invoking Sevtug now requires 3 invokers instead of 1.
+  - rscadd: The Clockwork Slab now has action buttons for rapidly invoking Guvax and
+      Vanguard.
+  - tweak: Belligerent is now chanted more often.
+  - experiment: Taunting Tirade now weakens nearby nonservants, but is now only invoked
+      once every 6 seconds(1 second chant, 5 second flee time) and is only chanted
+      five times.
+  lordpidey:
+  - rscadd: Flyswatters are now included in beekeeping crates, they are great at killing
+      insects and flies of all sizes.
+2016-07-19:
+  Joan:
+  - tweak: Cogscarabs can no longer pass mobs and have slightly less health.
+  - experiment: The Gateway to the Celestial Derelict can now take damage from bombs.
+  RemieRichards:
+  - rscadd: Added VR Sleepers that allow users to enter a virtual body in a virtual
+      world (Currently not mapped in ;_;)
+  Xhuis:
+  - rscadd: Added communication intercept texts for gamemodes that were missing them.
+  - tweak: Changed all intercept texts and improved grammar for a lot of key game
+      code.
+  - rscdel: The shuttle can now leave while a celestial gateway exists.
+  - rscadd: If the shuttle docks at Central Command while a celestial gateway exists,
+      Ratvar's servants will win a minor victory. His arrival will still award a major
+      victory.
+  - rscadd: The celestial gateway can now take damage from explosions.
+2016-07-22:
+  Bawhoppen:
+  - rscadd: Titanium now spawns in mining again.
+  - rscadd: It has uses in R&D and robotics production.
+  - rscadd: All shuttle walls are now using a new proper smoothing path. Mappers please
+      make sure to use this path correctly in the future. (along with tiles)
+  Cheridan:
+  - rscadd: Added another space ruin.
+  Cruix:
+  - bugfix: Camera bugs can now show camera views.
+  - bugfix: The chameleon masks in the chameleon kit can once again have their voice
+      changers toggled.
+  Incoming5643:
+  - rscadd: You now have the ability to automatically "back out" of a round if you
+      miss your chance at all the jobs you have set to low or higher. This is found
+      on the toggle at the bottom of the jobs window
+  - rscadd: Due to a quirk of game mode code this option will fail to work if you've
+      been selected as an antag (what a tragedy!) In this situation, you'll be assigned
+      a random job.
+  Joan:
+  - bugfix: You can now throw items and mobs over chasms without causing them to drop.
+  - bugfix: You can now throw items over lava without burning them. Mobs will still
+      burn, however.
+  - experiment: Tinkerer's Caches now link to a nearby unlinked clockwork wall, and
+      will not generate components unless linked. As compensation, they will link
+      to nearby walls(and can generate components) in a larger area.
+  - wip: Guvax is now slightly slower when above 5 valid servants; 1 additional second
+      of invoke time for each one above 5, from 0.75 additional seconds, up to a maximum
+      of 20 seconds of invoke time, from 15 seconds.
+  - tweak: Sigils of Transgression now stun for about 7 seconds.
+  - experiment: Sigils of Submission/Accession now take 7 seconds to convert successfully,
+      and have an obvious message to the person on them that their mind is being invaded.
+  - tweak: Ocular Wardens do 17% less damage.
+  - tweak: Mania Motors cause less brain damage and hallucinations.
+  - rscadd: If you lack the components to recite a scripture, you will be informed
+      of how many components  that scripture requires.
+  - experiment: Tinkerer's Caches now cost an additional one of each non-alloy component
+      to construct for every three existing Tinkerer's Caches, up to a maximum of
+      5 of each non-alloy component.
+  - rscadd: Revenant scriptures now announce to all servants and ghosts when used
+      instead of having a visible message.
+  Lzimann:
+  - tweak: Blood packs are now back in surgery room.
+  MMMiracles:
+  - rscadd: A giant wad of paper has been seen hurling through the nearby sector of
+      SS13, officials deny existence of giant paper ball hurling through space because
+      'thats really fucking stupid'.
+  MrStonedOne:
+  - bugfix: Fixes super darkness from lighting creating two darkness overlays on the
+      same turf but only changing the darkness of one of the overlays
+  PKPenguin321:
+  - rscadd: Added Canned Laughter for the clown. Hehehe
+  RemieRichards:
+  - tweak: Auto-generated ratvarian now follows all the rules of hand-written ratvarian,
+      but you probably won't notice.
+  Shadowlight213:
+  - tweak: Angels can now equip satchels
+  - rscadd: Players will now receive an achievement for killing their first megafauna
+      after this point.
+  - rscadd: Additionally, megafauna kills are now tracked on a hub page. Rack up those
+      kills for first place!
+  Xhuis:
+  - rscadd: Clockwork cultists may now have the "Escape" and "Silicon" objectives,
+      requiring a certain amount of servants to escape on the shuttle and all silicons
+      to be converted respectively.
+  - rscadd: Ocular wardens are now forced to target bibles rather than the people
+      holding them.
+2016-07-28:
+  Cruix:
+  - bugfix: Fixed  a bug where some objects in photos would not be displayed if they
+      were facing a certain direction.
+  - bugfix: Photograph descriptions will no longer claim that mobs with low max health
+      are hurt when they are not.
+  Incoming5643:
+  - rscadd: The previously underwhelming viscerator robot has been made a lot more
+      terrifying by the new ability to proactively target and dismember limbs.
+  Joan:
+  - tweak: The Tinkerer's Cache cost increase for having multiple Tinkerer's Caches
+      now happens every 5 caches, from every 3.
+  - experiment: If the invoker of Nzcrentr is knocked unconscious or killed, they
+      will gib instead of producing a lighting blast.
+  - tweak: Anima Fragments slow down for slightly less time when hit.
+  - tweak: Clockwork Marauders do 1 more damage on every attack.
+  - tweak: Wraith Spectacles are now less hard on the eyes, and can be used without
+      permanent vision impairment for about 50% longer; from 40~ seconds to about
+      1 minute.
+  - tweak: Halves the Interdiction Lens' disrupt cost from 100 per disrupted object
+      to 50 per disrupted object.
+  - tweak: Clockwork Sigils will now be destroyed by any level of explosion, except
+      for Sigils of Transmission, which will gain a small amount of power if hit by
+      a light explosion instead of breaking.
+  - bugfix: Clockwork Structures will now properly take damage from explosions instead
+      of variably not taking damage or instantly being destroyed.
+  - rscadd: Ghosts can now click Spatial Gateways to teleport to the other gateway.
+  - bugfix: Spatial Gateways are now properly disrupted by devastating explosions(but
+      not heavy or light explosions)
+  - rscadd: Striking a Sigil with any damaging item as a non-servant will remove it.
+      Servants still need to be on harm intent with an empty hand to remove Sigils.
+  Kor:
+  - rscadd: The Staff of Storms, dropped by Legion, can now be used on station.
+  MMMiracles:
+  - rscadd: Adds jump boots, a mid/end-tier mining equipment that allows the user
+      to dash over 4-wide chasms.
+  ModernViolence:
+  - bugfix: Hulk now has default cooldown for melee attacks against dominator
+  MrStonedOne:
+  - tweak: Space wind (movement from pressure differentials (like a hole to space))
+      has been improved.
+  - tweak: Space wind's rate of movement now scales with pressure differential amount.
+  - experiment: Actively moving (as in holding down a move key) reduces chance/rate
+      of getting moved by space wind.
+  - rscadd: 'Having a wall or dense anchored object to your left or right will lower
+      the chance/rate of getting moved by space wind for each direction (IE: a wall
+      on both sides of you will be a double reduction)'
+  - rscadd: Added Lazy airlock cycling. Bump opening an airlock with this system will
+      close its partner. This system has been added to most airlocks that go to space
+      on boxstation, as well as airlocks to secure areas like brig, bridge, engine.
+  - tweak: This can be overridden by click opening, having a shuttle docked, or setting
+      emergency mode on one of the doors.
+  PKPenguin321:
+  - bugfix: Laughter no longer makes you laugh if you're muted.
+  - rscadd: Laughter can now be brewed with banana juice and sugar.
+  Thunder12345:
+  - rscadd: An old rapier was found rusting in the back of a closet. We cleaned it
+      up, polished it, and assigned it to your captain as a ceremonial weapon only.
+      Warranty void if used in combat.
+  incoming5643:
+  - tweak: viscerator grenades are now more generous with viscerators spawned
+2016-07-30:
+  astralenigma:
+  - bugfix: Admins can now turn people into red god.
+2016-07-31:
+  Arctophylax:
+  - bugfix: Birdboat's atmospheric tanks now function normally again.
+  - bugfix: Birdboat's TEG is now orientated to match the pipe layout.
+  Bawhoppen:
+  - tweak: toolboxes fit in backpacks
+  Gun Hog:
+  - rscadd: In an effort to reduce the demoralizing effects that accompany the death
+      of a crew member, Nanotrasen has provided the prototype designs for the Sad
+      Trombone implant. It can be fabricated at your station's protolathe, if you
+      manage to secure the ever elusive Bananium ore.
+  Joan:
+  - rscadd: Megafauna will now seek and consume corpses of enemies to heal or otherwise.
+  - tweak: Toolboxes are slightly more robust.
+  - tweak: Vanguard now only stuns for 25% of absorbed stuns, from 50%.
+  Kor:
+  - rscadd: Hostile mobs will now attack turrets.
+  Robustin:
+  - rscdel: Amber ERT Commanders no longer have thermal goggles
+  lordpidey:
+  - rscadd: Added Devil agent gamemode, where multiple devils are each trying to buy
+      more souls than the next in line.
+  - rscadd: If you've already sold your soul, you can sell it again to a different
+      devil.  You can even go back and forth for INFINITE POWER.

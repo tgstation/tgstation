@@ -1104,7 +1104,6 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 /proc/generate_asset_name(file)
 	return "asset.[md5(fcopy_rsc(file))]"
 
-
 /**
  * Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
  * exporting it as text, and then parsing the base64 from that.
@@ -1141,6 +1140,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		targets = target
 		if (!targets.len)
 			return
+
 	if (!isicon(I))
 		if (isfile(thing)) //special snowflake
 			var/name = sanitize_filename("[generate_asset_name(thing)].png")
@@ -1154,9 +1154,11 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		var/atom/A = thing
 
 		I = A.icon
+
 		if (isnull(icon_state))
 			icon_state = A.icon_state
-			if (!(icon_state in icon_states(I, 1)))
+			//Despite casting to atom, this code path supports mutable appearances, so let's be nice to them
+			if(isnull(icon_state) || (isatom(thing) && A.flags_1 & HTML_USE_INITAL_ICON_1))
 				icon_state = initial(A.icon_state)
 				if (isnull(dir))
 					dir = initial(A.dir)

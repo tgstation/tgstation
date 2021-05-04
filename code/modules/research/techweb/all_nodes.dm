@@ -176,7 +176,7 @@
 	display_name = "Anomaly Research"
 	description = "Unlock the potential of the mysterious anomalies that appear on station."
 	prereq_ids = list("adv_engi", "practical_bluespace")
-	design_ids = list("reactive_armour", "anomaly_neutralizer", "crystal_stabilizer")
+	design_ids = list("reactive_armour", "anomaly_neutralizer")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 /datum/techweb_node/high_efficiency
@@ -302,6 +302,14 @@
 	description = "Technology for exploring far away locations."
 	prereq_ids = list("robotics")
 	design_ids = list("exodrone_console","exoscanner_console","exoscanner","exodrone_launcher")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/dex_robotics
+	id = "dex_robotics"
+	display_name = "Dexterous Robotics Research"
+	description = "The fine art of opposable thumbs."
+	prereq_ids = list("adv_engi", "adv_robotics", "biotech")
+	design_ids = list("maint_drone")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/neural_programming

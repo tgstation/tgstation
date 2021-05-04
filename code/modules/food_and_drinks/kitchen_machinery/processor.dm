@@ -162,6 +162,8 @@
 	set src in oview(1)
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
+	if (!usr.canUseTopic())
+		return
 	if(isliving(usr))
 		var/mob/living/L = usr
 		if(!(L.mobility_flags & MOBILITY_UI))

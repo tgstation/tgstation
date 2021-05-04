@@ -37,16 +37,19 @@
 	get_timer()
 	START_PROCESSING(SSobj, src)
 
+///This is what actually "dries" the blood. Returns true if it's all out of blood to dry, and false otherwise
 /obj/effect/decal/cleanable/blood/proc/dry()
 	if(bloodiness > 20)
 		bloodiness -= BLOOD_AMOUNT_PER_DECAL
 		get_timer()
+		return FALSE
 	else
 		name = dryname
 		desc = drydesc
 		bloodiness = 0
 		color =  COLOR_GRAY //not all blood splatters have their own sprites... It still looks pretty nice
 		STOP_PROCESSING(SSobj, src)
+		return TRUE
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
@@ -107,7 +110,9 @@
 
 /obj/effect/decal/cleanable/blood/gibs/dry()
 	. = ..()
-	AddComponent(/datum/component/rot, 0, 0.7)
+	if(!.)
+		return
+	AddComponent(/datum/component/rot, 0, 5 MINUTES, 0.7)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return FALSE
