@@ -125,6 +125,7 @@
 							if (pay == diff || pay > diff || pay >= diff)
 								investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
 								to_chat(M, "<span class='notice'>The fine has been paid in full.</span>")
+							SSblackbox.ReportCitation(text2num(href_list["cdataid"]),"","","","", 0, pay)
 							qdel(C)
 							playsound(src, "terminal_type", 25, FALSE)
 					else
