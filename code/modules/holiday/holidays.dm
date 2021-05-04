@@ -16,16 +16,12 @@
 	var/current_year = 0
 	/// How many years are you offsetting your calculations for begin_day and end_day on. Used for holidays like easter.
 	var/year_offset = 0
-<<<<<<< HEAD
+	///Timezones this holiday is celebrated in (defaults to three timezones spanning a 50 hour window covering all timezones)
+	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_ANYWHERE_ON_EARTH)
 	///If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
 	var/obj/item/drone_hat
 	///When this holiday is active, does this prevent mail from arriving to cargo? Try not to use this for longer holidays.
 	var/mail_holiday = FALSE
-=======
-	///Timezones this holiday is celebrated in (defaults to three timezones spanning a 50 hour window covering all timezones)
-	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_ANYWHERE_ON_EARTH)
-	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
->>>>>>> upstream/master
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
