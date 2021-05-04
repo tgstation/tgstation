@@ -737,9 +737,6 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
 				}
 				break;
-			case 'tgs':
-				$currentchangelogblock[] = array('type' => 'tgs', 'body' => $item);
-				break;
 			case 'code_imp':
 			case 'code':
 				if($item != 'changed some code'){

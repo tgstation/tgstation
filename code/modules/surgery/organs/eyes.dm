@@ -446,6 +446,8 @@
 /obj/item/organ/eyes/fly
 	name = "fly eyes"
 	desc = "These eyes seem to stare back no matter the direction you look at it from."
+	eye_icon_state = "flyeyes"
+	icon_state = "eyeballs-fly"
 
 /obj/item/organ/eyes/fly/Insert(mob/living/carbon/M, special = FALSE)
 	. = ..()

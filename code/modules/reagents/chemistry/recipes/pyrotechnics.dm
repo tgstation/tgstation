@@ -136,7 +136,7 @@
 			R.reveal(100)
 			R.adjustHealth(50)
 		for(var/mob/living/carbon/C in get_hearers_in_view(effective_size,T))
-			if(iscultist(C))
+			if(IS_CULTIST(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
 				C.Paralyze(40)
 				C.adjust_fire_stacks(5)

@@ -14,6 +14,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
 	circuit = /obj/item/circuitboard/machine/crystallizer
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
+	vent_movement = NONE
 
 	///Base icon state for the machine to be used in update_icon()
 	var/base_icon = "crystallizer"
@@ -131,17 +132,6 @@
 
 ///Calculation for the heat of the various gas mixes and controls the quality of the item
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_calculations()
-	var/datum/gas_mixture/cooling_port = airs[1]
-	if(cooling_port.total_moles() > MINIMUM_MOLE_COUNT)
-		if(internal.total_moles() > 0)
-			var/coolant_temperature_delta = cooling_port.temperature - internal.temperature
-			var/cooling_heat_capacity = cooling_port.heat_capacity()
-			var/internal_heat_capacity = internal.heat_capacity()
-			var/cooling_heat_amount = HIGH_CONDUCTIVITY_RATIO * coolant_temperature_delta * (cooling_heat_capacity * internal_heat_capacity / (cooling_heat_capacity + internal_heat_capacity))
-			cooling_port.temperature = max(cooling_port.temperature - cooling_heat_amount / cooling_heat_capacity, TCMB)
-			internal.temperature = max(internal.temperature + cooling_heat_amount / internal_heat_capacity, TCMB)
-		update_parents()
-
 	if(	(internal.temperature >= (selected_recipe.min_temp * MIN_DEVIATION_RATE) && internal.temperature <= selected_recipe.min_temp) || \
 		(internal.temperature >= selected_recipe.max_temp && internal.temperature <= (selected_recipe.max_temp * MAX_DEVIATION_RATE)))
 		quality_loss = min(quality_loss + 1.5, 100)
@@ -152,8 +142,23 @@
 
 	if(selected_recipe.reaction_type == "endothermic")
 		internal.temperature = max(internal.temperature - (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
+		update_parents()
 	else if(selected_recipe.reaction_type == "exothermic")
 		internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
+		update_parents()
+
+///Conduction between the internal gasmix and the moderating (cooling/heating) gasmix.
+/obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_conduction()
+	var/datum/gas_mixture/cooling_port = airs[1]
+	if(cooling_port.total_moles() > MINIMUM_MOLE_COUNT)
+		if(internal.total_moles() > 0)
+			var/coolant_temperature_delta = cooling_port.temperature - internal.temperature
+			var/cooling_heat_capacity = cooling_port.heat_capacity()
+			var/internal_heat_capacity = internal.heat_capacity()
+			var/cooling_heat_amount = HIGH_CONDUCTIVITY_RATIO * coolant_temperature_delta * (cooling_heat_capacity * internal_heat_capacity / (cooling_heat_capacity + internal_heat_capacity))
+			cooling_port.temperature = max(cooling_port.temperature - cooling_heat_amount / cooling_heat_capacity, TCMB)
+			internal.temperature = max(internal.temperature + cooling_heat_amount / internal_heat_capacity, TCMB)
+			update_parents()
 
 ///Calculate the total moles needed for the recipe
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/moles_calculations()
@@ -172,14 +177,13 @@
 	if(!on || !is_operational || selected_recipe == null)
 		return
 
-	if(!check_gas_requirements())
-		return
-
-	inject_gases()
+	if(check_gas_requirements())
+		inject_gases()
 
 	if(!internal.total_moles())
-		update_parents()
 		return
+
+	heat_conduction()
 
 	if(internal_check())
 		if(check_temp_requirements())

@@ -63,7 +63,7 @@
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 	if(!machine_stat)
-		. += mutable_appearance(icon, "smartfridge-light-mask", 0, EMISSIVE_PLANE, alpha)
+		. += emissive_appearance(icon, "smartfridge-light-mask", alpha = src.alpha)
 
 
 /obj/machinery/smartfridge/update_overlays()
