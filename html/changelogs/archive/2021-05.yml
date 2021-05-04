@@ -45,3 +45,36 @@
       of the nonfunctional Alt+Z. Right click for beaker apparatus spills reagent,
       just like with regular beakers. Z and self attack keeps the old interaction,
       it changes transfer volume.
+2021-05-02:
+  Celotajs:
+<<<<<<< HEAD
+  - qol: The roulette TGUI now looks a bit better
+  Iamgoofball:
+  - bugfix: potentially reduces overlay impact on SendMaps
+=======
+  - bugfix: Chameleon sneakers and jumpsuits now work correctly
+  - qol: The roulette TGUI now looks a bit better
+  Fikou, TWATICUS:
+  - qol: You can now reskin a lot more tiles! Use iron, bronze, pod, carpet or plastitanium
+      tiles inhand to change their sprites.
+  Iamgoofball:
+  - bugfix: potentially reduces overlay impact on SendMaps
+  LemonInTheDark:
+  - bugfix: Fixes some atmos senstivity stuff, it'll work more consistently now
+>>>>>>> upstream/master
+  Mothblocks:
+  - qol: Preferences are no longer dependent on gender.
+  maxymax13:
+  - qol: Pun Pun can no longer ruin all the tile alligments of the plants in the bar,
+      as plants no longer get offset when dropped.
+<<<<<<< HEAD
+=======
+  ninjanomnom:
+  - admin: The greyscale debug menu now has improved functionality involving dirs
+      and changing config types.
+  sergeirocks100:
+  - rscadd: Adds cryopod areas to every in-rotation map. Expect to find them in dorms
+      or recreation areas.
+>>>>>>> upstream/master
+  tf-4:
+  - bugfix: Tram medbay storage is now wired to the grid at round start.

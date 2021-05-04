@@ -1821,7 +1821,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "fQ" = (
-/turf/open/floor/iron/elevatorshaft{
+/turf/open/floor/plating/elevatorshaft{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7";
 	name = "elevator flooring"
 	},
@@ -1846,7 +1846,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "fU" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/iron/elevatorshaft{
+/turf/open/floor/plating/elevatorshaft{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7";
 	name = "elevator flooring"
 	},

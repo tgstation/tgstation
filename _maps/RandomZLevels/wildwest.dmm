@@ -51,7 +51,7 @@
 /turf/open/floor/circuit/off,
 /area/awaymission/wildwest/vault)
 "an" = (
-/turf/open/floor/iron/cult{
+/turf/open/floor/cult{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/awaymission/wildwest/vault)
@@ -130,7 +130,7 @@
 /area/awaymission/wildwest/vault)
 "aL" = (
 /obj/item/paper/fluff/awaymissions/wildwest/grinder,
-/turf/open/floor/iron/cult{
+/turf/open/floor/cult{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/awaymission/wildwest/vault)
@@ -142,7 +142,7 @@
 /area/awaymission/wildwest/mines)
 "aO" = (
 /obj/effect/mob_spawn/human/corpse/syndicatecommando,
-/turf/open/floor/iron/cult{
+/turf/open/floor/cult{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/awaymission/wildwest/vault)

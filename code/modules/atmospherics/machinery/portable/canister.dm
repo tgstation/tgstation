@@ -323,7 +323,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_colors = "#ffffff#a50021#ffffff"
 	mode = NONE
 
-
 /obj/machinery/portable_atmospherics/canister/proto/default
 	name = "prototype canister"
 	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
@@ -333,7 +332,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
 	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
 	prototype = TRUE
-
 
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen
 	name = "prototype canister"
@@ -440,23 +438,38 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			new /obj/item/stack/sheet/bluespace_crystal (drop_location(), 1)
 	qdel(src)
 
-/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+/obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
 	. = ..()
-	if(user.combat_mode)
-		return FALSE
-
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 	var/pressure = air_contents.return_pressure()
 	if(pressure > 300)
-		to_chat(user, "<span class='alert'>The pressure gauge on \the [src] indicates a high pressure inside... maybe you want to reconsider?</span>")
+		to_chat(user, "<span class='alert'>The pressure gauge on [src] indicates a high pressure inside... maybe you want to reconsider?</span>")
 		message_admins("[src] deconstructed by [ADMIN_LOOKUPFLW(user)]")
 		log_game("[src] deconstructed by [key_name(user)]")
-	to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
+	to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
 	if(I.use_tool(src, user, 3 SECONDS, volume=50))
-		to_chat(user, "<span class='notice'>You cut \the [src] apart.</span>")
+		to_chat(user, "<span class='notice'>You cut [src] apart.</span>")
 		deconstruct(TRUE)
+	return TRUE
 
+/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(user.combat_mode)
+		return FALSE
+	if(obj_integrity >= max_integrity)
+		return TRUE
+	if(machine_stat & BROKEN)
+		return TRUE
+	if(!tool.tool_start_check(user, amount=0))
+		return TRUE
+	to_chat(user, "<span class='notice'>You begin repairing cracks in [src]...</span>")
+	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
+		obj_integrity = min(obj_integrity + 25, max_integrity)
+		if(obj_integrity >= max_integrity)
+			to_chat(user, "<span class='notice'>You've finished repairing [src].</span>")
+			return TRUE
+		to_chat(user, "<span class='notice'>You repair some of the cracks in [src]...</span>")
 	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)

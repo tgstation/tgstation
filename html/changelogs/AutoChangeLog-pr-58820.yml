@@ -1,0 +1,4 @@
+author: "tf-4"
+delete-after: True
+changes: 
+  - bugfix: "PDAs will no longer flash at you over messages that you've already read"
