@@ -407,10 +407,10 @@
 	id = "nitrium_decomp"
 
 /datum/gas_reaction/nitrium_decomposition/init_reqs()
-	min_requirements = list(
+	requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/nitrium = 5,
-		"MAX_TEMP" = 600
+		"TEMP" = 600
 	)
 
 /datum/gas_reaction/nitrium_decomposition/react(datum/gas_mixture/air)
@@ -438,7 +438,7 @@
 	id = "nitrium_formation"
 
 /datum/gas_reaction/nitrium_formation/init_reqs()
-	min_requirements = list(
+	requirements = list(
 		/datum/gas/tritium = 20,
 		/datum/gas/nitrogen = 10,
 		/datum/gas/bz = 10,
