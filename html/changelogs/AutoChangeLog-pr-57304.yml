@@ -1,0 +1,5 @@
+author: "Urumasi"
+delete-after: True
+changes: 
+  - rscadd: "Lawyers can now object by slamming the table."
+  - code_imp: "Table slamming is now handled using signals."
