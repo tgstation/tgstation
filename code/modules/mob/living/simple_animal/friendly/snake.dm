@@ -35,7 +35,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	if(!special_reagent)
 		special_reagent = /datum/reagent/toxin
-	AddComponent(/datum/component/poisonous, special_reagent, 4)
+	AddElement(/datum/element/venomous, special_reagent, 4)
 
 /mob/living/simple_animal/hostile/retaliate/snake/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

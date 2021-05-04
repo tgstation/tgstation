@@ -66,7 +66,7 @@
 	lay_web = new
 	lay_web.Grant(src)
 	if(poison_per_bite)
-		AddComponent(/datum/component/poisonous, poison_type, poison_per_bite)
+		AddElement(/datum/element/venomous, poison_type, poison_per_bite)
 
 /mob/living/simple_animal/hostile/giant_spider/Login()
 	. = ..()

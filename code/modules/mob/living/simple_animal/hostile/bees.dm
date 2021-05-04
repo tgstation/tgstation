@@ -182,8 +182,9 @@
 		beegent = R
 		name = "[initial(name)] ([R.name])"
 		real_name = name
-		//if the bee already had a beegent this component will inherit these arguments and assume the new beegent
-		AddComponent(/datum/component/poisonous, beegent.type, list(1, 5))
+		//clear the old since this one is going to have some new value
+		RemoveElement(/datum/element/venomous)
+		AddElement(/datum/element/venomous, beegent.type, list(1, 5))
 		generate_bee_visuals()
 
 /mob/living/simple_animal/hostile/bee/proc/pollinate(obj/machinery/hydroponics/Hydro)
