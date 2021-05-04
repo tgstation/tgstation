@@ -99,7 +99,7 @@
 
 /datum/fantasy_affix/venomous/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
-	var/picked_poison = pick(
+	var/picked_poison = pick(list(
 		/datum/reagent/toxin/plantbgone,
 		/datum/reagent/toxin/mutetoxin,
 		/datum/reagent/toxin/amanitin,
@@ -108,7 +108,7 @@
 		/datum/reagent/toxin/heparin,
 		/datum/reagent/toxin/rotatium,
 		/datum/reagent/toxin/histamine
-		)
+	))
 	var/list/names = list(
 		/datum/reagent/toxin/plantbgone = "Plantbane",
 		/datum/reagent/toxin/mutetoxin = "Mimemind",
