@@ -317,9 +317,8 @@
 			var/obj/item/pda/pda_path = /obj/item/pda
 
 			for(var/path in pda_types)
-				if(!(pda_types[path] == selection))
-					continue
-				pda_path = path
+				if(pda_types[path] == selection)
+					pda_path = path
 
 			if(initial(pda_path.greyscale_config) && initial(pda_path.greyscale_colors))
 				stored_pda.greyscale_config = initial(pda_path.greyscale_config)
