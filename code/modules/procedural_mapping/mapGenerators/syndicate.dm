@@ -1,15 +1,12 @@
 
 // Modules
 
-/turf/open/floor/iron/shuttle/red/syndicate
-	name = "floor" //Not Brig Floor
-
 /datum/map_generator_module/bottom_layer/syndie_floor
-	spawnableTurfs = list(/turf/open/floor/iron/shuttle/red/syndicate = 100)
+	spawnableTurfs = list(/turf/open/floor/mineral/plastitanium/red = 100)
 
 /datum/map_generator_module/border/syndie_walls
 	spawnableAtoms = list()
-	spawnableTurfs = list(/turf/closed/wall/r_wall = 100)
+	spawnableTurfs = list(/turf/closed/wall/r_wall/syndicate = 100)
 
 
 /datum/map_generator_module/syndie_furniture

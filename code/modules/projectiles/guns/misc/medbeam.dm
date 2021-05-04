@@ -112,7 +112,7 @@
 				return FALSE
 		for(var/obj/effect/ebeam/medical/B in turf)// Don't cross the str-beams!
 			if(B.owner.origin != current_beam.origin)
-				explosion(B.loc,0,3,5,8)
+				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8)
 				qdel(dummy)
 				return FALSE
 	qdel(dummy)

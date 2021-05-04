@@ -68,15 +68,6 @@
 	result = /obj/item/food/cheesyfries
 	subcategory = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/wrap
-	name = "Wrap"
-	reqs = list(/datum/reagent/consumable/soysauce = 10,
-		/obj/item/food/friedegg = 1,
-		/obj/item/food/grown/cabbage = 1,
-	)
-	result = /obj/item/food/eggwrap
-	subcategory = CAT_MISCFOOD
-
 /datum/crafting_recipe/food/beans
 	name = "Beans"
 	time = 40
@@ -93,87 +84,6 @@
 		/obj/item/food/grown/eggplant = 1
 	)
 	result = /obj/item/food/eggplantparm
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/burrito
-	name ="Burrito"
-	reqs = list(
-		/obj/item/food/tortilla = 1,
-		/obj/item/food/grown/soybeans = 2
-	)
-	result = /obj/item/food/burrito
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/cheesyburrito
-	name ="Cheesy burrito"
-	reqs = list(
-		/obj/item/food/cheese = 2,
-		/obj/item/food/tortilla = 1,
-		/obj/item/food/grown/soybeans = 1
-	)
-	result = /obj/item/food/cheesyburrito
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/carneburrito
-	name ="Carne de asada burrito"
-	reqs = list(
-		/obj/item/food/tortilla = 1,
-		/obj/item/food/meat/cutlet = 2,
-		/obj/item/food/grown/soybeans = 1
-	)
-	result = /obj/item/food/carneburrito
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/fuegoburrito
-	name ="Fuego plasma burrito"
-	reqs = list(
-		/obj/item/food/tortilla = 1,
-		/obj/item/food/grown/ghost_chili = 2,
-		/obj/item/food/grown/soybeans = 1
-	)
-	result = /obj/item/food/fuegoburrito
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/melonfruitbowl
-	name ="Melon fruit bowl"
-	reqs = list(
-		/obj/item/food/grown/watermelon = 1,
-		/obj/item/food/grown/apple = 1,
-		/obj/item/food/grown/citrus/orange = 1,
-		/obj/item/food/grown/citrus/lemon = 1,
-		/obj/item/food/grown/banana = 1,
-		/obj/item/food/grown/ambrosia = 1
-	)
-	result = /obj/item/food/melonfruitbowl
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/nachos
-	name ="Nachos"
-	reqs = list(
-		/datum/reagent/consumable/salt = 1,
-		/obj/item/food/tortilla = 1
-	)
-	result = /obj/item/food/nachos
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/cheesynachos
-	name ="Cheesy nachos"
-	reqs = list(
-		/datum/reagent/consumable/salt = 1,
-		/obj/item/food/cheese = 1,
-		/obj/item/food/tortilla = 1
-	)
-	result = /obj/item/food/cheesynachos
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/cubannachos
-	name ="Cuban nachos"
-	reqs = list(
-		/datum/reagent/consumable/ketchup = 5,
-		/obj/item/food/grown/chili = 2,
-		/obj/item/food/tortilla = 1
-	)
-	result = /obj/item/food/cubannachos
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/melonkeg
@@ -196,19 +106,6 @@
 	result = /obj/item/food/honeybar
 	subcategory = CAT_MISCFOOD
 
-
-/datum/crafting_recipe/food/stuffedlegion
-	name = "Stuffed legion"
-	time = 40
-	reqs = list(
-		/obj/item/food/meat/steak/goliath = 1,
-		/obj/item/organ/regenerative_core/legion = 1,
-		/datum/reagent/consumable/ketchup = 2,
-		/datum/reagent/consumable/capsaicin = 2
-	)
-	result = /obj/item/food/stuffedlegion
-	subcategory = CAT_MISCFOOD
-
 /datum/crafting_recipe/food/powercrepe
 	name = "Powercrepe"
 	time = 40
@@ -220,27 +117,6 @@
 		/obj/item/melee/sabre = 1
 	)
 	result = /obj/item/food/powercrepe
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/taco
-	name ="Classic Taco"
-	reqs = list(
-		/obj/item/food/tortilla = 1,
-		/obj/item/food/cheese = 1,
-		/obj/item/food/meat/cutlet = 1,
-		/obj/item/food/grown/cabbage = 1,
-	)
-	result = /obj/item/food/taco
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/tacoplain
-	name ="Plain Taco"
-	reqs = list(
-		/obj/item/food/tortilla = 1,
-		/obj/item/food/cheese = 1,
-		/obj/item/food/meat/cutlet = 1,
-	)
-	result = /obj/item/food/taco/plain
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/branrequests
@@ -260,6 +136,17 @@
 		/obj/item/food/salad/boiledrice = 1
 	)
 	result = /obj/item/food/salad/ricepudding
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/risotto
+	name = "Risotto"
+	reqs = list(
+		/obj/item/food/cheese = 1,
+		/datum/reagent/consumable/ethanol/wine = 5,
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/grown/mushroom/chanterelle = 1
+	)
+	result = /obj/item/food/salad/risotto
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!

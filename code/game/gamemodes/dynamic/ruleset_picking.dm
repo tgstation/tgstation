@@ -63,6 +63,7 @@
 	if (!rule.repeatable)
 		latejoin_rules = remove_from_list(latejoin_rules, rule.type)
 	addtimer(CALLBACK(src, .proc/execute_midround_latejoin_rule, rule), rule.delay)
+	return TRUE
 
 /// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
 /datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)

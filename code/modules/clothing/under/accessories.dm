@@ -223,9 +223,9 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = -10, ACID = 0) //It's made of plasma. Of course it's flammable.
 	custom_materials = list(/datum/material/plasma=1000)
 
-/obj/item/clothing/accessory/medal/plasma/ComponentInitialize()
+/obj/item/clothing/accessory/medal/plasma/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/item/clothing/accessory/medal/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 300

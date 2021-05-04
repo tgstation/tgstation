@@ -37,7 +37,7 @@
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
-	QDEL_LIST(diseases)
+	QDEL_LAZYLIST(diseases)
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels)
@@ -1146,7 +1146,7 @@
 	if(G.trigger_guard == TRIGGER_GUARD_NONE)
 		to_chat(src, "<span class='warning'>You are unable to fire this!</span>")
 		return FALSE
-	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !ISADVANCEDTOOLUSER(src))
+	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && (!ISADVANCEDTOOLUSER(src) && !HAS_TRAIT(src, TRAIT_GUN_NATURAL)))
 		to_chat(src, "<span class='warning'>You try to fire [G], but can't use the trigger!</span>")
 		return FALSE
 	return TRUE
@@ -1580,6 +1580,14 @@
 	if(!apply_change)
 		return BODYTEMP_NORMAL
 	return BODYTEMP_NORMAL + get_body_temp_normal_change()
+
+///Returns the body temperature at which this mob will start taking heat damage.
+/mob/living/proc/get_body_temp_heat_damage_limit()
+	return BODYTEMP_HEAT_DAMAGE_LIMIT
+
+///Returns the body temperature at which this mob will start taking cold damage.
+/mob/living/proc/get_body_temp_cold_damage_limit()
+	return BODYTEMP_COLD_DAMAGE_LIMIT
 
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
