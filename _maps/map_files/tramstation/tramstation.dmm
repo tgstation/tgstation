@@ -14041,7 +14041,7 @@
 "beR" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "beV" = (
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 4
@@ -15384,7 +15384,7 @@
 "bFu" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "bFz" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -23868,7 +23868,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "eUX" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
@@ -26418,6 +26418,7 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/science/mixing)
 "fTY" = (
@@ -28242,7 +28243,7 @@
 "gIF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "gIG" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -36167,7 +36168,7 @@
 	network = list("ss13","science")
 	},
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "jSl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -42211,7 +42212,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "mhz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -44520,6 +44521,9 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
+"neU" = (
+/turf/closed/wall/r_wall,
+/area/science/mixing/chamber)
 "nfa" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -45934,7 +45938,7 @@
 /area/maintenance/tram/mid)
 "nKT" = (
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "nLa" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
 	dir = 4
@@ -50179,7 +50183,7 @@
 "prF" = (
 /obj/machinery/igniter/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "prM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -57941,15 +57945,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
-"svk" = (
-/obj/effect/landmark/blobstart,
-/obj/machinery/duct,
-/obj/machinery/shower{
-	dir = 1
-	},
-/obj/structure/curtain,
-/turf/open/floor/iron/freezer,
-/area/commons/toilet/restrooms)
 "svq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/violet/visible,
@@ -58177,6 +58172,10 @@
 	},
 /turf/open/floor/vault,
 /area/hallway/primary/tram/center)
+"sAP" = (
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank,
+/turf/open/floor/engine/vacuum,
+/area/science/mixing/chamber)
 "sAS" = (
 /obj/effect/turf_decal/bot_white/right,
 /obj/effect/turf_decal/tile/neutral{
@@ -60329,7 +60328,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "tre" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/food_packaging,
@@ -62318,7 +62317,7 @@
 	pixel_x = -24
 	},
 /turf/open/floor/iron/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "uaP" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/event_spawn,
@@ -63303,7 +63302,7 @@
 "usG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "usM" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -63391,7 +63390,7 @@
 "uuB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "uuG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -70454,7 +70453,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "xeO" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -72011,7 +72010,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /turf/open/floor/engine,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "xJA" = (
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/stripes{
@@ -117619,7 +117618,7 @@ cbV
 ess
 ruh
 cht
-mSi
+neU
 beR
 beR
 beR
@@ -117876,7 +117875,7 @@ cbV
 ess
 xwF
 axC
-mSi
+neU
 nKT
 prF
 nKT
@@ -118133,9 +118132,9 @@ bOv
 aUr
 lgh
 kbJ
-mSi
+neU
 eUU
-nKT
+sAP
 tqT
 wiT
 vml
@@ -118390,7 +118389,7 @@ cgy
 xDy
 jys
 dSz
-mSi
+neU
 gIF
 xJw
 usG
@@ -118904,7 +118903,7 @@ wUd
 sOv
 vgg
 swZ
-mSi
+neU
 gIF
 mhs
 usG
@@ -156688,7 +156687,7 @@ aOb
 buP
 jpX
 oKb
-svk
+fZt
 aOb
 aae
 aae
