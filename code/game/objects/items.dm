@@ -364,6 +364,42 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	add_fingerprint(usr)
 	return ..()
 
+/obj/item/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
+
+/obj/item/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(href_list[VV_HK_ADD_FANTASY_AFFIX] && check_rights(R_FUN))
+
+		var/list/affixes = list()
+		for(var/datum/fantasy_affix/affix_choice in subtypesof(/datum/fantasy_affix))
+			affixes[initial(affix_choice.name)] = affix_choice
+
+		var/picked_affix_name = input(usr, "Choose an affix to add to [src]...", "Enchant [src]", "Allow", "Cancel")
+		if(!picked_affix_name || QDELETED(src))
+			return
+
+		var/datum/fantasy_affix/affix = affixes[picked_affix_name]
+		var/fantasy_quality = 0
+		if(initial(affix.alignment) & AFFIX_GOOD)
+			fantasy_quality++
+		else
+			fantasy_quality--
+
+		// This should never happen, but if it does it should not be silent.
+		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), FALSE, FALSE) == COMPONENT_INCOMPATIBLE)
+			to_chat(usr, "<span class='warning'>Fantasy component not compatible with [src].</span>")
+			CRASH("fantasy component incompatible with object of type: [type]")
+
+		to_chat(usr, "<span class='notice'>[src] now has [picked_affix_name]!</span>")
+		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [src]")
+		message_admins("<span class='notice'>[key_name(usr)] has added [picked_affix_name] fantasy affix to [src]</span>")
+
 /obj/item/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)

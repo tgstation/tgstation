@@ -97,6 +97,9 @@
 #define VV_HK_MASS_DEL_TYPE "mass_delete_type"
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
 
+// /obj/item
+#define VV_HK_ADD_FANTASY_AFFIX "add_fantasy_affix"
+
 // /mob
 #define VV_HK_GIB "gib"
 #define VV_HK_GIVE_SPELL "give_spell"

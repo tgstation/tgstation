@@ -1,4 +1,5 @@
 /datum/fantasy_affix/cosmetic_suffixes
+	name = "purely cosmetic suffix"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD | AFFIX_EVIL
 
@@ -47,6 +48,7 @@
 
 //////////// Good suffixes
 /datum/fantasy_affix/bane
+	name = "bane of some random mob"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 
@@ -78,6 +80,7 @@
 	return "[newName] of [initial(picked_mobtype.name)] slaying"
 
 /datum/fantasy_affix/summoning
+	name = "summoning some random mob (careful with this)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 	weight = 5
@@ -115,6 +118,7 @@
 	return "[newName] of [initial(picked_mobtype.name)] summoning"
 
 /datum/fantasy_affix/shrapnel
+	name = "shrapnel"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 
@@ -149,6 +153,7 @@
 	return "[newName] of [initial(picked_projectiletype.name)] shrapnel"
 
 /datum/fantasy_affix/strength
+	name = "knockback (strength in game)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 
@@ -161,6 +166,7 @@
 //////////// Bad suffixes
 
 /datum/fantasy_affix/fool
+	name = "clown honks (fool in game)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_EVIL
 
