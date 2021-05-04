@@ -555,7 +555,7 @@ Converting them yourself to appearances and storing this converted value will en
 
 Bad:
 ```dm
-/obj/machine/update_overlays(var/blah)
+/obj/machine/update_overlays(blah)
 	if (stat & broken)
 		add_overlay(icon(broken_icon))  //this icon gets created, passed to byond, converted to an appearance, then deleted.
 		return
