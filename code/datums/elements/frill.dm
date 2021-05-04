@@ -29,7 +29,8 @@ GLOBAL_LIST_EMPTY(frill_objects)
 
 	var/turf/turf_or_movable = target
 	var/turf/operator_turf = yep_its_a_turf ? get_step(turf_or_movable, NORTH) : turf_or_movable
-	operator_turf.vis_contents += get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE, pixel_y = yep_its_a_turf ? 0 : 32)
+	if(operator_turf)
+		operator_turf.vis_contents += get_frill_object(icon_path, turf_or_movable.smoothing_junction, TRUE, pixel_y = yep_its_a_turf ? 0 : 32)
 	RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, .proc/on_junction_change)
 
 /datum/element/frill/Detach(turf/target)
