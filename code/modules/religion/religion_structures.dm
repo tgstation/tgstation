@@ -23,7 +23,7 @@
 
 /obj/structure/altar_of_gods/update_overlays()
 	. = ..()
-	if(icon_state == initial(/obj/structure/altar_of_gods.icon_state))
+	if(icon_state == initial(icon_state))
 		return
 	. += "convertaltarcandle"
 
@@ -49,7 +49,7 @@
 			icon = sect_to_altar.altar_icon
 		if(sect_to_altar.altar_icon_state)
 			icon_state = sect_to_altar.altar_icon_state
-		update_overlays() //Light the candles!
+	update_overlays() //Light the candles!
 
 /obj/item/ritual_totem
 	name = "ritual totem"
