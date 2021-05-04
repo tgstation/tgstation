@@ -6,10 +6,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/ruin/space/djstation/solars)
-"ac" = (
-/obj/machinery/power/solar/fake,
-/turf/open/floor/iron/solarpanel/airless,
-/area/ruin/space/djstation/solars)
 "ad" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/djstation/solars)
@@ -25,11 +21,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ah" = (
-/turf/open/floor/plating,
-/area/ruin/space/djstation)
-"ai" = (
-/obj/machinery/telecomms/relay/preset/ruskie,
-/obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "aj" = (
@@ -63,13 +54,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
-"ap" = (
-/obj/machinery/power/apc/auto_name/south,
-/obj/structure/cable,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/turf/open/floor/plating,
-/area/ruin/space/djstation)
 "aq" = (
 /obj/item/storage/box/lights/mixed,
 /obj/structure/sign/warning/electricshock{
@@ -93,20 +77,7 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
-"av" = (
-/obj/machinery/vending/snack,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/djstation)
 "aw" = (
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/djstation)
-"ax" = (
-/obj/machinery/light_switch/directional/north,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/djstation)
-"ay" = (
-/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "az" = (
@@ -127,10 +98,6 @@
 /area/ruin/space/djstation)
 "aB" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
-/turf/open/floor/iron/grimy,
-/area/ruin/space/djstation)
-"aC" = (
-/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
 "aD" = (
@@ -197,14 +164,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/djstation)
-"aN" = (
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/djstation)
 "aO" = (
 /obj/structure/chair{
 	dir = 1
@@ -248,10 +207,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
-"aU" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/grimy,
-/area/ruin/space/djstation)
 "aV" = (
 /obj/structure/closet,
 /turf/open/floor/iron/grimy,
@@ -265,10 +220,6 @@
 	name = "Washroom"
 	},
 /turf/open/floor/iron/freezer,
-/area/ruin/space/djstation)
-"aY" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "aZ" = (
 /obj/structure/disposalpipe/segment,
@@ -298,15 +249,6 @@
 /obj/item/clothing/under/costume/soviet,
 /obj/item/clothing/head/ushanka,
 /turf/open/floor/iron/cafeteria,
-/area/ruin/space/djstation)
-"be" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "bf" = (
 /obj/structure/toilet{
@@ -343,6 +285,37 @@
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
 /area/template_noop)
+"ga" = (
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/djstation)
+"gZ" = (
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/djstation)
+"pT" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"tD" = (
+/obj/machinery/power/solar/fake,
+/turf/open/floor/iron/solarpanel/airless,
+/area/ruin/space/djstation/solars)
+"wG" = (
+/obj/machinery/vending/snack,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/djstation)
+"xP" = (
+/obj/machinery/telecomms/relay/preset/ruskie,
+/obj/machinery/light/directional/north,
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
 "Co" = (
 /obj/machinery/door/airlock/external{
 	name = "Ruskie DJ Station"
@@ -351,6 +324,33 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/ruin/space/djstation)
+"DZ" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/djstation)
+"HW" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/djstation)
+"Mw" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/djstation)
+"PE" = (
+/obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
+"Th" = (
+/obj/machinery/newscaster/directional/north,
+/turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 
 (1,1,1) = {"
@@ -385,11 +385,11 @@ aa
 aa
 aa
 ab
-ac
+tD
 ad
-ac
+tD
 ad
-ac
+tD
 ab
 aa
 af
@@ -410,17 +410,17 @@ aa
 aa
 aa
 ab
-ac
+tD
 ad
-ac
+tD
 ad
-ac
+tD
 ab
 aa
 af
 aA
 aA
-aN
+DZ
 af
 ae
 ae
@@ -435,11 +435,11 @@ aa
 aa
 ae
 ab
-ac
+tD
 ad
-ac
+tD
 ad
-ac
+tD
 ab
 aa
 af
@@ -460,11 +460,11 @@ aa
 ae
 ae
 ab
-ac
+tD
 ad
-ac
+tD
 ad
-ac
+tD
 ab
 aa
 af
@@ -473,7 +473,7 @@ aA
 aA
 aX
 ba
-be
+pT
 af
 aa
 aa
@@ -505,17 +505,17 @@ aa
 "}
 (7,1,1) = {"
 ab
-ac
-ac
-ac
-ac
+tD
+tD
+tD
+tD
 ag
 ah
 ah
 ah
 am
 ah
-ap
+PE
 af
 au
 aw
@@ -542,7 +542,7 @@ ah
 ah
 aq
 af
-av
+wG
 aw
 aH
 aP
@@ -555,12 +555,12 @@ aa
 "}
 (9,1,1) = {"
 ab
-ac
-ac
-ac
-ac
+tD
+tD
+tD
+tD
 af
-ai
+xP
 ah
 aj
 an
@@ -592,7 +592,7 @@ ah
 ah
 ah
 af
-ax
+gZ
 aw
 aH
 aR
@@ -605,10 +605,10 @@ af
 "}
 (11,1,1) = {"
 ab
-ac
-ac
-ac
-ac
+tD
+tD
+tD
+tD
 ag
 ah
 ah
@@ -617,11 +617,11 @@ ah
 ah
 as
 af
-ay
+Th
 aw
 aw
 aw
-aY
+HW
 bd
 aw
 bi
@@ -660,11 +660,11 @@ ae
 ae
 ae
 ab
-ac
+tD
 ad
-ac
+tD
 ad
-ac
+tD
 ab
 aa
 af
@@ -685,15 +685,15 @@ aa
 aa
 ae
 ab
-ac
+tD
 ad
-ac
+tD
 ad
-ac
+tD
 ab
 aa
 af
-aC
+ga
 aK
 aT
 af
@@ -710,17 +710,17 @@ aa
 aa
 ae
 ab
-ac
+tD
 ad
-ac
+tD
 ad
-ac
+tD
 ab
 aa
 af
 aD
 aK
-aU
+Mw
 af
 ae
 ae
@@ -735,11 +735,11 @@ aa
 aa
 aa
 ab
-ac
+tD
 ad
-ac
+tD
 ad
-ac
+tD
 ab
 aa
 af

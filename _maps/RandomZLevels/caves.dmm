@@ -364,10 +364,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
-"bn" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/wood,
-/area/awaymission/caves/northblock)
 "bo" = (
 /obj/structure/flora/rock,
 /obj/item/soulstone/anybody,
@@ -1551,12 +1547,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"fQ" = (
-/turf/open/floor/plating/elevatorshaft{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7";
-	name = "elevator flooring"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "fR" = (
 /obj/structure/grille,
 /obj/structure/barricade/wooden,
@@ -1574,13 +1564,6 @@
 "fT" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
-"fU" = (
-/obj/effect/landmark/awaystart,
-/turf/open/floor/plating/elevatorshaft{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7";
-	name = "elevator flooring"
-	},
 /area/awaymission/caves/bmp_asteroid)
 "fW" = (
 /obj/structure/girder,
@@ -1885,206 +1868,32 @@
 /obj/effect/baseturf_helper/asteroid/basalt,
 /turf/closed/wall,
 /area/awaymission/caves/northblock)
-"hQ" = (
-/obj/machinery/light/small/directional/south,
+"ik" = (
+/obj/structure/noticeboard/directional/north,
+/obj/item/paper/fluff/awaymissions/caves/shipment_notice,
+/obj/item/paper/fluff/awaymissions/caves/safety_notice,
 /turf/open/floor/iron,
-/area/awaymission/caves/northblock)
-"kE" = (
-/mob/living/simple_animal/hostile/giant_spider/hunter,
-/turf/open/floor/iron,
+/area/awaymission/caves/listeningpost)
+"iH" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/plating{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/research)
+"jI" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
 /area/awaymission/caves/bmp_asteroid)
-"lp" = (
+"ki" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
 /obj/item/multitool,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
-"lE" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
-"lO" = (
-/turf/open/floor/plating/asteroid/basalt/airless,
-/area/awaymission/caves/bmp_asteroid/level_two)
-"no" = (
-/obj/machinery/light/small/built/directional/east,
-/obj/structure/sign/warning/pods{
-	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
-	name = "\improper MECH TUNNEL PASSAGE B1 TO A2";
-	pixel_x = 32
-	},
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
-"nw" = (
-/obj/machinery/light/small/built/directional/east,
-/obj/structure/spider/stickyweb,
-/turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid/level_two)
-"pc" = (
-/obj/machinery/light/small/directional/west,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/wood,
-/area/awaymission/caves/northblock)
-"qE" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron,
-/area/awaymission/caves/northblock)
-"rk" = (
-/obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/giant_spider/hunter,
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
-"rF" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating,
-/area/awaymission/caves/bmp_asteroid)
-"sw" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/awaymission/caves/listeningpost)
-"sI" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
-"tK" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
-"tU" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
-"uN" = (
-/obj/structure/spider/stickyweb,
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/giant_spider/hunter,
-/turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
-"vU" = (
-/obj/structure/noticeboard/directional/north,
-/obj/item/paper/fluff/awaymissions/caves/shipment_notice,
-/obj/item/paper/fluff/awaymissions/caves/safety_notice,
-/turf/open/floor/iron,
-/area/awaymission/caves/listeningpost)
-"wl" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
-"zN" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
-"Bb" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
-"Cv" = (
-/obj/structure/sign/warning/pods{
-	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
-	name = "\improper MECH TUNNEL PASSAGE A2 TO B1";
-	pixel_x = 32
-	},
-/obj/machinery/light/small/built/directional/east,
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_two)
-"Ep" = (
-/mob/living/simple_animal/hostile/giant_spider/hunter,
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
-"FI" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/research)
-"FS" = (
-/obj/machinery/light/small/built/directional/north,
-/obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/giant_spider/hunter,
-/turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
-"Gt" = (
-/obj/machinery/light/small/built/directional/north,
-/obj/machinery/suit_storage_unit/mining{
-	desc = "An industrial unit made to hold space suits. Age has seemed to rust the sliding door mechanisms, making it difficult to open.";
-	name = "rusted suit storage unit"
-	},
-/turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
-"GX" = (
-/mob/living/simple_animal/hostile/giant_spider/nurse,
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
-"IN" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
-"Kh" = (
-/obj/machinery/light/small/built/directional/west,
-/turf/open/floor/wood{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/northblock)
-"Mk" = (
-/obj/machinery/light/small/built/directional/west,
-/turf/open/floor/wood,
-/area/awaymission/caves/northblock)
-"MT" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
-"NO" = (
-/obj/machinery/light/directional/north,
-/obj/structure/filingcabinet,
-/obj/item/paper/fluff/awaymissions/caves/omega,
-/turf/open/floor/iron{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/research)
-"OE" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/plating{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/research)
-"OX" = (
-/turf/closed/indestructible/oldshuttle{
-	desc = "Go through.";
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "black";
-	name = "the other side"
-	},
-/area/space/nearstation)
-"PS" = (
+"lC" = (
 /obj/machinery/light/small/built/directional/south,
 /obj/machinery/suit_storage_unit/mining{
 	desc = "An industrial unit made to hold space suits. Age has seemed to rust the sliding door mechanisms, making it difficult to open.";
@@ -2092,20 +1901,10 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
-"PV" = (
-/obj/item/mjollnir,
-/mob/living/simple_animal/hostile/giant_spider/nurse,
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
-"Qh" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
-"Vm" = (
+"lO" = (
+/turf/open/floor/plating/asteroid/basalt/airless,
+/area/awaymission/caves/bmp_asteroid/level_two)
+"ma" = (
 /obj/structure/sign/warning/pods{
 	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
 	name = "\improper MECH TUNNEL PASSAGE A1 TO A2";
@@ -2116,11 +1915,135 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"Wj" = (
+"nP" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/wood,
+/area/awaymission/caves/northblock)
+"ps" = (
+/mob/living/simple_animal/hostile/giant_spider/nurse,
+/turf/open/floor/plating/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_three)
+"pu" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
+/area/awaymission/caves/bmp_asteroid)
+"qS" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid)
+"rE" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
+/area/awaymission/caves/northblock)
+"rQ" = (
+/obj/structure/spider/stickyweb,
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/giant_spider/hunter,
+/turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
-"Wp" = (
+"uo" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_two)
+"uR" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid)
+"vk" = (
+/obj/machinery/light/small/built/directional/west,
+/turf/open/floor/wood{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/northblock)
+"vr" = (
+/mob/living/simple_animal/hostile/giant_spider/hunter,
+/turf/open/floor/plating/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_three)
+"vv" = (
+/obj/machinery/light/directional/north,
+/obj/structure/filingcabinet,
+/obj/item/paper/fluff/awaymissions/caves/omega,
+/turf/open/floor/iron{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/research)
+"vL" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_three)
+"wW" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid)
+"yW" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron,
+/area/awaymission/caves/northblock)
+"Aw" = (
+/obj/machinery/light/small/built/directional/east,
+/obj/structure/sign/warning/pods{
+	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
+	name = "\improper MECH TUNNEL PASSAGE B1 TO A2";
+	pixel_x = 32
+	},
+/turf/open/floor/plating/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_three)
+"Cn" = (
+/obj/machinery/light/small/built/directional/east,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid/level_two)
+"Dk" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid)
+"Du" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/awaymission/caves/northblock)
+"Eg" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/awaymission/caves/listeningpost)
+"Hh" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_three)
+"Ki" = (
+/obj/structure/spider/stickyweb,
+/mob/living/simple_animal/hostile/giant_spider/hunter,
+/turf/open/floor/plating/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_three)
+"LF" = (
+/turf/open/floor/plating/elevatorshaft{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7";
+	name = "elevator flooring"
+	},
+/area/awaymission/caves/bmp_asteroid)
+"LO" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/warning/pods{
 	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
@@ -2131,12 +2054,89 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
-"YY" = (
+"Nk" = (
+/obj/effect/landmark/awaystart,
+/turf/open/floor/plating/elevatorshaft{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7";
+	name = "elevator flooring"
+	},
+/area/awaymission/caves/bmp_asteroid)
+"OX" = (
+/turf/closed/indestructible/oldshuttle{
+	desc = "Go through.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "black";
+	name = "the other side"
+	},
+/area/space/nearstation)
+"PH" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/research)
+"Qh" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
+/area/awaymission/caves/bmp_asteroid)
+"Rk" = (
+/obj/machinery/light/small/built/directional/north,
+/obj/structure/spider/stickyweb,
+/mob/living/simple_animal/hostile/giant_spider/hunter,
+/turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid)
+"Rl" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/dark{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid)
+"SC" = (
+/obj/structure/sign/warning/pods{
+	desc = "A warning sign which warns of potential mech traffic to and from different levels of the mine.";
+	name = "\improper MECH TUNNEL PASSAGE A2 TO B1";
+	pixel_x = 32
+	},
+/obj/machinery/light/small/built/directional/east,
+/turf/open/floor/plating/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
 /area/awaymission/caves/bmp_asteroid/level_two)
+"TL" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid)
+"TZ" = (
+/mob/living/simple_animal/hostile/giant_spider/hunter,
+/turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid)
+"UY" = (
+/obj/machinery/light/small/built/directional/north,
+/obj/machinery/suit_storage_unit/mining{
+	desc = "An industrial unit made to hold space suits. Age has seemed to rust the sliding door mechanisms, making it difficult to open.";
+	name = "rusted suit storage unit"
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid)
+"Yk" = (
+/obj/item/mjollnir,
+/mob/living/simple_animal/hostile/giant_spider/nurse,
+/turf/open/floor/plating/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_three)
+"YI" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid)
+"Zy" = (
+/obj/machinery/light/small/built/directional/west,
+/turf/open/floor/wood,
+/area/awaymission/caves/northblock)
 
 (1,1,1) = {"
 aa
@@ -5034,7 +5034,7 @@ ae
 bc
 bc
 ae
-Ep
+vr
 bx
 ac
 ac
@@ -5286,7 +5286,7 @@ ac
 ae
 bc
 ae
-GX
+ps
 ae
 bc
 bc
@@ -5408,12 +5408,12 @@ bL
 bL
 dt
 dx
-Mk
+Zy
 dI
 dM
 dP
 dI
-bn
+nP
 dA
 du
 bL
@@ -5538,20 +5538,20 @@ ac
 ac
 ac
 ac
-Ep
+vr
 ae
 ae
 ae
 ae
 bc
 ae
-Ep
+vr
 ae
 ae
 bc
 bc
 bc
-GX
+ps
 ac
 ac
 ac
@@ -5689,11 +5689,11 @@ fz
 fz
 dW
 bL
-tK
+Qh
 eQ
 eQ
 eQ
-tK
+Qh
 bL
 bL
 bL
@@ -5796,7 +5796,7 @@ ac
 ac
 aJ
 bc
-Ep
+vr
 bc
 ae
 ac
@@ -5804,7 +5804,7 @@ ac
 bc
 ae
 ae
-rk
+Ki
 bc
 bc
 ae
@@ -6063,7 +6063,7 @@ ae
 bc
 bc
 bc
-PV
+Yk
 bB
 ae
 ac
@@ -6181,7 +6181,7 @@ du
 du
 du
 dt
-qE
+rE
 dM
 du
 du
@@ -6198,10 +6198,10 @@ bL
 eQ
 eQ
 eQ
-Vm
+ma
 eQ
 eQ
-Vm
+ma
 cj
 eQ
 eQ
@@ -6320,7 +6320,7 @@ ae
 bc
 bc
 ae
-rk
+Ki
 bc
 ae
 ac
@@ -6436,12 +6436,12 @@ bL
 bL
 du
 dA
-bn
+nP
 dI
 dO
 dP
 dI
-pc
+Du
 el
 dt
 bL
@@ -6576,7 +6576,7 @@ ac
 ac
 ac
 ae
-GX
+ps
 bc
 bc
 bu
@@ -7210,7 +7210,7 @@ dt
 du
 du
 dM
-hQ
+yW
 dt
 dt
 dt
@@ -7464,12 +7464,12 @@ bL
 bL
 dt
 dC
-Mk
+Zy
 dI
 dM
 dT
 dI
-Kh
+vk
 em
 du
 eQ
@@ -7740,7 +7740,7 @@ bL
 bL
 bL
 dW
-FS
+Rk
 fB
 dW
 fL
@@ -7998,7 +7998,7 @@ bL
 bL
 dX
 fs
-kE
+TZ
 fG
 fB
 fT
@@ -8257,7 +8257,7 @@ dW
 ft
 ev
 dW
-Wj
+TL
 ev
 dW
 bL
@@ -8512,7 +8512,7 @@ bL
 bL
 dX
 fu
-uN
+rQ
 dX
 ev
 fB
@@ -9280,7 +9280,7 @@ eQ
 eQ
 eQ
 eQ
-MT
+uR
 cx
 cx
 cx
@@ -9510,7 +9510,7 @@ bL
 ch
 cr
 cA
-OE
+iH
 cR
 cV
 cr
@@ -10535,14 +10535,14 @@ bL
 bL
 bL
 ch
-NO
+vv
 cv
 cv
 cn
 cn
 cn
 cn
-FI
+PH
 ch
 bL
 bL
@@ -10813,11 +10813,11 @@ bL
 bL
 bL
 dX
-Gt
+UY
 eE
 ev
 ev
-PS
+lC
 dX
 bL
 bL
@@ -11079,19 +11079,19 @@ dW
 bL
 eQ
 eQ
-MT
+uR
 eQ
 eQ
 eQ
 eQ
-wl
+Dk
 cx
 cx
 cx
 cx
 eQ
 eQ
-MT
+uR
 eQ
 eQ
 eQ
@@ -11362,10 +11362,10 @@ bL
 cx
 cx
 cx
-wl
+Dk
 cx
 eQ
-rF
+pu
 cx
 cx
 cx
@@ -11822,10 +11822,10 @@ eQ
 eQ
 eQ
 eQ
-tK
+Qh
 cx
 cx
-tK
+Qh
 eQ
 eQ
 eQ
@@ -11839,7 +11839,7 @@ eQ
 bL
 dW
 eg
-lE
+wW
 ev
 ev
 eF
@@ -11876,10 +11876,10 @@ cj
 eQ
 eQ
 eQ
-tK
+Qh
 cx
 cx
-tK
+Qh
 eQ
 bL
 bL
@@ -11940,7 +11940,7 @@ ae
 aH
 aK
 aK
-tU
+Hh
 aH
 aQ
 ae
@@ -12101,7 +12101,7 @@ eg
 ev
 eF
 eI
-lp
+ki
 eU
 eG
 eY
@@ -12361,7 +12361,7 @@ eJ
 eN
 eJ
 eF
-sw
+Eg
 eJ
 eJ
 fi
@@ -12452,7 +12452,7 @@ ae
 ae
 ae
 aJ
-IN
+vL
 aK
 aK
 aJ
@@ -12618,7 +12618,7 @@ eJ
 eO
 eJ
 eF
-vU
+ik
 eJ
 eJ
 eF
@@ -13139,12 +13139,12 @@ fh
 eQ
 eQ
 eQ
-MT
+uR
 eQ
 cx
 cx
 eQ
-MT
+uR
 eQ
 eQ
 eQ
@@ -13649,15 +13649,15 @@ bL
 bL
 bL
 eQ
-tK
+Qh
 eQ
 cj
 eQ
 fJ
-fQ
-fQ
-fQ
-fQ
+LF
+LF
+LF
+LF
 fJ
 eQ
 eQ
@@ -13911,10 +13911,10 @@ eQ
 eQ
 eQ
 fJ
-fQ
-fQ
-fQ
-fQ
+LF
+LF
+LF
+LF
 fJ
 eQ
 eQ
@@ -14168,10 +14168,10 @@ eQ
 eQ
 eQ
 fJ
-fQ
-fU
-fQ
-fQ
+LF
+Nk
+LF
+LF
 fJ
 eQ
 eQ
@@ -14425,17 +14425,17 @@ cj
 eQ
 eQ
 fJ
-fQ
-fQ
-fQ
-fQ
+LF
+LF
+LF
+LF
 fJ
 eQ
 eQ
 eQ
 bL
 dW
-Qh
+YI
 cx
 cx
 eQ
@@ -14674,20 +14674,20 @@ bM
 bM
 bM
 ca
-tK
-eQ
-eQ
-eQ
-eQ
-eQ
-Bb
-dW
-fJ
-fJ
-fJ
-fJ
-dW
 Qh
+eQ
+eQ
+eQ
+eQ
+eQ
+qS
+dW
+fJ
+fJ
+fJ
+fJ
+dW
+YI
 eQ
 eQ
 bL
@@ -16236,7 +16236,7 @@ gm
 dW
 dX
 dW
-zN
+Rl
 cx
 eQ
 eQ
@@ -17610,7 +17610,7 @@ ae
 ae
 ae
 ae
-no
+Aw
 ak
 ac
 ac
@@ -17864,7 +17864,7 @@ ah
 ah
 ae
 ae
-no
+Aw
 ae
 ae
 aJ
@@ -19321,7 +19321,7 @@ bL
 bL
 dX
 gC
-sI
+jI
 gG
 gJ
 gB
@@ -53707,20 +53707,20 @@ bK
 bK
 bK
 bJ
-YY
+uo
 bJ
 cf
 cf
-YY
+uo
 bJ
 bJ
 bK
 bK
 bK
-Wp
+LO
 bJ
 bJ
-Wp
+LO
 bJ
 bJ
 bJ
@@ -58346,7 +58346,7 @@ cm
 bQ
 dk
 dp
-nw
+Cn
 ds
 dw
 bR
@@ -62700,7 +62700,7 @@ aa
 aa
 bK
 bK
-Cv
+SC
 bJ
 bJ
 bJ
@@ -62960,7 +62960,7 @@ bK
 bQ
 bJ
 bJ
-Cv
+SC
 bJ
 bJ
 bJ

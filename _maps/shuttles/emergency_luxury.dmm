@@ -11,31 +11,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
-"ad" = (
-/obj/machinery/scanner_gate/luxury_shuttle{
-	layer = 2.6
-	},
-/obj/machinery/door/airlock/silver{
-	name = "First Class"
-	},
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
-"ae" = (
-/obj/docking_port/mobile/emergency{
-	dir = 2;
-	dwidth = 5;
-	height = 14;
-	name = "Luxurious Emergency Shuttle";
-	width = 25
-	},
-/obj/machinery/scanner_gate/luxury_shuttle{
-	layer = 2.6
-	},
-/obj/machinery/door/airlock/silver{
-	name = "First Class"
-	},
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
 "af" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Cell";
@@ -45,13 +20,6 @@
 /area/shuttle/escape/brig)
 "ag" = (
 /turf/closed/indestructible/riveted/plastinum,
-/area/shuttle/escape/luxury)
-"ah" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/ore_box,
-/obj/effect/decal/cleanable/cobweb,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "aj" = (
 /obj/effect/turf_decal/delivery,
@@ -110,11 +78,6 @@
 "aw" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
-"ax" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron,
-/area/shuttle/escape/luxury)
 "ay" = (
 /turf/closed/indestructible/syndicate,
 /area/shuttle/escape/luxury)
@@ -123,14 +86,6 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/diamond,
-/area/shuttle/escape/luxury)
-"aA" = (
-/obj/machinery/button/door{
-	id = "ohnopoors";
-	name = "window shutters";
-	pixel_y = 26
-	},
-/turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "aB" = (
 /turf/open/floor/carpet/cyan,
@@ -239,14 +194,6 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
-"aR" = (
-/obj/structure/mirror/directional/west,
-/obj/structure/sink/greyscale{
-	dir = 4;
-	pixel_x = -12
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape/luxury)
 "aS" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
@@ -340,27 +287,11 @@
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
-"bj" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/brig)
-"bk" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/carpet/blue,
-/area/shuttle/escape/luxury)
 "bl" = (
 /obj/machinery/computer/station_alert{
 	dir = 8
 	},
 /turf/open/floor/mineral/diamond,
-/area/shuttle/escape/luxury)
-"bm" = (
-/obj/structure/table/wood/fancy/black,
-/obj/item/storage/fancy/cigarettes/cigars/havana{
-	pixel_y = 7
-	},
-/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
 "bn" = (
 /obj/effect/turf_decal/delivery,
@@ -480,10 +411,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
-"bE" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape/luxury)
 "bF" = (
 /obj/item/bikehorn/rubberducky,
 /obj/item/bikehorn/rubberducky,
@@ -498,10 +425,6 @@
 "bH" = (
 /obj/structure/door_assembly,
 /turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"bI" = (
-/obj/item/stack/tile/iron/base,
-/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bJ" = (
 /obj/structure/chair/comfy/shuttle,
@@ -555,16 +478,8 @@
 /obj/machinery/recharger,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
-"bQ" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/holofloor/beach/water,
-/area/shuttle/escape/luxury)
 "bR" = (
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"bS" = (
-/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "bT" = (
@@ -606,10 +521,6 @@
 	},
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
-"bZ" = (
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
 "ca" = (
 /obj/machinery/iv_drip,
 /mob/living/simple_animal/bot/medbot{
@@ -633,12 +544,6 @@
 "cd" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Infirmary"
-	},
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"ce" = (
-/obj/machinery/vending/wallmed/directional/east{
-	use_power = 0
 	},
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
@@ -686,11 +591,6 @@
 /obj/item/reagent_containers/blood/a_plus,
 /obj/item/reagent_containers/blood/random,
 /turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"ck" = (
-/obj/item/stack/tile/iron/base,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cl" = (
 /obj/structure/table/optable,
@@ -755,13 +655,6 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
-"cu" = (
-/obj/structure/toilet{
-	pixel_y = 8
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape/luxury)
 "cv" = (
 /obj/structure/table,
 /obj/item/reagent_containers/pill/maintenance{
@@ -790,10 +683,6 @@
 /obj/item/shard,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
-"cz" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape/luxury)
 "cA" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
@@ -808,28 +697,99 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
-"cD" = (
+"cN" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"fX" = (
+/obj/item/stack/tile/iron/base,
+/turf/open/floor/iron,
+/area/shuttle/escape/luxury)
+"gn" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"jg" = (
+/obj/structure/chair/comfy/brown,
+/obj/machinery/light/directional/north,
+/turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
+"kt" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"nu" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"nK" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"nZ" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"oS" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape/luxury)
+"qn" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/carpet/orange,
+/area/shuttle/escape/luxury)
+"sK" = (
+/obj/machinery/button/door{
+	id = "ohnopoors";
+	name = "window shutters";
+	pixel_y = 26
+	},
+/turf/open/floor/carpet/blue,
+/area/shuttle/escape/luxury)
+"tc" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/holofloor/beach/water,
+/area/shuttle/escape/luxury)
+"tm" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"ym" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/ore_box,
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
+/area/shuttle/escape/luxury)
+"yo" = (
+/obj/machinery/stasis,
+/obj/machinery/light/directional/north,
+/turf/open/floor/carpet/cyan,
+/area/shuttle/escape/luxury)
+"By" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/escape/luxury)
+"Cb" = (
 /obj/structure/frame/machine,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
-"cE" = (
-/obj/structure/chair/comfy/brown,
-/obj/machinery/light/directional/north,
-/turf/open/floor/carpet/orange,
-/area/shuttle/escape/luxury)
-"cF" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"cG" = (
-/obj/machinery/stasis,
-/obj/machinery/light/directional/north,
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"cH" = (
+"Ew" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/advanced,
 /obj/item/storage/firstaid/regular,
@@ -863,48 +823,43 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
-"cI" = (
-/obj/machinery/light/directional/east,
+"Fo" = (
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6
+	},
+/obj/machinery/door/airlock/silver{
+	name = "First Class"
+	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
-"cJ" = (
-/obj/item/stack/tile/iron/base,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"cK" = (
-/obj/structure/table,
-/obj/item/wirecutters{
-	pixel_y = 6
+"GH" = (
+/obj/structure/mirror/directional/west,
+/obj/structure/sink/greyscale{
+	dir = 4;
+	pixel_x = -12
 	},
-/obj/item/hatchet,
-/obj/item/kitchen/knife,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
-/area/shuttle/escape/luxury)
-"cL" = (
-/obj/structure/chair/comfy/brown{
-	dir = 1
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/carpet/orange,
-/area/shuttle/escape/luxury)
-"cM" = (
-/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
-"cN" = (
-/obj/structure/chair/wood{
-	dir = 8
+"HE" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"Ku" = (
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	dwidth = 5;
+	height = 14;
+	name = "Luxurious Emergency Shuttle";
+	width = 25
 	},
-/turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"qa" = (
-/obj/structure/toilet{
-	pixel_y = 8
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6
 	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/white,
+/obj/machinery/door/airlock/silver{
+	name = "First Class"
+	},
+/turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "Lt" = (
 /obj/machinery/door/airlock/security/glass{
@@ -914,6 +869,65 @@
 /obj/machinery/scanner_gate/luxury_shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
+"Mi" = (
+/obj/item/stack/tile/iron/base,
+/obj/machinery/light/small/directional/west,
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/item/stack/tile/iron/base,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape/luxury)
+"Nv" = (
+/obj/machinery/vending/wallmed/directional/east{
+	use_power = 0
+	},
+/turf/open/floor/carpet/cyan,
+/area/shuttle/escape/luxury)
+"Of" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/storage/fancy/cigarettes/cigars/havana{
+	pixel_y = 7
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"Qf" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"RG" = (
+/obj/item/stack/tile/iron/base,
+/turf/open/floor/plating,
+/area/shuttle/escape/luxury)
+"UD" = (
+/obj/structure/table,
+/obj/item/wirecutters{
+	pixel_y = 6
+	},
+/obj/item/hatchet,
+/obj/item/kitchen/knife,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/escape/luxury)
+"VF" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape/luxury)
+"Zv" = (
+/obj/item/stack/tile/iron/base,
+/obj/machinery/light/small/directional/west,
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/item/stack/tile/iron/base,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape/luxury)
 
 (1,1,1) = {"
 aa
@@ -949,18 +963,18 @@ ab
 "}
 (3,1,1) = {"
 ab
-ah
+ym
 bn
 by
 ab
-cD
+Cb
 aj
 cc
 aj
 ab
 cp
 cv
-cK
+UD
 ab
 "}
 (4,1,1) = {"
@@ -985,7 +999,7 @@ aq
 bp
 bA
 ab
-bS
+RG
 bC
 bJ
 cf
@@ -1000,7 +1014,7 @@ ab
 be
 bq
 bB
-ck
+Mi
 bT
 ak
 bU
@@ -1017,13 +1031,13 @@ bf
 br
 bC
 bJ
-bI
+fX
 bC
 bK
 bs
 co
 cs
-cJ
+Zv
 cC
 ab
 "}
@@ -1036,7 +1050,7 @@ bJ
 bU
 bC
 bJ
-bS
+RG
 bC
 bJ
 cx
@@ -1045,11 +1059,11 @@ ab
 "}
 (9,1,1) = {"
 ac
-ax
+By
 bs
 bC
 bK
-bS
+RG
 bX
 bJ
 ak
@@ -1081,7 +1095,7 @@ at
 at
 bD
 ag
-aA
+sK
 ao
 ao
 ao
@@ -1093,18 +1107,18 @@ ag
 "}
 (12,1,1) = {"
 ag
-bj
+HE
 at
 bD
 ag
-cE
+jg
 aG
 aK
 ch
 bV
 aO
 aT
-cL
+qn
 ag
 "}
 (13,1,1) = {"
@@ -1143,7 +1157,7 @@ ag
 ag
 ao
 bt
-bQ
+tc
 bL
 bV
 aD
@@ -1172,7 +1186,7 @@ ch
 ag
 "}
 (17,1,1) = {"
-ae
+Ku
 ao
 bw
 bG
@@ -1184,12 +1198,12 @@ ch
 bV
 aQ
 aW
-cL
+qn
 ag
 "}
 (18,1,1) = {"
 ag
-bk
+nK
 ao
 ao
 ao
@@ -1198,13 +1212,13 @@ ao
 ao
 ao
 ao
-cI
+kt
 ao
 ao
 ag
 "}
 (19,1,1) = {"
-ad
+Fo
 ao
 ao
 ao
@@ -1225,13 +1239,13 @@ ao
 ao
 ao
 bO
-cF
-bZ
+nZ
+oS
 ao
 cN
 ag
-aR
-aR
+GH
+GH
 aS
 ag
 "}
@@ -1248,12 +1262,12 @@ au
 ag
 ct
 ct
-cM
+Qf
 ag
 "}
 (22,1,1) = {"
 ag
-bm
+Of
 aw
 aw
 bP
@@ -1269,16 +1283,16 @@ ag
 "}
 (23,1,1) = {"
 ag
-bE
+tm
 aw
 aw
-cz
+VF
 ag
-cG
+yo
 aB
-cH
+Ew
 ag
-cu
+nu
 bb
 aS
 ag
@@ -1296,7 +1310,7 @@ cl
 ag
 ag
 ag
-cM
+Qf
 ag
 "}
 (25,1,1) = {"
@@ -1307,10 +1321,10 @@ bl
 bv
 ag
 cb
-ce
+Nv
 cm
 ag
-qa
+gn
 bb
 aS
 ag

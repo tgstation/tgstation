@@ -1653,13 +1653,6 @@
 /obj/item/lipstick/jade,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
-"gr" = (
-/obj/machinery/button/door/directional/east{
-	id = "spacebattlestorage";
-	name = "Secure Storage"
-	},
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "gs" = (
 /obj/machinery/computer/operating,
 /turf/open/floor/iron/white/side,
@@ -2256,6 +2249,13 @@
 /obj/item/stack/rods,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/space/nearstation)
+"iH" = (
+/obj/machinery/button/door/directional/east{
+	id = "spacebattlestorage";
+	name = "Secure Storage"
+	},
+/turf/open/floor/plating,
+/area/awaymission/spacebattle/cruiser)
 "iI" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate5)
@@ -2345,16 +2345,9 @@
 "jl" = (
 /turf/closed/wall/mineral/plasma,
 /area/awaymission/spacebattle/secret)
-"jm" = (
-/turf/open/floor/vault/alien,
-/area/awaymission/spacebattle/secret)
 "jn" = (
 /obj/machinery/door/airlock/plasma,
 /turf/closed/wall/mineral/plasma,
-/area/awaymission/spacebattle/secret)
-"jo" = (
-/obj/item/clothing/suit/space/hardsuit/wizard,
-/turf/open/floor/vault/alien,
 /area/awaymission/spacebattle/secret)
 "jp" = (
 /obj/vehicle/sealed/mecha/combat/gygax,
@@ -2795,6 +2788,10 @@
 "vw" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate5)
+"vS" = (
+/obj/item/clothing/suit/space/hardsuit/wizard,
+/turf/open/floor/vault/alien,
+/area/awaymission/spacebattle/secret)
 "zS" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate6)
@@ -2804,6 +2801,9 @@
 "Dv" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate3)
+"Hv" = (
+/turf/open/floor/vault/alien,
+/area/awaymission/spacebattle/secret)
 "UZ" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate1)
@@ -29673,7 +29673,7 @@ kt
 kt
 kt
 kt
-gr
+iH
 kj
 kH
 kn
@@ -64477,15 +64477,15 @@ jk
 jk
 aa
 jl
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa
@@ -64734,15 +64734,15 @@ jk
 jk
 aa
 jl
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa
@@ -64991,15 +64991,15 @@ jk
 jk
 aa
 jl
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa
@@ -65248,15 +65248,15 @@ jk
 jk
 aa
 jl
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa
@@ -65505,15 +65505,15 @@ jk
 jk
 aa
 jl
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa
@@ -65762,15 +65762,15 @@ jk
 jk
 aa
 jl
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa
@@ -66019,15 +66019,15 @@ jk
 aa
 aa
 jl
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa
@@ -66276,15 +66276,15 @@ aa
 aa
 aa
 jl
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa
@@ -66533,15 +66533,15 @@ aa
 aa
 aa
 jl
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa
@@ -66790,15 +66790,15 @@ aa
 aa
 aa
 jl
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa
@@ -67047,15 +67047,15 @@ aa
 aa
 aa
 jl
-jm
-jm
-jm
-jm
-jo
-jm
-jm
-jm
-jm
+Hv
+Hv
+Hv
+Hv
+vS
+Hv
+Hv
+Hv
+Hv
 jl
 aa
 aa

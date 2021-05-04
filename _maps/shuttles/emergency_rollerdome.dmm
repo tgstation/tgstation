@@ -48,6 +48,10 @@
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"kE" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "ln" = (
 /obj/machinery/vending/games,
 /turf/open/floor/eighties,
@@ -92,14 +96,6 @@
 "pj" = (
 /turf/template_noop,
 /area/template_noop)
-"pI" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"qU" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "ss" = (
 /obj/docking_port/mobile/emergency{
 	name = "Uncle Pete's Rollerdome"
@@ -123,10 +119,6 @@
 	dir = 9
 	},
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"wf" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
-/turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "wn" = (
 /obj/structure/chair/comfy/brown{
@@ -220,6 +212,10 @@
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"Ob" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "Ow" = (
 /obj/structure/table,
 /obj/item/storage/box/drinkingglasses,
@@ -246,6 +242,13 @@
 /obj/machinery/vending/donksofttoyvendor,
 /turf/open/floor/eighties,
 /area/shuttle/escape)
+"Py" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey,
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "Qf" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -264,6 +267,10 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/railing,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"RB" = (
+/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "RN" = (
 /obj/machinery/jukebox/disco/indestructible,
@@ -291,13 +298,6 @@
 /obj/item/kitchen/knife,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"Yr" = (
-/obj/structure/table/wood/poker,
-/obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/obj/machinery/light/directional/south,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "Zo" = (
 /obj/structure/table/wood/bar,
 /turf/open/floor/wood,
@@ -320,19 +320,19 @@ pj
 tG
 tG
 tG
-wf
+RB
 tG
 ss
 tG
-wf
-wf
-wf
+RB
+RB
+RB
 tG
 hF
 tG
 QO
 tG
-wf
+RB
 tG
 pj
 "}
@@ -355,7 +355,7 @@ Cg
 AT
 ce
 Ky
-pI
+Ob
 Ky
 tG
 tG
@@ -385,7 +385,7 @@ KJ
 od
 "}
 (4,1,1) = {"
-wf
+RB
 Hi
 We
 We
@@ -409,7 +409,7 @@ KJ
 od
 "}
 (5,1,1) = {"
-wf
+RB
 wn
 Ky
 Ky
@@ -433,10 +433,10 @@ KJ
 od
 "}
 (6,1,1) = {"
-wf
+RB
 im
 Ky
-Yr
+Py
 zx
 cP
 Cg
@@ -457,7 +457,7 @@ KJ
 od
 "}
 (7,1,1) = {"
-wf
+RB
 wn
 Ky
 Ky
@@ -481,7 +481,7 @@ KJ
 od
 "}
 (8,1,1) = {"
-wf
+RB
 zt
 xK
 xK
@@ -547,7 +547,7 @@ Cg
 AT
 ce
 Ky
-qU
+kE
 Ky
 tG
 tG
@@ -560,19 +560,19 @@ pj
 tG
 tG
 tG
-wf
+RB
 tG
 tG
 tG
-wf
-wf
-wf
+RB
+RB
+RB
 tG
 tG
 tG
-wf
+RB
 tG
-wf
+RB
 tG
 pj
 "}

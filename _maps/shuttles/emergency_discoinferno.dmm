@@ -5,10 +5,6 @@
 "b" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
-"c" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating/elevatorshaft,
-/area/shuttle/escape)
 "d" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
@@ -64,13 +60,6 @@
 /obj/machinery/computer/crew{
 	dir = 4
 	},
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape)
-"n" = (
-/obj/structure/table/wood/poker,
-/obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "o" = (
@@ -140,11 +129,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"C" = (
-/obj/machinery/computer/slot_machine,
-/obj/machinery/light/directional/west,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "D" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
@@ -167,16 +151,6 @@
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape)
-"H" = (
-/obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/machinery/light/directional/east,
-/obj/item/coin/plasma,
-/obj/item/coin/plasma,
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "I" = (
 /obj/machinery/computer/slot_machine{
@@ -214,8 +188,34 @@
 "O" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape)
+"P" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating/elevatorshaft,
+/area/shuttle/escape)
 "R" = (
 /turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/shuttle/escape)
+"W" = (
+/obj/machinery/computer/slot_machine,
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"X" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/machinery/light/directional/east,
+/obj/item/coin/plasma,
+/obj/item/coin/plasma,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"Y" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey,
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -226,19 +226,19 @@ a
 b
 b
 b
-c
+P
 b
 u
 b
-c
-c
-c
+P
+P
+P
 b
 O
 b
 w
 b
-c
+P
 b
 a
 "}
@@ -259,9 +259,9 @@ r
 r
 r
 q
-c
+P
 x
-C
+W
 I
 b
 b
@@ -271,7 +271,7 @@ b
 b
 h
 m
-c
+P
 r
 r
 r
@@ -283,7 +283,7 @@ r
 r
 r
 r
-c
+P
 x
 D
 D
@@ -291,11 +291,11 @@ M
 N
 "}
 (4,1,1) = {"
-c
+P
 d
 i
 i
-c
+P
 r
 r
 r
@@ -307,7 +307,7 @@ j
 r
 r
 r
-c
+P
 x
 x
 x
@@ -315,11 +315,11 @@ M
 N
 "}
 (5,1,1) = {"
-c
+P
 e
 j
 j
-c
+P
 r
 r
 s
@@ -331,7 +331,7 @@ j
 s
 r
 r
-c
+P
 y
 E
 y
@@ -339,11 +339,11 @@ M
 N
 "}
 (6,1,1) = {"
-c
+P
 f
 j
-n
-c
+Y
+P
 r
 j
 j
@@ -355,7 +355,7 @@ t
 j
 j
 r
-c
+P
 z
 F
 J
@@ -363,7 +363,7 @@ M
 N
 "}
 (7,1,1) = {"
-c
+P
 e
 j
 j
@@ -379,7 +379,7 @@ j
 s
 r
 r
-c
+P
 y
 G
 y
@@ -387,11 +387,11 @@ M
 N
 "}
 (8,1,1) = {"
-c
+P
 g
 k
 k
-c
+P
 r
 r
 r
@@ -403,7 +403,7 @@ j
 r
 r
 r
-c
+P
 x
 x
 x
@@ -415,7 +415,7 @@ b
 b
 l
 o
-c
+P
 r
 r
 r
@@ -427,7 +427,7 @@ r
 r
 r
 r
-c
+P
 A
 x
 K
@@ -451,9 +451,9 @@ r
 r
 r
 q
-c
+P
 B
-H
+X
 L
 b
 b
@@ -466,19 +466,19 @@ a
 b
 b
 b
-c
+P
 b
 b
 b
-c
-c
-c
+P
+P
+P
 b
 b
 b
-c
+P
 b
-c
+P
 b
 a
 "}

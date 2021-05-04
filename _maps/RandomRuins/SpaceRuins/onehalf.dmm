@@ -125,29 +125,6 @@
 /obj/item/roller,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
-"aB" = (
-/obj/machinery/light/directional/east,
-/obj/structure/table,
-/obj/item/storage/firstaid/brute{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/iron/white,
-/area/ruin/space/has_grav/onehalf/dorms_med)
-"aC" = (
-/obj/machinery/light/directional/west,
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/dorms_med)
-"aD" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/onehalf/drone_bay)
 "aE" = (
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plating/airless,
@@ -182,16 +159,6 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aL" = (
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/ruin/space/has_grav/onehalf/dorms_med)
-"aM" = (
-/obj/structure/closet/crate/medical,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/healthanalyzer,
-/obj/item/reagent_containers/blood/o_minus,
-/obj/item/reagent_containers/blood/o_minus,
-/obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
@@ -266,14 +233,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
-"aY" = (
-/obj/machinery/power/apc/auto_name/north,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/drone_bay)
 "aZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
@@ -281,65 +240,9 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
-"ba" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/button/door/directional/north{
-	id = "onehalf_drone2ext";
-	name = "Drone 2 External Hatch Override";
-	pixel_x = 8;
-	pixel_y = 32
-	},
-/obj/machinery/button/door/directional/north{
-	id = "onehalf_drone1ext";
-	name = "Drone 1 External Hatch Override";
-	pixel_x = -8;
-	pixel_y = 32
-	},
-/obj/machinery/button/door/directional/north{
-	custom_acid_overlay = "onehalf_drone2int";
-	name = "Drone 2 Internal Hatch Override";
-	pixel_x = 8
-	},
-/obj/machinery/button/door/directional/north{
-	custom_acid_overlay = "onehalf_drone1int";
-	name = "Drone 1 Internal Hatch Override";
-	pixel_x = -8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/drone_bay)
 "bb" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/drone_bay)
-"bc" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/button/door/directional/north{
-	id = "onehalf_drone4ext";
-	name = "Drone 4 External Hatch Override";
-	pixel_x = 8;
-	pixel_y = 32
-	},
-/obj/machinery/button/door/directional/north{
-	id = "onehalf_drone3ext";
-	name = "Drone 3 External Hatch Override";
-	pixel_x = -8;
-	pixel_y = 32
-	},
-/obj/machinery/button/door/directional/north{
-	custom_acid_overlay = "onehalf_drone4int";
-	name = "Drone 4 Internal Hatch Override";
-	pixel_x = 8
-	},
-/obj/machinery/button/door/directional/north{
-	custom_acid_overlay = "onehalf_drone3int";
-	name = "Drone 3 Internal Hatch Override";
-	pixel_x = -8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -445,14 +348,6 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
-"bs" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/light/small/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/drone_bay)
 "bt" = (
 /obj/structure/disposalpipe/junction/yjunction{
 	dir = 1
@@ -498,14 +393,6 @@
 	icon_state = "damaged1"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
-"bz" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/power/apc/auto_name/south,
-/obj/structure/cable,
-/turf/open/floor/iron/airless,
-/area/ruin/space/has_grav/onehalf/hallway)
 "bA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -532,13 +419,6 @@
 /obj/structure/disposalpipe/junction{
 	dir = 8
 	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/drone_bay)
-"bE" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bF" = (
@@ -662,18 +542,8 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
-"cd" = (
-/obj/machinery/light/directional/north,
-/obj/structure/frame/computer,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/bridge)
 "ce" = (
 /obj/structure/frame/computer,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/bridge)
-"cf" = (
-/obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cg" = (
@@ -796,10 +666,6 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
-"cx" = (
-/obj/item/stack/tile/iron/base,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/bridge)
 "cy" = (
 /obj/machinery/power/solar_control,
 /turf/open/floor/iron,
@@ -825,11 +691,6 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge"
 	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/bridge)
-"cF" = (
-/obj/machinery/light/small/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -871,11 +732,6 @@
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
-"cM" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/vending/sovietsoda,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/bridge)
 "cN" = (
 /obj/item/stack/sheet/plasteel,
 /turf/template_noop,
@@ -929,12 +785,6 @@
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
-"db" = (
-/obj/machinery/light/directional/south,
-/obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/onehalf/bridge)
 "dc" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless{
@@ -969,9 +819,15 @@
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
 /area/template_noop)
-"ms" = (
-/obj/item/stack/tile/iron/base,
-/obj/structure/cable,
+"eE" = (
+/obj/machinery/light/directional/south,
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/bridge)
+"fF" = (
+/obj/machinery/light/directional/north,
+/obj/structure/frame/computer,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "nu" = (
@@ -980,15 +836,159 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
+"pN" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav/onehalf/hallway)
+"sY" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/vending/sovietsoda,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/bridge)
+"xA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/north{
+	id = "onehalf_drone4ext";
+	name = "Drone 4 External Hatch Override";
+	pixel_x = 8;
+	pixel_y = 32
+	},
+/obj/machinery/button/door/directional/north{
+	id = "onehalf_drone3ext";
+	name = "Drone 3 External Hatch Override";
+	pixel_x = -8;
+	pixel_y = 32
+	},
+/obj/machinery/button/door/directional/north{
+	custom_acid_overlay = "onehalf_drone4int";
+	name = "Drone 4 Internal Hatch Override";
+	pixel_x = 8
+	},
+/obj/machinery/button/door/directional/north{
+	custom_acid_overlay = "onehalf_drone3int";
+	name = "Drone 3 Internal Hatch Override";
+	pixel_x = -8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/drone_bay)
+"yD" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/bridge)
+"yV" = (
+/obj/item/stack/tile/iron/base,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/bridge)
+"EC" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/drone_bay)
+"EW" = (
+/obj/machinery/light/small/directional/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/onehalf/drone_bay)
+"FU" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/bridge)
+"Gg" = (
+/obj/item/stack/tile/iron/base,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/bridge)
+"Iv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/drone_bay)
 "KC" = (
 /obj/structure/frame/computer,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
+"Lj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/drone_bay)
+"NS" = (
+/obj/machinery/light/directional/west,
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/dorms_med)
+"PG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/north{
+	id = "onehalf_drone2ext";
+	name = "Drone 2 External Hatch Override";
+	pixel_x = 8;
+	pixel_y = 32
+	},
+/obj/machinery/button/door/directional/north{
+	id = "onehalf_drone1ext";
+	name = "Drone 1 External Hatch Override";
+	pixel_x = -8;
+	pixel_y = 32
+	},
+/obj/machinery/button/door/directional/north{
+	custom_acid_overlay = "onehalf_drone2int";
+	name = "Drone 2 Internal Hatch Override";
+	pixel_x = 8
+	},
+/obj/machinery/button/door/directional/north{
+	custom_acid_overlay = "onehalf_drone1int";
+	name = "Drone 1 Internal Hatch Override";
+	pixel_x = -8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/drone_bay)
+"Rx" = (
+/obj/machinery/light/directional/east,
+/obj/structure/table,
+/obj/item/storage/firstaid/brute{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/onehalf/dorms_med)
 "Vh" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
+"ZE" = (
+/obj/structure/closet/crate/medical,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/healthanalyzer,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/item/reagent_containers/blood/o_minus,
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/onehalf/dorms_med)
 
 (1,1,1) = {"
 aa
@@ -1171,8 +1171,8 @@ aa
 ab
 ag
 an
-aB
-aM
+Rx
+ZE
 ag
 bi
 bx
@@ -1215,11 +1215,11 @@ aa
 ab
 ag
 ao
-aC
+NS
 ao
 ag
 bj
-bz
+pN
 bR
 bR
 ax
@@ -1303,7 +1303,7 @@ aa
 ab
 ab
 aq
-aD
+EW
 aq
 aX
 bo
@@ -1312,7 +1312,7 @@ bU
 aa
 cj
 bU
-cF
+yD
 bU
 aw
 aa
@@ -1327,7 +1327,7 @@ aa
 ar
 ar
 ar
-aY
+EC
 bp
 bp
 bU
@@ -1357,7 +1357,7 @@ ca
 cl
 cw
 Vh
-cM
+sY
 cR
 cY
 bU
@@ -1371,9 +1371,9 @@ aa
 ar
 ar
 ar
-ba
+PG
 bp
-bE
+Iv
 bU
 cb
 cm
@@ -1401,7 +1401,7 @@ cc
 cn
 cn
 Vh
-cx
+Gg
 cn
 da
 cq
@@ -1419,10 +1419,10 @@ bb
 bp
 bp
 bU
-cd
+fF
 co
 cn
-ms
+yV
 nu
 cS
 KC
@@ -1459,11 +1459,11 @@ aa
 ar
 ar
 ar
-bc
+xA
 bp
-bE
+Iv
 bU
-cf
+FU
 Vh
 Vh
 cJ
@@ -1491,7 +1491,7 @@ cy
 KC
 ce
 cU
-db
+eE
 bU
 ad
 aa
@@ -1548,7 +1548,7 @@ aa
 ar
 ar
 ar
-bs
+Lj
 bH
 ar
 aa
