@@ -289,13 +289,9 @@
 	dog_fashion = /datum/dog_fashion/head/sombrero
 
 	greyscale_config = /datum/greyscale_config/sombrero
-
-/obj/item/clothing/head/sombrero/Initialize()
-	. = ..()
-	if(greyscale_colors)
-		lefthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/sombrero/lefthand, greyscale_colors)
-		righthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/sombrero/righthand, greyscale_colors)
-		worn_icon = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/sombrero/worn, greyscale_colors)
+	greyscale_config_worn = /datum/greyscale_config/sombrero/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sombrero/lefthand
+	greyscale_config_inhand_right = /datum/greyscale_config/sombrero/righthand
 
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"

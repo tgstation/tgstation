@@ -1,6 +1,6 @@
 {
-	"": [
-		{
+    "": [
+        {
             "type": "icon_state",
             "icon_state": "cloth_worn",
             "blend_mode": "overlay",
@@ -17,5 +17,5 @@
             "icon_state": "plate_worn",
             "blend_mode": "overlay"
         }
-	]
+    ]
 }
