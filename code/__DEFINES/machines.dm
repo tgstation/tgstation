@@ -62,6 +62,7 @@
 #define MC_CHARGE "CHARGE"
 #define MC_AI "AI"
 #define MC_SENSORS "SENSORS"
+#define MC_SIGNALER "SIGNALER"
 
 //NTNet stuff, for modular computers
 									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
