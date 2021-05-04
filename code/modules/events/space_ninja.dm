@@ -23,7 +23,7 @@
 		return MAP_ERROR
 
 	//selecting a candidate player
-	var/list/candidates = get_candidates(ROLE_NINJA, null, ROLE_NINJA)
+	var/list/candidates = get_candidates(ROLE_NINJA, ROLE_NINJA)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

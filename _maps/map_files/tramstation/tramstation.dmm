@@ -1591,6 +1591,9 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/machinery/computer/cryopod{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "afH" = (
@@ -8101,7 +8104,7 @@
 /area/service/janitor)
 "azj" = (
 /obj/structure/cable,
-/turf/open/floor/goonplaque,
+/turf/open/floor/iron/goonplaque,
 /area/hallway/secondary/entry)
 "azk" = (
 /obj/structure/reagent_dispensers/fueltank/large,
@@ -18181,6 +18184,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
+"cKs" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/commons/locker)
 "cKC" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -20016,7 +20031,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/effect/landmark/start/paramedic,
 /obj/effect/landmark/event_spawn,
 /obj/machinery/holopad,
@@ -20554,7 +20568,6 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "dFW" = (
-/obj/structure/cable,
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/iron/white,
 /area/medical/storage)
@@ -26229,7 +26242,7 @@
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "fSF" = (
-/turf/open/floor/iron/elevatorshaft,
+/turf/open/floor/plating/elevatorshaft,
 /area/security/prison)
 "fSO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -40052,6 +40065,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/iron,
 /area/service/bar)
 "lqN" = (
@@ -45265,6 +45279,10 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
+"nEg" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/medical/storage)
 "nEr" = (
 /obj/effect/turf_decal/arrows/white{
 	dir = 4
@@ -57683,7 +57701,7 @@
 	name = "AI Core Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless/solarpanel,
+/turf/open/floor/iron/solarpanel/airless,
 /area/space/nearstation)
 "sBn" = (
 /obj/structure/fireaxecabinet{
@@ -58978,6 +58996,18 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/commons/dorms)
+"tfY" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/commons/locker)
 "tfZ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Library"
@@ -93849,9 +93879,9 @@ aSb
 gmg
 arc
 suF
-aDH
-aDH
-aDH
+cKs
+cKs
+cKs
 aUD
 wGT
 aRW
@@ -94106,9 +94136,9 @@ aSd
 joB
 aBx
 suF
-aDH
-aDH
-aDH
+tfY
+tfY
+tfY
 aUD
 aks
 aRW
@@ -167605,7 +167635,7 @@ bOQ
 fCO
 ofE
 mJp
-xZg
+nEg
 mhz
 ozN
 aIK

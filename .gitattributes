@@ -42,5 +42,3 @@
 ## Force tab indents on dm files
 *.dm whitespace=indent-with-non-tab
 
-## Force changelog merging to use union
-html/changelog.html text eol=lf merge=union

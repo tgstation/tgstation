@@ -814,7 +814,7 @@
 /obj/effect/turf_decal{
 	dir = 1
 	},
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cx" = (
@@ -844,7 +844,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cB" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cC" = (
@@ -874,7 +874,7 @@
 "cG" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/turf_decal/delivery/red,
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/machinery/door/poddoor,
 /turf/open/floor/plating{
 	broken = 1;
@@ -901,7 +901,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "cJ" = (
 /obj/effect/turf_decal/delivery/white,
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/machinery/door/poddoor,
 /turf/open/floor/plating{
 	broken = 1;

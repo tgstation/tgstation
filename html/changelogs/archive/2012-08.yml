@@ -1,0 +1,107 @@
+2012-08-01:
+  Giacom:
+  - tweak: I've made some adjustments to the Fireball spell. I've changed it to shoot
+      in the player's facing direction instead of you having to pick a name from a
+      list. It will explode upon contact of a person, if it hits an obstacle or if
+      it shoots for too long. To make up for the fireball not being able to go diagonal
+      I've shortened the cooldown to 10 seconds. It still can hurt you badly and knock
+      you down if you shoot it at a wall. Lastly, it now lights up so it'll show up
+      in dark rooms easily.
+  Sieve:
+  - rscadd: Borgs can now have an encryption key installed into their internal radios.
+      Simply ID, open the panel, and use the key to insert it (Screwdriver to remove)
+  - rscadd: Due to that as well, borgs have a 'Toggle Broadcast Mode' button for their
+      radios, which changes the broadcast type between station-bounced (Non-reliant
+      on TComms), and subspace (Required for department channels)
+  - tweak: Also changed the binary chat for consistency, now for the prefix is ':b'
+      for everyone, not just one for humans and one for borgs/AIs/pAIs
+  - tweak: Based on feedback, Nuke Op pinpointers now automagically change between
+      shuttle and disk mode when the nuke is armed or disarmed.
+2012-08-02:
+  Icarus:
+  - rscadd: Borgs now have flashlights to allow them to see in lightless areas
+  - tweak: 'Changes to Medbay: The sleeper and storage rooms have been swapped around.
+      Hopefully this leads to more healing and less looting.'
+2012-08-04:
+  Icarus:
+  - tweak: Changes to Med-Sci south and surrounding maintenance areas. Virology is
+      more isolated and Science gets a new Misc. Research Lab.
+  - tweak: Atmos techs get construction access now to do their little projects in.
+  - tweak: Transformation Stings now work on living humans.
+2012-08-06:
+  Dingus:
+  - tweak: Library has been redesigned. It's a whole lot more classy now.
+  - tweak: Significant changes to Medbay. CMO's office is more centralized, genetics
+      has a new exit into cryogenics, and a new break room has been installed
+2012-08-11:
+  Sieve:
+  - bugfix: Turrets now properly fire at simple_animals.
+  - tweak: Borgs, AIs, and brains/MMIs can be sacrificed by cultists.
+  - tweak: Grenades now automatically set throw on again.
+2012-08-14:
+  Sieve:
+  - rscadd: DNA modifiers can be used if there is no occupant, primarily to handle
+      the buffer.
+  - tweak: Ion Rifles are only effected by max severity EMPs, so AOE from its own
+      shot won't effect it
+  - tweak: Pepper Spray fits on Sec belts again
+2012-08-16:
+  Errorage:
+  - tweak: Changes were made to how heating and cooling of humans works.
+  - tweak: You must wear both a space suit and space helmet to be protected from space!
+      Likewise you must wear a firesuit and a fire helmet to be protected from fire!
+      Fire helmets are red and white hardhats, found in all fire closets.
+  - tweak: Fire suits now only protect from heat and space suits only protect from
+      cold, so make your choice count.
+2012-08-23:
+  Nodrak:
+  - bugfix: In-hand sprites once again update correctly when equipping items.
+2012-08-24:
+  Sieve:
+  - rscadd: Floorbots now actually pull up tiles when emagged
+  - tweak: All helper bots (excluding MULEs) have an access panel and maint panel,
+      access being for behavior and maint for internal work
+  - tweak: To open the maint panel, the access panel needs to be unlocked, then you
+      use a screwdriver. There you can emag/repair it to your heart's content. (Emagging
+      the access panel will also unlock it permanently)
+  - tweak: Helper bots are now repaired by using a welder when their maint panel is
+      open
+2012-08-26:
+  trubble_bass:
+  - tweak: Nerfed the Neurotoxin drink, it is now less effective than a stunbaton.
+      But more effective than a Beepsky Smash.
+  - tweak: Updated descriptions on various cocktails to be more accurate or more relevant
+      to the drink itself.
+2012-08-28:
+  Giacom:
+  - rscadd: You can now toggle the bolt light of airlocks. An extra wire,  that controls
+      the airlock's bolt light, has been added.
+  - rscadd: Aliens can now tell who is and who isn't infected. They get a special
+      facehugger icon that appears over mobs that have been impregnated.
+  - wip: Cameras have temporary X-Ray for the time being.
+2012-08-29:
+  Nodrak:
+  - bugfix: Mice now work with the admin player panel. Admins can now turn players
+      into mice with the 'Animalize' button in the player panel!
+  - bugfix: Space bear AI no longer runs when a player is controlling it. Admins can
+      now turn players into space bears with the 'Animalize' button in the player
+      panel!
+  - bugfix: The holodeck beach program once again has a beach.
+  - bugfix: The nuke op shuttle floor was pressure-washed a few days ago. We have
+      since re-painted it with nanotrasen blood. Sorry for any confusion.
+2012-08-30:
+  Giacom:
+  - rscadd: You can now create an EMP Pulse. Like an explosion, it is the mixing of
+      two reagents that trigger this to happen. I will tell you the first required
+      reagent. Uranium. Have fun!
+  - tweak: I have made most chemicals need 3-5 or more chemicals in order to react
+      to a turf. For instance, you need at least 5 units of thermite splashed on a
+      wall for it to burn down."
+  - tweak: The EMP kit, that you can buy through the uplink, has two more grenades
+      in them now. Making the box full of EMP grenades!
+  - tweak: Changed the EMP grenade's range to be much bigger.
+2012-08-31:
+  Agouri:
+  - bugfix: Overhauled newscasters. No visual additions but the thing is much more
+      robust and everything works as intended. Wanted issues are fixed. Admins, check
+      out Access News Network under Fun.

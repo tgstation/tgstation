@@ -87,7 +87,6 @@
 			M.add_antag_datum(/datum/antagonist/brother, team)
 			GLOB.pre_setup_antags -= M
 		team.update_name()
-	mode.brother_teams += pre_brother_teams
 	return TRUE
 
 //////////////////////////////////////////////
@@ -574,7 +573,7 @@
 
 /datum/dynamic_ruleset/roundstart/monkey/execute()
 	for(var/datum/mind/carrier in assigned)
-		var/datum/antagonist/monkey/M = add_monkey_leader(carrier)
+		var/datum/antagonist/monkey/M = carrier.add_antag_datum(/datum/antagonist/monkey/leader)
 		if(M)
 			monkey_team = M.monkey_team
 	return TRUE

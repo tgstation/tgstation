@@ -1,4 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes: 
-  - bugfix: "security bots will no longer remember you hitting them while they're off"
