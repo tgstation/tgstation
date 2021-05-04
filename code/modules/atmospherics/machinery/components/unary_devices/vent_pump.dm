@@ -118,7 +118,6 @@
 					return
 
 				loc.assume_air(removed)
-				air_update_turf(FALSE, FALSE)
 				update_parents()
 
 	else // external -> internal
@@ -137,7 +136,6 @@
 				return
 
 			air_contents.merge(removed)
-			air_update_turf(FALSE, FALSE)
 			update_parents()
 
 //Radio remote control
