@@ -319,6 +319,7 @@
 			for(var/path in pda_types)
 				if(pda_types[path] == selection)
 					pda_path = path
+					break
 
 			if(initial(pda_path.greyscale_config) && initial(pda_path.greyscale_colors))
 				stored_pda.greyscale_config = initial(pda_path.greyscale_config)
