@@ -80,7 +80,7 @@
 	return "[newName] of [initial(picked_mobtype.name)] slaying"
 
 /datum/fantasy_affix/summoning
-	name = "summoning some random mob (careful with this)"
+	name = "summoning some random mob (unbalanced and dangerous)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 	weight = 5
@@ -122,8 +122,8 @@
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
 
-/datum/fantasy_affix/shrapnel/validate(datum/component/fantasy/comp)
-	if(isgun(comp.parent))
+/datum/fantasy_affix/shrapnel/validate(obj/item/attached)
+	if(isgun(attached))
 		return TRUE
 	return FALSE
 
