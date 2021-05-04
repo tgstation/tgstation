@@ -218,9 +218,10 @@
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	user.face_atom(src)
 	if(user.melee_damage_upper == 0)
-		visible_message("<span class='notice'>\The [user] [user.friendly_verb_continuous] [src]!</span>", \
-						"<span class='notice'>\The [user] [user.friendly_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, "<span class='notice'>You [user.friendly_verb_simple] [src]!</span>")
+		if(user != src)
+			visible_message("<span class='notice'>\The [user] [user.friendly_verb_continuous] [src]!</span>", \
+							"<span class='notice'>\The [user] [user.friendly_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, "<span class='notice'>You [user.friendly_verb_simple] [src]!</span>")
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to hurt anyone!</span>")
@@ -403,7 +404,7 @@
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
-	if(get_eye_protection() < intensity && (override_blindness_check || !is_blind()))
+	if(get_eye_protection() < intensity && (affect_silicon || override_blindness_check || !is_blind()))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", length), length)
 		return TRUE

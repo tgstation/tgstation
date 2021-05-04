@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where the latejoin injection timer would not reset, meaning past a certain point anyone who joined would get antag, draining all the threat."

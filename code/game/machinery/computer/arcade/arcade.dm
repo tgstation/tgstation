@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/extendohand/acme = 1,
 		/obj/item/hot_potato/harmless/toy = 1,
 		/obj/item/card/emagfake = 1,
-		/obj/item/clothing/shoes/sneakers/wheelys = 2,
+		/obj/item/clothing/shoes/wheelys = 2,
 		/obj/item/clothing/shoes/kindle_kicks = 2,
 		/obj/item/toy/plush/goatplushie = 2,
 		/obj/item/toy/plush/moth = 2,
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else
 			empprize = pickweight(GLOB.arcade_prize_pool)
 		new empprize(loc)
-	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
+	explosion(src, devastation_range = -1, light_impact_range = 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
 /obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/arcadeticket))

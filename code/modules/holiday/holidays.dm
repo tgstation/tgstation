@@ -16,10 +16,16 @@
 	var/current_year = 0
 	/// How many years are you offsetting your calculations for begin_day and end_day on. Used for holidays like easter.
 	var/year_offset = 0
+<<<<<<< HEAD
 	///If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
 	var/obj/item/drone_hat
 	///When this holiday is active, does this prevent mail from arriving to cargo? Try not to use this for longer holidays.
 	var/mail_holiday = FALSE
+=======
+	///Timezones this holiday is celebrated in (defaults to three timezones spanning a 50 hour window covering all timezones)
+	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_ANYWHERE_ON_EARTH)
+	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
+>>>>>>> upstream/master
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
@@ -74,7 +80,7 @@
 
 /datum/holiday/new_year
 	name = NEW_YEAR
-	begin_day = 30
+	begin_day = 31
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
@@ -95,7 +101,7 @@
 
 /datum/holiday/valentines
 	name = VALENTINES
-	begin_day = 13
+	begin_day = 14
 	end_day = 15
 	begin_month = FEBRUARY
 
@@ -180,9 +186,8 @@
 
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
-	begin_month = MARCH
-	begin_day = 31
-	end_month = APRIL
+	begin_month = APRIL
+	begin_day = 1
 	end_day = 2
 
 /datum/holiday/april_fools/celebrate()
@@ -271,6 +276,7 @@
 
 /datum/holiday/usa
 	name = "US Independence Day"
+	timezones = list(TIMEZONE_EDT, TIMEZONE_CDT, TIMEZONE_MDT, TIMEZONE_MST, TIMEZONE_PDT, TIMEZONE_AKDT, TIMEZONE_HDT, TIMEZONE_HST)
 	begin_day = 4
 	begin_month = JULY
 	mail_holiday = TRUE
@@ -280,6 +286,7 @@
 
 /datum/holiday/nz
 	name = "Waitangi Day"
+	timezones = list(TIMEZONE_NZDT, TIMEZONE_CHADT)
 	begin_day = 6
 	begin_month = FEBRUARY
 
@@ -287,11 +294,12 @@
 	return pick("Aotearoa","Kiwi","Fish 'n' Chips","Kākāpō","Southern Cross")
 
 /datum/holiday/nz/greet()
-	var/nz_age = text2num(time2text(world.timeofday, "YYYY")) - 1840 //is this work
-	return "On this day [nz_age] years ago, New Zealand's Treaty of Waitangi, the founding document of the nation, was signed!" //thus creating much controversy
+	var/nz_age = text2num(time2text(world.timeofday, "YYYY")) - 1840
+	return "On this day [nz_age] years ago, New Zealand's Treaty of Waitangi, the founding document of the nation, was signed!"
 
 /datum/holiday/anz
 	name = "ANZAC Day"
+	timezones = list(TIMEZONE_TKT, TIMEZONE_TOT, TIMEZONE_NZST, TIMEZONE_NFT, TIMEZONE_LHST, TIMEZONE_AEST, TIMEZONE_ACST, TIMEZONE_ACWST, TIMEZONE_AWST, TIMEZONE_CXT, TIMEZONE_CCT, TIMEZONE_CKT, TIMEZONE_NUT)
 	begin_day = 25
 	begin_month = APRIL
 	drone_hat = /obj/item/food/grown/poppy
@@ -306,6 +314,7 @@
 
 /datum/holiday/france
 	name = "Bastille Day"
+	timezones = list(TIMEZONE_CEST)
 	begin_day = 14
 	begin_month = JULY
 	drone_hat = /obj/item/clothing/head/beret
@@ -383,7 +392,7 @@
 
 /datum/holiday/halloween
 	name = HALLOWEEN
-	begin_day = 28
+	begin_day = 29
 	begin_month = OCTOBER
 	end_day = 2
 	end_month = NOVEMBER
@@ -479,7 +488,7 @@
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 22
+	begin_day = 23
 	begin_month = DECEMBER
 	end_day = 27
 	drone_hat = /obj/item/clothing/head/santa

@@ -11,7 +11,7 @@
 
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
 
-	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
+	if(tool_behaviour && target.tool_act(user, src, tool_behaviour, is_right_clicking))
 		return TRUE
 
 	var/pre_attack_result

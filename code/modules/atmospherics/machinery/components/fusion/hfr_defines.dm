@@ -1,9 +1,3 @@
-///Max amount of radiation that can be emitted per reaction cycle
-#define FUSION_RAD_MAX 5000
-///Maximum instability before the reaction goes endothermic
-#define FUSION_INSTABILITY_ENDOTHERMALITY   4
-///Maximum reachable fusion temperature
-#define FUSION_MAXIMUM_TEMPERATURE 1e8
 ///Speed of light, in m/s
 #define LIGHT_SPEED 299792458
 ///Calculation between the plank constant and the lambda of the lightwave

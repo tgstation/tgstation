@@ -257,9 +257,12 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	//collect recipients
 	var/list/mail_recipients = list()
-	for(var/mob/living/carbon/human/player_human in GLOB.player_list)
-		if(player_human.stat != DEAD)
-			mail_recipients += player_human
+	for(var/mob/living/carbon/human/player_human in shuffle(GLOB.player_list))
+		if(player_human.stat == DEAD)
+			continue
+		if(!SSjob.GetJob(player_human.mind.assigned_role) || (player_human.mind.assigned_role in GLOB.nonhuman_positions))
+			continue //this check stops wizards and nuke ops from getting mail, which is hilarious but should definitely not happen
+		mail_recipients += player_human
 
 	//Creates mail for all the mail waiting to arrive, if there's nobody to recieve it it's just junkmail.
 	for(var/mail_iterator in 1 to SSeconomy.mail_waiting)
