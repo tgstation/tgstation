@@ -1017,6 +1017,19 @@
 /obj/machinery/light/broken/directional/west
 	dir = WEST
 
+// ---- Tube construct
+/obj/structure/light_construct/directional/north
+	dir = NORTH
+
+/obj/structure/light_construct/directional/south
+	dir = SOUTH
+
+/obj/structure/light_construct/directional/east
+	dir = EAST
+
+/obj/structure/light_construct/directional/west
+	dir = WEST
+
 // ---- Tube frames
 /obj/machinery/light/built/directional/north
 	dir = NORTH
@@ -1134,6 +1147,7 @@
 /obj/machinery/light/dim/directional/west
 	dir = WEST
 
+
 // -------- Bulb lights
 /obj/machinery/light/small/directional/north
 	dir = NORTH
@@ -1145,6 +1159,19 @@
 	dir = EAST
 
 /obj/machinery/light/small/directional/west
+	dir = WEST
+
+// ---- Bulb construct
+/obj/structure/light_construct/small/directional/north
+	dir = NORTH
+
+/obj/structure/light_construct/small/directional/south
+	dir = SOUTH
+
+/obj/structure/light_construct/small/directional/east
+	dir = EAST
+
+/obj/structure/light_construct/small/directional/west
 	dir = WEST
 
 // ---- Bulb frames
