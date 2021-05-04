@@ -4,8 +4,8 @@ import { NtosWindow } from '../layouts';
 export const NtosSignaler = (props, context) => {
   return (
     <NtosWindow
-      width={800}
-      height={600}>
+      width={400}
+      height={300}>
       <NtosWindow.Content scrollable>
         <SignalerContent />
       </NtosWindow.Content>

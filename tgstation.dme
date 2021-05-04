@@ -2805,6 +2805,7 @@
 #include "code\modules\modular_computers\file_system\programs\robocontrol.dm"
 #include "code\modules\modular_computers\file_system\programs\robotact.dm"
 #include "code\modules\modular_computers\file_system\programs\secureye.dm"
+#include "code\modules\modular_computers\file_system\programs\signaler.dm"
 #include "code\modules\modular_computers\file_system\programs\sm_monitor.dm"
 #include "code\modules\modular_computers\file_system\programs\techweb.dm"
 #include "code\modules\modular_computers\file_system\programs\antagonist\contract_uplink.dm"
