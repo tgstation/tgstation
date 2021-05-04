@@ -31,16 +31,16 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "am" = (
-/mob/living/simple_animal/hostile/poison/bees,
-/mob/living/simple_animal/hostile/poison/bees,
-/mob/living/simple_animal/hostile/poison/bees,
-/mob/living/simple_animal/hostile/poison/bees,
-/mob/living/simple_animal/hostile/poison/bees,
-/mob/living/simple_animal/hostile/poison/bees,
+/mob/living/simple_animal/hostile/bees,
+/mob/living/simple_animal/hostile/bees,
+/mob/living/simple_animal/hostile/bees,
+/mob/living/simple_animal/hostile/bees,
+/mob/living/simple_animal/hostile/bees,
+/mob/living/simple_animal/hostile/bees,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "an" = (
-/mob/living/simple_animal/hostile/poison/bees,
+/mob/living/simple_animal/hostile/bees,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "ao" = (
@@ -70,7 +70,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "au" = (
 /obj/structure/flora/ausbushes/leafybush,
-/mob/living/simple_animal/hostile/poison/bees,
+/mob/living/simple_animal/hostile/bees,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "av" = (
@@ -123,7 +123,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aB" = (
 /obj/machinery/light,
-/mob/living/simple_animal/hostile/poison/bees,
+/mob/living/simple_animal/hostile/bees,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "aC" = (

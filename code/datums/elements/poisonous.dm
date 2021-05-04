@@ -52,6 +52,8 @@
 /datum/component/poisonous/proc/poison_target(mob/living/target)
 	if(!istype(target))
 		return
+	if(target.stat == DEAD)
+		return
 	var/final_amount_added
 	if(islist(amount_added))
 		final_amount_added = rand(amount_added[1], amount_added[2])

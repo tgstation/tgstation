@@ -62,6 +62,10 @@
 	alignment = AFFIX_GOOD
 	weight = 5
 
+/datum/fantasy_affix/vampiric/validate(datum/component/fantasy/comp)
+	var/obj/item/attached = comp.parent
+	return attached.force //don't apply to things that just bap people
+
 /datum/fantasy_affix/vampiric/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
 	comp.appliedComponents += master.AddComponent(/datum/component/lifesteal, comp.quality)
@@ -97,6 +101,10 @@
 	placement = AFFIX_PREFIX
 	alignment = AFFIX_EVIL
 
+/datum/fantasy_affix/venomous/validate(datum/component/fantasy/comp)
+	var/obj/item/attached = comp.parent
+	return attached.force //don't apply to things that just bap people
+
 /datum/fantasy_affix/venomous/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
 	var/picked_poison = pick(list(
@@ -110,16 +118,16 @@
 		/datum/reagent/toxin/histamine
 	))
 	var/list/names = list(
-		/datum/reagent/toxin/plantbgone = "Plantbane",
-		/datum/reagent/toxin/mutetoxin = "Mimemind",
-		/datum/reagent/toxin/amanitin = "Dormant Death",
-		/datum/reagent/toxin/lipolicide = "Famineblood",
-		/datum/reagent/toxin/spewium = "Gulchergut",
-		/datum/reagent/toxin/heparin = "Jabberwound",
-		/datum/reagent/toxin/rotatium = "Spindown",
-		/datum/reagent/toxin/histamine = "Creeping Malaise"
+		/datum/reagent/toxin/plantbgone = "plantbane",
+		/datum/reagent/toxin/mutetoxin = "mimemind",
+		/datum/reagent/toxin/amanitin = "dormant death",
+		/datum/reagent/toxin/lipolicide = "famineblood",
+		/datum/reagent/toxin/spewium = "gulchergut",
+		/datum/reagent/toxin/heparin = "jabberwound",
+		/datum/reagent/toxin/rotatium = "spindown",
+		/datum/reagent/toxin/histamine = "creeping malaise"
 	)
 	var/poisonname = names[picked_poison]
-	comp.appliedComponents += master.AddComponent(/datum/component/poisonous, picked_poison, 5)
-	//seriously don't @ me about the correct use of venom vs poison and toxin. shut up.
-	return "[poisonname] [pick("toxin", "poison", "venom")] [newName]"
+	comp.appliedComponents += master.AddComponent(/datum/component/poisonous, picked_poison, comp.quality)
+	//seriously don't @ me about the correct use of venom vs poison. shut up.
+	return "[poisonname]-[pick("poisoned", "envenomed", "laced")] [newName]"
