@@ -1,6 +1,6 @@
 /turf/closed/wall/window_frame
 	name = "window frame"
-	desc = "A frame section to place a window on top.."
+	desc = "A frame section to place a window on top."
 	icon = 'icons/turf/walls/low_walls/low_wall_normal.dmi'
 	icon_state = "low_wall_normal-0"
 	base_icon_state = "low_wall_normal"
@@ -12,7 +12,7 @@
 	blocks_air = FALSE
 	flags_1 = RAD_NO_CONTAMINATE_1
 	rad_insulation = null
-	frill_icon = null
+	frill_icon = 'icons/effects/frills/window_normal_frill.dmi'
 	///Bitflag to hold state on what other objects we have
 	var/window_state = NONE
 	///Icon used by grilles for this window frame
@@ -20,9 +20,10 @@
 	///Icon state used by grilles for this window frame
 	var/grille_icon_state = "window_grille"
 	///Icon used by windows for this window frame
-	var/window_icon = 'icons/turf/walls/window-normal.dmi'
+	var/window_icon = 'icons/turf/walls/window_normal.dmi'
 	///Icon state used by windows for this window frame
-	var/window_icon_state = "window-normal"
+	var/window_icon_state = "window_normal"
+	///Frill used for window frame
 
 
 /turf/closed/wall/window_frame/Initialize(mapload)
@@ -34,6 +35,13 @@
 /turf/closed/wall/window_frame/set_smoothed_icon_state(new_junction)
 	. = ..()
 	update_icon()
+
+/turf/closed/wall/window_frame/update_appearance(updates)
+	. = ..()
+	if(window_state & WINDOW_FRAME_WITH_WINDOW)
+		AddElement(/datum/element/frill, frill_icon)
+	else
+		RemoveElement(/datum/element/frill)
 
 /turf/closed/wall/window_frame/update_overlays()
 	. = ..()
