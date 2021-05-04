@@ -314,25 +314,21 @@
 				return TRUE
 
 			var/selection = params["selection"]
-			var/to_standard = TRUE
+			var/obj/item/pda/pda_path = /obj/item/pda
 
 			for(var/path in pda_types)
 				if(!(pda_types[path] == selection))
 					continue
+				pda_path = path
 
-				var/obj/item/pda/pda_path = path
-				stored_pda.icon_state = initial(pda_path.icon_state)
-				stored_pda.desc = initial(pda_path.desc)
+			if(initial(pda_path.greyscale_config) && initial(pda_path.greyscale_colors))
 				stored_pda.greyscale_config = initial(pda_path.greyscale_config)
 				stored_pda.greyscale_colors = initial(pda_path.greyscale_colors)
-				to_standard = FALSE
-
-			if(to_standard)
-				var/obj/item/pda/pda_path = /obj/item/pda
-				stored_pda.icon_state = initial(pda_path.icon_state)
-				stored_pda.desc = initial(pda_path.desc)
-				stored_pda.greyscale_config = initial(pda_path.greyscale_config)
-				stored_pda.greyscale_colors = initial(pda_path.greyscale_colors)
+				stored_pda.update_greyscale()
+			else
+				stored_pda.icon = initial(pda_path.icon)
+			stored_pda.icon_state = initial(pda_path.icon_state)
+			stored_pda.desc = initial(pda_path.desc)
 
 			return TRUE
 		if("trim_card")
