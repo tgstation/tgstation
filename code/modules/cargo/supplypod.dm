@@ -459,12 +459,18 @@
 	glow_effect.icon_state = "pod_glow_" + GLOB.podstyles[style][POD_GLOW]
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
+	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, .proc/remove_glow)
 
 /obj/structure/closet/supplypod/proc/endGlow()
 	if(!glow_effect)
 		return
 	glow_effect.layer = LOW_ITEM_LAYER
 	glow_effect.fadeAway(delays[POD_OPENING])
+	remove_glow()
+
+/obj/structure/closet/supplypod/proc/remove_glow()
+	SIGNAL_HANDLER
+	UnregisterSignal(glow_effect, COMSIG_PARENT_QDELETING)
 	glow_effect = null
 
 /obj/structure/closet/supplypod/Destroy()

@@ -139,7 +139,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/CtrlClickOn(atom/A)
 	face_atom(A)
-	target = A
+	GiveTarget(A)
 	if(!isturf(loc))
 		return
 	if(next_move > world.time)

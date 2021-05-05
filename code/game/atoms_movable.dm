@@ -123,15 +123,16 @@
 
 	. = ..()
 
-	//We add ourselves to this list, best to clear it out
-	LAZYCLEARLIST(area_sensitive_contents)
-
 	for(var/movable_content in contents)
 		qdel(movable_content)
 
 	LAZYCLEARLIST(client_mobs_in_contents)
 
 	moveToNullspace()
+
+	//We add ourselves to this list, best to clear it out
+	//DO it after moveToNullspace so memes can be had
+	LAZYCLEARLIST(area_sensitive_contents)
 
 	vis_contents.Cut()
 
