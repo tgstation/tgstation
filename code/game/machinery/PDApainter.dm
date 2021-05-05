@@ -322,9 +322,8 @@
 					break
 
 			if(initial(pda_path.greyscale_config) && initial(pda_path.greyscale_colors))
-				stored_pda.greyscale_config = initial(pda_path.greyscale_config)
-				stored_pda.greyscale_colors = initial(pda_path.greyscale_colors)
-				stored_pda.update_greyscale()
+				stored_pda.set_greyscale_config(initial(pda_path.greyscale_config), update=FALSE)
+				stored_pda.set_greyscale_colors(initial(pda_path.greyscale_colors))
 			else
 				stored_pda.icon = initial(pda_path.icon)
 			stored_pda.icon_state = initial(pda_path.icon_state)
