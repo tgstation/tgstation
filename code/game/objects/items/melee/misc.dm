@@ -188,9 +188,9 @@
 
 	var/cooldown = 40 // Default wait time until can stun again.
 	var/knockdown_time_carbon = (1.5 SECONDS) // Knockdown length for carbons.
-	var/stun_time_silicon = (5 SECONDS) // If enabled, how long do we stun silicons.
+	var/stun_time_cyborg = (5 SECONDS) // If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
 	var/stamina_damage = 55 // Do we deal stamina damage.
-	var/affect_silicon = FALSE // Does it stun silicons.
+	var/affect_cyborg = FALSE // Can we stun cyborgs?
 	var/on_sound // "On" sound, played when switching between able to stun or not.
 	var/on_stun_sound = 'sound/effects/woodhit.ogg' // Default path to sound for when we stun.
 	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
@@ -227,8 +227,8 @@
 
 	return .
 
-/// Default message for stunning a silicon.
-/obj/item/melee/classic_baton/proc/get_silicon_stun_description(mob/living/target, mob/living/user)
+/// Default message for stunning a cyborg.
+/obj/item/melee/classic_baton/proc/get_cyborg_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
 	.["visible"] = "<span class='danger'>[user] pulses [target]'s sensors with [src]!</span>"
@@ -236,8 +236,8 @@
 
 	return .
 
-/// Default message for trying to stun a silicon with a baton that can't stun silicons.
-/obj/item/melee/classic_baton/proc/get_unga_dunga_silicon_stun_description(mob/living/target, mob/living/user)
+/// Default message for trying to stun a cyborg with a baton that can't stun cyborgs.
+/obj/item/melee/classic_baton/proc/get_unga_dunga_cyborg_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
 	.["visible"] = "<span class='danger'>[user] tries to knock down [target] with [src], and predictably fails!</span>" //look at this duuuuuude
@@ -249,8 +249,8 @@
 /obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
 	return
 
-/// Contains any special effects that we apply to silicons we stun. Does not include flashing the silicon's screen, hardstunning them, etc.
-/obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
+/// Contains any special effects that we apply to cyborgs we stun. Does not include flashing the cyborg's screen, hardstunning them, etc.
+/obj/item/melee/classic_baton/proc/additional_effects_cyborg(mob/living/target, mob/living/user)
 	return
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user, params)
@@ -293,17 +293,17 @@
 	var/list/desc = get_stun_description(target, user)
 
 	if(iscyborg(target))
-		if(affect_silicon)
-			desc = get_silicon_stun_description(target, user)
+		if(affect_cyborg)
+			desc = get_cyborg_stun_description(target, user)
 
 			target.flash_act(affect_silicon = TRUE)
-			target.Paralyze(stun_time_silicon)
-			additional_effects_silicon(target, user)
+			target.Paralyze(stun_time_cyborg)
+			additional_effects_cyborg(target, user)
 
 			playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
 
 		else
-			desc = get_unga_dunga_silicon_stun_description(target, user)
+			desc = get_unga_dunga_cyborg_stun_description(target, user)
 
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
 	else
@@ -416,7 +416,7 @@
 
 	cooldown = 25
 	stamina_damage = 85
-	affect_silicon = TRUE
+	affect_cyborg = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
