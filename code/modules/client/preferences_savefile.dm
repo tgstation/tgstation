@@ -487,7 +487,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	skin_tone = sanitize_inlist(skin_tone, GLOB.skin_tones)
 	backpack = sanitize_inlist(backpack, GLOB.backpacklist, initial(backpack))
 	jumpsuit_style = sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
-	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
+	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list_save, initial(uplink_spawn_loc))
 	playtime_reward_cloak = sanitize_integer(playtime_reward_cloak)
 	features["mcolor"] = sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["ethcolor"] = copytext_char(features["ethcolor"], 1, 7)
