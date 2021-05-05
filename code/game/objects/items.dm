@@ -214,7 +214,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
-	update_item_greyscale()
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -273,7 +272,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	return
 
 /// Checks if this atom uses the GAS system and if so updates the worn and inhand icons
-/obj/item/proc/update_item_greyscale()
+/obj/item/update_greyscale()
+	. = ..()
 	if(!greyscale_colors)
 		return
 	if(greyscale_config_worn)
@@ -282,7 +282,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		lefthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_left, greyscale_colors)
 	if(greyscale_config_inhand_right)
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
-	return
 
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
