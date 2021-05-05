@@ -102,6 +102,7 @@
 	desc = "Molten and unwrought, a hunk of metal warped to cinders and slag. Unmade, it aspires to be more than it is, and shears soot-filled wounds with a blunt edge."
 	icon_state = "ash_blade"
 	inhand_icon_state = "ash_blade"
+	AddOverlay("ash_blade_eye") //storing eye (10s/4f animation) seperate from blade (1.2s/6f animation) cuts down on file bloat
 
 /obj/item/melee/sickly_blade/flesh
 	name = "Flesh Blade"
