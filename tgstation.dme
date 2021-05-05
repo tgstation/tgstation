@@ -559,6 +559,7 @@
 #include "code\datums\components\tether.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\twohanded.dm"
+#include "code\datums\components\udder.dm"
 #include "code\datums\components\uplink.dm"
 #include "code\datums\components\wearertargeting.dm"
 #include "code\datums\components\wet_floor.dm"
