@@ -55,8 +55,7 @@
 
 /datum/component/acid/Destroy(force, silent)
 	STOP_PROCESSING(SSacid, src)
-	if(sizzle)
-		QDEL_NULL(sizzle)
+	QDEL_NULL(sizzle)
 	if(process_effect)
 		QDEL_NULL(process_effect)
 	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)

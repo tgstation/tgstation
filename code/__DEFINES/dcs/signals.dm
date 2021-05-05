@@ -293,6 +293,11 @@
 ///Called right after the atom changes the value of light_flags to a different one, from base of [/atom/proc/set_light_flags]: (old_flags)
 #define COMSIG_ATOM_UPDATE_LIGHT_FLAGS "atom_update_light_flags"
 
+///signal sent out by an atom when it checks if it can be pulled, for additional checks
+#define COMSIG_ATOM_CAN_BE_PULLED "movable_can_be_pulled"
+	#define COMSIG_ATOM_CANT_PULL (1 << 0)
+///signal sent out by an atom when it is no longer being pulled by something else
+#define COMSIG_ATOM_NO_LONGER_PULLED "movable_no_longer_pulled"
 ///called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"
 ///called on a movable (NOT living) when it starts pulling (atom/movable/pulled, state, force)
@@ -664,6 +669,11 @@
 	#define COMPONENT_HOSTILE_NO_ATTACK (1<<0)
 ///from base of mob/living/simple_animal/hostile/regalrat: (mob/living/simple_animal/hostile/regalrat/king)
 #define COMSIG_RAT_INTERACT "rat_interaction"
+
+///from /obj/item/slapper/attack_obj(): (source=mob/living/slammer, obj/structure/table/slammed_table)
+#define COMSIG_LIVING_SLAM_TABLE "living_slam_table"
+///from /obj/item/slapper/attack_obj(): (source=obj/structure/table/slammed_table, mob/living/slammer)
+#define COMSIG_TABLE_SLAMMED "table_slammed"
 
 // /obj signals
 

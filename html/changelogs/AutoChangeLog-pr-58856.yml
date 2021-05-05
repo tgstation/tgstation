@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - refactor: "An unused variable in the code for sticky tape has been removed."

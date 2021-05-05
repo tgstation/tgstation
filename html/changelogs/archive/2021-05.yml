@@ -93,3 +93,60 @@
       which previously took this slot, has been moved to right click instead.
   tf-4:
   - bugfix: PDAs will no longer flash at you over messages that you've already read
+2021-05-04:
+  ATHATH:
+  - refactor: An unused variable in the code for sticky tape has been removed.
+  Celotajs:
+  - admin: Moved Give SDQL Spell to Debug tab
+  Fikou:
+  - bugfix: chief engis and captains gloves are now not flammable
+  InsaneRed:
+  - bugfix: fixes the missing blast door on delta stations perma prison.
+  JJRcop:
+  - balance: The reagent gun, aka the Reagent Dartgun, has has its capacity reduced
+      to 90, or exactly 6 shots. Down from 100, or 6.6 shots.
+  LemonInTheDark:
+  - bugfix: Fixed hitting a canister not cause it to leak until it's interacted with
+      in some other wa
+  Maurukas:
+  - bugfix: Adds PunPun to Tramstation Bar
+  SpaceDragon00:
+  - spellcheck: Corrects sing/sings to singe/singes
+  Thunder12345:
+  - imageadd: The engineering circuitboards are now yellow instead of orange.
+  YakumoChen:
+  - qol: Pierced Reality and Singulo toys drop on the center of tiles again, for realism.
+  Yenwodyah:
+  - qol: The supermatter sliver sprite shows up above the supermatter crystal sprite
+      again
+  cacogen:
+  - qol: RCD repairs grilles when adding windows
+  - balance: If a grille's tile has unanchored items on it, adding a window will fail
+  - qol: Attempting to add a window to a grille with unanchored items on the tile
+      will move 20 of them to your tile
+  ninjanomnom:
+  - rscadd: Gases with visuals can now be seen inside canisters
+  tralezab:
+  - bugfix: you can no longer copy honorbound, burdened, wizard mutations, other heinous
+      shit
+2021-05-05:
+  Celotajs:
+  - imageadd: PDA icons are now generated with GAGS
+  Fikou:
+  - bugfix: fixed fake chasms not dropping floortiles
+  - bugfix: fixed borgs having their floor tiles deleted when reskinning
+  MadMedicineMan:
+  - bugfix: Renamed Outpost Medical on Cams
+  Urumasi:
+  - rscadd: Lawyers can now object by slamming the table.
+  - code_imp: Table slamming is now handled using signals.
+  ninjanomnom:
+  - bugfix: Monkeys are once again capable of using guns, take back your freedom!
+  - rscadd: Monkey ai is now actually able to make use of guns instead of just player
+      controlled monkeys.
+  - rscadd: Monkey ai will prioritize guns once they learn of what guns can do.
+  - rscadd: Monkey ai now understands the ancient art of throwing.
+  - rscadd: Monkey ai will use random objects on each other in their surroundings
+      and in their hands.
+  - rscadd: Monkey ai will occasionally "gift" people things.
+  - rscadd: Monkey ai consumes food once in a while according to their desire.

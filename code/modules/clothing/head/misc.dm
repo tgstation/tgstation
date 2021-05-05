@@ -52,7 +52,7 @@
 		var/wait_how_many_bees_did_that_guy_pull_out_of_his_hat = rand(4, 8)
 		for(var/b in 1 to wait_how_many_bees_did_that_guy_pull_out_of_his_hat)
 			var/mob/living/simple_animal/hostile/bee/barry = new(get_turf(magician))
-			barry.target = magician
+			barry.GiveTarget(magician)
 			if(prob(20))
 				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
 	else

@@ -166,7 +166,7 @@
 			var/obj/structure/beebox/BB = target
 			forceMove(BB)
 			toggle_ai(AI_IDLE)
-			target = null
+			LoseTarget()
 			wanted_objects -= beehometypecache //so we don't attack beeboxes when not going home
 		return //no don't attack the goddamm box
 	else
@@ -189,10 +189,10 @@
 
 /mob/living/simple_animal/hostile/bee/proc/pollinate(obj/machinery/hydroponics/Hydro)
 	if(!istype(Hydro) || !Hydro.myseed || Hydro.dead || Hydro.recent_bee_visit)
-		target = null
+		LoseTarget()
 		return
 
-	target = null //so we pick a new hydro tray next FindTarget(), instead of loving the same plant for eternity
+	LoseTarget() //so we pick a new hydro tray next FindTarget(), instead of loving the same plant for eternity
 	wanted_objects -= hydroponicstypecache //so we only hunt them while they're alive/seeded/not visisted
 	Hydro.recent_bee_visit = TRUE
 	addtimer(VARSET_CALLBACK(Hydro, recent_bee_visit, FALSE), BEE_TRAY_RECENT_VISIT)
@@ -228,7 +228,7 @@
 			if(idle <= BEE_IDLE_GOHOME && prob(BEE_PROB_GOHOME))
 				if(!FindTarget())
 					wanted_objects |= beehometypecache //so we don't attack beeboxes when not going home
-					target = beehome
+					GiveTarget(beehome)
 	if(!beehome) //add outselves to a beebox (of the same reagent) if we have no home
 		for(var/obj/structure/beebox/BB in view(vision_range, src))
 			if(reagent_incompatible(BB.queen_bee) || BB.bees.len >= BB.get_max_bees())

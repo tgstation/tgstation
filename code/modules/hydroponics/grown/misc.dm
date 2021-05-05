@@ -63,7 +63,6 @@
 	stank.gases[/datum/gas/miasma][MOLES] = (yield + 6)*3.5*MIASMA_CORPSE_MOLES*delta_time // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	T.assume_air(stank)
-	T.air_update_turf(FALSE, FALSE)
 
 //Galaxy Thistle
 /obj/item/seeds/galaxythistle
