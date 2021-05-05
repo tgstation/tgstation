@@ -51,6 +51,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/eye_overlay = "eldritch_blade_eye"
+	var/current_user = null
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
 	if(!(IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
@@ -95,15 +96,35 @@
 /obj/item/melee/sickly_blade/update_overlays()
 	/* This is called when the blade is first initialized, whenever the heretic gains an acention level, and whenever it is picked up or dropped. Overlays are
 	 *   > The moving eye sprite on some blades (basic, ash, void)
-	 *   > The one triggered on blade upgrade (fiery blade, bleeding steel, etc)
+	 *   > The one triggered on firey blade upgrade (other upgrades are underlays)
 	 *   > The one triggered on ascention
 	 * Because eldrich blades do not have a specific owner, the pick up/drop proc of this is necessary.
 	 */
 	. = ..()
+	if(!(current_user)):
+		return
+	if(!(IS_HERETIC(current_user) || IS_HERETIC_MONSTER(current_user))
+		return
 	if(initial(eye_overlay))
 		. += eye_overlay
 
+	// todo: finish this
 
+/obj/item/melee/sickly_blade/update_appearance()
+	/* This is called when the heretic ascends, gains a blade upgrade, picks up this object, or drops this object.
+	 * The reasoning is that, for one, it's easier, and for two, the blade is an independant object of the heretic;
+	 * Therefore, it is empowered by the heretic and not necessarily inately magical, a magical focus like the wizard's wands.
+	 */
+	underlays.Cut()
+	// todo: finish this
+
+/obj/item/melee/sickly_blade/pickup(mob/user)
+	current_user = user
+	update_appearance()
+
+/obj/item/melee/sickly_blade/dropped(mob/user)
+	current_user = null
+	update_appearance()
 
 /obj/item/melee/sickly_blade/rust
 	name = "\improper Rusted Blade"
