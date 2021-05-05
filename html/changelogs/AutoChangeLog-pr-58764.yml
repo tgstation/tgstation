@@ -1,0 +1,4 @@
+author: "Celotajs"
+delete-after: True
+changes: 
+  - code_imp: "The license details in the TGUI changelog are now correct."

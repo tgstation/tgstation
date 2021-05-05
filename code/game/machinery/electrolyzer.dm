@@ -91,7 +91,7 @@
 		return
 
 	var/datum/gas_mixture/env = L.return_air() //get air from the turf
-	var/datum/gas_mixture/removed = env.remove(0.1 * env.total_moles())
+	var/datum/gas_mixture/removed = env.remove_ratio(0.1)
 
 	if(!removed)
 		return

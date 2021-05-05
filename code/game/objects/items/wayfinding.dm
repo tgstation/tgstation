@@ -230,7 +230,7 @@
 
 /obj/machinery/pinpointer_dispenser/point_at(A)
 	. = ..()
-	visible_message("<span class='name'>[src]</span> points at [A]. [prob(funnyprob) ? "How'd it do that?" : ""]")
+	visible_message("<span class='emote'><span class='name'>[src]</span> points at [A]. [prob(funnyprob) ? "How'd it do that?" : ""]</span>")
 
 //Pinpointer itself
 /obj/item/pinpointer/wayfinding //Help players new to a station find their way around

@@ -23,6 +23,9 @@
  * Toy Daggers
  * Squeaky Brain
  * Broken Radio
+ * Fake heretic codex
+ * Fake Pierced Reality
+ * Intento
  */
 
 /obj/item/toy
@@ -188,6 +191,7 @@
 	desc = "\"Singulo\" brand spinning toy."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
+	item_flags = NO_PIXEL_RANDOM_DROP
 
 /obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/human/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
@@ -1550,6 +1554,7 @@
 	desc = "Hah. You thought it was the real deal!"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
+	item_flags = NO_PIXEL_RANDOM_DROP
 
 /obj/item/storage/box/heretic_box
 	name = "box of pierced realities"
