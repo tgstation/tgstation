@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "Cargo requests can now be discussed over #cargobus!"
