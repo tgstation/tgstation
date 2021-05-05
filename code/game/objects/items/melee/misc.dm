@@ -205,11 +205,11 @@
 
 	wound_bonus = 15
 
-// Description for trying to stun when still on cooldown.
+/// Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
 
-// Description for when turning their baton "on"
+/// Description for when turning the baton "on"
 /obj/item/melee/classic_baton/proc/get_on_description()
 	. = list()
 
@@ -218,7 +218,7 @@
 
 	return .
 
-// Default message for stunning mob.
+/// Default message for stunning a mob.
 /obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
@@ -227,20 +227,29 @@
 
 	return .
 
-// Default message for stunning a silicon.
+/// Default message for stunning a silicon.
 /obj/item/melee/classic_baton/proc/get_silicon_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] = "<span class='danger'>[user] pulses [target]'s sensors with the baton!</span>"
-	.["local"] = "<span class='danger'>You pulse [target]'s sensors with the baton!</span>"
+	.["visible"] = "<span class='danger'>[user] pulses [target]'s sensors with [src]!</span>"
+	.["local"] = "<span class='userdanger'>Your sensors are pulsed by [target]'s [src]!</span>"
 
 	return .
 
-// Are we applying any special effects when we stun to carbon
+/// Default message for trying to stun a silicon with a baton that can't stun silicons.
+/obj/item/melee/classic_baton/proc/get_unga_dunga_silicon_stun_description(mob/living/target, mob/living/user)
+	. = list()
+
+	.["visible"] = "<span class='danger'>[user] tries to knock down [target] with [src], and predictably fails!</span>" //look at this duuuuuude
+	.["local"] = "<span class='userdanger'>[target] tries to... knock you down with [src]?</span>" //look at the top of his head!
+
+	return .
+
+/// Contains any special effects that we apply to carbons we stun. Does not include applying a knockdown, dealing stamina damage, etc.
 /obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
 	return
 
-// Are we applying any special effects when we stun to silicon
+/// Contains any special effects that we apply to silicons we stun. Does not include flashing the silicon's screen, hardstunning them, etc.
 /obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
 	return
 
@@ -281,30 +290,31 @@
 		if(check_martial_counter(H, user))
 			return
 
+	var/list/desc = get_stun_description(target, user)
+
 	if(iscyborg(target))
-		if (affect_silicon)
-			var/list/desc = get_silicon_stun_description(target, user)
+		if(affect_silicon)
+			desc = get_silicon_stun_description(target, user)
 
 			target.flash_act(affect_silicon = TRUE)
 			target.Paralyze(stun_time_silicon)
 			additional_effects_silicon(target, user)
 
-			user.visible_message(desc["visible"], desc["local"])
+			playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
+
 		else
-			log_combat(user, target, "tried to stun", src)
-			return
+			desc = get_unga_dunga_silicon_stun_description(target, user)
+
+			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
 	else
-		var/list/desc = get_stun_description(target, user)
-	
 		target.Knockdown(knockdown_time_carbon)
 		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
 		additional_effects_carbon(target, user)
 
-		target.visible_message(desc["visible"], desc["local"])
+		playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
 
-	log_combat(user, target, "stunned", src)
-	add_fingerprint(user)
-	playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
+	target.visible_message(desc["visible"], desc["local"])
+	log_combat(user, target, "stun attacked", src)
 	if(stun_animation)
 		user.do_attack_animation(target)
 
@@ -312,6 +322,7 @@
 		target.LAssailant = null
 	else
 		target.LAssailant = user
+
 	cooldown_check = world.time + cooldown
 	return
 
