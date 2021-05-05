@@ -49,7 +49,7 @@
 			icon = sect_to_altar.altar_icon
 		if(sect_to_altar.altar_icon_state)
 			icon_state = sect_to_altar.altar_icon_state
-	update_overlays() //Light the candles!
+	update_appearance() //Light the candles!
 
 /obj/item/ritual_totem
 	name = "ritual totem"
