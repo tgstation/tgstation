@@ -184,7 +184,6 @@
 			continue
 		to_release.merge(air.remove(shared_loss))
 	T.assume_air(to_release)
-	air_update_turf(FALSE, FALSE)
 
 // Helpers
 

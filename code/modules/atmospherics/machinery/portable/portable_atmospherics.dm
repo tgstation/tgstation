@@ -40,7 +40,6 @@
 		//This explosion will destroy the can, release its air.
 		var/turf/T = get_turf(src)
 		T.assume_air(air_contents)
-		T.air_update_turf(FALSE, FALSE)
 
 	return ..()
 
