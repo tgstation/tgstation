@@ -45,6 +45,7 @@
 	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/, /obj/item/organ)
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()
+	. = ..()
 	if(wanted_objects.len)
 		AddComponent(/datum/component/udder, /obj/item/udder/gutlunch, /mob.proc/regenerate_icons, /mob.proc/regenerate_icons)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

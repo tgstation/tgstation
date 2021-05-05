@@ -144,6 +144,7 @@
 		//usually this would be a callback but this is a specifically gutlunch feature so fuck it, gutlunch specific proccall
 		gutlunch.regenerate_icons(reagents.total_volume, reagents.maximum_volume)
 
+///signal called on parent attacking an atom
 /obj/item/udder/proc/on_mob_attacking(mob/living/simple_animal/hostile/gutlunch, atom/target)
 	if(is_type_in_typecache(target, gutlunch.wanted_objects)) //we eats
 		generate()
