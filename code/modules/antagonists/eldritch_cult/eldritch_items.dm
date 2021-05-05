@@ -50,6 +50,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	var/eye_overlay = "eldritch_blade_eye"
+	var/upgrade_overlay = null
+	var/ascend_overlay = null
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
 	if(!(IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
@@ -91,30 +94,41 @@
 	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
 		. += "<span class='notice'><B>A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand.</B></span>"
 
+/obj/item/melee/sickly_blade/update_overlays()
+	/* This is called when the blade is first initialized, and whenever the heretic gains an acention level. Overlays are
+	 *   > The moving eye sprite on some blades
+	 *   > The one triggered on blade upgrade
+	 *   > The one triggered on ascention
+	 */
+	. = ..()
+
 /obj/item/melee/sickly_blade/rust
 	name = "\improper Rusted Blade"
 	desc = "This crescent blade is decrepit, wasting to rust. Yet still it bites, ripping flesh and bone with jagged, rotten teeth."
 	icon_state = "rust_blade"
 	inhand_icon_state = "rust_blade"
+	eye_overlay = null
 
 /obj/item/melee/sickly_blade/ash
 	name = "\improper Ashen Blade"
 	desc = "Molten and unwrought, a hunk of metal warped to cinders and slag. Unmade, it aspires to be more than it is, and shears soot-filled wounds with a blunt edge."
 	icon_state = "ash_blade"
 	inhand_icon_state = "ash_blade"
-	AddOverlay("ash_blade_eye") //storing eye (10s/4f animation) seperate from blade (1.2s/6f animation) cuts down on file bloat
+	eye_overlay = "ash_blade_eye"
 
 /obj/item/melee/sickly_blade/flesh
 	name = "Flesh Blade"
 	desc = "A crescent blade born from a fleshwarped creature. Keenly aware, it seeks to spread to others the suffering it has endured from its dreadful origins."
 	icon_state = "flesh_blade"
 	inhand_icon_state = "flesh_blade"
+	eye_overlay = null
 
 /obj/item/melee/sickly_blade/void
 	name = "Void Blade"
 	desc = "Devoid of any substance, this blade reflects nothingness. It is a real depiction of purity, and chaos that ensues after its implementation."
 	icon_state = "void_blade"
 	inhand_icon_state = "void_blade"
+	eye_overlay = "void_blade_eye"
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"
