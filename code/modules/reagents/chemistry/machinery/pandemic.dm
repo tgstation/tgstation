@@ -242,11 +242,11 @@
 		. = TRUE //no afterattack
 		if(machine_stat & (NOPOWER|BROKEN))
 			return
-		var/obj/item/reagent_containers/B = I
+		var/obj/item/reagent_containers/beaker_in = I
 		if(!user.transferItemToLoc(I, src))
 			return
-		replace_beaker(user, B)
-		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		replace_beaker(user, beaker_in)
+		to_chat(user, "<span class='notice'>You add [beaker_in] to [src].</span>")
 		updateUsrDialog()
 		update_appearance()
 	else
