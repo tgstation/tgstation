@@ -46,7 +46,7 @@
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
-	icon_state = "black"
+
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
 	species_exception = null
 
@@ -305,13 +305,13 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
-/obj/item/clothing/shoes/sneakers/wheelys
+/obj/item/clothing/shoes/wheelys
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
 	worn_icon_state = "wheelys"
 	greyscale_colors = "#545454#ffffff"
+	icon_state = "sneakers"
 	greyscale_config = /datum/greyscale_config/sneakers_wheelys
-	greyscale_config_worn = null
 	inhand_icon_state = "wheelys"
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
 	worn_x_dimension = 64
@@ -323,16 +323,16 @@
 	///The vehicle associated with the shoes
 	var/obj/vehicle/ridden/scooter/skateboard/wheelys/wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys
 
-/obj/item/clothing/shoes/sneakers/wheelys/Initialize()
+/obj/item/clothing/shoes/wheelys/Initialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	wheels = new wheels(null)
 	wheels.link_shoes(src)
 
-/obj/item/clothing/shoes/sneakers/wheelys/ui_action_click(mob/user, action)
+/obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
-	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/sneakers/wheelys))
+	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
 	if(!(wheels.is_occupant(user)))
@@ -345,13 +345,13 @@
 	wheels.buckle_mob(user)
 	wheelToggle = TRUE
 
-/obj/item/clothing/shoes/sneakers/wheelys/dropped(mob/user)
+/obj/item/clothing/shoes/wheelys/dropped(mob/user)
 	if(wheelToggle)
 		wheels.unbuckle_mob(user)
 		wheelToggle = FALSE
 	..()
 
-/obj/item/clothing/shoes/sneakers/wheelys/proc/toggle_wheels(status)
+/obj/item/clothing/shoes/wheelys/proc/toggle_wheels(status)
 	if (status)
 		worn_icon_state = "[initial(worn_icon_state)]-on"
 	else
@@ -359,11 +359,11 @@
 	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
 	update_appearance()
 
-/obj/item/clothing/shoes/sneakers/wheelys/Destroy()
+/obj/item/clothing/shoes/wheelys/Destroy()
 	QDEL_NULL(wheels)
 	. = ..()
 
-/obj/item/clothing/shoes/sneakers/wheelys/rollerskates
+/obj/item/clothing/shoes/wheelys/rollerskates
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
 	icon_state = "rollerskates"
@@ -375,7 +375,7 @@
 	custom_premium_price = PAYCHECK_EASY * 5
 	custom_price = PAYCHECK_EASY * 5
 
-/obj/item/clothing/shoes/sneakers/wheelys/skishoes
+/obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
 	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	icon_state = "skishoes"
@@ -447,6 +447,7 @@
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
 	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in occupants)
 			occupant.forceMove(user.drop_location())
@@ -456,6 +457,18 @@
 			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
 				user.reagents.add_reagent(/datum/reagent/toxin, 7)
 		occupants.Cut()
+
+/obj/item/clothing/shoes/cowboy/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
+
+/obj/item/clothing/shoes/cowboy/proc/table_slam(mob/living/source, obj/structure/table/the_table)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/handle_table_slam, source)
+
+/obj/item/clothing/shoes/cowboy/proc/handle_table_slam(mob/living/user)
+	user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)
+	user.client?.give_award(/datum/award/achievement/misc/hot_damn, user)
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
 	. = ..()

@@ -39,7 +39,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/clipboard
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo/quartermaster = 1)
 
 	chameleon_extras = /obj/item/stamp/qm
 

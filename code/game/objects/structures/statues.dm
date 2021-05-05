@@ -91,9 +91,9 @@
 	name = "statue of a scientist"
 	icon_state = "sci"
 
-/obj/structure/statue/plasma/ComponentInitialize()
+/obj/structure/statue/plasma/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/statue/plasma/bullet_act(obj/projectile/Proj)
 	var/burn = FALSE

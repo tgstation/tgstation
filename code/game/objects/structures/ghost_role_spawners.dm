@@ -153,15 +153,17 @@
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
 	new_spawn.fully_replace_character_name(null,"Wish Granter's Victim ([rand(1,999)])")
 	var/wish = rand(1,4)
+	var/message = ""
 	switch(wish)
 		if(1)
-			to_chat(new_spawn, "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>")
+			message = "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>"
 		if(2)
-			to_chat(new_spawn, "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>")
+			message = "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>"
 		if(3)
-			to_chat(new_spawn, "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>")
+			message = "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>"
 		if(4)
-			to_chat(new_spawn, "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>")
+			message = "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>"
+	to_chat(new_spawn, "<span class='infoplain'>[message]</span>")
 
 //Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
 /obj/effect/mob_spawn/human/golem
@@ -290,7 +292,7 @@
 			flavour_text += "you're an exile from the Tiger Cooperative. Their technological fanaticism drove you to question the power and beliefs of the Exolitics, and they saw you as a \
 			heretic and subjected you to hours of horrible torture. You were hours away from execution when a high-ranking friend of yours in the Cooperative managed to secure you a pod, \
 			scrambled its destination's coordinates, and launched it. You awoke from stasis when you landed and have been surviving - barely - ever since."
-			outfit.uniform = /obj/item/clothing/under/color/prisoner
+			outfit.uniform = /obj/item/clothing/under/rank/prisoner
 			outfit.shoes = /obj/item/clothing/shoes/sneakers/orange
 		if(3)
 			flavour_text += "you were a doctor on one of Nanotrasen's space stations, but you left behind that damn corporation's tyranny and everything it stood for. From a metaphorical hell \
@@ -359,7 +361,7 @@
 
 /datum/outfit/lavalandprisoner
 	name = "Lavaland Prisoner"
-	uniform = /obj/item/clothing/under/color/prisoner
+	uniform = /obj/item/clothing/under/rank/prisoner
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	r_pocket = /obj/item/tank/internals/emergency_oxygen

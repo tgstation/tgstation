@@ -1,0 +1,152 @@
+2021-05-01:
+  ATHATH:
+  - spellcheck: The shivering symptom has been renamed to be the "chills" symptom,
+      per Cobby's request.
+  - bugfix: The shivering/chills symptom now actually chills you like it says it does
+      instead of heating you up. fix Safe chills and safe fever should now use an
+      infectee's species's body temperature's actual cold and heat damage thresholds,
+      instead of just using the default ones.
+  - balance: Maxed out, unsafe chills and maxed out, unsafe fevers can now make you
+      slightly colder or hotter than they could before, respectively.
+  Arkatos:
+  - code_imp: Space carps now use a new greyscaling system.
+  - bugfix: Fixed an issue where space carps turned grey for a moment when attacking
+      something.
+  - qol: Light purple space carp variant is now more close to the original. Nostalgia!
+  - qol: Replaced beige space carp variant with a light red one.
+  KathyRyals:
+  - balance: Thermal is now an active mutation, that has a cooldown and deals damage
+      to your eyes.
+  LemonInTheDark:
+  - bugfix: Prayers will show a little book next to them again
+  LemonInTheDark, duncathan:
+  - refactor: Gas reactions should be cheaper in the standard case
+  - refactor: Moves canisters, pipelines, and tanks to event based processing, if
+      you see something fail to "update" when it really should let me know yeah?
+  Mothblocks:
+  - bugfix: Midround events will now properly poll again.
+  RandomGamer123:
+  - bugfix: Anomaly research can now be researched again.
+  Ryll/Shaps:
+  - bugfix: You can no longer shoot yourself in the foot with gunboots
+  Yakumochen:
+  - spellcheck: Removes nanochips from infiltrator gloves. Makes them more tacticool.
+  itseastosee:
+  - spellcheck: The unknown narrator now properly talks in second person
+  maxymax13, /vg/station, Citadel Station:
+  - imageadd: 3 new variations for wooden tiles are available (large, parquet, and
+      tiled), the same way you color titanium tiles! Remember, use a screwdriver and
+      not a crowbar!
+  - imageadd: A new red planetary pattern design is available for arcade carpet!
+  unit0016:
+  - refactor: Cargo Shuttle consoles now rely a lot more on variables instead of hardcoding.
+  vincentiusvin:
+  - bugfix: The hotkey for dumping borg apparatus is now moved to Alt+Click instead
+      of the nonfunctional Alt+Z. Right click for beaker apparatus spills reagent,
+      just like with regular beakers. Z and self attack keeps the old interaction,
+      it changes transfer volume.
+2021-05-02:
+  Celotajs:
+  - bugfix: Chameleon sneakers and jumpsuits now work correctly
+  - qol: The roulette TGUI now looks a bit better
+  Fikou, TWATICUS:
+  - qol: You can now reskin a lot more tiles! Use iron, bronze, pod, carpet or plastitanium
+      tiles inhand to change their sprites.
+  Iamgoofball:
+  - bugfix: potentially reduces overlay impact on SendMaps
+  LemonInTheDark:
+  - bugfix: Fixes some atmos senstivity stuff, it'll work more consistently now
+  Mothblocks:
+  - qol: Preferences are no longer dependent on gender.
+  maxymax13:
+  - qol: Pun Pun can no longer ruin all the tile alligments of the plants in the bar,
+      as plants no longer get offset when dropped.
+  ninjanomnom:
+  - admin: The greyscale debug menu now has improved functionality involving dirs
+      and changing config types.
+  sergeirocks100:
+  - rscadd: Adds cryopod areas to every in-rotation map. Expect to find them in dorms
+      or recreation areas.
+  tf-4:
+  - bugfix: Tram medbay storage is now wired to the grid at round start.
+2021-05-03:
+  ATHATH:
+  - qol: Shattering a heretic blade as a heretic or a heretic monster to teleport
+      a random, mostly safe location is now done by activating the blade in-hand instead
+      of by pressing an action button. This information will be given to a heretic
+      or a heretic monster if they examine a heretic blade.
+  - soundadd: Teleporting using a heretic blade now plays a glass shattering noise
+      and produces a slightly different message (that factors in whether or not the
+      teleportation attempt was successful).
+  - bugfix: Teleporting using a heretic blade is now considered to be a magical teleportation
+      method by the game.
+  cacogen:
+  - qol: RPD can destroy broken disposal pipes
+  - qol: Securing a disposal pipe over a broken disposal pipe will delete it
+  - balance: Securing a disposal pipe over a floor tile with a crowbar in your offhand
+      will remove the floor tile before trying to secure it
+  necromanceranne:
+  - imageadd: Changes the CE Insulated gloves sprite into a unique appearance, and
+      not just infiltrator gloves but blood orange.
+  ninjanomnom:
+  - qol: You can repair canisters now by left clicking with an active welder. Deconstruction,
+      which previously took this slot, has been moved to right click instead.
+  tf-4:
+  - bugfix: PDAs will no longer flash at you over messages that you've already read
+2021-05-04:
+  ATHATH:
+  - refactor: An unused variable in the code for sticky tape has been removed.
+  Celotajs:
+  - admin: Moved Give SDQL Spell to Debug tab
+  Fikou:
+  - bugfix: chief engis and captains gloves are now not flammable
+  InsaneRed:
+  - bugfix: fixes the missing blast door on delta stations perma prison.
+  JJRcop:
+  - balance: The reagent gun, aka the Reagent Dartgun, has has its capacity reduced
+      to 90, or exactly 6 shots. Down from 100, or 6.6 shots.
+  LemonInTheDark:
+  - bugfix: Fixed hitting a canister not cause it to leak until it's interacted with
+      in some other wa
+  Maurukas:
+  - bugfix: Adds PunPun to Tramstation Bar
+  SpaceDragon00:
+  - spellcheck: Corrects sing/sings to singe/singes
+  Thunder12345:
+  - imageadd: The engineering circuitboards are now yellow instead of orange.
+  YakumoChen:
+  - qol: Pierced Reality and Singulo toys drop on the center of tiles again, for realism.
+  Yenwodyah:
+  - qol: The supermatter sliver sprite shows up above the supermatter crystal sprite
+      again
+  cacogen:
+  - qol: RCD repairs grilles when adding windows
+  - balance: If a grille's tile has unanchored items on it, adding a window will fail
+  - qol: Attempting to add a window to a grille with unanchored items on the tile
+      will move 20 of them to your tile
+  ninjanomnom:
+  - rscadd: Gases with visuals can now be seen inside canisters
+  tralezab:
+  - bugfix: you can no longer copy honorbound, burdened, wizard mutations, other heinous
+      shit
+2021-05-05:
+  Celotajs:
+  - imageadd: PDA icons are now generated with GAGS
+  Fikou:
+  - bugfix: fixed fake chasms not dropping floortiles
+  - bugfix: fixed borgs having their floor tiles deleted when reskinning
+  MadMedicineMan:
+  - bugfix: Renamed Outpost Medical on Cams
+  Urumasi:
+  - rscadd: Lawyers can now object by slamming the table.
+  - code_imp: Table slamming is now handled using signals.
+  ninjanomnom:
+  - bugfix: Monkeys are once again capable of using guns, take back your freedom!
+  - rscadd: Monkey ai is now actually able to make use of guns instead of just player
+      controlled monkeys.
+  - rscadd: Monkey ai will prioritize guns once they learn of what guns can do.
+  - rscadd: Monkey ai now understands the ancient art of throwing.
+  - rscadd: Monkey ai will use random objects on each other in their surroundings
+      and in their hands.
+  - rscadd: Monkey ai will occasionally "gift" people things.
+  - rscadd: Monkey ai consumes food once in a while according to their desire.
