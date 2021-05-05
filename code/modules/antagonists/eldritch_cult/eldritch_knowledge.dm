@@ -1,6 +1,6 @@
 
 /**
- * #Eldritch Knwoledge
+ * #Eldritch Knowledge
  *
  * Datum that makes eldritch cultist interesting.
  *
