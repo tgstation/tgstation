@@ -123,7 +123,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aB" = (
 /obj/machinery/light,
-/mob/living/simple_animal/hostile/bees,
+/mob/living/simple_animal/hostile/bee,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "aC" = (

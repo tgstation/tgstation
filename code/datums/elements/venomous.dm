@@ -14,17 +14,17 @@
 /datum/element/venomous/Attach(datum/target, poison_type, amount_added)
 	. = ..()
 
-	if(!isitem(target))
-		return ELEMENT_INCOMPATIBLE
-	src.poison_type = poison_type
-	src.amount_added = amount_added
-
 	if(isgun(target))
 		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(target))
 		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
 	else if(ishostile(target))
 		RegisterSignal(target, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/hostile_attackingtarget)
+	else
+		return ELEMENT_INCOMPATIBLE
+
+	src.poison_type = poison_type
+	src.amount_added = amount_added
 
 /datum/element/venomous/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_ATTACKINGTARGET))
