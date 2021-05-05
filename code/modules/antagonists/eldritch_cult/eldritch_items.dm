@@ -51,8 +51,6 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/eye_overlay = "eldritch_blade_eye"
-	var/upgrade_overlay = null
-	var/ascend_overlay = null
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
 	if(!(IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
@@ -95,12 +93,17 @@
 		. += "<span class='notice'><B>A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand.</B></span>"
 
 /obj/item/melee/sickly_blade/update_overlays()
-	/* This is called when the blade is first initialized, and whenever the heretic gains an acention level. Overlays are
-	 *   > The moving eye sprite on some blades
-	 *   > The one triggered on blade upgrade
+	/* This is called when the blade is first initialized, whenever the heretic gains an acention level, and whenever it is picked up or dropped. Overlays are
+	 *   > The moving eye sprite on some blades (basic, ash, void)
+	 *   > The one triggered on blade upgrade (fiery blade, bleeding steel, etc)
 	 *   > The one triggered on ascention
+	 * Because eldrich blades do not have a specific owner, the pick up/drop proc of this is necessary.
 	 */
 	. = ..()
+	if(initial(eye_overlay))
+		. += eye_overlay
+
+
 
 /obj/item/melee/sickly_blade/rust
 	name = "\improper Rusted Blade"
