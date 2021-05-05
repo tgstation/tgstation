@@ -57,7 +57,7 @@
 
 #define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
 
-/obj/item/melee/touch_attack/shock/proc/defib(var/mob/living/carbon/target, var/mob/living/carbon/user)
+/obj/item/melee/touch_attack/shock/proc/defib(mob/living/carbon/target, mob/living/carbon/user)
 
 	if(target.can_defib() == DEFIB_POSSIBLE)
 		target.notify_ghost_cloning("Your heart is being defibrillated!")
