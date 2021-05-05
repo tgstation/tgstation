@@ -186,15 +186,24 @@
 
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
-	var/cooldown = 40 // Default wait time until can stun again.
-	var/knockdown_time_carbon = (1.5 SECONDS) // Knockdown length for carbons.
-	var/stun_time_cyborg = (5 SECONDS) // If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
-	var/stamina_damage = 55 // Do we deal stamina damage.
-	var/affect_cyborg = FALSE // Can we stun cyborgs?
-	var/on_sound // "On" sound, played when switching between able to stun or not.
-	var/on_stun_sound = 'sound/effects/woodhit.ogg' // Default path to sound for when we stun.
-	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
-	var/on = TRUE // Are we on or off.
+	/// Default wait time until can stun again.
+	var/cooldown = 40 
+	/// The length of the knockdown applied to a struck living, non-cyborg mob.
+	var/knockdown_time = (1.5 SECONDS)
+	/// If affect_cyborg is TRUE, this is how long we stun cyborgs for on a hit.
+	var/stun_time_cyborg = (5 SECONDS)
+	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
+	var/stamina_damage = 55
+	/// Can we stun cyborgs?
+	var/affect_cyborg = FALSE
+	/// "On" sound, played when switching between able to stun or not.
+	var/on_sound 
+	/// The path of the default sound to play when we stun something.
+	var/on_stun_sound = 'sound/effects/woodhit.ogg'
+	/// Do we animate the "hit" when stunning something?
+	var/stun_animation = TRUE
+	/// Are we on or off?
+	var/on = TRUE
 
 	var/on_icon_state // What is our sprite when turned on
 	var/off_icon_state // What is our sprite when turned off
@@ -218,7 +227,7 @@
 
 	return .
 
-/// Default message for stunning a mob.
+/// Default message for stunning a living, non-cyborg mob.
 /obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
@@ -245,8 +254,8 @@
 
 	return .
 
-/// Contains any special effects that we apply to carbons we stun. Does not include applying a knockdown, dealing stamina damage, etc.
-/obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
+/// Contains any special effects that we apply to living, non-cyborg mobs we stun. Does not include applying a knockdown, dealing stamina damage, etc.
+/obj/item/melee/classic_baton/proc/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	return
 
 /// Contains any special effects that we apply to cyborgs we stun. Does not include flashing the cyborg's screen, hardstunning them, etc.
@@ -259,17 +268,27 @@
 
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		to_chat(user, "<span class ='userdanger'>You hit yourself over the head!</span>")
+		user.visible_message("<span class ='userdanger'>You accidentally hit yourself over the head with [src]!</span>", "<span class='danger'>[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!</span>")
 
-		user.Paralyze(knockdown_time_carbon * force)
-		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
-
-		additional_effects_carbon(user) // user is the target here
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+		if(iscyborg(user))
+			if(affect_cyborg)
+				user.flash_act(affect_silicon = TRUE)
+				user.Paralyze(stun_time_cyborg * 3)
+				additional_effects_cyborg(user, user) // user is the target here
+				playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
+			else
+				playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 		else
-			user.take_bodypart_damage(2*force)
+			user.Paralyze(knockdown_time * 3)
+			user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
+			additional_effects_non_cyborg(user, user) // user is the target here
+			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
+
+		user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+
+		log_combat(user, target, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
+		if(stun_animation)
+			user.do_attack_animation(user)
 		return
 	if(!isliving(target))
 		return
@@ -300,16 +319,15 @@
 			target.Paralyze(stun_time_cyborg)
 			additional_effects_cyborg(target, user)
 
-			playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
-
+			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
 		else
 			desc = get_unga_dunga_cyborg_stun_description(target, user)
 
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
 	else
-		target.Knockdown(knockdown_time_carbon)
+		target.Knockdown(knockdown_time)
 		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
-		additional_effects_carbon(target, user)
+		additional_effects_non_cyborg(target, user)
 
 		playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
 
@@ -430,7 +448,7 @@
 /obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
 	return "<span class='danger'>The baton is still charging!</span>"
 
-/obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_carbon(mob/living/target, mob/living/user)
+/obj/item/melee/classic_baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.Jitter(20)
 	target.stuttering += 20
 
