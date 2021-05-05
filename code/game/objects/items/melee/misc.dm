@@ -279,7 +279,7 @@
 			else
 				playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 		else
-			user.Paralyze(knockdown_time * 3)
+			user.Knockdown(knockdown_time * 3)
 			user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
 			additional_effects_non_cyborg(user, user) // user is the target here
 			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
