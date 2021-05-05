@@ -32,6 +32,11 @@
 		return
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
+
+		if(C.stat == DEAD && !user.combat_mode)
+			defib(C, user)
+			return
+
 		if(C.electrocute_act(15, user, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN))//doesnt stun. never let this stun
 			C.dropItemToGround(C.get_active_held_item())
 			C.dropItemToGround(C.get_inactive_held_item())
@@ -49,3 +54,46 @@
 	else
 		to_chat(user,"<span class='warning'>The electricity doesn't seem to affect [target]...</span>")
 		return ..()
+
+#define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
+
+/obj/item/melee/touch_attack/shock/proc/defib(var/mob/living/carbon/target, var/mob/living/carbon/user)
+
+	if(target.can_defib() == DEFIB_POSSIBLE)
+		target.notify_ghost_cloning("Your heart is being defibrillated!")
+		target.grab_ghost() // Shove them back in their body.
+
+	user.visible_message("<span class='warning'>[user] begins to place their hand on [target]'s chest.</span>", "<span class='warning'>You begin to place your hand on [target]'s chest...</span>")
+	if(do_after(user, 5 SECONDS, target))
+		for(var/obj/item/clothing/C in target.get_equipped_items())
+			if((C.body_parts_covered & CHEST) && (C.clothing_flags & THICKMATERIAL)) //check to see if something is obscuring their chest.
+				return FALSE
+		if(isliving(target.pulledby)) //CLEAR!
+			var/mob/living/M = target.pulledby
+			if(M.electrocute_act(30, target))
+				M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [target]!</span>")
+				M.emote("scream")
+		target.visible_message("<span class='warning'>[target]'s body convulses a bit.</span>")
+		playsound(src, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
+		if(!target.can_defib())
+			return FALSE
+		var/total_brute = target.getBruteLoss()
+		var/total_burn = target.getFireLoss()
+		if (target.health > HALFWAYCRITDEATH)
+			target.adjustOxyLoss(target.health - HALFWAYCRITDEATH, 0)
+		else
+			var/overall_damage = total_brute + total_burn + target.getToxLoss() + target.getOxyLoss()
+			var/mobhealth = target.health
+			target.adjustOxyLoss((mobhealth - HALFWAYCRITDEATH) * (target.getOxyLoss() / overall_damage), 0)
+			target.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (target.getToxLoss() / overall_damage), 0, TRUE) // force tox heal for toxin lovers too
+			target.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), 0)
+			target.adjustBruteLoss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), 0)
+		target.updatehealth() // Previous "adjust" procs don't update health, so we do it manually.
+		target.set_heartattack(FALSE)
+		target.grab_ghost()
+		target.revive(full_heal = FALSE, admin_revive = FALSE)
+		target.emote("gasp")
+		target.Jitter(100)
+		SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "saved_life", /datum/mood_event/saved_life)
+		log_combat(user, target, "revived", "shock touch")
