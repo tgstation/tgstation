@@ -797,7 +797,7 @@
 
 /obj/item/borg/apparatus/Destroy()
 	if(stored)
-		qdel(stored)
+		QDEL_NULL(stored)
 	. = ..()
 
 ///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
@@ -894,7 +894,7 @@
 	if(stored)
 		var/obj/item/reagent_containers/C = stored
 		C.SplashReagents(get_turf(src))
-		qdel(stored)
+		QDEL_NULL(stored)
 	. = ..()
 
 /obj/item/borg/apparatus/beaker/examine()

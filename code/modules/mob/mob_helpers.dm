@@ -434,13 +434,6 @@
 	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
 	var/smessage_type = num2text(message_type)
 
-	if(client)
-		if(!islist(client.player_details.logging[smessage_type]))
-			client.player_details.logging[smessage_type] = list()
-
-	if(!islist(logging[smessage_type]))
-		logging[smessage_type] = list()
-
 	var/colored_message = message
 	if(color)
 		if(color[1] == "#")
@@ -461,10 +454,10 @@
 
 	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
-	logging[smessage_type] += timestamped_message
+	LAZYADD(logging[smessage_type], timestamped_message)
 
 	if(client)
-		client.player_details.logging[smessage_type] += timestamped_message
+		LAZYADD(client.player_details.logging[smessage_type], timestamped_message)
 
 	..()
 

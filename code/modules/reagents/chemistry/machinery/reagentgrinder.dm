@@ -48,6 +48,7 @@
 /obj/machinery/reagentgrinder/Destroy()
 	if(beaker)
 		beaker.forceMove(drop_location())
+		beaker = null
 	drop_all_items()
 	return ..()
 
