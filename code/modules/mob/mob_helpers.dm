@@ -434,6 +434,13 @@
 	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
 	var/smessage_type = num2text(message_type)
 
+	if(client)
+		if(!islist(client.player_details.logging[smessage_type]))
+			client.player_details.logging[smessage_type] = list()
+
+	if(!islist(logging[smessage_type]))
+		logging[smessage_type] = list()
+
 	var/colored_message = message
 	if(color)
 		if(color[1] == "#")

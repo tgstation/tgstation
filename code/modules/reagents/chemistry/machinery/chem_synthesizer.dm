@@ -58,8 +58,7 @@
 	update_appearance()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/Destroy()
-	if(beaker)
-		QDEL_NULL(beaker)
+	QDEL_NULL(beaker)
 	return ..()
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_data(mob/user)
