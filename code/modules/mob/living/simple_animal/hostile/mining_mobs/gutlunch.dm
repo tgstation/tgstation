@@ -74,7 +74,9 @@
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/regenerate_icons(new_udder_volume, max_udder_volume)
 	cut_overlays()
-	var/static/gutlunch_full_overlay = iconstate2appearance(icon, "gl_full")
+	var/static/gutlunch_full_overlay
+	if(isnull(gutlunch_full_overlay))
+		gutlunch_full_overlay = iconstate2appearance(icon, "gl_full")
 	if(new_udder_volume == max_udder_volume)
 		add_overlay(gutlunch_full_overlay)
 	..()
