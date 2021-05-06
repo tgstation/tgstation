@@ -449,11 +449,8 @@
 		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1) * 0.5)
 
 /obj/machinery/smartfridge/organ/process(delta_time)
-	for(var/organ in contents)
-		var/obj/item/organ/O = organ
-		if(!istype(O))
-			continue
-		O.applyOrganDamage(-repair_rate * O.maxHealth * delta_time)
+	for(var/obj/item/organ/organ in contents)
+		organ.applyOrganDamage(-repair_rate * organ.maxHealth * delta_time)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
