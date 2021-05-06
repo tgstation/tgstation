@@ -65,6 +65,7 @@
 		return
 
 	to_chat(user, "<span class='danger'>[our_plant]'s thorns prick your hand. Ouch.</span>")
+	our_plant.investigate_log("rose-pricked [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(2))
 		user.update_damage_overlays()
@@ -90,6 +91,7 @@
 	SIGNAL_HANDLER
 
 	to_chat(user, "<span class='danger'>[our_plant] singes your bare hand!</span>")
+	our_plant.investigate_log("self-burned [key_name(user)] for [our_plant.force] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND))
 		user.update_damage_overlays()
@@ -118,6 +120,7 @@
 	if(target.IgniteMob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(target)] on fire with [our_plant] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(target)] on fire with [our_plant] at [AREACOORD(user)]")
+	our_plant.investigate_log("was used by [key_name(user)] to burn [key_name(target)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 
 /datum/plant_gene/trait/novaflower_attack/proc/after_flower_attack(obj/item/our_plant, atom/target, mob/user)
 	SIGNAL_HANDLER
@@ -187,6 +190,7 @@
 	to_chat(target, "<span class='danger'>You are stunned by the powerful acid of [our_plant]!</span>")
 	user.visible_message("<span class='danger'>[user] stuns [target] with the powerful acids of [our_plant]!")
 	log_combat(user, target, "attacked with deathnettle", our_plant)
+	our_plant.investigate_log("was used by [key_name(user)] to stun [key_name(target)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 
 	target.adjust_blurriness(our_plant.force / 7)
 	if(prob(20))
@@ -213,6 +217,7 @@
  */
 /datum/plant_gene/trait/nettle_burn/proc/burn_holder(obj/item/our_plant, mob/living/carbon/user)
 	to_chat(user, "<span class='danger'>[our_plant] burns your bare hand!</span>")
+	our_plant.investigate_log("self-burned [key_name(user)] for [our_plant.force] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND))
 		user.update_damage_overlays()

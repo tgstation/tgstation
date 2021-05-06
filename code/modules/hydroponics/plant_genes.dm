@@ -241,7 +241,7 @@
 			return FALSE
 
 	for(var/datum/plant_gene/trait/trait in source_seed.genes)
-		if(trait_id & trait.traid_id)
+		if(trait_ids & trait.trait_ids)
 			message_admins("Could not add [src] to [trait].")
 			return FALSE
 		if(type == trait.type)
@@ -258,7 +258,7 @@
 /datum/plant_gene/trait/proc/on_new_plant(obj/item/our_plant, newloc)
 	// Plants should always have seeds, but if a non-plant sneaks in or a plant with nulled seed, cut it out
 	if(isnull(our_plant.get_plant_seed()))
-		stack_trace("[our_plant] ([our_plant.type]) has a nulled seed value")
+		stack_trace("[our_plant] ([our_plant.type]) has a nulled seed value while trying to initialize [src]!")
 		return FALSE
 
 	// Add on any bonus lines on examine
@@ -397,12 +397,15 @@
 /datum/plant_gene/trait/cell_charge/proc/zap_target(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
-	if(iscarbon(target))
-		var/mob/living/carbon/target_carbon = target
-		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-		var/power = our_seed.potency * rate
-		if(prob(power))
-			target_carbon.electrocute_act(round(power), our_plant, 1, SHOCK_NOGLOVES)
+	if(!iscarbon(target))
+		return
+
+	our_plant.investigate_log("zapped [key_name(target)] at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
+	var/mob/living/carbon/target_carbon = target
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	var/power = our_seed.potency * rate
+	if(prob(power))
+		target_carbon.electrocute_act(round(power), our_plant, 1, SHOCK_NOGLOVES)
 
 /*
  * Recharges every cell the person is holding for a bit based on plant potency.
@@ -536,12 +539,15 @@
 /datum/plant_gene/trait/teleport/proc/squash_teleport(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
-	if(isliving(target))
-		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-		var/teleport_radius = max(round(our_seed.potency / 10), 1)
-		var/turf/T = get_turf(target)
-		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
-		do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
+	if(!isliving(target))
+		return
+
+	our_plant.investigate_log("squash-teleported [key_name(target)] at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	var/teleport_radius = max(round(our_seed.potency / 10), 1)
+	var/turf/T = get_turf(target)
+	new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
+	do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /*
  * When slipped on, makes the target teleport and either teleport the source again or delete it.
@@ -552,6 +558,7 @@
 /datum/plant_gene/trait/teleport/proc/slip_teleport(obj/item/our_plant, mob/living/carbon/target)
 	SIGNAL_HANDLER
 
+	our_plant.investigate_log("slip-teleported [key_name(target)] at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/teleport_radius = max(round(our_seed.potency / 10), 1)
 	var/turf/T = get_turf(target)
@@ -673,14 +680,19 @@
  * target - the atom being hit on thrown or slipping on our plant
  */
 /datum/plant_gene/trait/stinging/proc/prickles_inject(obj/item/our_plant, atom/target)
-	if(isliving(target) && our_plant.reagents?.total_volume)
-		var/mob/living/living_target = target
-		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-		if(living_target.reagents && living_target.can_inject())
-			var/injecting_amount = max(1, our_seed.potency * 0.2) // Minimum of 1, max of 20
-			our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)
-			to_chat(target, "<span class='danger'>You are pricked by [our_plant]!</span>")
-			log_combat(our_plant, living_target, "pricked and attempted to inject reagents from [our_plant] to [living_target]. Last touched by: [our_plant.fingerprintslast].")
+	SIGNAL_HANDLER
+
+	if(!isliving(target) || !our_plant.reagents?.total_volume)
+		return
+
+	var/mob/living/living_target = target
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	if(living_target.reagents && living_target.can_inject())
+		var/injecting_amount = max(1, our_seed.potency * 0.2) // Minimum of 1, max of 20
+		our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)
+		to_chat(target, "<span class='danger'>You are pricked by [our_plant]!</span>")
+		log_combat(our_plant, living_target, "pricked and attempted to inject reagents from [our_plant] to [living_target]. Last touched by: [our_plant.fingerprintslast].")
+		our_plant.investigate_log("pricked and injected [key_name(living_target)] and injected [injecting_amount] reagents at [AREACOORD(living_target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
 
 /// Explodes into reagent-filled smoke when squashed.
 /datum/plant_gene/trait/smoke
@@ -703,6 +715,7 @@
 /datum/plant_gene/trait/smoke/proc/make_smoke(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
+	our_plant.investigate_log("made smoke at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
 	var/datum/effect_system/smoke_spread/chem/smoke = new ()
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/splat_location = get_turf(target)
