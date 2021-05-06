@@ -49,7 +49,7 @@
 	drop_all_items()
 	beaker?.forceMove(drop_location())
 	beaker = null
-    return ..()
+	return ..()
 
 /obj/machinery/reagentgrinder/Destroy()
 	QDEL_NULL(beaker)
