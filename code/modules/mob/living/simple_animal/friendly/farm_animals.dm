@@ -149,11 +149,10 @@
 	tame_chance = 25
 	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
-	pet_bonus = TRUE
-	pet_bonus_emote = "moos happily!"
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
+	AddElement(/datum/element/pet_bonus, "moos happily!")
 	add_cell_sample()
 	. = ..()
 
@@ -267,13 +266,12 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
-	pet_bonus = TRUE
-	pet_bonus_emote = "chirps!"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/chick/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "chirps!")
 	pixel_x = base_pixel_x + rand(-6, 6)
 	pixel_y = base_pixel_y + rand(0, 10)
 	add_cell_sample()

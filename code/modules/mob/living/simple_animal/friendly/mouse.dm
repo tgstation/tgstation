@@ -182,11 +182,10 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
-	pet_bonus = TRUE
-	pet_bonus_emote = "squeaks happily!"
 
 /mob/living/simple_animal/mouse/brown/tom/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	// Tom fears no cable.
 	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, SPECIES_TRAIT)
 

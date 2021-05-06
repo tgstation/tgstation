@@ -64,5 +64,7 @@
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	turns_per_move = 10
-	pet_bonus = TRUE
-	pet_bonus_emote = "chitters proudly!"
+
+/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus/Initialize()
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "chitters proudly!")
