@@ -57684,11 +57684,6 @@
 "jwX" = (
 /obj/structure/tank_holder/extinguisher,
 /obj/machinery/light,
-/obj/machinery/camera{
-	c_tag = "Cargo - Drone Bay";
-	dir = 1;
-	pixel_x = 14
-	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "jxd" = (
