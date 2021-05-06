@@ -10,9 +10,9 @@
 	. = ..()
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
-	var/mob/living/simple_animal/valid_target = target
+	var/mob/living/valid_target = target
 	on_stat_change(new_stat = valid_target.stat) //immediately try adding flight if they're conscious
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
+	RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
 
 /datum/element/simple_flying/Detach(datum/target)
 	. = ..()
