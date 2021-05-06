@@ -46,7 +46,7 @@
 	update_appearance()
 
 /obj/machinery/reagentgrinder/deconstruct()
-    drop_all_items()
+	drop_all_items()
 	beaker?.forceMove(drop_location())
 	beaker = null
     return ..()

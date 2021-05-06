@@ -461,10 +461,10 @@
 
 	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
-	LAZYADD(logging[smessage_type], timestamped_message)
+	logging[smessage_type] += timestamped_message
 
 	if(client)
-		LAZYADD(client.player_details.logging[smessage_type], timestamped_message)
+		client.player_details.logging[smessage_type] += timestamped_message
 
 	..()
 
