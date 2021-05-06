@@ -1,0 +1,4 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - bugfix: "Icebox incinerator input will now connect correctly to the injector instead of the waste system"
