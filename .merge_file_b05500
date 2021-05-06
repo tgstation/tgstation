@@ -17265,14 +17265,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
-"cqE" = (
-/obj/structure/closet/crate/trashcart/laundry,
-/obj/item/clothing/under/rank/prisoner/skirt,
-/obj/item/clothing/under/rank/prisoner/skirt,
-/obj/item/clothing/under/rank/prisoner/skirt,
-/obj/item/clothing/shoes/sneakers/orange,
-/turf/open/floor/iron/cafeteria,
-/area/security/prison)
 "cqH" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small{
@@ -18035,6 +18027,9 @@
 	},
 /turf/open/floor/plating,
 /area/science/robotics/lab)
+"cHl" = (
+/turf/open/floor/plating/elevatorshaft,
+/area/security/prison)
 "cHo" = (
 /obj/machinery/telecomms/server/presets/engineering,
 /turf/open/floor/iron/dark/telecomms,
@@ -18923,6 +18918,15 @@
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
+"cZp" = (
+/obj/structure/closet/crate/trashcart/laundry,
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/under/rank/prisoner,
+/obj/item/clothing/shoes/sneakers/orange,
+/obj/item/clothing/shoes/sneakers/orange,
+/turf/open/floor/iron/cafeteria,
+/area/security/prison)
 "cZx" = (
 /obj/item/shovel,
 /turf/open/floor/plating/asteroid/airless,
@@ -25433,6 +25437,14 @@
 	dir = 5
 	},
 /area/command/heads_quarters/rd)
+"fES" = (
+/obj/machinery/power/solar{
+	id = "aicore";
+	name = "AI Core Solar Array"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/solarpanel/airless,
+/area/space/nearstation)
 "fET" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
@@ -25885,6 +25897,14 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/orange/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"fNn" = (
+/obj/structure/closet/crate/trashcart/laundry,
+/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/under/rank/prisoner/skirt,
+/obj/item/clothing/shoes/sneakers/orange,
+/turf/open/floor/iron/cafeteria,
+/area/security/prison)
 "fNx" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -27463,6 +27483,22 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
+"gwv" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/obj/machinery/computer/cryopod{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/cafeteria,
+/area/commons/locker)
 "gwG" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -30062,6 +30098,18 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
+"hrG" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/exoscanner{
+	pixel_y = 3
+	},
+/obj/item/circuitboard/machine/exoscanner,
+/obj/item/circuitboard/machine/exoscanner{
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/iron,
+/area/cargo/storage)
 "hrP" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/glass/beaker{
@@ -30371,22 +30419,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/commons/dorms)
-"hyC" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/effect/landmark/start/hangover,
-/obj/machinery/computer/cryopod{
-	pixel_y = 32
-	},
-/turf/open/floor/iron/cafeteria,
-/area/commons/locker)
 "hyU" = (
 /obj/structure/sign/directions/supply{
 	dir = 4;
@@ -30808,23 +30840,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
-"hJd" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/exoscanner{
-	pixel_y = 3
-	},
-/obj/item/circuitboard/machine/exoscanner,
-/obj/item/circuitboard/machine/exoscanner{
-	pixel_y = -3
-	},
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/machinery/camera{
-	c_tag = "Cargo - Drone Bay";
-	dir = 1;
-	pixel_x = 14
-	},
-/turf/open/floor/iron,
-/area/cargo/storage)
 "hJh" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -31225,18 +31240,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
-"hRp" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/cryopod{
-	dir = 8
-	},
-/turf/open/floor/iron/cafeteria,
-/area/commons/locker)
 "hRu" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
@@ -31327,10 +31330,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/central)
-"hUl" = (
-/obj/structure/cable,
-/turf/open/floor/iron/goonplaque,
-/area/hallway/secondary/entry)
 "hUF" = (
 /mob/living/simple_animal/slime,
 /turf/open/floor/engine,
@@ -34545,15 +34544,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/closed/wall/r_wall,
 /area/engineering/supermatter)
-"jnC" = (
-/obj/structure/closet/crate/trashcart/laundry,
-/obj/effect/spawner/lootdrop/prison_contraband,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/under/rank/prisoner,
-/obj/item/clothing/shoes/sneakers/orange,
-/obj/item/clothing/shoes/sneakers/orange,
-/turf/open/floor/iron/cafeteria,
-/area/security/prison)
 "jnV" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -39603,18 +39593,6 @@
 	},
 /turf/open/floor/plating,
 /area/science/server)
-"lhP" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/cryopod{
-	dir = 4
-	},
-/turf/open/floor/iron/cafeteria,
-/area/commons/locker)
 "lhV" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -41042,6 +41020,10 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
+"lJr" = (
+/obj/structure/cable,
+/turf/open/floor/iron/goonplaque,
+/area/hallway/secondary/entry)
 "lJz" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -45300,6 +45282,18 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
+"nDX" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/commons/locker)
 "nEg" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -48544,6 +48538,18 @@
 	},
 /turf/open/floor/iron,
 /area/security/prison)
+"oSS" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/commons/locker)
 "oSV" = (
 /obj/machinery/disposal/delivery_chute{
 	dir = 1
@@ -57995,9 +58001,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/security/prison)
-"sHK" = (
-/turf/open/floor/plating/elevatorshaft,
 /area/security/prison)
 "sHL" = (
 /obj/machinery/plumbing/synthesizer{
@@ -70696,14 +70699,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"xvV" = (
-/obj/machinery/power/solar{
-	id = "aicore";
-	name = "AI Core Solar Array"
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel/airless,
-/area/space/nearstation)
 "xwt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/blobstart,
@@ -93625,7 +93620,7 @@ aOP
 aRZ
 gmg
 aRW
-hyC
+gwv
 aUD
 aUD
 aAh
@@ -93883,9 +93878,9 @@ aSb
 gmg
 arc
 suF
-hRp
-hRp
-hRp
+oSS
+oSS
+oSS
 aUD
 wGT
 aRW
@@ -94140,9 +94135,9 @@ aSd
 joB
 aBx
 suF
-lhP
-lhP
-lhP
+nDX
+nDX
+nDX
 aUD
 aks
 aRW
@@ -100494,8 +100489,8 @@ aae
 aae
 aae
 nTn
-sHK
-sHK
+cHl
+cHl
 oJf
 kvb
 qUI
@@ -100751,8 +100746,8 @@ aae
 aae
 aae
 nTn
-sHK
-sHK
+cHl
+cHl
 oJf
 sHA
 fMH
@@ -101008,8 +101003,8 @@ aae
 aae
 aae
 nTn
-sHK
-sHK
+cHl
+cHl
 ozW
 pxY
 cYA
@@ -105378,7 +105373,7 @@ aae
 nTn
 nTn
 rzK
-jnC
+cZp
 ccM
 ttL
 qCK
@@ -106406,7 +106401,7 @@ kcp
 ccM
 ccM
 aeC
-cqE
+fNn
 ccM
 aNn
 gEc
@@ -156305,7 +156300,7 @@ auD
 kqz
 axT
 axT
-hUl
+lJr
 axT
 axT
 uog
@@ -182334,9 +182329,9 @@ aYr
 aYr
 aYr
 aYr
-xvV
-xvV
-xvV
+fES
+fES
+fES
 leZ
 leZ
 leZ
@@ -182848,9 +182843,9 @@ aYr
 aYr
 aYr
 aYr
-xvV
-xvV
-xvV
+fES
+fES
+fES
 leZ
 leZ
 uSH
@@ -183360,10 +183355,10 @@ aYr
 aYr
 aYr
 aYr
-xvV
-xvV
-xvV
-xvV
+fES
+fES
+fES
+fES
 mLq
 leZ
 leZ
@@ -183876,8 +183871,8 @@ gNY
 gNY
 vbT
 hdo
-xvV
-xvV
+fES
+fES
 lKt
 wvH
 wvH
@@ -184038,7 +184033,7 @@ ybt
 bsW
 bsW
 dhl
-hJd
+hrG
 wDe
 aae
 aae
@@ -184388,10 +184383,10 @@ aYr
 aYr
 aYr
 aYr
-xvV
-xvV
-xvV
-xvV
+fES
+fES
+fES
+fES
 mLq
 leZ
 leZ
@@ -184904,9 +184899,9 @@ aYr
 aYr
 aYr
 aYr
-xvV
-xvV
-xvV
+fES
+fES
+fES
 leZ
 leZ
 uSH
@@ -185418,9 +185413,9 @@ aYr
 aYr
 aYr
 aYr
-xvV
-xvV
-xvV
+fES
+fES
+fES
 leZ
 leZ
 leZ

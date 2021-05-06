@@ -45,3 +45,39 @@
       of the nonfunctional Alt+Z. Right click for beaker apparatus spills reagent,
       just like with regular beakers. Z and self attack keeps the old interaction,
       it changes transfer volume.
+2021-05-02:
+  Celotajs:
+  - qol: The roulette TGUI now looks a bit better
+  Iamgoofball:
+  - bugfix: potentially reduces overlay impact on SendMaps
+  Mothblocks:
+  - qol: Preferences are no longer dependent on gender.
+  maxymax13:
+  - qol: Pun Pun can no longer ruin all the tile alligments of the plants in the bar,
+      as plants no longer get offset when dropped.
+  tf-4:
+  - bugfix: Tram medbay storage is now wired to the grid at round start.
+2021-05-05:
+  ATHATH:
+  - qol: Shattering a heretic blade as a heretic or a heretic monster to teleport
+      a random, mostly safe location is now done by activating the blade in-hand instead
+      of by pressing an action button. This information will be given to a heretic
+      or a heretic monster if they examine a heretic blade.
+  - soundadd: Teleporting using a heretic blade now plays a glass shattering noise
+      and produces a slightly different message (that factors in whether or not the
+      teleportation attempt was successful).
+  - bugfix: Teleporting using a heretic blade is now considered to be a magical teleportation
+      method by the game.
+  cacogen:
+  - qol: RPD can destroy broken disposal pipes
+  - qol: Securing a disposal pipe over a broken disposal pipe will delete it
+  - balance: Securing a disposal pipe over a floor tile with a crowbar in your offhand
+      will remove the floor tile before trying to secure it
+  necromanceranne:
+  - imageadd: Changes the CE Insulated gloves sprite into a unique appearance, and
+      not just infiltrator gloves but blood orange.
+  ninjanomnom:
+  - qol: You can repair canisters now by left clicking with an active welder. Deconstruction,
+      which previously took this slot, has been moved to right click instead.
+  tf-4:
+  - bugfix: PDAs will no longer flash at you over messages that you've already read

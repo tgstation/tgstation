@@ -630,7 +630,7 @@
 	dir = 8
 	},
 /obj/item/stack/cable_coil/cut,
-/obj/item/stack/tile/iron{
+/obj/item/stack/tile/iron/base{
 	pixel_x = 3;
 	pixel_y = -4
 	},
