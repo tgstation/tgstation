@@ -1,7 +1,8 @@
 
 // --- Below here are special, unique plant traits that only belong to certain plants. ---
 // They are un-removable and cannot be mutated randomly, and should never be graftable.
-/// Holymelon's anti-magic trait
+
+/// Holymelon's anti-magic trait, based on potency
 /datum/plant_gene/trait/anti_magic
 	name = "Anti-Magic Vacuoles"
 	/// The amount of anti-magic blocking uses we have.
@@ -38,7 +39,7 @@
 	new /obj/effect/decal/cleanable/ash(our_plant.drop_location())
 	qdel(our_plant)
 
-/// Rose's prickly thorns on pickup.
+/// Rose's prick on backfire
 /datum/plant_gene/trait/rose_thorns
 	name = "Rose Thorns"
 
@@ -70,7 +71,7 @@
 	if(affecting?.receive_damage(2))
 		user.update_damage_overlays()
 
-/// Novaflower's burn on pickup
+/// Novaflower's burn on backfire
 /datum/plant_gene/trait/novaflower_heat
 	name = "Burning Stem"
 
@@ -97,7 +98,7 @@
 		user.update_damage_overlays()
 	return BACKFIRE_CANCEL_ACTION
 
-/// Novaflower fire on attack
+/// Novaflower force + fire on attack + leaves falling off
 /datum/plant_gene/trait/novaflower_attack
 	name = "Heated Petals"
 
@@ -173,6 +174,7 @@
 		to_chat(user, "<span class='warning'>All the petals have fallen off [our_plant] from violent whacking!</span>")
 		qdel(our_plant)
 
+/// Deathnettle force + stun on attack + leaves falling off
 /datum/plant_gene/trait/nettle_attack/death
 	name = "Aggressive Stinging Nettles"
 	force_multiplier = 0.4
@@ -198,7 +200,7 @@
 		target.Paralyze(our_plant.force / 0.75)
 	target.drop_all_held_items()
 
-/// Normal Nettle burn on attack/pickup
+/// Normal Nettle burn on backfire
 /datum/plant_gene/trait/nettle_burn
 	name = "Stinging Stem"
 
@@ -222,7 +224,7 @@
 	if(affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND))
 		user.update_damage_overlays()
 
-/// DeathNettle burn on attack/pickup
+/// DeathNettle burn on backfire
 /datum/plant_gene/trait/nettle_burn/death
 	name = "Aggressive Stinging Stem"
 
@@ -232,3 +234,45 @@
 		user.Paralyze(100)
 		to_chat(user, "<span class='userdanger'>You are stunned by the powerful acids of [our_plant]!</span>")
 	return BACKFIRE_CANCEL_ACTION
+
+/// Ghost-Chili heating/backfire
+/datum/plant_gene/trait/chili_heat
+	name = "Active Capsicum Glands"
+	/// The mob currently holding the chili.
+	var/mob/living/carbon/human/held_mob
+	/// The chili this gene is tied to, to track it for processing.
+	var/obj/item/our_chili
+
+/datum/plant_gene/trait/chili_heat/on_new_plant(obj/item/our_plant, newloc)
+	. = ..()
+	if(!.)
+		return
+
+	our_plant.AddElement(/datum/element/plant_backfire)
+	var/obj/item/our_chili = our_plant
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/begin_heating_holder)
+	RegisterSignal(our_plant, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/stop_heating_holder)
+
+/// Begin processing the chili.
+/datum/plant_gene/trait/chili_heat/proc/begin_heating_holder(obj/item/our_plant, mob/living/carbon/user)
+	SIGNAL_HANDLER
+
+	held_mob = user
+	START_PROCESSING(SSobj, our_chili)
+
+/// Stop processing the chili.
+/datum/plant_gene/trait/chili_heat/proc/stop_heating_holder(datum/source, mob/living/carbon/user)
+	SIGNAL_HANDLER
+
+	held_mob = null
+	STOP_PROCESSING(SSobj, our_chili)
+
+/// Heats up the mob currently holding the chili until they drop it. Stops processing if it's not being held.
+/datum/plant_gene/trait/chili_heat/process(delta_time)
+	if(our_chili.loc == held_mob)
+		if(held_mob.is_holding(our_chili))
+			held_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
+			if(DT_PROB(5, delta_time))
+				to_chat(held_mob, "<span class='warning'>Your hand holding [our_chili] burns!</span>")
+	else
+		stop_heating_holder()
