@@ -305,8 +305,8 @@
 /**
  * Right click
  *
- * Used for Rightclick interactions, in similar fashion of AltClick.
- * Returns RightClick().
+ * Used for right-clicking interactions, in similar fashion of AltClick.
+ * Returns [atom/proc/RightClick] on the atom being right-clicked. This sends a signal.
  * Arguments:
  * * atom/target - The atom being rightclicked.
  */
@@ -316,8 +316,8 @@
 /**
  * Proc used for right-clicking
  *
- * Used for Rightclick interactions, called by RightClickOn().
- * Returns TRUE upon checking if a right-click has happened.
+ * Used for right-click interactions, called by [mob/proc/RightClickOn].
+ * Returns TRUE if a signal hooked [COMSIG_CLICK_RIGHT] right-click has happened.
  * Arguments:
  * * mob/user - The mob right-clicking.
  */
