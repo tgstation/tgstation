@@ -1,7 +1,7 @@
 /**
  * # simple flying element!
  *
- * Non bespoke element (1 in existence) that makes animals fly while living and
+ * Non bespoke element (1 in existence) that makes animals fly while living and... not while dead!
  * Note: works for carbons and above, but please do something better. humans have wings got dangit!
  */
 /datum/element/simple_flying
