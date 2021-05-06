@@ -10,7 +10,7 @@
 	yield = 4
 	instability = 25
 	growthstages = 5
-	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/nettle_attack, /datum/plant_gene/trait/nettle_burn)
 	mutatelist = list(/obj/item/seeds/nettle/death)
 	reagents_add = list(/datum/reagent/toxin/acid = 0.5)
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
@@ -25,7 +25,7 @@
 	endurance = 25
 	maturation = 8
 	yield = 2
-	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging, /datum/plant_gene/trait/nettle_attack/death, /datum/plant_gene/trait/nettle_burn/death)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/toxin/acid/fluacid = 0.5, /datum/reagent/toxin/acid = 0.5)
 	rarity = 20
@@ -49,35 +49,9 @@
 	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
 
-/obj/item/food/grown/nettle/Initialize(mapload, obj/item/seeds/new_seed)
-	. = ..()
-	force = round((5 + seed.potency / 5), 1)
-	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/nettle.proc/burn_holder, list(TRAIT_PIERCEIMMUNE))
-
 /obj/item/food/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|TOXLOSS)
-
-/*
- * Burn the person holding the nettle's hands. Their active hand takes burn = the nettle's force.
- *
- * user - the carbon who is holding the nettle.
- */
-/obj/item/food/grown/nettle/proc/burn_holder(mob/living/carbon/user)
-	to_chat(user, "<span class='danger'>[src] burns your bare hand!</span>")
-	var/obj/item/bodypart/affecting = user.get_active_hand()
-	if(affecting?.receive_damage(0, force, wound_bonus = CANT_WOUND))
-		user.update_damage_overlays()
-
-/obj/item/food/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(force > 0)
-		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
-	else
-		to_chat(usr, "<span class='warning'>All the leaves have fallen off [src] from violent whacking.</span>")
-		qdel(src)
 
 /obj/item/food/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
@@ -87,26 +61,3 @@
 	force = 30
 	wound_bonus = CANT_WOUND
 	throwforce = 15
-
-/obj/item/food/grown/nettle/death/Initialize(mapload, obj/item/seeds/new_seed)
-	. = ..()
-	force = round((5 + seed.potency / 2.5), 1)
-
-/obj/item/food/grown/nettle/death/burn_holder(mob/living/carbon/user)
-	. = ..()
-	if(prob(50))
-		user.Paralyze(100)
-		to_chat(user, "<span class='userdanger'>You are stunned by the powerful acids of [src]!</span>")
-
-/obj/item/food/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
-	if(!..())
-		return
-	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
-		log_combat(user, M, "attacked", src)
-
-		M.adjust_blurriness(force/7)
-		if(prob(20))
-			M.Unconscious(force / 0.3)
-			M.Paralyze(force / 0.75)
-		M.drop_all_held_items()

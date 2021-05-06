@@ -99,14 +99,17 @@
 
 /obj/item/food/grown/tomato/blue/bluespace/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/tomato/blue/bluespace.proc/splat_user, extra_genes = list(/datum/plant_gene/trait/squash))
+	AddElement(/datum/element/plant_backfire, extra_genes = list(/datum/plant_gene/trait/squash))
+	RegisterSignal(src, COMSIG_PLANT_ON_BACKFIRE, .proc/splat_user)
 
 /*
  * Splat our tomato on our user. Called from [/datum/element/plant_backfire]
  *
  * user - the mob handling the bluespace tomato
  */
-/obj/item/food/grown/tomato/blue/bluespace/proc/splat_user(mob/living/carbon/user)
+/obj/item/food/grown/tomato/blue/bluespace/proc/splat_user(datum/source, mob/living/carbon/user)
+	SIGNAL_HANDLER
+
 	if(prob(50))
 		to_chat(user, "<span class='danger'>[src] slips out of your hand!</span>")
 		attack_self(user)
@@ -138,7 +141,8 @@
 
 /obj/item/food/grown/tomato/killer/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	AddElement(/datum/element/plant_backfire, /obj/item/food/grown/tomato/killer.proc/early_awaken, extra_genes = list(/datum/plant_gene/trait/squash))
+	AddElement(/datum/element/plant_backfire)
+	RegisterSignal(src, COMSIG_PLANT_ON_BACKFIRE, .proc/early_awaken)
 
 /obj/item/food/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)
@@ -182,7 +186,9 @@
  *
  * user - the mob handling the killer tomato
  */
-/obj/item/food/grown/tomato/killer/proc/early_awaken(mob/living/carbon/user)
+/obj/item/food/grown/tomato/killer/proc/early_awaken(datum/source, mob/living/carbon/user)
+	SIGNAL_HANDLER
+
 	if(!awakening && prob(25))
 		to_chat(user, "<span class='danger'>[src] begins to growl and shake!</span>")
 		begin_awaken(1 SECONDS)

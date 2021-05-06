@@ -226,7 +226,6 @@
 /obj/item/seeds/chanter/jupitercup/Initialize(mapload,nogenes)
 	. = ..()
 	if(!nogenes)
-		unset_mutability(/datum/plant_gene/reagent/liquidelectricity, PLANT_GENE_EXTRACTABLE)
 		unset_mutability(/datum/plant_gene/trait/plant_type/carnivory, PLANT_GENE_REMOVABLE)
 
 /obj/item/food/grown/mushroom/jupitercup
