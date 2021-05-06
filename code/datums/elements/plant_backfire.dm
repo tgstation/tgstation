@@ -9,17 +9,14 @@
 	var/extra_traits
 	/// Any plant genes we want to check that are required for our plant to be dangerous. Plants without a gene in this list will be considered safe. List of typepaths.
 	var/extra_genes
-	/// The proc path of the backfire effect of the plant.
-	var/backfire_procpath
 
-/datum/element/plant_backfire/Attach(datum/target, backfire_procpath, extra_traits, extra_genes)
+/datum/element/plant_backfire/Attach(datum/target, extra_traits, extra_genes)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
 	src.extra_traits = extra_traits
 	src.extra_genes = extra_genes
-	src.backfire_procpath = backfire_procpath
 
 	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, .proc/attack_safety_check)
 	RegisterSignal(target, COMSIG_ITEM_PICKUP, .proc/pickup_safety_check)
@@ -40,8 +37,8 @@
 
 	if(plant_safety_check(source, user))
 		return
-	call(source, backfire_procpath)(user)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, user) & BACKFIRE_CANCEL_ACTION)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /*
  * Checks before we pick up the plant if we're okay to continue.
@@ -54,7 +51,7 @@
 
 	if(plant_safety_check(source, user))
 		return
-	call(source, backfire_procpath)(user)
+	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, user)
 
 /*
  * Checks before we throw the plant if we're okay to continue.
@@ -68,8 +65,8 @@
 	var/mob/living/thrower = arguments[4] // 4th arg = mob/thrower
 	if(plant_safety_check(source, thrower))
 		return
-	call(source, backfire_procpath)(thrower)
-	return COMPONENT_CANCEL_THROW
+	if(SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, thrower) & BACKFIRE_CANCEL_ACTION)
+		return COMPONENT_CANCEL_THROW
 
 /*
  * Actually checks if our user is safely handling our plant.

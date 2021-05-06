@@ -1,170 +1,169 @@
-/// Plants that glow.
-#define GLOW_ID "glow"
-/// Plant types.
-#define PLANT_TYPE_ID "plant_type"
-/// Plants that affect the reagent's temperature.
-#define TEMP_CHANGE_ID "temperature_change"
-/// Plants that affect the reagent contents.
-#define CONTENTS_CHANGE_ID "contents_change"
-/// Plants that do something special when they impact.
-#define THROW_IMPACT_ID "special_throw_impact"
-
+/// Plant gene datums - things that build and modify a plant or seed.
 /datum/plant_gene
+	/// The name of the gene.
 	var/name
-	var/mutability_flags = PLANT_GENE_EXTRACTABLE | PLANT_GENE_REMOVABLE ///These flags tells the genemodder if we want the gene to be extractable, only removable or neither.
+	/// Flags that determine if a gene can be modified.
+	var/mutability_flags
 
-/datum/plant_gene/proc/get_name() // Used for manipulator display and gene disk name.
-	var/formatted_name
-	if(!(mutability_flags & PLANT_GENE_REMOVABLE && mutability_flags & PLANT_GENE_EXTRACTABLE))
-		if(mutability_flags & PLANT_GENE_REMOVABLE)
-			formatted_name += "Fragile "
-		else if(mutability_flags & PLANT_GENE_EXTRACTABLE)
-			formatted_name += "Essential "
-		else
-			formatted_name += "Immutable "
-	formatted_name += name
-	return formatted_name
+/*
+ * Returns the formatted name of the plant gene.
+ *
+ * Overridden by the various subtypes of plant genes to format their respective names.
+ */
+/datum/plant_gene/proc/get_name()
+	return name
 
-/datum/plant_gene/proc/can_add(obj/item/seeds/S)
-	return !istype(S, /obj/item/seeds/sample) // Samples can't accept new genes
+/*
+ * Check if the seed can accept this plant gene.
+ *
+ * our_seed - the seed we're adding the gene to
+ *
+ * Returns TRUE if the seed can take the gene, and FALSE otherwise.
+ */
+/datum/plant_gene/proc/can_add(obj/item/seeds/our_seed)
+	return !istype(our_seed, /obj/item/seeds/sample) // Samples can't accept new genes.
 
+/// Copies over vars and information about our current gene to a new gene and returns the new instance of gene.
 /datum/plant_gene/proc/Copy()
-	var/datum/plant_gene/G = new type
-	G.mutability_flags = mutability_flags
-	return G
+	var/datum/plant_gene/new_gene = new type
+	new_gene.mutability_flags = mutability_flags
+	return new_gene
 
-// Core plant genes store 5 main variables: lifespan, endurance, production, yield, potency
+/// Core plant genes. Stores the main variables: lifespan, endurance, production, yield, potency, instability, weed rate/chance
 /datum/plant_gene/core
-	var/value
+	/// The number value of our core gene.
+	var/value = 0
 
 /datum/plant_gene/core/get_name()
 	return "[name] [value]"
 
-/datum/plant_gene/core/proc/apply_stat(obj/item/seeds/S)
+/*
+ * Apply our core gene's stats to our seed's stats.
+ */
+/datum/plant_gene/core/proc/apply_stat(obj/item/seeds/our_seed)
 	return
 
-/datum/plant_gene/core/New(i = null)
-	..()
-	if(!isnull(i))
-		value = i
+/datum/plant_gene/core/New(initial_value = 0)
+	value = initial_value
 
 /datum/plant_gene/core/Copy()
-	var/datum/plant_gene/core/C = ..()
-	C.value = value
-	return C
+	. = ..()
+	var/datum/plant_gene/core/new_core_gene = .
+	new_core_gene.value = value
+	return
 
-/datum/plant_gene/core/can_add(obj/item/seeds/S)
-	if(!..())
+/datum/plant_gene/core/can_add(obj/item/seeds/our_seed)
+	. = ..()
+	if(!.)
 		return FALSE
-	return S.get_gene(src.type)
+	return our_seed.get_gene(type) // We can't double-add core plant genes.
 
 /datum/plant_gene/core/lifespan
 	name = "Lifespan"
 	value = 25
 
-/datum/plant_gene/core/lifespan/apply_stat(obj/item/seeds/S)
-	S.lifespan = value
-
+/datum/plant_gene/core/lifespan/apply_stat(obj/item/seeds/our_seed)
+	our_seed.lifespan = value
 
 /datum/plant_gene/core/endurance
 	name = "Endurance"
 	value = 15
 
-/datum/plant_gene/core/endurance/apply_stat(obj/item/seeds/S)
-	S.endurance = value
-
+/datum/plant_gene/core/endurance/apply_stat(obj/item/seeds/our_seed)
+	our_seed.endurance = value
 
 /datum/plant_gene/core/production
 	name = "Production Speed"
 	value = 6
 
-/datum/plant_gene/core/production/apply_stat(obj/item/seeds/S)
-	S.production = value
-
+/datum/plant_gene/core/production/apply_stat(obj/item/seeds/our_seed)
+	our_seed.production = value
 
 /datum/plant_gene/core/yield
 	name = "Yield"
 	value = 3
 
-/datum/plant_gene/core/yield/apply_stat(obj/item/seeds/S)
-	S.yield = value
-
+/datum/plant_gene/core/yield/apply_stat(obj/item/seeds/our_seed)
+	our_seed.yield = value
 
 /datum/plant_gene/core/potency
 	name = "Potency"
 	value = 10
 
-/datum/plant_gene/core/potency/apply_stat(obj/item/seeds/S)
-	S.potency = value
+/datum/plant_gene/core/potency/apply_stat(obj/item/seeds/our_seed)
+	our_seed.potency = value
 
 /datum/plant_gene/core/instability
 	name = "Stability"
 	value = 10
 
-/datum/plant_gene/core/instability/apply_stat(obj/item/seeds/S)
-	S.instability = value
+/datum/plant_gene/core/instability/apply_stat(obj/item/seeds/our_seed)
+	our_seed.instability = value
 
 /datum/plant_gene/core/weed_rate
 	name = "Weed Growth Rate"
 	value = 1
 
-/datum/plant_gene/core/weed_rate/apply_stat(obj/item/seeds/S)
-	S.weed_rate = value
-
+/datum/plant_gene/core/weed_rate/apply_stat(obj/item/seeds/our_seed)
+	our_seed.weed_rate = value
 
 /datum/plant_gene/core/weed_chance
 	name = "Weed Vulnerability"
 	value = 5
 
-/datum/plant_gene/core/weed_chance/apply_stat(obj/item/seeds/S)
-	S.weed_chance = value
+/datum/plant_gene/core/weed_chance/apply_stat(obj/item/seeds/our_seed)
+	our_seed.weed_chance = value
 
-
-// Reagent genes store reagent ID and reagent ratio. Amount of reagent in the plant = 1 + (potency * rate)
+/// Reagent genes store a reagent ID and reagent ratio.
 /datum/plant_gene/reagent
 	name = "Nutriment"
+	mutability_flags = PLANT_GENE_REMOVABLE
+	/// The actual reagent that this gene is tied to.
 	var/reagent_id = /datum/reagent/consumable/nutriment
+	/// The amount of reagent generated by the plant. The equation is [1 + ((max_volume*(potency/100)) * rate)]
 	var/rate = 0.04
 
 /datum/plant_gene/reagent/get_name()
 	var/formatted_name
-	if(!(mutability_flags & PLANT_GENE_REMOVABLE && mutability_flags & PLANT_GENE_EXTRACTABLE))
-		if(mutability_flags & PLANT_GENE_REMOVABLE)
-			formatted_name += "Fragile "
-		else if(mutability_flags & PLANT_GENE_EXTRACTABLE)
-			formatted_name += "Essential "
-		else
-			formatted_name += "Immutable "
+	if(!(mutability_flags & PLANT_GENE_REMOVABLE))
+		formatted_name += "Fragile "
 	formatted_name += "[name] production [rate*100]%"
 	return formatted_name
 
-/datum/plant_gene/reagent/proc/set_reagent(reag_id)
-	reagent_id = reag_id
+/*
+ * Set our reagent's ID and name to the passed reagent.
+ *
+ * new_reagent_id - typepath of the reagent we're setting this gene to
+ */
+/datum/plant_gene/reagent/proc/set_reagent(new_reagent_id)
+	reagent_id = new_reagent_id
 	name = "UNKNOWN"
 
-	var/datum/reagent/R = GLOB.chemical_reagents_list[reag_id]
-	if(R && R.type == reagent_id)
-		name = R.name
+	var/datum/reagent/found_reagent = GLOB.chemical_reagents_list[new_reagent_id]
+	if(found_reagent?.type == reagent_id)
+		name = found_reagent.name
 
-/datum/plant_gene/reagent/New(reag_id = null, reag_rate = 0)
-	..()
-	if(reag_id && reag_rate)
-		set_reagent(reag_id)
-		rate = reag_rate
+/datum/plant_gene/reagent/New(initial_reagent_id, initial_reagent_rate = 0)
+	. = ..()
+	if(initial_reagent_id && initial_reagent_rate)
+		set_reagent(initial_reagent_id)
+		rate = initial_reagent_rate
 
 /datum/plant_gene/reagent/Copy()
-	var/datum/plant_gene/reagent/G = ..()
-	G.name = name
-	G.reagent_id = reagent_id
-	G.rate = rate
-	return G
+	. = ..()
+	var/datum/plant_gene/reagent/new_reagent_gene = .
+	new_reagent_gene.name = name
+	new_reagent_gene.reagent_id = reagent_id
+	new_reagent_gene.rate = rate
+	return
 
-/datum/plant_gene/reagent/can_add(obj/item/seeds/S)
-	if(!..())
+/datum/plant_gene/reagent/can_add(obj/item/seeds/our_seed)
+	. = ..()
+	if(!.)
 		return FALSE
-	for(var/datum/plant_gene/reagent/R in S.genes)
-		if(R.reagent_id == reagent_id && R.rate <= rate)
-			return FALSE
+	for(var/datum/plant_gene/reagent/seed_reagent in our_seed.genes)
+		if(seed_reagent.reagent_id == reagent_id && seed_reagent.rate <= rate)
+			return FALSE // We can upgrade reagent genes if our rate is greater than the one already in the plant.
 	return TRUE
 
 /**
@@ -184,16 +183,19 @@
 	name = "Polypyrylium Oligomers"
 	reagent_id = /datum/reagent/medicine/polypyr
 	rate = 0.15
+	mutability_flags = null
 
 /datum/plant_gene/reagent/liquidelectricity
 	name = "Enriched Liquid Electricity"
 	reagent_id = /datum/reagent/consumable/liquidelectricity/enriched
 	rate = 0.1
+	mutability_flags = null
 
 /datum/plant_gene/reagent/carbon
 	name = "Carbon"
 	reagent_id = /datum/reagent/carbon
 	rate = 0.1
+	mutability_flags = null
 
 /// Traits that affect the grown product.
 /datum/plant_gene/trait
@@ -201,17 +203,28 @@
 	var/rate = 0.05
 	/// Bonus lines displayed on examine.
 	var/examine_line = ""
-	/// Traits that share this ID cannot be placed on the same plant.
-	var/trait_id
+	/// Traits that share an ID in this list cannot be placed on the same plant.
+	var/trait_ids
 	/// Flags that modify the final product.
 	var/trait_flags
 	/// A blacklist of seeds that a trait cannot be attached to.
 	var/list/obj/item/seeds/seed_blacklist
 
 /datum/plant_gene/trait/Copy()
-	var/datum/plant_gene/trait/G = ..()
-	G.rate = rate
-	return G
+	. = ..()
+	var/datum/plant_gene/trait/new_trait_gene = .
+	new_trait_gene.rate = rate
+	return
+
+/datum/plant_gene/trait/get_name() // Used for manipulator display and gene disk name.
+	var/formatted_name
+	if(!(mutability_flags & PLANT_GENE_REMOVABLE))
+		if(!(mutability_flags & PLANT_GENE_MUTATABLE))
+			formatted_name += "Immutable "
+		else
+			formatted_name += "Essential "
+	formatted_name += name
+	return formatted_name
 
 /*
  * Checks if we can add the trait to the seed in question.
@@ -219,7 +232,8 @@
  * source_seed - the seed genes we're adding the trait too
  */
 /datum/plant_gene/trait/can_add(obj/item/seeds/source_seed)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 
 	for(var/obj/item/seeds/found_seed as anything in seed_blacklist)
@@ -227,7 +241,8 @@
 			return FALSE
 
 	for(var/datum/plant_gene/trait/trait in source_seed.genes)
-		if(trait_id && trait.trait_id == trait_id)
+		if(trait_id & trait.traid_id)
+			message_admins("Could not add [src] to [trait].")
 			return FALSE
 		if(type == trait.type)
 			return FALSE
@@ -270,7 +285,8 @@
 /datum/plant_gene/trait/squash
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
-	trait_id = THROW_IMPACT_ID
+	trait_ids = THROW_IMPACT_ID | REAGENT_TRANSFER_ID
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 // Register a signal that our plant can be squashed on add.
 /datum/plant_gene/trait/squash/on_new_plant(obj/item/food/grown/our_plant, newloc)
@@ -324,6 +340,7 @@
 	name = "Slippery Skin"
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /datum/plant_gene/trait/slip/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -355,6 +372,7 @@
 /datum/plant_gene/trait/cell_charge
 	name = "Electrical Activity"
 	rate = 0.2
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /datum/plant_gene/trait/cell_charge/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -416,11 +434,12 @@
  * Adds (1.4 + potency * rate) light range and (potency * (rate + 0.01)) light_power to products.
  */
 /datum/plant_gene/trait/glow
-
 	name = "Bioluminescence"
 	rate = 0.03
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
-	trait_id = GLOW_ID
+	trait_ids = GLOW_ID
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	/// The color of our bioluminesence.
 	var/glow_color = "#C3E381"
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/seed)
@@ -443,7 +462,6 @@
  * Adds - (potency * (rate * 0.2)) light power to products.
  */
 /datum/plant_gene/trait/glow/shadow
-
 	name = "Shadow Emission"
 	rate = 0.04
 	glow_color = "#AAD84B"
@@ -495,6 +513,7 @@
 /datum/plant_gene/trait/teleport
 	name = "Bluespace Activity"
 	rate = 0.1
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /datum/plant_gene/trait/teleport/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -554,6 +573,7 @@
 	name = "Densified Chemicals"
 	rate = 2
 	trait_flags = TRAIT_HALVES_YIELD
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /datum/plant_gene/trait/maxchem/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -573,6 +593,7 @@
 	name = "Perennial Growth"
 	/// Don't allow replica pods to be multi harvested, please.
 	seed_blacklist = list(/obj/item/seeds/replicapod)
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /*
  * Allows a plant to be turned into a battery when cabling is applied.
@@ -581,6 +602,7 @@
  */
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /datum/plant_gene/trait/battery/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -633,6 +655,8 @@
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
 	examine_line = "<span class='info'>It's quite prickley.</span>"
+	trait_ids = REAGENT_TRANSFER_ID
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /datum/plant_gene/trait/stinging/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -661,6 +685,7 @@
 /// Explodes into reagent-filled smoke when squashed.
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /datum/plant_gene/trait/smoke/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -690,6 +715,7 @@
 /// Makes the plant and its seeds fireproof. From lavaland plants.
 /datum/plant_gene/trait/fire_resistance
 	name = "Fire Resistance"
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /datum/plant_gene/trait/fire_resistance/on_new_seed(obj/item/seeds/new_seed)
 	if(!(new_seed.resistance_flags & FIRE_PROOF))
@@ -706,6 +732,7 @@
 /// Invasive spreading lets the plant jump to other trays, and the spreading plant won't replace plants of the same type.
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /datum/plant_gene/trait/invasive/on_new_seed(obj/item/seeds/new_seed)
 	. = ..()
@@ -771,7 +798,8 @@
  */
 /datum/plant_gene/trait/brewing
 	name = "Auto-Distilling Composition"
-	trait_id = CONTENTS_CHANGE_ID
+	trait_ids = CONTENTS_CHANGE_ID
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /**
  * Similar to auto-distilling, but instead of brewing the plant's contents it juices it.
@@ -780,7 +808,8 @@
  */
 /datum/plant_gene/trait/juicing
 	name = "Auto-Juicing Composition"
-	trait_id = CONTENTS_CHANGE_ID
+	trait_ids = CONTENTS_CHANGE_ID
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /**
  * Plays a laughter sound when someone slips on it.
@@ -789,6 +818,7 @@
  */
 /datum/plant_gene/trait/plant_laughter
 	name = "Hallucinatory Feedback"
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 	/// Sounds that play when this trait triggers
 	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
 
@@ -820,6 +850,8 @@
  */
 /datum/plant_gene/trait/eyes
 	name = "Oculary Mimicry"
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	/// Our googly eyes appearance.
 	var/mutable_appearance/googly
 
 /datum/plant_gene/trait/eyes/on_new_plant(obj/item/our_plant, newloc)
@@ -835,7 +867,8 @@
 /datum/plant_gene/trait/sticky
 	name = "Prickly Adhesion"
 	examine_line = "<span class='info'>It's quite sticky.</span>"
-	trait_id = THROW_IMPACT_ID
+	trait_ids = THROW_IMPACT_ID
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /datum/plant_gene/trait/sticky/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -856,8 +889,9 @@
  */
 /datum/plant_gene/trait/chem_heating
 	name = "Exothermic Activity"
-	trait_id = TEMP_CHANGE_ID
+	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /**
  * This trait is the opposite of above - it cools down the plant's chemical contents on harvest.
@@ -865,13 +899,14 @@
  */
 /datum/plant_gene/trait/chem_cooling
 	name = "Endothermic Activity"
-	trait_id = TEMP_CHANGE_ID
+	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
 
 /// Plant type traits. Incompatible with one another.
-/datum/plant_gene/trait/plant_type // Parent type
+/datum/plant_gene/trait/plant_type
 	name = "you shouldn't see this"
-	trait_id = PLANT_TYPE_ID
+	trait_ids = PLANT_TYPE_ID
 
 /// Weeds don't get annoyed by weeds in their tray.
 /datum/plant_gene/trait/plant_type/weed_hardy
@@ -888,9 +923,3 @@
 /// Plant doesn't get annoyed by pests in their tray.
 /datum/plant_gene/trait/plant_type/carnivory
 	name = "Obligate Carnivory"
-
-#undef GLOW_ID
-#undef PLANT_TYPE_ID
-#undef TEMP_CHANGE_ID
-#undef CONTENTS_CHANGE_ID
-#undef THROW_IMPACT_ID

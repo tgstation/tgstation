@@ -227,7 +227,7 @@
 			t_prod.seed.desc = initial(new_prod.desc)
 			t_prod.seed.plantname = initial(new_prod.plantname)
 			for(var/datum/plant_gene/trait/trait in parent.myseed.genes)
-				if(trait.can_add(t_prod.seed))
+				if((trait.mutability_flags & PLANT_GENE_MUTATABLE) && trait.can_add(t_prod.seed))
 					t_prod.seed.genes += trait
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
@@ -578,12 +578,12 @@
 /obj/item/seeds/proc/add_random_traits(lower = 0, upper = 2)
 	var/amount_random_traits = rand(lower, upper)
 	for(var/i in 1 to amount_random_traits)
-		var/random_trait = pick((subtypesof(/datum/plant_gene/trait)-typesof(/datum/plant_gene/trait/plant_type)))
-		var/datum/plant_gene/trait/T = new random_trait
-		if(T.can_add(src))
-			genes += T
+		var/random_trait = pick(subtypesof(/datum/plant_gene/trait))
+		var/datum/plant_gene/trait/picked_random_trait = new random_trait
+		if((picked_random_trait.mutability_flags & PLANT_GENE_MUTATABLE) && picked_random_trait.can_add(src))
+			genes += picked_random_trait
 		else
-			qdel(T)
+			qdel(picked_random_trait)
 
 /obj/item/seeds/proc/add_random_plant_type(normal_plant_chance = 75)
 	if(prob(normal_plant_chance))

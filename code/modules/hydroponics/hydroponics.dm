@@ -628,10 +628,10 @@
 
 		var/list/current_traits = list()
 		for(var/datum/plant_gene/gene in myseed.genes)
-			if(istype(gene, /datum/plant_gene/core) || (istype(gene,/datum/plant_gene/trait/plant_type)) || islist(gene))
+			if(islist(gene))
 				continue
-			if(!(gene.mutability_flags & PLANT_GENE_REMOVABLE) || !(gene.mutability_flags & PLANT_GENE_EXTRACTABLE))
-				continue //No bypassing unextractable or essential genes.
+			if(!(gene.mutability_flags & PLANT_GENE_REMOVABLE))
+				continue // Don't show genes that can't be removed.
 			current_traits[gene.name] = gene
 		var/removed_trait = (input(user, "Select a trait to remove from the [myseed.plantname].", "Plant Trait Removal") as null|anything in sortList(current_traits))
 		if(removed_trait == null)

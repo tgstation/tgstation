@@ -2227,6 +2227,7 @@
 #include "code\modules\hydroponics\sample.dm"
 #include "code\modules\hydroponics\seed_extractor.dm"
 #include "code\modules\hydroponics\seeds.dm"
+#include "code\modules\hydroponics\unique_plant_genes.dm"
 #include "code\modules\hydroponics\beekeeping\beebox.dm"
 #include "code\modules\hydroponics\beekeeping\beekeeper_suit.dm"
 #include "code\modules\hydroponics\beekeeping\honey_frame.dm"
