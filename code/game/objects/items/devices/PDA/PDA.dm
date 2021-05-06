@@ -178,7 +178,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/update_overlays()
 	. = ..()
-	var/mutable_appearance/overlay = new('icons/obj/pda.dmi')
+	if(!initial(icon))
+		return
+	var/mutable_appearance/overlay = new(initial(icon))
 	overlay.pixel_x = overlays_x_offset
 	if(id)
 		overlay.icon_state = "id_overlay"
