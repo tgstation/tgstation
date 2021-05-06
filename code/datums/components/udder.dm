@@ -107,7 +107,7 @@
  *
  * Proc called from attacking the component parent with the correct item, moves reagents into the glass basically.
  */
-/obj/item/udder/proc/milk(var/obj/item/reagent_containers/glass/milk_holder, mob/user)
+/obj/item/udder/proc/milk(obj/item/reagent_containers/glass/milk_holder, mob/user)
 	if(milk_holder.reagents.total_volume >= milk_holder.volume)
 		to_chat(user, "<span class='warning'>[milk_holder] is full.</span>")
 		return
