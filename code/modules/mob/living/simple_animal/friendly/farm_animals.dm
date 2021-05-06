@@ -298,7 +298,7 @@
 	..()
 	amount_grown = 0
 
-GLOBAL_LIST_EMPTY(chickens)
+GLOBAL_VAR_INIT(chickens, 0)
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
