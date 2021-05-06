@@ -129,3 +129,52 @@
   tralezab:
   - bugfix: you can no longer copy honorbound, burdened, wizard mutations, other heinous
       shit
+2021-05-05:
+  Celotajs:
+  - imageadd: PDA icons are now generated with GAGS
+  Fikou:
+  - bugfix: fixed fake chasms not dropping floortiles
+  - bugfix: fixed borgs having their floor tiles deleted when reskinning
+  MadMedicineMan:
+  - bugfix: Renamed Outpost Medical on Cams
+  Urumasi:
+  - rscadd: Lawyers can now object by slamming the table.
+  - code_imp: Table slamming is now handled using signals.
+  ninjanomnom:
+  - bugfix: Monkeys are once again capable of using guns, take back your freedom!
+  - rscadd: Monkey ai is now actually able to make use of guns instead of just player
+      controlled monkeys.
+  - rscadd: Monkey ai will prioritize guns once they learn of what guns can do.
+  - rscadd: Monkey ai now understands the ancient art of throwing.
+  - rscadd: Monkey ai will use random objects on each other in their surroundings
+      and in their hands.
+  - rscadd: Monkey ai will occasionally "gift" people things.
+  - rscadd: Monkey ai consumes food once in a while according to their desire.
+2021-05-06:
+  ATHATH:
+  - bugfix: Cloth golems and podpeople can now strip people again.
+  - bugfix: Bananium golems are considered to be advanced tool users again.
+  - bugfix: Killer tomatoes no longer require the liquid contents trait to have a
+      chance to self-animate when picked up without proper protection.
+  ArcaneMusic:
+  - imageadd: Exploration Drone's scanning dishes have less SOUL and more STYLE.
+  Celotajs:
+  - qol: You can now see in game preferences that the implant uplink takes 4 TC from
+      you.
+  - code_imp: The license details in the TGUI changelog are now correct.
+  LemonInTheDark:
+  - code_imp: Td should spike slightly less, assuming harddels actually go down
+  - code_imp: You feel a great disturbance in the force, mob code has changed. Please
+      report any odd targeting behavior on the issue tracker
+  - bugfix: h2o jetpacks will no longer leave trails of water in space
+  Seris02:
+  - bugfix: many of the toggle preferences in preferences_toggles.dm going into the
+      unsorted chat log
+  - bugfix: many of the role greetings from sending to the wrong chat filters/ to
+      unsorted
+  - bugfix: miscellaneous other strings getting sent to the unsorted chat filter
+  mandosegua:
+  - bugfix: Swarmers are no longer able to eat the shuttle engines and make hull breaches
+      in their place.
+  tralezab:
+  - rscadd: 'Cargo requests can now be discussed over #cargobus!'

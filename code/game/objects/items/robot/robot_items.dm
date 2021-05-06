@@ -56,13 +56,13 @@
 			mode = 0
 	switch(mode)
 		if(0)
-			to_chat(user, "Power reset. Hugs!")
+			to_chat(user, "<span class='infoplain'>Power reset. Hugs!</span>")
 		if(1)
-			to_chat(user, "Power increased!")
+			to_chat(user, "<span class='infoplain'>Power increased!</span>")
 		if(2)
-			to_chat(user, "BZZT. Electrifying arms...")
+			to_chat(user, "<span class='warningplain'>BZZT. Electrifying arms...</span>")
 		if(3)
-			to_chat(user, "ERROR: ARM ACTUATORS OVERLOADED.")
+			to_chat(user, "<span class='warningplain'>ERROR: ARM ACTUATORS OVERLOADED.</span>")
 
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user, params)
 	if(M == user)
@@ -824,7 +824,7 @@
 	return
 
 /**
-* Attack_self will pass for the stored item. 
+* Attack_self will pass for the stored item.
 */
 /obj/item/borg/apparatus/attack_self(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
@@ -907,7 +907,7 @@
 				. += "[R.volume] units of [R.name]"
 		else
 			. += "Nothing."
-		
+
 		. += "<span class='notice'> <i>Right-clicking</i> will splash the beaker on the ground.</span>"
 	. += "<span class='notice'> <i>Alt-click</i> will drop the currently stored beaker. </span>"
 

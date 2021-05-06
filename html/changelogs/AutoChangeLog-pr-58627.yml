@@ -1,0 +1,6 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Tramstation now has several new cameras to help the AI look over the map."
+  - rscadd: "Tramstation now has a public lavaland dock beside the Research wing."
+  - bugfix: "Tramstation paramedics now have Cargo access."

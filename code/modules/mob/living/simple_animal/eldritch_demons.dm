@@ -250,7 +250,7 @@
 			return
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Shoot(atom/targeted_atom)
-	target = targeted_atom
+	GiveTarget(targeted_atom)
 	AttackingTarget()
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
@@ -261,7 +261,7 @@
 	if(target == back || target == front)
 		return
 	if(back)
-		back.target = target
+		back.GiveTarget(target)
 		back.AttackingTarget()
 	if(!Adjacent(target))
 		return
