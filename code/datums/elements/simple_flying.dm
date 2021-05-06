@@ -18,6 +18,7 @@
 	. = ..()
 	UnregisterSignal(target, COMSIG_MOB_STATCHANGE)
 
+///signal called by the stat of the target changing
 /datum/element/simple_flying/proc/on_stat_change(mob/living/simple_animal/target, new_stat)
 	SIGNAL_HANDLER
 
