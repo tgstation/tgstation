@@ -688,6 +688,7 @@
 #include "code\datums\elements\rad_insulation.dm"
 #include "code\datums\elements\ridable.dm"
 #include "code\datums\elements\selfknockback.dm"
+#include "code\datums\elements\simple_flying.dm"
 #include "code\datums\elements\skittish.dm"
 #include "code\datums\elements\snail_crawl.dm"
 #include "code\datums\elements\squashable.dm"

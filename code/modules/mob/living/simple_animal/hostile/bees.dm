@@ -64,6 +64,7 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	generate_bee_visuals()
+	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/poison/bees/mob_pickup(mob/living/L)
