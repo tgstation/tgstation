@@ -1,0 +1,4 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - bugfix: "Fixes tramstation incinerator mix input and scrubber not getting properly connected and some random layer adapters being visible inside walls."
