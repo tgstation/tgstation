@@ -670,6 +670,7 @@
 	#define COMPONENT_HOSTILE_NO_ATTACK (1<<0)
 ///from base of mob/living/simple_animal/hostile/regalrat: (mob/living/simple_animal/hostile/regalrat/king)
 #define COMSIG_RAT_INTERACT "rat_interaction"
+#define COMSIG_SIMPLEMOB_SENTIENCEPOTION "simplemob_sentiencepotion"
 
 ///from /obj/item/slapper/attack_obj(): (source=mob/living/slammer, obj/structure/table/slammed_table)
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"

@@ -145,9 +145,6 @@
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
-	food_type = list(/obj/item/food/grown/wheat)
-	tame_chance = 25
-	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
 	pet_bonus = TRUE
 	pet_bonus_emote = "moos happily!"
@@ -155,7 +152,9 @@
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
 	add_cell_sample()
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/wheat), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
 	. = ..()
+
 
 /mob/living/simple_animal/cow/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -172,7 +171,7 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/cow/tamed()
+/mob/living/simple_animal/cow/proc/tamed(mob/living/tamer)
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
