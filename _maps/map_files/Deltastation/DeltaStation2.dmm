@@ -52447,7 +52447,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/cargo/miningoffice)
 "ibr" = (
 /obj/structure/cable,
@@ -75877,6 +75877,11 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table/reinforced,
+/obj/machinery/microwave{
+	desc = "Cooks and boils stuff, somehow.";
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "ocW" = (
@@ -95336,9 +95341,14 @@
 /turf/open/floor/wood,
 /area/command/meeting_room/council)
 "sYS" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/iron,
-/area/cargo/miningoffice)
+/area/cargo/storage)
 "sYU" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/green{
@@ -159133,8 +159143,8 @@ ncY
 snR
 fQy
 oQN
-wzW
 sYS
+mFE
 eID
 vZl
 kfD
