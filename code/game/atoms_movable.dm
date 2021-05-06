@@ -123,15 +123,16 @@
 
 	. = ..()
 
-	//We add ourselves to this list, best to clear it out
-	LAZYCLEARLIST(area_sensitive_contents)
-
 	for(var/movable_content in contents)
 		qdel(movable_content)
 
 	LAZYCLEARLIST(client_mobs_in_contents)
 
 	moveToNullspace()
+
+	//We add ourselves to this list, best to clear it out
+	//DO it after moveToNullspace so memes can be had
+	LAZYCLEARLIST(area_sensitive_contents)
 
 	vis_contents.Cut()
 
@@ -284,6 +285,7 @@
 
 /atom/movable/proc/stop_pulling()
 	if(pulling)
+		SEND_SIGNAL(pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 		pulling.set_pulledby(null)
 		setGrabState(GRAB_PASSIVE)
 		pulling = null
@@ -1057,6 +1059,8 @@
 
 /atom/movable/proc/can_be_pulled(user, grab_state, force)
 	if(src == user || !isturf(loc))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_ATOM_CAN_BE_PULLED, user) & COMSIG_ATOM_CANT_PULL)
 		return FALSE
 	if(anchored || throwing)
 		return FALSE

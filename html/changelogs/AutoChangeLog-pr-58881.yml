@@ -1,0 +1,5 @@
+author: "Greniza"
+delete-after: True
+changes: 
+  - imageadd: "New candle animations"
+  - imageadd: "New animations for altar candles"
