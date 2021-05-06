@@ -488,6 +488,7 @@
 #include "code\datums\components\dejavu.dm"
 #include "code\datums\components\earprotection.dm"
 #include "code\datums\components\edit_complainer.dm"
+#include "code\datums\components\egg_layer.dm"
 #include "code\datums\components\electrified_buckle.dm"
 #include "code\datums\components\embedded.dm"
 #include "code\datums\components\explodable.dm"

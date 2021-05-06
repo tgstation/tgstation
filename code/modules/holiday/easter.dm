@@ -42,19 +42,24 @@
 	emote_hear = list("hops.")
 	emote_see = list("hops around","bounces up and down")
 	butcher_results = list(/obj/item/food/meat/slab = 1)
-	egg_type = /obj/item/food/egg/loaded
-	food_type = /obj/item/food/grown/carrot
-	eggsleft = 10
-	eggsFertile = FALSE
 	icon_prefix = "rabbit"
-	feedMessages = list("It nibbles happily.","It noms happily.")
-	layMessage = list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling.")
 	pet_bonus = TRUE
 	pet_bonus_emote = "hops around happily!"
 	can_be_held = TRUE
 
+/mob/living/simple_animal/chicken/rabbit/Initialize()
+	. = ..()
+	EggLayingComponent()
+
+/mob/living/simple_animal/chicken/rabbit/proc/EggLayingComponent()
+	AddComponent(/datum/component/egg_layer, /obj/item/food/egg/loaded, list(/obj/item/food/grown/carrot), list("It nibbles happily.","It noms happily."), list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."), 10, FALSE)
+
 /mob/living/simple_animal/chicken/rabbit/empty //top hats summon these kinds of rabbits instead of the normal kind
-	eggsleft = 0 //if you want to harvest toys and easter bunny gear from these guys, you're gonna need to feed them carrots first
+
+//if you want to harvest toys and easter bunny gear from these guys, you're gonna need to feed them carrots first (0 initial eggs to lay)
+/mob/living/simple_animal/chicken/rabbit/empty/EggLayingComponent()
+	AddComponent(/datum/component/egg_layer, /obj/item/food/egg/loaded, list(/obj/item/food/grown/carrot), list("It nibbles happily.","It noms happily."), list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."), 0, FALSE)
+
 
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"

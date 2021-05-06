@@ -107,9 +107,10 @@
 	icon_dead = "b_rabbit_dead"
 	icon_prefix = "b_rabbit"
 	minbodytemp = 0
-	eggsleft = 0
-	egg_type = null
 	speak = list()
+
+/mob/living/simple_animal/chicken/rabbit/normal/EggLayingComponent()
+	return // no eggs
 
 /*Cabin's forest. Removed in the new cabin map since it was buggy and I prefer manual placement.*/
 /datum/map_generator/snowy
