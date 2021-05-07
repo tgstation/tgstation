@@ -819,13 +819,13 @@
 			if(!(entry.name in wanted_spell_names))
 				continue
 			if(entry?.CanBuy(wizard,src))
+				wanted_spell_names -= entry.name
 				for(var/i in 1 to wanted_spell_names[entry.name])
 					entry.Buy(wizard,src)
 					if(entry.limit)
 						entry.limit--
 					uses -= entry.cost
 				entry.refundable = FALSE //once you go loading out, you never go back
-				wanted_spell_names -= entry.name
 				continue
 			if(wanted_spell_names.len)
 				failed = TRUE//we went through the entire loop without finding what we wanted, sound the alarm!
