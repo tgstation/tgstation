@@ -456,7 +456,6 @@
 					to_chat(quirker, "<span class='danger'>You feel self-conscious and stop talking. You need a moment to recover!</span>")
 					break
 			if(prob(max(5,(nearby_people*12.5*moodmod)))) //Minimum 1/20 chance of stutter
-				new_message += pick("uh,","erm,","um,")
 				word = html_decode(word)
 				var/leng = length(word)
 				var/stuttered = ""
