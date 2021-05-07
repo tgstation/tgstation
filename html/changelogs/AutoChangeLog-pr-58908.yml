@@ -1,5 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Syndicate uplink types can now be changed again"
-  - bugfix: "Radio uplink frequencies are now random again"

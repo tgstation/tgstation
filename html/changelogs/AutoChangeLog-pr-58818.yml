@@ -1,4 +1,0 @@
-author: "SparkezelPL"
-delete-after: True
-changes: 
-  - bugfix: "Single tank bombs no longer just delete themselves"

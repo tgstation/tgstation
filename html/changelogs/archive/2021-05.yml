@@ -178,3 +178,43 @@
       in their place.
   tralezab:
   - rscadd: 'Cargo requests can now be discussed over #cargobus!'
+2021-05-07:
+  Celotajs:
+  - bugfix: GAGS-generated clothing can now have proper blood splatters and damage
+  Fikou:
+  - imageadd: centers hydroponic sprays, adds new sprites for plant-b-gone
+  Greniza:
+  - imageadd: New candle animations
+  - imageadd: New animations for altar candles
+  InsaneRed:
+  - bugfix: Icebox incinerator input will now connect correctly to the injector instead
+      of the waste system
+  - bugfix: Fixes tramstation incinerator mix input and scrubber not getting properly
+      connected and some random layer adapters being visible inside walls.
+  MMMiracles:
+  - rscadd: Tramstation now has several new cameras to help the AI look over the map.
+  - rscadd: Tramstation now has a public lavaland dock beside the Research wing.
+  - bugfix: Tramstation paramedics now have Cargo access.
+  Maurukas:
+  - bugfix: spammable logging in chem grenades
+  Owai-Seek:
+  - rscadd: BBQ Sauce can now be ordered in the kitchen console.
+  RandomGamer123:
+  - bugfix: Syndicate uplink types can now be changed again
+  - bugfix: Radio uplink frequencies are now random again
+  SparkezelPL:
+  - bugfix: Single tank bombs no longer just delete themselves
+  manofpepsi:
+  - rscadd: The old delta maint is back! (with minor changes), the delta warehouse
+      is now split into two for the drone bay.
+  necromanceranne:
+  - bugfix: Prevents guns that can misfire reaching 100% probability.
+  norill:
+  - bugfix: fixed buggy organ fridges repair rate
+  - bugfix: fixed upgraded organ fridges not repairing organs
+  prodirus:
+  - bugfix: The cursed slot machine sprite in the Greed lavaland ruin is now slightly
+      less cursed.
+  tralezab:
+  - bugfix: dogs now resist before fetching or harassing, to unbuckle from stuff if
+      they need to
