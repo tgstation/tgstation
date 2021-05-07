@@ -408,14 +408,19 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		else
 			fantasy_quality--
 
+		//name gets changed by the component so i want to store it for feedback later
+		var/before_name = name
+		//naming these vars that i'm putting into the fantasy component to make it more readable
+		var/canFail = FALSE
+		var/announce = FALSE
 		//Apply fantasy with affix. failing this should never happen, but if it does it should not be silent.
-		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), FALSE, FALSE) == COMPONENT_INCOMPATIBLE)
+		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
 			to_chat(usr, "<span class='warning'>Fantasy component not compatible with [src].</span>")
 			CRASH("fantasy component incompatible with object of type: [type]")
 
-		to_chat(usr, "<span class='notice'>[src] now has [picked_affix_name]!</span>")
-		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [src]")
-		message_admins("<span class='notice'>[key_name(usr)] has added [picked_affix_name] fantasy affix to [src]</span>")
+		to_chat(usr, "<span class='notice'>[before_name] now has [picked_affix_name]!</span>")
+		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]")
+		message_admins("<span class='notice'>[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]</span>")
 
 /obj/item/attack_hand(mob/user, list/modifiers)
 	. = ..()
