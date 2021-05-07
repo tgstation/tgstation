@@ -96,8 +96,8 @@
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
-	if(islist(antag_datums))
-		QDEL_LIST(antag_datums)
+	QDEL_LIST(antag_datums)
+	QDEL_NULL(language_holder)
 	current = null
 	return ..()
 
