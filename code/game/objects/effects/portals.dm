@@ -52,14 +52,13 @@
 /obj/effect/portal/attack_tk(mob/user)
 	return
 
-/obj/effect/portal/proc/on_entered(atom/newloc, atom/movable/AM, atom/oldloc)
+/obj/effect/portal/proc/on_entered(atom/newloc, atom/movable/entering_movable, atom/oldloc)
 	SIGNAL_HANDLER
-	if(isobserver(AM))
+	if(isobserver(entering_movable))
 		return
 	if(linked && (get_turf(oldloc) == get_turf(linked)))
 		return
-	if(!teleport(AM))
-		return
+	teleport(entering_movable)
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
