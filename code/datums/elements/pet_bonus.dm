@@ -20,7 +20,7 @@
 
 	src.emote_message = emote_message
 	src.moodlet = moodlet
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND , .proc/on_attack_hand)
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 
 /datum/element/pet_bonus/Detach(datum/target)
 	. = ..()
@@ -34,5 +34,5 @@
 
 	new /obj/effect/temp_visual/heart(pet.loc)
 	if(emote_message && prob(33))
-		pet.manual_emote("[emote_message]")
+		pet.manual_emote(emote_message)
 	SEND_SIGNAL(petter, COMSIG_ADD_MOOD_EVENT, pet, moodlet, pet)
