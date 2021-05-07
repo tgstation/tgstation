@@ -7579,25 +7579,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/service/lawoffice)
-"bdh" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/table/reinforced,
-/obj/item/storage/box/donkpockets,
-/obj/structure/window{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/cargo/storage)
 "bdo" = (
 /mob/living/simple_animal/hostile/cockroach,
 /turf/open/floor/plating,
@@ -52447,7 +52428,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/cargo/miningoffice)
 "ibr" = (
 /obj/structure/cable,
@@ -58973,7 +58954,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/cargo_technician,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "jQa" = (
@@ -68509,14 +68489,8 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/item/kirbyplants/random,
-/obj/structure/window{
-	dir = 8
-	},
-/obj/structure/window{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/cargo,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "mnC" = (
@@ -71670,11 +71644,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/window{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/mug/tea{
+	pixel_x = -7;
+	pixel_y = 8
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/trash/chips,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "ndg" = (
@@ -75877,6 +75851,11 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table/reinforced,
+/obj/machinery/microwave{
+	desc = "Cooks and boils stuff, somehow.";
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "ocW" = (
@@ -87118,14 +87097,18 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/computer/cargo,
-/obj/structure/window{
-	dir = 4
+/obj/item/paper_bin{
+	pixel_x = 4;
+	pixel_y = 6
 	},
-/obj/structure/window{
-	dir = 1
+/obj/item/stamp/denied{
+	pixel_x = -7;
+	pixel_y = 9
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/item/stamp{
+	pixel_x = -7;
+	pixel_y = 1
+	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "qUc" = (
@@ -89007,26 +88990,6 @@
 	heat_capacity = 1e+006
 	},
 /area/engineering/storage_shared)
-"rtZ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/door/window/southleft{
-	req_access_txt = "31"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/cargo/storage)
 "rum" = (
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
@@ -90396,16 +90359,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/closet/crate/bin,
-/obj/structure/window,
-/obj/structure/window{
-	dir = 8
-	},
-/obj/item/trash/cheesie,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/trash/can{
-	pixel_x = -8
-	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "rMx" = (
@@ -91119,10 +91072,6 @@
 	dir = 4
 	},
 /obj/machinery/modular_computer/console/preset/cargochat/cargo,
-/obj/structure/window{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "rWm" = (
@@ -92391,16 +92340,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	desc = "Cooks and boils stuff, somehow.";
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/structure/window,
-/obj/structure/window{
-	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -95336,9 +95275,14 @@
 /turf/open/floor/wood,
 /area/command/meeting_room/council)
 "sYS" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/iron,
-/area/cargo/miningoffice)
+/area/cargo/storage)
 "sYU" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/green{
@@ -158615,7 +158559,7 @@ jpQ
 iuR
 uld
 mny
-bdh
+jpQ
 rMo
 tII
 ffH
@@ -158873,7 +158817,7 @@ jpQ
 hXn
 rWl
 jPM
-rtZ
+hJN
 sMk
 vma
 eHP
@@ -159133,8 +159077,8 @@ ncY
 snR
 fQy
 oQN
-wzW
 sYS
+mFE
 eID
 vZl
 kfD
