@@ -40,7 +40,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/cockroach/proc/make_squashable()
-	AddElement(/datum/element/squashable, squash_chance = 50, squash_damage = 1)
+	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 
 /mob/living/simple_animal/hostile/cockroach/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
@@ -97,7 +97,7 @@
 	AddElement(/datum/element/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
 
 /mob/living/simple_animal/hostile/cockroach/hauberoach/make_squashable()
-	AddElement(/datum/element/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/simple_animal/hostile/cockroach/hauberoach/.proc/on_squish)
+	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/simple_animal/hostile/cockroach/hauberoach/.proc/on_squish)
 
 ///Proc used to override the squashing behavior of the normal cockroach.
 /mob/living/simple_animal/hostile/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)

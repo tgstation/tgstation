@@ -927,9 +927,13 @@
 	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE)
 	AddElement(/datum/element/caltrop, min_damage = force)
 	update()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
-/obj/item/light/Crossed(atom/movable/AM)
-	. = ..()
+/obj/item/light/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(!isliving(AM))
 		return
 	var/mob/living/L = AM

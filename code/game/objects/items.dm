@@ -299,7 +299,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/turf/T = loc
 	loc = null
-	loc = T
+	forceMove(T)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
@@ -492,7 +492,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(item_flags & DROPDEL)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
-	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
+	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
 	user?.update_equipment_speed_mods()
