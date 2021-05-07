@@ -64,28 +64,31 @@
 	if(do_after(user, 50 * P.plunge_mod, target = src) && !activated)
 		start_chemming()
 
-/obj/structure/geyser/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner))
-		if(discovered)
-			to_chat(user, "<span class='warning'>This geyser has already been discovered!</span>")
-		else
-			to_chat(user, "<span class='notice'>You discovered the geyser and mark it on the GPS system!</span>")
-			if(discovery_message)
-				to_chat(user, discovery_message)
+/obj/structure/geyser/attackby(obj/item/item, mob/user, params)
+	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
+		return
 
-			discovered = TRUE
-			if(true_name)
-				name = true_name
+	if(discovered)
+		to_chat(user, "<span class='warning'>This geyser has already been discovered!</span>")
+		return
 
-			AddComponent(/datum/component/gps, true_name) //put it on the gps so miners can mark it and chemists can profit off of it
+	to_chat(user, "<span class='notice'>You discovered the geyser and mark it on the GPS system!</span>")
+	if(discovery_message)
+		to_chat(user, discovery_message)
 
-			if(isliving(user))
-				var/mob/living/living = user
+	discovered = TRUE
+	if(true_name)
+		name = true_name
 
-				var/obj/item/card/id/card = living.get_idcard()
-				if(card)
-					to_chat(user, "<span class='notice'>[point_value] mining points have been paid out!</span>")
-					card.mining_points = point_value
+	AddComponent(/datum/component/gps, true_name) //put it on the gps so miners can mark it and chemists can profit off of it
+
+	if(isliving(user))
+		var/mob/living/living = user
+
+		var/obj/item/card/id/card = living.get_idcard()
+		if(card)
+			to_chat(user, "<span class='notice'>[point_value] mining points have been paid out!</span>")
+			card.mining_points = point_value
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel
