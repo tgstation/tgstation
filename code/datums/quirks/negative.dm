@@ -432,7 +432,14 @@
 
 	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
+
+	var/moodmod
+	if(CONFIG_GET(flag/disable_human_mood))
+		moodmod = (max(50, 0.1*quirk_holder.nutrition))
+	else
+		var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
+		moodmod = (mood.mood_level*(7-mood.sanity_level)) //low sanity levels are better, they max at 6
+
 	var/nearby_people = 0
 	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
 		if(H.client)
@@ -443,13 +450,15 @@
 		var/list/new_message = list()
 		var/mob/living/carbon/human/quirker = quirk_holder
 		for(var/word in message_split)
-			if(prob(nearby_people+mood.sanity_level+(10-mood.mood_level)) && word != message_split[1])
+			if(prob(max(12.50,(100*(nearby_people/(nearby_people+1))*moodmod))) && word != message_split[1]) //Minimum 1/8 chance of filler, multiplicative inverse for nearby people
 				new_message += pick("uh,","erm,","um,")
-				if(prob(max(1, (1+nearby_people)*mood.sanity_level*(10-mood.mood_level))))
+				if(prob(min(0.2,(0.002*((1+nearby_people)*12.5)*moodmod)))) ////Max 1 in 20 chance of cutoff after a succesful filler roll, for 50% odds in a 15 word sentence
+
 					to_chat(quirker, "<span class='danger'>You feel self-conscious and stop talking. You need a moment to recover!</span>")
-					quirker.silent = max(3, quirker.silent)
+					quirker.silent = max(5, quirker.silent)
 					break
-			if(prob(nearby_people+mood.sanity_level+(10-mood.mood_level)))
+			if(prob(max(12.50,(100*(nearby_people/(nearby_people+1))*moodmod)))) //Minimum 1/8 chance of stutter, multiplicative inverse for nearby people
+				new_message += pick("uh,","erm,","um,")
 				word = html_decode(word)
 				var/leng = length(word)
 				var/stuttered = ""
@@ -472,7 +481,7 @@
 				new_message += word
 		message = jointext(new_message, " ")
 	var/mob/living/carbon/human/quirker = quirk_holder
-	if(prob(min(87.5, (nearby_people*(mood.sanity_level+(10-mood.mood_level))))))
+	if(prob(min(50,(0.50*((1+nearby_people)*12.5)*moodmod)))) //Max 50% chance of not talking
 		if(dumb_thing)
 			to_chat(quirker, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
 			dumb_thing = FALSE //only once per life
@@ -480,9 +489,9 @@
 				new/obj/item/food/spaghetti/pastatomato(get_turf(quirker)) //now that's what I call spaghetti code
 		else
 			to_chat(quirk_holder, "<span class='warning'>You think that wouldn't add much to the conversation and decide not to say it.</span>")
-			if(mood.mood_level < 5 && prob(100-(mood.mood_level*20)))
+			if(prob(min(25,(0.25*((1+nearby_people)*12.75)*moodmod)))) //Max 25% chance of silence stacks after succesful not talking roll
 				to_chat(quirker, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
-				quirker.silent = max(5, quirker.silent)
+				quirker.silent = max(7, quirker.silent)
 		speech_args[SPEECH_MESSAGE] = pick("Uh.","Erm.","Um.")
 	else
 		speech_args[SPEECH_MESSAGE] = message
