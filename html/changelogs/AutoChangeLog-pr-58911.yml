@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - admin: "moves sdql spell from debug tab to vv dropdown"
