@@ -683,6 +683,7 @@
 #include "code\datums\elements\light_eater.dm"
 #include "code\datums\elements\movetype_handler.dm"
 #include "code\datums\elements\obj_regen.dm"
+#include "code\datums\elements\pet_bonus.dm"
 #include "code\datums\elements\plant_backfire.dm"
 #include "code\datums\elements\point_of_interest.dm"
 #include "code\datums\elements\rad_insulation.dm"

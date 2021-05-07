@@ -209,8 +209,10 @@
 	food_type = list()
 	tame_chance = 0
 	bonus_tame_chance = 0
-	pet_bonus = TRUE
-	pet_bonus_emote = "bloops happily!"
+
+/mob/living/simple_animal/hostile/carp/lia/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "bloops happily!")
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
@@ -224,8 +226,6 @@
 	food_type = list()
 	tame_chance = 0
 	bonus_tame_chance = 0
-	pet_bonus = TRUE
-	pet_bonus_emote = "bloops happily!"
 	/// Keeping track of the nuke disk for the functionality of storing it.
 	var/obj/item/disk/nuclear/disky
 	/// Location of the file storing disk overlays
@@ -235,6 +235,7 @@
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "bloops happily!")
 	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors))
 	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART
