@@ -63,7 +63,7 @@
 		target.notify_ghost_cloning("Your heart is being defibrillated!")
 		target.grab_ghost() // Shove them back in their body.
 
-	user.visible_message("<span class='warning'>[user] begins to place their hand on [target]'s chest.</span>", "<span class='warning'>You begin to place your hand on [target]'s chest...</span>")
+	user.visible_message("<span class='warning'>[user] begins to place [user.p_their()] hand on [target]'s chest.</span>", "<span class='warning'>You begin to place your hand on [target]'s chest...</span>")
 	if(do_after(user, 5 SECONDS, target))
 		for(var/obj/item/clothing/C in target.get_equipped_items())
 			if((C.body_parts_covered & CHEST) && (C.clothing_flags & THICKMATERIAL)) //check to see if something is obscuring their chest.
