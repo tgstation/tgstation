@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - admin: "Added fantasy affixes to the VV dropdown for items!"
