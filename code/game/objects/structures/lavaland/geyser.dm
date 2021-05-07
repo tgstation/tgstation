@@ -88,7 +88,7 @@
 		var/obj/item/card/id/card = living.get_idcard()
 		if(card)
 			to_chat(user, "<span class='notice'>[point_value] mining points have been paid out!</span>")
-			card.mining_points = point_value
+			card.mining_points += point_value
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel
