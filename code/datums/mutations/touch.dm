@@ -55,8 +55,6 @@
 		to_chat(user,"<span class='warning'>The electricity doesn't seem to affect [target]...</span>")
 		return ..()
 
-#define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
-
 /obj/item/melee/touch_attack/shock/proc/defib(mob/living/carbon/target, mob/living/carbon/user)
 
 	if(target.can_defib() == DEFIB_POSSIBLE)

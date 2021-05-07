@@ -1,5 +1,5 @@
 //backpack item
-#define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
+
 
 /obj/item/defibrillator
 	name = "defibrillator"
@@ -682,4 +682,4 @@
 /obj/item/shockpaddles/syndicate/cyborg
 	req_defib = FALSE
 
-#undef HALFWAYCRITDEATH
+
