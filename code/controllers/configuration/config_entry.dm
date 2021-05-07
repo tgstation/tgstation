@@ -86,6 +86,19 @@
 	config_entry_value = auto_trim ? trim(str_val) : str_val
 	return TRUE
 
+/datum/config_entry/icons
+	abstract_type = /datum/config_entry/icons
+	var/auto_trim = TRUE
+
+/datum/config_entry/icons/vv_edit_var(var_name, var_value)
+	return var_name != NAMEOF(src, auto_trim) && ..()
+
+/datum/config_entry/icons/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
+	config_entry_value = auto_trim ? trim(str_val) : str_val
+	return TRUE
+
 /datum/config_entry/number
 	config_entry_value = 0
 	abstract_type = /datum/config_entry/number

@@ -2,7 +2,7 @@
 	. = text
 	if(!CONFIG_GET(flag/emojis))
 		return
-	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
+	var/static/list/emojis = icon_states(icon(CONFIG_GET(icons/emojis_file)))
 	var/parsed = ""
 	var/pos = 1
 	var/search = 0
@@ -34,7 +34,7 @@
 	. = text
 	if(!CONFIG_GET(flag/emojis))
 		return
-	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
+	var/static/list/emojis = icon_states(icon(CONFIG_GET(icons/emojis_file)))
 	var/final = "" //only tags are added to this
 	var/pos = 1
 	var/search = 0
