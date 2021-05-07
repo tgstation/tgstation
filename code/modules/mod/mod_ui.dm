@@ -35,6 +35,7 @@
 			active_power = module.active_power_cost,
 			use_power = module.use_power_cost,
 			module_complexity = module.complexity,
+			configurable = module.configurable,
 			id = module.tgui_id,
 			ref = REF(module)
 		)
@@ -57,6 +58,9 @@
 		if("activate")
 			toggle_activate(usr)
 		if("select")
-			var/obj/item/mod/module/thingy = locate(params["ref"]) in modules
-			thingy.on_select()
+			var/obj/item/mod/module/module = locate(params["ref"]) in modules
+			module.on_select()
+		if("configure")
+			var/obj/item/mod/module/module = locate(params["ref"]) in modules
+			module.ui_interact(usr)
 	return TRUE

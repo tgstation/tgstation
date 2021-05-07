@@ -17,6 +17,8 @@
 	var/use_power_cost = 0
 	/// ID used by their TGUI
 	var/tgui_id = null
+	/// Can we be configured
+	var/configurable = FALSE
 	/// Linked MODsuit
 	var/obj/item/mod/control/mod
 	/// If we're an active module, what item are we?
