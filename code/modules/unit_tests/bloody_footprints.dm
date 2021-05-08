@@ -55,4 +55,4 @@
 			footprint_total += 1
 
 	TEST_ASSERT(footprint_total, "The floor somehow lost its footprints after being walked over")
-	TEST_ASSERT(footprint_total == 1, "The floor had more then one set of footprints in it ([footprint_total]), something is fucked")
+	TEST_ASSERT_EQUAL(footprint_total, 1, "The floor had more than one set of footprints in it, something is fucked")
