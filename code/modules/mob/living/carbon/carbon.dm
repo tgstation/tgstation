@@ -858,7 +858,7 @@
 	if (!dna?.check_mutation(HARS))
 		var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
 
-		if (QDELETED(BR))
+		if (QDELETED(BR) || !BR)
 			return DEFIB_FAIL_NO_BRAIN
 
 		if (BR.organ_flags & ORGAN_FAILING)
