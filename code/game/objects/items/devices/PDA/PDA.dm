@@ -20,6 +20,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	worn_icon_state = "pda"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	greyscale_config = /datum/greyscale_config/pda
+	greyscale_colors = "#999875#a92323"
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
@@ -176,7 +178,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/update_overlays()
 	. = ..()
-	var/mutable_appearance/overlay = new(icon)
+	if(!initial(icon))
+		return
+	var/mutable_appearance/overlay = new(initial(icon))
 	overlay.pixel_x = overlays_x_offset
 	if(id)
 		overlay.icon_state = "id_overlay"

@@ -224,7 +224,6 @@
 	//Burn it based on transfered gas
 	target.hotspot_expose((tank_mix.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
-	SSair.add_to_active(target)
 
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()

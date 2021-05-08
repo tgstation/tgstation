@@ -1,0 +1,5 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - bugfix: "Properly fixes the stray extuingisher cabinet in deltastation."
+  - bugfix: "Fixes the lack of ai cameras in drone rooms on tram and metastation."
