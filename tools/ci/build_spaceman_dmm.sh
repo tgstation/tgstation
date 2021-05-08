@@ -17,9 +17,3 @@ git reset --hard FETCH_HEAD
 
 #Builds dmdoc and dreamchecker at once, they'll use same github actions cache
 cargo build --release --bin dreamchecker --bin dmdoc
-
-chmod +x target/release/dreamchecker
-cp target/release/dreamchecker .
-
-chmod +x target/release/dmdoc
-cp target/release/dmdoc .
