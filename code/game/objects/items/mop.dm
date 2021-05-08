@@ -18,6 +18,7 @@
 	var/mopspeed = 15
 	force_string = "robust... against germs"
 	var/insertable = TRUE
+	var/notches = 0 //How many people have fallen to our mop. Code is shamelessly stolen from highlander
 
 /obj/item/mop/Initialize()
 	. = ..()
@@ -41,6 +42,68 @@
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER),0.1)
 	reagents.remove_any(val2remove) //reaction() doesn't use up the reagents
 
+
+/obj/item/mop/examine(mob/user)
+	. = ..()
+	. += "It has [!notches ? "nothing" : "[notches] notches"] scratched into the handle."
+
+/obj/item/mop/attack(mob/living/target, mob/living/user)
+	var/living_state = target_stat
+	. = ..()
+	if(!QDELETED(target) && target.stat == DEAD && target.mind && living_state != DEAD)
+		add_notch(user)
+
+/obj/item/claymore/highlander/proc/add_notch(mob/living/user) //DYNAMIC CLAYMORE PROGRESSION SYSTEM - THIS IS THE FUTURE
+	notches++
+	force++
+	var/new_name = name
+	switch(notches)
+		if(1)
+			to_chat(user, "<span class='notice'>Your first kill - hopefully one of many. You scratch a notch into [src]'s handle.</span>")
+			new_name = "notched mop"
+		if(2)
+			to_chat(user, "<span class='notice'>Another falls before you. Another soul fuses with your own. Another notch in the handle.</span>")
+			new_name = "double-notched v"
+			add_atom_colour(rgb(255, 235, 235), ADMIN_COLOUR_PRIORITY)
+		if(3)
+			to_chat(user, "<span class='notice'>You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b></span>")
+			new_name = "triple-notched mop"
+			add_atom_colour(rgb(255, 215, 215), ADMIN_COLOUR_PRIORITY)
+		if(4)
+			to_chat(user, "<span class='notice'>You've lost count of</span> <span class='boldannounce'>how many you've killed.</span>")
+			new_name = "many-notched mop"
+			add_atom_colour(rgb(255, 195, 195), ADMIN_COLOUR_PRIORITY)
+		if(5)
+			to_chat(user, "<span class='boldannounce'>Five voices now echo in your mind, cheering the slaughter.</span>")
+			new_name = "battle-tested mop"
+			add_atom_colour(rgb(255, 175, 175), ADMIN_COLOUR_PRIORITY)
+		if(6)
+			to_chat(user, "<span class='boldannounce'>Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe.</span>")
+			new_name = "battle-scarred mop"
+			add_atom_colour(rgb(255, 155, 155), ADMIN_COLOUR_PRIORITY)
+		if(7)
+			to_chat(user, "<span class='boldannounce'>Kill. Butcher. <i>Conquer.</i></span>")
+			new_name = "vicious mop"
+			add_atom_colour(rgb(255, 135, 135), ADMIN_COLOUR_PRIORITY)
+		if(8)
+			to_chat(user, "<span class='userdanger'>IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i></span>")
+			new_name = "bloodthirsty mop"
+			add_atom_colour(rgb(255, 115, 115), ADMIN_COLOUR_PRIORITY)
+		if(9)
+			to_chat(user, "<span class='userdanger'>ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE.</span>")
+			new_name = "gore-stained mop"
+			add_atom_colour(rgb(255, 95, 95), ADMIN_COLOUR_PRIORITY)
+		if(10)
+			user.visible_message("<span class='warning'>[user]'s eyes light up with a vengeful fire!</span>", \
+			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
+			user.update_icons()
+			new_name = "GORE-DRENCHED MOP OF [pick("THE GERM SLAUGHTER", "A THOUSAND SLAUGHTERED MICROBES", "BUCKET AND VALHALLA", "WETTING THE FLOORS", "GREYTIDING")]"
+			icon_state = "mop_gold"
+			inhand_icon_state = "mop_gold"
+			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+
+	name = new_name
+	playsound(user, 'sound/items/screwdriver2.ogg', 50, TRUE)
 
 /obj/item/mop/afterattack(atom/A, mob/user, proximity)
 	. = ..()
