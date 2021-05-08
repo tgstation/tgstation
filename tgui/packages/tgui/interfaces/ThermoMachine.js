@@ -36,6 +36,9 @@ export const ThermoMachine = (props, context) => {
                 format={value => toFixed(value, 2)} />
               {' kPa'}
             </LabeledList.Item>
+            <LabeledList.Item label="Mode">
+                {data.cooling? 'Cooling' : 'Heating'}
+            </LabeledList.Item>
           </LabeledList>
         </Section>
         <Section
@@ -73,17 +76,6 @@ export const ThermoMachine = (props, context) => {
                 content={data.use_env_heat ? 'On' : 'Off'}
                 selected={data.use_env_heat}
                 onClick={() => act('use_env_heat')} />
-            </LabeledList.Item>
-            <LabeledList.Item label="Thermal setting">
-              <Button
-                content={data.auto_thermal_regulator ? 'Auto' : 'Off'}
-                selected={data.auto_thermal_regulator}
-                onClick={() => act('auto_thermal_regulator')} />
-              <Button
-                content={data.cooling ? 'Cooling' : 'Heating'}
-                disabled={data.auto_thermal_regulator}
-                selected={data.cooling}
-                onClick={() => act('cooling')} />
             </LabeledList.Item>
             <LabeledList.Item label="Target Temperature">
               <NumberInput
