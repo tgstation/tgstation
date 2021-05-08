@@ -48,16 +48,15 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "bI" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/box/white/corners,
-/obj/machinery/button/door{
-	id = "caravantrade1_cargo";
-	name = "Cargo Blast Door Control";
-	pixel_y = -24
-	},
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/diamond{
 	amount = 5
+	},
+/obj/machinery/button/door/directional/south{
+	id = "caravantrade1_cargo";
+	name = "Cargo Blast Door Control"
 	},
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
@@ -68,7 +67,7 @@
 /obj/structure/sink{
 	pixel_y = 24
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor{
@@ -234,9 +233,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "lM" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/structure/sign/warning/vacuum{
 	pixel_x = 32
 	},
@@ -252,13 +249,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "mw" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/light/small/directional/west,
+/obj/machinery/firealarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
@@ -311,7 +303,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "pR" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -355,9 +347,7 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "sf" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/table,
 /obj/item/stack/package_wrap,
 /obj/item/crowbar,
@@ -384,9 +374,7 @@
 "ss" = (
 /obj/structure/rack,
 /obj/item/storage/belt/utility,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 29
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
@@ -405,21 +393,13 @@
 	},
 /area/shuttle/caravan/freighter1)
 "uA" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
 	pixel_x = 24
-	},
-/obj/machinery/button/door{
-	id = "caravantrade1_cabin1";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = -25;
-	pixel_y = 6;
-	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -433,6 +413,12 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/button/door/directional/west{
+	id = "caravantrade1_cabin1";
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
@@ -485,16 +471,15 @@
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "yC" = (
-/obj/machinery/button/door{
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/button/door/directional/west{
 	id = "caravantrade1_bolt";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = -25;
 	pixel_y = 8;
 	specialfunctions = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -651,13 +636,8 @@
 	},
 /area/shuttle/caravan/freighter1)
 "EQ" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/light/small/directional/east,
+/obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -711,9 +691,7 @@
 /turf/template_noop,
 /area/shuttle/caravan/freighter1)
 "GJ" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
@@ -726,9 +704,7 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "Ib" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
@@ -738,9 +714,7 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "Ja" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/item/storage/firstaid/regular,
@@ -806,7 +780,7 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "Mb" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -902,21 +876,13 @@
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "PM" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
 	pixel_x = 24
-	},
-/obj/machinery/button/door{
-	id = "caravantrade1_cabin2";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = -25;
-	pixel_y = 6;
-	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -931,6 +897,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/button/door/directional/west{
+	id = "caravantrade1_cabin2";
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter1)
 "Qk" = (
@@ -941,15 +913,8 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "Qs" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Small Freighter APC";
-	pixel_x = 24;
-	start_charge = 0
-	},
+/obj/machinery/light/small/directional/east,
+/obj/machinery/power/apc/auto_name/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
@@ -958,9 +923,7 @@
 "QY" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/item/stack/cable_coil{
 	pixel_x = 12;
 	pixel_y = 4
