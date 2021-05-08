@@ -64,3 +64,43 @@
 			turf_type = /turf/open/floor/mineral/titanium/tiled/purple
 			icon_state = "tile_shuttle_old_purple"
 			desc = "Purple titanium floor tiles."
+
+/obj/item/stack/tile/wood/attack_self(mob/user)
+	var/static/list/choices = list(
+			"Wood" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile-wood"),
+			"Parquet Wood" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile-wood_parquet"),
+			"Large Wood" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile-wood_large"),
+			"Wood Tile" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile-wood_tile"),
+		)
+	var/choice = show_radial_menu(user, src, choices, radius = 48, require_near = TRUE)
+	switch(choice)
+		if("Wood")
+			turf_type = /turf/open/floor/wood
+			icon_state = "tile-wood"
+		if("Parquet Wood")
+			turf_type = /turf/open/floor/wood/parquet
+			icon_state = "tile-wood_parquet"
+		if("Large Wood")
+			turf_type = /turf/open/floor/wood/large
+			icon_state = "tile-wood_large"
+		if("Wood Tile")
+			turf_type = /turf/open/floor/wood/tile
+			icon_state = "tile-wood_tile"
+
+/obj/item/stack/tile/eighties/attack_self(mob/user)
+	var/static/list/choices = list(
+			"Eighties Black" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_eighties"),
+			"Eighties Red" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_eightiesred"),
+			"Eighties Blue" = image(icon = 'icons/obj/tiles.dmi', icon_state = "tile_eightiesblue"),
+		)
+	var/choice = show_radial_menu(user, src, choices, radius = 48, require_near = TRUE)
+	switch(choice)
+		if("Eighties Black")
+			turf_type = /turf/open/floor/eighties
+			icon_state = "tile_eighties"
+		if("Eighties Red")
+			turf_type = /turf/open/floor/eighties/red
+			icon_state = "tile_eightiesred"
+		if("Eighties Blue")
+			turf_type = /turf/open/floor/eighties/blue
+			icon_state = "tile_eightiesblue"

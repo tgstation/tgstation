@@ -21,6 +21,12 @@
 	. = ..()
 	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons))
 
+/obj/structure/altar_of_gods/update_overlays()
+	. = ..()
+	if(icon_state == initial(icon_state))
+		return
+	. += "convertaltarcandle"
+
 /obj/structure/altar_of_gods/attack_hand(mob/living/user)
 	if(!Adjacent(user) || !user.pulling)
 		return ..()
@@ -43,3 +49,4 @@
 			icon = sect_to_altar.altar_icon
 		if(sect_to_altar.altar_icon_state)
 			icon_state = sect_to_altar.altar_icon_state
+	update_icon() //Light the candles!

@@ -372,13 +372,3 @@
 
 /obj/item/stack/tile/eighties/loaded
 	amount = 15
-
-/obj/item/stack/tile/children
-	name = "children's carpet"
-	singular_name = "children's carpet"
-	desc = "A stack of floor tiles that make you want to explore the galaxy!"
-	icon_state = "tile_children"
-	turf_type = /turf/open/floor/eighties
-
-/obj/item/stack/tile/children/loaded
-	amount = 15

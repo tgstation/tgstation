@@ -181,12 +181,15 @@
 	floor_tile = /obj/item/stack/tile/eighties
 	broken_states = list("damaged")
 
-/turf/open/floor/children
-	name = "children's carpet"
-	desc = "Just like the one you used to drool on."
-	icon_state = "children"
-	floor_tile = /obj/item/stack/tile/children
-	broken_states = list("damaged")
+/turf/open/floor/eighties/red
+	name = "red retro floor"
+	desc = "Totally RED-ICAL!"
+	icon_state = "eightiesred"
+
+/turf/open/floor/eighties/blue
+	name = "blue retro floor"
+	desc = "Totally BLUE-ICAL!"
+	icon_state = "eightiesblue"
 
 /turf/open/floor/plating/rust
 	name = "rusted plating"

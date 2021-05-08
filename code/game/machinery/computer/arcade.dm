@@ -40,7 +40,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/stack/tile/fakespace/loaded = 2,
 		/obj/item/stack/tile/fakepit/loaded = 2,
 		/obj/item/stack/tile/eighties/loaded = 2,
-		/obj/item/stack/tile/children/loaded = 2,
 		/obj/item/toy/toy_xeno = 2,
 		/obj/item/storage/box/actionfigure = 1,
 		/obj/item/restraints/handcuffs/fake = 2,
