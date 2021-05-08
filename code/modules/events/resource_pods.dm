@@ -191,7 +191,8 @@
 		"Cyber Arabian space-camel caravan", \
 		"US^2 patriot route", \
 		"J4N3-X musical supply chain", \
-		"Germany III handelsroute"
+		"Germany III handelsroute", \
+		"Sneed F&S supply depot"
 		))
 
 /// An adjective describing how many pods are being sent.

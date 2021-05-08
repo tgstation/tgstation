@@ -266,3 +266,11 @@
 	icon_state = "fuel_stationary"
 	desc = "A stationary, plumbed, fuel tank."
 	reagent_id = /datum/reagent/fuel
+
+/obj/structure/reagent_dispensers/ice
+	name = "ice dispenser"
+	desc = "It dispenses the wicked ice."
+	icon_state = "ice"
+	anchored = TRUE
+	density = FALSE
+	reagent_id = /datum/reagent/consumable/ice

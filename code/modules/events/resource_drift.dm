@@ -118,7 +118,8 @@
 		"Cyber Arabia", \
 		"Jerusalem 2", \
 		"C'est La France", \
-		"Germany III"
+		"Germany III", \
+		"Sneed F&S"
 		)
 	var/party_one = pick_n_take(parties)
 	var/party_two = pick_n_take(parties)

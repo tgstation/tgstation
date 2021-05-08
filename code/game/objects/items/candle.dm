@@ -79,6 +79,7 @@
 	start_lit = TRUE
 
 /obj/item/candle/infinite/fancy
+	name = "white candle"
 	icon_state = "candlefancy"
 
 /obj/item/candle/infinite/fancy/update_icon_state()

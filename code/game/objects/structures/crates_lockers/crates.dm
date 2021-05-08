@@ -90,13 +90,20 @@
 	for(var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/lootdrop/maintenance(src)
 
-/obj/structure/closet/crate/trashcart/Initialize()
+/obj/structure/closet/crate/cart/maint
+
+/obj/structure/closet/crate/cart/maint/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(2,6))
+		new /obj/effect/spawner/lootdrop/maintenance(src)
+
+/obj/structure/closet/crate/cart/trashcart/Initialize()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
 
-/obj/structure/closet/crate/trashcart/filled
+/obj/structure/closet/crate/cart/trashcart/filled
 
-/obj/structure/closet/crate/trashcart/filled/PopulateContents()
+/obj/structure/closet/crate/cart/trashcart/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(7,15))
 		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
@@ -109,20 +116,40 @@
 	name = "internals crate"
 	icon_state = "o2crate"
 
-/obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
-	desc = "A heavy, metal trashcart with wheels."
-	name = "trash cart"
-	icon_state = "trashcart"
+/obj/structure/closet/crate/cart
+	desc = "A heavy, metal cart with wheels."
+	name = "cart"
+	icon_state = "cart"
 
-/obj/structure/closet/crate/trashcart/Moved()
+/obj/structure/closet/crate/cart/Moved()
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
-/obj/structure/closet/crate/trashcart/laundry
+/obj/structure/closet/crate/cart/trashcart
+	desc = "A heavy, metal trashcart with wheels."
+	name = "trash cart"
+	icon_state = "trashcart"
+
+/obj/structure/closet/crate/cart/laundry
 	name = "laundry cart"
 	desc = "A large cart for hauling around large amounts of laundry."
 	icon_state = "laundry"
+
+/obj/structure/closet/crate/cart/medical
+	name = "medical cart"
+	desc = "A cart for the quick movement of medical supplies."
+	icon_state = "medcart"
+
+/obj/structure/closet/crate/cart/mech
+	name = "mech cart"
+	desc = "A large cart for hauling around lthose giant mech parts."
+	icon_state = "mechcart"
+
+/obj/structure/closet/crate/cart/forensic
+	name = "forensic cart"
+	desc = "Bring out your dead! Bring out your dead!"
+	icon_state = "forensiccart"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."

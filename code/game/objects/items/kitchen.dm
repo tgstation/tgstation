@@ -214,6 +214,13 @@
 	force = 16
 	throwforce = 16
 
+/obj/item/kitchen/knife/bread
+	name = "bread knife"
+	icon_state = "knife_bread"
+	desc = "Excels at sawing through tough crusts, horrible at sawing through people."
+	force = 2
+	throwforce = 1
+
 /obj/item/kitchen/knife/combat/bone
 	name = "bone dagger"
 	inhand_icon_state = "bone_dagger"

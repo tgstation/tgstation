@@ -472,3 +472,9 @@
 	name = "Howie"
 	desc = "A modified Neocanadian Assault Rifle, looks like its more for display than for live fire use now. Has a similar aesthetic to a certain old Goat you know, maybe you should show it to someone."
 	icon_state = "howie"
+
+/obj/item/sealed_suitcase
+	name = "sealed suitcase"
+	desc = "A mysterious suitcase. It radiates demonic energy, it looks like whatever's in there is trying to break out. Best if you don't open it."
+	icon_state = "sealed_suitcase"
+	w_class = WEIGHT_CLASS_BULKY

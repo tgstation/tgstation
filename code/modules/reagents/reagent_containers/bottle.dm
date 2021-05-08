@@ -17,6 +17,19 @@
 		icon_state = "bottle"
 	update_icon()
 
+/obj/item/reagent_containers/glass/bottle/small
+	name = "vial"
+	desc = "A small vial."
+	icon_state = "vial"
+	fill_icon_state = "vial"
+	volume = 15
+	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = list(5,10,15)
+	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
+
+// Containers //
+////////////////
+//  Reagents  //
 /obj/item/reagent_containers/glass/bottle/epinephrine
 	name = "epinephrine bottle"
 	desc = "A small bottle. Contains epinephrine - used to stabilize patients."

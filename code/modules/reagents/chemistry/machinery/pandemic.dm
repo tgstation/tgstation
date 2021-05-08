@@ -6,7 +6,7 @@
 	desc = "Used to work with viruses."
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "mixer0"
+	icon_state = "centrifuge0"
 	use_power = TRUE
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
@@ -128,14 +128,14 @@
 
 /obj/machinery/computer/pandemic/update_icon_state()
 	if(machine_stat & BROKEN)
-		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
+		icon_state = (beaker ? "centrifuge1_b" : "centrifuge0_b")
 	else
-		icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
+		icon_state = "centrifuge[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
 
 /obj/machinery/computer/pandemic/update_overlays()
 	. = ..()
 	if(wait)
-		. += "waitlight"
+		. += "cent_waitlight"
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
 	if(beaker)
@@ -208,14 +208,14 @@
 				return
 			A = A.Copy()
 			var/list/data = list("viruses" = list(A))
-			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
-			B.name = "[A.name] culture bottle"
-			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
-			B.reagents.add_reagent(/datum/reagent/blood, 20, data)
+			var/obj/item/reagent_containers/glass/bottle/small/B = new(drop_location())
+			B.name = "[A.name] culture vial"
+			B.desc = "A small vial. Contains [A.agent] culture in synthblood medium."
+			B.reagents.add_reagent(/datum/reagent/blood, 15, data)
 			wait = TRUE
 			update_icon()
 			var/turf/source_turf = get_turf(src)
-			log_virus("A culture bottle was printed for the virus [A.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
+			log_virus("A culture vial was printed for the virus [A.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
 			. = TRUE
 		if("create_vaccine_bottle")
@@ -223,8 +223,8 @@
 				return
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
-			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
-			B.name = "[D.name] vaccine bottle"
+			var/obj/item/reagent_containers/glass/bottle/small/B = new(drop_location())
+			B.name = "[D.name] vaccine vial"
 			B.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 			wait = TRUE
 			update_icon()

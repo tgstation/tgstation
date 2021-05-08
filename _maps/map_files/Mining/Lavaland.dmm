@@ -783,6 +783,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/structure/item_dispenser/radio{
+	pixel_y = -27
+	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "cq" = (

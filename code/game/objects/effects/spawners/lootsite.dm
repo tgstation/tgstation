@@ -4,7 +4,7 @@
 	icon_state = "loot_site"
 	///This is the loot table for the spawner. Try to make sure the weights add up to 1000, so it is easy to understand.
 	var/list/loot_table = list(/obj/structure/closet/crate/maint = 765,
-							/obj/structure/closet/crate/trashcart/filled = 80,
+							/obj/structure/closet/crate/cart/trashcart/filled = 80,
 							/obj/effect/spawner/bundle/moisture_trap = 50,
 							/obj/effect/spawner/bundle/hobo_squat = 35,
 							/obj/structure/closet/mini_fridge = 40,
@@ -20,3 +20,12 @@
 	new spawned_object(get_turf(src))
 
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/loot_site_spawner/cargo
+	icon_state = "loot_site_cargo"
+	loot_table = list(/obj/structure/closet/crate/maint = 100,
+					/obj/structure/closet/crate/cart/maint = 25,
+					/obj/effect/spawner/lootdrop/maintenance/four = 5,
+					/obj/effect/spawner/lootdrop/maintenance/three = 25,
+					/obj/effect/spawner/lootdrop/maintenance/two = 50,
+					/obj/effect/spawner/lootdrop/maintenance = 75)
