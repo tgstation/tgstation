@@ -42,7 +42,5 @@
 
 /datum/component/technointrovert/proc/on_try_wires_interact(datum/source, atom/machine)
 	SIGNAL_HANDLER
-	if(!ismachinery(machine))
-		return
-	else if(!is_in_whitelist(source, machine))
+	if(ismachinery(machine) && !is_in_whitelist(source, machine))
 		return COMPONENT_CANT_INTERACT_WIRES
