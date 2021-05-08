@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(istype(AM, /obj/structure/fluff/tram_rail) || istype(AM, /obj/effect/landmark/tram))
+	if(istype(AM, /obj/structure/fluff/tram_rail) || AM.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
 		return
 	if(AM in lift_load)
 		return
