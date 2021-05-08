@@ -19,10 +19,6 @@ OOC_DURING_ROUND
 ## Comment this out if you want to disable emojis
 EMOJIS
 
-## EMOJI FILE ###
-## Set custom emojis file (.dmi), else leave it as-is or uncomment for default set.
-EMOJIS_FILE icons/emoji.dmi
-
 ## HEART COMMENDATIONS ###
 ## Uncomment this if you'd like to enable commendation pollings for this percentage of players near the end of the round (5% suggested)
 COMMENDATION_PERCENT_POLL 0.05
