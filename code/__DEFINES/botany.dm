@@ -38,6 +38,9 @@
 #define PLANT_GENE_REMOVABLE (1<<0)
 /// Plant genes that can be mutated randomly in strange seeds / due to high instability.
 #define PLANT_GENE_MUTATABLE (1<<1)
+/// Plant genes that can be graftable. Used in formatting text, as they need to be set to be graftable anyways.
+#define PLANT_GENE_GRAFTABLE (1<<2)
+
 
 /// -- Flags for seeds. --
 /// Allows a plant to wild mutate (mutate on haravest) at a certain instability.

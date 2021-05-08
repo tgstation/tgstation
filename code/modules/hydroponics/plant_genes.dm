@@ -183,19 +183,19 @@
 	name = "Polypyrylium Oligomers"
 	reagent_id = /datum/reagent/medicine/polypyr
 	rate = 0.15
-	mutability_flags = null
+	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/reagent/liquidelectricity
 	name = "Enriched Liquid Electricity"
 	reagent_id = /datum/reagent/consumable/liquidelectricity/enriched
 	rate = 0.1
-	mutability_flags = null
+	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/reagent/carbon
 	name = "Carbon"
 	reagent_id = /datum/reagent/carbon
 	rate = 0.1
-	mutability_flags = null
+	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /// Traits that affect the grown product.
 /datum/plant_gene/trait
@@ -219,7 +219,7 @@
 /datum/plant_gene/trait/get_name() // Used for manipulator display and gene disk name.
 	var/formatted_name
 	if(!(mutability_flags & PLANT_GENE_REMOVABLE))
-		if(!(mutability_flags & PLANT_GENE_MUTATABLE))
+		if(!(mutability_flags & PLANT_GENE_GRAFTABLE))
 			formatted_name += "Immutable "
 		else
 			formatted_name += "Essential "
@@ -286,7 +286,7 @@
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 	trait_ids = THROW_IMPACT_ID | REAGENT_TRANSFER_ID
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 // Register a signal that our plant can be squashed on add.
 /datum/plant_gene/trait/squash/on_new_plant(obj/item/food/grown/our_plant, newloc)
@@ -340,7 +340,7 @@
 	name = "Slippery Skin"
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/slip/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -372,7 +372,7 @@
 /datum/plant_gene/trait/cell_charge
 	name = "Electrical Activity"
 	rate = 0.2
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/cell_charge/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -441,7 +441,7 @@
 	rate = 0.03
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
 	trait_ids = GLOW_ID
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// The color of our bioluminesence.
 	var/glow_color = "#C3E381"
 
@@ -516,7 +516,7 @@
 /datum/plant_gene/trait/teleport
 	name = "Bluespace Activity"
 	rate = 0.1
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/teleport/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -580,7 +580,7 @@
 	name = "Densified Chemicals"
 	rate = 2
 	trait_flags = TRAIT_HALVES_YIELD
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/maxchem/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -600,7 +600,7 @@
 	name = "Perennial Growth"
 	/// Don't allow replica pods to be multi harvested, please.
 	seed_blacklist = list(/obj/item/seeds/replicapod)
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /*
  * Allows a plant to be turned into a battery when cabling is applied.
@@ -609,7 +609,7 @@
  */
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/battery/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -663,7 +663,7 @@
 	name = "Hypodermic Prickles"
 	examine_line = "<span class='info'>It's quite prickley.</span>"
 	trait_ids = REAGENT_TRANSFER_ID
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/stinging/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -697,7 +697,7 @@
 /// Explodes into reagent-filled smoke when squashed.
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/smoke/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -728,7 +728,7 @@
 /// Makes the plant and its seeds fireproof. From lavaland plants.
 /datum/plant_gene/trait/fire_resistance
 	name = "Fire Resistance"
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/fire_resistance/on_new_seed(obj/item/seeds/new_seed)
 	if(!(new_seed.resistance_flags & FIRE_PROOF))
@@ -745,7 +745,7 @@
 /// Invasive spreading lets the plant jump to other trays, and the spreading plant won't replace plants of the same type.
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/invasive/on_new_seed(obj/item/seeds/new_seed)
 	. = ..()
@@ -812,7 +812,7 @@
 /datum/plant_gene/trait/brewing
 	name = "Auto-Distilling Composition"
 	trait_ids = CONTENTS_CHANGE_ID
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /**
  * Similar to auto-distilling, but instead of brewing the plant's contents it juices it.
@@ -822,7 +822,7 @@
 /datum/plant_gene/trait/juicing
 	name = "Auto-Juicing Composition"
 	trait_ids = CONTENTS_CHANGE_ID
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /**
  * Plays a laughter sound when someone slips on it.
@@ -831,7 +831,7 @@
  */
 /datum/plant_gene/trait/plant_laughter
 	name = "Hallucinatory Feedback"
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// Sounds that play when this trait triggers
 	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
 
@@ -863,7 +863,7 @@
  */
 /datum/plant_gene/trait/eyes
 	name = "Oculary Mimicry"
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// Our googly eyes appearance.
 	var/mutable_appearance/googly
 
@@ -881,7 +881,7 @@
 	name = "Prickly Adhesion"
 	examine_line = "<span class='info'>It's quite sticky.</span>"
 	trait_ids = THROW_IMPACT_ID
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/sticky/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -904,7 +904,7 @@
 	name = "Exothermic Activity"
 	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /**
  * This trait is the opposite of above - it cools down the plant's chemical contents on harvest.
@@ -914,12 +914,13 @@
 	name = "Endothermic Activity"
 	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /// Plant type traits. Incompatible with one another.
 /datum/plant_gene/trait/plant_type
 	name = "you shouldn't see this"
 	trait_ids = PLANT_TYPE_ID
+	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /// Weeds don't get annoyed by weeds in their tray.
 /datum/plant_gene/trait/plant_type/weed_hardy

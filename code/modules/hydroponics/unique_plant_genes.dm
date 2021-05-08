@@ -146,13 +146,17 @@
 /datum/plant_gene/trait/sunflower_attack/proc/after_flower_attack(obj/item/our_plant, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	user.visible_message("<font color='green'>[user] smacks [target] with their [our_plant]!<font color='orange'><b>FLOWER POWER!</b></font></font>", ignored_mobs = list(target, user))
-	to_chat(target, "<font color='green'>[user] smacks you with [our_plant]!<font color='orange'><b>FLOWER POWER!</b></font></font>")
-	to_chat(user, "<font color='green'>Your [our_plant]'s <font color='orange'><b>FLOWER POWER</b></font> strikes [target]!</font>")
+	if(!istype(target))
+		return
+
+	user.visible_message("<font color='green'>[user] smacks [target] with their [our_plant.name]! <font color='orange'><b>FLOWER POWER!</b></font></font>", ignored_mobs = list(target, user))
+	if(target != user)
+		to_chat(target, "<font color='green'>[user] smacks you with [our_plant]!<font color='orange'><b>FLOWER POWER!</b></font></font>")
+	to_chat(user, "<font color='green'>Your [our_plant.name]'s <font color='orange'><b>FLOWER POWER</b></font> strikes [target]!</font>")
 
 /// Normal Nettle force + leaves falling off
 /datum/plant_gene/trait/nettle_attack
-	name = "Stinging Nettles"
+	name = "Sharpened Leaves"
 	/// The multiplier we apply to the potency to calculate force.
 	var/force_multiplier = 0.2
 
@@ -171,12 +175,12 @@
 	if(our_plant.force > 0)
 		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
 	else
-		to_chat(user, "<span class='warning'>All the petals have fallen off [our_plant] from violent whacking!</span>")
+		to_chat(user, "<span class='warning'>All the leaves have fallen off [our_plant] from violent whacking.</span>")
 		qdel(our_plant)
 
 /// Deathnettle force + stun on attack + leaves falling off
 /datum/plant_gene/trait/nettle_attack/death
-	name = "Aggressive Stinging Nettles"
+	name = "Aggressive Sharpened Leaves"
 	force_multiplier = 0.4
 
 /datum/plant_gene/trait/nettle_attack/death/on_new_plant(obj/item/our_plant, newloc)
@@ -248,8 +252,8 @@
 	if(!.)
 		return
 
+	our_chili = our_plant
 	our_plant.AddElement(/datum/element/plant_backfire)
-	var/obj/item/our_chili = our_plant
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/begin_heating_holder)
 	RegisterSignal(our_plant, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/stop_heating_holder)
 
@@ -258,14 +262,14 @@
 	SIGNAL_HANDLER
 
 	held_mob = user
-	START_PROCESSING(SSobj, our_chili)
+	START_PROCESSING(SSobj, src)
 
 /// Stop processing the chili.
 /datum/plant_gene/trait/chili_heat/proc/stop_heating_holder(datum/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
 	held_mob = null
-	STOP_PROCESSING(SSobj, our_chili)
+	STOP_PROCESSING(SSobj, src)
 
 /// Heats up the mob currently holding the chili until they drop it. Stops processing if it's not being held.
 /datum/plant_gene/trait/chili_heat/process(delta_time)
