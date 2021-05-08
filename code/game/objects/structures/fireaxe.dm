@@ -12,6 +12,22 @@
 	var/open = FALSE
 	var/obj/item/fireaxe/fireaxe
 
+/obj/structure/fireaxecabinet/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/structure/fireaxecabinet/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/structure/fireaxecabinet/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/structure/fireaxecabinet/directional/west
+	dir = EAST
+	pixel_x = -32
+
 /obj/structure/fireaxecabinet/Initialize()
 	. = ..()
 	fireaxe = new

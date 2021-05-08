@@ -17,6 +17,22 @@
 	var/strength = 100 //How knocked down targets are when flashed.
 	var/base_state = "mflash"
 
+/obj/machinery/flasher/directional/north
+	dir = SOUTH
+	pixel_y = 26
+
+/obj/machinery/flasher/directional/south
+	dir = NORTH
+	pixel_y = -26
+
+/obj/machinery/flasher/directional/east
+	dir = WEST
+	pixel_x = 26
+
+/obj/machinery/flasher/directional/west
+	dir = EAST
+	pixel_x = -26
+
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."

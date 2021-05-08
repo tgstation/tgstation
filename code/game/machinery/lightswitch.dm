@@ -9,6 +9,22 @@
 	/// instead of the switch's location.
 	var/area/area = null
 
+/obj/machinery/light_switch/directional/north
+	dir = SOUTH
+	pixel_y = 26
+
+/obj/machinery/light_switch/directional/south
+	dir = NORTH
+	pixel_y = -26
+
+/obj/machinery/light_switch/directional/east
+	dir = WEST
+	pixel_x = 26
+
+/obj/machinery/light_switch/directional/west
+	dir = EAST
+	pixel_x = -26
+
 /obj/machinery/light_switch/Initialize()
 	. = ..()
 	if(istext(area))

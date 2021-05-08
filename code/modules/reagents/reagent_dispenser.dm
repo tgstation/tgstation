@@ -150,11 +150,26 @@
 	density = FALSE
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin
 
+/obj/structure/reagent_dispensers/peppertank/directional/north
+	dir = SOUTH
+	pixel_y = 30
+
+/obj/structure/reagent_dispensers/peppertank/directional/south
+	dir = NORTH
+	pixel_y = -30
+
+/obj/structure/reagent_dispensers/peppertank/directional/east
+	dir = WEST
+	pixel_x = 30
+
+/obj/structure/reagent_dispensers/peppertank/directional/west
+	dir = EAST
+	pixel_x = -30
+
 /obj/structure/reagent_dispensers/peppertank/Initialize()
 	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
-
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "liquid cooler"
@@ -206,6 +221,21 @@
 	density = FALSE
 	reagent_id = /datum/reagent/consumable/virus_food
 
+/obj/structure/reagent_dispensers/virusfood/directional/north
+	dir = SOUTH
+	pixel_y = 30
+
+/obj/structure/reagent_dispensers/virusfood/directional/south
+	dir = NORTH
+	pixel_y = -30
+
+/obj/structure/reagent_dispensers/virusfood/directional/east
+	dir = WEST
+	pixel_x = 30
+
+/obj/structure/reagent_dispensers/virusfood/directional/west
+	dir = EAST
+	pixel_x = -30
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
