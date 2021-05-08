@@ -202,15 +202,6 @@
 	interact()
 	return TRUE
 
-//Blueprint Subtypes
-
-/obj/item/areaeditor/blueprints/cyborg
-	name = "station schematics"
-	desc = "A digital copy of the station blueprints stored in your memory."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "blueprints"
-	fluffnotice = "Intellectual Property of Nanotrasen. For use in engineering cyborgs only. Wipe from memory upon departure from the station."
-
 /proc/rename_area(a, new_name)
 	var/area/A = get_area(a)
 	var/prevname = "[A.name]"

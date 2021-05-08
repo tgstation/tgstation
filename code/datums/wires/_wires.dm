@@ -241,8 +241,9 @@
 	if(isAdminGhostAI(user))
 		return TRUE
 
-	// Same for anyone with an abductor multitool.
-	if(user.is_holding_item_of_type(/obj/item/multitool/abductor))
+	// Same for anyone with an abductor/cyborg multitool.
+	if(user.is_holding_item_of_type(/obj/item/multitool/abductor) || user.is_holding_item_of_type(/obj/item/multitool/cyborg))
+
 		return TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
