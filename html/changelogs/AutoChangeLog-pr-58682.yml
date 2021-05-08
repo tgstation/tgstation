@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - qol: "Tend Wounds and Debride Infected Flesh surgeries now tell the surgeon roughly how many more repetitions are left before the patient is fully treated."
+  - qol: "Having a health analyzer in your offhand during Tend Wounds will give you precise updates on how much damage is left after each step."

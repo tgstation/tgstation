@@ -383,7 +383,6 @@
 		loc.assume_air(main_port.remove_ratio(1))
 	if(thermal_exchange_port)
 		loc.assume_air(thermal_exchange_port.remove_ratio(1))
-	air_update_turf(FALSE, FALSE)
 	qdel(src)
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_status(mob/user)

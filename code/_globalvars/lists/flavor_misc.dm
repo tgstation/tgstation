@@ -173,8 +173,12 @@ GLOBAL_LIST_INIT(jumpsuitlist, list(PREF_SUIT, PREF_SKIRT))
 #define UPLINK_PDA "PDA"
 #define UPLINK_RADIO "Radio"
 #define UPLINK_PEN "Pen" //like a real spy!
-#define UPLINK_IMPLANT  "Implant"
-GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT))
+#define UPLINK_IMPLANT "Implant"
+#define UPLINK_IMPLANT_WITH_PRICE "[UPLINK_IMPLANT] (-[UPLINK_IMPLANT_TELECRYSTAL_COST] TC)"
+// What we show to the user
+GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT_WITH_PRICE))
+// What is actually saved; if the uplink implant price changes, it won't affect save files then
+GLOBAL_LIST_INIT(uplink_spawn_loc_list_save, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT))
 
 	//Female Uniforms
 GLOBAL_LIST_EMPTY(female_clothing_icons)

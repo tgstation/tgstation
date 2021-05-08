@@ -230,7 +230,7 @@
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
 		return
-	target = attack_target
+	GiveTarget(attack_target)
 	if(dextrous && (isitem(attack_target) || !combat_mode))
 		..()
 	else

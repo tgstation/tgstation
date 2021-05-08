@@ -126,8 +126,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		addtimer(CALLBACK(src, .proc/announce_conflict, notadded), 5 SECONDS)
 
 /datum/preferences/proc/announce_conflict(list/notadded)
-	to_chat(parent, "<span class='alertwarning'><u>Keybinding Conflict</u></span>\n\
-					<span class='alertwarning'>There are new <a href='?_src_=prefs;preference=tab;tab=3'>keybindings</a> that default to keys you've already bound. The new ones will be unbound.</span>")
+	to_chat(parent, "<span class='warningplain'><b><u>Keybinding Conflict</u></b></span>\n\
+					<span class='warningplain'><b>There are new <a href='?_src_=prefs;preference=tab;tab=3'>keybindings</a> that default to keys you've already bound. The new ones will be unbound.</b></span>")
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, "<span class='danger'>[conflicted.category]: [conflicted.full_name] needs updating</span>")
@@ -487,7 +487,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	skin_tone = sanitize_inlist(skin_tone, GLOB.skin_tones)
 	backpack = sanitize_inlist(backpack, GLOB.backpacklist, initial(backpack))
 	jumpsuit_style = sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
-	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
+	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list_save, initial(uplink_spawn_loc))
 	playtime_reward_cloak = sanitize_integer(playtime_reward_cloak)
 	features["mcolor"] = sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["ethcolor"] = copytext_char(features["ethcolor"], 1, 7)

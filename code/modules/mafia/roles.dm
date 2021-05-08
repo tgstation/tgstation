@@ -88,7 +88,7 @@
 			to_chat(body,"<span class='danger'>You are a crewmember. Find out and lynch the changelings!</span>")
 		if(MAFIA_TEAM_SOLO)
 			to_chat(body,"<span class='danger'>You are not aligned to town or mafia. Accomplish your own objectives!</span>")
-	to_chat(body, "<b>Be sure to read <a href=\"https://tgstation13.org/wiki/Mafia\">the wiki page</a> to learn more, if you have no idea what's going on.</b>")
+	to_chat(body, "<span class='warningplain'><b>Be sure to read <a href=\"https://tgstation13.org/wiki/Mafia\">the wiki page</a> to learn more, if you have no idea what's going on.</b></span>")
 
 /datum/mafia_role/proc/reveal_role(datum/mafia_controller/game, verbose = FALSE)
 	if((role_flags & ROLE_REVEALED))

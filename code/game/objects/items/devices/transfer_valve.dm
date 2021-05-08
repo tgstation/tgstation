@@ -61,6 +61,7 @@
 			return
 		attached_device = A
 		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
+		A.on_attach()
 		A.holder = src
 		A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 		log_bomber(user, "attached a [item.name] to a ttv -", src, null, FALSE)
@@ -81,11 +82,6 @@
 /obj/item/transfer_valve/on_found(mob/finder)
 	if(attached_device)
 		attached_device.on_found(finder)
-
-/obj/item/transfer_valve/Crossed(atom/movable/AM as mob|obj)
-	. = ..()
-	if(attached_device)
-		attached_device.Crossed(AM)
 
 //Triggers mousetraps
 /obj/item/transfer_valve/attack_hand(mob/user, list/modifiers)

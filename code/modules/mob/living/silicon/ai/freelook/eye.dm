@@ -83,7 +83,7 @@
 		if(!force_update && (T == get_turf(src)) )
 			return //we are already here!
 		if (T)
-			forceMove(T)
+			abstract_move(T)
 		else
 			moveToNullspace()
 		if(use_static != USE_STATIC_NONE)

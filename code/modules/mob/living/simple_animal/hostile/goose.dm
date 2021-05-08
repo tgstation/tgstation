@@ -36,7 +36,6 @@
 	var/icon_vomit = "vomit"
 	var/icon_vomit_end = "vomit_end"
 	var/message_cooldown = 0
-	var/list/nummies = list()
 	var/choking = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/goose/Initialize()
@@ -46,27 +45,21 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
 	if(stat == DEAD)
 		return
-	nummies.Cut()
-	nummies += loc.contents
 	if(prob(5) && random_retaliate)
 		Retaliate()
 
 /mob/living/simple_animal/hostile/retaliate/goose/handle_automated_action()
-	if(length(nummies))
-		var/obj/item/E = locate() in nummies
-		if(E && E.loc == loc)
-			feed(E)
-		nummies -= E
+	var/obj/item/eat_it_motherfucker = pick(locate(/obj/item) in loc)
+	if(!eat_it_motherfucker)
+		return
+	feed(eat_it_motherfucker)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/handle_automated_action()
-	if(length(nummies))
-		var/obj/item/E = pick(nummies)
-		if(!E.has_material_type(/datum/material/plastic))
-			nummies -= E // remove non-plastic item from queue
-			E = locate(/obj/item/reagent_containers/food) in nummies // find food
-		if(E && E.loc == loc)
-			feed(E)
-		nummies -= E
+	for(var/obj/item/eat_it_motherfucker in loc)
+		if(!eat_it_motherfucker.has_material_type(/datum/material/plastic))
+			continue
+		feed(eat_it_motherfucker)
+		break
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/feed(obj/item/suffocator)
 	if(stat == DEAD || choking) // plapatin I swear to god
@@ -174,7 +167,7 @@
 	if (stat == DEAD)
 		return
 	var/turf/T = get_turf(src)
-	var/obj/item/reagent_containers/food/consumed = locate() in contents //Barf out a single food item from our guts
+	var/obj/item/consumed = locate() in contents //Barf out a single food item from our guts
 	choking = FALSE // assume birdboat is vomiting out whatever he was choking on
 	if (prob(50) && consumed)
 		barf_food(consumed)
