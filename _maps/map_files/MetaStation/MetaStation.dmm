@@ -78375,6 +78375,11 @@
 /obj/machinery/computer/exoscanner_control{
 	dir = 1
 	},
+/obj/machinery/camera{
+	c_tag = "Cargo Bay - Drone Launch Room";
+	dir = 1;
+	pixel_x = 14
+	},
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "wFn" = (
