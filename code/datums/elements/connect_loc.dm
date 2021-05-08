@@ -31,18 +31,16 @@
 	. = ..()
 
 	if(!tracked)
-		tracked = listener
-
-	if(!istype(tracked))
-		return
-
-	unregister_signals(listener, tracked, tracked.loc)
-
-	UnregisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE)
+		unregister_all(listener)
+	else if(targets[tracked.loc]) // Detach can happen multiple times due to qdel
+		unregister_signals(listener, tracked, tracked.loc)
+		UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
 
 /datum/element/connect_loc/proc/update_signals(datum/listener, atom/movable/tracked)
 	var/existing = length(targets[tracked.loc])
-	LAZYSET(targets[tracked.loc], tracked, listener)
+	if(!existing)
+		targets[tracked.loc] = list()
+	targets[tracked.loc][tracked] = listener
 
 	if(isnull(tracked.loc))
 		return
@@ -53,6 +51,15 @@
 
 	if (!existing && isturf(tracked.loc))
 		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change)
+
+/datum/element/connect_loc/proc/unregister_all(datum/listener)
+	for(var/atom/location as anything in targets)
+		var/list/loc_targets = targets[location]
+		for(var/atom/movable/tracked as anything in loc_targets)
+			if(loc_targets[tracked] != listener)
+				continue
+			unregister_signals(listener, tracked, location)
+			UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
 	targets[old_loc] -= tracked
