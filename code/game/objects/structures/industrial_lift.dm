@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(istype(AM, /obj/structure/fluff/tram_rail))
+	if(istype(AM, /obj/structure/fluff/tram_rail) || istype(AM, /obj/effect/landmark/tram))
 		return
 	if(AM in lift_load)
 		return
@@ -412,6 +412,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/obj/effect/landmark/tram/from_where
 	var/travel_direction
 	var/time_inbetween_moves = 1
+
 
 /obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
 
