@@ -1,5 +1,0 @@
-author: "Greniza"
-delete-after: True
-changes: 
-  - bugfix: "Made the PDA painter be able to paint PDAs into standard PDAs."
-  - bugfix: "Made the PDA painter able to paint PDAs again after 58844 did not update the painter."

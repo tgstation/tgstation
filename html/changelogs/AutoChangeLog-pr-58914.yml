@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - refactor: "is_flying_animal var is now an element!"

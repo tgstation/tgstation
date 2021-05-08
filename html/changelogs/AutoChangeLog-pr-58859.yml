@@ -1,7 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - rscadd: "Miners can now discover geysers with their mining scanner for a point reward! This will discover their type and mark that geyser (with type) on the GPS system."
-  - rscdel: "removes the ClF3 geysers"
-  - rscadd: "Adds a very rare strange geyser that has a random reagent (maintpill/strange seed style)"
-  - balance: "Geysers can now be activated with normal, cheap plungers"

@@ -218,3 +218,33 @@
   tralezab:
   - bugfix: dogs now resist before fetching or harassing, to unbuckle from stuff if
       they need to
+2021-05-08:
+  ArcaneDefence:
+  - bugfix: Felinids are disgusted by raw and gross foods again.
+  Celotajs:
+  - bugfix: Fixed PDA overlays for GAGS PDAs
+  EOBGames:
+  - bugfix: Removed the gamer cube in Delta cargo.
+  Fikou:
+  - admin: moves sdql spell from debug tab to vv dropdown
+  Greniza:
+  - bugfix: Made the PDA painter be able to paint PDAs into standard PDAs.
+  - bugfix: Made the PDA painter able to paint PDAs again after 58844 did not update
+      the painter.
+  Kylerace:
+  - refactor: tram is marginally faster
+  Time-Green:
+  - rscadd: Miners can now discover geysers with their mining scanner for a point
+      reward! This will discover their type and mark that geyser (with type) on the
+      GPS system.
+  - rscdel: removes the ClF3 geysers
+  - rscadd: Adds a very rare strange geyser that has a random reagent (maintpill/strange
+      seed style)
+  - balance: Geysers can now be activated with normal, cheap plungers
+  interestingusernam3:
+  - bugfix: Messages related to becoming and ceasing to be a heretic monster are now
+      more noticeable.
+  tralezab:
+  - refactor: is_flying_animal var is now an element!
+  - refactor: pet bonuses are now an element
+  - admin: Added fantasy affixes to the VV dropdown for items!
