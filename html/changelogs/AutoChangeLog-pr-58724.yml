@@ -1,0 +1,6 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - rscadd: "a new TGUI interface for sentience fun balloons"
+  - code_imp: "added a pop_sound_effect variable to customize sentience fun balloons"
+  - code_imp: "moved the arena shuttle's area and effects to shuttles.dm"
