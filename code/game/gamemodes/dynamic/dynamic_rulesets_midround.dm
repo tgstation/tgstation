@@ -333,37 +333,6 @@
 
 //////////////////////////////////////////////
 //                                          //
-//              WIZARD (GHOST)              //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/midround/from_ghosts/wizard
-	name = "Wizard"
-	antag_datum = /datum/antagonist/wizard
-	antag_flag = ROLE_WIZARD
-	enemy_roles = list("Security Officer","Detective","Head of Security", "Captain")
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
-	required_candidates = 1
-	weight = 1
-	cost = 20
-	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	repeatable = TRUE
-
-/datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
-	if (required_candidates > (dead_players.len + list_observers.len))
-		return FALSE
-	if(GLOB.wizardstart.len == 0)
-		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
-		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
-		return FALSE
-	return ..()
-
-/datum/dynamic_ruleset/midround/from_ghosts/wizard/finish_setup(mob/new_character, index)
-	..()
-	new_character.forceMove(pick(GLOB.wizardstart))
-
-//////////////////////////////////////////////
-//                                          //
 //          NUCLEAR OPERATIVES (MIDROUND)   //
 //                                          //
 //////////////////////////////////////////////
