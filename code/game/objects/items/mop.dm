@@ -48,12 +48,12 @@
 	. += "It has [!notches ? "nothing" : "[notches] notches"] scratched into the handle."
 
 /obj/item/mop/attack(mob/living/target, mob/living/user)
-	var/living_state = target_stat
+	var/living_state = target.stat
 	. = ..()
 	if(!QDELETED(target) && target.stat == DEAD && target.mind && living_state != DEAD)
 		add_notch(user)
 
-/obj/item/claymore/highlander/proc/add_notch(mob/living/user) //DYNAMIC CLAYMORE PROGRESSION SYSTEM - THIS IS THE FUTURE
+/obj/item/mop/proc/add_notch(mob/living/user) //DYNAMIC CLAYMORE PROGRESSION SYSTEM - THIS IS THE FUTURE
 	notches++
 	force++
 	var/new_name = name
