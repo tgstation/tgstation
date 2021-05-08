@@ -143,7 +143,7 @@
 			if(1.25 to 2.75)
 				bandage_condition = "badly worn"
 			if(2.75 to 4)
-				bandage_condition = "slightly pus-stained"
+				bandage_condition = "slightly stained"
 			if(4 to INFINITY)
 				bandage_condition = "clean"
 
@@ -155,7 +155,7 @@
 			if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
 				condition += ", <span class='deadsay'>with growing clouds of infection.</span>"
 			if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
-				condition += ", <span class='deadsay'>with streaks of rotten, pulsating infection!</span>"
+				condition += ", <span class='deadsay'>with streaks of rotten infection!</span>"
 			if(WOUND_INFECTION_SEPTIC to INFINITY)
 				return "<span class='deadsay'><B>[victim.p_their(TRUE)] [limb.name] is a mess of charred skin and infected rot!</B></span>"
 			else
@@ -185,7 +185,7 @@
 			if(WOUND_INFECTION_SEPTIC to INFINITY)
 				. += "Infection Level: <span class='deadsay'>LOSS IMMINENT</span>\n"
 		if(infestation > sanitization)
-			. += "\tSurgical debridement, antiobiotics/sterilizers, or regenerative mesh will rid infection. Paramedic UV penlights are also effective.\n"
+			. += "\tSurgical debridement, antibiotics/sterilizers, or regenerative mesh will rid infection. Paramedic UV penlights are also effective.\n"
 
 		if(flesh_damage > 0)
 			. += "Flesh damage detected: Application of ointment, regenerative mesh, Synthflesh, or ingestion of \"Miner's Salve\" will repair damaged flesh. Good nutrition, rest, and keeping the wound clean can also slowly repair flesh.\n"

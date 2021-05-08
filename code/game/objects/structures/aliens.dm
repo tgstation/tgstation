@@ -92,6 +92,11 @@
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
 
+/// meant for one lavaland ruin or anywhere that has simplemobs who can push aside structures
+/obj/structure/alien/resin/wall/immovable
+	desc = "Dense resin solidified into a wall."
+	move_resist = MOVE_FORCE_VERY_STRONG
+
 /obj/structure/alien/resin/wall/creature
 	name = "gelatinous wall"
 	desc = "Thick material shaped into a wall. Eugh."

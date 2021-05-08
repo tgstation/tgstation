@@ -94,7 +94,6 @@
 	name = "Abandoned Ship Pod"
 
 ////////////////////////////Single-area shuttles////////////////////////////
-
 /area/shuttle/transit
 	name = "Hyperspace"
 	desc = "Weeeeee"
@@ -212,3 +211,65 @@
 
 /area/shuttle/caravan/freighter3
 	name = "Tiny Freighter"
+
+// ----------- Arena Shuttle
+/area/shuttle_arena
+	name = "arena"
+	has_gravity = STANDARD_GRAVITY
+	requires_power = FALSE
+
+/obj/effect/forcefield/arena_shuttle
+	name = "portal"
+	timeleft = 0
+	var/list/warp_points = list()
+
+/obj/effect/forcefield/arena_shuttle/Initialize()
+	. = ..()
+	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
+		warp_points += exit
+
+/obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
+	if(!isliving(AM))
+		return
+
+	var/mob/living/L = AM
+	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
+		to_chat(L, "<span class='notice'>Your offering is accepted. You may pass.</span>", confidential = TRUE)
+		qdel(L.pulling)
+		var/turf/LA = get_turf(pick(warp_points))
+		L.forceMove(LA)
+		L.hallucination = 0
+		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>", confidential = TRUE)
+		for(var/obj/item/chainsaw/doomslayer/chainsaw in L)
+			qdel(chainsaw)
+		var/obj/item/skeleton_key/key = new(L)
+		L.put_in_hands(key)
+	else
+		to_chat(L, "<span class='warning'>You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.</span>", confidential = TRUE)
+
+/obj/effect/landmark/shuttle_arena_safe
+	name = "hall of champions"
+	desc = "For the winners."
+
+/obj/effect/landmark/shuttle_arena_entrance
+	name = "\proper the arena"
+	desc = "A lava filled battlefield."
+
+/obj/effect/forcefield/arena_shuttle_entrance
+	name = "portal"
+	timeleft = 0
+	var/list/warp_points = list()
+
+/obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
+	if(!isliving(AM))
+		return
+
+	if(!warp_points.len)
+		for(var/obj/effect/landmark/shuttle_arena_entrance/S in GLOB.landmarks_list)
+			warp_points |= S
+
+	var/obj/effect/landmark/LA = pick(warp_points)
+	var/mob/living/M = AM
+	M.forceMove(get_turf(LA))
+	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>", confidential = TRUE)
+	M.apply_status_effect(STATUS_EFFECT_MAYHEM)
