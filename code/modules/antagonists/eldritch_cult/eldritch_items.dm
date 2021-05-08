@@ -98,17 +98,19 @@
 	/* This is called when the blade is first initialized, whenever the heretic gains an acention level, and whenever it is picked up or dropped. Overlays are
 	 *   > The moving eye sprite on some blades (basic, ash, void)
 	 *   > The one triggered on firey blade and seeking blade upgrades (other upgrades are underlays)
-	 *   > The one triggered on ascention
-	 * Because eldrich blades do not have a specific owner, the pick up/drop proc of this is necessary.
+	 * Because eldrich blades do not have a specific owner, the pick up/drop proc of this is necessary to update stuff according to the heretic's knowledge.
 	 */
 	. = ..()
 
-	if(!(current_user)):
+	if(!(current_user))
 		return
+
 	if(!(IS_HERETIC(current_user) || IS_HERETIC_MONSTER(current_user)))
 		return
+
 	if(initial(eye_overlay) && !(current_user/datum/antagonist/heretic.ascended))
 		. += eye_overlay
+
 	for(var/incantation in user_knowledge)
 
 		if(initial(incantation.name) == initial(/datum/eldritch_knowledge/ash_blade_upgrade.name))
@@ -124,7 +126,7 @@
 /obj/item/melee/sickly_blade/update_appearance()
 	/* This is called when the heretic ascends, gains a blade upgrade, picks up this object, or drops this object.
 	 * The reasoning is that, for one, it's easier, and for two, the blade is an independent object of the heretic;
-	 * Therefore, it is empowered by the heretic and not necessarily inately magical, a magical focus like the wizard's wands.
+	 * Therefore, it is empowered by the heretic and not necessarily innately magical, a magical focus like the wizard's wands.
 	 */
 	var/list/user_knowledge = current_user/datum/antagonist/heretic.researched_knowledge
 	. = ..()
