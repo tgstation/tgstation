@@ -415,6 +415,10 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
 
+/obj/structure/industrial_lift/tram/central/Initialize(mapload)
+	. = ..()
+	SStramprocess.can_fire = TRUE
+
 /obj/structure/industrial_lift/tram/LateInitialize()
 	. = ..()
 	find_our_location()
