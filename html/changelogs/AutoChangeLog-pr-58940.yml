@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - code_imp: "SStramprocess only fires on maps with trams actually present on the map"
