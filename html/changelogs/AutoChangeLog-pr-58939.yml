@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Purchasing classic or mjolnir loadouts as the wizard will no longer crash the server."
