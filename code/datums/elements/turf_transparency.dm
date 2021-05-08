@@ -27,6 +27,9 @@
 	var/turf/our_turf = source
 	our_turf.vis_contents.len = 0
 	REMOVE_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
+	var/turf/below_turf = our_turf.below()
+	if(below_turf)
+		UnregisterSignal(below_turf, COMSIG_TURF_CHANGE)
 
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multiz(turf/our_turf, prune_on_fail = FALSE, init = FALSE)
@@ -38,6 +41,20 @@
 			return FALSE
 	if(init)
 		our_turf.vis_contents += below_turf
+
+		if(below_turf)
+		//	update_below_turf_mask(below_turf)
+			RegisterSignal(below_turf, COMSIG_TURF_CHANGE, .proc/on_below_turf_change)
+
+	if(below_turf)
+		var/datum/lighting_object/below_lighting = below_turf.lighting_object
+		var/mutable_appearance/below_turf_without_lighting = new(below_turf)
+
+		if(below_lighting)
+			below_turf_without_lighting.underlays -= below_lighting.current_underlay
+
+		our_turf.underlays += below_turf_without_lighting
+
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
 		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = TURF_LAYER-0.01)
 		girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR
@@ -46,6 +63,28 @@
 		plating_underlay = RESET_ALPHA | RESET_COLOR
 		our_turf.underlays += plating_underlay
 	return TRUE
+
+/datum/element/turf_z_transparency/proc/on_below_turf_change(turf/below_turf, path, new_baseturfs, flags, list/post_change_callbacks)
+	SIGNAL_HANDLER
+	var/turf/our_turf = below_turf.above()
+	if(!HAS_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT))
+		return
+	our_turf.underlays.Cut(2)
+
+	//post_change_callbacks += update_below_turf_callback
+
+/datum/element/turf_z_transparency/proc/update_below_turf_mask(turf/below_turf)
+	var/turf/our_turf = below_turf.above()
+
+	if(!HAS_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT))
+		return
+
+	var/datum/lighting_object/below_lighting = below_turf.lighting_object
+	var/mutable_appearance/below_turf_without_lighting = new(below_turf)
+	if(below_turf.lighting_object)
+		below_turf_without_lighting.underlays -= below_lighting.current_underlay
+	our_turf.underlays += below_turf_without_lighting
+
 
 /datum/element/turf_z_transparency/proc/on_multiz_turf_del(turf/our_turf, turf/T, dir)
 	SIGNAL_HANDLER

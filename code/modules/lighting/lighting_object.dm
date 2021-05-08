@@ -1,10 +1,5 @@
-#define LIGHTING_OBJECT_TRANSPARENT 1
-#define LIGHTING_OBJECT_DARK 2
-#define LIGHTING_OBJECT_COLOR 3
-
 /datum/lighting_object
 	var/mutable_appearance/current_underlay
-	var/current_state = LIGHTING_OBJECT_TRANSPARENT
 
 	var/needs_update = FALSE
 	var/turf/myturf
@@ -15,7 +10,7 @@
 		return
 	. = ..()
 
-	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", 100, LIGHTING_PLANE)
+	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", 100, LIGHTING_PLANE, 255)
 	current_underlay.color = LIGHTING_BASE_MATRIX
 
 	myturf = source
@@ -59,7 +54,7 @@
 	var/list/corners = myturf.corners
 	var/datum/lighting_corner/cr = dummy_lighting_corner
 	var/datum/lighting_corner/cg = dummy_lighting_corner
-	var/datum/lighting_corner/cb = dummy_lighting_corner//TODOKYLER: this is dumb and wasteful figure out a way to make this not happen
+	var/datum/lighting_corner/cb = dummy_lighting_corner
 	var/datum/lighting_corner/ca = dummy_lighting_corner
 	if (corners) //done this way for speed
 		cr = corners[3] || dummy_lighting_corner
@@ -93,43 +88,52 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
-	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8) && current_state != LIGHTING_OBJECT_TRANSPARENT)
+	var/forced_state = SEND_SIGNAL(src, COMSIG_LIGHTING_OBJECT_UPDATING) //this is probably dumb
+
+	if(((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8)) || forced_state & LIGHTING_OBJECT_FORCE_FULLBRIGHT)
+		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
 		myturf.underlays -= current_underlay
 		current_underlay.icon_state = "transparent"
 		current_underlay.color = null
-		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
 		myturf.underlays += current_underlay
-		current_state = LIGHTING_OBJECT_TRANSPARENT
-	else if(!set_luminosity && current_state != LIGHTING_OBJECT_DARK)
+	else if(!set_luminosity || forced_state & LIGHTING_OBJECT_FORCE_DARK)
 		myturf.underlays -= current_underlay
 		current_underlay.icon_state = "dark"
 		current_underlay.color = null
 		myturf.underlays += current_underlay
-		current_state = LIGHTING_OBJECT_DARK
 	else
 		myturf.underlays -= current_underlay
 		current_underlay.icon_state = null
 		current_underlay.color = list(
-		//	nr	ng	nb	na   =
-			rr, rg, rb, 00,//  r*x
-			gr, gg, gb, 00,//+ g*x
-			br, bg, bb, 00,//+ b*x
-			ar, ag, ab, 00,//+ a*x
-			00, 00, 00, 01 //+ c*x
-		)
-		/*current_underlay.color = list(
-			rr, gr, br, 00,
-			rg, gg, bg, 00,
-			rb, gb, bb, 00,
+			rr, rg, rb, 00,
+			gr, gg, gb, 00,
+			br, bg, bb, 00,
 			ar, ag, ab, 00,
 			00, 00, 00, 01
-		)*/
+		)
 
 		myturf.underlays += current_underlay
-		current_state = LIGHTING_OBJECT_COLOR
 
-	myturf.luminosity = set_luminosity
+	SEND_SIGNAL(src, COMSIG_LIGHTING_OBJECT_UPDATED, current_underlay)
 
-#undef LIGHTING_OBJECT_TRANSPARENT
-#undef LIGHTING_OBJECT_DARK
-#undef LIGHTING_OBJECT_COLOR
+	myturf.luminosity = set_luminosity || forced_state & LIGHTING_OBJECT_FORCE_FULLBRIGHT
+
+/atom/movable/lighting_movable
+	name = ""
+
+	anchored = TRUE
+
+	icon = LIGHTING_ICON
+	icon_state = "transparent"
+	color = null //we manually set color in init instead
+	plane = LIGHTING_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	invisibility = INVISIBILITY_LIGHTING
+	vis_flags = VIS_HIDE
+
+/atom/movable/lighting_movable/Initialize(mapload)
+	. = ..()
+	verbs.Cut()
+	//We avoid setting this in the base as if we do then the parent atom handling will add_atom_color it and that
+	//is totally unsuitable for this object, as we are always changing it's colour manually
+	color = LIGHTING_BASE_MATRIX

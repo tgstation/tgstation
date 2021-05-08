@@ -61,7 +61,14 @@
 	#define COMPONENT_VV_HANDLED (1<<0)
 /// from datum ui_act (usr, action)
 #define COMSIG_UI_ACT "COMSIG_UI_ACT"
-
+/// from base of /datum/lighting_object/update() (mutable_appearance)
+#define COMSIG_LIGHTING_OBJECT_UPDATED "comsig_lighting_object_updated"
+/// from base of /datum/lighting_object/update()
+#define COMSIG_LIGHTING_OBJECT_UPDATING "comsig_lighting_object_updating"
+	///return this if you want to force the lighting_object to use the dark state
+	#define LIGHTING_OBJECT_FORCE_DARK (1<<0)
+	///return this if you want to force the lighting_object to use the full bright state
+	#define LIGHTING_OBJECT_FORCE_FULLBRIGHT (1<<1)
 
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"

@@ -125,8 +125,7 @@
 		. * applied_lum_b                    \
 	);
 
-// This is the define used to calculate falloff.
-
+/// This is the define used to calculate falloff.
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
 	var/thing
@@ -218,7 +217,6 @@
 
 	var/list/datum/lighting_corner/corners = list()
 	var/list/turf/turfs = list()
-	var/thing
 	var/datum/lighting_corner/C
 	var/turf/T
 
