@@ -40,14 +40,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"bQ" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
-	},
-/obj/structure/chair/comfy/shuttle,
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "bS" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/lights/mixed{
@@ -96,14 +88,19 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/south,
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -31
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dT" = (
@@ -163,7 +160,9 @@
 /obj/item/storage/toolbox/emergency{
 	pixel_y = 3
 	},
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "fD" = (
@@ -201,7 +200,11 @@
 	dir = 1
 	},
 /obj/structure/chair/comfy/shuttle,
-/obj/item/radio/intercom/directional/north,
+/obj/item/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_y = 27
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "gj" = (
@@ -241,10 +244,18 @@
 	dir = 9
 	},
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/west,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_y = 28
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/brig)
+"hv" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
 "hC" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -294,7 +305,9 @@
 /obj/item/restraints/handcuffs{
 	pixel_y = 3
 	},
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iF" = (
@@ -474,7 +487,9 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "qD" = (
@@ -568,8 +583,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light/directional/west,
-/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "uI" = (
@@ -607,7 +623,9 @@
 /obj/item/storage/box/handcuffs{
 	pixel_y = 5
 	},
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/brig)
 "wg" = (
@@ -622,7 +640,7 @@
 /area/shuttle/escape)
 "wX" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "xA" = (
@@ -713,7 +731,10 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/status_display/evac{
+	dir = 8;
+	pixel_x = 32
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "AM" = (
@@ -786,7 +807,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -798,7 +821,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/machinery/vending/cola/space_up,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -833,7 +858,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/machinery/vending/snack/green,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -1168,7 +1195,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
 	},
-/obj/machinery/light/directional/north,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -1328,7 +1357,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 3
 	},
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
@@ -1362,7 +1391,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ZL" = (
@@ -1377,7 +1408,9 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 
@@ -1617,7 +1650,7 @@ Yu
 Yu
 VI
 VI
-Yu
+hv
 Yu
 Db
 Co
@@ -1817,8 +1850,8 @@ iD
 og
 WL
 Zg
-Yu
-bQ
+hv
+Co
 Zt
 VI
 VI

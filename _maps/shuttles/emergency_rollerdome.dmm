@@ -93,11 +93,15 @@
 /turf/template_noop,
 /area/template_noop)
 "pI" = (
-/obj/machinery/light/directional/west,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "qU" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ss" = (
@@ -295,7 +299,7 @@
 /obj/structure/table/wood/poker,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/obj/machinery/light/directional/south,
+/obj/machinery/light,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Zo" = (
