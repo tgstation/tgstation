@@ -15,6 +15,7 @@
 	///Weighted list of extra features that can spawn in the area, such as geysers.
 	var/list/feature_spawn_list
 
+	var/list/veins_spawn_list
 
 	///Base chance of spawning a mob
 	var/mob_spawn_chance = 6
@@ -22,6 +23,8 @@
 	var/flora_spawn_chance = 2
 	///Base chance of spawning features
 	var/feature_spawn_chance = 0.1
+
+	var/veins_spawn_chance = 1.2
 	///Unique ID for this spawner
 	var/string_gen
 
@@ -44,6 +47,8 @@
 		flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
 	if(!feature_spawn_list)
 		feature_spawn_list = list(/obj/structure/geyser/random = 1)
+	if(!veins_spawn_list)
+		veins_spawn_list = list(/obj/structure/ore_vein = 10)
 
 /datum/map_generator/cave_generator/generate_terrain(list/turfs)
 	. = ..()
@@ -103,9 +108,25 @@
 				if(can_spawn)
 					spawned_feature = new picked_feature(new_open_turf)
 
+			var/atom/spawned_veins
+			if(veins_spawn_list && prob(veins_spawn_chance))
+				var/can_spawn = TRUE
+
+				if(!(A.area_flags & FLORA_ALLOWED)) //checks the same flag because lol dunno
+					can_spawn = FALSE
+
+				var/atom/picked_feature = pickweight(veins_spawn_list)
+
+				for(var/obj/structure/ore_vein/veins in range(7, new_open_turf))
+					if(istype(picked_feature, veins))
+						can_spawn = FALSE
+
+				if(can_spawn)
+					spawned_veins = new picked_feature(new_open_turf)
+
 			//MOB SPAWNING HERE
 
-			if(mob_spawn_list && !spawned_flora && !spawned_feature && prob(mob_spawn_chance))
+			if(mob_spawn_list && !spawned_flora && !spawned_feature && !spawned_veins && prob(mob_spawn_chance))
 				var/can_spawn = TRUE
 
 				if(!(A.area_flags & MOB_SPAWN_ALLOWED))

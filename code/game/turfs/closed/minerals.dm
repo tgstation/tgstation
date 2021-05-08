@@ -20,7 +20,7 @@
 	var/environment_type = "asteroid"
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
 	var/obj/item/stack/ore/mineralType = null
-	var/mineralAmt = 3
+	var/mineralAmt = 1
 	var/last_act = 0
 	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
 	var/defer_change = 0
@@ -47,7 +47,7 @@
 
 /turf/closed/mineral/proc/Change_Ore(ore_type, random = 0)
 	if(random)
-		mineralAmt = rand(1, 5)
+		mineralAmt = rand(0, 1)
 	if(ispath(ore_type, /obj/item/stack/ore)) //If it has a scan_state, switch to it
 		var/obj/item/stack/ore/the_ore = ore_type
 		scan_state = initial(the_ore.scan_state) // I SAID. SWITCH. TO. IT.
@@ -202,7 +202,7 @@
 			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
-				M.mineralAmt = rand(1, 5)
+				M.mineralAmt = rand(0, 1)
 				M.environment_type = src.environment_type
 				src = M
 				M.levelupdate()
@@ -426,7 +426,7 @@
 
 /turf/closed/mineral/bananium
 	mineralType = /obj/item/stack/ore/bananium
-	mineralAmt = 3
+	mineralAmt = 1
 	scan_state = "rock_Bananium"
 
 /turf/closed/mineral/bscrystal

@@ -1430,6 +1430,7 @@
 #include "code\game\objects\structures\icemoon\cave_entrance.dm"
 #include "code\game\objects\structures\lavaland\geyser.dm"
 #include "code\game\objects\structures\lavaland\necropolis_tendril.dm"
+#include "code\game\objects\structures\mining\ore_vein.dm"
 #include "code\game\objects\structures\plaques\_plaques.dm"
 #include "code\game\objects\structures\plaques\static_plaques.dm"
 #include "code\game\objects\structures\signs\_signs.dm"
