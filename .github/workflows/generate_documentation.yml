@@ -19,7 +19,7 @@ jobs:
         run: bash tools/ci/build_spaceman_dmm.sh
       - name: Generate documentation
         run: |
-          cargo run -p ~/SpacemanDMM --release --bin dmdoc
+          cargo run --manifest-path SpacemanDMM/Cargo.toml --release --bin dmdoc
           touch dmdoc/.nojekyll
           echo codedocs.tgstation13.org > dmdoc/CNAME
       - name: Deploy
