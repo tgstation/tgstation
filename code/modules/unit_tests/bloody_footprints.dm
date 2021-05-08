@@ -25,7 +25,10 @@
 
 	TEST_ASSERT(soles.bloody_shoes[blood_type], "Shoes didn't become stained after stepping in a pool of [blood_type]")
 
-	//We need to do this so the component will even attempt to apply a footprint overlay, please kill me slowly
+	//The bloody soles component handles the order of stepping on blood/stepping on a bloody tile in a constranating way
+	//Which means it needs to check and see if any time has passed between steps, so it can be sure the player is stepping onto a new tile (that should become bloody)
+	//I on the other hand need to do all my movements in one tick, so we need to sidestep this check
+	//Please kill me slowly
 	soles.last_pickup -= 1
 
 	//Move off the bloody tile, time to do some testing
