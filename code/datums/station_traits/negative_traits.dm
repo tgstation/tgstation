@@ -168,11 +168,12 @@
 	if(!punpun.put_in_l_hand(weapon) && !punpun.put_in_r_hand(weapon))
 		// Guess they did all this with whatever they have in their hands already
 		qdel(weapon)
+		weapon = punpun.get_active_held_item() || punpun.get_inactive_held_item()
 
 	weapon?.add_mob_blood(punpun)
 	punpun.add_mob_blood(punpun)
 
-	punpun.ai_controller = /datum/ai_controller/monkey/angry
+	new /datum/ai_controller/monkey/angry(punpun)
 
 	var/area/place = get_area(punpun)
 
