@@ -51,6 +51,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/eye_overlay = "eldritch_blade_eye"
+	var/alt_dormant_icon = TRUE
 	var/mob/current_user = null // null when not in hand, non-null when in hand
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
@@ -104,7 +105,7 @@
 
 	if(!(current_user)):
 		return
-	if(!(IS_HERETIC(current_user) || IS_HERETIC_MONSTER(current_user))
+	if(!(IS_HERETIC(current_user) || IS_HERETIC_MONSTER(current_user)))
 		return
 	if(initial(eye_overlay) && !(current_user/datum/antagonist/heretic.ascended))
 		. += eye_overlay
@@ -128,8 +129,15 @@
 	var/list/user_knowledge = current_user/datum/antagonist/heretic.researched_knowledge
 	. = ..()
 	underlays.Cut()
-	if(!(current_user)):
+
+	if(!(current_user))
+		if(alt_dormant_icon)
+			icon_state = "[initial(icon_state)]_dormant"
 		return
+	else
+		icon_state = initial(icon_state)
+
+
 	if(!(IS_HERETIC(current_user) || IS_HERETIC_MONSTER(current_user))
 		return
 
@@ -159,6 +167,7 @@
 	icon_state = "rust_blade"
 	inhand_icon_state = "rust_blade"
 	eye_overlay = null
+	alt_dormant_icon = FALSE
 
 /obj/item/melee/sickly_blade/ash
 	name = "\improper Ashen Blade"
@@ -166,6 +175,7 @@
 	icon_state = "ash_blade"
 	inhand_icon_state = "ash_blade"
 	eye_overlay = "ash_blade_eye"
+	alt_dormant_icon = FALSE
 
 /obj/item/melee/sickly_blade/flesh
 	name = "Flesh Blade"
@@ -173,6 +183,7 @@
 	icon_state = "flesh_blade"
 	inhand_icon_state = "flesh_blade"
 	eye_overlay = null
+	alt_dormant_icon = TRUE
 
 /obj/item/melee/sickly_blade/void
 	name = "Void Blade"
@@ -180,6 +191,7 @@
 	icon_state = "void_blade"
 	inhand_icon_state = "void_blade"
 	eye_overlay = "void_blade_eye"
+	alt_dormant_icon = FALSE
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"
