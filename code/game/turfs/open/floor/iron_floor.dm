@@ -46,15 +46,15 @@
 	base_icon_state = "textured_edge"
 	floor_tile = /obj/item/stack/tile/iron/textured_edge
 
-/turf/open/floor/iron/textured_large1
-	icon_state = "textured_large1"
-	base_icon_state = "textured_large1"
-	floor_tile = /obj/item/stack/tile/iron/textured_large1
+/turf/open/floor/iron/textured_half
+	icon_state = "textured_half"
+	base_icon_state = "textured_half"
+	floor_tile = /obj/item/stack/tile/iron/textured_half
 
-/turf/open/floor/iron/textured_large2
-	icon_state = "textured_large2"
-	base_icon_state = "textured_large2"
-	floor_tile = /obj/item/stack/tile/iron/textured_large2
+/turf/open/floor/iron/textured_large
+	icon_state = "textured_large"
+	base_icon_state = "textured_large"
+	floor_tile = /obj/item/stack/tile/iron/textured_large
 
 /turf/open/floor/iron/dark
 	icon_state = "darkfull"
@@ -86,15 +86,15 @@
 	base_icon_state = "textured_dark_edge"
 	floor_tile = /obj/item/stack/tile/iron/dark/textured_edge
 
-/turf/open/floor/iron/dark/textured_large1
-	icon_state = "textured_dark_large1"
-	base_icon_state = "textured_dark_large1"
-	floor_tile = /obj/item/stack/tile/iron/dark/textured_large1
+/turf/open/floor/iron/dark/textured_half
+	icon_state = "textured_dark_half"
+	base_icon_state = "textured_dark_half"
+	floor_tile = /obj/item/stack/tile/iron/dark/textured_half
 
-/turf/open/floor/iron/dark/textured_large2
-	icon_state = "textured_dark_large2"
-	base_icon_state = "textured_dark_large2"
-	floor_tile = /obj/item/stack/tile/iron/dark/textured_large2
+/turf/open/floor/iron/dark/textured_large
+	icon_state = "textured_dark_large"
+	base_icon_state = "textured_dark_large"
+	floor_tile = /obj/item/stack/tile/iron/dark/textured_large
 
 /turf/open/floor/iron/dark/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -141,15 +141,15 @@
 	base_icon_state = "textured_white_edge"
 	floor_tile = /obj/item/stack/tile/iron/white/textured_edge
 
-/turf/open/floor/iron/white/textured_large1
-	icon_state = "textured_white_large1"
-	base_icon_state = "textured_white_large1"
-	floor_tile = /obj/item/stack/tile/iron/white/textured_large1
+/turf/open/floor/iron/white/textured_half
+	icon_state = "textured_white_half"
+	base_icon_state = "textured_white_half"
+	floor_tile = /obj/item/stack/tile/iron/white/textured_half
 
-/turf/open/floor/iron/white/textured_large2
-	icon_state = "textured_white_large2"
-	base_icon_state = "textured_white_large2"
-	floor_tile = /obj/item/stack/tile/iron/white/textured_large2
+/turf/open/floor/iron/white/textured_large
+	icon_state = "textured_white_large"
+	base_icon_state = "textured_white_large"
+	floor_tile = /obj/item/stack/tile/iron/white/textured_large
 
 /turf/open/floor/iron/white/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -185,15 +185,15 @@
 	base_icon_state = "smooth_edge"
 	floor_tile = /obj/item/stack/tile/iron/smooth_edge
 
-/turf/open/floor/iron/smooth_large1
-	icon_state = "smooth_large1"
-	base_icon_state = "smooth_large1"
-	floor_tile = /obj/item/stack/tile/iron/smooth_large1
+/turf/open/floor/iron/smooth_half
+	icon_state = "smooth_half"
+	base_icon_state = "smooth_half"
+	floor_tile = /obj/item/stack/tile/iron/smooth_half
 
-/turf/open/floor/iron/smooth_large2
-	icon_state = "smooth_large2"
-	base_icon_state = "smooth_large2"
-	floor_tile = /obj/item/stack/tile/iron/smooth_large2
+/turf/open/floor/iron/smooth_large
+	icon_state = "smooth_large"
+	base_icon_state = "smooth_large"
+	floor_tile = /obj/item/stack/tile/iron/smooth_large
 
 /turf/open/floor/iron/chapel
 	icon_state = "chapel"
@@ -282,11 +282,6 @@
 	base_icon_state = "bluespace"
 	desc = "Sadly, these don't seem to make you faster..."
 	floor_tile = /obj/item/stack/tile/iron/bluespace
-
-/turf/open/floor/iron/monotile
-	icon_state = "monotile"
-	base_icon_state = "monotile"
-	floor_tile = /obj/item/stack/tile/iron/monotile
 
 /turf/open/floor/iron/sepia
 	icon_state = "sepia"
