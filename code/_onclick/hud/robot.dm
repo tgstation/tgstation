@@ -81,6 +81,12 @@
 	using.screen_loc = ui_borg_language_menu
 	static_inventory += using
 
+//Area Creator
+	using = new /atom/movable/screen/area_creator
+	using.screen_loc = ui_borg_create_area
+	using.hud = src
+	static_inventory += using
+
 //Radio
 	using = new /atom/movable/screen/robot/radio()
 	using.screen_loc = ui_borg_radio

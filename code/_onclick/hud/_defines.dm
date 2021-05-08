@@ -117,6 +117,7 @@
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
+#define ui_borg_create_area "CENTER+3:19,SOUTH+1:6"
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"
