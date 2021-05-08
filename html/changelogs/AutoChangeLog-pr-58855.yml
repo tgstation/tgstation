@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Blood cult's blood beam no longer sticks to your hand, and now fires!"
+  - bugfix: "Blood cultists can no longer walk out of a blood beam to avoid being stunned."
