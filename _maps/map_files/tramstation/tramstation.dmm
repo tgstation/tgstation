@@ -16134,13 +16134,13 @@
 "bTX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	id = "left_tram_lower";
+	id = "right_tram_lower";
 	name = "tunnel access blast door"
 	},
-/obj/machinery/door/firedoor,
-/turf/open/lava,
-/area/maintenance/tram/left)
+/turf/open/floor/iron,
+/area/maintenance/tram/mid)
 "bUp" = (
 /obj/machinery/computer/atmos_control/tank/air_tank{
 	dir = 1
@@ -100233,9 +100233,9 @@ qJQ
 aEc
 aEc
 ucp
-bTX
-bTX
-bTX
+ucp
+ucp
+ucp
 ucp
 aEc
 aEc
@@ -110513,9 +110513,9 @@ iBD
 aHH
 aHH
 eMU
-eMU
-eMU
-eMU
+bTX
+bTX
+bTX
 eMU
 aHH
 aHH
