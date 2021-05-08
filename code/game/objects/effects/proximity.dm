@@ -118,6 +118,7 @@
 	return
 
 /obj/effect/abstract/proximity_checker/Destroy()
+	monitor.checkers -= src
 	monitor = null
 	return ..()
 
