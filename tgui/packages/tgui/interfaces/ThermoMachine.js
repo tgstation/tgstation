@@ -37,7 +37,7 @@ export const ThermoMachine = (props, context) => {
               {' kPa'}
             </LabeledList.Item>
             <LabeledList.Item label="Mode">
-                {data.cooling? 'Cooling' : 'Heating'}
+              {data.cooling? 'Cooling' : 'Heating'}
             </LabeledList.Item>
           </LabeledList>
         </Section>
