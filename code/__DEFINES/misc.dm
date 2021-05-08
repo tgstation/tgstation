@@ -552,5 +552,5 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define SKILLCHIP_CATEGORY_GENERAL "general"
 #define SKILLCHIP_CATEGORY_JOB "job"
 
-/// Emojis icon set
-#define EMOJIS_SET 'icons/emoji.dmi'
+/// Emoji icon set
+#define EMOJI_SET 'icons/emoji.dmi'
