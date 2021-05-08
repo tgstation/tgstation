@@ -208,8 +208,8 @@
 			no_damage = FALSE
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
-		user.visible_message("<span class='danger'>[user] hits [src] with [I][no_damage ? ", without leaving a mark" : ""]!</span>", \
-			"<span class='danger'>You hit [src] with [I][no_damage ? ", without leaving a mark" : ""]!</span>", null, COMBAT_MESSAGE_RANGE)
+		user.visible_message("<span class='danger'>[user] hits [src] with [I][no_damage ? ", which doesn't leave a mark" : ""]!</span>", \
+			"<span class='danger'>You hit [src] with [I][no_damage ? ", which doesn't leave a mark" : ""]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	send_item_attack_message(I, user)
