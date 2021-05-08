@@ -49,18 +49,16 @@
 		user.forceMove(get_turf(src))
 		return TRUE
 
-/obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = 0)
-	if(force_stop)
-		return ..()
-	if(isobserver(AM))
-		return ..()
-	if(linked && (get_turf(oldloc) == get_turf(linked)))
-		return ..()
-	if(!teleport(AM))
-		return ..()
-
 /obj/effect/portal/attack_tk(mob/user)
 	return
+
+/obj/effect/portal/proc/on_entered(atom/newloc, atom/movable/entering_movable, atom/oldloc)
+	SIGNAL_HANDLER
+	if(isobserver(entering_movable))
+		return
+	if(linked && (get_turf(oldloc) == get_turf(linked)))
+		return
+	teleport(entering_movable)
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -85,6 +83,10 @@
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/effect/portal/singularity_pull()
 	return

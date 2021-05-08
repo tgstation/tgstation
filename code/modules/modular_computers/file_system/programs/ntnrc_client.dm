@@ -1,3 +1,4 @@
+
 /datum/computer_file/program/chatclient
 	filename = "ntnrc_client"
 	filedesc = "Chat Client"
@@ -5,12 +6,13 @@
 	program_icon_state = "command"
 	extended_desc = "This program allows communication over NTNRC network"
 	size = 8
-	requires_ntnet = 1
+	requires_ntnet = TRUE
 	requires_ntnet_feature = NTNET_COMMUNICATION
 	ui_header = "ntnrc_idle.gif"
-	available_on_ntnet = 1
+	available_on_ntnet = TRUE
 	tgui_id = "NtosNetChat"
 	program_icon = "comment-alt"
+	alert_able = TRUE
 	var/last_message // Used to generate the toolbar icon
 	var/username
 	var/active_channel
@@ -37,7 +39,7 @@
 			var/message = reject_bad_text(params["message"])
 			if(!message)
 				return
-			if(channel.password && !(src in channel.clients))
+			if(channel.password && (!(src in channel.active_clients) && !(src in channel.offline_clients)))
 				if(channel.password == message)
 					channel.add_client(src)
 					return TRUE
@@ -57,7 +59,7 @@
 
 			active_channel =  new_target
 			channel = SSnetworks.station_network.get_chat_channel_by_id(new_target)
-			if(!(src in channel.clients) && !channel.password)
+			if((!(src in channel.active_clients) && !(src in channel.offline_clients)) && !channel.password)
 				channel.add_client(src)
 			return TRUE
 		if("PRG_leavechannel")
@@ -90,12 +92,12 @@
 				return TRUE
 		if("PRG_changename")
 			var/newname = sanitize(params["new_name"])
-			if(!newname)
+			newname = replacetext(newname, " ", "_")
+			if(!newname || newname == username)
 				return
-			for(var/C in SSnetworks.station_network.chat_channels)
-				var/datum/ntnet_conversation/chan = C
-				if(src in chan.clients)
-					chan.add_status_message("[username] is now known as [newname].")
+			for(var/datum/ntnet_conversation/anychannel as anything in SSnetworks.station_network.chat_channels)
+				if(src in anychannel.active_clients)
+					anychannel.add_status_message("[username] is now known as [newname].")
 			username = newname
 			return TRUE
 		if("PRG_savelog")
@@ -146,6 +148,18 @@
 
 			channel.password = new_password
 			return TRUE
+		if("PRG_mute_user")
+			if(!authed)
+				return
+			var/datum/computer_file/program/chatclient/muted = locate(params["ref"]) in channel.active_clients + channel.offline_clients
+			channel.mute_user(src, muted)
+			return TRUE
+		if("PRG_ping_user")
+			if(!authed)
+				return
+			var/datum/computer_file/program/chatclient/pinged = locate(params["ref"]) in channel.active_clients + channel.offline_clients
+			channel.ping_user(src, pinged)
+			return TRUE
 
 /datum/computer_file/program/chatclient/process_tick()
 	. = ..()
@@ -163,10 +177,19 @@
 	else
 		ui_header = "ntnrc_idle.gif"
 
+/datum/computer_file/program/chatclient/run_program(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	for(var/datum/ntnet_conversation/channel as anything in SSnetworks.station_network.chat_channels)
+		if(src in channel.offline_clients)
+			channel.offline_clients.Remove(src)
+			channel.active_clients.Add(src)
+
 /datum/computer_file/program/chatclient/kill_program(forced = FALSE)
-	for(var/C in SSnetworks.station_network.chat_channels)
-		var/datum/ntnet_conversation/channel = C
-		channel.remove_client(src)
+	for(var/datum/ntnet_conversation/channel as anything in SSnetworks.station_network.chat_channels)
+		channel.go_offline(src)
+	active_channel = null
 	..()
 
 /datum/computer_file/program/chatclient/ui_static_data(mob/user)
@@ -193,6 +216,7 @@
 	data["all_channels"] = all_channels
 
 	data["active_channel"] = active_channel
+	data["selfref"] = REF(src) //used to verify who is you, as usernames can be copied.
 	data["username"] = username
 	data["adminmode"] = netadmin_mode
 	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)
@@ -204,21 +228,25 @@
 		if(netadmin_mode)
 			authed = TRUE
 		var/list/clients = list()
-		for(var/C in channel.clients)
-			if(C == src)
+		for(var/datum/computer_file/program/chatclient/channel_client as anything in channel.active_clients + channel.offline_clients)
+			if(channel_client == src)
 				authed = TRUE
-			var/datum/computer_file/program/chatclient/cl = C
 			clients.Add(list(list(
-				"name" = cl.username
+				"name" = channel_client.username,
+				"status" = channel_client.program_state,
+				"muted" = (channel_client in channel.muted_clients),
+				"operator" = channel.operator == channel_client,
+				"ref" = REF(channel_client)
 			)))
 		data["authed"] = authed
 		//no fishing for ui data allowed
 		if(authed)
+			data["strong"] = channel.strong
 			data["clients"] = clients
 			var/list/messages = list()
-			for(var/M in channel.messages)
+			for(var/message in channel.messages)
 				messages.Add(list(list(
-					"msg" = M
+					"msg" = message
 				)))
 			data["messages"] = messages
 			data["is_operator"] = (channel.operator == src) || netadmin_mode

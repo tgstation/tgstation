@@ -189,3 +189,9 @@
 	category_index = CATEGORY_SAUCES_REAGENTS
 	item_instance = /obj/item/reagent_containers/food/condiment/soysauce
 	cost_per_order = 15
+
+/datum/orderable_item/bbqsauce
+	name = "BBQ Sauce"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/bbqsauce
+	cost_per_order = 60

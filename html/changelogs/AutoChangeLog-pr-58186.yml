@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - refactor: "Rewrite the way we handle which roles get assigned with playtime tracking."
+  - bugfix: "Players who get MMI'd and put into borgs or AIs mid-shift now gain job playtime tracking towards Silicon roles instead."
