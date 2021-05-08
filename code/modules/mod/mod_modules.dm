@@ -32,7 +32,7 @@
 	/// What modules are we incompatible with?
 	var/list/incompatible_modules = list()
 	/// Cooldown after use
-	var/cooldown_time = 1 SECONDS
+	var/cooldown_time = 0
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 

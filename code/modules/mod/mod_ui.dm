@@ -6,6 +6,7 @@
 
 /obj/item/mod/control/ui_data()
 	var/data = list()
+	data["control"] = name
 	data["ui_theme"] = theme.ui_theme
 	data["interface_break"] = interface_break
 	data["malfunctioning"] = malfunctioning
@@ -34,7 +35,9 @@
 			idle_power = module.idle_power_cost,
 			active_power = module.active_power_cost,
 			use_power = module.use_power_cost,
-			module_complexity = module.complexity,
+			complexity = module.complexity,
+			cooldown_time = module.cooldown_time,
+			cooldown = COOLDOWN_TIMELEFT(module, cooldown_timer),
 			configurable = module.configurable,
 			id = module.tgui_id,
 			ref = REF(module)

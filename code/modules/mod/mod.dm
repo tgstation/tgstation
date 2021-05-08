@@ -220,6 +220,7 @@
 		to_chat(user, "<span class='notice'>You start removing [cell].</span>")
 		if(do_after(user, 50, target = src))
 			to_chat(user, "<span class='notice'>You remove [cell].</span>")
+			cell.forceMove(get_turf(user))
 			user.put_in_hands(cell)
 		return
 	return ..()
@@ -259,24 +260,26 @@
 
 /obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/mod/module))
-		if(open && !active && !activating)
-			install(attacking_item, FALSE)
-			return TRUE
-		else
-			audible_message("<span class='warning'>[src] indicates that something prevents installing [attacking_item].</span>")
+		if(!open)
+			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
+		install(attacking_item, FALSE)
+		return TRUE
 	else if(istype(attacking_item, /obj/item/stock_parts/cell))
-		if(open && !active && !activating && !cell)
-			attacking_item.forceMove(src)
-			cell = attacking_item
-			audible_message("<span class='notice'>[src] indicates that [cell] has been succesfully installed.</span>")
-			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-			return TRUE
-		else
-			audible_message("<span class='warning'>[src] indicates that something prevents installing [attacking_item].</span>")
+		if(!open)
+			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
+		if(cell)
+			audible_message("<span class='warning'>[src] indicates that there is a cell already installed.</span>")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+			return FALSE
+		attacking_item.forceMove(src)
+		cell = attacking_item
+		audible_message("<span class='notice'>[src] indicates that [cell] has been succesfully installed.</span>")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		return TRUE
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
 		return TRUE
@@ -288,6 +291,10 @@
 		update_access(attacking_item)
 		return TRUE
 	return ..()
+
+/obj/item/mod/control/get_cell()
+	if(!wearer)
+		return cell
 
 /obj/item/mod/control/emag_act(mob/user)
 	locked = !locked
@@ -396,9 +403,6 @@
 
 	if(newloc == wearer || newloc == src)
 		return
-	if(part == cell)
-		cell.update_icon()
-		cell = null
 	if(modules.Find(part))
 		var/obj/item/mod/module/module = part
 		if(module.module_type == MODULE_TOGGLE || module.module_type == MODULE_ACTIVE)
