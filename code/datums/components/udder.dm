@@ -38,7 +38,8 @@
 		if(11 to 99)
 			examine_list += "<span class='notice'>[parent]'s [udder] can be milked if you have something to contain it.</span>"
 		if(100)
-			examine_list += "<span class='notice'>[parent]'s [udder] is full, and can be milked if you have something to contain it.</span>"
+			examine_list += "<span class='notice'>[parent]'s [udder] is round and full, and can be milked if you have something to contain it.</span>"
+			
 
 ///signal called on parent being attacked with an item
 /datum/component/udder/proc/on_attackby(datum/source, obj/item/milking_tool, mob/user)
