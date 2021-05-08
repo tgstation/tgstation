@@ -174,7 +174,7 @@
 
 	if(cooling)
 		var/datum/gas_mixture/exchange_target
-		// Exchange target is the thing we are paired with, be it environment or the red port. 
+		// Exchange target is the thing we are paired with, be it enviroment or the red port. 
 		if(use_enviroment_heat)
 			exchange_target = local_turf.return_air()
 		else
@@ -188,7 +188,7 @@
 		var/temperature_exchange_delta = exchange_target.temperature - main_port.temperature
 		// Log 1 is already 0, going any lower will result in a negative number.
 		efficiency = clamp(1 - log(10, max(1, temperature_exchange_delta*0.08)), 0.65, 1)
-		// We take an extra efficiency malus for environments where the mol is too low.
+		// We take an extra efficiency malus for enviroments where the mol is too low.
 		if (use_enviroment_heat)
 			efficiency *= clamp(log(1.55, exchange_target.total_moles()) * 0.15, 0.65, 1)
 
