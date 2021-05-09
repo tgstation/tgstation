@@ -58,10 +58,8 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
         }}>
           {this.props.content}
         </div>
-      } updateRenderedContent={(element) => {
-        element = element.cloneNode() as typeof element;
-        element.style.pointerEvents = "none";
-        return element;
+      } additionalStyles={{
+        "pointer-events": "none",
       }}>
         {this.props.children}
       </Popper>

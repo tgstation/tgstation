@@ -4,7 +4,7 @@ import { Component, findDOMfromVNode, InfernoNode, render } from "inferno";
 type PopperProps = {
   popperContent: InfernoNode;
   options?: Partial<OptionsGeneric<unknown>>;
-  updateRenderedContent?: (element: HTMLDivElement) => HTMLDivElement,
+  additionalStyles?: CSSProperties,
 };
 
 export class Popper extends Component<PopperProps> {
@@ -21,13 +21,15 @@ export class Popper extends Component<PopperProps> {
 
   componentDidMount() {
     const {
+      additionalStyles,
       options,
-      updateRenderedContent,
     } = this.props;
 
     this.renderedContent = document.createElement("div");
-    if (updateRenderedContent) {
-      this.renderedContent = updateRenderedContent(this.renderedContent);
+    if (additionalStyles) {
+      for (const [attribute, value] of Object.entries(additionalStyles)) {
+        this.renderedContent.style[attribute] = value;
+      }
     }
 
     this.renderPopperContent(() => {
