@@ -59,11 +59,11 @@
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
 	radiation_pulse(src, rad_damage)
-	for(var/turf/Turf in view(freeze_range,loc))
-		if(isfloorturf(Turf))
-			var/turf/open/floor/ItsAFloor = Turf
-			ItsAFloor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
-			for(var/mob/living/carbon/Victim in Turf)
-				Victim.adjustStaminaLoss(stamina_damage)
-				Victim.adjust_bodytemperature(-230)
+	for(var/turf/turf_affected in view(freeze_range,loc))
+		if(isfloorturf(turf_affected))
+			var/turf/open/floor/its_floor = turf_affected
+			its_floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
+			for(var/mob/living/carbon/victim in turf_affected)
+				victim.adjustStaminaLoss(stamina_damage)
+				victim.adjust_bodytemperature(-230)
 	qdel(src)
