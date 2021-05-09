@@ -18,9 +18,7 @@
 /obj/structure/table,
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/gauze,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "ae" = (
@@ -32,9 +30,7 @@
 /area/ruin/powered/snow_biodome)
 "ag" = (
 /obj/structure/reagent_dispensers/beerkeg,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "ah" = (
@@ -62,7 +58,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "an" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/white,
 /area/ruin/powered/snow_biodome)
 "ao" = (
@@ -200,62 +196,47 @@
 	},
 /area/ruin/powered/snow_biodome)
 "bv" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/ice,
 /area/ruin/powered/snow_biodome)
 "bw" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "bx" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "by" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bz" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "bB" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bD" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bM" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/asteroid/snow,
 /area/ruin/powered/snow_biodome)
 "bN" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/ice,
 /area/ruin/powered/snow_biodome)
 "dS" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "eb" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "eg" = (
@@ -263,10 +244,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "gh" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "gz" = (
@@ -274,9 +252,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "hA" = (
-/obj/machinery/light/built{
-	dir = 1
-	},
+/obj/machinery/light/built/directional/north,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/pod/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -343,9 +319,7 @@
 "KS" = (
 /obj/item/chainsaw,
 /obj/structure/closet,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "Mp" = (
