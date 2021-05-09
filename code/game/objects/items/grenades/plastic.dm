@@ -141,7 +141,7 @@
 			message_say = "FOR ME MATEYS!"
 		else if(our_guy.has_antag_datum(/datum/antagonist/wizard))
 			message_say = "FOR THE FEDERATION!"
-	IHaveABrain.say(message_say, forced="C4 suicide")
+	player.say(message_say, forced="C4 suicide")
 
 /obj/item/grenade/c4/suicide_act(mob/living/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
