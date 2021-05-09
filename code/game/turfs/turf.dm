@@ -45,11 +45,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/tmp/lighting_corners_initialised = FALSE
 
-	///List of light sources affecting this turf.
-	var/tmp/list/datum/light_source/affecting_lights
 	///Our lighting object.
 	var/tmp/atom/movable/lighting_object/lighting_object
-	var/tmp/list/datum/lighting_corner/corners
+	///Lighting Corner datums.
+	var/tmp/datum/lighting_corner/lighting_corner_NE
+	var/tmp/datum/lighting_corner/lighting_corner_SE
+	var/tmp/datum/lighting_corner/lighting_corner_SW
+	var/tmp/datum/lighting_corner/lighting_corner_NW
+
 
 	///Which directions does this turf block the vision of, taking into account both the turf's opacity and the movable opacity_sources.
 	var/directional_opacity = NONE
