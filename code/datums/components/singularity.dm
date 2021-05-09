@@ -130,6 +130,10 @@
 	return COMPONENT_CANCEL_BLOB_ACT
 
 /datum/component/singularity/proc/consume(datum/source, atom/thing)
+	if (thing == source)
+		stack_trace("Singularity tried to consume itself.")
+		return
+
 	consume_callback?.Invoke(thing, src)
 
 /datum/component/singularity/proc/consume_attack(datum/source, mob/user)
