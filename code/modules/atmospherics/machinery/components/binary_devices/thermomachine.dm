@@ -130,7 +130,7 @@
  * C2 and T2 is for the heat capacity of the freezer and temperature that we desire respectively.
  * T3 is the temperature we get.
  * M is the motor heat.
- * E is the efficiency variable. At E=1 and M=0 it works out to be ((C1*T1)+(C2+T2))/C1+C2.
+ * E is the efficiency variable. At E=1 and M=0 it works out to be ((C1*T1)+(C2*T2))/(C1+C2).
  */
 /obj/machinery/atmospherics/components/binary/thermomachine/process_atmos()
 	if(!is_operational || !on)  //if it has no power or its switched off, dont process atmos
