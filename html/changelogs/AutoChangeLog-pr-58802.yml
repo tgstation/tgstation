@@ -1,8 +1,0 @@
-author: "JJRcop, ninjanomnom"
-delete-after: True
-changes: 
-  - qol: "Instead of a machinery whitelist, Drones cannot interact with machines which were touched by a being in the past 5 minutes."
-  - qol: "Drones have a new machinery blacklist which currently contains the Air Alarm, and most Computers. The CE can disable this on their PDA."
-  - qol: "Drones aren't blocked by simple robots anymore. (Cleanbot, Floorbot, etc)"
-  - qol: "Drones can now use chisels, and construct APCs, newscasters, lights, and other things placed on walls."
-  - bugfix: "Drones now respect USE_EXP_RESTRICTIONS_ADMIN_BYPASS"
