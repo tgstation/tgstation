@@ -225,7 +225,7 @@
 	pixel_x = -2
 	},
 /obj/item/cartridge/detective,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "agR" = (
 /obj/structure/fluff/decorative/wall/clock/south{
@@ -317,7 +317,7 @@
 	dir = 4;
 	pixel_x = 18
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -434,7 +434,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -693,7 +693,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "apJ" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -1584,7 +1584,7 @@
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "aLk" = (
 /obj/machinery/vending/boozeomat/all_access,
@@ -1783,7 +1783,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "aQI" = (
 /obj/structure/closet/secure_closet/research_director,
@@ -1855,7 +1855,7 @@
 /obj/structure/item_dispenser/handcuffs{
 	pixel_y = 27
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "aSH" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -1882,7 +1882,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "aTo" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2061,7 +2061,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "aWN" = (
 /obj/structure/cable,
@@ -2492,7 +2492,7 @@
 "beI" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "beO" = (
 /obj/structure/cable,
@@ -3493,7 +3493,7 @@
 /obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -4328,7 +4328,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "bXk" = (
 /obj/machinery/door/airlock/security/glass{
@@ -4449,7 +4449,7 @@
 	pixel_y = 7
 	},
 /obj/machinery/recharger,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "bZD" = (
 /obj/machinery/hydroponics/constructable,
@@ -4851,14 +4851,14 @@
 	dir = 5
 	},
 /obj/machinery/holopad,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
 "ciQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -5703,7 +5703,7 @@
 	name = "Quartermaster's Office";
 	req_access_txt = "41"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "cBL" = (
 /turf/open/floor/plasteel{
@@ -5953,7 +5953,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "cIt" = (
 /obj/structure/table/wood,
@@ -7070,7 +7070,7 @@
 	dir = 1
 	},
 /obj/machinery/holopad,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "djp" = (
 /obj/effect/turf_decal/tile/blue{
@@ -7930,7 +7930,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/head_of_service,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -7949,7 +7949,7 @@
 	},
 /obj/item/kirbyplants,
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -8822,7 +8822,7 @@
 	pixel_x = -9;
 	pixel_y = 5
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "dNf" = (
 /obj/machinery/atmospherics/components/trinary/filter{
@@ -10957,7 +10957,7 @@
 "eEZ" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "eFa" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -11032,7 +11032,7 @@
 /obj/machinery/keycard_auth{
 	pixel_x = 27
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "eGJ" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
@@ -11620,7 +11620,7 @@
 /obj/structure/fluff/decorative/wall/clock{
 	pixel_y = 28
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "eUa" = (
 /obj/structure/table/wood,
@@ -11673,7 +11673,7 @@
 "eUP" = (
 /obj/structure/table/wood,
 /obj/machinery/recharger,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "eUX" = (
 /obj/structure/cable,
@@ -11683,7 +11683,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "eUY" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -12021,7 +12021,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "faw" = (
 /obj/structure/door_assembly/door_assembly_research,
@@ -12193,7 +12193,7 @@
 /obj/item/stamp/denied{
 	pixel_x = 7
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -12422,7 +12422,7 @@
 /obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "fhv" = (
 /turf/closed/wall,
@@ -12939,7 +12939,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "ftS" = (
 /obj/structure/cable,
@@ -13065,7 +13065,7 @@
 /area/space/nearstation)
 "fwJ" = (
 /obj/effect/landmark/start/head_of_service,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -13562,7 +13562,7 @@
 "fFk" = (
 /obj/structure/chair/comfy/brown,
 /obj/effect/landmark/start/quartermaster,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "fFl" = (
 /obj/structure/disposalpipe/segment,
@@ -13725,7 +13725,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "fHQ" = (
 /obj/machinery/vending/cigarette,
@@ -14109,7 +14109,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/ce,
 /obj/effect/landmark/start/chief_engineer,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "fQc" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
@@ -14619,7 +14619,7 @@
 	name = "Chief Engineer's Quarters";
 	req_access_txt = "56"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "gbq" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -14846,7 +14846,7 @@
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "ggn" = (
 /obj/effect/turf_decal/tile/blue{
@@ -14879,7 +14879,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ggC" = (
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "ggE" = (
 /obj/effect/turf_decal/stripes/line{
@@ -15324,7 +15324,7 @@
 	pixel_x = 25;
 	pixel_y = -25
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "grc" = (
 /obj/effect/turf_decal/delivery,
@@ -15886,7 +15886,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "gFa" = (
 /obj/effect/turf_decal/tile/purple{
@@ -17460,7 +17460,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "hmO" = (
 /obj/structure/cable,
@@ -17567,7 +17567,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "hot" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -18091,7 +18091,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "hxV" = (
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -18347,7 +18347,7 @@
 	dir = 4;
 	pixel_x = -28
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "hFy" = (
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
@@ -18619,7 +18619,7 @@
 /obj/structure/disposalpipe/junction/flip{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -19108,7 +19108,7 @@
 /obj/machinery/camera/autoname{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "hWQ" = (
 /obj/machinery/telecomms/server/presets/supply,
@@ -19340,7 +19340,7 @@
 /area/engine/engineering)
 "icA" = (
 /obj/structure/filingcabinet/chestdrawer,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -19821,7 +19821,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -19900,7 +19900,7 @@
 	name = "Head of Security's Quarters";
 	req_access_txt = "58"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "irq" = (
 /obj/structure/sign/plaques/kiddie/badger{
@@ -20575,7 +20575,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -20709,7 +20709,7 @@
 "iHa" = (
 /obj/machinery/computer/cargo,
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "iHf" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
@@ -20998,7 +20998,7 @@
 /area/maintenance/aft)
 "iMk" = (
 /obj/structure/dresser,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "iMl" = (
 /obj/machinery/door/airlock{
@@ -21676,7 +21676,7 @@
 	pixel_x = 8;
 	pixel_y = 24
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -22034,7 +22034,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "jhJ" = (
 /turf/open/floor/plasteel/white,
@@ -22237,7 +22237,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "jnj" = (
 /obj/structure/transit_tube/curved,
@@ -22249,7 +22249,7 @@
 /obj/item/pen{
 	pixel_y = 5
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "jnE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -22769,7 +22769,7 @@
 /area/maintenance/starboard/fore)
 "jxy" = (
 /obj/machinery/modular_computer/console/preset/id,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "jxD" = (
 /obj/machinery/door/firedoor,
@@ -23696,7 +23696,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -24939,7 +24939,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -30
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "kpZ" = (
 /obj/structure/table/wood,
@@ -27890,7 +27890,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "lxf" = (
 /obj/machinery/recharge_station,
@@ -28116,7 +28116,7 @@
 /obj/structure/mirror{
 	pixel_y = 32
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "lCG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -28164,7 +28164,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -28528,7 +28528,7 @@
 /area/medical/virology)
 "lJl" = (
 /obj/machinery/computer/bounty,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "lJE" = (
 /obj/effect/decal/cleanable/oil,
@@ -28594,7 +28594,7 @@
 "lKn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "lKo" = (
 /obj/effect/turf_decal/tile/bar{
@@ -28767,7 +28767,7 @@
 	pixel_y = 4
 	},
 /obj/item/book/manual/wiki/cooking_to_serve_man,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -29595,7 +29595,7 @@
 	})
 "mgo" = (
 /mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "mgq" = (
 /obj/structure/disposalpipe/segment{
@@ -30759,7 +30759,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -30895,7 +30895,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -30927,7 +30927,7 @@
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
 /obj/machinery/camera/autoname,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "mHQ" = (
 /obj/structure/cable,
@@ -30965,7 +30965,7 @@
 /area/storage/primary)
 "mIh" = (
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "mIs" = (
 /obj/machinery/camera/autoname,
@@ -31220,7 +31220,7 @@
 /area/security/execution/education)
 "mNp" = (
 /obj/effect/landmark/start/head_of_security,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "mNx" = (
 /turf/open/floor/plating/airless,
@@ -31533,7 +31533,7 @@
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "mTB" = (
 /obj/effect/loot_site_spawner,
@@ -31653,7 +31653,7 @@
 	pixel_y = 7;
 	req_access_txt = "48"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "mVt" = (
 /turf/open/floor/engine,
@@ -32194,7 +32194,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "njy" = (
 /obj/machinery/camera/autoname,
@@ -33966,7 +33966,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "nVO" = (
 /obj/machinery/firealarm{
@@ -34393,7 +34393,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "oeI" = (
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
@@ -34567,7 +34567,7 @@
 /area/crew_quarters/heads/hop)
 "oiP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -34632,7 +34632,7 @@
 /area/maintenance/disposal)
 "ojH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "ojU" = (
 /obj/machinery/button/door{
@@ -34810,7 +34810,7 @@
 	name = "Head of Security RC";
 	pixel_y = 30
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "onI" = (
 /obj/structure/table,
@@ -35728,7 +35728,7 @@
 "oGM" = (
 /obj/machinery/photocopier,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "oGP" = (
 /obj/machinery/telecomms/receiver/preset_left,
@@ -36080,7 +36080,7 @@
 	},
 /obj/structure/filingcabinet/chestdrawer,
 /mob/living/simple_animal/parrot/poly,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "oNk" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -36359,7 +36359,7 @@
 /area/medical/chemistry)
 "oTq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "oTw" = (
 /obj/effect/turf_decal/tile/purple{
@@ -36781,7 +36781,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -36903,7 +36903,7 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "pdN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -37356,7 +37356,7 @@
 	pixel_x = 9
 	},
 /obj/machinery/recharger,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "pmq" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -37509,7 +37509,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/start/chief_engineer,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "ppC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -37864,7 +37864,7 @@
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "puu" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
@@ -38778,7 +38778,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "pMM" = (
 /obj/machinery/porta_turret/ai{
@@ -38931,7 +38931,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "pOF" = (
 /obj/structure/window/reinforced{
@@ -39783,7 +39783,7 @@
 /area/security/brig)
 "qkz" = (
 /obj/machinery/computer/security/qm,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "qkA" = (
 /obj/structure/cable,
@@ -39886,7 +39886,7 @@
 "qmd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "qmz" = (
 /obj/structure/disposalpipe/segment{
@@ -40087,7 +40087,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "qpK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -41087,7 +41087,7 @@
 /obj/structure/fluff/decorative/wall/clock{
 	pixel_y = 28
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "qLb" = (
 /obj/effect/landmark/start/atmospheric_technician,
@@ -41195,7 +41195,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "qOU" = (
 /obj/structure/closet/emcloset,
@@ -41280,7 +41280,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -41307,7 +41307,7 @@
 /obj/machinery/camera/autoname{
 	dir = 10
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "qSE" = (
 /obj/effect/turf_decal/tile/purple{
@@ -41839,7 +41839,7 @@
 	pixel_y = 6;
 	req_access_txt = "58"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "rgt" = (
 /obj/structure/table/wood,
@@ -42954,7 +42954,7 @@
 	pixel_x = 32;
 	pixel_y = -24
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "rAj" = (
 /obj/machinery/button/door{
@@ -43248,7 +43248,7 @@
 "rGl" = (
 /obj/structure/dresser,
 /obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "rGm" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -43937,7 +43937,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -44608,7 +44608,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -45180,7 +45180,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "sxh" = (
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "sxW" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -45480,7 +45480,7 @@
 /area/tcommsat/server)
 "sEg" = (
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "sEj" = (
 /obj/effect/turf_decal/siding/wood{
@@ -45745,7 +45745,7 @@
 	pixel_y = 5;
 	req_access_txt = "47"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "sHq" = (
 /obj/structure/table/wood,
@@ -48937,7 +48937,7 @@
 /area/library)
 "tWe" = (
 /obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "tWj" = (
 /obj/effect/turf_decal/tile/purple{
@@ -49099,7 +49099,7 @@
 /area/science/research)
 "tYI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "tYL" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -49148,7 +49148,7 @@
 	pixel_y = 4
 	},
 /obj/item/pen,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -51008,7 +51008,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -51199,7 +51199,7 @@
 "uRT" = (
 /obj/vehicle/ridden/atv,
 /obj/item/key,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "uRY" = (
 /obj/structure/cable,
@@ -51382,7 +51382,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -52119,7 +52119,7 @@
 /turf/open/floor/plating,
 /area/maintenance/central)
 "vkF" = (
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "vkG" = (
 /obj/effect/turf_decal/siding/wood{
@@ -52127,7 +52127,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/holopad,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/chief)
 "vkM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -52172,7 +52172,7 @@
 /area/maintenance/central)
 "vlQ" = (
 /obj/effect/landmark/start/quartermaster,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "vmf" = (
 /obj/structure/cable,
@@ -52951,7 +52951,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/research_director,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "vzT" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/co2,
@@ -53435,7 +53435,7 @@
 "vIB" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -53664,7 +53664,7 @@
 /obj/item/pen{
 	pixel_y = 5
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "vMN" = (
 /obj/structure/window/reinforced{
@@ -53955,7 +53955,7 @@
 	pixel_y = 30;
 	receive_ore_updates = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hor)
 "vTe" = (
 /obj/effect/turf_decal/stripes/line{
@@ -54456,7 +54456,7 @@
 "wgo" = (
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "wgt" = (
 /obj/structure/rack,
@@ -54708,7 +54708,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -55298,7 +55298,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "wAU" = (
 /obj/structure/cable,
@@ -56159,7 +56159,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -56934,7 +56934,7 @@
 	dir = 8;
 	pixel_x = 28
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/heads/hos)
 "xlp" = (
 /obj/structure/cable,
@@ -57423,7 +57423,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/secure/briefcase,
 /obj/item/assembly/flash/handheld,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -58230,7 +58230,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/crew_quarters/lounge{
 	name = "Head Of Service's Office"
 	})
@@ -58912,7 +58912,7 @@
 	pixel_x = 30
 	},
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood/parquet,
 /area/quartermaster/qm)
 "ycv" = (
 /turf/closed/wall/r_wall,
