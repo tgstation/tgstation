@@ -73,7 +73,6 @@
 	speed = 3
 	maxHealth = 1
 	health = 1
-	is_flying_animal = TRUE
 	harm_intent_damage = 5
 	melee_damage_lower = 2
 	melee_damage_upper = 2
@@ -92,6 +91,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/death), 100)
+	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 
 //Legion

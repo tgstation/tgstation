@@ -90,7 +90,8 @@
 		"skills" = 'icons/pda_icons/pda_skills.png',
 		"status" = 'icons/pda_icons/pda_status.png',
 		"dronephone" = 'icons/pda_icons/pda_dronephone.png',
-		"emoji" = 'icons/pda_icons/pda_emoji.png'
+		"emoji" = 'icons/pda_icons/pda_emoji.png',
+		"droneblacklist" = 'icons/pda_icons/pda_droneblacklist.png',
 	)
 
 /datum/asset/spritesheet/simple/paper

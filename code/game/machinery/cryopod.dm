@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		..(user)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
-			to_chat(occupant, "<span class='boldnotice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
+			to_chat(occupant, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
 		if(mob_occupant.client || !mob_occupant.key) // Self cryos and SSD
 			despawn_world_time = world.time + (fast_despawn) // This gives them 30 seconds
 		else
@@ -285,13 +285,13 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		crew_member["job"] = "N/A"
 	// Delete them from datacore.
 	var/announce_rank = null
-	for(var/datum/data/record/medical_record in GLOB.data_core.medical)
+	for(var/datum/data/record/medical_record as anything in GLOB.data_core.medical)
 		if(medical_record.fields["name"] == mob_occupant.real_name)
 			qdel(medical_record)
-	for(var/datum/data/record/security_record in GLOB.data_core.security)
+	for(var/datum/data/record/security_record as anything in GLOB.data_core.security)
 		if(security_record.fields["name"] == mob_occupant.real_name)
 			qdel(security_record)
-	for(var/datum/data/record/general_record in GLOB.data_core.general)
+	for(var/datum/data/record/general_record as anything in GLOB.data_core.general)
 		if(general_record.fields["name"] == mob_occupant.real_name)
 			announce_rank = general_record.fields["rank"]
 			qdel(general_record)
@@ -376,16 +376,16 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		// rerun the checks in case of shenanigans
 
 	if(target == user)
-		visible_message("[user] starts climbing into the cryo pod.")
+		visible_message("<span class='infoplain'>[user] starts climbing into the cryo pod.</span>")
 	else
-		visible_message("[user] starts putting [target] into the cryo pod.")
+		visible_message("<span class='infoplain'>[user] starts putting [target] into the cryo pod.</span>")
 
 	if(occupant)
 		to_chat(user, "<span class='notice'>[src] is in use.</span>")
 		return
 	close_machine(target)
 
-	to_chat(target, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")
+	to_chat(target, "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>")
 	name = "[name] ([occupant.name])"
 	log_admin("[key_name(target)] entered a stasis pod.")
 	message_admins("[key_name_admin(target)] entered a stasis pod. [ADMIN_JMP(src)]")
