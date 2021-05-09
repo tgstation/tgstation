@@ -34,10 +34,10 @@
 	target = null
 	..()
 
-/obj/item/grenade/c4/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+/obj/item/grenade/c4/attackby(obj/item/Item, mob/user, params)
+	if(Item.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='notice'>The wire panel can be accessed without a screwdriver.</span>")
-	else if(is_wire_tool(I))
+	else if(is_wire_tool(Item))
 		wires.interact(user)
 	else
 		return ..()
@@ -58,8 +58,8 @@
 		location = get_turf(src)
 	if(location)
 		if(directional && target?.density)
-			var/turf/T = get_step(location, aim_dir)
-			explosion(get_step(T, aim_dir), devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3])
+			var/turf/Turf = get_step(location, aim_dir)
+			explosion(get_step(Turf, aim_dir), devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3])
 		else
 			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3])
 	qdel(src)
@@ -79,18 +79,18 @@
 		det_time = newtime
 		to_chat(user, "Timer set for [det_time] seconds.")
 
-/obj/item/grenade/c4/afterattack(atom/movable/AM, mob/user, flag)
+/obj/item/grenade/c4/afterattack(atom/movable/ThingIWantToExplode, mob/user, flag)
 	. = ..()
-	aim_dir = get_dir(user,AM)
+	aim_dir = get_dir(user,ThingIWantToExplode)
 	if(!flag)
 		return
 
 	to_chat(user, "<span class='notice'>You start planting [src]. The timer is set to [det_time]...</span>")
 
-	if(do_after(user, 30, target = AM))
+	if(do_after(user, 30, target = ThingIWantToExplode))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
-		target = AM
+		target = ThingIWantToExplode
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
 		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(user)] with a [det_time] second fuse")
@@ -99,47 +99,47 @@
 
 		moveToNullspace() //Yep
 
-		if(istype(AM, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
-			var/obj/item/I = AM
+		if(istype(ThingIWantToExplode, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
+			var/obj/item/Item = ThingIWantToExplode
 			I.throw_speed = max(1, (I.throw_speed - 3))
 			I.throw_range = max(1, (I.throw_range - 3))
-			if(I.embedding)
-				I.embedding["embed_chance"] = 0
-				I.updateEmbedding()
-		else if(istype(AM, /mob/living))
+			if(Item.embedding)
+				Item.embedding["embed_chance"] = 0
+				Item.updateEmbedding()
+		else if(istype(ThingIWantToExplode, /mob/living))
 			plastic_overlay.layer = FLOAT_LAYER
 
 		target.add_overlay(plastic_overlay)
 		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>")
 		addtimer(CALLBACK(src, .proc/detonate), det_time*10)
 
-/obj/item/grenade/c4/proc/shout_syndicate_crap(mob/M)
-	if(!M)
+/obj/item/grenade/c4/proc/shout_syndicate_crap(mob/IHaveABrain)
+	if(!IHaveABrain)
 		return
 	var/message_say = "FOR NO RAISIN!"
-	if(M.mind)
-		var/datum/mind/UM = M.mind
-		if(UM.has_antag_datum(/datum/antagonist/nukeop) || UM.has_antag_datum(/datum/antagonist/traitor))
+	if(IHaveABrain.mind)
+		var/datum/mind/OurGuy = IHaveABrain.mind
+		if(OurGuy.has_antag_datum(/datum/antagonist/nukeop) || OurGuy.has_antag_datum(/datum/antagonist/traitor))
 			message_say = "FOR THE SYNDICATE!"
-		else if(UM.has_antag_datum(/datum/antagonist/changeling))
+		else if(OurGuy.has_antag_datum(/datum/antagonist/changeling))
 			message_say = "FOR THE HIVE!"
-		else if(UM.has_antag_datum(/datum/antagonist/cult))
+		else if(OurGuy.has_antag_datum(/datum/antagonist/cult))
 			message_say = "FOR NAR'SIE!"
-		else if(UM.has_antag_datum(/datum/antagonist/rev))
+		else if(OurGuy.has_antag_datum(/datum/antagonist/rev))
 			message_say = "VIVA LA REVOLUTION!"
-		else if(UM.has_antag_datum(/datum/antagonist/brother))
+		else if(OurGuy.has_antag_datum(/datum/antagonist/brother))
 			message_say = "FOR MY BROTHER!"
-		else if(UM.has_antag_datum(/datum/antagonist/ninja))
+		else if(OurGuy.has_antag_datum(/datum/antagonist/ninja))
 			message_say = "FOR THE SPIDER CLAN!"
-		else if(UM.has_antag_datum(/datum/antagonist/fugitive))
+		else if(OurGuy.has_antag_datum(/datum/antagonist/fugitive))
 			message_say = "FOR FREEDOM!"
-		else if(UM.has_antag_datum(/datum/antagonist/ashwalker))
+		else if(OurGuy.has_antag_datum(/datum/antagonist/ashwalker))
 			message_say = "I HAVE NO IDEA WHAT THIS THING DOES!"
-		else if(UM.has_antag_datum(/datum/antagonist/ert))
+		else if(OurGuy.has_antag_datum(/datum/antagonist/ert))
 			message_say = "FOR NANOTRASEN!"
-		else if(UM.has_antag_datum(/datum/antagonist/pirate))
+		else if(OurGuy.has_antag_datum(/datum/antagonist/pirate))
 			message_say = "FOR ME MATEYS!"
-		else if(UM.has_antag_datum(/datum/antagonist/wizard))
+		else if(OurGuy.has_antag_datum(/datum/antagonist/wizard))
 			message_say = "FOR THE FEDERATION!"
 	M.say(message_say, forced="C4 suicide")
 
