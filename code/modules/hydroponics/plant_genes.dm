@@ -242,7 +242,6 @@
 
 	for(var/datum/plant_gene/trait/trait in source_seed.genes)
 		if(trait_ids & trait.trait_ids)
-			message_admins("Could not add [src] to [trait].")
 			return FALSE
 		if(type == trait.type)
 			return FALSE

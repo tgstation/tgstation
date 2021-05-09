@@ -658,11 +658,11 @@
 		if(!myseed)
 			to_chat(user, "<span class='notice'>The tray is empty.</span>")
 			return
-		if(!myseed.apply_graft(snip))
-			to_chat(user, "<span class='warning'>The [myseed.plantname] rejects the [snip]!</span>")
-			return
+		if(myseed.apply_graft(snip))
+			to_chat(user, "<span class='notice'>You carefully integrate the grafted plant limb onto [myseed.plantname], granting it [snip.stored_trait.get_name()].</span>")
+		else
+			to_chat(user, "<span class='warning'>You integrate the grafted plant limb onto [myseed.plantname], but it does not accept the [snip.stored_trait.get_name()] trait from the [snip].</span>")
 		qdel(snip)
-		to_chat(user, "<span class='notice'>You carefully integrate the grafted plant limb onto [myseed.plantname].</span>")
 		return
 
 	else if(istype(O, /obj/item/storage/bag/plants))

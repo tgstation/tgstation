@@ -630,15 +630,19 @@
  *
  * Adds the graft trait to this plant if possible.
  * Increases plant stats by 2/3 of the grafts stats to a maximum of 100 (10 for yield).
- * Returns [TRUE]
+ * Returns TRUE if the graft could apply its trait successfully, FALSE if it fails to apply the trait.
+ * NOTE even if the graft fails to apply the trait it still adjusts the plant's stats and reagents.
  *
  * Arguments:
  * - [snip][/obj/item/graft]: The graft being used applied to this plant.
  */
 /obj/item/seeds/proc/apply_graft(obj/item/graft/snip)
+	. = TRUE
 	var/datum/plant_gene/new_trait = snip.stored_trait
 	if(new_trait?.can_add(src))
 		genes += new_trait.Copy()
+	else
+		. = FALSE
 
 	// Adjust stats based on graft stats
 	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.lifespan - lifespan)))))
@@ -651,7 +655,7 @@
 	// Add in any reagents, too.
 	reagents_from_genes()
 
-	return TRUE
+	return
 
 /*
  * Both `/item/food/grown` and `/item/grown` implement a seed variable which tracks
