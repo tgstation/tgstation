@@ -704,6 +704,7 @@
 #include "code\datums\elements\undertile.dm"
 #include "code\datums\elements\update_icon_blocker.dm"
 #include "code\datums\elements\update_icon_updates_onmob.dm"
+#include "code\datums\elements\venomous.dm"
 #include "code\datums\elements\waddling.dm"
 #include "code\datums\elements\decals\blood.dm"
 #include "code\datums\elements\food\dunkable.dm"
