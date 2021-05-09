@@ -53,6 +53,12 @@
 	. = ..()
 	var/datum/component/ntnet_interface/target_interface = A.GetComponent(/datum/component/ntnet_interface)
 
+	// Try to find an airlock in the clicked turf
+	if(!target_interface)
+		var/obj/machinery/door/airlock/door = locate() in get_turf(A)
+		if(door)
+			target_interface = door.GetComponent(/datum/component/ntnet_interface)
+
 	if(!target_interface)
 		return
 
