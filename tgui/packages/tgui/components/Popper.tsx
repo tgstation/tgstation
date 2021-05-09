@@ -1,17 +1,14 @@
 import { createPopper, OptionsGeneric } from "@popperjs/core";
-import { Component, InfernoNode, render } from "inferno";
+import { Component, createRef, Fragment, findDOMfromVNode, InfernoNode, RefObject, render } from "inferno";
 
 type PopperProps = {
   popperContent?: InfernoNode;
-  options?: OptionsGeneric<unknown>;
-  render: (id: string) => InfernoNode;
+  options?: Partial<OptionsGeneric<unknown>>;
 };
 
 export class Popper extends Component<PopperProps> {
   static id: number = 0;
 
-  content: Element;
-  ourId: string;
   renderedContent: HTMLDivElement;
   popperInstance: ReturnType<typeof createPopper>;
 
@@ -19,19 +16,23 @@ export class Popper extends Component<PopperProps> {
     super();
 
     Popper.id += 1;
-    this.ourId = `Popper-${Popper.id}`;
   }
 
   componentDidMount() {
-    this.content = document.getElementById(this.ourId);
-
     this.renderedContent = document.createElement("div");
 
     render(this.props.popperContent, this.renderedContent, () => {
       document.body.appendChild(this.renderedContent);
 
       this.popperInstance = createPopper(
-        this.content,
+        // HACK: We don't want to create a wrapper, as it could break the layout
+        // of consumers, so we do the inferno equivalent of `findDOMNode(this)`.
+        // This is usually bad as refs are usually better, but refs did
+        // not work in this case, as they weren't propagating correctly.
+        // A previous attempt was made as a render prop that passed an ID,
+        // but this made consuming use too unwieldly.
+        // This code is copied from `findDOMNode` in inferno-extras.
+        findDOMfromVNode(this.$LI, true),
         this.renderedContent,
         this.props.options,
       );
@@ -49,10 +50,6 @@ export class Popper extends Component<PopperProps> {
   }
 
   render() {
-    // Creating a new element and getting the ref of that breaks layouts.
-    // Creating a ref and passing it down doesn't propagate, and requires
-    // children be function components.
-    // So you know what? Fuck it, everyone gets a god damn ID.
-    return this.props.render(this.ourId);
+    return this.props.children;
   }
 }

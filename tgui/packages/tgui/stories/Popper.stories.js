@@ -18,13 +18,13 @@ const Story = () => {
         </Box>
       } options={{
         placement: "bottom",
-      }} render={(id) => {
-        return (<Box id={id} style={{
+      }}>
+        <Box style={{
           border: "5px solid white",
           height: "300px",
           width: "200px",
-        }} />);
-      }} />
+        }} />
+      </Popper>
 
       <Popper popperContent={
         <Box style={{
@@ -35,13 +35,13 @@ const Story = () => {
         </Box>
       } options={{
         placement: "right",
-      }} render={(id) => {
-        return (<Box id={id} style={{
+      }}>
+        <Box style={{
           border: "5px solid white",
           height: "500px",
           width: "100px",
-        }} />);
-      }} />
+        }} />
+      </Popper>
     </>
   );
 };
