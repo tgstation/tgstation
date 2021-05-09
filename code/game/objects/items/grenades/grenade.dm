@@ -126,8 +126,8 @@
 
 /obj/item/grenade/proc/update_mob()
 	if(ismob(loc))
-		var/mob/ADude = loc
-		ADude.dropItemToGround(src)
+		var/mob/mob = loc
+		mob.dropItemToGround(src)
 
 /obj/item/grenade/attackby(obj/item/weapon, mob/user, params)
 	if(active)
