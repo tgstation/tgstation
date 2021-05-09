@@ -41,7 +41,6 @@
 	density = FALSE
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
-	is_flying_animal = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!
 	can_be_held = TRUE
@@ -64,6 +63,7 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	generate_bee_visuals()
+	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/poison/bees/mob_pickup(mob/living/L)

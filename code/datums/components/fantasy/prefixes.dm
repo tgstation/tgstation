@@ -1,4 +1,5 @@
 /datum/fantasy_affix/cosmetic_prefixes
+	name = "purely cosmetic prefix"
 	placement = AFFIX_PREFIX
 	alignment = AFFIX_GOOD | AFFIX_EVIL
 
@@ -39,6 +40,7 @@
 		return "[pick(badPrefixes)] [newName]"
 
 /datum/fantasy_affix/tactical
+	name = "tactical"
 	placement = AFFIX_PREFIX
 	alignment = AFFIX_GOOD
 	weight = 1 // Very powerful, no one should have such power
@@ -49,6 +51,7 @@
 	return "tactical [newName]"
 
 /datum/fantasy_affix/pyromantic
+	name = "pyromantic"
 	placement = AFFIX_PREFIX
 	alignment = AFFIX_GOOD
 
@@ -58,6 +61,7 @@
 	return "pyromantic [newName]"
 
 /datum/fantasy_affix/vampiric
+	name = "vampiric"
 	placement = AFFIX_PREFIX
 	alignment = AFFIX_GOOD
 	weight = 5
@@ -68,6 +72,7 @@
 	return "vampiric [newName]"
 
 /datum/fantasy_affix/beautiful
+	name = "beautiful"
 	placement = AFFIX_PREFIX
 	alignment = AFFIX_GOOD
 
@@ -81,6 +86,7 @@
 	master.RemoveElement(/datum/element/beauty, max(comp.quality, 1) * 250)
 
 /datum/fantasy_affix/ugly
+	name = "ugly"
 	placement = AFFIX_PREFIX
 	alignment = AFFIX_EVIL
 

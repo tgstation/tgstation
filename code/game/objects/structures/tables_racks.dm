@@ -322,13 +322,17 @@
 	. = ..()
 	debris += new frame
 	debris += new /obj/item/shard
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/structure/table/glass/Destroy()
 	QDEL_LIST(debris)
 	. = ..()
 
-/obj/structure/table/glass/Crossed(atom/movable/AM)
-	. = ..()
+/obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(flags_1 & NODECONSTRUCT_1)
 		return
 	if(!isliving(AM))

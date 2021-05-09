@@ -7,6 +7,10 @@ If you're wanting to add easy recolors for your sprite then this is the system f
 - Blend modes; Instead of just putting layers of sprites on top of eachother you can use the more advanced blend modes.
 - Reusable configurations; You can reference greyscale sprites from within the configuration of another, allowing you to have a bunch of styles with minimal additional configuration.
 
+## Other Documents
+
+- [Basic follow along guide on hackmd](https://hackmd.io/@tgstation/GAGS-Walkthrough)
+
 ## Broad overview
 
 There are three main parts to GAGS that you'll need to be aware of when adding a new greyscale sprite:
