@@ -1,26 +1,30 @@
 /datum/lighting_object
+	///the underlay we are currently applying to our turf to apply light
 	var/mutable_appearance/current_underlay
 
+	///whether we are already in the SSlighting.objects_queue list
 	var/needs_update = FALSE
-	var/turf/myturf
+
+	//the turf that our light is applied to
+	var/turf/affected_turf
 
 /datum/lighting_object/New(turf/source)
 	if(!isturf(source))
-		qdel(src)
+		qdel(src, force=TRUE)
 		return
 	. = ..()
 
 	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", 100, LIGHTING_PLANE, 255)
 	current_underlay.color = LIGHTING_BASE_MATRIX
 
-	myturf = source
-	if (myturf.lighting_object)
-		qdel(myturf.lighting_object, force = TRUE)
-	myturf.lighting_object = src
-	myturf.luminosity = 0
+	affected_turf = source
+	if (affected_turf.lighting_object)
+		qdel(affected_turf.lighting_object, force = TRUE)
+	affected_turf.lighting_object = src
+	affected_turf.luminosity = 0
 
-	for(var/turf/open/space/S in RANGE_TURFS(1, myturf))
-		S.update_starlight()
+	for(var/turf/open/space/space_tile in RANGE_TURFS(1, affected_turf))
+		space_tile.update_starlight()
 
 	needs_update = TRUE
 	SSlighting.objects_queue += src
@@ -51,7 +55,7 @@
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-	var/list/corners = myturf.corners
+	var/list/corners = affected_turf.corners
 	var/datum/lighting_corner/cr = dummy_lighting_corner
 	var/datum/lighting_corner/cg = dummy_lighting_corner
 	var/datum/lighting_corner/cb = dummy_lighting_corner
@@ -92,17 +96,17 @@
 
 	if(((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8)) || forced_state & LIGHTING_OBJECT_FORCE_FULLBRIGHT)
 		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
-		myturf.underlays -= current_underlay
+		affected_turf.underlays -= current_underlay
 		current_underlay.icon_state = "transparent"
 		current_underlay.color = null
-		myturf.underlays += current_underlay
+		affected_turf.underlays += current_underlay
 	else if(!set_luminosity || forced_state & LIGHTING_OBJECT_FORCE_DARK)
-		myturf.underlays -= current_underlay
+		affected_turf.underlays -= current_underlay
 		current_underlay.icon_state = "dark"
 		current_underlay.color = null
-		myturf.underlays += current_underlay
+		affected_turf.underlays += current_underlay
 	else
-		myturf.underlays -= current_underlay
+		affected_turf.underlays -= current_underlay
 		current_underlay.icon_state = null
 		current_underlay.color = list(
 			rr, rg, rb, 00,
@@ -112,28 +116,8 @@
 			00, 00, 00, 01
 		)
 
-		myturf.underlays += current_underlay
+		affected_turf.underlays += current_underlay
 
 	SEND_SIGNAL(src, COMSIG_LIGHTING_OBJECT_UPDATED, current_underlay)
 
-	myturf.luminosity = set_luminosity || forced_state & LIGHTING_OBJECT_FORCE_FULLBRIGHT
-
-/atom/movable/lighting_movable
-	name = ""
-
-	anchored = TRUE
-
-	icon = LIGHTING_ICON
-	icon_state = "transparent"
-	color = null //we manually set color in init instead
-	plane = LIGHTING_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	invisibility = INVISIBILITY_LIGHTING
-	vis_flags = VIS_HIDE
-
-/atom/movable/lighting_movable/Initialize(mapload)
-	. = ..()
-	verbs.Cut()
-	//We avoid setting this in the base as if we do then the parent atom handling will add_atom_color it and that
-	//is totally unsuitable for this object, as we are always changing it's colour manually
-	color = LIGHTING_BASE_MATRIX
+	affected_turf.luminosity = set_luminosity || forced_state & LIGHTING_OBJECT_FORCE_FULLBRIGHT
