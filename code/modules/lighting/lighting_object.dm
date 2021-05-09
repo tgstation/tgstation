@@ -32,10 +32,11 @@
 /datum/lighting_object/Destroy(force)
 	if (force)
 		SSlighting.objects_queue -= src
-		if (isturf(myturf))
-			myturf.lighting_object = null
-			myturf.luminosity = 1
-		myturf = null
+		if (isturf(affected_turf))
+			affected_turf.lighting_object = null
+			affected_turf.luminosity = 1
+			affected_turf.underlays -= current_underlay
+		affected_turf = null
 
 		return ..()
 

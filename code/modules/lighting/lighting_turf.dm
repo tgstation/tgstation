@@ -1,30 +1,24 @@
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
-	var/datum/light_source/L
-	var/thing
-	for (thing in affecting_lights)
-		L = thing
-		L.vis_update()
+	for (var/datum/light_source/light as anything in affecting_lights)
+		light.vis_update()
 
 /turf/proc/lighting_clear_overlay()
 	if (lighting_object)
-		qdel(lighting_object, TRUE)
+		qdel(lighting_object, force=TRUE)
 
-	var/datum/lighting_corner/C
-	var/thing
-	for (thing in corners)
-		if(!thing)
+	for (var/datum/lighting_corner/corner as anything in corners)
+		if(!corner)
 			continue
-		C = thing
-		C.update_active()
+		corner.update_active()
 
 // Builds a lighting object for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
 	if (lighting_object)
-		qdel(lighting_object,force=TRUE) //Shitty fix for lighting objects persisting after death
+		qdel(lighting_object, force=TRUE) //Shitty fix for lighting objects persisting after death
 
-	var/area/A = loc
-	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
+	var/area/our_area = loc
+	if (!IS_DYNAMIC_LIGHTING(our_area) && !light_sources)
 		return
 
 	if (!lighting_corners_initialised)
@@ -32,18 +26,13 @@
 
 	new/datum/lighting_object(src)
 
-	var/thing
-	var/datum/lighting_corner/C
-	var/datum/light_source/S
-	for (thing in corners)
-		if(!thing)
+	for (var/datum/lighting_corner/corner as anything in corners)
+		if(!corner)
 			continue
-		C = thing
-		if (!C.active) // We would activate the corner, calculate the lighting for it.
-			for (thing in C.affecting)
-				S = thing
-				S.recalc_corner(C)
-			C.active = TRUE
+		if (!corner.active) // We would activate the corner, calculate the lighting for it.
+			for (var/datum/light_source/light as anything in corner.affecting)
+				light.recalc_corner(corner)
+			corner.active = TRUE
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
@@ -51,13 +40,11 @@
 		return 1
 
 	var/totallums = 0
-	var/thing
-	var/datum/lighting_corner/L
-	for (thing in corners)
-		if(!thing)
+
+	for (var/datum/lighting_corner/corner as anything in corners)
+		if(!corner)
 			continue
-		L = thing
-		totallums += L.lum_r + L.lum_b + L.lum_g
+		totallums += corner.lum_r + corner.lum_b + corner.lum_g
 
 	totallums /= 12 // 4 corners, each with 3 channels, get the average.
 
@@ -103,8 +90,7 @@
 			reconsider_lights()
 		return
 	directional_opacity = NONE
-	for(var/am in opacity_sources)
-		var/atom/movable/opacity_source = am
+	for(var/atom/movable/opacity_source as anything in opacity_sources)
 		if(opacity_source.flags_1 & ON_BORDER_1)
 			directional_opacity |= opacity_source.dir
 		else //If fulltile and opaque, then the whole tile blocks view, no need to continue checking.
