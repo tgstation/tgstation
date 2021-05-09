@@ -3,33 +3,13 @@
 	desc = "You probably shouldn't be seeing this. Shout at a coder."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "hypovial"
+	fill_icon_state = "hypovial"
 	spillable = FALSE
 	volume = 10
 	possible_transfer_amounts = list(1,2,5,10)
 	custom_price = 350
 	var/fill_name = "hypovial"
-
-/obj/item/reagent_containers/glass/bottle/vial/update_overlays()
-    . = ..()
-    if(!fill_icon_thresholds)
-        return
-    if(reagents.total_volume)
-        var/fill_overlay = 10
-        switch(round((reagents.total_volume / volume)*100))
-            if(1 to 24)
-                fill_overlay = 10
-            if(25 to 49)
-                fill_overlay = 25
-            if(50 to 74)
-                fill_overlay = 50
-            if(75 to 89)
-                fill_overlay = 75
-            if(89 to 100)
-                fill_overlay = 100
-        var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_overlay]")
-
-        filling.color = mix_color_from_reagents(reagents.reagent_list)
-        . += filling
+	fill_icon_thresholds = list(0, 10, 50, 75, 100)
 
 /obj/item/reagent_containers/glass/bottle/vial/Initialize()
 	. = ..()
@@ -49,10 +29,10 @@
 /obj/item/reagent_containers/glass/bottle/vial/large
 	name = "large hypovial"
 	icon_state = "hypoviallarge"
+	fill_icon_state = "hypoviallarge"
 	desc = "A large, 120u capacity vial that fits only in the most deluxe hyposprays."
 	volume = 120
 	possible_transfer_amounts = list(1,2,5,10,20,30,40,50,100,120)
-	fill_name = "hypoviallarge"
 
 //Hypos that are in the CMO's kit round start
 /obj/item/reagent_containers/glass/bottle/vial/large/deluxe

@@ -491,6 +491,11 @@
 
 /datum/crafting_recipe/food/sugarcookie/cringe
 	name = "Cringe cookie"
+	reqs = list(
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
+		/datum/reagent/toxin = 1
+	)
 	result = /obj/item/reagent_containers/food/snacks/sugarcookie/cringe
 
 /datum/crafting_recipe/food/fortunecookie

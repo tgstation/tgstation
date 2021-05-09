@@ -1,6 +1,6 @@
 /obj/structure/item_dispenser
 	name = "item dispenser"
-	desc = "A small wall-mounted recepticle which dispenses a specific item. If you're seeing this, it's broken."
+	desc = "A small wall-mounted receptacle which dispenses a specific item. If you're seeing this, it's broken."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "dispenser_id"
 	anchored = TRUE
@@ -51,42 +51,42 @@
 
 /obj/structure/item_dispenser/glasses
 	name = "glasses dispenser"
-	desc = "A small wall-mounted recepticle which dispenses glasses."
+	desc = "A small wall-mounted receptacle which dispenses glasses."
 	icon_state = "dispenser_glasses"
 	stock =	/obj/item/clothing/glasses/regular
 	item_name = "glasses"
 
 /obj/structure/item_dispenser/handcuffs
 	name = "handcuff dispenser"
-	desc = "A small wall-mounted recepticle which dispenses handcuffs."
+	desc = "A small wall-mounted receptacle which dispenses handcuffs."
 	icon_state = "dispenser_handcuffs"
 	stock =	/obj/item/restraints/handcuffs
 	item_name = "handcuffs"
 
 /obj/structure/item_dispenser/latex
 	name = "latex glove dispenser"
-	desc = "A small wall-mounted recepticle which dispenses latex gloves."
+	desc = "A small wall-mounted receptacle which dispenses latex gloves."
 	icon_state = "dispenser_gloves"
 	stock =	/obj/item/clothing/gloves/color/latex
 	item_name = "latex gloves"
 
 /obj/structure/item_dispenser/mask
 	name = "facemask dispenser"
-	desc = "A small wall-mounted recepticle which dispenses facemasks."
+	desc = "A small wall-mounted receptacle which dispenses facemasks."
 	icon_state = "dispenser_mask"
 	stock =	/obj/item/clothing/mask/surgical
 	item_name = "facemask"
 
 /obj/structure/item_dispenser/id
 	name = "id card dispenser"
-	desc = "A small wall-mounted recepticle which dispenses id cards."
+	desc = "A small wall-mounted receptacle which dispenses id cards."
 	icon_state = "dispenser_id"
 	stock =	/obj/item/card/id
 	item_name = "id card"
 
 /obj/structure/item_dispenser/radio
 	name = "radio dispenser"
-	desc = "A small wall-mounted recepticle which dispenses radios."
+	desc = "A small wall-mounted receptacle which dispenses radios."
 	icon_state = "dispenser_radio"
 	stock =	/obj/item/radio
 	item_name = "radio"
@@ -94,7 +94,7 @@
 
 /obj/structure/item_dispenser/bodybag
 	name = "bodybag dispenser"
-	desc = "A small wall-mounted recepticle which dispenses bodybags."
+	desc = "A small wall-mounted receptacle which dispenses bodybags."
 	icon_state = "dispenser_bodybag"
 	stock =	/obj/item/bodybag
 	item_name = "bodybag"

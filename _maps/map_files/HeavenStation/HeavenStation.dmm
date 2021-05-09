@@ -4174,9 +4174,14 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "bUx" = (
-/obj/effect/loot_site_spawner,
-/turf/open/floor/plating,
-/area/quartermaster/warehouse)
+/obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/item_dispenser/handcuffs{
+	pixel_y = 27
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "bUR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -7852,10 +7857,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dxy" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall,
-/area/crew_quarters/bar/atrium)
 "dxC" = (
 /obj/effect/mapping_helpers/iannewyear,
 /turf/open/floor/wood,
@@ -9937,16 +9938,6 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
-"eix" = (
-/obj/structure/chair/wood{
-	dir = 1
-	},
-/obj/effect/landmark/start/assistant,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/bar/atrium)
 "eiT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -28270,6 +28261,7 @@
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/closet/cardboard,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "lFI" = (
@@ -33765,14 +33757,9 @@
 /turf/open/floor/wood,
 /area/security/detectives_office)
 "nQB" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/item_dispenser/handcuffs{
-	pixel_y = 27
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
+/obj/machinery/status_display/evac,
+/turf/closed/wall,
+/area/crew_quarters/bar/atrium)
 "nQQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastright{
@@ -36292,6 +36279,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/effect/loot_site_spawner/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "oRY" = (
@@ -57883,6 +57871,16 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/library)
+"xGm" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar/atrium)
 "xGB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -95017,7 +95015,7 @@ kIf
 kbX
 ofN
 lVr
-dxy
+nQB
 baM
 eJH
 jDl
@@ -95523,7 +95521,7 @@ kDd
 uLL
 nbv
 aKt
-eix
+xGm
 mfA
 tiv
 qWq
@@ -104859,7 +104857,7 @@ nKn
 pjx
 qJO
 mAU
-bUx
+rhQ
 eGJ
 nKn
 lTz
@@ -105109,7 +105107,7 @@ mnu
 qnp
 nKn
 vPP
-bUx
+rhQ
 fhe
 fhe
 gNV
@@ -106332,7 +106330,7 @@ bOp
 bOp
 fbU
 hyD
-nQB
+bUx
 jFB
 jFB
 jFB

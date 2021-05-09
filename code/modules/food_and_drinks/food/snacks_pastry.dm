@@ -715,8 +715,8 @@
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
-/obj/item/reagent_containers/food/snacks/sugarcookie/cringe
-	name = "cringe cookie"
+/obj/item/reagent_containers/food/snacks/sugarcookie/cringe //I found these sprites and I wanted to make cookies out of them.
+	name = "cringe cookie" //Couldn't think of a better name. I know this name is ass.
 	icon_state = "cringecookie"
 	desc = "Teeming with toxicity, just the way you like it."
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 3, /datum/reagent/toxin = 1)
