@@ -369,11 +369,11 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/explode()
 	explosion(loc, 0, 0, 3, 3, TRUE)
 	var/datum/gas_mixture/main_port = airs[1]
-	var/datum/gas_mixture/thermal_exchange_port = airs[2]
+	var/datum/gas_mixture/exchange_target = airs[2]
 	if(main_port)
 		loc.assume_air(main_port.remove_ratio(1))
-	if(thermal_exchange_port)
-		loc.assume_air(thermal_exchange_port.remove_ratio(1))
+	if(exchange_target)
+		loc.assume_air(exchange_target.remove_ratio(1))
 	qdel(src)
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_status(mob/user)
@@ -448,9 +448,10 @@
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("pumping")
 			if(holding && nodes[2])
+				var/datum/gas_mixture/exchange_target = airs[2]
 				var/datum/gas_mixture/holding_mix = holding.return_air()
 				var/datum/gas_mixture/remove = holding_mix.remove_ratio(1)
-				thermal_exchange_port.merge(remove)
+				exchange_target.merge(remove)
 				. = TRUE
 		if("eject")
 			if(holding)
