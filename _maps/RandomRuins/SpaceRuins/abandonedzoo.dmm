@@ -79,7 +79,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aw" = (
 /obj/structure/flora/rock,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "ax" = (
@@ -87,9 +87,7 @@
 /obj/item/clipboard,
 /obj/item/clothing/mask/surgical,
 /obj/item/razor,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "ay" = (
@@ -112,9 +110,7 @@
 	pixel_y = 5
 	},
 /obj/item/storage/box/beakers,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aA" = (
@@ -122,7 +118,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "aB" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /mob/living/simple_animal/hostile/poison/bees,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
@@ -221,9 +217,7 @@
 /turf/template_noop,
 /area/template_noop)
 "aR" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -262,9 +256,7 @@
 /obj/structure/rack,
 /obj/item/crowbar,
 /obj/item/shield/riot,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aV" = (
@@ -289,9 +281,7 @@
 	pixel_x = -3;
 	pixel_y = -1
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aY" = (
@@ -308,9 +298,7 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "ba" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -367,7 +355,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bg" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
@@ -391,7 +379,7 @@
 /obj/item/retractor,
 /obj/item/cautery,
 /obj/item/circular_saw,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bk" = (
@@ -443,9 +431,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "bw" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /mob/living/simple_animal/hostile/carp,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
@@ -464,9 +450,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bA" = (
@@ -480,9 +464,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bC" = (
 /obj/structure/alien/weeds/node,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/abandonedzoo)
 "bD" = (
@@ -532,9 +514,7 @@
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "bL" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -548,9 +528,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
 "bM" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -626,9 +604,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
 "rY" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/item/stack/cable_coil/cut,
 /obj/item/stack/tile/iron/base{
 	pixel_x = 3;

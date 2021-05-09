@@ -321,14 +321,8 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
-"aY" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall,
-/area/ruin/space/has_grav/hellfactory)
 "aZ" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/checker,
 /area/ruin/space/has_grav/hellfactory)
 "ba" = (
@@ -367,9 +361,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "bh" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/item/chair/plastic{
 	pixel_y = 4
 	},
@@ -383,9 +375,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "bi" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bj" = (
@@ -427,10 +417,6 @@
 "bp" = (
 /obj/structure/chair/plastic,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav/hellfactory)
-"bq" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall/r_wall/rust,
 /area/ruin/space/has_grav/hellfactory)
 "br" = (
 /obj/item/pressure_plate/hologrid{
@@ -571,7 +557,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bK" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/rack,
 /obj/item/book/manual/random,
 /obj/item/poster/random_contraband,
@@ -612,10 +598,6 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/hellfactory)
-"bQ" = (
-/obj/structure/mirror,
-/turf/closed/wall/rust,
 /area/ruin/space/has_grav/hellfactory)
 "bR" = (
 /obj/item/pressure_plate/hologrid{
@@ -672,10 +654,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hellfactory)
 "bY" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bZ" = (
@@ -687,8 +666,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "cb" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/structure/curtain,
+/obj/structure/mirror/directional/north,
 /turf/open/floor/holofloor/wood,
 /area/ruin/space/has_grav/hellfactory)
 "cc" = (
@@ -721,16 +701,15 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "ch" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/machinery/plumbing/tank,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "ci" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/decal/remains/human,
 /obj/structure/curtain,
+/obj/structure/mirror/directional/north,
 /turf/open/floor/holofloor/wood,
 /area/ruin/space/has_grav/hellfactory)
 "cj" = (
@@ -743,9 +722,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "cl" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cm" = (
@@ -788,7 +765,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "ct" = (
-/obj/machinery/light/built,
+/obj/machinery/light/built/directional/south,
 /obj/structure/marker_beacon{
 	icon_state = "markerburgundy-on"
 	},
@@ -848,9 +825,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cC" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
@@ -955,7 +930,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/hellfactory)
 "cT" = (
-/obj/machinery/light/broken,
+/obj/machinery/light/broken/directional/south,
 /obj/structure/marker_beacon{
 	icon_state = "markerburgundy-on"
 	},
@@ -990,10 +965,7 @@
 /area/ruin/space/has_grav/hellfactory)
 "oH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/checker,
 /area/ruin/space/has_grav/hellfactory)
 "oJ" = (
@@ -1008,6 +980,10 @@
 "rC" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/rust,
+/area/ruin/space/has_grav/hellfactory)
+"sk" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "uL" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1051,13 +1027,11 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer4,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/hellfactory)
 "PO" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "Sz" = (
@@ -1072,12 +1046,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
+"VN" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hellfactory)
 "Wh" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "Yd" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
 "Zh" = (
@@ -1398,8 +1376,8 @@ ao
 ah
 ac
 ac
-bq
-by
+aW
+VN
 by
 by
 lR
@@ -1483,9 +1461,9 @@ aW
 by
 Wh
 Fs
-bQ
+aL
 cb
-bQ
+aL
 ci
 aL
 cm
@@ -1611,8 +1589,8 @@ ab
 bL
 aB
 aB
-aY
-aA
+ab
+sk
 aB
 ab
 ab
