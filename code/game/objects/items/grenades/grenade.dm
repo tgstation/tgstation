@@ -86,7 +86,7 @@
 		if(!botch_check(user)) // if they botch the prime, it'll be handled in botch_check
 			arm_grenade(user)
 
-/obj/item/grenade/proc/log_grenade(mob/user, turf/Turf)
+/obj/item/grenade/proc/log_grenade(mob/user, turf/source_terf)
 	log_bomber(user, "has primed a", src, "for detonation")
 
 /**
@@ -94,8 +94,8 @@
  * Grenades with other triggers like remote igniters probably skip this step and go straight to [/obj/item/grenade/proc/detonate]
  */
 /obj/item/grenade/proc/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
-	var/turf/Turf = get_turf(src)
-	log_grenade(user, Turf) //Inbuilt admin procs already handle null users
+	var/turf/source_terf = get_turf(src)
+	log_grenade(user, source_terf) //Inbuilt admin procs already handle null users
 	if(user)
 		add_fingerprint(user)
 		if(msg)
@@ -129,11 +129,11 @@
 		var/mob/ADude = loc
 		ADude.dropItemToGround(src)
 
-/obj/item/grenade/attackby(obj/item/ThingInHand, mob/user, params)
+/obj/item/grenade/attackby(obj/item/weapon, mob/user, params)
 	if(active)
 		return ..()
 
-	if(ThingInHand.tool_behaviour == TOOL_MULTITOOL)
+	if(weapon.tool_behaviour == TOOL_MULTITOOL)
 		var/newtime = text2num(stripped_input(user, "Please enter a new detonation time", name))
 		if (newtime != null && user.canUseTopic(src, BE_CLOSE))
 			if(change_det_time(newtime))
@@ -141,7 +141,7 @@
 				if (round(newtime * 10) != det_time)
 					to_chat(user, "<span class='warning'>The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible.</span>")
 		return
-	else if(ThingInHand.tool_behaviour == TOOL_SCREWDRIVER)
+	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
 		if(change_det_time())
 			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 
@@ -167,12 +167,12 @@
 	return attack_hand(user, modifiers)
 
 /obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/projectile/PewPew = hitby
-	if(damage && attack_type == PROJECTILE_ATTACK && PewPew.damage_type != STAMINA && prob(15))
+	var/obj/projectile/hit_projectile = hitby
+	if(damage && attack_type == PROJECTILE_ATTACK && hit_projectile.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What a shot!</span>")
-		var/turf/Turf = get_turf(src)
-		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(Turf)]")
-		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(Turf)]")
+		var/turf/source_terf = get_turf(src)
+		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(source_terf)]")
+		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(source_terf)]")
 		detonate()
 		return TRUE //It hit the grenade, not them
 
