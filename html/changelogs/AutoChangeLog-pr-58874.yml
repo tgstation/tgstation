@@ -1,4 +1,0 @@
-author: "mandosegua"
-delete-after: True
-changes: 
-  - bugfix: "Swarmers are no longer able to eat the shuttle engines and make hull breaches in their place."

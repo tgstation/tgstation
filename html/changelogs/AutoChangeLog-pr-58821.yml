@@ -1,6 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - bugfix: "many of the toggle preferences in preferences_toggles.dm going into the unsorted chat log"
-  - bugfix: "many of the role greetings from sending to the wrong chat filters/ to unsorted"
-  - bugfix: "miscellaneous other strings getting sent to the unsorted chat filter"

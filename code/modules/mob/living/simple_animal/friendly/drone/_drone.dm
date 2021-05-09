@@ -122,27 +122,35 @@
 	"<span class='notice'>     - Interacting with living beings (communication, attacking, healing, etc.)</span>\n"+\
 	"<span class='notice'>     - Interacting with non-living beings (dragging bodies, looting bodies, etc.)</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
-	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>\n"+\
+	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"
 	/// blacklisted drone areas, direct
 	var/list/drone_area_blacklist_flat = list(/area/engineering/atmos, /area/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
 	var/list/drone_area_blacklist_recursive = list(/area/engineering/supermatter)
-	/// whitelisted drone machines, direct
-	var/list/drone_machinery_whitelist_flat
-	/// whitelisted drone machines, recursive/includes descendants
-	var/list/drone_machinery_whitelist_recursive = list(
-		/obj/machinery/atmospherics,
-		/obj/machinery/autolathe,
-		/obj/machinery/cell_charger,
-		/obj/machinery/disposal,
-		/obj/machinery/drone_dispenser,
-		/obj/machinery/light,
-		/obj/machinery/pipedispenser,
-		/obj/machinery/recharger,
-		/obj/machinery/rnd/production,
+	/// blacklisted drone machines, direct
+	var/list/drone_machinery_blacklist_flat
+	/// blacklisted drone machines, recursive/includes descendants
+	var/list/drone_machinery_blacklist_recursive = list(
+		/obj/machinery/airalarm,
+		/obj/machinery/computer,
+		/obj/machinery/modular_computer,
 	)
+	/// cancels out blacklisted machines, direct
+	var/list/drone_machinery_whitelist_flat
+	/// cancels out blacklisted machines, recursive/includes descendants
+	var/list/drone_machinery_whitelist_recursive = list(
+		/obj/machinery/computer/arcade,
+		/obj/machinery/computer/monitor,
+		/obj/machinery/computer/pod,
+		/obj/machinery/computer/station_alert,
+		/obj/machinery/computer/teleporter,
+	)
+	/// blacklisted drone machine typecache, compiled from [var/drone_machinery_blacklist_flat], [var/list/drone_machinery_blacklist_recursive], negated by their whitelist counterparts
+	var/list/drone_machinery_blacklist_compiled
 	/// whitelisted drone items, direct
 	var/list/drone_item_whitelist_flat = list(
+		/obj/item/chisel,
 		/obj/item/crowbar/drone,
 		/obj/item/screwdriver/drone,
 		/obj/item/wrench/drone,
@@ -166,6 +174,7 @@
 		/obj/item/stack/tile,
 		/obj/item/stock_parts,
 		/obj/item/toner,
+		/obj/item/wallframe,
 		/obj/item/clothing/head,
 		/obj/item/clothing/mask,
 	)
@@ -360,26 +369,47 @@
 		if(cleared)
 			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
+/mob/living/simple_animal/drone/proc/blacklist_on_try_use_machine(datum/source, obj/machinery/machine)
+	SIGNAL_HANDLER
+	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
+		to_chat(src, "<span class='warning'>Using [machine] could break your laws.</span>")
+		return COMPONENT_CANT_USE_MACHINE_INTERACT | COMPONENT_CANT_USE_MACHINE_TOOLS
+
+/mob/living/simple_animal/drone/proc/blacklist_on_try_wires_interact(datum/source, atom/machine)
+	SIGNAL_HANDLER
+	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
+		to_chat(src, "<span class='warning'>Using [machine] could break your laws.</span>")
+		return COMPONENT_CANT_INTERACT_WIRES
+
+
 /mob/living/simple_animal/drone/proc/set_shy(new_shy)
 	shy = new_shy
 	shy_update()
 
 /mob/living/simple_animal/drone/proc/shy_update()
 	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
-	var/list/drone_good_machines = make_associative(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive)
 	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
+
+	var/list/drone_bad_machinery = make_associative(drone_machinery_blacklist_flat) + typecacheof(drone_machinery_blacklist_recursive)
+	var/list/drone_good_machinery = LAZYCOPY(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive) // not a valid typecache, only intended for negation against drone_bad_machinery
+	drone_machinery_blacklist_compiled = drone_bad_machinery - drone_good_machinery
+
+	var/static/list/not_shy_of = typecacheof(list(/mob/living/simple_animal/drone, /mob/living/simple_animal/bot))
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		LoadComponent(/datum/component/shy, typecacheof(/mob/living/simple_animal/drone), 4, "Your laws prevent this action near %TARGET.", TRUE)
+		LoadComponent(/datum/component/shy, not_shy_of, 4, "Your laws prevent this action near %TARGET.", TRUE)
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
-		LoadComponent(/datum/component/technointrovert, drone_good_machines, "Using %TARGET could break your laws.")
+		LoadComponent(/datum/component/technoshy, 5 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
+		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, .proc/blacklist_on_try_use_machine)
+		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		qdel(GetComponent(/datum/component/shy))
 		qdel(GetComponent(/datum/component/shy_in_room))
-		qdel(GetComponent(/datum/component/technointrovert))
+		qdel(GetComponent(/datum/component/technoshy))
 		qdel(GetComponent(/datum/component/itempicky))
+		UnregisterSignal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return

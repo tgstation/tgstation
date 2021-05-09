@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - code_imp: "Td should spike slightly less, assuming harddels actually go down"
-  - code_imp: "You feel a great disturbance in the force, mob code has changed. Please report any odd targeting behavior on the issue tracker"
