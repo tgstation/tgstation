@@ -24,6 +24,7 @@
 /obj/structure/plaque/static_plaque/golden/commission
 	name = "Commission Plaque"
 	desc = "Spinward Sector Station SS-13\n'Runtime' Class Outpost\nCommissioned 11/03/2556\n'Dedicated to the Pioneers'"
+	icon_state = "commission_nt"
 
 //Current stations
 
@@ -82,6 +83,7 @@
 //Space Station 13, Developer Class Outpost, Station Commissioned 25.12.2391, For the Glory of the Workers of the Third Soviet Union
 /obj/structure/plaque/static_plaque/golden/commission/ks13
 	desc = "космическая-станция-13\nфорпост класса разработчика\nстанция сдана 25.12.2391\nво славу тружеников третьего советского союза"
+	icon_state = "commission_commie"
 
 //These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic (default) or wood, not gold.
 //See: code>game>objects>structures>signs>_signs.dm

@@ -33211,6 +33211,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/plaque/static_plaque/golden/commission/kilo,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bOM" = (
