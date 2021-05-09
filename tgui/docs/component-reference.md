@@ -743,6 +743,16 @@ the input, or successfully enter a number.
 - `onDrag: (e, value) => void` - An event, which fires about every 500ms
 when you drag the input up and down, on release and on manual editing.
 
+### `Popper`
+
+Popper lets you position elements so that they don't go out of the bounds of the window. See [popper.js](https://popper.js.org/) for more information.
+
+**Props:**
+
+- `popperContent: InfernoNode` - The content that will be put inside the popper.
+- `options?: { ... }` - An object of options to pass to `createPopper`. See [https://popper.js.org/docs/v2/constructors/#options], but the one you want most is `placement`. Valid placements are "bottom", "top", "left", and "right". You can affix "-start" and "-end" to achieve something like top left or top right respectively. You can also use "auto" (with an optional "-start" or "-end"), where a best fit will be chosen.
+- `updateRenderedContent?: (element: HTMLDivElement) => HTMLDivElement` - An optional callback that takes the `div` that the popper will be put into, and returns a new one.
+
 ### `ProgressBar`
 
 Progress indicators inform users about the status of ongoing processes.
@@ -1092,17 +1102,16 @@ it is recommended to use that prop instead.
 Usage:
 
 ```jsx
-<Box position="relative">
-  Sample text.
-  <Tooltip
-    position="bottom"
-    content="Box tooltip" />
-</Box>
+<Tooltip position="bottom" content="Box tooltip">
+  <Box position="relative">
+    Sample text.
+  </Box>
+</Tooltip>
 ```
 
 **Props:**
 
-- `position: string` - Tooltip position.
+- `position: string` - Tooltip position. Valid positions are "bottom", "top", "left", and "right". You can affix "-start" and "-end" to achieve something like top left or top right respectively. You can also use "auto" (with an optional "-start" or "-end"), where a best fit will be chosen. Defaults to "auto".
 - `content: string` - Content of the tooltip. Must be a plain string.
 Fragments or other elements are **not** supported.
 
