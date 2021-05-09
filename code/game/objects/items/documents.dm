@@ -169,7 +169,7 @@
 			to_chat(user, "<span class='notice'>You set the device's scanning speed to SLOW.")
 		else
 			print_time = 0
-			to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTING FAST.")
+			to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTNING FAST.")
 
 /**
  * Reports printed by fake N-spect scanner
