@@ -1,0 +1,6 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "Fantasy Prefix for poisoned weapons"
+  - bugfix: "Many things that would trigger on attacking someone even if you didn't successfully land a hit now only trigger when you do"
+  - refactor: "Poisonous is an element, no more terrible pathing /poison/ woop woop"
