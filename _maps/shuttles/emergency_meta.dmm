@@ -46,7 +46,7 @@
 "bf" = (/obj/machinery/door/airlock/external{name = "Emergency Recovery Airlock"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/shuttle/escape)
 "bh" = (/obj/structure/chair/comfy/shuttle{dir = 4},/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
 "bi" = (/obj/structure/chair/comfy/shuttle,/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
-"bj" = (/obj/structure/table,/obj/item/defibrillator/loaded,/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"bj" = (/obj/structure/table,/obj/item/defibrillator/loaded,/obj/structure/item_dispenser/mask{pixel_x = -25},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
 "bk" = (/obj/machinery/shower,/turf/open/floor/mineral/titanium/white,/area/shuttle/escape)
 "bl" = (/obj/machinery/stasis,/turf/open/floor/mineral/titanium,/area/shuttle/escape)
 "bm" = (/obj/structure/rack,/obj/item/crowbar,/obj/item/wrench,/obj/item/weldingtool,/obj/item/wirecutters,/obj/item/stack/cable_coil,/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel,/area/shuttle/escape)
@@ -89,8 +89,10 @@
 "cb" = (/obj/machinery/light/small{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/shuttle/escape)
 "cc" = (/obj/machinery/light{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/shuttle/escape)
 "cd" = (/obj/structure/chair/comfy/shuttle{dir = 8},/obj/machinery/light{dir = 4},/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
+"Dc" = (/obj/structure/chair/comfy/shuttle,/obj/structure/item_dispenser/handcuffs{pixel_x = 25},/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
 "LY" = (/turf/open/floor/mineral/titanium,/area/shuttle/escape)
 "Vs" = (/turf/open/floor/mineral/titanium/white,/area/shuttle/escape)
+"Wx" = (/obj/machinery/stasis,/obj/structure/item_dispenser/latex{pixel_x = 25},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
 
 (1,1,1) = {"
 aaaaadacacacacadadacadafadafagacacacadahadafadadad
@@ -102,7 +104,7 @@ adadadaLaxLYLYadaqLYarararararLYarararararLYLYaNad
 auavadaOaqaCbYazbXLYLYLYLYLYLYLYLYLYLYLYLYLYLYLYac
 auavadaPaQaRaqadapLYaEaEaSaEaELYaEaEcaaEaELYLYaTad
 adadadaJadadaWadadaYacadadadacaZacbaadacaJbbbbagad
-auavadbdbebfcbadbhbUbibiadbjbkVsbladbmbnbobpbpbqad
+auavadbdbebfcbadbhbUbiDcadbjbkVsWxadbmbnbobpbpbqad
 auavadbdccbTadadbhbUbUcdbtbuVsVsblacbvbwbebebebpac
 auavadbdbebebyazbhbUbUbsazbzVsVsVsaZbAbebebwbebpac
 aaadadbCbebebyadbDbEbFbGadbHbIbJbKbabMbNbObPbQbRad

@@ -2,6 +2,7 @@
 	name = "Radiation Storm"
 	typepath = /datum/round_event/radiation_storm
 	max_occurrences = 1
+	min_players = 10
 
 /datum/round_event/radiation_storm
 

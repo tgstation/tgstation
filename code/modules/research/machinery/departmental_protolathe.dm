@@ -8,6 +8,7 @@
 	name = "department protolathe (Engineering)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_ENGINEERING
 	department_tag = "Engineering"
+	icon_state = "protolathe-e"
 	circuit = /obj/item/circuitboard/machine/protolathe/department/engineering
 
 /obj/machinery/rnd/production/protolathe/department/service
@@ -32,6 +33,7 @@
 	name = "department protolathe (Science)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_SCIENCE
 	department_tag = "Science"
+	icon_state = "protolathe-re"
 	circuit = /obj/item/circuitboard/machine/protolathe/department/science
 
 /obj/machinery/rnd/production/protolathe/department/security

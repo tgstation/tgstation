@@ -132,3 +132,5 @@ config/title_music/sounds/THE REAL FOLK BLUES.ogg
 config/title_music/sounds/Corpse Party.ogg
 config/title_music/sounds/Icarus.ogg
 config/title_music/sounds/Greenpath.ogg
+config/title_music/sounds/In The Garden.ogg
+config/title_music/sounds/Icarus.ogg

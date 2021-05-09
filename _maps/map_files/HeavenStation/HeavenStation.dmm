@@ -1636,6 +1636,11 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/machinery/button/crematorium{
+	id = "crematoriumChapel";
+	pixel_x = 24;
+	req_access_txt = "27"
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "aNR" = (
@@ -7847,6 +7852,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"dxy" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall,
+/area/crew_quarters/bar/atrium)
 "dxC" = (
 /obj/effect/mapping_helpers/iannewyear,
 /turf/open/floor/wood,
@@ -9928,6 +9937,16 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
+"eix" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/bar/atrium)
 "eiT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -20384,6 +20403,9 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera/autoname,
+/obj/structure/item_dispenser/radio{
+	pixel_y = 27
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "iAo" = (
@@ -22991,6 +23013,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/structure/item_dispenser/bodybag{
+	pixel_y = -27
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "jCR" = (
@@ -23102,9 +23127,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/item_dispenser/bodybag{
-	pixel_y = 27
-	},
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "jEE" = (
@@ -28544,6 +28566,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar/atrium)
 "lJU" = (
@@ -29092,9 +29117,6 @@
 "lVr" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/bar,
-/obj/machinery/status_display/evac{
-	pixel_y = -32
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "lVy" = (
@@ -33743,21 +33765,14 @@
 /turf/open/floor/wood,
 /area/security/detectives_office)
 "nQB" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
+/obj/structure/closet/secure_closet/security/sec,
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/item_dispenser/handcuffs{
+	pixel_y = 27
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/multiver{
-	pixel_x = 8
-	},
-/obj/item/reagent_containers/glass/bottle/epinephrine,
-/obj/item/reagent_containers/syringe,
-/turf/open/floor/plasteel/white,
-/area/medical/sleeper)
+/turf/open/floor/plasteel,
+/area/security/brig)
 "nQQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastright{
@@ -37829,6 +37844,11 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/item_dispenser/glasses{
 	charges = 14;
+	pixel_x = -7;
+	pixel_y = 27
+	},
+/obj/structure/item_dispenser/latex{
+	pixel_x = 8;
 	pixel_y = 27
 	},
 /turf/open/floor/plasteel/dark,
@@ -38800,7 +38820,7 @@
 	c_tag = "Medical Primary Storage";
 	network = list("ss13","medbay")
 	},
-/obj/structure/item_dispenser/latex{
+/obj/structure/item_dispenser/bodybag{
 	pixel_y = 27
 	},
 /turf/open/floor/plasteel/dark,
@@ -42465,6 +42485,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "rrh" = (
@@ -48168,9 +48189,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "tHL" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/plating/grass,
@@ -50957,11 +50975,6 @@
 /area/quartermaster/sorting)
 "uKV" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -50973,6 +50986,11 @@
 	dir = 10;
 	network = list("ss13","medbay")
 	},
+/obj/item/reagent_containers/glass/bottle/epinephrine,
+/obj/item/reagent_containers/glass/bottle/multiver{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "uLe" = (
@@ -55199,6 +55217,11 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "wym" = (
@@ -89975,7 +89998,7 @@ crS
 dlc
 hmO
 dzp
-nQB
+vBg
 djp
 tRN
 wxH
@@ -94994,7 +95017,7 @@ kIf
 kbX
 ofN
 lVr
-nMP
+dxy
 baM
 eJH
 jDl
@@ -95500,7 +95523,7 @@ kDd
 uLL
 nbv
 aKt
-jEr
+eix
 mfA
 tiv
 qWq
@@ -106309,7 +106332,7 @@ bOp
 bOp
 fbU
 hyD
-obM
+nQB
 jFB
 jFB
 jFB

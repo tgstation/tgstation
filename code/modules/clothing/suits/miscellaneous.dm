@@ -889,10 +889,10 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	resistance_flags = NONE
 	can_be_bloody = FALSE
-	strip_delay = 99180
+	strip_delay = 3 MINUTES
 	var/handled = FALSE
 	species_exception = list(/datum/species/balan)
-	custom_price = 1000
+	custom_price = 5000
 
 /obj/item/clothing/suit/balan/equipped(mob/user, slot)
 	if(slot != ITEM_SLOT_OCLOTHING)
