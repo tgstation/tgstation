@@ -57,6 +57,11 @@
 			to_chat(user, "<span class='notice'>You forge the official seal with a [C.crayon_color] crayon. No one will notice... right?</span>")
 			update_appearance()
 
+/**
+ * # N-spect scanner
+ *
+ *
+ */
 /obj/item/inspector
 	name = "\improper N-spect scanner"
 	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then \
@@ -69,10 +74,14 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
+	///sound that plays when printing a report
+	var/print_sound = 'sound/machines/high_tech_confirm.ogg'
+	///time requiered to print a report
+	var/print_time = 5 SECONDS
 
 /obj/item/inspector/attack_self(mob/user)
 	. = ..()
-	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
+	if(do_after(user, print_time, target = user, progress=TRUE))
 		print_report()
 
 ///Prints out a report for bounty purposes, and plays a short audio blip.
@@ -80,7 +89,7 @@
 	// Create our report
 	var/obj/item/paper/report/slip = new(get_turf(src))
 	slip.generate_report(get_area(src))
-	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+	playsound(src, print_sound, 50, FALSE)
 
 /obj/item/paper/report
 	name = "encrypted station inspection"
@@ -110,6 +119,65 @@
 		. += "<span class='notice'>\The [src] contains data on [scanned_area.name].</span>"
 	else if(scanned_area)
 		. += "<span class='notice'>\The [src] contains data on a vague area on station, you should throw it away.</span>"
+	else if(info)
+		icon_state = "slipfull"
+		. += "<span class='notice'>Wait a minute, this isn't an encrypted inspection report! You should throw it away.</span>"
+	else
+		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"
+
+/**
+ * # Fake N-spect scanner
+ *
+ *
+ */
+/obj/item/inspector/clown
+	print_time = 0
+	print_sound = 'sound/items/biddledeep.ogg'
+
+/obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
+	. = ..()
+	print_report()
+
+/obj/item/inspector/clown/print_report()
+	// Create our report
+	var/obj/item/paper/fake_report/slip = new(get_turf(src))
+	slip.generate_report(get_area(src))
+	playsound(src, print_sound, 50, FALSE)
+
+/obj/item/paper/fake_report
+	name = "encrypted station inspection"
+	desc = "Contains no information about the station's current status."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "slip"
+	///What area the inspector scanned when the report was made. Used to verify the security bounty.
+	var/area/scanned_area
+	show_written_words = FALSE
+
+/obj/item/paper/fake_report/proc/generate_report(area/scan_area)
+	scanned_area = pick(typesof(/area/));
+	icon_state = "slipfull"
+
+	var/list/characters = list()
+	characters += GLOB.alphabet
+	characters += GLOB.alphabet_upper
+	characters += GLOB.numerals
+
+	var/length = rand(5, 100)
+	var/i
+	for(i = 0; i<length; i++)
+		if(prob(90))
+			info += pick_list_replacements(CLOWN_NONSENSE_FILE, "honk")
+		else if(prob(1))
+			info += pick_list_replacements(CLOWN_NONSENSE_FILE, "rare")
+		else
+			info += pick_list_replacements(CLOWN_NONSENSE_FILE, "bad")
+
+/obj/item/paper/fake_report/examine(mob/user)
+	. = ..()
+	if(scanned_area?.name)
+		. += "<span class='notice'>\The [src] contains no data on [scanned_area.name].</span>"
+	else if(scanned_area)
+		. += "<span class='notice'>\The [src] contains no data on a vague area on station, you should throw it away.</span>"
 	else if(info)
 		icon_state = "slipfull"
 		. += "<span class='notice'>Wait a minute, this isn't an encrypted inspection report! You should throw it away.</span>"
