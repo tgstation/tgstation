@@ -67,3 +67,25 @@
 	testbed.test_list.Cut()
 	to_find_assoc.Cut()
 	testbed.test_assoc_list.Cut()
+
+	//Calm before the storm
+	testbed.test_assoc_list = list(null = victim)
+
+	victim.DoSearchVar(testbed, "Fourth Run", search_time = 5)
+	TEST_ASSERT(testbed.test_assoc_list, "The ref-tracking tool failed to find a null key'd assoc list entry")
+	victim.found_refs.Cut()
+	testbed.test_assoc_list.Cut()
+
+	//Let's do some more complex assoc list investigation
+	var/list/to_find_in_key = list(victim)
+	testbed.test_assoc_list[to_find_in_key] = list("memes")
+	var/list/to_find_null_assoc_nested = list(victim)
+	testbed.test_assoc_list[null] = to_find_null_assoc_nested
+
+	victim.DoSearchVar(testbed, "Fifth Run", search_time = 6)
+	TEST_ASSERT(victim.found_refs[to_find_in_key], "The ref-tracking tool failed to find a nested assoc list key")
+	TEST_ASSERT(victim.found_refs[to_find_null_assoc_nested], "The ref-tracking tool failed to find a null key'd nested assoc list entry")
+	victim.found_refs.Cut()
+	to_find_in_key.Cut()
+	to_find_null_assoc_nested.Cut()
+	testbed.test_assoc_list.Cut()
