@@ -68,7 +68,7 @@
 
 /mob/living/simple_animal/rabbit/Initialize()
 	. = ..()
-  AddElement(/datum/element/pet_bonus, "hops around happily!")
+	AddElement(/datum/element/pet_bonus, "hops around happily!")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
 	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
 	var/eggs_added_from_eating = rand(1, 4)
