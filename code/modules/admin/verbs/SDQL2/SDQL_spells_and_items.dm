@@ -22,7 +22,7 @@
 	. = ..()
 	var/mob/firer_mob = firer
 	process_spell_query(query, list(target), firer_mob, linked_spell)
-	
+
 /obj/effect/proc_holder/spell/aoe_turf/sdql
 	name = "AoE SDQL Spell"
 	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
@@ -31,7 +31,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/sdql/cast(list/targets, mob/user)
 	process_spell_query(query, targets, user, src)
-	
+
 /obj/effect/proc_holder/spell/cone/sdql
 	name = "Cone SDQL Spell"
 	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
@@ -115,7 +115,7 @@
 			if(V in attached_hand.vars)
 				attached_hand.vv_edit_var(V, hand_var_overrides[V])
 		user.update_inv_hands()
-	
+
 
 /obj/item/melee/touch_attack/sdql
 	name = "\improper SDQL touch attack"
@@ -207,8 +207,8 @@
 #undef RAW_ADDRESS
 
 /client/proc/cmd_give_sdql_spell(mob/target in GLOB.mob_list)
-	set category = "Admin.Debug"
 	set name = "Give SDQL spell"
+	set hidden = TRUE
 	if(CONFIG_GET(flag/sdql_spells))
 		var/datum/give_sdql_spell/ui = new(usr, target)
 		ui.ui_interact(usr)
@@ -282,21 +282,21 @@
 		"still_recharging_message",
 		"target_ignore_prev",
 	)
-	
+
 	//If a spell creates a datum with vars it overrides, this list should contain an association with the supertype of the created datum
 	var/static/list/special_list_vars = list(
 		"projectile_var_overrides" = list(
 			"supertype" = /obj/projectile,
 			"type" = /obj/projectile/sdql,
-		), 
+		),
 		"hand_var_overrides" = list(
 			"supertype" = /obj/item/melee/touch_attack,
 			"type" = /obj/item/melee/touch_attack/sdql,
 		),
 	)
-	
+
 	var/static/list/static_data
-	
+
 	//base64 representations of any icons that may need to be displayed
 	var/action_icon_base64
 	var/projectile_icon_base64
@@ -671,7 +671,7 @@
 	switch(V)
 		if("bruteloss", "fireloss", "toxloss", "oxyloss", "stun", "knockdown", "paralyze", "unconscious")
 			return TRUE
-		else    
+		else
 			if(V in target_mob.vars)
 				if(!isnum(target_mob.vars[V]))
 					alert = "[target_mob.type]/[V] is not a number!"
@@ -721,7 +721,7 @@
 		if("ranged_mousepointer")
 			var/icon/out_icon = icon(saved_vars["ranged_mousepointer"], frame = 1)
 			mouse_icon_base64 = icon2base64(out_icon)
-		
+
 		if("everything")
 			var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 			var/image/out_image = image('icons/mob/actions/backgrounds.dmi', null, saved_vars["action_background_icon_state"])
@@ -837,7 +837,7 @@
 				new_spell.vv_edit_var(V, icon(saved_vars[V]))
 			else
 				new_spell.vv_edit_var(V, saved_vars[V])
-	
+
 	//delete and recreate the action so the overriden vars are respected by the action button
 	qdel(new_spell.action)
 	new_spell.action = new new_spell.base_action(new_spell)
