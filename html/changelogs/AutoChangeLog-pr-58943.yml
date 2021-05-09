@@ -1,0 +1,4 @@
+author: "norill"
+delete-after: True
+changes: 
+  - qol: "made door remote work by clicking on the floor under an airlock too"
