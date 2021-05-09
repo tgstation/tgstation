@@ -157,6 +157,9 @@
 		if(print_sound == 'sound/items/biddledeep.ogg')
 			print_sound = 'sound/machines/high_tech_confirm.ogg'
 			to_chat(user, "<span class='notice'>You set the device's bleep setting to normal mode")
+		else if(print_sound == 'sound/machines/high_tech_confirm.ogg')
+			print_sound = 'sound/items/bikehorn.ogg'
+			to_chat(user, "<span class='notice'>You set the device's bleep setting to honk mode")
 		else
 			print_sound = 'sound/items/biddledeep.ogg'
 			to_chat(user, "<span class='notice'>You set the device's bleep setting to classic mode")
