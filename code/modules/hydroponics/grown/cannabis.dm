@@ -63,7 +63,7 @@
 	species = "ocannabis"
 	plantname = "Omega Weed"
 	product = /obj/item/food/grown/cannabis/ultimate
-	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/green)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/green, /datum/plant_gene/trait/modified_volume/omega_weed)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/drug/space_drugs = 0.3,
 						/datum/reagent/toxin/mindbreaker = 0.3,
@@ -120,5 +120,4 @@
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
 	bite_consumption_mod = 2 // Ingesting like 40 units of drugs in 1 bite at 100 potency
-	max_volume = 420
 	wine_power = 90

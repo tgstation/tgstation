@@ -152,7 +152,7 @@
 	species = "sunflower"
 	plantname = "Sunflowers"
 	product = /obj/item/grown/sunflower
-	genes = list(/datum/plant_gene/trait/sunflower_attack)
+	genes = list(/datum/plant_gene/trait/attack/sunflower_attack)
 	endurance = 20
 	production = 2
 	yield = 2
@@ -215,7 +215,7 @@
 	icon_grow = "novaflower-grow"
 	icon_dead = "sunflower-dead"
 	product = /obj/item/grown/novaflower
-	genes = list(/datum/plant_gene/trait/novaflower_heat, /datum/plant_gene/trait/novaflower_attack)
+	genes = list(/datum/plant_gene/trait/backfire/novaflower_heat, /datum/plant_gene/trait/attack/novaflower_attack)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
 	rarity = 20
@@ -251,7 +251,7 @@
 	potency = 15
 	instability = 20 //Roses crossbreed easily, and there's many many species of them.
 	growthstages = 3
-	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/rose_thorns)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/backfire/rose_thorns)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "rose-grow"
 	icon_dead = "rose-dead"

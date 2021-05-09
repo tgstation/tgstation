@@ -67,7 +67,7 @@
 	production = 10
 	yield = 3
 	rarity = 20
-	genes = list(/datum/plant_gene/trait/chem_heating, /datum/plant_gene/trait/chili_heat)
+	genes = list(/datum/plant_gene/trait/chem_heating, /datum/plant_gene/trait/backfire/chili_heat)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.3, /datum/reagent/consumable/capsaicin = 0.55, /datum/reagent/consumable/nutriment = 0.04)
 	graft_gene = /datum/plant_gene/trait/chem_heating
