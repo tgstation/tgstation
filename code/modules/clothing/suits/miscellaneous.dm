@@ -892,7 +892,7 @@
 	strip_delay = 3 MINUTES
 	var/handled = FALSE
 	species_exception = list(/datum/species/balan)
-	custom_price = 5000
+	custom_price = 8000
 
 /obj/item/clothing/suit/balan/equipped(mob/user, slot)
 	if(slot != ITEM_SLOT_OCLOTHING)
