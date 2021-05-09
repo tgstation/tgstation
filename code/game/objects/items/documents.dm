@@ -76,7 +76,7 @@
 	throw_speed = 1
 	///sound that plays when printing a report
 	var/print_sound = 'sound/machines/high_tech_confirm.ogg'
-	///time requiered to print a report
+	///time required to print a report
 	var/print_time = 5 SECONDS
 
 /obj/item/inspector/attack_self(mob/user)
