@@ -101,8 +101,8 @@
 
 		if(istype(ThingIWantToExplode, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
 			var/obj/item/Item = ThingIWantToExplode
-			I.throw_speed = max(1, (I.throw_speed - 3))
-			I.throw_range = max(1, (I.throw_range - 3))
+			Item.throw_speed = max(1, (Item.throw_speed - 3))
+			Item.throw_range = max(1, (Item.throw_range - 3))
 			if(Item.embedding)
 				Item.embedding["embed_chance"] = 0
 				Item.updateEmbedding()
@@ -141,7 +141,7 @@
 			message_say = "FOR ME MATEYS!"
 		else if(OurGuy.has_antag_datum(/datum/antagonist/wizard))
 			message_say = "FOR THE FEDERATION!"
-	M.say(message_say, forced="C4 suicide")
+	IHaveABrain.say(message_say, forced="C4 suicide")
 
 /obj/item/grenade/c4/suicide_act(mob/living/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
