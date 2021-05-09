@@ -79,7 +79,7 @@
 	if(.)
 		return
 
-	if(owner.stat)
+	if(!owner.stat)
 		remove_ranged_ability()
 		return
 
