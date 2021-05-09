@@ -25,6 +25,8 @@
 	name = "Commission Plaque"
 	desc = "Spinward Sector Station SS-13\n'Runtime' Class Outpost\nCommissioned 11/03/2556\n'Dedicated to the Pioneers'"
 
+//Current stations
+
 /obj/structure/plaque/static_plaque/golden/commission/icebox
 	desc = "Spinward Sector Station SS-13\n'Box' Class Outpost (Revivion 2.2: 'Icebox')\nCommissioned 05/22/2560\n'Cold Reliable'"
 
@@ -32,13 +34,54 @@
 	desc = "Spinward Sector Station SS-13\n'Meta' Class Outpost\nCommissioned 08/11/2553\n'Theseus' Station'"
 
 /obj/structure/plaque/static_plaque/golden/commission/delta
-	desc = "Spinward Sector Station SS-13\n'Delta' Class Outpost\nCommissioned 12/17/2556\n'Heralding Change'"
+	desc = "Spinward Sector Station SS-13\n'Delta' Class Outpost\nCommissioned 12/17/2556\n'Efficiency Through Redundancy'"
 
 /obj/structure/plaque/static_plaque/golden/commission/kilo
 	desc = "Spinward Sector Station SS-13\n'Kilo' Class Outpost\nCommissioned 11/13/2559\n'Forever Different'"
 
 /obj/structure/plaque/static_plaque/golden/commission/tram
 	desc = "Spinward Sector Station SS-13\n'Tram' Class Outpost\nCommissioned 03/11/2561\n'Making Moves'"
+
+//Removed stations
+
+/obj/structure/plaque/static_plaque/golden/commission/asteroid
+	desc = "Spinward Sector Station SS-12\n'Asteroid' Class Outpost\nCommissioned 10/13/2555\nDecommissioned 06/19/2556\n'A Meteoric Success'"
+
+/obj/structure/plaque/static_plaque/golden/commission/birdboat
+	desc = "Spinward Sector Station SS-03\n'Birdboat' Class Outpost\nCommissioned 09/17/2555\nDecommissioned 02/09/2557\n'Rocking the Boat'"
+
+/obj/structure/plaque/static_plaque/golden/commission/box
+	desc = "Spinward Sector Station SS-01\n'Box' Class Outpost\nCommissioned 11/15/2550\nDecommissioned 07/06/2560\n'Old Faithful'"
+
+/obj/structure/plaque/static_plaque/golden/commission/pubby
+	desc = "Spinward Sector Station SS-06\n'Pubby' Class Outpost\nCommissioned 10/19/2556\nDecommissioned 12/25/2560\n'No Law But Ours'"
+
+/obj/structure/plaque/static_plaque/golden/commission/cere
+	desc = "Spinward Sector Station SS-10\n'Cere' Class Outpost\nCommissioned 03/29/2557\nDecommissioned 08/26/2557\n'Take a Hike'"
+
+/obj/structure/plaque/static_plaque/golden/commission/disc
+	desc = "Spinward Sector Station SS-05\n'Disc' Class Outpost\nCommissioned 09/21/2555\nDecommissioned 01/31/2556\n'Sleep Tight'"
+
+/obj/structure/plaque/static_plaque/golden/commission/donut
+	desc = "Spinward Sector Station SS-11\n'Donut' Class Outpost\nCommissioned 12/16/2558\nDecommissioned 04/28/2560\n'Hail the Lord'"
+
+/obj/structure/plaque/static_plaque/golden/commission/dream
+	desc = "Spinward Sector Station SS-04\n'Dream' Class Outpost\nCommissioned 08/11/2555\nDecommissioned 12/22/2556\n'Aiming High'"
+
+/obj/structure/plaque/static_plaque/golden/commission/efficiency
+	desc = "Spinward Sector Station SS-07\n'Efficiency' Class Outpost\nCommissioned 01/28/2556\nDecommissioned 12/20/2556\n'Work Smarter, Not Harder'"
+
+/obj/structure/plaque/static_plaque/golden/commission/mini
+	desc = "Spinward Sector Station SS-08\n'Mini' Class Outpost\nCommissioned 01/29/2554\nDecommissioned 12/27/2556\n'The Littlest Station'"
+
+/obj/structure/plaque/static_plaque/golden/commission/omega
+	desc = "Spinward Sector Station SS-09\n'Omega' Class Outpost\nCommissioned 12/27/2556\nDecommissioned 09/20/2558\n'Tiny Take Two'"
+
+// Other Stations
+
+//Space Station 13, Developer Class Outpost, Station Commissioned 25.12.2391, For the Glory of the Workers of the Third Soviet Union
+/obj/structure/plaque/static_plaque/golden/commission/ks13
+	desc = "космическая-станция-13\nфорпост класса разработчика\nстанция сдана 25.12.2391\nво славу тружеников третьего советского союза"
 
 //These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic (default) or wood, not gold.
 //See: code>game>objects>structures>signs>_signs.dm
