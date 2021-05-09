@@ -1,9 +1,10 @@
 import { createPopper, OptionsGeneric } from "@popperjs/core";
-import { Component, createRef, Fragment, findDOMfromVNode, InfernoNode, RefObject, render } from "inferno";
+import { Component, findDOMfromVNode, InfernoNode, render } from "inferno";
 
 type PopperProps = {
-  popperContent?: InfernoNode;
+  popperContent: InfernoNode;
   options?: Partial<OptionsGeneric<unknown>>;
+  updateRenderedContent?: (element: HTMLDivElement) => HTMLDivElement,
 };
 
 export class Popper extends Component<PopperProps> {
@@ -19,9 +20,17 @@ export class Popper extends Component<PopperProps> {
   }
 
   componentDidMount() {
-    this.renderedContent = document.createElement("div");
+    const {
+      options,
+      updateRenderedContent,
+    } = this.props;
 
-    render(this.props.popperContent, this.renderedContent, () => {
+    this.renderedContent = document.createElement("div");
+    if (updateRenderedContent) {
+      this.renderedContent = updateRenderedContent(this.renderedContent);
+    }
+
+    this.renderPopperContent(() => {
       document.body.appendChild(this.renderedContent);
 
       this.popperInstance = createPopper(
@@ -32,21 +41,27 @@ export class Popper extends Component<PopperProps> {
         // A previous attempt was made as a render prop that passed an ID,
         // but this made consuming use too unwieldly.
         // This code is copied from `findDOMNode` in inferno-extras.
+        // Because this component is written in TypeScript, we will know
+        // immediately if this internal variable is removed.
         findDOMfromVNode(this.$LI, true),
         this.renderedContent,
-        this.props.options,
+        options,
       );
     });
   }
 
   componentDidUpdate() {
-    this.popperInstance?.update();
+    this.renderPopperContent(() => this.popperInstance?.update());
   }
 
   componentWillUnmount() {
     this.popperInstance?.destroy();
     this.renderedContent.remove();
     this.renderedContent = null;
+  }
+
+  renderPopperContent(callback: () => void) {
+    render(this.props.popperContent, this.renderedContent, callback);
   }
 
   render() {

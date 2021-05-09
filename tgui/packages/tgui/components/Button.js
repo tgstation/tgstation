@@ -49,7 +49,7 @@ export const Button = props => {
   }
   // IE8: Use a lowercase "onclick" because synthetic events are fucked.
   // IE8: Use an "unselectable" prop because "user-select" doesn't work.
-  return (
+  let buttonContent = (
     <Box
       className={classes([
         'Button',
@@ -106,14 +106,18 @@ export const Button = props => {
           rotation={iconRotation}
           spin={iconSpin} />
       )}
-      {tooltip && (
-        <Tooltip
-          content={tooltip}
-          overrideLong={tooltipOverrideLong}
-          position={tooltipPosition} />
-      )}
     </Box>
   );
+
+  if (tooltip) {
+    buttonContent = (
+      <Tooltip content={tooltip} position={tooltipPosition}>
+        {buttonContent}
+      </Tooltip>
+    );
+  }
+
+  return buttonContent;
 };
 
 Button.defaultHooks = pureComponentHooks;
