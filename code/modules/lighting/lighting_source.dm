@@ -20,7 +20,7 @@
 
 	// Variables for keeping track of the colour.
 	var/lum_r
-	var/lum_g //TODOKYLER: write doc comments for these
+	var/lum_g
 	var/lum_b
 
 	// The lumcount values used to apply the light.
