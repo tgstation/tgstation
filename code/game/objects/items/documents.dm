@@ -60,7 +60,7 @@
 /**
  * # N-spect scanner
  *
- *
+ * Creates reports for area inspection bounties.
  */
 /obj/item/inspector
 	name = "\improper N-spect scanner"
@@ -84,7 +84,11 @@
 	if(do_after(user, print_time, target = user, progress=TRUE))
 		print_report()
 
-///Prints out a report for bounty purposes, and plays a short audio blip.
+/**
+ * Prints out a report for bounty purposes, and plays a short audio blip.
+ *
+ * Arguments:
+*/
 /obj/item/inspector/proc/print_report()
 	// Create our report
 	var/obj/item/paper/report/slip = new(get_turf(src))
@@ -128,10 +132,14 @@
 /**
  * # Fake N-spect scanner
  *
+ * A clown variant of the N-spect scanner
  *
+ * This prints fake reports with garbage in them,
+ * can be adjusted to print them instantly with a screwdriver,
+ * and by defaults plays the old "woody" scanning sound, but can be adjusted
+ * to play the normal N-spect scanner sound with a multitool
  */
 /obj/item/inspector/clown
-	print_time = 0
 	print_sound = 'sound/items/biddledeep.ogg'
 
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
@@ -144,17 +152,38 @@
 	slip.generate_report(get_area(src))
 	playsound(src, print_sound, 50, FALSE)
 
+/obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_MULTITOOL)
+		if(print_sound == 'sound/items/biddledeep.ogg')
+			print_sound = 'sound/machines/high_tech_confirm.ogg'
+			to_chat(user, "<span class='notice'>You set the device's bleep setting to normal mode")
+		else
+			print_sound = 'sound/items/biddledeep.ogg'
+			to_chat(user, "<span class='notice'>You set the device's bleep setting to classic mode")
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		if(print_time == 0)
+			print_time = 5 SECONDS
+			to_chat(user, "<span class='notice'>You set the device's scanning speed to SLOW.")
+		else
+			print_time = 0
+			to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTING FAST.")
+
+/**
+ * Reports printed by fake N-spect scanner
+ *
+ * Not valid for the bounty.
+ */
 /obj/item/paper/fake_report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "slip"
-	///What area the inspector scanned when the report was made. Used to verify the security bounty.
+	///A random area or no area. Used to generate the examine text of the report
 	var/area/scanned_area
 	show_written_words = FALSE
 
 /obj/item/paper/fake_report/proc/generate_report(area/scan_area)
-	scanned_area = pick(typesof(/area/));
+	scanned_area = scan_area
 	icon_state = "slipfull"
 
 	var/list/characters = list()
@@ -162,7 +191,7 @@
 	characters += GLOB.alphabet_upper
 	characters += GLOB.numerals
 
-	var/length = rand(5, 100)
+	var/length = rand(23, 230)
 	var/i
 	for(i = 0; i<length; i++)
 		if(prob(90))

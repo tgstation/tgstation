@@ -80,3 +80,13 @@
 	price_max = 200
 	stock_max = 3
 	availability_prob = 50
+
+/datum/blackmarket_item/tool/fake_scanner
+	name = "Clowny N-spect scanner"
+	desc = "This UPGRADED N-spect scanner can play TWO HIGH-QUALITY SOUNDS (multitool requiered for sound adjustment not included) and print reports LIGHTNING FAST (screwdriver necessary to activate maximum speed not included). We make no claims as to the usefulness of the reports printed by this."
+	item = /obj/item/inspector/clown
+
+	price_min = 230
+	price_max = 323
+	stock_max = 2
+	availability_prob = 50
