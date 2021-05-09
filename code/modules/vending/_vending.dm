@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		R.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
 		R.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
 		R.age_restricted = initial(temp.age_restricted)
-		R.colorable = !!initial(temp.greyscale_config)
+		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors))
 		recordlist += R
 
 /**
@@ -842,7 +842,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(initial(item.greyscale_config_inhand_right))
 			allowed_configs += "[initial(item.greyscale_config_inhand_right)]"
 
-	var/datum/greyscale_modify_menu/menu = new(src, usr, allowed_configs, CALLBACK(src, .proc/vend_greyscale, params))
+	var/datum/greyscale_modify_menu/menu = new(
+		src, usr, allowed_configs, CALLBACK(src, .proc/vend_greyscale, params),
+		starting_icon_state=initial(fake_atom.icon_state),
+		starting_config=initial(fake_atom.greyscale_config),
+		starting_colors=initial(fake_atom.greyscale_colors)
+	)
 	menu.ui_interact(usr)
 
 /obj/machinery/vending/proc/vend_greyscale(list/params, datum/greyscale_modify_menu/menu)

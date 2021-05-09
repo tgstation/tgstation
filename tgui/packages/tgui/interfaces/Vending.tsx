@@ -69,17 +69,23 @@ const VendingRow = (props, context) => {
     productStock,
     custom,
   } = props;
+  const {
+    onstation,
+    department,
+    user,
+    jobDiscount,
+  } = data;
   const free = (
-    !data.onstation
+    !onstation
     || product.price === 0
     || (
       !product.premium
-      && data.department
-      && data.user
+      && department
+      && user
     )
   );
-  const discount = data.department === data.user?.department;
-  const redPrice = Math.round(product.price * data.jobDiscount);
+  const discount = department === user?.department;
+  const redPrice = Math.round(product.price * jobDiscount);
   return (
     <Table.Row>
       <Table.Cell collapsing>
@@ -130,8 +136,8 @@ const VendingRow = (props, context) => {
             disabled={(
               productStock.amount === 0
               || !free && (
-                !data.user
-                || product.price > data.user.cash
+                !user
+                || product.price > user.cash
               )
             )}
             content={(free && discount)
@@ -150,7 +156,7 @@ const VendingRow = (props, context) => {
                 icon="palette"
                 disabled={
                   productStock.Amount === 0
-                  || (!free && (!data.user || product.price > data.user.cash))
+                  || (!free && (!user || product.price > user.cash))
                 }
                 onClick={() => act('select_colors', { ref: product.ref })}
               />
@@ -164,6 +170,14 @@ const VendingRow = (props, context) => {
 
 export const Vending = (props, context) => {
   const { act, data } = useBackend<VendingData>(context);
+  const {
+    user,
+    onstation,
+    product_records = [],
+    coin_records = [],
+    hidden_records = [],
+    stock,
+  } = data;
   let inventory;
   let custom = false;
   if (data.vending_machine_input) {
@@ -172,13 +186,13 @@ export const Vending = (props, context) => {
   }
   else {
     inventory = [
-      ...data.product_records,
-      ...data.coin_records,
+      ...product_records,
+      ...coin_records,
     ];
     if (data.extended_inventory) {
       inventory = [
         ...inventory,
-        ...data.hidden_records,
+        ...hidden_records,
       ];
     }
   }
@@ -190,15 +204,15 @@ export const Vending = (props, context) => {
       width={450}
       height={600}>
       <Window.Content scrollable>
-        {!!data.onstation && (
+        {!!onstation && (
           <Section title="User">
-            {data.user && (
+            {user && (
               <Box>
-                Welcome, <b>{data.user.name}</b>,
+                Welcome, <b>{user.name}</b>,
                 {' '}
-                <b>{data.user.job || 'Unemployed'}</b>!
+                <b>{user.job || 'Unemployed'}</b>!
                 <br />
-                Your balance is <b>{data.user.cash} credits</b>.
+                Your balance is <b>{user.cash} credits</b>.
               </Box>
             ) || (
               <Box color="light-grey">
@@ -215,7 +229,7 @@ export const Vending = (props, context) => {
                 key={product.name}
                 custom={custom}
                 product={product}
-                productStock={data.stock[product.name]} />
+                productStock={stock[product.name]} />
             ))}
           </Table>
         </Section>

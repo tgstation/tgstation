@@ -11,23 +11,33 @@
 
 	var/list/sprite_data
 	var/sprite_dir = SOUTH
+	var/icon_state
 	var/generate_full_preview = FALSE
+
+	var/refreshing = TRUE
 
 	var/unlocked = FALSE
 
-/datum/greyscale_modify_menu/New(atom/target, client/user, list/allowed_configs, datum/callback/apply_callback)
+/datum/greyscale_modify_menu/New(atom/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state="", starting_config, starting_colors)
 	src.target = target
 	src.user = user
-	src.allowed_configs = allowed_configs
 	src.apply_callback = apply_callback || CALLBACK(src, .proc/DefaultApply)
+	icon_state = starting_icon_state
 
-	var/current_config = "[target?.greyscale_config]"
+	var/current_config = "[starting_config]" || "[target?.greyscale_config]"
 	config = SSgreyscale.configurations[current_config]
 	if(!(current_config in allowed_configs))
-		config = SSgreyscale.configurations["[pick(allowed_configs)]"]
+		config = SSgreyscale.configurations["[allowed_configs[pick(allowed_configs)]]"]
+
+	var/list/config_choices = list()
+	for(var/config_string in allowed_configs)
+		var/datum/greyscale_config/config = text2path("[config_string]")
+		config_choices[initial(config.name)] = config_string
+	src.allowed_configs = config_choices
+
+	ReadColorsFromString(starting_colors, target?.greyscale_colors)
 
 	if(target)
-		ReadColorsFromString(target.greyscale_colors)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/ui_close)
 
 	refresh_preview()
@@ -51,7 +61,7 @@
 
 /datum/greyscale_modify_menu/ui_data(mob/user)
 	var/list/data = list()
-	data["greyscale_config"] = "[config.type]"
+	data["greyscale_config"] = "[config.name]"
 
 	var/list/color_data = list()
 	data["colors"] = color_data
@@ -62,8 +72,10 @@
 		))
 
 	data["generate_full_preview"] = generate_full_preview
-	data["full_preview_allowed"] = unlocked
+	data["unlocked"] = unlocked
+	data["refreshing"] = refreshing
 	data["sprites_dir"] = dir2text(sprite_dir)
+	data["icon_state"] = icon_state
 	data["sprites"] = sprite_data
 	return data
 
@@ -79,10 +91,11 @@
 				"Greyscale Modification Menu",
 				"[config.type]"
 			) as anything in allowed_configs
+			new_config = allowed_configs[new_config]
 			new_config = SSgreyscale.configurations[new_config]
 			if(!isnull(new_config) && config != new_config)
 				config = new_config
-				refresh_preview()
+				queue_refresh()
 
 		if("load_config_from_string")
 			if(!(params["config_string"] in allowed_configs))
@@ -90,22 +103,22 @@
 			var/datum/greyscale_config/new_config = SSgreyscale.configurations[params["config_string"]]
 			if(!isnull(new_config) && config != new_config)
 				config = new_config
-				refresh_preview()
+				queue_refresh()
 
 		if("toggle_full_preview")
 			if(!generate_full_preview && !unlocked)
 				return
 			generate_full_preview = !generate_full_preview
-			refresh_preview()
+			queue_refresh()
 
 		if("recolor")
 			var/index = text2num(params["color_index"])
 			split_colors[index] = lowertext(params["new_color"])
-			refresh_preview()
+			queue_refresh()
 
 		if("recolor_from_string")
 			ReadColorsFromString(lowertext(params["color_string"]))
-			refresh_preview()
+			queue_refresh()
 
 		if("pick_color")
 			var/group = params["color_index"]
@@ -117,7 +130,14 @@
 			) as color|null
 			if(new_color)
 				split_colors[group] = new_color
-				refresh_preview()
+				queue_refresh()
+
+		if("select_icon_state")
+			var/new_icon_state = params["new_icon_state"]
+			if(!config.icon_states[new_icon_state])
+				return
+			icon_state = new_icon_state
+			queue_refresh()
 
 		if("apply")
 			apply_callback.Invoke(src)
@@ -125,11 +145,11 @@
 		if("refresh_file")
 			if(!unlocked)
 				return
-			if(length(GLOB.player_list) > 1)
+			if(length(GLOB.player_list) > 0)
 				var/check = alert(
 					user,
-					{"Other players are connected to the server, are you sure you want to refresh all greyscale configurations?
-					This is highly likely to cause a lag spike for a few seconds."},
+{"Other players are connected to the server, are you sure you want to refresh all greyscale configurations?\n
+This is highly likely to cause a lag spike for a few seconds."},
 					"Refresh Greyscale Configurations",
 					"Yes",
 					"Cancel"
@@ -137,11 +157,11 @@
 				if(check != "Yes")
 					return
 			SSgreyscale.RefreshConfigsFromFile()
-			refresh_preview()
+			queue_refresh()
 
 		if("change_dir")
 			sprite_dir = text2dir(params["new_sprite_dir"])
-			refresh_preview()
+			queue_refresh()
 
 /datum/greyscale_modify_menu/proc/ReadColorsFromString(colorString)
 	var/list/raw_colors = splittext(colorString, "#")
@@ -149,18 +169,33 @@
 	for(var/i in 2 to length(raw_colors))
 		split_colors += "#[raw_colors[i]]"
 
+/datum/greyscale_modify_menu/proc/queue_refresh()
+	refreshing = TRUE
+	addtimer(CALLBACK(src, .proc/refresh_preview), 1 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+
 /datum/greyscale_modify_menu/proc/refresh_preview()
 	for(var/i in length(split_colors) + 1 to config.expected_colors)
 		split_colors += rgb(100, 100, 100)
 	var/list/used_colors = split_colors.Copy(1, config.expected_colors+1)
 
 	sprite_data = list()
+
+	var/list/generated_icon_states = list()
+	for(var/state in config.icon_states)
+		generated_icon_states += state // We don't want the values from this keyed list
+	sprite_data["icon_states"] = generated_icon_states
+
+	if(!(icon_state in generated_icon_states))
+		icon_state = target.icon_state
+		if(!(icon_state in generated_icon_states))
+			icon_state = pick(generated_icon_states)
+
 	var/image/finished
 	if(!generate_full_preview)
-		finished = config.Generate(used_colors.Join())
+		finished = image(config.GenerateBundle(used_colors), icon_state=icon_state)
 	else
 		var/list/data = config.GenerateDebug(used_colors.Join())
-		finished = image(data["icon"])
+		finished = image(data["icon"], icon_state=icon_state)
 		var/list/steps = list()
 		sprite_data["steps"] = steps
 		for(var/step in data["steps"])
@@ -173,7 +208,9 @@
 					"result"=icon2html(result, user, dir=sprite_dir, sourceonly=TRUE)
 				)
 			)
+
 	sprite_data["finished"] = icon2html(finished, user, dir=sprite_dir, sourceonly=TRUE)
+	refreshing = FALSE
 
 /datum/greyscale_modify_menu/proc/Unlock()
 	allowed_configs = SSgreyscale.configurations
