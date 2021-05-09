@@ -223,9 +223,9 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = -10, ACID = 0) //It's made of plasma. Of course it's flammable.
 	custom_materials = list(/datum/material/plasma=1000)
 
-/obj/item/clothing/accessory/medal/plasma/ComponentInitialize()
+/obj/item/clothing/accessory/medal/plasma/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/item/clothing/accessory/medal/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 300
@@ -299,15 +299,20 @@
 		user.say("The testimony contradicts the evidence!", forced = "attorney's badge")
 	user.visible_message("<span class='notice'>[user] shows [user.p_their()] attorney's badge.</span>", "<span class='notice'>You show your attorney's badge.</span>")
 
-/obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
-	var/mob/living/L = user
-	if(L)
-		L.bubble_icon = "lawyer"
+/obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, mob/living/user)
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
+	user.bubble_icon = "lawyer"
 
-/obj/item/clothing/accessory/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U, user)
-	var/mob/living/L = user
-	if(L)
-		L.bubble_icon = initial(L.bubble_icon)
+/obj/item/clothing/accessory/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U, mob/living/user)
+	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
+	user.bubble_icon = initial(user.bubble_icon)
+
+/obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/handle_table_slam, source)
+
+/obj/item/clothing/accessory/lawyers_badge/proc/handle_table_slam(mob/living/user)
+	user.say("Objection!!", spans = list(SPAN_YELL), forced=TRUE)
 
 ////////////////
 //HA HA! NERD!//

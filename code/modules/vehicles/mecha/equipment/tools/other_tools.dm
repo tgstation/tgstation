@@ -248,7 +248,7 @@
 		h_boost *= -2
 	else if(chassis.internal_damage && DT_PROB(8, delta_time))
 		for(var/int_dam_flag in repairable_damage)
-			if(!chassis.internal_damage & int_dam_flag)
+			if(!(chassis.internal_damage & int_dam_flag))
 				continue
 			chassis.clear_internal_damage(int_dam_flag)
 			repaired = TRUE
@@ -540,11 +540,12 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas/thrust(movement_dir)
 	if(!chassis || !chassis.internal_tank)
 		return FALSE
-	var/moles = chassis.internal_tank.air_contents.total_moles()
+	var/datum/gas_mixture/our_mix = chassis.internal_tank.return_air()
+	var/moles = our_mix.total_moles()
 	if(moles < move_cost)
-		chassis.internal_tank.air_contents.remove(moles)
+		our_mix.remove(moles)
 		return FALSE
-	chassis.internal_tank.air_contents.remove(move_cost)
+	our_mix.remove(move_cost)
 	generate_effect(movement_dir)
 	return TRUE
 

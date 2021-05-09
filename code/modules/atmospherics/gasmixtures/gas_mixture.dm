@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/total_moles()
 	var/cached_gases = gases
 	TOTAL_MOLES(cached_gases, .)
-	
+
 /// Checks to see if gas amount exists in mixture.
 /// Do NOT use this in code where performance matters!
 /// It's better to batch calls to garbage_collect(), especially in places where you're checking many gastypes
@@ -132,6 +132,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /// Calculate volume in liters
 /datum/gas_mixture/proc/return_volume()
 	return max(0, volume)
+
+/// Gets the gas visuals for everything in this mixture
+/datum/gas_mixture/proc/return_visuals()
+	var/list/output
+	GAS_OVERLAYS(gases, output)
+	return output
 
 /// Calculate thermal energy in joules
 /datum/gas_mixture/proc/thermal_energy()
@@ -443,52 +449,58 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return ""
 
-///Performs various reactions such as combustion or fusion (LOL)
+///Performs various reactions such as combustion and fabrication
 ///Returns: 1 if any reaction took place; 0 otherwise
 /datum/gas_mixture/proc/react(datum/holder)
 	. = NO_REACTION
 	var/list/cached_gases = gases
 	if(!length(cached_gases))
 		return
-	var/list/reactions = list()
-	for(var/G in SSair.gas_reactions)
-		var/datum/gas_reaction/reaction = G
-		if(cached_gases[reaction.major_gas])
-			reactions += G
+
+	var/list/pre_formation = list()
+	var/list/mid_formation = list()
+	var/list/post_formation = list()
+	var/list/fires = list()
+	var/list/gas_reactions = SSair.gas_reactions
+	for(var/gas_id in cached_gases)
+		var/list/reaction_set = gas_reactions[gas_id]
+		if(!reaction_set)
+			continue
+		pre_formation += reaction_set[1]
+		mid_formation += reaction_set[2]
+		post_formation += reaction_set[3]
+		fires += reaction_set[4]
+
+	var/list/reactions = pre_formation + mid_formation + post_formation + fires
 
 	if(!length(reactions))
 		return
 
+	//Fuck you
+	if(cached_gases[/datum/gas/hypernoblium] && cached_gases[/datum/gas/hypernoblium][MOLES] >= REACTION_OPPRESSION_THRESHOLD && temperature > 20)
+		return STOP_REACTIONS
+
 	reaction_results = new
-	//It might be worth looking into updating these after each reaction, but it changes things a lot, so be careful
+	//It might be worth looking into updating these after each reaction, but that makes us care more about order of operations, so be careful
 	var/temp = temperature
-	var/ener = THERMAL_ENERGY(src)
-
 	reaction_loop:
-		for(var/r in reactions)
-			var/datum/gas_reaction/reaction = r
+		for(var/datum/gas_reaction/reaction as anything in reactions)
 
-			var/list/min_reqs = reaction.min_requirements
-			if( (min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
-				(min_reqs["ENER"] && ener < min_reqs["ENER"]) || \
-				(min_reqs["MAX_TEMP"] && temp > min_reqs["MAX_TEMP"])
-			)
+			var/list/reqs = reaction.requirements
+			if((reqs["MIN_TEMP"] && temp < reqs["MIN_TEMP"]) || (reqs["MAX_TEMP"] && temp > reqs["MAX_TEMP"]))
 				continue
 
-			for(var/id in min_reqs)
-				if (id == "TEMP" || id == "ENER" || id == "MAX_TEMP")
+			for(var/id in reqs)
+				if (id == "MIN_TEMP" || id == "MAX_TEMP")
 					continue
-				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
+				if(!cached_gases[id] || cached_gases[id][MOLES] < reqs[id])
 					continue reaction_loop
 
 			//at this point, all requirements for the reaction are satisfied. we can now react()
-
 			. |= reaction.react(src, holder)
 
-			if (. & STOP_REACTIONS)
-				break
 
-	if(.) //If we changed the mix to any degree, or if we stopped reacting
+	if(.) //If we changed the mix to any degree
 		garbage_collect()
 
 ///Takes the amount of the gas you want to PP as an argument

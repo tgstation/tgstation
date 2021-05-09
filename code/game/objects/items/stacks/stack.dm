@@ -77,6 +77,10 @@
 					recipes += temp
 	update_weight()
 	update_appearance()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -437,10 +441,10 @@
 	S.add(transfer)
 	return transfer
 
-/obj/item/stack/Crossed(atom/movable/crossing)
+/obj/item/stack/proc/on_entered(datum/source, atom/movable/crossing)
+	SIGNAL_HANDLER
 	if(!crossing.throwing && can_merge(crossing))
-		merge(crossing)
-	. = ..()
+		INVOKE_ASYNC(src, .proc/merge, crossing)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting))

@@ -193,9 +193,10 @@
 	inhand_icon_state = "spacepol"
 	can_adjust = FALSE
 
-/obj/item/clothing/under/color/prisoner
+/obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	icon_state = "jumpsuit"
 	greyscale_colors = "#ff8300"
 	greyscale_config = /datum/greyscale_config/jumpsuit_prison
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_prison_inhand_left
@@ -205,9 +206,10 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/obj/item/clothing/under/color/jumpskirt/prisoner
+/obj/item/clothing/under/rank/prisoner/skirt
 	name = "prison jumpskirt"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	icon_state = "jumpskirt"
 	greyscale_colors = "#ff8300"
 	greyscale_config = /datum/greyscale_config/jumpsuit_prison
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_prison_inhand_left

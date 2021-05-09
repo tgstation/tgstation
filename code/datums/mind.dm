@@ -96,8 +96,8 @@
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
-	if(islist(antag_datums))
-		QDEL_LIST(antag_datums)
+	QDEL_LIST(antag_datums)
+	QDEL_NULL(language_holder)
 	current = null
 	return ..()
 
@@ -454,7 +454,7 @@
 	if(window)
 		recipient << browse(output,"window=memory")
 	else if(all_objectives.len || memory)
-		to_chat(recipient, "<i>[output]</i>")
+		to_chat(recipient, "<span class='infoplain'><i>[output]</i></span>")
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))

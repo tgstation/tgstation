@@ -142,8 +142,10 @@
 
 	if(selected_recipe.reaction_type == "endothermic")
 		internal.temperature = max(internal.temperature - (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
+		update_parents()
 	else if(selected_recipe.reaction_type == "exothermic")
 		internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
+		update_parents()
 
 ///Conduction between the internal gasmix and the moderating (cooling/heating) gasmix.
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_conduction()
@@ -156,7 +158,7 @@
 			var/cooling_heat_amount = HIGH_CONDUCTIVITY_RATIO * coolant_temperature_delta * (cooling_heat_capacity * internal_heat_capacity / (cooling_heat_capacity + internal_heat_capacity))
 			cooling_port.temperature = max(cooling_port.temperature - cooling_heat_amount / cooling_heat_capacity, TCMB)
 			internal.temperature = max(internal.temperature + cooling_heat_amount / internal_heat_capacity, TCMB)
-		update_parents()
+			update_parents()
 
 ///Calculate the total moles needed for the recipe
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/moles_calculations()
@@ -179,7 +181,6 @@
 		inject_gases()
 
 	if(!internal.total_moles())
-		update_parents()
 		return
 
 	heat_conduction()

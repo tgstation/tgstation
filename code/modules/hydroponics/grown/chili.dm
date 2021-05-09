@@ -50,7 +50,7 @@
 	name = "chilly pepper"
 	desc = "It's a mutant strain of chili."
 	icon_state = "icepepper"
-	bite_consumption_mod = 2
+	bite_consumption_mod = 5
 	foodtypes = FRUIT
 	wine_power = 30
 
@@ -77,6 +77,6 @@
 	name = "ghost chili"
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
-	bite_consumption_mod = 4
+	bite_consumption_mod = 5
 	foodtypes = FRUIT
 	wine_power = 50
