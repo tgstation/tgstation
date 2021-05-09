@@ -58,8 +58,8 @@
 		location = get_turf(src)
 	if(location)
 		if(directional && target?.density)
-			var/turf/Turf = get_step(location, aim_dir)
-			explosion(get_step(Turf, aim_dir), devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3])
+			var/turf/turf = get_step(location, aim_dir)
+			explosion(get_step(turf, aim_dir), devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3])
 		else
 			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3])
 	qdel(src)
