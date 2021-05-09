@@ -548,7 +548,7 @@
 	display_name = "Botanical Engineering"
 	description = "Botanical tools"
 	prereq_ids = list("adv_engi", "biotech")
-	design_ids = list("portaseeder", "flora_gun", "hydro_tray", "biogenerator", "seed_extractor")
+	design_ids = list("portaseeder", "gene_shears", "hydro_tray", "biogenerator", "seed_extractor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/wild = 3000)
 
@@ -556,7 +556,7 @@
 	id = "exp_tools"
 	display_name = "Experimental Tools"
 	description = "Highly advanced tools."
-	design_ids = list("exwelder", "jawsoflife", "handdrill", "laserscalpel", "mechanicalpinches", "searingtool", "gene_shears")
+	design_ids = list("exwelder", "jawsoflife", "handdrill", "laserscalpel", "mechanicalpinches", "searingtool", "flora_gun")
 	prereq_ids = list("adv_engi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)
