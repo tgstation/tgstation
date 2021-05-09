@@ -131,6 +131,7 @@
 
 /datum/component/singularity/proc/consume(datum/source, atom/thing)
 	if (thing == parent)
+		stack_trace("Singularity tried to consume itself.")
 		return
 
 	consume_callback?.Invoke(thing, src)
