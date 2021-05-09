@@ -145,7 +145,8 @@
 					/obj/item/clothing/head/medjed = 1,
 					/obj/item/clothing/suit/gambler_jacket = 1,
 					/obj/item/clothing/shoes/practical_boots = 1,
-					/obj/item/clothing/mask/golden = 5)
+					/obj/item/clothing/mask/golden = 5,
+					/obj/item/clothing/suit/boxfox = 3)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 					  /obj/item/clothing/head/powdered_wig = 1,
 					  /obj/item/gun/magic/wand/nothing = 2,
@@ -167,7 +168,8 @@
 				   /obj/item/clothing/under/dress/wedding_dress = 1,
 				   /obj/item/clothing/under/suit/tuxedo = 1,
 				   /obj/item/clothing/head/weddingveil = 1,
-				   /obj/item/storage/belt/cummerbund = 1)
+				   /obj/item/storage/belt/cummerbund = 1,
+				   /obj/item/clothing/suit/balan = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
 	default_price = 180
 	extra_price = 360

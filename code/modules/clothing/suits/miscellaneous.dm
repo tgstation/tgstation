@@ -874,3 +874,48 @@
 	name = "Centcomm Top"
 	desc = "You used to wear red, but green fits you a lot more nicely."
 	icon_state = "corset"
+
+/obj/item/clothing/suit/balan //RATATOUILLE!!
+	name = "balan costume"
+	desc = "Wearing this, you will always stay winning."
+	icon_state = "balan"
+	inhand_icon_state = "balan"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	resistance_flags = NONE
+	can_be_bloody = FALSE
+	strip_delay = 99180
+	var/handled = FALSE
+	species_exception = list(/datum/species/balan)
+	custom_price = 1000
+
+/obj/item/clothing/suit/balan/equipped(mob/user, slot)
+	if(slot != ITEM_SLOT_OCLOTHING)
+		return
+	if(ishumanbasic(user))
+		handled = TRUE
+		user.set_species(/datum/species/balan)
+		to_chat(user, "<span class='notice'>Your body is overtaken by the whimsical nature of theatre!!</span.?>")
+	else
+		to_chat(user, "<span class='notice'>You feel a distinct lack of whimsy...</span.?>")
+
+obj/item/clothing/suit/balan/dropped(mob/user)
+	if(handled)
+		if(ishuman(user)) //same as above
+			user.set_species(/datum/species/human)
+			handled = FALSE
+			to_chat(user, "<span class='notice'>You think theatre is stupid.</span.?>")
+
+/obj/item/clothing/suit/boxfox
+	name = "box fox costume"
+	desc = "Wearing this, you will turn into a box when you feel like it, or so it says on the label. It's just a normal costume, though."
+	icon_state = "boxfox"
+	inhand_icon_state = "boxfox"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDEHAIR|HIDEEARS
+	can_be_bloody = FALSE

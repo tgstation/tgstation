@@ -1,15 +1,15 @@
 /obj/structure/item_dispenser
 	name = "item dispenser"
-	desc = "A small wall-mounted recepticle which dispenses a specific item."
+	desc = "A small wall-mounted recepticle which dispenses a specific item. If you're seeing this, it's broken."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "dispenser_id"
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 200
 	integrity_failure = 0.25
-	var/charges = 7
-	var/stock = null
-	var/item_name = null
+	var/charges = 7 // How many of the item is in the dispenser
+	var/stock = null //What item we want
+	var/item_name = null //Otherwise we'd get full item names and that's clutter
 
 /obj/structure/item_dispenser/examine(mob/user)
 	. = ..()
