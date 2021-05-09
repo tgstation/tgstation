@@ -61,8 +61,8 @@
 	radiation_pulse(src, rad_damage)
 	for(var/turf/turf_affected in view(freeze_range,loc))
 		if(isfloorturf(turf_affected))
-			var/turf/open/floor/its_floor = turf_affected
-			its_floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
+			var/turf/open/floor/floor = turf_affected
+			floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
 			for(var/mob/living/carbon/victim in turf_affected)
 				victim.adjustStaminaLoss(stamina_damage)
 				victim.adjust_bodytemperature(-230)
