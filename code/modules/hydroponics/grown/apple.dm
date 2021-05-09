@@ -21,7 +21,7 @@
 	name = "apple"
 	desc = "It's a little piece of Eden."
 	icon_state = "apple"
-	bite_consumption = 100 // Always eat the apple in one bite
+	bite_consumption_mod = 100 // Always eat apples in one bite
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/applejuice = 0)
 	tastes = list("apple" = 1)

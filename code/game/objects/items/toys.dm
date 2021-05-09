@@ -534,8 +534,15 @@
 	if(!..())
 		pop_burst()
 
-/obj/item/toy/snappop/Crossed(H as mob|obj)
+/obj/item/toy/snappop/Initialize()
 	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
+
+/obj/item/toy/snappop/proc/on_entered(datum/source, H as mob|obj)
+	SIGNAL_HANDLER
 	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)

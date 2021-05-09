@@ -24,7 +24,7 @@
 
 	src.connections = connections
 
-	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE, .proc/on_moved)
 	update_signals(listener, tracked)
 
 /datum/element/connect_loc/Detach(datum/listener, atom/movable/tracked, list/connections)
@@ -36,20 +36,20 @@
 	if(!istype(tracked))
 		return
 
-	if (!isnull(tracked.loc))
-		unregister_signals(listener, tracked, tracked.loc)
+	unregister_signals(listener, tracked, tracked.loc)
 
-	UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE)
 
 /datum/element/connect_loc/proc/update_signals(datum/listener, atom/movable/tracked)
 	var/existing = length(targets[tracked.loc])
 	LAZYSET(targets[tracked.loc], tracked, listener)
 
-	if (isnull(tracked.loc))
+	if(isnull(tracked.loc))
 		return
 
 	for (var/signal in connections)
-		listener.RegisterSignal(tracked.loc, signal, connections[signal])
+		listener.RegisterSignal(tracked.loc, signal, connections[signal], override=TRUE)
+		//override=TRUE because more than one connect_loc element instance tracked object can be on the same loc
 
 	if (!existing && isturf(tracked.loc))
 		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change)

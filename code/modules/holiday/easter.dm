@@ -46,8 +46,6 @@
 	emote_hear = list("hops.")
 	emote_see = list("hops around","bounces up and down")
 	butcher_results = list(/obj/item/food/meat/slab = 1)
-	pet_bonus = TRUE
-	pet_bonus_emote = "hops around happily!"
 	can_be_held = TRUE
 	density = FALSE
 	speak_chance = 2
@@ -70,6 +68,7 @@
 
 /mob/living/simple_animal/rabbit/Initialize()
 	. = ..()
+  AddElement(/datum/element/pet_bonus, "hops around happily!")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
 	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
 	var/eggs_added_from_eating = rand(1, 4)

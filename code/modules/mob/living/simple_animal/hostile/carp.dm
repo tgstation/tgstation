@@ -37,7 +37,6 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("carp")
-	is_flying_animal = TRUE
 	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
 	/// If the carp uses random coloring
@@ -67,6 +66,7 @@
 	)
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload)
+	AddElement(/datum/element/simple_flying)
 	if(random_color)
 		set_greyscale_config(/datum/greyscale_config/carp)
 		carp_randomify(rarechance)
@@ -208,8 +208,10 @@
 	icon_state = "magicarp"
 	maxHealth = 200
 	random_color = FALSE
-	pet_bonus = TRUE
-	pet_bonus_emote = "bloops happily!"
+
+/mob/living/simple_animal/hostile/carp/lia/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "bloops happily!")
 
 /mob/living/simple_animal/hostile/carp/lia/make_tameable()
 	return
@@ -223,8 +225,6 @@
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
 	rarechance = 10
-	pet_bonus = TRUE
-	pet_bonus_emote = "bloops happily!"
 	/// Keeping track of the nuke disk for the functionality of storing it.
 	var/obj/item/disk/nuclear/disky
 	/// Location of the file storing disk overlays
@@ -234,6 +234,7 @@
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "bloops happily!")
 	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors))
 	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, INNATE_TRAIT) //carp SMART

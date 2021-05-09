@@ -980,3 +980,10 @@
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		program.force_full_update()
+
+/mob/living/silicon/robot/get_exp_list(minutes)
+	. = ..()
+
+	var/datum/job/cyborg/cyborg_job_ref = SSjob.GetJobType(/datum/job/cyborg)
+
+	.[cyborg_job_ref.title] = minutes

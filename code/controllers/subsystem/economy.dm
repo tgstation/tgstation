@@ -47,9 +47,13 @@ SUBSYSTEM_DEF(economy)
 	var/import_total = 0
 	/// Number of mail items generated.
 	var/mail_waiting = 0
+	/// Mail Holiday: AKA does mail arrive today? Always blocked on Sundays.
+	var/mail_blocked = FALSE
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
+	if(time2text(world.timeofday, "DDD") == SUNDAY)
+		mail_blocked = TRUE
 	for(var/A in department_accounts)
 		new /datum/bank_account/department(A, budget_to_hand_out)
 	return ..()

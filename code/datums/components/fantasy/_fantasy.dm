@@ -12,6 +12,7 @@
 
 	var/static/list/affixListing
 
+///affixes expects an initialized list
 /datum/component/fantasy/Initialize(quality, list/affixes = list(), canFail=FALSE, announce=FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -22,7 +23,10 @@
 
 	src.affixes = affixes
 	appliedComponents = list()
-	randomAffixes()
+	if(affixes && affixes.len)
+		setAffixes()
+	else
+		randomAffixes()
 
 /datum/component/fantasy/Destroy()
 	unmodify()
@@ -55,6 +59,7 @@
 		quality = -quality
 	return quality
 
+///proc on creation for random affixes
 /datum/component/fantasy/proc/randomAffixes(force)
 	if(!affixListing)
 		affixListing = list()
@@ -80,9 +85,18 @@
 			continue
 		if(!(affix.alignment & alignment))
 			continue
-		if(!affix.validate(src))
+		if(!affix.validate(parent))
 			continue
 		affixes += affix
+		usedSlots |= affix.placement
+
+///proc on creation for specific affixes given to the fantasy component
+/datum/component/fantasy/proc/setAffixes(force)
+	var/usedSlots = NONE
+	for(var/datum/fantasy_affix/affix in affixes) // We want at least 1 affix applied
+		if((affix.placement & usedSlots) || (!affix.validate(parent)))
+			affixes.Remove(affix) //bad affix (can't be added to this item)
+			continue
 		usedSlots |= affix.placement
 
 /datum/component/fantasy/proc/modify()
