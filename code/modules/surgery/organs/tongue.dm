@@ -362,6 +362,9 @@
 	organ_flags = NONE
 	icon_state = "tonguerobot"
 	say_mod = "states"
+	verb_ask = "queries"
+	verb_exclaim = "declares"
+	verb_yell = "alarms"
 	attack_verb_continuous = list("beeps", "boops")
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
