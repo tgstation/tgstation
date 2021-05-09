@@ -112,7 +112,7 @@
 		} else {                                 \
 			effect_str -= C                      \
 		}                                        \
-    	                                         \
+		                                           \
 		C.update_lumcount                        \
 		(                                        \
 			(. * lum_r) - (OLD * applied_lum_r), \
