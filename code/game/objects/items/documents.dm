@@ -135,8 +135,8 @@
  * A clown variant of the N-spect scanner
  *
  * This prints fake reports with garbage in them,
- * can be adjusted to print them instantly with a screwdriver,
- * and by defaults plays the old "woody" scanning sound, but can be adjusted
+ * can be set to print them instantly with a screwdriver.
+ * By default it plays the old "woody" scanning sound, but it can be set
  * to play the normal N-spect scanner sound with a multitool
  */
 /obj/item/inspector/clown
