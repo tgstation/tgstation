@@ -352,8 +352,9 @@
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget(atom/attacked_target)
 	in_melee = TRUE
+	SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target)
 	var/result = target.attack_animal(src)
-	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target, result)
+	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
 	return result
 
 /mob/living/simple_animal/hostile/proc/Aggro()
