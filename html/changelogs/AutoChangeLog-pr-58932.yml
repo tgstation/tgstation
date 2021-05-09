@@ -1,0 +1,6 @@
+author: "Twaticus, Imaginos16"
+delete-after: True
+changes: 
+  - imageadd: "Resprites (almost) all base floor tiles."
+  - imageadd: "Ports smooth tiles & textured versions of grey, black, and white tiles."
+  - imageadd: "Dance floor item icons are no longer massive."

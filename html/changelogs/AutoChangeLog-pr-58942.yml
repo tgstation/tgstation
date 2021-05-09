@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "blood filters no longer tell everyone that the listener's blood is being filtered"
