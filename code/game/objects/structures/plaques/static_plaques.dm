@@ -52,7 +52,7 @@
 	desc = "Spinward Sector Station SS-03\n'Birdboat' Class Outpost\nCommissioned 09/17/2555\nDecommissioned 02/09/2557\n'Rocking the Boat'"
 
 /obj/structure/plaque/static_plaque/golden/commission/box
-	desc = "Spinward Sector Station SS-01\n'Box' Class Outpost\nCommissioned 11/15/2550\nDecommissioned 07/06/2560\n'Old Faithful'"
+	desc = "Spinward Sector Station SS-02\n'Box' Class Outpost\nCommissioned 11/15/2550\nDecommissioned 07/06/2560\n'Old Faithful'"
 
 /obj/structure/plaque/static_plaque/golden/commission/pubby
 	desc = "Spinward Sector Station SS-06\n'Pubby' Class Outpost\nCommissioned 10/19/2556\nDecommissioned 12/25/2560\n'No Law But Ours'"
@@ -77,6 +77,9 @@
 
 /obj/structure/plaque/static_plaque/golden/commission/omega
 	desc = "Spinward Sector Station SS-09\n'Omega' Class Outpost\nCommissioned 12/27/2556\nDecommissioned 09/20/2558\n'Tiny Take Two'"
+
+/obj/structure/plaque/static_plaque/golden/commission/uterus
+	desc = "Spinward Sector Station SS-01\n'Uterus' Class Outpost\nCommissioned 09/03/2551\nDecommissioned 06/21/2552\n'Humanity's Vanguard'"
 
 // Other Stations
 
