@@ -665,12 +665,15 @@
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
 
+// simple_animal signals
+/// called when a simplemob is given sentience from a potion (target = person who sentienced)
+#define COMSIG_SIMPLEMOB_SENTIENCEPOTION "simplemob_sentiencepotion"
+
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
 	#define COMPONENT_HOSTILE_NO_ATTACK (1<<0)
 ///from base of mob/living/simple_animal/hostile/regalrat: (mob/living/simple_animal/hostile/regalrat/king)
 #define COMSIG_RAT_INTERACT "rat_interaction"
-#define COMSIG_SIMPLEMOB_SENTIENCEPOTION "simplemob_sentiencepotion"
 
 ///from /obj/item/slapper/attack_obj(): (source=mob/living/slammer, obj/structure/table/slammed_table)
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"

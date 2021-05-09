@@ -152,11 +152,11 @@
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
 	add_cell_sample()
-	TameableCowComponent()
+	make_tameable()
 	. = ..()
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
-/mob/living/simple_animal/cow/proc/TameableCowComponent()
+/mob/living/simple_animal/cow/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/wheat), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
 
 /mob/living/simple_animal/cow/add_cell_sample()
@@ -170,7 +170,7 @@
 /mob/living/simple_animal/cow/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/reagent_containers/glass))
 		udder.milkAnimal(O, user)
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -224,7 +224,7 @@
 	. = ..()
 	speak = GLOB.wisdoms //Done here so it's setup properly
 
-/mob/living/simple_animal/cow/wisdom/TameableCowComponent()
+/mob/living/simple_animal/cow/wisdom/make_tameable()
 	return //cannot tame
 
 ///Give intense wisdom to the attacker if they're being friendly about it
@@ -298,7 +298,6 @@
 	..()
 	amount_grown = 0
 
-GLOBAL_VAR_INIT(chickens, 0)
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
@@ -329,26 +328,43 @@ GLOBAL_VAR_INIT(chickens, 0)
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
-
 	footstep_type = FOOTSTEP_MOB_CLAW
+	///counter for how many chickens are in existence to stop too many chickens from lagging shit up
+	var/static/chicken_count = 0
+	///boolean deciding whether eggs laid by this chicken can hatch into chicks
+	var/process_eggs = TRUE
 
 /mob/living/simple_animal/chicken/Initialize()
 	. = ..()
-	GLOB.chickens++
+	chicken_count++
 	add_cell_sample()
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown","black","white"), TRUE)
-	AddComponent(/datum/component/egg_layer, /obj/item/food/egg, list(/obj/item/food/grown/wheat), list("It clucks happily.","It clucks happily."), EGG_LAYING_MESSAGES, 0, TRUE, .proc/max_chicken_check)
+	var/list/feed_messages = list("[p_they()] clucks happily.")
+	var/eggs_left = 0
+	var/eggs_added_from_eating = rand(1, 4)
+	var/max_eggs_held = 8
+	AddComponent(/datum/component/egg_layer,\
+		/obj/item/food/egg,\
+		list(/obj/item/food/grown/wheat),\
+		feed_messages,\
+		EGG_LAYING_MESSAGES,\
+		eggs_left,\
+		eggs_added_from_eating,\
+		max_eggs_held,\
+		.proc/egg_laid\
+		)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/chicken/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chicken/Destroy()
-	GLOB.chickens--
+	chicken_count--
 	return ..()
 
-/mob/living/simple_animal/chicken/proc/max_chicken_check()
-	return GLOB.chickens <= MAX_CHICKENS
+/mob/living/simple_animal/chicken/proc/egg_laid(obj/item/egg)
+	if(chicken_count <= MAX_CHICKENS && process_eggs && prob(25))
+		START_PROCESSING(SSobj, egg)
 
 /obj/item/food/egg/var/amount_grown = 0
 /obj/item/food/egg/process(delta_time)

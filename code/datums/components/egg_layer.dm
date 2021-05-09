@@ -14,14 +14,16 @@
 	var/list/feedMessages
 	/// messages sent when laying an egg
 	var/list/layMessages
-	/// kind of a weird boolean, but basically egg layers usually need to make their eggs process to let them grow. and some don't want that to happen too!
-	var/process_eggs
 	/// how many eggs left to lay
-	var/eggs_left = 0
-	/// used to check for possibly too much egg laying going on (aka past a certain amount of chickens, stop making more chickens from eggs)
-	var/datum/callback/egg_animal_callback
+	var/eggs_left
+	/// how many eggs to lay given from food
+	var/eggs_added_from_eating
+	/// how many eggs can be stored
+	var/max_eggs_held
+	/// callback to a proc that allows the parent to modify their new eggs
+	var/datum/callback/egg_laid_callback
 
-/datum/component/egg_layer/Initialize(egg_type, food_types, feedMessages, layMessages, eggs_left, process_eggs, egg_animal_callback)
+/datum/component/egg_layer/Initialize(egg_type, food_types, feedMessages, layMessages, eggs_left, eggs_added_from_eating, max_eggs_held, egg_laid_callback)
 	if(!isatom(parent)) //yes, you could make a tameable toolbox.
 		return COMPONENT_INCOMPATIBLE
 
@@ -30,11 +32,20 @@
 	src.feedMessages = feedMessages
 	src.layMessages = layMessages
 	src.eggs_left = eggs_left
-	src.process_eggs = process_eggs
-	src.egg_animal_callback = egg_animal_callback
+	src.eggs_added_from_eating = eggs_added_from_eating
+	src.max_eggs_held = max_eggs_held
+	src.egg_laid_callback = egg_laid_callback
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/feed_food)
+
 	START_PROCESSING(SSobj, src)
+
+/datum/component/egg_layer/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/feed_food)
+
+/datum/component/egg_layer/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
 
 /datum/component/egg_layer/Destroy(force, silent)
 	. = ..()
@@ -50,15 +61,15 @@
 		var/mob/living/potentially_dead_horse = at_least_atom
 		if(potentially_dead_horse.stat == DEAD)
 			to_chat(attacker, "<span class='warning'>[parent] is dead!</span>")
-			return
-	. = COMPONENT_CANCEL_ATTACK_CHAIN //No beating up anymore!
-	if(eggs_left < 8)
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(eggs_left < max_eggs_held)
 		to_chat(attacker, "<span class='warning'>[parent] doesn't seem hungry!</span>")
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	attacker.visible_message("<span class='notice'>[attacker] hand-feeds [food] to [parent].</span>", "<span class='notice'>You hand-feed [food] to [parent].</span>")
 	at_least_atom.visible_message(pick(feedMessages))
 	qdel(food)
-	eggs_left += min(eggs_left += rand(1, 4), 8)
+	eggs_left += min(eggs_left + eggs_added_from_eating, max_eggs_held)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/egg_layer/process(delta_time = SSOBJ_DT)
 
@@ -75,10 +86,5 @@
 	var/obj/item/egg = new egg_type(get_turf(at_least_atom))
 	egg.pixel_x = rand(-6, 6)
 	egg.pixel_y = rand(-6, 6)
-	if(!process_eggs)
-		return
-	var/positive_callback_result
-	if(egg_animal_callback)
-		positive_callback_result = egg_animal_callback.Invoke()
-	if(positive_callback_result && prob(25))
-		START_PROCESSING(SSobj, egg)
+	egg_laid_callback?.Invoke(egg)
+

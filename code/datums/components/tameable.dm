@@ -36,26 +36,24 @@
 		var/mob/living/potentially_dead_horse = source
 		if(potentially_dead_horse.stat == DEAD)
 			to_chat(attacker, "<span class='warning'>[parent] is dead!</span>")
-			return
-
-	. = COMPONENT_CANCEL_ATTACK_CHAIN //No beating up anymore!
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	attacker.visible_message("<span class='notice'>[attacker] hand-feeds [food] to [parent].</span>", "<span class='notice'>You hand-feed [food] to [parent].</span>")
 	qdel(food)
 	if(tame)
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
 		on_tame(attacker)
 	else
 		tame_chance += bonus_tame_chance
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 ///Ran once taming succeeds
 /datum/component/tameable/proc/on_tame(mob/living/tamer)
 	SIGNAL_HANDLER
 	tame = TRUE
 
-	if(after_tame) //Run custom behavior if needed
-		after_tame.Invoke(tamer)
+	after_tame?.Invoke(tamer)//Run custom behavior if needed
 
 	if(ishostile(parent) && isliving(tamer)) //Kinda shit check but this only applies to hostiles atm
 		var/mob/living/simple_animal/hostile/evil_but_now_not_evil = parent

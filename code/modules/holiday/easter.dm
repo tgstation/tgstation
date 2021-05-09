@@ -71,7 +71,18 @@
 /mob/living/simple_animal/rabbit/Initialize()
 	. = ..()
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
-	AddComponent(/datum/component/egg_layer, /obj/item/food/egg/loaded, list(/obj/item/food/grown/carrot), list("It nibbles happily.","It noms happily."), list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."), initial_egg_amount, FALSE)
+	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
+	var/eggs_added_from_eating = rand(1, 4)
+	var/max_eggs_held = 8
+	AddComponent(/datum/component/egg_layer,\
+		/obj/item/food/egg/loaded,\
+		list(/obj/item/food/grown/carrot),\
+		feed_messages,\
+		list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."),\
+		initial_egg_amount,\
+		eggs_added_from_eating,\
+		max_eggs_held\
+		)
 
 /mob/living/simple_animal/rabbit/empty //top hats summon these kinds of rabbits instead of the normal kind
 	initial_egg_amount = 0

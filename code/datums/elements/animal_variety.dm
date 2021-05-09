@@ -5,6 +5,9 @@
  * basically you will see VARIETY in a batch of simplemobs.
  */
 /datum/element/animal_variety
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	id_arg_index = 2
+
 	/// prefix for the icon state, this will always stay the same
 	var/icon_prefix
 	/// chosen sprite suffix, in element args it picks from a list on what this will be
