@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/limbs_id
 	///This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.
 	var/name
-	// Default color. If mutant colors are disabled, this is the color that will be used by that race.
+	///Default color. If mutant colors are disabled, this is the color that will be used by that race.
 	var/default_color = "#FFF"
 
 	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
@@ -52,6 +52,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/nojumpsuit = FALSE
 	///Affects the speech message, for example: Motharula flutters, "My speech message is flutters!"
 	var/say_mod = "says"
+	///Affects exclaim messages (ones that end in !)
+	var/exclaim_mod = "exclaims"
+	///Affects ask messages (ones that end in ?)
+	var/ask_mod = "asks"
+	///Affects yell messages (ones that end in !!)
+	var/yell_mod
 	///What languages this species can understand and say. Use a [language holder datum][/datum/language_holder] in this var.
 	var/species_language_holder = /datum/language_holder
 	/**

@@ -8,6 +8,9 @@
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	var/list/languages_possible
 	var/say_mod = null
+	var/ask_mod = null
+	var/yell_mod = null
+	var/exclaim_mod = null
 
 	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
 	var/sense_of_taste = TRUE
@@ -41,6 +44,12 @@
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod
+	if(ask_mod && M.dna && M.dna.species)
+		M.dna.species.ask_mod = ask_mod
+	if(exclaim_mod && M.dna && M.dna.species)
+		M.dna.species.exclaim_mod = exclaim_mod
+	if(yell_mod && M.dna && M.dna.species)
+		M.dna.species.yell_mod = yell_mod
 	if (modifies_speech)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
@@ -362,9 +371,9 @@
 	organ_flags = NONE
 	icon_state = "tonguerobot"
 	say_mod = "states"
-	verb_ask = "queries"
-	verb_exclaim = "declares"
-	verb_yell = "alarms"
+	ask_mod = "queries"
+	exclaim_mod = "declares"
+	yell_mod = "alarms"
 	attack_verb_continuous = list("beeps", "boops")
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
