@@ -114,7 +114,7 @@
 	. += "<span class='notice'>-use a multitool with left-click to change the piping layer and right-click to change the piping color.</span>"
 	. += "<span class='notice'>The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).</span>"
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>Heat capacity at <b>[heat_capacity] Joules per Kelvin.</b>.</span>"
+		. += "<span class='notice'>Heat capacity at <b>[heat_capacity] Joules per Kelvin</b>.</span>"
 		. += "<span class='notice'>Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.</span>"
 
 /obj/machinery/atmospherics/components/binary/thermomachine/AltClick(mob/living/user)
