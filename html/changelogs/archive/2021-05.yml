@@ -299,3 +299,13 @@
   tralezab:
   - code_imp: SStramprocess only fires on maps with trams actually present on the
       map
+2021-05-10:
+  Melbert:
+  - bugfix: You no longer eat all botany plants plants in 1 bite. Apples and Potatos
+      retain their unique 1 bite behavior.
+  - code_imp: Botany plants use a new formula for calculating bite size. All botany
+      plants have had their bite modifier adjusted to match.
+  Twaticus, Imaginos16:
+  - imageadd: Resprites (almost) all base floor tiles.
+  - imageadd: Ports smooth tiles & textured versions of grey, black, and white tiles.
+  - imageadd: Dance floor item icons are no longer massive.
