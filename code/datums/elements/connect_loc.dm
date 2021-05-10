@@ -24,7 +24,7 @@
 
 	src.connections = connections
 
-	RegisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE, .proc/on_moved)
+	RegisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE, .proc/on_moved, override=TRUE)
 	update_signals(listener, tracked)
 
 /datum/element/connect_loc/Detach(datum/listener, atom/movable/tracked, list/connections)
