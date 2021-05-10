@@ -39,7 +39,7 @@
 			examine_list += "<span class='notice'>[parent]'s [udder] can be milked if you have something to contain it.</span>"
 		if(100)
 			examine_list += "<span class='notice'>[parent]'s [udder] is round and full, and can be milked if you have something to contain it.</span>"
-			
+
 
 ///signal called on parent being attacked with an item
 /datum/component/udder/proc/on_attackby(datum/source, obj/item/milking_tool, mob/user)
@@ -130,11 +130,11 @@
 /obj/item/udder/gutlunch/initial_conditions()
 	if(udder_mob.gender == FEMALE)
 		START_PROCESSING(SSobj, src)
-	RegisterSignal(udder_mob, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/on_mob_attacking)
+	RegisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/on_mob_attacking)
 
 /obj/item/udder/gutlunch/Destroy()
 	. = ..()
-	UnregisterSignal(udder_mob, COMSIG_HOSTILE_ATTACKINGTARGET)
+	UnregisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 
 /obj/item/udder/gutlunch/process(delta_time)
 	var/mob/living/simple_animal/hostile/asteroid/gutlunch/gutlunch = udder_mob
@@ -151,6 +151,7 @@
 		generate()
 		gutlunch.visible_message("<span class='notice'>[src] slurps up [target].</span>")
 		qdel(target)
+	return COMPONENT_HOSTILE_NO_ATTACK //there is no longer a target to attack
 
 /obj/item/udder/gutlunch/generate()
 	var/made_something = FALSE
