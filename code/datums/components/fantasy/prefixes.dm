@@ -104,6 +104,7 @@
 	master.AddElement(/datum/element/beauty, min(comp.quality, -1) * 250)
 
 /datum/fantasy_affix/venomous
+	name = "<poisonname>-laced (picked from small pool of toxins)"
 	placement = AFFIX_PREFIX
 	alignment = AFFIX_GOOD
 
