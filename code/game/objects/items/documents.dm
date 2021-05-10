@@ -189,7 +189,7 @@
 			to_chat(user, "<span class='notice'>You set the device's scanning speed to SLOW.")
 		else
 			print_time = 0
-			to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTING FAST.")
+			to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTNING FAST.")
 
 /**
  * Reports printed by fake N-spect scanner
@@ -201,7 +201,7 @@
 	desc = "Contains no information about the station's current status."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "slip"
-	///A random area or no area. Used to generate the examine text of the report
+	///What area the inspector scanned when the report was made. Used to generate the examine text of the report
 	var/area/scanned_area
 	show_written_words = FALSE
 

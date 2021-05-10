@@ -18,3 +18,10 @@
 
 // Used by PDA and cartridge code to reduce repetitiveness of spritesheets
 #define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
+
+//clown N-spect scanner defines
+#define CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL 0
+#define CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC 1
+#define CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK 2
+#define CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY 3
+#define CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST 3
