@@ -305,15 +305,19 @@
       retain their unique 1 bite behavior.
   - code_imp: Botany plants use a new formula for calculating bite size. All botany
       plants have had their bite modifier adjusted to match.
+<<<<<<< HEAD
   Ryll/Shaps:
   - bugfix: Changeling stings once again require you to be within range of your target
       and have a direct path from you to the target
   Time-Green:
   - bugfix: you can now map infinitely huge plumbing networks
+=======
+>>>>>>> 7a44a16f2abfe271ad166710dc7ea8031201faf0
   Twaticus, Imaginos16:
   - imageadd: Resprites (almost) all base floor tiles.
   - imageadd: Ports smooth tiles & textured versions of grey, black, and white tiles.
   - imageadd: Dance floor item icons are no longer massive.
+<<<<<<< HEAD
   dragomagol:
   - bugfix: blood filters no longer tell everyone that the listener's blood is being
       filtered
@@ -327,3 +331,5 @@
   - bugfix: Many things that would trigger on attacking someone even if you didn't
       successfully land a hit now only trigger when you do
   - refactor: Poisonous is an element, no more terrible pathing /poison/ woop woop
+=======
+>>>>>>> 7a44a16f2abfe271ad166710dc7ea8031201faf0
