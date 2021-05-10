@@ -419,7 +419,7 @@
 			if (!(mind.assigned_role in GLOB.command_positions + GLOB.security_positions))
 				continue
 
-			if (!(mind.has_antag_datum(/datum/antagonist/rev)))
+			if (mind.has_antag_datum(/datum/antagonist/rev))
 				continue
 
 			var/mob/living/carbon/target_body = mind.current
