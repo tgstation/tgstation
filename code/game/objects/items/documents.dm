@@ -1,3 +1,9 @@
+#define CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL 0
+#define CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC 1
+#define CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK 2
+#define CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY 3
+#define CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST 3
+
 /obj/item/documents
 	name = "secret documents"
 	desc = "\"Top Secret\" documents."
@@ -74,8 +80,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
-	///sound that plays when printing a report
-	var/print_sound = 'sound/machines/high_tech_confirm.ogg'
 	///time required to print a report
 	var/print_time = 5 SECONDS
 
@@ -93,7 +97,7 @@
 	// Create our report
 	var/obj/item/paper/report/slip = new(get_turf(src))
 	slip.generate_report(get_area(src))
-	playsound(src, print_sound, 50, FALSE)
+	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
 
 /obj/item/paper/report
 	name = "encrypted station inspection"
@@ -140,7 +144,8 @@
  * to play the normal N-spect scanner sound with a multitool
  */
 /obj/item/inspector/clown
-	print_sound = 'sound/items/biddledeep.ogg'
+	///determines the sound that plays when printing a report
+	var/print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC
 
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -150,19 +155,34 @@
 	// Create our report
 	var/obj/item/paper/fake_report/slip = new(get_turf(src))
 	slip.generate_report(get_area(src))
-	playsound(src, print_sound, 50, FALSE)
+	switch(print_sound_mode)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL)
+			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
+			playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK)
+			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
+			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, FALSE)
 
 /obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MULTITOOL)
-		if(print_sound == 'sound/items/biddledeep.ogg')
-			print_sound = 'sound/machines/high_tech_confirm.ogg'
-			to_chat(user, "<span class='notice'>You set the device's bleep setting to normal mode")
-		else if(print_sound == 'sound/machines/high_tech_confirm.ogg')
-			print_sound = 'sound/items/bikehorn.ogg'
-			to_chat(user, "<span class='notice'>You set the device's bleep setting to honk mode")
-		else
-			print_sound = 'sound/items/biddledeep.ogg'
-			to_chat(user, "<span class='notice'>You set the device's bleep setting to classic mode")
+		print_sound_mode++
+		if(print_sound_mode > CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST)
+			print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL
+
+		var/mode_name = "INVALID"
+		switch(print_sound_mode)
+			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL)
+				mode_name = "normal"
+			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
+				mode_name = "classic"
+			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK)
+				mode_name = "honk"
+			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
+				mode_name = "bababooey"
+		to_chat(user, "<span class='notice'>You set the device's bleep setting to [mode_name] mode")
+
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(print_time == 0)
 			print_time = 5 SECONDS
