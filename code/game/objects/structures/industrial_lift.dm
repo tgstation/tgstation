@@ -185,7 +185,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(istype(AM, /obj/structure/fluff/tram_rail))
+	if(istype(AM, /obj/structure/fluff/tram_rail) || AM.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
 		return
 	if(AM in lift_load)
 		return
@@ -413,7 +413,12 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/travel_direction
 	var/time_inbetween_moves = 1
 
+
 /obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
+
+/obj/structure/industrial_lift/tram/central/Initialize(mapload)
+	. = ..()
+	SStramprocess.can_fire = TRUE
 
 /obj/structure/industrial_lift/tram/LateInitialize()
 	. = ..()
