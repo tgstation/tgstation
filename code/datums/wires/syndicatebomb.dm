@@ -11,6 +11,8 @@
 	..()
 
 /datum/wires/syndicatebomb/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/machinery/syndicatebomb/P = holder
 	if(P.open_panel)
 		return TRUE
