@@ -124,8 +124,8 @@
 	to_chat(user, "<span class='notice'>You reset the target temperature on [src] to [target_temperature] K.</span>")
 
 /** Performs heat calculation for the freezer. The full equation for this whole process is:
- * T3 = (C1*T1  +  C1*C2/(C1+C2)*(T2-T1)*E) / C1.
- * T4 = (C1*T1  -  C1*C2/(C1+C2)*(T2-T1)*E  +  M) / C1.
+ * T3 = (C1*T1  +  (C1*C2)/(C1+C2)*(T2-T1)*E) / C1.
+ * T4 = (C1*T1  -  (C1*C2)/(C1+C2)*(T2-T1)*E  +  M) / C1.
  * C1 is main port heat capacity, T1 is the temp.
  * C2 and T2 is for the heat capacity of the freezer and temperature that we desire respectively.
  * T3 is the temperature we get, T4 is the exchange target (heat reservoir).
@@ -150,7 +150,7 @@
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - main_port.temperature
 
-	// This variable holds the C1*C2/(C1+C2)*(T2-T1) part of the equation.
+	// This variable holds the (C1*C2)/(C1+C2)*(T2-T1) part of the equation.
 	var/heat_amount = temperature_target_delta * (main_port.heat_capacity() * heat_capacity / (main_port.heat_capacity() + heat_capacity))
 
 	// Motor heat is the heat added to both ports of the thermomachine at every tick.
@@ -188,8 +188,9 @@
 		// The hotter the heat reservoir is, the larger the malus.
 		var/temperature_exchange_delta = exchange_target.temperature - main_port.temperature
 		// Log 1 is already 0, going any lower will result in a negative number.
-		efficiency = clamp(1 - log(10, max(1, temperature_exchange_delta*0.08)), 0.65, 1)
+		efficiency = clamp(1 - log(10, max(1, temperature_exchange_delta)) * 0.08, 0.65, 1)
 		// We take an extra efficiency malus for enviroments where the mol is too low.
+		// Cases of log(0) will be caught by the early return above.
 		if (use_enviroment_heat)
 			efficiency *= clamp(log(1.55, exchange_target.total_moles()) * 0.15, 0.65, 1)
 
