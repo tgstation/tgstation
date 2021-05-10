@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Proximity checkers, used in the peacekeeper borg module, will now properly destroy."
