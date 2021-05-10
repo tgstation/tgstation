@@ -81,7 +81,7 @@
 		initial_egg_amount,\
 		eggs_added_from_eating,\
 		max_eggs_held\
-		)
+	)
 
 /mob/living/simple_animal/rabbit/empty //top hats summon these kinds of rabbits instead of the normal kind
 	initial_egg_amount = 0

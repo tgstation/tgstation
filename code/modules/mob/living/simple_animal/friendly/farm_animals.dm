@@ -350,7 +350,7 @@
 		eggs_added_from_eating,\
 		max_eggs_held,\
 		.proc/egg_laid\
-		)
+	)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/chicken/add_cell_sample()
