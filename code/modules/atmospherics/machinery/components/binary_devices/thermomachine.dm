@@ -31,12 +31,14 @@
 	var/cooling = TRUE
 	var/base_heating = 140
 	var/base_cooling = 170
-	var/obj/item/tank/holding
 	var/use_enviroment_heat = FALSE
 	var/skipping_work = FALSE
 	var/safeties = TRUE
 	var/lastwarning
 	var/color_index = 1
+
+	// Efficiency dictates how much we throttle the heat exchange process.
+	var/efficiency = 1
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize()
 	. = ..()
@@ -98,9 +100,6 @@
 	. = ..()
 	. += getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer)
 	. += getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer)
-	if(holding)
-		var/mutable_appearance/holding = mutable_appearance(icon, "holding")
-		. += holding
 	if(skipping_work && on)
 		var/mutable_appearance/skipping = mutable_appearance(icon, "blinking")
 		. += skipping
@@ -125,10 +124,11 @@
 	to_chat(user, "<span class='notice'>You reset the target temperature on [src] to [target_temperature] K.</span>")
 
 /** Performs heat calculation for the freezer. The full equation for this whole process is:
- * T3 = (C1*T1  +  C1*C2/(C1+C2)*(T2-T1)*E  +  M) / C1.
+ * T3 = (C1*T1  +  C1*C2/(C1+C2)*(T2-T1)*E) / C1.
+ * T4 = (C1*T1  -  C1*C2/(C1+C2)*(T2-T1)*E  +  M) / C1.
  * C1 is main port heat capacity, T1 is the temp.
  * C2 and T2 is for the heat capacity of the freezer and temperature that we desire respectively.
- * T3 is the temperature we get.
+ * T3 is the temperature we get, T4 is the exchange target (heat reservoir).
  * M is the motor heat.
  * E is the efficiency variable. At E=1 and M=0 it works out to be ((C1*T1)+(C2*T2))/(C1+C2).
  */
@@ -154,12 +154,9 @@
 	var/heat_amount = temperature_target_delta * (main_port.heat_capacity() * heat_capacity / (main_port.heat_capacity() + heat_capacity))
 
 	// Motor heat is the heat added to both ports of the thermomachine at every tick.
-	var/motor_heat = 2500
-	if(abs(temperature_target_delta) < 1.5) //Allow the machine to work more finely on lower temperature differences.
+	var/motor_heat = 5000
+	if(abs(temperature_target_delta) < 5) //Allow the machine to work more finely on lower temperature differences.
 		motor_heat = 0
-
-	// Efficiency dictates how much we throttle the heat exchange process.
-	var/efficiency = 1
 	
 	// Automatic Switching. Longer if check to prevent unecessary update_appearances.
 	if ((cooling && temperature_target_delta > 0) || (!cooling && temperature_target_delta < 0))
@@ -171,6 +168,10 @@
 	if (main_port.total_moles() < 0.01)
 		skipping_work = TRUE
 		return
+
+	// Efficiency should be a proc level variable, but we need it for the ui. 
+	// This is to reset the value when we are heating.
+	efficiency = 1
 
 	if(cooling)
 		var/datum/gas_mixture/exchange_target
@@ -208,7 +209,7 @@
 		
 		exchange_target.temperature = max((THERMAL_ENERGY(exchange_target) - (heat_amount * efficiency) + motor_heat) / exchange_target.heat_capacity(), TCMB)
 
-	main_port.temperature = max((THERMAL_ENERGY(main_port) + (heat_amount * efficiency) + motor_heat) / main_port.heat_capacity(), TCMB)
+	main_port.temperature = max((THERMAL_ENERGY(main_port) + (heat_amount * efficiency)) / main_port.heat_capacity(), TCMB)
 
 	heat_amount = abs(heat_amount)
 	var/power_usage = 0
@@ -224,7 +225,7 @@
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/item, mob/user, params)
-	if(!on && !holding && item.tool_behaviour == TOOL_SCREWDRIVER)
+	if(!on && item.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!anchored)
 			to_chat(user, "<span class='notice'>Anchor [src] first!</span>")
 			return
@@ -234,16 +235,6 @@
 	if(default_change_direction_wrench(user, item))
 		return
 	if(default_deconstruction_crowbar(item))
-		return
-
-	if(istype(item, /obj/item/tank))
-		var/obj/item/tank/tank = item
-		if(!user.transferItemToLoc(tank, src))
-			return FALSE
-		to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [tank]" : "You insert [tank] into [src]"].</span>")
-		investigate_log("had its internal [holding] swapped with [tank] by [key_name(user)].", INVESTIGATE_ATMOS)
-		replace_tank(user, tank)
-		update_appearance()
 		return
 
 	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL)
@@ -349,17 +340,6 @@
 		obj_flags |= EMAGGED
 		safeties = FALSE
 
-/obj/machinery/atmospherics/components/binary/thermomachine/proc/replace_tank(mob/living/user, obj/item/tank/new_tank)
-	if(!user)
-		return FALSE
-	if(holding)
-		user.put_in_hands(holding)
-		holding = null
-	if(new_tank)
-		holding = new_tank
-	update_appearance()
-	return TRUE
-
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/check_explosion(temperature)
 	if(temperature < THERMOMACHINE_SAFE_TEMPERATURE + 2000)
 		return FALSE
@@ -402,12 +382,8 @@
 	var/datum/gas_mixture/air1 = airs[1]
 	data["temperature"] = air1.temperature
 	data["pressure"] = air1.return_pressure()
+	data["efficiency"] = efficiency
 
-	data["holding"] = holding ? TRUE : FALSE
-	data["tank_gas"] = FALSE
-	if(holding)
-		var/datum/gas_mixture/holding_mix = holding.return_air()
-		data["tank_gas"] = !!holding_mix.total_moles()
 	data["use_env_heat"] = use_enviroment_heat
 	data["skipping_work"] = skipping_work
 	data["safeties"] = safeties
@@ -446,17 +422,6 @@
 			if(.)
 				target_temperature = clamp(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
-		if("pumping")
-			if(holding && nodes[2])
-				var/datum/gas_mixture/exchange_target = airs[2]
-				var/datum/gas_mixture/holding_mix = holding.return_air()
-				var/datum/gas_mixture/remove = holding_mix.remove_ratio(1)
-				exchange_target.merge(remove)
-				. = TRUE
-		if("eject")
-			if(holding)
-				replace_tank(usr)
-				. = TRUE
 		if("use_env_heat")
 			use_enviroment_heat = !use_enviroment_heat
 			. = TRUE
