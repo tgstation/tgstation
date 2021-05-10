@@ -20,7 +20,7 @@
 	desc = "Sigh... wheat... a-grain?"
 	gender = PLURAL
 	icon_state = "wheat"
-	bite_consumption_mod = 2
+	bite_consumption_mod = 0.5 // Chewing on wheat grains?
 	foodtypes = GRAIN
 	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("wheat" = 1)
@@ -42,7 +42,7 @@
 	desc = "Eat oats, do squats."
 	gender = PLURAL
 	icon_state = "oat"
-	bite_consumption_mod = 2
+	bite_consumption_mod = 0.5
 	foodtypes = GRAIN
 	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("oat" = 1)
@@ -66,7 +66,7 @@
 	desc = "Rice to meet you."
 	gender = PLURAL
 	icon_state = "rice"
-	bite_consumption_mod = 2
+	bite_consumption_mod = 0.5
 	foodtypes = GRAIN
 	grind_results = list(/datum/reagent/consumable/rice = 0)
 	tastes = list("rice" = 1)
@@ -87,7 +87,7 @@
 	desc = "Some blood-drenched wheat stalks. You can crush them into what passes for meat if you squint hard enough."
 	icon_state = "meatwheat"
 	gender = PLURAL
-	bite_consumption_mod = 2
+	bite_consumption_mod = 0.5
 	seed = /obj/item/seeds/wheat/meat
 	foodtypes = MEAT | GRAIN
 	grind_results = list(/datum/reagent/consumable/flour = 0, /datum/reagent/blood = 0)
