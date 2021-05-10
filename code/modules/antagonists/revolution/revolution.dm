@@ -419,7 +419,7 @@
 			if (!(mind.assigned_role in GLOB.command_positions + GLOB.security_positions))
 				continue
 
-			if (mind in ex_revs)
+			if (mind in ex_revs + ex_headrevs)
 				continue
 
 			var/mob/living/carbon/target_body = mind.current
