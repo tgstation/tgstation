@@ -1,21 +1,35 @@
+/// The controller for the ui in charge of all runtime greyscale configuration/debug.
+/// If `Unlock()` is not called the menu is safe for players to use.
 /datum/greyscale_modify_menu
+	/// The "owner" object of this menu, is usually the greyscale object being edited but that can be changed for specific uses of this menu
 	var/atom/target
+	/// The client that opened this menu
 	var/client/user
 
+	/// A keyed list of allowed configs in the form niceName:typepath
 	var/list/allowed_configs
 
+	/// A callback to control what happens when the user presses apply. Used mainly for if you want the menu to be used outside of vv.
 	var/datum/callback/apply_callback
 
+	/// The current config being previewed
 	var/datum/greyscale_config/config
+	/// A list of colors currently selected
 	var/list/split_colors
 
+	/// Collection of data for tgui to use in displaying everything
 	var/list/sprite_data
+	/// The sprite dir currently being shown
 	var/sprite_dir = SOUTH
+	/// The sprite icon state currently being shown
 	var/icon_state
+	/// Whether the full preview should be generated, with this FALSE only the final sprite is shown instead of all steps.
 	var/generate_full_preview = FALSE
 
+	/// Whether the menu is in the middle of refreshing the preview
 	var/refreshing = TRUE
 
+	/// Whether the menu is currently locked down to prevent abuse from players. Currently is only unlocked when opened from vv.
 	var/unlocked = FALSE
 
 /datum/greyscale_modify_menu/New(atom/target, client/user, list/allowed_configs, datum/callback/apply_callback, starting_icon_state="", starting_config, starting_colors)
@@ -35,7 +49,7 @@
 		config_choices[initial(config.name)] = config_string
 	src.allowed_configs = config_choices
 
-	ReadColorsFromString(starting_colors, target?.greyscale_colors)
+	ReadColorsFromString(starting_colors || target?.greyscale_colors)
 
 	if(target)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/ui_close)
@@ -145,7 +159,7 @@
 		if("refresh_file")
 			if(!unlocked)
 				return
-			if(length(GLOB.player_list) > 0)
+			if(length(GLOB.player_list) > 1)
 				var/check = alert(
 					user,
 {"Other players are connected to the server, are you sure you want to refresh all greyscale configurations?\n
