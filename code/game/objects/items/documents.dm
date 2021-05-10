@@ -178,11 +178,11 @@
 		to_chat(user, "<span class='notice'>You set the device's bleep setting to [mode_name] mode")
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(print_time == 0)
+		if(print_time == 1)
 			print_time = 5 SECONDS
 			to_chat(user, "<span class='notice'>You set the device's scanning speed to SLOW.")
 		else
-			print_time = 0
+			print_time = 1
 			to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTNING FAST.")
 
 /**
