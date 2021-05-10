@@ -23,15 +23,15 @@ export const ThermoMachine = (props, context) => {
         minValue={.4225}
         maxValue={1}
         ranges={{
-          good: [.826, 1],
-          average: [.65,.825],
-          bad: [.4225,.64],
+          good: [.826, 1], 
+          average: [.65,.825], 
+          bad: [.4225,.64]
         }}>
-          {Math.round(data.efficiency * 10000)/100 + " %"}
+        {Math.round(data.efficiency * 10000)/100 + " %"}
       </ProgressBar>
     </LabeledList.Item>
   );
-  const cooling_environment_reservoir = !!data.cooling &&(
+  const cooling_enviroment_reservoir = !!data.cooling &&(
     <LabeledList.Item label="Enviroment as heat reservoir">
       <Button
         content={data.use_env_heat ? 'On' : 'Off'}
@@ -82,7 +82,7 @@ export const ThermoMachine = (props, context) => {
                 disabled={!data.hacked}
                 onClick={() => act('safeties')} />
             </LabeledList.Item>
-            {cooling_environment_reservoir}
+            {cooling_enviroment_reservoir}
             <LabeledList.Item label="Target Temperature">
               <NumberInput
                 animated
