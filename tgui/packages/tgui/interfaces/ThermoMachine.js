@@ -25,7 +25,7 @@ export const ThermoMachine = (props, context) => {
         ranges={{
           good: [.826, 1], 
           average: [.65,.825], 
-          bad: [.4225,.64]
+          bad: [.4225,.64], 
         }}>
         {Math.round(data.efficiency * 10000)/100 + " %"}
       </ProgressBar>
