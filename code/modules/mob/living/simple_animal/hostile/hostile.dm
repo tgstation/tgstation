@@ -66,7 +66,7 @@
 	///Declares a cooldown for potential charges right off the bat.
 	COOLDOWN_DECLARE(charge_cooldown)
 
-/mob/living/simple_animal/hostile/Initialize()
+/mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()
 
 	if(!targets_from)
@@ -351,9 +351,11 @@
 
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget(atom/attacked_target)
-	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)
 	in_melee = TRUE
-	return target.attack_animal(src)
+	SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target)
+	var/result = target.attack_animal(src)
+	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
+	return result
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
