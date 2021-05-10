@@ -47649,7 +47649,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/medical{
-	name = "Operating Theater A";
+	name = "Operating Theater B";
 	req_access_txt = "45"
 	},
 /turf/open/floor/iron/dark,
