@@ -199,13 +199,13 @@
 
 /// Traits that affect the grown product.
 /datum/plant_gene/trait
-	/// The rate at which this trait affects something.
+	/// The rate at which this trait affects something. This can be anything really - why? I dunno.
 	var/rate = 0.05
 	/// Bonus lines displayed on examine.
 	var/examine_line = ""
-	/// Traits that share an ID in this list cannot be placed on the same plant.
+	/// Flag - Traits that share an ID cannot be placed on the same plant.
 	var/trait_ids
-	/// Flags that modify the final product.
+	/// Flag - Modifications made to the final product.
 	var/trait_flags
 	/// A blacklist of seeds that a trait cannot be attached to.
 	var/list/obj/item/seeds/seed_blacklist
@@ -255,7 +255,8 @@
  * newloc - the loc of the plant
  */
 /datum/plant_gene/trait/proc/on_new_plant(obj/item/our_plant, newloc)
-	// Plants should always have seeds, but if a non-plant sneaks in or a plant with nulled seed, cut it out
+	// Plants should always have seeds, but if a plant gene is somehow being instantiated on a plant with no seed, stop initializing genes
+	// (Plants hold their genes on their seeds, so we can't really add them to something that doesn't exist)
 	if(isnull(our_plant.get_plant_seed()))
 		stack_trace("[our_plant] ([our_plant.type]) has a nulled seed value while trying to initialize [src]!")
 		return FALSE
@@ -295,7 +296,9 @@
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/squash_plant)
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/squash_plant)
-	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/squash_plant)
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	if(!our_seed.get_gene(/datum/plant_gene/trait/mob_transformation)) // If we awaken our plant on use, don't squash it.
+		RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/squash_plant)
 
 /*
  * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,

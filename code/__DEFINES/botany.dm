@@ -41,7 +41,6 @@
 /// Plant genes that can be graftable. Used in formatting text, as they need to be set to be graftable anyways.
 #define PLANT_GENE_GRAFTABLE (1<<2)
 
-
 /// -- Flags for seeds. --
 /// Allows a plant to wild mutate (mutate on haravest) at a certain instability.
 #define MUTATE_EARLY (1<<0)

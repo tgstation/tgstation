@@ -183,7 +183,7 @@
 	. = ..()
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	if(!our_seed?.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
+	if(!our_seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
 		to_chat(user, "<span class='danger'>[our_plant]'s thorns nearly prick your hand. Best be careful.</span>")
 		return
 
@@ -311,7 +311,7 @@
 	our_plant.AddElement(/datum/element/plant_backfire)
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/early_awakening)
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/manual_awakening)
-	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK, .proc/pre_consumption_check)
+	RegisterSignal(our_plant, COMSIG_ITEM_PRE_ATTACK, .proc/pre_consumption_check)
 
 /*
  * Before we can eat our plant, check to see if it's waking up. Don't eat it if it is.
@@ -320,14 +320,19 @@
  * target - the mob eating the plant
  * user - the mob feeding someone the plant (generally, target == user)
  */
-/datum/plant_gene/trait/mob_transformation/proc/pre_consumption_check(obj/item/our_plant, mob/target, mob/user, def_zone)
+/datum/plant_gene/trait/mob_transformation/proc/pre_consumption_check(obj/item/our_plant, atom/target, mob/user)
 	SIGNAL_HANDLER
 
-	if(awakening)
-		if(target != user)
-			to_chat(user, "<span class='warning'>[our_plant] is twitching and shaking, preventing you from feeding it to [target].</span>")
-		to_chat(target, "<span class='warning'>[our_plant] is twitching and shaking, preventing you from eating it.</span>")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(!awakening)
+		return
+
+	if(!ismob(target))
+		return
+
+	if(target != user)
+		to_chat(user, "<span class='warning'>[our_plant] is twitching and shaking, preventing you from feeding it to [target].</span>")
+	to_chat(target, "<span class='warning'>[our_plant] is twitching and shaking, preventing you from eating it.</span>")
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /*
  * Called when a user manually activates the plant.
@@ -369,20 +374,17 @@
 	addtimer(CALLBACK(src, .proc/awaken, our_plant), awaken_time)
 
 /*
- * Actually awaken the plant, spawning the linked mob.
+ * Actually awaken the plant, spawning the mob designated by the [killer_plant] typepath.
  *
  * our_plant - the plant that's waking up
  */
 /datum/plant_gene/trait/mob_transformation/proc/awaken(obj/item/our_plant)
-	if(QDELETED(src))
+	if(QDELETED(our_plant))
 		return
 	if(!ispath(killer_plant))
 		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	if(!our_seed)
-		return
-
 	var/mob/living/spawned_mob = new killer_plant(our_plant.drop_location())
 	spawned_mob.maxHealth += round(our_seed.endurance / 3)
 	spawned_mob.health = spawned_mob.maxHealth
@@ -391,6 +393,7 @@
 		spawned_simplemob.melee_damage_lower += round(our_seed.potency / 10)
 		spawned_simplemob.melee_damage_upper += round(our_seed.potency / 10)
 		spawned_simplemob.move_to_delay -= round(our_seed.production / 50)
+	our_plant.forceMove(our_plant.drop_location())
 	spawned_mob.visible_message("<span class='notice'>[our_plant] growls as it suddenly awakens!</span>")
 	qdel(our_plant)
 
