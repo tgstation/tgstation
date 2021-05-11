@@ -128,7 +128,10 @@
 	 * The reasoning is that, for one, it's easier, and for two, the blade is an independent object of the heretic;
 	 * Therefore, it is empowered by the heretic and not necessarily innately magical, a magical focus like the wizard's wands.
 	 */
-	var/list/user_knowledge = current_user/datum/antagonist/heretic.researched_knowledge
+	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
+		var/list/user_knowledge = current_user/datum/antagonist/heretic.researched_knowledge
+	else
+		var/list/user_knowledge = list() //shouldn't matter, but just to be safe
 	. = ..()
 	underlays.Cut()
 
