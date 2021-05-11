@@ -86,7 +86,7 @@
 			catch
 				// Expected, indicates a flat list
 
-			if(l_value)
+			if(!isnull(l_value))
 				list_contents += list(list(
 					"key" = _jatum_serialize_value(key, seen_references),
 					"value" = _jatum_serialize_value(l_value, seen_references)
