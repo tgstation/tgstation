@@ -271,7 +271,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NANITE_MONITORING "nanite_monitoring"
 /// nobody can use martial arts on this mob
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune"
-/// You've been cursed with some form of hungry item so you can't get another
+/// You've been cursed with a living duffelbag, and can't have more added
 #define TRAIT_DUFFEL_CURSE_PROOF "duffel_cursed"
 /// Revenants draining you only get a very small benefit.
 #define TRAIT_WEAK_SOUL "weak_soul"

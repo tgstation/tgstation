@@ -5,10 +5,11 @@
 #define HUNGER_THRESHOLD_WARNING 25
 ///the point where the item has a chance to eat something on every tick. possibly you!
 #define HUNGER_THRESHOLD_TRY_EATING 50
+
 /**
  * curse of hunger component; for very hungry items.
  *
- *
+ * Used as a rpgloot suffix and wizard spell!
  */
 /datum/component/curse_of_hunger
 	///whether to add dropdel to the item with curse of hunger, used for temporary curses like the wizard duffelbags
@@ -55,6 +56,9 @@
 ///signal called from equipping parent
 /datum/component/curse_of_hunger/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
+	var/obj/item/at_least_item = parent
+	if(!(at_least_item.slot_flags & slot))
+		return
 	the_curse_begins(equipper)
 
 ///signal called from a successful unequip of parent
@@ -74,24 +78,21 @@
 
 /datum/component/curse_of_hunger/proc/the_curse_begins(mob/cursed)
 	var/obj/item/at_least_item = parent
-	if(!(at_least_item.slot_flags && slot))
-		return
 	awakened = TRUE
 	START_PROCESSING(SSobj, src)
 	ADD_TRAIT(at_least_item, TRAIT_NODROP, CURSED_ITEM_TRAIT(at_least_item.type))
 	if(add_dropdel)
 		at_least_item.item_flags |= DROPDEL
-	ADD_TRAIT(equipper, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(at_least_item.type))
-	ADD_TRAIT(equipper, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(at_least_item.type))
+	ADD_TRAIT(cursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(at_least_item.type))
+	ADD_TRAIT(cursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(at_least_item.type))
 
 /datum/component/curse_of_hunger/proc/the_curse_ends(mob/uncursed)
 	var/obj/item/at_least_item = parent
 	STOP_PROCESSING(SSobj, src)
 	REMOVE_TRAIT(parent, TRAIT_NODROP, CURSED_ITEM_TRAIT(parent.type))
-	REMOVE_TRAIT(unequipper, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(at_least_item.type))
-	REMOVE_TRAIT(unequipper, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(at_least_item.type))
-
-	var/turf/vomit_turf = get_turf(newloc)
+	REMOVE_TRAIT(uncursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(at_least_item.type))
+	REMOVE_TRAIT(uncursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(at_least_item.type))
+	var/turf/vomit_turf = get_turf(at_least_item)
 	playsound(vomit_turf, 'sound/effects/splat.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/vomit(vomit_turf)
 

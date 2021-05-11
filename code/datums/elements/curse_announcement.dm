@@ -32,9 +32,8 @@
 
 /datum/element/curse_announcement/proc/announce(obj/item/cursed_item, mob/cursed)
 	SIGNAL_HANDLER
-
 	to_chat(cursed, "<span class='userdanger'>[announcement_message]</span>")
-	cursed_item.add_filter("cursed_item", 9, list("type" = "outline", "color" = filter_color))\
+	cursed_item.add_filter("cursed_item", 9, list("type" = "outline", "color" = filter_color))
 	cursed_item.name = "[cursed_item][new_name]"
 	cursed_item.RemoveElement(/datum/element/curse_announcement)
 
