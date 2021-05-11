@@ -327,3 +327,9 @@
   - bugfix: Many things that would trigger on attacking someone even if you didn't
       successfully land a hit now only trigger when you do
   - refactor: Poisonous is an element, no more terrible pathing /poison/ woop woop
+2021-05-11:
+  JJRcop:
+  - server: Default Drone hours without config set reduced from 40 to 14. Please set
+      DRONE_ROLE_PLAYTIME to 40 if you wish to retain old behavior.
+  tralezab:
+  - bugfix: "Fixes processing items \U0001F400"
