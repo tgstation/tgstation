@@ -56,15 +56,19 @@
 	for(var/atom/location as anything in targets)
 		var/list/loc_targets = targets[location]
 		for(var/atom/movable/tracked as anything in loc_targets)
-			if(loc_targets[tracked] != listener)
-				continue
-			unregister_signals(listener, tracked, location)
+			if(tracked == listener)
+				unregister_signals(loc_targets[tracked], tracked, location)
+			else if(loc_targets[tracked] == listener)
+				unregister_signals(listener, tracked, location)
+			else
+				return
 			UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
-	targets[old_loc] -= tracked
-	if (length(targets[old_loc]) == 0)
+	if (length(targets[old_loc]) <= 1)
 		targets -= old_loc
+	else
+		targets[old_loc] -= tracked
 
 	// Yes this is after the above because we use null as a key when objects are in nullspace
 	if(isnull(old_loc))
