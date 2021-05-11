@@ -10,9 +10,9 @@
 	var/wielded = FALSE
 	/// The multiplier applied to force when wielded, does not work with force_wielded, and force_unwielded
 	var/force_multiplier
-	/// The force of the item when weilded
+	/// The force of the item when wielded
 	var/force_wielded
-	/// The force of the item when unweilded
+	/// The force of the item when unwielded
 	var/force_unwielded
 	/// Play sound when wielded
 	var/wieldsound
