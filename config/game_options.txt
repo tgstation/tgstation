@@ -574,4 +574,4 @@ MAXFINE 2000
 ## Uncomment to enable SDQL spells
 ## Warning: SDQL is a powerful tool and can break many things or expose security sensitive information.
 ## Giving players access to it has major security concerns, be careful and deliberate when using this feature.
-SDQL_SPELLS
+#SDQL_SPELLS
