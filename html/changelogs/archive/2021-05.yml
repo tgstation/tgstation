@@ -1,0 +1,338 @@
+2021-05-01:
+  ATHATH:
+  - spellcheck: The shivering symptom has been renamed to be the "chills" symptom,
+      per Cobby's request.
+  - bugfix: The shivering/chills symptom now actually chills you like it says it does
+      instead of heating you up. fix Safe chills and safe fever should now use an
+      infectee's species's body temperature's actual cold and heat damage thresholds,
+      instead of just using the default ones.
+  - balance: Maxed out, unsafe chills and maxed out, unsafe fevers can now make you
+      slightly colder or hotter than they could before, respectively.
+  Arkatos:
+  - code_imp: Space carps now use a new greyscaling system.
+  - bugfix: Fixed an issue where space carps turned grey for a moment when attacking
+      something.
+  - qol: Light purple space carp variant is now more close to the original. Nostalgia!
+  - qol: Replaced beige space carp variant with a light red one.
+  KathyRyals:
+  - balance: Thermal is now an active mutation, that has a cooldown and deals damage
+      to your eyes.
+  LemonInTheDark:
+  - bugfix: Prayers will show a little book next to them again
+  LemonInTheDark, duncathan:
+  - refactor: Gas reactions should be cheaper in the standard case
+  - refactor: Moves canisters, pipelines, and tanks to event based processing, if
+      you see something fail to "update" when it really should let me know yeah?
+  Mothblocks:
+  - bugfix: Midround events will now properly poll again.
+  RandomGamer123:
+  - bugfix: Anomaly research can now be researched again.
+  Ryll/Shaps:
+  - bugfix: You can no longer shoot yourself in the foot with gunboots
+  Yakumochen:
+  - spellcheck: Removes nanochips from infiltrator gloves. Makes them more tacticool.
+  itseastosee:
+  - spellcheck: The unknown narrator now properly talks in second person
+  maxymax13, /vg/station, Citadel Station:
+  - imageadd: 3 new variations for wooden tiles are available (large, parquet, and
+      tiled), the same way you color titanium tiles! Remember, use a screwdriver and
+      not a crowbar!
+  - imageadd: A new red planetary pattern design is available for arcade carpet!
+  unit0016:
+  - refactor: Cargo Shuttle consoles now rely a lot more on variables instead of hardcoding.
+  vincentiusvin:
+  - bugfix: The hotkey for dumping borg apparatus is now moved to Alt+Click instead
+      of the nonfunctional Alt+Z. Right click for beaker apparatus spills reagent,
+      just like with regular beakers. Z and self attack keeps the old interaction,
+      it changes transfer volume.
+2021-05-02:
+  Celotajs:
+  - bugfix: Chameleon sneakers and jumpsuits now work correctly
+  - qol: The roulette TGUI now looks a bit better
+  Fikou, TWATICUS:
+  - qol: You can now reskin a lot more tiles! Use iron, bronze, pod, carpet or plastitanium
+      tiles inhand to change their sprites.
+  Iamgoofball:
+  - bugfix: potentially reduces overlay impact on SendMaps
+  LemonInTheDark:
+  - bugfix: Fixes some atmos senstivity stuff, it'll work more consistently now
+  Mothblocks:
+  - qol: Preferences are no longer dependent on gender.
+  maxymax13:
+  - qol: Pun Pun can no longer ruin all the tile alligments of the plants in the bar,
+      as plants no longer get offset when dropped.
+  ninjanomnom:
+  - admin: The greyscale debug menu now has improved functionality involving dirs
+      and changing config types.
+  sergeirocks100:
+  - rscadd: Adds cryopod areas to every in-rotation map. Expect to find them in dorms
+      or recreation areas.
+  tf-4:
+  - bugfix: Tram medbay storage is now wired to the grid at round start.
+2021-05-03:
+  ATHATH:
+  - qol: Shattering a heretic blade as a heretic or a heretic monster to teleport
+      a random, mostly safe location is now done by activating the blade in-hand instead
+      of by pressing an action button. This information will be given to a heretic
+      or a heretic monster if they examine a heretic blade.
+  - soundadd: Teleporting using a heretic blade now plays a glass shattering noise
+      and produces a slightly different message (that factors in whether or not the
+      teleportation attempt was successful).
+  - bugfix: Teleporting using a heretic blade is now considered to be a magical teleportation
+      method by the game.
+  cacogen:
+  - qol: RPD can destroy broken disposal pipes
+  - qol: Securing a disposal pipe over a broken disposal pipe will delete it
+  - balance: Securing a disposal pipe over a floor tile with a crowbar in your offhand
+      will remove the floor tile before trying to secure it
+  necromanceranne:
+  - imageadd: Changes the CE Insulated gloves sprite into a unique appearance, and
+      not just infiltrator gloves but blood orange.
+  ninjanomnom:
+  - qol: You can repair canisters now by left clicking with an active welder. Deconstruction,
+      which previously took this slot, has been moved to right click instead.
+  tf-4:
+  - bugfix: PDAs will no longer flash at you over messages that you've already read
+2021-05-04:
+  ATHATH:
+  - refactor: An unused variable in the code for sticky tape has been removed.
+  Celotajs:
+  - admin: Moved Give SDQL Spell to Debug tab
+  Fikou:
+  - bugfix: chief engis and captains gloves are now not flammable
+  InsaneRed:
+  - bugfix: fixes the missing blast door on delta stations perma prison.
+  JJRcop:
+  - balance: The reagent gun, aka the Reagent Dartgun, has has its capacity reduced
+      to 90, or exactly 6 shots. Down from 100, or 6.6 shots.
+  LemonInTheDark:
+  - bugfix: Fixed hitting a canister not cause it to leak until it's interacted with
+      in some other wa
+  Maurukas:
+  - bugfix: Adds PunPun to Tramstation Bar
+  SpaceDragon00:
+  - spellcheck: Corrects sing/sings to singe/singes
+  Thunder12345:
+  - imageadd: The engineering circuitboards are now yellow instead of orange.
+  YakumoChen:
+  - qol: Pierced Reality and Singulo toys drop on the center of tiles again, for realism.
+  Yenwodyah:
+  - qol: The supermatter sliver sprite shows up above the supermatter crystal sprite
+      again
+  cacogen:
+  - qol: RCD repairs grilles when adding windows
+  - balance: If a grille's tile has unanchored items on it, adding a window will fail
+  - qol: Attempting to add a window to a grille with unanchored items on the tile
+      will move 20 of them to your tile
+  ninjanomnom:
+  - rscadd: Gases with visuals can now be seen inside canisters
+  tralezab:
+  - bugfix: you can no longer copy honorbound, burdened, wizard mutations, other heinous
+      shit
+2021-05-05:
+  Celotajs:
+  - imageadd: PDA icons are now generated with GAGS
+  Fikou:
+  - bugfix: fixed fake chasms not dropping floortiles
+  - bugfix: fixed borgs having their floor tiles deleted when reskinning
+  MadMedicineMan:
+  - bugfix: Renamed Outpost Medical on Cams
+  Urumasi:
+  - rscadd: Lawyers can now object by slamming the table.
+  - code_imp: Table slamming is now handled using signals.
+  ninjanomnom:
+  - bugfix: Monkeys are once again capable of using guns, take back your freedom!
+  - rscadd: Monkey ai is now actually able to make use of guns instead of just player
+      controlled monkeys.
+  - rscadd: Monkey ai will prioritize guns once they learn of what guns can do.
+  - rscadd: Monkey ai now understands the ancient art of throwing.
+  - rscadd: Monkey ai will use random objects on each other in their surroundings
+      and in their hands.
+  - rscadd: Monkey ai will occasionally "gift" people things.
+  - rscadd: Monkey ai consumes food once in a while according to their desire.
+2021-05-06:
+  ATHATH:
+  - bugfix: Cloth golems and podpeople can now strip people again.
+  - bugfix: Bananium golems are considered to be advanced tool users again.
+  - bugfix: Killer tomatoes no longer require the liquid contents trait to have a
+      chance to self-animate when picked up without proper protection.
+  ArcaneMusic:
+  - imageadd: Exploration Drone's scanning dishes have less SOUL and more STYLE.
+  Celotajs:
+  - qol: You can now see in game preferences that the implant uplink takes 4 TC from
+      you.
+  - code_imp: The license details in the TGUI changelog are now correct.
+  LemonInTheDark:
+  - code_imp: Td should spike slightly less, assuming harddels actually go down
+  - code_imp: You feel a great disturbance in the force, mob code has changed. Please
+      report any odd targeting behavior on the issue tracker
+  - bugfix: h2o jetpacks will no longer leave trails of water in space
+  Seris02:
+  - bugfix: many of the toggle preferences in preferences_toggles.dm going into the
+      unsorted chat log
+  - bugfix: many of the role greetings from sending to the wrong chat filters/ to
+      unsorted
+  - bugfix: miscellaneous other strings getting sent to the unsorted chat filter
+  mandosegua:
+  - bugfix: Swarmers are no longer able to eat the shuttle engines and make hull breaches
+      in their place.
+  tralezab:
+  - rscadd: 'Cargo requests can now be discussed over #cargobus!'
+2021-05-07:
+  Celotajs:
+  - bugfix: GAGS-generated clothing can now have proper blood splatters and damage
+  Fikou:
+  - imageadd: centers hydroponic sprays, adds new sprites for plant-b-gone
+  Greniza:
+  - imageadd: New candle animations
+  - imageadd: New animations for altar candles
+  InsaneRed:
+  - bugfix: Icebox incinerator input will now connect correctly to the injector instead
+      of the waste system
+  - bugfix: Fixes tramstation incinerator mix input and scrubber not getting properly
+      connected and some random layer adapters being visible inside walls.
+  MMMiracles:
+  - rscadd: Tramstation now has several new cameras to help the AI look over the map.
+  - rscadd: Tramstation now has a public lavaland dock beside the Research wing.
+  - bugfix: Tramstation paramedics now have Cargo access.
+  Maurukas:
+  - bugfix: spammable logging in chem grenades
+  Owai-Seek:
+  - rscadd: BBQ Sauce can now be ordered in the kitchen console.
+  RandomGamer123:
+  - bugfix: Syndicate uplink types can now be changed again
+  - bugfix: Radio uplink frequencies are now random again
+  SparkezelPL:
+  - bugfix: Single tank bombs no longer just delete themselves
+  manofpepsi:
+  - rscadd: The old delta maint is back! (with minor changes), the delta warehouse
+      is now split into two for the drone bay.
+  necromanceranne:
+  - bugfix: Prevents guns that can misfire reaching 100% probability.
+  norill:
+  - bugfix: fixed buggy organ fridges repair rate
+  - bugfix: fixed upgraded organ fridges not repairing organs
+  prodirus:
+  - bugfix: The cursed slot machine sprite in the Greed lavaland ruin is now slightly
+      less cursed.
+  tralezab:
+  - bugfix: dogs now resist before fetching or harassing, to unbuckle from stuff if
+      they need to
+2021-05-08:
+  ArcaneDefence:
+  - bugfix: Felinids are disgusted by raw and gross foods again.
+  Celotajs:
+  - bugfix: Fixed PDA overlays for GAGS PDAs
+  EOBGames:
+  - bugfix: Removed the gamer cube in Delta cargo.
+  Fikou:
+  - admin: moves sdql spell from debug tab to vv dropdown
+  Greniza:
+  - bugfix: Made the PDA painter be able to paint PDAs into standard PDAs.
+  - bugfix: Made the PDA painter able to paint PDAs again after 58844 did not update
+      the painter.
+  Kylerace:
+  - refactor: tram is marginally faster
+  Time-Green:
+  - rscadd: Miners can now discover geysers with their mining scanner for a point
+      reward! This will discover their type and mark that geyser (with type) on the
+      GPS system.
+  - rscdel: removes the ClF3 geysers
+  - rscadd: Adds a very rare strange geyser that has a random reagent (maintpill/strange
+      seed style)
+  - balance: Geysers can now be activated with normal, cheap plungers
+  interestingusernam3:
+  - bugfix: Messages related to becoming and ceasing to be a heretic monster are now
+      more noticeable.
+  tralezab:
+  - refactor: is_flying_animal var is now an element!
+  - refactor: pet bonuses are now an element
+  - admin: Added fantasy affixes to the VV dropdown for items!
+2021-05-09:
+  ArcaneMusic:
+  - rscadd: On Sundays and given mail holidays, mail will not arrive on station.
+  - code_imp: Documented code in the holidays file.
+  BootlegBow:
+  - bugfix: flypeople no longer dislike moffins
+  Celotajs, ike709:
+  - code_imp: ike709's code improvements from BeeStation have been ported.
+  InsaneRed:
+  - bugfix: Properly fixes the stray extuingisher cabinet in deltastation.
+  - bugfix: Fixes the lack of ai cameras in drone rooms on tram and metastation.
+  JJRcop, ninjanomnom:
+  - qol: Instead of a machinery whitelist, Drones cannot interact with machines which
+      were touched by a being in the past 5 minutes.
+  - qol: Drones have a new machinery blacklist which currently contains the Air Alarm,
+      and most Computers. The CE can disable this on their PDA.
+  - qol: Drones aren't blocked by simple robots anymore. (Cleanbot, Floorbot, etc)
+  - qol: Drones can now use chisels, and construct APCs, newscasters, lights, and
+      other things placed on walls.
+  - bugfix: Drones now respect USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+  JohnFulpWillard:
+  - bugfix: Blood cult's blood beam no longer sticks to your hand, and now fires!
+  - bugfix: Blood cultists can no longer walk out of a blood beam to avoid being stunned.
+  RaveRadbury:
+  - qol: Social Anxiety is more immersive
+  - balance: made social anxiety more tied to speaking, along with more affect from
+      sanity, mood, and nearby people
+  Ryll/Shaps:
+  - qol: Tend Wounds and Debride Infected Flesh surgeries now tell the surgeon roughly
+      how many more repetitions are left before the patient is fully treated.
+  - qol: Having a health analyzer in your offhand during Tend Wounds will give you
+      precise updates on how much damage is left after each step.
+  Timberpoes:
+  - refactor: Rewrite the way we handle which roles get assigned with playtime tracking.
+  - bugfix: Players who get MMI'd and put into borgs or AIs mid-shift now gain job
+      playtime tracking towards Silicon roles instead.
+  - bugfix: Purchasing classic or mjolnir loadouts as the wizard will no longer crash
+      the server.
+  YakumoChen:
+  - imageadd: Fixes magic shoes and gives them a magical twinkling star decal.
+  dragomagol:
+  - rscadd: a new TGUI interface for sentience fun balloons
+  - code_imp: added a pop_sound_effect variable to customize sentience fun balloons
+  - code_imp: moved the arena shuttle's area and effects to shuttles.dm
+  ishitbyabullet:
+  - bugfix: The lavaland xeno nest is still fixed.
+  ninjanomnom:
+  - rscadd: New station trait where Pun Pun starts angry, armed, and ready for a fight.
+  tralezab:
+  - code_imp: SStramprocess only fires on maps with trams actually present on the
+      map
+2021-05-10:
+  Melbert:
+  - bugfix: You no longer eat all botany plants plants in 1 bite. Apples and Potatos
+      retain their unique 1 bite behavior.
+  - code_imp: Botany plants use a new formula for calculating bite size. All botany
+      plants have had their bite modifier adjusted to match.
+  Ryll/Shaps:
+  - bugfix: Changeling stings once again require you to be within range of your target
+      and have a direct path from you to the target
+  Time-Green:
+  - bugfix: you can now map infinitely huge plumbing networks
+  Twaticus, Imaginos16:
+  - imageadd: Resprites (almost) all base floor tiles.
+  - imageadd: Ports smooth tiles & textured versions of grey, black, and white tiles.
+  - imageadd: Dance floor item icons are no longer massive.
+  dragomagol:
+  - bugfix: blood filters no longer tell everyone that the listener's blood is being
+      filtered
+  norill:
+  - rscadd: changed name and description of surgery room disposals to inform that
+      they are connected to the morgue
+  - qol: made door remote work by clicking on the floor under an airlock too
+  tralezab:
+  - refactor: Udders are now a component, all of it!
+  - rscadd: Fantasy Prefix for poisoned weapons
+  - bugfix: Many things that would trigger on attacking someone even if you didn't
+      successfully land a hit now only trigger when you do
+  - refactor: Poisonous is an element, no more terrible pathing /poison/ woop woop
+2021-05-11:
+  JJRcop:
+  - server: Default Drone hours without config set reduced from 40 to 14. Please set
+      DRONE_ROLE_PLAYTIME to 40 if you wish to retain old behavior.
+  Mothblocks:
+  - bugfix: Proximity checkers, used in the peacekeeper borg module, will now properly
+      destroy.
+  tralezab:
+  - bugfix: "Fixes processing items \U0001F400"

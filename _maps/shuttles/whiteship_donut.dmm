@@ -178,7 +178,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "restroom"
 	},
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aG" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -211,11 +211,11 @@
 	},
 /obj/machinery/door/window/eastleft,
 /obj/structure/window/reinforced/tinted,
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aL" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aM" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -224,7 +224,7 @@
 	pixel_x = 32
 	},
 /obj/structure/window/reinforced/tinted,
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aN" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -253,12 +253,12 @@
 	pixel_x = -12
 	},
 /obj/item/soap,
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aR" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light,
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aS" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -269,7 +269,7 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 1
 	},
-/turf/open/floor/iron/airless/showroomfloor,
+/turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aT" = (
 /obj/machinery/mech_bay_recharge_port,

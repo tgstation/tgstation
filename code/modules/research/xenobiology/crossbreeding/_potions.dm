@@ -93,7 +93,7 @@ Slimecrossing Potions
 	if(!do_after(user, 50, target = M))
 		return
 	to_chat(user, "<span class='notice'>You feed [M] the love potion!</span>")
-	to_chat(M, "<span class='notice'>You develop feelings for [user], and anyone [user.p_they()] like.</span>")
+	to_chat(M, "<span class='notice'>You develop feelings for [user], and anyone [user.p_they()] like[user.p_s()].</span>")
 	if(M.mind)
 		M.mind.store_memory("You are in love with [user].")
 	M.faction |= "[REF(user)]"

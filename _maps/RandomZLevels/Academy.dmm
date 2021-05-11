@@ -2297,7 +2297,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/iron/airless/white{
+/turf/open/floor/iron/white/airless{
 	dir = 4
 	},
 /area/awaymission/academy/academyaft)
@@ -2311,7 +2311,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/airless/white,
+/turf/open/floor/iron/white/airless,
 /area/awaymission/academy/academyaft)
 "iY" = (
 /obj/structure/shuttle/engine/propulsion/left,
@@ -2335,7 +2335,7 @@
 /area/awaymission/academy/academyaft)
 "jf" = (
 /obj/structure/cable,
-/turf/open/floor/iron/airless/white{
+/turf/open/floor/iron/white/airless{
 	dir = 4
 	},
 /area/awaymission/academy/academyaft)
@@ -2345,7 +2345,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/structure/cable,
-/turf/open/floor/iron/airless/white,
+/turf/open/floor/iron/white/airless,
 /area/awaymission/academy/academyaft)
 "ji" = (
 /obj/structure/table,
@@ -2377,7 +2377,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jn" = (
-/turf/open/floor/iron/airless/white{
+/turf/open/floor/iron/white/airless{
 	dir = 4
 	},
 /area/awaymission/academy/academyaft)
@@ -2390,7 +2390,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/airless/white,
+/turf/open/floor/iron/white/airless,
 /area/awaymission/academy/academyaft)
 "jp" = (
 /obj/item/weldingtool,
@@ -2471,7 +2471,7 @@
 /area/awaymission/academy/academyaft)
 "jz" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/iron/airless/white{
+/turf/open/floor/iron/white/airless{
 	dir = 4
 	},
 /area/awaymission/academy/academyaft)
@@ -2483,7 +2483,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/airless/white,
+/turf/open/floor/iron/white/airless,
 /area/awaymission/academy/academyaft)
 "jB" = (
 /obj/item/shard{
@@ -2831,7 +2831,7 @@
 /turf/open/floor/mineral/uranium,
 /area/awaymission/academy/academycellar)
 "lj" = (
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
+/mob/living/simple_animal/hostile/giant_spider/hunter,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lk" = (

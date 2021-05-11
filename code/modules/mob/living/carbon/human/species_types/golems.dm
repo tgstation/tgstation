@@ -574,6 +574,7 @@
 	fixed_mut_color = "ff0"
 	say_mod = "honks"
 	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_RESISTHEAT,
 		TRAIT_NOBREATH,
@@ -751,6 +752,7 @@
 	species_traits = list(NOBLOOD,NO_UNDERWEAR) //no mutcolors, and can burn
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
 		TRAIT_RESISTCOLD,
 		TRAIT_NOBREATH,
 		TRAIT_RESISTHIGHPRESSURE,

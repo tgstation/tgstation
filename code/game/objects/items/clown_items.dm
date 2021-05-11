@@ -185,10 +185,13 @@
 	throw_range = 7
 	attack_verb_continuous = list("HONKS")
 	attack_verb_simple = list("HONK")
+	///sound file given to the squeaky component we make in Initialize()
+	var/soundfile = 'sound/items/bikehorn.ogg'
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20) //die off quick please)
+	//LoadComponent so child types dont stack squeak components
+	LoadComponent(/datum/component/squeak, list(soundfile=1), 50, 0, 0, 0, 0, 20, 0)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user != M && ishuman(user))
@@ -208,10 +211,7 @@
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
 	worn_icon_state = "horn_air"
-
-/obj/item/bikehorn/airhorn/Initialize()
-	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50, falloff_exponent = 20) //die off quick please)
+	soundfile = 'sound/items/airhorn2.ogg'
 
 //golden bikehorn
 /obj/item/bikehorn/golden
