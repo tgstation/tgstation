@@ -50,6 +50,7 @@
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high /// If this is a path, this gets created as an object in Initialize.
 	var/cell_cover_open = FALSE /// Status of the cell cover on the suit
 	var/thermal_on = FALSE /// Status of the thermal regulator
+	var/show_hud = TRUE /// If it will show suit batery on the hud, disabled for things like changeling flesh spacesuit
 
 /obj/item/clothing/suit/space/Initialize(mapload)
 	. = ..()
@@ -222,6 +223,9 @@
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)
 	var/mob/living/carbon/human/human = user
+
+	if(!show_hud)
+		return
 
 	if(!cell)
 		human.update_spacesuit_hud_icon("missing")
