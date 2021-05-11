@@ -34,10 +34,10 @@
 	target = null
 	..()
 
-/obj/item/grenade/c4/attackby(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
+/obj/item/grenade/c4/attackby(obj/item/item, mob/user, params)
+	if(item.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='notice'>The wire panel can be accessed without a screwdriver.</span>")
-	else if(is_wire_tool(weapon))
+	else if(is_wire_tool(item))
 		wires.interact(user)
 	else
 		return ..()
