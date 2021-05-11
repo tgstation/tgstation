@@ -397,6 +397,7 @@
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
 	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 30, RAD = 30, FIRE = 100, ACID = 100)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
+	toggle_sound = 'sound/items/handling/cloth_pickup.ogg'
 
 /obj/item/clothing/suit/space/hardsuit/cult/real
 	slowdown = 0
