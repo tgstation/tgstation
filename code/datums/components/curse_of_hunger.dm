@@ -20,7 +20,7 @@
 	///how many times it needs to be fed poisoned food for it to drop off of you
 	var/poison_food_tolerance = FULL_HEALTH
 
-/datum/component/curse_of_hunger/Initialize(add_dropdel)
+/datum/component/curse_of_hunger/Initialize(add_dropdel = FALSE)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -76,6 +76,7 @@
 	var/obj/item/at_least_item = parent
 	if(!(at_least_item.slot_flags && slot))
 		return
+	awakened = TRUE
 	START_PROCESSING(SSobj, src)
 	ADD_TRAIT(at_least_item, TRAIT_NODROP, CURSED_ITEM_TRAIT(at_least_item.type))
 	if(add_dropdel)
