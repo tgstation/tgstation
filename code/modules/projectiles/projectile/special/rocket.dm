@@ -45,6 +45,10 @@
 	shrapnel_type = null
 
 /obj/projectile/bullet/a84mm_he/on_hit(atom/target, blocked=0)
+	if(isliving(target))
+		var/mob/living/gibbed_dude = target
+		if(gibbed_dude.stat < HARD_CRIT)
+			gibbed_dude.say("Is that a fucking ro-")
 	..()
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
 		explosion(target, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 4)
@@ -63,6 +67,10 @@
 	shrapnel_type = null
 
 /obj/projectile/bullet/a84mm_weak/on_hit(atom/target, blocked=0)
+	if(isliving(target))
+		var/mob/living/gibbed_dude = target
+		if(gibbed_dude.stat < HARD_CRIT)
+			gibbed_dude.say("Is that a fucking ro-")
 	..()
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
 		explosion(target, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 4)
