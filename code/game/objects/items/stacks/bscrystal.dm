@@ -13,6 +13,9 @@
 	grind_results = list(/datum/reagent/bluespace = 20)
 	scan_state = "rock_BScrystal"
 	merge_type = /obj/item/stack/ore/bluespace_crystal
+	dust_type = /obj/item/stack/process_ore/dust/bluespace_crystal
+	clump_type = /obj/item/stack/process_ore/clump/bluespace_crystal
+	shard_type = /obj/item/stack/process_ore/shard/bluespace_crystal
 	/// The teleport range when crushed/thrown at someone.
 	var/blink_range = 8
 

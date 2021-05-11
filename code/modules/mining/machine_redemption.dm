@@ -16,7 +16,7 @@
 	processing_flags = START_PROCESSING_MANUALLY
 
 	var/points = 0
-	var/ore_multiplier = 1
+	var/ore_multiplier = 0.3
 	var/point_upgrade = 1
 	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
 	/// Variable that holds a timer which is used for callbacks to `send_console_message()`. Used for preventing multiple calls to this proc while the ORM is eating a stack of ores.

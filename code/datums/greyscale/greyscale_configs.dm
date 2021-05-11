@@ -153,3 +153,7 @@
 
 /datum/greyscale_config/sombrero/base_worn
 	json_config = 'code/datums/greyscale/json_configs/sombrero_base_worn.json'
+
+/datum/greyscale_config/ore_dust
+	icon_file = 'icons/obj/mining.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ore_dust.json'

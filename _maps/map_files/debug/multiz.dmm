@@ -701,10 +701,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/commons/storage/primary)
-"cV" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
 "cW" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
@@ -886,15 +882,9 @@
 	},
 /turf/open/floor/iron,
 /area/construction)
-"dN" = (
-/obj/structure/table,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
 "dO" = (
-/obj/structure/table,
 /obj/machinery/light,
-/obj/item/fireaxe,
-/obj/item/extinguisher,
+/obj/machinery/ore_processing/sheet_input_port,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "dP" = (
@@ -1112,6 +1102,46 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/engineering/storage)
+"gi" = (
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "gK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8;
@@ -1187,6 +1217,11 @@
 /obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"jz" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/drills_controller,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "jA" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -1225,6 +1260,18 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
+"kG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/ore_vein,
+/obj/machinery/drill,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
+"lc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/turf/open/floor/plating,
+/area/commons/storage/primary)
 "lm" = (
 /obj/machinery/light{
 	dir = 1
@@ -1325,6 +1372,10 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"qM" = (
+/obj/structure/ore_vein/silver,
+/turf/open/floor/plating,
+/area/commons/storage/primary)
 "qR" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
@@ -1334,6 +1385,18 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/storage)
+"qW" = (
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "rd" = (
 /obj/machinery/light{
 	dir = 8
@@ -1352,6 +1415,11 @@
 	dir = 1
 	},
 /area/hallway/secondary/service)
+"sk" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/ore_processing/enrichment_chamber,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "sm" = (
 /obj/structure/stairs/south,
 /turf/open/floor/plating,
@@ -1371,6 +1439,10 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/storage)
+"sV" = (
+/obj/machinery/ore_exit_port,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "td" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -1391,6 +1463,14 @@
 	dir = 1
 	},
 /area/hallway/primary/central)
+"uB" = (
+/obj/item/stack/ore/iron,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
+"uL" = (
+/obj/machinery/ore_processing/crusher,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "vt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1414,6 +1494,10 @@
 /obj/item/construction/rcd/combat/admin,
 /turf/open/floor/iron,
 /area/construction)
+"vG" = (
+/obj/structure/ore_vein/iron,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "vT" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -1448,6 +1532,13 @@
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/engineering/storage)
+"xU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/ore_processing/furnace,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "yl" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1466,6 +1557,7 @@
 /area/commons/storage/primary)
 "yX" = (
 /obj/structure/industrial_lift,
+/obj/machinery/ore_silo,
 /turf/open/floor/plating,
 /area/commons/storage/primary)
 "zd" = (
@@ -1561,6 +1653,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
+"Dr" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8;
+	icon_state = "connector_map-2"
+	},
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plating,
+/area/commons/storage/primary)
 "DG" = (
 /obj/machinery/light{
 	dir = 4
@@ -1595,10 +1695,19 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"Fe" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/item/drill_package,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "Fs" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
+"Fx" = (
+/obj/item/drill_package,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "FL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden{
@@ -1662,6 +1771,10 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/storage)
+"JO" = (
+/obj/machinery/ore_processing/chemical_injection_chamber,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "Kd" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1682,6 +1795,19 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
+"Lm" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "Lu" = (
 /obj/structure/railing{
 	dir = 4
@@ -1703,6 +1829,10 @@
 /obj/machinery/light,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
+"MV" = (
+/obj/item/drill_package,
+/turf/open/floor/plating,
+/area/commons/storage/primary)
 "Ob" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -1712,6 +1842,10 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/engineering/storage)
+"Pg" = (
+/obj/machinery/atmospherics/components/unary/purification_chamber,
+/turf/open/floor/plating,
+/area/commons/storage/primary)
 "Pm" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -1742,11 +1876,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/storage)
-"RQ" = (
-/obj/machinery/door/airlock/glass,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
 "St" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1788,6 +1917,11 @@
 /obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/engineering/storage)
+"UQ" = (
+/obj/structure/ore_vein,
+/obj/machinery/drill,
+/turf/open/floor/plating,
+/area/commons/storage/primary)
 "Vm" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
@@ -1804,6 +1938,13 @@
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/construction)
+"WH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/item/construction/plumbing,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "WN" = (
 /obj/machinery/light{
 	dir = 8
@@ -1819,12 +1960,28 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"XX" = (
+/obj/structure/ore_vein/plasma,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "Zc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"Zj" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "Zk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -3393,7 +3550,7 @@ dJ
 dB
 dl
 dD
-dc
+WH
 dc
 dA
 dl
@@ -3441,7 +3598,7 @@ bO
 cA
 bE
 bE
-cS
+dJ
 Hp
 dJ
 dB
@@ -3453,7 +3610,7 @@ dB
 dl
 dE
 dJ
-dN
+dJ
 cS
 af
 ad
@@ -3495,17 +3652,17 @@ bO
 cA
 bE
 bE
-cS
+sV
 lm
+JO
+dB
+Pg
+dE
+uL
 dJ
-dB
+sk
 dl
-dE
-dH
-dI
-dB
-dl
-dE
+xU
 dJ
 dO
 cS
@@ -3549,19 +3706,19 @@ bO
 gY
 bO
 bO
-RQ
+Hp
 Hp
 dJ
 dB
-dl
+lc
 dE
-dH
-dI
-dB
+dJ
+gi
+Zj
 dl
 dE
 dJ
-dN
+dJ
 cS
 af
 ad
@@ -3603,19 +3760,19 @@ bO
 cA
 bE
 bE
-cV
 dJ
+uB
 dJ
 dB
-dl
+Dr
 dE
-dH
-dI
-dB
+dJ
+qW
+Lm
 dl
 dE
 dJ
-dN
+dJ
 cS
 af
 ad
@@ -3657,15 +3814,15 @@ bO
 cA
 bE
 bE
-cV
 dJ
 dJ
-dB
+dJ
+jz
 dl
-dE
-dH
-dI
-dB
+kG
+Fx
+vG
+Fe
 dl
 dE
 dJ
@@ -3717,8 +3874,8 @@ dJ
 dB
 dl
 dE
-dH
-dI
+dJ
+dJ
 dB
 dl
 dE
@@ -3770,10 +3927,10 @@ dk
 dk
 dC
 dl
-dE
-dH
-dI
-dB
+kG
+Fx
+XX
+Fe
 dl
 dE
 dJ
@@ -3878,10 +4035,10 @@ aW
 yX
 nS
 dl
-dl
-dl
-dl
-dl
+UQ
+MV
+qM
+MV
 dl
 dl
 dl

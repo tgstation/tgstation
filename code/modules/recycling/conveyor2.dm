@@ -38,6 +38,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/auto
 	processing_flags = START_PROCESSING_ON_INIT
 
+/obj/machinery/conveyor/auto/no_deconstruct/attackby(obj/item/I, mob/living/user, params)
+	return
+
 /obj/machinery/conveyor/auto/Initialize(mapload, newdir)
 	operating = TRUE
 	return ..()

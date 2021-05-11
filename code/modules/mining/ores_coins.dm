@@ -21,6 +21,9 @@
 	var/list/stack_overlays
 	var/scan_state = "" //Used by mineral turfs for their scan overlay.
 	var/spreadChance = 0 //Also used by mineral turfs for spreading veins
+	var/dust_type = null
+	var/clump_type = null
+	var/shard_type = null
 
 /obj/item/stack/ore/update_overlays()
 	. = ..()
@@ -82,6 +85,9 @@
 	scan_state = "rock_Uranium"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/uranium
+	dust_type = /obj/item/stack/process_ore/dust/uranium
+	clump_type = /obj/item/stack/process_ore/clump/uranium
+	shard_type = /obj/item/stack/process_ore/shard/uranium
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
@@ -95,6 +101,9 @@
 	scan_state = "rock_Iron"
 	spreadChance = 20
 	merge_type = /obj/item/stack/ore/iron
+	dust_type = /obj/item/stack/process_ore/dust/iron
+	clump_type = /obj/item/stack/process_ore/clump/iron
+	shard_type = /obj/item/stack/process_ore/shard/iron
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
@@ -154,6 +163,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	scan_state = "rock_Plasma"
 	spreadChance = 8
 	merge_type = /obj/item/stack/ore/plasma
+	dust_type = /obj/item/stack/process_ore/dust/plasma
+	clump_type = /obj/item/stack/process_ore/clump/plasma
+	shard_type = /obj/item/stack/process_ore/shard/plasma
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
@@ -171,6 +183,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	scan_state = "rock_Silver"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/silver
+	dust_type = /obj/item/stack/process_ore/dust/silver
+	clump_type = /obj/item/stack/process_ore/clump/silver
+	shard_type = /obj/item/stack/process_ore/shard/silver
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
@@ -184,6 +199,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	scan_state = "rock_Gold"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/gold
+	dust_type = /obj/item/stack/process_ore/dust/gold
+	clump_type = /obj/item/stack/process_ore/clump/gold
+	shard_type = /obj/item/stack/process_ore/shard/gold
 
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
@@ -196,6 +214,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 10
 	scan_state = "rock_Diamond"
 	merge_type = /obj/item/stack/ore/diamond
+	dust_type = /obj/item/stack/process_ore/dust/diamond
+	clump_type = /obj/item/stack/process_ore/clump/diamond
+	shard_type = /obj/item/stack/process_ore/shard/diamond
 
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
@@ -221,6 +242,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	scan_state = "rock_Titanium"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/titanium
+	dust_type = /obj/item/stack/process_ore/dust/titanium
+	clump_type = /obj/item/stack/process_ore/clump/titanium
+	shard_type = /obj/item/stack/process_ore/shard/titanium
 
 /obj/item/stack/ore/slag
 	name = "slag"

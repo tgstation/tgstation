@@ -1,0 +1,10 @@
+{
+	"": [
+		{
+			"type": "icon_state",
+			"icon_state": "dust_greyscale",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
