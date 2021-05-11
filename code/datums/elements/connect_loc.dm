@@ -61,7 +61,7 @@
 			else if(loc_targets[tracked] == listener)
 				unregister_signals(listener, tracked, location)
 			else
-				return
+				continue
 			UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
