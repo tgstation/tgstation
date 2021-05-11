@@ -29,12 +29,16 @@
 /datum/component/curse_of_hunger/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(parent, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequip)
+	if(isclothing(parent))
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+		RegisterSignal(parent, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequip)
+	else
+		RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/on_pickup)
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 
 /datum/component/curse_of_hunger/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_POST_UNEQUIP))
+	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_POST_UNEQUIP, COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
 
 ///signal called on parent being examined
 /datum/component/curse_of_hunger/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -51,6 +55,24 @@
 ///signal called from equipping parent
 /datum/component/curse_of_hunger/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
+	the_curse_begins(equipper)
+
+///signal called from a successful unequip of parent
+/datum/component/curse_of_hunger/proc/on_unequip(mob/living/unequipper, force, atom/newloc, no_move, invdrop, silent)
+	SIGNAL_HANDLER
+	the_curse_ends(unequipper)
+
+///signal called from picking up parent
+/datum/component/curse_of_hunger/proc/on_pickup(datum/source, mob/grabber)
+	SIGNAL_HANDLER
+	the_curse_begins(grabber)
+
+///signal called from dropping parent
+/datum/component/curse_of_hunger/proc/on_drop(datum/source, mob/dropper)
+	SIGNAL_HANDLER
+	the_curse_ends(dropper)
+
+/datum/component/curse_of_hunger/proc/the_curse_begins(mob/cursed)
 	var/obj/item/at_least_item = parent
 	if(!(at_least_item.slot_flags && slot))
 		return
@@ -61,9 +83,7 @@
 	ADD_TRAIT(equipper, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(at_least_item.type))
 	ADD_TRAIT(equipper, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(at_least_item.type))
 
-///signal called from a successful unequip of parent
-/datum/component/curse_of_hunger/proc/on_unequip(mob/living/unequipper, force, atom/newloc, no_move, invdrop, silent)
-	SIGNAL_HANDLER
+/datum/component/curse_of_hunger/proc/the_curse_ends(mob/uncursed)
 	var/obj/item/at_least_item = parent
 	STOP_PROCESSING(SSobj, src)
 	REMOVE_TRAIT(parent, TRAIT_NODROP, CURSED_ITEM_TRAIT(parent.type))
