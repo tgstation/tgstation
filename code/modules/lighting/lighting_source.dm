@@ -106,20 +106,13 @@
 	. = LUM_FALLOFF(C, pixel_turf);              \
 	. *= light_power;                            \
 	var/OLD = effect_str[C];                     \
-	if (. || OLD) {                              \
-		if(. > 0) {                              \
-			effect_str[C] = .;                   \
-		} else {                                 \
-			effect_str -= C                      \
-		}                                        \
-		                                           \
-		C.update_lumcount                        \
-		(                                        \
-			(. * lum_r) - (OLD * applied_lum_r), \
-			(. * lum_g) - (OLD * applied_lum_g), \
-			(. * lum_b) - (OLD * applied_lum_b)  \
-		);                                       \
-	}
+	                                             \
+	C.update_lumcount                            \
+	(                                            \
+		(. * lum_r) - (OLD * applied_lum_r),     \
+		(. * lum_g) - (OLD * applied_lum_g),     \
+		(. * lum_b) - (OLD * applied_lum_b)      \
+	);                                           \
 
 #define REMOVE_CORNER(C)                         \
 	. = -effect_str[C];                          \
@@ -134,14 +127,9 @@
 
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
-	var/thing
-
-	var/datum/lighting_corner/C
-	for (thing in effect_str)
-		C = thing
-		REMOVE_CORNER(C)
-
-		LAZYREMOVE(C.affecting, src)
+	for (var/datum/lighting_corner/corner as anything in effect_str)
+		REMOVE_CORNER(corner)
+		LAZYREMOVE(corner.affecting, src)
 
 	effect_str = null
 
@@ -152,7 +140,7 @@
 		effect_str[C] = 0
 
 	APPLY_CORNER(C)
-	UNSETEMPTY(effect_str)
+	effect_str[C] = .
 
 
 /datum/light_source/proc/update_corners()
@@ -218,14 +206,11 @@
 
 	var/list/datum/lighting_corner/corners = list()
 	var/list/turf/turfs                    = list()
-	var/thing
-	var/datum/lighting_corner/C
-	var/turf/T
 
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
 		source_turf.luminosity = CEILING(light_range, 1)
-		for(T in view(CEILING(light_range, 1), source_turf))
+		for(var/turf/T in view(CEILING(light_range, 1), source_turf))
 			if((!IS_DYNAMIC_LIGHTING(T) && !T.light_sources))
 				continue
 			if(!IS_OPAQUE_TURF(T))
@@ -238,34 +223,34 @@
 			turfs += T
 		source_turf.luminosity = oldlum
 
-	var/list/L
+	var/list/datum/lighting_corner/new_corners = (corners - effect_str)
 	LAZYINITLIST(effect_str)
 	if (needs_update == LIGHTING_VIS_UPDATE)
-		for (thing in corners - effect_str) // New corners
-			C = thing
-			APPLY_CORNER(C)
-			if (.)
-				LAZYADD(C.affecting, src)
+		for (var/datum/lighting_corner/corner as anything in new_corners)
+			APPLY_CORNER(corner)
+			if (. != 0)
+				LAZYADD(corner.affecting, src)
+				effect_str[corner] = .
 	else
-		L = corners - effect_str
-		for (thing in L) // New corners
-			C = thing
-			APPLY_CORNER(C)
-			if (.)
-				LAZYADD(C.affecting, src)
+		for (var/datum/lighting_corner/corner as anything in new_corners)
+			APPLY_CORNER(corner)
+			if (. != 0)
+				LAZYADD(corner.affecting, src)
+				effect_str[corner] = .
 
-		for (thing in corners - L) // Existing corners
-			C = thing
-			APPLY_CORNER(C)
-			if (!.) // too low of a fall off to bother tracking
-				LAZYREMOVE(C.affecting, src)
+		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
+			APPLY_CORNER(corner)
+			if (. != 0)
+				effect_str[corner] = .
+			else
+				LAZYREMOVE(corner.affecting, src)
+				effect_str -= corner
 
-	L = effect_str - corners
-	for (thing in L) // Old, now gone, corners.
-		C = thing
-		REMOVE_CORNER(C)
-		LAZYREMOVE(C.affecting, src)
-	effect_str -= L
+	var/list/datum/lighting_corner/gone_corners = effect_str - corners
+	for (var/datum/lighting_corner/corner as anything in gone_corners) 
+		REMOVE_CORNER(corner)
+		LAZYREMOVE(corner.affecting, src)
+	effect_str -= gone_corners
 
 	applied_lum_r = lum_r
 	applied_lum_g = lum_g

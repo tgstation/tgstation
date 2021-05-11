@@ -77,18 +77,12 @@
 	
 
 /datum/lighting_corner/proc/vis_update()
-	var/thing
-	var/datum/light_source/L
-	for (thing in affecting)
-		L = thing
-		L.vis_update()
+	for (var/datum/light_source/light_source as anything in affecting)
+		light_source.vis_update()
 
 /datum/lighting_corner/proc/full_update()
-	var/thing
-	var/datum/light_source/L
-	for (thing in affecting)
-		L = thing
-		L.recalc_corner(src)
+	for (var/datum/light_source/light_source as anything in affecting)
+		light_source.recalc_corner(src)
 
 // God that was a mess, now to do the rest of the corner code! Hooray!
 /datum/lighting_corner/proc/update_lumcount(delta_r, delta_g, delta_b)
@@ -156,12 +150,11 @@
 	if (!force)
 		return QDEL_HINT_LETMELIVE
 
-	var/thing
-	var/datum/light_source/L
-	for (thing in affecting)
-		L = thing
-		LAZYREMOVE(L.effect_str, src)
-	
+
+	for (var/datum/light_source/light_source as anything in affecting)
+		LAZYREMOVE(light_source.effect_str, src)
+	affecting = null
+
 	if (master_NE)
 		master_NE.lighting_corner_SW = null
 		master_NE.lighting_corners_initialised = FALSE
