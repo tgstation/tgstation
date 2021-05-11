@@ -13,16 +13,21 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: Setup cache
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
+        id: sdmm_cache
         with:
-          path: $HOME/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm
+          path: |
+            ~/SpacemanDMM/target
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-SDMM-${{hashFiles('dependencies.sh')}}
+      - name: Build SDMM
+        if: steps.sdmm_cache.outputs.cache-hit != 'true'
+        run: bash tools/ci/build_spaceman_dmm.sh
       - name: Install Tools
         run: |
           pip3 install setuptools
           bash tools/ci/install_node.sh
-          bash tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
       - name: Run Linters
         run: |
@@ -35,7 +40,7 @@ jobs:
           bash tools/ci/check_grep.sh
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
-          ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
+          cargo run --manifest-path ~/SpacemanDMM/Cargo.toml --release --bin dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
       - name: Annotate Lints
         uses: yogstation13/DreamAnnotate@v1
         if: always()
