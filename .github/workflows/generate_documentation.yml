@@ -9,20 +9,16 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        id: sdmm_cache
+      - name: Setup cache
+        uses: actions/cache@v2
         with:
-          path: |
-            ~/SpacemanDMM/target
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: ${{ runner.os }}-SDMM-${{hashFiles('dependencies.sh')}}
-      - name: Build SDMM
-        if: steps.sdmm_cache.outputs.cache-hit != 'true'
-        run: bash tools/ci/build_spaceman_dmm.sh
+          path: $HOME/SpacemanDMM
+          key: ${{ runner.os }}-spacemandmm
+      - name: Install SpacemanDMM
+        run: bash tools/ci/install_spaceman_dmm.sh dmdoc
       - name: Generate documentation
         run: |
-          cargo run --manifest-path ~/SpacemanDMM/Cargo.toml --release --bin dmdoc
+          ~/dmdoc
           touch dmdoc/.nojekyll
           echo codedocs.tgstation13.org > dmdoc/CNAME
       - name: Deploy
