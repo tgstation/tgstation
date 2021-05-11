@@ -132,8 +132,8 @@
 		user.update_inv_hands()
 
 	if(isitem(parent))
-		var/obj/item/butchering_tool = parent
-		for(var/datum/action/action as anything in butchering_tool.actions)
+		var/obj/item/two_handed_item = parent
+		for(var/datum/action/action as anything in two_handed_item.actions)
 			action.UpdateButtonIcon()
 
 /**

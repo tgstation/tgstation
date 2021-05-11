@@ -224,6 +224,22 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			hitsound = 'sound/items/welder.ogg'
 		if(damtype == BRUTE)
 			hitsound = "swing_hit"
+	if(!LAZYLEN(embedding))
+		if(GLOB.embedpocalypse)
+			embedding = EMBED_POINTY
+			name = "pointy [name]"
+		else if(GLOB.stickpocalypse)
+			embedding = EMBED_HARMLESS
+			name = "sticky [name]"
+
+	updateEmbedding()
+
+	if(GLOB.rpg_loot_items)
+		AddComponent(/datum/component/fantasy)
+
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
+		var/speed = 8 SECONDS * toolspeed
+		AddComponent(/datum/component/butchering, speed)
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL //prevent reqdels
@@ -243,25 +259,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		obj_destruction(MELEE)
-
-/obj/item/ComponentInitialize()
-	. = ..()
-	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
-	if(!LAZYLEN(embedding))
-		if(GLOB.embedpocalypse)
-			embedding = EMBED_POINTY
-			name = "pointy [name]"
-		else if(GLOB.stickpocalypse)
-			embedding = EMBED_HARMLESS
-			name = "sticky [name]"
-
-	updateEmbedding()
-
-	if(GLOB.rpg_loot_items)
-		AddComponent(/datum/component/fantasy)
-
-	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item
  *

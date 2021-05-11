@@ -20,53 +20,40 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
-	// used as a component arg for how much force the chainsaw has while on
+	///butchering component added to this object, only used for deletion which is why this is acceptable.
+	var/datum/component/butchering/butcher_component
+	///used as a component arg for how much force the chainsaw has while on
 	var/force_on = 24
-	var/wielded = FALSE // track wielded status on item
+	///track wielded status on item
+	var/wielded = FALSE
 
 /obj/item/chainsaw/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	add_butcher_component()
+	AddComponent(
+		/datum/component/two_handed,\
+		require_twohands = TRUE,\
+		attacksound = 'sound/weapons/chainsawhit.ogg',\
+		force_wielded = force_on,\
+		force_unwielded = 13,\
+		icon_wielded = "chainsaw_on"\
+	)
+
+///wrapper for adding the butcher component to it is cleaner to add and remove it in multiple places
+/obj/item/chainsaw/proc/add_butcher_component()
 	//some clarified arguments
 	var/speed = 3 SECONDS
 	var/effectiveness = 100
 	var/bonus_modifier = 0
 	var/butcher_sound = 'sound/effects/butcher.ogg'
-	var/can_be_blunt = TRUE
-	var/butchering_enabled = FALSE
-	var/enable_butchering_signals = list(COMSIG_TWOHANDED_WIELD)
-	var/disable_butchering_signals = list(COMSIG_TWOHANDED_UNWIELD)
-	AddComponent(\
+	butcher_component = AddComponent(\
 		/datum/component/butchering,\
 		speed,\
 		effectiveness,\
 		bonus_modifier,\
 		butcher_sound,\
-		can_be_blunt,\
-		butchering_enabled,\
-		enable_butchering_signals,\
-		disable_butchering_signals\
-	)
-	//same here for twohands
-	var/require_twohands = TRUE
-	var/unwieldsound = null
-	var/wieldsound = null
-	var/attacksound = 'sound/weapons/chainsawhit.ogg'
-	var/force_multiplier = 0
-	var/force_wielded = force_on
-	var/force_unwielded = 13
-	var/icon_wielded = "chainsaw_on"
-	AddComponent(
-		/datum/component/two_handed,\
-		require_twohands,\
-		unwieldsound,\
-		wieldsound,\
-		attacksound,\
-		force_multiplier,\
-		force_wielded,\
-		force_unwielded,\
-		icon_wielded\
 	)
 
 /// triggered on wield of two handed item
@@ -74,6 +61,7 @@
 	SIGNAL_HANDLER
 
 	to_chat(user, "As you pull the starting cord dangling from [src], it begins to whirr.")
+	add_butcher_component()
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
@@ -81,6 +69,7 @@
 	SIGNAL_HANDLER
 
 	to_chat(user, "As you pull the starting cord dangling from [src], the chain stops moving.")
+	qdel(butcher_component)
 	wielded = FALSE
 
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)

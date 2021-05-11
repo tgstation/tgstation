@@ -7,37 +7,29 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	///butchering component added to this object, only used for deletion which is why this is acceptable.
+	var/datum/component/butchering/butcher_component
 
-/obj/item/clothing/gloves/butchering/Initialize()
+/obj/item/clothing/gloves/butchering/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
 	//some clarified arguments
 	var/speed = 0.5 SECONDS
 	var/effectiveness = 125
 	var/bonus_modifier = 0
 	var/butcher_sound = 'sound/effects/butcher.ogg'
-	var/can_be_blunt = TRUE
-	var/butchering_enabled = FALSE
-	var/enable_butchering_signals = list(COMSIG_ITEM_EQUIPPED)
-	var/disable_butchering_signals = list(COMSIG_ITEM_PRE_UNEQUIP)
-	AddComponent(
+	butcher_component = AddComponent(
 		/datum/component/butchering,\
 		speed,\
 		effectiveness,\
 		bonus_modifier,\
-		butcher_sound,\
-		can_be_blunt,\
-		butchering_enabled,\
-		enable_butchering_signals,\
-		disable_butchering_signals\
+		butcher_sound\
 	)
-
-/obj/item/clothing/gloves/butchering/equipped(mob/user, slot, initial = FALSE)
-	. = ..()
 	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/butcher_target)
 
 /obj/item/clothing/gloves/butchering/dropped(mob/user, silent = FALSE)
 	. = ..()
 	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	qdel(butcher_component)
 
 /obj/item/clothing/gloves/butchering/proc/butcher_target(mob/user, atom/target, proximity)
 	if(!isliving(target))

@@ -7,59 +7,30 @@
 	var/bonus_modifier
 	/// Sound played when butchering
 	var/butcher_sound
-	/// Whether or not this component is compatible with blunt tools.
-	var/can_be_blunt
-	/// For some items, the butchering needs to be conditional, see the lists below
-	var/butchering_enabled
-	/// signals to turn butchering_enabled on
-	var/list/enable_butchering_signals
-	/// signals to turn butchering_enabled off
-	var/list/disable_butchering_signals
 
 /datum/component/butchering/Initialize(
 	speed = 8 SECONDS,
 	effectiveness = 100,
 	bonus_modifier = 0,
-	butcher_sound = 'sound/effects/butcher.ogg',
-	can_be_blunt = FALSE,
-	butchering_enabled = TRUE,
-	enable_butchering_signals = list(),
-	disable_butchering_signals = list()
+	butcher_sound = 'sound/effects/butcher.ogg'
 )
 	src.speed = speed
 	src.effectiveness = effectiveness
 	src.bonus_modifier = bonus_modifier
 	src.butcher_sound = butcher_sound
-	src.can_be_blunt = can_be_blunt
-	src.butchering_enabled = butchering_enabled
-	src.enable_butchering_signals = enable_butchering_signals
-	src.disable_butchering_signals = disable_butchering_signals
 
 /datum/component/butchering/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_item_attacking)
-	RegisterSignal(parent, enable_butchering_signals, .proc/enable_butchering)
-	RegisterSignal(parent, disable_butchering_signals, .proc/enable_butchering)
 
 /datum/component/butchering/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
-	UnregisterSignal(parent, enable_butchering_signals)
-	UnregisterSignal(parent, disable_butchering_signals)
-
-/datum/component/butchering/proc/enable_butchering(datum/source)
-	SIGNAL_HANDLER
-	butchering_enabled = TRUE
-
-/datum/component/butchering/proc/disable_butchering(datum/source)
-	SIGNAL_HANDLER
-	butchering_enabled = FALSE
 
 /datum/component/butchering/proc/on_item_attacking(obj/item/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 
 	if(target.stat == DEAD && (target.butcher_results || target.guaranteed_butcher_results)) //can we butcher it?
-		if(butchering_enabled && (can_be_blunt || source.get_sharpness()))
-			INVOKE_ASYNC(src, .proc/startButcher, source, target, user)
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+		INVOKE_ASYNC(src, .proc/startButcher, source, target, user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(ishuman(target) && source.force && source.get_sharpness())
 		var/mob/living/carbon/human/human_victim = target
@@ -75,7 +46,9 @@
 	to_chat(user, "<span class='notice'>You begin to butcher [target]...</span>")
 	playsound(target.loc, butcher_sound, 50, TRUE, -1)
 	if(do_mob(user, target, speed) && target.Adjacent(source))
-		Butcher(user, target)
+		Butcher(user, target, source)
+	else
+		log_combat(user, human_victim, "attempted to butcher", source)
 
 /datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/human_victim, mob/living/user)
 	if(DOING_INTERACTION_WITH_TARGET(user, human_victim))
@@ -112,14 +85,15 @@
  * Arguments:
  * - [butcher][/mob/living]: The mob doing the butchering
  * - [meat][/mob/living]: The mob being butchered
+ * - [tool][/obj/item]: tool used to butcher. optional and just used in logging
  */
-/datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
+/datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat, obj/item/tool)
+	log_combat(butcher, meat, "butchered", tool)
 	var/list/results = list()
-	var/turf/T = meat.drop_location()
+	var/turf/meat_drop_location = meat.drop_location()
 	var/final_effectiveness = effectiveness - meat.butcher_difficulty
 	var/bonus_chance = max(0, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
-	for(var/V in meat.butcher_results)
-		var/obj/bones = V
+	for(var/obj/bones as anything in meat.butcher_results)
 		var/amount = meat.butcher_results[bones]
 		for(var/_i in 1 to amount)
 			if(!prob(final_effectiveness))
@@ -130,16 +104,15 @@
 			if(prob(bonus_chance))
 				if(butcher)
 					to_chat(butcher, "<span class='info'>You harvest some extra [initial(bones.name)] from [meat]!</span>")
-				results += new bones (T)
-			results += new bones (T)
+				results += new bones(meat_drop_location)
+			results += new bones(meat_drop_location)
 
 		meat.butcher_results.Remove(bones) //in case you want to, say, have it drop its results on gib
 
-	for(var/V in meat.guaranteed_butcher_results)
-		var/obj/sinew = V
+	for(var/obj/sinew as anything in meat.guaranteed_butcher_results)
 		var/amount = meat.guaranteed_butcher_results[sinew]
 		for(var/i in 1 to amount)
-			results += new sinew (T)
+			results += new sinew(meat_drop_location)
 		meat.guaranteed_butcher_results.Remove(sinew)
 
 	for(var/obj/item/carrion in results)
@@ -174,7 +147,7 @@
 	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
 /datum/component/butchering/recycler/RegisterWithParent()
-	return
+	return //we do not want the signals the parent (oop definition of parent) has
 
 /datum/component/butchering/recycler/UnregisterFromParent()
 	return

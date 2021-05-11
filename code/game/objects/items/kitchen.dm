@@ -110,7 +110,7 @@
 
 ///Adds the butchering component, used to override stats for special cases
 /obj/item/kitchen/knife/proc/set_butchering()
-	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
+	AddComponent(/datum/component/butchering, speed = 80 - force, effectiveness = 100, bonus_modifier = force - 10) //bonus chance increases depending on force
 
 /obj/item/kitchen/knife/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
@@ -197,7 +197,7 @@
 	icon_state = "huntingknife"
 
 /obj/item/kitchen/knife/hunting/set_butchering()
-	AddComponent(/datum/component/butchering, 80 - force, 100, force + 10)
+	AddComponent(/datum/component/butchering, speed = 80 - force, effectiveness = 100, bonus_modifier = force + 10)
 
 /obj/item/kitchen/knife/combat
 	name = "combat knife"
