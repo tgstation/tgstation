@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/pointed/griffin_convert
 	name = "Convert"
 	desc = "Convert people into your henchmen."
-	charge_max = 35 SECONDS
+	charge_max = 1 MINUTES
 	clothes_req = FALSE
 	invocation = "Join the Tide!"
 	invocation_type = INVOCATION_SHOUT
@@ -32,4 +32,8 @@
 		to_chat(user, "<span class='warning'>You attempt to convert [targeted], but they are mindshielded!</span>")
 		return TRUE //It counts!
 
-	brainwash(targeted, "You are a tider now! Serve the tide and assist The Griffin no matter the cost!")
+	if(targeted.flash_act(1, 1)) //Basically headrev's flash, but with cooldown and an invocation.
+		brainwash(targeted, "You are a tider now! Serve the tide and assist The Griffin no matter the cost!")
+		targeted.adjustStaminaLoss(rand(80,120))
+		targeted.Paralyze(rand(25,50))
+	return TRUE

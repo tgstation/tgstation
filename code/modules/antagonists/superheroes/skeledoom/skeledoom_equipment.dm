@@ -13,12 +13,40 @@
 	cold_protection = CHEST|GROIN|ARMS|LEGS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
-/obj/item/clothing/gloves/color/white/skeleton
+/obj/item/clothing/gloves/skeleton
 	name = "skeleton gloves"
-	desc = "Black gloves with bone print of them."
+	desc = "Black gloves with bone print of them and a bunch of odd electronics attached to the fingertips. Strange."
 	icon_state = "skeleton"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
+
+/obj/item/clothing/gloves/skeleton/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_GLOVES)
+		ADD_TRAIT(user, TRAIT_ROBOTIC_FRIEND, CLOTHING_TRAIT)
+		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/hack)
+
+/obj/item/clothing/gloves/skeleton/dropped(mob/user)
+	. = ..()
+	if(user.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
+		REMOVE_TRAIT(user, TRAIT_ROBOTIC_FRIEND, CLOTHING_TRAIT)
+		UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+
+/obj/item/clothing/gloves/skeleton/proc/hack(mob/living/carbon/human/H, atom/A, proximity)
+	if(!proximity)
+		return
+
+	if(!istype(A, /mob/living/simple_animal/bot))
+		return
+
+	var/mob/living/simple_animal/bot/bot = A
+	H.visible_message("<span class='warning'>[H] presses [H.p_their()] fingertips against [bot]'s hatch and [bot.p_they()] starts buzzing oddly.</span>", "<span class='notice'>As you press fingertips against [bot]'s hatch, [src]'s circuits start overloading [bot]'s sensor systems.</span>")
+	if(!do_after(H, 4 SECONDS, target = bot))
+		return
+
+	to_chat("<span class='notice'>You feel a soft buzzing underneath your hand and remove it from [bot]. Now [bot] sees everybody except you as target.</span>")
+	bot.emag_act(H)
+	bot.emag_act(H) //We hack them twice for aggro mode
 
 /obj/item/clothing/mask/gas/skeleton
 	name = "skeleton gas mask"
@@ -31,14 +59,22 @@
 	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 	clothing_flags = THICKMATERIAL
 
-/obj/item/clothing/head/beret/black/skeledoom/cryo
+/obj/item/clothing/head/beret/black/skeledoom/cryo //He gets a bootleg version of wintercoat because... dunno, just thought that it's going to be funny.
 	name = "armored black hood"
-	desc = "A black hood separated from a coat. Not very comfortable."
+	desc = "A black hood separated from a coat. Not very useful nor comfortable."
 	icon_state = "hood_hos"
 	icon = 'icons/obj/clothing/head/winterhood.dmi'
 	worn_icon = 'icons/mob/clothing/head/winterhood.dmi'
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/suit/armor/skeledoom/Initialize()
+	. = ..()
+	allowed = GLOB.security_vest_allowed
+
+/obj/item/clothing/suit/armor/skeledoom/cryo/Initialize()
+	. = ..()
+	allowed = GLOB.security_hardsuit_allowed
 
 //Hardsuit
 
@@ -70,6 +106,7 @@
 	name = "modified sniper rifle"
 	desc = "A modified .50 sniper rifle with a dna-locked pin and a suppressor. It has \"This is my gun, fuck off.\" written on the grip."
 	can_suppress = TRUE
+	can_unsuppress = FALSE
 	fire_delay = 2 //Speedy!
 	pin = /obj/item/firing_pin/dna
 
@@ -77,6 +114,8 @@
 	. = ..()
 	var/obj/item/suppressor/suppressor = new(src)
 	install_suppressor(suppressor)
+	qdel(magazine)
+	magazine = new /obj/item/ammo_box/magazine/sniper_rounds/taser(src)
 
 /obj/projectile/bullet/p50/smoke
 	name =".50 smoke bullet"

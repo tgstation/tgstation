@@ -250,3 +250,6 @@
 	var/obj/vehicle/ridden/wheelchair/motorized/our_chair = parent
 	if(istype(our_chair) && our_chair.power_cell)
 		our_chair.power_cell.use(our_chair.power_usage / max(our_chair.power_efficiency, 1) * 0.05)
+
+/datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes/ianiser
+	vehicle_move_delay = 0

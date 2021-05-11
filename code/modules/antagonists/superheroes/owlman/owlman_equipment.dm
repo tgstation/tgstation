@@ -71,3 +71,28 @@
 	new /obj/item/grenade/smokebomb(src)
 	new /obj/item/grenade/smokebomb(src)
 	new /obj/item/grenade/smokebomb(src)
+
+/obj/item/clothing/suit/hooded/wintercoat/owlman
+	name = "Owlman's wintercoat"
+	desc = "A wintercoat with cloth wings attached to it. Stylish and warm."
+	icon = 'icons/obj/clothing/suits.dmi'
+	icon_state = "owl_wings_cryo"
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+
+	clothing_flags = THICKMATERIAL //We don't wanna to get fucked up by BuzzOn's bees, don't we?
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
+
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/owlman
+	actions_types = list(/datum/action/item_action/toggle_wings)
+
+/obj/item/clothing/suit/hooded/wintercoat/owlman/Initialize()
+	. = ..()
+	allowed = GLOB.security_hardsuit_allowed
+
+/obj/item/clothing/head/hooded/winterhood/owlman
+	name = "brown winter hood"
+	desc = "A brown winter hood with a bunch of synthetic feathers stuck to it."
+	icon_state = "hood_owlman"
+
+	clothing_flags = THICKMATERIAL
+	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)

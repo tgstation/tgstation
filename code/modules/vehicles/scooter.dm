@@ -290,3 +290,9 @@
 	instability = 8
 	wheel_name = "skis"
 	component_type = /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes
+
+/obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes/ianiser
+	name = "advanced ski shoes"
+	desc = "Advanced ski shoes that provide great speed in cost of stability."
+	instability = 12
+	component_type = /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes/ianiser

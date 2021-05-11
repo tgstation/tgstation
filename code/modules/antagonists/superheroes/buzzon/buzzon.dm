@@ -30,8 +30,10 @@
 	back = /obj/item/melee/beesword/buzzon/cryo
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/blue
 	implants = list(/obj/item/implant/spell/specified_type/bees/cryo)
+	suit_store = /obj/item/tank/internals/oxygen
+	internals_slot = ITEM_SLOT_SUITSTORE
 
-/datum/outfit/superhero/buzzon
+/datum/outfit/superhero/buzzon/space
 	name = "BuzzOn (Operation Starbird)"
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/buzzon
 	suit_store = /obj/item/tank/internals/oxygen
@@ -45,8 +47,6 @@
 	ears = /obj/item/radio/headset
 	implants = list(/obj/item/implant/spell/specified_type/bees)
 
-/obj/machinery/suit_storage_unit/superhero/buzzon
-	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi/buzzon
-	helmet_type = null
-	mask_type = /obj/item/clothing/mask/gas
-	storage_type = /obj/item/tank/internals/oxygen
+/datum/outfit/superhero/buzzon_nude/spawner
+	name = "BuzzOn (Spawner)"
+	implants = list()

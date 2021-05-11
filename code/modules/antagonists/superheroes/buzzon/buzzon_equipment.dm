@@ -24,7 +24,7 @@
 /obj/item/clothing/shoes/sneakers/buzzon
 	name = "BuzzOn shoes"
 	desc = "Shoes of a bee that became human, rumors say that they buzz when you walk in them."
-	greyscale_colors = "#f6c61a#ffffff"
+	greyscale_colors = "#000000#f6c61a"
 
 	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 
@@ -60,6 +60,14 @@
 	cold_protection = CHEST|GROIN|ARMS|LEGS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
+/obj/item/clothing/suit/hooded/bee_costume/buzzon/Initialize()
+	. = ..()
+	allowed = GLOB.security_vest_allowed
+
+/obj/item/clothing/suit/hooded/bee_costume/buzzon/cryo/Initialize()
+	. = ..()
+	allowed = GLOB.security_hardsuit_allowed
+
 /obj/item/clothing/suit/hooded/bee_costume/buzzon/proc/recall_sword()
 	if(!ishuman(loc))
 		return
@@ -81,7 +89,7 @@
 		if(isliving(linked_sword.loc))
 			var/mob/living/current_owner = linked_sword.loc
 			current_owner.dropItemToGround(linked_sword)
-			current_owner.visible_message("<span class='warning'>[linked_sword]'s small rocket engine suddenly activates and rips it out of your hand!</span>")
+			to_chat(current_owner, "<span class='warning'>[linked_sword]'s small rocket engine suddenly activates and rips it out of your hand!</span>")
 		linked_sword.throw_at(owner, 10, 2)
 
 /obj/item/clothing/head/hooded/bee_hood/full //It's not a helmet because I want tackles and flashbangs to fuck you up
@@ -92,7 +100,6 @@
 	body_parts_covered = HEAD
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
-	v
 
 /obj/item/clothing/head/hooded/bee_hood/full/cryo
 	icon_state = "bee_full_cryo"

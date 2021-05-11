@@ -80,6 +80,7 @@
 	charge_max = 25 SECONDS
 	range = -1
 	include_user = TRUE
+	clothes_req = FALSE
 	invocation = "SHOOO!!"
 	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "owl_sweep"

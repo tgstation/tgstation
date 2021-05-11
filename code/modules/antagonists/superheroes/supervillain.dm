@@ -2,7 +2,8 @@
 	name = "Default Supervillain Outfit"
 	uniform = /obj/item/clothing/under/color/black
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	id_trim = /datum/id_trim/chameleon/operative
+	id = /obj/item/card/id/advanced/black
+	id_trim = /datum/id_trim/centcom/superhero/supervillain
 
 /datum/antagonist/supervillain
 	name = "Supervillain"
@@ -14,7 +15,7 @@
 
 /datum/antagonist/supervillain/greet()
 	to_chat(owner, "<span class='boldannounce'>You are a Supervillain!</span>")
-	to_chat(owner, "<B>Your main goal is to catch your enemies, Superheroes. Althrough you may mildly antagonise the station, mass-murdering and griefing players is not allowed.</B>")
+	to_chat(owner, "<B>Your main goal is to catch your enemies, Superheroes. Althrough you may antagonise the station, mass-murdering is not allowed.</B>")
 	owner.announce_objectives()
 
 /datum/antagonist/supervillain/get_team()

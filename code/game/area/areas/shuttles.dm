@@ -212,3 +212,20 @@
 
 /area/shuttle/caravan/freighter3
 	name = "Tiny Freighter"
+
+////////////////////////////OwlSkip////////////////////////////
+
+/area/shuttle/owlskip
+	name = "OwlSkip"
+	requires_power = TRUE
+	area_limited_icon_smoothing = /area/shuttle/owlskip
+	area_flags = NO_ALERTS
+
+/area/shuttle/owlskip/bridge
+	name = "OwlSkip Bridge Module"
+
+/area/shuttle/owlskip/starboard
+	name = "OwlSkip Starboard Module"
+
+/area/shuttle/owlskip/port
+	name = "OwlSkip Port Module"

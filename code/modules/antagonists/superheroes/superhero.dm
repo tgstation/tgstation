@@ -5,6 +5,7 @@
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset
 	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/centcom/superhero
 
 /datum/antagonist/superhero
 	name = "Superhero"

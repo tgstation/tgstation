@@ -27,10 +27,10 @@
 	if(!H.mind)
 		return
 
-	var/obj/effect/proc_holder/spell/spell = new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long/owlman
+	var/obj/effect/proc_holder/spell/spell = new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long/owlman()
 	H.mind.AddSpell(spell)
 
-	var/obj/effect/proc_holder/spell/spell2 = new /obj/effect/proc_holder/spell/targeted/owl_rush
+	var/obj/effect/proc_holder/spell/spell2 = new /obj/effect/proc_holder/spell/targeted/owl_rush()
 	H.mind.AddSpell(spell2)
 
 /datum/outfit/superhero/owlman_nude
@@ -47,14 +47,15 @@
 	if(!H.mind)
 		return
 
-	var/obj/effect/proc_holder/spell/spell = new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long/owlman
+	var/obj/effect/proc_holder/spell/spell = new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long/owlman()
 	H.mind.AddSpell(spell)
 
-	var/obj/effect/proc_holder/spell/spell2 = new /obj/effect/proc_holder/spell/targeted/owl_rush
+	var/obj/effect/proc_holder/spell/spell2 = new /obj/effect/proc_holder/spell/targeted/owl_rush()
 	H.mind.AddSpell(spell2)
 
-/obj/machinery/suit_storage_unit/superhero/owlman
-	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi/owl
-	helmet_type = null
-	mask_type = /obj/item/clothing/mask/gas/owl_mask
-	storage_type = /obj/item/tank/internals/oxygen
+/datum/outfit/superhero/owlman/winter
+	name = "Owlman (Operation Cryostung)"
+	suit = /obj/item/clothing/suit/hooded/wintercoat/owlman
+	shoes = /obj/item/clothing/shoes/winterboots
+	suit_store = /obj/item/tank/internals/oxygen
+	internals_slot = ITEM_SLOT_SUITSTORE

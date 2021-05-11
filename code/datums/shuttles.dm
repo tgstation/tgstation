@@ -702,3 +702,11 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/superhero
+	port_id = "superhero"
+	name = "Default superhero shuttle"
+
+/datum/map_template/shuttle/superhero/owlskip
+	suffix = "owlskip"
+	name = "OwlSkip"

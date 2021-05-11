@@ -168,3 +168,21 @@
 	. = ..()
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
+
+/// Trims for Superheroes and Supervillains. Both get full station access.
+
+/datum/id_trim/centcom/superhero
+	assignment = "Superhero"
+	trim_state = "trim_ert_commander"
+
+/datum/id_trim/centcom/superhero/New()
+	. = ..()
+	access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
+
+/datum/id_trim/centcom/superhero/supervillain
+	assignment = "Supervillain"
+	trim_state = "trim_syndicate"
+
+/datum/id_trim/centcom/superhero/supervillain/New()
+	. = ..()
+	access += ACCESS_SYNDICATE

@@ -4,7 +4,7 @@
 	suit = /obj/item/clothing/suit/armor/skeledoom
 	shoes = /obj/item/clothing/shoes/jackboots
 	ears = /obj/item/radio/headset
-	gloves = /obj/item/clothing/gloves/color/white/skeleton
+	gloves = /obj/item/clothing/gloves/skeleton
 	mask = /obj/item/clothing/mask/gas/skeleton
 	head = /obj/item/clothing/head/beret/black/skeledoom
 	back = /obj/item/gun/ballistic/automatic/sniper_rifle/skeledoom
@@ -33,7 +33,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	ears = /obj/item/radio/headset
-	gloves = /obj/item/clothing/gloves/color/white/skeleton
+	gloves = /obj/item/clothing/gloves/skeleton
 	implants = list(/obj/item/implant/stealth)
 
 /obj/machinery/suit_storage_unit/superhero/skeledoom
@@ -41,3 +41,7 @@
 	helmet_type = null
 	mask_type = /obj/item/clothing/mask/gas/skeleton
 	storage_type = /obj/item/tank/internals/oxygen
+
+/datum/outfit/superhero/villain/skeledoom_nude/spawner
+	name = "SkeleDoom (Spawner)"
+	implants = list()
