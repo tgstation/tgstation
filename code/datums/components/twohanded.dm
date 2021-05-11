@@ -6,17 +6,28 @@
  */
 /datum/component/two_handed
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // Only one of the component can exist on an item
-	var/wielded = FALSE /// Are we holding the two handed item properly
-	var/force_multiplier = 0 /// The multiplier applied to force when wielded, does not work with force_wielded, and force_unwielded
-	var/force_wielded = 0 /// The force of the item when weilded
-	var/force_unwielded = 0 /// The force of the item when unweilded
-	var/wieldsound = FALSE /// Play sound when wielded
-	var/unwieldsound = FALSE /// Play sound when unwielded
-	var/attacksound = FALSE /// Play sound on attack when wielded
-	var/require_twohands = FALSE /// Does it have to be held in both hands
-	var/icon_wielded = FALSE /// The icon that will be used when wielded
-	var/obj/item/offhand/offhand_item = null /// Reference to the offhand created for the item
-	var/sharpened_increase = 0 /// The amount of increase recived from sharpening the item
+	/// Are we holding the two handed item properly
+	var/wielded = FALSE
+	/// The multiplier applied to force when wielded, does not work with force_wielded, and force_unwielded
+	var/force_multiplier
+	/// The force of the item when weilded
+	var/force_wielded
+	/// The force of the item when unweilded
+	var/force_unwielded
+	/// Play sound when wielded
+	var/wieldsound
+	/// Play sound when unwielded
+	var/unwieldsound
+	/// Play sound on attack when wielded
+	var/attacksound
+	/// Does it have to be held in both hands
+	var/require_twohands = FALSE
+	/// The icon that will be used when wielded
+	var/icon_wielded = FALSE
+	/// Reference to the offhand created for the item
+	var/obj/item/offhand/offhand_item = null
+	/// The amount of increase recived from sharpening the item
+	var/sharpened_increase = 0
 /**
 
  * Two Handed component
@@ -31,7 +42,7 @@
  * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
  * * icon_wielded (optional) The icon to be used when wielded
  */
-/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound=FALSE, unwieldsound=FALSE, attacksound=FALSE, \
+/datum/component/two_handed/Initialize(require_twohands=FALSE, wieldsound, unwieldsound, attacksound, \
 										force_multiplier=0, force_wielded=0, force_unwielded=0, icon_wielded=FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -118,6 +129,12 @@
 		unwield(user)
 	else if(user.is_holding(parent))
 		wield(user)
+		user.update_inv_hands()
+
+	if(isitem(parent))
+		var/obj/item/butchering_tool = parent
+		for(var/datum/action/action as anything in butchering_tool.actions)
+			action.UpdateButtonIcon()
 
 /**
  * Wield the two handed item in both hands

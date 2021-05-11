@@ -10,19 +10,34 @@
 
 /obj/item/clothing/gloves/butchering/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 5, 125, null, null, TRUE, TRUE)
+	//some clarified arguments
+	var/speed = 0.5 SECONDS
+	var/effectiveness = 125
+	var/bonus_modifier = 0
+	var/butcher_sound = 'sound/effects/butcher.ogg'
+	var/can_be_blunt = TRUE
+	var/butchering_enabled = FALSE
+	var/enable_butchering_signals = list(COMSIG_ITEM_EQUIPPED)
+	var/disable_butchering_signals = list(COMSIG_ITEM_PRE_UNEQUIP)
+	AddComponent(
+		/datum/component/butchering,\
+		speed,\
+		effectiveness,\
+		bonus_modifier,\
+		butcher_sound,\
+		can_be_blunt,\
+		butchering_enabled,\
+		enable_butchering_signals,\
+		disable_butchering_signals\
+	)
 
 /obj/item/clothing/gloves/butchering/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
 	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/butcher_target)
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = TRUE
 
 /obj/item/clothing/gloves/butchering/dropped(mob/user, silent = FALSE)
 	. = ..()
 	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = FALSE
 
 /obj/item/clothing/gloves/butchering/proc/butcher_target(mob/user, atom/target, proximity)
 	if(!isliving(target))

@@ -923,6 +923,13 @@
 ///sent from mecha action buttons to the mecha they're linked to
 #define COMSIG_MECHA_ACTION_TRIGGER "mecha_action_activate"
 
+// /obj/item/mecha_parts/mecha_equipment signals, sorted close to mecha signals so you can find it easier
+
+///from base of /obj/item/mecha_parts/mecha_equipment/proc/attach(): (mecha)
+#define COMSIG_MECHA_EQUIPMENT_ATTACHED "mecha_equipment_attached"
+///from base of /obj/item/mecha_parts/mecha_equipment/proc/detach(): ()
+#define COMSIG_MECHA_EQUIPMENT_DETACHED "mecha_equipment_detached"
+
 
 // /mob/living/carbon/human signals
 

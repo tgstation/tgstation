@@ -118,24 +118,24 @@
 		return TRUE
 	return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/M)
-	LAZYADD(M.equipment, src)
-	chassis = M
-	forceMove(M)
+/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/mecha)
+	LAZYADD(mecha.equipment, src)
+	chassis = mecha
+	forceMove(mecha)
+	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_ATTACHED, mecha)
 	log_message("[src] initialized.", LOG_MECHA)
 	update_chassis_page()
-	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
+/obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto = null)
 	moveto = moveto || get_turf(chassis)
 	if(src.Move(moveto))
+		SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_DETACHED)
 		LAZYREMOVE(chassis.equipment, src)
 		if(chassis.selected == src)
 			chassis.selected = null
 		update_chassis_page()
 		log_message("[src] removed from equipment.", LOG_MECHA)
 		chassis = null
-	return
 
 
 /obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)

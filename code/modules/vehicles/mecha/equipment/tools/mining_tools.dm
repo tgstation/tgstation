@@ -22,7 +22,26 @@
 
 /obj/item/mecha_parts/mecha_equipment/drill/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 50, 100, null, null, TRUE)
+	//some clarified arguments
+	var/speed = 5 SECONDS
+	var/effectiveness = 100
+	var/bonus_modifier = 0
+	var/butcher_sound = 'sound/effects/butcher.ogg'
+	var/can_be_blunt = TRUE
+	var/butchering_enabled = FALSE
+	var/enable_butchering_signals = list(COMSIG_MECHA_EQUIPMENT_ATTACHED)
+	var/disable_butchering_signals = list(COMSIG_MECHA_EQUIPMENT_DETACHED)
+	AddComponent(\
+		/datum/component/butchering,\
+		speed,\
+		effectiveness,\
+		bonus_modifier,\
+		butcher_sound,\
+		can_be_blunt,\
+		butchering_enabled,\
+		enable_butchering_signals,\
+		disable_butchering_signals\
+	)
 
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, params)
 	// Check if we can even use the equipment to begin with.
@@ -111,16 +130,6 @@
 		if(istype(M, /obj/vehicle/sealed/mecha/working) || istype(M, /obj/vehicle/sealed/mecha/combat))
 			return TRUE
 	return FALSE
-
-/obj/item/mecha_parts/mecha_equipment/drill/attach(obj/vehicle/sealed/mecha/M)
-	..()
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = TRUE
-
-/obj/item/mecha_parts/mecha_equipment/drill/detach(atom/moveto)
-	..()
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/living/user)
 	target.visible_message("<span class='danger'>[chassis] is drilling [target] with [src]!</span>", \

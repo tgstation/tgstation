@@ -1,85 +1,110 @@
 /datum/component/butchering
 	/// Time in deciseconds taken to butcher something
-	var/speed = 8 SECONDS
+	var/speed
 	/// Percentage effectiveness; numbers above 100 yield extra drops
-	var/effectiveness = 100
+	var/effectiveness
 	/// Percentage increase to bonus item chance
-	var/bonus_modifier = 0
+	var/bonus_modifier
 	/// Sound played when butchering
-	var/butcher_sound = 'sound/effects/butcher.ogg'
-	/// Whether or not this component can be used to butcher currently. Used to temporarily disable butchering
-	var/butchering_enabled = TRUE
+	var/butcher_sound
 	/// Whether or not this component is compatible with blunt tools.
-	var/can_be_blunt = FALSE
+	var/can_be_blunt
+	/// For some items, the butchering needs to be conditional, see the lists below
+	var/butchering_enabled
+	/// signals to turn butchering_enabled on
+	var/list/enable_butchering_signals
+	/// signals to turn butchering_enabled off
+	var/list/disable_butchering_signals
 
-/datum/component/butchering/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt)
-	if(_speed)
-		speed = _speed
-	if(_effectiveness)
-		effectiveness = _effectiveness
-	if(_bonus_modifier)
-		bonus_modifier = _bonus_modifier
-	if(_butcher_sound)
-		butcher_sound = _butcher_sound
-	if(disabled)
-		butchering_enabled = FALSE
-	if(_can_be_blunt)
-		can_be_blunt = _can_be_blunt
-	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
+/datum/component/butchering/Initialize(
+	speed = 8 SECONDS,
+	effectiveness = 100,
+	bonus_modifier = 0,
+	butcher_sound = 'sound/effects/butcher.ogg',
+	can_be_blunt = FALSE,
+	butchering_enabled = TRUE,
+	enable_butchering_signals = list(),
+	disable_butchering_signals = list()
+)
+	src.speed = speed
+	src.effectiveness = effectiveness
+	src.bonus_modifier = bonus_modifier
+	src.butcher_sound = butcher_sound
+	src.can_be_blunt = can_be_blunt
+	src.butchering_enabled = butchering_enabled
+	src.enable_butchering_signals = enable_butchering_signals
+	src.disable_butchering_signals = disable_butchering_signals
 
-/datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
+/datum/component/butchering/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_item_attacking)
+	RegisterSignal(parent, enable_butchering_signals, .proc/enable_butchering)
+	RegisterSignal(parent, disable_butchering_signals, .proc/enable_butchering)
+
+/datum/component/butchering/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
+	UnregisterSignal(parent, enable_butchering_signals)
+	UnregisterSignal(parent, disable_butchering_signals)
+
+/datum/component/butchering/proc/enable_butchering(datum/source)
+	SIGNAL_HANDLER
+	butchering_enabled = TRUE
+
+/datum/component/butchering/proc/disable_butchering(datum/source)
+	SIGNAL_HANDLER
+	butchering_enabled = FALSE
+
+/datum/component/butchering/proc/on_item_attacking(obj/item/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
+	if(target.stat == DEAD && (target.butcher_results || target.guaranteed_butcher_results)) //can we butcher it?
 		if(butchering_enabled && (can_be_blunt || source.get_sharpness()))
-			INVOKE_ASYNC(src, .proc/startButcher, source, M, user)
+			INVOKE_ASYNC(src, .proc/startButcher, source, target, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(ishuman(M) && source.force && source.get_sharpness())
-		var/mob/living/carbon/human/H = M
-		if((user.pulling == H && user.grab_state >= GRAB_AGGRESSIVE) && user.zone_selected == BODY_ZONE_HEAD) // Only aggressive grabbed can be sliced.
-			if(H.has_status_effect(/datum/status_effect/neck_slice))
-				user.show_message("<span class='warning'>[H]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
+	if(ishuman(target) && source.force && source.get_sharpness())
+		var/mob/living/carbon/human/human_victim = target
+		if((user.pulling == human_victim && user.grab_state >= GRAB_AGGRESSIVE) && user.zone_selected == BODY_ZONE_HEAD) // Only aggressive grabbed can be sliced.
+			if(human_victim.has_status_effect(/datum/status_effect/neck_slice))
+				user.show_message("<span class='warning'>[human_victim]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
 								"<span class='warning'>Their neck has already been already cut, you can't make the bleeding any worse!</span>")
 				return COMPONENT_CANCEL_ATTACK_CHAIN
-			INVOKE_ASYNC(src, .proc/startNeckSlice, source, H, user)
+			INVOKE_ASYNC(src, .proc/startNeckSlice, source, human_victim, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)
-	to_chat(user, "<span class='notice'>You begin to butcher [M]...</span>")
-	playsound(M.loc, butcher_sound, 50, TRUE, -1)
-	if(do_mob(user, M, speed) && M.Adjacent(source))
-		Butcher(user, M)
+/datum/component/butchering/proc/startButcher(obj/item/source, mob/living/target, mob/living/user)
+	to_chat(user, "<span class='notice'>You begin to butcher [target]...</span>")
+	playsound(target.loc, butcher_sound, 50, TRUE, -1)
+	if(do_mob(user, target, speed) && target.Adjacent(source))
+		Butcher(user, target)
 
-/datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/H, mob/living/user)
-	if(DOING_INTERACTION_WITH_TARGET(user, H))
-		to_chat(user, "<span class='warning'>You're already interacting with [H]!</span>")
+/datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/human_victim, mob/living/user)
+	if(DOING_INTERACTION_WITH_TARGET(user, human_victim))
+		to_chat(user, "<span class='warning'>You're already interacting with [human_victim]!</span>")
 		return
 
-	user.visible_message("<span class='danger'>[user] is slitting [H]'s throat!</span>", \
-					"<span class='danger'>You start slicing [H]'s throat!</span>", \
-					"<span class='hear'>You hear a cutting noise!</span>", ignored_mobs = H)
-	H.show_message("<span class='userdanger'>Your throat is being slit by [user]!</span>", MSG_VISUAL, \
+	user.visible_message("<span class='danger'>[user] is slitting [human_victim]'s throat!</span>", \
+					"<span class='danger'>You start slicing [human_victim]'s throat!</span>", \
+					"<span class='hear'>You hear a cutting noise!</span>", ignored_mobs = human_victim)
+	human_victim.show_message("<span class='userdanger'>Your throat is being slit by [user]!</span>", MSG_VISUAL, \
 					"<span class = 'userdanger'>Something is cutting into your neck!</span>", NONE)
-	log_combat(user, H, "attempted throat slitting", source)
+	log_combat(user, human_victim, "attempted throat slitting", source)
 
-	playsound(H.loc, butcher_sound, 50, TRUE, -1)
-	if(do_mob(user, H, clamp(500 / source.force, 30, 100)) && H.Adjacent(source))
-		if(H.has_status_effect(/datum/status_effect/neck_slice))
-			user.show_message("<span class='warning'>[H]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
+	playsound(human_victim.loc, butcher_sound, 50, TRUE, -1)
+	if(do_mob(user, human_victim, clamp(500 / source.force, 30, 100)) && human_victim.Adjacent(source))
+		if(human_victim.has_status_effect(/datum/status_effect/neck_slice))
+			user.show_message("<span class='warning'>[human_victim]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
 							"<span class='warning'>Their neck has already been already cut, you can't make the bleeding any worse!</span>")
 			return
 
-		H.visible_message("<span class='danger'>[user] slits [H]'s throat!</span>", \
+		human_victim.visible_message("<span class='danger'>[user] slits [human_victim]'s throat!</span>", \
 					"<span class='userdanger'>[user] slits your throat...</span>")
-		log_combat(user, H, "wounded via throat slitting", source)
-		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
-		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
+		log_combat(user, human_victim, "wounded via throat slitting", source)
+		human_victim.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
+		var/obj/item/bodypart/slit_throat = human_victim.get_bodypart(BODY_ZONE_HEAD)
 		if(slit_throat)
 			var/datum/wound/slash/critical/screaming_through_a_slit_throat = new
 			screaming_through_a_slit_throat.apply_wound(slit_throat)
-		H.apply_status_effect(/datum/status_effect/neck_slice)
+		human_victim.apply_status_effect(/datum/status_effect/neck_slice)
 
 /**
  * Handles a user butchering a target
@@ -147,6 +172,12 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, parent, loc_connections)
+
+/datum/component/butchering/recycler/RegisterWithParent()
+	return
+
+/datum/component/butchering/recycler/UnregisterFromParent()
+	return
 
 /datum/component/butchering/recycler/proc/on_entered(datum/source, mob/living/L)
 	SIGNAL_HANDLER
