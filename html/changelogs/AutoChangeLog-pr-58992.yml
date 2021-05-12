@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Blazing Oil blobs can now be damaged by sprayed water from fire
+extinguishers, as intended."
