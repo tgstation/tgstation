@@ -24,8 +24,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	announce_span = "danger"
 	announce_text = "Dynamic mode!" // This needs to be changed maybe
 
-	reroll_friendly = FALSE
-
 	// Threat logging vars
 	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
 	var/threat_level = 0
@@ -158,6 +156,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Can differ from the actual threat amount.
 	var/shown_threat
 
+	/// What is the lower bound of when the roundstart annoucement is sent out?
+	var/waittime_l = 600
+	/// What is the higher bound of when the roundstart annoucement is sent out?
+	var/waittime_h = 1800
+
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</a><BR>"
@@ -258,7 +261,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return rule.round_result()
 	return ..()
 
-/datum/game_mode/dynamic/send_intercept()
+/datum/game_mode/dynamic/proc/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	switch(round(shown_threat))
 		if(0 to 19)
@@ -324,9 +327,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	round_start_budget = round((lorentz_to_amount(relative_round_start_budget_scale) / 100) * threat_level, 0.1)
 	initial_round_start_budget = round_start_budget
 	mid_round_budget = threat_level - round_start_budget
-
-/datum/game_mode/dynamic/can_start()
-	return TRUE
 
 /datum/game_mode/dynamic/proc/setup_parameters()
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
@@ -419,6 +419,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
+
+	if (!CONFIG_GET(flag/no_intercept_report))
+		addtimer(CALLBACK(src, .proc/send_intercept), rand(waittime_l, waittime_h))
+
 	..()
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.

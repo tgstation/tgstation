@@ -212,19 +212,13 @@ SUBSYSTEM_DEF(ticker)
 	var/init_start = world.timeofday
 
 	mode = new /datum/game_mode/dynamic
-	if(!mode.can_start())
-		to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby.")
-		qdel(mode)
-		mode = null
-		SSjob.ResetOccupations()
-		return FALSE
 
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup() //Choose antagonists
 	CHECK_TICK
-	can_continue = can_continue && SSjob.DivideOccupations(mode.required_jobs) //Distribute jobs
+	can_continue = can_continue && SSjob.DivideOccupations() //Distribute jobs
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
