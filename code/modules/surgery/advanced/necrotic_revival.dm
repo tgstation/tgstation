@@ -12,8 +12,8 @@
 
 /datum/surgery/advanced/necrotic_revival/can_start(mob/user, mob/living/carbon/target)
 	. = ..()
-	var/obj/item/organ/zombie_infection/ZI = target.getorganslot(ORGAN_SLOT_ZOMBIE)
-	if(ZI)
+	var/obj/item/organ/zombie_infection/z_infect = target.getorganslot(ORGAN_SLOT_ZOMBIE)
+	if(z_infect)
 		return FALSE
 
 /datum/surgery_step/bionecrosis
@@ -33,6 +33,6 @@
 		"<span class='notice'>[user] successfully grows a romerol tumor on [target]'s brain!</span>",
 		"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
 	if(!target.getorganslot(ORGAN_SLOT_ZOMBIE))
-		var/obj/item/organ/zombie_infection/ZI = new()
-		ZI.Insert(target)
+		var/obj/item/organ/zombie_infection/z_infect = new()
+		z_infect.Insert(target)
 	return ..()

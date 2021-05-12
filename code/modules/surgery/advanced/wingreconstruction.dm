@@ -27,13 +27,13 @@
 
 /datum/surgery_step/wing_reconstruction/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
+		var/mob/living/carbon/human/human = target
 		display_results(user, target, "<span class='notice'>You succeed in reconstructing [target]'s wings.</span>",
 			"<span class='notice'>[user] successfully reconstructs [target]'s wings!</span>",
 			"<span class='notice'>[user] completes the surgery on [target]'s wings.</span>")
-		if(H.dna.features["original_moth_wings"] != null)
-			H.dna.features["moth_wings"] = H.dna.features["original_moth_wings"]
+		if(human.dna.features["original_moth_wings"] != null)
+			human.dna.features["moth_wings"] = human.dna.features["original_moth_wings"]
 		else
-			H.dna.features["moth_wings"] = "Plain"
-		H.update_mutant_bodyparts()
+			human.dna.features["moth_wings"] = "Plain"
+		human.update_mutant_bodyparts()
 	return ..()

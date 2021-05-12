@@ -8,7 +8,7 @@
 	name = "replace limb"
 	implements = list(/obj/item/bodypart = 100, /obj/item/borg/apparatus/organ_storage = 100)
 	time = 32
-	var/obj/item/bodypart/L = null // L because "limb"
+	var/obj/item/bodypart/limb = null // "limb" because "limb"
 
 
 /datum/surgery_step/replace_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -24,8 +24,8 @@
 	if(aug.body_zone != target_zone)
 		to_chat(user, "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>")
 		return -1
-	L = surgery.operated_bodypart
-	if(L)
+	limb = surgery.operated_bodypart
+	if(limb)
 		display_results(user, target, "<span class='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>",
 			"<span class='notice'>[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug].</span>",
 			"<span class='notice'>[user] begins to augment [target]'s [parse_zone(user.zone_selected)].</span>")
@@ -45,7 +45,7 @@
 //SURGERY STEP SUCCESSES
 
 /datum/surgery_step/replace_limb/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery, default_display_results = FALSE)
-	if(L)
+	if(limb)
 		if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 			tool.icon_state = initial(tool.icon_state)
 			tool.desc = initial(tool.desc)

@@ -19,14 +19,14 @@
 
 /datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if ishuman(target)
-		var/mob/living/carbon/human/H = target
-		if (!(NOBLOOD in H.dna.species.species_traits))
-			display_results(user, target, "<span class='notice'>Blood pools around the incision in [H]'s [parse_zone(target_zone)].</span>",
-				"<span class='notice'>Blood pools around the incision in [H]'s [parse_zone(target_zone)].</span>",
+		var/mob/living/carbon/human/human = target
+		if (!(NOBLOOD in human.dna.species.species_traits))
+			display_results(user, target, "<span class='notice'>Blood pools around the incision in [human]'s [parse_zone(target_zone)].</span>",
+				"<span class='notice'>Blood pools around the incision in [human]'s [parse_zone(target_zone)].</span>",
 				"")
-			var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-			if(BP)
-				BP.generic_bleedstacks += 10
+			var/obj/item/bodypart/bodypart = target.get_bodypart(target_zone)
+			if(bodypart)
+				bodypart.generic_bleedstacks += 10
 	return ..()
 
 /datum/surgery_step/incise/nobleed/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -49,10 +49,10 @@
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
 		target.heal_bodypart_damage(20,0)
 	if (ishuman(target))
-		var/mob/living/carbon/human/H = target
-		var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
-		if(BP)
-			BP.generic_bleedstacks -= 3
+		var/mob/living/carbon/human/human = target
+		var/obj/item/bodypart/bodypart = human.get_bodypart(target_zone)
+		if(bodypart)
+			bodypart.generic_bleedstacks -= 3
 	return ..()
 
 //retract skin
@@ -90,10 +90,10 @@
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
 		target.heal_bodypart_damage(45,0)
 	if (ishuman(target))
-		var/mob/living/carbon/human/H = target
-		var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
-		if(BP)
-			BP.generic_bleedstacks -= 3
+		var/mob/living/carbon/human/human = target
+		var/obj/item/bodypart/bodypart = human.get_bodypart(target_zone)
+		if(bodypart)
+			bodypart.generic_bleedstacks -= 3
 	return ..()
 
 

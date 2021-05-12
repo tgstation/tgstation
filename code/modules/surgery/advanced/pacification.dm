@@ -14,8 +14,8 @@
 
 /datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target)
 	. = ..()
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
+	var/obj/item/organ/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!brain)
 		return FALSE
 
 /datum/surgery_step/pacify

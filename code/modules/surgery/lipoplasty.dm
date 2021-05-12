@@ -5,8 +5,8 @@
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
 	if(HAS_TRAIT(target, TRAIT_FAT) && target.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 //cut fat
@@ -25,7 +25,7 @@
 	display_results(user, target, "<span class='notice'>You cut [target]'s excess fat loose.</span>",
 			"<span class='notice'>[user] cuts [target]'s excess fat loose!</span>",
 			"<span class='notice'>[user] finishes the cut on [target]'s [target_zone].</span>")
-	return 1
+	return TRUE
 
 //remove fat
 /datum/surgery_step/remove_fat
@@ -46,17 +46,17 @@
 	var/removednutriment = target.nutrition
 	target.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 	removednutriment -= NUTRITION_LEVEL_WELL_FED //whatever was removed goes into the meat
-	var/mob/living/carbon/human/H = target
+	var/mob/living/carbon/human/human = target
 	var/typeofmeat = /obj/item/food/meat/slab/human
 
-	if(H.dna && H.dna.species)
-		typeofmeat = H.dna.species.meat
+	if(human.dna && human.dna.species)
+		typeofmeat = human.dna.species.meat
 
 	var/obj/item/food/meat/slab/human/newmeat = new typeofmeat
 	newmeat.name = "fatty meat"
 	newmeat.desc = "Extremely fatty tissue taken from a patient."
-	newmeat.subjectname = H.real_name
-	newmeat.subjectjob = H.job
+	newmeat.subjectname = human.real_name
+	newmeat.subjectjob = human.job
 	newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, (removednutriment / 15)) //To balance with nutriment_factor of nutriment
 	newmeat.forceMove(target.loc)
 	return ..()

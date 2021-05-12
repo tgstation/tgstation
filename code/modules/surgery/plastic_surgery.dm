@@ -40,8 +40,8 @@
 			"<span class='notice'>[user] alters [oldname]'s appearance completely, [target.p_they()] is now [newname]!</span>",
 			"<span class='notice'>[user] finishes the operation on [target]'s face.</span>")
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.sec_hud_set_ID()
+		var/mob/living/carbon/human/human = target
+		human.sec_hud_set_ID()
 	return ..()
 
 /datum/surgery_step/reshape_face/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

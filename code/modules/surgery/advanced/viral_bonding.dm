@@ -39,7 +39,7 @@
 	display_results(user, target, "<span class='notice'>[target]'s bone marrow begins pulsing slowly. The viral bonding is complete.</span>",
 		"<span class='notice'>[target]'s bone marrow begins pulsing slowly.</span>",
 		"<span class='notice'>[user] finishes the operation.</span>")
-	for(var/X in target.diseases)
-		var/datum/disease/D = X
-		D.carrier = TRUE
+	for(var/target_disease in target.diseases)
+		var/datum/disease/disease = target_disease
+		disease.carrier = TRUE
 	return TRUE
