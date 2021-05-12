@@ -9258,6 +9258,7 @@
 	pixel_x = 26;
 	pixel_y = -26
 	},
+/obj/item/trapdoor_remote,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "aCS" = (
@@ -42423,7 +42424,7 @@
 "mjK" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/iron,
+/turf/open/floor/iron/trapdoor,
 /area/hallway/secondary/command)
 "mjQ" = (
 /obj/structure/toilet{
