@@ -175,6 +175,8 @@
 				mode_name = "honk"
 			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
 				mode_name = "bababooey"
+			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY_ALT)
+				mode_name = "bababooey (varied)"
 		to_chat(user, "<span class='notice'>You set the device's bleep setting to [mode_name] mode")
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -201,6 +203,8 @@
 		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK)
 			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
 		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
+			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABAOOEY_ALT)
 			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, TRUE)
 
 /**
