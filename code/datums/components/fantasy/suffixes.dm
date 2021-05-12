@@ -184,9 +184,9 @@
 /datum/fantasy_affix/curse_of_hunger/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	var/filter_color = "#8a0c0c" //clarified args
-	var/new_name = pick(", eternally hungry", " of the glutton", " cursed with hunger", " consumer of all", " of the feast")
-	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, new_name)
+	var/filter_color = "#8a0c0ca1" //clarified args
+	var/new_name = pick(", eternally hungry", " of the glutton", " cursed with hunger", ", consumer of all", " of the feast")
+	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, new_name, comp)
 	var/add_dropdel = FALSE //clarified boolean
 	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_hunger, add_dropdel)
 	return newName //no spoilers!

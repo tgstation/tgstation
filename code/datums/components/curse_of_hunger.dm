@@ -1,4 +1,3 @@
-
 ///inital food tolerances, two dishes
 #define FULL_HEALTH 2
 ///the point where you can notice the item is hungry on examine.
@@ -29,13 +28,14 @@
 
 /datum/component/curse_of_hunger/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	if(isclothing(parent))
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-		RegisterSignal(parent, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequip)
+	var/obj/item/cursed_item = parent
+	RegisterSignal(cursed_item, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	//checking slot_equipment_priority is the better way to decide if it should be an equip-curse (alternative being if it has slot_flags)
+	//because it needs to know where to equip to (and stuff like buckets and cones can be on_pickup curses despite having slots to equip to)
+	if(cursed_item.slot_equipment_priority)
+		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	else
-		RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/on_pickup)
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+		RegisterSignal(cursed_item, COMSIG_ITEM_PICKUP, .proc/on_pickup)
 
 /datum/component/curse_of_hunger/UnregisterFromParent()
 	. = ..()
@@ -46,12 +46,10 @@
 	SIGNAL_HANDLER
 	if(!awakened)
 		return //we should not reveal we are cursed until equipped
+	if(poison_food_tolerance != FULL_HEALTH)
+		examine_list += "<span class='notice'>[parent] looks sick from something it ate.</span>"
 	if(hunger > HUNGER_THRESHOLD_WARNING)
-		examine_list += "<span class='danger'>[parent] is growling for food...</span>"
-	if(poison_food_tolerance == FULL_HEALTH)
-		examine_list += "<span class='notice'>[parent] looks healthy.</span>"
-	else
-		examine_list += "<span class='notice'>[parent] looks sick.</span>"
+		examine_list += "<span class='danger'>[parent] hungers for something to eat...</span>"
 
 ///signal called from equipping parent
 /datum/component/curse_of_hunger/proc/on_equip(datum/source, mob/equipper, slot)
@@ -77,14 +75,19 @@
 	the_curse_ends(dropper)
 
 /datum/component/curse_of_hunger/proc/the_curse_begins(mob/cursed)
-	var/obj/item/at_least_item = parent
+	var/obj/item/cursed_item = parent
 	awakened = TRUE
 	START_PROCESSING(SSobj, src)
-	ADD_TRAIT(at_least_item, TRAIT_NODROP, CURSED_ITEM_TRAIT(at_least_item.type))
+	ADD_TRAIT(cursed_item, TRAIT_NODROP, CURSED_ITEM_TRAIT(cursed_item.type))
+	ADD_TRAIT(cursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(cursed_item.type))
+	ADD_TRAIT(cursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(cursed_item.type))
 	if(add_dropdel)
-		at_least_item.item_flags |= DROPDEL
-	ADD_TRAIT(cursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(at_least_item.type))
-	ADD_TRAIT(cursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(at_least_item.type))
+		cursed_item.item_flags |= DROPDEL
+		return
+	if(cursed_item.slot_equipment_priority)
+		RegisterSignal(cursed_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequip)
+	else
+		RegisterSignal(cursed_item, COMSIG_ITEM_DROPPED, .proc/on_drop)
 
 /datum/component/curse_of_hunger/proc/the_curse_ends(mob/uncursed)
 	var/obj/item/at_least_item = parent
@@ -92,40 +95,62 @@
 	REMOVE_TRAIT(parent, TRAIT_NODROP, CURSED_ITEM_TRAIT(parent.type))
 	REMOVE_TRAIT(uncursed, TRAIT_CLUMSY, CURSED_ITEM_TRAIT(at_least_item.type))
 	REMOVE_TRAIT(uncursed, TRAIT_PACIFISM, CURSED_ITEM_TRAIT(at_least_item.type))
+	//remove either one of the signals that could have called this proc
+	UnregisterSignal(parent, list(COMSIG_ITEM_POST_UNEQUIP, COMSIG_ITEM_DROPPED))
+
 	var/turf/vomit_turf = get_turf(at_least_item)
 	playsound(vomit_turf, 'sound/effects/splat.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/vomit(vomit_turf)
 
-	//if(!add_dropdel) //will still exist after this, why not make it hunt new targets
+	if(!add_dropdel) //gives a head start for the person to get away from the cursed item before it begins hunting again!
+		addtimer(CALLBACK(src, .proc/seek_new_target), 10 SECONDS)
+
+///proc called after a timer to awaken the AI in the cursed item if it doesn't have a target already.
+/datum/component/curse_of_hunger/proc/seek_new_target()
+	var/obj/item/cursed_item = parent
+	if(iscarbon(cursed_item.loc))
+		return
+	else if(!isturf(cursed_item.loc))
+		cursed_item.forceMove(get_turf(cursed_item))
+	//only taking the most reasonable slot is fine since it unequips what is there to equip itself.
+	cursed_item.AddElement(/datum/element/cursed, cursed_item.slot_equipment_priority[1])
+	cursed_item.visible_message("<span class='warning'>[cursed_item] begins to move on its own...</span>")
 
 /datum/component/curse_of_hunger/process(delta_time)
 	var/obj/item/cursed_item = parent
 	var/mob/living/carbon/cursed = cursed_item.loc
 	///check hp
 	if(!poison_food_tolerance)
-		cursed.dropItemToGround(src, TRUE)
+		cursed.dropItemToGround(cursed_item, TRUE)
 		return
 	hunger++
-	///check hunger
-	if((hunger > HUNGER_THRESHOLD_TRY_EATING) && prob(20))
-		for(var/obj/item/food in cursed.contents)
-			if(!IS_EDIBLE(food))
-				return
-			food.forceMove(cursed.loc)
-			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-			///poisoned food damages it
-			if(istype(food, /obj/item/food/badrecipe))
-				to_chat(cursed, "<span class='warning'>[cursed_item] begins to look sick after eating [food]!</span>")
-				poison_food_tolerance--
-			else
-				to_chat(cursed, "<span class='notice'>[cursed_item] eats your [food] to sate its hunger.</span>")
-			QDEL_NULL(food)
-			hunger = 0
-			return
-		///no food found: it bites you and loses some hp
-		var/affecting = cursed.get_bodypart(BODY_ZONE_CHEST)
-		cursed.apply_damage(60, BRUTE, affecting)
+	if((hunger <= HUNGER_THRESHOLD_TRY_EATING) && prob(20))
+		return
+	//check hungry enough to eat something!
+	for(var/obj/item/food in cursed.contents)
+		if(!IS_EDIBLE(food))
+			continue
+		food.forceMove(cursed.loc)
+		playsound(cursed_item, 'sound/items/eatfood.ogg', 20, TRUE)
+		///poisoned food damages it
+		if(istype(food, /obj/item/food/badrecipe))
+			to_chat(cursed, "<span class='warning'>[cursed_item] eats your [food] to sate its hunger, and looks [pick("queasy", "sick", "iffy", "unwell")] afterwards!</span>")
+			poison_food_tolerance--
+		else
+			to_chat(cursed, "<span class='notice'>[cursed_item] eats your [food] to sate its hunger.</span>")
+		cursed.temporarilyRemoveItemFromInventory(food, force = TRUE)
+		qdel(food)
 		hunger = 0
-		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-		to_chat(cursed, "<span class='userdanger'>[cursed_item] bites you to sate its hunger!</span>")
-		poison_food_tolerance = min(poison_food_tolerance++, FULL_HEALTH)
+		return
+	///no food found: it bites you and regains some poison food tolerance
+	playsound(cursed_item, 'sound/items/eatfood.ogg', 20, TRUE)
+	to_chat(cursed, "<span class='userdanger'>[cursed_item] bites you to sate its hunger!</span>")
+	var/affecting = cursed.get_bodypart(BODY_ZONE_CHEST)
+	cursed.apply_damage(60, BRUTE, affecting)
+	hunger = 0
+	poison_food_tolerance = min(poison_food_tolerance++, FULL_HEALTH)
+
+/datum/component/curse_of_hunger/proc/test()
+	var/obj/item/cursed_item = parent
+	var/mob/living/carbon/cursed = cursed_item.loc
+	cursed.dropItemToGround(cursed_item, TRUE)
