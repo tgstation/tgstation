@@ -137,7 +137,7 @@
 
 /datum/component/riding/vehicle/scooter/handle_specials(mob/living/riding_mob)
 	. = ..()
-	if(istype(riding_mob, obj/item/robot_model/medical))
+	if(iscyborg(riding_mob))
 		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list( 2)))
 	else
 		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list( 2), TEXT_SOUTH = list(-2), TEXT_EAST = list(0), TEXT_WEST = list( 2)))
