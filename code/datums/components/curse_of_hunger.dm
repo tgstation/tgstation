@@ -114,7 +114,7 @@
 		cursed_item.forceMove(get_turf(cursed_item))
 	//only taking the most reasonable slot is fine since it unequips what is there to equip itself.
 	cursed_item.AddElement(/datum/element/cursed, cursed_item.slot_equipment_priority[1])
-	cursed_item.visible_message("<span class='warning'>[cursed_item] begins to move on its own...</span>")
+	cursed_item.visible_message("<span class='warning'>[cursed_item] begins to move on [cursed_item.p_their()] own...</span>")
 
 /datum/component/curse_of_hunger/process(delta_time)
 	var/obj/item/cursed_item = parent
@@ -134,17 +134,17 @@
 		playsound(cursed_item, 'sound/items/eatfood.ogg', 20, TRUE)
 		///poisoned food damages it
 		if(istype(food, /obj/item/food/badrecipe))
-			to_chat(cursed, "<span class='warning'>[cursed_item] eats your [food] to sate its hunger, and looks [pick("queasy", "sick", "iffy", "unwell")] afterwards!</span>")
+			to_chat(cursed, "<span class='warning'>[cursed_item] eats your [food] to sate [cursed_item.p_their()] hunger, and looks [pick("queasy", "sick", "iffy", "unwell")] afterwards!</span>")
 			poison_food_tolerance--
 		else
-			to_chat(cursed, "<span class='notice'>[cursed_item] eats your [food] to sate its hunger.</span>")
+			to_chat(cursed, "<span class='notice'>[cursed_item] eats your [food] to sate [cursed_item.p_their()] hunger.</span>")
 		cursed.temporarilyRemoveItemFromInventory(food, force = TRUE)
 		qdel(food)
 		hunger = 0
 		return
 	///no food found: it bites you and regains some poison food tolerance
 	playsound(cursed_item, 'sound/items/eatfood.ogg', 20, TRUE)
-	to_chat(cursed, "<span class='userdanger'>[cursed_item] bites you to sate its hunger!</span>")
+	to_chat(cursed, "<span class='userdanger'>[cursed_item] bites you to sate [cursed_item.p_their()] hunger!</span>")
 	var/affecting = cursed.get_bodypart(BODY_ZONE_CHEST)
 	cursed.apply_damage(60, BRUTE, affecting)
 	hunger = 0

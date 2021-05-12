@@ -87,11 +87,10 @@
 	if(!curse_victim.dropItemToGround(blocking, silent = TRUE))
 		return //cannot equip to this person so whatever just keep whacking them until they die or fugg off
 	curse_victim.equip_to_slot_if_possible(item_pawn, attempted_slot, qdel_on_fail = FALSE, disable_warning = FALSE)
-	to_chat(curse_victim, "<span class='danger'>[item_pawn] equips itself onto you!</span>")
+	to_chat(curse_victim, "<span class='danger'>[item_pawn] equips [item_pawn.p_them()]self onto you!</span>")
 	what_a_horrible_night_to_have_a_curse()
 
 ///proc called when the cursed object successfully attaches itself to someone, removing the cursed element and by extension the ai itself
 /datum/ai_controller/cursed/proc/what_a_horrible_night_to_have_a_curse()
 	var/obj/item/item_pawn = pawn
 	item_pawn.RemoveElement(/datum/element/cursed)
-
