@@ -26,7 +26,7 @@
 	var/list/protected_roles = list()
 	/// If set, rule will deny candidates from those roles always.
 	var/list/restricted_roles = list()
-	/// If set, rule will only accept candidates from those roles
+	/// If set, rule will only accept candidates from those roles. If on a roundstart ruleset, requires the player to have the correct antag pref enabled and any of the possible roles enabled.
 	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/list/enemy_roles = list()
@@ -213,10 +213,15 @@
 				candidates.Remove(candidate_player)
 				continue
 
+		var/exclusive_candidate = FALSE
 		for(var/role in exclusive_roles)
-			if(!(role in candidate_client.prefs.job_preferences))
-				candidates.Remove(candidate_player)
+			if(role in candidate_client.prefs.job_preferences)
+				exclusive_candidate = TRUE
 				break
+
+		if(!exclusive_candidate)
+			candidates.Remove(candidate_player)
+			break
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE
