@@ -297,11 +297,6 @@
 /datum/controller/subsystem/ticker/proc/build_roundend_report()
 	var/list/parts = list()
 
-	//Gamemode specific things. Should be empty most of the time.
-	parts += mode.special_report()
-
-	CHECK_TICK
-
 	//AI laws
 	parts += law_report()
 

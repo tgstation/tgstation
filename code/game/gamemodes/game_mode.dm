@@ -199,12 +199,6 @@
 	for (var/C in GLOB.admins)
 		to_chat(C, msg.Join())
 
-/datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
-	newborgie.remove_antag_datum(/datum/antagonist/cult)
-	var/datum/antagonist/rev/rev = newborgie.has_antag_datum(/datum/antagonist/rev)
-	if(rev)
-		rev.remove_revolutionary(TRUE)
-
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = subtypesof(/datum/station_goal)
 	var/goal_weights = 0
@@ -212,10 +206,6 @@
 		var/datum/station_goal/picked = pick_n_take(possible)
 		goal_weights += initial(picked.weight)
 		GLOB.station_goals += new picked
-
-//Additional report section in roundend report
-/datum/game_mode/proc/special_report()
-	return
 
 //Set result and news report here
 /datum/game_mode/proc/set_round_result()
