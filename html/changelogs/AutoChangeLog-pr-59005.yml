@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "CONTRIBUTING.md's example on static overlays passes integration tests now"
