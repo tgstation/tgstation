@@ -13,8 +13,6 @@
 
 
 /datum/game_mode
-	/// List of available station goals for the crew to be working on, built into the round-type.
-	var/list/datum/station_goal/station_goals = list()
 	///Is the gamemode all set up and ready to start checking for ending conditions.
 	var/gamemode_ready = FALSE
 
@@ -85,10 +83,10 @@
  * Returns a formatted string all station goals that are available to the station.
  */
 /datum/game_mode/proc/generate_station_goal_report()
-	if(!station_goals.len)
+	if(!GLOB.station_goals.len)
 		return
 	. = "<hr><b>Special Orders for [station_name()]:</b><BR>"
-	for(var/datum/station_goal/station_goal in station_goals)
+	for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
 		station_goal.on_report()
 		. += station_goal.get_report()
 	return
@@ -219,7 +217,7 @@
 	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
 		var/datum/station_goal/picked = pick_n_take(possible)
 		goal_weights += initial(picked.weight)
-		station_goals += new picked
+		GLOB.station_goals += new picked
 
 //Additional report section in roundend report
 /datum/game_mode/proc/special_report()

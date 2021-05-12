@@ -1,8 +1,3 @@
-//TODO
-// Admin button to override with your own
-// Sabotage objective for tators
-// Multiple goals with less impact but more department focused
-
 /datum/station_goal
 	var/name = "Generic Goal"
 	var/weight = 1 //In case of multiple goals later.
@@ -32,7 +27,7 @@
 		return "<li>[name] : <span class='redtext'>Failed!</span></li>"
 
 /datum/station_goal/Destroy()
-	SSticker.mode.station_goals -= src
+	GLOB.station_goals -= src
 	. = ..()
 
 /datum/station_goal/Topic(href, href_list)
@@ -46,18 +41,3 @@
 		send_report()
 	else if(href_list["remove"])
 		qdel(src)
-
-/*
-//Crew has to create alien intelligence detector
-// Requires a lot of minerals
-// Dish requires a lot of power
-// Needs five? AI's for decoding purposes
-/datum/station_goal/seti
-	name = "SETI Project"
-
-//Crew Sweep
-//Blood samples and special scans of amount of people on roundstart manifest.
-//Should keep sec busy.
-//Maybe after completion you'll get some ling detecting gear or some station wide DNA scan ?
-
-*/

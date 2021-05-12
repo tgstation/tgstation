@@ -1653,7 +1653,7 @@
 				return
 			G.report_message = description
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
-		SSticker.mode.station_goals += G
+		GLOB.station_goals += G
 		modify_goals()
 
 	else if(href_list["viewruntime"])

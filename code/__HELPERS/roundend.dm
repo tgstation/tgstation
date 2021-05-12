@@ -483,10 +483,9 @@
 
 /datum/controller/subsystem/ticker/proc/goal_report()
 	var/list/parts = list()
-	if(mode.station_goals.len)
-		for(var/V in mode.station_goals)
-			var/datum/station_goal/G = V
-			parts += G.get_result()
+	if(GLOB.station_goals.len)
+		for(var/datum/station_goal/goal as anything in GLOB.station_goals)
+			parts += goal.get_result()
 		return "<div class='panel stationborder'><ul>[parts.Join()]</ul></div>"
 
 ///Generate a report for how much money is on station, as well as the richest crewmember on the station.

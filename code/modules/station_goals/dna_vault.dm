@@ -11,6 +11,9 @@
 #define VAULT_SPEED "Leg Muscle Stimulus"
 #define VAULT_QUICK "Arm Muscle Stimulus"
 
+/// List of available station goals for the crew to be working on
+GLOBAL_LIST_EMPTY_TYPED(station_goals, /datum/station_goal)
+
 /datum/station_goal/dna_vault
 	name = "DNA Vault"
 	var/animal_count
@@ -159,12 +162,12 @@
 		fillers += F
 
 	if(SSticker.mode)
-		for(var/datum/station_goal/dna_vault/G in SSticker.mode.station_goals)
-			animals_max = G.animal_count
-			plants_max = G.plant_count
-			dna_max = G.human_count
-			break
-	. = ..()
+		var/datum/station_goal/dna_vault/dna_vault_goal = locate() in GLOB.station_goals
+		if (!isnull(dna_vault_goal))
+			animals_max = dna_vault_goal.animal_count
+			plants_max = dna_vault_goal.plant_count
+			dna_max = dna_vault_goal.human_count
+	return ..()
 
 /obj/machinery/dna_vault/Destroy()
 	for(var/V in fillers)
