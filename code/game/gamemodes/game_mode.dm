@@ -13,9 +13,6 @@
 
 
 /datum/game_mode
-	///Is the gamemode all set up and ready to start checking for ending conditions.
-	var/gamemode_ready = FALSE
-
 	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS = list(), CURRENT_LIVING_ANTAGS = list(), CURRENT_DEAD_PLAYERS = list(), CURRENT_OBSERVERS = list())
 
@@ -55,7 +52,6 @@
 			query_round_game_mode.Execute()
 			qdel(query_round_game_mode)
 	generate_station_goals()
-	gamemode_ready = TRUE
 	return TRUE
 
 
@@ -68,7 +64,7 @@
 	return
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
-	if(!SSticker.setup_done || !gamemode_ready)
+	if(!SSticker.setup_done)
 		return FALSE
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
 		return TRUE
