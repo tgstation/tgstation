@@ -8,8 +8,8 @@
 
 /datum/surgery/core_removal/can_start(mob/user, mob/living/target)
 	if(target.stat == DEAD)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //extract brain
 /datum/surgery_step/extract_core
@@ -36,7 +36,7 @@
 			slime.icon_state = "[slime.colour] baby slime dead-nocore"
 			return ..()
 		else
-			return 0
+			return FALSE
 	else
 		to_chat(user, "<span class='warning'>There aren't any cores left in [target]!</span>")
 		return ..()

@@ -15,14 +15,14 @@
 
 /datum/surgery_step/insert_pill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/reagent_containers/pill/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(!istype(tool))
-		return 0
+		return FALSE
 
 	user.transferItemToLoc(tool, target, TRUE)
 
-	var/datum/action/item_action/hands_free/activate_pill/P = new(tool)
-	P.button.name = "Activate [tool.name]"
-	P.target = tool
-	P.Grant(target) //The pill never actually goes in an inventory slot, so the owner doesn't inherit actions from it
+	var/datum/action/item_action/hands_free/activate_pill/pill = new(tool)
+	pill.button.name = "Activate [tool.name]"
+	pill.target = tool
+	pill.Grant(target) //The pill never actually goes in an inventory slot, so the owner doesn't inherit actions from it
 
 	display_results(user, target, "<span class='notice'>You wedge [tool] into [target]'s [parse_zone(target_zone)].</span>",
 			"<span class='notice'>[user] wedges \the [tool] into [target]'s [parse_zone(target_zone)]!</span>",

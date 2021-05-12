@@ -7,9 +7,9 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery/coronary_bypass/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/heart/H = target.getorganslot(ORGAN_SLOT_HEART)
-	if(H)
-		if(H.damage > 60 && !H.operated)
+	var/obj/item/organ/heart/heart = target.getorganslot(ORGAN_SLOT_HEART)
+	if(heart)
+		if(heart.damage > 60 && !heart.operated)
 			return TRUE
 	return FALSE
 
@@ -28,26 +28,26 @@
 
 /datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if (!(NOBLOOD in H.dna.species.species_traits))
-			display_results(user, target, "<span class='notice'>Blood pools around the incision in [H]'s heart.</span>",
-				"<span class='notice'>Blood pools around the incision in [H]'s heart.</span>",
+		var/mob/living/carbon/human/human = target
+		if (!(NOBLOOD in human.dna.species.species_traits))
+			display_results(user, target, "<span class='notice'>Blood pools around the incision in [human]'s heart.</span>",
+				"<span class='notice'>Blood pools around the incision in [human]'s heart.</span>",
 				"")
-			var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
-			BP.generic_bleedstacks += 10
-			H.adjustBruteLoss(10)
+			var/obj/item/bodypart/bodypart = human.get_bodypart(target_zone)
+			bodypart.generic_bleedstacks += 10
+			human.adjustBruteLoss(10)
 	return ..()
 
 /datum/surgery_step/incise_heart/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
+		var/mob/living/carbon/human/human = target
 		display_results(user, target, "<span class='warning'>You screw up, cutting too deeply into the heart!</span>",
-			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest!</span>",
-			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest!</span>")
-		var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
-		BP.generic_bleedstacks += 10
-		H.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
-		H.adjustBruteLoss(10)
+			"<span class='warning'>[user] screws up, causing blood to spurt out of [human]'s chest!</span>",
+			"<span class='warning'>[user] screws up, causing blood to spurt out of [human]'s chest!</span>")
+		var/obj/item/bodypart/bodypart = human.get_bodypart(target_zone)
+		bodypart.generic_bleedstacks += 10
+		human.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
+		human.adjustBruteLoss(10)
 
 //grafts a coronary bypass onto the individual's heart, success chance is 90% base again
 /datum/surgery_step/coronary_bypass
@@ -72,11 +72,11 @@
 
 /datum/surgery_step/coronary_bypass/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
+		var/mob/living/carbon/human/human = target
 		display_results(user, target, "<span class='warning'>You screw up in attaching the graft, and it tears off, tearing part of the heart!</span>",
-			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest profusely!</span>",
-			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest profusely!</span>")
-		H.adjustOrganLoss(ORGAN_SLOT_HEART, 20)
-		var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
-		BP.generic_bleedstacks += 30
+			"<span class='warning'>[user] screws up, causing blood to spurt out of [human]'s chest profusely!</span>",
+			"<span class='warning'>[user] screws up, causing blood to spurt out of [human]'s chest profusely!</span>")
+		human.adjustOrganLoss(ORGAN_SLOT_HEART, 20)
+		var/obj/item/bodypart/bodypart = human.get_bodypart(target_zone)
+		bodypart.generic_bleedstacks += 30
 	return FALSE

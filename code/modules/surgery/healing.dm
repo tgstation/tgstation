@@ -63,8 +63,8 @@
 			break
 
 /datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/umsg = "You succeed in fixing some of [target]'s wounds" //no period, add initial space to "addons"
-	var/tmsg = "[user] fixes some of [target]'s wounds" //see above
+	var/user_msg = "You succeed in fixing some of [target]'s wounds" //no period, add initial space to "addons"
+	var/target_msg = "[user] fixes some of [target]'s wounds" //see above
 	var/brute_healed = brutehealing
 	var/burn_healed = burnhealing
 	if(target.stat == DEAD) //dead patients get way less additional heal from the damage they have.
@@ -76,13 +76,13 @@
 	if(!get_location_accessible(target, target_zone))
 		brute_healed *= 0.55
 		burn_healed *= 0.55
-		umsg += " as best as you can while [target.p_they()] [target.p_have()] clothing on"
-		tmsg += " as best as [user.p_they()] can while [target.p_they()] [target.p_have()] clothing on"
+		user_msg += " as best as you can while [target.p_they()] [target.p_have()] clothing on"
+		target_msg += " as best as [user.p_they()] can while [target.p_they()] [target.p_have()] clothing on"
 	target.heal_bodypart_damage(brute_healed,burn_healed)
 
-	display_results(user, target, "<span class='notice'>[umsg].</span>",
-		"[tmsg].",
-		"[tmsg].")
+	display_results(user, target, "<span class='notice'>[user_msg].</span>",
+		"[target_msg].",
+		"[target_msg].")
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE

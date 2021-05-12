@@ -32,16 +32,16 @@
 		"<span class='notice'>[user] begins to make an incision in [target].</span>")
 
 /datum/surgery_step/gastrectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/mob/living/carbon/human/H = target
-	H.setOrganLoss(ORGAN_SLOT_STOMACH, 20) // Stomachs have a threshold for being able to even digest food, so I might tweak this number
+	var/mob/living/carbon/human/human = target
+	human.setOrganLoss(ORGAN_SLOT_STOMACH, 20) // Stomachs have a threshold for being able to even digest food, so I might tweak this number
 	display_results(user, target, "<span class='notice'>You successfully remove the damaged part of [target]'s stomach.</span>",
 		"<span class='notice'>[user] successfully removes the damaged part of [target]'s stomach.</span>",
 		"<span class='notice'>[user] successfully removes the damaged part of [target]'s stomach.</span>")
 	return ..()
 
 /datum/surgery_step/hepatectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
-	var/mob/living/carbon/human/H = target
-	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 15)
+	var/mob/living/carbon/human/human = target
+	human.adjustOrganLoss(ORGAN_SLOT_STOMACH, 15)
 	display_results(user, target, "<span class='warning'>You cut the wrong part of [target]'s stomach!</span>",
 		"<span class='warning'>[user] cuts the wrong part of [target]'s stomach!</span>",
 		"<span class='warning'>[user] cuts the wrong part of [target]'s stomach!</span>")
