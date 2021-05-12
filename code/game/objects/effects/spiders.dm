@@ -40,7 +40,7 @@
 		return
 	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
 		return
-	user.visible_message("<span class='notice'>[user] begins weaving the web into cloth.</span>", "<span class='notice'>You begin weaving the web into cloth.</span>")
+	user.visible_message("<span class='notice'>[user] begins weaving [src] into cloth.</span>", "<span class='notice'>You begin weaving [src] into cloth.</span>")
 	if(!do_after(user, 2 SECONDS))
 		return
 	qdel(src)
