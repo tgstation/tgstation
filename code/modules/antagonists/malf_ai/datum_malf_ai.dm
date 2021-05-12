@@ -4,7 +4,7 @@
 /datum/antagonist/malf_ai
 	name = "Malfunctioning AI"
 	roundend_category = "traitors"
-	antagpanel_category = "Traitor"
+	antagpanel_category = "Malf AI"
 	job_rank = ROLE_MALF
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
