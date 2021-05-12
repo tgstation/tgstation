@@ -1,5 +1,6 @@
 /datum/element/volatile_gas_storage
 	element_flags = ELEMENT_BESPOKE
+	id_arg_index = 2
 
 	var/minimum_explosive_pressure
 	var/max_explosive_pressure
