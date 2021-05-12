@@ -54,7 +54,7 @@
 	exclusive_roles = list("AI")
 	required_candidates = 1
 	weight = 3
-	cost = 35
+	cost = 18
 	requirements = list(101,101,80,70,60,60,50,50,40,40)
 	antag_cap = 1
 	flags = HIGH_IMPACT_RULESET
