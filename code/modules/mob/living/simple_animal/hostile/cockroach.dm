@@ -31,6 +31,10 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	faction = list("neutral")
 	var/squish_chance = 50
+	var/obj/effect/decal/cleanable/ants/movement_target
+	//Reduces how often a cockroach can kill ants
+	COOLDOWN_DECLARE(emote_cooldown)
+	var/turns_since_scan = 0
 
 /mob/living/simple_animal/hostile/cockroach/Initialize()
 	. = ..()
@@ -44,6 +48,43 @@
 
 /mob/living/simple_animal/hostile/cockroach/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
+
+/mob/living/simple_animal/hostile/cockroach/proc/splat() //Forces a cockroach death, used for retribution
+	src.health = 0
+	death()
+
+/mob/living/simple_animal/hostile/cockroach/Life(delta_time = SSMOBS_DT, times_fired) //Natural predators
+	if((src.loc) && isturf(src.loc))
+		if(!stat && !resting && !buckled)
+			for(var/obj/effect/decal/cleanable/ants/A in view(1,src))//Tiny ants are defenseless to this mighty foe
+				if(Adjacent(A) && COOLDOWN_FINISHED(src, emote_cooldown))
+					manual_emote("chomps \the [A]!")
+					qdel(A)
+					movement_target = null
+					stop_automated_movement = 0
+					COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
+					break
+	..()
+	if(!stat && !buckled)
+		turns_since_scan++
+		if(turns_since_scan > 5)
+			walk_to(src,0)
+			turns_since_scan = 0
+			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
+				movement_target = null
+				stop_automated_movement = 0
+			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
+				movement_target = null
+				stop_automated_movement = 0
+				for(var/obj/effect/decal/cleanable/ants/snack in oview(src,3))
+					if(isturf(snack.loc))
+						movement_target = snack
+						break
+			if(movement_target)
+				stop_automated_movement = 1
+				walk_to(src,movement_target,0,3)
+
+
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot

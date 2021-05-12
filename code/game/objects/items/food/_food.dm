@@ -36,6 +36,8 @@
 	var/burns_on_grill = FALSE
 	///Price of this food if sold in a venue
 	var/venue_value
+	///Food that's immune to decomposition.
+	var/preserved_food = FALSE
 
 /obj/item/food/Initialize()
 	. = ..()
@@ -51,6 +53,7 @@
 	MakeProcessable()
 	MakeLeaveTrash()
 	MakeGrillable()
+	MakeDecompose()
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/MakeEdible()
@@ -81,4 +84,10 @@
 /obj/item/food/proc/MakeLeaveTrash()
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type)
+	return
+
+///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
+/obj/item/food/proc/MakeDecompose()
+	if(!preserved_food)
+		AddComponent(/datum/component/decomposition)
 	return

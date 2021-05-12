@@ -2611,3 +2611,45 @@
 		var/color
 		CONVERT_PH_TO_COLOR(exposed_atom.reagents.ph, color)
 		exposed_atom.add_atom_colour(color, WASHABLE_COLOUR_PRIORITY)
+
+/datum/reagent/ants
+	name = "Ants"
+	description = "A sample of a lost breed of Space Ants (formicidae bastardium tyrannus), they are well-known for ravaging the living shit out of pretty much anything."
+	reagent_state = SOLID
+	color = "#993333"
+	taste_mult = 1.3
+	taste_description = "<span class='warning'>ANTS OH GOD</span>"
+	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
+	glass_name = "glass of ants"
+	glass_desc = "Bottoms up...?"
+	var/ant_damage = 0
+	var/amount_left = 0
+
+/datum/reagent/ants/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(max(0.5, round((ant_damage * 0.1),0.1)))
+	if(prob(5)) //Due to the fact this has a chance of happening every cycle, it's more likely to happen than it looks
+		if(prob(1)) //Super rare statement
+			M.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
+		else
+			var/scream_statement = pick(1,2)
+			switch(scream_statement)
+				if(1)
+					M.say("THEY'RE UNDER MY SKIN!!", forced = /datum/reagent/ants)
+				if(2)
+					M.say("GET THEM OUT OF ME!!", forced = /datum/reagent/ants)
+	if(prob(15))
+		M.emote("scream")
+	ant_damage += 1
+	..()
+
+/datum/reagent/ants/on_mob_end_metabolize(mob/living/L)
+	ant_damage = 0
+
+/datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!iscarbon(exposed_mob) || (methods & (INGEST|INJECT)))
+		return
+	if(methods & (PATCH|TOUCH|VAPOR))
+		amount_left = round(reac_volume,0.1)
+		exposed_mob.apply_status_effect(STATUS_EFFECT_ANTS, amount_left)
+	return ..()

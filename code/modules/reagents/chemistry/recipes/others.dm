@@ -857,3 +857,17 @@
 			return
 	clear_products(holder, step_volume_added)
 	holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The reaction gives out a fizz, teleporting items everywhere!</span>")
+
+/datum/chemical_reaction/ants
+	results = list(/datum/reagent/ants = 2)
+	required_reagents = list(/datum/reagent/ants = 1, /datum/reagent/consumable/sugar = 3)
+
+/datum/chemical_reaction/big_ant
+	required_reagents = list(/datum/reagent/ants = 20, /datum/reagent/medicine/omnizine = 20, /datum/reagent/medicine/strange_reagent = 5)
+	required_temp = 374
+
+/datum/chemical_reaction/big_ant/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = rand(1, created_volume), i <= created_volume, i++)
+		new /mob/living/simple_animal/ant(location)
+	..()
