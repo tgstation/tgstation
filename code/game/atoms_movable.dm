@@ -366,16 +366,6 @@
 	loc = new_loc
 	Moved(old_loc)
 
-/**
- * meant to be used for all location changes. any instances of setting loc directly (for movables) should instead use this
- * do NOT use this directly, use either Move() or abstract_move() or forceMove()
- */
-/atom/movable/proc/update_loc(atom/new_loc)
-	SHOULD_NOT_OVERRIDE(TRUE)
-	var/old_loc = loc
-	loc = new_loc
-	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, old_loc)
-
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
