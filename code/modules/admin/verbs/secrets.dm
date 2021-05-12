@@ -463,20 +463,20 @@
 			if(!objective)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))
-			for(var/mob/living/H in GLOB.player_list)
-				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
+			for(var/mob/living/player in GLOB.player_list)
+				if(!(ishuman(player)||istype(player, /mob/living/silicon/)))
 					continue
-				if(H.stat == DEAD || !H.mind || ispAI(H))
+				if(player.stat == DEAD || !player.mind || ispAI(player))
 					continue
-				if(is_special_character(H))
+				if(is_special_character(player))
 					continue
-				var/datum/antagonist/traitor/T = new()
-				T.give_objectives = FALSE
+				var/datum/antagonist/traitor/traitor_datum = new()
+				traitor_datum.give_objectives = FALSE
 				var/datum/objective/new_objective = new
-				new_objective.owner = H
+				new_objective.owner = player
 				new_objective.explanation_text = objective
-				T.add_objective(new_objective)
-				H.mind.add_antag_datum(T)
+				traitor_datum.objectives += new_objective
+				player.mind.add_antag_datum(traitor_datum)
 			message_admins("<span class='adminnotice'>[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(holder)] used everyone is a traitor secret. Objective is [objective]")
 		if("massbraindamage")

@@ -22,7 +22,7 @@
 
 	generic_objective.completed = TRUE
 
-	add_objective(generic_objective)
+	objectives += generic_objective
 
 /datum/contractor_hub
 	var/contract_rep = 0

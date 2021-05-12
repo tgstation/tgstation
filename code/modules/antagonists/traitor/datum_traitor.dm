@@ -64,14 +64,6 @@
 	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
 	hearing_args[HEARING_RAW_MESSAGE] = message
 
-/// Adds an objective datum to the objective list.
-/datum/antagonist/traitor/proc/add_objective(datum/objective/new_objective)
-	objectives += new_objective
-
-/// Removes an objective datum from the objective list.
-/datum/antagonist/traitor/proc/remove_objective(datum/objective/del_objective)
-	objectives -= del_objective
-
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	objectives.Cut()
@@ -90,7 +82,7 @@
 	if(is_hijacker)
 		var/datum/objective/hijack/hijack_objective = new
 		hijack_objective.owner = owner
-		add_objective(hijack_objective)
+		objectives += hijack_objective
 		return
 
 	forge_escape_objective()
@@ -108,12 +100,12 @@
 	if(martyr_compatibility && is_martyr)
 		var/datum/objective/martyr/martyr_objective = new
 		martyr_objective.owner = owner
-		add_objective(martyr_objective)
+		objectives += martyr_objective
 		return
 
 	var/datum/objective/escape/escape_objective = new
 	escape_objective.owner = owner
-	add_objective(escape_objective)
+	objectives += escape_objective
 
 /// Adds a generic kill or steal objective to this datum's objective list.
 /datum/antagonist/traitor/proc/forge_single_generic_objective()
@@ -123,33 +115,33 @@
 			var/datum/objective/destroy/destroy_objective = new
 			destroy_objective.owner = owner
 			destroy_objective.find_target()
-			add_objective(destroy_objective)
+			objectives += destroy_objective
 			return
 
 		if(prob(MAROON_PROB))
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			maroon_objective.find_target()
-			add_objective(maroon_objective)
+			objectives += maroon_objective
 			return
 
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = owner
 		kill_objective.find_target()
-		add_objective(kill_objective)
+		objectives += kill_objective
 		return
 
 	if(prob(DOWNLOAD_PROB) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist", "Geneticist")))
 		var/datum/objective/download/download_objective = new
 		download_objective.owner = owner
 		download_objective.gen_amount_goal()
-		add_objective(download_objective)
+		objectives += download_objective
 		return
 
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = owner
 	steal_objective.find_target()
-	add_objective(steal_objective)
+	objectives += steal_objective
 
 /datum/antagonist/traitor/greet()
 	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role].</span>")
