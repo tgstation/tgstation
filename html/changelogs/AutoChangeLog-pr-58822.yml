@@ -1,0 +1,5 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - qol: "Adds mail to the in-game message of items that can't be sent on the supply shuttle."
+  - code_imp: "Adds code improvements done to the cargo console to the modular computer cargo program as well."
