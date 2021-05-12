@@ -15,15 +15,8 @@
 /datum/game_mode
 	/// Self explanitory, name of the game mode.
 	var/name = "invalid"
-	/// See nuclearbomb.dm and malfunction.dm, does this gamemode end with a nuke endscreen?
-	var/station_was_nuked = FALSE
 	/// Used for tracking where the nuke hit. Changes cinematic if the nuke is deployed off station zlevel.
 	var/nuke_off_station = FALSE
-
-	///The gamemode's name will be in this span during announcement.
-	var/announce_span = "warning"
-	///Used to describe a gamemode when it's announced. Not seen during secret or dynamic.
-	var/announce_text = "This gamemode forgot to set a descriptive text! Uh oh!"
 
 	/// List of available station goals for the crew to be working on, built into the round-type.
 	var/list/datum/station_goal/station_goals = list()
@@ -86,7 +79,7 @@
 		return FALSE
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
 		return TRUE
-	if(station_was_nuked)
+	if(GLOB.station_was_nuked)
 		return TRUE
 	if(force_ending)
 		return TRUE
@@ -308,12 +301,6 @@
 /datum/game_mode/proc/generate_report() //Generates a small text blurb for the gamemode in centcom report
 	return "Gamemode report for [name] not set.  Contact a coder."
 
-//By default nuke just ends the round
-/datum/game_mode/proc/OnNukeExplosion(off_station)
-	nuke_off_station = off_station
-	if(off_station < 2)
-		station_was_nuked = TRUE //Will end the round on next check.
-
 //Additional report section in roundend report
 /datum/game_mode/proc/special_report()
 	return
@@ -321,7 +308,7 @@
 //Set result and news report here
 /datum/game_mode/proc/set_round_result()
 	SSticker.mode_result = "undefined"
-	if(station_was_nuked)
+	if(GLOB.station_was_nuked)
 		SSticker.news_report = STATION_DESTROYED_NUKE
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
 		SSticker.news_report = STATION_EVACUATED
