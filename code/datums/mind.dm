@@ -307,9 +307,6 @@
 /datum/mind/proc/remove_traitor()
 	remove_antag_datum(/datum/antagonist/traitor)
 
-/datum/mind/proc/remove_malf()
-	remove_antag_datum(/datum/antagonist/malf_ai)
-
 /datum/mind/proc/remove_nukeop()
 	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(nuke)
@@ -663,10 +660,6 @@
 /datum/mind/proc/make_traitor()
 	if(!(has_antag_datum(/datum/antagonist/traitor)))
 		add_antag_datum(/datum/antagonist/traitor)
-
-/datum/mind/proc/make_malfunctioning()
-	if(!(has_antag_datum(/datum/antagonist/malf_ai)))
-		add_antag_datum(/datum/antagonist/malf_ai)
 
 /datum/mind/proc/make_contractor_support()
 	if(!(has_antag_datum(/datum/antagonist/traitor/contractor_support)))
