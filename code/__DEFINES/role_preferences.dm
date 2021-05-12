@@ -48,6 +48,7 @@
 /// first connection in order to play.
 GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TRAITOR = 0,
+	ROLE_MALFAI = 0,
 	ROLE_BROTHER = 0,
 	ROLE_OPERATIVE = 14,
 	ROLE_CHANGELING = 0,

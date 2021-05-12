@@ -7,8 +7,9 @@
 /datum/antagonist/traitor/internal_affairs
 	name = "Internal Affairs Agent"
 	employer = "Nanotrasen"
-	special_role = "internal affairs agent"
 	antagpanel_category = "IAA"
+
+	var/special_role = "internal affairs agent"
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
 	var/list/datum/mind/targets_stolen
@@ -142,8 +143,7 @@
 	for (var/datum/objective/martyr/martyr_objective in objectives)
 		remove_objective(martyr_objective)
 
-	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive/malf
-	var/datum/objective/escape_objective = new objtype
+	var/datum/objective/escape_objective = new /datum/objective/escape()
 	escape_objective.owner = owner
 	add_objective(escape_objective)
 
@@ -223,8 +223,7 @@
 					objective.stolen = FALSE
 
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
-	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive/malf
-	var/datum/objective/escape_objective = new objtype
+	var/datum/objective/escape_objective = new /datum/objective/escape()
 	escape_objective.owner = owner
 	add_objective(escape_objective)
 
