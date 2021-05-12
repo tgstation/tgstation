@@ -186,15 +186,6 @@
 					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (Dead)\n"
 					failed = TRUE //Dead
 
-			var/p_ckey = L.client.ckey
-// WARNING("AR_DEBUG: [p_ckey]: failed - [failed], antag_rep_change: [SSpersistence.antag_rep_change[p_ckey]]")
-
-			// people who died or left should not gain any reputation
-			// people who rolled antagonist still lose it
-			if(failed && SSpersistence.antag_rep_change[p_ckey] > 0)
-// WARNING("AR_DEBUG: Zeroed [p_ckey]'s antag_rep_change")
-				SSpersistence.antag_rep_change[p_ckey] = 0
-
 			continue //Happy connected client
 		for(var/mob/dead/observer/D in GLOB.dead_mob_list)
 			if(D.mind && D.mind.current == L)
