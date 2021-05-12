@@ -10,12 +10,18 @@
 	. = ..()
 	if(istype(target, /obj/machinery/portable_atmospherics))
 		RegisterSignal(target, COMSIG_OBJ_BREAK, .proc/PortableBreak)
-	if(istype(target, /obj/machinery/atmospherics/components))
+	else if(istype(target, /obj/machinery/atmospherics/components))
 		RegisterSignal(target, COMSIG_OBJ_BREAK, .proc/AtmosComponentBreak)
+	else
+		return ELEMENT_INCOMPATIBLE
 
 	src.minimum_explosive_pressure = minimum_explosive_pressure
 	src.max_explosive_pressure = max_explosive_pressure
 	src.max_explosive_force = max_explosive_force
+
+/datum/element/volatile_gas_storage/Detach(datum/source, ...)
+	. = ..()
+	UnregisterSignal(source, COMSIG_OBJ_BREAK)
 
 /datum/element/volatile_gas_storage/proc/Break(atom/origin, datum/gas_mixture/released_gas)
 	var/expelled_pressure = min(released_gas?.return_pressure(), max_explosive_pressure)

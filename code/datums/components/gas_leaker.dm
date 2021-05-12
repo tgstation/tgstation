@@ -15,10 +15,16 @@
 	else
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_OBJ_TAKE_DAMAGE, .proc/start_processing)
-
 	src.integrity_leak_percent = integrity_leak_percent
 	src.leak_rate = leak_rate
+
+/datum/component/gas_leaker/RegisterWithParent()
+	. = ..()
+	RegisterSignal(parent, COMSIG_OBJ_TAKE_DAMAGE, .proc/start_processing)
+
+/datum/component/gas_leaker/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, COMSIG_OBJ_TAKE_DAMAGE)
 
 /datum/component/gas_leaker/process()
 	. = ..()
