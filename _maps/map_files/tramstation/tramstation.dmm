@@ -17989,6 +17989,16 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
+"cDN" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 1
+	},
+/obj/structure/plaque/static_plaque/golden/commission/tram,
+/turf/open/floor/iron,
+/area/hallway/primary/tram/center)
 "cEd" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -30306,6 +30316,11 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/machinery/camera{
+	c_tag = "Cargo Bay - Drone Launch Room";
+	dir = 1;
+	pixel_x = 14
+	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "hrP" = (
@@ -171255,7 +171270,7 @@ ayB
 azO
 wCt
 qBE
-atg
+cDN
 avS
 aeR
 tlq

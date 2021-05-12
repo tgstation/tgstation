@@ -1081,6 +1081,7 @@
 /area/commons/storage/primary)
 "dD" = (
 /obj/effect/landmark/observer_start,
+/obj/structure/plaque/static_plaque/golden/commission,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "dE" = (

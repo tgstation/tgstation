@@ -34299,6 +34299,10 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/supermatter)
+"iac" = (
+/obj/structure/plaque/static_plaque/golden/commission/icebox,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "iaH" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -93303,7 +93307,7 @@ wDc
 dLp
 ttP
 slr
-aYV
+iac
 pEE
 bes
 bfF

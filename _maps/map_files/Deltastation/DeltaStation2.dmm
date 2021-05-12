@@ -57934,6 +57934,7 @@
 	dir = 8
 	},
 /obj/machinery/newscaster/directional/east,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/dark,
 /area/service/library)
 "jCf" = (
@@ -83384,6 +83385,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/plaque/static_plaque/golden/commission/delta,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "pYz" = (
@@ -100045,10 +100047,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/engineering/supermatter/room)
-"uli" = (
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/closed/wall,
-/area/service/library)
 "ulk" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -147044,7 +147042,7 @@ qkQ
 qvX
 nJo
 nJo
-uli
+nJo
 nJo
 nJo
 nJo

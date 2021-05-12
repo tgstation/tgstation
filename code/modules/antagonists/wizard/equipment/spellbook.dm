@@ -650,11 +650,6 @@
 
 #undef MINIMUM_THREAT_FOR_RITUALS
 
-#define LOADOUT_CLASSIC "loadout_classic"
-#define LOADOUT_MJOLNIR "loadout_hammer"
-#define LOADOUT_WIZARMY "loadout_army"
-#define LOADOUT_SOULTAP "loadout_tap"
-
 /obj/item/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
@@ -805,31 +800,31 @@
 /obj/item/spellbook/proc/wizard_loadout(mob/living/carbon/human/wizard, loadout)
 	var/list/wanted_spell_names
 	switch(loadout)
-		if(LOADOUT_CLASSIC) //(Fireball>2, MM>2, Smite>2, Jauntx2>4) = 10
+		if(WIZARD_LOADOUT_CLASSIC) //(Fireball>2, MM>2, Smite>2, Jauntx2>4) = 10
 			wanted_spell_names = list("Fireball" = 1, "Magic Missile" = 1, "Smite" = 1, "Ethereal Jaunt" = 2)
-		if(LOADOUT_MJOLNIR) //(Mjolnir>2, Summon Itemx3>3, Mutate>2, Force Wall>1, Blink>2) = 10
+		if(WIZARD_LOADOUT_MJOLNIR) //(Mjolnir>2, Summon Itemx3>3, Mutate>2, Force Wall>1, Blink>2) = 10
 			wanted_spell_names = list("Mjolnir" = 1, "Summon Item" = 3, "Mutate" = 1, "Force Wall" = 1, "Blink" = 1)
-		if(LOADOUT_WIZARMY) //(Soulstones>2, Staff of Change>2, A Necromantic Stone>2, Teleport>2, Ethereal Jaunt>2) = 10
+		if(WIZARD_LOADOUT_WIZARMY) //(Soulstones>2, Staff of Change>2, A Necromantic Stone>2, Teleport>2, Ethereal Jaunt>2) = 10
 			wanted_spell_names = list("Soulstone Shard Kit" = 1, "Staff of Change" = 1, "A Necromantic Stone" = 1, "Teleport" = 1, "Ethereal Jaunt" = 1)
-		if(LOADOUT_SOULTAP) //(Soul Tap>1, Smite>2, Flesh to Stone>2, Mindswap>2, Knock>1, Teleport>2) = 10
+		if(WIZARD_LOADOUT_SOULTAP) //(Soul Tap>1, Smite>2, Flesh to Stone>2, Mindswap>2, Knock>1, Teleport>2) = 10
 			wanted_spell_names = list("Soul Tap" = 1, "Smite" = 1, "Flesh to Stone" = 1, "Mindswap" = 1, "Knock" = 1, "Teleport" = 1)
-	var/failed = FALSE
-	while(wanted_spell_names.len && !failed)
-		for(var/datum/spellbook_entry/entry as anything in entries)
-			if(!(entry.name in wanted_spell_names))
-				continue
-			if(entry?.CanBuy(wizard,src))
-				for(var/i in 1 to wanted_spell_names[entry.name])
-					entry.Buy(wizard,src)
-					if(entry.limit)
-						entry.limit--
-					uses -= entry.cost
-				entry.refundable = FALSE //once you go loading out, you never go back
-				wanted_spell_names -= entry.name
-				continue
-			if(wanted_spell_names.len)
-				failed = TRUE//we went through the entire loop without finding what we wanted, sound the alarm!
-	if(failed)
+
+	for(var/datum/spellbook_entry/entry as anything in entries)
+		if(!(entry.name in wanted_spell_names))
+			continue
+		if(entry.CanBuy(wizard,src))
+			var/purchase_count = wanted_spell_names[entry.name]
+			wanted_spell_names -= entry.name
+			for(var/i in 1 to purchase_count)
+				entry.Buy(wizard,src)
+				if(entry.limit)
+					entry.limit--
+				uses -= entry.cost
+			entry.refundable = FALSE //once you go loading out, you never go back
+		if(!length(wanted_spell_names))
+			break
+
+	if(length(wanted_spell_names))
 		stack_trace("Wizard Loadout \"[loadout]\" could not find valid spells to buy in the spellbook. Either you input a name that doesn't exist, or you overspent")
 	if(uses)
 		stack_trace("Wizard Loadout \"[loadout]\" does not use 10 wizard spell slots. Stop scamming players out.")
