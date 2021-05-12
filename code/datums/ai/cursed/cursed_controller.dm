@@ -55,7 +55,13 @@
 	SIGNAL_HANDLER
 	if(!iscarbon(hit_atom))
 		return
-	try_equipping_to_target_slot(hit_atom)
+	//equipcode has sleeps all over it.
+	INVOKE_ASYNC(src, .proc/try_equipping_to_target_slot, hit_atom)
+
+///signal called by picking up the pawn, will try to equip to where it should actually be and start the curse
+/datum/ai_controller/cursed/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/try_equipping_to_target_slot, equipper, slot)
 
 /**
  * curse of hunger component; for very hungry items.
@@ -88,9 +94,4 @@
 /datum/ai_controller/cursed/proc/what_a_horrible_night_to_have_a_curse()
 	var/obj/item/item_pawn = pawn
 	item_pawn.RemoveElement(/datum/element/cursed)
-
-///signal called by picking up the pawn, will try to equip to where it should actually be and start the curse
-/datum/ai_controller/cursed/proc/on_equip(datum/source, mob/equipper, slot)
-	SIGNAL_HANDLER
-	try_equipping_to_target_slot(equipper, slot)
 
