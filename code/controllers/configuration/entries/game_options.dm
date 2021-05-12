@@ -344,10 +344,6 @@
 
 /datum/config_entry/flag/shift_time_realtime
 
-/datum/config_entry/keyed_list/antag_rep
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUM
-
 /datum/config_entry/number/monkeycap
 	config_entry_value = 64
 	min_val = 0
