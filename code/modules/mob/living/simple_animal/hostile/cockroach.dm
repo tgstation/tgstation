@@ -54,7 +54,7 @@
 		if(!stat && !resting && !buckled)
 			for(var/obj/effect/decal/cleanable/ants/ant in view(1,src))//Tiny ants are defenseless to this mighty foe
 				if(Adjacent(ant) && COOLDOWN_FINISHED(src, emote_cooldown))
-					manual_emote("chomps \the [A]!")
+					manual_emote("chomps [ant]!")
 					qdel(ant)
 					movement_target = null
 					stop_automated_movement = 0

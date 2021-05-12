@@ -1006,7 +1006,7 @@
 	victim.adjustBruteLoss(max(0.2, round((ants_remaining * 0.008),0.1))) //Roughly 20 brute over 50 seconds.
 	if(!victim.stat) //Makes sure people don't scratch at themselves while they're dead
 		if(DT_PROB(15, delta_time))
-				victim.say(pick("GET THEM OFF ME!!", "OH GOD THE ANTS!!") forced = /datum/status_effect/ants)
+			victim.say(pick("GET THEM OFF ME!!", "OH GOD THE ANTS!!"), forced = /datum/status_effect/ants)
 		if(DT_PROB(30,delta_time))
 			victim.emote("scream")
 		if(DT_PROB(80, delta_time))

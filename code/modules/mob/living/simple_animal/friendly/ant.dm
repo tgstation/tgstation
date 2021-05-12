@@ -48,7 +48,7 @@
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/hostile/cockroach/roach in view(1,src))
 				if(!roach.stat && Adjacent(roach) && COOLDOWN_FINISHED(src, emote_cooldown))
-					manual_emote("chomps \the [roach]!")
+					manual_emote("chomps [roach]!")
 					roach.death()
 					movement_target = null
 					stop_automated_movement = 0

@@ -13,12 +13,12 @@
 	)
 	AddElement(/datum/element/connect_loc, src, loc_connections)
 
-/datum/component/creamed/RegisterWithParent()
+/datum/component/decomposition/RegisterWithParent()
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED, //If a person drops the object
 		COMSIG_ITEM_EJECTED_FROM_CLOSET, //Checks if an object has been ejected from a lcoker/crate
 		COMSIG_STORAGE_EXITED), //Checks if a storage object has been dumped
-		 .proc/table_check)
+		.proc/table_check)
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_PICKUP, //person picks up an item
 		COMSIG_TRY_STORAGE_HIDE_ALL), //Object has been put into a closed locker/crate
@@ -26,12 +26,12 @@
 	RegisterSignal(parent, COMSIG_STORAGE_ENTERED, .proc/storage_check) //Checks if you put it in storage
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 
-/datum/component/creamed/UnregisterFromParent()
+/datum/component/decomposition/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_EJECTED_FROM_CLOSET,
 		COMSIG_STORAGE_EXITED),
-		 .proc/table_check)
+		.proc/table_check)
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_PICKUP,
 		COMSIG_TRY_STORAGE_HIDE_ALL),
@@ -42,6 +42,10 @@
 /datum/component/decomposition/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/datum/component/decomposition/proc/on_entered()
+//I genuinely don't know how to do what you said I should do here,
+//so I'm going to go ask.
 
 /datum/component/decomposition/proc/storage_check()
 	SIGNAL_HANDLER
@@ -59,14 +63,15 @@
 	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
 
-/datum/component/decomposition/process(delta_time, obj/item/food/decomp)
-	decomposition_level += delta_time 
+/datum/component/decomposition/process(delta_time)
+	var/obj/item/food/decomp = parent //Lets us spawn things at decomp
+	decomposition_level += delta_time
 	if(decomposition_level >= 600) //10 minutes
-		new /obj/item/food/badrecipe/moldy(parent.loc)
-		qdel(parent)
+		new /obj/item/food/badrecipe/moldy(decomp.loc)
+		qdel(decomp)
 		return
 	if(decomposition_level == 300) //5 minutes
-		new /obj/effect/decal/cleanable/ants(parent.loc)
+		new /obj/effect/decal/cleanable/ants(decomp.loc)
 
 /datum/component/decomposition/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
