@@ -82,9 +82,7 @@
 
 /datum/element/connect_loc/proc/on_moved(atom/movable/tracked, atom/old_loc)
 	SIGNAL_HANDLER
-	//loc1 -> loc2 -> loc3, but Moved(loc2) (when loc == loc3) happens before Moved(loc1) (when loc == loc2)
-	//it needs to somehow only update the second Moved() (at loc == loc3)
-	//so the actual Moved() that updates connect_loc should be Moved(loc1) (at loc == loc3)
+
 	var/datum/listener = targets[old_loc][tracked]
 	unregister_signals(listener, tracked, old_loc)
 	update_signals(listener, tracked)
