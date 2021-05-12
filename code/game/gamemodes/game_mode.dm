@@ -57,10 +57,6 @@
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	return
 
-///Called by the gameSSticker
-/datum/game_mode/process()
-	return
-
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
 	if(!SSticker.setup_done)
 		return FALSE
