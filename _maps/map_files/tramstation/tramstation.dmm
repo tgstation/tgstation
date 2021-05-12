@@ -9258,7 +9258,9 @@
 	pixel_x = 26;
 	pixel_y = -26
 	},
-/obj/item/trapdoor_remote,
+/obj/item/trapdoor_remote{
+	pixel_x = -9
+	},
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "aCS" = (
