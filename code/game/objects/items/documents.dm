@@ -134,8 +134,9 @@
  *
  * This prints fake reports with garbage in them,
  * can be set to print them instantly with a screwdriver.
- * By default it plays the old "woody" scanning sound, but it can be set
- * to play the normal N-spect scanner sound with a multitool
+ * By default it plays the old "woody" scanning sound, scanning sounds can be cycled by clicking with a multitool.
+ * Upgrades to clownspection scanner when clicked with bananium (WIP!!!!!!!!!!!!!!!!)
+ * Cannot print on blessed tiles (Not yet implemented!!!!!!!!!!!!!!!!!!)
  */
 /obj/item/inspector/clown
 	///determines the sound that plays when printing a report
@@ -178,13 +179,39 @@
 		to_chat(user, "<span class='notice'>You set the device's bleep setting to [mode_name] mode")
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(print_time == 1)
-			print_time = 5 SECONDS
-			to_chat(user, "<span class='notice'>You set the device's scanning speed to SLOW.")
-		else
-			print_time = 1
-			to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTNING FAST.")
+		cycle_print_time(user)
 
+/obj/item/inspector/clown/proc/cycle_print_time(mob/user)
+	if(print_time == 1 SECONDS)
+		print_time = 5 SECONDS
+		to_chat(user, "<span class='notice'>You set the device's scanning speed to SLOW.")
+	else
+		print_time = 1 SECONDS
+		to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTNING FAST.")
+
+/**
+ * # True clownspection scanner (WIP!!!!!!!!!!!)
+ *
+ * An upgraded version of the fake N-spect scanner
+ *
+ * Can print things way fasta, at full power the reports printed by this will destroy
+ * themselves and leave water behind when folding is attempted by someone who isn't an
+ * origami master.
+ * Unlike the normal clown scanner, is not restricted by blessed tiles.
+ */
+/obj/item/inspector/clown/full_power
+	icon_state = "clowninspector"
+
+/obj/item/inspector/clown/full_power/cycle_print_time(mob/user)
+	if(print_time == 0.1 SECONDS)
+		print_time = 5 SECONDS
+		to_chat(user, "<span class='notice'>You set the device's scanning speed to SLOW.")
+	else if(print_time == 5 SECONDS)
+		print_time = 1 SECONDS
+		to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTNING FAST.")
+	else
+		print_time = 0.1 SECONDS
+		to_chat(user, "<span class='notice'>You set the device's scanning speed setting to HONK.")
 /**
  * Reports printed by fake N-spect scanner
  *
