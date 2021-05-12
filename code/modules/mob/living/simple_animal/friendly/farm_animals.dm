@@ -308,6 +308,7 @@
 	var/eggs_left = 0
 	var/eggs_added_from_eating = rand(1, 4)
 	var/max_eggs_held = 8
+	var/datum/callback/lay_egg_callback = CALLBACK(src, .proc/egg_laid)
 	AddComponent(/datum/component/egg_layer,\
 		/obj/item/food/egg,\
 		list(/obj/item/food/grown/wheat),\
@@ -316,7 +317,7 @@
 		eggs_left,\
 		eggs_added_from_eating,\
 		max_eggs_held,\
-		.proc/egg_laid\
+		lay_egg_callback\
 	)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

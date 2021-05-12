@@ -11,9 +11,9 @@
 	/// items that can be fed to the mob to make it lay more eggs
 	var/list/food_types
 	/// messages sent when fed
-	var/list/feedMessages
+	var/list/feed_messages
 	/// messages sent when laying an egg
-	var/list/layMessages
+	var/list/lay_messages
 	/// how many eggs left to lay
 	var/eggs_left
 	/// how many eggs to lay given from food
