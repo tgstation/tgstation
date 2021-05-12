@@ -223,7 +223,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!GLOB.Debug2)
 		if(!can_continue)
-			log_game("[mode.name] failed pre_setup")
+			log_game("Game failed pre_setup")
 			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up game.</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()

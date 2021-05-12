@@ -13,9 +13,6 @@
 
 
 /datum/game_mode
-	/// Self explanitory, name of the game mode.
-	var/name = "invalid"
-
 	/// List of available station goals for the crew to be working on, built into the round-type.
 	var/list/datum/station_goal/station_goals = list()
 	///Is the gamemode all set up and ready to start checking for ending conditions.
@@ -294,10 +291,6 @@
 		var/datum/station_goal/picked = pick_n_take(possible)
 		goal_weights += initial(picked.weight)
 		station_goals += new picked
-
-
-/datum/game_mode/proc/generate_report() //Generates a small text blurb for the gamemode in centcom report
-	return "Gamemode report for [name] not set.  Contact a coder."
 
 //Additional report section in roundend report
 /datum/game_mode/proc/special_report()
