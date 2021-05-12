@@ -398,9 +398,6 @@
 		challenge_report += "<b>War not declared.</b> <a href='?_src_=holder;[HrefToken()];force_war=[REF(war_button)]'>\[Force war\]</a>"
 	return common_part + disk_report + challenge_report
 
-/datum/team/nuclear/is_gamemode_hero()
-	return SSticker.mode.name == "nuclear emergency"
-
 /// Returns whether or not syndicate operatives escaped.
 /proc/syndies_escaped()
 	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")

@@ -21,20 +21,6 @@
 /datum/config_entry/keyed_list/min_pop/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_list/continuous // which roundtypes continue if all antagonists die
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_FLAG
-
-/datum/config_entry/keyed_list/continuous/ValidateListEntry(key_name, key_value)
-	return key_name in config.modes
-
-/datum/config_entry/keyed_list/midround_antag // which roundtypes use the midround antagonist system
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_FLAG
-
-/datum/config_entry/keyed_list/midround_antag/ValidateListEntry(key_name, key_value)
-	return key_name in config.modes
-
 /datum/config_entry/number/damage_multiplier
 	config_entry_value = 1
 	integer = FALSE
@@ -127,17 +113,6 @@
 	config_entry_value = 100
 	integer = FALSE
 	min_val = 0
-
-/datum/config_entry/number/midround_antag_time_check // How late (in minutes you want the midround antag system to stay on, setting this to 0 will disable the system)
-	config_entry_value = 60
-	integer = FALSE
-	min_val = 0
-
-/datum/config_entry/number/midround_antag_life_check // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
-	config_entry_value = 0.7
-	integer = FALSE
-	min_val = 0
-	max_val = 1
 
 /datum/config_entry/number/shuttle_refuel_delay
 	config_entry_value = 12000

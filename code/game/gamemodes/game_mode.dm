@@ -15,16 +15,10 @@
 /datum/game_mode
 	/// Self explanitory, name of the game mode.
 	var/name = "invalid"
-	/// In determining gamemode weights, what is this gamemode called?
-	var/config_tag = null
-	/// Gamemodes with the same report type will not show up in the command report together.
-	var/report_type = "invalid"
 	/// See nuclearbomb.dm and malfunction.dm, does this gamemode end with a nuke endscreen?
 	var/station_was_nuked = FALSE
 	/// Used for tracking where the nuke hit. Changes cinematic if the nuke is deployed off station zlevel.
 	var/nuke_off_station = FALSE
-	/// List of possible starting antags goes here
-	var/list/datum/mind/antag_candidates = list()
 
 	///The gamemode's name will be in this span during announcement.
 	var/announce_span = "warning"
@@ -35,8 +29,6 @@
 	var/list/datum/station_goal/station_goals = list()
 	///Is the gamemode all set up and ready to start checking for ending conditions.
 	var/gamemode_ready = FALSE
-	/////What reason do we have for not setting up the game mode.
-	var/setup_error
 
 	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS = list(), CURRENT_LIVING_ANTAGS = list(), CURRENT_DEAD_PLAYERS = list(), CURRENT_OBSERVERS = list())
@@ -88,11 +80,6 @@
 ///Called by the gameSSticker
 /datum/game_mode/process()
 	return
-
-//For things that do not die easily
-/datum/game_mode/proc/are_special_antags_dead()
-	return TRUE
-
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
 	if(!SSticker.setup_done || !gamemode_ready)
@@ -310,12 +297,7 @@
 		rev.remove_revolutionary(TRUE)
 
 /datum/game_mode/proc/generate_station_goals()
-	var/list/possible = list()
-	for(var/T in subtypesof(/datum/station_goal))
-		var/datum/station_goal/G = T
-		if(config_tag in initial(G.gamemode_blacklist))
-			continue
-		possible += T
+	var/list/possible = subtypesof(/datum/station_goal)
 	var/goal_weights = 0
 	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
 		var/datum/station_goal/picked = pick_n_take(possible)

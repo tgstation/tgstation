@@ -7,7 +7,6 @@
 	var/name = "Generic Goal"
 	var/weight = 1 //In case of multiple goals later.
 	var/required_crew = 10
-	var/list/gamemode_blacklist = list()
 	var/completed = FALSE
 	var/report_message = "Complete this goal."
 

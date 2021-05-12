@@ -18,8 +18,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic
 	name = "dynamic mode"
-	config_tag = "dynamic"
-	report_type = "dynamic"
 
 	announce_span = "danger"
 	announce_text = "Dynamic mode!" // This needs to be changed maybe

@@ -27,7 +27,7 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 
-/datum/round_event_control/wizard/embedpocalypse/sticky/canSpawnEvent(players_amt, gamemode)
+/datum/round_event_control/wizard/embedpocalypse/sticky/canSpawnEvent(players_amt)
 	if(GLOB.embedpocalypse)
 		return FALSE
 

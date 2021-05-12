@@ -26,7 +26,6 @@ SUBSYSTEM_DEF(persistence)
 	LoadPoly()
 	LoadChiselMessages()
 	LoadTrophies()
-	LoadRecentModes()
 	LoadRecentMaps()
 	LoadPhotoPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
@@ -107,15 +106,6 @@ SUBSYSTEM_DEF(persistence)
 		saved_trophies = json["data"]
 	SetUpTrophies(saved_trophies.Copy())
 
-/datum/controller/subsystem/persistence/proc/LoadRecentModes()
-	var/json_file = file("data/RecentModes.json")
-	if(!fexists(json_file))
-		return
-	var/list/json = json_decode(file2text(json_file))
-	if(!json)
-		return
-	saved_modes = json["data"]
-
 /datum/controller/subsystem/persistence/proc/LoadRecentMaps()
 	var/map_sav = FILE_RECENT_MAPS
 	if(!fexists(FILE_RECENT_MAPS))
@@ -176,7 +166,6 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
 	CollectTrophies()
-	CollectRoundtype()
 	CollectMaps()
 	SavePhotoPersistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
@@ -296,16 +285,6 @@ SUBSYSTEM_DEF(persistence)
 		data["message"] = T.trophy_message
 		data["placer_key"] = T.placer_key
 		saved_trophies += list(data)
-
-/datum/controller/subsystem/persistence/proc/CollectRoundtype()
-	saved_modes[3] = saved_modes[2]
-	saved_modes[2] = saved_modes[1]
-	saved_modes[1] = SSticker.mode.config_tag
-	var/json_file = file("data/RecentModes.json")
-	var/list/file_data = list()
-	file_data["data"] = saved_modes
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectMaps()
 	if(length(saved_maps) > KEEP_ROUNDS_MAP) //Get rid of extras from old configs.
