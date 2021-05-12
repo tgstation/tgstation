@@ -49,28 +49,28 @@
  * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
  */
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
-	if(!iscarbon(M) || owner == M)
+/obj/item/organ/proc/Insert(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = TRUE)
+	if(!iscarbon(carbon) || owner == carbon)
 		return
 
-	var/obj/item/organ/replaced = M.getorganslot(slot)
+	var/obj/item/organ/replaced = carbon.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(M, special = TRUE)
+		replaced.Remove(carbon, special = TRUE)
 		if(drop_if_replaced)
-			replaced.forceMove(get_turf(M))
+			replaced.forceMove(get_turf(carbon))
 		else
 			qdel(replaced)
 
-	SEND_SIGNAL(M, COMSIG_CARBON_GAIN_ORGAN, src, special)
+	SEND_SIGNAL(carbon, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
-	owner = M
-	M.internal_organs |= src
-	M.internal_organs_slot[slot] = src
+	owner = carbon
+	carbon.internal_organs |= src
+	carbon.internal_organs_slot[slot] = src
 	moveToNullspace()
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.Grant(M)
+	for(var/actions in actions)
+		var/datum/action/action = actions
+		action.Grant(carbon)
 	STOP_PROCESSING(SSobj, src)
 
 /*
@@ -79,22 +79,22 @@
  * M - the mob who owns our organ, that we're removing the organ from.
  * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/proc/Remove(mob/living/carbon/carbon, special = FALSE)
 
 	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 
 	owner = null
-	if(M)
-		M.internal_organs -= src
-		if(M.internal_organs_slot[slot] == src)
-			M.internal_organs_slot.Remove(slot)
-		if((organ_flags & ORGAN_VITAL) && !special && !(M.status_flags & GODMODE))
-			M.death()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.Remove(M)
+	if(carbon)
+		carbon.internal_organs -= src
+		if(carbon.internal_organs_slot[slot] == src)
+			carbon.internal_organs_slot.Remove(slot)
+		if((organ_flags & ORGAN_VITAL) && !special && !(carbon.status_flags & GODMODE))
+			carbon.death()
+	for(var/actions in actions)
+		var/datum/action/action = actions
+		action.Remove(carbon)
 
-	SEND_SIGNAL(M, COMSIG_CARBON_LOSE_ORGAN, src, special)
+	SEND_SIGNAL(carbon, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
 	START_PROCESSING(SSobj, src)
 
@@ -219,23 +219,23 @@
 		return
 
 	else
-		var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
-		if(!L)
-			L = new()
-			L.Insert(src)
-		L.setOrganDamage(0)
+		var/obj/item/organ/lungs/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+		if(!lungs)
+			lungs = new()
+			lungs.Insert(src)
+		lungs.setOrganDamage(0)
 
-		var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
-		if(!H)
-			H = new()
-			H.Insert(src)
-		H.setOrganDamage(0)
+		var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+		if(!heart)
+			heart = new()
+			heart.Insert(src)
+		heart.setOrganDamage(0)
 
-		var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
-		if(!T)
-			T = new()
-			T.Insert(src)
-		T.setOrganDamage(0)
+		var/obj/item/organ/tongue/tongue = getorganslot(ORGAN_SLOT_TONGUE)
+		if(!tongue)
+			tongue = new()
+			tongue.Insert(src)
+		tongue.setOrganDamage(0)
 
 		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 		if(!eyes)

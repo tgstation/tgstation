@@ -8,9 +8,9 @@
 	var/implant_overlay
 	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
 
-/obj/item/organ/cyberimp/New(mob/M = null)
-	if(iscarbon(M))
-		src.Insert(M)
+/obj/item/organ/cyberimp/New(mob/implanted_mob = null)
+	if(iscarbon(implanted_mob))
+		src.Insert(implanted_mob)
 	if(implant_overlay)
 		var/mutable_appearance/overlay = mutable_appearance(icon, implant_overlay)
 		overlay.color = implant_color
@@ -50,18 +50,18 @@
 /obj/item/organ/cyberimp/brain/anti_drop/ui_action_click()
 	active = !active
 	if(active)
-		for(var/obj/item/I in owner.held_items)
-			stored_items += I
+		for(var/obj/item/item in owner.held_items)
+			stored_items += item
 
-		var/list/L = owner.get_empty_held_indexes()
-		if(LAZYLEN(L) == owner.held_items.len)
+		var/list/hold_list = owner.get_empty_held_indexes()
+		if(LAZYLEN(hold_list) == owner.held_items.len)
 			to_chat(owner, "<span class='notice'>You are not holding any items, your hands relax...</span>")
 			active = 0
 			stored_items = list()
 		else
-			for(var/obj/item/I in stored_items)
-				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>")
-				ADD_TRAIT(I, TRAIT_NODROP, IMPLANT_TRAIT)
+			for(var/obj/item/item in stored_items)
+				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(item))]'s grip tightens.</span>")
+				ADD_TRAIT(item, TRAIT_NODROP, IMPLANT_TRAIT)
 
 	else
 		release_items()
@@ -73,23 +73,23 @@
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
 	var/range = severity ? 10 : 5
-	var/atom/A
+	var/atom/target_atom
 	if(active)
 		release_items()
-	for(var/obj/item/I in stored_items)
-		A = pick(oview(range))
-		I.throw_at(A, range, 2)
-		to_chat(owner, "<span class='warning'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))] spasms and throws the [I.name]!</span>")
+	for(var/obj/item/item in stored_items)
+		target_atom = pick(oview(range))
+		item.throw_at(target_atom, range, 2)
+		to_chat(owner, "<span class='warning'>Your [owner.get_held_index_name(owner.get_held_index_of_item(item))] spasms and throws the [item.name]!</span>")
 	stored_items = list()
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
-	for(var/obj/item/I in stored_items)
-		REMOVE_TRAIT(I, TRAIT_NODROP, IMPLANT_TRAIT)
+	for(var/obj/item/item in stored_items)
+		REMOVE_TRAIT(item, TRAIT_NODROP, IMPLANT_TRAIT)
 	stored_items = list()
 
 
-/obj/item/organ/cyberimp/brain/anti_drop/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/brain/anti_drop/Remove(mob/living/carbon/carbon, special = 0)
 	if(active)
 		ui_action_click()
 	..()
@@ -109,9 +109,9 @@
 
 	var/stun_cap_amount = 40
 
-/obj/item/organ/cyberimp/brain/anti_stun/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/cyberimp/brain/anti_stun/Remove(mob/living/carbon/carbon, special = FALSE)
 	. = ..()
-	UnregisterSignal(M, signalCache)
+	UnregisterSignal(carbon, signalCache)
 
 /obj/item/organ/cyberimp/brain/anti_stun/Insert()
 	. = ..()

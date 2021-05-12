@@ -115,49 +115,49 @@
 		body.vomit(damage)
 		to_chat(body, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
-/obj/item/organ/stomach/get_availability(datum/species/S)
-	return !(NOSTOMACH in S.inherent_traits)
+/obj/item/organ/stomach/get_availability(datum/species/species)
+	return !(NOSTOMACH in species.inherent_traits)
 
-/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H, delta_time, times_fired)
-	if(H.disgust)
-		var/pukeprob = 2.5 + (0.025 * H.disgust)
-		if(H.disgust >= DISGUST_LEVEL_GROSS)
+/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/human, delta_time, times_fired)
+	if(human.disgust)
+		var/pukeprob = 2.5 + (0.025 * human.disgust)
+		if(human.disgust >= DISGUST_LEVEL_GROSS)
 			if(DT_PROB(5, delta_time))
-				H.stuttering += 1
-				H.add_confusion(2)
-			if(DT_PROB(5, delta_time) && !H.stat)
-				to_chat(H, "<span class='warning'>You feel kind of iffy...</span>")
-			H.jitteriness = max(H.jitteriness - 3, 0)
-		if(H.disgust >= DISGUST_LEVEL_VERYGROSS)
+				human.stuttering += 1
+				human.add_confusion(2)
+			if(DT_PROB(5, delta_time) && !human.stat)
+				to_chat(human, "<span class='warning'>You feel kind of iffy...</span>")
+			human.jitteriness = max(human.jitteriness - 3, 0)
+		if(human.disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
-				H.add_confusion(2.5)
-				H.stuttering += 1
-				H.vomit(10, 0, 1, 0, 1, 0)
-			H.Dizzy(5)
-		if(H.disgust >= DISGUST_LEVEL_DISGUSTED)
+				human.add_confusion(2.5)
+				human.stuttering += 1
+				human.vomit(10, 0, 1, 0, 1, 0)
+			human.Dizzy(5)
+		if(human.disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(DT_PROB(13, delta_time))
-				H.blur_eyes(3) //We need to add more shit down here
+				human.blur_eyes(3) //We need to add more shit down here
 
-		H.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
-	switch(H.disgust)
+		human.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
+	switch(human.disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
-			H.clear_alert("disgust")
-			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
+			human.clear_alert("disgust")
+			SEND_SIGNAL(human, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
-			H.throw_alert("disgust", /atom/movable/screen/alert/gross)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/gross)
+			human.throw_alert("disgust", /atom/movable/screen/alert/gross)
+			SEND_SIGNAL(human, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/gross)
 		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
-			H.throw_alert("disgust", /atom/movable/screen/alert/verygross)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/verygross)
+			human.throw_alert("disgust", /atom/movable/screen/alert/verygross)
+			SEND_SIGNAL(human, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/verygross)
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-			H.throw_alert("disgust", /atom/movable/screen/alert/disgusted)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
+			human.throw_alert("disgust", /atom/movable/screen/alert/disgusted)
+			SEND_SIGNAL(human, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
-/obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/stomach/Remove(mob/living/carbon/carbon, special = 0)
 	if(istype(owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = owner
-		H.clear_alert("disgust")
-		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
+		var/mob/living/carbon/human/human = owner
+		human.clear_alert("disgust")
+		SEND_SIGNAL(human, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 
 	return ..()
 
@@ -201,12 +201,12 @@
 	..()
 	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
 
-/obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/carbon, special = 0)
 	..()
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
 
-/obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/carbon, special = 0)
 	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
 	..()
