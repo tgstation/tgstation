@@ -144,7 +144,7 @@
  * This prints fake reports with garbage in them,
  * can be set to print them instantly with a screwdriver.
  * By default it plays the old "woody" scanning sound, scanning sounds can be cycled by clicking with a multitool.
- * Upgrades to clownspection scanner when clicked with bananium (WIP!!!!!!!!!!!!!!!!)
+ * Can be crafted into a bananium HONK-spect scanner
  * Cannot print on blessed tiles (Not yet implemented!!!!!!!!!!!!!!!!!!)
  */
 /obj/item/inspector/clown
