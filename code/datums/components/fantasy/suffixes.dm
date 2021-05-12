@@ -181,6 +181,12 @@
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_EVIL
 
+/datum/fantasy_affix/curse_of_hunger/validate(obj/item/attached)
+	//curse of hunger that attaches onto food has the ability to eat itself. it's hilarious.
+	if(!IS_EDIBLE(attached))
+		return TRUE
+	return TRUE
+
 /datum/fantasy_affix/curse_of_hunger/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
