@@ -65,9 +65,8 @@
 		return FALSE
 
 	// If we're not forced, we're going to make sure we can actually have an AI in this shift,
-	if(!forced)
-		if(min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions) <= 0)
-			return FALSE
+	if(!forced && min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions) <= 0)
+		return FALSE
 
 	return ..()
 
