@@ -15,8 +15,6 @@
 /datum/game_mode
 	/// Self explanitory, name of the game mode.
 	var/name = "invalid"
-	/// Used for tracking where the nuke hit. Changes cinematic if the nuke is deployed off station zlevel.
-	var/nuke_off_station = FALSE
 
 	/// List of available station goals for the crew to be working on, built into the round-type.
 	var/list/datum/station_goal/station_goals = list()

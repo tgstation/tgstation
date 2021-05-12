@@ -1,4 +1,5 @@
 GLOBAL_VAR_INIT(station_was_nuked, FALSE)
+GLOBAL_VAR(station_nuke_source)
 
 /obj/machinery/nuclearbomb
 	name = "nuclear fission explosive"
@@ -495,6 +496,7 @@ GLOBAL_VAR_INIT(station_was_nuked, FALSE)
 
 	//Cinematic
 	GLOB.station_was_nuked = TRUE
+	GLOB.station_nuke_source = off_station
 	really_actually_explode(off_station)
 	SSticker.roundend_check_paused = FALSE
 
