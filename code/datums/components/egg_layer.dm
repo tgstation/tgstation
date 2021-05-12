@@ -23,14 +23,14 @@
 	/// callback to a proc that allows the parent to modify their new eggs
 	var/datum/callback/egg_laid_callback
 
-/datum/component/egg_layer/Initialize(egg_type, food_types, feedMessages, layMessages, eggs_left, eggs_added_from_eating, max_eggs_held, egg_laid_callback)
+/datum/component/egg_layer/Initialize(egg_type, food_types, feed_messages, lay_messages, eggs_left, eggs_added_from_eating, max_eggs_held, egg_laid_callback)
 	if(!isatom(parent)) //yes, you could make a tameable toolbox.
 		return COMPONENT_INCOMPATIBLE
 
 	src.egg_type = egg_type
 	src.food_types = food_types
-	src.feedMessages = feedMessages
-	src.layMessages = layMessages
+	src.feed_messages = feed_messages
+	src.lay_messages = lay_messages
 	src.eggs_left = eggs_left
 	src.eggs_added_from_eating = eggs_added_from_eating
 	src.max_eggs_held = max_eggs_held
@@ -66,7 +66,7 @@
 		to_chat(attacker, "<span class='warning'>[parent] doesn't seem hungry!</span>")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	attacker.visible_message("<span class='notice'>[attacker] hand-feeds [food] to [parent].</span>", "<span class='notice'>You hand-feed [food] to [parent].</span>")
-	at_least_atom.visible_message(pick(feedMessages))
+	at_least_atom.visible_message(pick(feed_messages))
 	qdel(food)
 	eggs_left += min(eggs_left + eggs_added_from_eating, max_eggs_held)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -81,7 +81,7 @@
 	if(!eggs_left || !DT_PROB(1.5, delta_time))
 		return
 
-	at_least_atom.visible_message("<span class='alertalien'>[at_least_atom] [pick(layMessages)]</span>")
+	at_least_atom.visible_message("<span class='alertalien'>[at_least_atom] [pick(lay_messages)]</span>")
 	eggs_left--
 	var/obj/item/egg = new egg_type(get_turf(at_least_atom))
 	egg.pixel_x = rand(-6, 6)
