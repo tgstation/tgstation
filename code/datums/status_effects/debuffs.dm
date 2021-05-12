@@ -997,42 +997,38 @@
 	. = ..()
 
 /datum/status_effect/ants/proc/ants_washed()
+	SIGNAL_HANDLER
 	owner.remove_status_effect(STATUS_EFFECT_ANTS)
 	return COMPONENT_CLEANED
 
 /datum/status_effect/ants/tick(delta_time)
-	var/mob/living/carbon/human/M = owner
-	M.adjustBruteLoss(max(0.2, round((ants_remaining * 0.06),0.1))) //More ants means more damage
-	if(!M.stat) //Makes sure people don't scratch at themselves while they're dead
+	var/mob/living/carbon/human/victim = owner
+	victim.adjustBruteLoss(max(0.2, round((ants_remaining * 0.008),0.1))) //Roughly 20 brute over 50 seconds.
+	if(!victim.stat) //Makes sure people don't scratch at themselves while they're dead
 		if(DT_PROB(15, delta_time))
-			var/ant_scream = pick(1,2)
-			switch(ant_scream)
-				if(1)
-					M.say("GET THEM OFF ME!!", forced = /datum/status_effect/ants)
-				if(2)
-					M.say("OH GOD THE ANTS!!", forced = /datum/status_effect/ants)
+				victim.say(pick("GET THEM OFF ME!!", "OH GOD THE ANTS!!") forced = /datum/status_effect/ants)
 		if(DT_PROB(30,delta_time))
-			M.emote("scream")
+			victim.emote("scream")
 		if(DT_PROB(80, delta_time))
 			switch (rand(1, 50))
 				if (1 to 8) //16% Chance (if I made it 15% the other two probabilities wouldn't be integers)
-					var/obj/item/bodypart/head/hed = M.get_bodypart(BODY_ZONE_HEAD)
-					to_chat(M, "<span class='danger'>You scratch at the ants on your scalp!.</span>")
+					var/obj/item/bodypart/head/hed = victim.get_bodypart(BODY_ZONE_HEAD)
+					to_chat(victim, "<span class='danger'>You scratch at the ants on your scalp!.</span>")
 					hed.receive_damage(0.1,0)
 				if (8 to 29) //42% chance
-					var/obj/item/bodypart/arm = M.get_bodypart(pick(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM))
-					to_chat(M, "<span class='danger'>You scratch at the ants on your arms!</span>")
+					var/obj/item/bodypart/arm = victim.get_bodypart(pick(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM))
+					to_chat(victim, "<span class='danger'>You scratch at the ants on your arms!</span>")
 					arm.receive_damage(0.1,0)
 				if (29 to 50) //42% chance
-					var/obj/item/bodypart/leg = M.get_bodypart(pick(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG))
-					to_chat(M, "<span class='danger'>You scratch at the ants on your leg!</span>")
+					var/obj/item/bodypart/leg = victim.get_bodypart(pick(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG))
+					to_chat(victim, "<span class='danger'>You scratch at the ants on your leg!</span>")
 					leg.receive_damage(0.1,0)
 		if(DT_PROB(3, delta_time)) //See? It's not ALL bad!
-			M.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
+			victim.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
 			ants_remaining -= 5
-	ants_remaining -= 1
+	ants_remaining -= delta_time
 	if(ants_remaining <= 0)
-		M.remove_status_effect(STATUS_EFFECT_ANTS) //If this person has no more ants on them, they are no longer affected.
+		victim.remove_status_effect(STATUS_EFFECT_ANTS) //If this person has no more ants on them, they are no longer affected.
 
 /atom/movable/screen/alert/status_effect/ants
 	name = "Ants!"
@@ -1040,12 +1036,12 @@
 	icon_state = "antalert"
 
 /atom/movable/screen/alert/status_effect/ants/Click()
-	var/mob/living/L = owner
-	if(!istype(L) || !L.can_resist() || L != owner)
+	var/mob/living/living = owner
+	if(!istype(living) || !living.can_resist() || living != owner)
 		return
-	to_chat(L, "<span class='notice'>You start to shake the ants off!</span>")
-	if(!do_after(L, 2 SECONDS, target = L))
+	to_chat(living, "<span class='notice'>You start to shake the ants off!</span>")
+	if(!do_after(living, 2 SECONDS, target = living))
 		return
-	else for (var/datum/status_effect/ants/ant_covered in L.status_effects)
-		to_chat(L, "<span class='notice'>You manage to get some of the ants off!</span>")
-		ant_covered.ants_remaining -=7
+	for (var/datum/status_effect/ants/ant_covered in living.status_effects)
+		to_chat(living, "<span class='notice'>You manage to get some of the ants off!</span>")
+		ant_covered.ants_remaining -= 7

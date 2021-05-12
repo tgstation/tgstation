@@ -38,7 +38,6 @@
 
 /mob/living/simple_animal/ant/Initialize()
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "buzzes!")
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/ant/add_cell_sample()
@@ -47,10 +46,10 @@
 /mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) //Payback time bitch
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
-			for(var/mob/living/simple_animal/hostile/cockroach/CR in view(1,src))
-				if(!CR.stat && Adjacent(CR) && COOLDOWN_FINISHED(src, emote_cooldown))
-					manual_emote("chomps \the [CR]!")
-					CR.splat()
+			for(var/mob/living/simple_animal/hostile/cockroach/roach in view(1,src))
+				if(!roach.stat && Adjacent(roach) && COOLDOWN_FINISHED(src, emote_cooldown))
+					manual_emote("chomps \the [roach]!")
+					roach.death()
 					movement_target = null
 					stop_automated_movement = 0
 					COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
@@ -65,7 +64,7 @@
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
 				stop_automated_movement = 0
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
+			if(!movement_target || !(movement_target.loc in oview(src, 3)))
 				movement_target = null
 				stop_automated_movement = 0
 				for(var/mob/living/simple_animal/hostile/cockroach/snack in oview(src,3))

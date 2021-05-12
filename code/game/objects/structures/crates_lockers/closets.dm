@@ -144,9 +144,8 @@
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(L)
-		for(var/i in src)
-			var/atom/movable/thing = i
-			SEND_SIGNAL(thing, COMSIG_CLOSET_CONTENTS_EXPOSED, src)
+		for(var/atom/movable/thing as anything in src)
+			SEND_SIGNAL(thing, COMSIG_ITEM_EJECTED_FROM_CLOSET, src)
 		if(throwing) // you keep some momentum when getting out of a thrown closet
 			step(AM, dir)
 	if(throwing)

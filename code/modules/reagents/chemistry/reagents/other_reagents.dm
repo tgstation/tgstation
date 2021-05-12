@@ -2622,27 +2622,23 @@
 	metabolization_rate = 5 * REAGENTS_METABOLISM //1u per second
 	glass_name = "glass of ants"
 	glass_desc = "Bottoms up...?"
+	ph = 4.6 //Ants contain Formic Acid, meaning they would likely be very acidic themselves if you used them as a reagent
 	var/ant_damage = 0
 	var/amount_left = 0
 
-/datum/reagent/ants/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(max(0.5, round((ant_damage * 0.1),0.1)))
+/datum/reagent/ants/on_mob_life(mob/living/carbon/victim)
+	victim.adjustBruteLoss(max(0.2, round((ant_damage * 0.01),0.1))) //Around 25 brute for 50 seconds
 	if(prob(5)) //Due to the fact this has a chance of happening every cycle, it's more likely to happen than it looks
 		if(prob(1)) //Super rare statement
-			M.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
+			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
 		else
-			var/scream_statement = pick(1,2)
-			switch(scream_statement)
-				if(1)
-					M.say("THEY'RE UNDER MY SKIN!!", forced = /datum/reagent/ants)
-				if(2)
-					M.say("GET THEM OUT OF ME!!", forced = /datum/reagent/ants)
+			victim.say(pick("THEY'RE UNDER MY SKIN!!", "GET THEM OUT OF ME!!"), forced = /datum/reagent/ants)
 	if(prob(15))
-		M.emote("scream")
+		victim.emote("scream")
 	ant_damage += 1
 	..()
 
-/datum/reagent/ants/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/ants/on_mob_end_metabolize(mob/living/livin)
 	ant_damage = 0
 
 /datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)

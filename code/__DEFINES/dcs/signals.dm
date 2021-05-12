@@ -1254,4 +1254,4 @@
 
 // Closet/crate items ejected signal
 ///from closet open()
-#define COMSIG_CLOSET_CONTENTS_EXPOSED "closet_contents_exposed"
+#define COMSIG_ITEM_EJECTED_FROM_CLOSET "item_ejected_from_closet"
