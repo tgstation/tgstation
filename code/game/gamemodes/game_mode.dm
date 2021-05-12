@@ -13,8 +13,6 @@
 
 
 /datum/game_mode
-	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
-	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS = list(), CURRENT_LIVING_ANTAGS = list(), CURRENT_DEAD_PLAYERS = list(), CURRENT_OBSERVERS = list())
 
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
