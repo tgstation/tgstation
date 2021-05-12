@@ -83,15 +83,24 @@
 		print_report()
 
 /**
+ * Create our report
+ *
+ * Arguments:
+ */
+/obj/item/inspector/proc/create_slip()
+	var/obj/item/paper/report/slip = new(get_turf(src))
+	slip.generate_report(get_area(src))
+
+/obj/item/inspector/proc/play_sound()
+	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+/**
  * Prints out a report for bounty purposes, and plays a short audio blip.
  *
  * Arguments:
 */
 /obj/item/inspector/proc/print_report()
-	// Create our report
-	var/obj/item/paper/report/slip = new(get_turf(src))
-	slip.generate_report(get_area(src))
-	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+	create_slip()
+	play_sound()
 
 /obj/item/paper/report
 	name = "encrypted station inspection"
@@ -147,18 +156,8 @@
 	print_report()
 
 /obj/item/inspector/clown/print_report()
-	// Create our report
-	var/obj/item/paper/fake_report/slip = new(get_turf(src))
-	slip.generate_report(get_area(src))
-	switch(print_sound_mode)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL)
-			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
-			playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK)
-			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
-			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, FALSE)
+	create_slip()
+	play_sound()
 
 /obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MULTITOOL)
@@ -189,8 +188,23 @@
 		print_time = 1 SECONDS
 		to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTNING FAST.")
 
+/obj/item/inspector/clown/create_slip()
+	var/obj/item/paper/fake_report/slip = new(get_turf(src))
+	slip.generate_report(get_area(src))
+
+/obj/item/inspector/clown/play_sound()
+	switch(print_sound_mode)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL)
+			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
+			playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK)
+			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
+			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, TRUE)
+
 /**
- * # True clownspection scanner (WIP!!!!!!!!!!!)
+ * # Bananium HONK-spect scanner (WIP!!!!!!!!!!!)
  *
  * An upgraded version of the fake N-spect scanner
  *
@@ -199,10 +213,25 @@
  * origami master.
  * Unlike the normal clown scanner, is not restricted by blessed tiles.
  */
-/obj/item/inspector/clown/full_power
+/obj/item/inspector/clown/bananium
+	name = "\improper Bananium HONK-spect scanner"
+	desc = "Honkmother-blessed inspection device. Performs inspections according to Clown protocols when activated, then \
+			prints a clowncrypted report regarding the maintenance of the station. Hard to replace."
 	icon_state = "clowninspector"
+	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/inspector/clown/full_power/cycle_print_time(mob/user)
+/obj/item/inspector/clown/bananium/Initialize()
+	. = ..()
+	playsound(src, 'sound/effects/angryboat.ogg', 150, FALSE)
+
+/obj/item/inspector/clown/bananium/create_slip()
+	if(print_time == 0.1 SECONDS)
+		var/obj/item/paper/fake_report/water/slip = new(get_turf(src))
+		slip.generate_report(get_area(src))
+	else
+		..()
+
+/obj/item/inspector/clown/bananium/cycle_print_time(mob/user)
 	if(print_time == 0.1 SECONDS)
 		print_time = 5 SECONDS
 		to_chat(user, "<span class='notice'>You set the device's scanning speed to SLOW.")
@@ -256,3 +285,5 @@
 		. += "<span class='notice'>Wait a minute, this isn't an encrypted inspection report! You should throw it away.</span>"
 	else
 		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"
+
+/obj/item/paper/fake_report/water
