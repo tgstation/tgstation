@@ -51,8 +51,6 @@
 	var/antag_flag = null
 	/// A reference to a gamemode's sole important antagonist if one exists.
 	var/mob/living/living_antag_player = null
-	/// Matters more outside of dynamic, if a gamemode is converted mid-round due to a mulligan or due to admin action, the new mode is stored here.
-	var/datum/game_mode/replacementmode = null
 	///0: round not converted, 1: round going to convert, 2: round converted
 	var/round_converted = 0
 	///Can this game mode be re-rolled? If so, puts it up for a mulligan if the round ends early.
@@ -82,12 +80,6 @@
 
 	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
 	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS = list(), CURRENT_LIVING_ANTAGS = list(), CURRENT_DEAD_PLAYERS = list(), CURRENT_OBSERVERS = list())
-
-
-/datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
-	to_chat(world, "<span class='infoplain'><b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b></span>")
-	to_chat(world, "<span class='infoplain'><b>[announce_text]</b></span>")
-
 
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
@@ -152,89 +144,7 @@
 
 ///Handles late-join antag assignments
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
-	if(replacementmode && round_converted == 2)
-		replacementmode.make_antag_chance(character)
 	return
-
-
-///Allows rounds to basically be "rerolled" should the initial premise fall through. Also known as mulligan antags.
-/datum/game_mode/proc/convert_roundtype()
-	set waitfor = FALSE
-	var/list/living_crew = list()
-
-	for(var/i in GLOB.player_list)
-		var/mob/Player = i
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player))
-			living_crew += Player
-	var/malc = CONFIG_GET(number/midround_antag_life_check)
-	if(living_crew.len / GLOB.joined_player_list.len <= malc) //If a lot of the player base died, we start fresh
-		message_admins("Convert_roundtype failed due to too many dead people. Limit is [malc * 100]% living crew")
-		return null
-
-	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew.len)
-	var/list/datum/game_mode/usable_modes = list()
-	for(var/datum/game_mode/G in runnable_modes)
-		if(G.reroll_friendly && living_crew.len >= G.required_players)
-			usable_modes += G
-		else
-			qdel(G)
-
-	if(!usable_modes.len)
-		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
-		return null
-
-	replacementmode = pickweight(usable_modes)
-
-	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out
-		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE, SHUTTLE_DISABLED)
-			return TRUE
-		if(SHUTTLE_CALL)
-			if(SSshuttle.emergency.timeLeft(1) < initial(SSshuttle.emergencyCallTime)*0.5)
-				return TRUE
-
-	var/matc = CONFIG_GET(number/midround_antag_time_check)
-	if(world.time >= (matc * 600))
-		message_admins("Convert_roundtype failed due to round length. Limit is [matc] minutes.")
-		return null
-
-	var/list/antag_candidates = list()
-
-	for(var/mob/living/carbon/human/H in living_crew)
-		if(H.client && H.client.prefs.allow_midround_antag && !is_centcom_level(H.z))
-			antag_candidates += H
-
-	if(!antag_candidates)
-		message_admins("Convert_roundtype failed due to no antag candidates.")
-		return null
-
-	antag_candidates = shuffle(antag_candidates)
-
-	if(CONFIG_GET(flag/protect_roles_from_antagonist))
-		replacementmode.restricted_jobs += replacementmode.protected_jobs
-	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		replacementmode.restricted_jobs += "Assistant"
-
-	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=[REF(usr)]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>end the round now</A>.")
-	log_game("Roundtype converted to [replacementmode.name]")
-
-	. = 1
-
-	sleep(rand(600,1800))
-	if(!SSticker.IsRoundInProgress())
-		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
-		round_converted = 0
-		return
-	//somewhere between 1 and 3 minutes from now
-	if(!CONFIG_GET(keyed_list/midround_antag)[SSticker.mode.config_tag])
-		round_converted = 0
-		return TRUE
-	for(var/mob/living/carbon/human/H in antag_candidates)
-		if(H.client)
-			replacementmode.make_antag_chance(H)
-	replacementmode.gamemode_ready = TRUE //Awful but we're not doing standard setup here.
-	round_converted = 2
-	message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
-
 
 ///Called by the gameSSticker
 /datum/game_mode/process()
@@ -248,56 +158,12 @@
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
 	if(!SSticker.setup_done || !gamemode_ready)
 		return FALSE
-	if(replacementmode && round_converted == 2)
-		return replacementmode.check_finished()
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
 		return TRUE
 	if(station_was_nuked)
 		return TRUE
-	var/list/continuous = CONFIG_GET(keyed_list/continuous)
-	var/list/midround_antag = CONFIG_GET(keyed_list/midround_antag)
-	if(!round_converted && (!continuous[config_tag] || (continuous[config_tag] && midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
-		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
-			for(var/mob/Player in GLOB.mob_list)
-				if(Player.mind)
-					if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums))
-						continuous_sanity_checked = TRUE
-						return FALSE
-			if(!continuous_sanity_checked)
-				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")
-				continuous[config_tag] = TRUE
-				midround_antag[config_tag] = FALSE
-				SSshuttle.clearHostileEnvironment(src)
-				return FALSE
-
-
-		if(living_antag_player && living_antag_player.mind && isliving(living_antag_player) && living_antag_player.stat != DEAD && !isnewplayer(living_antag_player) &&!isbrain(living_antag_player) && (living_antag_player.mind.special_role || LAZYLEN(living_antag_player.mind.antag_datums)))
-			return FALSE //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
-
-		for(var/mob/Player in GLOB.alive_mob_list)
-			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client && (Player.mind.special_role || LAZYLEN(Player.mind.antag_datums))) //Someone's still antagging but is their antagonist datum important enough to skip mulligan?
-				for(var/datum/antagonist/antag_types in Player.mind.antag_datums)
-					if(antag_types.prevent_roundtype_conversion)
-						living_antag_player = Player //they were an important antag, they're our new mark
-						return FALSE
-
-		if(!are_special_antags_dead())
-			return FALSE
-
-		if(!continuous[config_tag] || force_ending)
-			return TRUE
-
-		else
-			round_converted = convert_roundtype()
-			if(!round_converted)
-				if(round_ends_with_antag_death)
-					return TRUE
-				else
-					midround_antag[config_tag] = 0
-					return FALSE
-
-	return FALSE
-
+	if(force_ending)
+		return TRUE
 
 /datum/game_mode/proc/send_intercept()
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"

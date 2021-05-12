@@ -76,14 +76,6 @@
 	/// If written as a linear equation, will be in the form of `list("denominator" = denominator, "offset" = offset).
 	var/antag_cap = 0
 
-
-/datum/dynamic_ruleset/New()
-	..()
-	if (istype(SSticker.mode, /datum/game_mode/dynamic))
-		mode = SSticker.mode
-	else if (!SSticker.is_mode("dynamic")) // This is here to make roundstart forced ruleset function.
-		qdel(src)
-
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
 	ruletype = "Roundstart"
 

@@ -293,19 +293,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(SSsecurity_level.current_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
-// Yes, this is copy pasted from game_mode
-/datum/game_mode/dynamic/check_finished(force_ending)
-	if(!SSticker.setup_done || !gamemode_ready)
-		return FALSE
-	if(replacementmode && round_converted == 2)
-		return replacementmode.check_finished()
-	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
-		return TRUE
-	if(station_was_nuked)
-		return TRUE
-	if(force_ending)
-		return TRUE
-
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
 		alert("The round hasn't started yet!")

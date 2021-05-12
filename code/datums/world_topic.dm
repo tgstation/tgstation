@@ -141,7 +141,6 @@
 /datum/world_topic/status/Run(list/input)
 	. = list()
 	.["version"] = GLOB.game_version
-	.["mode"] = GLOB.master_mode
 	.["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
 	.["enter"] = GLOB.enter_allowed
 	.["ai"] = CONFIG_GET(flag/allow_ai)

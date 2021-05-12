@@ -515,8 +515,6 @@
 			return
 		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
-		if(!SSticker.is_mode("dynamic"))
-			return alert(usr, "The game mode has to be dynamic mode.", null, null, null, null)
 		var/roundstart_rules = list()
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
 			var/datum/dynamic_ruleset/roundstart/newrule = new rule()
@@ -551,16 +549,11 @@
 
 		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
-		if(!SSticker.is_mode("dynamic"))
-			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
 		dynamic_mode_options(usr)
 	else if(href_list["f_dynamic_force_extended"])
 		if(!check_rights(R_ADMIN))
 			return
-
-		if(!SSticker.is_mode("dynamic"))
-			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
 		GLOB.dynamic_forced_extended = !GLOB.dynamic_forced_extended
 		log_admin("[key_name(usr)] set 'forced_extended' to [GLOB.dynamic_forced_extended].")
@@ -571,9 +564,6 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!SSticker.is_mode("dynamic"))
-			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
-
 		GLOB.dynamic_no_stacking = !GLOB.dynamic_no_stacking
 		log_admin("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
 		message_admins("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
@@ -581,9 +571,6 @@
 	else if(href_list["f_dynamic_stacking_limit"])
 		if(!check_rights(R_ADMIN))
 			return
-
-		if(!SSticker.is_mode("dynamic"))
-			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
 		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 		log_admin("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
@@ -596,9 +583,6 @@
 
 		if(SSticker?.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
-
-		if(!SSticker.is_mode("dynamic"))
-			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
 
 		var/new_value = input(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level") as num
 		if (new_value > 100)
