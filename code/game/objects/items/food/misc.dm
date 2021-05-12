@@ -176,6 +176,7 @@
 	food_reagents = list(/datum/reagent/toxin/bad_food = 30)
 	foodtypes = GROSS
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE //Can't decompose any more than this
 
 /obj/item/food/badrecipe/Initialize()
 	. = ..()

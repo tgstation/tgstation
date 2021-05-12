@@ -1044,7 +1044,7 @@
 	if(!istype(L) || !L.can_resist() || L != owner)
 		return
 	to_chat(L, "<span class='notice'>You start to shake the ants off!</span>")
-	if(!do_after(L, 2 SECONDS, TRUE))
+	if(!do_after(L, 2 SECONDS, target = L))
 		return
 	else for (var/datum/status_effect/ants/ant_covered in L.status_effects)
 		to_chat(L, "<span class='notice'>You manage to get some of the ants off!</span>")
