@@ -140,7 +140,7 @@
 	if(iscyborg(riding_mob))
 		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(2)))
 	else
-		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list( 2), TEXT_SOUTH = list(-2), TEXT_EAST = list(0), TEXT_WEST = list( 2)))
+		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(2), TEXT_SOUTH = list(-2), TEXT_EAST = list(0), TEXT_WEST = list(2)))
 
 /datum/component/riding/vehicle/scooter/skateboard
 	vehicle_move_delay = 1.5
