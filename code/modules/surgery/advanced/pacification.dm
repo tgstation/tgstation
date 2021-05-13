@@ -1,12 +1,13 @@
 /datum/surgery/advanced/pacify
 	name = "Pacification"
 	desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/saw,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/pacify,
-				/datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/pacify,
+		/datum/surgery_step/close)
 
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)

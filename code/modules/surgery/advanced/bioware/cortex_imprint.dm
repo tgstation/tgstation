@@ -1,13 +1,14 @@
 /datum/surgery/advanced/bioware/cortex_imprint
 	name = "Cortex Imprint"
 	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, making the brain able to bypass impediments caused by minor brain traumas."
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/imprint_cortex,
-				/datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/imprint_cortex,
+		/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_HEAD)
 	target_mobtypes = list(/mob/living/carbon/human)
 	bioware_target = BIOWARE_CORTEX

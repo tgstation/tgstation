@@ -1,12 +1,13 @@
 /datum/surgery/advanced/viral_bonding
 	name = "Viral Bonding"
 	desc = "A surgical procedure that forces a symbiotic relationship between a virus and its host. The patient must be dosed with spaceacillin, virus food, and formaldehyde."
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/viral_bond,
-				/datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/viral_bond,
+		/datum/surgery_step/close)
 
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)

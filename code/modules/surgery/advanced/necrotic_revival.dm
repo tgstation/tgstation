@@ -1,12 +1,13 @@
 /datum/surgery/advanced/necrotic_revival
 	name = "Necrotic Revival"
 	desc = "An experimental surgical procedure that stimulates the growth of a Romerol tumor inside the patient's brain. Requires zombie powder or rezadone."
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/saw,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/bionecrosis,
-				/datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/bionecrosis,
+		/datum/surgery_step/close)
 
 	possible_locs = list(BODY_ZONE_HEAD)
 

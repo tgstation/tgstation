@@ -3,15 +3,15 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_real_bodypart = TRUE
-	steps = list(/datum/surgery_step/incise,
+	steps = list(
+		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/gastrectomy,
 		/datum/surgery_step/clamp_bleeders,
-		/datum/surgery_step/close
-		)
+		/datum/surgery_step/close)
 
 /datum/surgery/gastrectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/stomach/target_stomach = target.getorganslot(ORGAN_SLOT_STOMACH)
