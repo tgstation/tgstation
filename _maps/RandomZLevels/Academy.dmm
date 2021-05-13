@@ -2831,7 +2831,7 @@
 /turf/open/floor/mineral/uranium,
 /area/awaymission/academy/academycellar)
 "lj" = (
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
+/mob/living/simple_animal/hostile/giant_spider/hunter,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lk" = (

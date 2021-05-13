@@ -299,3 +299,65 @@
   tralezab:
   - code_imp: SStramprocess only fires on maps with trams actually present on the
       map
+2021-05-10:
+  Melbert:
+  - bugfix: You no longer eat all botany plants plants in 1 bite. Apples and Potatos
+      retain their unique 1 bite behavior.
+  - code_imp: Botany plants use a new formula for calculating bite size. All botany
+      plants have had their bite modifier adjusted to match.
+  Ryll/Shaps:
+  - bugfix: Changeling stings once again require you to be within range of your target
+      and have a direct path from you to the target
+  Time-Green:
+  - bugfix: you can now map infinitely huge plumbing networks
+  Twaticus, Imaginos16:
+  - imageadd: Resprites (almost) all base floor tiles.
+  - imageadd: Ports smooth tiles & textured versions of grey, black, and white tiles.
+  - imageadd: Dance floor item icons are no longer massive.
+  dragomagol:
+  - bugfix: blood filters no longer tell everyone that the listener's blood is being
+      filtered
+  norill:
+  - rscadd: changed name and description of surgery room disposals to inform that
+      they are connected to the morgue
+  - qol: made door remote work by clicking on the floor under an airlock too
+  tralezab:
+  - refactor: Udders are now a component, all of it!
+  - rscadd: Fantasy Prefix for poisoned weapons
+  - bugfix: Many things that would trigger on attacking someone even if you didn't
+      successfully land a hit now only trigger when you do
+  - refactor: Poisonous is an element, no more terrible pathing /poison/ woop woop
+2021-05-11:
+  JJRcop:
+  - server: Default Drone hours without config set reduced from 40 to 14. Please set
+      DRONE_ROLE_PLAYTIME to 40 if you wish to retain old behavior.
+  Mothblocks:
+  - bugfix: Proximity checkers, used in the peacekeeper borg module, will now properly
+      destroy.
+  tralezab:
+  - bugfix: "Fixes processing items \U0001F400"
+2021-05-12:
+  Inept, Fikou:
+  - rscadd: Nanotrasen has seen it fit to officially commemorate the commission date
+      of its various stations- look for the commission plaques on each station today!
+  antropod:
+  - bugfix: fixed "remove" button in reaction chamber gui
+2021-05-13:
+  JohnFulpWillard:
+  - bugfix: You can no longer transformation sting people into Skeletons.
+  Pepsiman0:
+  - qol: The electrolite was completely removed from the game, the electrolyzer now
+      needs manipulators instead of the electrolites.
+  RandomGamer123:
+  - qol: Adds mail to the in-game message of items that can't be sent on the supply
+      shuttle.
+  - code_imp: Adds code improvements done to the cargo console to the modular computer
+      cargo program as well.
+  SmArtKar:
+  - balance: Now you need enriched liquid electricity to grow a vatbeast
+  coiax:
+  - bugfix: Blazing Oil blobs can now be damaged by sprayed water from fire extinguishers,
+      as intended.
+  tralezab:
+  - bugfix: CONTRIBUTING.md's example on static overlays passes integration tests
+      now

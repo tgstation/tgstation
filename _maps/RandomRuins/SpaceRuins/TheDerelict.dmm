@@ -3828,6 +3828,10 @@
 	icon_state = "damaged4"
 	},
 /area/ruin/space/derelict/singularity_engine)
+"Rw" = (
+/obj/structure/plaque/static_plaque/golden/commission/ks13,
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary)
 "RF" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
@@ -7935,7 +7939,7 @@ gP
 jp
 fZ
 go
-go
+Rw
 go
 gc
 gc

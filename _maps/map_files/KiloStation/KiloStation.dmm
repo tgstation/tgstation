@@ -4443,7 +4443,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny,
+/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "ajE" = (
@@ -29646,7 +29646,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/scrawny,
+/mob/living/simple_animal/hostile/giant_spider/tarantula/scrawny,
 /turf/open/floor/iron/dark,
 /area/maintenance/port)
 "bAd" = (
@@ -30566,7 +30566,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny,
+/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
 /turf/open/floor/iron/dark,
 /area/maintenance/port)
 "bDV" = (
@@ -33211,6 +33211,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/plaque/static_plaque/golden/commission/kilo,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bOM" = (
@@ -52263,7 +52264,7 @@
 /area/maintenance/starboard)
 "cME" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/scrawny,
+/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cMF" = (
