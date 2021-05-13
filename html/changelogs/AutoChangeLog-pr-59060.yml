@@ -1,0 +1,4 @@
+author: "SgtHunk"
+delete-after: True
+changes: 
+  - bugfix: "Fixed trashbags being able to be equipped on janitor wintercoats."

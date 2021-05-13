@@ -83385,6 +83385,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/plaque/static_plaque/golden/commission/delta,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "pYz" = (

@@ -454,9 +454,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
-// Used by PDA and cartridge code to reduce repetitiveness of spritesheets
-#define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
-
 /// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
 #define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
 

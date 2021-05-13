@@ -126,7 +126,7 @@
 
 /datum/reagent/toxin/hot_ice
 	name = "Hot Ice Slush"
-	description = "Frozen plasma, worth its weight in gold, to the right people"
+	description = "Frozen plasma, worth its weight in gold, to the right people."
 	reagent_state = SOLID
 	color = "#724cb8" // rgb: 114, 76, 184
 	taste_description = "thick and smokey"

@@ -22,7 +22,7 @@
 
 	generic_objective.completed = TRUE
 
-	add_objective(generic_objective)
+	objectives += generic_objective
 
 /datum/contractor_hub
 	var/contract_rep = 0
@@ -223,7 +223,7 @@
 
 	/// We give a reference to the mind that'll be the support unit
 	partner_mind = partner.mind
-	partner_mind.make_Contractor_Support()
+	partner_mind.make_contractor_support()
 
 	to_chat(partner_mind.current, "\n<span class='alertwarning'>[user.real_name] is your superior. Follow any, and all orders given by them. You're here to support their mission only.</span>")
 	to_chat(partner_mind.current, "<span class='alertwarning'>Should they perish, or be otherwise unavailable, you're to assist other active agents in this mission area to the best of your ability.</span>\n\n")
