@@ -1112,6 +1112,13 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating,
 /area/construction)
+"gU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/mob/lavaland_drone,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "gW" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -1213,6 +1220,13 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/storage)
+"kd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/mob/lavaland_drone,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "kg" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -1307,6 +1321,13 @@
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
+"pb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/mob/lavaland_drone,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "pi" = (
 /obj/machinery/light{
 	dir = 4
@@ -1537,6 +1558,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
+"BU" = (
+/mob/lavaland_drone,
+/turf/open/floor/plating,
+/area/commons/storage/primary)
 "CA" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -3770,7 +3795,7 @@ dk
 dk
 dC
 dl
-dE
+pb
 dH
 dI
 dB
@@ -3824,8 +3849,8 @@ Zk
 mG
 xK
 dl
-dF
-dk
+gU
+kd
 dk
 dC
 dl
@@ -3879,7 +3904,7 @@ yX
 nS
 dl
 dl
-dl
+BU
 dl
 dl
 dl

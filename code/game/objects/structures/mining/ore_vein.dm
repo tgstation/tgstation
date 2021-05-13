@@ -53,6 +53,11 @@ GLOBAL_LIST_INIT(weighted_rare_ore_types, list(
 		true_name = initial(random_ore.name) + " vein"
 
 /obj/structure/ore_vein/attackby(obj/item/item, mob/user)
+	if(istype(item, /obj/item/drill_package) && discovered)
+		if(locate(/obj/machinery/drill) in loc)
+			return
+		new/obj/machinery/drill(loc)
+
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
 		return
 
@@ -70,6 +75,9 @@ GLOBAL_LIST_INIT(weighted_rare_ore_types, list(
 
 	AddComponent(/datum/component/gps, true_name)
 
+	add_points(user)
+
+/obj/structure/ore_vein/proc/add_points(mob/user)
 	if(isliving(user))
 		var/mob/living/living = user
 
