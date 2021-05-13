@@ -55,15 +55,6 @@
 	if(should_equip)
 		owner.equip_traitor(employer, silent, src)
 
-/// Callback for COMSIG_MOVABLE_HEAR which highlights syndicate code phrases in chat.
-/datum/antagonist/traitor/proc/handle_hearing(datum/source, list/hearing_args)
-	SIGNAL_HANDLER
-
-	var/message = hearing_args[HEARING_RAW_MESSAGE]
-	message = GLOB.syndicate_code_phrase_regex.Replace(message, "<span class='blue'>$1</span>")
-	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
-	hearing_args[HEARING_RAW_MESSAGE] = message
-
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	objectives.Cut()
@@ -155,14 +146,17 @@
 
 	add_antag_hud(antag_hud_type, antag_hud_name, datum_owner)
 	handle_clown_mutation(datum_owner, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-	RegisterSignal(datum_owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
 
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/datum_owner = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, datum_owner)
 	handle_clown_mutation(datum_owner, removing = FALSE)
-	UnregisterSignal(datum_owner, COMSIG_MOVABLE_HEAR)
+
+	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
+		component.delete_if_from_source(src)
 
 /// Outputs this shift's codewords and responses to the antag's chat and copies them to their memory.
 /datum/antagonist/traitor/proc/give_codewords()

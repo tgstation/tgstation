@@ -42,15 +42,6 @@
 
 	return ..()
 
-/// Callback for COMSIG_MOVABLE_HEAR which highlights syndicate code phrases in chat.
-/datum/antagonist/malf_ai/proc/handle_hearing(datum/source, list/hearing_args)
-	SIGNAL_HANDLER
-
-	var/message = hearing_args[HEARING_RAW_MESSAGE]
-	message = GLOB.syndicate_code_phrase_regex.Replace(message, "<span class='blue'>$1</span>")
-	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
-	hearing_args[HEARING_RAW_MESSAGE] = message
-
 /// Generates a complete set of malf AI objectives up to the traitor objective limit.
 /datum/antagonist/malf_ai/proc/forge_ai_objectives()
 	objectives.Cut()
@@ -113,7 +104,8 @@
 	if(istype(datum_owner))
 		datum_owner.hack_software = TRUE
 
-	RegisterSignal(datum_owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
 
 /datum/antagonist/malf_ai/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -124,7 +116,8 @@
 	if(istype(datum_owner))
 		datum_owner.hack_software = FALSE
 
-	UnregisterSignal(datum_owner, COMSIG_MOVABLE_HEAR)
+	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
+		component.delete_if_from_source(src)
 
 /// Outputs this shift's codewords and responses to the antag's chat and copies them to their memory.
 /datum/antagonist/malf_ai/proc/give_codewords()

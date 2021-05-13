@@ -1,0 +1,40 @@
+/datum/component/codeword_hearing
+	dupe_mode = COMPONENT_DUPE_ALLOWED
+
+	/// Regex for matching words or phrases you want highlighted.
+	var/regex/replace_regex
+	/// The <span class=''> to use for highlighting matches.
+	var/span_class
+	/// The source of this component. Used to identify the source in delete_if_from_source since this component is COMPONENT_DUPE_ALLOWED.
+	var/source
+
+/datum/component/codeword_hearing/Initialize(regex/codeword_regex, highlight_span_class, component_source)
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	replace_regex = codeword_regex
+	span_class = highlight_span_class
+	source = component_source
+	return ..()
+
+/datum/component/codeword_hearing/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+
+/datum/component/codeword_hearing/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_MOVABLE_HEAR)
+
+/// Callback for COMSIG_MOVABLE_HEAR which highlights syndicate code phrases in chat.
+/datum/component/codeword_hearing/proc/handle_hearing(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+
+	var/message = hearing_args[HEARING_RAW_MESSAGE]
+	message = replace_regex.Replace(message, "<span class='[span_class]'>$1</span>")
+	hearing_args[HEARING_RAW_MESSAGE] = message
+
+/// Since a parent can have multiple of these components on them simultaneously, this allows a datum to delete components from a specific source.
+/datum/component/codeword_hearing/proc/delete_if_from_source(component_source)
+	if(source == component_source)
+		qdel(src)
+		return TRUE
+
+	return FALSE
