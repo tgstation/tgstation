@@ -1,3 +1,7 @@
+#define STARLIGHT_CAN_HEAL 2
+#define STARLIGHT_CAN_HEAL_WITH_PENALTY 1
+#define STARLIGHT_CANNOT_HEAL 0
+
 /datum/symptom/heal
 	name = "Basic Healing (does nothing)" //warning for adminspawn viruses
 	desc = "You should not be seeing this."
@@ -72,13 +76,35 @@
 	if(A.totalStageSpeed() >= 6)
 		power = 2
 
+/datum/symptom/heal/starlight/CanTileHeal(turf/T)
+	var/area/area_to_check = get_area(T)
+	if(isspaceturf(T) || area_to_check.outdoors) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions
+		return STARLIGHT_CAN_HEAL
+	else if(istype(T, /turf/open/openspace)) // is the turf openspace
+		T = T.below()
+		area_to_check = get_area(T)
+		if(isspaceturf(T) || area_to_check.outdoors)
+			return STARLIGHT_CAN_HEAL
+	else if(istransparentturf(T)) // is the turf glass/transparent
+		T = T.below()
+		if(!T) // no below turf exists, assume its space
+			return STARLIGHT_CAN_HEAL_WITH_PENALTY
+		area_to_check = get_area(T)
+		if(isspaceturf(T) || area_to_check.outdoors)
+			return CAN_HEAL_WITH_PENALTY // space tile is underneath glass, so near space
+	return STARLIGHT_CANNOT_HEAL
+	
 /datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(istype(get_turf(M), /turf/open/space))
-		return power
-	else
-		for(var/turf/T in view(M, 2))
-			if(istype(T, /turf/open/space))
+	var/turf/T = get_turf(M)
+	switch(CanTileHeal(T))
+		if(STARLIGHT_CAN_HEAL_WITH_PENALTY)
+			return power * nearspace_penalty
+		if(STARLIGHT_CAN_HEAL)
+			return power
+	for(T in view(M, 2))
+		switch(CanTileHeal(T))
+			if(STARLIGHT_CAN_HEAL_WITH_PENALTY, STARLIGHT_CAN_HEAL)
 				return power * nearspace_penalty
 
 /datum/symptom/heal/starlight/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
