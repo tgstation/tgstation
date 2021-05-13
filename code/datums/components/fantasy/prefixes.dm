@@ -66,8 +66,7 @@
 	alignment = AFFIX_GOOD
 	weight = 5
 
-/datum/fantasy_affix/vampiric/validate(datum/component/fantasy/comp)
-	var/obj/item/attached = comp.parent
+/datum/fantasy_affix/vampiric/validate(obj/item/attached)
 	return attached.force //don't apply to things that just bap people
 
 /datum/fantasy_affix/vampiric/apply(datum/component/fantasy/comp, newName)
@@ -108,8 +107,7 @@
 	placement = AFFIX_PREFIX
 	alignment = AFFIX_GOOD
 
-/datum/fantasy_affix/venomous/validate(datum/component/fantasy/comp)
-	var/obj/item/attached = comp.parent
+/datum/fantasy_affix/venomous/validate(obj/item/attached)
 	return attached.force //don't apply to things that just bap people
 
 /datum/fantasy_affix/venomous/apply(datum/component/fantasy/comp, newName)
