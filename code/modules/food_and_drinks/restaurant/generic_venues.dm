@@ -28,6 +28,8 @@
 		var/panini_count = 0
 		for(var/extra_cheese in 1 to 69)
 			line_to_say += "h"
+			if(prob(10))
+				break
 		line_to_say += ", [initial(object_to_order.name)]."
 	customer_pawn.say(line_to_say)
 
