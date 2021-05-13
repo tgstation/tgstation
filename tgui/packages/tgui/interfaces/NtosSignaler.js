@@ -6,9 +6,9 @@ export const NtosSignaler = (props, context) => {
     <NtosWindow
       width={400}
       height={300}>
-      <NtosWindow.Content scrollable>
+      <NtosWindow.Content>
         <SignalerContent />
       </NtosWindow.Content>
     </NtosWindow>
-  );
+);
 };

@@ -37,7 +37,10 @@
 	. = ..()
 	if(.)
 		return
-
+	var/obj/item/computer_hardware/radio_card/sensor = computer?.get_modular_computer_part(MC_SIGNALER)
+	if(!(sensor?.check_functionality()))
+		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
+		return
 	switch(action)
 		if("signal")
 			INVOKE_ASYNC(src, .proc/signal)
