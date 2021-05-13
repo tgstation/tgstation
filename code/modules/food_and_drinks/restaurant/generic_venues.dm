@@ -27,7 +27,7 @@
 		line_to_say = "Yeah can I get a mothafuckin uh"
 		for(var/extra_cheese in 1 to rand(1,69))
 			line_to_say += "h"
-		line_to_say += ", [initial(object_to_order.name)]."
+		line_to_say += ", [initial(object_to_order.name)], extra cheese?"
 	customer_pawn.say(line_to_say)
 
 	var/appearance = SSrestaurant.food_appearance_cache[object_to_order]
