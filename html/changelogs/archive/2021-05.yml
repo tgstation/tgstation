@@ -342,3 +342,22 @@
       of its various stations- look for the commission plaques on each station today!
   antropod:
   - bugfix: fixed "remove" button in reaction chamber gui
+2021-05-13:
+  JohnFulpWillard:
+  - bugfix: You can no longer transformation sting people into Skeletons.
+  Pepsiman0:
+  - qol: The electrolite was completely removed from the game, the electrolyzer now
+      needs manipulators instead of the electrolites.
+  RandomGamer123:
+  - qol: Adds mail to the in-game message of items that can't be sent on the supply
+      shuttle.
+  - code_imp: Adds code improvements done to the cargo console to the modular computer
+      cargo program as well.
+  SmArtKar:
+  - balance: Now you need enriched liquid electricity to grow a vatbeast
+  coiax:
+  - bugfix: Blazing Oil blobs can now be damaged by sprayed water from fire extinguishers,
+      as intended.
+  tralezab:
+  - bugfix: CONTRIBUTING.md's example on static overlays passes integration tests
+      now
