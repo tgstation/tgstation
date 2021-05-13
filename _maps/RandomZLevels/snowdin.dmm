@@ -1044,7 +1044,7 @@
 	dir = 5
 	},
 /obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice,
+/mob/living/simple_animal/hostile/giant_spider/hunter/ice,
 /turf/open/floor/iron/freezer,
 /area/awaymission/snowdin/post/kitchen)
 "cH" = (
@@ -8387,7 +8387,7 @@
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "tL" = (
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice,
+/mob/living/simple_animal/hostile/giant_spider/nurse/ice,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "tN" = (
@@ -8430,7 +8430,7 @@
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/snowdin/outside)
 "tV" = (
-/mob/living/simple_animal/hostile/poison/giant_spider/ice,
+/mob/living/simple_animal/hostile/giant_spider/ice,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "tW" = (
@@ -8543,7 +8543,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "uw" = (
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice,
+/mob/living/simple_animal/hostile/giant_spider/hunter/ice,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "ux" = (
@@ -8668,7 +8668,7 @@
 /area/awaymission/snowdin/post/cavern1)
 "uP" = (
 /obj/structure/spider/stickyweb,
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice,
+/mob/living/simple_animal/hostile/giant_spider/hunter/ice,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "uQ" = (
@@ -9482,7 +9482,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/cave)
 "xl" = (
-/turf/open/floor/iron/elevatorshaft{
+/turf/open/floor/plating/elevatorshaft{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/awaymission/snowdin/cave)
@@ -9673,7 +9673,7 @@
 	roundstart_template = /datum/map_template/shuttle/snowdin/excavation;
 	width = 6
 	},
-/turf/open/floor/iron/elevatorshaft{
+/turf/open/floor/plating/elevatorshaft{
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	},
 /area/awaymission/snowdin/cave)
@@ -9714,7 +9714,7 @@
 	name = "snowdin excavation down";
 	width = 6
 	},
-/turf/open/floor/iron/elevatorshaft,
+/turf/open/floor/plating/elevatorshaft,
 /area/awaymission/snowdin/post/mining_dock)
 "xQ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -14204,7 +14204,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
 "JQ" = (
-/turf/open/floor/iron/elevatorshaft,
+/turf/open/floor/plating/elevatorshaft,
 /area/awaymission/snowdin/post/mining_main)
 "JT" = (
 /obj/machinery/light/small,
@@ -14360,7 +14360,7 @@
 	roundstart_template = /datum/map_template/shuttle/snowdin/mining;
 	width = 5
 	},
-/turf/open/floor/iron/elevatorshaft,
+/turf/open/floor/plating/elevatorshaft,
 /area/awaymission/snowdin/post/mining_main)
 "Ko" = (
 /obj/machinery/light{
@@ -14416,7 +14416,7 @@
 	name = "snowdin mining bottom";
 	width = 5
 	},
-/turf/open/floor/iron/elevatorshaft,
+/turf/open/floor/plating/elevatorshaft,
 /area/awaymission/snowdin/post/mining_dock)
 "Ku" = (
 /obj/machinery/light{
@@ -14856,7 +14856,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "Ys" = (
-/turf/open/floor/iron/elevatorshaft,
+/turf/open/floor/plating/elevatorshaft,
 /area/awaymission/snowdin/post/mining_dock)
 "ZH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{

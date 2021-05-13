@@ -49,9 +49,12 @@
 	icon_prefix = "rabbit"
 	feedMessages = list("It nibbles happily.","It noms happily.")
 	layMessage = list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling.")
-	pet_bonus = TRUE
-	pet_bonus_emote = "hops around happily!"
 	can_be_held = TRUE
+
+/mob/living/simple_animal/chicken/rabbit/Initialize()
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "hops around happily!")
+
 
 /mob/living/simple_animal/chicken/rabbit/empty //top hats summon these kinds of rabbits instead of the normal kind
 	eggsleft = 0 //if you want to harvest toys and easter bunny gear from these guys, you're gonna need to feed them carrots first
@@ -215,8 +218,7 @@
 		/obj/item/food/meatball = 1
 	)
 	result = /obj/item/food/scotchegg
-
-	subcategory = CAT_MISCFOOD
+	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/mammi
 	name = "Mammi"

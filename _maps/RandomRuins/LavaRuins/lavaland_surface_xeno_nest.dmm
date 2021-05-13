@@ -4,11 +4,11 @@
 /area/template_noop)
 "b" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/resin/wall,
+/obj/structure/alien/resin/wall/immovable,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "d" = (
-/obj/structure/alien/resin/wall,
+/obj/structure/alien/resin/wall/immovable,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
@@ -49,8 +49,8 @@
 /area/ruin/unpowered/xenonest)
 "r" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/resin/wall,
-/obj/structure/alien/resin/wall,
+/obj/structure/alien/resin/wall/immovable,
+/obj/structure/alien/resin/wall/immovable,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "t" = (
@@ -71,12 +71,12 @@
 "w" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/structure/alien/resin/wall,
+/obj/structure/alien/resin/wall/immovable,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "y" = (
 /obj/structure/alien/weeds/node,
-/obj/structure/alien/resin/wall,
+/obj/structure/alien/resin/wall/immovable,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "z" = (
@@ -165,6 +165,15 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
+"Y" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/wall{
+	move_force = 1000;
+	move_resist = 3000;
+	pull_force = 1000
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
 
 (1,1,1) = {"
 a
@@ -243,7 +252,7 @@ b
 g
 g
 b
-b
+Y
 G
 a
 a

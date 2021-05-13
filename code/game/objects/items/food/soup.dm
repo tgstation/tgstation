@@ -216,6 +216,7 @@
 	tastes = list("sweet potato" = 1)
 	foodtypes = VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
+
 /obj/item/food/soup/beet/red
 	name = "red beet soup"
 	desc = "Quite a delicacy."
@@ -279,3 +280,11 @@
 	tastes = list("chicken" = 2, "creamy curry" = 4, "earthy heat" = 1)
 	foodtypes = VEGETABLES | MEAT | DAIRY
 	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/soup/oatmeal
+	name = "oatmeal"
+	desc = "A nice bowl of oatmeal."
+	icon_state = "oatmeal"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("oats" = 1, "milk" = 1)
+	foodtypes = DAIRY | GRAIN | BREAKFAST

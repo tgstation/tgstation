@@ -17,7 +17,7 @@
 	var/telecrystals
 	var/selected_cat
 	var/owner = null
-	var/datum/game_mode/gamemode
+	var/uplink_flag
 	var/datum/uplink_purchase_log/purchase_log
 	var/list/uplink_items
 	var/hidden_crystals = 0
@@ -29,7 +29,7 @@
 
 	var/list/previous_attempts
 
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = TELECRYSTALS_DEFAULT)
+/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -49,8 +49,6 @@
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
-	update_items()
-
 	if(_owner)
 		owner = _owner
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
@@ -60,7 +58,8 @@
 			purchase_log = new(owner, src)
 	lockable = _lockable
 	active = _enabled
-	gamemode = _gamemode
+	src.uplink_flag = uplink_flag
+	update_items()
 	telecrystals = starting_tc
 	if(!lockable)
 		active = TRUE
@@ -71,19 +70,28 @@
 /datum/component/uplink/InheritComponent(datum/component/uplink/U)
 	lockable |= U.lockable
 	active |= U.active
-	if(!gamemode)
-		gamemode = U.gamemode
+	uplink_flag |= U.uplink_flag
 	telecrystals += U.telecrystals
 	if(purchase_log && U.purchase_log)
 		purchase_log.MergeWithAndDel(U.purchase_log)
 
 /datum/component/uplink/Destroy()
-	gamemode = null
 	purchase_log = null
 	return ..()
 
 /datum/component/uplink/proc/update_items()
-	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	var/updated_items
+	updated_items = get_uplink_items(uplink_flag, TRUE, allow_restricted)
+	update_sales(updated_items)
+	uplink_items = updated_items
+
+/datum/component/uplink/proc/update_sales(updated_items)
+	var/discount_categories = list("Discounted Gear", "Discounted Team Gear", "Limited Stock Team Gear")
+	if (uplink_items == null)
+		return
+	for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
+		if (uplink_items[category] != null && updated_items[category] != null)
+			updated_items[category] = uplink_items[category]
 
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
 	if(!silent)
@@ -92,10 +100,6 @@
 	telecrystals += amt
 	TC.use(amt)
 	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
-
-/datum/component/uplink/proc/set_gamemode(_gamemode)
-	gamemode = _gamemode
-	update_items()
 
 /datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
@@ -350,5 +354,5 @@
 		return
 	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
 	log_game("[key_name(user)] triggered an uplink failsafe explosion. The owner of the uplink was [key_name(owner)].")
-	explosion(T,1,2,3)
+	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.

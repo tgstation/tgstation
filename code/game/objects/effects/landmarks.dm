@@ -453,6 +453,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/start/hangover/Initialize()
 	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/landmark/start/hangover/LateInitialize()
+	. = ..()
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 		return
 	if(prob(60))
@@ -462,6 +466,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		for(var/index in 1 to bottle_count)
 			var/turf/turf_to_spawn_on = get_step(src, pick(GLOB.alldirs))
 			if(!isopenturf(turf_to_spawn_on))
+				continue
+			var/dense_object = FALSE
+			for(var/atom/content in turf_to_spawn_on.contents)
+				if(content.density)
+					dense_object = TRUE
+					break
+			if(dense_object)
 				continue
 			new /obj/item/reagent_containers/food/drinks/beer/almost_empty(turf_to_spawn_on)
 

@@ -55,8 +55,6 @@
 		colored_belt_appearance = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/screwdriver_belt, greyscale_colors))
 	. = ..()
 	AddElement(/datum/element/eyestab)
-	if(prob(75))
-		pixel_y = rand(0, 16)
 
 /obj/item/screwdriver/get_belt_overlay()
 	if(random_color)

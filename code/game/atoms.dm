@@ -284,11 +284,12 @@
 			AA.remove_from_hud(src)
 
 	if(reagents)
-		qdel(reagents)
+		QDEL_NULL(reagents)
 
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
+	LAZYCLEARLIST(managed_overlays)
 
 	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
@@ -726,22 +727,26 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
 /// Checks if the colors given are different and if so causes a greyscale icon update
-/atom/proc/set_greyscale_colors(list/colors)
+/// The colors argument can be either a list or the full color string
+/atom/proc/set_greyscale_colors(list/colors, update=TRUE)
 	SHOULD_CALL_PARENT(TRUE)
-	var/new_colors = colors.Join("")
-	if(greyscale_colors == new_colors)
+	if(istype(colors))
+		colors = colors.Join("")
+	if(greyscale_colors == colors)
 		return
-	greyscale_colors = new_colors
+	greyscale_colors = colors
 	if(!greyscale_config)
 		return
-	update_greyscale()
+	if(update)
+		update_greyscale()
 
 /// Checks if the greyscale config given is different and if so causes a greyscale icon update
-/atom/proc/set_greyscale_config(new_config)
+/atom/proc/set_greyscale_config(new_config, update=TRUE)
 	if(greyscale_config == new_config)
 		return
 	greyscale_config = new_config
-	update_greyscale()
+	if(update)
+		update_greyscale()
 
 /// Checks if this atom uses the GAS system and if so updates the icon
 /atom/proc/update_greyscale()
@@ -1192,6 +1197,7 @@
 		if(curturf)
 			. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
+	VV_DROPDOWN_OPTION(VV_HK_SHOW_HIDDENPRINTS, "Show Hiddenprint log")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
@@ -1236,14 +1242,20 @@
 					reagents.add_reagent(chosen_id, amount)
 					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
 					message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to [src]</span>")
+
 	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
 		usr.client.cmd_admin_explosion(src)
+
 	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
 		usr.client.cmd_admin_emp(src)
+
 	if(href_list[VV_HK_RADIATE] && check_rights(R_FUN))
 		var/strength = input(usr, "Choose the radiation strength.", "Choose the strength.") as num|null
 		if(!isnull(strength))
 			AddComponent(/datum/component/radioactive, strength, src)
+
+	if(href_list[VV_HK_SHOW_HIDDENPRINTS] && check_rights(R_ADMIN))
+		usr.client.cmd_show_hiddenprints(src)
 
 
 	if(href_list[VV_HK_ADD_AI])
@@ -1272,6 +1284,7 @@
 				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
 				if(!isnull(angle))
 					transform = M.Turn(angle)
+
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
@@ -1340,30 +1353,54 @@
  *
  * Must return  parent proc ..() in the end if overridden
  */
-/atom/proc/tool_act(mob/living/user, obj/item/I, tool_type)
-	var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
-	var/signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, I, processing_recipes)
-	if(processing_recipes.len)
-		process_recipes(user, I, processing_recipes)
-	if(QDELETED(I))
-		return TRUE
-	switch(tool_type)
-		if(TOOL_CROWBAR)
-			. = crowbar_act(user, I)
-		if(TOOL_MULTITOOL)
-			. = multitool_act(user, I)
-		if(TOOL_SCREWDRIVER)
-			. = screwdriver_act(user, I)
-		if(TOOL_WRENCH)
-			. = wrench_act(user, I)
-		if(TOOL_WIRECUTTER)
-			. = wirecutter_act(user, I)
-		if(TOOL_WELDER)
-			. = welder_act(user, I)
-		if(TOOL_ANALYZER)
-			. = analyzer_act(user, I)
-	if(. || signal_result & COMPONENT_BLOCK_TOOL_ATTACK) //Either the proc or the signal handled the tool's events in some way.
-		return TRUE
+/atom/proc/tool_act(mob/living/user, obj/item/I, tool_type, is_right_clicking)
+	var/act_result
+	var/signal_result
+	if(!is_right_clicking) // Left click first for sensibility
+		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
+		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, I, processing_recipes)
+		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
+			return TOOL_ACT_SIGNAL_BLOCKING
+		if(processing_recipes.len)
+			process_recipes(user, I, processing_recipes)
+		if(QDELETED(I))
+			return TRUE
+		switch(tool_type)
+			if(TOOL_CROWBAR)
+				act_result = crowbar_act(user, I,)
+			if(TOOL_MULTITOOL)
+				act_result = multitool_act(user, I)
+			if(TOOL_SCREWDRIVER)
+				act_result = screwdriver_act(user, I)
+			if(TOOL_WRENCH)
+				act_result = wrench_act(user, I)
+			if(TOOL_WIRECUTTER)
+				act_result = wirecutter_act(user, I)
+			if(TOOL_WELDER)
+				act_result = welder_act(user, I)
+			if(TOOL_ANALYZER)
+				act_result = analyzer_act(user, I)
+	else
+		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, I)
+		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
+			return TOOL_ACT_SIGNAL_BLOCKING
+		switch(tool_type)
+			if(TOOL_CROWBAR)
+				act_result = crowbar_act_secondary(user, I,)
+			if(TOOL_MULTITOOL)
+				act_result = multitool_act_secondary(user, I)
+			if(TOOL_SCREWDRIVER)
+				act_result = screwdriver_act_secondary(user, I)
+			if(TOOL_WRENCH)
+				act_result = wrench_act_secondary(user, I)
+			if(TOOL_WIRECUTTER)
+				act_result = wirecutter_act_secondary(user, I)
+			if(TOOL_WELDER)
+				act_result = welder_act_secondary(user, I)
+			if(TOOL_ANALYZER)
+				act_result = analyzer_act_secondary(user, I)
+	if(act_result) // A tooltype_act has completed successfully
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
 /atom/proc/process_recipes(mob/living/user, obj/item/I, list/processing_recipes)
@@ -1418,12 +1455,20 @@
 //! Tool-specific behavior procs.
 ///
 
-///Crowbar act
-/atom/proc/crowbar_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with crowbar capabilities is used to left click an object
+/atom/proc/crowbar_act(mob/living/user, obj/item/tool)
 	return
 
-///Multitool act
-/atom/proc/multitool_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with crowbar capabilities is used to right click an object
+/atom/proc/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with multitool capabilities is used to left click an object
+/atom/proc/multitool_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with multitool capabilities is used to right click an object
+/atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return
 
 ///Check if the multitool has an item in it's data buffer
@@ -1434,24 +1479,44 @@
 		return FALSE
 	return TRUE
 
-///Screwdriver act
-/atom/proc/screwdriver_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with screwdriver capabilities is used to left click an object
+/atom/proc/screwdriver_act(mob/living/user, obj/item/tool)
 	return
 
-///Wrench act
-/atom/proc/wrench_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with screwdriver capabilities is used to right click an object
+/atom/proc/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	return
 
-///Wirecutter act
-/atom/proc/wirecutter_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with wrench capabilities is used to left click an object
+/atom/proc/wrench_act(mob/living/user, obj/item/tool)
 	return
 
-///Welder act
-/atom/proc/welder_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with wrench capabilities is used to right click an object
+/atom/proc/wrench_act_secondary(mob/living/user, obj/item/tool)
 	return
 
-///Analyzer act
-/atom/proc/analyzer_act(mob/living/user, obj/item/I)
+/// Called on an object when a tool with wirecutter capabilities is used to left click an object
+/atom/proc/wirecutter_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with wirecutter capabilities is used to right click an object
+/atom/proc/wirecutter_act_secondary(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with welder capabilities is used to left click an object
+/atom/proc/welder_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with welder capabilities is used to right click an object
+/atom/proc/welder_act_secondary(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with analyzer capabilities is used to left click an object
+/atom/proc/analyzer_act(mob/living/user, obj/item/tool)
+	return
+
+/// Called on an object when a tool with analyzer capabilities is used to right click an object
+/atom/proc/analyzer_act_secondary(mob/living/user, obj/item/tool)
 	return
 
 ///Generate a tag for this atom

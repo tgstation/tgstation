@@ -20,6 +20,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	worn_icon_state = "pda"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	greyscale_config = /datum/greyscale_config/pda
+	greyscale_colors = "#999875#a92323"
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
@@ -176,7 +178,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/update_overlays()
 	. = ..()
-	var/mutable_appearance/overlay = new(icon)
+	if(!initial(icon))
+		return
+	var/mutable_appearance/overlay = new(initial(icon))
 	overlay.pixel_x = overlays_x_offset
 	if(id)
 		overlay.icon_state = "id_overlay"
@@ -321,6 +325,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Toggle Door'>[PDAIMG(rdoor)]Toggle Remote Door</a></li>"
 					if (cartridge.access & CART_DRONEPHONE)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Drone Phone'>[PDAIMG(dronephone)]Drone Phone</a></li>"
+					if (cartridge.access & CART_DRONEACCESS)
+						var/blacklist_state = GLOB.drone_machine_blacklist_enabled
+						dat += "<li><a href='byond://?src=[REF(src)];drone_blacklist=[!blacklist_state];choice=Drone Access'>[PDAIMG(droneblacklist)][blacklist_state ? "Disable" : "Enable"] Drone Blacklist</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=3'>[PDAIMG(atmos)]Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=Light'>[PDAIMG(flashlight)][light_on ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
@@ -398,6 +405,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 							dat += "<br><a href='byond://?src=[REF(src)];choice=SkillReward;skill=[type]'>Contact the Professional [S.title] Association</a>"
 						dat += "</li></ul>"
 			if(21)
+				if(icon_alert)
+					cut_overlay(icon_alert)
+
 				dat += "<h4>[PDAIMG(mail)] SpaceMessenger V3.9.6</h4>"
 				dat += "<a href='byond://?src=[REF(src)];choice=Clear'>[PDAIMG(blank)]Clear Messages</a>"
 
@@ -582,6 +592,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 					to_chat(U, msg)
 					if(!silent)
 						playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+			if("Drone Access")
+				var/mob/living/simple_animal/drone/drone_user = U
+				if(isdrone(U) && drone_user.shy)
+					to_chat(U, "<span class='warning'>Your laws prevent this action.</span>")
+					return
+				var/new_state = text2num(href_list["drone_blacklist"])
+				GLOB.drone_machine_blacklist_enabled = new_state
+				if(!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 
 
 //NOTEKEEPER FUNCTIONS===================================
@@ -1119,9 +1138,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(T)
 		T.hotspot_expose(700,125)
 		if(istype(cartridge, /obj/item/cartridge/virus/syndicate))
-			explosion(T, -1, 1, 3, 4)
+			explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 4)
 		else
-			explosion(T, -1, -1, 2, 3)
+			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
 	qdel(src)
 	return
 

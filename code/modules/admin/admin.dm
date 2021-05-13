@@ -416,10 +416,7 @@
 	if(!check_rights(0))
 		return
 
-	var/dat = {"
-		<center><B>Game Panel</B></center><hr>\n
-		<A href='?src=[REF(src)];[HrefToken()];c_mode=1'>Change Game Mode</A><br>
-		"}
+	var/dat = "<center><B>Game Panel</B></center><hr>"
 	if(GLOB.master_mode == "secret")
 		dat += "<A href='?src=[REF(src)];[HrefToken()];f_secret=1'>(Force Secret Mode)</A><br>"
 	if(SSticker.is_mode("dynamic"))
@@ -588,12 +585,12 @@
 			return TRUE
 		SSticker.start_immediately = FALSE
 		SSticker.SetTimeLeft(1800)
-		to_chat(world, "<b>The game will start in 180 seconds.</b>")
+		to_chat(world, "<span class='infoplain'><b>The game will start in 180 seconds.</b></span>")
 		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
 		message_admins("<font color='blue'>[usr.key] has cancelled immediate game start. Game will start in 180 seconds.</font>")
 		log_admin("[usr.key] has cancelled immediate game start.")
 	else
-		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
+		to_chat(usr, "<span class='warningplain'><font color='red'>Error: Start Now: Game has already started.</font></span>")
 	return FALSE
 
 /datum/admins/proc/toggleenter()
@@ -652,10 +649,10 @@
 		SSticker.SetTimeLeft(newtime)
 		SSticker.start_immediately = FALSE
 		if(newtime < 0)
-			to_chat(world, "<b>The game start has been delayed.</b>", confidential = TRUE)
+			to_chat(world, "<span class='infoplain'><b>The game start has been delayed.</b></span>", confidential = TRUE)
 			log_admin("[key_name(usr)] delayed the round start.")
 		else
-			to_chat(world, "<b>The game will start in [DisplayTimeText(newtime)].</b>", confidential = TRUE)
+			to_chat(world, "<span class='infoplain'><b>The game will start in [DisplayTimeText(newtime)].</b></span>", confidential = TRUE)
 			SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
 			log_admin("[key_name(usr)] set the pre-game delay to [DisplayTimeText(newtime)].")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

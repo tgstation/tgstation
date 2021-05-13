@@ -181,9 +181,9 @@
 
 ///Handles random hardcore point rewarding if it applies.
 /datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/player_client)
-	if(!ishuman(player_client.mob))
+	if(!ishuman(player_client?.mob))
 		return FALSE
-	var/mob/living/carbon/human/human_mob = player_client.mob
+	var/mob/living/carbon/human/human_mob = player_client?.mob
 	if(!human_mob.hardcore_survival_score) ///no score no glory
 		return FALSE
 
@@ -197,15 +197,15 @@
 					didthegamerwin = FALSE
 		if(!didthegamerwin)
 			return FALSE
-		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
+		player_client?.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
 	else if(human_mob.onCentCom())
-		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+		player_client?.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
 
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 
-	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
+	to_chat(world, "<span class='infoplain'><BR><BR><BR><span class='big bold'>The round has ended.</span></span>")
 	log_game("The round has ended.")
 
 	for(var/I in round_end_events)
@@ -218,11 +218,11 @@
 		speed_round = TRUE
 
 	for(var/client/C in GLOB.clients)
-		if(!C.credits)
-			C.RollCredits()
-		C.playtitlemusic(40)
+		if(!C?.credits)
+			C?.RollCredits()
+		C?.playtitlemusic(40)
 		if(speed_round)
-			C.give_award(/datum/award/achievement/misc/speed_round, C.mob)
+			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
 
 	var/popcount = gather_roundend_feedback()
@@ -661,7 +661,7 @@
 	var/datum/action/report/R = new
 	C.player_details.player_actions += R
 	R.Grant(C.mob)
-	to_chat(C,"<a href='?src=[REF(R)];report=1'>Show roundend report again</a>")
+	to_chat(C,"<span class='infoplain'><a href='?src=[REF(R)];report=1'>Show roundend report again</a></span>")
 
 /datum/action/report
 	name = "Show roundend report"

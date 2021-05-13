@@ -21,9 +21,11 @@
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
 
 
-///Monkey AI controller blackboard keys
+// Monkey AI controller blackboard keys
 
 #define BB_MONKEY_AGRESSIVE "BB_monkey_agressive"
+#define BB_MONKEY_GUN_NEURONS_ACTIVATED "BB_monkey_gun_aware"
+#define BB_MONKEY_GUN_WORKED "BB_monkey_gun_worked"
 #define BB_MONKEY_BEST_FORCE_FOUND "BB_monkey_bestforcefound"
 #define BB_MONKEY_ENEMIES "BB_monkey_enemies"
 #define BB_MONKEY_BLACKLISTITEMS "BB_monkey_blacklistitems"
@@ -33,6 +35,7 @@
 #define BB_MONKEY_TARGET_DISPOSAL "BB_monkey_target_disposal"
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
+#define BB_MONKEY_NEXT_HUNGRY "BB_monkey_next_hungry"
 
 
 ///Haunted item controller defines

@@ -140,6 +140,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PACIFISM "pacifism"
 #define TRAIT_IGNORESLOWDOWN "ignoreslow"
 #define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
+/// Makes it so the mob can use guns regardless of tool user status
+#define TRAIT_GUN_NATURAL "gunnatural"
 /// Causes death-like unconsciousness
 #define TRAIT_DEATHCOMA "deathcoma"
 /// Makes the owner appear as dead to most forms of medical examination
@@ -185,6 +187,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
 #define TRAIT_TOXINLOVER "toxinlover"
+/// reduces the use time of syringes, pills, patches and medigels but only when using on someone
+#define TRAIT_FASTMED "fast_med_use"
 #define TRAIT_NOBREATH "no_breath"
 #define TRAIT_ANTIMAGIC "anti_magic"
 #define TRAIT_HOLY "holy"
@@ -224,6 +228,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// We place people into a fireman carry especially quickly compared to quick_carry
 #define TRAIT_QUICKER_CARRY "quicker-carry"
 #define TRAIT_QUICK_BUILD "quick-build"
+/// We can handle 'dangerous' plants in botany safely
+#define TRAIT_PLANT_SAFE "plant_safe"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_UNSTABLE "unstable"
 #define TRAIT_OIL_FRIED "oil_fried"
@@ -425,6 +431,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXTROVERT "extrovert"
 #define TRAIT_INTROVERT "introvert"
 #define TRAIT_ANXIOUS "anxious"
+#define TRAIT_INSANITY "insanity"
+
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items
@@ -601,6 +609,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_COMPONENT_TRAIT "mood_component"
 #define DRONE_SHY_TRAIT "drone_shy"
+/// Pacifism trait given by stabilized light pink extracts.
+#define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

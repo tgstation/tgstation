@@ -126,7 +126,7 @@
 
 /datum/reagent/toxin/hot_ice
 	name = "Hot Ice Slush"
-	description = "Frozen plasma, worth its weight in gold, to the right people"
+	description = "Frozen plasma, worth its weight in gold, to the right people."
 	reagent_state = SOLID
 	color = "#724cb8" // rgb: 114, 76, 184
 	taste_description = "thick and smokey"
@@ -306,7 +306,8 @@
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.hallucination += 5 * REM * delta_time
+	if(!HAS_TRAIT(M, TRAIT_INSANITY))
+		M.hallucination += 5 * REM * delta_time
 	return ..()
 
 /datum/reagent/toxin/plantbgone

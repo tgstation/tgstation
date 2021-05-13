@@ -16,14 +16,14 @@ This file contains the cult dagger and rune list code
 
 /obj/item/melee/cultblade/dagger/examine(mob/user)
 	. = ..()
-	if(iscultist(user) || isobserver(user))
+	if(IS_CULTIST(user) || isobserver(user))
 		. += {"<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar'Sie.\n
 		Striking a cult structure will unanchor or reanchor it.\n
 		Striking another cultist with it will purge holy water from them.\n
 		Striking a noncultist, however, will tear their flesh.</span>"}
 
 /obj/item/melee/cultblade/dagger/attack(mob/living/M, mob/living/user)
-	if(iscultist(M))
+	if(IS_CULTIST(M))
 		if(M.has_reagent(/datum/reagent/water/holywater)) //allows cultists to be rescued from the clutches of ordained religion
 			to_chat(user, "<span class='cult'>You remove the taint from [M].</span>" )
 			var/holy2unholy = M.reagents.get_reagent_amount(/datum/reagent/water/holywater)
@@ -41,7 +41,7 @@ This file contains the cult dagger and rune list code
 	. = ..()
 
 /obj/item/melee/cultblade/dagger/attack_self(mob/user)
-	if(!iscultist(user))
+	if(!IS_CULTIST(user))
 		to_chat(user, "<span class='warning'>[src] is covered in unintelligible shapes and markings.</span>")
 		return
 	scribe_rune(user)
