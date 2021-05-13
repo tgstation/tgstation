@@ -43,9 +43,9 @@
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
 	. = ..()
-	
+
 	AddComponent(/datum/component/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, vary = TRUE)
-	
+
 	stored_gun = new(src)
 	var/datum/action/innate/minedrone/toggle_light/toggle_light_action = new()
 	toggle_light_action.Grant(src)
@@ -116,7 +116,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/death()
-	DropOre(0)
+	DropOre()
 	if(stored_gun)
 		for(var/obj/item/borg/upgrade/modkit/M in stored_gun.modkits)
 			M.uninstall(stored_gun)
@@ -280,7 +280,7 @@
 
 /obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.melee_damage_upper != initial(M.melee_damage_upper))
-		to_chat(user, "<span class='warning'>[src] already has a combat upgrade installed!</span>")
+		to_chat(user, "<span class='warning'>[M.name] already has a combat upgrade installed!</span>")
 		return
 	M.melee_damage_lower += 7
 	M.melee_damage_upper += 7
@@ -293,7 +293,7 @@
 
 /obj/item/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.maxHealth != initial(M.maxHealth))
-		to_chat(user, "<span class='warning'>[src] already has reinforced armor!</span>")
+		to_chat(user, "<span class='warning'>[M.name] already has reinforced armor!</span>")
 		return
 	M.maxHealth += 45
 	M.updatehealth()
