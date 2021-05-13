@@ -50,11 +50,11 @@ GLOBAL_DATUM(global_funny_embedding, /datum/global_funny_embedding)
 ///signal sent by a new item being created.
 /datum/global_funny_embedding/proc/on_new_item_in_existence(datum/source, obj/item/created_item)
 	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
-	if(LAZYLEN(embedding))
+	if(LAZYLEN(created_item.embedding))
 		return //already embeds to some degree, so whatever 🐀
 	created_item.embedding = embed_type
-	created_item.name = "[prefix] [name]"
-	updateEmbedding()
+	created_item.name = "[prefix] [created_item.name]"
+	created_item.updateEmbedding()
 
 /**
  * ### handle_current_items
