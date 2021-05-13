@@ -65,6 +65,8 @@
 		start_chemming()
 
 /obj/structure/geyser/attackby(obj/item/item, mob/user, params)
+	. = ..()
+
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
 		return
 
