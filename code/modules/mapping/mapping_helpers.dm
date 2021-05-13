@@ -504,5 +504,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "trapdoor"
 
 /obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
-	AddComponent(/datum/component/trapdoor)
+	var/turf/component_target = get_turf(src)
+	component_target.AddComponent(/datum/component/trapdoor)
 	qdel(src)

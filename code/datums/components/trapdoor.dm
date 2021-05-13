@@ -20,7 +20,7 @@
 	///assembly tied to this trapdoor
 	var/obj/item/assembly/trapdoor/assembly
 	///path of the turf this should change into when the assembly is pulsed. needed for openspace trapdoors knowing what to turn back into
-	var/trapdoor_turf_path = /turf/open/openspace
+	var/trapdoor_turf_path
 
 /datum/component/trapdoor/Initialize(starts_open = FALSE, trapdoor_turf_path, assembly, given_decals)
 	if(!isopenturf(parent))
@@ -28,7 +28,7 @@
 	if(IS_OPEN(parent))
 		src.trapdoor_turf_path = trapdoor_turf_path
 	else
-		trapdoor_turf_path = parent.type
+		src.trapdoor_turf_path = parent.type
 		if(given_decals)
 			stored_decals = given_decals
 			reapply_all_decals()
@@ -93,17 +93,17 @@
 			assembly.linked = FALSE
 			assembly = null
 		return
-	post_change_callbacks += CALLBACK(src, .proc/turf_changed_post, assembly, trapdoor_turf_path)
+	post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, trapdoor_turf_path, stored_decals)
 
 /**
- * # turf_changed_post
+ * # carry_over_trapdoor
  *
- * wrapper that applies the trapdoor to the new turf (created by the last trapdoor)
+ * applies the trapdoor to the new turf (created by the last trapdoor)
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  * change da turf my final callback. Goodbye
  */
-/datum/component/trapdoor/proc/turf_changed_post(assembly, trapdoor_turf_path, turf/new_turf)
-	new_turf.AddComponent(/datum/component/trapdoor, starts_open = FALSE, assembly, trapdoor_turf_path, stored_decals)
+/obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, list/stored_decals, turf/new_turf)
+	new_turf.AddComponent(/datum/component/trapdoor, starts_open = FALSE, trapdoor_turf_path, src, stored_decals)
 
 
 /**
