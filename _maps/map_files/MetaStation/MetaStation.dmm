@@ -36418,7 +36418,6 @@
 /obj/machinery/navbeacon/wayfinding,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/poddoor/preopen,
 /obj/machinery/door/poddoor/preopen{
 	id = "transitlockdown"
 	},
@@ -52506,7 +52505,7 @@
 /area/security/brig)
 "nZU" = (
 /obj/machinery/button/door{
-	id = "transittube";
+	id = "transitlockdown";
 	name = "Transit Tube Lockdown";
 	pixel_x = -24;
 	pixel_y = -5;
@@ -65384,6 +65383,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
