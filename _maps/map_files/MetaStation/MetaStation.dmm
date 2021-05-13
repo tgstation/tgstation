@@ -25110,14 +25110,14 @@
 	name = "Queue Shutters Control";
 	pixel_x = 25;
 	pixel_y = -36;
-	req_access_txt = "28"
+	req_access_txt = "57"
 	},
 /obj/machinery/button/door{
 	id = "hop";
 	name = "Privacy Shutters Control";
 	pixel_x = 25;
 	pixel_y = -26;
-	req_access_txt = "28"
+	req_access_txt = "57"
 	},
 /obj/machinery/button/flasher{
 	id = "hopflash";
@@ -31997,7 +31997,7 @@
 /area/maintenance/port)
 "hfB" = (
 /obj/machinery/button/door{
-	id = "transittube";
+	id = "transitlockdown";
 	name = "Transit Tube Lockdown";
 	pixel_x = -24;
 	pixel_y = -5;
@@ -56226,6 +56226,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/door/poddoor/preopen{
+	id = "transitlockdown"
+	},
 /turf/open/floor/iron/dark,
 /area/engineering/break_room)
 "pqA" = (
@@ -58446,7 +58449,7 @@
 	name = "Privacy Shutters Control";
 	pixel_x = -24;
 	pixel_y = -6;
-	req_access_txt = "28"
+	req_access_txt = "57"
 	},
 /obj/machinery/light_switch{
 	pixel_x = -25;
@@ -66081,6 +66084,9 @@
 	name = "MiniSat Space Access Airlock";
 	req_access_txt = "32"
 	},
+/obj/machinery/door/poddoor/preopen{
+	id = "transitlockdown"
+	},
 /turf/open/floor/iron/dark,
 /area/engineering/break_room)
 "syL" = (
@@ -70740,6 +70746,10 @@
 /obj/machinery/navbeacon/wayfinding,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/preopen,
+/obj/machinery/door/poddoor/preopen{
+	id = "transitlockdown"
+	},
 /turf/open/floor/iron/dark,
 /area/engineering/break_room)
 "uac" = (
