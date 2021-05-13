@@ -1,3 +1,13 @@
+/**
+ * Component that allows for highlighting of words or phrases in chat based on regular expressions.
+ *
+ * Hooks into the parent's COMSIG_MOVABLE_HEAR signal to wrap every regex match in the message
+ * between <span class=''></span> tags with the provided span class. This modifies the output that
+ * is sent to the parent's chat window.
+ *
+ * Removal of this component should be done by calling [GetComponents(/datum/component/codeword_hearing)]
+ * on the parent and then iterating through all components calling [delete_if_from_source(source)].
+ */
 /datum/component/codeword_hearing
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 
