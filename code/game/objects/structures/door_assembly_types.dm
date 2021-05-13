@@ -156,14 +156,14 @@
 	airlock_type = /obj/machinery/door/airlock/virology
 
 /obj/structure/door_assembly/door_assembly_centcom
-	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/centcom
 	noglass = TRUE
 
 /obj/structure/door_assembly/door_assembly_grunge
-	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/grunge
 	noglass = TRUE
 

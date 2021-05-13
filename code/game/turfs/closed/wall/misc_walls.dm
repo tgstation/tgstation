@@ -80,11 +80,11 @@
 	name = "rusted wall"
 	desc = "A rusted metal wall."
 	icon = 'icons/turf/walls/rusty_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_rusty_frill.dmi'
 	icon_state = "rusty_wall-0"
 	base_icon_state = "rusty_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 45
-	frill_icon = null
 
 /turf/closed/wall/rust/rust_heretic_act()
 	ScrapeAway()
@@ -93,11 +93,11 @@
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_rusty_reinforced_frill.dmi'
 	icon_state = "rusty_reinforced_wall-0"
 	base_icon_state = "rusty_reinforced_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 15
-	frill_icon = null
 
 /turf/closed/wall/r_wall/rust/rust_heretic_act()
 	if(prob(50))

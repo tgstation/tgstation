@@ -246,6 +246,7 @@
 				return
 			to_chat(user, "<span class='notice'>You unsecure the support struts.</span>")
 			state = GIRDER_REINF_STRUTS
+			update_icon()
 		return TRUE
 
 	else if(state == GIRDER_REINF_STRUTS)
@@ -255,6 +256,7 @@
 				return
 			to_chat(user, "<span class='notice'>You secure the support struts.</span>")
 			state = GIRDER_REINF
+			update_icon()
 		return TRUE
 
 // Wirecutter behavior for girders
@@ -307,6 +309,18 @@
 		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
 		new remains(loc)
 	qdel(src)
+
+/obj/structure/girder/update_icon()
+	. = ..()
+	switch(state)
+		if(GIRDER_NORMAL)
+			icon_state = "girder"
+		if(GIRDER_DISPLACED)
+			icon_state = "displaced"
+		if(GIRDER_REINF)
+			icon_state = "reinforced"
+		if(GIRDER_REINF_STRUTS)
+			icon_state = "reinforced_struts"
 
 /obj/structure/girder/narsie_act()
 	new /obj/structure/girder/cult(loc)

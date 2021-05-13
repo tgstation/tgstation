@@ -68,6 +68,7 @@
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating. Rough."
 	icon = 'icons/turf/walls/sandstone_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_sandstone_frill.dmi'
 	icon_state = "sandstone_wall-0"
 	base_icon_state = "sandstone_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
@@ -239,6 +240,21 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ABDUCTOR_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ABDUCTOR_WALLS)
 	custom_materials = list(/datum/material/alloy/alien = 4000)
+
+/turf/closed/wall/mineral/bamboo
+	name = "bamboo wall"
+	desc = "A wall with constructed from bamboo."
+	icon = 'icons/turf/walls/bamboo_wall.dmi'
+	frill_icon = 'icons/effects/frills/wall_bamboo_frill.dmi'
+	icon_state = "bamboo_wall-0"
+	base_icon_state = "bamboo_wall"
+	sheet_type = /obj/item/stack/sheet/mineral/bamboo
+	hardness = 50
+	explosion_block = 0
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BAMBOO_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)
+	custom_materials = list(/datum/material/bamboo = 4000)
 
 /////////////////////Titanium walls/////////////////////
 

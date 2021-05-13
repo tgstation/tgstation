@@ -132,3 +132,31 @@
 	icon_state = "low_wall_material-0"
 	base_icon_state = "low_wall_material"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/closed/wall/window_frame/rusty
+	name = "rusty window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_rusty.dmi'
+	icon_state = "low_wall_rusty-0"
+	base_icon_state = "low_wall_rusty"
+	custom_materials = list(/datum/material/iron = 2000)
+
+/turf/closed/wall/window_frame/sandstone
+	name = "sandstone plinth"
+	icon = 'icons/turf/walls/low_walls/low_wall_sandstone.dmi'
+	icon_state = "low_wall_sandstone-0"
+	base_icon_state = "low_wall_sandstone"
+	custom_materials = list(/datum/material/sandstone = 2000)
+
+/turf/closed/wall/window_frame/bamboo
+	name = "bamboo platform"
+	icon = 'icons/turf/walls/low_walls/low_wall_bamboo.dmi'
+	icon_state = "low_wall_bamboo-0"
+	base_icon_state = "low_wall_bamboo"
+	custom_materials = list(/datum/material/bamboo = 2000)
+
+/turf/closed/wall/window_frame/paperframe
+	name = "japanese window frame"
+	icon = 'icons/turf/walls/low_walls/low_wall_paperframe.dmi'
+	icon_state = "low_wall_paperframe-0"
+	base_icon_state = "low_wall_paperframe"
+	custom_materials = list(/datum/material/paper = 2000)
