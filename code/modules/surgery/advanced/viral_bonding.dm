@@ -21,7 +21,10 @@
 
 /datum/surgery_step/viral_bond
 	name = "viral bond"
-	implements = list(TOOL_CAUTERY = 100, TOOL_WELDER = 50, /obj/item = 30) // 30% success with any hot item.
+	implements = list(
+		TOOL_CAUTERY = 100,
+		TOOL_WELDER = 50,
+		/obj/item = 30) // 30% success with any hot item.
 	time = 100
 	chems_needed = list(/datum/reagent/medicine/spaceacillin,/datum/reagent/consumable/virus_food,/datum/reagent/toxin/formaldehyde)
 

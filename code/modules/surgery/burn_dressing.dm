@@ -25,7 +25,11 @@
 ///// Debride
 /datum/surgery_step/debride
 	name = "excise infection"
-	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCALPEL = 85, TOOL_SAW = 60, TOOL_WIRECUTTER = 40)
+	implements = list(
+		TOOL_HEMOSTAT = 100,
+		TOOL_SCALPEL = 85,
+		TOOL_SAW = 60,
+		TOOL_WIRECUTTER = 40)
 	time = 30
 	repeatable = TRUE
 	/// How much sanitization is added per step
@@ -101,7 +105,9 @@
 ///// Dressing burns
 /datum/surgery_step/dress
 	name = "bandage burns"
-	implements = list(/obj/item/stack/medical/gauze = 100, /obj/item/stack/sticky_tape/surgical = 100)
+	implements = list(
+		/obj/item/stack/medical/gauze = 100,
+		/obj/item/stack/sticky_tape/surgical = 100)
 	time = 40
 	/// How much sanitization is added
 	var/sanitization_added = 3

@@ -6,7 +6,9 @@
 
 /datum/surgery_step/replace_limb
 	name = "replace limb"
-	implements = list(/obj/item/bodypart = 100, /obj/item/borg/apparatus/organ_storage = 100)
+	implements = list(
+		/obj/item/bodypart = 100,
+		/obj/item/borg/apparatus/organ_storage = 100)
 	time = 32
 	var/obj/item/bodypart/target_limb
 

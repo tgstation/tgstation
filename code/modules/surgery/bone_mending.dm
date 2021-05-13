@@ -48,7 +48,12 @@
 ///// Repair Hairline Fracture (Severe)
 /datum/surgery_step/repair_bone_hairline
 	name = "repair hairline fracture (bonesetter/bone gel/tape)"
-	implements = list(/obj/item/bonesetter = 100, /obj/item/stack/medical/bone_gel = 100, /obj/item/stack/sticky_tape/surgical = 100, /obj/item/stack/sticky_tape/super = 50, /obj/item/stack/sticky_tape = 30)
+	implements = list(
+		/obj/item/bonesetter = 100,
+		/obj/item/stack/medical/bone_gel = 100,
+		/obj/item/stack/sticky_tape/surgical = 100,
+		/obj/item/stack/sticky_tape/super = 50,
+		/obj/item/stack/sticky_tape = 30)
 	time = 40
 
 /datum/surgery_step/repair_bone_hairline/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -84,7 +89,11 @@
 ///// Reset Compound Fracture (Crticial)
 /datum/surgery_step/reset_compound_fracture
 	name = "reset bone"
-	implements = list(/obj/item/bonesetter = 100, /obj/item/stack/sticky_tape/surgical = 60, /obj/item/stack/sticky_tape/super = 40, /obj/item/stack/sticky_tape = 20)
+	implements = list(
+		/obj/item/bonesetter = 100,
+		/obj/item/stack/sticky_tape/surgical = 60,
+		/obj/item/stack/sticky_tape/super = 40,
+		/obj/item/stack/sticky_tape = 20)
 	time = 40
 
 /datum/surgery_step/reset_compound_fracture/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -118,7 +127,11 @@
 ///// Repair Compound Fracture (Crticial)
 /datum/surgery_step/repair_bone_compound
 	name = "repair compound fracture (bone gel/tape)"
-	implements = list(/obj/item/stack/medical/bone_gel = 100, /obj/item/stack/sticky_tape/surgical = 100, /obj/item/stack/sticky_tape/super = 50, /obj/item/stack/sticky_tape = 30)
+	implements = list(
+		/obj/item/stack/medical/bone_gel = 100,
+		/obj/item/stack/sticky_tape/surgical = 100,
+		/obj/item/stack/sticky_tape/super = 50,
+		/obj/item/stack/sticky_tape = 30)
 	time = 40
 
 /datum/surgery_step/repair_bone_compound/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

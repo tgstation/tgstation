@@ -13,7 +13,10 @@
 //fix eyes
 /datum/surgery_step/fix_eyes
 	name = "fix eyes"
-	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 45, /obj/item/pen = 25)
+	implements = list(
+		TOOL_HEMOSTAT = 100,
+		TOOL_SCREWDRIVER = 45,
+		/obj/item/pen = 25)
 	time = 64
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)

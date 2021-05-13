@@ -16,7 +16,10 @@
 
 /datum/surgery_step/wing_reconstruction
 	name = "start wing reconstruction"
-	implements = list(TOOL_HEMOSTAT = 85, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	implements = list(
+		TOOL_HEMOSTAT = 85,
+		TOOL_SCREWDRIVER = 35,
+		/obj/item/pen = 15)
 	time = 200
 	chems_needed = list(/datum/reagent/medicine/c2/synthflesh)
 	require_all_chems = FALSE

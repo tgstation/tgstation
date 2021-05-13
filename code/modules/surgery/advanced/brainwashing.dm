@@ -27,7 +27,11 @@
 
 /datum/surgery_step/brainwash
 	name = "brainwash"
-	implements = list(TOOL_HEMOSTAT = 85, TOOL_WIRECUTTER = 50, /obj/item/stack/package_wrap = 35, /obj/item/stack/cable_coil = 15)
+	implements = list(
+		TOOL_HEMOSTAT = 85,
+		TOOL_WIRECUTTER = 50,
+		/obj/item/stack/package_wrap = 35,
+		/obj/item/stack/cable_coil = 15)
 	time = 200
 	var/objective
 

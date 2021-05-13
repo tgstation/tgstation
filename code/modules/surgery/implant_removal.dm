@@ -13,7 +13,10 @@
 //extract implant
 /datum/surgery_step/extract_implant
 	name = "extract implant"
-	implements = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 65, /obj/item/kitchen/fork = 35)
+	implements = list(
+		TOOL_HEMOSTAT = 100,
+		TOOL_CROWBAR = 65,
+		/obj/item/kitchen/fork = 35)
 	time = 64
 	var/obj/item/implant/implant
 
