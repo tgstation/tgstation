@@ -54280,7 +54280,8 @@
 "vGP" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/bluespace_vendor/north,
-/turf/open/floor/iron/trapdoor,
+/obj/effect/mapping_helpers/trapdoor_placer,
+/turf/open/floor/iron,
 /area/hallway/primary/central)
 "vHp" = (
 /obj/effect/turf_decal/tile/red,
@@ -55063,9 +55064,9 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/trapdoor_remote{
+/obj/item/trapdoor_remote/preloaded{
 	pixel_x = -6;
-	pixel_y = 1
+	pixel_y = 2
 	},
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)

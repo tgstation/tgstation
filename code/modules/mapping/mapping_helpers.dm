@@ -490,3 +490,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_cache[url] = I
 	query_in_progress = FALSE
 	return I
+
+/**
+ * # trapdoor placer!
+ *
+ * This places an unlinked trapdoor in the tile its on (so someone with a remote needs to link it up first)
+ * if YOU want to learn more about trapdoors, read about the component at trapdoor.dm
+ * note: this is not a turf subtype because the trapdoor needs the type of the turf to turn back into
+ */
+/obj/effect/mapping_helpers/trapdoor_placer
+	name = "trapdoor placer"
+	late = TRUE
+	icon_state = "trapdoor"
+
+/obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
+	AddComponent(/datum/component/trapdoor)
+	qdel(src)

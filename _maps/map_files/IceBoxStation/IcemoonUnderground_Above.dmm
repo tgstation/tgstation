@@ -5477,7 +5477,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "Ox" = (
-/turf/open/floor/iron/elevatorshaft,
+/turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
 "Oy" = (
 /obj/structure/cable,
@@ -32261,7 +32261,7 @@ ak
 ak
 ak
 ak
-ak
+NH
 ak
 ak
 ak
@@ -32517,8 +32517,8 @@ ak
 ak
 ak
 ak
-ak
-ak
+NH
+NH
 ak
 ak
 ak
@@ -32774,8 +32774,8 @@ ak
 ak
 ak
 ak
-ak
-ak
+NH
+NH
 ak
 ak
 ak
@@ -33031,8 +33031,8 @@ ak
 ak
 ak
 ak
-ak
-ak
+NH
+NH
 ak
 ak
 ak
@@ -33287,9 +33287,9 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+NH
+NH
+NH
 ak
 ak
 ak
@@ -33544,10 +33544,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+NH
+NH
+NH
+NH
 ak
 ak
 ak
@@ -33803,8 +33803,8 @@ NH
 NH
 NH
 NH
-ak
-ak
+NH
+NH
 ak
 ak
 ak
@@ -34061,7 +34061,7 @@ NH
 NH
 NH
 NH
-ak
+NH
 ak
 ak
 ak

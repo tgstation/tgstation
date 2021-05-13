@@ -9258,7 +9258,7 @@
 	pixel_x = 26;
 	pixel_y = -26
 	},
-/obj/item/trapdoor_remote{
+/obj/item/trapdoor_remote/preloaded{
 	pixel_x = -9
 	},
 /turf/open/floor/wood,
@@ -42425,8 +42425,8 @@
 /area/security/prison)
 "mjK" = (
 /obj/effect/turf_decal/delivery,
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/iron/trapdoor,
+/obj/effect/mapping_helpers/trapdoor_placer,
+/turf/open/floor/iron,
 /area/hallway/secondary/command)
 "mjQ" = (
 /obj/structure/toilet{
@@ -64378,6 +64378,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 21
 	},
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "uOF" = (
