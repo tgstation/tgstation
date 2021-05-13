@@ -1,9 +1,15 @@
 #define PROCESS_PORTABLE "portable"
 #define PROCESS_COMPONENT "component"
 
+/// A component to leak gas over time from damaged objects with gas storage
 /datum/component/gas_leaker
+	/// Keeps track of what type we were attached to so we don't need to istype every process
 	var/process_type
+
+	/// The percent of max integrity that we start leaking. From 0 to 1
 	var/integrity_leak_percent
+
+	/// The rate at which gas leaks, you probably want this *very* low. From 0 to 1
 	var/leak_rate
 
 /datum/component/gas_leaker/Initialize(integrity_leak_percent=0.9, leak_rate=1)
@@ -26,21 +32,19 @@
 	. = ..()
 	UnregisterSignal(parent, COMSIG_OBJ_TAKE_DAMAGE)
 
-/datum/component/gas_leaker/process()
-	. = ..()
+/datum/component/gas_leaker/proc/process_atmos()
+	. = PROCESS_KILL
 	switch(process_type)
 		if(PROCESS_PORTABLE)
 			. = process_portable()
 		if(PROCESS_COMPONENT)
 			. = process_component()
-		else
-			. = TRUE
 
 /datum/component/gas_leaker/proc/start_processing()
 	SIGNAL_HANDLER
-	// We're totally a pipe network, dont tell anyone
+	// Hello fellow atmospherics machines, I too am definitely an atmos machine like you!
 	// This component needs to tick at the same rate as the atmos system
-	SSair.networks += src
+	SSair.atmos_machinery += src
 
 /datum/component/gas_leaker/proc/process_portable()
 	var/obj/machinery/portable_atmospherics/master = parent
@@ -63,3 +67,6 @@
 		if(mix.release_gas_to(location.return_air(), pressure, true_rate))
 			. = FALSE
 			location.air_update_turf(FALSE, FALSE)
+
+#undef PROCESS_PORTABLE
+#undef PROCESS_COMPONENT
