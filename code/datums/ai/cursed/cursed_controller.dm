@@ -21,8 +21,7 @@
 	return ..() //Run parent at end
 
 /datum/ai_controller/cursed/UnpossessPawn()
-	UnregisterSignal(pawn, COMSIG_MOVABLE_IMPACT)
-	UnregisterSignal(pawn, COMSIG_ITEM_EQUIPPED)
+	UnregisterSignal(pawn, list(COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_EQUIPPED))
 	return ..() //Run parent at end
 
 /datum/ai_controller/cursed/SelectBehaviors(delta_time)

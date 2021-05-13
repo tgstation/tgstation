@@ -164,6 +164,8 @@
  */
 /datum/ai_behavior/find_and_set
 	action_cooldown = 5 SECONDS
+	///search range in how many tiles around the pawn to look for the path
+	var/search_range = 7
 	//optional, don't use if you're changing search_tactic()
 	var/locate_path
 	var/bb_key_to_set
@@ -178,4 +180,4 @@
 		finish_action(controller, FALSE)
 
 /datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller)
-	return locate(locate_path) in oview(7, controller.pawn)
+	return locate(locate_path) in oview(search_range, controller.pawn)

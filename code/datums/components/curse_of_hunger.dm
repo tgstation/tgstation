@@ -148,7 +148,7 @@
 	var/affecting = cursed.get_bodypart(BODY_ZONE_CHEST)
 	cursed.apply_damage(60, BRUTE, affecting)
 	hunger = 0
-	poison_food_tolerance = min(poison_food_tolerance++, FULL_HEALTH)
+	poison_food_tolerance = min(poison_food_tolerance += 1, FULL_HEALTH)
 
 /datum/component/curse_of_hunger/proc/test()
 	var/obj/item/cursed_item = parent
