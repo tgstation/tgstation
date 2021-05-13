@@ -78,16 +78,15 @@
 	/// If written as a linear equation, will be in the form of `list("denominator" = denominator, "offset" = offset).
 	var/antag_cap = 0
 
-// This doesn't do anything different at runtime, so don't bother compiling it.
-#ifdef SPACEMAN_DMM
 /datum/dynamic_ruleset/New()
 	// Rulesets can be instantiated more than once, such as when an admin clicks
 	// "Execute Midround Ruleset". Thus, it would be wrong to perform any
 	// side effects here. Dynamic rulesets should be stateless anyway.
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	mode = SSticker.mode
+
 	..()
-#endif
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
 	ruletype = "Roundstart"
