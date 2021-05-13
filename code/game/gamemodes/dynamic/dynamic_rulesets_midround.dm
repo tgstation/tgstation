@@ -1,3 +1,8 @@
+/// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
+#define MALF_ION_PROB 33
+/// The probability to replace an existing law with an ion law instead of adding a new ion law.
+#define REPLACE_LAW_WITH_ION_PROB 10
+
 //////////////////////////////////////////////
 //                                          //
 //            MIDROUND RULESETS             //
@@ -301,10 +306,6 @@
 	cost = 35
 	requirements = list(101,101,80,70,60,60,50,50,40,40)
 	required_type = /mob/living/silicon/ai
-	/// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
-	var/ion_announce = 33
-	/// The chance to replace an existing law with an ion law instead of adding a new ion law.
-	var/replace_law_with_ion_chance = 10
 
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
@@ -329,9 +330,9 @@
 	var/datum/antagonist/malf_ai/malf_antag_datum = new
 	new_malf_ai.mind.special_role = antag_flag
 	new_malf_ai.mind.add_antag_datum(malf_antag_datum)
-	if(prob(ion_announce))
+	if(prob(MALF_ION_PROB))
 		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", ANNOUNCER_IONSTORM)
-		if(prob(replace_law_with_ion_chance))
+		if(prob(REPLACE_LAW_WITH_ION_PROB))
 			new_malf_ai.replace_random_law(generate_ion_law(), list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
 		else
 			new_malf_ai.add_ion_law(generate_ion_law())
@@ -703,3 +704,8 @@
 /datum/dynamic_ruleset/midround/spiders/execute()
 	create_midwife_eggs(spawncount)
 	return ..()
+
+/// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
+#undef MALF_ION_PROB
+/// The probability to replace an existing law with an ion law instead of adding a new ion law.
+#undef REPLACE_LAW_WITH_ION_PROB
