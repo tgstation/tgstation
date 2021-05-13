@@ -553,18 +553,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		valve_open = !valve_open
 		timing = FALSE
 
-	var/turf/location = get_turf(src)
-
-	var/pressure = release_pressure
-	var/gas_mix = holding?.return_air()
-	var/air_update = FALSE
-
 	// Handle gas transfer.
 	if(valve_open)
-		var/datum/gas_mixture/target_air = gas_mix || location.return_air()
+		var/turf/location = get_turf(src)
+		var/datum/gas_mixture/target_air = holding?.return_air() || location.return_air()
 		excited = TRUE
 
-		if(air_contents.release_gas_to(target_air, pressure) && (!holding || air_update))
+		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
 			air_update_turf(FALSE, FALSE)
 
 	var/our_pressure = air_contents.return_pressure()
