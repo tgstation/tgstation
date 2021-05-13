@@ -22,8 +22,13 @@
 	var/obj/item/object_to_order = customer_data.get_order(src)
 
 	. = object_to_order
-
-	customer_pawn.say(order_food_line(object_to_order))
+	var/line_to_say = order_food_line(object_to_order)
+	if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		line_to_say = "Yeah can I get a mothafuckin uh"
+		while(prob(90))
+			line_to_say += "h"
+		line_to_say += ", [initial(object_to_order.name)]."
+	customer_pawn.say(line_to_say)
 
 	var/appearance = SSrestaurant.food_appearance_cache[object_to_order]
 
