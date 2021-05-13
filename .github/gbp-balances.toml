@@ -18,7 +18,7 @@
 1049222 = 8 # neersighted
 1102671 = 41 # WarlockD
 1134201 = 131 # psykzz
-1234602 = 217 # ninjanomnom
+1234602 = 223 # ninjanomnom
 1294508 = 7 # ThePainkiller
 1313921 = 40 # msgerbs
 1364938 = 6 # Rockdtben
@@ -50,7 +50,7 @@
 3355198 = 8 # JohnGinnane
 3384919 = 3 # ORCACommander
 3503632 = 6 # BebeYoshi
-3589655 = 80 # Ryll-Ryll
+3589655 = 83 # Ryll-Ryll
 3625094 = 12 # MTandi
 3681297 = 14 # monster860
 3789327 = 11 # iprice
@@ -168,7 +168,7 @@
 10260415 = 7 # ThePotato97
 10277607 = 5 # Chessus
 10297716 = 11 # Valtosin
-10399117 = -1 # YakumoChen
+10399117 = 1 # YakumoChen
 10467687 = 44 # bobbahbrown
 10489825 = 10 # F-OS
 10579515 = 5 # Zostroll
@@ -296,7 +296,7 @@
 23219460 = 8 # EvilMelonTheSecond
 23252965 = 8 # Shirbu
 23388888 = 4 # Okand37
-23585223 = 151 # Fikou
+23585223 = 154 # Fikou
 24467262 = 5 # timmyred456
 24477175 = 1 # XRandomXManX
 24501938 = 4 # Cw3040
@@ -310,7 +310,8 @@
 24857008 = 7 # SomeguyManperson
 24904657 = 6 # scrubs2009
 24967815 = 5 # TheSmallBlue
-24975989 = 344 # Timberpoes
+24975989 = 354 # Timberpoes
+25063394 = 0 # AffectedArc07
 25089914 = 12 # cacogen
 25136265 = 4 # alexkar598
 25163791 = 5 # obscolene
@@ -363,7 +364,7 @@
 30916002 = 38 # Hathkar
 31044876 = 3 # Cenrus
 31083792 = 7 # shrimpboom8
-31096837 = 11 # RandomGamer123
+31096837 = 14 # RandomGamer123
 31149809 = 0 # Metroidlover
 31166707 = 7 # Orchian
 31222036 = 16 # praisenarsie
@@ -528,7 +529,7 @@
 47086570 = 28 # IndieanaJones
 47089551 = 7 # AvalonHunter
 47149121 = 5 # dee-dubya
-47158596 = 16 # InsaneRed
+47158596 = 22 # InsaneRed
 47324920 = 279 # nemvar
 47335341 = 4 # 5dplanner
 47342933 = 3 # yeeyeh
@@ -543,7 +544,7 @@
 49008286 = 3 # KitKetKetrai
 49109742 = -1 # Seris02
 49172648 = 5 # Hekzder
-49448379 = 21 # SweptWasTaken
+49448379 = 22 # SweptWasTaken
 49525951 = -3 # grinkgo
 49667761 = 6 # notfrying1pans
 49726786 = 3 # MrFluffster
@@ -637,6 +638,7 @@
 61306435 = 4 # Pumpkinoe
 61349687 = 4 # SomeoneYouProbablyKnow
 61350382 = 6 # MLGTASTICa
+61478538 = 3 # TaeruAlethea
 61635418 = 2 # Greniza
 61719178 = 4 # redguy999
 61732742 = 9 # Caldony
@@ -675,7 +677,7 @@
 67243209 = 200 # kevinz000
 67441715 = 3 # SpookyTheFox
 68121607 = -5 # SpaceLoveSs13
-68669754 = 39 # SgtHunk
+68669754 = 42 # SgtHunk
 68723396 = 5 # Dickff
 68795324 = 4 # zerosexualpartners
 68921923 = 4 # Asha108
@@ -688,7 +690,7 @@
 71117108 = 6 # UnlimitedVanillaWorks
 71224718 = -2 # joookschad
 71611085 = 5 # Dolth
-71612753 = 4 # manofpepsi
+71612753 = -13 # manofpepsi
 71699183 = 5 # FireFlashie
 72946484 = 5 # Gogo9001
 73274515 = -3 # Naaanii
