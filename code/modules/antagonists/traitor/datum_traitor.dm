@@ -9,7 +9,7 @@
 /// Chance the traitor gets a kill objective. If this prob fails, they will get a steal objective instead.
 #define KILL_PROB 50
 /// If a kill objective is rolled, chance that it is to destroy the AI.
-#define DESTROY_AI_PROB (100 / GLOB.joined_player_list.len)
+#define DESTROY_AI_PROB(denominator) (100 / denominator)
 /// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
 #define MAROON_PROB 30
 /// If it's a steal objective, this is the chance that it'll be a download research notes objective. Science staff can't get this objective. It can only roll once. If any of these fail, they will get a generic steal objective instead.
@@ -111,7 +111,7 @@
 /datum/antagonist/traitor/proc/forge_single_generic_objective()
 	if(prob(KILL_PROB))
 		var/list/active_ais = active_ais()
-		if(active_ais.len && prob(DESTROY_AI_PROB))
+		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
 			var/datum/objective/destroy/destroy_objective = new
 			destroy_objective.owner = owner
 			destroy_objective.find_target()
