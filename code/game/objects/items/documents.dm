@@ -204,7 +204,7 @@
 			playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
 		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
 			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, FALSE)
-		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABAOOEY_ALT)
+		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY_ALT)
 			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, TRUE)
 
 /**
