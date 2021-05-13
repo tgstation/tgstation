@@ -25,7 +25,6 @@
 	var/line_to_say = order_food_line(object_to_order)
 	if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		line_to_say = "Yeah can I get a mothafuckin uh"
-		var/panini_count = 0
 		for(var/extra_cheese in 1 to rand(1,69))
 			line_to_say += "h"
 		line_to_say += ", [initial(object_to_order.name)]."
