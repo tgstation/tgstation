@@ -26,12 +26,8 @@
 	if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		line_to_say = "Yeah can I get a mothafuckin uh"
 		var/panini_count = 0
-		while(prob(90))
+		for(var/extra_cheese in 1 to 69)
 			line_to_say += "h"
-			panini_count++
-			if(panini_count > 69)
-				break
-			CHECK_TICK
 		line_to_say += ", [initial(object_to_order.name)]."
 	customer_pawn.say(line_to_say)
 
