@@ -76,7 +76,7 @@
 	if(A.totalStageSpeed() >= 6)
 		power = 2
 
-/datum/symptom/heal/starlight/CanTileHeal(turf/T)
+/datum/symptom/heal/starlight/proc/CanTileHeal(turf/T)
 	var/area/area_to_check = get_area(T)
 	if(isspaceturf(T) || area_to_check.outdoors) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions
 		return STARLIGHT_CAN_HEAL
@@ -91,7 +91,7 @@
 			return STARLIGHT_CAN_HEAL_WITH_PENALTY
 		area_to_check = get_area(T)
 		if(isspaceturf(T) || area_to_check.outdoors)
-			return CAN_HEAL_WITH_PENALTY // space tile is underneath glass, so near space
+			return STARLIGHT_CAN_HEAL_WITH_PENALTY // space tile is underneath glass, so near space
 	return STARLIGHT_CANNOT_HEAL
 	
 /datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
