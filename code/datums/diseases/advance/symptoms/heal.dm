@@ -78,21 +78,21 @@
 
 /datum/symptom/heal/starlight/proc/CanTileHeal(turf/T)
 	var/area/area_to_check = get_area(T)
-	if(isspaceturf(T) || area_to_check.outdoors) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions
-		return STARLIGHT_CAN_HEAL
-	else if(istype(T, /turf/open/openspace)) // is the turf openspace
-		T = T.below()
-		area_to_check = get_area(T)
-		if(isspaceturf(T) || area_to_check.outdoors)
+	var/levels_of_glass = 0 // Since starlight condensation only works 2 tiles to the side anyways, it shouldn't work with like 100 z-levels of glass
+	while(levels_of_glass <= 2)
+		if(isspaceturf(T) || area_to_check.outdoors) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions
+			if (levels_of_glass)
+				return STARLIGHT_CAN_HEAL_WITH_PENALTY // glass gives penalty
 			return STARLIGHT_CAN_HEAL
-	else if(istransparentturf(T)) // is the turf glass/transparent
-		T = T.below()
-		if(!T) // no below turf exists, assume its space
-			return STARLIGHT_CAN_HEAL_WITH_PENALTY
-		area_to_check = get_area(T)
-		if(isspaceturf(T) || area_to_check.outdoors)
-			return STARLIGHT_CAN_HEAL_WITH_PENALTY // space tile is underneath glass, so near space
-	return STARLIGHT_CANNOT_HEAL
+		if(istransparentturf(T) && !(istype(T, /turf/open/openspace)))
+			levels_of_glass += 1
+		if(istransparentturf(T) || istype(T, /turf/open/openspace))
+			T = T.below()
+			if(!T) // no below turf exists, assume its space since space station
+				return STARLIGHT_CAN_HEAL_WITH_PENALTY // openspace turfs should have a turf below them eventually, so this must be glass
+			continue
+		return STARLIGHT_CANNOT_HEAL // hit a non-space non-transparent turf
+	return STARLIGHT_CANNOT_HEAL // passed through more than 2 layers of glass, cannot heal
 	
 /datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
@@ -103,9 +103,8 @@
 		if(STARLIGHT_CAN_HEAL)
 			return power
 	for(T in view(M, 2))
-		switch(CanTileHeal(T))
-			if(STARLIGHT_CAN_HEAL_WITH_PENALTY, STARLIGHT_CAN_HEAL)
-				return power * nearspace_penalty
+		if(CanTileHeal(T))
+			return power * nearspace_penalty
 
 /datum/symptom/heal/starlight/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
