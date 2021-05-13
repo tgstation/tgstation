@@ -185,7 +185,4 @@
 
 	return result.Join("<br>")
 
-/datum/antagonist/traitor/is_gamemode_hero()
-	return SSticker.mode.name == "traitor"
-
 #undef PROB_SPECIAL
