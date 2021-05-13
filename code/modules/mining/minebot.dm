@@ -284,6 +284,7 @@
 		return
 	M.melee_damage_lower += 7
 	M.melee_damage_upper += 7
+	to_chat(user, "<span class='notice'>You increase the close-quarter combat abilities of [M.name].")
 	qdel(src)
 
 //Health
@@ -297,6 +298,7 @@
 		return
 	M.maxHealth += 45
 	M.updatehealth()
+	to_chat(user, "<span class='notice'>You reinforce the armor of [M.name].")
 	qdel(src)
 
 //AI
