@@ -268,7 +268,7 @@
 	characters += GLOB.alphabet_upper
 	characters += GLOB.numerals
 
-	var/length = rand(23, 230)
+	var/length = rand(23, 123)
 	var/i
 	for(i = 0; i<length; i++)
 		if(prob(90))
@@ -291,3 +291,20 @@
 		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"
 
 /obj/item/paper/fake_report/water
+	grind_results = list(/datum/reagent/water = 5)
+
+/obj/item/paper/fake_report/water/AltClick(mob/living/user, obj/item/I)
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		return
+	var/datum/action/innate/origami/origami_action = locate() in user.actions
+	if(origami_action?.active) //Origami masters can fold water
+		to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
+		user.temporarilyRemoveItemFromInventory(src)
+		I = new /obj/item/paperplane/syndicate(loc, src)
+		if(user.Adjacent(I))
+			user.put_in_hands(I)
+	else
+		var/turf/open/target = get_turf(src)
+		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 100, wet_time_to_add = 50)
+		to_chat(user, "<span class='notice'>As you try to fold [src] into the shape of a plane, it disintegrates into water!</span>")
+		qdel(src)
