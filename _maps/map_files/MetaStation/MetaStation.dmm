@@ -25110,14 +25110,14 @@
 	name = "Queue Shutters Control";
 	pixel_x = 25;
 	pixel_y = -36;
-	req_access_txt = "28"
+	req_access_txt = "57"
 	},
 /obj/machinery/button/door{
 	id = "hop";
 	name = "Privacy Shutters Control";
 	pixel_x = 25;
 	pixel_y = -26;
-	req_access_txt = "28"
+	req_access_txt = "57"
 	},
 /obj/machinery/button/flasher{
 	id = "hopflash";
@@ -58446,7 +58446,7 @@
 	name = "Privacy Shutters Control";
 	pixel_x = -24;
 	pixel_y = -6;
-	req_access_txt = "28"
+	req_access_txt = "57"
 	},
 /obj/machinery/light_switch{
 	pixel_x = -25;
