@@ -101,19 +101,19 @@
 		reviver_cooldown += 20 SECONDS
 
 	if(ishuman(owner))
-		var/mob/living/carbon/human/human = owner
-		if(human.stat != DEAD && prob(50 / severity) && human.can_heartattack())
-			human.set_heartattack(TRUE)
-			to_chat(human, "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
+		var/mob/living/carbon/human/human_owner = owner
+		if(human_owner.stat != DEAD && prob(50 / severity) && human_owner.can_heartattack())
+			human_owner.set_heartattack(TRUE)
+			to_chat(human_owner, "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 			addtimer(CALLBACK(src, .proc/undo_heart_attack), 600 / severity)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
-	var/mob/living/carbon/human/human = owner
-	if(!istype(human))
+	var/mob/living/carbon/human/human_owner = owner
+	if(!istype(human_owner))
 		return
-	human.set_heartattack(FALSE)
-	if(human.stat == CONSCIOUS)
-		to_chat(human, "<span class='notice'>You feel your heart beating again!</span>")
+	human_owner.set_heartattack(FALSE)
+	if(human_owner.stat == CONSCIOUS)
+		to_chat(human_owner, "<span class='notice'>You feel your heart beating again!</span>")
 
 
 /obj/item/organ/cyberimp/chest/thrusters
@@ -130,14 +130,14 @@
 	var/on = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/thruster_owner, special = 0)
 	. = ..()
 	if(!ion_trail)
 		ion_trail = new
 		ion_trail.auto_process = FALSE
-	ion_trail.set_up(carbon)
+	ion_trail.set_up(thruster_owner)
 
-/obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special = 0)
 	if(on)
 		toggle(silent = TRUE)
 	..()

@@ -160,23 +160,23 @@
 	else
 		return ..()
 
-/obj/item/bodypart/chest/robot/wirecutter_act(mob/living/user, obj/item/item)
+/obj/item/bodypart/chest/robot/wirecutter_act(mob/living/user, obj/item/cutter)
 	. = ..()
 	if(!wired)
 		return
 	. = TRUE
-	item.play_tool_sound(src)
+	cutter.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You cut the wires out of [src].</span>")
 	new /obj/item/stack/cable_coil(drop_location(), 1)
 	wired = FALSE
 
-/obj/item/bodypart/chest/robot/screwdriver_act(mob/living/user, obj/item/item)
+/obj/item/bodypart/chest/robot/screwdriver_act(mob/living/user, obj/item/screwtool)
 	..()
 	. = TRUE
 	if(!cell)
 		to_chat(user, "<span class='warning'>There's no power cell installed in [src]!</span>")
 		return
-	item.play_tool_sound(src)
+	screwtool.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>Remove [cell] from [src].</span>")
 	cell.forceMove(drop_location())
 	cell = null
@@ -275,10 +275,10 @@
 			return
 	return ..()
 
-/obj/item/bodypart/head/robot/crowbar_act(mob/living/user, obj/item/item)
+/obj/item/bodypart/head/robot/crowbar_act(mob/living/user, obj/item/prytool)
 	..()
 	if(flash1 || flash2)
-		item.play_tool_sound(src)
+		prytool.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You remove the flash from [src].</span>")
 		if(flash1)
 			flash1.forceMove(drop_location())

@@ -20,8 +20,8 @@
 /datum/surgery/advanced/brainwashing/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
-	var/obj/item/organ/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!brain)
+	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!target_brain)
 		return FALSE
 	return TRUE
 

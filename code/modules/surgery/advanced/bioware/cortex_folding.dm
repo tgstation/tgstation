@@ -13,8 +13,8 @@
 	bioware_target = BIOWARE_CORTEX
 
 /datum/surgery/advanced/bioware/cortex_folding/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
+	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!target_brain)
 		return FALSE
 	return ..()
 

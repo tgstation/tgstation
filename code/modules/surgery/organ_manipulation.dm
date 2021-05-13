@@ -71,7 +71,7 @@
 	implements = list(/obj/item/organ = 100, /obj/item/borg/apparatus/organ_storage = 100)
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55, /obj/item/kitchen/fork = 35)
 	var/current_type
-	var/obj/item/organ/target_organ = null
+	var/obj/item/organ/target_organ
 
 /datum/surgery_step/manipulate_organs/New()
 	..()

@@ -54,22 +54,22 @@
 	if(!uses)
 		desc = "[initial(desc)] Looks like it's been used up."
 
-/obj/item/autosurgeon/organ/attackby(obj/item/item, mob/user, params)
-	if(istype(item, organ_type))
+/obj/item/autosurgeon/organ/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, organ_type))
 		if(storedorgan)
 			to_chat(user, "<span class='alert'>[src] already has an implant stored.</span>")
 			return
 		else if(!uses)
 			to_chat(user, "<span class='alert'>[src] has already been used up.</span>")
 			return
-		if(!user.transferItemToLoc(item, src))
+		if(!user.transferItemToLoc(weapon, src))
 			return
-		storedorgan = item
-		to_chat(user, "<span class='notice'>You insert the [item] into [src].</span>")
+		storedorgan = weapon
+		to_chat(user, "<span class='notice'>You insert the [weapon] into [src].</span>")
 	else
 		return ..()
 
-/obj/item/autosurgeon/organ/screwdriver_act(mob/living/user, obj/item/item)
+/obj/item/autosurgeon/organ/screwdriver_act(mob/living/user, obj/item/screwtool)
 	if(..())
 		return TRUE
 	if(!storedorgan)
@@ -77,11 +77,11 @@
 	else
 		var/atom/drop_loc = user.drop_location()
 		for(var/stored in src)
-			var/atom/movable/atom_movable = stored
-			atom_movable.forceMove(drop_loc)
+			var/atom/movable/stored_implant = stored
+			stored_implant.forceMove(drop_loc)
 
 		to_chat(user, "<span class='notice'>You remove the [storedorgan] from [src].</span>")
-		item.play_tool_sound(src)
+		screwtool.play_tool_sound(src)
 		storedorgan = null
 		if(uses != INFINITE)
 			uses--

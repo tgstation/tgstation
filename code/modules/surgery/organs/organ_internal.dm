@@ -45,56 +45,56 @@
 /*
  * Insert the organ into the select mob.
  *
- * M - the mob who will get our organ
+ * reciever - the mob who will get our organ
  * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
  */
-/obj/item/organ/proc/Insert(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = TRUE)
-	if(!iscarbon(carbon) || owner == carbon)
+/obj/item/organ/proc/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+	if(!iscarbon(reciever) || owner == reciever)
 		return
 
-	var/obj/item/organ/replaced = carbon.getorganslot(slot)
+	var/obj/item/organ/replaced = reciever.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(carbon, special = TRUE)
+		replaced.Remove(reciever, special = TRUE)
 		if(drop_if_replaced)
-			replaced.forceMove(get_turf(carbon))
+			replaced.forceMove(get_turf(reciever))
 		else
 			qdel(replaced)
 
-	SEND_SIGNAL(carbon, COMSIG_CARBON_GAIN_ORGAN, src, special)
+	SEND_SIGNAL(reciever, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
-	owner = carbon
-	carbon.internal_organs |= src
-	carbon.internal_organs_slot[slot] = src
+	owner = reciever
+	reciever.internal_organs |= src
+	reciever.internal_organs_slot[slot] = src
 	moveToNullspace()
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
 	for(var/actions in actions)
 		var/datum/action/action = actions
-		action.Grant(carbon)
+		action.Grant(reciever)
 	STOP_PROCESSING(SSobj, src)
 
 /*
  * Remove the organ from the select mob.
  *
- * M - the mob who owns our organ, that we're removing the organ from.
+ * organ_owner - the mob who owns our organ, that we're removing the organ from.
  * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
-/obj/item/organ/proc/Remove(mob/living/carbon/carbon, special = FALSE)
+/obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 
 	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 
 	owner = null
-	if(carbon)
-		carbon.internal_organs -= src
-		if(carbon.internal_organs_slot[slot] == src)
-			carbon.internal_organs_slot.Remove(slot)
-		if((organ_flags & ORGAN_VITAL) && !special && !(carbon.status_flags & GODMODE))
-			carbon.death()
+	if(organ_owner)
+		organ_owner.internal_organs -= src
+		if(organ_owner.internal_organs_slot[slot] == src)
+			organ_owner.internal_organs_slot.Remove(slot)
+		if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
+			organ_owner.death()
 	for(var/actions in actions)
 		var/datum/action/action = actions
-		action.Remove(carbon)
+		action.Remove(organ_owner)
 
-	SEND_SIGNAL(carbon, COMSIG_CARBON_LOSE_ORGAN, src, special)
+	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
 	START_PROCESSING(SSobj, src)
 
@@ -164,29 +164,29 @@
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
-///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
-/obj/item/organ/proc/applyOrganDamage(d, maximum = maxHealth) //use for damaging effects
-	if(!d) //Micro-optimization.
+///Adjusts an organ's damage by the amount "damage_amount", up to a maximum amount, which is by default max damage
+/obj/item/organ/proc/applyOrganDamage(damage_amount, maximum = maxHealth) //use for damaging effects
+	if(!damage_amount) //Micro-optimization.
 		return
 	if(maximum < damage)
 		return
-	damage = clamp(damage + d, 0, maximum)
+	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
 	prev_damage = damage
 	if(mess && owner)
 		to_chat(owner, mess)
 
-///SETS an organ's damage to the amount "d", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
-/obj/item/organ/proc/setOrganDamage(d) //use mostly for admin heals
-	applyOrganDamage(d - damage)
+///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
+/obj/item/organ/proc/setOrganDamage(damage_amount) //use mostly for admin heals
+	applyOrganDamage(damage_amount - damage)
 
 /** check_damage_thresholds
- * input: M (a mob, the owner of the organ we call the proc on)
+ * input: mob/organ_owner (a mob, the owner of the organ we call the proc on)
  * output: returns a message should get displayed.
  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
  *  If we have, send the corresponding threshold message to the owner, if such a message exists.
  */
-/obj/item/organ/proc/check_damage_thresholds(M)
+/obj/item/organ/proc/check_damage_thresholds(mob/organ_owner)
 	if(damage == prev_damage)
 		return
 	var/delta = damage - prev_damage
@@ -211,7 +211,7 @@
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
 /mob/living/proc/regenerate_organs()
-	return 0
+	return FALSE
 
 /mob/living/carbon/regenerate_organs()
 	if(dna?.species)
@@ -272,9 +272,9 @@
  * regenerate organs works with generic organs, so we need to get whether it can accept certain organs just by what this returns.
  * This is set to return true or false, depending on if a species has a specific organless trait. stomach for example checks if the species has NOSTOMACH and return based on that.
  * Arguments:
- * S - species, needed to return whether the species has an organ specific trait
+ * owner_species - species, needed to return whether the species has an organ specific trait
  */
-/obj/item/organ/proc/get_availability(datum/species/S)
+/obj/item/organ/proc/get_availability(datum/species/owner_species)
 	return TRUE
 
 /// Called before organs are replaced in regenerate_organs with new ones

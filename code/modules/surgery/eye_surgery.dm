@@ -12,8 +12,8 @@
 	time = 64
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/eyes/eyes = target.getorganslot(ORGAN_SLOT_EYES)
-	if(!eyes)
+	var/obj/item/organ/eyes/target_eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	if(!target_eyes)
 		to_chat(user, "<span class='warning'>It's hard to do surgery on someone's eyes when [target.p_they()] [target.p_do()]n't have any.</span>")
 		return FALSE
 	return TRUE
@@ -24,7 +24,7 @@
 		"<span class='notice'>[user] begins to perform surgery on [target]'s eyes.</span>")
 
 /datum/surgery_step/fix_eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/obj/item/organ/eyes/eyes = target.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/target_eyes = target.getorganslot(ORGAN_SLOT_EYES)
 	user.visible_message("<span class='notice'>[user] successfully fixes [target]'s eyes!</span>", "<span class='notice'>You succeed in fixing [target]'s eyes.</span>")
 	display_results(user, target, "<span class='notice'>You succeed in fixing [target]'s eyes.</span>",
 		"<span class='notice'>[user] successfully fixes [target]'s eyes!</span>",
@@ -33,7 +33,7 @@
 	target.set_blindness(0)
 	target.cure_nearsighted(list(EYE_DAMAGE))
 	target.blur_eyes(35) //this will fix itself slowly.
-	eyes.setOrganDamage(0)
+	target_eyes.setOrganDamage(0)
 	return ..()
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

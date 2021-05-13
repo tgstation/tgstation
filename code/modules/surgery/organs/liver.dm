@@ -75,31 +75,31 @@
 #define HAS_PAINFUL_TOXIN 2
 
 /obj/item/organ/liver/on_life(delta_time, times_fired)
-	var/mob/living/carbon/carbon = owner
+	var/mob/living/carbon/liver_owner = owner
 	..() //perform general on_life()
-	if(istype(carbon))
-		if(!(organ_flags & ORGAN_FAILING) && !HAS_TRAIT(carbon, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
+	if(istype(liver_owner))
+		if(!(organ_flags & ORGAN_FAILING) && !HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
 
 			var/provide_pain_message = HAS_NO_TOXIN
-			var/obj/belly = carbon.getorganslot(ORGAN_SLOT_STOMACH)
+			var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
 			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
-				for(var/datum/reagent/toxin/toxin in carbon.reagents.reagent_list)
-					var/thisamount = carbon.reagents.get_reagent_amount(toxin.type)
+				for(var/datum/reagent/toxin/toxin in liver_owner.reagents.reagent_list)
+					var/thisamount = liver_owner.reagents.get_reagent_amount(toxin.type)
 					if(belly)
 						thisamount += belly.reagents.get_reagent_amount(toxin.type)
 					if (thisamount && thisamount <= toxTolerance * (maxHealth - damage) / maxHealth ) //toxTolerance is effectively multiplied by the % that your liver's health is at
-						carbon.reagents.remove_reagent(toxin.type, 0.5 * delta_time)
+						liver_owner.reagents.remove_reagent(toxin.type, 0.5 * delta_time)
 					else
 						damage += (thisamount * toxLethality * delta_time)
 						if(provide_pain_message != HAS_PAINFUL_TOXIN)
 							provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
 			//metabolize reagents
-			carbon.reagents.metabolize(carbon, delta_time, times_fired, can_overdose=TRUE)
+			liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
 
 			if(provide_pain_message && damage > 10 && DT_PROB(damage/6, delta_time)) //the higher the damage the higher the probability
-				to_chat(carbon, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
+				to_chat(liver_owner, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
 
 
 	if(damage > maxHealth)//cap liver damage

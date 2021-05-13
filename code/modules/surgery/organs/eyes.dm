@@ -33,22 +33,22 @@
 	var/no_glasses
 	var/damaged = FALSE //damaged indicates that our eyes are undergoing some level of negative effect
 
-/obj/item/organ/eyes/Insert(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = FALSE, initialising)
+/obj/item/organ/eyes/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE, initialising)
 	. = ..()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human = owner
-		old_eye_color = human.eye_color
+	if(ishuman(eye_owner))
+		var/mob/living/carbon/human/human_owner = eye_owner
+		old_eye_color = human_owner.eye_color
 		if(eye_color)
-			human.eye_color = eye_color
-			human.regenerate_icons()
+			human_owner.eye_color = eye_color
+			human_owner.regenerate_icons()
 		else
-			eye_color = human.eye_color
-		if(HAS_TRAIT(human, TRAIT_NIGHT_VISION) && !lighting_alpha)
+			eye_color = human_owner.eye_color
+		if(HAS_TRAIT(human_owner, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
-	carbon.update_tint()
+	eye_owner.update_tint()
 	owner.update_sight()
-	if(carbon.has_dna() && ishuman(carbon))
-		carbon.dna.species.handle_body(carbon) //updates eye icon
+	if(eye_owner.has_dna() && ishuman(eye_owner))
+		eye_owner.dna.species.handle_body(eye_owner) //updates eye icon
 
 /obj/item/organ/eyes/proc/refresh()
 	if(ishuman(owner))
@@ -68,40 +68,40 @@
 		affected_human.dna.species.handle_body(affected_human) //updates eye icon
 
 
-/obj/item/organ/eyes/Remove(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/eyes/Remove(mob/living/carbon/eye_owner, special = 0)
 	..()
-	if(ishuman(carbon) && eye_color)
-		var/mob/living/carbon/human/human = carbon
-		human.eye_color = old_eye_color
-		human.regenerate_icons()
-	carbon.cure_blind(EYE_DAMAGE)
-	carbon.cure_nearsighted(EYE_DAMAGE)
-	carbon.set_blindness(0)
-	carbon.set_blurriness(0)
-	carbon.clear_fullscreen("eye_damage", 0)
-	carbon.update_sight()
+	if(ishuman(eye_owner) && eye_color)
+		var/mob/living/carbon/human/human_owner = eye_owner
+		human_owner.eye_color = old_eye_color
+		human_owner.regenerate_icons()
+	eye_owner.cure_blind(EYE_DAMAGE)
+	eye_owner.cure_nearsighted(EYE_DAMAGE)
+	eye_owner.set_blindness(0)
+	eye_owner.set_blurriness(0)
+	eye_owner.clear_fullscreen("eye_damage", 0)
+	eye_owner.update_sight()
 
 
 /obj/item/organ/eyes/on_life(delta_time, times_fired)
 	..()
-	var/mob/living/carbon/carbon = owner
+	var/mob/living/carbon/eye_owner = owner
 	//since we can repair fully damaged eyes, check if healing has occurred
 	if((organ_flags & ORGAN_FAILING) && (damage < maxHealth))
 		organ_flags &= ~ORGAN_FAILING
-		carbon.cure_blind(EYE_DAMAGE)
+		eye_owner.cure_blind(EYE_DAMAGE)
 	//various degrees of "oh fuck my eyes", from "point a laser at your eye" to "staring at the Sun" intensities
 	if(damage > 20)
 		damaged = TRUE
 		if((organ_flags & ORGAN_FAILING))
-			carbon.become_blind(EYE_DAMAGE)
+			eye_owner.become_blind(EYE_DAMAGE)
 		else if(damage > 30)
-			carbon.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, 2)
+			eye_owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, 2)
 		else
-			carbon.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, 1)
+			eye_owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, 1)
 	//called once since we don't want to keep clearing the screen of eye damage for people who are below 20 damage
 	else if(damaged)
 		damaged = FALSE
-		carbon.clear_fullscreen("eye_damage")
+		eye_owner.clear_fullscreen("eye_damage")
 	return
 
 /obj/item/organ/eyes/night_vision
@@ -207,21 +207,21 @@
 /obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
 	return
 
-/obj/item/organ/eyes/robotic/flashlight/Insert(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = FALSE)
+/obj/item/organ/eyes/robotic/flashlight/Insert(mob/living/carbon/victim, special = FALSE, drop_if_replaced = FALSE)
 	..()
 	if(!eye)
 		eye = new /obj/item/flashlight/eyelight()
 	eye.on = TRUE
-	eye.forceMove(carbon)
-	eye.update_brightness(carbon)
-	carbon.become_blind("flashlight_eyes")
+	eye.forceMove(victim)
+	eye.update_brightness(victim)
+	victim.become_blind("flashlight_eyes")
 
 
-/obj/item/organ/eyes/robotic/flashlight/Remove(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/eyes/robotic/flashlight/Remove(mob/living/carbon/victim, special = 0)
 	eye.on = FALSE
-	eye.update_brightness(carbon)
+	eye.update_brightness(victim)
 	eye.forceMove(src)
-	carbon.cure_blind("flashlight_eyes")
+	victim.cure_blind("flashlight_eyes")
 	..()
 
 // Welding shield implant
@@ -259,7 +259,7 @@
 	terminate_effects()
 	. = ..()
 
-/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/carbon, special = FALSE)
+/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/eye_owner, special = FALSE)
 	terminate_effects()
 	. = ..()
 
@@ -319,13 +319,13 @@
 		return
 	deactivate(silent = TRUE)
 
-/obj/item/organ/eyes/robotic/glow/Insert(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = FALSE)
+/obj/item/organ/eyes/robotic/glow/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
-	RegisterSignal(carbon, COMSIG_ATOM_DIR_CHANGE, .proc/update_visuals)
+	RegisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE, .proc/update_visuals)
 
-/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/carbon, special = FALSE)
+/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/eye_owner, special = FALSE)
 	. = ..()
-	UnregisterSignal(carbon, COMSIG_ATOM_DIR_CHANGE)
+	UnregisterSignal(eye_owner, COMSIG_ATOM_DIR_CHANGE)
 
 /obj/item/organ/eyes/robotic/glow/Destroy()
 	QDEL_NULL(mobhook) // mobhook is not our component
@@ -449,12 +449,12 @@
 	eye_icon_state = "flyeyes"
 	icon_state = "eyeballs-fly"
 
-/obj/item/organ/eyes/fly/Insert(mob/living/carbon/carbon, special = FALSE)
+/obj/item/organ/eyes/fly/Insert(mob/living/carbon/eye_owner, special = FALSE)
 	. = ..()
-	ADD_TRAIT(carbon, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
+	ADD_TRAIT(eye_owner, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 
-/obj/item/organ/eyes/fly/Remove(mob/living/carbon/carbon, special = FALSE)
-	REMOVE_TRAIT(carbon, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
+/obj/item/organ/eyes/fly/Remove(mob/living/carbon/eye_owner, special = FALSE)
+	REMOVE_TRAIT(eye_owner, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 	return ..()
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted

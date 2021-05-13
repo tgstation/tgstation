@@ -7,8 +7,8 @@
 		return FALSE
 	if(!istype(target))
 		return FALSE
-	for(var/X in target.bioware)
-		var/datum/bioware/B = X
-		if(B.mod_type == bioware_target)
+	for(var/thing in target.bioware)
+		var/datum/bioware/bioware = thing
+		if(bioware.mod_type == bioware_target)
 			return FALSE
 	return TRUE

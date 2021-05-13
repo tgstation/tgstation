@@ -38,11 +38,11 @@
 	. = ..()
 	. += "<span class='info'>[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>"
 
-/obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/item)
+/obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/screwtool)
 	. = ..()
 	if(.)
 		return TRUE
-	item.play_tool_sound(src)
+	screwtool.play_tool_sound(src)
 	if(zone == BODY_ZONE_R_ARM)
 		zone = BODY_ZONE_L_ARM
 	else
@@ -51,19 +51,19 @@
 	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>")
 	update_appearance()
 
-/obj/item/organ/cyberimp/arm/Insert(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/cyberimp/arm/Insert(mob/living/carbon/arm_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
-	hand = owner.hand_bodyparts[side]
+	hand = arm_owner.hand_bodyparts[side]
 	if(hand)
 		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, .proc/ui_action_click) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
-		RegisterSignal(carbon, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
+		RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
 
-/obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/arm_owner, special = 0)
 	Retract()
 	if(hand)
 		UnregisterSignal(hand, COMSIG_ITEM_ATTACK_SELF)
-		UnregisterSignal(carbon, COMSIG_KB_MOB_DROPITEM_DOWN)
+		UnregisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN)
 	..()
 
 /obj/item/organ/cyberimp/arm/emp_act(severity)
@@ -101,11 +101,11 @@
 	active_item = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/organ/cyberimp/arm/proc/Extend(obj/item/item)
-	if(!(item in src))
+/obj/item/organ/cyberimp/arm/proc/Extend(obj/item/augment)
+	if(!(augment in src))
 		return
 
-	active_item = item
+	active_item = augment
 
 	active_item.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	ADD_TRAIT(active_item, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
@@ -148,8 +148,8 @@
 			Extend(contents[1])
 		else
 			var/list/choice_list = list()
-			for(var/obj/item/item in items_list)
-				choice_list[item] = image(item)
+			for(var/obj/item/augment_item in items_list)
+				choice_list[augment_item] = image(augment_item)
 			var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
 			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !active_item && (choice in contents))
 				// This monster sanity check is a nice example of how bad input is.
@@ -233,7 +233,7 @@
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
 		var/obj/item/assembly/flash/armimplant/flash = locate(/obj/item/assembly/flash/armimplant) in items_list
-		flash.I = src
+		flash.I = src // Todo: wipe single letter vars out of assembly code
 
 /obj/item/organ/cyberimp/arm/flash/Extend()
 	. = ..()
@@ -258,7 +258,7 @@
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
 		var/obj/item/assembly/flash/armimplant/flash = locate(/obj/item/assembly/flash/armimplant) in items_list
-		flash.I = src
+		flash.I = src // Todo: wipe single letter vars out of assembly code
 
 /obj/item/organ/cyberimp/arm/surgery
 	name = "surgical toolset implant"

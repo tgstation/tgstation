@@ -26,21 +26,21 @@
 	..()
 	if(!(organ_flags & ORGAN_FAILING))
 		return
-	var/mob/living/carbon/carbon = owner
-	if(carbon)
-		carbon.adjustToxLoss(2 * delta_time, TRUE, TRUE) //forced to ensure people don't use it to gain tox as slime person
+	var/mob/living/carbon/organ_owner = owner
+	if(organ_owner)
+		organ_owner.adjustToxLoss(2 * delta_time, TRUE, TRUE) //forced to ensure people don't use it to gain tox as slime person
 
-/obj/item/organ/appendix/get_availability(datum/species/species)
-	return !(TRAIT_NOHUNGER in species.inherent_traits)
+/obj/item/organ/appendix/get_availability(datum/species/owner_species)
+	return !(TRAIT_NOHUNGER in owner_species.inherent_traits)
 
-/obj/item/organ/appendix/Remove(mob/living/carbon/carbon, special = 0)
-	for(var/datum/disease/appendicitis/appendicitis in carbon.diseases)
+/obj/item/organ/appendix/Remove(mob/living/carbon/organ_owner, special = 0)
+	for(var/datum/disease/appendicitis/appendicitis in organ_owner.diseases)
 		appendicitis.cure()
 		inflamed = TRUE
 	update_appearance()
 	..()
 
-/obj/item/organ/appendix/Insert(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/appendix/Insert(mob/living/carbon/organ_owner, special = 0)
 	..()
 	if(inflamed)
-		carbon.ForceContractDisease(new /datum/disease/appendicitis(), FALSE, TRUE)
+		organ_owner.ForceContractDisease(new /datum/disease/appendicitis(), FALSE, TRUE)

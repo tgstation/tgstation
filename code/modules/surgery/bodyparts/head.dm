@@ -18,8 +18,8 @@
 	scars_covered_by_clothes = FALSE
 	grind_results = null
 
-	var/mob/living/brain/brainmob = null //The current occupant.
-	var/obj/item/organ/brain/brain = null //The brain organ
+	var/mob/living/brain/brainmob //The current occupant.
+	var/obj/item/organ/brain/brain //The brain organ
 	var/obj/item/organ/eyes/eyes
 	var/obj/item/organ/ears/ears
 	var/obj/item/organ/tongue/tongue
@@ -35,7 +35,7 @@
 	var/facial_hairstyle = "Shaved"
 	//Eye Colouring
 
-	var/lip_style = null
+	var/lip_style
 	var/lip_color = "white"
 
 	var/stored_lipstick_trait
@@ -105,8 +105,8 @@
 	var/turf/head_turf = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
 		playsound(head_turf, 'sound/misc/splort.ogg', 50, TRUE, -1)
-	for(var/obj/item/item in src)
-		if(item == brain)
+	for(var/obj/item/head_item in src)
+		if(head_item == brain)
 			if(user)
 				user.visible_message("<span class='warning'>[user] saws [src] open and pulls out a brain!</span>", "<span class='notice'>You saw [src] open and pull out a brain.</span>")
 			if(brainmob)
@@ -121,23 +121,23 @@
 			brain = null
 			update_icon_dropped()
 		else
-			if(istype(item, /obj/item/reagent_containers/pill))
-				for(var/datum/action/item_action/hands_free/activate_pill/pill_action in item.actions)
+			if(istype(head_item, /obj/item/reagent_containers/pill))
+				for(var/datum/action/item_action/hands_free/activate_pill/pill_action in head_item.actions)
 					qdel(pill_action)
-			item.forceMove(head_turf)
+			head_item.forceMove(head_turf)
 	eyes = null
 	ears = null
 	tongue = null
 
 /obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/source)
-	var/mob/living/carbon/carbon
+	var/mob/living/carbon/head_owner
 	if(source)
-		carbon = source
+		head_owner = source
 	else
-		carbon = owner
+		head_owner = owner
 
-	real_name = carbon.real_name
-	if(HAS_TRAIT(carbon, TRAIT_HUSK))
+	real_name = head_owner.real_name
+	if(HAS_TRAIT(head_owner, TRAIT_HUSK))
 		real_name = "Unknown"
 		hairstyle = "Bald"
 		facial_hairstyle = "Shaved"
@@ -145,47 +145,47 @@
 		stored_lipstick_trait = null
 
 	else if(!animal_origin)
-		var/mob/living/carbon/human/human = carbon
-		var/datum/species/species = human.dna.species
+		var/mob/living/carbon/human/human_head_owner = head_owner
+		var/datum/species/owner_species = human_head_owner.dna.species
 
 		//Facial hair
-		if(human.facial_hairstyle && (FACEHAIR in species.species_traits))
-			facial_hairstyle = human.facial_hairstyle
-			if(species.hair_color)
-				if(species.hair_color == "mutcolor")
-					facial_hair_color = human.dna.features["mcolor"]
+		if(human_head_owner.facial_hairstyle && (FACEHAIR in owner_species.species_traits))
+			facial_hairstyle = human_head_owner.facial_hairstyle
+			if(owner_species.hair_color)
+				if(owner_species.hair_color == "mutcolor")
+					facial_hair_color = human_head_owner.dna.features["mcolor"]
 				else if(hair_color == "fixedmutcolor")
-					facial_hair_color = "#[species.fixed_mut_color]"
+					facial_hair_color = "#[owner_species.fixed_mut_color]"
 				else
-					facial_hair_color = species.hair_color
+					facial_hair_color = owner_species.hair_color
 			else
-				facial_hair_color = human.facial_hair_color
-			hair_alpha = species.hair_alpha
+				facial_hair_color = human_head_owner.facial_hair_color
+			hair_alpha = owner_species.hair_alpha
 		else
 			facial_hairstyle = "Shaved"
 			facial_hair_color = "000"
 			hair_alpha = 255
 		//Hair
-		if(human.hairstyle && (HAIR in species.species_traits))
-			hairstyle = human.hairstyle
-			if(species.hair_color)
-				if(species.hair_color == "mutcolor")
-					hair_color = human.dna.features["mcolor"]
+		if(human_head_owner.hairstyle && (HAIR in owner_species.species_traits))
+			hairstyle = human_head_owner.hairstyle
+			if(owner_species.hair_color)
+				if(owner_species.hair_color == "mutcolor")
+					hair_color = human_head_owner.dna.features["mcolor"]
 				else if(hair_color == "fixedmutcolor")
-					hair_color = "#[species.fixed_mut_color]"
+					hair_color = "#[owner_species.fixed_mut_color]"
 				else
-					hair_color = species.hair_color
+					hair_color = owner_species.hair_color
 			else
-				hair_color = human.hair_color
-			hair_alpha = species.hair_alpha
+				hair_color = human_head_owner.hair_color
+			hair_alpha = owner_species.hair_alpha
 		else
 			hairstyle = "Bald"
 			hair_color = "000"
 			hair_alpha = initial(hair_alpha)
 		// lipstick
-		if(human.lip_style && (LIPS in species.species_traits))
-			lip_style = human.lip_style
-			lip_color = human.lip_color
+		if(human_head_owner.lip_style && (LIPS in owner_species.species_traits))
+			lip_style = human_head_owner.lip_style
+			lip_color = human_head_owner.lip_color
 		else
 			lip_style = null
 			lip_color = "white"

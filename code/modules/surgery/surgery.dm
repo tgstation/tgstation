@@ -64,8 +64,8 @@
 		. = FALSE
 
 	if(iscyborg(user))
-		var/mob/living/silicon/robot/robot = user
-		var/obj/item/surgical_processor/surgical_processor = locate() in robot.model.modules
+		var/mob/living/silicon/robot/robo_surgeon = user
+		var/obj/item/surgical_processor/surgical_processor = locate() in robo_surgeon.model.modules
 		if(surgical_processor) //no early return for !surgical_processor since we want to check optable should this not exist.
 			if(replaced_by in surgical_processor.advanced_surgeries)
 				return FALSE
@@ -76,9 +76,9 @@
 
 	//Get the relevant operating computer
 	var/obj/machinery/computer/operating/opcomputer
-	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, patient_turf)
-	if(table?.computer)
-		opcomputer = table.computer
+	var/obj/structure/table/optable/optable = locate(/obj/structure/table/optable, patient_turf)
+	if(optable?.computer)
+		opcomputer = optable.computer
 	if(!opcomputer)
 		return
 	if(opcomputer.machine_stat & (NOPOWER|BROKEN))

@@ -37,32 +37,32 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 
-/obj/item/organ/tongue/Insert(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/tongue/Insert(mob/living/carbon/tongue_owner, special = 0)
 	..()
-	if(say_mod && carbon.dna && carbon.dna.species)
-		carbon.dna.species.say_mod = say_mod
+	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
+		tongue_owner.dna.species.say_mod = say_mod
 	if (modifies_speech)
-		RegisterSignal(carbon, COMSIG_MOB_SAY, .proc/handle_speech)
-	carbon.UnregisterSignal(carbon, COMSIG_MOB_SAY)
+		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	tongue_owner.UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
 
 	/* This could be slightly simpler, by making the removal of the
 	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
 	* then you can distinguish between ageusia from no tongue, and
 	* ageusia from having a non-tasting tongue.
 	*/
-	REMOVE_TRAIT(carbon, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	if(!sense_of_taste)
-		ADD_TRAIT(carbon, TRAIT_AGEUSIA, ORGAN_TRAIT)
+		ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 
-/obj/item/organ/tongue/Remove(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/tongue/Remove(mob/living/carbon/tongue_owner, special = 0)
 	..()
-	if(say_mod && carbon.dna && carbon.dna.species)
-		carbon.dna.species.say_mod = initial(carbon.dna.species.say_mod)
-	UnregisterSignal(carbon, COMSIG_MOB_SAY, .proc/handle_speech)
-	carbon.RegisterSignal(carbon, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
-	REMOVE_TRAIT(carbon, TRAIT_AGEUSIA, ORGAN_TRAIT)
+	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
+		tongue_owner.dna.species.say_mod = initial(tongue_owner.dna.species.say_mod)
+	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	tongue_owner.RegisterSignal(tongue_owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
-	ADD_TRAIT(carbon, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 /obj/item/organ/tongue/could_speak_language(language)
 	return is_type_in_typecache(language, languages_possible)
@@ -218,20 +218,20 @@
 	modifies_speech = TRUE
 	var/mothership
 
-/obj/item/organ/tongue/abductor/attack_self(mob/living/carbon/human/human)
-	if(!istype(human))
+/obj/item/organ/tongue/abductor/attack_self(mob/living/carbon/human/tongue_holder)
+	if(!istype(tongue_holder))
 		return
 
-	var/obj/item/organ/tongue/abductor/tongue = human.getorganslot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/abductor/tongue = tongue_holder.getorganslot(ORGAN_SLOT_TONGUE)
 	if(!istype(tongue))
 		return
 
 	if(tongue.mothership == mothership)
-		to_chat(human, "<span class='notice'>[src] is already attuned to the same channel as your own.</span>")
+		to_chat(tongue_holder, "<span class='notice'>[src] is already attuned to the same channel as your own.</span>")
 
-	human.visible_message("<span class='notice'>[human] holds [src] in their hands, and concentrates for a moment.</span>", "<span class='notice'>You attempt to modify the attenuation of [src].</span>")
-	if(do_after(human, delay=15, target=src))
-		to_chat(human, "<span class='notice'>You attune [src] to your own channel.</span>")
+	tongue_holder.visible_message("<span class='notice'>[tongue_holder] holds [src] in their hands, and concentrates for a moment.</span>", "<span class='notice'>You attempt to modify the attenuation of [src].</span>")
+	if(do_after(tongue_holder, delay=15, target=src))
+		to_chat(tongue_holder, "<span class='notice'>You attune [src] to your own channel.</span>")
 		mothership = tongue.mothership
 
 /obj/item/organ/tongue/abductor/examine(mob/examining_mob)
@@ -249,12 +249,12 @@
 	var/mob/living/carbon/human/user = source
 	var/rendered = "<span class='abductor'><b>[user.real_name]:</b> [message]</span>"
 	user.log_talk(message, LOG_SAY, tag="abductor")
-	for(var/mob/living/carbon/human/human in GLOB.alive_mob_list)
-		var/obj/item/organ/tongue/abductor/tongue = human.getorganslot(ORGAN_SLOT_TONGUE)
+	for(var/mob/living/carbon/human/living_mob in GLOB.alive_mob_list)
+		var/obj/item/organ/tongue/abductor/tongue = living_mob.getorganslot(ORGAN_SLOT_TONGUE)
 		if(!istype(tongue))
 			continue
 		if(mothership == tongue.mothership)
-			to_chat(human, rendered)
+			to_chat(living_mob, rendered)
 
 	for(var/mob/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, user)
@@ -427,24 +427,24 @@
 	modifies_speech = TRUE
 	organ_flags = ORGAN_UNREMOVABLE
 
-/obj/item/organ/tongue/tied/Insert(mob/living/carbon/carbon)
+/obj/item/organ/tongue/tied/Insert(mob/living/carbon/signer)
 	. = ..()
-	carbon.verb_ask = "signs"
-	carbon.verb_exclaim = "signs"
-	carbon.verb_whisper = "subtly signs"
-	carbon.verb_sing = "rythmically signs"
-	carbon.verb_yell = "emphatically signs"
-	ADD_TRAIT(carbon, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	REMOVE_TRAIT(carbon, TRAIT_MUTE, ORGAN_TRAIT)
+	signer.verb_ask = "signs"
+	signer.verb_exclaim = "signs"
+	signer.verb_whisper = "subtly signs"
+	signer.verb_sing = "rythmically signs"
+	signer.verb_yell = "emphatically signs"
+	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
+	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
 
-/obj/item/organ/tongue/tied/Remove(mob/living/carbon/carbon, special = 0)
+/obj/item/organ/tongue/tied/Remove(mob/living/carbon/speaker, special = 0)
 	..()
-	carbon.verb_ask = initial(verb_ask)
-	carbon.verb_exclaim = initial(verb_exclaim)
-	carbon.verb_whisper = initial(verb_whisper)
-	carbon.verb_sing = initial(verb_sing)
-	carbon.verb_yell = initial(verb_yell)
-	REMOVE_TRAIT(carbon, TRAIT_SIGN_LANG, ORGAN_TRAIT) //People who are Ahealed get "cured" of their sign language-having ways. If I knew how to make the tied tongue persist through aheals, I'd do that.
+	speaker.verb_ask = initial(verb_ask)
+	speaker.verb_exclaim = initial(verb_exclaim)
+	speaker.verb_whisper = initial(verb_whisper)
+	speaker.verb_sing = initial(verb_sing)
+	speaker.verb_yell = initial(verb_yell)
+	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, ORGAN_TRAIT) //People who are Ahealed get "cured" of their sign language-having ways. If I knew how to make the tied tongue persist through aheals, I'd do that.
 
 //Thank you Jwapplephobia for helping me with the literal hellcode below
 
@@ -453,7 +453,7 @@
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/exclamation_found = findtext(message, "!")
 	var/question_found = findtext(message, "?")
-	var/mob/living/carbon/carbon = owner
+	var/mob/living/carbon/signer = owner
 	new_message = message
 	if(exclamation_found)
 		new_message = replacetext(new_message, "!", ".")
@@ -462,8 +462,8 @@
 	speech_args[SPEECH_MESSAGE] = new_message
 
 	if(exclamation_found && question_found)
-		carbon.visible_message("<span class='notice'>[carbon] lowers one of [carbon.p_their()] eyebrows, raising the other.</span>")
+		signer.visible_message("<span class='notice'>[signer] lowers one of [signer.p_their()] eyebrows, raising the other.</span>")
 	else if(exclamation_found)
-		carbon.visible_message("<span class='notice'>[carbon] raises [carbon.p_their()] eyebrows.</span>")
+		signer.visible_message("<span class='notice'>[signer] raises [signer.p_their()] eyebrows.</span>")
 	else if(question_found)
-		carbon.visible_message("<span class='notice'>[carbon] lowers [carbon.p_their()] eyebrows.</span>")
+		signer.visible_message("<span class='notice'>[signer] lowers [signer.p_their()] eyebrows.</span>")

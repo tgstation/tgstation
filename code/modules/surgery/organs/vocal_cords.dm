@@ -42,9 +42,9 @@
 	var/msg = "<span class='resonate'><span class='name'>[owner.real_name]</span> <span class='message'>resonates, \"[message]\"</span></span>"
 	for(var/player in GLOB.player_list)
 		if(iscarbon(player))
-			var/mob/living/carbon/carbon = player
-			if(carbon.getorganslot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
-				to_chat(carbon, msg)
+			var/mob/living/carbon/speaker = player
+			if(speaker.getorganslot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
+				to_chat(speaker, msg)
 		if(isobserver(player))
 			var/link = FOLLOW_LINK(player, owner)
 			to_chat(player, "[link] [msg]")
