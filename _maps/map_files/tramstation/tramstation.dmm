@@ -23,8 +23,8 @@
 /area/mine/explored)
 "aag" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse/brown/tom,
 /obj/machinery/duct,
+/mob/living/simple_animal/mouse/brown/tom,
 /turf/open/floor/plating,
 /area/security/prison)
 "aai" = (
@@ -252,7 +252,7 @@
 /obj/structure/cable,
 /mob/living/simple_animal/bot/floorbot,
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "aaN" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -14593,7 +14593,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "bwG" = (
 /obj/structure/table/wood,
 /obj/machinery/requests_console/directional/north{
@@ -16191,7 +16191,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "cba" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/warning,
@@ -18907,7 +18907,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "dfT" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/disposaloutlet,
@@ -21075,6 +21075,9 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/openspace,
 /area/science/xenobiology)
+"dVB" = (
+/turf/closed/wall/r_wall,
+/area/ai_monitored/turret_protected/aisat/maint)
 "dWa" = (
 /obj/structure/weightmachine/weightlifter,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -22333,7 +22336,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "evF" = (
 /obj/effect/spawner/lootdrop/food_packaging,
 /obj/effect/decal/cleanable/dirt,
@@ -23430,7 +23433,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "eVK" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -24078,10 +24081,10 @@
 	dir = 6
 	},
 /obj/effect/landmark/event_spawn,
+/obj/machinery/duct,
 /mob/living/simple_animal/hostile/retaliate/goat{
 	name = "Pete"
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/showroomfloor,
 /area/service/kitchen)
 "fiD" = (
@@ -30199,7 +30202,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "hEv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
@@ -33909,7 +33912,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "jiI" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -41883,7 +41886,7 @@
 "mpf" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "mph" = (
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
@@ -44612,7 +44615,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "nyZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -46009,7 +46012,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "oeG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 5
@@ -47378,7 +47381,7 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "oDV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -48662,7 +48665,7 @@
 /obj/structure/table,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "pdY" = (
 /obj/machinery/door/airlock{
 	id_tag = "private_f";
@@ -51491,7 +51494,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "qnn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	dir = 10
@@ -52054,13 +52057,13 @@
 	codes_txt = "patrol;next_patrol=7-TunnelRightBottomDoor";
 	location = "6-TunnelRightBottom"
 	},
-/mob/living/simple_animal/bot/secbot{
-	auto_patrol = 1;
-	name = "Officer Tunnel Rat"
-	},
 /obj/machinery/camera{
 	c_tag = "Maintenance - East Tram Tunnel 4";
 	dir = 1
+	},
+/mob/living/simple_animal/bot/secbot{
+	auto_patrol = 1;
+	name = "Officer Tunnel Rat"
 	},
 /turf/open/floor/iron,
 /area/maintenance/tram/right)
@@ -52333,7 +52336,7 @@
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "qDT" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -56450,6 +56453,17 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/main)
+"slt" = (
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/yellow/corner{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/west,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/turret_protected/aisat_interior)
 "slI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -57824,7 +57838,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "sOX" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -58113,7 +58127,7 @@
 	network = list("ss13","minisat")
 	},
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "sVC" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -62144,7 +62158,7 @@
 /obj/machinery/space_heater,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "uqs" = (
 /obj/structure/closet{
 	name = "janitorial supplies"
@@ -69225,7 +69239,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "xdg" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/n2,
 /turf/open/floor/iron,
@@ -71660,7 +71674,7 @@
 	},
 /mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "xWG" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
@@ -71719,7 +71733,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
+/area/ai_monitored/turret_protected/aisat/maint)
 "xXg" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
@@ -117069,11 +117083,11 @@ tsK
 qcJ
 lVh
 kOG
-gre
-gre
-gre
-gre
-gre
+dVB
+dVB
+dVB
+dVB
+dVB
 wDu
 qcJ
 pGq
@@ -117325,13 +117339,13 @@ xeZ
 tsK
 qcJ
 oxi
-gre
-gre
+dVB
+dVB
 uqp
 evw
 oDy
-gre
-gre
+dVB
+dVB
 wrm
 dXO
 qkE
@@ -117582,13 +117596,13 @@ xeZ
 xAh
 qcJ
 dXO
-gre
+dVB
 sVe
 xXd
 xWd
 jiH
 eVy
-gre
+dVB
 pyg
 eYL
 kDL
@@ -117839,7 +117853,7 @@ vMN
 fnT
 xOP
 cID
-gre
+dVB
 qDt
 sOQ
 oey
@@ -118096,13 +118110,13 @@ xeZ
 uiX
 hqG
 lVh
-gre
+dVB
 pdR
 dfE
 aaM
 dfE
 bwy
-gre
+dVB
 doq
 eYL
 uTb
@@ -118353,13 +118367,13 @@ xeZ
 tsK
 hqG
 oxi
-gre
-gre
+dVB
+dVB
 hDN
 mpf
 caY
-gre
-gre
+dVB
+dVB
 wxx
 lVh
 tsT
@@ -118611,11 +118625,11 @@ tsK
 hqG
 dXO
 kOG
-gre
-gre
-gre
-gre
-gre
+dVB
+dVB
+dVB
+dVB
+dVB
 bck
 hqG
 pGq
@@ -118872,7 +118886,7 @@ hlR
 hlR
 jxY
 hlR
-uIP
+slt
 nLh
 kAx
 pGq
