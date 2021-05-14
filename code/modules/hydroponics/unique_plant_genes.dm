@@ -275,11 +275,10 @@
  * Stops processing if we're no longer being held by [held mob].
  */
 /datum/plant_gene/trait/backfire/chili_heat/process(delta_time)
-	if(our_chili.loc == held_mob)
-		if(held_mob.is_holding(our_chili))
-			held_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
-			if(DT_PROB(5, delta_time))
-				to_chat(held_mob, "<span class='warning'>Your hand holding [our_chili] burns!</span>")
+	if(held_mob.is_holding(our_chili))
+		held_mob.adjust_bodytemperature(7.5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
+		if(DT_PROB(5, delta_time))
+			to_chat(held_mob, "<span class='warning'>Your hand holding [our_chili] burns!</span>")
 	else
 		stop_backfire_effect()
 
@@ -401,7 +400,7 @@
 /datum/plant_gene/trait/mob_transformation/tomato
 	killer_plant = /mob/living/simple_animal/hostile/killertomato
 
-/// Plants eaten in 1 bite.
+/// Traiit for plants eaten in 1 bite.
 /datum/plant_gene/trait/one_bite
 	name = "Large Bites"
 
@@ -414,7 +413,7 @@
 	if(istype(grown_plant))
 		grown_plant.bite_consumption_mod = 100
 
-/// Traits for plants with a different base volume.
+/// Traits for plants with a different base max_volume.
 /datum/plant_gene/trait/modified_volume
 	name = "Deep Vesicles"
 	/// The new number we set the plant's max_volume to.
@@ -429,6 +428,7 @@
 	if(istype(grown_plant))
 		grown_plant.max_volume = new_capcity
 
+/// Omegaweed's funny 420 max volume gene.
 /datum/plant_gene/trait/modified_volume/omega_weed
 	name = "Dank Vesicles"
 	new_capcity = 420
