@@ -217,18 +217,15 @@
 	while(t_amount < product_count)
 		var/obj/item/food/grown/t_prod
 		if(instability >= 30 && (seed_flags & MUTATE_EARLY) && LAZYLEN(mutatelist) && prob(instability/3))
-			var/obj/item/seeds/new_prod = pick(mutatelist)
-			t_prod = initial(new_prod.product)
+			var/obj/item/seeds/mutated_seed = pick(mutatelist)
+			t_prod = initial(mutated_seed.product)
 			if(!t_prod)
 				continue
-			t_prod = new t_prod(output_loc, src)
-			t_prod.seed = new new_prod
-			t_prod.seed.name = initial(new_prod.name)
-			t_prod.seed.desc = initial(new_prod.desc)
-			t_prod.seed.plantname = initial(new_prod.plantname)
+			mutated_seed = new mutated_seed
 			for(var/datum/plant_gene/trait/trait in parent.myseed.genes)
-				if((trait.mutability_flags & PLANT_GENE_MUTATABLE) && trait.can_add(t_prod.seed))
-					t_prod.seed.genes += trait
+				if((trait.mutability_flags & PLANT_GENE_MUTATABLE) && trait.can_add(mutated_seed))
+					mutated_seed.genes += trait
+			t_prod = new t_prod(output_loc, mutated_seed)
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
 			ADD_TRAIT(t_prod, TRAIT_PLANT_WILDMUTATE, user)
