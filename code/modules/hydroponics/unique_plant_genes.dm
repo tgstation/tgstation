@@ -297,6 +297,7 @@
 /// Traits for plants that can be activated to turn into a mob.
 /datum/plant_gene/trait/mob_transformation
 	name = "Dormat Ferocity"
+	trait_ids = ATTACK_SELF_ID
 	/// The typepath to what mob spawns from this plant.
 	var/killer_plant
 	/// Whether our attatched plant is currently waking up or not.
@@ -428,7 +429,107 @@
 	if(istype(grown_plant))
 		grown_plant.max_volume = new_capcity
 
-/// Omegaweed's funny 420 max volume gene.
+/// Omegaweed's funny 420 max volume gene
 /datum/plant_gene/trait/modified_volume/omega_weed
 	name = "Dank Vesicles"
 	new_capcity = 420
+
+/// Cherry Bomb's increased max volume gene
+/datum/plant_gene/trait/modified_volume/cherry_bomb
+	name = "Powder-filled Bulbs"
+	new_capcity = 125
+
+/// Plants that explode when used.
+/datum/plant_gene/trait/bomb_plant
+	name = "Explosive Contents"
+	trait_ids = ATTACK_SELF_ID
+
+/datum/plant_gene/trait/bomb_plant/on_new_plant(obj/item/our_plant, newloc)
+	. = ..()
+	if(!.)
+		return
+
+	our_plant.max_integrity = 40 // Max_integrity is lowered so they explode better, or something like that.
+	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/detonate_plant)
+	RegisterSignal(our_plant, COMSIG_ATOM_EX_ACT, .proc/clean_up_explosion)
+	RegisterSignal(our_plant, COMSIG_OBJ_DECONSTRUCT, .proc/clean_up_deconstruct)
+
+/*
+ * Trigger our plant's detonation.
+ *
+ * our_plant - the plant that's exploding
+ * user - the mob detonating the plant
+ */
+/datum/plant_gene/trait/bomb_plant/proc/detonate_plant(obj/item/our_plant, mob/living/user)
+	SIGNAL_HANDLER
+
+	user.visible_message("<span class='warning'>[user] plucks the stem from [our_plant]!</span>", "<span class='userdanger'>You pluck the stem from [our_plant], which begins to hiss loudly!</span>")
+	log_bomber(user, "primed a", our_plant, "for detonation")
+	detonate(our_plant)
+
+/*
+ * Clean up after our plant is deconstructed.
+ * When is a plant ever deconstructed? Apparently, when it burns.
+ *
+ * our_plant - the plant that's 'deconstructed'
+ * disassembled - if it was disassembled when it was deconstructed.
+ */
+/datum/plant_gene/trait/bomb_plant/proc/clean_up_deconstruct(obj/item/our_plant, disassembled)
+	SIGNAL_HANDLER
+
+	if(!disassembled)
+		detonate(our_plant)
+	if(!QDELETED(our_plant))
+		qdel(our_plant)
+
+/*
+ * React to explosions that hit the plant.
+ * Ensures that the plant id deleted by its own explosion.
+ * Also prevents mass chain reaction with piles plants.
+ *
+ * our_plant - the plant that's exploded on
+ * severity - severity of the explosion
+ */
+/datum/plant_gene/trait/bomb_plant/proc/clean_up_explosion(obj/item/our_plant, severity)
+	SIGNAL_HANDLER
+
+	qdel(our_plant)
+
+/*
+ * RActually blow up the plant.
+ *
+ * our_plant - the plant that's exploding for real
+ */
+/datum/plant_gene/trait/bomb_plant/proc/detonate(obj/item/our_plant)
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	var/obj/item/food/grown/grown_plant = our_plant
+	// If we have an alt icon, use that to show our plant is exploding.
+	if(istype(our_plant) && grown_plant.alt_icon)
+		our_plant.icon_state = grown_plant.alt_icon
+
+	playsound(our_plant, 'sound/effects/fuse.ogg', our_seed.potency, FALSE)
+	our_plant.reagents.chem_temp = 1000 //Sets off the gunpowder
+	our_plant.reagents.handle_reactions()
+
+/// A subtype of bomb plants that have their boom sized based on potency instead of reagent contents.
+/datum/plant_gene/trait/bomb_plant/potency_based
+	name = "Explosive Nature"
+
+/datum/plant_gene/trait/bomb_plant/potency_based/detonate_plant(obj/item/our_plant, mob/living/user)
+	user.visible_message("<span class='warning'>[user] primes [our_plant]!</span>", "<span class='userdanger'>You prime [our_plant]!</span>")
+	log_bomber(user, "primed a", our_plant, "for detonation")
+
+	var/obj/item/food/grown/grown_plant = our_plant
+	if(istype(our_plant) && grown_plant.alt_icon)
+		our_plant.icon_state = grown_plant.alt_icon
+
+	playsound(our_plant.drop_location(), 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
+	addtimer(CALLBACK(src, .proc/detonate), rand(1 SECONDS, 6 SECONDS))
+
+/datum/plant_gene/trait/bomb_plant/potency_based/detonate(obj/item/our_plant)
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	var/flame_reach = clamp(round(our_seed.potency / 20), 1, 5) //Like IEDs - their flame range can get up to 5, but their real boom is small
+
+	our_plant.forceMove(our_plant.drop_location())
+	explosion(our_plant, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = flame_reach)
+	qdel(our_plant)

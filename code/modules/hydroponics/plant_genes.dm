@@ -285,7 +285,7 @@
 /datum/plant_gene/trait/squash
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
-	trait_ids = THROW_IMPACT_ID | REAGENT_TRANSFER_ID
+	trait_ids = THROW_IMPACT_ID | REAGENT_TRANSFER_ID | ATTACK_SELF_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 // Register a signal that our plant can be squashed on add.
@@ -296,9 +296,7 @@
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/squash_plant)
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/squash_plant)
-	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	if(!our_seed.get_gene(/datum/plant_gene/trait/mob_transformation)) // If we awaken our plant on use, don't squash it.
-		RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/squash_plant)
+	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/squash_plant)
 
 /*
  * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,

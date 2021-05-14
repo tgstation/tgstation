@@ -62,3 +62,5 @@
 #define THROW_IMPACT_ID (1<<4)
 /// Plants that transfer reagents on impact.
 #define REAGENT_TRANSFER_ID (1<<5)
+/// Plants that have a unique effect on attack_self.
+#define ATTACK_SELF_ID (1<<6)

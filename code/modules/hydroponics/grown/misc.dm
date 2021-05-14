@@ -197,6 +197,7 @@
 	plantname = "Cherry Bomb Tree"
 	product = /obj/item/food/grown/cherry_bomb
 	mutatelist = list()
+	genes = list(/datum/plant_gene/trait/bomb_plant, /datum/plant_gene/trait/modified_volume/cherry_bomb)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/gunpowder = 0.7)
 	rarity = 60 //See above
 
@@ -204,31 +205,10 @@
 	name = "cherry bombs"
 	desc = "You think you can hear the hissing of a tiny fuse."
 	icon_state = "cherry_bomb"
+	alt_icon = "cherry_bomb_lit"
 	seed = /obj/item/seeds/cherry/bomb
 	bite_consumption_mod = 3
-	max_volume = 125 //Gives enough room for the gunpowder at max potency
-	max_integrity = 40
 	wine_power = 80
-
-/obj/item/food/grown/cherry_bomb/attack_self(mob/living/user)
-	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
-	log_bomber(user, "primed a", src, "for detonation")
-	detonate()
-
-/obj/item/food/grown/cherry_bomb/deconstruct(disassembled = TRUE)
-	if(!disassembled)
-		detonate()
-	if(!QDELETED(src))
-		qdel(src)
-
-/obj/item/food/grown/cherry_bomb/ex_act(severity)
-	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
-
-/obj/item/food/grown/cherry_bomb/proc/detonate(mob/living/lanced_by)
-	icon_state = "cherry_bomb_lit"
-	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
-	reagents.chem_temp = 1000 //Sets off the gunpowder
-	reagents.handle_reactions()
 
 // aloe
 /obj/item/seeds/aloe

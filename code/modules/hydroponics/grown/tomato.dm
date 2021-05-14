@@ -108,7 +108,7 @@
 	plantname = "Killer-Tomato Plants"
 	product = /obj/item/food/grown/tomato/killer
 	yield = 2
-	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/mob_transformation/tomato)
+	genes = list(/datum/plant_gene/trait/mob_transformation/tomato)
 	growthstages = 2
 	icon_grow = "killertomato-grow"
 	icon_harvest = "killertomato-harvest"
