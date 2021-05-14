@@ -217,3 +217,35 @@
 	name = "Flower Worn"
 	icon_file = 'icons/mob/clothing/head/hydroponics.dmi'
 	json_config = 'code/datums/greyscale/json_configs/simple_flower_worn.json'
+
+/datum/greyscale_config/cleric_mace
+	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace.json'
+
+/datum/greyscale_config/cleric_mace_lefthand
+	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_lefthand.json'
+
+/datum/greyscale_config/cleric_mace_righthand
+	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_righthand.json'
+
+/datum/greyscale_config/cleric_mace_worn
+	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn.json'
+
+/datum/greyscale_config/cleric_mace/gold
+	material_skin = /datum/material/gold
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_gold.json'
+
+/datum/greyscale_config/cleric_mace_lefthand/gold
+	material_skin = /datum/material/gold
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_lefthand_gold.json'
+
+/datum/greyscale_config/cleric_mace_righthand/gold
+	material_skin = /datum/material/gold
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_righthand_gold.json'
+
+/datum/greyscale_config/cleric_mace_worn/gold
+	icon_file = 'icons/obj/items/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'

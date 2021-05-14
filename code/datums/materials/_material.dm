@@ -14,7 +14,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/id
 
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
+	///Deprecated, use greyscale_color instead.
 	var/color
+	///Determines the color palette of the material. Formatted the same as atom/var/greyscale_colors
+	var/greyscale_colors
 	///Base alpha of the material, is used for greyscale icons.
 	var/alpha = 255
 	///Bitflags that influence how SSmaterials handles this material.
@@ -70,6 +73,16 @@ Simple datum which is instanced once per type and is used for every object of sa
 		if(texture_layer_icon_state)
 			ADD_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
 			source.add_filter("material_texture_[name]",1,layering_filter(icon=cached_texture_filter_icon,blend_mode=BLEND_INSET_OVERLAY))
+
+	if(material_flags & MATERIAL_GREYSCALE)
+		var/default_path = initial(source.greyscale_config)
+		for(var/datum/greyscale_config/path as anything in subtypesof(default_path))
+			var/mat_path = initial(path.material_skin)
+			if(type == mat_path)
+				default_path = path
+				break
+		source.set_greyscale_config(default_path, update=FALSE)
+		source.set_greyscale_colors(greyscale_colors)
 
 	if(alpha < 255)
 		source.opacity = FALSE
@@ -141,6 +154,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 			source.remove_filter("material_texture_[name]")
 			REMOVE_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
 		source.alpha = initial(source.alpha)
+
+	if(material_flags & MATERIAL_GREYSCALE)
+		source.set_greyscale_config(initial(source.greyscale_config), update=FALSE)
+		source.set_greyscale_colors(initial(source.greyscale_colors))
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = initial(source.name)
