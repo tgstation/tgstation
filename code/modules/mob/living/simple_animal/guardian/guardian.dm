@@ -25,7 +25,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	speed = 0
 	combat_mode = TRUE
 	stop_automated_movement = 1
-	is_flying_animal = TRUE // Immunity to chasms and landmines, etc.
 	attack_sound = 'sound/weapons/punch1.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -66,7 +65,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
 	GLOB.parasites += src
 	updatetheme(theme)
-
+	AddElement(/datum/element/simple_flying)
 	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
@@ -399,13 +398,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/preliminary_message = "<span class='holoparasite bold'>[input]</span>" //apply basic color/bolding
 		var/my_message = "<font color=\"[guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
 
-		to_chat(summoner, my_message)
+		to_chat(summoner, "<span class='say'>[my_message]</span>")
 		var/list/guardians = summoner.hasparasites()
 		for(var/para in guardians)
-			to_chat(para, my_message)
+			to_chat(para, "<span class='say'>[my_message]</span>")
 		for(var/M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, src)
-			to_chat(M, "[link] [my_message]")
+			to_chat(M, "<span class='say'>[link] [my_message]</span>")
 
 		src.log_talk(input, LOG_SAY, tag="guardian")
 
@@ -420,14 +419,14 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/preliminary_message = "<span class='holoparasite bold'>[input]</span>" //apply basic color/bolding
 	var/my_message = "<span class='holoparasite bold'><i>[src]:</i> [preliminary_message]</span>" //add source, color source with default grey...
 
-	to_chat(src, my_message)
+	to_chat(src, "<span class='say'>[my_message]</span>")
 	var/list/guardians = hasparasites()
 	for(var/para in guardians)
 		var/mob/living/simple_animal/hostile/guardian/G = para
-		to_chat(G, "<font color=\"[G.guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]" )
+		to_chat(G, "<span class='say'><font color=\"[G.guardiancolor]\"><b><i>[src]:</i></b></font> [preliminary_message]</span>" )
 	for(var/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, src)
-		to_chat(M, "[link] [my_message]")
+		to_chat(M, "<span class='say'>[link] [my_message]</span>")
 
 	src.log_talk(input, LOG_SAY, tag="guardian")
 

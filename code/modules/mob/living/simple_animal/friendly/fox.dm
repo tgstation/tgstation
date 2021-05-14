@@ -23,8 +23,6 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	can_be_held = TRUE
 	held_state = "fox"
-	pet_bonus = TRUE
-	pet_bonus_emote = "pants and yaps happily!"
 	///In the case 'melee_damage_upper' is somehow raised above 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
@@ -32,6 +30,10 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+
+/mob/living/simple_animal/pet/fox/Initialize()
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "pants and yaps happily!")
 
 //Captain fox
 /mob/living/simple_animal/pet/fox/renault

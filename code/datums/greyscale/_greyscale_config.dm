@@ -39,8 +39,6 @@
 		CRASH("Greyscale config object [DebugName()] is missing an icon file, make sure `icon_file` has been assigned a value.")
 	string_icon_file = "[icon_file]"
 
-	Refresh()
-
 /datum/greyscale_config/proc/Refresh(loadFromDisk=FALSE)
 	if(loadFromDisk)
 		json_config = file(string_json_config)
@@ -127,13 +125,20 @@
 	var/list/colors = ParseColorString(color_string)
 	if(length(colors) != expected_colors)
 		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
-	var/icon/icon_bundle = new
+
+	// We could do this all in one loop but it's easier to debug this way
+	var/list/generated_icons = list()
 	for(var/icon_state in icon_states)
 		var/icon/generated_icon = GenerateLayerGroup(colors, icon_states[icon_state], render_steps)
 		// We read a pixel to force the icon to be fully generated before we let it loose into the world
 		// I hate this
 		generated_icon.GetPixel(1, 1)
-		icon_bundle.Insert(generated_icon, icon_state)
+		generated_icons[icon_state] = generated_icon
+
+	var/icon/icon_bundle = new
+	for(var/icon_state in generated_icons)
+		icon_bundle.Insert(generated_icons[icon_state], icon_state)
+
 	icon_bundle = fcopy_rsc(icon_bundle)
 	icon_cache[key] = icon_bundle
 	var/icon/output = icon(icon_bundle)

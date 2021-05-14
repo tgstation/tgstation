@@ -248,7 +248,7 @@
 		h_boost *= -2
 	else if(chassis.internal_damage && DT_PROB(8, delta_time))
 		for(var/int_dam_flag in repairable_damage)
-			if(!chassis.internal_damage & int_dam_flag)
+			if(!(chassis.internal_damage & int_dam_flag))
 				continue
 			chassis.clear_internal_damage(int_dam_flag)
 			repaired = TRUE

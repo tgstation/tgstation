@@ -18,13 +18,12 @@
 	turns_per_move = 10
 	icon = 'icons/mob/penguins.dmi'
 	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 3)
-	pet_bonus = TRUE
-	pet_bonus_emote = "honks happily!"
 
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
 /mob/living/simple_animal/pet/penguin/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "honks happily!")
 	AddElement(/datum/element/waddling)
 
 /mob/living/simple_animal/pet/penguin/emperor

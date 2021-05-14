@@ -117,7 +117,7 @@
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return FALSE
 
-/obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/L)
+/obj/effect/decal/cleanable/blood/gibs/on_entered(datum/source, atom/movable/L)
 	if(isliving(L) && has_gravity(loc))
 		playsound(loc, 'sound/effects/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 20 : 50, TRUE)
 	. = ..()
@@ -288,8 +288,8 @@
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
-		return
-	..()
+		return FALSE
+	return ..()
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

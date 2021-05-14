@@ -496,7 +496,7 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/electrolyzer
 	req_components = list(
-		/obj/item/stock_parts/electrolite = 2,
+		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/capacitor = 2,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/glass = 1)
@@ -773,6 +773,16 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 2)
+
+/obj/item/circuitboard/machine/sleeper/fullupgrade
+	name = "Sleeper (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/sleeper/syndie/fullupgrade
+	req_components = list(
+		/obj/item/stock_parts/matter_bin/bluespace = 1,
+		/obj/item/stock_parts/manipulator/femto = 1,
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 

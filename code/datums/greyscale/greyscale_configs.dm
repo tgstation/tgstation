@@ -125,10 +125,41 @@
 	icon_file = 'icons/obj/clothing/shoes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sneakers_wheelys.json'
 
+/datum/greyscale_config/sneakers_marisa
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sneakers_marisa.json'
+
 /datum/greyscale_config/circuit
 	icon_file = 'icons/obj/module.dmi'
 	json_config = 'code/datums/greyscale/json_configs/circuit.json'
 
+<<<<<<< HEAD
 /datum/greyscale_config/winter_coats
 	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats.json'
+=======
+/datum/greyscale_config/sombrero
+	icon_file = 'icons/obj/clothing/head/sombrero.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sombrero.json'
+
+/datum/greyscale_config/sombrero/base
+	json_config = 'code/datums/greyscale/json_configs/sombrero_base.json'
+
+/datum/greyscale_config/sombrero/lefthand
+	json_config = 'code/datums/greyscale/json_configs/sombrero_lefthand.json'
+
+/datum/greyscale_config/sombrero/base_lefthand
+	json_config = 'code/datums/greyscale/json_configs/sombrero_base_lefthand.json'
+
+/datum/greyscale_config/sombrero/righthand
+	json_config = 'code/datums/greyscale/json_configs/sombrero_righthand.json'
+
+/datum/greyscale_config/sombrero/base_righthand
+	json_config = 'code/datums/greyscale/json_configs/sombrero_base_righthand.json'
+
+/datum/greyscale_config/sombrero/worn
+	json_config = 'code/datums/greyscale/json_configs/sombrero_worn.json'
+
+/datum/greyscale_config/sombrero/base_worn
+	json_config = 'code/datums/greyscale/json_configs/sombrero_base_worn.json'
+>>>>>>> upstream/master

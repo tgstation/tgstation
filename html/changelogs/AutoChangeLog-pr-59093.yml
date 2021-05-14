@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - refactor: "rpgloot, embedopocalypse, and stickapocalypse are now datum singletons"
+  - refactor: "THAT USE SIGNALS!"

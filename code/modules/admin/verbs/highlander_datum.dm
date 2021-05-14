@@ -1,7 +1,6 @@
 
 GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 
-
 /**
  * The highlander controller handles the admin highlander mode, if enabled.
  * It is first created when "there can only be one" triggers it, and it can be referenced from GLOB.highlander_controller

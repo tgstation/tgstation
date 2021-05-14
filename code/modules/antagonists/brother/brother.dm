@@ -57,7 +57,7 @@
 /datum/antagonist/brother/proc/give_meeting_area()
 	if(!owner.current || !team || !team.meeting_area)
 		return
-	to_chat(owner.current, "<B>Your designated meeting area:</B> [team.meeting_area]")
+	to_chat(owner.current, "<span class='infoplain'><B>Your designated meeting area:</B> [team.meeting_area]</span>")
 	antag_memory += "<b>Meeting Area</b>: [team.meeting_area]<br>"
 
 /datum/antagonist/brother/greet()

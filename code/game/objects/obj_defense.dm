@@ -75,10 +75,11 @@
 /obj/bullet_act(obj/projectile/P)
 	. = ..()
 	playsound(src, P.hitsound, 50, TRUE)
+	var/no_damage = FALSE
+	if(!QDELETED(src) && !take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)) //Bullet on_hit effect might have already destroyed this object
+		no_damage = TRUE
 	if(P.suppressed != SUPPRESSED_VERY)
-		visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
-	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)
+		visible_message("<span class='danger'>[src] is hit by \a [P][no_damage ? ", which doesn't leave a mark" : ""]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 
 ///Called to get the damage that hulks will deal to the obj.
 /obj/proc/hulk_damage()
