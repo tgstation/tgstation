@@ -32,11 +32,11 @@
 	if(piece == gauntlets && wearer.gloves)
 		gauntlets.overslot = wearer.gloves
 		wearer.transferItemToLoc(gauntlets.overslot, gauntlets, TRUE)
-		RegisterSignal(gauntlets, COMSIG_ITEM_POST_UNEQUIP, /obj/item/clothing/gloves/mod/proc/show_overslot)
+		gauntlets.RegisterSignal(gauntlets, COMSIG_ITEM_POST_UNEQUIP, /obj/item/clothing/gloves/mod.proc/show_overslot)
 	if(piece == boots && wearer.shoes)
 		boots.overslot = wearer.shoes
 		wearer.transferItemToLoc(boots.overslot, boots, TRUE)
-		RegisterSignal(boots, COMSIG_ITEM_POST_UNEQUIP, /obj/item/clothing/shoes/mod/proc/show_overslot)
+		boots.RegisterSignal(boots, COMSIG_ITEM_POST_UNEQUIP, /obj/item/clothing/shoes/mod.proc/show_overslot)
 	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		user.visible_message("<span class='notice'>[wearer]'s [piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
 			"<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
@@ -52,10 +52,10 @@
 
 /obj/item/mod/control/proc/conceal(mob/user, part)
 	var/obj/item/piece = part
-	if(piece == boots || piece == gauntlets)
-		UnregisterSignal(piece, COMSIG_ITEM_POST_UNEQUIP)
 	REMOVE_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(piece, src, TRUE)
+	if((piece == boots && boots.overslot) || (piece == gauntlets && gauntlets.overslot))
+		piece.UnregisterSignal(piece, COMSIG_ITEM_POST_UNEQUIP)
 	user.visible_message("<span class='notice'>[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>",
 		"<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>",
 		"<span class='hear'>You hear a mechanical hiss.</span>")
