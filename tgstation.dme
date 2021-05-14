@@ -1586,6 +1586,7 @@
 #include "code\modules\admin\view_variables\mark_datum.dm"
 #include "code\modules\admin\view_variables\mass_edit_variables.dm"
 #include "code\modules\admin\view_variables\modify_variables.dm"
+#include "code\modules\admin\view_variables\nobody_wants_to_learn_matrix_math.dm"
 #include "code\modules\admin\view_variables\reference_tracking.dm"
 #include "code\modules\admin\view_variables\topic.dm"
 #include "code\modules\admin\view_variables\topic_basic.dm"

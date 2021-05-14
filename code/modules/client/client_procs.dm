@@ -1098,6 +1098,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		holder.filteriffic = new /datum/filter_editor(in_atom)
 		holder.filteriffic.ui_interact(mob)
 
+/client/proc/open_matrix_tester(atom/in_atom)
+	if(holder)
+		var/datum/nobody_wants_to_learn_matrix_math/matrix_tester = new /datum/nobody_wants_to_learn_matrix_math(in_atom)
+		matrix_tester.ui_interact(mob)
 
 /client/proc/set_right_click_menu_mode(shift_only)
 	if(shift_only)

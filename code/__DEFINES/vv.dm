@@ -87,6 +87,7 @@
 #define VV_HK_AUTO_RENAME "auto_rename"
 #define VV_HK_RADIATE "radiate"
 #define VV_HK_EDIT_FILTERS "edit_filters"
+#define VV_HK_TEST_MATRIXES "test_matrixes"
 #define VV_HK_ADD_AI "add_ai"
 
 // /atom/movable
