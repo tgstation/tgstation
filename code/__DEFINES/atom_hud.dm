@@ -45,7 +45,9 @@
 //for antag huds. these are used at the /mob level
 #define ANTAG_HUD "23"
 // for fans to identify pins
-#define FAN_HUD "24"
+#define FAN_HUD		"24"
+// for implants to let you see sensor field
+#define SENSOR_HUD		"25"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -53,33 +55,34 @@
 
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!
-#define DATA_HUD_SECURITY_BASIC 1
-#define DATA_HUD_SECURITY_ADVANCED 2
-#define DATA_HUD_MEDICAL_BASIC 3
-#define DATA_HUD_MEDICAL_ADVANCED 4
-#define DATA_HUD_DIAGNOSTIC_BASIC 5
-#define DATA_HUD_DIAGNOSTIC_ADVANCED 6
-#define DATA_HUD_ABDUCTOR 7
-#define DATA_HUD_SENTIENT_DISEASE 8
-#define DATA_HUD_AI_DETECT 9
-#define DATA_HUD_FAN 10
+#define DATA_HUD_SECURITY_BASIC			1
+#define DATA_HUD_SECURITY_ADVANCED		2
+#define DATA_HUD_MEDICAL_BASIC			3
+#define DATA_HUD_MEDICAL_ADVANCED		4
+#define DATA_HUD_DIAGNOSTIC_BASIC		5
+#define DATA_HUD_DIAGNOSTIC_ADVANCED	6
+#define DATA_HUD_ABDUCTOR				7
+#define DATA_HUD_SENTIENT_DISEASE		8
+#define DATA_HUD_AI_DETECT				9
+#define DATA_HUD_FAN					10
+#define DATA_HUD_SENSORS		11
 
 //antag HUD defines
-#define ANTAG_HUD_CULT 11
-#define ANTAG_HUD_REV 12
-#define ANTAG_HUD_OPS 13
-#define ANTAG_HUD_WIZ 14
-#define ANTAG_HUD_SHADOW 15
-#define ANTAG_HUD_TRAITOR 16
-#define ANTAG_HUD_NINJA 17
-#define ANTAG_HUD_CHANGELING 18
-#define ANTAG_HUD_ABDUCTOR 19
-#define ANTAG_HUD_BROTHER 20
-#define ANTAG_HUD_OBSESSED 21
-#define ANTAG_HUD_FUGITIVE 22
-#define ANTAG_HUD_GANGSTER 23
-#define ANTAG_HUD_SPACECOP 24
-#define ANTAG_HUD_HERETIC 25
+#define ANTAG_HUD_CULT			12
+#define ANTAG_HUD_REV			13
+#define ANTAG_HUD_OPS			14
+#define ANTAG_HUD_WIZ			15
+#define ANTAG_HUD_SHADOW    	16
+#define ANTAG_HUD_TRAITOR 		17
+#define ANTAG_HUD_NINJA 		18
+#define ANTAG_HUD_CHANGELING 	19
+#define ANTAG_HUD_ABDUCTOR 		20
+#define ANTAG_HUD_BROTHER		21
+#define ANTAG_HUD_OBSESSED		22
+#define ANTAG_HUD_FUGITIVE		23
+#define ANTAG_HUD_GANGSTER		24
+#define ANTAG_HUD_SPACECOP		25
+#define ANTAG_HUD_HERETIC		26
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

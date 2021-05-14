@@ -164,6 +164,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 40
 	purchasable_from = UPLINK_NUKE_OPS
 
+/datum/uplink_item/bundles_tc/mantis_kit
+	name = "A.R.A.S.A.K.A. Mantis Blades Kit"
+	desc = "Comes with 2 A.R.A.S.A.K.A. Mantis blades and a syndicate cyberlink. All packaged with autosurgeons."
+	item = /obj/item/storage/briefcase/syndie_mantis
+	cost = 20
+	purchasable_from = UPLINK_NUKE_OPS
+
 /datum/uplink_item/bundles_tc/medical
 	name = "Medical bundle"
 	desc = "The support specialist: Aid your fellow operatives with this medical bundle. Contains a tactical medkit, \
@@ -1191,6 +1198,21 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/chameleon
 	cost = 2
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops are allowed to buy this kit, since it's basically a costume
+
+/*/datum/uplink_item/stealthy_tools/chameleon_skillchip
+	name = "Chameleon Skillchip"
+	desc = "A highly advanced skillchip that contains data on all available skillchips. \
+			This skillchip only takes up a single skillchip slot in the user's brain. \
+			Comes with a single-use Syndicate autosurgeon for immediate self-application."
+	item = /obj/item/autosurgeon/skillchip/syndicate/chameleon_chip
+	cost = 4
+	purchasable_from = ~UPLINK_NUKE_OPS*/ // it was removed from tg it seems, left here just in cases
+
+/datum/uplink_item/stealthy_tools/cyberlink
+	name = "Cybersun Cybernetics Access System"
+	desc = "Syndicate made cyberlink, allowing you access to implants manufactured by Syndicate corporation's. Doesn't work with NT made implants, due to software diffrences."
+	item = /obj/item/autosurgeon/organ/cyberlink_syndicate
+	cost = 2
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"

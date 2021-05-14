@@ -1,5 +1,6 @@
 /datum/blackmarket_item/misc
 	category = "Miscellaneous"
+	root = /datum/blackmarket_item/misc
 
 /datum/blackmarket_item/misc/Clear_PDA
 	name = "Clear PDA"

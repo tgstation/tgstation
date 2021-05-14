@@ -12,7 +12,7 @@
 	/// How much money is inserted into the uplink.
 	var/money = 0
 	/// List of typepaths for "/datum/blackmarket_market"s that this uplink can access.
-	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket)
+	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket,/datum/blackmarket_market/cybernetics)
 
 /obj/item/blackmarket_uplink/Initialize()
 	. = ..()
@@ -72,6 +72,8 @@
 	data["items"] = list()
 	data["viewing_category"] = viewing_category
 	data["viewing_market"] = viewing_market
+	data["viewing_time_left"] = market.time_left
+	data["viewing_max_time_left"] = market.time_left
 	if(viewing_category && market)
 		if(market.available_items[viewing_category])
 			for(var/datum/blackmarket_item/I in market.available_items[viewing_category])

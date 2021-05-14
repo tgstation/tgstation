@@ -341,7 +341,7 @@
 	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocols fix the flashbulb if it ever burns out."
 	var/flashcd = 20
 	var/overheat = 0
-	var/obj/item/organ/cyberimp/arm/flash/I = null
+	var/obj/item/organ/cyberimp/arm/item_set/flash/I = null
 
 /obj/item/assembly/flash/armimplant/burn_out()
 	if(I?.owner)

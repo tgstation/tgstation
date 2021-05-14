@@ -1,5 +1,6 @@
 /datum/blackmarket_item/clothing
 	category = "Clothing"
+	root = /datum/blackmarket_item/clothing
 
 /datum/blackmarket_item/clothing/ninja_mask
 	name = "Space Ninja Mask"

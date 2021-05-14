@@ -26,6 +26,8 @@
 	var/stock_max = 0
 	/// Probability for this item to be available. Used by SSblackmarket on init.
 	var/availability_prob = 0
+	///Path to the 'root' of the datum, 'root' being /datum/blackmarket_item/foo and is there so that /datum/blackmarket_item/foo/1 and /datum/blackmarket_item/foo/2 are counted during repopulation but  /datum/blackmarket_item/foo isn't
+	var/root
 
 /datum/blackmarket_item/New()
 	if(isnull(price))

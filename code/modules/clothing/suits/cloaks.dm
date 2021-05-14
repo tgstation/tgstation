@@ -207,3 +207,11 @@
 
 /obj/item/clothing/neck/cloak/skill_reward/playing/check_wearable(mob/user)
 	return user.client?.get_exp_living(TRUE) >= PLAYTIME_VETERAN
+
+/obj/item/clothing/neck/cloak/skill_reward/hacker
+	name = "legendary hacker's cloak"
+	desc = "Worn by the most skilled of cybernetic hackers, wearing this proves you were able to conquer protocol, and hack any cybernetic. You are not sure if openly wearing an item of clothing that says 'I'm a master in breaking security protocols' is a good idea."
+	icon_state = "hackercloak"
+	associated_skill_path = /datum/skill/implant_hacking
+
+

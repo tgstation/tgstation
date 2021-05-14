@@ -285,8 +285,8 @@
 		augment_list = list()
 		var/list/templist = list(
 		/obj/item/organ/cyberimp/brain/anti_drop,
-		/obj/item/organ/cyberimp/arm/toolset,
-		/obj/item/organ/cyberimp/arm/surgery,
+		/obj/item/organ/cyberimp/arm/item_set/toolset,
+		/obj/item/organ/cyberimp/arm/item_set/surgery,
 		/obj/item/organ/cyberimp/chest/thrusters,
 		/obj/item/organ/lungs/cybernetic/tier3,
 		/obj/item/organ/liver/cybernetic/tier3) //cyberimplants range from a nice bonus to fucking broken bullshit so no subtypesof
