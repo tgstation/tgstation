@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - spellcheck: "The atmospherics hardsuit description was changed to better inform that it has less radiation protection than the engineering ones."

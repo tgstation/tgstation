@@ -7,8 +7,9 @@
 /datum/antagonist/traitor/internal_affairs
 	name = "Internal Affairs Agent"
 	employer = "Nanotrasen"
-	special_role = "internal affairs agent"
 	antagpanel_category = "IAA"
+
+	var/special_role = "internal affairs agent"
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
 	var/list/datum/mind/targets_stolen
@@ -118,34 +119,33 @@
 		CRASH("Antag datum with no owner.")
 	if(!objectives.len)
 		return
-	for (var/objective_ in objectives)
-		if(!(istype(objective_, /datum/objective/escape) || istype(objective_, /datum/objective/survive/malf)))
+	for (var/objective in objectives)
+		if(!(istype(objective, /datum/objective/escape) || istype(objective, /datum/objective/survive/malf)))
 			continue
-		remove_objective(objective_)
+		objectives -= objective
 
 	var/datum/objective/martyr/martyr_objective = new
 	martyr_objective.owner = owner
-	add_objective(martyr_objective)
+	objectives += martyr_objective
 
 /datum/antagonist/traitor/proc/reinstate_escape_objective()
 	if(!owner)
 		CRASH("Antag datum with no owner.")
 	if(!objectives.len)
 		return
-	for (var/objective_ in objectives)
-		if(!istype(objective_, /datum/objective/martyr))
+	for (var/objective in objectives)
+		if(!istype(objective, /datum/objective/martyr))
 			continue
-		remove_objective(objective_)
+		objectives -= objective
 
 /datum/antagonist/traitor/internal_affairs/reinstate_escape_objective()
 	..()
 	for (var/datum/objective/martyr/martyr_objective in objectives)
-		remove_objective(martyr_objective)
+		objectives -= martyr_objective
 
-	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive/malf
-	var/datum/objective/escape_objective = new objtype
+	var/datum/objective/escape_objective = new /datum/objective/escape()
 	escape_objective.owner = owner
-	add_objective(escape_objective)
+	objectives += escape_objective
 
 /datum/antagonist/traitor/internal_affairs/proc/steal_targets(datum/mind/victim)
 	if(!owner.current||owner.current.stat==DEAD)
@@ -161,7 +161,7 @@
 				new_objective.owner = owner
 				new_objective.target = objective.target
 				new_objective.update_explanation_text()
-				add_objective(new_objective)
+				objectives += new_objective
 				targets_stolen += objective.target
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
 				to_chat(owner.current, "<span class='userdanger'>New target added to database: [objective.target.name] ([status_text])</span>")
@@ -174,7 +174,7 @@
 				new_objective.owner = owner
 				new_objective.target = objective.target
 				new_objective.update_explanation_text()
-				add_objective(new_objective)
+				objectives += new_objective
 				targets_stolen += objective.target
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
 				to_chat(owner.current, "<span class='userdanger'>New target added to database: [objective.target.name] ([status_text])</span>")
@@ -223,10 +223,9 @@
 					objective.stolen = FALSE
 
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
-	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive/malf
-	var/datum/objective/escape_objective = new objtype
+	var/datum/objective/escape_objective = new /datum/objective/escape()
 	escape_objective.owner = owner
-	add_objective(escape_objective)
+	objectives += escape_objective
 
 /datum/antagonist/traitor/internal_affairs/proc/greet_iaa()
 	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "receiving bribes", "malpractice", "worship of prohibited life forms", "possession of profane texts", "murder", "arson", "insulting their manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")

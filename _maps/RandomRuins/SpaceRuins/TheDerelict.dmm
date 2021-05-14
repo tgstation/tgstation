@@ -84,9 +84,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/solar_control)
 "aK" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "aL" = (
@@ -160,7 +158,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "ba" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
@@ -175,7 +173,7 @@
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "be" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bf" = (
@@ -219,9 +217,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bo" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bp" = (
@@ -233,9 +229,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bq" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "br" = (
@@ -314,9 +308,7 @@
 	},
 /area/ruin/space/derelict/bridge/ai_upload)
 "bG" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bH" = (
@@ -328,9 +320,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "bI" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bJ" = (
@@ -371,9 +361,7 @@
 /turf/template_noop,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bS" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "bT" = (
@@ -433,7 +421,7 @@
 	},
 /area/template_noop)
 "cd" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "ce" = (
@@ -450,7 +438,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/gravity_generator)
 "cm" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "cn" = (
@@ -465,9 +453,7 @@
 	},
 /area/ruin/space/derelict/gravity_generator)
 "cp" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged5"
 	},
@@ -516,9 +502,7 @@
 /area/ruin/space/derelict/bridge/access)
 "cz" = (
 /obj/structure/rack,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
@@ -579,10 +563,7 @@
 	},
 /area/ruin/space/derelict/gravity_generator)
 "cQ" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
@@ -597,9 +578,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/bridge/access)
 "cS" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/rack,
 /obj/item/stack/cable_coil/cut,
 /obj/item/stack/cable_coil/cut,
@@ -694,9 +673,7 @@
 /turf/template_noop,
 /area/template_noop)
 "dl" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
 "dm" = (
@@ -717,17 +694,13 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/singularity_engine)
 "ds" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/structure/table,
 /obj/item/paper/fluff/ruins/thederelict/equipment,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/gravity_generator)
 "du" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/item/stock_parts/matter_bin{
 	pixel_x = -10;
 	pixel_y = 5
@@ -819,9 +792,7 @@
 /area/ruin/space/derelict/bridge)
 "dL" = (
 /obj/structure/table,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "dM" = (
@@ -857,16 +828,12 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "dR" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "dV" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/gravity_generator)
 "dW" = (
@@ -945,9 +912,7 @@
 /turf/closed/wall,
 /area/ruin/space/derelict/gravity_generator)
 "em" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
@@ -1156,17 +1121,14 @@
 /area/ruin/space/derelict/bridge)
 "fg" = (
 /obj/structure/table,
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "fh" = (
 /obj/structure/table,
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "fi" = (
@@ -1231,9 +1193,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
@@ -1242,9 +1202,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "ft" = (
@@ -1277,9 +1235,7 @@
 /area/ruin/space/derelict/bridge/access)
 "fz" = (
 /obj/structure/table,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/item/electronics/airlock,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
@@ -1424,9 +1380,7 @@
 /area/ruin/space/derelict/singularity_engine)
 "fY" = (
 /obj/structure/table,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
@@ -1456,9 +1410,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/bridge/access)
 "gg" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
 "gh" = (
@@ -1534,14 +1486,11 @@
 	},
 /area/ruin/space/derelict/hallway/primary)
 "gA" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "gB" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
@@ -1587,9 +1536,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "gK" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged3"
 	},
@@ -1654,7 +1601,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "hb" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
@@ -1676,9 +1623,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "hg" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "hh" = (
@@ -1702,9 +1647,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/medical/chapel)
 "hl" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/medical/chapel)
 "hm" = (
@@ -1740,7 +1683,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "ht" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/medical/chapel)
 "hu" = (
@@ -1838,16 +1781,14 @@
 	},
 /area/ruin/space/derelict/medical)
 "hM" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/medical)
 "hN" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged4"
 	},
@@ -1891,9 +1832,7 @@
 	},
 /area/ruin/space/derelict/medical/chapel)
 "hV" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
 "hW" = (
@@ -1933,9 +1872,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "id" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "ie" = (
@@ -2128,9 +2065,7 @@
 	},
 /area/ruin/space/derelict/medical)
 "iO" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/medical)
 "iP" = (
@@ -2285,9 +2220,7 @@
 	},
 /area/ruin/space/derelict/hallway/primary)
 "js" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "jt" = (
@@ -2295,7 +2228,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "ju" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
@@ -2310,25 +2243,16 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jx" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jy" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Worn-out APC";
-	pixel_x = 24
-	},
+/obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jz" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
@@ -2370,15 +2294,11 @@
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
 "jH" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "jI" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "jJ" = (
@@ -2439,9 +2359,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "jV" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
@@ -2466,9 +2384,7 @@
 	},
 /area/ruin/space/derelict/hallway/primary)
 "jZ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "ka" = (
@@ -2534,9 +2450,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kp" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kq" = (
@@ -2547,10 +2461,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kr" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
@@ -2644,9 +2555,7 @@
 /turf/template_noop,
 /area/template_noop)
 "kV" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
 "kW" = (
@@ -2668,10 +2577,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "la" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
@@ -2989,9 +2895,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "mj" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "mk" = (
@@ -3066,9 +2970,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/atmospherics)
 "my" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
@@ -3168,16 +3070,14 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "mT" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/atmospherics)
 "mU" = (
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "mV" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "mW" = (
@@ -3188,11 +3088,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "mX" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Worn-out APC";
-	pixel_x = -25
-	},
+/obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
@@ -3206,18 +3102,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "na" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nc" = (
-/obj/machinery/power/apc{
-	areastring = "/area/ruin/space/derelict/atmospherics";
-	dir = 1;
-	name = "Worn-out APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
@@ -3229,9 +3118,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nf" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/plaque{
 	icon_state = "derelict10"
 	},
@@ -3274,9 +3161,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nl" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/plaque{
 	icon_state = "derelict16"
 	},
@@ -3467,9 +3352,7 @@
 	},
 /area/ruin/space/derelict/se_solar)
 "ob" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
@@ -3478,7 +3361,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "oe" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
 "of" = (
@@ -3646,7 +3529,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "DX" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
@@ -3786,12 +3669,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "Ni" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Worn-out APC";
-	pixel_x = -25;
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
@@ -3828,6 +3706,10 @@
 	icon_state = "damaged4"
 	},
 /area/ruin/space/derelict/singularity_engine)
+"Rw" = (
+/obj/structure/plaque/static_plaque/golden/commission/ks13,
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary)
 "RF" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
@@ -3840,9 +3722,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "TJ" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
@@ -7935,7 +7815,7 @@ gP
 jp
 fZ
 go
-go
+Rw
 go
 gc
 gc

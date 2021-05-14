@@ -1,4 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - server: "Default Drone hours without config set reduced from 40 to 14. Please set DRONE_ROLE_PLAYTIME to 40 if you wish to retain old behavior."

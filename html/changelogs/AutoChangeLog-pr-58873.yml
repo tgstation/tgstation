@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - qol: "Tells you a melee attack or projectile hit an object (e.g. airlock, reinforced window) without leaving a mark if it did no damage"
