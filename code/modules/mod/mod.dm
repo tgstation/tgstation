@@ -67,7 +67,7 @@
 	/// Currently used module.
 	var/obj/item/mod/module/selected_module
 	/// AI mob inhabiting the MOD.
-	var/mob/living/silicon/ai/AI
+	var/mob/living/silicon/ai/ai
 	/// Delay between moves as AI.
 	var/movedelay = 0
 	/// Cooldown for AI moves.
@@ -253,6 +253,11 @@
 		for(var/obj/item/mod/module/module in modules)
 			if(module.removable)
 				uninstall(module)
+				module.forceMove(drop_location())
+			else
+				audible_message("<span class='warning'>[src] indicates that [old_module] cannot be removed.</span>")
+				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+				return
 		I.play_tool_sound(src, 100)
 		return TRUE
 	to_chat(user, "<span class='warning'>ERROR: There's no modules on [src]!</span>")
@@ -376,15 +381,10 @@
 
 /obj/item/mod/control/proc/uninstall(module)
 	var/obj/item/mod/module/old_module = module
-	if(!old_module.removable)
-		audible_message("<span class='warning'>[src] indicates that [old_module] cannot be removed.</span>")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
-		return
 	modules -= old_module
 	complexity -= old_module.complexity
 	old_module.on_uninstall()
 	old_module.mod = null
-	old_module.forceMove(get_turf(src))
 
 /obj/item/mod/control/proc/update_access(card)
 	var/obj/item/card/id/access_id = card

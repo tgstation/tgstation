@@ -140,8 +140,7 @@
 	return TRUE
 
 /obj/item/mod/module/proc/add_ui_data()
-	var/data = list()
-	return data
+	return list()
 
 /obj/item/mod/module/proc/on_exit(datum/source, atom/movable/offender, atom/newloc)
 	SIGNAL_HANDLER
@@ -214,8 +213,8 @@
 	mod.helmet.tint = helmet_tint
 	mod.helmet.flash_protect = helmet_flash_protect
 	if(hud_type)
-		var/datum/atom_hud/HUD = GLOB.huds[hud_type]
-		HUD.add_hud_to(mod.wearer)
+		var/datum/atom_hud/hud = GLOB.huds[hud_type]
+		hud.add_hud_to(mod.wearer)
 	for(var/trait in visor_traits)
 		ADD_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
@@ -228,8 +227,8 @@
 	mod.helmet.tint = initial(mod.helmet.tint)
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 	if(hud_type)
-		var/datum/atom_hud/HUD = GLOB.huds[hud_type]
-		HUD.remove_hud_from(mod.wearer)
+		var/datum/atom_hud/hud = GLOB.huds[hud_type]
+		hud.remove_hud_from(mod.wearer)
 	for(var/trait in visor_traits)
 		REMOVE_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
@@ -326,10 +325,10 @@
 		return
 	unstealth(source)
 
-/obj/item/mod/module/stealth/proc/on_bullet_act(datum/source, obj/projectile/Proj)
+/obj/item/mod/module/stealth/proc/on_bullet_act(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 
-	if(!Proj.nodamage)
+	if(!projectile.nodamage)
 		unstealth(source)
 
 /obj/item/mod/module/stealth/ninja
@@ -429,7 +428,7 @@
 	. = ..()
 	if(!.)
 		return
-	RegisterSignal(mod.wearer, COMSIG_MOB_GRAVITY, .proc/negates_gravity)
+	ADD_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
 	mod.slowdown += slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
@@ -438,15 +437,10 @@
 	. = ..()
 	if(!.)
 		return
-	UnregisterSignal(mod.wearer, COMSIG_MOB_GRAVITY)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
 	mod.slowdown -= slowdown_active
 	mod.wearer.update_equipment_speed_mods()
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
-
-/obj/item/mod/module/magboot/proc/negates_gravity(datum/source)
-	SIGNAL_HANDLER
-
-	return COMSIG_MOB_NEGATES_GRAVITY
 
 /obj/item/mod/module/holster
 	name = "MOD holster module"

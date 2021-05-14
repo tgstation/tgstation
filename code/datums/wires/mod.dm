@@ -1,6 +1,6 @@
 /datum/wires/mod
 	holder_type = /obj/item/mod/control
-	proper_name = "MOD control module"
+	proper_name = "mod control module"
 
 /datum/wires/mod/New(atom/holder)
 	wires = list(WIRE_HACK, WIRE_DISABLE, WIRE_SHOCK, WIRE_INTERFACE)
@@ -10,47 +10,46 @@
 /datum/wires/mod/interactable(mob/user)
 	if(!..())
 		return FALSE
-	var/obj/item/mod/control/MOD = holder
-	if(!issilicon(user) && MOD.seconds_electrified && MOD.shock(user))
-		return FALSE
-	if(MOD == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
-		to_chat(user, "<span class='warning'>You cannot access the [MOD] control panel while wearing it!</span>")
-		return FALSE
-	if(MOD.open)
-		return TRUE
+	var/obj/item/mod/control/mod = holder
+	return mod.open
 
 /datum/wires/mod/get_status()
-	var/obj/item/mod/control/MOD = holder
+	var/obj/item/mod/control/mod = holder
 	var/list/status = list()
-	status += "The orange light is [MOD.seconds_electrified ? "on" : "off"]."
-	status += "The red light is [MOD.malfunctioning ? "off" : "blinking"]."
-	status += "The green light is [MOD.locked ? "on" : "off"]."
-	status += "The yellow light is [MOD.interface_break ? "off" : "on"]."
+	status += "The orange light is [mod.seconds_electrified ? "on" : "off"]."
+	status += "The red light is [mod.malfunctioning ? "off" : "blinking"]."
+	status += "The green light is [mod.locked ? "on" : "off"]."
+	status += "The yellow light is [mod.interface_break ? "off" : "on"]."
 	return status
 
 /datum/wires/mod/on_pulse(wire)
-	var/obj/item/mod/control/MOD = holder
+	var/obj/item/mod/control/mod = holder
 	switch(wire)
 		if(WIRE_HACK)
-			MOD.locked = !MOD.locked
+			mod.locked = !mod.locked
 		if(WIRE_DISABLE)
-			MOD.malfunctioning = TRUE
+			mod.malfunctioning = TRUE
 		if(WIRE_SHOCK)
-			MOD.seconds_electrified = MACHINE_DEFAULT_ELECTRIFY_TIME
+			mod.seconds_electrified = MACHINE_DEFAULT_ELECTRIFY_TIME
 		if(WIRE_INTERFACE)
-			MOD.interface_break = !MOD.interface_break
+			mod.interface_break = !mod.interface_break
 
 /datum/wires/mod/on_cut(wire, mend)
-	var/obj/item/mod/control/MOD = holder
+	var/obj/item/mod/control/mod = holder
 	switch(wire)
 		if(WIRE_HACK)
-			MOD.locked = !mend
+			mod.locked = !mend
 		if(WIRE_DISABLE)
-			MOD.malfunctioning = !mend
+			mod.malfunctioning = !mend
 		if(WIRE_SHOCK)
 			if(mend)
-				MOD.seconds_electrified = MACHINE_NOT_ELECTRIFIED
+				mod.seconds_electrified = MACHINE_NOT_ELECTRIFIED
 			else
-				MOD.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
+				mod.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
 		if(WIRE_INTERFACE)
-			MOD.interface_break = !mend
+			mod.interface_break = !mend
+
+/datum/wires/mod/ui_act(action, params)
+	. = ..()
+	if(!issilicon(usr) && mod.seconds_electrified && mod.shock(usr))
+		return FALSE

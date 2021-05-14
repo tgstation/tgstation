@@ -35,10 +35,10 @@
 	if(piece == boots && wearer.shoes)
 		boots.overslot = wearer.shoes
 		wearer.transferItemToLoc(boots.overslot, boots, TRUE)
-	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags, FALSE, TRUE))
+	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		user.visible_message("<span class='notice'>[wearer]'s [piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
-						"<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
-						"<span class='hear'>You hear a mechanical hiss.</span>")
+			"<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
+			"<span class='hear'>You hear a mechanical hiss.</span>")
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 		ADD_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	else if(piece.loc != src)
@@ -56,14 +56,13 @@
 		gauntlets.show_overslot(wearer)
 	if(piece == boots)
 		boots.show_overslot(wearer)
-	user.visible_message("<span class='notice'>[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", \
-					"<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>", \
-					"<span class='hear'>You hear a mechanical hiss.</span>")
+	user.visible_message("<span class='notice'>[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>",
+		"<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>",
+		"<span class='hear'>You hear a mechanical hiss.</span>")
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/mod/control/proc/toggle_activate(mob/user, force_deactivate = FALSE)
-	for(var/p in mod_parts)
-		var/obj/item/part = p
+	for(var/obj/item/part as anything in mod_parts)
 		if(!force_deactivate && part.loc == src)
 			to_chat(user, "<span class='warning'>ERROR: Not all parts deployed.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
@@ -130,7 +129,7 @@
 		wearer.update_hair()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
-		to_chat(wearer, "<span class='notice'>Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer.real_name].</span>")
+		audible_message("<span class='notice'>Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer.real_name].</span>", hearing_distance = 1)
 		icon_state = "[skin]-control[active ? "" : "-sealed"]"
 		worn_icon_state = "[skin]-control[active ? "" : "-sealed"]"
 		wearer.update_inv_back()
@@ -139,13 +138,13 @@
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = 6000)
 			slowdown = theme.slowdown_active
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
-			for(var/obj/item/mod/module/module in modules)
+			for(var/obj/item/mod/module/module as anything in modules)
 				module.on_equip()
 			START_PROCESSING(SSobj,src)
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = 6000)
 			slowdown = theme.slowdown_unactive
-			for(var/obj/item/mod/module/module in modules)
+			for(var/obj/item/mod/module/module as anything in modules)
 				module.on_unequip()
 				if(module.active)
 					module.on_deactivation()

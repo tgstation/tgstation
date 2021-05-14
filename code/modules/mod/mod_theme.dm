@@ -1,3 +1,4 @@
+/// MODsuit theme, instanced once and then used by MODsuits to grab various statistics.
 /datum/mod_theme
 	/// Theme name for the MOD.
 	var/name = "standard"

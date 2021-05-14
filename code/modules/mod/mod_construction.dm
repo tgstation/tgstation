@@ -47,7 +47,6 @@
 
 /obj/item/mod/construction/shell/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	var/atom/Tsec = drop_location()
 	switch(build_step)
 		if(1)
 			if(istype(I, /obj/item/mod/construction/core)) //Construct
@@ -156,7 +155,7 @@
 				to_chat(user, "<span class='notice'>You fit [external_armor] onto [src], finishing your MODsuit.</span>")
 				qdel(external_armor)
 				qdel(src)
-				var/obj/item/modsuit = new /obj/item/mod/control(Tsec, external_armor.theme)
+				var/obj/item/modsuit = new /obj/item/mod/control(drop_location(), external_armor.theme)
 				user.put_in_hands(modsuit)
 			if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(I.use_tool(src, user, 0, volume=30))

@@ -18,7 +18,7 @@
 	data["selected_module"] = selected_module?.name
 	data["wearer_name"] = wearer ? wearer.get_authentification_name("Unknown") : "No Occupant"
 	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown","Unknown",FALSE) : "No Job"
-	data["ai"] = AI?.name
+	data["ai"] = ai?.name
 	data["cell"] = cell?.name
 	data["charge"] = cell ? round(cell.percent(), 1) : 0
 	data["helmet"] = helmet?.name
@@ -26,7 +26,7 @@
 	data["gauntlets"] = gauntlets?.name
 	data["boots"] = boots?.name
 	data["modules"] = list()
-	for(var/obj/item/mod/module/module in modules)
+	for(var/obj/item/mod/module/module as anything in modules)
 		var/list/module_data = list(
 			name = module.name,
 			description = module.desc,

@@ -14,13 +14,13 @@
 /obj/item/clothing/shoes/magboots/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_FEET)
-		RegisterSignal(user, COMSIG_MOB_GRAVITY, .proc/negates_gravity)
+		update_gravity_trait()
 	else
-		UnregisterSignal(user, COMSIG_MOB_GRAVITY)
+		REMOVE_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
 
 /obj/item/clothing/shoes/magboots/dropped(mob/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_MOB_GRAVITY)
+	REMOVE_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
@@ -40,6 +40,7 @@
 	magpulse = !magpulse
 	icon_state = "[magboot_state][magpulse]"
 	to_chat(user, "<span class='notice'>You [magpulse ? "enable" : "disable"] the mag-pulse traction system.</span>")
+	update_gravity_trait(user)
 	user.update_inv_shoes() //so our mob-overlays update
 	user.update_gravity(user.has_gravity())
 	user.update_equipment_speed_mods() //we want to update our speed so we arent running at max speed in regular magboots
@@ -47,16 +48,15 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/shoes/magboots/proc/negates_gravity(datum/source)
-	SIGNAL_HANDLER
-
-	if(magpulse)
-		return COMSIG_MOB_NEGATES_GRAVITY
-
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	. = ..()
 	. += "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
 
+/obj/item/clothing/shoes/magboots/proc/update_gravity_trait(user)
+	if(magpulse)
+		ADD_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
+	else
+		REMOVE_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
 
 /obj/item/clothing/shoes/magboots/advance
 	desc = "Advanced magnetic boots that have a lighter magnetic pull, placing less burden on the wearer."
