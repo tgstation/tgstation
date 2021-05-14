@@ -12,7 +12,7 @@
 	running_find_references = type
 	if(usr?.client)
 		if(usr.client.running_find_references)
-			testing("CANCELLED search for references to a [usr.client.running_find_references].")
+			log_world("CANCELLED search for references to a [usr.client.running_find_references].")
 			usr.client.running_find_references = null
 			running_find_references = null
 			//restart the garbage collector
@@ -30,7 +30,7 @@
 	if(usr?.client)
 		usr.client.running_find_references = type
 
-	testing("Beginning search for references to a [type].")
+	log_world("Beginning search for references to a [type].")
 
 	var/starting_time = world.time
 
@@ -44,7 +44,7 @@
 	for(var/client/thing) //clients
 		DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
 
-	testing("Completed search for references to a [type].")
+	log_world("Completed search for references to a [type].")
 	if(usr?.client)
 		usr.client.running_find_references = null
 	running_find_references = null
@@ -82,8 +82,13 @@
 		return
 
 	if(!recursive_limit)
-		testing("Recursion limit reached. [container_name]")
+		log_world("Recursion limit reached. [container_name]")
 		return
+
+	//Check each time you go down a layer. This makes it a bit slow, but it won't effect the rest of the game at all
+	#ifndef FIND_REF_NO_CHECK_TICK
+	CHECK_TICK
+	#endif
 
 	if(istype(potential_container, /datum))
 		var/datum/datum_container = potential_container
@@ -102,7 +107,7 @@
 				#ifdef REFERENCE_TRACKING_DEBUG
 				found_refs[varname] = TRUE
 				#endif
-				testing("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
+				log_world("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
 
 			else if(islist(variable))
 				DoSearchVar(variable, "[container_name] \ref[datum_container] -> [varname] (list)", recursive_limit - 1, search_time)
@@ -115,14 +120,14 @@
 				#ifdef REFERENCE_TRACKING_DEBUG
 				found_refs[potential_container] = TRUE
 				#endif
-				testing("Found [type] \ref[src] in list [container_name].")
+				log_world("Found [type] \ref[src] in list [container_name].")
 
 			//Check assoc entrys
 			else if(!isnum(element_in_list) && normal && potential_container[element_in_list] == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
 				found_refs[potential_container] = TRUE
 				#endif
-				testing("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
+				log_world("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
 
 			//We need to run both of these checks, since our object could be hiding in either of them
 			else
@@ -132,11 +137,6 @@
 				//Check assoc sublists
 				if(!isnum(element_in_list) && normal && islist(potential_container[element_in_list]))
 					DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [potential_container[element_in_list]] (list)", recursive_limit - 1, search_time)
-
-	#ifndef FIND_REF_NO_CHECK_TICK
-	CHECK_TICK
-	#endif
-
 
 /proc/qdel_and_find_ref_if_fail(datum/thing_to_del, force = FALSE)
 	thing_to_del.qdel_and_find_ref_if_fail(force)
