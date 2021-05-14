@@ -22,6 +22,9 @@
 /datum/nobody_wants_to_learn_matrix_math/ui_state(mob/user)
 	return GLOB.admin_state
 
+/datum/nobody_wants_to_learn_matrix_math/ui_close(mob/user)
+	qdel(src)
+
 /datum/nobody_wants_to_learn_matrix_math/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
