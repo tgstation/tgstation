@@ -167,7 +167,6 @@
 /area/ruin/powered/graveyard_shuttle)
 "aI" = (
 /obj/effect/spawner/structure/window/shuttle,
-/obj/structure/grille,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/graveyard_shuttle)
 "aJ" = (
