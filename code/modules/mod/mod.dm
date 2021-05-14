@@ -337,7 +337,7 @@
 		return FALSE
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
-	return electrocute_mob(user, get_area(src), src, 0.7, check_range))
+	return electrocute_mob(user, get_area(src), src, 0.7, check_range)
 
 /obj/item/mod/control/proc/install(module, starting_module = FALSE)
 	var/obj/item/mod/module/new_module = module
