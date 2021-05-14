@@ -12,6 +12,7 @@
 		var/complexity_max = mod.complexity_max
 		var/complexity = 0
 		for(var/obj/item/mod/module/module as anything in mod.initial_modules)
+			module = new module()
 			modules += module
 			complexity += module.complexity
 			TEST_ASSERT(!is_type_in_list(module, mod.theme.module_blacklist), "[modpath] starting modules are in [mod.theme.type] blacklist.")
