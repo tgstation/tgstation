@@ -18,7 +18,7 @@
 			intAI.radio_enabled = FALSE
 			intAI.disconnect_shell()
 			intAI.forceMove(card)
-			card.ai = intAI
+			card.AI = intAI
 			for(var/datum/action/action as anything in actions)
 				if(action.owner == intAI)
 					action.Remove(intAI)
@@ -30,7 +30,7 @@
 			ai = null
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to the suit.
-			intAI = card.ai
+			intAI = card.AI
 			if(!intAI)
 				to_chat(user, "<span class='warning'>There is no AI currently installed on this device.</span>")
 				return
@@ -43,7 +43,7 @@
 				return
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [intAI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 			ai_enter_mod(intAI)
-			card.ai = null
+			card.AI = null
 
 /obj/item/mod/control/proc/ai_enter_mod(mob/living/silicon/ai/newAI)
 	newAI.control_disabled = FALSE

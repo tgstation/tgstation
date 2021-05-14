@@ -52,7 +52,7 @@
 	. = ..()
 	. += "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
 
-/obj/item/clothing/shoes/magboots/proc/update_gravity_trait(user)
+/obj/item/clothing/shoes/magboots/proc/update_gravity_trait(mob/user)
 	if(magpulse)
 		ADD_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)
 	else

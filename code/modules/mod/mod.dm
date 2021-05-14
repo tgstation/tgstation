@@ -255,7 +255,7 @@
 				uninstall(module)
 				module.forceMove(drop_location())
 			else
-				audible_message("<span class='warning'>[src] indicates that [old_module] cannot be removed.</span>")
+				audible_message("<span class='warning'>[src] indicates that [module] cannot be removed.</span>")
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 				return
 		I.play_tool_sound(src, 100)
