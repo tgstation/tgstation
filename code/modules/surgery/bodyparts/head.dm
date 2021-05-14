@@ -41,6 +41,11 @@
 	var/stored_lipstick_trait
 
 
+/obj/item/bodypart/head/Initialize()
+	. = ..()
+	if(prob(1))
+		desc = "So, no head?"
+
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
 	QDEL_NULL(brain)
