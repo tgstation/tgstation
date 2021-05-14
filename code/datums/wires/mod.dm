@@ -8,6 +8,8 @@
 	..()
 
 /datum/wires/mod/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/item/mod/control/MOD = holder
 	if(!issilicon(user) && MOD.seconds_electrified && MOD.shock(user))
 		return FALSE
