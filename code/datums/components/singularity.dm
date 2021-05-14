@@ -81,7 +81,11 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/consume_attackby)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
-	RegisterSignal(parent, list(COMSIG_ATOM_BUMPED, COMSIG_MOVABLE_CROSSED), .proc/consume)
+	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/consume)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/consume,
+	)
+	AddElement(/datum/element/connect_loc, parent, loc_connections)
 
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
 
@@ -111,7 +115,6 @@
 		COMSIG_ATOM_BSA_BEAM,
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
-		COMSIG_MOVABLE_CROSSED,
 		COMSIG_MOVABLE_PRE_MOVE,
 		COMSIG_PARENT_ATTACKBY,
 	))

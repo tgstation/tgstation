@@ -36,9 +36,7 @@
 /obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "cH" = (
@@ -94,9 +92,7 @@
 /area/shuttle/pirate)
 "fN" = (
 /obj/structure/dresser,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "fT" = (
@@ -173,7 +169,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "ko" = (
@@ -184,18 +180,14 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/structure/mirror{
-	pixel_y = 26
-	},
+/obj/structure/mirror/directional/north,
 /obj/structure/sink{
 	pixel_y = 17
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "kF" = (
@@ -217,10 +209,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "lu" = (
-/obj/item/storage/secure/safe{
-	pixel_x = 6;
-	pixel_y = 32
-	},
+/obj/item/storage/secure/safe/directional/north,
 /obj/effect/mob_spawn/human/pirate/silverscale/captain{
 	dir = 8
 	},
@@ -288,9 +277,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "rB" = (
@@ -342,9 +329,7 @@
 /area/shuttle/pirate)
 "xe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "xj" = (
@@ -396,9 +381,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "zQ" = (
@@ -435,16 +418,14 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/structure/mirror{
-	pixel_y = 26
-	},
+/obj/structure/mirror/directional/north,
 /obj/structure/sink{
 	pixel_y = 17
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "BK" = (
@@ -506,9 +487,7 @@
 /area/shuttle/pirate)
 "Gy" = (
 /obj/structure/table/glass,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/west,
 /obj/item/reagent_containers/food/drinks/bottle/patron{
 	pixel_x = -5;
 	pixel_y = 16
@@ -524,9 +503,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/vodka{
 	pixel_x = 2;
 	pixel_y = 4
-	},
-/obj/machinery/light_switch{
-	pixel_y = 22
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -585,9 +561,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "Kq" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Lk" = (
@@ -700,12 +674,7 @@
 /area/shuttle/pirate)
 "QU" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	aidisabled = 1;
-	dir = 1;
-	name = "Pirate Corvette APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 4
@@ -749,9 +718,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "RY" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "Sh" = (
@@ -856,7 +823,7 @@
 /obj/machinery/vending/boozeomat/all_access{
 	onstation = 0
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "XX" = (

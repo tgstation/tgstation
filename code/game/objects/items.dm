@@ -299,7 +299,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/turf/T = loc
 	loc = null
-	loc = T
+	forceMove(T)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
@@ -363,6 +363,64 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/ui_act(action, list/params)
 	add_fingerprint(usr)
 	return ..()
+
+/obj/item/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
+
+/obj/item/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(href_list[VV_HK_ADD_FANTASY_AFFIX] && check_rights(R_FUN))
+
+		//gathering all affixes that make sense for this item
+		var/list/prefixes = list()
+		var/list/suffixes = list()
+		for(var/datum/fantasy_affix/affix_choice as anything in subtypesof(/datum/fantasy_affix))
+			affix_choice = new affix_choice()
+			if(!affix_choice.validate(src))
+				qdel(affix_choice)
+			else
+				if(affix_choice.placement & AFFIX_PREFIX)
+					prefixes[affix_choice.name] = affix_choice
+				else
+					suffixes[affix_choice.name] = affix_choice
+
+		//making it more presentable here
+		var/list/affixes = list("---PREFIXES---")
+		affixes.Add(prefixes)
+		affixes.Add("---SUFFIXES---")
+		affixes.Add(suffixes)
+
+		//admin picks, cleanup the ones we didn't do and handle chosen
+		var/picked_affix_name = input(usr, "Choose an affix to add to [src]...", "Enchant [src]") as null|anything in affixes
+		if(!affixes[picked_affix_name] || QDELETED(src))
+			return
+		var/datum/fantasy_affix/affix = affixes[picked_affix_name]
+		affixes.Remove(affix)
+		QDEL_LIST_ASSOC(affixes) //remove the rest, we didn't use them
+		var/fantasy_quality = 0
+		if(affix.alignment & AFFIX_GOOD)
+			fantasy_quality++
+		else
+			fantasy_quality--
+
+		//name gets changed by the component so i want to store it for feedback later
+		var/before_name = name
+		//naming these vars that i'm putting into the fantasy component to make it more readable
+		var/canFail = FALSE
+		var/announce = FALSE
+		//Apply fantasy with affix. failing this should never happen, but if it does it should not be silent.
+		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
+			to_chat(usr, "<span class='warning'>Fantasy component not compatible with [src].</span>")
+			CRASH("fantasy component incompatible with object of type: [type]")
+
+		to_chat(usr, "<span class='notice'>[before_name] now has [picked_affix_name]!</span>")
+		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]")
+		message_admins("<span class='notice'>[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]</span>")
 
 /obj/item/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -492,7 +550,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(item_flags & DROPDEL)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
-	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
+	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
 	user?.update_equipment_speed_mods()
@@ -525,7 +583,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
  * Arguments:
  * * user is mob that equipped it
  * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
- * * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ * * initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
  */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)

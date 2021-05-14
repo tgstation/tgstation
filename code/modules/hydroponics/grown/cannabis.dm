@@ -88,7 +88,7 @@
 	name = "cannabis leaf"
 	desc = "Recently legalized in most galaxies."
 	icon_state = "cannabis"
-	bite_consumption_mod = 2
+	bite_consumption_mod = 4
 	foodtypes = VEGETABLES //i dont really know what else weed could be to be honest
 	tastes = list("cannabis" = 1)
 	wine_power = 20
@@ -119,5 +119,6 @@
 	name = "omega cannabis leaf"
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
+	bite_consumption_mod = 2 // Ingesting like 40 units of drugs in 1 bite at 100 potency
 	max_volume = 420
 	wine_power = 90

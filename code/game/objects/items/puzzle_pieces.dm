@@ -122,7 +122,6 @@
 
 /obj/item/pressure_plate/hologrid/Initialize()
 	. = ..()
-
 	AddElement(/datum/element/undertile, tile_overlay = tile_overlay) //we remove use_anchor here, so it ALWAYS stays anchored
 
 /obj/item/pressure_plate/hologrid/examine(mob/user)
@@ -137,7 +136,7 @@
 	icon_state = "lasergrid_full"
 	claimed = TRUE
 
-/obj/item/pressure_plate/hologrid/Crossed(atom/movable/AM)
+/obj/item/pressure_plate/hologrid/on_entered(datum/source, atom/movable/AM)
 	. = ..()
 	if(trigger_item && istype(AM, specific_item) && !claimed)
 		AM.set_anchored(TRUE)
