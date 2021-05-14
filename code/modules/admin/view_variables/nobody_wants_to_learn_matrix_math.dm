@@ -17,7 +17,7 @@
 
 /datum/nobody_wants_to_learn_matrix_math/Destroy(force, ...)
 	QDEL_NULL(testing_matrix)
-	. = ..()
+	return ..()
 
 /datum/nobody_wants_to_learn_matrix_math/ui_state(mob/user)
 	return GLOB.admin_state
