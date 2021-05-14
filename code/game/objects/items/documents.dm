@@ -150,6 +150,10 @@
 /obj/item/inspector/clown
 	///determines the sound that plays when printing a report
 	var/print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC
+	///will only cycle through modes with numbers lower than this
+	var/max_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
+	///names of modes, ordered first to last
+	var/mode_names = list("normal", "classic", "honk", "bababooey", "bababooey (varied)", "bwoink")
 
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -161,24 +165,7 @@
 
 /obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MULTITOOL)
-		print_sound_mode++
-		if(print_sound_mode > CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST)
-			print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL
-
-		var/mode_name = "INVALID"
-		switch(print_sound_mode)
-			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL)
-				mode_name = "normal"
-			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC)
-				mode_name = "classic"
-			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_HONK)
-				mode_name = "honk"
-			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY)
-				mode_name = "bababooey"
-			if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY_ALT)
-				mode_name = "bababooey (varied)"
-		to_chat(user, "<span class='notice'>You set the device's bleep setting to [mode_name] mode")
-
+		cycle_sound(user)
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		cycle_print_time(user)
 
@@ -189,6 +176,12 @@
 	else
 		print_time = 1 SECONDS
 		to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTNING FAST.")
+
+/obj/item/inspector/clown/proc/cycle_sound(mob/user)
+	print_sound_mode++
+	if(print_sound_mode > max_mode)
+		print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL
+	to_chat(user, "<span class='notice'>You set the device's bleep setting to [mode_names[print_sound_mode]] mode")
 
 /obj/item/inspector/clown/create_slip()
 	var/obj/item/paper/fake_report/slip = new(get_turf(src))
@@ -206,6 +199,8 @@
 			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, FALSE)
 		if(CLOWN_INSPECTOR_PRINT_SOUND_MODE_BABABOOEY_ALT)
 			playsound(src, pick(list('sound/items/bababooey.ogg', 'sound/items/bababooey2.ogg')), 50, TRUE)
+		if(BANANIUM_INSPECTOR_PRINT_SOUND_MODE_BWOINK)
+			playsound(src, 'sound/effects/adminhelp.ogg', 50, FALSE)
 
 /**
  * # Bananium HONK-spect scanner (WIP!!!!!!!!!!!)
@@ -223,6 +218,7 @@
 			prints a clowncrypted report regarding the maintenance of the station. Hard to replace."
 	icon_state = "clowninspector"
 	w_class = WEIGHT_CLASS_SMALL
+	max_mode = BANANIUM_INSPECTOR_PRINT_SOUND_MODE_LAST
 
 /obj/item/inspector/clown/bananium/Initialize()
 	. = ..()
