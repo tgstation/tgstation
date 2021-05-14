@@ -126,7 +126,7 @@
 		to_chat(user, "<span class='danger'>Throwing [pushed_mob] onto the table might hurt them!</span>")
 		return
 	var/added_passtable = FALSE
-	if(!pushed_mob.pass_flags & PASSTABLE)
+	if(!(pushed_mob.pass_flags & PASSTABLE))
 		added_passtable = TRUE
 		pushed_mob.pass_flags |= PASSTABLE
 	pushed_mob.Move(src.loc)
@@ -322,13 +322,17 @@
 	. = ..()
 	debris += new frame
 	debris += new /obj/item/shard
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/structure/table/glass/Destroy()
 	QDEL_LIST(debris)
 	. = ..()
 
-/obj/structure/table/glass/Crossed(atom/movable/AM)
-	. = ..()
+/obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(flags_1 & NODECONSTRUCT_1)
 		return
 	if(!isliving(AM))
@@ -509,22 +513,21 @@
 	else
 		return "<span class='notice'>The top cover is firmly <b>welded</b> on.</span>"
 
-/obj/structure/table/reinforced/attackby(obj/item/W, mob/living/user, params)
-	var/list/modifiers = params2list(params)
-	if(W.tool_behaviour == TOOL_WELDER && LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(!W.tool_start_check(user, amount=0))
-			return
+/obj/structure/table/reinforced/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(weapon.tool_behaviour == TOOL_WELDER)
+		if(weapon.tool_start_check(user, amount = 0))
+			if(deconstruction_ready)
+				to_chat(user, "<span class='notice'>You start strengthening the reinforced table...</span>")
+				if (weapon.use_tool(src, user, 50, volume = 50))
+					to_chat(user, "<span class='notice'>You strengthen the table.</span>")
+					deconstruction_ready = FALSE
+			else
+				to_chat(user, "<span class='notice'>You start weakening the reinforced table...</span>")
+				if (weapon.use_tool(src, user, 50, volume = 50))
+					to_chat(user, "<span class='notice'>You weaken the table.</span>")
+					deconstruction_ready = TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		if(deconstruction_ready)
-			to_chat(user, "<span class='notice'>You start strengthening the reinforced table...</span>")
-			if (W.use_tool(src, user, 50, volume=50))
-				to_chat(user, "<span class='notice'>You strengthen the table.</span>")
-				deconstruction_ready = 0
-		else
-			to_chat(user, "<span class='notice'>You start weakening the reinforced table...</span>")
-			if (W.use_tool(src, user, 50, volume=50))
-				to_chat(user, "<span class='notice'>You weaken the table.</span>")
-				deconstruction_ready = 1
 	else
 		. = ..()
 
@@ -535,7 +538,7 @@
 	icon_state = "brass_table-0"
 	base_icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	buildstack = /obj/item/stack/tile/bronze
+	buildstack = /obj/item/stack/sheet/bronze
 	smoothing_groups = list(SMOOTH_GROUP_BRONZE_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = list(SMOOTH_GROUP_BRONZE_TABLES)
 

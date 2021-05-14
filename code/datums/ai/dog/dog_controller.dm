@@ -192,7 +192,9 @@
 	if(carried_item)
 		examine_text += "<span class='notice'>[pawn.p_they(TRUE)] [pawn.p_are()] carrying [carried_item.get_examine_string(user)] in [pawn.p_their()] mouth.</span>"
 	if(blackboard[BB_DOG_FRIENDS][user])
-		examine_text += "<span class='notice'>[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!</span>"
+		var/mob/living/living_pawn = pawn
+		if(!IS_DEAD_OR_INCAP(living_pawn))
+			examine_text += "<span class='notice'>[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!</span>"
 
 /// If we died, drop anything we were carrying
 /datum/ai_controller/dog/proc/on_death(mob/living/ol_yeller)
@@ -222,7 +224,7 @@
 /// Show the command radial menu
 /datum/ai_controller/dog/proc/command_radial(mob/living/clicker)
 	var/list/commands = list(
-		COMMAND_HEEL = image(icon = 'icons/Testing/turf_analysis.dmi', icon_state = "red_arrow"),
+		COMMAND_HEEL = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow"),
 		COMMAND_FETCH = image(icon = 'icons/mob/actions/actions_spells.dmi', icon_state = "summons"),
 		COMMAND_ATTACK = image(icon = 'icons/effects/effects.dmi', icon_state = "bite"),
 		COMMAND_DIE = image(icon = 'icons/mob/pets.dmi', icon_state = "puppy_dead")
@@ -248,6 +250,10 @@
 		return
 
 	if(!COOLDOWN_FINISHED(src, command_cooldown))
+		return
+
+	var/mob/living/living_pawn = pawn
+	if(IS_DEAD_OR_INCAP(living_pawn))
 		return
 
 	var/spoken_text = speech_args[SPEECH_MESSAGE] // probably should check for full words
@@ -301,6 +307,9 @@
 		return
 	if(!can_see(pawn, pointing_friend, length=AI_DOG_VISION_RANGE) || !can_see(pawn, pointed_movable, length=AI_DOG_VISION_RANGE))
 		return
+	var/mob/living/living_pawn = pawn
+	if(IS_DEAD_OR_INCAP(living_pawn))
+		return
 
 	COOLDOWN_START(src, command_cooldown, AI_DOG_COMMAND_COOLDOWN)
 
@@ -312,9 +321,13 @@
 			current_movement_target = pointed_movable
 			blackboard[BB_FETCH_TARGET] = pointed_movable
 			blackboard[BB_FETCH_DELIVER_TO] = pointing_friend
+			if(living_pawn.buckled)
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/fetch)
 		if(DOG_COMMAND_ATTACK)
 			pawn.visible_message("<span class='notice'>[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and growls intensely!</span>")
 			current_movement_target = pointed_movable
 			blackboard[BB_DOG_HARASS_TARGET] = pointed_movable
+			if(living_pawn.buckled)
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist)//in case they are in bed or something
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/harass)

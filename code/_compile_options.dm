@@ -57,8 +57,8 @@
 #error You need version 513.1514 or higher
 #endif
 
-//Don't load extools on 514
-#if DM_VERSION < 514
+//Don't load extools on 514 and 513.1539+
+#if DM_VERSION < 514 && DM_BUILD < 1540
 #define USE_EXTOOLS
 #endif
 
@@ -92,7 +92,7 @@
 #define MAX_ATOM_OVERLAYS 100
 
 #if !defined(CBT) && !defined(SPACEMAN_DMM)
-#warn "Building with Dream Maker is no longer supported and may result in errors."
+#warn "Building with Dream Maker is no longer supported and will result in errors."
 #warn "In order to build, run BUILD.bat in the root directory."
 #warn "Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build."
 #endif

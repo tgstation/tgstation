@@ -368,7 +368,7 @@
 
 			var/list/settings = list(
 				"mainsettings" = list(
-					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/poison/bees),
+					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/bee),
 					"humanoutfit" = list("desc" = "Outfit if human", "type" = "datum", "path" = "/datum/outfit", "subtypesonly" = TRUE, "value" = /datum/outfit),
 					"amount" = list("desc" = "Number per portal", "type" = "number", "value" = 1),
 					"portalnum" = list("desc" = "Number of total portals", "type" = "number", "value" = 10),
@@ -463,20 +463,20 @@
 			if(!objective)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))
-			for(var/mob/living/H in GLOB.player_list)
-				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
+			for(var/mob/living/player in GLOB.player_list)
+				if(!(ishuman(player)||istype(player, /mob/living/silicon/)))
 					continue
-				if(H.stat == DEAD || !H.mind || ispAI(H))
+				if(player.stat == DEAD || !player.mind || ispAI(player))
 					continue
-				if(is_special_character(H))
+				if(is_special_character(player))
 					continue
-				var/datum/antagonist/traitor/T = new()
-				T.give_objectives = FALSE
+				var/datum/antagonist/traitor/traitor_datum = new()
+				traitor_datum.give_objectives = FALSE
 				var/datum/objective/new_objective = new
-				new_objective.owner = H
+				new_objective.owner = player
 				new_objective.explanation_text = objective
-				T.add_objective(new_objective)
-				H.mind.add_antag_datum(T)
+				traitor_datum.objectives += new_objective
+				player.mind.add_antag_datum(traitor_datum)
 			message_admins("<span class='adminnotice'>[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(holder)] used everyone is a traitor secret. Objective is [objective]")
 		if("massbraindamage")
@@ -557,6 +557,32 @@
 			message_admins("[key_name_admin(holder)] has Un-Fully Immersed \
 				everyone!")
 			log_admin("[key_name(holder)] has Un-Fully Immersed everyone.")
+		if("makeNerd")
+			var/spawnpoint = pick(GLOB.blobstart)
+			var/list/mob/dead/observer/candidates
+			var/mob/dead/observer/chosen_candidate
+			var/mob/living/simple_animal/drone/nerd
+			var/teamsize
+
+			teamsize = input(usr, "How many drones?", "N.E.R.D. team size", 2) as num|null
+
+			if(teamsize <= 0)
+				return FALSE
+
+			candidates = pollGhostCandidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
+
+			if(length(candidates) == 0)
+				return FALSE
+
+			while(length(candidates) && teamsize)
+				chosen_candidate = pick(candidates)
+				candidates -= chosen_candidate
+				nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
+				nerd.key = chosen_candidate.key
+				log_game("[key_name(nerd)] has been selected as a Nanotrasen emergency response drone")
+				teamsize--
+
+			return TRUE
 	if(E)
 		E.processing = FALSE
 		if(E.announceWhen>0)

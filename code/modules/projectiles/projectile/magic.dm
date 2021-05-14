@@ -231,8 +231,8 @@
 							/mob/living/simple_animal/hostile/retaliate/bat,
 							/mob/living/simple_animal/hostile/retaliate/goat,
 							/mob/living/simple_animal/hostile/killertomato,
-							/mob/living/simple_animal/hostile/poison/giant_spider,
-							/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
+							/mob/living/simple_animal/hostile/giant_spider,
+							/mob/living/simple_animal/hostile/giant_spider/hunter,
 							/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 							/mob/living/simple_animal/hostile/carp/ranged,
 							/mob/living/simple_animal/hostile/carp/ranged/chaos,
@@ -583,7 +583,7 @@
 		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
 			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, FALSE, 100, M)
 	if(M.stat == DEAD)//boo.
 		return
 	if(LAZYLEN(candidates))
@@ -676,7 +676,7 @@
 			return BULLET_ACT_BLOCK
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 	var/turf/T = get_turf(target)
-	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
+	explosion(T, devastation_range = -1, heavy_impact_range = exp_heavy, light_impact_range = exp_light, flame_range = exp_fire, flash_range = exp_flash, adminlog = FALSE)
 
 
 //still magic related, but a different path

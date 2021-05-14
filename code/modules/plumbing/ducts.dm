@@ -63,9 +63,7 @@ All the important duct code:
 		if(D.duct_layer & duct_layer)
 			disconnect_duct()
 
-	if(active)
-		attempt_connect()
-
+	attempt_connect()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 ///start looking around us for stuff to connect to
@@ -132,9 +130,11 @@ All the important duct code:
 		else
 			create_duct()
 			duct.add_duct(D)
+
 	add_neighbour(D, direction)
-	//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
-	D.attempt_connect()
+
+	//Delegate to timer subsystem so its handled the next tick and doesnt cause byond to mistake it for an infinite loop and kill the game
+	addtimer(CALLBACK(D, .proc/attempt_connect))
 
 	return TRUE
 
@@ -169,31 +169,6 @@ All the important duct code:
 	if(ispath(drop_on_wrench) && !QDELING(src))
 		new drop_on_wrench(drop_location())
 		qdel(src)
-
-///''''''''''''''''optimized''''''''''''''''' proc for quickly reconnecting after a duct net was destroyed
-/obj/machinery/duct/proc/reconnect()
-	if(neighbours.len && !duct)
-		create_duct()
-	for(var/atom/movable/AM in neighbours)
-		if(istype(AM, /obj/machinery/duct))
-			var/obj/machinery/duct/D = AM
-			if(D.duct)
-				if(D.duct == duct) //we're already connected
-					continue
-				else
-					duct.assimilate(D.duct)
-					continue
-			else
-				duct.add_duct(D)
-				D.reconnect()
-		else
-			if(AM in get_step(src, neighbours[AM])) //did we move?
-				for(var/plumber in AM.GetComponents(/datum/component/plumbing))
-					if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
-						return
-					connect_plumber(plumber, neighbours[AM])
-			else
-				neighbours -= AM //we moved
 
 ///Special proc to draw a new connect frame based on neighbours. not the norm so we can support multiple duct kinds
 /obj/machinery/duct/proc/generate_connects()

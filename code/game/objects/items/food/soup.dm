@@ -216,6 +216,7 @@
 	tastes = list("sweet potato" = 1)
 	foodtypes = VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
+
 /obj/item/food/soup/beet/red
 	name = "red beet soup"
 	desc = "Quite a delicacy."
@@ -245,7 +246,7 @@
 	name = "electron soup"
 	desc = "A gastronomic curiosity of ethereal origin. It is famed for the minature weather system formed over a properly prepared soup."
 	icon_state = "electronsoup"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity/enriched = 5)
 	tastes = list("mushroom" = 1, "electrons" = 4)
 	foodtypes = VEGETABLES | TOXIC
 
@@ -279,3 +280,11 @@
 	tastes = list("chicken" = 2, "creamy curry" = 4, "earthy heat" = 1)
 	foodtypes = VEGETABLES | MEAT | DAIRY
 	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/soup/oatmeal
+	name = "oatmeal"
+	desc = "A nice bowl of oatmeal."
+	icon_state = "oatmeal"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("oats" = 1, "milk" = 1)
+	foodtypes = DAIRY | GRAIN | BREAKFAST

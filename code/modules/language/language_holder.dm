@@ -50,7 +50,7 @@ Key procs
 	/// Currently spoken language
 	var/selected_language
 	/// Tracks the entity that owns the holder.
-	var/owner
+	var/atom/owner
 
 /// Initializes, and copies in the languages from the current atom if available.
 /datum/language_holder/New(_owner)
@@ -63,6 +63,7 @@ Key procs
 
 /datum/language_holder/Destroy()
 	QDEL_NULL(language_menu)
+	owner = null
 	return ..()
 
 /// Grants the supplied language.
@@ -244,8 +245,7 @@ Key procs
 							/datum/language/narsie = list(LANGUAGE_ATOM))
 
 /datum/language_holder/drone
-	understood_languages = list(/datum/language/drone = list(LANGUAGE_ATOM),
-								/datum/language/machine = list(LANGUAGE_ATOM))
+	understood_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
 	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
 

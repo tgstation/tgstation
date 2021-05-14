@@ -41,6 +41,8 @@
 	var/icon_welded = "welded"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
+	/// true whenever someone with the strong pull component is dragging this, preventing opening
+	var/strong_grab = FALSE
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
@@ -88,7 +90,7 @@
 	if(broken || !secure)
 		return
 	//Overlay is similar enough for both that we can use the same mask for both
-	. += mutable_appearance(icon, "locked", 0, EMISSIVE_PLANE, alpha)
+	. += emissive_appearance(icon, "locked", alpha = src.alpha)
 	. += locked ? "locked" : "unlocked"
 
 /obj/structure/closet/examine(mob/user)
@@ -115,11 +117,14 @@
 		return TRUE
 	if(welded || locked)
 		return FALSE
+	if(strong_grab)
+		to_chat(user, "<span class='danger'>[pulledby] has an incredibly strong grip on [src], preventing it from opening.</span>")
+		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
-				to_chat(user, "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" )
+				to_chat(user, "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>")
 			return FALSE
 	return TRUE
 

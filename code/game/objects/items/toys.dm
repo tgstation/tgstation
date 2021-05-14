@@ -23,6 +23,9 @@
  * Toy Daggers
  * Squeaky Brain
  * Broken Radio
+ * Fake heretic codex
+ * Fake Pierced Reality
+ * Intento
  */
 
 /obj/item/toy
@@ -188,6 +191,7 @@
 	desc = "\"Singulo\" brand spinning toy."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
+	item_flags = NO_PIXEL_RANDOM_DROP
 
 /obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/human/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
@@ -530,8 +534,15 @@
 	if(!..())
 		pop_burst()
 
-/obj/item/toy/snappop/Crossed(H as mob|obj)
+/obj/item/toy/snappop/Initialize()
 	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
+
+/obj/item/toy/snappop/proc/on_entered(datum/source, H as mob|obj)
+	SIGNAL_HANDLER
 	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)
@@ -1038,7 +1049,7 @@
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
 		sleep(140)
 		user.visible_message("<span class='alert'>[src] violently explodes!</span>")
-		explosion(src, 0, 0, 1, 0)
+		explosion(src, light_impact_range = 1)
 		qdel(src)
 	else if (cooldown < world.time)
 		cooldown = world.time + 600 //1 minute
@@ -1081,7 +1092,7 @@
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if (obj_flags & EMAGGED)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
-		explosion(get_turf(hit_atom), -1, -1, 1)
+		explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 1)
 		for(var/mob/M in urange(10, src))
 			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)
@@ -1550,6 +1561,7 @@
 	desc = "Hah. You thought it was the real deal!"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
+	item_flags = NO_PIXEL_RANDOM_DROP
 
 /obj/item/storage/box/heretic_box
 	name = "box of pierced realities"

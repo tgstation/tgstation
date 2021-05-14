@@ -25,6 +25,10 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
 	GLOB.human_list += src
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
@@ -47,7 +51,7 @@
 		return ..()
 	visible_message("<span class='danger'>[src] makes a hard landing on [T] but remains unharmed from the fall.</span>", \
 					"<span class='userdanger'>You brace for the fall. You make a hard landing on [T] but remain unharmed.</span>")
-	Knockdown(levels * 50)
+	Knockdown(levels * 40)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -66,12 +70,13 @@
 	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 	. += "Move Mode: [m_intent]"
 	if (internal)
-		if (!internal.air_contents)
-			qdel(internal)
+		var/datum/gas_mixture/internal_air = internal.return_air()
+		if (!internal_air)
+			QDEL_NULL(internal)
 		else
 			. += ""
 			. += "Internal Atmosphere Info: [internal.name]"
-			. += "Tank Pressure: [internal.air_contents.return_pressure()]"
+			. += "Tank Pressure: [internal_air.return_pressure()]"
 			. += "Distribution Pressure: [internal.distribute_pressure]"
 	if(istype(wear_suit, /obj/item/clothing/suit/space))
 		var/obj/item/clothing/suit/space/S = wear_suit
@@ -85,8 +90,8 @@
 			. += "Absorbed DNA: [changeling.absorbedcount]"
 
 // called when something steps onto a human
-/mob/living/carbon/human/Crossed(atom/movable/AM)
-	. = ..()
+/mob/living/carbon/human/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	spreadFire(AM)
 
 /mob/living/carbon/human/Topic(href, href_list)
@@ -286,7 +291,7 @@
 					return
 				fine = min(fine, maxFine)
 
-				var/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
+				var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
 				for (var/obj/item/pda/P in GLOB.PDAs)
 					if(P.owner == R.fields["name"])
 						var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
@@ -301,6 +306,7 @@
 						usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
 				GLOB.data_core.addCitation(R.fields["id"], crime)
 				investigate_log("New Citation: <strong>[t1]</strong> Fine: [fine] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
+				SSblackbox.ReportCitation(crime.dataId, usr.ckey, usr.real_name, R.fields["name"], t1, fine)
 				return
 
 			if(href_list["add_crime"])
@@ -919,19 +925,17 @@
 		to_chat(src, "<span class='warning'>You can't fireman carry [target] while [target.p_they()] [target.p_are()] standing!</span>")
 		return
 
-	var/carrydelay = 5 SECONDS //This is augmented by traits from your skillchip
+	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
 	var/skills_space = "" //cobby told me to do this
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay = 3 SECONDS
-		skills_space = " expertly"
+		skills_space = " very quickly"
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
 		carrydelay = 4 SECONDS
 		skills_space = " quickly"
 
-	visible_message("<span class='notice'>[src] starts[skills_space] lifting [target] onto [p_their()] back..</span>",
-	//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
-	"<span class='notice'>[carrydelay < 3.5 SECONDS ? "Using your fireman carrying training, you" : "You"][skills_space] start to lift [target] onto your back[carrydelay == 4 SECONDS ? ", with ease thanks to your advanced knowledge.." : "..."]</span>")
-	//(Using your fireman carrying training, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, with ease thanks to your advanced knowledge../...)
+	visible_message("<span class='notice'>[src] starts[skills_space] lifting [target] onto [p_their()] back...</span>",
+		"<span class='notice'>You[skills_space] start to lift [target] onto your back...</span>")
 	if(!do_after(src, carrydelay, target))
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!</span>")
 		return
@@ -1010,6 +1014,12 @@
 	if(NOBLOOD in dna.species.species_traits)
 		return FALSE
 	return ..()
+
+/mob/living/carbon/human/get_exp_list(minutes)
+	. = ..()
+
+	if(mind.assigned_role in SSjob.name_occupations)
+		.[mind.assigned_role] = minutes
 
 /mob/living/carbon/human/monkeybrain
 	ai_controller = /datum/ai_controller/monkey

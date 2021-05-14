@@ -278,7 +278,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/katana/cursed/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/wirerod
 	name = "wired rod"
@@ -370,11 +370,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
-	var/extended = 0
+	var/extended = FALSE
+
+/obj/item/switchblade/Initialize()
+	. = ..()
+	set_extended(extended)
 
 /obj/item/switchblade/attack_self(mob/user)
 	extended = !extended
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	set_extended(!extended)
+
+/obj/item/switchblade/proc/set_extended(new_extended)
+	extended = new_extended
 	if(extended)
 		force = 20
 		w_class = WEIGHT_CLASS_NORMAL
@@ -397,6 +405,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
+
+/obj/item/switchblade/extended
+	extended = TRUE
 
 /obj/item/phone
 	name = "red phone"
@@ -720,7 +731,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter/Initialize()
 	. = ..()
 	strong_against = typecacheof(list(
-					/mob/living/simple_animal/hostile/poison/bees/,
+					/mob/living/simple_animal/hostile/bee/,
 					/mob/living/simple_animal/butterfly,
 					/mob/living/simple_animal/hostile/cockroach,
 					/obj/item/queen_bee,

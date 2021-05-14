@@ -1005,6 +1005,24 @@
 	crate_name = "tesla coil crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+/datum/supply_pack/engine/hypertorus_fusion_reactor
+	name = "HFR Crate"
+	desc = "The new and improved fusion reactor. Requires CE access to open."
+	cost = CARGO_CRATE_VALUE * 23
+	access = ACCESS_CE
+	contains = list(/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/body,
+					/obj/item/hfr_box/body,
+					/obj/item/hfr_box/body,
+					/obj/item/hfr_box/body,
+					/obj/item/hfr_box/core)
+	crate_name = "HFR crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	dangerous = TRUE
+
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Canisters & Materials ////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -2113,9 +2131,9 @@
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? Then this isn't the crate for you. Contains three poisonous snakes."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_SECURITY
-	contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake,
-					/mob/living/simple_animal/hostile/retaliate/poison/snake,
-					/mob/living/simple_animal/hostile/retaliate/poison/snake)
+	contains = list(/mob/living/simple_animal/hostile/retaliate/snake,
+					/mob/living/simple_animal/hostile/retaliate/snake,
+					/mob/living/simple_animal/hostile/retaliate/snake)
 	crate_name = "snake crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -2618,7 +2636,7 @@
 
 ///Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
 /datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
-	var/list/uplink_items = get_uplink_items(SSticker.mode)
+	var/list/uplink_items = get_uplink_items(UPLINK_TRAITORS)
 	while(crate_value)
 		var/category = pick(uplink_items)
 		var/item = pick(uplink_items[category])

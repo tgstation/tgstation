@@ -2,7 +2,7 @@
  * This is the proc that handles the order of an item_attack.
  *
  * The order of procs called is:
- * * [/atom/proc/tool_act] on the target. If it returns TRUE, the chain will be stopped.
+ * * [/atom/proc/tool_act] on the target. If it returns TOOL_ACT_TOOLTYPE_SUCCESS or TOOL_ACT_SIGNAL_BLOCKING, the chain will be stopped.
  * * [/obj/item/proc/pre_attack] on src. If this returns TRUE, the chain will be stopped.
  * * [/atom/proc/attackby] on the target. If it returns TRUE, the chain will be stopped.
  * * [/obj/item/proc/afterattack]. The return value does not matter.
@@ -11,7 +11,7 @@
 
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
 
-	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
+	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
 		return TRUE
 
 	var/pre_attack_result
@@ -166,11 +166,6 @@
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
 
-	if(item_flags & EYE_STAB && user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-			M = user
-		if(eyestab(M,user))
-			return
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(hitsound)

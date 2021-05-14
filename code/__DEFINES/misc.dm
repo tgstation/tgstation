@@ -454,9 +454,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
-// Used by PDA and cartridge code to reduce repetitiveness of spritesheets
-#define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
-
 /// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
 #define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
 
@@ -515,8 +512,9 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 //Religion
 
-#define HOLY_ROLE_PRIEST 1 //default priestly role
-#define HOLY_ROLE_HIGHPRIEST 2 //the one who designates the religion
+#define HOLY_ROLE_DEACON 1 //role below priests, for losing most powers of priests but still being holy.
+#define HOLY_ROLE_PRIEST 2 //default priestly role
+#define HOLY_ROLE_HIGHPRIEST 3 //the one who designates the religion
 
 #define ALIGNMENT_GOOD "good"
 #define ALIGNMENT_NEUT "neutral"
@@ -550,4 +548,3 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 //while using the SKILLCHIP_RESTRICTED_CATEGORIES flag
 #define SKILLCHIP_CATEGORY_GENERAL "general"
 #define SKILLCHIP_CATEGORY_JOB "job"
-#define SKILLCHIP_CATEGORY_FIREMAN_CARRYING "fireman carrying"

@@ -3,6 +3,8 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
+
 	wires = new /datum/wires/robot(src)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
@@ -385,9 +387,9 @@
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
 		QDEL_NULL(mmi)
-		explosion(loc,1,2,4,flame_range = 2)
+		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2)
 	else
-		explosion(loc,-1,0,2)
+		explosion(src, devastation_range = -1, light_impact_range = 2)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
@@ -978,3 +980,10 @@
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		program.force_full_update()
+
+/mob/living/silicon/robot/get_exp_list(minutes)
+	. = ..()
+
+	var/datum/job/cyborg/cyborg_job_ref = SSjob.GetJobType(/datum/job/cyborg)
+
+	.[cyborg_job_ref.title] = minutes

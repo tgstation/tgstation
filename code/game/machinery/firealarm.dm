@@ -51,10 +51,9 @@
 	update_appearance()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
-
-/obj/machinery/firealarm/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	
+	AddElement(/datum/element/atmos_sensitive, mapload)
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
 /obj/machinery/firealarm/Destroy()
 	myarea.firereset(src)
@@ -78,33 +77,33 @@
 
 	. += "fire_overlay"
 	if(is_station_level(z))
-		. += "fire_[GLOB.security_level]"
-		. += mutable_appearance(icon, "fire_[GLOB.security_level]", layer, plane)
-		. += mutable_appearance(icon, "fire_[GLOB.security_level]", layer, EMISSIVE_PLANE)
+		. += "fire_[SSsecurity_level.current_level]"
+		. += mutable_appearance(icon, "fire_[SSsecurity_level.current_level]")
+		. += emissive_appearance(icon, "fire_[SSsecurity_level.current_level]")
 	else
 		. += "fire_[SEC_LEVEL_GREEN]"
-		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]", layer, plane)
-		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]", layer, EMISSIVE_PLANE)
+		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
+		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
 
 	var/area/A = get_area(src)
 
 	if(!detecting || !A.fire)
 		. += "fire_off"
-		. += mutable_appearance(icon, "fire_off", layer, plane)
-		. += mutable_appearance(icon, "fire_off", layer, EMISSIVE_PLANE)
+		. += mutable_appearance(icon, "fire_off")
+		. += emissive_appearance(icon, "fire_off")
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
-		. += mutable_appearance(icon, "fire_emagged", layer, plane)
-		. += mutable_appearance(icon, "fire_emagged", layer, EMISSIVE_PLANE)
+		. += mutable_appearance(icon, "fire_emagged")
+		. += emissive_appearance(icon, "fire_emagged")
 	else
 		. += "fire_on"
-		. += mutable_appearance(icon, "fire_on", layer, plane)
-		. += mutable_appearance(icon, "fire_on", layer, EMISSIVE_PLANE)
+		. += mutable_appearance(icon, "fire_on")
+		. += emissive_appearance(icon, "fire_on")
 
 	if(!panel_open && detecting && triggered) //It just looks horrible with the panel open
 		. += "fire_detected"
-		. += mutable_appearance(icon, "fire_detected", layer, plane)
-		. += mutable_appearance(icon, "fire_detected", layer, EMISSIVE_PLANE) //Pain
+		. += mutable_appearance(icon, "fire_detected")
+		. += emissive_appearance(icon, "fire_detected") //Pain
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -137,12 +136,25 @@
 		update_appearance()
 	alarm()
 
-/obj/machinery/firealarm/atmos_end(datum/gas_mixture/air, exposed_temperature)
+/obj/machinery/firealarm/atmos_end()
 	if(!detecting)
 		return
 	if(triggered)
 		triggered = FALSE
 		myarea.triggered_firealarms -= 1
+		update_appearance()
+
+/**
+ * Signal handler for checking if we should update fire alarm appearance accordingly to a newly set security level
+ *
+ * Arguments:
+ * * source The datum source of the signal
+ * * new_level The new security level that is in effect
+ */
+/obj/machinery/firealarm/proc/check_security_level(datum/source, new_level)
+	SIGNAL_HANDLER
+
+	if(is_station_level(z))
 		update_appearance()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)

@@ -120,7 +120,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, amount=1)
-		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
+		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, 0, amount / 1250)
 
 /datum/material/plasma/on_removed(atom/source, amount, material_flags)
 	. = ..()
@@ -161,7 +161,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
+	source.LoadComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, 0, 0, 0, 0, 20, 0)
 	source.AddComponent(/datum/component/slippery, min(amount / 10, 80))
 
 /datum/material/bananium/on_removed(atom/source, amount, material_flags)
@@ -343,17 +343,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
 	return TRUE
 
-/datum/material/otherworld_crystal
-	name = "Otherworld Crystal"
-	desc = "An unkown crystal from an unkown dimension"
-	color = COLOR_YELLOW
-	strength_modifier = 0.95
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
-	sheet_type = /obj/item/stack/sheet/otherworld_crystal
-	value_per_unit = 0.25
-	beauty_modifier = 0.4
-	alpha = 150
-
 //I don't like sand. It's coarse, and rough, and irritating, and it gets everywhere.
 /datum/material/sand
 	name = "sand"
@@ -423,7 +412,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Clock Cult? Never heard of it."
 	color = "#92661A"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
-	sheet_type = /obj/item/stack/tile/bronze
+	sheet_type = /obj/item/stack/sheet/bronze
 	value_per_unit = 0.025
 	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1.5, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = 0.2
