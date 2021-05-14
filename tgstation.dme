@@ -2916,6 +2916,7 @@
 #include "code\modules\power\floodlight.dm"
 #include "code\modules\power\generator.dm"
 #include "code\modules\power\gravitygenerator.dm"
+#include "code\modules\power\heavy_emitter.dm"
 #include "code\modules\power\lighting.dm"
 #include "code\modules\power\monitor.dm"
 #include "code\modules\power\multiz.dm"
