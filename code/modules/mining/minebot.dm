@@ -280,11 +280,11 @@
 
 /obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.melee_damage_upper != initial(M.melee_damage_upper))
-		to_chat(user, "<span class='warning'>[M.name] already has a combat upgrade installed!</span>")
+		to_chat(user, "<span class='warning'>[M] already has a combat upgrade installed!</span>")
 		return
 	M.melee_damage_lower += 7
 	M.melee_damage_upper += 7
-	to_chat(user, "<span class='notice'>You increase the close-quarter combat abilities of [M.name].")
+	to_chat(user, "<span class='notice'>You increase the close-quarter combat abilities of [M].")
 	qdel(src)
 
 //Health
@@ -294,11 +294,11 @@
 
 /obj/item/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.maxHealth != initial(M.maxHealth))
-		to_chat(user, "<span class='warning'>[M.name] already has reinforced armor!</span>")
+		to_chat(user, "<span class='warning'>[M] already has reinforced armor!</span>")
 		return
 	M.maxHealth += 45
 	M.updatehealth()
-	to_chat(user, "<span class='notice'>You reinforce the armor of [M.name].")
+	to_chat(user, "<span class='notice'>You reinforce the armor of [M].")
 	qdel(src)
 
 //AI
