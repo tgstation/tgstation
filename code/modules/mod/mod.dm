@@ -200,16 +200,16 @@
 /obj/item/mod/control/MouseDrop(atom/over_object)
 	if(src != wearer?.back || !istype(over_object, /atom/movable/screen/inventory/hand))
 		return ..()
-		for(var/obj/item/part in mod_parts)
-			if(part.loc != src)
-				to_chat(wearer, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
-				playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
-				return
-		if(!wearer.incapacitated())
-			var/atom/movable/screen/inventory/hand/ui_hand = over_object
-			if(wearer.putItemFromInventoryInHandIfPossible(src, H.held_index))
-				add_fingerprint(usr)
-				return ..()
+	for(var/obj/item/part in mod_parts)
+		if(part.loc != src)
+			to_chat(wearer, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
+			return
+	if(!wearer.incapacitated())
+		var/atom/movable/screen/inventory/hand/ui_hand = over_object
+		if(wearer.putItemFromInventoryInHandIfPossible(src, ui_hand.held_index))
+			add_fingerprint(usr)
+			return ..()
 
 /obj/item/mod/control/attack_hand(mob/user)
 	if(seconds_electrified && cell.charge)
