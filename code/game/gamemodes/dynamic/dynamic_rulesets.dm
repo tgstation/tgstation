@@ -26,7 +26,7 @@
 	var/list/protected_roles = list()
 	/// If set, rule will deny candidates from those roles always.
 	var/list/restricted_roles = list()
-	/// If set, rule will only accept candidates from those roles, IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
+	/// If set, rule will only accept candidates from those roles. If on a roundstart ruleset, requires the player to have the correct antag pref enabled and any of the possible roles enabled.
 	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/list/enemy_roles = list()
@@ -190,20 +190,38 @@
 
 /// Checks if candidates are connected and if they are banned or don't want to be the antagonist.
 /datum/dynamic_ruleset/roundstart/trim_candidates()
-	for(var/mob/dead/new_player/P in candidates)
-		var/client/client = GET_CLIENT(P)
-		if (!client || !P.mind) // Are they connected?
-			candidates.Remove(P)
-		else if(client.get_remaining_days(minimum_required_age) > 0)
-			candidates.Remove(P)
-		else if(P.mind.special_role) // We really don't want to give antag to an antag.
-			candidates.Remove(P)
-		else if(antag_flag_override)
-			if(!(antag_flag_override in client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
-				candidates.Remove(P)
+	for(var/mob/dead/new_player/candidate_player in candidates)
+		var/client/candidate_client = GET_CLIENT(candidate_player)
+		if (!candidate_client || !candidate_player.mind) // Are they connected?
+			candidates.Remove(candidate_player)
+			continue
+
+		if(candidate_client.get_remaining_days(minimum_required_age) > 0)
+			candidates.Remove(candidate_player)
+			continue
+
+		if(candidate_player.mind.special_role) // We really don't want to give antag to an antag.
+			candidates.Remove(candidate_player)
+			continue
+
+		if(antag_flag_override)
+			if(!(antag_flag_override in candidate_client.prefs.be_special) || is_banned_from(candidate_player.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
+				candidates.Remove(candidate_player)
+				continue
 		else
-			if(!(antag_flag in client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
-				candidates.Remove(P)
+			if(!(antag_flag in candidate_client.prefs.be_special) || is_banned_from(candidate_player.ckey, list(antag_flag, ROLE_SYNDICATE)))
+				candidates.Remove(candidate_player)
+				continue
+
+		var/exclusive_candidate = FALSE
+		for(var/role in exclusive_roles)
+			if(role in candidate_client.prefs.job_preferences)
+				exclusive_candidate = TRUE
+				break
+
+		if(!exclusive_candidate)
+			candidates.Remove(candidate_player)
+			break
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE

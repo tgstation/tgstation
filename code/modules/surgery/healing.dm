@@ -40,6 +40,10 @@
 	var/brute_multiplier = 0 //multiplies the damage that the patient has. if 0 the patient wont get any additional healing from the damage he has.
 	var/burn_multiplier = 0
 
+/// Returns a string letting the surgeon know roughly how much longer the surgery is estimated to take at the going rate
+/datum/surgery_step/heal/proc/get_progress(mob/user, mob/living/carbon/target, brute_healed, burn_healed)
+	return
+
 /datum/surgery_step/heal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/woundtype
 	if(brutehealing && burnhealing)
@@ -79,6 +83,8 @@
 		umsg += " as best as you can while [target.p_they()] [target.p_have()] clothing on"
 		tmsg += " as best as [user.p_they()] can while [target.p_they()] [target.p_have()] clothing on"
 	target.heal_bodypart_damage(brute_healed,burn_healed)
+
+	umsg += get_progress(user, target, brute_healed, burn_healed)
 
 	display_results(user, target, "<span class='notice'>[umsg].</span>",
 		"[tmsg].",
@@ -124,6 +130,34 @@
 	desc = "A surgical procedure that provides experimental treatment for a patient's brute traumas. Heals considerably more when the patient is severely injured."
 
 /********************BRUTE STEPS********************/
+/datum/surgery_step/heal/brute/get_progress(mob/user, mob/living/carbon/target, brute_healed, burn_healed)
+	if(!brute_healed)
+		return
+
+	var/estimated_remaining_steps = target.getBruteLoss() / brute_healed
+	var/progress_text
+
+	if(locate(/obj/item/healthanalyzer) in user.held_items)
+		progress_text = ". Remaining brute: <font color='#ff3333'>[target.getBruteLoss()]</font>"
+	else
+		switch(estimated_remaining_steps)
+			if(-INFINITY to 1)
+				return
+			if(1 to 3)
+				progress_text = ", stitching up the last few scrapes"
+			if(3 to 6)
+				progress_text = ", counting down the last few bruises left to treat"
+			if(6 to 9)
+				progress_text = ", continuing to plug away at [target.p_their()] extensive rupturing"
+			if(9 to 12)
+				progress_text = ", steadying yourself for the long surgery ahead"
+			if(12 to 15)
+				progress_text = ", though [target.p_they()] still look[target.p_s()] more like ground beef than a person"
+			if(15 to INFINITY)
+				progress_text = ", though you feel like you're barely making a dent in treating [target.p_their()] pulped body"
+
+	return progress_text
+
 /datum/surgery_step/heal/brute/basic
 	name = "tend bruises"
 	brutehealing = 5
@@ -162,6 +196,33 @@
 	desc = "A surgical procedure that provides experimental treatment for a patient's burns. Heals considerably more when the patient is severely injured."
 
 /********************BURN STEPS********************/
+/datum/surgery_step/heal/burn/get_progress(mob/user, mob/living/carbon/target, brute_healed, burn_healed)
+	if(!burn_healed)
+		return
+	var/estimated_remaining_steps = target.getFireLoss() / burn_healed
+	var/progress_text
+
+	if(locate(/obj/item/healthanalyzer) in user.held_items)
+		progress_text = ". Remaining brute: <font color='#ff9933'>[target.getFireLoss()]</font>"
+	else
+		switch(estimated_remaining_steps)
+			if(-INFINITY to 1)
+				return
+			if(1 to 3)
+				progress_text = ", finishing up the last few singe marks"
+			if(3 to 6)
+				progress_text = ", counting down the last few blisters left to treat"
+			if(6 to 9)
+				progress_text = ", continuing to plug away at [target.p_their()] thorough roasting"
+			if(9 to 12)
+				progress_text = ", steadying yourself for the long surgery ahead"
+			if(12 to 15)
+				progress_text = ", though [target.p_they()] still look[target.p_s()] more like burnt steak than a person"
+			if(15 to INFINITY)
+				progress_text = ", though you feel like you're barely making a dent in treating [target.p_their()] charred body"
+
+	return progress_text
+
 /datum/surgery_step/heal/burn/basic
 	name = "tend burn wounds"
 	burnhealing = 5
@@ -200,6 +261,39 @@
 	desc = "A surgical procedure that provides experimental treatment for a patient's burns and brute traumas. Heals considerably more when the patient is severely injured."
 
 /********************COMBO STEPS********************/
+/datum/surgery_step/heal/combo/get_progress(mob/user, mob/living/carbon/target, brute_healed, burn_healed)
+	var/estimated_remaining_steps = 0
+	if(brute_healed > 0)
+		estimated_remaining_steps = max(0, (target.getBruteLoss() / brute_healed))
+	if(burn_healed > 0)
+		estimated_remaining_steps = max(estimated_remaining_steps, (target.getFireLoss() / burn_healed)) // whichever is higher between brute or burn steps
+
+	var/progress_text
+
+	if(locate(/obj/item/healthanalyzer) in user.held_items)
+		if(target.getBruteLoss())
+			progress_text = ". Remaining brute: <font color='#ff3333'>[target.getBruteLoss()]</font>"
+		if(target.getFireLoss())
+			progress_text += ". Remaining burn: <font color='#ff9933'>[target.getFireLoss()]</font>"
+	else
+		switch(estimated_remaining_steps)
+			if(-INFINITY to 1)
+				return
+			if(1 to 3)
+				progress_text = ", finishing up the last few signs of damage"
+			if(3 to 6)
+				progress_text = ", counting down the last few patches of trauma"
+			if(6 to 9)
+				progress_text = ", continuing to plug away at [target.p_their()] extensive injuries"
+			if(9 to 12)
+				progress_text = ", steadying yourself for the long surgery ahead"
+			if(12 to 15)
+				progress_text = ", though [target.p_they()] still look[target.p_s()] more like smooshed baby food than a person"
+			if(15 to INFINITY)
+				progress_text = ", though you feel like you're barely making a dent in treating [target.p_their()] broken body"
+
+	return progress_text
+
 /datum/surgery_step/heal/combo
 	name = "tend physical wounds"
 	brutehealing = 3
