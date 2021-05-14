@@ -105,8 +105,7 @@
 	while(levels_of_glass <= 2)
 		if(isspaceturf(T) || area_to_check.outdoors) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions
 			if(levels_of_glass)
-				current_heal_level = STARLIGHT_CAN_HEAL_WITH_PENALTY // glass gives penalty
-				break
+				return STARLIGHT_CAN_HEAL_WITH_PENALTY // glass gives penalty
 			return STARLIGHT_CAN_HEAL
 		if(istransparentturf(T) && !(istype(T, /turf/open/openspace)))
 			levels_of_glass += 1
@@ -114,8 +113,7 @@
 			T = T.above() // check turf even further above
 			if(!T) // no above turf exists, assume its space since space station
 				if(levels_of_glass) // actually need to check this this time as openspace can have nothing above it as well
-					current_heal_level = STARLIGHT_CAN_HEAL_WITH_PENALTY 
-					break
+					return STARLIGHT_CAN_HEAL_WITH_PENALTY 
 				return STARLIGHT_CAN_HEAL
 			area_to_check = get_area(T)
 			continue
