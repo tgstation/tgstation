@@ -64,6 +64,7 @@
 #define DIAGONAL_DELAY 3
 #define WEARER_DELAY 1
 #define LONE_DELAY 5
+#define CELL_PER_STEP 25
 
 /obj/item/mod/control/relaymove(mob/user, direction)
 	if(!active && wearer || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || wearer && HAS_TRAIT(wearer, TRAIT_RESTRAINED) || !cell.charge <= 0 || !has_gravity(get_turf(src)))
@@ -71,7 +72,13 @@
 	var/timemodifier = ((direction in GLOB.cardinals) ? CARDINAL_DELAY : DIAGONAL_DELAY) * wearer ? WEARER_DELAY : LONE_DELAY
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
 	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
-	cell.charge = max(0, cell.charge - 25)
+	cell.charge = max(0, cell.charge - CELL_PER_STEP)
 	if(!wearer)
 		return step(src, direction)
 	return step(wearer, direction)
+
+#undef CARDINAL_DELAY
+#undef DIAGONAL_DELAY
+#undef WEARER_DELAY
+#undef LONE_DELAY
+#undef CELL_PER_STEP

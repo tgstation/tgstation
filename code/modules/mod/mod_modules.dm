@@ -254,12 +254,12 @@
 	visor_traits = list(TRAIT_MEDICAL_HUD)
 
 /obj/item/mod/module/visor/diaghud
-	name = "MOD medical visor module"
+	name = "MOD diagnostic visor module"
 	hud_type = DATA_HUD_DIAGNOSTIC_ADVANCED
 	visor_traits = list(TRAIT_DIAGNOSTIC_HUD)
 
 /obj/item/mod/module/visor/sechud
-	name = "MOD medical visor module"
+	name = "MOD security visor module"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	visor_traits = list(TRAIT_SECURITY_HUD)
 

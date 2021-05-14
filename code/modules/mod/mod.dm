@@ -235,6 +235,8 @@
 	to_chat(user, "<span class='notice'>You start to [open ? "screw the panel back on" : "unscrew the panel"]...</span>")
 	I.play_tool_sound(src, 100)
 	if(I.use_tool(src, user, 2 SECONDS))
+		if(active || activating)
+			return FALSE
 		I.play_tool_sound(src, 100)
 		user.visible_message("<span class='notice'>[user] [open ? "screws the panel back on" : "unscrews the panel"].</span>",
 			"<span class='notice'>You [open ? "screw the panel back on" : "unscrew the panel"].</span>",
@@ -337,7 +339,7 @@
 		return FALSE
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
-	return electrocute_mob(user, get_area(src), src, 0.7, check_range)
+	return electrocute_mob(user, cell, src, 0.7, check_range)
 
 /obj/item/mod/control/proc/install(module, starting_module = FALSE)
 	var/obj/item/mod/module/new_module = module
@@ -497,12 +499,13 @@
 		mod.gauntlets = null
 		QDEL_NULL(mod)
 
-/obj/item/clothing/gloves/mod/dropped(mob/user)
-	. = ..()
+/obj/item/clothing/gloves/mod/proc/show_overslot(mob/source)
+	SIGNAL_HANDLER
+
 	if(!overslot)
 		return
-	user.dropItemToGround(overslot, TRUE, TRUE)
-	user.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE)
+	if(!source.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
+		source.dropItemToGround(overslot, TRUE, TRUE)
 	overslot = null
 
 /obj/item/clothing/shoes/mod
@@ -528,12 +531,13 @@
 		mod.boots = null
 		QDEL_NULL(mod)
 
-/obj/item/clothing/shoes/mod/dropped(mob/user)
-	. = ..()
+/obj/item/clothing/shoes/mod/proc/show_overslot(mob/source)
+	SIGNAL_HANDLER
+
 	if(!overslot)
 		return
-	user.dropItemToGround(overslot, TRUE, TRUE)
-	user.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE)
+	if(!source.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
+		source.dropItemToGround(overslot, TRUE, TRUE)
 	overslot = null
 
 /obj/item/mod/control/pre_equipped
