@@ -493,15 +493,12 @@
 
 /obj/item/clothing/gloves/mod/Destroy()
 	..()
-	if(overslot && isliving(loc))
-		var/mob/wearer = loc
-		wearer.transferItemToLoc(src, mod, TRUE)
-		show_overslot(wearer)
 	if(mod)
 		mod.gauntlets = null
 		QDEL_NULL(mod)
 
-/obj/item/clothing/gloves/mod/proc/show_overslot(mob/user)
+/obj/item/clothing/gloves/mod/dropped(mob/user)
+	. = ..()
 	if(!overslot)
 		return
 	user.dropItemToGround(overslot, TRUE, TRUE)
@@ -527,15 +524,12 @@
 
 /obj/item/clothing/shoes/mod/Destroy()
 	..()
-	if(overslot && isliving(loc))
-		var/mob/wearer = loc
-		wearer.transferItemToLoc(src, mod, TRUE)
-		show_overslot(wearer)
 	if(mod)
 		mod.boots = null
 		QDEL_NULL(mod)
 
-/obj/item/clothing/shoes/mod/proc/show_overslot(mob/user)
+/obj/item/clothing/shoes/mod/dropped(mob/user)
+	. = ..()
 	if(!overslot)
 		return
 	user.dropItemToGround(overslot, TRUE, TRUE)

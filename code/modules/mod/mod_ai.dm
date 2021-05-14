@@ -60,10 +60,15 @@
 		newaction = new newaction(src)
 		newaction.Grant(newAI)
 
+#define CARDINAL_DELAY 2
+#define DIAGONAL_DELAY 3
+#define WEARER_DELAY 1
+#define LONE_DELAY 5
+
 /obj/item/mod/control/relaymove(mob/user, direction)
 	if(!active && wearer || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || wearer && HAS_TRAIT(wearer, TRAIT_RESTRAINED) || !cell.charge <= 0 || !has_gravity(get_turf(src)))
 		return FALSE
-	var/timemodifier = ((direction in GLOB.cardinals) ? 2 : 3) * wearer ? 1 : 5
+	var/timemodifier = ((direction in GLOB.cardinals) ? CARDINAL_DELAY : DIAGONAL_DELAY) * wearer ? WEARER_DELAY : LONE_DELAY
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
 	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
 	cell.charge = max(0, cell.charge - 25)

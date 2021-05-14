@@ -52,19 +52,23 @@
 		QDEL_NULL(device)
 	..()
 
+/// Called from MODsuit's install() proc, so when the module is installed.
 /obj/item/mod/module/proc/on_install()
 	return
 
+/// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
 /obj/item/mod/module/proc/on_uninstall()
 	return
 
+/// Called when the MODsuit is activated
 /obj/item/mod/module/proc/on_equip()
 	return
 
+/// Called when the MODsuit is deactivated
 /obj/item/mod/module/proc/on_unequip()
 	return
 
-
+/// Called when the module is selected from the TGUI
 /obj/item/mod/module/proc/on_select()
 	if(!mod.active || mod.activating)
 		return
@@ -76,6 +80,7 @@
 	else
 		on_use(mod.wearer)
 
+/// Called when the module is activated
 /obj/item/mod/module/proc/on_activation()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		return FALSE
@@ -91,11 +96,13 @@
 			to_chat(mod.wearer, "<span class='notice'>You extend [device].</span>")
 			RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 		else
-			to_chat(mod.wearer, "<span class='notice'>You activate [src]. You can use the middle-click button to use it.</span>")
+			to_chat(mod.wearer, "<span class='notice'>You activate [src]. You can use the middle-mouse button or alt-click to use it.</span>")
 			RegisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON, .proc/on_select_use)
+			RegisterSignal(mod.wearer, COMSIG_MOB_ALTCLICKON, .proc/on_select_use)
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	return TRUE
 
+/// Called when the module is deactivated
 /obj/item/mod/module/proc/on_deactivation()
 	active = FALSE
 	if(module_type == MODULE_ACTIVE)
@@ -107,8 +114,10 @@
 		else
 			to_chat(mod.wearer, "<span class='notice'>You deactivate [src].</span>")
 			UnregisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON)
+			UnregisterSignal(mod.wearer, COMSIG_MOB_ALTCLICKON)
 	return TRUE
 
+/// Called when the module is used
 /obj/item/mod/module/proc/on_use()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		return FALSE
@@ -117,6 +126,7 @@
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	return TRUE
 
+/// Called when an activated module without a device is used with middle/alt click
 /obj/item/mod/module/proc/on_select_use(mob/source, atom/target)
 	SIGNAL_HANDLER
 
@@ -124,6 +134,7 @@
 		return NONE
 	return COMSIG_MOB_CANCEL_CLICKON
 
+/// Called on the MODsuit's process
 /obj/item/mod/module/proc/on_process(delta_time)
 	if(active)
 		if(!drain_power(active_power_cost * delta_time))
@@ -133,15 +144,18 @@
 		drain_power(idle_power_cost * delta_time)
 	return TRUE
 
+/// Drains power from the suit cell
 /obj/item/mod/module/proc/drain_power(amount)
 	if(!mod.cell || (mod.cell.charge < amount))
 		return FALSE
 	mod.cell.charge = max(0, mod.cell.charge - amount)
 	return TRUE
 
+/// Adds additional things to the MODsuit ui_data()
 /obj/item/mod/module/proc/add_ui_data()
 	return list()
 
+/// Called when the device moves to a different place on active modules
 /obj/item/mod/module/proc/on_exit(datum/source, atom/movable/offender, atom/newloc)
 	SIGNAL_HANDLER
 
@@ -150,6 +164,7 @@
 	if(offender == device)
 		on_deactivation()
 
+/// Called when the device gets deleted on active modules
 /obj/item/mod/module/proc/on_device_deletion(datum/source)
 	SIGNAL_HANDLER
 

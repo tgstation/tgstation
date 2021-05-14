@@ -52,10 +52,6 @@
 	var/obj/item/piece = part
 	REMOVE_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(piece, src, TRUE)
-	if(piece == gauntlets)
-		gauntlets.show_overslot(wearer)
-	if(piece == boots)
-		boots.show_overslot(wearer)
 	user.visible_message("<span class='notice'>[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>",
 		"<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>",
 		"<span class='hear'>You hear a mechanical hiss.</span>")
