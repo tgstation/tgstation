@@ -402,10 +402,12 @@
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, atom/newloc)
 	SIGNAL_HANDLER
 
-	if(newloc == wearer || newloc == src)
+	if(newloc == src)
 		return
 	if(part == cell)
 		cell = null
+		return
+	if(newloc == wearer)
 		return
 	if(modules.Find(part))
 		var/obj/item/mod/module/module = part

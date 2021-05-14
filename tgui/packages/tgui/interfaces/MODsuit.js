@@ -9,7 +9,7 @@ const RadCounter = (props, context) => {
     active,
     radcount,
     userrads,
-    usercontam
+    usercontam,
   } = data;
   return (
     <Stack fill vertical>
@@ -38,7 +38,7 @@ const RadCounter = (props, context) => {
 };
 
 const ID2MODULE = {
-  rad_counter: () => <RadCounter />
+  rad_counter: () => <RadCounter />,
 };
 
 const LockedInterface = () => (
@@ -149,7 +149,7 @@ const HardwareSection = (props, context) => {
     gauntlets,
     boots,
     cell,
-    charge
+    charge,
   } = data;
   return (
     <Section title="Hardware">
@@ -178,8 +178,8 @@ const HardwareSection = (props, context) => {
             {cell || "None"}
           </LabeledList.Item>
           <LabeledList.Item
-          label="Cell Charge"
-          color={!cell && 'bad'}>
+            label="Cell Charge"
+            color={!cell && 'bad'}>
             {cell && (
               <ProgressBar
                 value={charge / 100}
@@ -288,11 +288,11 @@ const ModuleSection = (props, context) => {
                 </Table.Cell>
               </Table.Row>
               <Table.Row
-              key={module.ref}>
-                <Table.Cell  textAlign="center">
+                key={module.ref}>
+                <Table.Cell textAlign="center">
                   {module.complexity}/{complexity_max}
                 </Table.Cell>
-                <Table.Cell  textAlign="center">
+                <Table.Cell textAlign="center">
                   {module.idle_power}
                 </Table.Cell>
                 <Table.Cell textAlign="center">
@@ -329,7 +329,7 @@ const ModuleSection = (props, context) => {
               {module.description}
             </Box>
           </Collapsible>
-          )
+        );
       })}
     </Section>
   );

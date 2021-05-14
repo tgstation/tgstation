@@ -53,6 +53,7 @@
 			if(istype(I, /obj/item/mod/construction/core)) //Construct
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
+				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 				build_step++
 				qdel(I)
@@ -72,6 +73,7 @@
 			if(istype(I, /obj/item/mod/construction/chestplate)) //Construct
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
+				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
 				build_step++
 				qdel(I)
@@ -84,6 +86,7 @@
 			if(istype(I, /obj/item/mod/construction/helmet)) //Construct
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
+				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
 				build_step++
 				qdel(I)
@@ -97,6 +100,7 @@
 			if(istype(I, /obj/item/mod/construction/gauntlets)) //Construct
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
+				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
 				build_step++
 				qdel(I)
@@ -110,6 +114,7 @@
 			if(istype(I, /obj/item/mod/construction/boots)) //Construct
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
+				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
 				build_step++
 				qdel(I)
@@ -147,9 +152,12 @@
 				var/obj/item/mod/construction/armor/external_armor = I
 				if(!user.temporarilyRemoveItemFromInventory(external_armor))
 					return
-				to_chat(user, "<span class='notice'>You fit [external_armor] onto [src], finishing your new MODsuit.</span>")
-				new /obj/item/mod/control(Tsec, external_armor.theme)
+				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+				to_chat(user, "<span class='notice'>You fit [external_armor] onto [src], finishing your MODsuit.</span>")
 				qdel(external_armor)
+				qdel(src)
+				var/obj/item/modsuit = new /obj/item/mod/control(Tsec, external_armor.theme)
+				user.put_in_hands(modsuit)
 			if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(I.use_tool(src, user, 0, volume=30))
 					to_chat(user, "<span class='notice'>You unscrew the assembled parts.</span>")
