@@ -240,7 +240,13 @@
 	. = ..()
 	internals = new(src)
 
-
+/**
+ * ## trapdoor open animation!
+ *
+ * Uses a lot of math to assume the look of the floor that is turning into open space...
+ * To then animate into two pieces (see trapdoor_open_part) opening downwards
+ * This simply sets up and creates the parts that start doing fucked up byond math... not too complicated!
+ */
 /obj/effect/trapdoor_open_animation
 	name = "trapdoor open animation"
 	desc = "That's not fair! I disabled the mouse_opacity variable but you somehow still found this description!?"
@@ -251,36 +257,64 @@
 	//i'm pretty sure this is required, that atom is about to not exist momentarily
 	var/image/trapdoor_leftside = new()
 	trapdoor_leftside.appearance = trapdoor_to_copy.appearance
-	var/image/trapdoor_rightside = new()
-	trapdoor_rightside.appearance = trapdoor_leftside.appearance
+	//var/image/trapdoor_rightside = new()
+	//trapdoor_rightside.appearance = trapdoor_leftside.appearance
 
-	///these are inverted (leftside gets right side of the icon)
-	///because it allows their "hinge" (where the icon rotates from)
-	///to be set to the corner of the tile with matrixes.
-
-	//drawing box from bottom middle (world.icon_size/2x, 1y) to top left (1x, world.icon_sizey)
-		//trapdoor_leftside.DrawBox(null, world.icon_size/2, 1, 1, world.icon_size)
-	//drawing box from bottom middle (world.icon_size/2x, 1y) to top right (world.icon_sizex, world.icon_sizey)
-		//trapdoor_rightside.DrawBox(null, world.icon_size/2, 1, world.icon_size, world.icon_size)
+	//go left 16 to place yourself (and the hinge) correctly
 	new /obj/effect/temp_visual/trapdoor_open_part(src.loc, trapdoor_leftside, -16)
-	new /obj/effect/temp_visual/trapdoor_open_part(src.loc, trapdoor_rightside, 16)
+	//go right 16 to place yourself (and the hinge) correctly
+	//new /obj/effect/temp_visual/trapdoor_open_part(src.loc, trapdoor_rightside, 16)
 	return INITIALIZE_HINT_QDEL
 
+GLOBAL_VAR_INIT(skew_amt, 2)
+
+/**
+ * ## trapdoor open part!
+ *
+ * One half of the trapdoor open animation, hooks into fastprocess and repeatedly animates matrix
+ * Along with some trig math to draw the circle path it needs to follow along the hinge (horizontal_offset)
+ * I've tried my best to describe why each operation happens, but this gets into some freaky math + byond operations
+ */
 /obj/effect/temp_visual/trapdoor_open_part
 	duration = 1 SECONDS
+	var/angle = 0
+	var/matrix/animation_matrix
+	var/is_negative = FALSE
 
 /obj/effect/temp_visual/trapdoor_open_part/Initialize(mapload, given_appearance, horizontal_offset)
 	. = ..()
+	//setup
 	appearance = given_appearance
-	var/matrix/our_matrix = transform
+	is_negative = horizontal_offset < 0
+	animation_matrix = new()
 	///moves the hinge of the trapdoor animation to the corner of the tile
-	our_matrix.c = horizontal_offset
-	var/goal_scale = cos(TORADIANS(89))
-	var/goal_vertical_skew = sin(TORADIANS(89))
-	//turning clockwise requires inverting a few vars
-	if(!SIGN(horizontal_offset))
-		//horizontal_offset is negative so goal for horizontal skew should be
-		goal_vertical_skew = -goal_vertical_skew
-	animate(our_matrix, a = cos(goal_scale), time = 1 SECONDS)
-	animate(our_matrix, d = sin(goal_vertical_skew), time = 1 SECONDS)
+	transform.c = horizontal_offset
 
+	///this is cutting the other side of the tile away
+	///these are inverted (leftside gets right side of the tile)
+	///because it allows their "hinge" (where the icon rotates from)
+	///to be set to the corner of the tile with matrixes.
+	var/x_offset = is_negative ? 0 : world.icon_size/2
+	var/mask_icon = icon('icons/effects/effects.dmi', "trapdoor_mask")
+	add_filter("alpha_mask", 1, list("type" = "alpha", "icon" = mask_icon, "x" = x_offset))
+
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/effect/temp_visual/trapdoor_open_part/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSfastprocess, src)
+
+/obj/effect/temp_visual/trapdoor_open_part/process(delta_time)
+	angle += 17.5 //reaches ~360 in 1 seconds. Yes, we only need to turn 90 degrees but we're trying to change the matrix values from 1 to 0 (i have no idea what i am doing)
+	to_chat(world, "angle = [angle]")
+	var/goal_scale = sin(TORADIANS(angle)) * world.icon_size
+	var/goal_vertical_skew = cos(TORADIANS(angle)) * GLOB.skew_amt
+	if(is_negative)
+		goal_vertical_skew = -goal_vertical_skew
+	goal_scale = 1 - goal_scale
+	goal_vertical_skew = 1 + goal_vertical_skew
+	animation_matrix.a = goal_scale
+	animation_matrix.d = goal_vertical_skew
+	to_chat(world, "scale animating from [transform.a] to [goal_scale]")
+	to_chat(world, "skew animating from [transform.d] to [goal_vertical_skew]")
+	animate(src, transform = animation_matrix, time = delta_time)
