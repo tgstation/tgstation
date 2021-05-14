@@ -12,7 +12,7 @@
 /datum/component/udder/Initialize(udder_type = /obj/item/udder, on_milk_callback, on_generate_callback)
 	if(!isliving(parent)) //technically is possible to drop this on carbons... but you wouldn't do that to me, would you?
 		return COMPONENT_INCOMPATIBLE
-	udder = new udder_type(null, parent)
+	udder = new udder_type(null, parent, on_generate_callback)
 	src.on_milk_callback = on_milk_callback
 
 /datum/component/udder/RegisterWithParent()

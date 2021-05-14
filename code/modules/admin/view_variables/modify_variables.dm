@@ -381,6 +381,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		to_chat(src, "Your edit was rejected by the object.", confidential = TRUE)
 		return
 	vv_update_display(O, "varedited", VV_MSG_EDITED)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_VAR_EDIT, args)
 	log_world("### VarEdit by [key_name(src)]: [O.type] [variable]=[var_value] => [var_new]")
 	log_admin("[key_name(src)] modified [original_name]'s [variable] from [html_encode("[var_value]")] to [html_encode("[var_new]")]")
 	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] from [var_value] to [var_new]"

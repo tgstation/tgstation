@@ -23,8 +23,6 @@
 
 /obj/structure/altar_of_gods/update_overlays()
 	. = ..()
-	if(icon_state == initial(icon_state))
-		return
 	. += "convertaltarcandle"
 
 /obj/structure/altar_of_gods/attack_hand(mob/living/user, list/modifiers)
