@@ -11,12 +11,19 @@
 	bounty_types = CIV_JOB_ROBO
 
 	outfit = /datum/outfit/job/roboticist
+	plasmaman_outfit = /datum/outfit/plasmaman/robotics
 	departments = DEPARTMENT_SCIENCE
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
+
+	mail_goodies = list(
+		/obj/item/storage/box/flashes = 20,
+		/obj/item/stack/sheet/iron/twenty = 15,
+		/obj/item/modular_computer/tablet/preset/advanced = 5
+	)
 
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)
 

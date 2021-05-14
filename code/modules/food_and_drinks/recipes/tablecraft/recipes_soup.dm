@@ -305,3 +305,27 @@
 	)
 	result = /obj/item/food/soup/peasoup
 	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/indian_curry
+	name = "Indian Chicken Curry"
+	reqs = list(
+		/obj/item/food/meat/slab/chicken = 1,
+		/obj/item/food/grown/onion = 2,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/butter = 1,
+		/obj/item/food/salad/boiledrice = 1,
+		/datum/reagent/consumable/cream = 5
+	)
+	result = /obj/item/food/soup/indian_curry
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/oatmeal
+	name = "Oatmeal"
+	reqs = list(
+		/datum/reagent/consumable/milk = 10,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/food/grown/oat = 1
+	)
+	result = /obj/item/food/soup/oatmeal
+	subcategory = CAT_SOUP

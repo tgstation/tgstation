@@ -7,7 +7,7 @@
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 
 /datum/action/innate/cult/IsAvailable()
-	if(!iscultist(owner))
+	if(!IS_CULTIST(owner))
 		return FALSE
 	return ..()
 
@@ -41,7 +41,7 @@
 	my_message = "<span class='[span]'><b>[title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
-		if(iscultist(M))
+		if(IS_CULTIST(M))
 			to_chat(M, my_message)
 		else if(M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
@@ -54,7 +54,7 @@
 	desc = "Conveys a message from the spirit realm that all cultists can hear."
 
 /datum/action/innate/cult/comm/spirit/IsAvailable()
-	if(iscultist(owner.mind.current))
+	if(IS_CULTIST(owner.mind.current))
 		return TRUE
 
 /datum/action/innate/cult/comm/spirit/cultist_commune(mob/living/user, message)
@@ -64,7 +64,7 @@
 	my_message = "<span class='cultboldtalic'>The [user.name]: [message]</span>"
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
-		if(iscultist(M))
+		if(IS_CULTIST(M))
 			to_chat(M, my_message)
 		else if(M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
@@ -129,7 +129,10 @@
 					to_chat(B.current, "<span class='cultlarge'>[Nominee] could not win the cult's support and shall continue to serve as an acolyte.</span>")
 		return FALSE
 	team.cult_master = Nominee
-	SSticker.mode.remove_cultist(Nominee.mind, TRUE)
+	var/datum/antagonist/cult/cultist = Nominee.mind.has_antag_datum(/datum/antagonist/cult)
+	if (cultist)
+		cultist.silent = TRUE
+		cultist.on_removal()
 	Nominee.mind.add_antag_datum(/datum/antagonist/cult/master)
 	for(var/datum/mind/B in team.members)
 		if(B.current)
@@ -281,7 +284,7 @@
 		C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
 		C.cult_team.blood_target_image.pixel_x = -target.pixel_x
 		C.cult_team.blood_target_image.pixel_y = -target.pixel_y
-		for(var/datum/mind/B in SSticker.mode.cult)
+		for(var/datum/mind/B as anything in get_antag_minds(/datum/antagonist/cult))
 			if(B.current && B.current.stat != DEAD && B.current.client)
 				to_chat(B.current, "<span class='cultlarge'><b>[ranged_ability_user] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
 				SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
@@ -307,7 +310,7 @@
 	desc = "Marks a target for the entire cult to track."
 
 /datum/action/innate/cult/master/cultmark/ghost/IsAvailable()
-	if(istype(owner, /mob/dead/observer) && iscultist(owner.mind.current))
+	if(istype(owner, /mob/dead/observer) && IS_CULTIST(owner.mind.current))
 		return TRUE
 	else
 		qdel(src)
@@ -321,7 +324,7 @@
 	var/base_cooldown = 600
 
 /datum/action/innate/cult/ghostmark/IsAvailable()
-	if(istype(owner, /mob/dead/observer) && iscultist(owner.mind.current))
+	if(istype(owner, /mob/dead/observer) && IS_CULTIST(owner.mind.current))
 		return TRUE
 	else
 		qdel(src)
@@ -362,7 +365,7 @@
 	C.cult_team.blood_target_image.pixel_y = -target.pixel_y
 	SEND_SOUND(owner, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 	owner.client.images += C.cult_team.blood_target_image
-	for(var/datum/mind/B in SSticker.mode.cult)
+	for(var/datum/mind/B as anything in get_antag_minds(/datum/antagonist/cult))
 		if(B.current && B.current.stat != DEAD && B.current.client)
 			to_chat(B.current, "<span class='cultlarge'><b>[owner] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
 			SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
@@ -442,7 +445,9 @@
 	if(!isturf(T))
 		return FALSE
 	if(target in view(7, get_turf(ranged_ability_user)))
-		if((!(iscultist(target) || istype(target, /obj/structure/destructible/cult)) || target == caller) && !(attached_action.throwing))
+		var/mob/mob_target = target
+		var/is_cultist = istype(mob_target) && IS_CULTIST(mob_target)
+		if((!(is_cultist || istype(target, /obj/structure/destructible/cult)) || target == caller) && !(attached_action.throwing))
 			return
 		if(!attached_action.throwing)
 			attached_action.throwing = TRUE

@@ -104,12 +104,17 @@
 	var/alternative_fire_sound
 	///If only our alternative ammuntion misfires and not our main ammunition, we set this to TRUE
 	var/alternative_ammo_misfires = FALSE
+
+	/// Misfire Variables ///
+
 	/// Whether our ammo misfires now or when it's set by the wrench_act. TRUE means it misfires.
 	var/can_misfire = FALSE
 	///How likely is our gun to misfire?
 	var/misfire_probability = 0
 	///How much does shooting the gun increment the misfire probability?
 	var/misfire_percentage_increment = 0
+	///What is the cap on our misfire probability? Do not set this to 100.
+	var/misfire_probability_cap = 25
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -356,6 +361,7 @@
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	if(can_misfire)
 		misfire_probability += misfire_percentage_increment
+		misfire_probability = clamp(misfire_probability, 0, misfire_probability_cap)
 
 	. = ..()
 
@@ -553,6 +559,11 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		w_class = WEIGHT_CLASS_NORMAL
+		//The file might not have a "gun" icon, let's prepare for this
+		lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+		righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+		inhand_x_dimension = 32
+		inhand_y_dimension = 32
 		inhand_icon_state = "gun"
 		worn_icon_state = "gun"
 		slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back

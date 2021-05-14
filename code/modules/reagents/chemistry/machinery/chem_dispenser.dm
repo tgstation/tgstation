@@ -162,19 +162,22 @@
 	obj_flags |= EMAGGED
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
-	if(severity < 3)
-		..()
+	if(severity <= EXPLODE_LIGHT)
+		return FALSE
+	return ..()
 
 /obj/machinery/chem_dispenser/contents_explosion(severity, target)
 	..()
-	if(beaker)
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += beaker
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += beaker
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += beaker
+	if(!beaker)
+		return
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += beaker
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += beaker
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += beaker
 
 /obj/machinery/chem_dispenser/handle_atom_del(atom/A)
 	..()

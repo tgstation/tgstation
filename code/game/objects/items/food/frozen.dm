@@ -7,6 +7,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ice = 4)
 	tastes = list("ice cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 
 /obj/item/food/strawberryicecreamsandwich
 	name = "strawberry ice cream sandwich"
@@ -17,6 +18,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/ice = 4)
 	tastes = list("ice cream" = 2, "berry" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 
 
 /obj/item/food/spacefreezy
@@ -29,6 +31,10 @@
 	tastes = list("blue cherries" = 2, "ice cream" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
 
+/obj/item/food/spacefreezy/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder)
+
 /obj/item/food/sundae
 	name = "sundae"
 	desc = "A classic dessert."
@@ -39,6 +45,10 @@
 	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
 
+/obj/item/food/sundae/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, y_offset = -2, sweetener = /datum/reagent/consumable/caramel)
+
 /obj/item/food/honkdae
 	name = "honkdae"
 	desc = "The clown's favorite dessert."
@@ -48,6 +58,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
+
+/obj/item/food/honkdae/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/ice_cream_holder, y_offset = -2) //The sugar will react with the banana forming laughter. Honk!
 
 /////////////
 //SNOWCONES//
@@ -63,6 +77,7 @@
 	food_reagents = list(/datum/reagent/water = 11) // We dont get food for water/juices
 	tastes = list("ice" = 1, "water" = 1)
 	foodtypes = SUGAR //We use SUGAR as a base line to act in as junkfood, other wise we use fruit
+	food_flags = FOOD_FINGER_FOOD
 
 /obj/item/food/snowcones/lime
 	name = "lime snowcone"
@@ -207,6 +222,7 @@
 	var/bite_states = 4 //This value value is used for correctly setting the bite_consumption to ensure every bite changes the sprite. Do not set to zero.
 	var/bitecount = 0
 	foodtypes = DAIRY | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 
 /obj/item/food/popsicle/Initialize()
 	. = ..()
@@ -242,7 +258,7 @@
 	name = "popsicle stick"
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "popsicle_stick"
-	desc = "This humble little stick usually carries a frozen treat, at the moment it seems freed from this atlassian burden."
+	desc = "This humble little stick usually carries a frozen treat, at the moment it seems freed from this Atlassian burden."
 	custom_materials = list(/datum/material/wood=20)
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
@@ -262,13 +278,13 @@
 
 /obj/item/food/popsicle/jumbo
 	name = "jumbo icecream"
-	desc = "A luxurius icecream covered in rich chocolate. It seems smaller than you remember it being."
+	desc = "A luxurious icecream covered in rich chocolate. It seems smaller than you remember it being."
 	food_reagents = list(/datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 3, /datum/reagent/consumable/sugar = 2)
 	overlay_state = "jumbo"
 
 /obj/item/food/popsicle/nogga_black
 	name = "nogga black"
-	desc = "A salty licorice icecream recently reintroduced due to all the records of the controversy being lost to time. Those who cannot remember the past are doomed to repeat it."
+	desc = "A salty licorice icecream recently reintroduced due to all records of the controversy being lost to time. Those who cannot remember the past are doomed to repeat it."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/salt = 1,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
 	tastes = list("salty liquorice")
 	overlay_state = "nogga_black"
@@ -282,3 +298,4 @@
 	tastes = list("chopped hazelnuts", "waffle")
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 4, /datum/reagent/consumable/sugar = 2)
 	foodtypes = DAIRY | SUGAR
+	venue_value = FOOD_PRICE_NORMAL

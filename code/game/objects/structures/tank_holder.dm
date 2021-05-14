@@ -35,13 +35,24 @@
 
 /obj/structure/tank_holder/examine(mob/user)
 	. = ..()
+	. += "It is [anchored ? "wrenched to the floor." : "The <i>bolts</i> on the bottom are unsecured."]<br/>"
+	if(tank)
+		. += "It is holding one [tank]."
+	else
+		. += "It is empty."
 	. += "<span class='notice'>It is held together by some <b>screws</b>.</span>"
 
 /obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
-	if(!SEND_SIGNAL(W, COMSIG_CONTAINER_TRY_ATTACH, src, user))
+	if(W.tool_behaviour == TOOL_WRENCH)
+		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
+		if(W.use_tool(src, user, 20, volume=50))
+			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
+			set_anchored(!anchored)
+	else if(!SEND_SIGNAL(W, COMSIG_CONTAINER_TRY_ATTACH, src, user))
 		to_chat(user, "<span class='warning'>[W] does not fit in [src].</span>")
+	return
 
 /obj/structure/tank_holder/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -80,8 +91,16 @@
 	return ..()
 
 /obj/structure/tank_holder/contents_explosion(severity, target)
-	if(tank)
-		tank.ex_act(severity, target)
+	if(!tank)
+		return
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += tank
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += tank
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += tank
 
 /// Call this after taking the tank from contents in order to update references, icon
 /// and density.

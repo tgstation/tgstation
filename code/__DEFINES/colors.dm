@@ -12,6 +12,7 @@
 #define COLOR_SILVER "#C0C0C0"
 #define COLOR_GRAY "#808080"
 #define COLOR_FLOORTILE_GRAY "#8D8B8B"
+#define COLOR_DARK "#454545"
 #define COLOR_ALMOST_BLACK "#333333"
 #define COLOR_BLACK "#000000"
 #define COLOR_HALF_TRANSPARENT_BLACK    "#0000007A"
@@ -46,6 +47,7 @@
 #define COLOR_STRONG_BLUE "#1919c8"
 #define COLOR_BRIGHT_BLUE "#2CB2E8"
 #define COLOR_MODERATE_BLUE "#555CC2"
+#define COLOR_AMETHYST "#822BFF"
 #define COLOR_BLUE_LIGHT "#33CCFF"
 #define COLOR_NAVY "#000080"
 #define COLOR_BLUE_GRAY "#75A2BB"
@@ -71,6 +73,7 @@
 
 #define COLOR_BROWN "#BA9F6D"
 #define COLOR_DARK_BROWN "#997C4F"
+#define COLOR_ORANGE_BROWN "#a9734f"
 
 #define COLOR_GREEN_GRAY       "#99BB76"
 #define COLOR_RED_GRAY         "#B4696A"
@@ -113,6 +116,8 @@
 #define COLOR_THEME_GLASS "#75A4C4"
 #define COLOR_THEME_CLOCKWORK "#CFBA47"
 
+///Colors for eigenstates
+#define COLOR_PERIWINKLEE "#9999FF"
 /**
  * Some defines to generalise colours used in lighting.
  *
@@ -164,3 +169,13 @@
 #define LIGHT_COLOR_TUNGSTEN   "#FAE1AF"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN    "#F0FAFA"
+
+//The GAGS greyscale_colors for each department's computer/machine circuits
+#define CIRCUIT_COLOR_GENERIC "#1A7A13"
+#define CIRCUIT_COLOR_COMMAND "#1B4594"
+#define CIRCUIT_COLOR_SECURITY "#9A151E"
+#define CIRCUIT_COLOR_SCIENCE "#BC4A9B"
+#define CIRCUIT_COLOR_SERVICE "#92DCBA"
+#define CIRCUIT_COLOR_MEDICAL "#00CCFF"
+#define CIRCUIT_COLOR_ENGINEERING "#F8D700"
+#define CIRCUIT_COLOR_SUPPLY "#C47749"

@@ -88,7 +88,7 @@
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-	if(organ_flags & ORGAN_FAILING) //heart broke, stopped beating, death imminent
+	if(organ_flags & ORGAN_FAILING && !(HAS_TRAIT(src, TRAIT_STABLEHEART))) //heart broke, stopped beating, death imminent... unless you have veins that pump blood without a heart
 		if(owner.stat == CONSCIOUS)
 			owner.visible_message("<span class='danger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>", \
 				"<span class='userdanger'>You feel a terrible pain in your chest, as if your heart has stopped!</span>")
@@ -356,8 +356,16 @@
 
 ///Actually spawns the crystal which puts the ethereal in it.
 /obj/item/organ/heart/ethereal/proc/crystalize(mob/living/ethereal)
+
+	var/location = ethereal.loc
+
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
+
+	if(ismob(location) || isitem(location)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
+		to_chat(ethereal, "<span class='userwarning'>You were unable to finish your crystallization, for obvious reasons.</span>")
+		stop_crystalization_process(ethereal, FALSE)
+		return
 	COOLDOWN_START(src, crystalize_cooldown, INFINITY) //Prevent cheeky double-healing until we get out, this is against stupid admemery
 	current_crystal = new(get_turf(ethereal), src)
 	stop_crystalization_process(ethereal, TRUE)

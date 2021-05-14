@@ -70,7 +70,7 @@
 		else if (critter.health == critter.maxHealth)
 			to_chat(user, "<span class='notice'>[patient] is at full health.</span>")
 			return FALSE
-		user.visible_message("<span class='green'>[user] applies [src] on [patient].</span>", "<span class='green'>You apply [src] on [patient].</span>")
+		user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [patient].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [patient].</span></span>")
 		patient.heal_bodypart_damage((heal_brute * 0.5))
 		return TRUE
 	if(iscarbon(patient))
@@ -87,7 +87,7 @@
 		to_chat(user, "<span class='warning'>[src] won't work on a robotic limb!</span>")
 		return FALSE
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
-		user.visible_message("<span class='green'>[user] applies [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply [src] on [C]'s [affecting.name].</span>")
+		user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [C]'s [affecting.name].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [C]'s [affecting.name].</span></span>")
 		var/previous_damage = affecting.get_damage()
 		if(affecting.heal_damage(brute, burn))
 			C.update_damage_overlays()
@@ -162,7 +162,7 @@
 	if(!do_after(user, (user == M ? self_delay : other_delay), target=M))
 		return
 
-	user.visible_message("<span class='green'>[user] applies [src] to [M]'s [limb.name].</span>", "<span class='green'>You bandage the wounds on [user == M ? "your" : "[M]'s"] [limb.name].</span>")
+	user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] to [M]'s [limb.name].</span></span>", "<span class='infoplain'><span class='green'>You bandage the wounds on [user == M ? "your" : "[M]'s"] [limb.name].</span></span>")
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
@@ -361,9 +361,9 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
-	amount = 4
+	amount = 1
 	self_delay = 20
-	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
+	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
 	novariants = TRUE
 	merge_type = /obj/item/stack/medical/bone_gel
 
@@ -393,6 +393,9 @@
 		bone.receive_damage(brute=60)
 	use(1)
 	return (BRUTELOSS)
+
+/obj/item/stack/medical/bone_gel/four
+	amount = 4
 
 /obj/item/stack/medical/poultice
 	name = "mourning poultices"

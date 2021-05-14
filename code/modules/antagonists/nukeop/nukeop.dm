@@ -178,10 +178,10 @@
 
 /datum/antagonist/nukeop/leader/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
-	to_chat(owner, "<B>You are the Syndicate [title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
-	to_chat(owner, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
+	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B></span>")
+	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID to another operative.</B></span>")
 	if(!CONFIG_GET(flag/disable_warops))
-		to_chat(owner, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
+		to_chat(owner, "<span class='warningplain'><B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B></span>")
 		var/obj/item/dukinuki = new challengeitem
 		var/mob/living/carbon/human/H = owner.current
 		if(!istype(H))
@@ -285,11 +285,6 @@
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
 			return FALSE
 	return TRUE
-
-/datum/team/nuclear/proc/syndies_escaped()
-	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")
-	var/obj/docking_port/stationary/transit/T = locate() in S.loc
-	return S && (is_centcom_level(S.z) || T)
 
 /datum/team/nuclear/proc/get_result()
 	var/evacuation = EMERGENCY_ESCAPED_OR_ENDGAMED
@@ -405,3 +400,9 @@
 
 /datum/team/nuclear/is_gamemode_hero()
 	return SSticker.mode.name == "nuclear emergency"
+
+/// Returns whether or not syndicate operatives escaped.
+/proc/syndies_escaped()
+	var/obj/docking_port/mobile/S = SSshuttle.getShuttle("syndicate")
+	var/obj/docking_port/stationary/transit/T = locate() in S.loc
+	return S && (is_centcom_level(S.z) || T)

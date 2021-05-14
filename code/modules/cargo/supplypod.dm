@@ -17,6 +17,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	density = FALSE
+	divable = FALSE
 	///List of bitflags for supply pods, see: code\__DEFINES\obj_flags.dm
 	var/pod_flags = NONE
 
@@ -63,6 +64,11 @@
 	style = STYLE_BLUESPACE
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
+
+//type used for one drop spawning items. doesn't have a style as style is set by the helper that creates this
+/obj/structure/closet/supplypod/podspawn
+	bluespace = TRUE
+	explosionSize = list(0,0,0,0)
 
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
@@ -188,7 +194,7 @@
 		..()
 
 /obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
-	return
+	return FALSE
 
 /obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return
@@ -453,12 +459,18 @@
 	glow_effect.icon_state = "pod_glow_" + GLOB.podstyles[style][POD_GLOW]
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
+	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, .proc/remove_glow)
 
 /obj/structure/closet/supplypod/proc/endGlow()
 	if(!glow_effect)
 		return
 	glow_effect.layer = LOW_ITEM_LAYER
 	glow_effect.fadeAway(delays[POD_OPENING])
+	remove_glow()
+
+/obj/structure/closet/supplypod/proc/remove_glow()
+	SIGNAL_HANDLER
+	UnregisterSignal(glow_effect, COMSIG_PARENT_QDELETING)
 	glow_effect = null
 
 /obj/structure/closet/supplypod/Destroy()

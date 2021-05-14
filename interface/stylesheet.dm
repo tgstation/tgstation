@@ -24,7 +24,8 @@ em						{font-style: normal;	font-weight: bold;}
 .bold					{					font-weight: bold;}
 
 .prefix					{					font-weight: bold;}
-
+.oocplain				{}
+.warningplain			{}
 .ooc					{					font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
@@ -52,6 +53,8 @@ em						{font-style: normal;	font-weight: bold;}
 .aiprivradio			{color: #ff00ff;}
 .redteamradio			{color: #ff0000;}
 .blueteamradio			{color: #0000ff;}
+.greenteamradio			{color: #00ff00;}
+.yellowteamradio		{color: #d1ba22;}
 
 .yell					{					font-weight: bold;}
 

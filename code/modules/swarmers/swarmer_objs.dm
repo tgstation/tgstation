@@ -46,7 +46,7 @@
 	icon_state = "swarmer_console"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 	max_integrity = 500
-	layer = MASSIVE_OBJ_LAYER
+	plane = MASSIVE_OBJ_PLANE
 	light_color = LIGHT_COLOR_CYAN
 	light_range = 10
 	anchored = TRUE
@@ -130,7 +130,15 @@
 	max_integrity = 10
 	density = FALSE
 
-/obj/structure/swarmer/trap/Crossed(atom/movable/AM)
+/obj/structure/swarmer/trap/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
+
+/obj/structure/swarmer/trap/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/living_crosser = AM
 		if(!istype(living_crosser, /mob/living/simple_animal/hostile/swarmer))
@@ -139,7 +147,6 @@
 			if(iscyborg(living_crosser))
 				living_crosser.Paralyze(100)
 			qdel(src)
-	return ..()
 
 /obj/structure/swarmer/blockade
 	name = "swarmer blockade"

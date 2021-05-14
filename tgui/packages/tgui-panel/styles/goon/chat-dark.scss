@@ -311,7 +311,7 @@ em {
   font-weight: bold;
 }
 
-.say, .emote, .infoplain {
+.say, .emote, .infoplain, .oocplain, .warningplain {
 }
 
 .deadsay {
@@ -380,6 +380,14 @@ em {
 
 .blueteamradio {
   color: #3434fd;
+}
+
+.greenteamradio {
+  color: #34fd34;
+}
+
+.yellowteamradio {
+  color: #fdfd34;
 }
 
 .yell {
@@ -775,7 +783,7 @@ em {
 }
 
 .bigicon {
-  font-size: 5em;
+  font-size: 2.5em;
 }
 
 .memo {

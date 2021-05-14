@@ -18,9 +18,10 @@
 		affected_carbon.adjust_disgust(12.5 * delta_time)
 
 
-/datum/addiction/opiods/lose_addiction(datum/mind/victim_mind)
+/datum/addiction/opiods/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
-	victim_mind.current.remove_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
+	affected_carbon.remove_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
+	affected_carbon.set_disgust(affected_carbon.disgust * 0.5) //half their disgust to help
 
 ///Stimulants
 
@@ -40,11 +41,11 @@
 	. = ..()
 	affected_carbon.add_movespeed_modifier(/datum/movespeed_modifier/stimulants)
 
-/datum/addiction/stimulants/lose_addiction(datum/mind/victim_mind)
+/datum/addiction/stimulants/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
-	victim_mind.current.remove_actionspeed_modifier(ACTIONSPEED_ID_STIMULANTS)
-	victim_mind.current.remove_status_effect(STATUS_EFFECT_WOOZY)
-	victim_mind.current.remove_movespeed_modifier(MOVESPEED_ID_STIMULANTS)
+	affected_carbon.remove_actionspeed_modifier(ACTIONSPEED_ID_STIMULANTS)
+	affected_carbon.remove_status_effect(STATUS_EFFECT_WOOZY)
+	affected_carbon.remove_movespeed_modifier(MOVESPEED_ID_STIMULANTS)
 
 ///Alcohol
 /datum/addiction/alcohol
@@ -83,15 +84,16 @@
 	. = ..()
 	affected_carbon.apply_status_effect(/datum/status_effect/trance, 40 SECONDS, TRUE)
 
-/datum/addiction/hallucinogens/lose_addiction(datum/mind/victim_mind)
+/datum/addiction/hallucinogens/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
-	var/atom/movable/plane_master_controller/game_plane_master_controller = victim_mind.current.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	var/atom/movable/plane_master_controller/game_plane_master_controller = affected_carbon.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("hallucinogen_blur")
 	game_plane_master_controller.remove_filter("hallucinogen_wave")
-	victim_mind.current.remove_status_effect(/datum/status_effect/trance, 40 SECONDS, TRUE)
+	affected_carbon.remove_status_effect(/datum/status_effect/trance, 40 SECONDS, TRUE)
 
 /datum/addiction/maintenance_drugs
 	name = "maintenance drug"
+	withdrawal_stage_messages = list("", "", "")
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -120,12 +122,17 @@
 	. = ..()
 	if(!ishuman(affected_carbon))
 		return
+	to_chat(affected_carbon, "<span class='warning'>You feel yourself adapt to the darkness.</span>")
+	var/mob/living/carbon/human/affected_human = affected_carbon
 
-	var/mob/living/carbon/human/affected_human
-	var/obj/item/organ/eyes/eyes = affected_human.getorgan(/obj/item/organ/eyes)
+	var/obj/item/organ/liver/empowered_liver = affected_carbon.getorgan(/obj/item/organ/liver)
+	if(empowered_liver)
+		ADD_TRAIT(empowered_liver, TRAIT_GREYTIDE_METABOLISM, "maint_drug_addiction")
 
-	ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, type)
-	eyes.refresh()
+	var/obj/item/organ/eyes/empowered_eyes = affected_human.getorgan(/obj/item/organ/eyes)
+	if(empowered_eyes)
+		ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
+		empowered_eyes?.refresh()
 
 /datum/addiction/maintenance_drugs/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	if(!ishuman(affected_carbon))
@@ -133,25 +140,23 @@
 	var/mob/living/carbon/human/affected_human = affected_carbon
 	var/turf/T = get_turf(affected_human)
 	var/lums = T.get_lumcount()
-	if(lums >= 0.4)
+	if(lums > 0.5)
 		SEND_SIGNAL(affected_human, COMSIG_ADD_MOOD_EVENT, "too_bright", /datum/mood_event/bright_light)
 		affected_human.dizziness = min(40, affected_human.dizziness + 3)
 		affected_human.set_confusion(min(affected_human.get_confusion() + (0.5 * delta_time), 20))
 	else
 		SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "too_bright")
 
-/datum/addiction/maintenance_drugs/lose_addiction(datum/mind/victim_mind)
+/datum/addiction/maintenance_drugs/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
-	if(iscarbon(victim_mind.current))
-		var/mob/living/carbon/affected_carbon = victim_mind.current
-		affected_carbon.hal_screwyhud = SCREWYHUD_NONE
-	if(!ishuman(victim_mind.current))
+	affected_carbon.hal_screwyhud = SCREWYHUD_NONE
+	if(!ishuman(affected_carbon))
 		return
-	var/mob/living/carbon/human/affected_human = victim_mind.current
+	var/mob/living/carbon/human/affected_human = affected_carbon
 	affected_human.dna?.species.liked_food = initial(affected_human.dna?.species.liked_food)
 	affected_human.dna?.species.disliked_food = initial(affected_human.dna?.species.disliked_food)
 	affected_human.dna?.species.toxic_food = initial(affected_human.dna?.species.toxic_food)
-	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, type)
+	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
 	var/obj/item/organ/eyes/eyes = affected_human.getorgan(/obj/item/organ/eyes)
 	eyes.refresh()
 
@@ -221,18 +226,20 @@
 		return
 	to_chat(affected_carbon, "<span class='warning'>You feel a dull pain in your [organ.name].</span>")
 
-/datum/addiction/medicine/lose_addiction(datum/mind/victim_mind)
+/datum/addiction/medicine/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
-	if(iscarbon(victim_mind.current))
-		var/mob/living/carbon/affected_carbon = victim_mind.current
-		affected_carbon.hal_screwyhud = SCREWYHUD_NONE
+	affected_carbon.hal_screwyhud = SCREWYHUD_NONE
 	hallucination.cleanup()
 	QDEL_NULL(hallucination2)
 
 ///Nicotine
 /datum/addiction/nicotine
 	name = "nicotine"
+	addiction_relief_treshold = MIN_NICOTINE_ADDICTION_REAGENT_AMOUNT //much less because your intake is probably from ciggies
 	withdrawal_stage_messages = list("Feel like having a smoke...", "Getting antsy. Really need a smoke now.", "I can't take it! Need a smoke NOW!")
+
+	medium_withdrawal_moodlet = /datum/mood_event/nicotine_withdrawal_moderate
+	severe_withdrawal_moodlet = /datum/mood_event/nicotine_withdrawal_severe
 
 /datum/addiction/nicotine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
@@ -241,13 +248,11 @@
 /datum/addiction/nicotine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	affected_carbon.Jitter(10 * delta_time)
-	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "nicotine_withdrawal_moderate", /datum/mood_event/nicotine_withdrawal_moderate)
 	if(DT_PROB(10, delta_time))
 		affected_carbon.emote("cough")
 
 /datum/addiction/nicotine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	affected_carbon.Jitter(15 * delta_time)
-	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "nicotine_withdrawal_severe", /datum/mood_event/nicotine_withdrawal_severe)
 	if(DT_PROB(15, delta_time))
 		affected_carbon.emote("cough")

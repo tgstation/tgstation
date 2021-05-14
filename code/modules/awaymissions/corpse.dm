@@ -88,7 +88,7 @@
 	if(!random || newname)
 		if(newname)
 			M.real_name = newname
-		else
+		else if(!M.unique_name)
 			M.real_name = mob_name ? mob_name : M.name
 		if(!mob_gender)
 			mob_gender = pick(MALE, FEMALE)
@@ -112,9 +112,9 @@
 	if(ckey)
 		M.ckey = ckey
 		if(show_flavour)
-			var/output_message = "<span class='big bold'>[short_desc]</span>"
+			var/output_message = "<span class='infoplain'><span class='big bold'>[short_desc]</span></span>"
 			if(flavour_text != "")
-				output_message += "\n<span class='bold'>[flavour_text]</span>"
+				output_message += "\n<span class='infoplain'><b>[flavour_text]</b></span>"
 			if(important_info != "")
 				output_message += "\n<span class='userdanger'>[important_info]</span>"
 			to_chat(M, output_message)
@@ -422,6 +422,12 @@
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/centcom/corpse/private_security
+
+/obj/effect/mob_spawn/human/intern //this is specifically the comms intern from the event
+	name = "CentCom Intern"
+	outfit = /datum/outfit/centcom/centcom_intern/unarmed
+	mob_name = "Nameless Intern"
+	mob_gender = MALE
 
 /////////////////Spooky Undead//////////////////////
 //there are living variants of many of these, they're now in ghost_role_spawners.dm

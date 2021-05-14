@@ -126,8 +126,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		addtimer(CALLBACK(src, .proc/announce_conflict, notadded), 5 SECONDS)
 
 /datum/preferences/proc/announce_conflict(list/notadded)
-	to_chat(parent, "<span class='alertwarning'>KEYBINDING CONFLICT</span>\n\
-					<span class='alertwarning'>There are new <a href='?_src_=prefs;preference=tab;tab=3'>keybindings</a> that default to keys you've already bound. These will be unbound.</span>")
+	to_chat(parent, "<span class='warningplain'><b><u>Keybinding Conflict</u></b></span>\n\
+					<span class='warningplain'><b>There are new <a href='?_src_=prefs;preference=tab;tab=3'>keybindings</a> that default to keys you've already bound. The new ones will be unbound.</b></span>")
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, "<span class='danger'>[conflicted.category]: [conflicted.full_name] needs updating</span>")
@@ -431,6 +431,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	READ_FILE(S["preferred_ai_core_display"], preferred_ai_core_display)
 	READ_FILE(S["prefered_security_department"], prefered_security_department)
 
+	// This is the version when the random security department was removed.
+	// When the minimum is higher than that version, it's impossible for someone to have the "Random" department.
+	#if SAVEFILE_VERSION_MIN > 40
+	#warn The prefered_security_department check in preferences_savefile.dm is no longer necessary.
+	#endif
+
+	if (!(prefered_security_department in GLOB.security_depts_prefs))
+		prefered_security_department = SEC_DEPT_NONE
+
 	//Jobs
 	READ_FILE(S["joblessrole"], joblessrole)
 	//Load prefs
@@ -465,22 +474,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	randomise = SANITIZE_LIST(randomise)
 
-	if(gender == MALE)
-		hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_male_list)
-		facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_male_list)
-		underwear = sanitize_inlist(underwear, GLOB.underwear_m)
-		undershirt = sanitize_inlist(undershirt, GLOB.undershirt_m)
-	else if(gender == FEMALE)
-		hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_female_list)
-		facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_female_list)
-		underwear = sanitize_inlist(underwear, GLOB.underwear_f)
-		undershirt = sanitize_inlist(undershirt, GLOB.undershirt_f)
-	else
-		hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_list)
-		facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_list)
-		underwear = sanitize_inlist(underwear, GLOB.underwear_list)
-		undershirt = sanitize_inlist(undershirt, GLOB.undershirt_list)
-
+	hairstyle = sanitize_inlist(hairstyle, GLOB.hairstyles_list)
+	facial_hairstyle = sanitize_inlist(facial_hairstyle, GLOB.facial_hairstyles_list)
+	underwear = sanitize_inlist(underwear, GLOB.underwear_list)
+	undershirt = sanitize_inlist(undershirt, GLOB.undershirt_list)
 	socks = sanitize_inlist(socks, GLOB.socks_list)
 	age = sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color = sanitize_hexcolor(hair_color, 3, 0)
@@ -490,7 +487,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	skin_tone = sanitize_inlist(skin_tone, GLOB.skin_tones)
 	backpack = sanitize_inlist(backpack, GLOB.backpacklist, initial(backpack))
 	jumpsuit_style = sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
-	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
+	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list_save, initial(uplink_spawn_loc))
 	playtime_reward_cloak = sanitize_integer(playtime_reward_cloak)
 	features["mcolor"] = sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["ethcolor"] = copytext_char(features["ethcolor"], 1, 7)

@@ -6,6 +6,7 @@
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "tpump"
+	vent_movement = NONE
 	///Percent of the heat delta to transfer
 	var/heat_transfer_rate = 0
 	///Maximum allowed transfer percentage
@@ -29,7 +30,6 @@
 	icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/process_atmos()
-
 	if(!on || !is_operational)
 		return
 
@@ -50,11 +50,10 @@
 		var/cooling_heat_amount = (heat_transfer_rate * 0.01) * coolant_temperature_delta * (input_capacity * output_capacity / (input_capacity + output_capacity))
 		remove_input.temperature = max(remove_input.temperature - (cooling_heat_amount / input_capacity), TCMB)
 		remove_output.temperature = max(remove_output.temperature + (cooling_heat_amount / output_capacity), TCMB)
+		update_parents()
 
 	air_input.merge(remove_input)
 	air_output.merge(remove_output)
-
-	update_parents()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

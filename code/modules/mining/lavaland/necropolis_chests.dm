@@ -25,7 +25,7 @@
 
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
 		return FALSE
-	var/loot = rand(1,21)
+	var/loot = rand(1,20)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -69,15 +69,13 @@
 		if(16)
 			new /obj/item/immortality_talisman(src)
 		if(17)
-			new /obj/item/voodoo(src)
-		if(18)
 			new /obj/item/book/granter/spell/summonitem(src)
-		if(19)
+		if(18)
 			new /obj/item/book_of_babel(src)
-		if(20)
+		if(19)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-		if(21)
+		if(20)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 	spawned_loot = TRUE
 	qdel(item)
@@ -203,7 +201,7 @@
 
 /obj/item/rod_of_asclepius/proc/activated()
 	item_flags = DROPDEL
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -410,7 +408,11 @@
 	fire_sound = 'sound/weapons/batonextend.ogg'
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
+	sharpness = SHARP_POINTY
 	force = 18
+
+/obj/item/gun/magic/hook/shoot_with_empty_chamber(mob/living/user)
+	to_chat(user, "<span class='warning'>[src] isn't ready to fire yet!</span>")
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
@@ -418,6 +420,7 @@
 	projectile_type = /obj/projectile/hook
 	caliber = CALIBER_HOOK
 	icon_state = "hook"
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/projectile/hook
 	name = "hook"
@@ -461,9 +464,6 @@
 /obj/item/gun/magic/hook/bounty
 	name = "hook"
 	ammo_type = /obj/item/ammo_casing/magic/hook/bounty
-
-/obj/item/gun/magic/hook/bounty/shoot_with_empty_chamber(mob/living/user)
-	to_chat(user, "<span class='warning'>The [src] isn't ready to fire yet!</span>")
 
 /obj/item/ammo_casing/magic/hook/bounty
 	projectile_type = /obj/projectile/hook/bounty

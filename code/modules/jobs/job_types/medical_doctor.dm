@@ -8,6 +8,7 @@
 	selection_color = "#ffeef0"
 
 	outfit = /datum/outfit/job/doctor
+	plasmaman_outfit = /datum/outfit/plasmaman/medical
 
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
@@ -19,6 +20,16 @@
 	departments = DEPARTMENT_MEDICAL
 
 	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
+
+	mail_goodies = list(
+		/obj/item/healthanalyzer/advanced = 15,
+		/obj/item/scalpel/advanced = 6,
+		/obj/item/retractor/advanced = 6,
+		/obj/item/cautery/advanced = 6,
+		/datum/reagent/toxin/formaldehyde = 6,
+		/obj/effect/spawner/lootdrop/organ_spawner = 5,
+		/obj/effect/spawner/lootdrop/memeorgans = 1
+	)
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
@@ -37,7 +48,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 	box = /obj/item/storage/box/survival/medical
 
-	skillchips = list(/obj/item/skillchip/entrails_reader, /obj/item/skillchip/quickcarry)
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 	chameleon_extras = /obj/item/gun/syringe
 

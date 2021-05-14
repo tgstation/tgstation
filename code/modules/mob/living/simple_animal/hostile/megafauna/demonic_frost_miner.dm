@@ -151,7 +151,7 @@ Difficulty: Extremely Hard
 		target.ex_act(EXPLODE_HEAVY)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
-	adjustBruteLoss(30 * severity - 120)
+	adjustBruteLoss(-30 * severity)
 	visible_message("<span class='danger'>[src] absorbs the explosion!</span>", "<span class='userdanger'>You absorb the explosion!</span>")
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Goto(target, delay, minimum_distance)
@@ -331,12 +331,12 @@ Difficulty: Extremely Hard
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_FEET)
-		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/dropped(mob/user)
 	. = ..()
 	// Could have been blown off in an explosion from the previous owner
-	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/ui_action_click(mob/user)
 	on = !on

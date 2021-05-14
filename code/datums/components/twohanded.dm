@@ -17,8 +17,8 @@
 	var/icon_wielded = FALSE /// The icon that will be used when wielded
 	var/obj/item/offhand/offhand_item = null /// Reference to the offhand created for the item
 	var/sharpened_increase = 0 /// The amount of increase recived from sharpening the item
-
 /**
+
  * Two Handed component
  *
  * vars:
@@ -152,6 +152,7 @@
 	if(SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, user) & COMPONENT_TWOHANDED_BLOCK_WIELD)
 		return // blocked wield from item
 	wielded = TRUE
+	ADD_TRAIT(parent,TRAIT_WIELDED,src)
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
 
 	// update item stats and name
@@ -198,6 +199,7 @@
 	wielded = FALSE
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
+	REMOVE_TRAIT(parent,TRAIT_WIELDED,src)
 
 	// update item stats
 	var/obj/item/parent_item = parent

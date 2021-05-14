@@ -121,9 +121,10 @@
 	if(!special)
 		if(phantom_owner.dna)
 			for(var/X in phantom_owner.dna.mutations) //some mutations require having specific limbs to be kept.
-				var/datum/mutation/human/MT = X
-				if(MT.limb_req && MT.limb_req == body_zone)
-					phantom_owner.dna.force_lose(MT)
+				var/datum/mutation/human/mutation = X
+				if(mutation.limb_req && mutation.limb_req == body_zone)
+					to_chat(phantom_owner, "<span class='warning'>You feel your [mutation] deactivating from the loss of your [body_zone]!</span>")
+					phantom_owner.dna.force_lose(mutation)
 
 		for(var/X in phantom_owner.internal_organs) //internal organs inside the dismembered limb are dropped.
 			var/obj/item/organ/O = X

@@ -3,7 +3,7 @@
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	///The type of atom this creates when the processing recipe is used.
-	var/result_atom_type
+	var/atom/result_atom_type
 	///The tool behaviour for this processing recipe
 	var/tool_behaviour
 	///Time to process the atom
@@ -22,13 +22,22 @@
 	src.result_atom_type = result_atom_type
 
 	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour), .proc/try_process)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
 /datum/element/processable/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour))
+	UnregisterSignal(target, list(COMSIG_ATOM_TOOL_ACT(tool_behaviour), COMSIG_PARENT_EXAMINE))
 
 /datum/element/processable/proc/try_process(datum/source, mob/living/user, obj/item/I, list/mutable_recipes)
 	SIGNAL_HANDLER
 
 	mutable_recipes += list(list(TOOL_PROCESSING_RESULT = result_atom_type, TOOL_PROCESSING_AMOUNT = amount_created, TOOL_PROCESSING_TIME = time_to_process))
-	return COMPONENT_NO_AFTERATTACK
+
+///So people know what the frick they're doing without reading from a wiki page (I mean they will inevitably but i'm trying to help, ok?)
+/datum/element/processable/proc/OnExamine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(amount_created > 1)
+		examine_list += "<span class='notice'>It can be turned into [amount_created] [initial(result_atom_type.name)]s with <b>[tool_behaviour_name(tool_behaviour)]</b>!</span>"
+	else
+		examine_list += "<span class='notice'>It can be turned into \a [initial(result_atom_type.name)] with <b>[tool_behaviour_name(tool_behaviour)]</b>!</span>"

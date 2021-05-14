@@ -123,6 +123,12 @@
 	item_instance = /obj/item/reagent_containers/food/condiment/soymilk
 	cost_per_order = 30
 
+/datum/orderable_item/cream
+	name = "Cream"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/reagent_containers/food/drinks/bottle/cream
+	cost_per_order = 40
+
 /datum/orderable_item/eggs
 	name = "Egg Carton"
 	category_index = CATEGORY_MILK_EGGS
@@ -154,6 +160,12 @@
 	item_instance = /obj/item/reagent_containers/food/condiment/sugar
 	cost_per_order = 30
 
+/datum/orderable_item/rice
+	name = "Rice Sack"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/rice
+	cost_per_order = 30
+
 /datum/orderable_item/enzyme
 	name = "Universal Enzyme"
 	category_index = CATEGORY_SAUCES_REAGENTS
@@ -177,3 +189,9 @@
 	category_index = CATEGORY_SAUCES_REAGENTS
 	item_instance = /obj/item/reagent_containers/food/condiment/soysauce
 	cost_per_order = 15
+
+/datum/orderable_item/bbqsauce
+	name = "BBQ Sauce"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/bbqsauce
+	cost_per_order = 60

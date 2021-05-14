@@ -39,8 +39,12 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/obj_destruction(damage_flag)
 	var/turf/T = get_turf(src)
-	for(var/atom/movable/thing as anything in contents)
-		thing.forceMove(T)
+#if MIN_COMPILER_VERSION >= 514
+	#warn Please replace the loop below this warning with an `as anything` loop.
+#endif
+	for(var/wheelchair_content in contents)
+		var/atom/movable/atom_content = wheelchair_content
+		atom_content.forceMove(T)
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/motorized/relaymove(mob/living/user, direction)
@@ -116,8 +120,12 @@
 	new /obj/item/stack/rods(drop_location(), 8)
 	new /obj/item/stack/sheet/iron(drop_location(), 10)
 	var/turf/T = get_turf(src)
-	for(var/atom/movable/thing as anything in contents)
-		thing.forceMove(T)
+#if MIN_COMPILER_VERSION >= 514
+	#warn Please replace the loop below this warning with an `as anything` loop.
+#endif
+	for(var/wheelchair_content in contents)
+		var/atom/movable/atom_content = wheelchair_content
+		atom_content.forceMove(T)
 	qdel(src)
 	return TRUE
 
@@ -136,7 +144,7 @@
 	. = ..()
 	// Here is the shitty emag functionality.
 	if(obj_flags & EMAGGED && (istype(A, /turf/closed) || isliving(A)))
-		explosion(src, -1, 1, 3, 2, 0)
+		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
 		visible_message("<span class='boldwarning'>[src] explodes!!</span>")
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away

@@ -12,7 +12,7 @@
 					/obj/item/reagent_containers/medigel/aiuri = 2,
 					/obj/item/reagent_containers/medigel/sterilizine = 1,
 					/obj/item/healthanalyzer/wound = 2,
-					/obj/item/stack/medical/bone_gel = 2)
+					/obj/item/stack/medical/bone_gel/four = 2)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 2,
 	                  /obj/item/reagent_containers/pill/morphine = 2,
 	                  /obj/item/storage/box/gum/happiness = 1)
@@ -22,6 +22,22 @@
 	payment_department = ACCOUNT_MED
 	tiltable = FALSE
 	light_mask = "wallmed-light-mask"
+
+/obj/machinery/vending/wallmed/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/vending/wallmed/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/vending/wallmed/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/vending/wallmed/directional/west
+	dir = EAST
+	pixel_x = -32
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"

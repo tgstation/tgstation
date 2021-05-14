@@ -1,0 +1,16 @@
+{
+    "": [
+        {
+            "type": "icon_state",
+            "icon_state": "cloth_lefthand",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+        {
+            "type": "icon_state",
+            "icon_state": "ornamentation_lefthand",
+            "blend_mode": "overlay",
+            "color_ids": [ 2 ]
+        }
+    ]
+}

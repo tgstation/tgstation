@@ -63,6 +63,9 @@
 		for(var/obj/item/stack/S in loc)
 			if(can_merge(S))
 				INVOKE_ASYNC(src, .proc/merge, S)
+				//Merge can call qdel on us, so let's be safe yeah?
+				if(QDELETED(src))
+					return
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
@@ -77,6 +80,10 @@
 					recipes += temp
 	update_weight()
 	update_appearance()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -152,7 +159,7 @@
 		. += "There are [get_amount()] in the stack."
 	else
 		. += "There is [get_amount()] in the stack."
-	. += "<span class='notice'>Alt-click to take a custom amount.</span>"
+	. += "<span class='notice'><b>Right-click</b> with an empty hand to take a custom amount.</span>"
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -336,8 +343,8 @@
 				var/obj/structure/window/window_structure = object
 				if(!window_structure.fulltile)
 					continue
-			if(object.density)
-				to_chat(usr, "<span class='warning'>There is \a [object.name] here. You cant make \a [recipe.title] here!</span>")
+			if(object.density || NO_BUILD & object.obj_flags)
+				to_chat(usr, "<span class='warning'>There is \a [object.name] here. You can\'t make \a [recipe.title] here!</span>")
 				return FALSE
 	if(recipe.placement_checks)
 		switch(recipe.placement_checks)
@@ -437,10 +444,10 @@
 	S.add(transfer)
 	return transfer
 
-/obj/item/stack/Crossed(atom/movable/crossing)
+/obj/item/stack/proc/on_entered(datum/source, atom/movable/crossing)
+	SIGNAL_HANDLER
 	if(!crossing.throwing && can_merge(crossing))
-		merge(crossing)
-	. = ..()
+		INVOKE_ASYNC(src, .proc/merge, crossing)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting))
@@ -456,21 +463,18 @@
 	else
 		. = ..()
 
-/obj/item/stack/AltClick(mob/living/user)
-	. = ..()
-	if(isturf(loc)) // to prevent people that are alt clicking a tile to see its content from getting undesidered pop ups
-		return
+/obj/item/stack/attack_hand_secondary(mob/user, modifiers)
 	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || zero_amount())
-		return
-	//get amount from user
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	var/max = get_amount()
-	var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as null|num)
+	var/stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack? (Maximum [max])", "Stack Split") as null|num)
 	max = get_amount()
 	stackmaterial = min(max, stackmaterial)
 	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		return
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	split_stack(user, stackmaterial)
 	to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack.</span>")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /** Splits the stack into two stacks.
  *

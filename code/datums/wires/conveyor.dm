@@ -13,5 +13,7 @@
 	C.interact(fingerman)
 
 /datum/wires/conveyor/interactable(mob/user)
+	if(!..())
+		return FALSE
 	fingerman = user
 	return TRUE

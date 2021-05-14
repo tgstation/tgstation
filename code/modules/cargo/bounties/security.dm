@@ -59,7 +59,8 @@
 		/area/security/office,\
 		/area/security/prison,\
 		/area/security/range,\
-		/area/security/checkpoint)
+		/area/security/checkpoint,\
+		/area/security/interrogation)
 	demanded_area = pick(possible_areas)
 	name = name + ": [initial(demanded_area.name)]"
 	description = initial(description) + " [initial(demanded_area.name)]"

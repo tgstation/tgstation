@@ -54,6 +54,10 @@
 	jackpot_loop = new(list(src), FALSE)
 	wires = new /datum/wires/roulette(src)
 
+/obj/machinery/roulette/Destroy()
+	QDEL_NULL(jackpot_loop)
+	. = ..()
+
 /obj/machinery/roulette/obj_break(damage_flag)
 	prize_theft(0.05)
 	. = ..()
@@ -71,16 +75,19 @@
 	data["IsAnchored"] = anchored
 	data["BetAmount"] = chosen_bet_amount
 	data["BetType"] = chosen_bet_type
-	data["HouseBalance"] = my_card?.registered_account.account_balance
+	data["HouseBalance"] = my_card?.registered_account?.account_balance || 0
 	data["LastSpin"] = last_spin
 	data["Spinning"] = playing
-	var/mob/living/carbon/human/H = user
-	var/obj/item/card/id/C = H.get_idcard(TRUE)
-	if(C)
-		data["AccountBalance"] = C.registered_account.account_balance
+
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		var/obj/item/card/id/id_card = human_user.get_idcard(TRUE)
+		data["AccountBalance"] = id_card?.registered_account?.account_balance || 0
+		data["CanUnbolt"] = (id_card == my_card)
 	else
 		data["AccountBalance"] = 0
-	data["CanUnbolt"] = (C == my_card)
+		data["CanUnbolt"] = FALSE
 
 	return data
 

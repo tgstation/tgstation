@@ -38,6 +38,7 @@
 
 		var/obj/projectile/A = new projectile(get_turf(src))
 		var/modifiers = params2list(params)
+		A.firer = chassis
 		A.preparePixelProjectile(target, source, modifiers, spread)
 
 		A.fire()
@@ -471,10 +472,12 @@
 	..()
 	if(href_list["lethalPunch"])
 		harmful = !harmful
+		if(!chassis)
+			return
 		if(harmful)
-			chassis?.to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Enabled.</span>")
+			to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Enabled.</span>")
 		else
-			chassis?.to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Disabled.</span>")
+			to_chat(usr, "[icon2html(src, usr)]<span class='warning'>Lethal Fisting Disabled.</span>")
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(mob/source, atom/target, params)
 	. = ..()

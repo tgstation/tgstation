@@ -10,6 +10,22 @@
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
 
+/obj/structure/extinguisher_cabinet/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/structure/extinguisher_cabinet/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/structure/extinguisher_cabinet/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/structure/extinguisher_cabinet/directional/west
+	dir = EAST
+	pixel_x = -32
+
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
@@ -32,14 +48,16 @@
 	return ..()
 
 /obj/structure/extinguisher_cabinet/contents_explosion(severity, target)
-	if(stored_extinguisher)
-		switch(severity)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += stored_extinguisher
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += stored_extinguisher
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += stored_extinguisher
+	if(!stored_extinguisher)
+		return
+
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += stored_extinguisher
+		if(EXPLODE_HEAVY)
+			SSexplosions.med_mov_atom += stored_extinguisher
+		if(EXPLODE_LIGHT)
+			SSexplosions.low_mov_atom += stored_extinguisher
 
 /obj/structure/extinguisher_cabinet/handle_atom_del(atom/A)
 	if(A == stored_extinguisher)

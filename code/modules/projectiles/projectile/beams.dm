@@ -161,6 +161,34 @@
 	impact_light_range = 2.5
 	impact_light_color_override = COLOR_LIME
 
+//This is basically a cannon beam
+/obj/projectile/beam/emitter/heavy
+	name = "heavy emitter beam"
+	icon_state = "emitter_heavy"
+	damage = 600
+	wound_bonus = 70
+	armour_penetration = 100
+
+/obj/projectile/beam/emitter/heavy/on_hit(atom/target, blocked)
+	. = ..()
+
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		for(var/i in 1 to 3)
+			var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
+			var/type_found = pick(GLOB.global_wound_types[WOUND_BURN])
+			var/datum/wound/burnies = new type_found()
+			burnies.apply_wound(bodypart)
+
+	if(istype(target,/obj/machinery/power/supermatter_crystal))
+		return
+
+	explosion(src,rand(0,1),1+rand(0,1),2+rand(0,1))
+
+/obj/projectile/beam/emitter/heavy/on_range()
+	explosion(src,rand(1,2),1+rand(1,2),2+rand(1,2))
+	return ..()
+
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"
 	icon_state = "omnilaser"
@@ -219,6 +247,16 @@
 	icon_state = "red_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_color = COLOR_SOFT_RED
+
+/obj/projectile/beam/instakill/green
+	icon_state = "green_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+	light_color = COLOR_VERY_PALE_LIME_GREEN
+
+/obj/projectile/beam/instakill/yellow
+	icon_state = "yellow_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+	light_color = COLOR_VERY_SOFT_YELLOW
 
 /obj/projectile/beam/instakill/on_hit(atom/target)
 	. = ..()

@@ -55,7 +55,7 @@ HUMANS_NEED_SURNAMES
 #FORCE_RANDOM_NAMES
 
 ## Unhash this to turn on automatic reopening of a player's job if they suicide at roundstart
-#REOPEN_ROUNDSTART_SUICIDE_ROLES
+REOPEN_ROUNDSTART_SUICIDE_ROLES
 
 ## Unhash to enable reopening of command level positions
 #REOPEN_ROUNDSTART_SUICIDE_ROLES_COMMAND_POSITIONS
@@ -63,7 +63,7 @@ HUMANS_NEED_SURNAMES
 ## Define the delay for roles to be reopened after the round starts in seconds.
 ## Has a minimum delay of 30 seconds, though it's suggested to keep over 1 min
 ## If undefined, the delay defaults to 4 minutes.
-#REOPEN_ROUNDSTART_SUICIDE_ROLES_DELAY 240
+REOPEN_ROUNDSTART_SUICIDE_ROLES_DELAY 600
 
 ## Unhash to enable a printed command report for reopened roles listing what roles were reopened.
 #REOPEN_ROUNDSTART_SUICIDE_ROLES_COMMAND_REPORT
@@ -157,7 +157,7 @@ MIDROUND_ANTAG WIZARD
 #MIN_POP TRAITORBRO 0
 #MAX_POP TRAITORBRO -1
 
-#MIN_POP TRAITORCHAN 15
+MIN_POP TRAITORCHAN 10
 #MAX_POP TRAITORCHAN -1
 
 #MIN_POP DOUBLE_AGENTS 25
@@ -166,16 +166,16 @@ MIDROUND_ANTAG WIZARD
 #MIN_POP NUCLEAR 0
 #MAX_POP NUCLEAR -1
 
-#MIN_POP REVOLUTION 20
+MIN_POP REVOLUTION 15
 #MAX_POP REVOLUTION -1
 
-#MIN_POP CULT 24
+MIN_POP CULT 15
 #MAX_POP CULT -1
 
-#MIN_POP CHANGELING 15
+MIN_POP CHANGELING 10
 #MAX_POP CHANGELING -1
 
-#MIN_POP WIZARD 20
+MIN_POP WIZARD 20
 #MAX_POP WIZARD -1
 
 #MIN_POP MONKEY 20
@@ -218,7 +218,7 @@ PROTECT_ROLES_FROM_ANTAGONIST
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
 
 ## If non-human species are barred from joining as a head of staff
-#ENFORCE_HUMAN_AUTHORITY
+ENFORCE_HUMAN_AUTHORITY
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
@@ -309,7 +309,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 #SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
-#EVERYONE_HAS_MAINT_ACCESS
+EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this out this to make security officers spawn in departmental security posts
 SEC_START_BRIG
@@ -434,7 +434,7 @@ ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 
 ## Races that are better than humans in some ways, but worse in others
-ROUNDSTART_RACES ethereal
+#ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES golem
 #ROUNDSTART_RACES adamantine
@@ -450,7 +450,7 @@ ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES skeleton
 #ROUNDSTART_RACES zombie
 #ROUNDSTART_RACES slime
-#ROUNDSTART_RACES pod
+ROUNDSTART_RACES pod
 #ROUNDSTART_RACES military_synth
 #ROUNDSTART_RACES agent
 
@@ -471,10 +471,10 @@ OVERFLOW_CAP -1
 
 ## Starlight for exterior walls and breaches. Uncomment for starlight!
 ## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
-#STARLIGHT
+STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
-#GREY_ASSISTANTS
+GREY_ASSISTANTS
 
 ## Midround Antag (aka Mulligan antag) config options ###
 
@@ -534,7 +534,7 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 ## How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
 
-MICE_ROUNDSTART 10
+MICE_ROUNDSTART 0
 
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
 #EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
@@ -544,10 +544,10 @@ MICE_ROUNDSTART 10
 ROUNDSTART_TRAITS
 
 ## Uncomment to disable human moods.
-#DISABLE_HUMAN_MOOD
+DISABLE_HUMAN_MOOD
 
 ## Enable night shifts ##
-#ENABLE_NIGHT_SHIFTS
+ENABLE_NIGHT_SHIFTS
 
 ## Enable randomized shift start times##
 #RANDOMIZE_SHIFT_TIME
