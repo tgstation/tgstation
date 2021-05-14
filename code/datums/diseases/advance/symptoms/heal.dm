@@ -1,7 +1,3 @@
-#define STARLIGHT_CAN_HEAL 2
-#define STARLIGHT_CAN_HEAL_WITH_PENALTY 1
-#define STARLIGHT_CANNOT_HEAL 0
-
 /datum/symptom/heal
 	name = "Basic Healing (does nothing)" //warning for adminspawn viruses
 	desc = "You should not be seeing this."
@@ -66,6 +62,10 @@
 		"Stage Speed 6" = "Increases healing speed.",
 		"Transmission 6" = "Removes penalty for only being close to space.",
 	)
+
+#define STARLIGHT_CAN_HEAL 2
+#define STARLIGHT_CAN_HEAL_WITH_PENALTY 1
+#define STARLIGHT_CANNOT_HEAL 0
 
 /datum/symptom/heal/starlight/Start(datum/disease/advance/A)
 	. = ..()
