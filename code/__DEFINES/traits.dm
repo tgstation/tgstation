@@ -235,6 +235,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_OIL_FRIED "oil_fried"
 #define TRAIT_MEDICAL_HUD "med_hud"
 #define TRAIT_SECURITY_HUD "sec_hud"
+#define TRAIT_SENSOR_HUD "sensor_hud"
 /// for something granting you a diagnostic hud
 #define TRAIT_DIAGNOSTIC_HUD "diag_hud"
 /// Is a medbot healing you
@@ -613,6 +614,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define DRONE_SHY_TRAIT "drone_shy"
 /// Pacifism trait given by stabilized light pink extracts.
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
+#define ANTI_DROP_IMPLANT_TRAIT "antidrop_implant"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

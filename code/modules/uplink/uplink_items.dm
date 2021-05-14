@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Comes with 2 A.R.A.S.A.K.A. Mantis blades and a syndicate cyberlink. All packaged with autosurgeons."
 	item = /obj/item/storage/briefcase/syndie_mantis
 	cost = 20
-	include_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/medical
 	name = "Medical bundle"
@@ -1199,14 +1199,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 2
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops are allowed to buy this kit, since it's basically a costume
 
-/datum/uplink_item/stealthy_tools/chameleon_skillchip
+/*/datum/uplink_item/stealthy_tools/chameleon_skillchip
 	name = "Chameleon Skillchip"
 	desc = "A highly advanced skillchip that contains data on all available skillchips. \
 			This skillchip only takes up a single skillchip slot in the user's brain. \
 			Comes with a single-use Syndicate autosurgeon for immediate self-application."
 	item = /obj/item/autosurgeon/skillchip/syndicate/chameleon_chip
 	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear)
+	purchasable_from = ~UPLINK_NUKE_OPS*/ // it was removed from tg it seems, left here just in cases
 
 /datum/uplink_item/stealthy_tools/cyberlink
 	name = "Cybersun Cybernetics Access System"

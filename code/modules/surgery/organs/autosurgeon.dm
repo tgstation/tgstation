@@ -236,7 +236,8 @@
 
 	return TRUE
 
-/obj/item/autosurgeon/skillchip/syndicate/chameleon_chip
+/*/obj/item/autosurgeon/skillchip/syndicate/chameleon_chip
 	desc = "A single use autosurgeon that contains a Syndicate skillchip. A screwdriver can be used to remove it, but skillchips can't be placed back in."
 	uses = 1
 	starting_skillchip = /obj/item/skillchip/chameleon
+*/ //was removed from tg left just in case
