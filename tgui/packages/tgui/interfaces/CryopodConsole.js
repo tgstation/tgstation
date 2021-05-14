@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Collapsible, LabeledList, NoticeBox, Section } from '../components';
+import { Box, LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const CryopodConsole = (props, context) => {
@@ -11,11 +11,17 @@ export const CryopodConsole = (props, context) => {
   return (
     <Window title="Cryopod Console" width={400} height={480}>
       <Window.Content>
-        <Section title={welcomeTitle}>
-          This automated cryogenic freezing unit will safely store your
-          corporeal form until your next assignment.
-        </Section>
-        <CrewList />
+        <Stack vertical fill>
+          <Stack.Item>
+            <Section title={welcomeTitle}>
+              This automated cryogenic freezing unit will safely store your
+              corporeal form until your next assignment.
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow>
+            <CrewList />
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -26,20 +32,20 @@ const CrewList = (props, context) => {
   const { frozen_crew } = data;
 
   return (
-    <Collapsible title="Stored Crew">
-      {!frozen_crew.length ? (
-        <NoticeBox>No stored crew!</NoticeBox>
-      ) : (
-        <Section height={"100%"} scrollable>
-          <LabeledList>
-            {frozen_crew.map((person) => (
-              <LabeledList.Item key={person} label={person.name}>
-                {person.job}
-              </LabeledList.Item>
-            ))}
-          </LabeledList>
-        </Section>
-      )}
-    </Collapsible>
+    frozen_crew.length && (
+      <Section
+        fill
+        scrollable>
+        <LabeledList>
+          {frozen_crew.map((person) => (
+            <LabeledList.Item key={person} label={person.name}>
+              {person.job}
+            </LabeledList.Item>
+          ))}
+        </LabeledList>
+      </Section>
+    ) || (
+      <NoticeBox>No stored crew!</NoticeBox>
+    )
   );
 };
