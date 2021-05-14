@@ -79,8 +79,6 @@
 	. = ..()
 	if(newtheme)
 		theme = newtheme
-	if(!ispath(theme))
-		CRASH("A MODsuit spawned without a proper theme.")
 	theme = GLOB.mod_themes[theme]
 	slowdown = theme.slowdown_unactive
 	complexity_max = theme.complexity_max
@@ -95,26 +93,18 @@
 		helmet = new theme.helmet_path(src)
 		helmet.mod = src
 		mod_parts += helmet
-	else
-		CRASH("A MODsuit spawned without a helmet.")
 	if(ispath(theme.chestplate_path))
 		chestplate = new theme.chestplate_path(src)
 		chestplate.mod = src
 		mod_parts += chestplate
-	else
-		CRASH("A MODsuit spawned without a chestplate.")
 	if(ispath(theme.gauntlets_path))
 		gauntlets = new theme.gauntlets_path(src)
 		gauntlets.mod = src
 		mod_parts += gauntlets
-	else
-		CRASH("A MODsuit spawned without gauntlets.")
 	if(ispath(theme.boots_path))
 		boots = new theme.boots_path(src)
 		boots.mod = src
 		mod_parts += boots
-	else
-		CRASH("A MODsuit spawned without boots.")
 	var/list/all_parts = mod_parts.Copy() + src
 	for(var/obj/item/piece as anything in all_parts)
 		piece.name = "[theme.name] [piece.name]"
@@ -356,8 +346,6 @@
 			audible_message("<span class='warning'>[src] indicates that it rejects [new_module].</span>", "<span class='warning'>[src] flashes an error message.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
-		else
-			CRASH("MODsuit starting modules are in the theme's blacklist.")
 	var/complexity_with_module = complexity
 	complexity_with_module += new_module.complexity
 	if(complexity_with_module > complexity_max)

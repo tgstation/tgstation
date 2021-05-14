@@ -64,6 +64,7 @@
 #include "medical_wounds.dm"
 #include "merge_type.dm"
 #include "metabolizing.dm"
+#include "modsuit.dm"
 #include "ntnetwork_tests.dm"
 #include "outfit_sanity.dm"
 #include "pills.dm"
