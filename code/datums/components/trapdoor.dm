@@ -124,7 +124,7 @@
 	var/turf/open/trapdoor_turf = parent
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
 	trapdoor_turf.visible_message("<span class='warning'>[trapdoor_turf] swings open!</span>")
-	new /obj/effect/temp_visual/trapdoor_open(trapdoor_turf, trapdoor_turf)
+	new /obj/effect/trapdoor_open_animation(trapdoor_turf, trapdoor_turf)
 	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
 
 /**
@@ -249,24 +249,38 @@
 /obj/effect/trapdoor_open_animation/Initialize(mapload, atom/trapdoor_to_copy)
 	. = ..()
 	//i'm pretty sure this is required, that atom is about to not exist momentarily
-	var/static/image/trapdoor_leftside = new()
+	var/image/trapdoor_leftside = new()
 	trapdoor_leftside.appearance = trapdoor_to_copy.appearance
-	var/static/image/trapdoor_rightside = new()
+	var/image/trapdoor_rightside = new()
 	trapdoor_rightside.appearance = trapdoor_leftside.appearance
-	//drawing box from bottom middle (world.icon_size/2x, 1y) to top right (world.icon_sizex, world.icon_sizey)
-	trapdoor_leftside.DrawBox(null, world.icon_size/2, 1, world.icon_size, world.icon_size)
+
+	///these are inverted (leftside gets right side of the icon)
+	///because it allows their "hinge" (where the icon rotates from)
+	///to be set to the corner of the tile with matrixes.
+
 	//drawing box from bottom middle (world.icon_size/2x, 1y) to top left (1x, world.icon_sizey)
-	trapdoor_rightside.DrawBox(null, world.icon_size/2, 1, 1, world.icon_size)
-	var/obj/effect/temp_visual/trapdoor_open_part/left = new(src.loc, trapdoor_leftside)
-	var/obj/effect/temp_visual/trapdoor_open_part/right = new(src.loc, trapdoor_rightside)
+		//trapdoor_leftside.DrawBox(null, world.icon_size/2, 1, 1, world.icon_size)
+	//drawing box from bottom middle (world.icon_size/2x, 1y) to top right (world.icon_sizex, world.icon_sizey)
+		//trapdoor_rightside.DrawBox(null, world.icon_size/2, 1, world.icon_size, world.icon_size)
+	new /obj/effect/temp_visual/trapdoor_open_part(src.loc, trapdoor_leftside, -16)
+	new /obj/effect/temp_visual/trapdoor_open_part(src.loc, trapdoor_rightside, 16)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/temp_visual/trapdoor_open_part
 	duration = 1 SECONDS
 
-/obj/effect/temp_visual/trapdoor_open_part/Initialize(mapload, given_appearance, side)
+/obj/effect/temp_visual/trapdoor_open_part/Initialize(mapload, given_appearance, horizontal_offset)
 	. = ..()
 	appearance = given_appearance
-	var/matrix/matrix_to = matrix(0, 0, 0, -0.25, 0.25, 0)
-	animate(src, transform = matrix_to, icon_state = door_state, layer = door_layer, time = world.tick_lag, flags = ANIMATION_END_NOW)
+	var/matrix/our_matrix = transform
+	///moves the hinge of the trapdoor animation to the corner of the tile
+	our_matrix.c = horizontal_offset
+	var/goal_scale = cos(TORADIANS(89))
+	var/goal_vertical_skew = sin(TORADIANS(89))
+	//turning clockwise requires inverting a few vars
+	if(!SIGN(horizontal_offset))
+		//horizontal_offset is negative so goal for horizontal skew should be
+		goal_vertical_skew = -goal_vertical_skew
+	animate(our_matrix, a = cos(goal_scale), time = 1 SECONDS)
+	animate(our_matrix, d = sin(goal_vertical_skew), time = 1 SECONDS)
 
