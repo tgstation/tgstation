@@ -30,7 +30,7 @@ const CrewList = (props, context) => {
       {!frozen_crew.length ? (
         <NoticeBox>No stored crew!</NoticeBox>
       ) : (
-        <Section height={10} fill scrollable>
+        <Section height={"100%"} scrollable>
           <LabeledList>
             {frozen_crew.map((person) => (
               <LabeledList.Item key={person} label={person.name}>
