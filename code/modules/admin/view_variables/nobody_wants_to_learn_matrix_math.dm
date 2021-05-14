@@ -30,7 +30,6 @@
 
 /datum/nobody_wants_to_learn_matrix_math/ui_data()
 	var/list/data = list()
-	data["target_name"] = target.name
 	data["matrix_a"] = testing_matrix.a
 	data["matrix_b"] = testing_matrix.b
 	data["matrix_c"] = testing_matrix.c
