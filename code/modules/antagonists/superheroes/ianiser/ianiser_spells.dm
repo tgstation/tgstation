@@ -40,7 +40,7 @@
 	tesla_zap(user, 3, 1000, ZAP_DEFAULT_FLAGS)
 
 /obj/effect/proc_holder/spell/self/lightning_form
-	name = "Lightning Forms"
+	name = "Lightning Form"
 	desc = "Turn yourself into a ball of pure energy for a brief moment! When you are in space, this form won't degrade as much so you would be able to hold onto it for much longer."
 	charge_max = 20 SECONDS
 	clothes_req = FALSE
@@ -52,6 +52,10 @@
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 
 /obj/effect/proc_holder/spell/self/lightning_form/cast(list/targets, mob/living/user = usr)
+	if(istype(user.loc, /obj/effect/ianiser_ball))
+		var/obj/effect/ianiser_ball/ball = user.loc
+		qdel(ball)
+		return FALSE //Refunds
 	var/obj/effect/ianiser_ball/ball = new(get_turf(user))
 	user.forceMove(ball)
 	ball.ianiser = user
@@ -70,7 +74,7 @@
 	anchored = TRUE
 
 	var/mob/living/ianiser
-	var/time_left = 3 SECONDS
+	var/time_left = 1.5 SECONDS
 
 /obj/effect/ianiser_ball/Bump(atom/crashed_into)
 	. = ..()

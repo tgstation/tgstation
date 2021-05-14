@@ -229,3 +229,20 @@
 
 /area/shuttle/owlskip/port
 	name = "OwlSkip Port Module"
+
+////////////////////////////Dark Mothership////////////////////////////
+
+/area/shuttle/dark_mothership
+	name = "Dark Mothership"
+	requires_power = TRUE
+	area_limited_icon_smoothing = /area/shuttle/dark_mothership
+	area_flags = NO_ALERTS
+
+/area/shuttle/dark_mothership/bridge
+	name = "Dark Mothership Bridge"
+
+/area/shuttle/dark_mothership/starboard
+	name = "Dark Mothership Starboard"
+
+/area/shuttle/dark_mothership/port
+	name = "Dark Mothership Port"

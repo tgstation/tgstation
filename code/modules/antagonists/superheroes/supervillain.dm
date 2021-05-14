@@ -12,6 +12,7 @@
 	antagpanel_category = "Supervillain"
 	show_to_ghosts = TRUE
 	var/datum/team/supervillains/villains
+	var/hero_role = "Coder's Fuckup"
 
 /datum/antagonist/supervillain/greet()
 	to_chat(owner, "<span class='boldannounce'>You are a Supervillain!</span>")

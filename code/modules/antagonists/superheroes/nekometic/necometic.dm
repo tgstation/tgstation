@@ -34,6 +34,9 @@
 	uniform = /obj/item/clothing/under/costume/schoolgirl
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/nekometic
 	head = null
+	suit_store = /obj/item/tank/internals/oxygen
+	mask = /obj/item/clothing/mask/gas
+	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/superhero/villain/nekometic/winter
 	name = "Nekometic (Operation Cryostung)"

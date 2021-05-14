@@ -710,3 +710,7 @@
 /datum/map_template/shuttle/superhero/owlskip
 	suffix = "owlskip"
 	name = "OwlSkip"
+
+/datum/map_template/shuttle/superhero/dark_mothership
+	suffix = "dark_mothership"
+	name = "Dark Mothership"
