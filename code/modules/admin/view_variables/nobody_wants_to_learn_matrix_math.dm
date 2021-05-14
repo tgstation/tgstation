@@ -16,8 +16,8 @@
 	testing_matrix = new()
 
 /datum/nobody_wants_to_learn_matrix_math/Destroy(force, ...)
-	. = ..()
 	QDEL_NULL(testing_matrix)
+	. = ..()
 
 /datum/nobody_wants_to_learn_matrix_math/ui_state(mob/user)
 	return GLOB.admin_state
