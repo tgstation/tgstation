@@ -77,23 +77,51 @@
 		power = 2
 
 /datum/symptom/heal/starlight/proc/CanTileHeal(turf/T)
+	var/turf/original_turf = T
 	var/area/area_to_check = get_area(T)
 	var/levels_of_glass = 0 // Since starlight condensation only works 2 tiles to the side anyways, it shouldn't work with like 100 z-levels of glass
+	var/current_heal_level = STARLIGHT_CANNOT_HEAL
 	while(levels_of_glass <= 2)
 		if(isspaceturf(T) || area_to_check.outdoors) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions
 			if (levels_of_glass)
-				return STARLIGHT_CAN_HEAL_WITH_PENALTY // glass gives penalty
-			return STARLIGHT_CAN_HEAL
+				current_heal_level = STARLIGHT_CAN_HEAL_WITH_PENALTY // glass gives penalty
+				break
+			return STARLIGHT_CAN_HEAL // if can heal fully, already best case, return early
 		if(istransparentturf(T) && !(istype(T, /turf/open/openspace)))
 			levels_of_glass += 1
 		if(istransparentturf(T) || istype(T, /turf/open/openspace))
 			T = T.below()
 			if(!T) // no below turf exists, assume its space since space station
-				return STARLIGHT_CAN_HEAL_WITH_PENALTY // openspace turfs should have a turf below them eventually, so this must be glass
+				current_heal_level = STARLIGHT_CAN_HEAL_WITH_PENALTY // openspace turfs should have a turf below them eventually, so this must be glass
+				break
+			area_to_check = get_area(T)
 			continue
-		return STARLIGHT_CANNOT_HEAL // hit a non-space non-transparent turf
-	return STARLIGHT_CANNOT_HEAL // passed through more than 2 layers of glass, cannot heal
-	
+		break // hit a non-space non-transparent turf
+	levels_of_glass = 0
+	T = original_turf.above()
+	if(!T) // no turf exists above current turf
+		return current_heal_level
+	area_to_check = get_area(T)
+	while(levels_of_glass <= 2)
+		if(isspaceturf(T) || area_to_check.outdoors) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions
+			if(levels_of_glass)
+				current_heal_level = STARLIGHT_CAN_HEAL_WITH_PENALTY // glass gives penalty
+				break
+			return STARLIGHT_CAN_HEAL
+		if(istransparentturf(T) && !(istype(T, /turf/open/openspace)))
+			levels_of_glass += 1
+		if(istransparentturf(T) || istype(T, /turf/open/openspace))
+			T = T.above() // check turf even further above
+			if(!T) // no above turf exists, assume its space since space station
+				if(levels_of_glass) // actually need to check this this time as openspace can have nothing above it as well
+					current_heal_level = STARLIGHT_CAN_HEAL_WITH_PENALTY 
+					break
+				return STARLIGHT_CAN_HEAL
+			area_to_check = get_area(T)
+			continue
+		break // hit a non-space non-transparent turf
+	return current_heal_level
+
 /datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
 	var/turf/T = get_turf(M)
