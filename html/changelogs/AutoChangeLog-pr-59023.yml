@@ -1,4 +1,0 @@
-author: "InsaneRed"
-delete-after: True
-changes: 
-  - bugfix: "Hopline shutters and queue shutters can now only be controlled by people with proper access and not the entire service department"
