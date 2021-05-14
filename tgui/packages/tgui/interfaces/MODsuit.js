@@ -1,20 +1,44 @@
+import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table } from '../components';
+import { Button, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, RoundGauge, Dimmer } from '../components';
 import { Window } from '../layouts';
 
 const RadCounter = (props, context) => {
   const { data } = useBackend(context);
+  const {
+    active,
+    radcount,
+    userrads,
+    usercontam
+  } = data;
   return (
     <Stack fill vertical>
       <Stack.Item>
-        hi
+        {active && userrads}
+      </Stack.Item>
+      <Stack.Item>
+        {active && usercontam}
+      </Stack.Item>
+      <Stack.Item>
+        <RoundGauge
+          size={3}
+          value={active ? radcount : 0}
+          minValue={0}
+          maxValue={1500}
+          alertAfter={400}
+          ranges={{
+            "good": [0, 400],
+            "average": [400, 800],
+            "bad": [800, 1500],
+          }}
+          format={value => toFixed(value/10) + '%'} />
       </Stack.Item>
     </Stack>
   );
 };
 
 const ID2MODULE = {
-  rad_counter: () => RadCounter
+  rad_counter: () => <RadCounter />
 };
 
 const LockedInterface = () => (
@@ -29,6 +53,20 @@ const LockedInterface = () => (
     </Box>
   </Section>
 );
+
+const LockedModule = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { owner } = data;
+  return (
+    <Dimmer>
+      <Stack>
+        <Stack.Item fontSize="16px" color="blue">
+          ERROR: SUIT UNPOWERED.
+        </Stack.Item>
+      </Stack>
+    </Dimmer>
+  );
+};
 
 const displayText = param => {
   switch (param) {
@@ -172,11 +210,12 @@ const InfoSection = (props, context) => {
     <Section title="Info">
       <Stack vertical>
         {modules.map(module => (
-          <Stack.Item key={module.id}>
-            {!!module.id && (
-            ID2MODULE[module.id]
-            )}
-          </Stack.Item>
+          !!module.id && (
+            <Stack.Item key={module.id}>
+              {!active && <LockedModule />}
+              {ID2MODULE[module.id]()}
+            </Stack.Item>
+          )
         ))}
       </Stack>
     </Section>
@@ -265,7 +304,7 @@ const ModuleSection = (props, context) => {
                 <Table.Cell
                   textAlign="center">
                   {(module.cooldown > 0) && (
-                    Math.ceil(module.cooldown / 10)
+                    module.cooldown / 10
                   ) || ("0")}/{module.cooldown_time / 10}s
                 </Table.Cell>
                 <Table.Cell

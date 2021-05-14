@@ -43,8 +43,7 @@
 			ref = REF(module)
 		)
 		data["modules"] += list(module_data)
-	//now we add all the data for different info modules
-	data["radcount"] = wearer ? wearer.radiation : 0
+		data += module.add_ui_data()
 	return data
 
 /obj/item/mod/control/ui_act(action, params)

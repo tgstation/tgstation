@@ -7,8 +7,8 @@
 	worn_icon = 'icons/mob/mod.dmi'
 
 /obj/item/mod/control
-	name = "MOD control module"
-	desc = "The control piece of a Modular Outerwear Device, a special powered suit that protects against various environments. Wear it on your back, deploy it and activate it to learn the extend of technology."
+	name = "MOD control unit"
+	desc = "The control unit of a Modular Outerwear Device, a powered back-mounted suit that protects against various environments. Technology is amazing."
 	icon_state = "control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -75,7 +75,7 @@
 	/// Person wearing the MODsuit.
 	var/mob/living/carbon/human/wearer
 
-/obj/item/mod/control/Initialize(newtheme)
+/obj/item/mod/control/Initialize(mapload, newtheme)
 	. = ..()
 	if(newtheme)
 		theme = newtheme
@@ -220,8 +220,9 @@
 		to_chat(user, "<span class='notice'>You start removing [cell].</span>")
 		if(do_after(user, 50, target = src))
 			to_chat(user, "<span class='notice'>You remove [cell].</span>")
-			cell.forceMove(get_turf(user))
-			user.put_in_hands(cell)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			if(!user.put_in_hands(cell))
+				cell.forceMove(drop_location())
 		return
 	return ..()
 
@@ -379,11 +380,11 @@
 		audible_message("<span class='warning'>[src] indicates that [old_module] cannot be removed.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
-	old_module.forceMove(get_turf(src))
 	modules -= old_module
 	complexity -= old_module.complexity
 	old_module.on_uninstall()
 	old_module.mod = null
+	old_module.forceMove(get_turf(src))
 
 /obj/item/mod/control/proc/update_access(card)
 	var/obj/item/card/id/access_id = card
@@ -402,6 +403,9 @@
 	SIGNAL_HANDLER
 
 	if(newloc == wearer || newloc == src)
+		return
+	if(part == cell)
+		cell = null
 		return
 	if(modules.Find(part))
 		var/obj/item/mod/module/module = part

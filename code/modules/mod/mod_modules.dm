@@ -23,8 +23,6 @@
 	var/obj/item/mod/control/mod
 	/// If we're an active module, what item are we?
 	var/obj/item/device
-	/// Overlay added to the user when equipped.
-	var/mutable_appearance/wearer_overlay
 	/// Overlay given to the user when the module is inactive
 	var/overlay_state_inactive
 	/// Overlay given to the user when the module is active
@@ -38,8 +36,6 @@
 
 /obj/item/mod/module/Initialize()
 	. = ..()
-	if(overlay_state_active || overlay_state_inactive)
-		wearer_overlay = mutable_appearance('icons/mob/mod.dmi', "[overlay_state_inactive ? overlay_state_inactive : null]", -ABOVE_BODY_FRONT_LAYER)
 	if(module_type != MODULE_ACTIVE)
 		return
 	if(ispath(device))
@@ -61,6 +57,13 @@
 
 /obj/item/mod/module/proc/on_uninstall()
 	return
+
+/obj/item/mod/module/proc/on_equip()
+	return
+
+/obj/item/mod/module/proc/on_unequip()
+	return
+
 
 /obj/item/mod/module/proc/on_select()
 	if(!mod.active || mod.activating)
@@ -90,8 +93,6 @@
 		else
 			to_chat(mod.wearer, "<span class='notice'>You activate [src]. You can use the middle-click button to use it.</span>")
 			RegisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON, .proc/on_select_use)
-	if(wearer_overlay && overlay_state_active)
-		wearer_overlay.icon_state = overlay_state_active
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	return TRUE
 
@@ -106,8 +107,6 @@
 		else
 			to_chat(mod.wearer, "<span class='notice'>You deactivate [src].</span>")
 			UnregisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON)
-	if(wearer_overlay && overlay_state_inactive)
-		wearer_overlay.icon_state = overlay_state_inactive
 	return TRUE
 
 /obj/item/mod/module/proc/on_use()
@@ -115,9 +114,6 @@
 		return FALSE
 	if(!drain_power(use_power_cost))
 		return FALSE
-	if(wearer_overlay && overlay_state_active)
-		wearer_overlay.icon_state = overlay_state_active
-		addtimer(VARSET_CALLBACK(wearer_overlay, icon_state, "[overlay_state_inactive ? overlay_state_inactive : null]"), cooldown_time)
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	return TRUE
 
@@ -142,6 +138,10 @@
 		return FALSE
 	mod.cell.charge = max(0, mod.cell.charge - amount)
 	return TRUE
+
+/obj/item/mod/module/proc/add_ui_data()
+	var/data = list()
+	return data
 
 /obj/item/mod/module/proc/on_exit(datum/source, atom/movable/offender, atom/newloc)
 	SIGNAL_HANDLER
@@ -201,6 +201,7 @@
 	complexity = 3
 	active_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/visor)
+	cooldown_time = 0.5 SECONDS
 	var/helmet_tint = 0
 	var/helmet_flash_protect = FLASH_PROTECTION_NONE
 	var/hud_type = null
@@ -269,6 +270,7 @@
 	complexity = 1
 	use_power_cost = 30
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
+	cooldown_time = 0.5 SECONDS
 	var/module_advanced = FALSE
 
 /obj/item/mod/module/health_analyzer/on_use()
@@ -284,6 +286,7 @@
 	complexity = 5
 	active_power_cost = 50
 	use_power_cost = 150
+	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
 	var/bumpoff = TRUE
 	var/stealth_alpha = 50
@@ -336,6 +339,7 @@
 	stealth_alpha = 20
 	active_power_cost = 10
 	use_power_cost = 50
+	cooldown_time = 3 SECONDS
 
 /obj/item/mod/module/jetpack
 	name = "MOD ion jetpack module"
@@ -344,6 +348,8 @@
 	complexity = 3
 	active_power_cost = 20
 	use_power_cost = 80
+	incompatible_modules = list(/obj/item/mod/module/jetpack)
+	cooldown_time = 0.5 SECONDS
 	var/full_speed = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
@@ -415,6 +421,8 @@
 	module_type = MODULE_TOGGLE
 	complexity = 2
 	active_power_cost = 20
+	incompatible_modules = list(/obj/item/mod/module/magboot)
+	cooldown_time = 0.5 SECONDS
 	var/slowdown_active = 1
 
 /obj/item/mod/module/magboot/on_activation()
@@ -446,6 +454,8 @@
 	module_type = MODULE_USABLE
 	complexity = 2
 	use_power_cost = 25
+	incompatible_modules = list(/obj/item/mod/module/holster)
+	cooldown_time = 0.5 SECONDS
 	var/obj/item/gun/holstered
 
 /obj/item/mod/module/holster/on_use()
@@ -481,6 +491,8 @@
 	module_type = MODULE_ACTIVE
 	complexity = 3
 	use_power_cost = 50
+	incompatible_modules = list(/obj/item/mod/module/tether)
+	cooldown_time = 1.5 SECONDS
 
 /obj/item/mod/module/tether/on_use()
 	if(mod.wearer.has_gravity(get_turf(src)))
@@ -528,6 +540,7 @@
 	name = "MOD eating apparatus module"
 	desc = "A module that enables eating with the MOD helmet."
 	complexity = 2
+	incompatible_modules = list(/obj/item/mod/module/mouthhole)
 	var/former_flags = NONE
 	var/former_visor_flags = NONE
 
@@ -548,4 +561,47 @@
 	desc = "A module that enables a radiation scan in the MOD."
 	complexity = 1
 	idle_power_cost = 3
+	incompatible_modules = list(/obj/item/mod/module/rad_counter)
 	tgui_id = "rad_counter"
+	var/current_tick_amount = 0
+	var/radiation_count = 0
+	var/grace = RAD_GEIGER_GRACE_PERIOD
+	var/datum/looping_sound/geiger/soundloop
+
+/obj/item/mod/module/rad_counter/Initialize()
+	. = ..()
+	soundloop = new(list(), FALSE, TRUE)
+	soundloop.volume = 5
+
+/obj/item/mod/module/rad_counter/on_equip()
+	soundloop.start(mod.wearer)
+	RegisterSignal(mod, COMSIG_ATOM_RAD_ACT, .proc/rad_react)
+
+/obj/item/mod/module/rad_counter/on_unequip()
+	soundloop.stop(mod.wearer)
+	UnregisterSignal(mod, COMSIG_ATOM_RAD_ACT)
+
+/obj/item/mod/module/rad_counter/on_process(delta_time)
+	. = ..()
+	if(!.)
+		return
+	radiation_count = LPFILTER(radiation_count, current_tick_amount, delta_time, RAD_GEIGER_RC)
+	if(current_tick_amount)
+		grace = RAD_GEIGER_GRACE_PERIOD
+	else
+		grace -= delta_time
+		if(grace <= 0)
+			radiation_count = 0
+	current_tick_amount = 0
+	soundloop.last_radiation = radiation_count
+
+/obj/item/mod/module/rad_counter/add_ui_data()
+	. = ..()
+	.["userrads"] = mod.wearer ? mod.wearer.radiation : 0
+	.["usercontam"] = mod.wearer ? get_rad_contamination(mod.wearer) : 0
+	.["radcount"] = radiation_count
+
+/obj/item/mod/module/rad_counter/proc/rad_react(datum/source, amount)
+	if(amount <= RAD_BACKGROUND_RADIATION)
+		return
+	current_tick_amount += amount

@@ -72,8 +72,12 @@
 		to_chat(user, "<span class='warning'>ERROR: Access level insufficient.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
+	if(!cell?.charge && !force_deactivate)
+		to_chat(user, "<span class='warning'>ERROR: Suit unpowered.</span>")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		return
 	if(open && !force_deactivate)
-		to_chat(user, "<span class='warning'>ERROR: Suit panel open. Close before continuing</span>")
+		to_chat(user, "<span class='warning'>ERROR: Suit panel open.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	if(activating)
@@ -136,15 +140,13 @@
 			slowdown = theme.slowdown_active
 			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
 			for(var/obj/item/mod/module/module in modules)
-				if(module.wearer_overlay)
-					wearer.add_overlay(module.wearer_overlay)
+				module.on_equip()
 			START_PROCESSING(SSobj,src)
 		else
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = 6000)
 			slowdown = theme.slowdown_unactive
 			for(var/obj/item/mod/module/module in modules)
-				if(module.wearer_overlay)
-					wearer.cut_overlay(module.wearer_overlay)
+				module.on_unequip()
 				if(module.active)
 					module.on_deactivation()
 			STOP_PROCESSING(SSobj, src)
