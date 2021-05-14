@@ -739,6 +739,12 @@
 		user.visible_message("<span class='danger'>[user] sprays [src] into the face of [target]!</span>")
 		to_chat(target, "<span class='userdanger'>[user] sprays [src] into your face!</span>")
 
+		if(user == target) // huffin spray
+			var/mob/living/carbon/druggie = user
+			druggie.adjust_drugginess(30)
+			druggie.hallucination += 30
+			druggie.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 30))
+
 		if(C.client)
 			C.blur_eyes(3)
 			C.blind_eyes(1)
