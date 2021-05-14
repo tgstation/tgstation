@@ -1297,8 +1297,7 @@
 		C?.open_filter_editor(src)
 
 	if(href_list[VV_HK_TEST_MATRIXES] && check_rights(R_VAREDIT))
-		var/client/C = usr.client
-		C?.open_matrix_tester(src)
+		usr.client?.open_matrix_tester(src)
 
 /atom/vv_get_header()
 	. = ..()

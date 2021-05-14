@@ -1100,7 +1100,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/open_matrix_tester(atom/in_atom)
 	if(holder)
-		var/datum/nobody_wants_to_learn_matrix_math/matrix_tester = new /datum/nobody_wants_to_learn_matrix_math(in_atom)
+		var/datum/nobody_wants_to_learn_matrix_math/matrix_tester = new(in_atom)
 		matrix_tester.ui_interact(mob)
 
 /client/proc/set_right_click_menu_mode(shift_only)
