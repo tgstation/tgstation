@@ -214,16 +214,17 @@
 				continue
 
 		// If this ruleset has exclusive_roles set, we want to only consider players who have those
-		// job prefs enabled.
-		var/exclusive_candidate = FALSE
-		for(var/role in exclusive_roles)
-			if(role in candidate_client.prefs.job_preferences)
-				exclusive_candidate = TRUE
-				break
+		// job prefs enabled. Otherwise, continue as before.
+		if(length(exclusive_roles))
+			var/exclusive_candidate = FALSE
+			for(var/role in exclusive_roles)
+				if(role in candidate_client.prefs.job_preferences)
+					exclusive_candidate = TRUE
+					break
 
-		// If they didn't have any of the required job prefs enabled, they're not eligible for this antag type.
-		if(!exclusive_candidate)
-			candidates.Remove(candidate_player)
+			// If they didn't have any of the required job prefs enabled, they're not eligible for this antag type.
+			if(!exclusive_candidate)
+				candidates.Remove(candidate_player)
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE
