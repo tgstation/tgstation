@@ -203,11 +203,11 @@
 			playsound(src, 'sound/effects/adminhelp.ogg', 50, FALSE)
 
 /**
- * # Bananium HONK-spect scanner (WIP!!!!!!!!!!!)
+ * # Bananium HONK-spect scanner
  *
  * An upgraded version of the fake N-spect scanner
  *
- * Can print things way fasta, at full power the reports printed by this will destroy
+ * Can print things way faster, at full power the reports printed by this will destroy
  * themselves and leave water behind when folding is attempted by someone who isn't an
  * origami master.
  * Unlike the normal clown scanner, is not restricted by blessed tiles.
@@ -241,6 +241,9 @@
 	else
 		print_time = 0.1 SECONDS
 		to_chat(user, "<span class='notice'>You set the device's scanning speed setting to HONK.")
+
+/obj/item/inspector/clown/bananium/examine_more(mob/user)
+	return list("<span class='info'>You can adjust [src]'s scanning sound with a multitool</span>", "<span class='info'>You can adjust [src]'s scanning speed with a screwdriver</span>")
 /**
  * Reports printed by fake N-spect scanner
  *
@@ -285,7 +288,14 @@
 		. += "<span class='notice'>Wait a minute, this isn't an encrypted inspection report! You should throw it away.</span>"
 	else
 		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"
-
+/**
+ * # Fake report made of water
+ *
+ * Fake report but it turns into water under certain circumstances.
+ *
+ * If someone who isn't an origami master tries to fold it into a paper plane, it will make the floor it's on wet and disappear.
+ * If it is ground, it will turn into 5u water.
+ */
 /obj/item/paper/fake_report/water
 	grind_results = list(/datum/reagent/water = 5)
 
