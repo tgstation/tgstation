@@ -22,21 +22,29 @@
 	///path of the turf this should change into when the assembly is pulsed. needed for openspace trapdoors knowing what to turn back into
 	var/trapdoor_turf_path
 
-/datum/component/trapdoor/Initialize(starts_open = FALSE, trapdoor_turf_path, assembly, given_decals)
+/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, stored_decals)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(IS_OPEN(parent))
-		src.trapdoor_turf_path = trapdoor_turf_path
-	else
-		src.trapdoor_turf_path = parent.type
-		if(given_decals)
-			stored_decals = given_decals
-			reapply_all_decals()
-		//else
-			//record_decals()
+
 	src.assembly = assembly
+	if(IS_OPEN(parent))
+		openspace_trapdoor_setup(trapdoor_turf_path, assembly, stored_decals)
+	else
+		tile_trapdoor_setup(trapdoor_turf_path, assembly, stored_decals)
+
 	if(starts_open)
 		try_opening()
+
+///initializing as an opened trapdoor, we need to trust that we were given the data by a closed trapdoor
+/datum/component/trapdoor/proc/openspace_trapdoor_setup(trapdoor_turf_path, assembly, stored_decals)
+	src.trapdoor_turf_path = trapdoor_turf_path
+
+///initializing as a closed trapdoor, we need to take data from the tile we're on to give it to the open state to store
+/datum/component/trapdoor/proc/tile_trapdoor_setup(trapdoor_turf_path, assembly, stored_decals)
+	src.trapdoor_turf_path = parent.type
+	if(stored_decals)
+		src.stored_decals = stored_decals
+		reapply_all_decals()
 
 /datum/component/trapdoor/RegisterWithParent()
 	. = ..()
@@ -103,7 +111,7 @@
  * change da turf my final callback. Goodbye
  */
 /obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, list/stored_decals, turf/new_turf)
-	new_turf.AddComponent(/datum/component/trapdoor, starts_open = FALSE, trapdoor_turf_path, src, stored_decals)
+	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src, stored_decals)
 
 
 /**
@@ -114,6 +122,7 @@
  */
 /datum/component/trapdoor/proc/try_opening()
 	var/turf/open/trapdoor_turf = parent
+	playsound(trapdoor_turf, 'sound/machines/trapdoor_open.ogg', 50)
 	trapdoor_turf.visible_message("<span class='warning'>[trapdoor_turf] swings open!</span>")
 	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
 
@@ -129,8 +138,8 @@
 	if(blocking)
 		trapdoor_turf.visible_message("<span class='warning'>The trapdoor mechanism in [trapdoor_turf] tries to shut, but is jammed by [blocking]!</span>")
 		return
+	playsound(trapdoor_turf, 'sound/machines/trapdoor_shut.ogg', 50)
 	trapdoor_turf.visible_message("<span class='warning'>The trapdoor mechanism in [trapdoor_turf] swings shut!</span>")
-	trapdoor_turf.visible_message("<span class='warning'>[trapdoor_turf] swings open!</span>")
 	trapdoor_turf.ChangeTurf(trapdoor_turf_path, flags = CHANGETURF_INHERIT_AIR)
 
 #undef IS_OPEN
@@ -204,6 +213,7 @@
 		to_chat(user, "<span class='warning'>[src] is on a short cooldown.</span>")
 		return
 	to_chat(user, "<span class='notice'>You activate [src].</span>")
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 	icon_state = "trapdoor_pressed"
 	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), trapdoor_cooldown_time)
 	COOLDOWN_START(src, trapdoor_cooldown, trapdoor_cooldown_time)
