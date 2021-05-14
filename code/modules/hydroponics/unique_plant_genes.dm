@@ -524,7 +524,7 @@
 		our_plant.icon_state = grown_plant.alt_icon
 
 	playsound(our_plant.drop_location(), 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
-	addtimer(CALLBACK(src, .proc/detonate), rand(1 SECONDS, 6 SECONDS))
+	addtimer(CALLBACK(src, .proc/detonate, our_plant), rand(1 SECONDS, 6 SECONDS))
 
 /datum/plant_gene/trait/bomb_plant/potency_based/detonate(obj/item/our_plant)
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
