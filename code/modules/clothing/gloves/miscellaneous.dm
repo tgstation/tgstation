@@ -88,7 +88,7 @@
 
 /obj/item/clothing/gloves/color/plasmaman/plasmanitrile
 	name = "nitrile envirogloves"
-	desc = "Pricy nitrile gloves made for plasmamen"
+	desc = "Pricy nitrile gloves made for plasmamen."
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
