@@ -128,3 +128,7 @@
 /datum/greyscale_config/circuit
 	icon_file = 'icons/obj/module.dmi'
 	json_config = 'code/datums/greyscale/json_configs/circuit.json'
+
+/datum/greyscale_config/winter_coats
+	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wintercoats.json'
