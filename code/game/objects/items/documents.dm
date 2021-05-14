@@ -159,10 +159,6 @@
 	. = ..()
 	print_report()
 
-/obj/item/inspector/clown/print_report()
-	create_slip()
-	play_sound()
-
 /obj/item/inspector/clown/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MULTITOOL)
 		cycle_sound(user)
