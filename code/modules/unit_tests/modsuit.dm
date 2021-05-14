@@ -16,7 +16,7 @@
 			complexity += module.complexity
 			TEST_ASSERT(complexity <= complexity_max, "[modpath] starting modules reach above max complexity.")
 			TEST_ASSERT(!is_type_in_list(module, mod.theme.module_blacklist), "[modpath] starting modules are in [mod.theme.type] blacklist.")
-			modules += module
 			for(var/obj/item/mod/module/module_to_check as anything in modules)
 				TEST_ASSERT(!(is_type_in_list(module, module_to_check.incompatible_modules) || is_type_in_list(module_to_check, module.incompatible_modules)), "[modpath] initial module [module.type] is incompatible with initial module [module_to_check.type]")
+			modules += module
 
