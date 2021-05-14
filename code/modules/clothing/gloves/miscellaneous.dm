@@ -87,7 +87,7 @@
 	inhand_icon_state = "blackplasma"
 
 /obj/item/clothing/gloves/color/plasmaman/plasmanitrile
-	name = "Nitrile envirogloves"
+	name = "nitrile envirogloves"
 	desc = "Pricy nitrile gloves made for plasmamen"
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
