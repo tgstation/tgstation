@@ -67,7 +67,7 @@
 		objective_count++
 
 	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
-	for(var/i in objective_count to objective_limit)
+	for(var/i = objective_count, i < objective_limit, ++i)
 		forge_single_generic_objective()
 
 	if(is_hijacker)
