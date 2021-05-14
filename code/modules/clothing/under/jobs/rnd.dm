@@ -60,13 +60,13 @@
 
 /obj/item/clothing/under/rank/rnd/scientist
 	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
-	name = "scientist's jumpsuit"
+	name = "scientist's speedsuit"
 	icon_state = "toxins"
 	inhand_icon_state = "w_suit"
 	permeability_coefficient = 0.5
 
 /obj/item/clothing/under/rank/rnd/scientist/skirt
-	name = "scientist's jumpskirt"
+	name = "scientist's speedskirt"
 	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
 	icon_state = "toxinswhite_skirt"
 	inhand_icon_state = "w_suit"
@@ -76,13 +76,13 @@
 
 /obj/item/clothing/under/rank/rnd/roboticist
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
-	name = "roboticist's jumpsuit"
+	name = "roboticist's speedsuit"
 	icon_state = "robotics"
 	inhand_icon_state = "robotics"
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/rnd/roboticist/skirt
-	name = "roboticist's jumpskirt"
+	name = "roboticist's speedskirt"
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
 	icon_state = "robotics_skirt"
 	inhand_icon_state = "robotics"
@@ -92,14 +92,14 @@
 
 /obj/item/clothing/under/rank/rnd/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
-	name = "geneticist's jumpsuit"
+	name = "geneticist's speedsuit"
 	icon_state = "genetics"
 	inhand_icon_state = "w_suit"
 	permeability_coefficient = 0.5
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/rnd/geneticist/skirt
-	name = "geneticist's jumpskirt"
+	name = "geneticist's speedskirt"
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
 	icon_state = "geneticswhite_skirt"
 	inhand_icon_state = "w_suit"
