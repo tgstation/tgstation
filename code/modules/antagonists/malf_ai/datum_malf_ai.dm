@@ -52,7 +52,7 @@
 	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
 	var/objective_count = length(objectives)
 
-	for(var/i in objective_count to objective_limit)
+	for(var/i = objective_count, i < objective_limit, ++i)
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = owner
 		kill_objective.find_target()
