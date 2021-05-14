@@ -145,7 +145,6 @@
  * can be set to print them instantly with a screwdriver.
  * By default it plays the old "woody" scanning sound, scanning sounds can be cycled by clicking with a multitool.
  * Can be crafted into a bananium HONK-spect scanner
- * Cannot print on blessed tiles (Not yet implemented!!!!!!!!!!!!!!!!!!)
  */
 /obj/item/inspector/clown
 	///determines the sound that plays when printing a report
@@ -206,7 +205,6 @@
  * Can print things way faster, at full power the reports printed by this will destroy
  * themselves and leave water behind when folding is attempted by someone who isn't an
  * origami master.
- * Unlike the normal clown scanner, is not restricted by blessed tiles.
  */
 /obj/item/inspector/clown/bananium
 	name = "\improper Bananium HONK-spect scanner"
