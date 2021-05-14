@@ -99097,6 +99097,13 @@
 	},
 /turf/open/floor/iron,
 /area/security/office)
+"uzg" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "uzi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -106478,10 +106485,10 @@
 /turf/closed/wall/r_wall,
 /area/science/misc_lab/range)
 "wAZ" = (
-/obj/machinery/pipedispenser/disposal,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "wBb" = (
@@ -138298,7 +138305,7 @@ mZD
 utn
 xqx
 wAZ
-kPE
+uzg
 jLK
 mZD
 xcs
