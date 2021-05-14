@@ -1,6 +1,7 @@
 //Items with these will have a chance to get knocked off when disarming
 /datum/component/knockoff
 	var/knockoff_chance = 100 //Chance to knockoff
+	var/knockdown_threshold = 0 //  The minimum duration of a knockdown required to trigger a knockoff
 	var/list/target_zones //Aiming for these zones will cause the knockoff, null means all zones allowed
 	var/list/slots_knockoffable //Can be only knocked off from these slots, null means all slots allowed
 
@@ -32,11 +33,13 @@
 		return
 	wearer.visible_message("<span class='warning'>[attacker] knocks off [wearer]'s [item]!</span>","<span class='userdanger'>[attacker] knocks off your [item]!</span>")
 
-/datum/component/knockoff/proc/Knockoff_knockdown(mob/living/carbon/human/wearer)
+/datum/component/knockoff/proc/Knockoff_knockdown(mob/living/carbon/human/wearer,amount)
 	SIGNAL_HANDLER
 
 	var/obj/item/item = parent
 	if(!istype(wearer))
+		return
+	if(knockdown_threshold <= amount)
 		return
 	if(!prob(knockoff_chance))
 		return

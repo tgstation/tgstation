@@ -204,8 +204,7 @@
 
 /obj/item/clothing/glasses/regular/Initialize()
 	. = ..()
-	AddComponent(/datum/component/knockoff,30,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
-	AddElement(/datum/element/caltrop, min_damage = 5)
+	AddComponent(/datum/component/knockoff,30,25,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
@@ -216,20 +215,21 @@
 	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(!(L.movement_type & (FLYING|FLOATING)) || L.buckled || L.m_intent == MOVE_INTENT_WALK)
+		if(L.m_intent != MOVE_INTENT_WALK || !(L.movement_type & (FLYING|FLOATING)) || L.buckled)
 			playsound(src, 'sound/effects/glass_step.ogg', 30, TRUE)
 			take_damage(100, sound_effect = FALSE)
 
 /obj/item/clothing/glasses/regular/obj_destruction(damage_flag)
 	. = ..()
 	vision_correction = FALSE
-	name = "broken [initial(name)]"
 
 /obj/item/clothing/glasses/regular/welder_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(!W.tool_start_check(user, amount=1))
+	if(damaged_clothes == CLOTHING_PRISTINE)
 		return
-	if(W.use_tool(src, user, 10, volume=30, amount=1))
+	if(!I.tool_start_check(user, amount=1))
+		return
+	if(I.use_tool(src, user, 10, volume=30, amount=1))
 		user.visible_message("<span class='notice'>[user] welds [src] back together.</span>",\
 					"<span class='notice'>You weld [src] back together.</span>")
 		repair()
