@@ -5,7 +5,7 @@
 #define TRAPDOOR_LINKING_SEARCH_RANGE 7
 
 /**
- * # trapdoor component!
+ * ## trapdoor component!
  *
  * component attached to floors to turn them into trapdoors, a constructable trap that when signalled drops people to the level below.
  * assembly code at the bottom of this file
@@ -61,7 +61,7 @@
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
 
 /**
- * # reapply_all_decals
+ * ## reapply_all_decals
  *
  * changing turfs does not bring over decals, so we must perform a little bit of element reapplication.
  */
@@ -104,7 +104,7 @@
 	post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, trapdoor_turf_path, stored_decals)
 
 /**
- * # carry_over_trapdoor
+ * ## carry_over_trapdoor
  *
  * applies the trapdoor to the new turf (created by the last trapdoor)
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
@@ -115,19 +115,20 @@
 
 
 /**
- * # try_opening
+ * ## try_opening
  *
  * small proc for opening the turf into openspace
  * there are no checks for opening a trapdoor, but closed has some
  */
 /datum/component/trapdoor/proc/try_opening()
 	var/turf/open/trapdoor_turf = parent
-	playsound(trapdoor_turf, 'sound/machines/trapdoor_open.ogg', 50)
+	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
 	trapdoor_turf.visible_message("<span class='warning'>[trapdoor_turf] swings open!</span>")
+	new /obj/effect/temp_visual/trapdoor_open(trapdoor_turf, trapdoor_turf)
 	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
 
 /**
- * # try_closing
+ * ## try_closing
  *
  * small proc for closing the turf back into what it should be
  * trapdoor can be blocked by building things on the openspace turf
@@ -138,7 +139,7 @@
 	if(blocking)
 		trapdoor_turf.visible_message("<span class='warning'>The trapdoor mechanism in [trapdoor_turf] tries to shut, but is jammed by [blocking]!</span>")
 		return
-	playsound(trapdoor_turf, 'sound/machines/trapdoor_shut.ogg', 50)
+	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_shut.ogg', 50)
 	trapdoor_turf.visible_message("<span class='warning'>The trapdoor mechanism in [trapdoor_turf] swings shut!</span>")
 	trapdoor_turf.ChangeTurf(trapdoor_turf_path, flags = CHANGETURF_INHERIT_AIR)
 
@@ -150,7 +151,7 @@
 	var/linked = FALSE
 
 /**
- * # trapdoor remotes!
+ * ## trapdoor remotes!
  *
  * Item that accepts the assembly for the internals and helps link/activate it.
  * This base type is an empty shell that needs the assembly added to it first to work.
@@ -238,3 +239,34 @@
 /obj/item/trapdoor_remote/preloaded/Initialize()
 	. = ..()
 	internals = new(src)
+
+
+/obj/effect/trapdoor_open_animation
+	name = "trapdoor open animation"
+	desc = "That's not fair! I disabled the mouse_opacity variable but you somehow still found this description!?"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/trapdoor_open_animation/Initialize(mapload, atom/trapdoor_to_copy)
+	. = ..()
+	//i'm pretty sure this is required, that atom is about to not exist momentarily
+	var/static/image/trapdoor_leftside = new()
+	trapdoor_leftside.appearance = trapdoor_to_copy.appearance
+	var/static/image/trapdoor_rightside = new()
+	trapdoor_rightside.appearance = trapdoor_leftside.appearance
+	//drawing box from bottom middle (world.icon_size/2x, 1y) to top right (world.icon_sizex, world.icon_sizey)
+	trapdoor_leftside.DrawBox(null, world.icon_size/2, 1, world.icon_size, world.icon_size)
+	//drawing box from bottom middle (world.icon_size/2x, 1y) to top left (1x, world.icon_sizey)
+	trapdoor_rightside.DrawBox(null, world.icon_size/2, 1, 1, world.icon_size)
+	var/obj/effect/temp_visual/trapdoor_open_part/left = new(src.loc, trapdoor_leftside)
+	var/obj/effect/temp_visual/trapdoor_open_part/right = new(src.loc, trapdoor_rightside)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/temp_visual/trapdoor_open_part
+	duration = 1 SECONDS
+
+/obj/effect/temp_visual/trapdoor_open_part/Initialize(mapload, given_appearance, side)
+	. = ..()
+	appearance = given_appearance
+	var/matrix/matrix_to = matrix(0, 0, 0, -0.25, 0.25, 0)
+	animate(src, transform = matrix_to, icon_state = door_state, layer = door_layer, time = world.tick_lag, flags = ANIMATION_END_NOW)
+
