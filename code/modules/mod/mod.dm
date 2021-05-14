@@ -8,7 +8,7 @@
 
 /obj/item/mod/control
 	name = "MOD control unit"
-	desc = "The control unit of a Modular Outerwear Device, a powered back-mounted suit that protects against various environments. Technology is amazing."
+	desc = "The control unit of a Modular Outerwear Device, a powered, back-mounted suit that protects against various environments. Technology is amazing."
 	icon_state = "control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -116,7 +116,7 @@
 	else
 		CRASH("A MODsuit spawned without boots.")
 	var/list/all_parts = mod_parts.Copy() + src
-	for(var/obj/item/piece in all_parts)
+	for(var/obj/item/piece as anything in all_parts)
 		piece.name = "[theme.name] [piece.name]"
 		piece.desc = "[piece.desc] [theme.desc]"
 		piece.armor = getArmor(arglist(theme.armor))
@@ -137,8 +137,7 @@
 /obj/item/mod/control/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(wires)
-	if(cell)
-		QDEL_NULL(cell)
+	QDEL_NULL(cell)
 	if(helmet)
 		helmet.mod = null
 		QDEL_NULL(helmet)
@@ -189,28 +188,28 @@
 		return TRUE
 
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
-	if(!iscarbon(user))
+	var/mob/living/carbon/carbon_user = user
+	if(!istype(carbon_user) || src != carbon_user.back)
 		return ..()
-	var/mob/living/carbon/guy = user
-	if(src == guy.back)
-		for(var/obj/item/part in mod_parts)
-			if(part.loc != src)
-				to_chat(guy, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
-				playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
-				return FALSE
+	for(var/obj/item/part in mod_parts)
+		if(part.loc != src)
+			to_chat(carbon_user, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
+			return FALSE
 
 /obj/item/mod/control/MouseDrop(atom/over_object)
-	if(src == wearer?.back && istype(over_object, /atom/movable/screen/inventory/hand))
+	if(src != wearer?.back || !istype(over_object, /atom/movable/screen/inventory/hand))
+		return ..()
 		for(var/obj/item/part in mod_parts)
 			if(part.loc != src)
 				to_chat(wearer, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
 				return
 		if(!wearer.incapacitated())
-			var/atom/movable/screen/inventory/hand/H = over_object
+			var/atom/movable/screen/inventory/hand/ui_hand = over_object
 			if(wearer.putItemFromInventoryInHandIfPossible(src, H.held_index))
 				add_fingerprint(usr)
-	return ..()
+				return ..()
 
 /obj/item/mod/control/attack_hand(mob/user)
 	if(seconds_electrified && cell.charge)
@@ -235,7 +234,7 @@
 		return FALSE
 	to_chat(user, "<span class='notice'>You start to [open ? "screw the panel back on" : "unscrew the panel"]...</span>")
 	I.play_tool_sound(src, 100)
-	if(I.use_tool(src, user, 20))
+	if(I.use_tool(src, user, 2 SECONDS))
 		I.play_tool_sound(src, 100)
 		user.visible_message("<span class='notice'>[user] [open ? "screws the panel back on" : "unscrews the panel"].</span>",
 			"<span class='notice'>You [open ? "screw the panel back on" : "unscrew the panel"].</span>",
@@ -250,12 +249,12 @@
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return FALSE
 	if(modules.len)
-		for(var/obj/item/mod/module/module in modules)
+		for(var/obj/item/mod/module/module as anything in modules)
 			if(module.removable)
 				uninstall(module)
 				module.forceMove(drop_location())
 			else
-				audible_message("<span class='warning'>[src] indicates that [module] cannot be removed.</span>")
+				audible_message("<span class='warning'>[src] indicates that [module] cannot be removed.</span>", "<span class='warning'>[src] flashes an error message.</span>")
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 				return
 		I.play_tool_sound(src, 100)
@@ -267,23 +266,23 @@
 /obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/mod/module))
 		if(!open)
-			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>")
+			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>", "<span class='warning'>[src] flashes an error message.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
 		install(attacking_item, FALSE)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(!open)
-			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>")
+			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>", "<span class='warning'>[src] flashes an error message.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
 		if(cell)
-			audible_message("<span class='warning'>[src] indicates that there is a cell already installed.</span>")
+			audible_message("<span class='warning'>[src] indicates that there is a cell already installed.</span>", "<span class='warning'>[src] flashes an error message.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
 		attacking_item.forceMove(src)
 		cell = attacking_item
-		audible_message("<span class='notice'>[src] indicates that [cell] has been succesfully installed.</span>")
+		audible_message("<span class='notice'>[src] indicates that [cell] has been succesfully installed.</span>", "<span class='warning'>[src] flashes a confirmation message.</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		return TRUE
 	else if(is_wire_tool(attacking_item) && open)
@@ -317,8 +316,7 @@
 		return FALSE
 	var/list/display_names = list()
 	var/list/skins = list()
-	for(var/i in 1 to length(theme.skins))
-		var/mod_skin = theme.skins[i]
+	for(var/mod_skin in theme.skins)
 		display_names[mod_skin] = REF(mod_skin)
 		var/image/skin_image = image(icon = icon, icon_state = "[mod_skin]-control")
 		skins += list(mod_skin = skin_image)
@@ -329,7 +327,7 @@
 	var/new_skin = locate(skin_reference) in theme.skins
 	skin = new_skin
 	var/list/skin_updating = mod_parts.Copy() + src
-	for(var/obj/item/piece in skin_updating)
+	for(var/obj/item/piece as anything in skin_updating)
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 	wearer.update_icons()
 	return TRUE
@@ -339,24 +337,21 @@
 		return FALSE
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
-	if(electrocute_mob(user, get_area(src), src, 0.7, check_range))
-		return TRUE
-	else
-		return FALSE
+	return electrocute_mob(user, get_area(src), src, 0.7, check_range))
 
 /obj/item/mod/control/proc/install(module, starting_module = FALSE)
 	var/obj/item/mod/module/new_module = module
-	for(var/obj/item/mod/module/old_module in modules)
+	for(var/obj/item/mod/module/old_module as anything in modules)
 		if(is_type_in_list(new_module, old_module.incompatible_modules) || is_type_in_list(old_module, new_module.incompatible_modules))
 			if(!starting_module)
-				audible_message("<span class='warning'>[src] indicates that [new_module] is incompatible with [old_module].</span>")
+				audible_message("<span class='warning'>[src] indicates that [new_module] is incompatible with [old_module].</span>", "<span class='warning'>[src] flashes an error message.</span>")
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 				return
 			else
 				CRASH("MODsuit starting modules are incompatible with each other.")
 	if(is_type_in_list(module, theme.module_blacklist))
 		if(!starting_module)
-			audible_message("<span class='warning'>[src] indicates that it rejects [new_module].</span>")
+			audible_message("<span class='warning'>[src] indicates that it rejects [new_module].</span>", "<span class='warning'>[src] flashes an error message.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
 		else
@@ -365,7 +360,7 @@
 	complexity_with_module += new_module.complexity
 	if(complexity_with_module > complexity_max)
 		if(!starting_module)
-			audible_message("<span class='warning'>[src] indicates that [new_module] is too complex for its' firmware.</span>")
+			audible_message("<span class='warning'>[src] indicates that [new_module] is too complex for its firmware.</span>", "<span class='warning'>[src] flashes an error message.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
 		else
@@ -376,13 +371,15 @@
 	new_module.mod = src
 	new_module.on_install()
 	if(!starting_module)
-		audible_message("<span class='notice'>[src] indicates that [new_module] has been installed successfully.</span>")
+		audible_message("<span class='notice'>[src] indicates that [new_module] has been installed successfully.</span>", "<span class='warning'>[src] flashes a confirmation message.</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/mod/control/proc/uninstall(module)
 	var/obj/item/mod/module/old_module = module
 	modules -= old_module
 	complexity -= old_module.complexity
+	if(old_module.active)
+		old_module.on_deactivation()
 	old_module.on_uninstall()
 	old_module.mod = null
 
@@ -497,9 +494,9 @@
 /obj/item/clothing/gloves/mod/Destroy()
 	..()
 	if(overslot && isliving(loc))
-		var/mob/guy = loc
-		guy.transferItemToLoc(src, mod, TRUE)
-		show_overslot(guy)
+		var/mob/wearer = loc
+		wearer.transferItemToLoc(src, mod, TRUE)
+		show_overslot(wearer)
 	if(mod)
 		mod.gauntlets = null
 		QDEL_NULL(mod)
@@ -531,9 +528,9 @@
 /obj/item/clothing/shoes/mod/Destroy()
 	..()
 	if(overslot && isliving(loc))
-		var/mob/guy = loc
-		guy.transferItemToLoc(src, mod, TRUE)
-		show_overslot(guy)
+		var/mob/wearer = loc
+		wearer.transferItemToLoc(src, mod, TRUE)
+		show_overslot(wearer)
 	if(mod)
 		mod.boots = null
 		QDEL_NULL(mod)
