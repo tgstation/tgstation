@@ -93,6 +93,7 @@
 
 /obj/item/inspector/proc/play_sound()
 	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+
 /**
  * Prints out a report for bounty purposes, and plays a short audio blip.
  *
@@ -238,6 +239,7 @@
 
 /obj/item/inspector/clown/bananium/examine_more(mob/user)
 	return list("<span class='info'>You can adjust [src]'s scanning sound with a multitool</span>", "<span class='info'>You can adjust [src]'s scanning speed with a screwdriver</span>")
+
 /**
  * Reports printed by fake N-spect scanner
  *
@@ -282,6 +284,7 @@
 		. += "<span class='notice'>Wait a minute, this isn't an encrypted inspection report! You should throw it away.</span>"
 	else
 		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"
+
 /**
  * # Fake report made of water
  *

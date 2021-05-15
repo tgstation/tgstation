@@ -80,6 +80,7 @@
 	price_max = 200
 	stock_max = 3
 	availability_prob = 50
+	
 /**
  * # Fake N-spect scanner black market entry
  */
