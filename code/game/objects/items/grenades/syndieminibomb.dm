@@ -59,7 +59,7 @@
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
 	radiation_pulse(src, rad_damage)
-	for(var/turf/turf_affected in view(freeze_range,loc))
+	for (var/turf/open/floor/floor in view(freeze_range, loc))
 		if(isfloorturf(turf_affected))
 			var/turf/open/floor/floor = turf_affected
 			floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
