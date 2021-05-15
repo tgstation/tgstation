@@ -24,7 +24,7 @@
 
 	src.connections = connections
 
-	RegisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE, .proc/on_moved, override=TRUE)
+	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved, override = TRUE)
 	update_signals(listener, tracked)
 
 /datum/element/connect_loc/Detach(datum/listener, atom/movable/tracked, list/connections)
@@ -34,7 +34,7 @@
 		unregister_all(listener)
 	else if(targets[tracked.loc]) // Detach can happen multiple times due to qdel
 		unregister_signals(listener, tracked, tracked.loc)
-		UnregisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE)
+		UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
 
 /datum/element/connect_loc/proc/update_signals(datum/listener, atom/movable/tracked)
 	var/existing = length(targets[tracked.loc])
@@ -62,7 +62,7 @@
 				unregister_signals(listener, tracked, location)
 			else
 				continue
-			UnregisterSignal(tracked, COMSIG_MOVABLE_LOCATION_CHANGE)
+			UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
 	if (length(targets[old_loc]) <= 1)

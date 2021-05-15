@@ -398,3 +398,39 @@
       shaken awake once more.
   tralezab:
   - bugfix: fixes udders not performing some things they should!
+2021-05-15:
+  ATHATH:
+  - bugfix: Beepsky smash's stamina healing and non-beepsky-related hallucinatory
+      effects are now applied to people WITH sec-affiliated livers instead of to people
+      WITHOUT sec-affiliated livers, restoring its previous, intended functionality.
+  Fikou:
+  - bugfix: ambience subsystem no longer plays to people in lobby
+  GoldenAlpharex:
+  - bugfix: You no longer get on the object layer when you're riding someone's back,
+      and your layer now gets successfully reset upon unbuckling.
+  - qol: The layer difference between the person at the front and at the back (layer-wise)
+      during a piggyback ride isn't abysmal anymore.
+  Guillaume Prata:
+  - spellcheck: The atmospherics hardsuit description was changed to better inform
+      that it has less radiation protection than the engineering ones.
+  InsaneRed:
+  - qol: Plasmamen paramedics now start with nitrile gloves
+  JohnFulpWillard:
+  - bugfix: Security Revolutionaries will no longer become Enemies of the Revolution
+      upon a Revolution victory.
+  Kylerace:
+  - bugfix: singularities will no longer eat themselves, among other things
+  - bugfix: After a series of thorough exorcisms, Nanotrasen would like to assure
+      Space Station 13 that ghosts both do not exist and if they did exist can no
+      longer affect the material plane by spamming the fuck out of squeaky noises
+      from bananium floors
+  LemonInTheDark:
+  - bugfix: Footsteps will no longer stack
+  cacogen:
+  - qol: Tells you a melee attack or projectile hit an object (e.g. airlock, reinforced
+      window) without leaving a mark if it did no damage
+  tralezab:
+  - refactor: rpgloot, embedopocalypse, and stickapocalypse are now datum singletons
+  - refactor: THAT USE SIGNALS!
+  - rscadd: RPGLoot now has the curse of hunger as a bad modifier. A very bad one!
+  - refactor: Duffelbag curse is now a component, attachable to any item.
