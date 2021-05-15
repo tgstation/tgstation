@@ -699,3 +699,25 @@
 	light_icon.appearance_flags = RESET_COLOR
 	light_icon.color = light_color
 	. += light_icon
+
+/obj/item/mod/module/science_scanner
+	name = "MOD science scanner module"
+	desc = "A module that enables internal research and reagent scanners in the MOD."
+	complexity = 1
+	active_power_cost = 5
+	incompatible_modules = list(/obj/item/mod/module/science_scanner)
+	cooldown_time = 0.5 SECONDS
+
+/obj/item/mod/module/emp_shield/on_activation()
+	. = ..()
+	if(!.)
+		return
+	mod.wearer.research_scanner++
+	mod.helmet.clothing_flags |= SCAN_REAGENTS
+
+/obj/item/mod/module/emp_shield/on_uninstall()
+	. = ..()
+	if(!.)
+		return
+	mod.wearer.research_scanner--
+	mod.helmet.clothing_flags &= ~SCAN_REAGENTS

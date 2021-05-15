@@ -80,8 +80,9 @@
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	if(activating)
-		to_chat(user, "<span class='warning'>ERROR: Suit already [active ? "shutting down" : "staring up"].</span>")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
+		if(!force_deactivate)
+			to_chat(user, "<span class='warning'>ERROR: Suit already [active ? "shutting down" : "staring up"].</span>")
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
 	activating = TRUE
 	to_chat(wearer, "<span class='notice'>MODsuit [active ? "shutting down" : "starting up"].</span>")
