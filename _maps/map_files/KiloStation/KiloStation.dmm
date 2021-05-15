@@ -82386,7 +82386,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
-	department = "Cargo Bay";
+	department = "Quartermaster's Desk";
 	departmentType = 2;
 	name = "Quartermaster's Requests Console"
 	},
