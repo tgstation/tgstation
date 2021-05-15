@@ -1288,7 +1288,10 @@
 			/datum/reagent/consumable/ice = 10
 			)
 	category = CAT_CHEMISTRY
-
+	
+/**
+ * Recipe used for upgrading fake N-spect scanners to bananium HONK-spect scanners
+ */
 /datum/crafting_recipe/clown_scanner_upgrade
 	name = "Bananium HONK-spect scanner"
 	result = /obj/item/inspector/clown/bananium
