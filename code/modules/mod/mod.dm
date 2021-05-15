@@ -293,7 +293,7 @@
 
 /obj/item/mod/control/emp_act(severity)
 	. = ..()
-	to_chat(wearer, "<span class='warning'>[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!</span>")
+	to_chat(wearer, "<span class='notice'>[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!</span>")
 	if(!active || !wearer || . & EMP_PROTECT_CONTENTS)
 		return
 	wearer.apply_damage(10 / severity, BURN, spread_damage=TRUE)
@@ -306,6 +306,22 @@
 	for(var/part in modules)
 		conceal(stripper, part)
 	return ..()
+
+/obj/item/mod/control/worn_overlays()
+	. = ..()
+	if(!active)
+		return
+	for(var/obj/item/mod/module/module as anything in modules)
+		var/used_overlay
+		if(overlay_state_active && module.active)
+			used_overlay = overlay_state_active
+		else if(overlay_state_inactive)
+			used_overlay = overlay_state_inactive
+		if(!used_overlay)
+			continue
+		var/icon/module_icon
+		module_icon = icon('icons/mob/mod.dmi', used_overlay)
+		. += module_icon
 
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
 	if(theme.skins.len <= 1)

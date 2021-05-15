@@ -658,7 +658,6 @@
 	set_light_on(active)
 	active_power_cost = base_power * light_range
 
-
 /obj/item/mod/module/flashlight/on_deactivation()
 	. = ..()
 	if(!.)
