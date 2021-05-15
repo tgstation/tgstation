@@ -50,7 +50,7 @@
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high /// If this is a path, this gets created as an object in Initialize.
 	var/cell_cover_open = FALSE /// Status of the cell cover on the suit
 	var/thermal_on = FALSE /// Status of the thermal regulator
-	var/show_hud = TRUE /// Show the cell battery charge on hud, disabled for things like the changeling flesh suit
+	var/show_hud = TRUE /// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 
 /obj/item/clothing/suit/space/Initialize(mapload)
 	. = ..()
