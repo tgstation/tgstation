@@ -190,9 +190,7 @@
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
-	var/list/sound_list = list()
-	sound_list[sound_file] = 1
-	AddComponent(/datum/component/squeak, sound_list, falloff_exponent = 20)
+	AddComponent(/datum/component/squeak, list((sound_file) = 1), 50, falloff_exponent = 20)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user != M && ishuman(user))
