@@ -1,14 +1,9 @@
-//REMOVE ME
-#error Template file included in dme
-//REMOVE ME
 
-/*
- * Template file for your new component
- *
- * See _component.dm for detailed explanations
- *
- */
+# Template file for your new component
 
+See _component.dm for detailed explanations
+
+```dm
 /datum/component/mycomponent
 	//can_transfer = TRUE                   // Must have PostTransfer
 	//dupe_mode = COMPONENT_DUPE_ALLOWED    // code/__DEFINES/dcs/flags.dm
@@ -57,3 +52,4 @@
 	if(myargone == myvar)
 		return TRUE
 */
+```
