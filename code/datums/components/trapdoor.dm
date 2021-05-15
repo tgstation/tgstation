@@ -21,8 +21,6 @@
 	var/obj/item/assembly/trapdoor/assembly
 	///path of the turf this should change into when the assembly is pulsed. needed for openspace trapdoors knowing what to turn back into
 	var/trapdoor_turf_path
-	///a state where this component is changing the turf, deleting itself in the process
-	var/ending = FALSE
 
 /datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, stored_decals)
 	if(!isopenturf(parent))
@@ -50,7 +48,6 @@
 
 /datum/component/trapdoor/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
 	RegisterSignal(parent, COMSIG_TURF_CHANGE, .proc/turf_changed_pre)
 	if(!src.assembly)
 		RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
@@ -62,13 +59,6 @@
 	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
 	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
-
-/////////////////
-/////////////////THE SOLUTION TO THE DECAL ISSUE
-/////////////////
-/////////////////
-/////////////////HAVE THE DECAL SEND A SIGNAL WHEN DESTROYED, LISTEN FOR THAT
-/////////////////STORE DESTROYED SIGNALS AS stored_decals
 
 /datum/component/trapdoor/proc/decal_detached(description, cleanable, directional, pic)
 	SIGNAL_HANDLER
@@ -82,6 +72,7 @@
 /datum/component/trapdoor/proc/reapply_all_decals()
 	for(var/list/element_data as anything in stored_decals)
 		apply_decal(element_data[1], element_data[2], element_data[3], element_data[4])
+	stored_decals = list()
 
 /// small proc that takes passed arguments and drops it into a new element
 /datum/component/trapdoor/proc/apply_decal(description, cleanable, directional, pic)
@@ -122,7 +113,6 @@
  *
  * applies the trapdoor to the new turf (created by the last trapdoor)
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
- * change da turf my final callback. Goodbye
  */
 /obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, list/stored_decals, turf/new_turf)
 	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src, stored_decals)
@@ -136,7 +126,8 @@
  */
 /datum/component/trapdoor/proc/try_opening()
 	var/turf/open/trapdoor_turf = parent
-	ending = TRUE
+	///we want to save this turf's decals as they were right before deletion, so this is the point where we begin listening
+	RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
 	trapdoor_turf.visible_message("<span class='warning'>[trapdoor_turf] swings open!</span>")
 	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
@@ -153,7 +144,6 @@
 	if(blocking)
 		trapdoor_turf.visible_message("<span class='warning'>The trapdoor mechanism in [trapdoor_turf] tries to shut, but is jammed by [blocking]!</span>")
 		return
-	ending = TRUE
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_shut.ogg', 50)
 	trapdoor_turf.visible_message("<span class='warning'>The trapdoor mechanism in [trapdoor_turf] swings shut!</span>")
 	trapdoor_turf.ChangeTurf(trapdoor_turf_path, flags = CHANGETURF_INHERIT_AIR)
