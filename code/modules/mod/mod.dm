@@ -123,7 +123,7 @@
 	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
-	/obj/item/mod/control/Destroy()
+/obj/item/mod/control/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
