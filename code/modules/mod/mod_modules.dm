@@ -28,6 +28,8 @@
 	var/overlay_state_inactive
 	/// Overlay given to the user when the module is active
 	var/overlay_state_active
+	/// Overlay given to the user when the module is used, lasts until cooldown finishes
+	var/overlay_state_use
 	/// What modules are we incompatible with?
 	var/list/incompatible_modules = list()
 	/// Cooldown after use
@@ -100,6 +102,7 @@
 			RegisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON, .proc/on_select_use)
 			RegisterSignal(mod.wearer, COMSIG_MOB_ALTCLICKON, .proc/on_select_use)
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
+	mod.wearer.update_inv_back()
 	return TRUE
 
 /// Called when the module is deactivated
@@ -115,6 +118,7 @@
 			to_chat(mod.wearer, "<span class='notice'>You deactivate [src].</span>")
 			UnregisterSignal(mod.wearer, COMSIG_MOB_MIDDLECLICKON)
 			UnregisterSignal(mod.wearer, COMSIG_MOB_ALTCLICKON)
+	mod.wearer.update_inv_back()
 	return TRUE
 
 /// Called when the module is used
@@ -124,6 +128,8 @@
 	if(!drain_power(use_power_cost))
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
+	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
+	mod.wearer.update_inv_back()
 	return TRUE
 
 /// Called when an activated module without a device is used with middle/alt click
@@ -171,6 +177,20 @@
 	if(source == device)
 		device = null
 		qdel(src)
+
+/// Generates an icon to be used for the suit's worn overlays
+/obj/item/mod/module/proc/generate_worn_overlay()
+	var/used_overlay
+	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
+		used_overlay = overlay_state_use
+	else if(overlay_state_active && active)
+		used_overlay = overlay_state_active
+	else if(overlay_state_inactive)
+		used_overlay = overlay_state_inactive
+	if(!used_overlay)
+		return
+	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/mod.dmi', used_overlay)
+	return module_icon
 
 /obj/item/mod/module/storage
 	name = "MOD storage module"
@@ -641,6 +661,7 @@
 	active_power_cost = 15
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
+	overlay_state_inactive = "module_light"
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
 	light_range = 3
@@ -670,3 +691,12 @@
 	if(!.)
 		return
 	active_power_cost = base_power * light_range
+
+/obj/item/mod/module/flashlight/generate_worn_overlay()
+	. = ..()
+	if(!. || !active)
+		return
+	var/mutable_appearance/light_icon = mutable_appearance('icons/mob/mod.dmi', "module_light_on")
+	light_icon.appearance_flags = RESET_COLOR
+	light_icon.color = light_color
+	. += light_icon

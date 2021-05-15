@@ -127,19 +127,22 @@
 	STOP_PROCESSING(SSobj, src)
 	if(!QDELETED(helmet))
 		helmet.mod = null
-		QDEL_NULL(helmet)
+		helmet = null
+		qdel(helmet)
 	if(!QDELETED(chestplate))
 		chestplate.mod = null
-		QDEL_NULL(chestplate)
+		chestplate = null
+		qdel(chestplate)
 	if(!QDELETED(gauntlets))
 		gauntlets.mod = null
-		QDEL_NULL(gauntlets)
+		gauntlets = null
+		qdel(gauntlets)
 	if(!QDELETED(boots))
 		boots.mod = null
-		QDEL_NULL(boots)
+		boots = null
+		qdel(boots)
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.mod = null
-		QDEL_NULL(module)
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
 	..()
@@ -317,15 +320,9 @@
 	if(!active)
 		return
 	for(var/obj/item/mod/module/module as anything in modules)
-		var/used_overlay
-		if(module.overlay_state_active && module.active)
-			used_overlay = module.overlay_state_active
-		else if(module.overlay_state_inactive)
-			used_overlay = module.overlay_state_inactive
-		if(!used_overlay)
-			continue
-		var/icon/module_icon
-		module_icon = icon('icons/mob/mod.dmi', used_overlay)
+		var/icon/module_icon = module.generate_worn_overlay()
+		if(!module_icon)
+			return
 		. += module_icon
 
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
@@ -509,8 +506,6 @@
 		QDEL_NULL(mod)
 
 /obj/item/clothing/gloves/mod/proc/show_overslot()
-	SIGNAL_HANDLER
-
 	if(!overslot)
 		return
 	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
@@ -541,8 +536,6 @@
 		QDEL_NULL(mod)
 
 /obj/item/clothing/shoes/mod/proc/show_overslot()
-	SIGNAL_HANDLER
-
 	if(!overslot)
 		return
 	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
