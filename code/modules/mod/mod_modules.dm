@@ -180,6 +180,7 @@
 
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay()
+	. = list()
 	var/used_overlay
 	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
 		used_overlay = overlay_state_use
@@ -187,10 +188,8 @@
 		used_overlay = overlay_state_active
 	else if(overlay_state_inactive)
 		used_overlay = overlay_state_inactive
-	if(!used_overlay)
-		return
 	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/mod.dmi', used_overlay)
-	return module_icon
+	. += module_icon
 
 /obj/item/mod/module/storage
 	name = "MOD storage module"

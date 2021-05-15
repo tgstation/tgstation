@@ -22,6 +22,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
+	alternate_worn_layer = BODY_FRONT_LAYER
 	/// The MOD's theme, decides on some stuff like armor and statistics.
 	var/datum/mod_theme/theme = /datum/mod_theme
 	/// Looks of the MOD.
@@ -125,24 +126,34 @@
 
 /obj/item/mod/control/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	var/atom/deleting_atom
 	if(!QDELETED(helmet))
+		deleting_atom = helmet
 		helmet.mod = null
 		helmet = null
-		qdel(helmet)
+		mod_parts -= deleting_atom
+		qdel(deleting_atom)
 	if(!QDELETED(chestplate))
+		deleting_atom = chestplate
 		chestplate.mod = null
 		chestplate = null
-		qdel(chestplate)
+		mod_parts -= deleting_atom
+		qdel(deleting_atom)
 	if(!QDELETED(gauntlets))
+		deleting_atom = gauntlets
 		gauntlets.mod = null
 		gauntlets = null
-		qdel(gauntlets)
+		mod_parts -= deleting_atom
+		qdel(deleting_atom)
 	if(!QDELETED(boots))
+		deleting_atom = boots
 		boots.mod = null
 		boots = null
-		qdel(boots)
+		mod_parts -= deleting_atom
+		qdel(deleting_atom)
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.mod = null
+		modules -= module
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
 	..()
@@ -451,10 +462,11 @@
 	var/obj/item/mod/control/mod
 
 /obj/item/clothing/head/helmet/space/mod/Destroy()
-	..()
 	if(!QDELETED(mod))
 		mod.helmet = null
+		mod.mod_parts -= src
 		QDEL_NULL(mod)
+	..()
 
 /obj/item/clothing/suit/armor/mod
 	name = "MOD chestplate"
@@ -477,10 +489,11 @@
 	var/obj/item/mod/control/mod
 
 /obj/item/clothing/suit/armor/mod/Destroy()
-	..()
 	if(!QDELETED(mod))
 		mod.chestplate = null
+		mod.mod_parts -= src
 		QDEL_NULL(mod)
+	..()
 
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
@@ -500,10 +513,11 @@
 	var/obj/item/clothing/overslot
 
 /obj/item/clothing/gloves/mod/Destroy()
-	..()
 	if(!QDELETED(mod))
 		mod.gauntlets = null
+		mod.mod_parts -= src
 		QDEL_NULL(mod)
+	..()
 
 /obj/item/clothing/gloves/mod/proc/show_overslot()
 	if(!overslot)
@@ -530,10 +544,11 @@
 	var/obj/item/clothing/overslot
 
 /obj/item/clothing/shoes/mod/Destroy()
-	..()
 	if(!QDELETED(mod))
 		mod.boots = null
+		mod.mod_parts -= src
 		QDEL_NULL(mod)
+	..()
 
 /obj/item/clothing/shoes/mod/proc/show_overslot()
 	if(!overslot)
