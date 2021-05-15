@@ -86,8 +86,7 @@
 	Field repairs can be done with a welder."}
 	if(stored_gun?.max_mod_capacity)
 		. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
-		for(var/upgrade in stored_gun.modkits)
-			var/obj/item/borg/upgrade/modkit/modkit = upgrade
+		for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 			. += "<span class='notice'>There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/welder_act(mob/living/user, obj/item/welder)
@@ -118,7 +117,7 @@
 /mob/living/simple_animal/hostile/mining_drone/death()
 	DropOre()
 	if(stored_gun)
-		for(var/obj/item/borg/upgrade/modkit/modkit in stored_gun.modkits)
+		for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 			modkit.uninstall(stored_gun)
 	deathmessage = "blows apart!"
 	..()
@@ -141,10 +140,8 @@
 	if(istype(object, /obj/projectile/kinetic))
 		var/obj/projectile/kinetic/projectile = object
 		if(projectile.kinetic_gun)
-			for(var/upgrade in projectile.kinetic_gun.modkits)
-				var/obj/item/borg/upgrade/modkit/modkit = upgrade
-				if(istype(modkit, /obj/item/borg/upgrade/modkit/minebot_passthrough))
-					return TRUE
+			if (locate(/obj/item/borg/upgrade/modkit/minebot_passthrough) in projectile.kinetic_gun.modkits)
+				return TRUE
 	if(istype(object, /obj/projectile/destabilizer))
 		return TRUE
 
