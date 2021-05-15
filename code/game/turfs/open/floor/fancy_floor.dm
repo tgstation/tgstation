@@ -406,6 +406,14 @@
 	return FALSE
 
 
+/turf/open/floor/emissive_test
+	name = "emissive test floor"
+	desc = "A glow-in-the-dark floor used to test emissive turfs."
+
+/turf/open/floor/emissive_test/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, alpha = src.alpha)
+
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
 	icon = 'icons/turf/floors/chasms.dmi'
