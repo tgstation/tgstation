@@ -135,7 +135,8 @@
 		UnregisterSignal(target, signal_procs[target])
 	//END: ECS SHIT
 
-	return QDEL_HINT_QUEUE
+	//Memes
+	return QDEL_HINT_IFFAIL_FINDREFERENCE
 
 #ifdef DATUMVAR_DEBUGGING_MODE
 /datum/proc/save_vars()
