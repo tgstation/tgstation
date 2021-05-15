@@ -15,6 +15,8 @@
 	* list of lists that are arguments for readding decals when the floor comes back. pain.
 	*
 	* format: list(list(element's description, element's cleanable, element's directional, element's pic))
+	* the list will be filled with all the data of the deleting elements (when ChangeTurf is called) only when the trapdoor begins to open.
+	* so any other case the elements will be changed but not recorded.
 	*/
 	var/list/stored_decals = list()
 	///assembly tied to this trapdoor
