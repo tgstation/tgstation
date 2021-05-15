@@ -1,0 +1,40 @@
+{
+	"winter_coat": [
+		{
+			"type": "icon_state",
+			"icon_state": "neck_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "sleeves_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "arms_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bodytop_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bodymiddle_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bodybottom_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		}
+	]
+}

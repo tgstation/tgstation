@@ -133,11 +133,6 @@
 	icon_file = 'icons/obj/module.dmi'
 	json_config = 'code/datums/greyscale/json_configs/circuit.json'
 
-<<<<<<< HEAD
-/datum/greyscale_config/winter_coats
-	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wintercoats.json'
-=======
 /datum/greyscale_config/sombrero
 	icon_file = 'icons/obj/clothing/head/sombrero.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sombrero.json'
@@ -162,4 +157,11 @@
 
 /datum/greyscale_config/sombrero/base_worn
 	json_config = 'code/datums/greyscale/json_configs/sombrero_base_worn.json'
->>>>>>> upstream/master
+
+/datum/greyscale_config/winter_coats
+	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wintercoats.json'
+
+/datum/greyscale_config/winter_coats/worn
+	icon_file = 'icons/mob/clothing/suits/wintercoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wintercoats_worn.json'
