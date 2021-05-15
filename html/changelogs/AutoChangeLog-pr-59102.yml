@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - spellcheck: "fixes span in filterrific.dm"

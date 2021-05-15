@@ -1,0 +1,6 @@
+author: "maxymax13"
+delete-after: True
+changes: 
+  - imageadd: "Did you know? \"Vendomat\" is just the name for the base vendor path. The assembly parts vendor you probably know as \"Vendomat\" has been given its unique own sprite and name to reduce confusion. Shop at a Part-Mart at your local Primary Tool Storage today!"
+  - imageadd: "Custom vendors now have a new sprite, with a fancy LCD!"
+  - imageadd: "Jesus-endorsed custom vendors now have a fancy UNIQUE golden sprite, rather than being a robotics vendor made  out of cheese!"
