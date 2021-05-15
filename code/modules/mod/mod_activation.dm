@@ -32,11 +32,11 @@
 	if(piece == gauntlets && wearer.gloves)
 		gauntlets.overslot = wearer.gloves
 		wearer.transferItemToLoc(gauntlets.overslot, gauntlets, TRUE)
-		gauntlets.RegisterSignal(gauntlets, COMSIG_ITEM_POST_UNEQUIP, /obj/item/clothing/gloves/mod.proc/show_overslot)
+		gauntlets.RegisterSignal(wearer, COMSIG_ITEM_POST_UNEQUIP, /obj/item/clothing/gloves/mod.proc/show_overslot)
 	if(piece == boots && wearer.shoes)
 		boots.overslot = wearer.shoes
 		wearer.transferItemToLoc(boots.overslot, boots, TRUE)
-		boots.RegisterSignal(boots, COMSIG_ITEM_POST_UNEQUIP, /obj/item/clothing/shoes/mod.proc/show_overslot)
+		boots.RegisterSignal(wearer, COMSIG_ITEM_POST_UNEQUIP, /obj/item/clothing/shoes/mod.proc/show_overslot)
 	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		user.visible_message("<span class='notice'>[wearer]'s [piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
 			"<span class='notice'>[piece] deploy[piece.p_s()] with a mechanical hiss.</span>",
@@ -55,7 +55,7 @@
 	REMOVE_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(piece, src, TRUE)
 	if((piece == boots && boots.overslot) || (piece == gauntlets && gauntlets.overslot))
-		piece.UnregisterSignal(piece, COMSIG_ITEM_POST_UNEQUIP)
+		piece.UnregisterSignal(wearer, COMSIG_ITEM_POST_UNEQUIP)
 	user.visible_message("<span class='notice'>[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>",
 		"<span class='notice'>[piece] retract[piece.p_s()] back into [src] with a mechanical hiss.</span>",
 		"<span class='hear'>You hear a mechanical hiss.</span>")
@@ -132,8 +132,8 @@
 		audible_message("<span class='notice'>Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer.name].</span>", hearing_distance = 1)
 		icon_state = "[skin]-control[active ? "" : "-sealed"]"
 		worn_icon_state = "[skin]-control[active ? "" : "-sealed"]"
-		wearer.update_inv_back()
 		active = !active
+		wearer.update_inv_back()
 		if(active)
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, frequency = 6000)
 			slowdown = theme.slowdown_active

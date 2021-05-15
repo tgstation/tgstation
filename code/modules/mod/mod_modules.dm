@@ -642,7 +642,6 @@
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
-	light_flags = LIGHT_ATTACHED
 	light_color = COLOR_WHITE
 	light_range = 3
 	light_power = 1
@@ -655,6 +654,7 @@
 	. = ..()
 	if(!.)
 		return
+	set_light_flags(light_flags | LIGHT_ATTACHED)
 	set_light_on(active)
 	active_power_cost = base_power * light_range
 
@@ -662,6 +662,7 @@
 	. = ..()
 	if(!.)
 		return
+	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
 
 /obj/item/mod/module/flashlight/on_process(delta_time)

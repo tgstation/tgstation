@@ -125,18 +125,23 @@
 
 /obj/item/mod/control/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(wires)
-	QDEL_NULL(cell)
 	if(!QDELETED(helmet))
+		helmet.mod = null
 		QDEL_NULL(helmet)
 	if(!QDELETED(chestplate))
+		chestplate.mod = null
 		QDEL_NULL(chestplate)
 	if(!QDELETED(gauntlets))
+		gauntlets.mod = null
 		QDEL_NULL(gauntlets)
 	if(!QDELETED(boots))
+		boots.mod = null
 		QDEL_NULL(boots)
 	for(var/obj/item/mod/module/module as anything in modules)
+		module.mod = null
 		QDEL_NULL(module)
+	QDEL_NULL(wires)
+	QDEL_NULL(cell)
 	..()
 
 /obj/item/mod/control/process(delta_time)
@@ -313,10 +318,10 @@
 		return
 	for(var/obj/item/mod/module/module as anything in modules)
 		var/used_overlay
-		if(overlay_state_active && module.active)
-			used_overlay = overlay_state_active
-		else if(overlay_state_inactive)
-			used_overlay = overlay_state_inactive
+		if(module.overlay_state_active && module.active)
+			used_overlay = module.overlay_state_active
+		else if(module.overlay_state_inactive)
+			used_overlay = module.overlay_state_inactive
 		if(!used_overlay)
 			continue
 		var/icon/module_icon
@@ -503,13 +508,13 @@
 		mod.gauntlets = null
 		QDEL_NULL(mod)
 
-/obj/item/clothing/gloves/mod/proc/show_overslot(mob/source)
+/obj/item/clothing/gloves/mod/proc/show_overslot()
 	SIGNAL_HANDLER
 
 	if(!overslot)
 		return
-	if(!source.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
-		source.dropItemToGround(overslot, TRUE, TRUE)
+	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
+		mod.wearer.dropItemToGround(overslot, TRUE, TRUE)
 	overslot = null
 
 /obj/item/clothing/shoes/mod
@@ -532,15 +537,16 @@
 /obj/item/clothing/shoes/mod/Destroy()
 	..()
 	if(!QDELETED(mod))
+		mod.boots = null
 		QDEL_NULL(mod)
 
-/obj/item/clothing/shoes/mod/proc/show_overslot(mob/source)
+/obj/item/clothing/shoes/mod/proc/show_overslot()
 	SIGNAL_HANDLER
 
 	if(!overslot)
 		return
-	if(!source.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
-		source.dropItemToGround(overslot, TRUE, TRUE)
+	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
+		mod.wearer.dropItemToGround(overslot, TRUE, TRUE)
 	overslot = null
 
 /obj/item/mod/control/pre_equipped
