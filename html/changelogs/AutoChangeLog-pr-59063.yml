@@ -1,4 +1,0 @@
-author: "InsaneRed"
-delete-after: True
-changes: 
-  - bugfix: "Metastation transit tube now properly has lockdown blastdoors"

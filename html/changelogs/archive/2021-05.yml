@@ -361,3 +361,76 @@
   tralezab:
   - bugfix: CONTRIBUTING.md's example on static overlays passes integration tests
       now
+2021-05-14:
+  Fikou, PestoVerde322:
+  - imageadd: New Altar of Gods sprites
+  InsaneRed:
+  - bugfix: Metastation transit tube now properly has lockdown blastdoors
+  - bugfix: Hopline shutters and queue shutters can now only be controlled by people
+      with proper access and not the entire service department
+  Pepsiman0:
+  - rscadd: most of the icebox maint was reworked. 3 new ladders leading to new small
+      areas have been added around the maints, providing more ways to come back to
+      the station from the zlevel below it. The other non maint areas that have been
+      touched are the vacant office and the engi hallway.
+  RandomGamer123:
+  - bugfix: DNA activators that failed no longer give chromosomes.
+  Ryll/Shaps:
+  - bugfix: Hauberoaches will no longer spam messages about trying to squish themselves
+      every time they move
+  SgtHunk:
+  - bugfix: Fixed trashbags being able to be equipped on janitor wintercoats.
+  TaeruAlethea:
+  - bugfix: fixed cyborgs using the carbon's offset on scooters and skateboards.
+  Timberpoes:
+  - refactor: Malf AI and Traitor are now unique antags with a dedicated dynamic ruleset
+      for rolling them and different entries on the traitor panel. The roundstart
+      traitor ruleset can no longer roll malf AIs, which is what the malf AI ruleset
+      does in its place.
+  - bugfix: Geneticists finally join their fellow members of science in being unable
+      to get the download research notes objective.
+  Twaticus:
+  - imageadd: New corner variants for the textured and smooth tiles
+  - imageadd: New normal, white and dark tile variants
+  - imageadd: New dark corner decal
+  ninjanomnom:
+  - bugfix: The woke plushie seems to have fallen asleep at some point. They've been
+      shaken awake once more.
+  tralezab:
+  - bugfix: fixes udders not performing some things they should!
+2021-05-15:
+  ATHATH:
+  - bugfix: Beepsky smash's stamina healing and non-beepsky-related hallucinatory
+      effects are now applied to people WITH sec-affiliated livers instead of to people
+      WITHOUT sec-affiliated livers, restoring its previous, intended functionality.
+  Fikou:
+  - bugfix: ambience subsystem no longer plays to people in lobby
+  GoldenAlpharex:
+  - bugfix: You no longer get on the object layer when you're riding someone's back,
+      and your layer now gets successfully reset upon unbuckling.
+  - qol: The layer difference between the person at the front and at the back (layer-wise)
+      during a piggyback ride isn't abysmal anymore.
+  Guillaume Prata:
+  - spellcheck: The atmospherics hardsuit description was changed to better inform
+      that it has less radiation protection than the engineering ones.
+  InsaneRed:
+  - qol: Plasmamen paramedics now start with nitrile gloves
+  JohnFulpWillard:
+  - bugfix: Security Revolutionaries will no longer become Enemies of the Revolution
+      upon a Revolution victory.
+  Kylerace:
+  - bugfix: singularities will no longer eat themselves, among other things
+  - bugfix: After a series of thorough exorcisms, Nanotrasen would like to assure
+      Space Station 13 that ghosts both do not exist and if they did exist can no
+      longer affect the material plane by spamming the fuck out of squeaky noises
+      from bananium floors
+  LemonInTheDark:
+  - bugfix: Footsteps will no longer stack
+  cacogen:
+  - qol: Tells you a melee attack or projectile hit an object (e.g. airlock, reinforced
+      window) without leaving a mark if it did no damage
+  tralezab:
+  - refactor: rpgloot, embedopocalypse, and stickapocalypse are now datum singletons
+  - refactor: THAT USE SIGNALS!
+  - rscadd: RPGLoot now has the curse of hunger as a bad modifier. A very bad one!
+  - refactor: Duffelbag curse is now a component, attachable to any item.
