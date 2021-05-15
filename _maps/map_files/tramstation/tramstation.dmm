@@ -53111,9 +53111,10 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/machinery/requests_console/directional/west{
+	announcementConsole = 1;
 	department = "Cargo Bay";
 	departmentType = 2;
-	name = "Cargo Bay Requests Console"
+	name = "Quartermaster's Requests Console"
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo - Quartermaster's Office";

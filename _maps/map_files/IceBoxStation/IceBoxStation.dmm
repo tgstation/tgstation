@@ -39451,9 +39451,10 @@
 /area/medical/chemistry)
 "nCD" = (
 /obj/machinery/requests_console/directional/west{
+	announcementConsole = 1;
 	department = "Cargo Bay";
 	departmentType = 2;
-	name = "Cargo Bay Requests Console"
+	name = "Quartermaster's Requests Console"
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1

@@ -77905,9 +77905,10 @@
 "xBW" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/machinery/requests_console/directional/east{
+	announcementConsole = 1;
 	department = "Cargo Bay";
 	departmentType = 2;
-	name = "Cargo Bay Requests Console"
+	name = "Quartermaster's Requests Console"
 	},
 /obj/item/reagent_containers/food/drinks/bottle/whiskey{
 	pixel_x = -5;

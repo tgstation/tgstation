@@ -82385,9 +82385,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/requests_console/directional/north{
+	announcementConsole = 1;
 	department = "Cargo Bay";
 	departmentType = 2;
-	name = "Cargo Bay Requests Console"
+	name = "Quartermaster's Requests Console"
 	},
 /obj/structure/extinguisher_cabinet/directional/north{
 	pixel_x = 32

@@ -69557,9 +69557,10 @@
 	dir = 8
 	},
 /obj/machinery/requests_console/directional/east{
+	announcementConsole = 1;
 	department = "Cargo Bay";
 	departmentType = 2;
-	name = "Cargo Bay Requests Console"
+	name = "Quartermaster's Requests Console"
 	},
 /turf/open/floor/iron,
 /area/cargo/qm)
