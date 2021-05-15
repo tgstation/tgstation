@@ -626,7 +626,7 @@ CREATE TABLE `SS13_text_adventures` (
 	`adventure_data` LONGTEXT NOT NULL,
 	`uploader` VARCHAR(32) NOT NULL,
 	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`approved` BOOLEAN NOT NULL DEFAULT FALSE,
+	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 

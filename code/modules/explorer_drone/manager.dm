@@ -36,7 +36,8 @@
 			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
 			if(!target)
 				return
-			target.remove()
+			if(!target.remove())
+				feedback_message = "Failed to remove adventure"
 			return TRUE
 		if("approve")
 			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries

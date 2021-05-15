@@ -119,7 +119,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		qdel(TimestampCheckQuery)
 		//We're up to date, update db instead
 		var/datum/db_query/UpdateQuery = SSdbcore.NewQuery("UPDATE [format_table_name("text_adventures")] SET adventure_data = :adventure_data,uploader = :uploader,approved = :approved WHERE id = :id",
-		list("id" = id, "adventure_data" = raw_json, uploader = usr.ckey, approved = approved))
+		list("id" = id, "adventure_data" = raw_json, "uploader" = usr.ckey, "approved" = approved))
 		UpdateQuery.warn_execute()
 		qdel(UpdateQuery)
 	else
@@ -136,10 +136,14 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 /datum/adventure_db_entry/proc/remove()
 	if(id)
 		var/datum/db_query/DelQuery = SSdbcore.NewQuery("DELETE FROM [format_table_name("text_adventures")] WHERE id = :id", list("id" = id))
-		if(DelQuery.warn_execute())
-			log_admin("[key_name(usr)] deleted text adventure with id : [id], name : [name]")
+		if(!DelQuery.warn_execute())
+			qdel(DelQuery)
+			return FALSE
+		log_admin("[key_name(usr)] deleted text adventure with id : [id], name : [name]")
 		qdel(DelQuery)
 	GLOB.explorer_drone_adventure_db_entries -= src
+	qdel(src)
+	return TRUE
 
 /// Extracts fields that are used by adventure browser / generation before instantiating
 /datum/adventure_db_entry/proc/extract_metadata()
