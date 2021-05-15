@@ -423,6 +423,17 @@
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
-	greyscale_colors = "#b8ccd4#ffa200#ff9100#abebe8#c84b77#123abc"
+	greyscale_colors = "#ffffff#ffffff#808080#808080#ff0000#808080"
 	greyscale_config = /datum/greyscale_config/winter_coats
 	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
+
+/obj/item/clothing/suit/hooded/wintercoat/custom/MakeHood()
+	. = ..()
+	hood.greyscale_colors = copytext(greyscale_colors, 1, 22) //Adopt the suit's grayscale coloring for visual clarity.
+
+/obj/item/clothing/head/hooded/winterhood/custom
+	name = "tailored winter coat hood"
+	desc = "A heavy jacket hood made from 'synthetic' animal furs, with custom colors."
+	greyscale_config = /datum/greyscale_config/winter_hoods
+	greyscale_config_worn = /datum/greyscale_config/winter_hoods/worn

@@ -158,6 +158,7 @@
 /datum/greyscale_config/sombrero/base_worn
 	json_config = 'code/datums/greyscale/json_configs/sombrero_base_worn.json'
 
+//Winter Coats + Winter Hoods
 /datum/greyscale_config/winter_coats
 	icon_file = 'icons/obj/clothing/suits/wintercoat.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats.json'
@@ -165,3 +166,11 @@
 /datum/greyscale_config/winter_coats/worn
 	icon_file = 'icons/mob/clothing/suits/wintercoat.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_worn.json'
+
+/datum/greyscale_config/winter_hoods
+	icon_file = 'icons/obj/clothing/head/winterhood.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood.json'
+
+/datum/greyscale_config/winter_hoods/worn
+	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
