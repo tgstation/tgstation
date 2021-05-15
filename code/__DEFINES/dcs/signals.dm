@@ -381,6 +381,9 @@
 ///from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 #define COMSIG_TURF_EXPOSE "turf_expose"
 
+///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
+#define COMSIG_TURF_DECAL_DETACHED "turf_decal_detached"
+
 // /atom/movable signals
 
 ///from base of atom/movable/Moved(): (/atom)

@@ -97,6 +97,7 @@
 	source.update_appearance()
 	if(isitem(source))
 		INVOKE_ASYNC(source, /obj/item/.proc/update_slot_icon)
+	SEND_SIGNAL(source, COMSIG_TURF_DECAL_DETACHED, description, cleanable, directional, pic)
 	return ..()
 
 /datum/element/decal/proc/late_update_icon(atom/source)

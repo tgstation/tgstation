@@ -21,6 +21,8 @@
 	var/obj/item/assembly/trapdoor/assembly
 	///path of the turf this should change into when the assembly is pulsed. needed for openspace trapdoors knowing what to turn back into
 	var/trapdoor_turf_path
+	///a state where this component is changing the turf, deleting itself in the process
+	var/ending = FALSE
 
 /datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, stored_decals)
 	if(!isopenturf(parent))
@@ -48,6 +50,7 @@
 
 /datum/component/trapdoor/RegisterWithParent()
 	. = ..()
+	RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
 	RegisterSignal(parent, COMSIG_TURF_CHANGE, .proc/turf_changed_pre)
 	if(!src.assembly)
 		RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
@@ -60,6 +63,17 @@
 	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
 
+/////////////////
+/////////////////THE SOLUTION TO THE DECAL ISSUE
+/////////////////
+/////////////////
+/////////////////HAVE THE DECAL SEND A SIGNAL WHEN DESTROYED, LISTEN FOR THAT
+/////////////////STORE DESTROYED SIGNALS AS stored_decals
+
+/datum/component/trapdoor/proc/decal_detached(description, cleanable, directional, pic)
+	SIGNAL_HANDLER
+	stored_decals |= list(description, cleanable, directional, pic)
+
 /**
  * ## reapply_all_decals
  *
@@ -71,7 +85,7 @@
 
 /// small proc that takes passed arguments and drops it into a new element
 /datum/component/trapdoor/proc/apply_decal(description, cleanable, directional, pic)
-	AddElement(parent, args)
+	AddElement(/datum/element/decal, args)
 
 ///called by linking remotes to tie an assembly to the trapdoor
 /datum/component/trapdoor/proc/on_link_requested(datum/source, obj/item/assembly/trapdoor/assembly)
@@ -122,6 +136,7 @@
  */
 /datum/component/trapdoor/proc/try_opening()
 	var/turf/open/trapdoor_turf = parent
+	ending = TRUE
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
 	trapdoor_turf.visible_message("<span class='warning'>[trapdoor_turf] swings open!</span>")
 	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
@@ -138,6 +153,7 @@
 	if(blocking)
 		trapdoor_turf.visible_message("<span class='warning'>The trapdoor mechanism in [trapdoor_turf] tries to shut, but is jammed by [blocking]!</span>")
 		return
+	ending = TRUE
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_shut.ogg', 50)
 	trapdoor_turf.visible_message("<span class='warning'>The trapdoor mechanism in [trapdoor_turf] swings shut!</span>")
 	trapdoor_turf.ChangeTurf(trapdoor_turf_path, flags = CHANGETURF_INHERIT_AIR)
@@ -147,7 +163,36 @@
 /obj/item/assembly/trapdoor
 	name = "trapdoor controller"
 	desc = "A sinister-looking controller for a trapdoor."
+	///if the trapdoor isn't linked it will try to link on pulse, this shouldn't be spammable
+	COOLDOWN_DECLARE(search_cooldown)
+	///trapdoor link cooldown time here!
+	var/search_cooldown_time = 10 SECONDS
+	///if true, a trapdoor in the world has a reference to this assembly and is listening for when it is pulsed.
 	var/linked = FALSE
+
+/obj/item/assembly/trapdoor/pulsed(radio)
+	. = ..()
+	if(linked)
+		return
+	if(!COOLDOWN_FINISHED(src, search_cooldown))
+		visible_message("<span class='warning'>[src] cannot attempt another trapdoor linkup so soon!</span>")
+		return
+	COOLDOWN_START(src, search_cooldown, search_cooldown_time)
+	attempt_link_up()
+
+/obj/item/trapdoor_remote/proc/attempt_link_up()
+	if(!COOLDOWN_FINISHED(src, search_cooldown))
+		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, search_cooldown))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		visible_message("<span class='warning'>[src] is on cooldown! Please wait [timeleft].</span>")
+		return
+	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAPDOOR_LINK, internals) & LINKED_UP)
+		playsound(game, 'sound/machines/chime.ogg', 50, TRUE)
+		visible_message("<span class='notice'>[src] has linked up to a nearby trapdoor! \
+		You may now use it to check where the trapdoor is... be careful!</span>")
+	else
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		visible_message("<span class='warning'>[src] has failed to find a trapdoor nearby to link to.</span>")
 
 /**
  * ## trapdoor remotes!
@@ -157,11 +202,9 @@
  */
 /obj/item/trapdoor_remote
 	name = "trapdoor remote"
-	desc = "A remote with internals that link to trapdoors and remotely activate them."
+	desc = "A small machine that interfaces with a trapdoor controller for easy use."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "trapdoor_remote"
-	COOLDOWN_DECLARE(search_cooldown)
-	var/search_cooldown_time = 10 SECONDS
 	COOLDOWN_DECLARE(trapdoor_cooldown)
 	var/trapdoor_cooldown_time = 2 SECONDS
 	var/obj/item/assembly/trapdoor/internals
@@ -207,7 +250,8 @@
 		to_chat(user, "<span class='warning'>[src] has no internals!</span>")
 		return
 	if(!internals.linked)
-		attempt_link_up(user)
+		to_chat(user, "<span class='notice'>You activate [src].</span>")
+		internals.pulsed()
 		return
 	if(!COOLDOWN_FINISHED(src, trapdoor_cooldown))
 		to_chat(user, "<span class='warning'>[src] is on a short cooldown.</span>")
@@ -218,17 +262,6 @@
 	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), trapdoor_cooldown_time)
 	COOLDOWN_START(src, trapdoor_cooldown, trapdoor_cooldown_time)
 	internals.pulsed()
-
-/obj/item/trapdoor_remote/proc/attempt_link_up(mob/user)
-	if(!COOLDOWN_FINISHED(src, search_cooldown))
-		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, search_cooldown))
-		to_chat(user, "<span class='warning'>[src] is on cooldown! Please wait [timeleft].</span>")
-		return
-	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAPDOOR_LINK, internals) & LINKED_UP)
-		to_chat(user, "<span class='notice'>[src] has linked up to a nearby trapdoor! \
-		You may now use it to check where the trapdoor is... be careful!</span>")
-	else
-		to_chat(user, "<span class='warning'>[src] has failed to find a trapdoor nearby to link to.</span>")
 
 #undef TRAPDOOR_LINKING_SEARCH_RANGE
 
