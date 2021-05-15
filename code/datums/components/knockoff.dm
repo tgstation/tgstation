@@ -1,9 +1,11 @@
-//Items with these will have a chance to get knocked off when disarming
+///Items with these will have a chance to get knocked off when disarming or being knocked down
 /datum/component/knockoff
-	var/knockoff_chance = 100 //Chance to knockoff
-	var/knockdown_threshold = 0 //  The minimum duration of a knockdown required to trigger a knockoff
-	var/list/target_zones //Aiming for these zones will cause the knockoff, null means all zones allowed
-	var/list/slots_knockoffable //Can be only knocked off from these slots, null means all slots allowed
+	///Chance to knockoff
+	var/knockoff_chance = 100
+	///Aiming for these zones will cause the knockoff, null means all zones allowed
+	var/list/target_zones
+	///Can be only knocked off from these slots, null means all slots allowed
+	var/list/slots_knockoffable
 
 /datum/component/knockoff/Initialize(knockoff_chance,zone_override,slots_knockoffable)
 	if(!isitem(parent))
@@ -19,6 +21,7 @@
 	if(slots_knockoffable)
 		src.slots_knockoffable = slots_knockoffable
 
+///Tries to knockoff the item when disarmed
 /datum/component/knockoff/proc/Knockoff(mob/living/carbon/human/wearer,mob/living/attacker,zone)
 	SIGNAL_HANDLER
 
@@ -33,19 +36,18 @@
 		return
 	wearer.visible_message("<span class='warning'>[attacker] knocks off [wearer]'s [item]!</span>","<span class='userdanger'>[attacker] knocks off your [item]!</span>")
 
+///Tries to knockoff the item when user is knocked down
 /datum/component/knockoff/proc/Knockoff_knockdown(mob/living/carbon/human/wearer,amount)
 	SIGNAL_HANDLER
 
 	var/obj/item/item = parent
 	if(!istype(wearer))
 		return
-	if(knockdown_threshold <= amount)
-		return
 	if(!prob(knockoff_chance))
 		return
 	if(!wearer.dropItemToGround(item))
 		return
-	wearer.visible_message("<span class='warning'>[wearer]'s [item] get knocked off!</span>","<span class='userdanger'>Your [item] get knocked off!</span>")
+	wearer.visible_message("<span class='warning'>[wearer]'s [item] gets knocked off!</span>","<span class='userdanger'>Your [item] was knocked off!</span>")
 
 
 /datum/component/knockoff/proc/OnEquipped(datum/source, mob/living/carbon/human/H,slot)
