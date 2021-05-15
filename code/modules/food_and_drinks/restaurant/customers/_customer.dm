@@ -25,7 +25,13 @@
 	var/second_warning_line = "This is your last warning!"
 	///Line when harrased by someone for the last time
 	var/self_defense_line = "Omae wa mo, shinderou."
-
+	///Line for easter egg ordering.
+	var/easter_egg_order_setup_line
+	///The letter to add to the easter egg ordering setup.
+	var/easter_egg_order_letter
+	///The ending of the easter egg order.
+	var/easter_egg_order_ending
+	
 	///Clothing sets to pick from when dressing the robot.
 	var/list/clothing_sets = list("amerifat_clothes")
 	///List of prefixes for our robots name
@@ -36,6 +42,7 @@
 	var/base_icon = "amerifat"
 	///Sound to use when this robot type speaks
 	var/speech_sound = 'sound/creatures/tourist/tourist_talk.ogg'
+
 
 	/// Is this unique once per venue?
 	var/is_unique = FALSE
@@ -75,6 +82,9 @@
 	first_warning_line = "Don't tread on me!"
 	second_warning_line = "Last chance buddy! Don't tread on me!"
 	self_defense_line = "CASTLE DOCTRINE ACTIVATED!"
+	easter_egg_order_setup_line = "Yeah can I get a mothafuckin uh"
+	easter_egg_order_letter = "h"
+	easter_egg_order_ending = ", extra cheese?"
 
 
 /datum/customer_data/italian
@@ -113,6 +123,11 @@
 	orderable_objects = list(
 	/datum/venue/restaurant = list(/obj/item/food/baguette = 20, /obj/item/food/garlicbread = 5, /obj/item/food/soup/onion = 4, /obj/item/food/pie/berryclafoutis = 2, /obj/item/food/omelette = 15),
 	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 10, /datum/reagent/consumable/ethanol/cognac = 5, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 5, /datum/reagent/consumable/ethanol/wine = 5))
+	easter_egg_order_setup_line = "Oui, puis-j'avoir d'un, euh"
+	easter_egg_order_letter = "h"
+	easter_egg_order_ending = ", avec fromage?"
+
+
 
 /datum/customer_data/french/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING])
@@ -278,6 +293,9 @@
 	first_warning_line = "Amigo! Don't touch me like that."
 	second_warning_line = "Compadre, enough is enough! Last warning!"
 	self_defense_line = "Time for you to find out what kind of robot I am, eh?"
+	easter_egg_order_setup_line = "¿Puedo conseguir, uh"
+	easter_egg_order_letter = "h"
+	easter_egg_order_ending = ", de queso extra?"
 
 /datum/customer_data/british
 	base_icon = "british"
@@ -291,6 +309,7 @@
 	first_warning_line = "Our sovereign lord the Queen chargeth and commandeth all persons, being assembled, immediately to disperse themselves."
 	second_warning_line = "And peaceably to depart to their habitations, or to their lawful business, upon the pains contained in the act made in the first year of King George, for preventing tumults and riotous assemblies. There will be no further warnings."
 	self_defense_line = "God Save the Queen."
+
 
 /datum/customer_data/british/gent
 	clothing_sets = list("british_gentleman")
