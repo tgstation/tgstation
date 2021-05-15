@@ -430,7 +430,8 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/custom/MakeHood()
 	. = ..()
-	hood.greyscale_colors = copytext(greyscale_colors, 1, 22) //Adopt the suit's grayscale coloring for visual clarity.
+	hood.set_greyscale_colors(copytext(greyscale_colors, 1, 22)) //Adopt the suit's grayscale coloring for visual clarity.
+	hood.update_item_greyscale()
 
 /obj/item/clothing/head/hooded/winterhood/custom
 	name = "tailored winter coat hood"
