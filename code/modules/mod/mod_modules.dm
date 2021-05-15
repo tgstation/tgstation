@@ -618,3 +618,55 @@
 	if(amount <= RAD_BACKGROUND_RADIATION)
 		return
 	current_tick_amount += amount
+
+/obj/item/mod/module/emp_shield
+	name = "MOD EMP shield module"
+	desc = "A module that shields the MOD from EMP's."
+	complexity = 2
+	idle_power_cost = 10
+	incompatible_modules = list(/obj/item/mod/module/emp_shield)
+
+/obj/item/mod/module/emp_shield/on_install()
+	. = ..()
+	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+
+/obj/item/mod/module/emp_shield/on_uninstall()
+	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+
+/obj/item/mod/module/flashlight
+	name = "MOD flashlight module"
+	desc = "A module granting the MOD a light source."
+	module_type = MODULE_TOGGLE
+	complexity = 1
+	active_power_cost = 15
+	incompatible_modules = list(/obj/item/mod/module/flashlight)
+	cooldown_time = 0.5 SECONDS
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_flags = LIGHT_ATTACHED
+	light_color = COLOR_WHITE
+	light_range = 3
+	light_power = 1
+	light_on = FALSE
+	var/base_power = 5
+	var/min_range = 1
+	var/max_range = 5
+
+/obj/item/mod/module/flashlight/on_activation()
+	. = ..()
+	if(!.)
+		return
+	set_light_on(active)
+	active_power_cost = base_power * light_range
+
+
+/obj/item/mod/module/flashlight/on_deactivation()
+	. = ..()
+	if(!.)
+		return
+	set_light_on(active)
+
+/obj/item/mod/module/flashlight/on_process(delta_time)
+	. = ..()
+	if(!.)
+		return
+	active_power_cost = base_power * light_range

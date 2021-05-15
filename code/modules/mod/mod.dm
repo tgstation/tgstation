@@ -291,6 +291,16 @@
 	locked = !locked
 	to_chat(user, "<span class='notice'>You emag [src], [locked ? "locking" : "unlocking"] it.</span>")
 
+/obj/item/mod/control/emp_act(severity)
+	. = ..()
+	to_chat(wearer, "<span class='warning'>[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!</span>")
+	if(!active || !wearer || . & EMP_PROTECT_CONTENTS)
+		return
+	wearer.apply_damage(10 / severity, BURN, spread_damage=TRUE)
+	to_chat(wearer, "<span class='danger'>You feel [src] heat up from the EMP burning you slightly.</span>")
+	if (wearer.stat < UNCONSCIOUS && prob(10))
+		wearer.emote("scream")
+
 /obj/item/mod/control/doStrip(mob/stripper, mob/owner)
 	toggle_activate(stripper, TRUE)
 	for(var/part in modules)
