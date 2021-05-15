@@ -62,12 +62,13 @@ export class Changelog extends Component {
     this.setState({ selectedIndex });
   }
 
-  getData = (date, attemptNumber = 0) => {
+  getData = (date, attemptNumber = 1) => {
     const { act } = useBackend(this.context);
     const self = this;
+    const maxAttempts = 6;
 
-    if (attemptNumber > 2) {
-      return this.setData('Failed to load data after 3 attempts');
+    if (attemptNumber > maxAttempts) {
+      return this.setData('Failed to load data after ' + maxAttempts + ' attempts');
     }
 
     act('get_month', { date });
@@ -78,7 +79,7 @@ export class Changelog extends Component {
         const errorRegex = /^Cannot find/;
 
         if (errorRegex.test(result)) {
-          const timeout = 50 + attemptNumber * 100;
+          const timeout = 50 + attemptNumber * 50;
 
           self.setData(
             'Loading changelog data' + '.'.repeat(attemptNumber + 3)
