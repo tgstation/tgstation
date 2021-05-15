@@ -1,41 +1,7 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, RoundGauge, Dimmer } from '../components';
+import { Button, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, RoundGauge, Dimmer, Modal } from '../components';
 import { Window } from '../layouts';
-
-const RadCounter = (props, context) => {
-  const { data } = useBackend(context);
-  const {
-    active,
-    radcount,
-    userrads,
-    usercontam,
-  } = data;
-  return (
-    <Stack fill vertical>
-      <Stack.Item>
-        {active && userrads}
-      </Stack.Item>
-      <Stack.Item>
-        {active && usercontam}
-      </Stack.Item>
-      <Stack.Item>
-        <RoundGauge
-          size={3}
-          value={active ? radcount : 0}
-          minValue={0}
-          maxValue={1500}
-          alertAfter={400}
-          ranges={{
-            "good": [0, 400],
-            "average": [400, 800],
-            "bad": [800, 1500],
-          }}
-          format={value => toFixed(value/10) + '%'} />
-      </Stack.Item>
-    </Stack>
-  );
-};
 
 const ID2MODULE = {
   rad_counter: () => <RadCounter />,
@@ -369,5 +335,39 @@ export const MODsuit = (props, context) => {
         )}
       </Window.Content>
     </Window>
+  );
+};
+
+const RadCounter = (props, context) => {
+  const { data } = useBackend(context);
+  const {
+    active,
+    radcount,
+    userrads,
+    usercontam,
+  } = data;
+  return (
+    <Stack fill vertical>
+      <Stack.Item>
+        {active && userrads}
+      </Stack.Item>
+      <Stack.Item>
+        {active && usercontam}
+      </Stack.Item>
+      <Stack.Item>
+        <RoundGauge
+          size={3}
+          value={active ? radcount : 0}
+          minValue={0}
+          maxValue={1500}
+          alertAfter={400}
+          ranges={{
+            "good": [0, 400],
+            "average": [400, 800],
+            "bad": [800, 1500],
+          }}
+          format={value => toFixed(value/10) + '%'} />
+      </Stack.Item>
+    </Stack>
   );
 };

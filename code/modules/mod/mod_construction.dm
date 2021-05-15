@@ -55,14 +55,13 @@
 
 /obj/item/mod/construction/shell/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(!core)
-		if(istype(I, /obj/item/mod/construction/core)) //Construct
-			if(!user.transferItemToLoc(I, src))
-				return
-			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-			core = I
-			icon_to_use = "core"
+	if(!core && istype(I, /obj/item/mod/construction/core)) //Construct
+		if(!user.transferItemToLoc(I, src))
+			return
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		core = I
+		icon_to_use = "core"
 
 	if(core)
 		if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
@@ -70,7 +69,7 @@
 				to_chat(user, "<span class='notice'>You screw [I] into [src].</span>")
 				screwed_core = TRUE
 				icon_to_use = "screwed_core"
-		if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				core.forceMove(drop_location())
 				to_chat(user, "<span class='notice'>You remove [core] from [src].</span>")
@@ -85,7 +84,7 @@
 			to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
 			helmet = I
 			icon_to_use = "helmet"
-		if(I.tool_behaviour == TOOL_SCREWDRIVER) //Deconstruct
+		else if(I.tool_behaviour == TOOL_SCREWDRIVER) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				to_chat(user, "<span class='notice'>You unscrew the core from [src].</span>")
 				screwed_core = FALSE
@@ -99,7 +98,7 @@
 			to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
 			chestplate = I
 			icon_to_use = "chestplate"
-		if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				helmet.forceMove(drop_location())
 				to_chat(user, "<span class='notice'>You pry [helmet] from [src].</span>")
@@ -114,7 +113,7 @@
 			to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
 			gauntlets = I
 			icon_to_use = "gauntlets"
-		if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				chestplate.forceMove(drop_location())
 				to_chat(user, "<span class='notice'>You pry [chestplate] from [src].</span>")
@@ -129,7 +128,7 @@
 			to_chat(user, "<span class='notice'>You fit [I] onto [src].</span>")
 			boots = I
 			icon_to_use = "boots"
-		if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				gauntlets.forceMove(drop_location())
 				to_chat(user, "<span class='notice'>You pry [gauntlets] from [src].</span>")
@@ -142,7 +141,7 @@
 				to_chat(user, "<span class='notice'>You wrench together the assembly.</span>")
 				wrenched_assembly = TRUE
 				icon_to_use = "wrenched_assembly"
-		if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
+		else if(I.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				boots.forceMove(drop_location())
 				to_chat(user, "<span class='notice'>You pry [boots] from [src].</span>")
@@ -155,7 +154,7 @@
 				to_chat(user, "<span class='notice'>You screw together the assembly.</span>")
 				screwed_assembly = TRUE
 				icon_to_use = "screwed_assembly"
-		if(I.tool_behaviour == TOOL_WRENCH) //Deconstruct
+		else if(I.tool_behaviour == TOOL_WRENCH) //Deconstruct
 			if(I.use_tool(src, user, 0, volume=30))
 				to_chat(user, "<span class='notice'>You unwrench the assembled parts.</span>")
 				wrenched_assembly = FALSE
@@ -172,7 +171,7 @@
 			qdel(src)
 			user.put_in_hands(modsuit)
 			return
-		if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
+		else if(I.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 			if(I.use_tool(src, user, 0, volume=30))
 				to_chat(user, "<span class='notice'>You unscrew the assembled parts.</span>")
 				screwed_assembly = FALSE
@@ -185,3 +184,24 @@
 		icon_state = "mod-construction"
 	else
 		icon_state = "mod-construction_[icon_to_use]"
+
+/obj/item/mod/construction/shell/Destroy()
+	QDEL_NULL(core)
+	QDEL_NULL(helmet)
+	QDEL_NULL(chestplate)
+	QDEL_NULL(gauntlets)
+	QDEL_NULL(boots)
+	return ..()
+
+/obj/item/mod/construction/shell/handle_atom_del(atom/deleted_atom)
+	if(deleted_atom == core)
+		core = null
+	if(deleted_atom == helmet)
+		helmet = null
+	if(deleted_atom == chestplate)
+		chestplate = null
+	if(deleted_atom == gauntlets)
+		gauntlets = null
+	if(deleted_atom == boots)
+		boots = null
+	return ..()

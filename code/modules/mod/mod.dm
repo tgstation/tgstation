@@ -117,31 +117,25 @@
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-	if(initial_modules.len)
-		for(var/obj/item/mod/module/module in initial_modules)
-			module = new module(src)
-			install(module, TRUE)
+	for(var/obj/item/mod/module/module as anything in initial_modules)
+		module = new module(src)
+		install(module, TRUE)
 	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
-/obj/item/mod/control/Destroy()
+	/obj/item/mod/control/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
-	if(helmet)
-		helmet.mod = null
+	if(!QDELETED(helmet))
 		QDEL_NULL(helmet)
-	if(chestplate)
-		chestplate.mod = null
+	if(!QDELETED(chestplate))
 		QDEL_NULL(chestplate)
-	if(gauntlets)
-		gauntlets.mod = null
+	if(!QDELETED(gauntlets))
 		QDEL_NULL(gauntlets)
-	if(boots)
-		boots.mod = null
+	if(!QDELETED(boots))
 		QDEL_NULL(boots)
-	for(var/obj/item/mod/module/module in modules)
-		module.mod = null
+	for(var/obj/item/mod/module/module as anything in modules)
 		QDEL_NULL(module)
 	..()
 
@@ -155,7 +149,7 @@
 	if(malfunctioning)
 		malfunctioning_charge_drain = rand(1,20)
 	cell.charge = max(0, cell.charge - (cell_drain + malfunctioning_charge_drain)*delta_time)
-	for(var/obj/item/mod/module/module in modules)
+	for(var/obj/item/mod/module/module as anything in modules)
 		if(malfunctioning && module.active && DT_PROB(5, delta_time))
 			module.on_deactivation()
 		module.on_process(delta_time)
@@ -207,7 +201,7 @@
 			return
 	if(open && cell && loc == user)
 		to_chat(user, "<span class='notice'>You start removing [cell].</span>")
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			to_chat(user, "<span class='notice'>You remove [cell].</span>")
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			if(!user.put_in_hands(cell))
@@ -246,7 +240,7 @@
 				uninstall(module)
 				module.forceMove(drop_location())
 			else
-				audible_message("<span class='warning'>[src] indicates that [module] cannot be removed.</span>", "<span class='warning'>[src] flashes an error message.</span>")
+				audible_message("<span class='warning'>[src] indicates that [module] cannot be removed.</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 				return
 		I.play_tool_sound(src, 100)
@@ -258,23 +252,23 @@
 /obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/mod/module))
 		if(!open)
-			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>", "<span class='warning'>[src] flashes an error message.</span>")
+			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
 		install(attacking_item, FALSE)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(!open)
-			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>", "<span class='warning'>[src] flashes an error message.</span>")
+			audible_message("<span class='warning'>[src] indicates that it needs to be open before installing [attacking_item].</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
 		if(cell)
-			audible_message("<span class='warning'>[src] indicates that there is a cell already installed.</span>", "<span class='warning'>[src] flashes an error message.</span>")
+			audible_message("<span class='warning'>[src] indicates that there is a cell already installed.</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return FALSE
 		attacking_item.forceMove(src)
 		cell = attacking_item
-		audible_message("<span class='notice'>[src] indicates that [cell] has been succesfully installed.</span>", "<span class='warning'>[src] flashes a confirmation message.</span>")
+		audible_message("<span class='notice'>[src] indicates that [cell] has been succesfully installed.</span>", "<span class='warning'>[src] flashes a confirmation message.</span>", hearing_distance = 1)
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		return TRUE
 	else if(is_wire_tool(attacking_item) && open)
@@ -339,8 +333,6 @@
 				audible_message("<span class='warning'>[src] indicates that [new_module] is incompatible with [old_module].</span>", "<span class='warning'>[src] flashes an error message.</span>")
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 				return
-			else
-				CRASH("MODsuit starting modules are incompatible with each other.")
 	if(is_type_in_list(module, theme.module_blacklist))
 		if(!starting_module)
 			audible_message("<span class='warning'>[src] indicates that it rejects [new_module].</span>", "<span class='warning'>[src] flashes an error message.</span>")
@@ -353,15 +345,13 @@
 			audible_message("<span class='warning'>[src] indicates that [new_module] is too complex for its firmware.</span>", "<span class='warning'>[src] flashes an error message.</span>")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
-		else
-			CRASH("MODsuit starting modules reach above max complexity.")
 	new_module.forceMove(src)
 	modules += new_module
 	complexity += new_module.complexity
 	new_module.mod = src
 	new_module.on_install()
 	if(!starting_module)
-		audible_message("<span class='notice'>[src] indicates that [new_module] has been installed successfully.</span>", "<span class='warning'>[src] flashes a confirmation message.</span>")
+		audible_message("<span class='notice'>[src] indicates that [new_module] has been installed successfully.</span>", "<span class='warning'>[src] flashes a confirmation message.</span>", hearing_distance = 1)
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/mod/control/proc/uninstall(module)
@@ -434,7 +424,7 @@
 
 /obj/item/clothing/head/helmet/space/mod/Destroy()
 	..()
-	if(mod)
+	if(!QDELETED(mod))
 		mod.helmet = null
 		QDEL_NULL(mod)
 
@@ -460,7 +450,7 @@
 
 /obj/item/clothing/suit/armor/mod/Destroy()
 	..()
-	if(mod)
+	if(!QDELETED(mod))
 		mod.chestplate = null
 		QDEL_NULL(mod)
 
@@ -483,7 +473,7 @@
 
 /obj/item/clothing/gloves/mod/Destroy()
 	..()
-	if(mod)
+	if(!QDELETED(mod))
 		mod.gauntlets = null
 		QDEL_NULL(mod)
 
@@ -515,8 +505,7 @@
 
 /obj/item/clothing/shoes/mod/Destroy()
 	..()
-	if(mod)
-		mod.boots = null
+	if(!QDELETED(mod))
 		QDEL_NULL(mod)
 
 /obj/item/clothing/shoes/mod/proc/show_overslot(mob/source)

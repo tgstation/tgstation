@@ -1,6 +1,7 @@
 /obj/item/mod/module
 	name = "MOD module"
 	icon_state = "module"
+	interaction_flags_atom = NONE
 	/// If it can be removed
 	var/removable = TRUE
 	/// If it's passive, active or usable
@@ -45,8 +46,7 @@
 		RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 
 /obj/item/mod/module/Destroy()
-	if(mod)
-		mod.uninstall(src)
+	mod?.uninstall(src)
 	if(device)
 		UnregisterSignal(device, COMSIG_PARENT_PREQDELETED)
 		QDEL_NULL(device)
@@ -205,8 +205,7 @@
 	modstorage.max_items = max_items
 
 /obj/item/mod/module/storage/on_uninstall()
-	var/datum/component/storage/modstorage = mod.GetComponent(/datum/component/storage)
-	modstorage.RemoveComponent()
+	qdel(mod.GetComponent(/datum/component/storage))
 
 /obj/item/mod/module/visor
 	name = "MOD visor module"
@@ -364,6 +363,8 @@
 	use_power_cost = 80
 	incompatible_modules = list(/obj/item/mod/module/jetpack)
 	cooldown_time = 0.5 SECONDS
+	configurable = TRUE
+	var/stabilizers = FALSE
 	var/full_speed = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
@@ -420,7 +421,7 @@
 /obj/item/mod/module/jetpack/proc/spacemove_react(mob/user, movement_dir)
 	SIGNAL_HANDLER
 
-	if(active && movement_dir)
+	if(active && (stabilizers || movement_dir))
 		return COMSIG_MOVABLE_STOP_SPACEMOVE
 
 /obj/item/mod/module/jetpack/proc/allow_thrust()
@@ -483,16 +484,19 @@
 			holstered = holding
 			to_chat(mod.wearer, "<span class='notice'>You holster [holstered].</span>")
 			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
-	else
-		if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
-			to_chat(mod.wearer, "<span class='notice'>You draw [holstered].</span>")
-			holstered = null
-			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
+	else if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
+		to_chat(mod.wearer, "<span class='notice'>You draw [holstered].</span>")
+		holstered = null
+		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 
 /obj/item/mod/module/holster/on_uninstall()
 	if(holstered)
 		holstered.forceMove(drop_location())
 		holstered = null
+
+/obj/item/mod/module/holster/Destroy()
+	QDEL_NULL(holstered)
+	return ..()
 
 /obj/item/mod/module/tether
 	name = "MOD emergency tether module"
