@@ -312,13 +312,14 @@
 	var/base_cooldown_add = 10 //base cooldown isn't reset to normal, it's just added on, since it's not practical to disable the cooldown module
 
 /obj/item/slimepotion/slime/sentience/mining/after_success(mob/living/user, mob/living/simple_animal/simple_mob)
-	if(istype(simple_mob, /mob/living/simple_animal/hostile/mining_drone))
-		var/mob/living/simple_animal/hostile/mining_drone/minebot = simple_mob
-		minebot.maxHealth = initial(minebot.maxHealth) + base_health_add
-		minebot.melee_damage_lower = initial(minebot.melee_damage_lower) + base_damage_add
-		minebot.melee_damage_upper = initial(minebot.melee_damage_upper) + base_damage_add
-		minebot.move_to_delay = initial(minebot.move_to_delay) + base_speed_add
-		minebot.stored_gun?.overheat_time += base_cooldown_add
+	if(!istype(simple_mob, /mob/living/simple_animal/hostile/mining_drone))
+		return
+	var/mob/living/simple_animal/hostile/mining_drone/minebot = simple_mob
+	minebot.maxHealth = initial(minebot.maxHealth) + base_health_add
+	minebot.melee_damage_lower = initial(minebot.melee_damage_lower) + base_damage_add
+	minebot.melee_damage_upper = initial(minebot.melee_damage_upper) + base_damage_add
+	minebot.move_to_delay = initial(minebot.move_to_delay) + base_speed_add
+	minebot.stored_gun?.overheat_time += base_cooldown_add
 
 #undef MINEDRONE_COLLECT
 #undef MINEDRONE_ATTACK
