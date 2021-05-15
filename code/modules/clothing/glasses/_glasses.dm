@@ -241,7 +241,6 @@
 /obj/item/clothing/glasses/regular/repair()
 	. = ..()
 	vision_correction = TRUE
-	name = initial(name)
 
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
