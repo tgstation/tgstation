@@ -616,7 +616,7 @@
 
 /obj/structure/sign/poster/official/no_erp
 	name = "No ERP"
-	desc = "This poster reminds the crew that saying the initialism \"ERP\" out loud makes you look like \"total fucking loser\" who is \"not welcome on Nanotrasen stations\"."
+	desc = "This poster reminds the crew that saying the acronym \"ERP\" out loud makes you look like \"total fucking loser\" who is \"not welcome on Nanotrasen stations\"."
 	icon_state = "poster34_legit"
 
 /obj/structure/sign/poster/official/wtf_is_co2
