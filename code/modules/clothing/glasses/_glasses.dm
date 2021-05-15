@@ -217,7 +217,7 @@
 		return
 	if(isliving(movable))
 		var/mob/living/crusher = movable
-		if(crusher.m_intent != MOVE_INTENT_WALK || !(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled)
+		if(crusher.m_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))
 			playsound(src, 'sound/effects/glass_step.ogg', 30, TRUE)
 			visible_message("<span class='warning'>[crusher] steps on [src], damaging it!</span>")
 			take_damage(100, sound_effect = FALSE)
