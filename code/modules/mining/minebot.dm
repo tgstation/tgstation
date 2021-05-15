@@ -321,8 +321,7 @@
 		minebot.melee_damage_lower = initial(minebot.melee_damage_lower) + base_damage_add
 		minebot.melee_damage_upper = initial(minebot.melee_damage_upper) + base_damage_add
 		minebot.move_to_delay = initial(minebot.move_to_delay) + base_speed_add
-		if(minebot.stored_gun)
-			minebot.stored_gun.overheat_time += base_cooldown_add
+		minebot.stored_gun?.overheat_time += base_cooldown_add
 
 #undef MINEDRONE_COLLECT
 #undef MINEDRONE_ATTACK
