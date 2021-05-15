@@ -3,9 +3,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
 	pixel_x = -24
@@ -84,7 +82,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "aj" = (
@@ -96,9 +94,7 @@
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
 	name = "fridge"
@@ -156,23 +152,20 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/button/door{
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/button/door/directional/south{
 	id = "piratebridgebolt";
 	name = "Bridge Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_y = -24;
 	specialfunctions = 4
 	},
-/obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ao" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
 	pixel_x = 24
@@ -278,9 +271,7 @@
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "ax" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -315,9 +306,7 @@
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "aB" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
@@ -380,9 +369,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "aI" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
 	},
@@ -418,15 +405,7 @@
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "aN" = (
-/obj/machinery/light/small,
-/obj/machinery/button/door{
-	id = "pirateportexternal";
-	name = "External Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = -4;
-	pixel_y = -24;
-	specialfunctions = 4
-	},
+/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -434,20 +413,24 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/button/door/directional/south{
+	id = "pirateportexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aO" = (
-/obj/machinery/light/small,
-/obj/machinery/button/door{
-	id = "piratestarboardexternal";
-	name = "External Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 4;
-	pixel_y = -24;
-	specialfunctions = 4
-	},
+/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/south{
+	id = "pirateportstarboardexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aQ" = (
@@ -490,19 +473,14 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aW" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
 	dir = 4;
 	x_offset = -3;
 	y_offset = 7
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -568,9 +546,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
@@ -590,9 +566,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "bo" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
 	},
@@ -619,12 +593,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/light/small/directional/north,
+/obj/machinery/firealarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/melee/transforming/energy/sword/pirate{
@@ -642,9 +612,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "bu" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -691,9 +659,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -728,7 +694,7 @@
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "bI" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/machinery/computer/piratepad_control{
 	dir = 1
 	},
@@ -756,7 +722,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -782,12 +748,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bO" = (
-/obj/machinery/power/apc{
-	aidisabled = 1;
-	dir = 1;
-	name = "Pirate Corvette APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -880,16 +841,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "dU" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -1013,9 +970,7 @@
 "km" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /obj/effect/turf_decal/bot,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
