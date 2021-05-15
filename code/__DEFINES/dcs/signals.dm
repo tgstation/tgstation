@@ -1257,3 +1257,9 @@
 // Exosca signals
 /// Sent on exoscan failure/manual interruption: ()
 #define COMSIG_EXOSCAN_INTERRUPTED "exoscan_interrupted"
+
+// Component signals
+/// from /datum/port/output/set_output: (output_value)
+#define COMSIG_PORT_SET_OUTPUT "port_set_output"
+/// from /datum/port/disconnect: ()
+#define COMSIG_PORT_DISCONNECT "port_disconnect"
