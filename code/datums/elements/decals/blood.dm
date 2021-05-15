@@ -12,7 +12,7 @@
 	UnregisterSignal(source, COMSIG_ATOM_GET_EXAMINE_NAME)
 	return ..()
 
-/datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
+/datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, source)
 	var/obj/item/I = source
 	if(!_icon)
 		_icon = 'icons/effects/blood.dmi'

@@ -36,7 +36,7 @@
 		decal.Detach(source)
 
 	for(var/result in resulting_decals_params)
-		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["cleanable"], result["color"], result["layer"], result["desc"], result["alpha"])
+		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["cleanable"], result["color"], result["plane"], result["layer"], result["desc"], result["alpha"])
 
 
 /datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
@@ -50,6 +50,7 @@
 		"dir" = new_dir,
 		"cleanable" = cleanable,
 		"color" = pic.color,
+		"plane" = pic.plane,
 		"layer" = pic.layer,
 		"desc" = description,
 		"alpha" = pic.alpha
@@ -57,9 +58,9 @@
 
 
 
-/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255, mutable_appearance/_pic)
+/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _plane=FLOAT_PLANE, _layer=FLOAT_LAYER, _description, _alpha=255, mutable_appearance/_pic)
 	. = ..()
-	if(!isatom(target) || !generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target))
+	if(!isatom(target) || !generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, target))
 		return ELEMENT_INCOMPATIBLE
 	if(_pic)
 		pic = _pic
@@ -83,11 +84,12 @@
 
 	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
 
-/datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
+/datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, source)
 	if(!_icon || !_icon_state)
 		return FALSE
 	var/temp_image = image(_icon, null, _icon_state, _layer, _dir)
 	pic = new(temp_image)
+	pic.plane = _plane
 	pic.color = _color
 	pic.alpha = _alpha
 	return TRUE
@@ -131,4 +133,4 @@
 	if(new_turf == source)
 		return
 	Detach(source)
-	new_turf.AddElement(/datum/element/decal, pic.icon, pic.icon_state, directional, cleanable, pic.color, pic.layer, description, pic.alpha)
+	new_turf.AddElement(/datum/element/decal, pic.icon, pic.icon_state, directional, cleanable, pic.color, pic.plane, pic.layer, description, pic.alpha)
