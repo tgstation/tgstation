@@ -596,7 +596,6 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
-		/obj/item/borg/stun,
 		/obj/item/card/emag,
 		)
 
