@@ -36,7 +36,7 @@
 		decal.Detach(source)
 
 	for(var/result in resulting_decals_params)
-		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["cleanable"], result["color"], result["plane"], result["layer"], result["desc"], result["alpha"])
+		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["plane"], result["layer"], result["alpha"], result["color"], result["cleanable"], result["desc"])
 
 
 /datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
@@ -58,7 +58,7 @@
 
 
 
-/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _plane=FLOAT_PLANE, _layer=FLOAT_LAYER, _description, _alpha=255, mutable_appearance/_pic)
+/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _plane=FLOAT_PLANE, _layer=FLOAT_LAYER, _alpha=255, _color, _cleanable=FALSE, _description, mutable_appearance/_pic)
 	. = ..()
 	if(!isatom(target) || !generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, target))
 		return ELEMENT_INCOMPATIBLE
@@ -133,4 +133,4 @@
 	if(new_turf == source)
 		return
 	Detach(source)
-	new_turf.AddElement(/datum/element/decal, pic.icon, pic.icon_state, directional, cleanable, pic.color, pic.plane, pic.layer, description, pic.alpha)
+	new_turf.AddElement(/datum/element/decal, pic.icon, pic.icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, cleanable, description)

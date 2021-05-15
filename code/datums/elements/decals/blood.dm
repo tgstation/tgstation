@@ -1,6 +1,6 @@
 /datum/element/decal/blood
 
-/datum/element/decal/blood/Attach(datum/target, _icon, _icon_state, _dir, _cleanable=CLEAN_TYPE_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
+/datum/element/decal/blood/Attach(datum/target, _icon, _icon_state, _dir, _plane, _layer, _alpha, _color, _cleanable=CLEAN_TYPE_BLOOD, _description, mutable_appearance/_pic)
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
