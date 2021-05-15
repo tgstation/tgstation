@@ -1,11 +1,10 @@
 /datum/element/decal/blood
 
-/datum/element/decal/blood/Attach(datum/target, _icon, _icon_state, _dir, _plane, _layer, _alpha, _color, _cleanable=CLEAN_TYPE_BLOOD, _description, mutable_appearance/_pic)
+/datum/element/decal/blood/Attach(datum/target, _icon, _icon_state, _dir, _plane, _layer, _alpha, _color, _smoothing, _cleanable=CLEAN_TYPE_BLOOD, _description, mutable_appearance/_pic)
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
 	. = ..()
-
 	RegisterSignal(target, COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name, TRUE)
 
 /datum/element/decal/blood/Detach(atom/source)

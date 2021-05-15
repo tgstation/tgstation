@@ -197,9 +197,9 @@
 				return TRUE
 	return FALSE
 
-/turf/closed/wall/r_wall/update_icon()
+/turf/closed/wall/r_wall/update_icon(updates=ALL)
 	. = ..()
-	if(d_state != INTACT)
+	if(!(updates & UPDATE_SMOOTHING) || (d_state != INTACT))
 		smoothing_flags = NONE
 		return
 	smoothing_flags = SMOOTH_BITMASK

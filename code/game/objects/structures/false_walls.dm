@@ -54,9 +54,9 @@
 		update_appearance()
 		air_update_turf(TRUE, !density)
 
-/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/update_icon(updates=ALL)//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	. = ..()
-	if(!density)
+	if(!density || !(updates & UPDATE_SMOOTHING))
 		return
 
 	if(opening)

@@ -234,9 +234,9 @@
 	. = ..()
 	update_appearance()
 
-/turf/open/floor/carpet/update_icon()
+/turf/open/floor/carpet/update_icon(updates=ALL)
 	. = ..()
-	if(!.)
+	if(!. || !(updates & UPDATE_SMOOTHING))
 		return
 	if(!broken && !burnt)
 		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))

@@ -329,12 +329,12 @@
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 //merges adjacent full-tile windows into one
-/obj/structure/window/update_overlays()
+/obj/structure/window/update_overlays(updates=ALL)
 	. = ..()
 	if(QDELETED(src) || !fulltile)
 		return
 
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
 	var/ratio = obj_integrity / max_integrity
@@ -812,9 +812,9 @@
 	. = ..()
 	set_opacity(obj_integrity >= max_integrity)
 
-/obj/structure/window/paperframe/update_icon()
+/obj/structure/window/paperframe/update_icon(updates=ALL)
 	. = ..()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
 /obj/structure/window/paperframe/update_overlays()
