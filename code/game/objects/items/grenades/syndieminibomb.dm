@@ -61,7 +61,6 @@
 	playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
 	radiation_pulse(src, rad_damage)
 	for (var/turf/open/floor/floor in view(freeze_range, loc))
-		var/turf/open/floor/floor = floor
 		floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
 		for(var/mob/living/carbon/victim in floor)
 			victim.adjustStaminaLoss(stamina_damage)
