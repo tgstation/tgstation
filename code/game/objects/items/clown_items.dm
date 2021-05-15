@@ -186,12 +186,13 @@
 	attack_verb_continuous = list("HONKS")
 	attack_verb_simple = list("HONK")
 	///sound file given to the squeaky component we make in Initialize()
-	var/soundfile = 'sound/items/bikehorn.ogg'
+	var/sound_file = 'sound/items/bikehorn.ogg'
 
 /obj/item/bikehorn/Initialize()
 	. = ..()
-	//LoadComponent so child types dont stack squeak components
-	LoadComponent(/datum/component/squeak, list(soundfile=1), 50, 0, 0, 0, 0, 20, 0)
+	var/list/sound_list = list()
+	sound_list[sound_file] = 1
+	AddComponent(/datum/component/squeak, sound_list, falloff_exponent = 20)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user != M && ishuman(user))
@@ -211,7 +212,7 @@
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
 	worn_icon_state = "horn_air"
-	soundfile = 'sound/items/airhorn2.ogg'
+	sound_file = 'sound/items/airhorn2.ogg'
 
 //golden bikehorn
 /obj/item/bikehorn/golden
