@@ -42,11 +42,6 @@
 	animate(
 		alpha = 0,
 		time = BALLOON_TEXT_FULLY_VISIBLE_TIME,
-	)
-
-	animate(
-		alpha = 0,
-		time = BALLOON_TEXT_FADE_TIME,
 		easing = CUBIC_EASING | EASE_IN,
 	)
 
