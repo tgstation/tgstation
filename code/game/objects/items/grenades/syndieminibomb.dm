@@ -53,6 +53,7 @@
 	var/freeze_range = 4
 	var/rad_damage = 350
 	var/stamina_damage = 30
+	var/temp_adjust = -230
 
 /obj/item/grenade/gluon/detonate(mob/living/lanced_by)
 	. = ..()
@@ -64,5 +65,5 @@
 		floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
 		for(var/mob/living/carbon/victim in floor)
 				victim.adjustStaminaLoss(stamina_damage)
-				victim.adjust_bodytemperature(-230)
+				victim.adjust_bodytemperature(temp_adjust)
 	qdel(src)
