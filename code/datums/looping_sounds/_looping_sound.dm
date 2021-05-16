@@ -15,7 +15,7 @@
 	direct (bool) If true plays directly to provided atoms instead of from them
 */
 /datum/looping_sound
-	var/list/atom/output_atoms
+	var/atom/parent
 	var/mid_sounds
 	var/mid_length
 	///Override for volume of start sound
@@ -35,12 +35,12 @@
 	var/timerid
 	var/falloff_distance
 
-/datum/looping_sound/New(list/_output_atoms=list(), start_immediately=FALSE, _direct=FALSE)
+/datum/looping_sound/New(_parent, start_immediately=FALSE, _direct=FALSE)
 	if(!mid_sounds)
 		WARNING("A looping sound datum was created without sounds to play.")
 		return
 
-	output_atoms = _output_atoms
+	set_parent(_parent)
 	direct = _direct
 
 	if(start_immediately)
@@ -48,19 +48,19 @@
 
 /datum/looping_sound/Destroy()
 	stop()
-	output_atoms = null
+	set_parent(null)
 	return ..()
 
-/datum/looping_sound/proc/start(atom/add_thing)
-	if(add_thing)
-		output_atoms |= add_thing
+/datum/looping_sound/proc/start(on_behalf_of)
+	if(on_behalf_of)
+		set_parent(on_behalf_of)
 	if(timerid)
 		return
 	on_start()
 
-/datum/looping_sound/proc/stop(atom/remove_thing)
-	if(remove_thing)
-		output_atoms -= remove_thing
+/datum/looping_sound/proc/stop(on_behalf_of)
+	if(on_behalf_of)
+		set_parent(null)
 	if(!timerid)
 		return
 	on_stop()
@@ -77,17 +77,14 @@
 		timerid = addtimer(CALLBACK(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP, SSsound_loops)
 
 /datum/looping_sound/proc/play(soundfile, volume_override)
-	var/list/atoms_cache = output_atoms
 	var/sound/S = sound(soundfile)
 	if(direct)
 		S.channel = SSsounds.random_available_channel()
 		S.volume = volume_override || volume //Use volume as fallback if theres no override
-	for(var/i in 1 to atoms_cache.len)
-		var/atom/thing = atoms_cache[i]
-		if(direct)
-			SEND_SOUND(thing, S)
-		else
-			playsound(thing, S, volume, vary, extra_range, falloff_exponent = falloff_exponent, falloff_distance = falloff_distance)
+	if(direct)
+		SEND_SOUND(parent, S)
+	else
+		playsound(parent, S, volume, vary, extra_range, falloff_exponent = falloff_exponent, falloff_distance = falloff_distance)
 
 /datum/looping_sound/proc/get_sound(starttime, _mid_sounds)
 	. = _mid_sounds || mid_sounds
@@ -104,3 +101,14 @@
 /datum/looping_sound/proc/on_stop()
 	if(end_sound)
 		play(end_sound, end_volume)
+
+/datum/looping_sound/proc/set_parent(new_parent)
+	if(parent)
+		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	parent = new_parent
+	if(parent)
+		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/handle_parent_del)
+
+/datum/looping_sound/proc/handle_parent_del(datum/source)
+	SIGNAL_HANDLER
+	set_parent(null)
