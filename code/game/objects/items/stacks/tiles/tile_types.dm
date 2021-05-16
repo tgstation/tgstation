@@ -488,3 +488,23 @@
 	turf_type = /turf/open/floor/cult
 	mats_per_unit = list(/datum/material/runedmetal=500)
 	merge_type = /obj/item/stack/tile/cult
+
+/// Floor tiles used to test emissive turfs.
+/obj/item/stack/tile/emissive_test
+	name = "emissive test tile"
+	singular_name = "emissive test floor tile"
+	desc = "A glow-in-the-dark floor tile used to test emissive turfs."
+	turf_type = /turf/open/floor/emissive_test
+	merge_type = /obj/item/stack/tile/emissive_test
+
+/obj/item/stack/tile/emissive_test/sixty
+	amount = 60
+
+/obj/item/stack/tile/emissive_test/white
+	name = "white emissive test tile"
+	singular_name = "white emissive test floor tile"
+	turf_type = /turf/open/floor/emissive_test/white
+	merge_type = /obj/item/stack/tile/emissive_test/white
+
+/obj/item/stack/tile/emissive_test/white/sixty
+	amount = 60

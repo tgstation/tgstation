@@ -405,14 +405,19 @@
 /turf/open/floor/carpet/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
 
-
+/// An emissive turf used to test emissive turfs.
 /turf/open/floor/emissive_test
 	name = "emissive test floor"
 	desc = "A glow-in-the-dark floor used to test emissive turfs."
+	floor_tile = /obj/item/stack/tile/emissive_test
 
 /turf/open/floor/emissive_test/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, icon_state, alpha = src.alpha)
+
+/turf/open/floor/emissive_test/white
+	icon_state = "pure_white"
+	base_icon_state = "pure_white"
 
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
