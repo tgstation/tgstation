@@ -26,7 +26,7 @@
 
 /datum/radial_menu/persistent/New()
 	close_button = new /atom/movable/screen/radial/persistent/center
-	close_button.parent = src
+	close_button.set_parent(src)
 
 
 /datum/radial_menu/persistent/element_chosen(choice_id,mob/user)
