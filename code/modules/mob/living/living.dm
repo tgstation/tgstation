@@ -1752,7 +1752,7 @@
 	. = buckled
 	buckled = new_buckled
 	if(buckled)
-		if(!istype(buckled,/obj/vehicle/ridden/wheelchair))
+		if(!HAS_TRAIT(buckled, TRAIT_NO_IMMOBILIZE))
 			ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)
 		switch(buckled.buckle_lying)
 			if(NO_BUCKLE_LYING) // The buckle doesn't force a lying angle.
