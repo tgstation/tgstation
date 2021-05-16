@@ -31,7 +31,7 @@
 	action_icon_state = "bee"
 	cooldown_min = 20 SECONDS
 
-	summon_type = /mob/living/simple_animal/hostile/poison/bees/toxin_type
+	summon_type = /mob/living/simple_animal/hostile/bee/toxin_type
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee/buzzon/cryo
-	summon_type = /mob/living/simple_animal/hostile/poison/bees/toxin_type/cryo
+	summon_type = /mob/living/simple_animal/hostile/bee/toxin_type/cryo
