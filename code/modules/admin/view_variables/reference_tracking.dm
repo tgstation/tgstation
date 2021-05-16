@@ -119,38 +119,43 @@
 				found_refs[varname] = TRUE
 				#endif
 				log_world("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
+				continue
 
-			else if(islist(variable))
+			if(islist(variable))
 				DoSearchVar(variable, "[container_name] \ref[datum_container] -> [varname] (list)", recursive_limit - 1, search_time)
 
 	else if(islist(potential_container))
 		var/normal = IS_NORMAL_LIST(potential_container)
-		for(var/element_in_list in potential_container)
+		var/list/potential_cache = potential_container
+		for(var/element_in_list in potential_cache)
 			#ifndef FIND_REF_NO_CHECK_TICK
 			CHECK_TICK
 			#endif
 			//Check normal entrys
 			if(element_in_list == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[potential_container] = TRUE
+				found_refs[potential_cache] = TRUE
 				#endif
 				log_world("Found [type] \ref[src] in list [container_name].")
+				continue
 
+			var/assoc_val = null
+			if(!isnum(element_in_list) && normal)
+				assoc_val = potential_cache[element_in_list]
 			//Check assoc entrys
-			else if(!isnum(element_in_list) && normal && potential_container[element_in_list] == src)
+			if(assoc_val == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[potential_container] = TRUE
+				found_refs[potential_cache] = TRUE
 				#endif
 				log_world("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
-
+				continue
 			//We need to run both of these checks, since our object could be hiding in either of them
-			else
-				//Check normal sublists
-				if(islist(element_in_list))
-					DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", recursive_limit - 1, search_time)
-				//Check assoc sublists
-				if(!isnum(element_in_list) && normal && islist(potential_container[element_in_list]))
-					DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [potential_container[element_in_list]] (list)", recursive_limit - 1, search_time)
+			//Check normal sublists
+			if(islist(element_in_list))
+				DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", recursive_limit - 1, search_time)
+			//Check assoc sublists
+			if(islist(assoc_val))
+				DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [assoc_val] (list)", recursive_limit - 1, search_time)
 
 /proc/qdel_and_find_ref_if_fail(datum/thing_to_del, force = FALSE)
 	thing_to_del.qdel_and_find_ref_if_fail(force)
