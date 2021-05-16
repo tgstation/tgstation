@@ -339,7 +339,7 @@
 	name = "simple neon carpet"
 	singular_name = "simple neon carpet tile"
 	icon_state = "tile_carpet_neon_simple"
-	neon_icon_state = "tile_carpet_neon_simple_glow"
+	neon_icon_state = "tile_carpet_neon_simple_light"
 	neon_inhand_icon_state = "tile-neon-glow"
 	turf_type = /turf/open/floor/carpet/neon/simple
 	merge_type = /obj/item/stack/tile/carpet/neon/simple
@@ -354,6 +354,7 @@
 /obj/item/stack/tile/carpet/neon/simple/black
 	name = "simple black neon carpet"
 	singular_name = "simple black neon carpet tile"
+	neon_icon_state = "tile_carpet_neon_simple_glow"
 	turf_type = /turf/open/floor/carpet/neon/simple/black
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/black
 	neon_color = COLOR_BLACK
@@ -370,14 +371,14 @@
 	singular_name = "simple orange neon carpet tile"
 	turf_type = /turf/open/floor/carpet/neon/simple/orange
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/orange
-	neon_color = LIGHT_COLOR_ORANGE
+	neon_color = COLOR_ORANGE
 
 /obj/item/stack/tile/carpet/neon/simple/yellow
 	name = "simple yellow neon carpet"
 	singular_name = "simple yellow neon carpet tile"
 	turf_type = /turf/open/floor/carpet/neon/simple/yellow
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/yellow
-	neon_color = LIGHT_COLOR_YELLOW
+	neon_color = COLOR_YELLOW
 
 /obj/item/stack/tile/carpet/neon/simple/lime
 	name = "simple lime neon carpet"
@@ -391,7 +392,7 @@
 	singular_name = "simple green neon carpet tile"
 	turf_type = /turf/open/floor/carpet/neon/simple/green
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/green
-	neon_color = LIGHT_COLOR_GREEN
+	neon_color = COLOR_GREEN
 
 /obj/item/stack/tile/carpet/neon/simple/teal
 	name = "simple teal neon carpet"
@@ -405,21 +406,21 @@
 	singular_name = "simple cyan neon carpet tile"
 	turf_type = /turf/open/floor/carpet/neon/simple/cyan
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/cyan
-	neon_color = LIGHT_COLOR_CYAN
+	neon_color = COLOR_CYAN
 
 /obj/item/stack/tile/carpet/neon/simple/blue
 	name = "simple blue neon carpet"
 	singular_name = "simple blue neon carpet tile"
 	turf_type = /turf/open/floor/carpet/neon/simple/blue
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/blue
-	neon_color = LIGHT_COLOR_BLUE
+	neon_color = COLOR_BLUE
 
 /obj/item/stack/tile/carpet/neon/simple/purple
 	name = "simple purple neon carpet"
 	singular_name = "simple purple neon carpet tile"
 	turf_type = /turf/open/floor/carpet/neon/simple/purple
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/purple
-	neon_color = LIGHT_COLOR_PURPLE
+	neon_color = COLOR_PURPLE
 
 /obj/item/stack/tile/carpet/neon/simple/violet
 	name = "simple violet neon carpet"
@@ -433,7 +434,7 @@
 	singular_name = "simple pink neon carpet tile"
 	turf_type = /turf/open/floor/carpet/neon/simple/pink
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/pink
-	neon_color = LIGHT_COLOR_PINK
+	neon_color = COLOR_LIGHT_PINK
 
 /obj/item/stack/tile/carpet/neon/ten
 	amount = 10

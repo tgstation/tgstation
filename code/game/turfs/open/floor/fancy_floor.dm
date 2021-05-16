@@ -448,7 +448,7 @@
 	icon = 'icons/turf/floors/carpet_neon_simple.dmi'
 	icon_state = "base-255"
 	base_icon_state = "base"
-	neon_icon_state = "glow"
+	neon_icon_state = "light"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON)
@@ -464,6 +464,7 @@
 /turf/open/floor/carpet/neon/simple/black
 	name = "simple black neon carpet"
 	desc = "A rubbery mat with a inset pattern of black phosphorescent dye."
+	neon_icon_state = "glow" // This one also lights up the edges of the lines.
 	neon_color = COLOR_BLACK
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/black
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLACK)
@@ -480,7 +481,7 @@
 /turf/open/floor/carpet/neon/simple/orange
 	name = "simple orange neon carpet"
 	desc = "A rubbery mat with a inset pattern of orange phosphorescent dye."
-	neon_color = LIGHT_COLOR_ORANGE
+	neon_color = COLOR_ORANGE
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/orange
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_ORANGE)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_ORANGE)
@@ -488,7 +489,7 @@
 /turf/open/floor/carpet/neon/simple/yellow
 	name = "simple yellow neon carpet"
 	desc = "A rubbery mat with a inset pattern of yellow phosphorescent dye."
-	neon_color = LIGHT_COLOR_YELLOW
+	neon_color = COLOR_YELLOW
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/yellow
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW)
@@ -504,7 +505,7 @@
 /turf/open/floor/carpet/neon/simple/green
 	name = "simple green neon carpet"
 	desc = "A rubbery mat with a inset pattern of green phosphorescent dye."
-	neon_color = LIGHT_COLOR_GREEN
+	neon_color = COLOR_GREEN
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/green
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN)
@@ -520,7 +521,7 @@
 /turf/open/floor/carpet/neon/simple/cyan
 	name = "simple cyan neon carpet"
 	desc = "A rubbery mat with a inset pattern of cyan phosphorescent dye."
-	neon_color = LIGHT_COLOR_CYAN
+	neon_color = COLOR_CYAN
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/cyan
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN)
@@ -528,7 +529,7 @@
 /turf/open/floor/carpet/neon/simple/blue
 	name = "simple blue neon carpet"
 	desc = "A rubbery mat with a inset pattern of blue phosphorescent dye."
-	neon_color = LIGHT_COLOR_BLUE
+	neon_color = COLOR_BLUE
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/blue
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE)
@@ -536,7 +537,7 @@
 /turf/open/floor/carpet/neon/simple/purple
 	name = "simple purple neon carpet"
 	desc = "A rubbery mat with a inset pattern of purple phosphorescent dye."
-	neon_color = LIGHT_COLOR_PURPLE
+	neon_color = COLOR_PURPLE
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/purple
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE)
@@ -552,7 +553,7 @@
 /turf/open/floor/carpet/neon/simple/pink
 	name = "simple pink neon carpet"
 	desc = "A rubbery mat with a inset pattern of pink phosphorescent dye."
-	neon_color = LIGHT_COLOR_PINK
+	neon_color = COLOR_LIGHT_PINK
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/pink
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK)
