@@ -108,13 +108,13 @@
 		if(CAT_QUIRK_MINOR_DISABILITY)
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
-				if(T.value == -4)
+				if(T.value >= -4 && T.value < 0)
 					dat += medical ? T.medical_record_text : T.name
 		//Neutral and Positive quirks
 		if(CAT_QUIRK_NOTES)
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
-				if(T.value > -4)
+				if(T.value > -1)
 					dat += medical ? T.medical_record_text : T.name
 	if(!dat.len)
 		return medical ? "No issues have been declared." : "None"
