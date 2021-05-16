@@ -750,10 +750,10 @@ const EventScreen = (props, context) => {
 
 
 type AdventureScreenProps = {
-  hide_status? : boolean
+  hide_status?: boolean
 }
 
-export const AdventureScreen = (props : AdventureScreenProps, context) => {
+export const AdventureScreen = (props: AdventureScreenProps, context) => {
   const { act, data } = useBackend<AdventureDataProvider>(context);
   const {
     adventure_data,
