@@ -299,6 +299,296 @@
 /obj/item/stack/tile/carpet/donk/thirty
 	amount = 30
 
+/obj/item/stack/tile/carpet/neon
+	name = "neon carpet"
+	singular_name = "neon carpet tile"
+	desc = "A piece of rubbery mat inset with a phosphorescent pattern."
+	inhand_icon_state = "tile-neon"
+	turf_type = /turf/open/floor/carpet/neon
+	merge_type = /obj/item/stack/tile/carpet/neon
+
+	// Neon overlay
+	/// The icon used for the neon overlay and emissive overlay.
+	var/neon_icon
+	/// The icon state used for the neon overlay and emissive overlay.
+	var/neon_icon_state
+	/// The icon state used for the neon overlay inhands.
+	var/neon_inhand_icon_state
+	/// The color used for the neon overlay.
+	var/neon_color
+	/// The alpha used for the emissive overlay.
+	var/emissive_alpha = 255
+
+/obj/item/stack/tile/carpet/neon/update_overlays()
+	. = ..()
+	var/mutable_appearance/neon_overlay = mutable_appearance(neon_icon || icon, neon_icon_state || icon_state, )
+	neon_overlay.color = neon_color
+	. += neon_overlay
+	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha=emissive_alpha)
+
+/obj/item/stack/tile/carpet/neon/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(!isinhands || !neon_inhand_icon_state)
+		return
+	var/mutable_appearance/neon_overlay = mutable_appearance(icon_file, neon_inhand_icon_state, alpha=src.alpha)
+	neon_overlay.color = neon_color
+	. += neon_overlay
+	// TODO: Figure out how to add an emissive overlay to the inhand.
+
+/obj/item/stack/tile/carpet/neon/simple
+	name = "simple neon carpet"
+	singular_name = "simple neon carpet tile"
+	icon_state = "tile_carpet_neon_simple"
+	neon_icon_state = "tile_carpet_neon_simple_glow"
+	neon_inhand_icon_state = "tile-neon-glow"
+	turf_type = /turf/open/floor/carpet/neon/simple
+	merge_type = /obj/item/stack/tile/carpet/neon/simple
+
+/obj/item/stack/tile/carpet/neon/simple/white
+	name = "simple white neon carpet"
+	singular_name = "simple white neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/white
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/white
+	neon_color = COLOR_WHITE
+
+/obj/item/stack/tile/carpet/neon/simple/black
+	name = "simple black neon carpet"
+	singular_name = "simple black neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/black
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/black
+	neon_color = COLOR_BLACK
+
+/obj/item/stack/tile/carpet/neon/simple/red
+	name = "simple red neon carpet"
+	singular_name = "simple red neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/red
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/red
+	neon_color = COLOR_RED
+
+/obj/item/stack/tile/carpet/neon/simple/orange
+	name = "simple orange neon carpet"
+	singular_name = "simple orange neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/orange
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/orange
+	neon_color = LIGHT_COLOR_ORANGE
+
+/obj/item/stack/tile/carpet/neon/simple/yellow
+	name = "simple yellow neon carpet"
+	singular_name = "simple yellow neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/yellow
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/yellow
+	neon_color = LIGHT_COLOR_YELLOW
+
+/obj/item/stack/tile/carpet/neon/simple/lime
+	name = "simple lime neon carpet"
+	singular_name = "simple lime neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/lime
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/lime
+	neon_color = COLOR_LIME
+
+/obj/item/stack/tile/carpet/neon/simple/green
+	name = "simple green neon carpet"
+	singular_name = "simple green neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/green
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/green
+	neon_color = LIGHT_COLOR_GREEN
+
+/obj/item/stack/tile/carpet/neon/simple/teal
+	name = "simple teal neon carpet"
+	singular_name = "simple teal neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/teal
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/teal
+	neon_color = COLOR_TEAL
+
+/obj/item/stack/tile/carpet/neon/simple/cyan
+	name = "simple cyan neon carpet"
+	singular_name = "simple cyan neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/cyan
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/cyan
+	neon_color = LIGHT_COLOR_CYAN
+
+/obj/item/stack/tile/carpet/neon/simple/blue
+	name = "simple blue neon carpet"
+	singular_name = "simple blue neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/blue
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/blue
+	neon_color = LIGHT_COLOR_BLUE
+
+/obj/item/stack/tile/carpet/neon/simple/purple
+	name = "simple purple neon carpet"
+	singular_name = "simple purple neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/purple
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/purple
+	neon_color = LIGHT_COLOR_PURPLE
+
+/obj/item/stack/tile/carpet/neon/simple/violet
+	name = "simple violet neon carpet"
+	singular_name = "simple violet neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/violet
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/violet
+	neon_color = COLOR_VIOLET
+
+/obj/item/stack/tile/carpet/neon/simple/pink
+	name = "simple pink neon carpet"
+	singular_name = "simple pink neon carpet tile"
+	turf_type = /turf/open/floor/carpet/neon/simple/pink
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/pink
+	neon_color = LIGHT_COLOR_PINK
+
+/obj/item/stack/tile/carpet/neon/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/white/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/white/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/white/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/black/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/black/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/black/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/red/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/red/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/red/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/orange/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/orange/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/orange/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/yellow/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/yellow/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/yellow/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/lime/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/lime/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/lime/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/green/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/green/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/green/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/teal/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/teal/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/teal/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/cyan/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/cyan/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/cyan/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/blue/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/blue/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/blue/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/purple/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/purple/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/purple/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/violet/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/violet/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/violet/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/pink/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/pink/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/pink/sixty
+	amount = 60
+
+/obj/item/stack/tile/fake_error
+	name = "misproduced carpet"
+	singular_name = "misproduced carpet tile"
+	desc = "A piece of neon carpet produced under a software error."
+	icon_state = "tile-error"
+	inhand_icon_state = "tile-error"
+	turf_type = /turf/open/floor/fake_error
+	merge_type = /obj/item/stack/tile/fake_error
+	resistance_flags = FLAMMABLE
+
+/obj/item/stack/tile/fake_error/ten
+	amount = 10
+
+/obj/item/stack/tile/fake_error/thirty
+	amount = 30
+
+/obj/item/stack/tile/fake_error/sixty
+	amount = 60
+
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
 	singular_name = "astral carpet tile"

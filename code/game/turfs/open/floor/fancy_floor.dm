@@ -419,6 +419,203 @@
 	icon_state = "pure_white"
 	base_icon_state = "pure_white"
 
+/turf/open/floor/carpet/neon
+	name = "neon carpet"
+	desc = "A rubbery pad inset with a phsophorescent pattern."
+	icon = 'icons/turf/floors/carpet_black.dmi'
+	icon_state = "carpet_black-255"
+	base_icon_state = "carpet_black"
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_NEON)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_NEON)
+	smoothing_junction = 255
+
+	/// The icon used for the neon decal.
+	var/neon_icon
+	/// The icon state used for the neon decal.
+	var/neon_icon_state
+	/// The color used for the neon decal
+	var/neon_color
+	/// The alpha used for the emissive decal.
+	var/emissive_alpha = 150
+
+/turf/open/floor/carpet/neon/Initialize()
+	. = ..()
+	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, null, null, src.alpha, neon_color, smoothing_junction)
+	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, EMISSIVE_COLOR, smoothing_junction)
+
+/turf/open/floor/carpet/neon/simple
+	name = "simple neon carpet"
+	icon = 'icons/turf/floors/carpet_neon_simple.dmi'
+	icon_state = "base-255"
+	base_icon_state = "base"
+	neon_icon_state = "glow"
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON)
+
+/turf/open/floor/carpet/neon/simple/white
+	name = "simple white neon carpet"
+	desc = "A rubbery mat with a inset pattern of white phosphorescent dye."
+	neon_color = COLOR_WHITE
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/white
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_WHITE)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_WHITE)
+
+/turf/open/floor/carpet/neon/simple/black
+	name = "simple black neon carpet"
+	desc = "A rubbery mat with a inset pattern of black phosphorescent dye."
+	neon_color = COLOR_BLACK
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/black
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLACK)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLACK)
+
+/turf/open/floor/carpet/neon/simple/red
+	name = "simple red neon carpet"
+	desc = "A rubbery mat with a inset pattern of red phosphorescent dye."
+	neon_color = COLOR_RED
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/red
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_RED)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_RED)
+
+/turf/open/floor/carpet/neon/simple/orange
+	name = "simple orange neon carpet"
+	desc = "A rubbery mat with a inset pattern of orange phosphorescent dye."
+	neon_color = LIGHT_COLOR_ORANGE
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/orange
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_ORANGE)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_ORANGE)
+
+/turf/open/floor/carpet/neon/simple/yellow
+	name = "simple yellow neon carpet"
+	desc = "A rubbery mat with a inset pattern of yellow phosphorescent dye."
+	neon_color = LIGHT_COLOR_YELLOW
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/yellow
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW)
+
+/turf/open/floor/carpet/neon/simple/lime
+	name = "simple lime neon carpet"
+	desc = "A rubbery mat with a inset pattern of lime phosphorescent dye."
+	neon_color = COLOR_LIME
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/lime
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_LIME)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_LIME)
+
+/turf/open/floor/carpet/neon/simple/green
+	name = "simple green neon carpet"
+	desc = "A rubbery mat with a inset pattern of green phosphorescent dye."
+	neon_color = LIGHT_COLOR_GREEN
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/green
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN)
+
+/turf/open/floor/carpet/neon/simple/teal
+	name = "simple teal neon carpet"
+	desc = "A rubbery mat with a inset pattern of teal phosphorescent dye."
+	neon_color = COLOR_TEAL
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/teal
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_TEAL)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_TEAL)
+
+/turf/open/floor/carpet/neon/simple/cyan
+	name = "simple cyan neon carpet"
+	desc = "A rubbery mat with a inset pattern of cyan phosphorescent dye."
+	neon_color = LIGHT_COLOR_CYAN
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/cyan
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN)
+
+/turf/open/floor/carpet/neon/simple/blue
+	name = "simple blue neon carpet"
+	desc = "A rubbery mat with a inset pattern of blue phosphorescent dye."
+	neon_color = LIGHT_COLOR_BLUE
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/blue
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE)
+
+/turf/open/floor/carpet/neon/simple/purple
+	name = "simple purple neon carpet"
+	desc = "A rubbery mat with a inset pattern of purple phosphorescent dye."
+	neon_color = LIGHT_COLOR_PURPLE
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/purple
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE)
+
+/turf/open/floor/carpet/neon/simple/violet
+	name = "simple violet neon carpet"
+	desc = "A rubbery mat with a inset pattern of violet phosphorescent dye."
+	neon_color = COLOR_VIOLET
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/violet
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_VIOLET)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_VIOLET)
+
+/turf/open/floor/carpet/neon/simple/pink
+	name = "simple pink neon carpet"
+	desc = "A rubbery mat with a inset pattern of pink phosphorescent dye."
+	neon_color = LIGHT_COLOR_PINK
+	floor_tile = /obj/item/stack/tile/carpet/neon/simple/pink
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK)
+
+/turf/open/floor/carpet/neon/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/white/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/black/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/red/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/orange/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/yellow/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/lime/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/green/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/teal/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/cyan/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/blue/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/purple/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/violet/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/neon/simple/pink/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/fake_error
+	name = ""
+	desc = "Neon carpet produced when a software error occured at the production line."
+	icon = 'icons/turf/floors.dmi'
+	base_icon_state = "fake_error"
+	icon_state = "fake_error"
+
+/turf/open/floor/fake_error/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "fake_error_glow", alpha=src.alpha)
+
+/turf/open/floor/fake_error/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
 	icon = 'icons/turf/floors/chasms.dmi'
