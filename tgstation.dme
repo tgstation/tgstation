@@ -3530,6 +3530,8 @@
 #include "code\modules\wiremod\component.dm"
 #include "code\modules\wiremod\integrated_circuit.dm"
 #include "code\modules\wiremod\port.dm"
+#include "code\modules\wiremod\components\comparison.dm"
+#include "code\modules\wiremod\components\dummy.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
 #include "interface\interface.dm"

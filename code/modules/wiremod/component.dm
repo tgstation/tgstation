@@ -13,23 +13,37 @@
 	icon_state = "circuit_map"
 	inhand_icon_state = "electronic"
 
+	/// The name of the component shown on the UI
+	var/display_name = "Generic Component"
+
 	/// The integrated_circuit that this component is attached to.
 	var/obj/item/integrated_circuit/parent
 
 	/// A list that contains the outpurt ports on this component
 	/// Used to connect between the ports
-	var/list/datum/port/output/output_ports
+	var/list/datum/port/output/output_ports = list()
 
 	/// A list that contains the components the input ports on this component
 	/// Used to connect between the ports
-	var/list/datum/port/input/input_ports
+	var/list/datum/port/input/input_ports = list()
 
 	/// Used to determine the x position of the component within the UI
 	var/rel_x = 0
 	/// Used to determine the y position of the component within the UI
 	var/rel_y = 0
 
+	/// The power usage whenever this component receives an input
 	var/power_usage_per_input = 1
+
+	/// The current selected option
+	var/current_option
+	/// The options that this component can take on. Limited to strings
+	var/list/options
+
+/obj/item/component/Initialize()
+	. = ..()
+	if(length(options))
+		current_option = options[1]
 
 /obj/item/component/Destroy()
 	if(parent)
@@ -50,6 +64,16 @@
 
 	for(var/datum/port/input/port_to_disconnect as anything in input_ports)
 		port_to_disconnect.disconnect()
+
+/**
+ * Sets the option on this component
+ *
+ * Can only be a value from the options variable
+ * Arguments:
+ * * option - The option that has been switched to.
+ */
+/obj/item/component/proc/set_option(option)
+	current_option = option
 
 /**
  * Adds an input port and returns it
@@ -92,6 +116,5 @@
 		return TRUE
 
 	var/obj/item/stock_parts/cell/cell = parent.get_cell()
-	if(!cell || !cell.use_power(power_usage_per_input))
+	if(!cell || !cell.use(power_usage_per_input))
 		return TRUE
-

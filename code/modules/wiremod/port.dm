@@ -28,6 +28,9 @@
 
 /datum/port/Destroy()
 	if(!connected_component.gc_destroyed)
+		// This should never happen
+		stack_trace("Attempted to delete a port with a non-destroyed connected_component! (port name: [name], component type: [connected_component.type])")
+		return QDEL_HINT_LETMELIVE
 	connected_component = null
 	return ..()
 
@@ -138,6 +141,8 @@
 		COMSIG_PORT_DISCONNECT
 	))
 	connected_port = null
+	input_value = null
+	connected_component.input_received()
 
 /datum/port/input/Destroy()
 	unregister_output_port()

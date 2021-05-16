@@ -1,0 +1,14 @@
+@use '../colors.scss';
+@use '../base.scss';
+
+.ObjectComponent__Titlebar {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  white-space: nowrap;
+}
+
+.ObjectComponent__Content {
+  white-space: nowrap;
+  background-color: rgba(0, 0, 0, 0.5);
+}
