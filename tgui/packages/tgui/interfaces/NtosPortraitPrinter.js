@@ -34,7 +34,6 @@ export const NtosPortraitPrinter = (props, context) => {
   const current_portrait_asset_name = TABS[tabIndex].asset_prefix + "_" + tab2list[listIndex]["md5"];
   return (
     <NtosWindow
-      theme="ntos"
       title="Art Galaxy"
       width={400}
       height={406}>
