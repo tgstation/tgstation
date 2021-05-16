@@ -67,7 +67,7 @@
 	for(var/canvas_type in typesof(/obj/item/canvas))
 		printed_canvas = canvas_type
 		if(initial(printed_canvas.width) == art_width && initial(printed_canvas.height) == art_height)
-			printed_canvas = new canvas_type(computer.physical)
+			printed_canvas = new canvas_type(get_turf(computer.physical))
 			break
 	printed_canvas.fill_grid_from_icon(art_icon)
 	printed_canvas.generated_icon = art_icon
@@ -78,3 +78,6 @@
 	printed_canvas.name = "painting - [title]"
 	///this is a copy of something that is already in the database- it should not be able to be saved.
 	printed_canvas.no_save = TRUE
+	printed_canvas.update_icon()
+	to_chat(usr, "<span class='notice'>You have printed [title] onto a new canvas.</span>")
+	playsound(computer.physical, 'sound/items/poster_being_created.ogg', 100, TRUE)
