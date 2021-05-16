@@ -88,6 +88,7 @@
 #include "subsystem_init.dm"
 #include "surgeries.dm"
 #include "teleporters.dm"
+#include "tgui_create_message.dm"
 #include "timer_sanity.dm"
 #include "unit_test.dm"
 #include "wizard.dm"
