@@ -478,6 +478,7 @@
 #include "code\datums\components\acid.dm"
 #include "code\datums\components\anti_magic.dm"
 #include "code\datums\components\aquarium.dm"
+#include "code\datums\components\area_sound_manager.dm"
 #include "code\datums\components\areabound.dm"
 #include "code\datums\components\armor_plate.dm"
 #include "code\datums\components\bane.dm"
