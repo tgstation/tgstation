@@ -216,7 +216,7 @@ export const ChemReactionChamber = (props, context) => {
                               icon="minus"
                               color="bad"
                               onClick={() => act('remove', {
-                                chem: reagent,
+                                chem: reagent.name,
                               })} />
                           </Stack.Item>
                         </Stack>

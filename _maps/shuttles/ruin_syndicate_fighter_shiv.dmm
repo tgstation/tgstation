@@ -41,16 +41,15 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/caravan/syndicate1)
 "uW" = (
-/obj/machinery/button/door{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/syndicate1,
+/obj/machinery/button/door/directional/west{
 	id = "caravansyndicate1_bolt";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = -25;
 	req_access_txt = "150";
 	specialfunctions = 4
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/syndicate1,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/caravan/syndicate1)
 "vD" = (

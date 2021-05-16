@@ -11,6 +11,8 @@
 	..()
 
 /datum/wires/autolathe/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/machinery/autolathe/A = holder
 	if(A.panel_open)
 		return TRUE

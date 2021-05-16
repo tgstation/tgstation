@@ -300,7 +300,7 @@
 						else
 							windoor.req_access = electronics.accesses
 						windoor.electronics = electronics
-						electronics.loc = windoor
+						electronics.forceMove(windoor)
 						if(created_name)
 							windoor.name = created_name
 						qdel(src)

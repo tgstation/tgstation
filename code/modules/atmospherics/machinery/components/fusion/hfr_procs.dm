@@ -325,7 +325,6 @@
 			remove = remove_fusion.remove_ratio(0.1)
 			var/turf/local = pick(around_turfs)
 			local.assume_air(remove)
-			local.air_update_turf(FALSE, FALSE)
 		loc.assume_air(internal_fusion)
 	var/datum/gas_mixture/remove_moderator
 	if(moderator_internal.total_moles() > 0)
@@ -335,7 +334,5 @@
 			remove = remove_moderator.remove_ratio(0.1)
 			var/turf/local = pick(around_turfs)
 			local.assume_air(remove)
-			local.air_update_turf(FALSE, FALSE)
 		loc.assume_air(moderator_internal)
-	air_update_turf(FALSE, FALSE)
 	qdel(src)

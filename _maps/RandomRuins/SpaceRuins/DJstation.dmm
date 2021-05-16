@@ -29,9 +29,7 @@
 /area/ruin/space/djstation)
 "ai" = (
 /obj/machinery/telecomms/relay/preset/ruskie,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "aj" = (
@@ -66,10 +64,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ap" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/space/syndiecosmetic,
@@ -100,24 +95,18 @@
 /area/ruin/space/djstation)
 "av" = (
 /obj/machinery/vending/snack,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "aw" = (
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "ax" = (
-/obj/machinery/light_switch{
-	pixel_y = 28
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "ay" = (
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "az" = (
@@ -141,9 +130,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
 "aC" = (
-/obj/machinery/light_switch{
-	pixel_y = 28
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
 "aD" = (
@@ -211,7 +198,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/djstation)
 "aN" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -262,7 +249,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
 "aU" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
 "aV" = (
@@ -280,9 +267,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "aY" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "aZ" = (
@@ -320,7 +305,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "bf" = (
