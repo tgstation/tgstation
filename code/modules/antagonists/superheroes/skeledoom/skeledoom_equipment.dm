@@ -223,9 +223,8 @@
 	STR.display_numerical_stacking = TRUE
 	STR.set_holdable(list(/obj/item/ammo_box/magazine/sniper_rounds,
 						  /obj/item/reagent_containers/hypospray/medipen/beepen,
-						  /obj/item/grenade/smokebomb,
-						  /obj/item/restraints/handcuffs,
-						  /obj/item/grenade/flashbang
+						  /obj/item/grenade,
+						  /obj/item/restraints/handcuffs
 					))
 
 /obj/item/storage/belt/bee_hunter/full/PopulateContents()
@@ -254,7 +253,7 @@
 
 /obj/item/clothing/glasses/thermal/sunglasses
 	name = "thermal sunglasses"
-	desc = "Sunglasses with a thermal vision. Badass."
+	desc = "Sunglasses with thermal vision. Badass."
 	icon_state = "sunhudsec"
 	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
