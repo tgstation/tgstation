@@ -2115,6 +2115,7 @@
 #include "code\modules\events\space_dragon.dm"
 #include "code\modules\events\space_ninja.dm"
 #include "code\modules\events\spacevine.dm"
+#include "code\modules\events\spawn_morph.dm"
 #include "code\modules\events\spider_infestation.dm"
 #include "code\modules\events\spontaneous_appendicitis.dm"
 #include "code\modules\events\stray_cargo.dm"
