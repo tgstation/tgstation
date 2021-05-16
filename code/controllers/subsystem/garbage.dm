@@ -49,6 +49,7 @@ SUBSYSTEM_DEF(garbage)
 	var/list/queues
 	#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
+	var/ref_search_stop = FALSE
 	#endif
 
 
@@ -170,20 +171,25 @@ SUBSYSTEM_DEF(garbage)
 
 		// Something's still referring to the qdel'd object.
 		fail_counts[level]++
+		#ifdef REFERENCE_TRACKING
+		var/ref_searching = FALSE
+		#endif
 		switch (level)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
 				if(reference_find_on_fail[refID])
-					D.find_references()
+					INVOKE_ASYNC(D, /datum/proc/find_references)
+					ref_searching = TRUE
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				else
-					D.find_references()
+					INVOKE_ASYNC(D, /datum/proc/find_references)
+					ref_searching = TRUE
 				#endif
 				reference_find_on_fail -= refID
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
-				
+
 				log_world("## TESTING: GC: -- \ref[D] | [type] was unable to be GC'd --")
 				#ifdef TESTING
 				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
@@ -200,6 +206,11 @@ SUBSYSTEM_DEF(garbage)
 				continue
 
 		Queue(D, level+1)
+
+		#ifdef REFERENCE_TRACKING
+		if(ref_searching)
+			return
+		#endif
 
 		if (MC_TICK_CHECK)
 			return

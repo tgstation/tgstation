@@ -1,20 +1,20 @@
 #ifdef REFERENCE_TRACKING
 
 /client/proc/find_refs()
+	set src in world
 	set category = "Debug"
 	set name = "Find References"
 	if(!check_rights(R_DEBUG))
 		return
-	set src in world
 
 	find_references(FALSE)
 
 /client/proc/qdel_then_find_references()
+	set src in world
 	set category = "Debug"
 	set name = "qdel() then Find References"
 	if(!check_rights(R_DEBUG))
 		return
-	set src in world
 
 	qdel(src, TRUE) //force a qdel
 	if(!running_find_references)
@@ -22,11 +22,11 @@
 
 
 /client/proc/qdel_then_if_fail_find_references()
+	set src in world
 	set category = "Debug"
 	set name = "qdel() then Find References if GC failure"
 	if(!check_rights(R_DEBUG))
 		return
-	set src in world
 
 	qdel_and_find_ref_if_fail(src, TRUE)
 
@@ -55,15 +55,20 @@
 	log_world("Beginning search for references to a [type].")
 
 	var/starting_time = world.time
-
 	DoSearchVar(GLOB, "GLOB") //globals
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
+		if(SSgarbage.ref_search_stop)
+			break
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 
 	for(var/datum/thing) //datums
+		if(SSgarbage.ref_search_stop)
+			break
 		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
 
 	for(var/client/thing) //clients
+		if(SSgarbage.ref_search_stop)
+			break
 		DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
 
 	log_world("Completed search for references to a [type].")
@@ -81,7 +86,7 @@
 		found_refs = list()
 	#endif
 
-	if(usr?.client && !usr.client.running_find_references)
+	if((usr?.client && !usr.client.running_find_references) || SSgarbage.ref_search_stop)
 		return
 
 	if(!recursive_limit)
@@ -102,6 +107,9 @@
 		var/list/vars_list = datum_container.vars
 
 		for(var/varname in vars_list)
+			#ifndef FIND_REF_NO_CHECK_TICK
+			CHECK_TICK
+			#endif
 			if (varname == "vars" || varname == "vis_locs") //Fun fact, vis_locs don't count for references
 				continue
 			var/variable = vars_list[varname]
@@ -118,6 +126,9 @@
 	else if(islist(potential_container))
 		var/normal = IS_NORMAL_LIST(potential_container)
 		for(var/element_in_list in potential_container)
+			#ifndef FIND_REF_NO_CHECK_TICK
+			CHECK_TICK
+			#endif
 			//Check normal entrys
 			if(element_in_list == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
