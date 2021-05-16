@@ -71,7 +71,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 		return
 	
 	var/list/controllers = list()
-	var/list/controller_choices
+	var/list/controller_choices = list()
 	
 	for (var/datum/controller/controller in world)
 		if (istype(controller, /datum/controller/subsystem))
