@@ -70,7 +70,7 @@
 		TOOL_RETRACTOR = 100,
 		TOOL_SCREWDRIVER = 45,
 		TOOL_WIRECUTTER = 35,
-		 /obj/item/stack/rods = 35)
+		/obj/item/stack/rods = 35)
 	time = 24
 
 /datum/surgery_step/retract_skin/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
