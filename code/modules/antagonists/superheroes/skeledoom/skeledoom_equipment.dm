@@ -57,7 +57,6 @@
 	name = "armored black beret"
 	desc = "An armored black beret, perfect for badass snipers."
 	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
-	clothing_flags = THICKMATERIAL
 
 /obj/item/clothing/head/beret/black/skeledoom/cryo //He gets a bootleg version of wintercoat because... dunno, just thought that it's going to be funny.
 	name = "armored black hood"
