@@ -66,6 +66,7 @@
 #define STARLIGHT_CAN_HEAL 2
 #define STARLIGHT_CAN_HEAL_WITH_PENALTY 1
 #define STARLIGHT_CANNOT_HEAL 0
+#define STARLIGHT_MAX_RANGE 2
 
 /datum/symptom/heal/starlight/Start(datum/disease/advance/A)
 	. = ..()
@@ -81,7 +82,7 @@
 	var/area/area_to_check = get_area(T)
 	var/levels_of_glass = 0 // Since starlight condensation only works 2 tiles to the side anyways, it shouldn't work with like 100 z-levels of glass
 	var/current_heal_level = STARLIGHT_CANNOT_HEAL
-	while(levels_of_glass <= 2)
+	while(levels_of_glass <= STARLIGHT_MAX_RANGE)
 		if(isspaceturf(T) || area_to_check.outdoors) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions
 			if (levels_of_glass)
 				current_heal_level = STARLIGHT_CAN_HEAL_WITH_PENALTY // glass gives penalty
@@ -102,7 +103,7 @@
 	if(!T) // no turf exists above current turf
 		return current_heal_level
 	area_to_check = get_area(T)
-	while(levels_of_glass <= 2)
+	while(levels_of_glass <= STARLIGHT_MAX_RANGE)
 		if(isspaceturf(T) || area_to_check.outdoors) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions
 			if(levels_of_glass)
 				return STARLIGHT_CAN_HEAL_WITH_PENALTY // glass gives penalty
@@ -122,15 +123,20 @@
 
 /datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	var/turf/T = get_turf(M)
-	switch(CanTileHeal(T))
+	var/turf/turf_of_mob = get_turf(M)
+	switch(CanTileHeal(turf_of_mob))
 		if(STARLIGHT_CAN_HEAL_WITH_PENALTY)
 			return power * nearspace_penalty
 		if(STARLIGHT_CAN_HEAL)
 			return power
-	for(T in view(M, 2))
-		if(CanTileHeal(T))
+	for(var/turf/turf_to_check in view(M, STARLIGHT_MAX_RANGE))
+		if(CanTileHeal(turf_to_check))
 			return power * nearspace_penalty
+
+#undef STARLIGHT_CAN_HEAL
+#undef STARLIGHT_CAN_HEAL_WITH_PENALTY
+#undef STARLIGHT_CANNOT_HEAL
+#undef STARLIGHT_MAX_RANGE
 
 /datum/symptom/heal/starlight/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
