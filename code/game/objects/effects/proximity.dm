@@ -118,7 +118,7 @@
 	return
 
 /obj/effect/abstract/proximity_checker/Destroy()
-	monitor.checkers -= src
+	LAZYREMOVE(monitor.checkers, src)
 	monitor = null
 	return ..()
 
