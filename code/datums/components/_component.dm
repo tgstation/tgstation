@@ -123,10 +123,12 @@
 /datum/component/proc/_RemoveFromParent()
 	var/datum/P = parent
 	var/list/dc = P.datum_components
+	var/list/components_of_type
+	var/list/subtracted
 	for(var/I in _GetInverseTypeList())
-		var/list/components_of_type = dc[I]
+		components_of_type = dc[I]
 		if(length(components_of_type)) //
-			var/list/subtracted = components_of_type - src
+			subtracted = components_of_type - src
 			if(subtracted.len == 1) //only 1 guy left
 				dc[I] = subtracted[1] //make him special
 			else
@@ -312,18 +314,16 @@
 /datum/proc/_SendSignal(sigtype, list/arguments)
 	var/target = comp_lookup[sigtype]
 	if(!length(target))
-		var/datum/C = target
-		if(!(C.datum_flags & DF_SIGNAL_ENABLED))
+		var/datum/listening_datum = target
+		if(!(listening_datum.datum_flags & DF_SIGNAL_ENABLED))
 			return NONE
-		var/proctype = C.signal_procs[src][sigtype]
-		return NONE | call(C, proctype)(arglist(arguments))
+		return NONE | CallAsync(listening_datum, listening_datum.signal_procs[src][sigtype], arguments)
 	. = NONE
-	for(var/I in target)
-		var/datum/C = I
-		if(!(C.datum_flags & DF_SIGNAL_ENABLED))
+	for(var/datum/listening_datum as anything in target)
+		if(!(listening_datum.datum_flags & DF_SIGNAL_ENABLED))
 			continue
-		var/proctype = C.signal_procs[src][sigtype]
-		. |= call(C, proctype)(arglist(arguments))
+		var/proctype = listening_datum.signal_procs[src][sigtype]
+		. |= CallAsync(listening_datum, proctype, arguments)
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
@@ -446,8 +446,7 @@
 					var/list/arguments = raw_args.Copy()
 					arguments[1] = new_comp
 					var/make_new_component = TRUE
-					for(var/i in GetComponents(new_type))
-						var/datum/component/C = i
+					for(var/datum/component/C as anything in GetComponents(new_type))
 						if(C.CheckDupeComponent(arglist(arguments)))
 							make_new_component = FALSE
 							QDEL_NULL(new_comp)
