@@ -580,6 +580,10 @@
 	merge_type = /obj/item/stack/tile/fake_error
 	resistance_flags = FLAMMABLE
 
+/obj/item/stack/tile/fake_error/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, alpha=src.alpha)
+
 /obj/item/stack/tile/fake_error/ten
 	amount = 10
 
