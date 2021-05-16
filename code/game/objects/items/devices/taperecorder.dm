@@ -36,7 +36,7 @@
 	. = ..()
 	if(starting_tape_type)
 		mytape = new starting_tape_type(src)
-	soundloop = new(list(src))
+	soundloop = new(src)
 	update_appearance()
 
 /obj/item/taperecorder/Destroy()

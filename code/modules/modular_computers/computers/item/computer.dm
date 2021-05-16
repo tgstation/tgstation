@@ -61,7 +61,7 @@
 	comp_light_color = "#FFFFFF"
 	idle_threads = list()
 	if(looping_sound)
-		soundloop = new(list(src), enabled)
+		soundloop = new(src, enabled)
 	update_appearance()
 
 /obj/item/modular_computer/Destroy()

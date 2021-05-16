@@ -24,8 +24,8 @@
 
 /obj/item/reverse_bear_trap/Initialize()
 	. = ..()
-	soundloop = new(list(src))
-	soundloop2 = new(list(src))
+	soundloop = new(src)
+	soundloop2 = new(src)
 
 /obj/item/reverse_bear_trap/Destroy()
 	QDEL_NULL(soundloop)

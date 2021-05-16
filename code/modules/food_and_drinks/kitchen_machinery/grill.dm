@@ -18,7 +18,7 @@
 
 /obj/machinery/grill/Initialize()
 	. = ..()
-	grill_loop = new(list(src), FALSE)
+	grill_loop = new(src, FALSE)
 
 /obj/machinery/grill/Destroy()
 	QDEL_NULL(grill_loop)

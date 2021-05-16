@@ -32,12 +32,12 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-	soundloop = new(list(src), FALSE)
+	soundloop = new(src, FALSE)
 
 /obj/item/geiger_counter/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(soundloop)
-	
+
 	return ..()
 
 /obj/item/geiger_counter/process(delta_time)

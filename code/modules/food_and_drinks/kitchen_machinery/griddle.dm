@@ -24,7 +24,7 @@
 
 /obj/machinery/griddle/Initialize()
 	. = ..()
-	grill_loop = new(list(src), FALSE)
+	grill_loop = new(src, FALSE)
 	if(isnum(variant))
 		variant = rand(1,3)
 	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)

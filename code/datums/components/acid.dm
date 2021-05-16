@@ -50,7 +50,7 @@
 	var/atom/parent_atom = parent
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 	parent_atom.update_appearance()
-	sizzle = new(list(parent), TRUE)
+	sizzle = new(parent, TRUE)
 	START_PROCESSING(SSacid, src)
 
 /datum/component/acid/Destroy(force, silent)
