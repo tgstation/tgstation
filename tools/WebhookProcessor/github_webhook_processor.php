@@ -747,13 +747,13 @@ function checkchangelog($payload, $compile = true) {
 			case 'content':
 				if($item != 'adds new content to existing features'){
 					$tags[] = 'Content';
-					$currentchangelogblock[] = array('type' => 'content', 'body' => $item)
+					$currentchangelogblock[] = array('type' => 'content', 'body' => $item);
 				}
 				break;
 			case 'jobtent':
 				if($item != 'adds new content to job specific features features'){
 					$tags[] = 'Content';
-					$currentchangelogblock[] = array('type' => 'content', 'body' => $item)
+					$currentchangelogblock[] = array('type' => 'content', 'body' => $item);
 				}
 				break;
 			case 'refactor':
