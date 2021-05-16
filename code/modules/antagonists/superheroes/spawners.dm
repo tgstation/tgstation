@@ -221,8 +221,8 @@
 /obj/machinery/outfit_equipper/superhero/ianiser/Initialize()
 	. = ..()
 	equip_options = list(/datum/outfit/superhero/ianiser = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian"),
-						 /datum/outfit/superhero/ianiser/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian_winter"),
-						 /datum/outfit/superhero/ianiser/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian_space"))
+						/datum/outfit/superhero/ianiser/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian_winter"),
+						/datum/outfit/superhero/ianiser/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian_space"))
 
 /obj/machinery/outfit_equipper/superhero/owlman
 	hero_role = "Owlman"
@@ -230,8 +230,8 @@
 /obj/machinery/outfit_equipper/superhero/owlman/Initialize()
 	. = ..()
 	equip_options = list(/datum/outfit/superhero/owlman = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman"),
-						 /datum/outfit/superhero/owlman/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman_winter"),
-						 /datum/outfit/superhero/owlman/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman_space"))
+						/datum/outfit/superhero/owlman/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman_winter"),
+						/datum/outfit/superhero/owlman/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman_space"))
 
 /// Villains
 
@@ -241,8 +241,8 @@
 /obj/machinery/outfit_equipper/superhero/skeledoom/Initialize()
 	. = ..()
 	equip_options = list(/datum/outfit/superhero/villain/skeledoom = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom"),
-						 /datum/outfit/superhero/villain/skeledoom/cryo = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom_winter"),
-						 /datum/outfit/superhero/villain/skeledoom/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom_space"))
+						/datum/outfit/superhero/villain/skeledoom/cryo = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom_winter"),
+						/datum/outfit/superhero/villain/skeledoom/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom_space"))
 
 /obj/machinery/outfit_equipper/superhero/nekometic
 	hero_role = "Nekometic"
@@ -250,8 +250,8 @@
 /obj/machinery/outfit_equipper/superhero/nekometic/Initialize()
 	. = ..()
 	equip_options = list(/datum/outfit/superhero/villain/nekometic = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko"),
-						 /datum/outfit/superhero/villain/nekometic/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko_winter"),
-						 /datum/outfit/superhero/villain/nekometic/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko_space"))
+						/datum/outfit/superhero/villain/nekometic/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko_winter"),
+						/datum/outfit/superhero/villain/nekometic/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko_space"))
 
 /obj/machinery/outfit_equipper/superhero/griffin
 	hero_role = "Griffin"
@@ -259,28 +259,27 @@
 /obj/machinery/outfit_equipper/superhero/griffin/Initialize()
 	. = ..()
 	equip_options = list(/datum/outfit/superhero/villain/griffin = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin"),
-						 /datum/outfit/superhero/villain/griffin/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin_winter"),
-						 /datum/outfit/superhero/villain/griffin/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin_space"))
+						/datum/outfit/superhero/villain/griffin/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin_winter"),
+						/datum/outfit/superhero/villain/griffin/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin_space"))
 
 /// Debug suit storage
 
 /obj/machinery/outfit_equipper/superhero/debug/Initialize()
 	. = ..()
 	equip_options = list(/datum/outfit/superhero/buzzon = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "bee"),
-						 /datum/outfit/superhero/buzzon/cryo = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "bee_winter"),
-						 /datum/outfit/superhero/buzzon/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "bee_space"),
-						 /datum/outfit/superhero/ianiser = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian"),
-						 /datum/outfit/superhero/ianiser/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian_winter"),
-						 /datum/outfit/superhero/ianiser/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian_space"),
-						 /datum/outfit/superhero/owlman = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman"),
-						 /datum/outfit/superhero/owlman/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman_winter"),
-						 /datum/outfit/superhero/owlman/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman_space"),
-						 /datum/outfit/superhero/villain/skeledoom = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom"),
-						 /datum/outfit/superhero/villain/skeledoom/cryo = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom_winter"),
-						 /datum/outfit/superhero/villain/skeledoom/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom_space"),
-						 /datum/outfit/superhero/villain/nekometic = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko"),
-						 /datum/outfit/superhero/villain/nekometic/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko_winter"),
-						 /datum/outfit/superhero/villain/nekometic/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko_space"),
-						 /datum/outfit/superhero/villain/griffin = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin"),
-						 /datum/outfit/superhero/villain/griffin/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin_winter"),
-						 /datum/outfit/superhero/villain/griffin/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin_space"))
+						/datum/outfit/superhero/buzzon/cryo = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "bee_winter"),
+						/datum/outfit/superhero/buzzon/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "bee_space"),
+						/datum/outfit/superhero/ianiser = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian"),
+						/datum/outfit/superhero/ianiser/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian_winter"),
+						/datum/outfit/superhero/ianiser/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "ian_space"),
+						/datum/outfit/superhero/owlman = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman"),
+						/datum/outfit/superhero/owlman/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman_winter"),
+						/datum/outfit/superhero/owlman/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "owlman_space"),
+						/datum/outfit/superhero/villain/skeledoom = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom"),
+						/datum/outfit/superhero/villain/skeledoom/cryo = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom_winter"),
+						/datum/outfit/superhero/villain/skeledoom/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "skeledoom_space"),
+						/datum/outfit/superhero/villain/nekometic = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko"),
+						/datum/outfit/superhero/villain/nekometic/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko_winter"),
+						/datum/outfit/superhero/villain/nekometic/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko_space"),
+						/datum/outfit/superhero/villain/griffin = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin"),
+						/datum/outfit/superhero/villain/griffin/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin_space"))
