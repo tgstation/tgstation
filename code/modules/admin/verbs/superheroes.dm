@@ -4,8 +4,13 @@
 	set name = "Summon Superheroes and Supervillains"
 	set desc = "Spawn superhero and supervillain ships. USE ONLY ONCE OR SHIPS MAY BREAK."
 
-	holder?.spawnSuperheroes()
-	holder?.spawnSupervillains()
+	var/choice = input(src, "Which teams do you want to spawn?") in list("Superheroes", "Supervillains", "Both superheroes and supervillains")
+
+	if(choice == "Superheroes" || choice == "Both superheroes and supervillains")
+		holder?.spawnSuperheroes()
+
+	if(choice == "Supervillains" || choice == "Both superheroes and supervillains")
+		holder?.spawnSupervillains()
 
 	var/list/candidates = pollGhostCandidates("Would you like to play as a superhero/supervillain?", ROLE_SUPERHERO, FALSE, 300)
 	var/list/heroes = list()
@@ -17,10 +22,14 @@
 		var/obj/effect/mob_spawn/human/superhero/spawner = pick_n_take(heroes)
 		spawner.create(ckey = ghostie.ckey)
 
-	message_admins("[key_name(usr)] spawned superheroes and supervillains.")
-	log_admin("[key_name(usr)] spawned superheroes and supervillains.")
+	message_admins("[key_name(usr)] spawned [choice].")
+	log_admin("[key_name(usr)] spawned [choice].")
 
-	priority_announce("Two unidentified ships detected near the station.")
+	if(choice == "Both superheroes and supervillains")
+		priority_announce("Two unidentified ships detected near the station.")
+	else
+		priority_announce("Unidentified ship detected near the station.")
+
 
 /datum/admins/proc/spawnSuperheroes()
 	var/datum/map_template/shuttle/superhero/owlskip/ship = new()

@@ -187,18 +187,18 @@
 				return
 	. = ..()
 
-/mob/living/simple_animal/hostile/poison/bees/toxin_type
+/mob/living/simple_animal/hostile/poison/bee/toxin_type
 	var/toxin_type = /datum/reagent/toxin
 
-/mob/living/simple_animal/hostile/poison/bees/toxin_type/Initialize()
+/mob/living/simple_animal/hostile/poison/bee/toxin_type/Initialize()
 	. = ..()
 	assign_reagent(GLOB.chemical_reagents_list[toxin_type])
 
-/mob/living/simple_animal/hostile/poison/bees/toxin_type/cryo
+/mob/living/simple_animal/hostile/poison/bee/toxin_type/cryo
 	toxin_type = /datum/reagent/consumable/frostoil
 
 /obj/item/grenade/spawnergrenade/buzzkill/non_toxic
-	spawner_type = /mob/living/simple_animal/hostile/poison/bees
+	spawner_type = /mob/living/simple_animal/hostile/poison/bee
 	deliveryamt = 5
 
 /obj/item/clothing/glasses/hud/security/sunglasses/blue
