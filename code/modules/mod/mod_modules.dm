@@ -708,14 +708,14 @@
 	incompatible_modules = list(/obj/item/mod/module/science_scanner)
 	cooldown_time = 0.5 SECONDS
 
-/obj/item/mod/module/emp_shield/on_activation()
+/obj/item/mod/module/science_scanner/on_activation()
 	. = ..()
 	if(!.)
 		return
 	mod.wearer.research_scanner++
 	mod.helmet.clothing_flags |= SCAN_REAGENTS
 
-/obj/item/mod/module/emp_shield/on_uninstall()
+/obj/item/mod/module/science_scanner/on_uninstall()
 	. = ..()
 	if(!.)
 		return
