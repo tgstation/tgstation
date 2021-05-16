@@ -282,4 +282,5 @@
 						/datum/outfit/superhero/villain/nekometic/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko_winter"),
 						/datum/outfit/superhero/villain/nekometic/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "neko_space"),
 						/datum/outfit/superhero/villain/griffin = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin"),
+						/datum/outfit/superhero/villain/griffin/winter = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin_winter"),
 						/datum/outfit/superhero/villain/griffin/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "griffin_space"))
