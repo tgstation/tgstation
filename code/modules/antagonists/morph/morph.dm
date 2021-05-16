@@ -79,6 +79,7 @@
 		visible_message("<span class='userdanger'>[src] leaps upwards and eviscerates [crosser]!</span>", \
 						"<span class='userdanger'>You ambush [crosser], eviscerating [crosser.p_them()]!</span>")
 		ambushed_living.adjustBruteLoss(70)
+		playsound(src, 'sound/creatures/morph_ambush.ogg')
 		return
 	//ambushed carbon mob
 	var/mob/living/carbon/ambushed_carbon = crosser
@@ -93,6 +94,31 @@
 	else
 		visible_message("<span class='userdanger'>[src] leaps upwards and eviscerates [crosser]!</span>", \
 						"<span class='userdanger'>You ambush [crosser], eviscerating [crosser.p_them()]!</span>")
+	playsound(src, 'sound/creatures/morph_ambush.ogg')
+	ambushed_carbon.adjustBruteLoss(70)
+
+/mob/living/simple_animal/hostile/morph/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(!(ambush_flags & AMBUSH_INTERACT))
+		return
+	//ambushed living mob
+	if(!iscarbon(crosser))
+		var/mob/living/ambushed_living = crosser
+		visible_message("<span class='userdanger'>[src] lunges forwards at [crosser] and eviscerates [crosser.p_them()]!</span>", \
+						"<span class='userdanger'>You ambush [crosser], eviscerating [crosser.p_them()]!</span>")
+		ambushed_living.adjustBruteLoss(70)
+		playsound(src, 'sound/creatures/morph_ambush.ogg')
+		return
+	//ambushed carbon mob
+	var/mob/living/carbon/ambushed_carbon = crosser
+	var/which_hand = BODY_ZONE_L_ARM
+	if(!(ambushed_carbon.active_hand_index % 2))
+		which_hand = BODY_ZONE_R_ARM
+	var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
+	visible_message("<span class='userdanger'>[src] lunges forwards and eviscerates [crosser]'s [chopchop]!</span>", \
+					"<span class='userdanger'>You ambush [crosser], eviscerating their [chopchop]!</span>")
+	chopchop.dismember(BRUTE)
+	playsound(src, 'sound/creatures/morph_ambush.ogg')
 	ambushed_carbon.adjustBruteLoss(70)
 
 /mob/living/simple_animal/hostile/morph/Moved()
