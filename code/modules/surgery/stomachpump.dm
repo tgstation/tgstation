@@ -37,17 +37,17 @@
 /datum/surgery_step/stomach_pump/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
-		display_results(user, target, "<span class='notice'>[user] forces [human] to vomit, cleansing their stomach of some chemicals!</span>",
-				"<span class='notice'>[user] forces [human] to vomit, cleansing their stomach of some chemicals!</span>",
-				"[user] forces [human] to vomit!")
+		display_results(user, target, "<span class='notice'>[user] forces [target_human] to vomit, cleansing their stomach of some chemicals!</span>",
+				"<span class='notice'>[user] forces [target_human] to vomit, cleansing their stomach of some chemicals!</span>",
+				"[user] forces [target_human] to vomit!")
 		target_human.vomit(20, FALSE, TRUE, 1, TRUE, FALSE, purge_ratio = 0.67) //higher purge ratio than regular vomiting
 	return ..()
 
 /datum/surgery_step/stomach_pump/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
-		display_results(user, target, "<span class='warning'>You screw up, brusing [human]'s chest!</span>",
-			"<span class='warning'>[user] screws up, brusing [human]'s chest!</span>",
+		display_results(user, target, "<span class='warning'>You screw up, brusing [target_human]'s chest!</span>",
+			"<span class='warning'>[user] screws up, brusing [target_human]'s chest!</span>",
 			"<span class='warning'>[user] screws up!</span>")
 		target_human.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
 		target_human.adjustBruteLoss(5)
