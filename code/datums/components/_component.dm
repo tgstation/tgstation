@@ -123,7 +123,7 @@
 /datum/component/proc/_RemoveFromParent()
 	var/datum/P = parent
 	var/list/dc = P.datum_components
-	var/list/components_of_type
+	var/list/components_of_type //pre init so we're not creating vars every loop
 	var/list/subtracted
 	for(var/I in _GetInverseTypeList())
 		components_of_type = dc[I]
@@ -446,8 +446,8 @@
 					var/list/arguments = raw_args.Copy()
 					arguments[1] = new_comp
 					var/make_new_component = TRUE
-					for(var/datum/component/C as anything in GetComponents(new_type))
-						if(C.CheckDupeComponent(arglist(arguments)))
+					for(var/datum/component/existing_component as anything in GetComponents(new_type))
+						if(existing_component.CheckDupeComponent(arglist(arguments)))
 							make_new_component = FALSE
 							QDEL_NULL(new_comp)
 							break
