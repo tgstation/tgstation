@@ -10,15 +10,15 @@
  */
 /datum/computer_file/program/portrait_printer
 	filename = "PortraitPrinter"
-	filedesc = "Marlowe Treeby's Spess Art"
+	filedesc = "Marlowe Treeby's Art Galaxy"
 	category = PROGRAM_CATEGORY_CREW
-	program_icon_state = "portrait_printer"
-	extended_desc = "This program connects to a Spinward Sector community art portal for viewing and printing art."
+	program_icon_state = "dummy"
+	extended_desc = "This program connects to a Spinward Sector community art site for viewing and printing art."
 	transfer_access = ACCESS_LIBRARY
 	usage_flags = PROGRAM_CONSOLE
 	requires_ntnet = TRUE
 	size = 9
-	tgui_id = "PortraitPrinter"
+	tgui_id = "NtosPortraitPrinter"
 	program_icon = "paint-brush"
 
 /datum/computer_file/program/portrait_printer/ui_data(mob/user)
@@ -45,10 +45,10 @@
 	if(computer)
 		printer = computer.all_components[MC_PRINT]
 	if(!printer)
-		to_chat(usr, "<span class='notice'>Hardware error: A printer is required to redeem tickets.</span>")
+		to_chat(usr, "<span class='notice'>Hardware error: A printer is required to print a canvas.</span>")
 		return
 	if(printer.stored_paper < CANVAS_PAPER_COST)
-		to_chat(usr, "<span class='notice'>Hardware error: Your printer needs at least [CANVAS_PAPER_COST] paper to print a canvas.</span>")
+		to_chat(usr, "<span class='notice'>Printing error: Your printer needs at least [CANVAS_PAPER_COST] paper to print a canvas.</span>")
 		return
 	printer.stored_paper -= CANVAS_PAPER_COST
 
@@ -76,3 +76,5 @@
 	printed_canvas.painting_name = title
 	printed_canvas.author_ckey = author
 	printed_canvas.name = "painting - [title]"
+	///this is a copy of something that is already in the database- it should not be able to be saved.
+	printed_canvas.no_save = TRUE

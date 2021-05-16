@@ -14985,9 +14985,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/computer/exodrone_control_console{
-	dir = 2
-	},
+/obj/machinery/computer/exodrone_control_console,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -46663,8 +46661,14 @@
 /area/maintenance/port/aft)
 "gKR" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_x = 5;
+	pixel_y = 3
+	},
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -46675,6 +46679,13 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/item/folder{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/laser_pointer{
+	pixel_x = 3
 	},
 /turf/open/floor/iron/dark,
 /area/service/library)
@@ -58013,9 +58024,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/computer/exoscanner_control{
-	dir = 2
-	},
+/obj/machinery/computer/exoscanner_control,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -84305,8 +84314,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 0
+	pixel_x = -7
 	},
 /obj/item/pen{
 	pixel_x = -7
@@ -110736,12 +110744,10 @@
 /area/medical/surgery/room_b)
 "xNJ" = (
 /obj/machinery/light/directional/south,
-/obj/structure/table/wood,
-/obj/item/folder,
-/obj/item/laser_pointer{
-	pixel_x = 3
-	},
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/modular_computer/console/preset/curator{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/service/library)
 "xNR" = (

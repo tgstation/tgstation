@@ -112,6 +112,7 @@
 	console_department = "Civilian"
 	name = "curator console"
 	desc = "A stationary computer. This one comes preloaded with art programs."
+	_has_printer = TRUE
 
 /obj/machinery/modular_computer/console/preset/curator/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]

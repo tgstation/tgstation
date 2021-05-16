@@ -1,9 +1,9 @@
 import { resolveAsset } from '../assets';
 import { useBackend, useLocalState } from '../backend';
 import { Button, NoticeBox, Section, Stack, Tabs } from '../components';
-import { Window } from '../layouts';
+import { NtosWindow } from '../layouts';
 
-export const PortraitPrinter = (props, context) => {
+export const NtosPortraitPrinter = (props, context) => {
   const { act, data } = useBackend(context);
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
   const [listIndex, setListIndex] = useLocalState(context, 'listIndex', 0);
@@ -33,17 +33,17 @@ export const PortraitPrinter = (props, context) => {
   const current_portrait_title = tab2list[listIndex]["title"];
   const current_portrait_asset_name = TABS[tabIndex].asset_prefix + "_" + tab2list[listIndex]["md5"];
   return (
-    <Window
+    <NtosWindow
       theme="ntos"
-      title="Portrait Picker"
+      title="Art Galaxy"
       width={400}
       height={406}>
-      <Window.Content>
-        <Stack fill>
-          <Stack.Item mb={1}>
+      <NtosWindow.Content>
+        <Stack vertical fill>
+          <Stack.Item>
             <Section fitted>
               <Tabs fluid textAlign="center">
-                {TABS.map((tabObj, i) => (
+                {TABS.map((tabObj, i) => !!tabObj.list && (
                   <Tabs.Tab
                     key={i}
                     selected={i === tabIndex}
@@ -57,7 +57,7 @@ export const PortraitPrinter = (props, context) => {
               </Tabs>
             </Section>
           </Stack.Item>
-          <Stack.Item mb={1} grow={2}>
+          <Stack.Item grow={2}>
             <Section fill>
               <Stack
                 height="100%"
@@ -67,8 +67,8 @@ export const PortraitPrinter = (props, context) => {
                 <Stack.Item>
                   <img
                     src={resolveAsset(current_portrait_asset_name)}
-                    height="96px"
-                    width="96px"
+                    height="128px"
+                    width="128px"
                     style={{
                       'vertical-align': 'middle',
                       '-ms-interpolation-mode': 'nearest-neighbor',
@@ -102,7 +102,7 @@ export const PortraitPrinter = (props, context) => {
                     <Stack.Item grow={3}>
                       <Button
                         icon="check"
-                        content="Select Portrait"
+                        content="Print Portrait"
                         onClick={() => act("select", {
                           tab: tabIndex+1,
                           selected: listIndex+1,
@@ -127,25 +127,15 @@ export const PortraitPrinter = (props, context) => {
                 </Section>
               </Stack.Item>
             </Stack>
-            <Stack.Item mt={1}>
+            <Stack.Item mt={1} mb={-1}>
               <NoticeBox info>
-                Only the 23x23 or 24x24 canvas size art can be
-                displayed. Make sure you read the warning below
-                before embracing the wide wonderful world of
-                artistic expression!
-              </NoticeBox>
-            </Stack.Item>
-            <Stack.Item>
-              <NoticeBox danger>
-                WARNING: While Central Command loves art as much as you do,
-                choosing erotic art will lead to severe consequences.
-                Additionally, Central Command reserves the right to request
-                you change your display portrait, for any reason.
+                Printing a canvas costs 10 paper from
+                the printer installed in your machine.
               </NoticeBox>
             </Stack.Item>
           </Stack.Item>
         </Stack>
-      </Window.Content>
-    </Window>
+      </NtosWindow.Content>
+    </NtosWindow>
   );
 };
