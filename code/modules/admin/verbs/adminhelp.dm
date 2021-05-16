@@ -12,9 +12,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/list/closed_tickets = list()
 	var/list/resolved_tickets = list()
 
-	var/obj/effect/statclick/ticket_list/astatclick = new(null, null, AHELP_ACTIVE)
-	var/obj/effect/statclick/ticket_list/cstatclick = new(null, null, AHELP_CLOSED)
-	var/obj/effect/statclick/ticket_list/rstatclick = new(null, null, AHELP_RESOLVED)
+	var/atom/movable/statclick/ticket_list/astatclick = new(null, null, AHELP_ACTIVE)
+	var/atom/movable/statclick/ticket_list/cstatclick = new(null, null, AHELP_CLOSED)
+	var/atom/movable/statclick/ticket_list/rstatclick = new(null, null, AHELP_RESOLVED)
 
 /datum/admin_help_tickets/Destroy()
 	QDEL_LIST(active_tickets)
@@ -98,7 +98,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in active_tickets)
 		var/datum/admin_help/AH = I
 		if(AH.initiator)
-			var/obj/effect/statclick/updated = AH.statclick.update()
+			var/atom/movable/statclick/updated = AH.statclick.update()
 			L[++L.len] = list("#[AH.id]. [AH.initiator_key_name]:", "[updated.name]", REF(AH))
 		else
 			++num_disconnected
@@ -135,18 +135,18 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //TICKET LIST STATCLICK
 //
 
-/obj/effect/statclick/ticket_list
+/atom/movable/statclick/ticket_list
 	var/current_state
 
-/obj/effect/statclick/ticket_list/New(loc, name, state)
+/atom/movable/statclick/ticket_list/New(loc, name, state)
 	current_state = state
 	..()
 
-/obj/effect/statclick/ticket_list/Click()
+/atom/movable/statclick/ticket_list/Click()
 	GLOB.ahelp_tickets.BrowseTickets(current_state)
 
 //called by admin topic
-/obj/effect/statclick/ticket_list/proc/Action()
+/atom/movable/statclick/ticket_list/proc/Action()
 	Click()
 
 //
@@ -168,7 +168,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	var/list/_interactions //use AddInteraction() or, preferably, admin_ticket_log()
 
-	var/obj/effect/statclick/ahelp/statclick
+	var/atom/movable/statclick/ahelp/statclick
 
 	var/static/ticket_counter = 0
 
@@ -473,20 +473,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 // TICKET STATCLICK
 //
 
-/obj/effect/statclick/ahelp
+/atom/movable/statclick/ahelp
 	var/datum/admin_help/ahelp_datum
 
-/obj/effect/statclick/ahelp/Initialize(mapload, datum/admin_help/AH)
+/atom/movable/statclick/ahelp/Initialize(mapload, datum/admin_help/AH)
 	ahelp_datum = AH
 	. = ..()
 
-/obj/effect/statclick/ahelp/update()
+/atom/movable/statclick/ahelp/update()
 	return ..(ahelp_datum.name)
 
-/obj/effect/statclick/ahelp/Click()
+/atom/movable/statclick/ahelp/Click()
 	ahelp_datum.TicketPanel()
 
-/obj/effect/statclick/ahelp/Destroy()
+/atom/movable/statclick/ahelp/Destroy()
 	ahelp_datum = null
 	return ..()
 

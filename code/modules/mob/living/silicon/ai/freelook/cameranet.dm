@@ -15,9 +15,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	var/list/chunks = list()
 	var/ready = 0
 
-	// The object used for the clickable stat() button.
-	var/obj/effect/statclick/statclick
-
 	// The objects used in vis_contents of obscured turfs
 	var/list/vis_contents_objects
 	var/obj/effect/overlay/camera_static/vis_contents_opaque

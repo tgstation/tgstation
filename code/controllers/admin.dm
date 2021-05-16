@@ -1,33 +1,33 @@
 // Clickable stat() button.
-/obj/effect/statclick
+/atom/movable/statclick
 	name = "Initializing..."
 	var/target
 
-INITIALIZE_IMMEDIATE(/obj/effect/statclick)
+INITIALIZE_IMMEDIATE(/atom/movable/statclick)
 
-/obj/effect/statclick/Initialize(mapload, text, target)
+/atom/movable/statclick/Initialize(mapload, text, target)
 	. = ..()
 	name = text
 	src.target = target
 	if(istype(target, /datum)) //Harddel man bad
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/cleanup)
 
-/obj/effect/statclick/Destroy()
+/atom/movable/statclick/Destroy()
 	target = null
 	return ..()
 
-/obj/effect/statclick/proc/cleanup()
+/atom/movable/statclick/proc/cleanup()
 	SIGNAL_HANDLER
 	qdel(src)
 
-/obj/effect/statclick/proc/update(text)
+/atom/movable/statclick/proc/update(text)
 	name = text
 	return src
 
-/obj/effect/statclick/debug
+/atom/movable/statclick/debug
 	var/class
 
-/obj/effect/statclick/debug/Click()
+/atom/movable/statclick/debug/Click()
 	if(!usr.client.holder || !target)
 		return
 	if(!class)
