@@ -11,33 +11,32 @@
 	/// Second object to compare
 	var/datum/port/input/compareB
 
-	/// Result of the comparison
-	var/datum/port/output/output
+	/// Result of the comparison.
+	var/datum/port/output/true
+	var/datum/port/output/false
 
-GLOBAL_LIST_INIT(comparison_options, list(
-	COMPARISON_EQUAL,
-	COMPARISON_NOT_EQUAL,
-	COMPARISON_GREATER_THAN,
-	COMPARISON_LESS_THAN,
-	COMPARISON_GREATER_THAN_OR_EQUAL,
-	COMPARISON_LESS_THAN_OR_EQUAL
+GLOBAL_LIST_INIT(comp_comparison_options, list(
+	COMP_COMPARISON_EQUAL,
+	COMP_COMPARISON_NOT_EQUAL,
+	COMP_COMPARISON_GREATER_THAN,
+	COMP_COMPARISON_LESS_THAN,
+	COMP_COMPARISON_GREATER_THAN_OR_EQUAL,
+	COMP_COMPARISON_LESS_THAN_OR_EQUAL
 ))
 
 /obj/item/component/comparison/Initialize()
-	options = GLOB.comparison_options
+	options = GLOB.comp_comparison_options
 	. = ..()
 	compareA = add_input_port("A", PORT_TYPE_ANY)
 	compareB = add_input_port("B", PORT_TYPE_ANY)
 
-	output = add_output_port("Result", PORT_TYPE_NUMBER)
+	true = add_output_port("True", PORT_TYPE_NUMBER)
+	false = add_output_port("False", PORT_TYPE_NUMBER)
 
 /obj/item/component/comparison/Destroy()
-	output = null
+	true = null
+	false = null
 	return ..()
-
-/obj/item/component/comparison/set_option(option)
-	. = ..()
-	input_received()
 
 /obj/item/component/comparison/input_received()
 	. = ..()
@@ -46,17 +45,21 @@ GLOBAL_LIST_INIT(comparison_options, list(
 
 	var/result = FALSE
 	switch(current_option)
-		if(COMPARISON_EQUAL)
+		if(COMP_COMPARISON_EQUAL)
 			result = compareA.input_value == compareB.input_value
-		if(COMPARISON_NOT_EQUAL)
+		if(COMP_COMPARISON_NOT_EQUAL)
 			result = compareA.input_value != compareB.input_value
-		if(COMPARISON_GREATER_THAN)
+		if(COMP_COMPARISON_GREATER_THAN)
 			result = compareA.input_value > compareB.input_value
-		if(COMPARISON_GREATER_THAN_OR_EQUAL)
+		if(COMP_COMPARISON_GREATER_THAN_OR_EQUAL)
 			result = compareA.input_value >= compareB.input_value
-		if(COMPARISON_LESS_THAN)
+		if(COMP_COMPARISON_LESS_THAN)
 			result = compareA.input_value < compareB.input_value
-		if(COMPARISON_LESS_THAN_OR_EQUAL)
+		if(COMP_COMPARISON_LESS_THAN_OR_EQUAL)
 			result = compareA.input_value <= compareB.input_value
 
-	output.set_output(result)
+	// Sends an output to the appropriate port
+	if(result)
+		true.set_output(result)
+	else
+		false.set_output(result)

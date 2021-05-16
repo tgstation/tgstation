@@ -186,7 +186,7 @@
 			var/user_input = params["input"]
 			switch(port.datatype)
 				if(PORT_TYPE_STRING, PORT_TYPE_ANY)
-					port.set_value(copytext(user_input, 1, MAX_STRING_LENGTH))
+					port.set_value(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
 				if(PORT_TYPE_NUMBER)
 					port.set_value(text2num(user_input))
 				// TODO: Add List support

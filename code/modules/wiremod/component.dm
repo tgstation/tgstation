@@ -74,6 +74,7 @@
  */
 /obj/item/component/proc/set_option(option)
 	current_option = option
+	input_received()
 
 /**
  * Adds an input port and returns it
@@ -81,9 +82,10 @@
  * Arguments:
  * * name - The name of the input port
  * * type - The datatype it handles
+ * * trigger - Whether this input port triggers an update on the component when updated.
  */
-/obj/item/component/proc/add_input_port(name, type)
-	var/datum/port/input/input_port = new(src, name, type)
+/obj/item/component/proc/add_input_port(name, type, trigger = TRUE)
+	var/datum/port/input/input_port = new(src, name, type, trigger)
 	input_ports += input_port
 	return input_port
 

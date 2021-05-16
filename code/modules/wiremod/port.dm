@@ -56,6 +56,10 @@
 	/// The output value of the port
 	var/output_value
 
+/datum/port/output/disconnect()
+	set_output(null)
+	return ..()
+
 /**
  * Sets the output value of the port
  *
@@ -84,6 +88,13 @@
 	/// The delay before updating the input value whenever a modification is made.
 	/// This does not apply when when the output port is registered
 	var/input_receive_delay
+
+	/// Whether this port triggers an update whenever an output is received.
+	var/trigger = FALSE
+
+/datum/port/input/New(obj/item/component/to_connect, name, datatype, trigger)
+	. = ..()
+	src.trigger = trigger
 
 /**
  * Connects the input port to the output port
@@ -125,7 +136,8 @@
  */
 /datum/port/input/proc/set_value(var/new_value)
 	input_value = new_value
-	connected_component.input_received()
+	if(trigger)
+		connected_component.input_received()
 
 /datum/port/input/disconnect()
 	unregister_output_port()
@@ -141,8 +153,7 @@
 		COMSIG_PORT_DISCONNECT
 	))
 	connected_port = null
-	input_value = null
-	connected_component.input_received()
+	set_value(null)
 
 /datum/port/input/Destroy()
 	unregister_output_port()
