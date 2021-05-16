@@ -5,24 +5,24 @@ import { AdventureDataProvider, AdventureScreen } from './ExodroneConsole';
 import { formatTime } from '../format';
 
 type Adventure = {
-  ref: string,
-  name: string,
-  id: string,
-  approved: boolean,
-  uploader: string,
-  version: number,
-  timestamp: string,
-  json_status: string
-}
+  ref: string;
+  name: string;
+  id: string;
+  approved: boolean;
+  uploader: string;
+  version: number;
+  timestamp: string;
+  json_status: string;
+};
 
 type AdventureBrowserData = AdventureDataProvider & {
   adventures: Array<Adventure>;
   feedback_message: string;
   play_mode: boolean;
-  adventure_data: any,
-  delay_time : number,
-  delay_message : string
-}
+  adventure_data: any;
+  delay_time: number;
+  delay_message: string;
+};
 
 const AdventureEntry = (props, context) => {
   const { data, act } = useBackend<AdventureBrowserData>(context);
@@ -68,7 +68,8 @@ const AdventureList = (props, context) => {
       {openAdventure && (
         <AdventureEntry
           entry_ref={openAdventure}
-          close={() => setOpenAdventure(null)} />)}
+          close={() => setOpenAdventure(null)} />
+      )}
       {!openAdventure && (
         <Table>
           <Table.Row>
@@ -83,12 +84,15 @@ const AdventureList = (props, context) => {
               <Table.Cell>{p.id}</Table.Cell>
               <Table.Cell>{p.name}</Table.Cell>
               <Table.Cell><Button icon="edit" onClick={() => setOpenAdventure(p.ref)} /></Table.Cell>
-            </Table.Row>))}
+            </Table.Row>
+          ))}
           <Table.Row>
             <Button onClick={() => act("create")}>Create New</Button>
           </Table.Row>
-        </Table>)}
-    </>);
+        </Table>
+      )}
+    </>
+  );
 };
 
 const DebugPlayer = (props, context) => {
@@ -112,7 +116,8 @@ export const AdventureBrowser = (props, context) => {
         {!!data.feedback_message && (
           <NoticeBox>
             {data.feedback_message}
-          </NoticeBox>)}
+          </NoticeBox>
+        )}
         {data.play_mode ? (<DebugPlayer />) : (<AdventureList />)}
       </Window.Content>
     </Window>
