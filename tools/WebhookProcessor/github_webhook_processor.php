@@ -744,6 +744,18 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'code_imp', 'body' => $item);
 				}
 				break;
+			case 'content':
+				if($item != 'adds new content to existing features'){
+					$tags[] = 'Content';
+					$currentchangelogblock[] = array('type' => 'content', 'body' => $item)
+				}
+				break;
+			case 'jobtent':
+				if($item != 'adds new content to job specific features features'){
+					$tags[] = 'Content';
+					$currentchangelogblock[] = array('type' => 'content', 'body' => $item)
+				}
+				break;
 			case 'refactor':
 				if($item != 'refactored some code'){
 					$tags[] = 'Refactor';

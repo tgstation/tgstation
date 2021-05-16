@@ -22,6 +22,8 @@ const icons = {
   soundadd: { icon: 'tg-sound-plus', color: 'green' },
   sounddel: { icon: 'tg-sound-minus', color: 'red' },
   add: { icon: 'check-circle', color: 'green' },
+  content: { icon: 'check-circle', color: 'green' },
+  jobtent: { icon: 'check-circle', color: 'green' },
   rscadd: { icon: 'check-circle', color: 'green' },
   rscdel: { icon: 'times-circle', color: 'red' },
   imageadd: { icon: 'tg-image-plus', color: 'green' },
