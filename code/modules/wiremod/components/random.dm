@@ -17,7 +17,6 @@
 	var/datum/port/output/output
 
 /obj/item/component/random/Initialize()
-	options = GLOB.comp_logic_options
 	. = ..()
 	minimum = add_input_port("Minimum", PORT_TYPE_NUMBER, FALSE)
 	maximum = add_input_port("Maximum", PORT_TYPE_NUMBER, FALSE)
@@ -26,6 +25,9 @@
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
 /obj/item/component/random/Destroy()
+	minimum = null
+	maximum = null
+	trigger = null
 	output = null
 	return ..()
 

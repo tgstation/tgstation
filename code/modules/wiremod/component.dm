@@ -95,12 +95,9 @@
  *
  * Arguments:
  * * name - The name of the output port
- * * type - The datatype it handles. For output ports, this cannot be any type
+ * * type - The datatype it handles.
  */
 /obj/item/component/proc/add_output_port(name, type)
-	if(!type)
-		CRASH("[type] tried to add an output port of name '[name]' with no type!")
-
 	var/datum/port/output/output_port = new(src, name, type)
 	output_ports += output_port
 	return output_port

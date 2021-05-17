@@ -47,8 +47,12 @@ GLOBAL_LIST_INIT(comp_typecheck_options, list(
 			result = isnum(input_val)
 		if(PORT_TYPE_LIST)
 			result = islist(input_val)
+		if(PORT_TYPE_ATOM)
+			result = isatom(input_val)
 		if(PORT_TYPE_MOB)
 			result = ismob(input_val)
+		if(PORT_TYPE_HUMAN)
+			result = ishuman(input_val)
 
 	// Sends an output to the appropriate port
 	if(result)

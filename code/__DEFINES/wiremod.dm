@@ -1,3 +1,5 @@
+#define PORT_INPUT_RECEIVE_DELAY 0.9 SECONDS
+
 // Port types. Determines what the port can connect to
 
 /// Can accept any datatype. Only works for inputs, output types will runtime.
@@ -13,8 +15,14 @@
 #define PORT_TYPE_LIST "list"
 
 // Other datatypes
+/// Atom datatype
+#define PORT_TYPE_ATOM "object"
+
 /// Mob datatype
 #define PORT_TYPE_MOB "organism"
+
+/// Human datatype
+#define PORT_TYPE_HUMAN "humanoid"
 
 /// The minimum position of the x and y co-ordinates of the component in the UI
 #define COMPONENT_MIN_RANDOM_POS 200
@@ -26,6 +34,9 @@
 #define COMPONENT_MAX_POS 2000
 
 // Components
+
+/// The value that is sent whenever a component is simply sending a signal. This can be anything.
+#define COMPONENT_SIGNAL 1
 
 // Comparison defines
 #define COMP_COMPARISON_EQUAL "="

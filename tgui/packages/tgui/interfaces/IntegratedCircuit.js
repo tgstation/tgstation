@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown } from '../components';
-import { Component } from 'inferno';
+import { Component, createRef } from 'inferno';
 import { Window } from '../layouts';
 
 const NULL_REF = "[0x0]";
@@ -38,8 +38,11 @@ FUNDAMENTAL_DATA_TYPES["any"] = FUNDAMENTAL_DATA_TYPES["string"];
 export const IntegratedCircuit = (props, context) => {
   const { act, data } = useBackend(context);
   const { components } = data;
-
   const connections = [];
+
+  const [positions, setPositions] =
+    useLocalState(context, "port_positions", {});
+
   for (let comp_index = 0; comp_index < components.length; comp_index++) {
     const inputs = components[comp_index].input_ports;
     for (let port_index = 0; port_index < inputs.length; port_index++) {
@@ -47,37 +50,27 @@ export const IntegratedCircuit = (props, context) => {
       if (port.connected_to === NULL_REF) continue;
       connections.push({
         color: port.color,
-        from: port.connected_to,
-        to: port.ref,
+        from: positions[port.connected_to],
+        to: positions[port.ref],
       });
     }
   }
-
-  // Helper function to get an element's exact position
-  const getPosition = el => {
-    let xPos = 0;
-    let yPos = 0;
-
-    while (el) {
-      xPos += el.offsetLeft;
-      yPos += el.offsetTop;
-      el = el.offsetParent;
-    }
-    return {
-      x: xPos,
-      y: yPos + SVG_Y_OFFSET,
-    };
-  };
 
   return (
     <Window
       width={600}
       height={600}>
       <Window.Content scrollable id="root">
+        {components.map((comp, index) => (
+          <ObjectComponent key={index} {...comp} index={index+1} />
+        ))}
         <svg width="100%" height="100%">
           {connections.map((val, index) => {
-            const from = getPosition(document.getElementById(val.from));
-            const to = getPosition(document.getElementById(val.to));
+            const from = val.from;
+            const to = val.to;
+            if (!to || !from) {
+              return;
+            }
             // Starting point
             let path = `M ${from.x} ${from.y}`;
             // Bezier curve
@@ -96,9 +89,6 @@ export const IntegratedCircuit = (props, context) => {
             );
           })}
         </svg>
-        {components.map((comp, index) => (
-          <ObjectComponent key={index} {...comp} index={index+1} />
-        ))}
       </Window.Content>
     </Window>
   );
@@ -272,103 +262,184 @@ export class ObjectComponent extends Component {
   }
 }
 
-const Port = (props, context) => {
-  const { act } = useBackend(context);
-  const {
-    port,
-    portIndex,
-    componentId,
-    isOutput,
-    ...rest
-  } = props;
+export class Port extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.iconRef = createRef();
 
-  const [selectedPort, setSelectedPort]
-    = useLocalState(context, "selected_port", null);
+    this.handlePortClick = () => {
+      const { act } = useBackend(this.context);
+      const [selectedPort, setSelectedPort]
+        = useLocalState(context, "selected_port", null);
 
-  const handlePortClick = () => {
-    if (selectedPort) {
-      if (selectedPort.ref === port.ref) {
-        setSelectedPort(null);
-        return;
-      } else if (selectedPort.component_id !== componentId) {
-        if (selectedPort.is_output === isOutput) {
+      const {
+        port,
+        portIndex,
+        componentId,
+        isOutput,
+        ...rest
+      } = props;
+
+      if (selectedPort) {
+        if (selectedPort.ref === port.ref) {
+          setSelectedPort(null);
+          return;
+        } else if (selectedPort.component_id !== componentId) {
+          if (selectedPort.is_output === isOutput) {
+            setSelectedPort(null);
+            return;
+          }
+          let data;
+          if (isOutput) {
+            data = {
+              input_port_id: selectedPort.index,
+              output_port_id: portIndex,
+              input_component_id: selectedPort.component_id,
+              output_component_id: componentId,
+            };
+          } else {
+            data = {
+              input_port_id: portIndex,
+              output_port_id: selectedPort.index,
+              input_component_id: componentId,
+              output_component_id: selectedPort.component_id,
+            };
+          }
+          act("add_connection", data);
           setSelectedPort(null);
           return;
         }
-        let data;
-        if (isOutput) {
-          data = {
-            input_port_id: selectedPort.index,
-            output_port_id: portIndex,
-            input_component_id: selectedPort.component_id,
-            output_component_id: componentId,
-          };
-        } else {
-          data = {
-            input_port_id: portIndex,
-            output_port_id: selectedPort.index,
-            input_component_id: componentId,
-            output_component_id: selectedPort.component_id,
-          };
-        }
-        act("add_connection", data);
-        setSelectedPort(null);
+      }
+      setSelectedPort({
+        index: portIndex,
+        component_id: componentId,
+        is_output: isOutput,
+        ref: port.ref,
+      });
+
+    };
+
+    this.handlePortRightClick = (e) => {
+      const { act } = useBackend(this.context);
+      const [selectedPort, setSelectedPort]
+        = useLocalState(context, "selected_port", null);
+
+      const {
+        port,
+        portIndex,
+        componentId,
+        isOutput,
+        ...rest
+      } = props;
+
+      e.preventDefault();
+      act("remove_connection", {
+        component_id: componentId,
+        is_input: !isOutput,
+        port_id: portIndex,
+      });
+    };
+
+    // Helper function to get an element's exact position
+    this.getPosition = el => {
+      let xPos = 0;
+      let yPos = 0;
+
+      while (el) {
+        xPos += el.offsetLeft;
+        yPos += el.offsetTop;
+        el = el.offsetParent;
+      }
+      return {
+        x: xPos,
+        y: yPos + SVG_Y_OFFSET,
+      };
+    };
+
+    this.updatePosition = () => {
+      const { port } = this.props;
+      const [positions, setPositions] =
+        useLocalState(context, "port_positions", {});
+
+      if (!this.iconRef.current) {
         return;
       }
+
+      const lastPosition = positions[port.ref];
+      const position = this.getPosition(this.iconRef.current);
+
+      if (isNaN(position.x) || isNaN(position.y)
+        || (lastPosition
+        && lastPosition.x === position.x
+        && lastPosition.y === position.y)) {
+        return;
+      }
+      positions[port.ref] = position;
+      setPositions(positions);
     }
-    setSelectedPort({
-      index: portIndex,
-      component_id: componentId,
-      is_output: isOutput,
-      ref: port.ref,
-    });
+  }
 
-  };
+  componentDidUpdate() {
+    this.updatePosition();
+  }
 
-  const handlePortRightClick = (e) => {
-    e.preventDefault();
-    act("remove_connection", {
-      component_id: componentId,
-      is_input: !isOutput,
-      port_id: portIndex,
-    });
-  };
+  componentDidMount() {
+    this.updatePosition();
+  }
 
-  return (
-    <Stack {...rest}>
-      {!!isOutput && (
+  render() {
+    const {
+      port,
+      portIndex,
+      componentId,
+      isOutput,
+      ...rest
+    } = this.props;
+
+    const [selectedPort, setSelectedPort]
+      = useLocalState(this.context, "selected_port", null);
+
+    return (
+      <Stack {...rest}>
+        {!!isOutput && (
+          <Stack.Item>
+            <DisplayName
+              port={port}
+              isOutput={isOutput}
+              componentId={componentId}
+              portIndex={portIndex}
+            />
+          </Stack.Item>
+        )}
         <Stack.Item>
-          <DisplayName
-            port={port}
-            isOutput={isOutput}
-            componentId={componentId}
-            portIndex={portIndex}
-          />
+          <Icon
+            color={port.color || "blue"}
+            name={selectedPort && selectedPort.ref === port.ref
+              ? "dot-circle" : "circle"}
+            position="relative"
+            onClick={(e) => this.handlePortClick(e)}
+            onContextMenu={(e) => this.handlePortRightClick(e)}
+          >
+            <span
+              ref={this.iconRef}
+              className="ObjectComponent__PortPos"
+            />
+          </Icon>
         </Stack.Item>
-      )}
-      <Stack.Item>
-        <Icon
-          color={port.color || "blue"}
-          name={selectedPort && selectedPort.ref === port.ref
-            ? "dot-circle" : "circle"}
-          onClick={(e) => handlePortClick(e)}
-          onContextMenu={(e) => handlePortRightClick(e)}
-          id={port.ref}
-        />
-      </Stack.Item>
-      {!isOutput && (
-        <Stack.Item>
-          <DisplayName
-            port={port}
-            isOutput={isOutput}
-            componentId={componentId}
-            portIndex={portIndex}
-          />
-        </Stack.Item>
-      )}
-    </Stack>
-  );
-};
+        {!isOutput && (
+          <Stack.Item>
+            <DisplayName
+              port={port}
+              isOutput={isOutput}
+              componentId={componentId}
+              portIndex={portIndex}
+            />
+          </Stack.Item>
+        )}
+      </Stack>
+    );
+  };
+}
 
 const DisplayName = (props, context) => {
   const { act } = useBackend(context);
@@ -380,7 +451,7 @@ const DisplayName = (props, context) => {
     ...rest
   } = props;
 
-  const InputComponent = FUNDAMENTAL_DATA_TYPES[port.datatype || 'any'];
+  const InputComponent = FUNDAMENTAL_DATA_TYPES[port.type || 'any'];
 
   const isInput = !isOutput
     && port.connected_to === NULL_REF
@@ -407,7 +478,7 @@ const DisplayName = (props, context) => {
             fontSize={0.75}
             opacity={0.25}
           >
-            {port.datatype || "any"}
+            {port.type || "any"}
           </Box>
         </Flex.Item>
       </Flex>

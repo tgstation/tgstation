@@ -25,7 +25,8 @@ GLOBAL_LIST_INIT(comp_logic_options, list(
 		var/letter = ascii2text(text2ascii("A") + port_id)
 		add_input_port(letter, PORT_TYPE_ANY)
 
-	output = add_output_port("Output", PORT_TYPE_NUMBER)
+	true = add_output_port("True", PORT_TYPE_NUMBER)
+	false = add_output_port("False", PORT_TYPE_NUMBER)
 
 /obj/item/component/logic/Destroy()
 	true = null

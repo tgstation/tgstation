@@ -87,7 +87,7 @@
 
 	/// The delay before updating the input value whenever a modification is made.
 	/// This does not apply when when the output port is registered
-	var/input_receive_delay
+	var/input_receive_delay = PORT_INPUT_RECEIVE_DELAY
 
 	/// Whether this port triggers an update whenever an output is received.
 	var/trigger = FALSE
@@ -109,7 +109,9 @@
 	RegisterSignal(port_to_register, COMSIG_PORT_SET_OUTPUT, .proc/receive_output)
 	RegisterSignal(port_to_register, COMSIG_PORT_DISCONNECT, .proc/unregister_output_port)
 	RegisterSignal(port_to_register, COMSIG_PARENT_QDELETING, .proc/unregister_output_port)
+
 	connected_port = port_to_register
+	SEND_SIGNAL(connected_port, COMSIG_PORT_OUTPUT_CONNECT, src)
 
 
 /**
