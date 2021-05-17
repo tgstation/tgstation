@@ -27,19 +27,11 @@
 	seenby += eye
 	if(changed)
 		update()
-	var/obj/effect/overlay/camera_static/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque
-	for(var/turf/obscured_turf as anything in obscuredTurfs)
-		obscured_turf.vis_contents |= vis_contents_opaque
 
 /// Remove an AI eye from the chunk, then update if changed.
 /datum/camerachunk/proc/remove(mob/camera/ai_eye/eye, remove_static_with_last_chunk = TRUE)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
-
-	if(!length(seenby))
-		var/obj/effect/overlay/camera_static/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque
-		for(var/turf/obscured_turf as anything in obscuredTurfs)
-			obscured_turf.vis_contents -= vis_contents_opaque
 
 	if(remove_static_with_last_chunk && !eye.visibleCameraChunks.len)
 		var/client/client = eye.GetViewerClient()
