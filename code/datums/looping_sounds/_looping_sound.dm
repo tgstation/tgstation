@@ -33,6 +33,7 @@
 	var/extra_range = 0
 	var/falloff_exponent
 	var/timerid
+	var/looping = FALSE
 	var/falloff_distance
 
 /datum/looping_sound/New(_parent, start_immediately=FALSE, _direct=FALSE)
@@ -64,8 +65,9 @@
 	if(!timerid)
 		return
 	on_stop()
-	deltimer(timerid, SStimer)
+	deltimer(timerid, SSsound_loops)
 	timerid = null
+	looping = FALSE
 
 /datum/looping_sound/proc/sound_loop(starttime)
 	if(max_loops && world.time >= starttime + mid_length * max_loops)
@@ -73,8 +75,9 @@
 		return
 	if(!chance || prob(chance))
 		play(get_sound(starttime))
-	if(!timerid)
-		timerid = addtimer(CALLBACK(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP, SSsound_loops)
+	if(!looping)
+		looping = TRUE
+		timerid = addtimer(CALLBACK(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
 
 /datum/looping_sound/proc/play(soundfile, volume_override)
 	var/sound/S = sound(soundfile)
@@ -96,10 +99,10 @@
 	if(start_sound)
 		play(start_sound, start_volume)
 		start_wait = start_length
-	addtimer(CALLBACK(src, .proc/sound_loop), start_wait, TIMER_CLIENT_TIME, SSsound_loops)
+	timerid = addtimer(CALLBACK(src, .proc/sound_loop), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
 
 /datum/looping_sound/proc/on_stop()
-	if(end_sound)
+	if(end_sound && looping)
 		play(end_sound, end_volume)
 
 /datum/looping_sound/proc/set_parent(new_parent)
