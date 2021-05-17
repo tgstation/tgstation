@@ -34,21 +34,6 @@
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
 
-/// Warning label override for bullet damage and count information
-/obj/item/ammo_casing/warning_label(list/readout = list(""))
-	. = ..()
-	/// Make sure there is actually something IN the casing
-	if(loaded_projectile)
-		/// No dividing by 0
-		if(loaded_projectile.damage > 0)
-			readout += "Most monkeys our legal team subjected to these rounds succumbed to their wounds after <span class='warning'>[round(100 / (loaded_projectile.damage * pellets), 0.1)]</span> point-blank discharges, taking <span class='warning'>[pellets]</span> shots per round"
-		if(loaded_projectile.stamina > 0)
-			readout += "More fortunate monkeys simply collapsed from exhaustion after <span class='warning'>[round(100 / ((loaded_projectile.damage + loaded_projectile.stamina) * pellets), 0.1)]</span> rounds"
-	else
-		/// Holograms don't do well with extreme forces
-		readout += "\nThe warning label was blown away..."
-	. += readout.Join("\n")
-
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
 	loaded_projectile = null

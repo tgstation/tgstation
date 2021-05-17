@@ -20,24 +20,6 @@
 	var/use_cyborg_cell = FALSE //whether the gun's cell drains the cyborg user's cell to recharge
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
-/// Warning label override to display the various modes on laser guns and their associated damage
-/obj/item/gun/energy/warning_label(list/readout = list(""))
-	. = ..()
-	/// Make sure there is something to actually retrieve
-	if(!ammo_type)
-		return
-	var/obj/item/ammo_casing/energy/exam_ammo
-	var/obj/projectile/exam_proj
-	readout += "Standard models of this dangerous tool have <span class='warning'>[ammo_type.len]</span> mode(s)"
-	for(var/obj/item/ammo_casing/energy/for_ammo in ammo_type)
-		exam_ammo = for_ammo
-		exam_proj = for_ammo.loaded_projectile
-		if(exam_proj.damage > 0) /// Don't divide by 0!!!!!
-			readout += "Our heroic interns braved <span class='warning'>[round(100 / exam_proj.damage, 0.1)]</span> shots on <span class='warning'>[exam_ammo.select_name]</span> mode before collapsing from [exam_proj.damage_type == STAMINA ? "immense pain" : "their wounds"]."
-		else
-			readout += "Given the right circumstances, our heroic interns found a way to brave the <span class='warning'>[exam_ammo.select_name]</span> mode indefinitely. They have now been put on permanent vacation."
-	. += readout.Join("\n")
-
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
 	if(!(. & EMP_PROTECT_CONTENTS))

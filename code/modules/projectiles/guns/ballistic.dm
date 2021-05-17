@@ -475,15 +475,6 @@
 		if(misfire_probability > 0)
 			. += "<span class='danger'>Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.</span>"
 
-/// Warning label override for bullet caliber information
-/obj/item/gun/ballistic/warning_label(list/readout = list(""))
-	. = ..()
-	if(magazine) /// Make sure you have a magazine, thats where the warning is!
-		readout += "Please remind yourself to keep the <span class='warning'>[magazine.caliber]</span> rounds that this device uses away from your co-workers"
-	else
-		readout += "The warning attached to the magazine is missing..."
-	. += readout.Join("\n")
-
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
 	var/boolets = 0 //mature var names for mature people

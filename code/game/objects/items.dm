@@ -223,6 +223,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(damtype == BRUTE)
 			hitsound = "swing_hit"
 
+	AddElement(/datum/element/weapon_description)
+
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL //prevent reqdels
 	if(ismob(loc))
@@ -304,10 +306,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
 
-	/// Code for showing offensive statistics via a hyperlinked tag
-	if(force >= 5 || throwforce >= 5 || override_notes || offensive_notes) /// Only show this tag for items that could feasibly be weapons, shields, or those that have special notes
-		. += "<span class='notice'>It appears to have an ever-updating holographic <a href='?src=[REF(src)];examine=s'>warning label.</a></span>"
-
 	if(!user.research_scanner)
 		return
 
@@ -345,82 +343,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		research_msg += "None"
 	research_msg += "."
 	. += research_msg.Join()
-
-/**
- *
- * Details the stats of the examined weapon
- *
- * This function is called when the user clicks the hyperlink in
- * /obj/item/examine. This function simply compiles some relevant
- * weapon data and outputs it to the user.
- * Arguments:
- *  * href - Unused
- *  * href-list - List provided by the href of input values, used to know what hyperlinked action is being attempted
- */
-
-/obj/item/Topic(href, href_list)
-	if(href_list["examine"])
-		to_chat(usr, "<span class='notice'>[warning_label()]</span>")
-/**
- *
- * Compiles a warning label detailing various statistics of the examined weapon
- *
- * This function is called by the "examine" function of Topic(), and compiles a number of relevant
- * weapon stats into a message that is then shown to the user
- * Arguments:
- *  * readout - Compiles all of the relevant text strings to be sent as a single message
- *
- */
-/obj/item/proc/warning_label(var/list/readout = "")
-	var/list/crimes = list("Assaults", "Third Degree Murders", "Robberies", "Terrorist Attacks", "Different Felonies", "Felinies", "Counts of Tax Evasion", "Mutinies")
-	var/list/victims = list("Human", "Moth", "Felinid", "Lizard", "Particularly Resilient Slime", "Syndicate Agent", "Clown", "Mortal Foe", "Innocent Bystander")
-	readout = list ("") /// Readout is used to store the text block output to the user so it all can be sent in one message
-
-	/// Meaningless flavor text
-	readout += "<span class='warning'>WARNING:</span> This item has been marked as dangerous by the NT legal team because of its use in <span class='warning'>[rand(2,99)] [crimes[rand(1, crimes.len)]].</span>"
-
-	/// Doesn't show the base notes for items that have the override notes variable set to true
-	if(!override_notes)
-		/// Make sure not to divide by 0 on accident
-		if(force > 0)
-			readout += "Our EXTENSIVE research has shown that it takes a mere <span class='warning'>[round((100 / force), 0.1)]</span> hits to down a(n) [victims[rand(1, victims.len)]]."
-		else
-			readout += "Our EXTENSIVE research found that you couldn't beat yourself to death with this if you tried."
-
-		if(throwforce > 0)
-			readout += "If you decide to throw this object instead, it will take <span class='warning'>[round((100 / throwforce), 0.1)]</span> hits."
-		else
-			readout += "If you decide to throw this object instead, then nice job, fuckwit. It doesn't hurt at all."
-		if(armour_penetration > 0 || block_chance > 0)
-			readout += "This item has demonstrated a(n) <span class='warning'>[weapon_tag_convert(armour_penetration)]</span> ability to pierce armor, and <span class='warning'>[weapon_tag_convert(block_chance)]</span> blocking capabilities."
-	/// Custom manual notes
-	if(offensive_notes)
-		readout += offensive_notes
-	/// Finally bringing the fields together
-	return readout.Join("\n")
-
-/*
- *
- * Converts percentile based stats to an adjective appropriate for the
- * examined warning label
- *
- * Arguments:
- *  * tag_val: The value of the item to be added to the tag
- */
-/obj/item/proc/weapon_tag_convert(var/tag_val)
-	switch(tag_val)
-		if(0)
-			return "NONEXISTANT"
-		if(1 to 25)
-			return "SLIGHT"
-		if(26 to 50)
-			return "MODERATE"
-		if(51 to 75)
-			return "EXTREME"
-		if(76 to INFINITY)
-			return "TOTALLY BONKERS"
-		else
-			return "STRANGE"
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
