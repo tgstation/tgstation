@@ -176,7 +176,7 @@
 		if(source.loaded_projectile.damage > 0)
 			readout += "Most monkeys our legal team subjected to these rounds succumbed to their wounds after <span class='warning'>[round(100 / (source.loaded_projectile.damage * source.pellets), 0.1)]</span> point-blank discharges, taking <span class='warning'>[source.pellets]</span> shots per round"
 		if(source.loaded_projectile.stamina > 0)
-			readout += "[source.loaded_projectile.damage == 0 ? "More fortunate monkeys" : "Most monkeys" ] collapsed from exhaustion after <span class='warning'>[round(100 / ((source.loaded_projectile.damage + source.loaded_projectile.stamina) * source.pellets), 0.1)]</span> of these rounds"
+			readout += "[source.loaded_projectile.damage == 0 ? "Most Monkeys" : "More Fortunate Monkeys" ] collapsed from exhaustion after <span class='warning'>[round(100 / ((source.loaded_projectile.damage + source.loaded_projectile.stamina) * source.pellets), 0.1)]</span> of these rounds"
 		if(source.loaded_projectile.damage == 0 && source.loaded_projectile.stamina == 0)
 			readout += "Our legal team had trouble determining the exact offensive purpose of these rounds"
 	else
