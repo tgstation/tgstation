@@ -123,12 +123,10 @@
 /datum/component/proc/_RemoveFromParent()
 	var/datum/P = parent
 	var/list/dc = P.datum_components
-	var/list/components_of_type //pre init so we're not creating vars every loop
-	var/list/subtracted
 	for(var/I in _GetInverseTypeList())
-		components_of_type = dc[I]
+		var/list/components_of_type = dc[I]
 		if(length(components_of_type)) //
-			subtracted = components_of_type - src
+			var/list/subtracted = components_of_type - src
 			if(subtracted.len == 1) //only 1 guy left
 				dc[I] = subtracted[1] //make him special
 			else
@@ -203,8 +201,6 @@
 			lookup[sig_type][src] = TRUE
 		else // Many other things have registered here
 			lookup[sig_type][src] = TRUE
-
-	datum_flags |= DF_SIGNAL_ENABLED
 
 /**
  * Stop listening to a given signal from target
@@ -315,15 +311,10 @@
 	var/target = comp_lookup[sigtype]
 	if(!length(target))
 		var/datum/listening_datum = target
-		if(!(listening_datum.datum_flags & DF_SIGNAL_ENABLED))
-			return NONE
 		return NONE | CallAsync(listening_datum, listening_datum.signal_procs[src][sigtype], arguments)
 	. = NONE
 	for(var/datum/listening_datum as anything in target)
-		if(!(listening_datum.datum_flags & DF_SIGNAL_ENABLED))
-			continue
-		var/proctype = listening_datum.signal_procs[src][sigtype]
-		. |= CallAsync(listening_datum, proctype, arguments)
+		. |= CallAsync(listening_datum, listening_datum.signal_procs[src][sigtype], arguments)
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
