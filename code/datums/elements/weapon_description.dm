@@ -61,7 +61,7 @@
 	SIGNAL_HANDLER
 
 	if(href_list["examine"])
-		to_chat(usr, "<span class='notice'>[build_label_text(source)]</span>")
+		to_chat(user, "<span class='notice'>[build_label_text(source)]</span>")
 
 /**
  *
