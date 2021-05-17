@@ -136,7 +136,7 @@
 	//END: ECS SHIT
 
 	//Memes
-	return QDEL_HINT_IFFAIL_FINDREFERENCE
+	return QDEL_HINT_QUEUE
 
 #ifdef DATUMVAR_DEBUGGING_MODE
 /datum/proc/save_vars()

@@ -62,9 +62,8 @@
 	source_atom = null
 	source_turf = null
 	pixel_turf = null
-	//DO NOT PR THIS, I'M JUST DOING IT BECAUSE LIGHTING  ARE HESOURCESLL
-	..()
-	return QDEL_HINT_QUEUE
+
+	return ..()
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
 // If you want it to go switch everybody to elastic tab stops.
