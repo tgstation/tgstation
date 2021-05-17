@@ -31,6 +31,8 @@
 	qdel_and_find_ref_if_fail(src, TRUE)
 
 /datum/proc/find_references(skip_alert)
+	if(ref_search_stop)
+		return
 	running_find_references = type
 	if(usr?.client)
 		if(usr.client.running_find_references)
