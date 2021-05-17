@@ -65,7 +65,7 @@
  *  * source - The object whose stats are being examined
  */
 /datum/element/weapon_description/proc/build_label_text(obj/item/source)
-	var/list/readout = list ("") /// Readout is used to store the text block output to the user so it all can be sent in one message
+	var/list/readout = list("") /// Readout is used to store the text block output to the user so it all can be sent in one message
 
 	/// Meaningless flavor text. The number of crimes is constantly changing because of the complex Nanotrasen legal system and the esoteric nature of time itself!
 	readout += "<span class='warning'>WARNING:</span> This item has been marked as dangerous by the NT legal team because of its use in <span class='warning'>[rand(2,99)] [crimes[rand(1, crimes.len)]]</span> in the past hour.\n"
