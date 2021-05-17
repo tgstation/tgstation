@@ -107,7 +107,7 @@
  * Arguments:
  *  * tag_val: The value of the item to be added to the tag
  */
-/datum/element/weapon_description/proc/weapon_tag_convert(var/tag_val)
+/datum/element/weapon_description/proc/weapon_tag_convert(tag_val)
 	switch(tag_val)
 		if(0)
 			return "INCAPABLE"
