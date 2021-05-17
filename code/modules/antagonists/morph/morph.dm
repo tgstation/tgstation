@@ -4,6 +4,10 @@
 ///ambush on someone walking over you (vents)
 #define AMBUSH_WALKED_OVER (1>>1)
 
+///damage applied to someone for a successful ambush
+#define AMBUSH_DAMAGE 70
+///range at which morph disguises show an odd examine message
+#define MORPH_EXAMINE_REVEAL_DISTANCE 3
 ///the time the morph needs to sit still for the ambush to activate!
 #define TIME_TO_AMBUSH 5 SECONDS
 
@@ -78,7 +82,7 @@
 		var/mob/living/ambushed_living = crosser
 		visible_message("<span class='userdanger'>[src] leaps upwards and eviscerates [ambushed_living]!</span>", \
 						"<span class='userdanger'>You ambush [ambushed_living], eviscerating [ambushed_living.p_them()]!</span>")
-		ambushed_living.adjustBruteLoss(70)
+		ambushed_living.adjustBruteLoss(AMBUSH_DAMAGE)
 		playsound(src, 'sound/creatures/morph_ambush.ogg')
 		return
 	//ambushed carbon mob
@@ -95,7 +99,7 @@
 		visible_message("<span class='userdanger'>[src] leaps upwards and eviscerates [ambushed_carbon]!</span>", \
 						"<span class='userdanger'>You ambush [ambushed_carbon], eviscerating [ambushed_carbon.p_them()]!</span>")
 	playsound(src, 'sound/creatures/morph_ambush.ogg')
-	ambushed_carbon.adjustBruteLoss(70)
+	ambushed_carbon.adjustBruteLoss(AMBUSH_DAMAGE)
 
 /mob/living/simple_animal/hostile/morph/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -106,7 +110,7 @@
 		var/mob/living/ambushed_living = user
 		visible_message("<span class='userdanger'>[src] lunges forwards at [ambushed_living] and eviscerates [ambushed_living.p_them()]!</span>", \
 						"<span class='userdanger'>You ambush [ambushed_living], eviscerating [ambushed_living.p_them()]!</span>")
-		ambushed_living.adjustBruteLoss(70)
+		ambushed_living.adjustBruteLoss(AMBUSH_DAMAGE)
 		playsound(src, 'sound/creatures/morph_ambush.ogg')
 		return
 	//ambushed carbon mob
@@ -119,7 +123,7 @@
 					"<span class='userdanger'>You ambush [ambushed_carbon], eviscerating their [chopchop]!</span>")
 	chopchop.dismember(BRUTE)
 	playsound(src, 'sound/creatures/morph_ambush.ogg')
-	ambushed_carbon.adjustBruteLoss(70)
+	ambushed_carbon.adjustBruteLoss(AMBUSH_DAMAGE)
 
 /mob/living/simple_animal/hostile/morph/Moved()
 	. = ..()
@@ -139,16 +143,16 @@
 /mob/living/simple_animal/hostile/morph/proc/ambush_ready()
 	ambush_flags = ambush_flags_possible
 	var/ways_to_ambush = ""
-	if(ambush_flags & AMBUSH_INTERACT)
-		ways_to_ambush += " You will dismember the hand of and deal great damage to the next victim that touches you."
 	if(ambush_flags & AMBUSH_WALKED_OVER)
 		ways_to_ambush += " You will dismember the leg of and deal great damage to the next victim that steps on you."
+	else if(ambush_flags & AMBUSH_INTERACT)
+		ways_to_ambush += " You will dismember the hand of and deal great damage to the next victim that touches you."
 	to_chat(src, "<span class='notice'>You are ready to ambush again![ways_to_ambush]</span>")
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(disguise_form)
 		. = disguise_form.examine(user)
-		if(get_dist(user,src)<=3)
+		if(get_dist(user,src)<= MORPH_EXAMINE_REVEAL_DISTANCE)
 			. += "<span class='warning'>It doesn't look quite right...</span>"
 	else
 		. = ..()
@@ -166,10 +170,6 @@
 		holder.icon_state = null
 		return //we hide medical hud while disguise_form
 	..()
-
-/mob/living/simple_animal/hostile/morph/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	. = ..()
-
 
 /mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/disguise_target) // make it into property/proc ? not sure if worth it
 	return !is_type_in_typecache(disguise_target, blacklist_typecache) && (isobj(disguise_target) || ismob(disguise_target))
