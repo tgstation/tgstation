@@ -461,3 +461,17 @@
   tralezab:
   - spellcheck: fixes span in filterrific.dm
   - bugfix: simple_flying now removes itself from a mob when the mob deletes
+2021-05-17:
+  Anonymous:
+  - code_imp: You can now change emoji set with just a define. See `__DEFINES/misc.dm`.
+  SgtHunk:
+  - qol: You can now unlock/lock secure lockers with Right click rather than using
+      Alt+click.
+  Timberpoes:
+  - bugfix: Cryopods can no longer be used to round remove other SSD players.
+  - bugfix: Cryopods no longer delete traitor objectives under certain edge cases,
+      and can no longer be used to metagame the existence of traitors with steal objectives.
+  - balance: Cryopods now vomit out all the items of players who get vored by them,
+      like beautiful loot pinatas.
+  itseasytosee:
+  - bugfix: changeling spacesuits no longer come with a battery hud
