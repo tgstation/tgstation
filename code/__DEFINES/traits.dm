@@ -215,6 +215,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISK_VERIFIER "disk-verifier"
 #define TRAIT_NOMOBSWAP "no-mob-swap"
 #define TRAIT_XRAY_VISION "xray_vision"
+/// Can weave webs into cloth
+#define TRAIT_WEB_WEAVER "web_weaver"
 #define TRAIT_THERMAL_VISION "thermal_vision"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
@@ -399,8 +401,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you
 #define TRAIT_APC_SHOCKING "apc_shocking"
-///Properly wielded two handed item
+/// Properly wielded two handed item
 #define TRAIT_WIELDED "wielded"
+/// Buckling yourself to objects with this trait won't immobilize you
+#define TRAIT_NO_IMMOBILIZE "no_immobilize"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
