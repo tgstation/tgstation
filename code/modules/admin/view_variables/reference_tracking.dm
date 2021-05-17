@@ -1,5 +1,5 @@
 #ifdef REFERENCE_TRACKING
-
+/*
 /client/proc/find_refs()
 	set src in world
 	set category = "Debug"
@@ -29,6 +29,7 @@
 		return
 
 	qdel_and_find_ref_if_fail(src, TRUE)
+	*/
 
 /datum/proc/find_references(skip_alert)
 	if(SSgarbage.ref_search_stop)
