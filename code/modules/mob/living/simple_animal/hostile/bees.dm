@@ -10,7 +10,7 @@
 #define BEE_POLLINATE_PEST_CHANCE 33
 #define BEE_POLLINATE_POTENCY_CHANCE 50
 
-/mob/living/simple_animal/hostile/poison/bees
+/mob/living/simple_animal/hostile/bee
 	name = "bee"
 	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
 	icon_state = ""
@@ -41,7 +41,6 @@
 	density = FALSE
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
-	is_flying_animal = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!
 	can_be_held = TRUE
@@ -59,14 +58,15 @@
 	var/static/beehometypecache = typecacheof(/obj/structure/beebox)
 	var/static/hydroponicstypecache = typecacheof(/obj/machinery/hydroponics)
 
-/mob/living/simple_animal/hostile/poison/bees/Initialize()
+/mob/living/simple_animal/hostile/bee/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	generate_bee_visuals()
+	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 
-/mob/living/simple_animal/hostile/poison/bees/mob_pickup(mob/living/L)
+/mob/living/simple_animal/hostile/bee/mob_pickup(mob/living/L)
 	var/obj/item/clothing/head/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	if(beegent)
@@ -75,7 +75,7 @@
 	L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
 	L.put_in_hands(holder)
 
-/mob/living/simple_animal/hostile/poison/bees/Destroy()
+/mob/living/simple_animal/hostile/bee/Destroy()
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
@@ -83,7 +83,7 @@
 	return ..()
 
 
-/mob/living/simple_animal/hostile/poison/bees/death(gibbed)
+/mob/living/simple_animal/hostile/bee/death(gibbed)
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
@@ -98,13 +98,13 @@
 	..()
 
 
-/mob/living/simple_animal/hostile/poison/bees/examine(mob/user)
+/mob/living/simple_animal/hostile/bee/examine(mob/user)
 	. = ..()
 
 	if(!beehome)
 		. += "<span class='warning'>This bee is homeless!</span>"
 
-/mob/living/simple_animal/hostile/poison/bees/ListTargets() // Bee processing is expessive, so we override them finding targets here.
+/mob/living/simple_animal/hostile/bee/ListTargets() // Bee processing is expessive, so we override them finding targets here.
 	if(!search_objects) //In case we want to have purely hostile bees
 		return ..()
 	else
@@ -115,7 +115,7 @@
 		for(var/mob/A in searched_for)
 			. += A
 
-/mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
+/mob/living/simple_animal/hostile/bee/proc/generate_bee_visuals()
 	cut_overlays()
 
 	var/col = BEE_DEFAULT_COLOUR
@@ -135,7 +135,7 @@
 
 
 //We don't attack beekeepers/people dressed as bees//Todo: bee costume
-/mob/living/simple_animal/hostile/poison/bees/CanAttack(atom/the_target)
+/mob/living/simple_animal/hostile/bee/CanAttack(atom/the_target)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -144,7 +144,7 @@
 		return !H.bee_friendly()
 
 
-/mob/living/simple_animal/hostile/poison/bees/Found(atom/A)
+/mob/living/simple_animal/hostile/bee/Found(atom/A)
 	if(isliving(A))
 		var/mob/living/H = A
 		return !H.bee_friendly()
@@ -156,7 +156,7 @@
 	return FALSE
 
 
-/mob/living/simple_animal/hostile/poison/bees/AttackingTarget()
+/mob/living/simple_animal/hostile/bee/AttackingTarget()
 	//Pollinate
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/Hydro = target
@@ -166,7 +166,7 @@
 			var/obj/structure/beebox/BB = target
 			forceMove(BB)
 			toggle_ai(AI_IDLE)
-			target = null
+			LoseTarget()
 			wanted_objects -= beehometypecache //so we don't attack beeboxes when not going home
 		return //no don't attack the goddamm box
 	else
@@ -177,26 +177,22 @@
 				beegent.expose_mob(L, INJECT)
 				L.reagents.add_reagent(beegent.type, rand(1,5))
 
-/mob/living/simple_animal/hostile/poison/bees/inject_poison(mob/living/L)
-	if(beegent && istype(L) && L.reagents)
-		beegent.expose_mob(L, INJECT)
-		L.reagents.add_reagent(beegent.type, rand(1,5))
-
-/mob/living/simple_animal/hostile/poison/bees/proc/assign_reagent(datum/reagent/R)
+/mob/living/simple_animal/hostile/bee/proc/assign_reagent(datum/reagent/R)
 	if(istype(R))
 		beegent = R
 		name = "[initial(name)] ([R.name])"
 		real_name = name
-		poison_type = null
+		//clear the old since this one is going to have some new value
+		RemoveElement(/datum/element/venomous)
+		AddElement(/datum/element/venomous, beegent.type, list(1, 5))
 		generate_bee_visuals()
 
-
-/mob/living/simple_animal/hostile/poison/bees/proc/pollinate(obj/machinery/hydroponics/Hydro)
+/mob/living/simple_animal/hostile/bee/proc/pollinate(obj/machinery/hydroponics/Hydro)
 	if(!istype(Hydro) || !Hydro.myseed || Hydro.dead || Hydro.recent_bee_visit)
-		target = null
+		LoseTarget()
 		return
 
-	target = null //so we pick a new hydro tray next FindTarget(), instead of loving the same plant for eternity
+	LoseTarget() //so we pick a new hydro tray next FindTarget(), instead of loving the same plant for eternity
 	wanted_objects -= hydroponicstypecache //so we only hunt them while they're alive/seeded/not visisted
 	Hydro.recent_bee_visit = TRUE
 	addtimer(VARSET_CALLBACK(Hydro, recent_bee_visit, FALSE), BEE_TRAY_RECENT_VISIT)
@@ -216,7 +212,7 @@
 		beehome.bee_resources = min(beehome.bee_resources + growth, 100)
 
 
-/mob/living/simple_animal/hostile/poison/bees/handle_automated_action()
+/mob/living/simple_animal/hostile/bee/handle_automated_action()
 	. = ..()
 	if(!.)
 		return
@@ -232,7 +228,7 @@
 			if(idle <= BEE_IDLE_GOHOME && prob(BEE_PROB_GOHOME))
 				if(!FindTarget())
 					wanted_objects |= beehometypecache //so we don't attack beeboxes when not going home
-					target = beehome
+					GiveTarget(beehome)
 	if(!beehome) //add outselves to a beebox (of the same reagent) if we have no home
 		for(var/obj/structure/beebox/BB in view(vision_range, src))
 			if(reagent_incompatible(BB.queen_bee) || BB.bees.len >= BB.get_max_bees())
@@ -241,15 +237,15 @@
 			beehome = BB
 			break // End loop after the first compatible find.
 
-/mob/living/simple_animal/hostile/poison/bees/will_escape_storage()
+/mob/living/simple_animal/hostile/bee/will_escape_storage()
 	return TRUE
 
-/mob/living/simple_animal/hostile/poison/bees/toxin/Initialize()
+/mob/living/simple_animal/hostile/bee/toxin/Initialize()
 	. = ..()
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
 	assign_reagent(GLOB.chemical_reagents_list[R])
 
-/mob/living/simple_animal/hostile/poison/bees/queen
+/mob/living/simple_animal/hostile/bee/queen
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_base = "queen"
@@ -257,12 +253,12 @@
 
 
 //the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
-/mob/living/simple_animal/hostile/poison/bees/queen/Found(atom/A)
+/mob/living/simple_animal/hostile/bee/queen/Found(atom/A)
 	return FALSE
 
 
 //leave pollination for the peasent bees
-/mob/living/simple_animal/hostile/poison/bees/queen/AttackingTarget()
+/mob/living/simple_animal/hostile/bee/queen/AttackingTarget()
 	. = ..()
 	if(. && beegent && isliving(target))
 		var/mob/living/L = target
@@ -271,13 +267,13 @@
 
 
 //PEASENT BEES
-/mob/living/simple_animal/hostile/poison/bees/queen/pollinate()
+/mob/living/simple_animal/hostile/bee/queen/pollinate()
 	return
 
-/mob/living/simple_animal/hostile/poison/bees/queen/will_escape_storage()
+/mob/living/simple_animal/hostile/bee/queen/will_escape_storage()
 	return FALSE
 
-/mob/living/simple_animal/hostile/poison/bees/proc/reagent_incompatible(mob/living/simple_animal/hostile/poison/bees/B)
+/mob/living/simple_animal/hostile/bee/proc/reagent_incompatible(mob/living/simple_animal/hostile/bee/B)
 	if(!B)
 		return FALSE
 	if(B.beegent && beegent && B.beegent.type != beegent.type || B.beegent && !beegent || !B.beegent && beegent)
@@ -291,7 +287,7 @@
 	icon_state = "queen_item"
 	inhand_icon_state = ""
 	icon = 'icons/mob/bees.dmi'
-	var/mob/living/simple_animal/hostile/poison/bees/queen/queen
+	var/mob/living/simple_animal/hostile/bee/queen/queen
 
 
 /obj/item/queen_bee/attackby(obj/item/I, mob/user, params)
@@ -329,7 +325,7 @@
 	QDEL_NULL(queen)
 	return ..()
 
-/mob/living/simple_animal/hostile/poison/bees/consider_wakeup()
+/mob/living/simple_animal/hostile/bee/consider_wakeup()
 	if (beehome && loc == beehome) // If bees are chilling in their nest, they're not actively looking for targets
 		idle = min(100, ++idle)
 		if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
@@ -338,10 +334,10 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/poison/bees/short
+/mob/living/simple_animal/hostile/bee/short
 	desc = "These bees seem unstable and won't survive for long."
 
-/mob/living/simple_animal/hostile/poison/bees/short/Initialize(mapload, timetolive=50 SECONDS)
+/mob/living/simple_animal/hostile/bee/short/Initialize(mapload, timetolive=50 SECONDS)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/death), timetolive)
 

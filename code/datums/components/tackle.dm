@@ -50,7 +50,7 @@
 /datum/component/tackler/Destroy()
 	var/mob/P = parent
 	to_chat(P, "<span class='notice'>You can no longer tackle.</span>")
-	..()
+	return ..()
 
 /datum/component/tackler/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/checkTackle)

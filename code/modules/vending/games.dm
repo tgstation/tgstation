@@ -22,10 +22,10 @@
 					/obj/item/skillchip/light_remover=2,
 					/obj/item/skillchip/useless_adapter=5)
 	contraband = list(/obj/item/dice/fudge = 9,
-					/obj/item/clothing/shoes/sneakers/wheelys/skishoes=4,
+					/obj/item/clothing/shoes/wheelys/skishoes=4,
 					/obj/item/instrument/musicalmoth=1)
 	premium = list(/obj/item/melee/skateboard/pro = 3,
-					/obj/item/clothing/shoes/sneakers/wheelys/rollerskates= 3,
+					/obj/item/clothing/shoes/wheelys/rollerskates= 3,
 					/obj/item/melee/skateboard/hoverboard = 1,
 					/obj/item/storage/box/tail_pin = 1,
 					/obj/item/toy/intento = 3)

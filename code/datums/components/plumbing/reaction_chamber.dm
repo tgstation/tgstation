@@ -52,7 +52,7 @@
 	demand_connects = EAST
 	demand_color = "green"
 
-	ducting_layer = SECOND_DUCT_LAYER
+	ducting_layer = FOURTH_DUCT_LAYER
 
 /datum/component/plumbing/alkaline_input/send_request(dir)
 	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/basic_buffer, dir = dir)

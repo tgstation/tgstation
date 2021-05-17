@@ -42,6 +42,10 @@
 	add_cell_sample()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /mob/living/simple_animal/mouse/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
@@ -75,15 +79,15 @@
 	if(.)
 		SSmobs.cheeserats += src
 
-/mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
-	if( ishuman(AM) )
+/mob/living/simple_animal/mouse/proc/on_entered(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
+	if(ishuman(AM))
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeak!</span>")
 	if(istype(AM, /obj/item/food/cheese/royal))
 		evolve()
 		qdel(AM)
-	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
 	if(prob(chew_probability))
@@ -144,7 +148,7 @@
 /mob/living/simple_animal/mouse/proc/evolve()
 	var/mob/living/simple_animal/hostile/regalrat/regalrat = new /mob/living/simple_animal/hostile/regalrat/controlled(loc)
 	visible_message("<span class='warning'>[src] devours the cheese! He morphs into something... greater!</span>")
-	regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!")
+	INVOKE_ASYNC(regalrat, /atom/movable/proc/say, "RISE, MY SUBJECTS! SCREEEEEEE!")
 	if(mind)
 		mind.transfer_to(regalrat)
 	qdel(src)
@@ -182,11 +186,10 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
-	pet_bonus = TRUE
-	pet_bonus_emote = "squeaks happily!"
 
 /mob/living/simple_animal/mouse/brown/tom/Initialize()
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	// Tom fears no cable.
 	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, SPECIES_TRAIT)
 

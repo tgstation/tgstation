@@ -1,9 +1,9 @@
-#define SHIVERING_CHANGE "shivering"
+#define CHILLS_CHANGE "chills"
 
 /*
 //////////////////////////////////////
 
-Shivering
+Chills
 
 	No change to hidden.
 	Increases resistance.
@@ -17,8 +17,8 @@ Bonus
 //////////////////////////////////////
 */
 
-/datum/symptom/shivering
-	name = "Shivering"
+/datum/symptom/chills
+	name = "Chills"
 	desc = "The virus inhibits the body's thermoregulation, cooling the body down."
 	stealth = 0
 	resistance = 2
@@ -30,11 +30,11 @@ Bonus
 	symptom_delay_max = 30
 	var/unsafe = FALSE //over the cold threshold
 	threshold_descs = list(
-		"Stage Speed 5" = "Increases cooling speed,; the host can fall below safe temperature levels.",
-		"Stage Speed 10" = "Further increases cooling speed."
+		"Stage Speed 5" = "Increases the intensity of the cooling; the host can fall below safe temperature levels.",
+		"Stage Speed 10" = "Increases the intensity of the cooling even further."
 	)
 
-/datum/symptom/shivering/Start(datum/disease/advance/A)
+/datum/symptom/chills/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
@@ -44,7 +44,7 @@ Bonus
 	if(A.totalStageSpeed() >= 10)
 		power = 2.5
 
-/datum/symptom/shivering/Activate(datum/disease/advance/A)
+/datum/symptom/chills/Activate(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
@@ -52,7 +52,7 @@ Bonus
 	if(!unsafe || A.stage < 4)
 		to_chat(M, "<span class='warning'>[pick("You feel cold.", "You shiver.")]</span>")
 	else
-		to_chat(M, "<span class='userdanger'>[pick("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently." )]</span>")
+		to_chat(M, "<span class='userdanger'>[pick("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently.")]</span>")
 	set_body_temp(A.affected_mob, A)
 
 /**
@@ -63,23 +63,24 @@ Bonus
  * * mob/living/M The mob to apply changes to
  * * datum/disease/advance/A The disease applying the symptom
  */
-/datum/symptom/shivering/proc/set_body_temp(mob/living/M, datum/disease/advance/A)
-	// Get the max amount of change allowed before going under cold damage limit, 5 over the cold damage limit
-	var/change_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 5) - M.get_body_temp_normal(apply_change=FALSE)
-	if(unsafe) // when unsafe the shivers can cause (cold?)burn damage (not wounds)
-		change_limit -= 20
-	M.add_body_temperature_change(SHIVERING_CHANGE, max(-((6 * power) * A.stage), change_limit))
+/datum/symptom/chills/proc/set_body_temp(mob/living/M, datum/disease/advance/A)
+	if(unsafe) // when unsafe the shivers can cause cold damage
+		M.add_body_temperature_change(CHILLS_CHANGE, -6 * power * A.stage)
+	else
+		// Get the max amount of change allowed before going under cold damage limit, then cap the maximum allowed temperature change from safe chills to 5 over the cold damage limit
+		var/change_limit = min(M.get_body_temp_cold_damage_limit() + 5 - M.get_body_temp_normal(apply_change=FALSE), 0)
+		M.add_body_temperature_change(CHILLS_CHANGE, max(-6 * power * A.stage, change_limit))
 
 /// Update the body temp change based on the new stage
-/datum/symptom/shivering/on_stage_change(datum/disease/advance/A)
+/datum/symptom/chills/on_stage_change(datum/disease/advance/A)
 	. = ..()
 	if(.)
 		set_body_temp(A.affected_mob, A)
 
 /// remove the body temp change when removing symptom
-/datum/symptom/shivering/End(datum/disease/advance/A)
+/datum/symptom/chills/End(datum/disease/advance/A)
 	var/mob/living/carbon/M = A.affected_mob
 	if(M)
-		M.remove_body_temperature_change(SHIVERING_CHANGE)
+		M.remove_body_temperature_change(CHILLS_CHANGE)
 
-#undef SHIVERING_CHANGE
+#undef CHILLS_CHANGE

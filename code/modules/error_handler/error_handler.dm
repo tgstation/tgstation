@@ -20,11 +20,11 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		return //this will never happen.
 
 	else if(copytext(E.name, 1, 18) == "Out of resources!")//18 == length() of that string + 1
-		log_world("BYOND out of memory. Restarting")
-		log_game("BYOND out of memory. Restarting")
+		log_world("BYOND out of memory. Restarting ([E?.file]:[E?.line])")
 		TgsEndProcess()
+		. = ..()
 		Reboot(reason = 1)
-		return ..()
+		return
 
 	if (islist(stack_trace_storage))
 		for (var/line in splittext(E.desc, "\n"))
