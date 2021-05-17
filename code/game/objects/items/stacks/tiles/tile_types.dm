@@ -343,6 +343,20 @@
 	neon_inhand_icon_state = "tile-neon-glow"
 	turf_type = /turf/open/floor/carpet/neon/simple
 	merge_type = /obj/item/stack/tile/carpet/neon/simple
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	neon_inhand_icon_state = "tile-neon-glow-nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/white
 	name = "simple white neon carpet"
@@ -350,6 +364,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/white
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/white
 	neon_color = COLOR_WHITE
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/white/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/white/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/white/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/white/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/white,
+		/obj/item/stack/tile/carpet/neon/simple/white/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/black
 	name = "simple black neon carpet"
@@ -358,6 +386,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/black
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/black
 	neon_color = COLOR_BLACK
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/black/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/black/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_glow_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/black/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/black/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/black,
+		/obj/item/stack/tile/carpet/neon/simple/black/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/red
 	name = "simple red neon carpet"
@@ -365,6 +407,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/red
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/red
 	neon_color = COLOR_RED
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/red/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/red/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/red/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/red/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/red,
+		/obj/item/stack/tile/carpet/neon/simple/red/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/orange
 	name = "simple orange neon carpet"
@@ -372,6 +428,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/orange
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/orange
 	neon_color = COLOR_ORANGE
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/orange/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/orange/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/orange/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/orange/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/orange,
+		/obj/item/stack/tile/carpet/neon/simple/orange/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/yellow
 	name = "simple yellow neon carpet"
@@ -379,6 +449,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/yellow
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/yellow
 	neon_color = COLOR_YELLOW
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/yellow/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/yellow/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/yellow/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/yellow/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/yellow,
+		/obj/item/stack/tile/carpet/neon/simple/yellow/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/lime
 	name = "simple lime neon carpet"
@@ -386,6 +470,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/lime
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/lime
 	neon_color = COLOR_LIME
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/lime/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/lime/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/lime/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/lime/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/lime,
+		/obj/item/stack/tile/carpet/neon/simple/lime/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/green
 	name = "simple green neon carpet"
@@ -393,6 +491,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/green
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/green
 	neon_color = COLOR_GREEN
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/green/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/green/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/green/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/green/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/green,
+		/obj/item/stack/tile/carpet/neon/simple/green/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/teal
 	name = "simple teal neon carpet"
@@ -400,6 +512,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/teal
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/teal
 	neon_color = COLOR_TEAL
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/teal/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/teal/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/teal/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/teal/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/teal,
+		/obj/item/stack/tile/carpet/neon/simple/teal/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/cyan
 	name = "simple cyan neon carpet"
@@ -407,6 +533,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/cyan
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/cyan
 	neon_color = COLOR_CYAN
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/cyan/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/cyan/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/cyan/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/cyan/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/cyan,
+		/obj/item/stack/tile/carpet/neon/simple/cyan/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/blue
 	name = "simple blue neon carpet"
@@ -414,6 +554,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/blue
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/blue
 	neon_color = COLOR_BLUE
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/blue/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/blue/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/blue/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/blue/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/blue,
+		/obj/item/stack/tile/carpet/neon/simple/blue/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/purple
 	name = "simple purple neon carpet"
@@ -421,6 +575,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/purple
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/purple
 	neon_color = COLOR_PURPLE
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/purple/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/purple/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/purple/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/purple/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/purple,
+		/obj/item/stack/tile/carpet/neon/simple/purple/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/violet
 	name = "simple violet neon carpet"
@@ -428,6 +596,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/violet
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/violet
 	neon_color = COLOR_VIOLET
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/violet/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/violet/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/violet/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/violet/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/violet,
+		/obj/item/stack/tile/carpet/neon/simple/violet/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/simple/pink
 	name = "simple pink neon carpet"
@@ -435,6 +617,20 @@
 	turf_type = /turf/open/floor/carpet/neon/simple/pink
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/pink
 	neon_color = COLOR_LIGHT_PINK
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/pink/nodots,
+	)
+
+/obj/item/stack/tile/carpet/neon/simple/pink/nodots
+	icon_state = "tile_carpet_neon_simple_nodots"
+	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
+	turf_type = /turf/open/floor/carpet/neon/simple/pink/nodots
+	merge_type = /obj/item/stack/tile/carpet/neon/simple/pink/nodots
+	tile_reskin_types = list(
+		/obj/item/stack/tile/carpet/neon/simple/pink,
+		/obj/item/stack/tile/carpet/neon/simple/pink/nodots,
+	)
 
 /obj/item/stack/tile/carpet/neon/ten
 	amount = 10
@@ -569,6 +765,132 @@
 	amount = 30
 
 /obj/item/stack/tile/carpet/neon/simple/pink/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/white/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/white/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/white/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/black/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/black/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/black/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/red/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/red/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/red/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/orange/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/orange/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/orange/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/yellow/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/yellow/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/yellow/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/lime/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/lime/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/lime/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/green/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/green/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/green/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/teal/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/teal/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/teal/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/cyan/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/cyan/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/cyan/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/blue/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/blue/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/blue/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/purple/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/purple/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/purple/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/violet/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/violet/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/violet/nodots/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/neon/simple/pink/nodots/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/neon/simple/pink/nodots/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/neon/simple/pink/nodots/sixty
 	amount = 60
 
 /obj/item/stack/tile/fake_error

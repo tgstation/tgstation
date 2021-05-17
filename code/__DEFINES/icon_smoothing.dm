@@ -79,14 +79,28 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE S_TURF(35) //![turf/open/floor/carpet/neon/simple/purple]
 #define SMOOTH_GROUP_CARPET_SIMPLE_NEON_VIOLET S_TURF(36) //![turf/open/floor/carpet/neon/simple/violet]
 #define SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK S_TURF(37) //![turf/open/floor/carpet/neon/simple/pink]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_NODOTS S_TURF(38) //![turf/open/floor/carpet/neon/simple/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_WHITE_NODOTS S_TURF(39) //![turf/open/floor/carpet/neon/simple/white/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLACK_NODOTS S_TURF(40) //![turf/open/floor/carpet/neon/simple/black/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_RED_NODOTS S_TURF(41) //![turf/open/floor/carpet/neon/simple/red/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_ORANGE_NODOTS S_TURF(42) //![turf/open/floor/carpet/neon/simple/orange/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW_NODOTS S_TURF(43) //![turf/open/floor/carpet/neon/simple/yellow/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_LIME_NODOTS S_TURF(44) //![turf/open/floor/carpet/neon/simple/lime/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN_NODOTS S_TURF(45) //![turf/open/floor/carpet/neon/simple/green/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_TEAL_NODOTS S_TURF(46) //![turf/open/floor/carpet/neon/simple/teal/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN_NODOTS S_TURF(47) //![turf/open/floor/carpet/neon/simple/cyan/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE_NODOTS S_TURF(48) //![turf/open/floor/carpet/neon/simple/blue/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE_NODOTS S_TURF(49) //![turf/open/floor/carpet/neon/simple/purple/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_VIOLET_NODOTS S_TURF(50) //![turf/open/floor/carpet/neon/simple/violet/nodots]
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK_NODOTS S_TURF(51) //![turf/open/floor/carpet/neon/simple/pink/nodots]
 
-#define SMOOTH_GROUP_CLOSED_TURFS S_TURF(38) ///turf/closed
-#define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(39) ///turf/closed/wall/material
-#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(40) ///turf/closed/wall/r_wall/syndicate, /turf/closed/indestructible/syndicate
-#define SMOOTH_GROUP_HOTEL_WALLS S_TURF(41) ///turf/closed/indestructible/hotelwall
-#define SMOOTH_GROUP_MINERAL_WALLS S_TURF(42) ///turf/closed/mineral, /turf/closed/indestructible
-#define SMOOTH_GROUP_BOSS_WALLS S_TURF(43) ///turf/closed/indestructible/riveted/boss
-#define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(44) ///turf/closed/wall/mineral/titanium/survival
+#define SMOOTH_GROUP_CLOSED_TURFS S_TURF(52) ///turf/closed
+#define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(53) ///turf/closed/wall/material
+#define SMOOTH_GROUP_SYNDICATE_WALLS S_TURF(54) ///turf/closed/wall/r_wall/syndicate, /turf/closed/indestructible/syndicate
+#define SMOOTH_GROUP_HOTEL_WALLS S_TURF(55) ///turf/closed/indestructible/hotelwall
+#define SMOOTH_GROUP_MINERAL_WALLS S_TURF(56) ///turf/closed/mineral, /turf/closed/indestructible
+#define SMOOTH_GROUP_BOSS_WALLS S_TURF(57) ///turf/closed/indestructible/riveted/boss
+#define SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS S_TURF(58) ///turf/closed/wall/mineral/titanium/survival
 
 #define MAX_S_TURF SMOOTH_GROUP_SURVIVAL_TITANIUM_WALLS //Always match this value with the one above it.
 
