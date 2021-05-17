@@ -1,10 +1,11 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown } from '../components';
+import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, ProgressBar, InfinitePlane } from '../components';
 import { Component, createRef } from 'inferno';
 import { Window } from '../layouts';
 
 const NULL_REF = "[0x0]";
 const SVG_Y_OFFSET = -32;
+const SVG_X_CURVE_POINT = 16;
 
 const FUNDAMENTAL_DATA_TYPES = {
   "string": (props, context) => {
@@ -60,35 +61,41 @@ export const IntegratedCircuit = (props, context) => {
     <Window
       width={600}
       height={600}>
-      <Window.Content scrollable id="root">
-        {components.map((comp, index) => (
-          <ObjectComponent key={index} {...comp} index={index+1} />
-        ))}
-        <svg width="100%" height="100%">
-          {connections.map((val, index) => {
-            const from = val.from;
-            const to = val.to;
-            if (!to || !from) {
-              return;
-            }
-            // Starting point
-            let path = `M ${from.x} ${from.y}`;
-            // Bezier curve
-            const xDiff = to.x - from.x;
-            const yDiff = to.x - from.x;
-            path += `C ${from.x+xDiff/2}, ${from.y+yDiff/2},`;
-            path += `${to.x-xDiff/2}, ${to.y-yDiff/2} ${to.x}, ${to.y}`;
-            return (
-              <path
-                key={index}
-                d={path}
-                fill="transparent"
-                stroke={val.color || "blue"}
-                stroke-width="2px"
-              />
-            );
-          })}
-        </svg>
+      <Window.Content>
+        <InfinitePlane
+          width="100%"
+          height="100%"
+        >
+          {components.map((comp, index) => (
+            <ObjectComponent key={index} {...comp} index={index+1} />
+          ))}
+          <svg width="100%" height="100%">
+            {connections.map((val, index) => {
+              const from = val.from;
+              const to = val.to;
+              if (!to || !from) {
+                return;
+              }
+              // Starting point
+              let path = `M ${from.x} ${from.y}`;
+              path += `L ${from.x+SVG_X_CURVE_POINT} ${from.y}`;
+              path += `C ${to.x}, ${from.y},`;
+              path += `${from.x}, ${to.y},`;
+              path += `${to.x-SVG_X_CURVE_POINT}, ${to.y}`;
+
+              path += `L ${to.x} ${to.y}`
+              return (
+                <path
+                  key={index}
+                  d={path}
+                  fill="transparent"
+                  stroke={val.color || "#ff00a8"}
+                  stroke-width="2px"
+                />
+              );
+            })}
+          </svg>
+        </InfinitePlane>
       </Window.Content>
     </Window>
   );
@@ -105,6 +112,7 @@ export class ObjectComponent extends Component {
 
     this.startDrag = (e) => {
       const { x, y } = this.props;
+      e.stopPropagation();
       this.setState({
         lastMousePos: null,
         isDragging: true,
@@ -135,17 +143,19 @@ export class ObjectComponent extends Component {
       const { dragPos, isDragging, lastMousePos } = this.state;
       if (dragPos && isDragging) {
         e.preventDefault();
-        const { screenX, screenY } = e;
+        const { screenZoomX, screenZoomY, screenX, screenY } = e;
+        let xPos = screenZoomX || screenX;
+        let yPos = screenZoomY || screenY;
         if (lastMousePos) {
           this.setState({
             dragPos: {
-              x: dragPos.x - (lastMousePos.x - screenX),
-              y: dragPos.y - (lastMousePos.y - screenY),
+              x: dragPos.x - (lastMousePos.x - xPos),
+              y: dragPos.y - (lastMousePos.y - yPos),
             },
           });
         }
         this.setState({
-          lastMousePos: { x: screenX, y: screenY },
+          lastMousePos: { x: xPos, y: yPos },
         });
       }
     };

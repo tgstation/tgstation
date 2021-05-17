@@ -14,6 +14,9 @@
 	/// The power of the integrated circuit
 	var/obj/item/stock_parts/cell/cell
 
+	/// The shell that this circuitboard is attached to. Used by components.
+	var/obj/shell
+
 	/// The attached components
 	var/list/obj/item/component/attached_components = list()
 

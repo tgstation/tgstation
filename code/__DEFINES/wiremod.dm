@@ -31,7 +31,7 @@
 
 /// The maximum position in both directions that a component can be in.
 /// Prevents someone from positioning a component at an absurdly high value.
-#define COMPONENT_MAX_POS 2000
+#define COMPONENT_MAX_POS 10000
 
 // Components
 

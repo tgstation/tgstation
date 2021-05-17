@@ -1,0 +1,3 @@
+
+/datum/component/shell
+	var/
