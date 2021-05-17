@@ -37,10 +37,10 @@
 		UnregisterSignal(below_turf, COMSIG_TURF_CHANGE)
 		UnregisterSignal(below_turf, COMSIG_DATUM_MATERIAL_APPLIED)
 
-
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multiz(turf/our_turf, prune_on_fail = FALSE, init = FALSE)
 	var/turf/below_turf = our_turf.below()
+	var/mutable_appearance/our_turf_underlay = our_turf.managed_turf_vis_contents[MULTIZ_MANAGED_TURF_VIS_CONTENTS]
 	if(!below_turf)
 		our_turf.vis_contents.len = 0
 		if(!show_bottom_level(our_turf) && prune_on_fail) //If we cant show whats below, and we prune on fail, change the turf to plating as a fallback
@@ -51,7 +51,7 @@
 
 	if(below_turf)
 		if(!init)
-			our_turf.underlays -= our_turf.managed_turf_vis_contents[MULTIZ_MANAGED_TURF_VIS_CONTENTS]
+			our_turf.underlays -= our_turf_underlay
 			our_turf.managed_turf_vis_contents -= MULTIZ_MANAGED_TURF_VIS_CONTENTS
 
 		var/datum/lighting_object/below_lighting = below_turf.lighting_object
@@ -60,8 +60,8 @@
 		if(below_lighting)
 			below_turf_without_lighting.underlays -= below_lighting.current_underlay.appearance
 
-		our_turf.managed_turf_vis_contents[MULTIZ_MANAGED_TURF_VIS_CONTENTS] = below_turf_without_lighting.appearance
-		our_turf.underlays += our_turf.managed_turf_vis_contents[MULTIZ_MANAGED_TURF_VIS_CONTENTS]
+		our_turf_underlay = below_turf_without_lighting.appearance
+		our_turf.underlays += our_turf_underlay
 
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
 		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = TURF_LAYER-0.01)
