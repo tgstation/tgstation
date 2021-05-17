@@ -17,8 +17,9 @@
 
 /datum/nanite_program/protocol/factory
 	name = "Factory Protocol"
-	desc = "Replication Protocol: the nanites build a factory matrix within the host, gradually increasing replication speed over time. \
-	The factory decays if the protocol is not active, or if the nanites are disrupted by shocks or EMPs."
+	desc = "Replication Protocol: the nanites build a factory matrix within the host, gradually increasing replication speed over time, \
+			granting a maximum of 2 additional nanite production after roughly 17 minutes. \
+			The factory decays if the protocol is not active, or if the nanites are disrupted by shocks or EMPs."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_REPLICATION

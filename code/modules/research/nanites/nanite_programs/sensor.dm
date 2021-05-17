@@ -235,7 +235,7 @@
 
 /datum/nanite_program/sensor/voice
 	name = "Voice Sensor"
-	desc = "Sends a signal when the nanites hear a determined word or sentence."
+	desc = "The nanites recieve a signal when they detect a determined word or sentence."
 
 /datum/nanite_program/sensor/voice/register_extra_settings()
 	. = ..()
@@ -263,7 +263,7 @@
 
 /datum/nanite_program/sensor/species
 	name = "Species Sensor"
-	desc = "When triggered, the nanites scan the host to determine their species and output a signal depending on the conditions set in the settings."
+	desc = "When triggered, the nanites scan the host to determine their species and recieve a signal depending on the conditions set in the settings."
 	can_trigger = TRUE
 	trigger_cost = 0
 	trigger_cooldown = 5
