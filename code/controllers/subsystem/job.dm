@@ -338,7 +338,7 @@ SUBSYSTEM_DEF(job)
 	FillHeadPosition()
 	JobDebug("DO, Head Check end")
 
-	// Fill out any AI positions.
+	// Fill out any remaining AI positions.
 	JobDebug("DO, Running AI Check")
 	fill_ai_positions()
 	JobDebug("DO, AI Check end")
