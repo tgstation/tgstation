@@ -47,6 +47,9 @@
 	setDir(pick(GLOB.alldirs))
 	update_appearance()
 
+/obj/item/ammo_casing/add_weapon_description()
+	AddElement(/datum/element/weapon_description, attached_proc = /datum/element/weapon_description/proc/add_notes_ammo)
+
 /obj/item/ammo_casing/Destroy()
 	. = ..()
 

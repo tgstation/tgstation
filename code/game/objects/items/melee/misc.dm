@@ -205,11 +205,10 @@
 
 	wound_bonus = 15
 
-/// Manually adding stamina damage notes to the classic baton, since the classic and stun batons do not share the same variable names
-/obj/item/melee/classic_baton/examine(mob/user)
-	offensive_notes = "Various interviewed security forces report being able to beat criminals into exhaustion with only [round(100 / stamina_damage, 0.1)] hit(s)!"
+/obj/item/melee/classic_baton/Initialize()
 	. = ..()
-
+	// Adding an extra break for the sake of presentation
+	offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only <span class='warning'>[round(100 / stamina_damage, 0.1)] hit(s)!</span>"
 
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()

@@ -5,16 +5,25 @@
  *
  */
 /datum/element/weapon_description
-	/// Flavor text crimes used in build_weapon_text()
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	id_arg_index = 2
+
+	// Additional proc to be run for specific object types
+	var/attached_proc
+
+	// Flavor text crimes used in build_weapon_text()
 	var/list/crimes = list("Assaults", "Third Degree Murders", "Robberies", "Terrorist Attacks", "Different Felonies", "Felinies", "Counts of Tax Evasion", "Mutinies")
 	var/list/victims = list("a human", "a moth", "a felinid", "a lizard", "a particularly resilient slime", "a syndicate Aagent", "a clown", "a mime", "a mortal foe", "an innocent bystander")
 
-/datum/element/weapon_description/Attach(datum/target)
+/datum/element/weapon_description/Attach(datum/target, attached_proc)
 	. = ..()
-	if(!isitem(target)) /// Do not attach this to anything that isn't an item
+	if(!isitem(target)) // Do not attach this to anything that isn't an item
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/warning_label)
 	RegisterSignal(target, COMSIG_TOPIC, .proc/topic_handler)
+	// Don't perform the assignment if there is nothing to assign, or if we already have something for this bespoke element
+	if(attached_proc && !src.attached_proc)
+		src.attached_proc = attached_proc
 
 /datum/element/weapon_description/Detach(datum/target)
 	. = ..()
@@ -30,12 +39,11 @@
  *  * user - Unused
  *  * examine_texts - The output text list of the original examine function
  */
-/datum/element/weapon_description/proc/warning_label(atom/source, mob/user, list/examine_texts)
+/datum/element/weapon_description/proc/warning_label(obj/item/item, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
 
-	var/obj/item/item = source
 	if(item.force >= 5 || item.throwforce >= 5 || item.override_notes || item.offensive_notes) /// Only show this tag for items that could feasibly be weapons, shields, or those that have special notes
-		examine_texts += "<span class='notice'>It appears to have an ever-updating bluespace <a href='?src=[REF(source)];examine=1'>warning label.</a></span>"
+		examine_texts += "<span class='notice'>It appears to have an ever-updating bluespace <a href='?src=[REF(item)];examine=1'>warning label.</a></span>"
 
 /**
  *
@@ -65,14 +73,14 @@
  *  * source - The object whose stats are being examined
  */
 /datum/element/weapon_description/proc/build_label_text(obj/item/source)
-	var/list/readout = list ("") /// Readout is used to store the text block output to the user so it all can be sent in one message
+	var/list/readout = list("") // Readout is used to store the text block output to the user so it all can be sent in one message
 
-	/// Meaningless flavor text. The number of crimes is constantly changing because of the complex Nanotrasen legal system and the esoteric nature of time itself!
+	// Meaningless flavor text. The number of crimes is constantly changing because of the complex Nanotrasen legal system and the esoteric nature of time itself!
 	readout += "<span class='warning'>WARNING:</span> This item has been marked as dangerous by the NT legal team because of its use in <span class='warning'>[rand(2,99)] [crimes[rand(1, crimes.len)]]</span> in the past hour.\n"
 
-	/// Doesn't show the base notes for items that have the override notes variable set to true
+	// Doesn't show the base notes for items that have the override notes variable set to true
 	if(!source.override_notes)
-		/// Make sure not to divide by 0 on accident
+		// Make sure not to divide by 0 on accident
 		if(source.force > 0)
 			readout += "Our extensive research has shown that it takes a mere <span class='warning'>[round((100 / source.force), 0.1)]</span> hits to down [victims[rand(1, victims.len)]] with no armor."
 		else
@@ -84,19 +92,15 @@
 			readout += "If you decide to throw this object instead, then you will have trouble damaging anything."
 		if(source.armour_penetration > 0 || source.block_chance > 0)
 			readout += "This item has proven itself <span class='warning'>[weapon_tag_convert(source.armour_penetration)]</span> of piercing armor and <span class='warning'>[weapon_tag_convert(source.block_chance)]</span> of blocking attacks."
-	/// Custom manual notes
+	// Custom manual notes
 	if(source.offensive_notes)
 		readout += source.offensive_notes
 
-	/// Spamming 'if's to see if we need to get additional weapon notes
-	if(istype(source, /obj/item/gun/ballistic))
-		readout += add_notes_ballistic(source)
-	else if(istype(source, /obj/item/gun/energy))
-		readout += add_notes_energy(source)
-	else if(istype(source, /obj/item/ammo_casing/))
-		readout += add_notes_ammo(source)
+	// Check if we have an additional proc, if so, add it to the readout
+	if(attached_proc)
+		readout += call(attached_proc)(source)
 
-	/// Finally bringing the fields together
+	// Finally bringing the fields together
 	return readout.Join("\n")
 
 /**
@@ -125,18 +129,17 @@
 
 /**
  *
- * Outputs type-specific weapon stats for ballistic weaponry
+ * Outputs type-specific weapon stats for ballistic weaponry.
+ * It contains extra breaks for the sake of presentation
  *
  * Arguments:
  * 	* source - The object being evaluated
  */
 /datum/element/weapon_description/proc/add_notes_ballistic(obj/item/gun/ballistic/source)
-	var/list/readout = list("")
-	if(source.magazine) /// Make sure you have a magazine, thats where the warning is!
-		readout += "Be especially careful around this device, as it is loaded with <span class='warning'>[source.magazine.caliber]</span> rounds, which you can inspect for more information."
+	if(source.magazine) // Make sure you have a magazine, thats where the warning is!
+		return "\nBe especially careful around this device, as it can be loaded with <span class='warning'>[source.magazine.caliber]</span> rounds, which you can inspect for more information."
 	else
-		readout += "The warning attached to the magazine is missing..."
-	return readout.Join("\n")
+		return "\nThe warning attached to the magazine is missing..."
 
 /**
  *
@@ -147,7 +150,7 @@
  */
 /datum/element/weapon_description/proc/add_notes_energy(obj/item/gun/energy/source)
 	var/list/readout = list("")
-	/// Make sure there is something to actually retrieve
+	// Make sure there is something to actually retrieve
 	if(!source.ammo_type)
 		return
 	var/obj/projectile/exam_proj
@@ -155,11 +158,11 @@
 	readout += "Our heroic interns have shown that one can theoretically stay standing after..."
 	for(var/obj/item/ammo_casing/energy/for_ammo in source.ammo_type)
 		exam_proj = for_ammo.loaded_projectile
-		if(exam_proj.damage > 0) /// Don't divide by 0!!!!!
+		if(exam_proj.damage > 0) // Don't divide by 0!!!!!
 			readout += "<span class='warning'>[round(100 / exam_proj.damage, 0.1)]</span> shots on <span class='warning'>[for_ammo.select_name]</span> mode before collapsing from [exam_proj.damage_type == STAMINA ? "immense pain" : "their wounds"]."
 		else
 			readout += "an infinite number of shots on <span class='warning'>[for_ammo.select_name] mode</span>."
-	return readout.Join("\n")
+	return readout.Join("\n") // Sending over the singular string, rather than the whole list
 
 /**
  *
@@ -169,17 +172,15 @@
  * 	* source - The object being evaluated
  */
 /datum/element/weapon_description/proc/add_notes_ammo(obj/item/ammo_casing/source)
-	var/list/readout = list("")
-	/// Make sure there is actually something IN the casing
+	// Make sure there is actually something IN the casing
 	if(source.loaded_projectile)
-		/// No dividing by 0
+		// No dividing by 0
 		if(source.loaded_projectile.damage > 0)
-			readout += "Most monkeys our legal team subjected to these rounds succumbed to their wounds after <span class='warning'>[round(100 / (source.loaded_projectile.damage * source.pellets), 0.1)]</span> point-blank discharges, taking <span class='warning'>[source.pellets]</span> shots per round"
+			return "Most monkeys our legal team subjected to these rounds succumbed to their wounds after <span class='warning'>[round(100 / (source.loaded_projectile.damage * source.pellets), 0.1)]</span> point-blank discharges, taking <span class='warning'>[source.pellets]</span> shots per round"
 		if(source.loaded_projectile.stamina > 0)
-			readout += "[source.loaded_projectile.damage == 0 ? "Most Monkeys" : "More Fortunate Monkeys" ] collapsed from exhaustion after <span class='warning'>[round(100 / ((source.loaded_projectile.damage + source.loaded_projectile.stamina) * source.pellets), 0.1)]</span> of these rounds"
+			return "[source.loaded_projectile.damage == 0 ? "Most Monkeys" : "More Fortunate Monkeys" ] collapsed from exhaustion after <span class='warning'>[round(100 / ((source.loaded_projectile.damage + source.loaded_projectile.stamina) * source.pellets), 0.1)]</span> of these rounds"
 		if(source.loaded_projectile.damage == 0 && source.loaded_projectile.stamina == 0)
-			readout += "Our legal team had trouble determining the exact offensive purpose of these rounds"
+			return "Our legal team has determined the offensive nature of these rounds to be esoteric"
 	else
-		/// Labels don't do well with extreme forces
-		readout += "The warning label was blown away..."
-	return readout.Join("\n")
+		// Labels don't do well with extreme forces
+		return "The warning label was blown away..."

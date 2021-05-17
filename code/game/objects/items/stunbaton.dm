@@ -52,6 +52,8 @@
 
 /obj/item/melee/baton/Initialize()
 	. = ..()
+	// Adding an extra break for the sake of presentation
+	offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only <span class='warning'>[round(100 / stamina_loss_amt, 0.1)] hit(s)!</span>"
 	if(preload_cell_type)
 		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
@@ -119,7 +121,6 @@
 	return ..()
 
 /obj/item/melee/baton/examine(mob/user)
-	offensive_notes = "Various interviewed security forces report being able to beat criminals into exhaustion with only [round(100 / stamina_loss_amt, 0.1)] hit(s)!"
 	. = ..()
 	if(cell)
 		. += "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>"
