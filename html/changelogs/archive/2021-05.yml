@@ -434,3 +434,30 @@
   - refactor: THAT USE SIGNALS!
   - rscadd: RPGLoot now has the curse of hunger as a bad modifier. A very bad one!
   - refactor: Duffelbag curse is now a component, attachable to any item.
+2021-05-16:
+  Clyde-Thunderpants:
+  - rscadd: New trait, web weaver, that allow you to weave webs into cloth.
+  - rscadd: The genetics webbing mutation now gives you web weaver
+  Greniza:
+  - qol: moved the alkaline input of reaction chamber to fourth layer
+  Mothblocks:
+  - bugfix: Singularities can no longer consume themselves.
+  Ryll/Shaps:
+  - bugfix: Dead and incapacitated people can no longer offer items
+  Timberpoes:
+  - bugfix: You can once again no longer roll multiple antags at once or antags you
+      have disabled in your prefs.
+  - bugfix: Traitors and malf AIs no longer get 1 more objective than intended.
+  Time-Green:
+  - bugfix: geysers are now ACTUALLY plungerable
+  maxymax13:
+  - imageadd: Did you know? "Vendomat" is just the name for the base vendor path.
+      The assembly parts vendor you probably know as "Vendomat" has been given its
+      unique own sprite and name to reduce confusion. Shop at a Part-Mart at your
+      local Primary Tool Storage today!
+  - imageadd: Custom vendors now have a new sprite, with a fancy LCD!
+  - imageadd: Jesus-endorsed custom vendors now have a fancy UNIQUE golden sprite,
+      rather than being a robotics vendor made  out of cheese!
+  tralezab:
+  - spellcheck: fixes span in filterrific.dm
+  - bugfix: simple_flying now removes itself from a mob when the mob deletes
