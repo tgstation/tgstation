@@ -49,7 +49,8 @@ SUBSYSTEM_DEF(garbage)
 	var/list/queues
 	#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
-	var/ref_search_stop = FALSE
+	//We default to true so the game can just "continue working" if there's no one to read the data
+	var/ref_search_stop = TRUE
 	#endif
 
 
