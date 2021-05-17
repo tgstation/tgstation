@@ -1,0 +1,4 @@
+author: "SgtHunk"
+delete-after: True
+changes: 
+  - rscadd: "The Tramstation security checkpoints now have cells for easy brigging on the go."
