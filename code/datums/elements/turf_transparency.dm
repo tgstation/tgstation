@@ -19,8 +19,9 @@
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
 
-	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
+	RegisterSignal(our_turf, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 
+	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
 
 	update_multiz(our_turf, TRUE, TRUE)
 
@@ -28,9 +29,9 @@
 	. = ..()
 	var/turf/our_turf = source
 	our_turf.vis_contents.len = 0
-	our_turf.underlays -= our_turf.managed_turf_vis_contents[MULTIZ_MANAGED_TURF_VIS_CONTENTS]
-	our_turf.managed_turf_vis_contents -= MULTIZ_MANAGED_TURF_VIS_CONTENTS
+	UnregisterSignal(our_turf, COMSIG_ATOM_UPDATE_OVERLAYS)
 
+	our_turf.update_appearance()
 	REMOVE_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
 	var/turf/below_turf = our_turf.below()
 	if(below_turf)
@@ -40,7 +41,6 @@
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multiz(turf/our_turf, prune_on_fail = FALSE, init = FALSE)
 	var/turf/below_turf = our_turf.below()
-	var/mutable_appearance/our_turf_underlay = our_turf.managed_turf_vis_contents[MULTIZ_MANAGED_TURF_VIS_CONTENTS]
 	if(!below_turf)
 		our_turf.vis_contents.len = 0
 		if(!show_bottom_level(our_turf) && prune_on_fail) //If we cant show whats below, and we prune on fail, change the turf to plating as a fallback
@@ -50,18 +50,7 @@
 		our_turf.vis_contents += below_turf
 
 	if(below_turf)
-		if(!init)
-			our_turf.underlays -= our_turf_underlay
-			our_turf.managed_turf_vis_contents -= MULTIZ_MANAGED_TURF_VIS_CONTENTS
-
-		var/datum/lighting_object/below_lighting = below_turf.lighting_object
-		var/mutable_appearance/below_turf_without_lighting = new(below_turf)
-
-		if(below_lighting)
-			below_turf_without_lighting.underlays -= below_lighting.current_underlay.appearance
-
-		our_turf_underlay = below_turf_without_lighting.appearance
-		our_turf.underlays += our_turf_underlay
+		our_turf.update_appearance()
 
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
 		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = TURF_LAYER-0.01)
@@ -71,6 +60,23 @@
 		plating_underlay = RESET_ALPHA | RESET_COLOR
 		our_turf.underlays += plating_underlay
 	return TRUE
+
+/datum/element/turf_z_transparency/proc/on_update_overlays(turf/our_turf, list/new_overlays_list)
+	SIGNAL_HANDLER
+
+	var/turf/below_turf = our_turf.below()
+	if(!below_turf)
+		return
+
+	var/datum/lighting_object/below_lighting = below_turf.lighting_object
+	var/mutable_appearance/below_turf_without_lighting = new(below_turf)
+	//below_turf_without_lighting.layer = our_turf.layer - 10
+	//below_turf_without_lighting.plane = our_turf.plane - 1
+
+	if(below_lighting)
+		below_turf_without_lighting.underlays -= below_lighting.current_underlay.appearance
+
+	new_overlays_list += below_turf_without_lighting.appearance
 
 /datum/element/turf_z_transparency/proc/on_multiz_turf_del(turf/our_turf, turf/below_turf, dir)
 	SIGNAL_HANDLER
