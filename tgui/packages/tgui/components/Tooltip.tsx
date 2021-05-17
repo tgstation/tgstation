@@ -50,17 +50,22 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
 
   render() {
     return (
-      <Popper options={{
-        placement: this.props.position || "auto",
-      }} popperContent={
-        <div class="Tooltip" style={{
-          opacity: this.state.hovered ? 1 : 0,
+      <Popper
+        options={{
+          placement: this.props.position || "auto",
+        }}
+        popperContent={
+          <div
+            className="Tooltip"
+            style={{
+              opacity: this.state.hovered ? 1 : 0,
+            }}>
+            {this.props.content}
+          </div>
+        }
+        additionalStyles={{
+          "pointer-events": "none",
         }}>
-          {this.props.content}
-        </div>
-      } additionalStyles={{
-        "pointer-events": "none",
-      }}>
         {this.props.children}
       </Popper>
     );
