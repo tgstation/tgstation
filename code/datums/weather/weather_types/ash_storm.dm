@@ -25,55 +25,39 @@
 	probability = 90
 
 	barometer_predictable = TRUE
-
-	var/datum/looping_sound/active_outside_ashstorm/sound_ao = new(list(), FALSE, TRUE)
-	var/datum/looping_sound/active_inside_ashstorm/sound_ai = new(list(), FALSE, TRUE)
-	var/datum/looping_sound/weak_outside_ashstorm/sound_wo = new(list(), FALSE, TRUE)
-	var/datum/looping_sound/weak_inside_ashstorm/sound_wi = new(list(), FALSE, TRUE)
+	var/list/weak_sounds = list()
+	var/list/strong_sounds = list()
 
 /datum/weather/ash_storm/telegraph()
-	. = ..()
-	var/list/inside_areas = list()
-	var/list/outside_areas = list()
 	var/list/eligible_areas = list()
 	for (var/z in impacted_z_levels)
 		eligible_areas += SSmapping.areas_in_z["[z]"]
 	for(var/i in 1 to eligible_areas.len)
 		var/area/place = eligible_areas[i]
 		if(place.outdoors)
-			outside_areas += place
+			weak_sounds[place] = /datum/looping_sound/weak_outside_ashstorm
+			strong_sounds[place] = /datum/looping_sound/active_outside_ashstorm
 		else
-			inside_areas += place
+			weak_sounds[place] = /datum/looping_sound/weak_inside_ashstorm
+			strong_sounds[place] = /datum/looping_sound/active_inside_ashstorm
 		CHECK_TICK
 
-	sound_ao.output_atoms = outside_areas
-	sound_ai.output_atoms = inside_areas
-	sound_wo.output_atoms = outside_areas
-	sound_wi.output_atoms = inside_areas
-
-	sound_wo.start()
-	sound_wi.start()
+	GLOB.ash_storm_sounds += weak_sounds
+	return ..()
 
 /datum/weather/ash_storm/start()
-	. = ..()
-	sound_wo.stop()
-	sound_wi.stop()
-
-	sound_ao.start()
-	sound_ai.start()
+	GLOB.ash_storm_sounds -= weak_sounds
+	GLOB.ash_storm_sounds += strong_sounds
+	return ..()
 
 /datum/weather/ash_storm/wind_down()
-	. = ..()
-	sound_ao.stop()
-	sound_ai.stop()
-
-	sound_wo.start()
-	sound_wi.start()
+	GLOB.ash_storm_sounds -= strong_sounds
+	GLOB.ash_storm_sounds += weak_sounds
+	return ..()
 
 /datum/weather/ash_storm/end()
-	. = ..()
-	sound_wo.stop()
-	sound_wi.stop()
+	GLOB.ash_storm_sounds -= weak_sounds
+	return ..()
 
 /datum/weather/ash_storm/proc/is_ash_immune(atom/L)
 	while (L && !isturf(L))
