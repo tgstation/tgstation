@@ -155,6 +155,7 @@
 /obj/item/assembly/trapdoor
 	name = "trapdoor controller"
 	desc = "A sinister-looking controller for a trapdoor."
+	icon_state = "trapdoor"
 	///if the trapdoor isn't linked it will try to link on pulse, this shouldn't be spammable
 	COOLDOWN_DECLARE(search_cooldown)
 	///trapdoor link cooldown time here!
@@ -169,22 +170,22 @@
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
 		visible_message("<span class='warning'>[src] cannot attempt another trapdoor linkup so soon!</span>")
 		return
-	COOLDOWN_START(src, search_cooldown, search_cooldown_time)
 	attempt_link_up()
+	COOLDOWN_START(src, search_cooldown, search_cooldown_time)
 
-/obj/item/trapdoor_remote/proc/attempt_link_up()
+/obj/item/assembly/trapdoor/proc/attempt_link_up()
+	var/turf/assembly_turf = get_turf(src)
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
 		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, search_cooldown))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-		visible_message("<span class='warning'>[src] is on cooldown! Please wait [timeleft].</span>")
+		assembly_turf.visible_message("<span class='warning'>[src] is on cooldown! Please wait [timeleft].</span>", vision_distance = SAMETILE_MESSAGE_RANGE)
 		return
-	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAPDOOR_LINK, internals) & LINKED_UP)
-		playsound(game, 'sound/machines/chime.ogg', 50, TRUE)
-		visible_message("<span class='notice'>[src] has linked up to a nearby trapdoor! \
-		You may now use it to check where the trapdoor is... be careful!</span>")
+	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAPDOOR_LINK, src) & LINKED_UP)
+		playsound(assembly_turf, 'sound/machines/chime.ogg', 50, TRUE)
+		assembly_turf.visible_message("<span class='notice'>[src] has linked up to a nearby trapdoor! \
+		You may now use it to check where the trapdoor is... be careful!</span>", vision_distance = SAMETILE_MESSAGE_RANGE)
 	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-		visible_message("<span class='warning'>[src] has failed to find a trapdoor nearby to link to.</span>")
+		playsound(assembly_turf, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		assembly_turf.visible_message("<span class='warning'>[src] has failed to find a trapdoor nearby to link to.</span>", vision_distance = SAMETILE_MESSAGE_RANGE)
 
 /**
  * ## trapdoor remotes!

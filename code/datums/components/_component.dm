@@ -396,9 +396,6 @@
 	var/new_type = raw_args[1]
 	var/datum/component/nt = new_type
 
-	if(istype(nt, /datum/component/trapdoor))
-		to_chat(world, "breakpoint")
-
 	if(QDELING(src))
 		CRASH("Attempted to add a new component of type \[[nt]\] to a qdeleting parent of type \[[type]\]!")
 
