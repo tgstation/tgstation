@@ -246,6 +246,8 @@
 
 ///from base of [/datum/controller/subsystem/materials/proc/InitializeMaterial]: (/datum/material)
 #define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"
+///from base of /datum/material/proc/on_applied: (amount, material_flags)
+#define COMSIG_DATUM_MATERIAL_APPLIED "datum_material_on_applied"
 
 ///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
 #define COMSIG_REAGENTS_NEW_REAGENT "reagents_new_reagent"

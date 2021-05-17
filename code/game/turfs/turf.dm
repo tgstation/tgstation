@@ -38,6 +38,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///Icon-smoothing variable to map a diagonal wall corner with a fixed underlay.
 	var/list/fixed_underlay = null
 
+	///stored turf appearances in vis_contents so they can be added and subtracted easily
+	var/list/managed_turf_vis_contents = list()
+
 	///Lumcount added by sources other than lighting datum objects, such as the overlay lighting component.
 	var/dynamic_lumcount = 0
 
@@ -114,6 +117,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if (light_power && light_range)
 		update_light()
 
+	// apply materials properly from the default custom_materials value
+	set_custom_materials(custom_materials)
+
 	var/turf/T = SSmapping.get_turf_above(src)
 	if(T)
 		T.multiz_turf_new(src, DOWN)
@@ -123,9 +129,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if (opacity)
 		directional_opacity = ALL_CARDINALS
-
-	// apply materials properly from the default custom_materials value
-	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
 

@@ -87,6 +87,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 	source.mat_update_desc(src)
 
+	SEND_SIGNAL(source, COMSIG_DATUM_MATERIAL_APPLIED, amount, material_flags)
+
 ///This proc is called when a material updates an object's description
 /atom/proc/mat_update_desc(/datum/material/mat)
 	return

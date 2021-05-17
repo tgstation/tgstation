@@ -93,7 +93,7 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
-	var/forced_state = SEND_SIGNAL(src, COMSIG_LIGHTING_OBJECT_UPDATING) //this is probably dumb
+	var/forced_state = SEND_SIGNAL(src, COMSIG_LIGHTING_OBJECT_UPDATING)
 
 	if(((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8)) || forced_state & LIGHTING_OBJECT_FORCE_FULLBRIGHT)
 		//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case

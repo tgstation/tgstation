@@ -1,3 +1,5 @@
+#define MULTIZ_MANAGED_TURF_VIS_CONTENTS "multiz turf"
+
 /datum/element/turf_z_transparency
 	var/show_bottom_level = FALSE
 
@@ -26,10 +28,15 @@
 	. = ..()
 	var/turf/our_turf = source
 	our_turf.vis_contents.len = 0
+	our_turf.underlays -= our_turf.managed_turf_vis_contents[MULTIZ_MANAGED_TURF_VIS_CONTENTS]
+	our_turf.managed_turf_vis_contents -= MULTIZ_MANAGED_TURF_VIS_CONTENTS
+
 	REMOVE_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
 	var/turf/below_turf = our_turf.below()
 	if(below_turf)
 		UnregisterSignal(below_turf, COMSIG_TURF_CHANGE)
+		UnregisterSignal(below_turf, COMSIG_DATUM_MATERIAL_APPLIED)
+
 
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multiz(turf/our_turf, prune_on_fail = FALSE, init = FALSE)
@@ -43,13 +50,18 @@
 		our_turf.vis_contents += below_turf
 
 	if(below_turf)
+		if(!init)
+			our_turf.underlays -= our_turf.managed_turf_vis_contents[MULTIZ_MANAGED_TURF_VIS_CONTENTS]
+			our_turf.managed_turf_vis_contents -= MULTIZ_MANAGED_TURF_VIS_CONTENTS
+
 		var/datum/lighting_object/below_lighting = below_turf.lighting_object
 		var/mutable_appearance/below_turf_without_lighting = new(below_turf)
 
 		if(below_lighting)
-			below_turf_without_lighting.underlays -= below_lighting.current_underlay
+			below_turf_without_lighting.underlays -= below_lighting.current_underlay.appearance
 
-		our_turf.underlays += below_turf_without_lighting
+		our_turf.managed_turf_vis_contents[MULTIZ_MANAGED_TURF_VIS_CONTENTS] = below_turf_without_lighting.appearance
+		our_turf.underlays += our_turf.managed_turf_vis_contents[MULTIZ_MANAGED_TURF_VIS_CONTENTS]
 
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
 		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = TURF_LAYER-0.01)
@@ -60,18 +72,27 @@
 		our_turf.underlays += plating_underlay
 	return TRUE
 
-/datum/element/turf_z_transparency/proc/on_multiz_turf_del(turf/our_turf, turf/T, dir)
+/datum/element/turf_z_transparency/proc/on_multiz_turf_del(turf/our_turf, turf/below_turf, dir)
 	SIGNAL_HANDLER
+
 	if(dir != DOWN)
 		return
+
 	update_multiz(our_turf)
 
-/datum/element/turf_z_transparency/proc/on_multiz_turf_new(turf/our_turf, turf/T, dir)
+/datum/element/turf_z_transparency/proc/on_multiz_turf_new(turf/our_turf, turf/below_turf, dir)
 	SIGNAL_HANDLER
+
 	if(dir != DOWN)
 		return
-	our_turf.underlays.Cut()
-	our_turf.lighting_object.update()
+
+	RegisterSignal(below_turf, COMSIG_DATUM_MATERIAL_APPLIED, .proc/on_below_mat_applied)
+	update_multiz(our_turf)
+
+///datum mats apply their stuff late into the process
+/datum/element/turf_z_transparency/proc/on_below_mat_applied(turf/below_turf)
+	SIGNAL_HANDLER
+	var/turf/our_turf = below_turf.above()
 	update_multiz(our_turf)
 
 ///Called when there is no real turf below this turf
@@ -88,3 +109,6 @@
 	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
 	our_turf.underlays += underlay_appearance
 	return TRUE
+
+#undef MULTIZ_MANAGED_TURF_VIS_CONTENTS
+
