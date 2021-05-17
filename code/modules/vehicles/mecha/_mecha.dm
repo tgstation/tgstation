@@ -173,7 +173,7 @@
 /obj/item/radio/mech //this has to go somewhere
 	subspace_transmission = TRUE
 
-/obj/vehicle/sealed/mecha/Initialize()
+/obj/vehicle/sealed/mecha/Initialize(mapload)
 	. = ..()
 	if(enclosed)
 		internal_tank = new (src)
@@ -212,9 +212,7 @@
 	diag_hud_set_mechstat()
 	update_appearance()
 
-/obj/mecha/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
@@ -244,7 +242,6 @@
 
 /obj/vehicle/sealed/mecha/obj_destruction()
 	loc.assume_air(cabin_air)
-	air_update_turf(FALSE, FALSE)
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			occupant.gib() //No wreck, no AI to recover
@@ -401,7 +398,6 @@
 				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(DT_PROB_RATE(0.05, delta_time))
 				if(loc)
 					loc.assume_air(leaked_gas)
-					air_update_turf(FALSE, FALSE)
 				else
 					qdel(leaked_gas)
 

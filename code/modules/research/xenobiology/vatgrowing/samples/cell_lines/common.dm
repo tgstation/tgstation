@@ -197,7 +197,7 @@
 						/datum/reagent/consumable/corn_syrup = -6,
 						/datum/reagent/sulfur = -3) //sulfur repels snakes according to professor google.
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/poison/snake = 1)
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/snake = 1)
 
 
 ///////////////////////////////////////////
@@ -361,7 +361,7 @@
 						/datum/reagent/consumable/nutriment/protein,
 						/datum/reagent/consumable/nutriment/vitamin,
 						/datum/reagent/consumable/nutriment/peptides,
-						/datum/reagent/consumable/liquidelectricity,
+						/datum/reagent/consumable/liquidelectricity/enriched,
 						/datum/reagent/growthserum,
 						/datum/reagent/yuck)
 

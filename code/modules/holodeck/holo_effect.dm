@@ -104,7 +104,7 @@
 	mobtype += pick(/mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/cat/kitten)
 
 /obj/effect/holodeck_effect/mobspawner/bee
-	mobtype = /mob/living/simple_animal/hostile/poison/bees/toxin
+	mobtype = /mob/living/simple_animal/hostile/bee/toxin
 
 /obj/effect/holodeck_effect/mobspawner/monkey
 	mobtype = /mob/living/simple_animal/holodeck_monkey

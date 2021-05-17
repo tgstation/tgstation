@@ -153,12 +153,9 @@
 	///Take the turf the cryotube is on
 	var/turf/T = get_turf(src)
 	if(T)
-		///Take the air composition of the turf
-		var/datum/gas_mixture/env = T.return_air()
 		///Take the air composition inside the cryotube
 		var/datum/gas_mixture/air1 = airs[1]
-		env.merge(air1)
-		T.air_update_turf(FALSE, FALSE)
+		T.assume_air(air1)
 
 	return ..()
 

@@ -24,7 +24,7 @@
 	name = "potato"
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
 	icon_state = "potato"
-	bite_consumption = 100
+	bite_consumption_mod = 100
 	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/potato_juice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
@@ -33,7 +33,7 @@
 	name = "potato wedges"
 	desc = "Slices of neatly cut potato."
 	icon_state = "potato_wedges"
-	bite_consumption = 100
+	bite_consumption_mod = 100
 
 
 /obj/item/food/grown/potato/attackby(obj/item/W, mob/user, params)
