@@ -212,8 +212,8 @@
 /obj/machinery/outfit_equipper/superhero/buzzon/Initialize()
 	. = ..()
 	equip_options = list(/datum/outfit/superhero/buzzon = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "bee"),
-						 /datum/outfit/superhero/buzzon/cryo = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "bee_winter"),
-						 /datum/outfit/superhero/buzzon/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "bee_space"))
+						/datum/outfit/superhero/buzzon/cryo = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "bee_winter"),
+						/datum/outfit/superhero/buzzon/space = image(icon = 'icons/hud/radial_heroes.dmi', icon_state = "bee_space"))
 
 /obj/machinery/outfit_equipper/superhero/ianiser
 	hero_role = "Ianiser"
