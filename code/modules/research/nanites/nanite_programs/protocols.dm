@@ -86,7 +86,7 @@
 
 /datum/nanite_program/protocol/hive
 	name = "Hive Protocol"
-	desc = "Storage Protocol: the nanites use a more efficient grid arrangment for volume storage, increasing maximum volume in a host, increasing maximum nanite volume to 750."
+	desc = "Storage Protocol: the nanites use a more efficient grid arrangment for volume storage, increasing maximum volume in a host to 750."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_STORAGE
@@ -102,8 +102,7 @@
 
 /datum/nanite_program/protocol/zip
 	name = "Zip Protocol"
-	desc = "Storage Protocol: the nanites are disassembled and compacted when unused, greatly increasing the maximum volume while in a host, \
-			increasing maximum nanite volume to 1000. However, the process slows down the replication rate slightly."
+	desc = "Storage Protocol: the nanites are disassembled and compacted when unused, increasing the maximum volume to 1000. However, the process slows down the replication rate slightly."
 	use_rate = 0.2
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_STORAGE

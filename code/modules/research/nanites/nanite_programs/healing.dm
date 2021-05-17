@@ -2,7 +2,7 @@
 
 /datum/nanite_program/regenerative
 	name = "Accelerated Regeneration"
-	desc = "The nanites boost the host's natural regeneration, increasing their healing speed. Does not consume nanites if the host is unharmed."
+	desc = "The nanites boost the host's natural regeneration, increasing their healing speed. Will not consume nanites if the host is unharmed."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
@@ -31,7 +31,7 @@
 
 /datum/nanite_program/temperature
 	name = "Temperature Adjustment"
-	desc = "The nanites adjust the host's internal temperature to an ideal level. Does not consume nanites if the host is at a normal body temperature."
+	desc = "The nanites adjust the host's internal temperature to an ideal level. Will not consume nanites if the host is at a normal body temperature."
 	use_rate = 3.5
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
