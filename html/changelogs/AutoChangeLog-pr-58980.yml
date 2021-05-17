@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - refactor: "tgui tooltips have been moved to a new system that keeps them within bounds of the screen."
