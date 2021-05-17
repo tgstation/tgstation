@@ -26,8 +26,8 @@
 	health = 150
 	healable = 0
 	obj_damage = 50
-	melee_damage_lower = 20
-	melee_damage_upper = 20
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	speed = 2
 	combat_mode = TRUE
 	AIStatus = AI_OFF
@@ -76,8 +76,8 @@
 	//ambushed living mob
 	if(!iscarbon(crosser))
 		var/mob/living/ambushed_living = crosser
-		visible_message("<span class='userdanger'>[src] leaps upwards and eviscerates [crosser]!</span>", \
-						"<span class='userdanger'>You ambush [crosser], eviscerating [crosser.p_them()]!</span>")
+		visible_message("<span class='userdanger'>[src] leaps upwards and eviscerates [ambushed_living]!</span>", \
+						"<span class='userdanger'>You ambush [ambushed_living], eviscerating [ambushed_living.p_them()]!</span>")
 		ambushed_living.adjustBruteLoss(70)
 		playsound(src, 'sound/creatures/morph_ambush.ogg')
 		return
@@ -88,12 +88,12 @@
 	if(left || right)
 		//weird logic so basically it's picking a random leg unless you only have one, which it will pick that
 		var/obj/item/bodypart/chosen_leg = left && right ? pick(left, right) : left || right
-		visible_message("<span class='userdanger'>[src] leaps upwards and eviscerates [crosser]'s [chosen_leg]!</span>", \
-						"<span class='userdanger'>You ambush [crosser], eviscerating their [chosen_leg]!</span>")
+		visible_message("<span class='userdanger'>[src] leaps upwards and eviscerates [ambushed_carbon]'s [chosen_leg]!</span>", \
+						"<span class='userdanger'>You ambush [ambushed_carbon], eviscerating their [chosen_leg]!</span>")
 		chosen_leg.dismember(BRUTE)
 	else
-		visible_message("<span class='userdanger'>[src] leaps upwards and eviscerates [crosser]!</span>", \
-						"<span class='userdanger'>You ambush [crosser], eviscerating [crosser.p_them()]!</span>")
+		visible_message("<span class='userdanger'>[src] leaps upwards and eviscerates [ambushed_carbon]!</span>", \
+						"<span class='userdanger'>You ambush [ambushed_carbon], eviscerating [ambushed_carbon.p_them()]!</span>")
 	playsound(src, 'sound/creatures/morph_ambush.ogg')
 	ambushed_carbon.adjustBruteLoss(70)
 
@@ -102,21 +102,21 @@
 	if(!(ambush_flags & AMBUSH_INTERACT))
 		return
 	//ambushed living mob
-	if(!iscarbon(crosser))
-		var/mob/living/ambushed_living = crosser
-		visible_message("<span class='userdanger'>[src] lunges forwards at [crosser] and eviscerates [crosser.p_them()]!</span>", \
-						"<span class='userdanger'>You ambush [crosser], eviscerating [crosser.p_them()]!</span>")
+	if(!iscarbon(user))
+		var/mob/living/ambushed_living = user
+		visible_message("<span class='userdanger'>[src] lunges forwards at [ambushed_living] and eviscerates [ambushed_living.p_them()]!</span>", \
+						"<span class='userdanger'>You ambush [ambushed_living], eviscerating [ambushed_living.p_them()]!</span>")
 		ambushed_living.adjustBruteLoss(70)
 		playsound(src, 'sound/creatures/morph_ambush.ogg')
 		return
 	//ambushed carbon mob
-	var/mob/living/carbon/ambushed_carbon = crosser
+	var/mob/living/carbon/ambushed_carbon = user
 	var/which_hand = BODY_ZONE_L_ARM
 	if(!(ambushed_carbon.active_hand_index % 2))
 		which_hand = BODY_ZONE_R_ARM
-	var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
-	visible_message("<span class='userdanger'>[src] lunges forwards and eviscerates [crosser]'s [chopchop]!</span>", \
-					"<span class='userdanger'>You ambush [crosser], eviscerating their [chopchop]!</span>")
+	var/obj/item/bodypart/chopchop = ambushed_carbon.get_bodypart(which_hand)
+	visible_message("<span class='userdanger'>[src] lunges forwards and eviscerates [ambushed_carbon]'s [chopchop]!</span>", \
+					"<span class='userdanger'>You ambush [ambushed_carbon], eviscerating their [chopchop]!</span>")
 	chopchop.dismember(BRUTE)
 	playsound(src, 'sound/creatures/morph_ambush.ogg')
 	ambushed_carbon.adjustBruteLoss(70)
@@ -209,6 +209,9 @@
 
 	set_varspeed(0)
 
+	melee_damage_lower += 15
+	melee_damage_upper += 15
+
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
 
@@ -229,6 +232,8 @@
 	alpha = initial(alpha)
 	color = initial(color)
 	desc = initial(desc)
+	melee_damage_lower = initial(melee_damage_lower)
+	melee_damage_upper = initial(melee_damage_upper)
 	animate_movement = SLIDE_STEPS
 	maptext = null
 
