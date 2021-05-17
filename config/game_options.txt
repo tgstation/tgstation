@@ -151,8 +151,8 @@ MIDROUND_ANTAG WIZARD
 ## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to
 ## VERY low numbers (< 5) can lead to errors if the roundtypes were not designed for that.
 
-#MIN_POP TRAITOR 0
-#MAX_POP TRAITOR -1
+MIN_POP TRAITOR 0
+MAX_POP TRAITOR -1
 
 #MIN_POP TRAITORBRO 0
 #MAX_POP TRAITORBRO -1

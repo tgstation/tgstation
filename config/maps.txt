@@ -14,8 +14,8 @@ Format:
 endmap
 
 map metastation
-	#default
-	minplayers 5
+	default
+	minplayers 0
 	#voteweight 0.5
 	votable
 endmap
@@ -26,18 +26,18 @@ map deltastation
 endmap
 
 map kilostation
-	minplayers 3
-	default
+	minplayers 0
+	#default
 	votable
 endmap
 
 map icebox
-	minplayers 25
+	minplayers 20
 	votable
 endmap
 
 map tramstation
-	minplayers 25
+	minplayers 20
 	votable
 endmap
 
