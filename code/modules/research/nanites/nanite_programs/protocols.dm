@@ -86,7 +86,7 @@
 
 /datum/nanite_program/protocol/hive
 	name = "Hive Protocol"
-	desc = "Storage Protocol: the nanites use a more efficient grid arrangment for volume storage, increasing maximum volume in a host to 750."
+	desc = "Storage Protocol: the nanites use a more efficient grid arrangment for volume storage, increasing maximum volume to 750."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_STORAGE
