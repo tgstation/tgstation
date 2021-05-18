@@ -1070,8 +1070,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/obj/item/photo/P = C
 		picture = P.picture
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
-	else if(id)
-		id.attackby(C, user)
+	else if(id) // Check to see if we have an ID inside
+		id.attackby(C, user) // If we do, try and put that attacking object in
 	else
 		return ..()
 

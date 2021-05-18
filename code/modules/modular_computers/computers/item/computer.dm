@@ -549,9 +549,9 @@
 		return
 
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(card_slot?.GetID())
+	if(card_slot?.GetID()) // Check to see if we have an ID inside
 		var/obj/item/card/id/id = card_slot.GetID()
-		id.attackby(W, user)
+		id.attackby(W, user) // If we do, try and put that attacking object in
 
 	..()
 
