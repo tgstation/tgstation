@@ -58,21 +58,24 @@
 	log_world("Beginning search for references to a [type].")
 
 	var/starting_time = world.time
-	DoSearchVar(GLOB, "GLOB") //globals
-	for(var/datum/thing in world) //atoms (don't beleive its lies)
+	//Time to search the whole game for our ref
+	//Let's do it in order of size, with clients first since they tend to be pretty volatile
+	for(var/client/thing) //clients
 		if(SSgarbage.ref_search_stop)
 			break
-		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
+		DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
 
+	DoSearchVar(GLOB, "GLOB") //globals
+	
 	for(var/datum/thing) //datums
 		if(SSgarbage.ref_search_stop)
 			break
 		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
 
-	for(var/client/thing) //clients
+	for(var/datum/thing in world) //atoms (don't beleive its lies)
 		if(SSgarbage.ref_search_stop)
 			break
-		DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
+		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 
 	log_world("Completed search for references to a [type].")
 	if(usr?.client)
