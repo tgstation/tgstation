@@ -357,5 +357,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	animate(get_filter("portal_ripple"), time = 1.3 SECONDS, loop = -1, easing = LINEAR_EASING, radius = 32)
 
 	var/turf/center_turf = our_destination.get_target_turf()
+	var/list/turfs_to_visualize = block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))
+	for(var/turf/to_unset as anything in turfs_to_visualize)
+		to_unset.vis_flags &= ~VIS_HIDE
 
 	vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))
