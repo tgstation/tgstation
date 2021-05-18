@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "Recyclers dont vore themselves the moment the world is created anymore."

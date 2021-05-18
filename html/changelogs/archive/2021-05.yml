@@ -475,3 +475,17 @@
       like beautiful loot pinatas.
   itseasytosee:
   - bugfix: changeling spacesuits no longer come with a battery hud
+2021-05-18:
+  Kylerace:
+  - bugfix: i dont have the energy for a witty in-universe changelog so airhorns can
+      honk again
+  - bugfix: Recyclers dont vore themselves the moment the world is created anymore.
+  Mothblocks:
+  - refactor: tgui tooltips have been moved to a new system that keeps them within
+      bounds of the screen.
+  RandomGamer123:
+  - bugfix: Being buckled to a wheelchair no longer prevents you from using dermal
+      button nanites, cult chat, and more.
+  SgtHunk:
+  - rscadd: The Tramstation security checkpoints now have cells for easy brigging
+      on the go.
