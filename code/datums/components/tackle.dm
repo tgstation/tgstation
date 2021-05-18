@@ -224,7 +224,7 @@
 			target.Paralyze(5)
 			target.Knockdown(30)
 			if(ishuman(target) && ishuman(user))
-				S.dna.species.grab(S, T)
+				INVOKE_ASYNC(S.dna.species, /datum/species.proc/grab, S, T)
 				S.setGrabState(GRAB_AGGRESSIVE)
 
 
