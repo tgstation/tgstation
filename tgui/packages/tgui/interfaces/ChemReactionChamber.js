@@ -110,7 +110,7 @@ export const ChemReactionChamber = (props, context) => {
                         The pH scale is logarithmic and inversely
                         indicates the concentration of hydrogen ions
                         in the solution.`}
-                        tooltipPosition="bottom-left" />
+                        tooltipPosition="bottom-start" />
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
