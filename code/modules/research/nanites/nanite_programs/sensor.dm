@@ -263,7 +263,7 @@
 
 /datum/nanite_program/sensor/species
 	name = "Species Sensor"
-	desc = "When triggered, the nanites scan the host to determine their species and recieve a signal depending on the conditions set in the settings."
+	desc = "When triggered, the nanites scan the host to determine their species and receive a signal depending on the conditions set in the settings."
 	can_trigger = TRUE
 	trigger_cost = 0
 	trigger_cooldown = 5
