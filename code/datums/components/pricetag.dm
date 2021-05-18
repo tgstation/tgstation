@@ -1,4 +1,5 @@
 /datum/component/pricetag
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///Payee gets 100% of the value if no ratio has been set.
 	var/default_profit_ratio = 1
 	///List of bank accounts this pricetag pays out to. Format is payees[bank_account] = profit_ratio.

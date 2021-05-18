@@ -241,7 +241,7 @@
 ///Upon completion of a civilian bounty, one of these is created. It is sold to cargo to give the cargo budget bounty money, and the person who completed it cash.
 /obj/item/bounty_cube
 	name = "bounty cube"
-	desc = "A bundle of compressed hardlight data, containing a completed bounty. Sell this on the cargo shuttle to claim it!"
+	desc = "A bundle of compressed hardlight data, containing a completed bounty. Sell this on the cargo shuttle to claim it! Wrapping and tagging is unnecessary."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "bounty_cube"
 	///Value of the bounty that this bounty cube sells for.
