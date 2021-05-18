@@ -548,6 +548,11 @@
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 		return
 
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(card_slot?.GetID())
+		var/obj/item/card/id/id = card_slot.GetID()
+		id.attackby(W, user)
+
 	..()
 
 // Used by processor to relay qdel() to machinery type.
