@@ -1,0 +1,5 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - bugfix: "double rat kebabs are now double the reagents of single rat kebabs"
+  - bugfix: "rat kebabs no longer drop the metal rods when eaten unlike other kebabs to maintain lore consistency"
