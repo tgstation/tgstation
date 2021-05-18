@@ -13,7 +13,7 @@
 :cl:
 add: Added new things
 add: Added more things
-content: Expanded an existing thing
+expansion: Expanded an existing thing
 jobtent: Expanded an existing job
 del: Removed old things
 qol: made something easier to use
