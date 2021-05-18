@@ -611,7 +611,6 @@
  */
 /obj/item/seeds/proc/create_graft()
 	var/obj/item/graft/snip = new(loc, graft_gene)
-	snip.parent_seed = src
 	snip.parent_name = plantname
 	snip.name += "([plantname])"
 
