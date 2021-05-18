@@ -59,10 +59,7 @@
 	var/list/newVisibleTurfs = list()
 
 	for(var/obj/machinery/camera/current_camera as anything in cameras)
-		if(!current_camera)
-			continue
-
-		if(!current_camera.can_use())
+		if(!current_camera || !current_camera.can_use())
 			continue
 
 		var/turf/point = locate(src.x + (CHUNK_SIZE / 2), src.y + (CHUNK_SIZE / 2), src.z)
@@ -82,7 +79,7 @@
 	//turfs that are included in the chunks normal turfs list minus the turfs the cameras CAN see
 	obscuredTurfs = turfs - newVisibleTurfs
 
-	var/list/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque
+	var/static/list/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque //ba dum tsss
 	for(var/turf/added_turf as anything in visAdded)
 		added_turf.vis_contents -= vis_contents_opaque
 
