@@ -77,7 +77,7 @@
 	if(A.totalStageSpeed() >= 6)
 		power = 2
 
-/datum/disease/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
+/datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
 	if(direction == ZTRAIT_UP)
 		turf_to_check = turf_to_check.above()
 		if(!turf_to_check)
@@ -117,14 +117,14 @@
 		return current_heal_level
 
 /datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
-	var/turf/turf_of_mob = get_turf(M)
+	var/mob/living/affected_mob = A.affected_mob
+	var/turf/turf_of_mob = get_turf(affected_mob)
 	switch(CanTileHeal(turf_of_mob, FALSE))
 		if(STARLIGHT_CAN_HEAL_WITH_PENALTY)
 			return power * nearspace_penalty
 		if(STARLIGHT_CAN_HEAL)
 			return power
-	for(var/turf/turf_to_check in view(M, STARLIGHT_MAX_RANGE))
+	for(var/turf/turf_to_check in view(affected_mob, STARLIGHT_MAX_RANGE))
 		if(CanTileHeal(turf_to_check, TRUE))
 			return power * nearspace_penalty
 
