@@ -553,7 +553,7 @@
 	if(card_slot?.GetID() && (istype(W, /obj/item/holochip) || istype(W, /obj/item/stack/spacecash) || istype(W, /obj/item/coin) || istype(W, /obj/item/storage/bag/money)))
 		var/obj/item/card/id/id = card_slot.GetID()
 		id.attackby(W, user) // If we do, try and put that attacking object in
-
+		return
 	..()
 
 // Used by processor to relay qdel() to machinery type.
