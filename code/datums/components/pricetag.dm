@@ -20,7 +20,8 @@
 
 /datum/component/pricetag/proc/Unwrapped()
 	SIGNAL_HANDLER
-
+	if(istype(parent, /obj/item/bounty_cube))
+		return
 	qdel(src) //Once it leaves it's wrapped container, the object in question should lose it's pricetag component.
 
 /datum/component/pricetag/proc/split_profit(item_value)
