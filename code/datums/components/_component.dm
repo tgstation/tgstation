@@ -311,8 +311,7 @@
 	var/target = comp_lookup[sigtype]
 	if(!length(target))
 		var/datum/listening_datum = target
-		return NONE | CallAsync(listening_datum, listening_datum.signal_procs[src][sigtype], arguments)
-	. = NONE
+		return CallAsync(listening_datum, listening_datum.signal_procs[src][sigtype], arguments)
 	for(var/datum/listening_datum as anything in target)
 		. |= CallAsync(listening_datum, listening_datum.signal_procs[src][sigtype], arguments)
 
