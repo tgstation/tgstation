@@ -73,10 +73,6 @@
 	A.emag_act(user, src)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
-	for (var/subtypelist in type_blacklist)
-		if (target.type in subtypelist)
-			to_chat(user, "<span class='warning'>The [target] cannot be affected by the [src]! A more specialized hacking device is required.</span>")
-			return FALSE
 	return TRUE
 
 /*
