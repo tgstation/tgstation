@@ -1,5 +1,8 @@
 #define PORT_INPUT_RECEIVE_DELAY 0.9 SECONDS
 
+/// Helper define that can only be used in /obj/item/component/input_received()
+#define COMPONENT_TRIGGERED_BY(trigger) (trigger.input_value && trigger == port)
+
 // Port types. Determines what the port can connect to
 
 /// Can accept any datatype. Only works for inputs, output types will runtime.
@@ -59,3 +62,14 @@
 #define COMP_ARITHMETIC_SUBTRACT "Subtract"
 #define COMP_ARITHMETIC_MULTIPLY "Multiply"
 #define COMP_ARITHMETIC_DIVIDE "Divide"
+
+// Shells
+
+/// Whether a circuit is stuck on a shell and cannot be removed (by a user)
+#define SHELL_FLAG_CIRCUIT_FIXED (1<<0)
+
+// Shell capacities. These can be converted to configs very easily later
+#define SHELL_CAPACITY_SMALL 10
+#define SHELL_CAPACITY_MEDIUM 25
+#define SHELL_CAPACITY_LARGE 50
+#define SHELL_CAPACITY_VERY_LARGE 500

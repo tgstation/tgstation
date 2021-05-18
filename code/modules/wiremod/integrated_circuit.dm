@@ -15,7 +15,7 @@
 	var/obj/item/stock_parts/cell/cell
 
 	/// The shell that this circuitboard is attached to. Used by components.
-	var/obj/shell
+	var/atom/movable/shell
 
 	/// The attached components
 	var/list/obj/item/component/attached_components = list()
@@ -24,26 +24,104 @@
 	. = ..()
 	cell = new /obj/item/stock_parts/cell/high(src)
 
+/obj/item/integrated_circuit/Destroy()
+	for(var/obj/item/component/to_delete in attached_components)
+		remove_component(to_delete)
+		qdel(to_delete)
+	shell = null
+	QDEL_NULL(cell)
+	return ..()
+
+/obj/item/integrated_circuit/examine(mob/user)
+	. = ..()
+	if(cell)
+		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+	else
+		. += "There is no power cell installed."
+
 /obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(iscomponent(I))
-		add_component(I)
+		add_component(I, user)
+		return
+
+	if(istype(I, /obj/item/stock_parts/cell))
+		if(cell)
+			to_chat(user, "<span class='warning'>There already is a cell inside!</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
+			return
+		cell = I
+		I.add_fingerprint(user)
+		user.visible_message("<span class='notice'>\The [user] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
+		return
+
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		if(!cell)
+			return
+		I.play_tool_sound(src)
+		user.visible_message("<span class='notice'>\The [user] unscrews the power cell from \the [src].</span>", "<span class='notice'>You unscrew the power cell from \the [src].</span>")
+		cell.forceMove(drop_location())
+		cell = null
+		return
+
+/**
+ * Registers an movable atom as a shell
+ *
+ * No functionality is done here. This is so that input components
+ * can properly register any signals on the shell.
+ * Arguments:
+ * * new_shell - The new shell to register.
+ */
+/obj/item/integrated_circuit/proc/set_shell(atom/movable/new_shell)
+	remove_current_shell()
+	shell = new_shell
+	RegisterSignal(shell, COMSIG_PARENT_QDELETING, .proc/remove_current_shell)
+	for(var/obj/item/component/attached_component as anything in attached_components)
+		attached_component.register_shell(shell)
+
+/**
+ * Unregisters the current shell attached to this circuit.
+ */
+/obj/item/integrated_circuit/proc/remove_current_shell()
+	SIGNAL_HANDLER
+	if(!shell)
+		return
+	for(var/obj/item/component/attached_component as anything in attached_components)
+		attached_component.unregister_shell(shell)
+	UnregisterSignal(shell, COMSIG_PARENT_QDELETING)
+	shell = null
 
 /**
  * Adds a component to the circuitboard
  *
  * Once the component is added, the ports can be attached to other components
  */
-/obj/item/integrated_circuit/proc/add_component(obj/item/component/to_add)
+/obj/item/integrated_circuit/proc/add_component(obj/item/component/to_add, mob/living/user)
 	if(to_add.parent)
 		return
+
+	if(SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
+		return
+
+	var/success = FALSE
+	if(user)
+		success = user.transferItemToLoc(to_add, src)
+	else
+		success = to_add.forceMove(src)
+
+	if(!success)
+		return
+
 	to_add.rel_x = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS)
 	to_add.rel_y = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS)
 	to_add.parent = src
-	to_add.forceMove(src)
 	attached_components += to_add
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/component_move_handler)
 	SStgui.update_uis(src)
+
+	if(shell)
+		to_add.register_shell(shell)
 
 /obj/item/integrated_circuit/proc/component_move_handler(obj/item/component/source)
 	SIGNAL_HANDLER
@@ -56,9 +134,12 @@
  * This removes all connects between the ports
  */
 /obj/item/integrated_circuit/proc/remove_component(obj/item/component/to_remove)
-	to_remove.parent = null
+	if(shell)
+		to_remove.unregister_shell(shell)
+
 	UnregisterSignal(to_remove, COMSIG_MOVABLE_MOVED)
 	attached_components -= to_remove
+	to_remove.parent = null
 	SStgui.update_uis(src)
 
 /obj/item/integrated_circuit/get_cell()
@@ -92,7 +173,13 @@
 		component_data["y"] = component.rel_y
 		component_data["option"] = component.current_option
 		component_data["options"] = component.options
+		component_data["removable"] = component.removable
 		.["components"] += list(component_data)
+
+/obj/item/integrated_circuit/ui_host(mob/user)
+	if(shell)
+		return shell
+	return ..()
 
 /obj/item/integrated_circuit/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -155,6 +242,8 @@
 			if(!WITHIN_RANGE(component_id, attached_components))
 				return
 			var/obj/item/component/component = attached_components[component_id]
+			if(!component.removable)
+				return
 			component.disconnect()
 			remove_component(component)
 			usr.put_in_hands(component)

@@ -23,11 +23,16 @@
 
 /obj/item/component/delay/Destroy()
 	output = null
+	trigger = null
+	delay_amount = null
 	return ..()
 
-/obj/item/component/delay/input_received()
+/obj/item/component/delay/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
+		return
+
+	if(!COMPONENT_TRIGGERED_BY(trigger))
 		return
 
 	var/delay = delay_amount.input_value

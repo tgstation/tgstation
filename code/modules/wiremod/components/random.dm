@@ -31,9 +31,12 @@
 	output = null
 	return ..()
 
-/obj/item/component/random/input_received()
+/obj/item/component/random/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
+		return
+
+	if(!COMPONENT_TRIGGERED_BY(trigger))
 		return
 
 	var/min_val = minimum.input_value

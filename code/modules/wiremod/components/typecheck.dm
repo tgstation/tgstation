@@ -12,6 +12,7 @@
 	/// Result of the comparison.
 	var/datum/port/output/true
 	var/datum/port/output/false
+	var/datum/port/output/result
 
 GLOBAL_LIST_INIT(comp_typecheck_options, list(
 	PORT_TYPE_STRING,
@@ -27,35 +28,38 @@ GLOBAL_LIST_INIT(comp_typecheck_options, list(
 
 	true = add_output_port("True", PORT_TYPE_NUMBER)
 	false = add_output_port("False", PORT_TYPE_NUMBER)
+	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
 /obj/item/component/typecheck/Destroy()
 	true = null
 	false = null
+	input_port = null
 	return ..()
 
-/obj/item/component/typecheck/input_received()
+/obj/item/component/typecheck/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
 
-	var/result = FALSE
+	var/logic_result = FALSE
 	var/input_val = input_port.input_value
 	switch(current_option)
 		if(PORT_TYPE_STRING)
-			result = istext(input_val)
+			logic_result = istext(input_val)
 		if(PORT_TYPE_NUMBER)
-			result = isnum(input_val)
+			logic_result = isnum(input_val)
 		if(PORT_TYPE_LIST)
-			result = islist(input_val)
+			logic_result = islist(input_val)
 		if(PORT_TYPE_ATOM)
-			result = isatom(input_val)
+			logic_result = isatom(input_val)
 		if(PORT_TYPE_MOB)
-			result = ismob(input_val)
+			logic_result = ismob(input_val)
 		if(PORT_TYPE_HUMAN)
-			result = ishuman(input_val)
+			logic_result = ishuman(input_val)
 
 	// Sends an output to the appropriate port
-	if(result)
-		true.set_output(result)
+	if(logic_result)
+		true.set_output(COMPONENT_SIGNAL)
 	else
-		false.set_output(result)
+		false.set_output(COMPONENT_SIGNAL)
+	result.set_output(logic_result)

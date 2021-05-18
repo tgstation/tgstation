@@ -2,7 +2,7 @@ import { computeBoxProps } from "./Box";
 import { Stack } from "./Stack";
 import { ProgressBar } from "./ProgressBar";
 import { Button } from "./Button";
-import { Component } from 'inferno'
+import { Component } from 'inferno';
 
 const ZOOM_MIN_VAL = 0.5;
 const ZOOM_MAX_VAL = 1.5;
@@ -76,7 +76,7 @@ export class InfinitePlane extends Component {
         return {
           left: event.clientX - state.lastLeft,
           top: event.clientY - state.lastTop,
-        }
+        };
       });
     }
   }
@@ -93,78 +93,61 @@ export class InfinitePlane extends Component {
     } = this.state;
 
     return (
-    <div
-      ref={this.ref}
-      {...computeBoxProps({
-        ...rest,
-        style: {
-          ...rest.style,
-          overflow: "hidden",
-          position: "relative",
-        },
-      })}
-    >
-      {/* A div covering the background to allow the div to be moved */}
       <div
-        style={{
-          "background": "red"
-        }}
-        onMouseDown={this.onMouseDown}
-        onMouseMove={this.onMouseMove}
-
-        style={{
-          position: "absolute",
-
-          height: "100%",
-          width: "100%",
-        }}
+        ref={this.ref}
+        {...computeBoxProps({
+          ...rest,
+          style: {
+            ...rest.style,
+            overflow: "hidden",
+            position: "relative",
+          },
+        })}
       >
+        <div
+          onMouseDown={(e) => this.onMouseDown(e)}
+          onMouseMove={(e) => this.onMouseMove(e)}
+          style={{
+            "position": "absolute",
+            "transform": `translate(${left}px, ${top}px) scale(${zoom})`,
+            "height": "100%",
+            "width": "100%",
+          }}
+        >
+          {children}
+        </div>
+
+        <Stack
+          position="absolute"
+          width="100%"
+        >
+          <Stack.Item>
+            <Button
+              icon="minus"
+              onClick={() => this.setState({
+                zoom: Math.max(zoom-ZOOM_INCREMENT, ZOOM_MIN_VAL),
+              })}
+            />
+          </Stack.Item>
+          <Stack.Item grow={1}>
+            <ProgressBar
+              minValue={ZOOM_MIN_VAL}
+              value={zoom}
+              maxValue={ZOOM_MAX_VAL}
+            >
+              {zoom}x
+            </ProgressBar>
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="plus"
+              onClick={() => this.setState({
+                zoom: Math.min(zoom+ZOOM_INCREMENT, ZOOM_MAX_VAL),
+              })}
+            />
+          </Stack.Item>
+        </Stack>
       </div>
-
-      <div
-        onMouseDown={this.onMouseDown}
-        onMouseMove={this.onMouseMove}
-        style={{
-          "position": "absolute",
-          "transform": `translate(${left}px, ${top}px) scale(${zoom})`,
-
-          "height": "100%",
-          "width": "100%",
-        }}
-      >
-        {children}
-      </div>
-
-      <Stack
-        position="absolute"
-        width="100%"
-      >
-        <Stack.Item>
-          <Button
-            icon="minus"
-            onClick={() => this.setState({
-              zoom: Math.max(zoom-ZOOM_INCREMENT, ZOOM_MIN_VAL),
-            })}
-          />
-        </Stack.Item>
-        <Stack.Item grow={1}>
-          <ProgressBar
-            minValue={ZOOM_MIN_VAL}
-            value={zoom}
-            maxValue={ZOOM_MAX_VAL}
-          >
-            {zoom}x
-          </ProgressBar>
-        </Stack.Item>
-        <Stack.Item>
-          <Button
-            icon="plus"
-            onClick={() => this.setState({
-              zoom: Math.min(zoom+ZOOM_INCREMENT, ZOOM_MAX_VAL),
-            })}
-          />
-        </Stack.Item>
-      </Stack>
-    </div>);
+    );
   }
 }

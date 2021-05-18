@@ -26,7 +26,7 @@
 	output = null
 	return ..()
 
-/obj/item/component/index/input_received()
+/obj/item/component/index/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return

@@ -40,6 +40,9 @@
 	/// The options that this component can take on. Limited to strings
 	var/list/options
 
+	// Whether the component is removable or not. Only affects user UI
+	var/removable = TRUE
+
 /obj/item/component/Initialize()
 	. = ..()
 	if(length(options))
@@ -52,6 +55,26 @@
 	QDEL_LIST(output_ports)
 	QDEL_LIST(input_ports)
 	return ..()
+
+/**
+ * Called when a shell is registered from the component/the component is added to a circuit.
+ *
+ * Register all signals here on the shell.
+ * Arguments:
+ * * shell - Shell being registered
+ */
+/obj/item/component/proc/register_shell(atom/movable/shell)
+	return
+
+/**
+ * Called when a shell is unregistered from the component/the component is removed from a circuit.
+ *
+ * Unregister all signals here on the shell.
+ * Arguments:
+ * * shell - Shell being unregistered
+ */
+/obj/item/component/proc/unregister_shell(atom/movable/shell)
+	return
 
 /**
  * Disconnects a component from other components
@@ -105,11 +128,10 @@
 /**
  * Called whenever an input is received from one of the ports.
  *
- * Does not specify which port sent the input because it is up to the
- * component to keep track of their input ports and to use this proc
- * as a way to update their general state and outputs.
+ * Arguments:
+ * * port - Can be null. The port that sent the input
  */
-/obj/item/component/proc/input_received()
+/obj/item/component/proc/input_received(datum/port/input/port)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!parent)
 		return TRUE

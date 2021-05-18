@@ -31,8 +31,8 @@ const FUNDAMENTAL_DATA_TYPES = {
         />
       </Box>
     );
-  }
-}
+  },
+};
 
 FUNDAMENTAL_DATA_TYPES["any"] = FUNDAMENTAL_DATA_TYPES["string"];
 
@@ -41,8 +41,8 @@ export const IntegratedCircuit = (props, context) => {
   const { components } = data;
   const connections = [];
 
-  const [positions, setPositions] =
-    useLocalState(context, "port_positions", {});
+  const [positions, setPositions]
+   = useLocalState(context, "port_positions", {});
 
   for (let comp_index = 0; comp_index < components.length; comp_index++) {
     const inputs = components[comp_index].input_ports;
@@ -83,7 +83,7 @@ export const IntegratedCircuit = (props, context) => {
               path += `${from.x}, ${to.y},`;
               path += `${to.x-SVG_X_CURVE_POINT}, ${to.y}`;
 
-              path += `L ${to.x} ${to.y}`
+              path += `L ${to.x} ${to.y}`;
               return (
                 <path
                   key={index}
@@ -172,6 +172,7 @@ export class ObjectComponent extends Component {
       color = "blue",
       options,
       option,
+      removable,
       ...rest
     } = this.props;
     const { act } = useBackend(this.context);
@@ -212,23 +213,23 @@ export class ObjectComponent extends Component {
                   options={options}
                   displayText={`Option: ${option}`}
                   noscroll
-                  onSelected={selected => {
-                    act("set_component_option", {
-                      component_id: index,
-                      option: selected,
-                    })
-                  }}
+                  onSelected={selected => act("set_component_option", {
+                    component_id: index,
+                    option: selected,
+                  })}
                 />
               </Stack.Item>
             )}
-            <Stack.Item>
-              <Button
-                color="transparent"
-                icon="times"
-                compact
-                onClick={() => act("detach_component", { component_id: index })}
-              />
-            </Stack.Item>
+            {!!removable && (
+              <Stack.Item>
+                <Button
+                  color="transparent"
+                  icon="times"
+                  compact
+                  onClick={() => act("detach_component", { component_id: index })}
+                />
+              </Stack.Item>
+            )}
           </Stack>
         </Box>
         <Box
@@ -368,8 +369,8 @@ export class Port extends Component {
 
     this.updatePosition = () => {
       const { port } = this.props;
-      const [positions, setPositions] =
-        useLocalState(context, "port_positions", {});
+      const [positions, setPositions]
+       = useLocalState(context, "port_positions", {});
 
       if (!this.iconRef.current) {
         return;
@@ -386,7 +387,7 @@ export class Port extends Component {
       }
       positions[port.ref] = position;
       setPositions(positions);
-    }
+    };
   }
 
   componentDidUpdate() {
@@ -448,7 +449,7 @@ export class Port extends Component {
         )}
       </Stack>
     );
-  };
+  }
 }
 
 const DisplayName = (props, context) => {

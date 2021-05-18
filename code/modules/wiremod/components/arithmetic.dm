@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 	output = null
 	return ..()
 
-/obj/item/component/arithmetic/input_received()
+/obj/item/component/arithmetic/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
@@ -47,8 +47,8 @@ GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 		ports -= first_port
 		result = first_port.input_value
 
-	for(var/datum/port/input/port as anything in ports)
-		var/value = port.input_value
+	for(var/datum/port/input/input_port as anything in ports)
+		var/value = input_port.input_value
 		if(isnull(value))
 			continue
 

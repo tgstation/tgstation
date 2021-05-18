@@ -1265,3 +1265,8 @@
 #define COMSIG_PORT_DISCONNECT "port_disconnect"
 /// Sent on the output port when an input port registers on it: (datum/port/input/registered_port)
 #define COMSIG_PORT_OUTPUT_CONNECT "port_output_connect"
+
+/// Sent when a [/obj/item/component] is added to a circuit.
+#define COMSIG_CIRCUIT_ADD_COMPONENT "circuit_add_component"
+	/// Cancels adding the component to the circuit.
+	#define COMPONENT_CANCEL_ADD_COMPONENT (1<<0)

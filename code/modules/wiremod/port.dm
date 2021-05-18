@@ -26,9 +26,9 @@
 	src.name = name
 	src.datatype = datatype
 
-/datum/port/Destroy()
-	if(!connected_component.gc_destroyed)
-		// This should never happen
+/datum/port/Destroy(force)
+	if(!force && !connected_component.gc_destroyed)
+		// This should never happen. Ports should be deleted with their components
 		stack_trace("Attempted to delete a port with a non-destroyed connected_component! (port name: [name], component type: [connected_component.type])")
 		return QDEL_HINT_LETMELIVE
 	connected_component = null
@@ -139,7 +139,7 @@
 /datum/port/input/proc/set_value(var/new_value)
 	input_value = new_value
 	if(trigger)
-		connected_component.input_received()
+		connected_component.input_received(src)
 
 /datum/port/input/disconnect()
 	unregister_output_port()

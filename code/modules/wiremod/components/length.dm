@@ -23,7 +23,7 @@
 	output = null
 	return ..()
 
-/obj/item/component/length/input_received()
+/obj/item/component/length/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
