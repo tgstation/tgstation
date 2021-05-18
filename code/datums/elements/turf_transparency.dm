@@ -70,8 +70,6 @@
 
 	var/datum/lighting_object/below_lighting = below_turf.lighting_object
 	var/mutable_appearance/below_turf_without_lighting = new(below_turf)
-	//below_turf_without_lighting.layer = our_turf.layer - 10
-	//below_turf_without_lighting.plane = our_turf.plane - 1
 
 	if(below_lighting)
 		below_turf_without_lighting.underlays -= below_lighting.current_underlay.appearance
