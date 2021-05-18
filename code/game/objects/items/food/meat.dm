@@ -576,7 +576,7 @@
 	name = "double rat-kebab"
 	icon_state = "doubleratkebab"
 	tastes = list("rat meat" = 2, "metal" = 1)
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/iron = 2)
 
 /obj/item/food/kebab/fiesta
 	name = "fiesta skewer"
