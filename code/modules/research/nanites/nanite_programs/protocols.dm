@@ -50,7 +50,7 @@
 
 /datum/nanite_program/protocol/pyramid
 	name = "Pyramid Protocol"
-	desc = "Replication Protocol: the nanites implement an alternate cooperative replication protocol that is more efficient as long as the saturation level is above 80% \
+	desc = "Replication Protocol: the nanites implement an alternate cooperative replication protocol that is active as long as the saturation level is above 80% \
 			resulting in an additional volume production of 1.2 per second."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
@@ -138,8 +138,8 @@
 
 /datum/nanite_program/protocol/unsafe_storage
 	name = "S.L.O. Protocol"
-	desc = "Storage Protocol: 'S.L.O.P.', or Storage Level Override Protocol, completely disables the safety measures normally present in nanites,\
-		allowing them to reach a whopping maximum volume level of 2000, but at the risk of causing internal damage to the host."
+	desc = "Storage Protocol: 'S.L.O.P.', or Storage Level Override Protocol, completely disables the safety measures normally present in nanites, \
+			allowing them to reach a whopping maximum volume level of 2000, but at the risk of causing internal damage to the host at sufficiently high nanite concentrations."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 	protocol_class = NANITE_PROTOCOL_STORAGE

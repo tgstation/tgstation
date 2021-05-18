@@ -243,7 +243,7 @@
 	name = "Mitosis"
 	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process. Becomes more effective the more nanites are already in the host; \
 			For every 50 nanite volume in the host, the production rate is increased by 0.5. The replication has also a chance to corrupt the nanite programming \
-			due to copy faults - cloud sync is highly recommended."
+			due to copy faults - constant cloud sync is highly recommended."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/toxic)
 
