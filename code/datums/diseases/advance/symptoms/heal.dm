@@ -96,7 +96,7 @@
 				turf_to_check = turf_to_check.above()
 			else
 				turf_to_check = turf_to_check.below()
-			if(!turf_to_check) // if does not exist, assume its space since space station
+			if(!turf_to_check && (direction == ZTRAIT_DOWN || (direction == ZTRAIT_UP && area_to_check.outdoors))) // if does not exist, assume its space since space station if below, however when checking upwards, only assume that its space if the area is outdoors
 				if(levels_of_glass)
 					return STARLIGHT_CAN_HEAL_WITH_PENALTY 
 				return STARLIGHT_CAN_HEAL
