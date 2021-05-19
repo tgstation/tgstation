@@ -5,8 +5,7 @@
 /mob/living/carbon/get_bodypart(zone)
 	if(!zone)
 		zone = BODY_ZONE_CHEST
-	for(var/part in bodyparts)
-		var/obj/item/bodypart/bodypart = part
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(bodypart.body_zone == zone)
 			return bodypart
 
@@ -108,14 +107,12 @@
 
 ///Remove all embedded objects from all limbs on the carbon mob
 /mob/living/carbon/proc/remove_all_embedded_objects()
-	for(var/part in bodyparts)
-		var/obj/item/bodypart/bodypart = part
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		for(var/obj/item/embedded in bodypart.embedded_objects)
 			remove_embedded_object(embedded)
 
 /mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
-	for(var/part in bodyparts)
-		var/obj/item/bodypart/bodypart = part
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		for(var/obj/item/embedded in bodypart.embedded_objects)
 			if(!include_harmless && embedded.isEmbedHarmless())
 				continue
@@ -221,8 +218,7 @@
 
 /mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
 	var/body_plan_changed = FALSE
-	for(var/part in bodyparts)
-		var/obj/item/bodypart/existing_bodypart = part
+	for(var/obj/item/bodypart/existing_bodypart as anything in bodyparts)
 		var/obj/item/bodypart/new_bodypart
 		if((!existing_bodypart.use_digitigrade && swap_back == FALSE) || (existing_bodypart.use_digitigrade && swap_back == TRUE))
 			if(existing_bodypart.body_part == LEG_LEFT)

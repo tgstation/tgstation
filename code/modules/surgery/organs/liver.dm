@@ -187,8 +187,7 @@
 		CRASH("on_death() called for [src] ([type]) with not-dead owner ([owner])")
 	if((organ_flags & ORGAN_FAILING) && HAS_TRAIT(carbon_owner, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
 		return
-	for(var/reagent in carbon_owner.reagents.reagent_list)
-		var/datum/reagent/chem = reagent
+	for(var/datum/reagent/chem as anything in carbon_owner.reagents.reagent_list)
 		chem.on_mob_dead(carbon_owner, delta_time)
 
 #undef HAS_SILENT_TOXIN

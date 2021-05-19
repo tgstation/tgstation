@@ -11,8 +11,7 @@
 
 /datum/bioware/New(mob/living/carbon/human/_owner)
 	owner = _owner
-	for(var/thing in owner.bioware)
-		var/datum/bioware/bioware = thing
+	for(var/datum/bioware/bioware in owner.bioware)
 		if(bioware.mod_type == mod_type)
 			qdel(src)
 			return

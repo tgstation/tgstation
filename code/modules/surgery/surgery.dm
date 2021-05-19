@@ -144,8 +144,7 @@
 	. = ..()
 	surgeries = list()
 	var/list/req_tech_surgeries = subtypesof(/datum/surgery)
-	for(var/i in req_tech_surgeries)
-		var/datum/surgery/beep = i
+	for(var/datum/surgery/beep as anything in req_tech_surgeries)
 		if(initial(beep.requires_tech))
 			surgeries += beep
 

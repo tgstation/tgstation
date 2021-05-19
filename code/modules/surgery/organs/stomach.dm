@@ -50,8 +50,7 @@
 	var/mob/living/carbon/body = owner
 
 	// digest food, sent all reagents that can metabolize to the body
-	for(var/chunk in reagents.reagent_list)
-		var/datum/reagent/bit = chunk
+	for(var/datum/reagent/bit as anything in reagents.reagent_list)
 
 		// If the reagent does not metabolize then it will sit in the stomach
 		// This has an effect on items like plastic causing them to take up space in the stomach
@@ -178,8 +177,7 @@
 			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
 		body.heal_bodypart_damage(milk_brute_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time, milk_burn_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 
-		for(var/i in body.all_wounds)
-			var/datum/wound/iter_wound = i
+		for(var/datum/wound/iter_wound as anything in body.all_wounds)
 			iter_wound.on_xadone(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		reagents.remove_reagent(milk.type, milk.metabolization_rate * delta_time)
 	return ..()

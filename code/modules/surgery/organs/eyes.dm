@@ -373,8 +373,7 @@
 		QDEL_LIST(eye_lighting)
 		QDEL_NULL(on_mob)
 	else
-		for(var/i in eye_lighting)
-			var/obj/effect/abstract/eye_lighting/lighting = i
+		for(var/obj/effect/abstract/eye_lighting/lighting as anything in eye_lighting)
 			lighting.forceMove(src)
 		if(!QDELETED(on_mob))
 			on_mob.set_light_flags(on_mob.light_flags | LIGHT_ATTACHED)
@@ -403,8 +402,7 @@
 
 
 /obj/item/organ/eyes/robotic/glow/proc/sync_light_effects()
-	for(var/e in eye_lighting)
-		var/obj/effect/abstract/eye_lighting/eye_lighting = e
+	for(var/obj/effect/abstract/eye_lighting/eye_lighting as anything in eye_lighting)
 		eye_lighting.set_light_color(current_color_string)
 	on_mob?.set_light_color(current_color_string)
 

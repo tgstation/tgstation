@@ -68,8 +68,7 @@
 	reciever.internal_organs_slot[slot] = src
 	moveToNullspace()
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
-	for(var/actions in actions)
-		var/datum/action/action = actions
+	for(var/datum/action/action as anything in actions)
 		action.Grant(reciever)
 	STOP_PROCESSING(SSobj, src)
 
@@ -90,8 +89,7 @@
 			organ_owner.internal_organs_slot.Remove(slot)
 		if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
 			organ_owner.death()
-	for(var/actions in actions)
-		var/datum/action/action = actions
+	for(var/datum/action/action as anything in actions)
 		action.Remove(organ_owner)
 
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)

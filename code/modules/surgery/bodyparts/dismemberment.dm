@@ -60,14 +60,13 @@
 	var/turf/owner_location = get_turf(chest_owner)
 	chest_owner.add_splatter_floor(owner_location)
 	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
-	for(var/organs in chest_owner.internal_organs)
-		var/obj/item/organ/organ = organs
+	for(var/obj/item/organ/organ as anything in chest_owner.internal_organs)
 		var/org_zone = check_zone(organ.zone)
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
 		organ.Remove(chest_owner)
 		organ.forceMove(owner_location)
-		. += organs
+		. += organ
 	if(cavity_item)
 		cavity_item.forceMove(owner_location)
 		. += cavity_item
@@ -92,20 +91,17 @@
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
 			owner.hand_bodyparts[held_index] = null
 
-	for(var/thing in wounds)
-		var/datum/wound/wound = thing
+	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
 
-	for(var/thing in scars)
-		var/datum/scar/scar = thing
+	for(var/datum/scar/scar as anything in scars)
 		scar.victim = null
 		LAZYREMOVE(owner.all_scars, scar)
 
 	var/mob/living/carbon/phantom_owner = owner // so we can still refer to the guy who lost their limb after said limb forgets 'em
 	owner = null
 
-	for(var/surgeries in phantom_owner.surgeries) //if we had an ongoing surgery on that limb, we stop it.
-		var/datum/surgery/surgery = surgeries
+	for(var/datum/surgery/surgery as anything in phantom_owner.surgeries) //if we had an ongoing surgery on that limb, we stop it.
 		if(surgery.operated_bodypart == src)
 			phantom_owner.surgeries -= surgery
 			qdel(surgery)
@@ -120,14 +116,12 @@
 
 	if(!special)
 		if(phantom_owner.dna)
-			for(var/mutations in phantom_owner.dna.mutations) //some mutations require having specific limbs to be kept.
-				var/datum/mutation/human/mutation = mutations
+			for(var/datum/mutation/human/mutation as anything in phantom_owner.dna.mutations) //some mutations require having specific limbs to be kept.
 				if(mutation.limb_req && mutation.limb_req == body_zone)
 					to_chat(phantom_owner, "<span class='warning'>You feel your [mutation] deactivating from the loss of your [body_zone]!</span>")
 					phantom_owner.dna.force_lose(mutation)
 
-		for(var/organs in phantom_owner.internal_organs) //internal organs inside the dismembered limb are dropped.
-			var/obj/item/organ/organ = organs
+		for(var/obj/item/organ/organ as anything in phantom_owner.internal_organs) //internal organs inside the dismembered limb are dropped.
 			var/org_zone = check_zone(organ.zone)
 			if(org_zone != body_zone)
 				continue
@@ -160,8 +154,7 @@
 /obj/item/bodypart/proc/get_mangled_state()
 	. = BODYPART_MANGLED_NONE
 
-	for(var/i in wounds)
-		var/datum/wound/iter_wound = i
+	for(var/datum/wound/iter_wound as anything in wounds)
 		if((iter_wound.wound_flags & MANGLES_BONE))
 			. |= BODYPART_MANGLED_BONE
 		if((iter_wound.wound_flags & MANGLES_FLESH))
@@ -286,8 +279,7 @@
 /obj/item/bodypart/head/drop_limb(special)
 	if(!special)
 		//Drop all worn head items
-		for(var/head_items in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
-			var/obj/item/head_item = head_items
+		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			owner.dropItemToGround(head_item, force = TRUE)
 
 	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay flushed emoji
@@ -346,8 +338,7 @@
 		new_limb_owner.update_inv_gloves()
 
 	if(special) //non conventional limb attachment
-		for(var/surgeries in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
-			var/datum/surgery/attach_surgery = surgeries
+		for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
 			var/surgery_zone = check_zone(attach_surgery.location)
 			if(surgery_zone == body_zone)
 				new_limb_owner.surgeries -= attach_surgery
@@ -357,19 +348,17 @@
 	for(var/obj/item/organ/limb_organ in contents)
 		limb_organ.Insert(new_limb_owner)
 
-	for(var/i in wounds)
-		var/datum/wound/wound = i
+	for(var/datum/wound/wound as anything in wounds)
 		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
 		// otherwise the wound thinks it's trying to replace an existing wound of the same type (itself) and fails/deletes itself
 		LAZYREMOVE(wounds, wound)
 		wound.apply_wound(src, TRUE)
 
-	for(var/thing in scars)
-		var/datum/scar/scar = thing
+	for(var/datum/scar/scar as anything in scars)
 		if(scar in new_limb_owner.all_scars) // prevent double scars from happening for whatever reason
 			continue
 		scar.victim = new_limb_owner
-		LAZYADD(new_limb_owner.all_scars, thing)
+		LAZYADD(new_limb_owner.all_scars, scar)
 
 	update_bodypart_damage_state()
 
@@ -443,8 +432,8 @@
 	var/list/zone_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	if(length(excluded_zones))
 		zone_list -= excluded_zones
-	for(var/Z in zone_list)
-		. += regenerate_limb(Z, noheal)
+	for(var/limb_zone in zone_list)
+		. += regenerate_limb(limb_zone, noheal)
 
 /mob/living/proc/regenerate_limb(limb_zone, noheal)
 	return
