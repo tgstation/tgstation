@@ -59,7 +59,7 @@ export const IntegratedCircuit = (props, context) => {
               locations={locations}
             />
           ))}
-          <Connections locations={locations}/>
+          <Connections locations={locations} />
         </InfinitePlane>
       </Window.Content>
     </Window>
@@ -71,7 +71,7 @@ export class Connections extends Component {
     super();
     this.state = {
       connections: [],
-    }
+    };
     this.getConnections = this.getConnections.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
   }
@@ -94,9 +94,16 @@ export class Connections extends Component {
       let curr_conn = current_connections[i];
       let new_conn = connections[i];
       const keys = Object.keys(new_conn);
+      if (!curr_conn) {
+        this.setState({
+          connections: connections,
+        });
+        return;
+      }
+
       for (let key = 0; key < keys.length; key++) {
         let key_str = keys[key];
-        if(new_conn[key_str] !== curr_conn[key_str]) {
+        if (new_conn[key_str] !== curr_conn[key_str]) {
           this.setState({
             connections: connections,
           });

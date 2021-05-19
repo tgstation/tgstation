@@ -54,7 +54,9 @@
 		set_atom_light(parent.shell)
 
 /obj/item/component/light/proc/set_atom_light(atom/movable/target_atom)
-	target_atom.set_light_power(brightness.input_value)
-	target_atom.set_light_range(brightness.input_value)
-	target_atom.set_light_color(rgb(red.input_value, green.input_value, blue.input_value))
-	target_atom.set_light_on(on.input_value)
+	var/bright_val = min(max(brightness.input_value || 0, 0), brightness)
+
+	target_atom.set_light_power(bright_val)
+	target_atom.set_light_range(bright_val)
+	target_atom.set_light_color(rgb(red.input_value || 0, green.input_value || 0, blue.input_value || 0))
+	target_atom.set_light_on(!!on.input_value)

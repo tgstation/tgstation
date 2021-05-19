@@ -92,6 +92,7 @@
 		return
 
 	attached_circuit.interact(user)
+	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /**
  * Called when a screwdriver is used on the parent. Removes the circuitboard from the component.

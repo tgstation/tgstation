@@ -39,10 +39,10 @@
 	if(!COMPONENT_TRIGGERED_BY(trigger))
 		return
 
-	var/min_val = minimum.input_value
-	var/max_val = maximum.input_value
+	var/min_val = minimum.input_value || 0
+	var/max_val = maximum.input_value || 0
 
-	if((isnull(min_val) || isnull(max_val)) || max_val < min_val)
+	if(max_val < min_val)
 		output.set_output(0)
 		return
 

@@ -4,7 +4,7 @@
  * General logic unit with AND OR capabilities
  */
 /obj/item/component/not
-	display_name = "Logic"
+	display_name = "Not"
 
 	/// The input port
 	var/datum/port/input/input_port

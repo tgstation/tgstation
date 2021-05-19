@@ -109,6 +109,15 @@ export class InfinitePlane extends Component {
           onMouseMove={(e) => this.onMouseMove(e)}
           style={{
             "position": "absolute",
+            "height": "100%",
+            "width": "100%",
+          }}
+        />
+        <div
+          onMouseDown={(e) => this.onMouseDown(e)}
+          onMouseMove={(e) => this.onMouseMove(e)}
+          style={{
+            "position": "absolute",
             "transform": `translate(${left}px, ${top}px) scale(${zoom})`,
             "height": "100%",
             "width": "100%",

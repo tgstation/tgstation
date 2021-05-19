@@ -18,8 +18,8 @@
 
 /obj/item/component/ram/Initialize()
 	. = ..()
-	input_port = add_input_port("Input", PORT_TYPE_NUMBER, FALSE)
-	trigger = add_input_port("Store", PORT_TYPE_ANY)
+	input_port = add_input_port("Input", PORT_TYPE_ANY, FALSE)
+	trigger = add_input_port("Store", PORT_TYPE_NUMBER)
 
 	output = add_output_port("Stored Value", PORT_TYPE_ANY)
 

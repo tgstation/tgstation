@@ -22,7 +22,7 @@
 /obj/item/component/compare/Initialize()
 	. = ..()
 	for(var/port_id in 1 to input_port_amount)
-		var/letter = ascii2text(text2ascii("A") + port_id)
+		var/letter = ascii2text(text2ascii("A") + (port_id-1))
 		add_input_port(letter, PORT_TYPE_ANY)
 
 	compare = add_input_port("Compare", PORT_TYPE_NUMBER)
@@ -52,7 +52,7 @@
 			true.set_output(COMPONENT_SIGNAL)
 		else
 			false.set_output(COMPONENT_SIGNAL)
-	result.set_output(result)
+	result.set_output(logic_result)
 
 /// Do the comparisons and return a result
 /obj/item/component/compare/proc/do_comparisons(list/ports)

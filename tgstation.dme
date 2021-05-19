@@ -3541,6 +3541,7 @@
 #include "code\modules\wiremod\components\length.dm"
 #include "code\modules\wiremod\components\light.dm"
 #include "code\modules\wiremod\components\logic.dm"
+#include "code\modules\wiremod\components\not.dm"
 #include "code\modules\wiremod\components\ram.dm"
 #include "code\modules\wiremod\components\random.dm"
 #include "code\modules\wiremod\components\species.dm"

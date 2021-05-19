@@ -288,6 +288,9 @@
 				if(PORT_TYPE_NUMBER)
 					port.set_value(text2num(user_input))
 				else
-					port.set_value(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
+					if(user_input == "")
+						port.set_value(null)
+					else
+						port.set_value(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
 			. = TRUE
 #undef WITHIN_RANGE
