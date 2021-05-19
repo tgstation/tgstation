@@ -14,14 +14,19 @@
 	var/status = BODYPART_ORGANIC
 	var/needs_processing = FALSE
 
-	var/body_zone //BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
+	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
+	var/body_zone
 	var/aux_zone // used for hands
 	var/aux_layer
-	var/body_part //bitflag used to check which clothes cover this bodypart
-	var/use_digitigrade = NOT_DIGITIGRADE //Used for alternate legs, useless elsewhere
+	/// bitflag used to check which clothes cover this bodypart
+	var/body_part
+	/// Used for alternate legs, useless elsewhere
+	var/use_digitigrade = NOT_DIGITIGRADE
 	var/list/embedded_objects = list()
-	var/held_index = 0 //are we a hand? if so, which one!
-	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
+	/// are we a hand? if so, which one!
+	var/held_index = 0
+	/// For limbs that don't really exist, eg chainsaws
+	var/is_pseudopart = FALSE
 
 	///If disabled, limb is as good as missing.
 	var/bodypart_disabled = FALSE
@@ -29,7 +34,8 @@
 	var/disable_threshold = 0
 	///Controls whether bodypart_disabled makes sense or not for this limb.
 	var/can_be_disabled = FALSE
-	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
+	///Multiplier of the limb's damage that gets applied to the mob
+	var/body_damage_coeff = 1
 	var/stam_damage_coeff = 0.75
 	var/brutestate = 0
 	var/burnstate = 0
@@ -38,12 +44,12 @@
 	var/stamina_dam = 0
 	var/max_stamina_damage = 0
 	var/max_damage = 0
-
-	var/cremation_progress = 0 //Gradually increases while burning when at full damage, destroys the limb when at 100
-
-	var/brute_reduction = 0 //Subtracted to brute damage taken
-	var/burn_reduction = 0 //Subtracted to burn damage taken
-
+	///Gradually increases while burning when at full damage, destroys the limb when at 100
+	var/cremation_progress = 0
+	///Subtracted to brute damage taken
+	var/brute_reduction = 0
+	///Subtracted to burn damage taken
+	var/burn_reduction = 0
 	//Coloring and proper item icon update
 	var/skin_tone = ""
 	var/body_gender = ""
@@ -54,14 +60,17 @@
 	var/mutation_color = ""
 	var/no_update = 0
 
-	var/animal_origin //for nonhuman bodypart (e.g. monkey)
-	var/dismemberable = 1 //whether it can be dismembered with a weapon.
+	///for nonhuman bodypart (e.g. monkey)
+	var/animal_origin
+	///whether it can be dismembered with a weapon.
+	var/dismemberable = 1
 
 	var/px_x = 0
 	var/px_y = 0
 
 	var/species_flags_list = list()
-	var/dmg_overlay_type //the type of damage overlay (if any) to use when this bodypart is bruised/burned.
+	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
+	var/dmg_overlay_type
 
 	//Damage messages used by help_shake_act()
 	var/light_brute_msg = "bruised"
