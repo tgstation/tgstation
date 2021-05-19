@@ -160,7 +160,6 @@
 		"Service" = GLOB.service_positions,
 		"Silicon" = GLOB.nonhuman_positions
 	)
-	var/list/heads = GLOB.command_positions + list("Quartermaster")
 
 	for(var/datum/data/record/t in GLOB.data_core.general)
 		var/name = t.fields["name"]
@@ -172,7 +171,7 @@
 				if(!manifest_out[department])
 					manifest_out[department] = list()
 				// Append to beginning of list if captain or department head
-				if (rank == "Captain" || (department != "Command" && (rank in heads)))
+				if (rank == "Captain" || (department != "Command" && (rank in GLOB.command_positions)))
 					manifest_out[department] = list(list(
 						"name" = name,
 						"rank" = rank
