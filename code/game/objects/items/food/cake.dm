@@ -318,9 +318,9 @@
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
 /obj/item/food/cake/bscc // blackbarry strawberries chocolate cake
-	name = "blackberry and strawberry chocolate cake"
-	desc = "A chocolate cake, filled with assortment of blackberries and strawberries!"
-	icon_state = "blackbarry_strawberries_cake_coco_cake"
+	name = "strawberry chocolate cake slice"
+	desc = "Just a chocolate cake with five strawberries on top. For some reason, this configuration of cake is particularly aesthetically pleasing to AIs in SELF."
+	icon_state = "liars_cake"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/coco = 5)
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
@@ -331,7 +331,7 @@
 /obj/item/food/cakeslice/bscc
 	name = "strawberry chocolate cake slice"
 	desc = "Just a slice of cake with five strawberries on top. For some reason, this configuration of cake is particularly aesthetically pleasing to AIs in SELF." //yes, I know the one referenced has cherries, but I'm not implementing a new cake today.
-	icon_state = "blackbarry_strawberries_cake_coco_slice"
+	icon_state = "liars_slice"
 	tastes = list("strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
