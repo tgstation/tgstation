@@ -34,6 +34,19 @@
 	var/genetic = FALSE
 	icon_state = "stickyweb1"
 
+/obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
+	.= ..()
+	if(.)
+		return
+	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
+		return
+	user.visible_message("<span class='notice'>[user] begins weaving [src] into cloth.</span>", "<span class='notice'>You begin weaving [src] into cloth.</span>")
+	if(!do_after(user, 2 SECONDS))
+		return
+	qdel(src)
+	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
+	user.put_in_hands(woven_cloth)
+
 /obj/structure/spider/stickyweb/Initialize()
 	if(prob(50))
 		icon_state = "stickyweb2"

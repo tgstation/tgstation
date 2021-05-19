@@ -1,0 +1,6 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - bugfix: "Syndicate Saboteur borgs now properly come with a analyzer installed"
+  - balance: "Syndicate Medical borgs no longer have an emag"
+  - balance: "Syndicate Saboteur borgs now come with an emag."
