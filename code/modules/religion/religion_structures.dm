@@ -50,7 +50,7 @@
 		. += list("<span class='admin'>Bible: [GLOB.bible_name].</span>")
 	if(GLOB.religious_sect)
 		. += list("<span class='admin'>Sect: [GLOB.religious_sect].</span>")
-		. += list("<span class='admin'>Favor: [GLOB.religious_sect.favor]..</span>")
+		. += list("<span class='admin'>Favor: [GLOB.religious_sect.favor].</span>")
 	var/chaplains = get_chaplains()
 	if(chaplains)
 		. += list("<span class='admin'>Chaplains: [chaplains].</span>")
