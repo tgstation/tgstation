@@ -1116,41 +1116,27 @@
 	crate_name = "water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
-/datum/supply_pack/materials/gas_canisters
-	cost = CARGO_CRATE_VALUE * 0.05
+/datum/supply_pack/materials/water_vapor
+	name = "Water Vapor Canister"
+	cost = CARGO_CRATE_VALUE * 15
 	contains = list(/obj/machinery/portable_atmospherics/canister)
 	crate_type = /obj/structure/closet/crate/large
+	contains = list(/obj/machinery/portable_atmospherics/canister/water_vapor)
 
-/datum/supply_pack/materials/gas_canisters/generate_supply_packs()
-	var/list/canister_packs = list()
+/datum/supply_pack/materials/oxygen
+	name = "Oxygen Canister"
+	cost = CARGO_CRATE_VALUE * 9
+	contains = list(/obj/machinery/portable_atmospherics/canister)
+	crate_type = /obj/structure/closet/crate/large
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
 
-	var/obj/machinery/portable_atmospherics/canister/fakeCanister = /obj/machinery/portable_atmospherics/canister
-	// This is the amount of moles in a default canister
-	var/moleCount = (initial(fakeCanister.maximum_pressure) * initial(fakeCanister.filled)) * initial(fakeCanister.volume) / (R_IDEAL_GAS_EQUATION * T20C)
+/datum/supply_pack/materials/bz
+	name = "BZ Canister"
+	cost = CARGO_CRATE_VALUE * 45
+	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
+	crate_type = /obj/structure/closet/crate/large
 
-	for(var/gasType in GLOB.meta_gas_info)
-		var/datum/gas/gas = gasType
-		var/name = initial(gas.name)
-		if(!initial(gas.purchaseable))
-			continue
-		var/datum/supply_pack/materials/pack = new
-		pack.name = "[name] Canister"
-		pack.desc = "Contains a canister of [name]."
-		if(initial(gas.dangerous))
-			pack.desc = "[pack.desc] Requires Atmospherics access to open."
-			pack.access = ACCESS_ATMOSPHERICS
-			pack.access_view = ACCESS_ATMOSPHERICS
-		pack.crate_name = "[name] canister crate"
-		pack.id = "[type]([name])"
 
-		pack.cost = cost + moleCount * initial(gas.base_value) * 1.6
-		pack.cost = CEILING(pack.cost, 10)
-
-		pack.contains = list(GLOB.gas_id_to_canister[initial(gas.id)])
-
-		canister_packs += pack
-
-	return canister_packs
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
