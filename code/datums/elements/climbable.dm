@@ -65,7 +65,7 @@
 		adjusted_climb_time *= 0.8
 	if(HAS_TRAIT(user,TRAIT_FAST_CLIMBER)) //How it feels to chew 5 gum
 		adjusted_climb_time *= 0.3
-	LAZYADDASSOC(current_climbers, climbed_thing, user)
+	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
 	if(do_after(user, adjusted_climb_time, climbed_thing))
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return
