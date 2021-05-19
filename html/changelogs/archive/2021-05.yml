@@ -461,3 +461,39 @@
   tralezab:
   - spellcheck: fixes span in filterrific.dm
   - bugfix: simple_flying now removes itself from a mob when the mob deletes
+2021-05-17:
+  Anonymous:
+  - code_imp: You can now change emoji set with just a define. See `__DEFINES/misc.dm`.
+  SgtHunk:
+  - qol: You can now unlock/lock secure lockers with Right click rather than using
+      Alt+click.
+  Timberpoes:
+  - bugfix: Cryopods can no longer be used to round remove other SSD players.
+  - bugfix: Cryopods no longer delete traitor objectives under certain edge cases,
+      and can no longer be used to metagame the existence of traitors with steal objectives.
+  - balance: Cryopods now vomit out all the items of players who get vored by them,
+      like beautiful loot pinatas.
+  itseasytosee:
+  - bugfix: changeling spacesuits no longer come with a battery hud
+2021-05-18:
+  Kylerace:
+  - bugfix: i dont have the energy for a witty in-universe changelog so airhorns can
+      honk again
+  - bugfix: Recyclers dont vore themselves the moment the world is created anymore.
+  Mothblocks:
+  - refactor: tgui tooltips have been moved to a new system that keeps them within
+      bounds of the screen.
+  RandomGamer123:
+  - bugfix: Being buckled to a wheelchair no longer prevents you from using dermal
+      button nanites, cult chat, and more.
+  SgtHunk:
+  - rscadd: The Tramstation security checkpoints now have cells for easy brigging
+      on the go.
+2021-05-19:
+  JohnFulpWillard:
+  - rscadd: The Quartermaster can now send announcements via the Requests console
+      in their office.
+  Kylerace:
+  - bugfix: double rat kebabs are now double the reagents of single rat kebabs
+  - bugfix: rat kebabs no longer drop the metal rods when eaten unlike other kebabs
+      to maintain lore consistency
