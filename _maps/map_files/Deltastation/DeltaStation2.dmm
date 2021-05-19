@@ -14985,9 +14985,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/computer/exodrone_control_console{
-	dir = 2
-	},
+/obj/machinery/computer/exodrone_control_console,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -18959,6 +18957,21 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
+"cvU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/science/mixing)
 "cvV" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/landmark/start/hangover,
@@ -30701,6 +30714,9 @@
 "dDq" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/purple,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "dDt" = (
@@ -39777,9 +39793,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/binary/valve{
-	dir = 8
-	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "eMM" = (
@@ -47066,6 +47079,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "gRT" = (
@@ -50522,7 +50538,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -56213,8 +56229,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/binary/valve,
 /obj/machinery/power/apc/auto_name/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "jug" = (
@@ -58013,9 +58029,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/computer/exoscanner_control{
-	dir = 2
-	},
+/obj/machinery/computer/exoscanner_control,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -58732,7 +58746,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "kdY" = (
@@ -63106,8 +63119,8 @@
 "lkV" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/binary/pump,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/bridge_pipe/supply/hidden{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
@@ -63766,7 +63779,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/trinary/mixer/flipped,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "ltm" = (
@@ -66704,7 +66717,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/binary/valve,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "mkz" = (
@@ -76769,9 +76782,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "oIv" = (
@@ -84306,8 +84316,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 0
+	pixel_x = -7
 	},
 /obj/item/pen{
 	pixel_x = -7
@@ -144844,7 +144853,7 @@ xKY
 dEu
 dFL
 hJS
-bpL
+cvU
 dJX
 drP
 dLX
