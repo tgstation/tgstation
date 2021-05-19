@@ -2,6 +2,8 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, InfinitePlane } from '../components';
 import { Component, createRef } from 'inferno';
 import { Window } from '../layouts';
+import { CSS_COLORS } from '../constants';
+import { classes } from '../../common/react';
 
 const NULL_REF = "[0x0]";
 const SVG_Y_OFFSET = -32;
@@ -41,8 +43,8 @@ export class IntegratedCircuit extends Component {
     super();
     this.state = {
       locations: {},
-    }
-    this.storePortLocation = this.storePortLocation.bind(this);
+    };
+    this.handlePortLocation = this.handlePortLocation.bind(this);
   }
 
   // Helper function to get an element's exact position
@@ -59,9 +61,9 @@ export class IntegratedCircuit extends Component {
       x: xPos,
       y: yPos + SVG_Y_OFFSET,
     };
-  };
+  }
 
-  storePortLocation(port, dom) {
+  handlePortLocation(port, dom) {
     const { locations } = this.state;
 
     if (!dom) {
@@ -70,6 +72,7 @@ export class IntegratedCircuit extends Component {
 
     const lastPosition = locations[port.ref];
     const position = this.getPosition(dom);
+    position.color = port.color;
 
     if (isNaN(position.x) || isNaN(position.y)
       || (lastPosition
@@ -101,8 +104,8 @@ export class IntegratedCircuit extends Component {
                 key={index}
                 {...comp}
                 index={index+1}
-                onPortUpdated={this.storePortLocation}
-                onPortLoaded={this.storePortLocation}
+                onPortUpdated={this.handlePortLocation}
+                onPortLoaded={this.handlePortLocation}
               />
             ))}
             <Connections locations={locations} />
@@ -111,7 +114,7 @@ export class IntegratedCircuit extends Component {
       </Window>
     );
   }
-};
+}
 
 const Connections = (props, context) => {
   const { data } = useBackend(context);
@@ -122,14 +125,20 @@ const Connections = (props, context) => {
   for (const comp of components) {
     for (const port of comp.input_ports) {
       if (port.connected_to === NULL_REF) continue;
+      const output_port = locations[port.connected_to];
       connections.push({
-        color: port.color,
-        from: locations[port.connected_to],
+        color: output_port && output_port.color || "blue",
+        from: output_port,
         to: locations[port.ref],
       });
     }
   }
 
+  const isColorClass = str => {
+    if (typeof str === 'string') {
+      return CSS_COLORS.includes(str);
+    }
+  };
 
   return (
     <svg width="100%" height="100%">
@@ -147,19 +156,23 @@ const Connections = (props, context) => {
         path += `${to.x-SVG_X_CURVE_POINT}, ${to.y}`;
 
         path += `L ${to.x} ${to.y}`;
+
+        val.color = val.color || "blue";
         return (
           <path
+            className={classes([
+              isColorClass(val.color) && `color-stroke-${val.color}`,
+            ])}
             key={index}
             d={path}
             fill="transparent"
-            stroke={val.color || "#ff00a8"}
             stroke-width="2px"
           />
         );
       })}
     </svg>
   );
-}
+};
 
 export class ObjectComponent extends Component {
   constructor() {
@@ -167,6 +180,7 @@ export class ObjectComponent extends Component {
     this.state = {
       isDragging: false,
       dragPos: null,
+      startPos: null,
       lastMousePos: null,
     };
 
@@ -177,6 +191,7 @@ export class ObjectComponent extends Component {
         lastMousePos: null,
         isDragging: true,
         dragPos: { x: x, y: y },
+        startPos: { x: x, y: y },
       });
       window.addEventListener('mousemove', this.doDrag);
       window.addEventListener('mouseup', this.stopDrag);
@@ -222,30 +237,31 @@ export class ObjectComponent extends Component {
   }
 
   /**
-   * Performs equality by iterating through keys on an object and returning false
-   * when any key has values which are not strictly equal between the arguments.
-   * Returns true when the values of all keys are strictly equal.
+   * Performs equality by iterating through keys on an object and returning
+   * false when any key has values which are not strictly equal
+   * between the arguments. Returns true when the values of all keys are
+   * strictly equal.
    */
   shallowEqual(objA, objB) {
     if (objA === objB) {
       return true;
     }
 
-    if (typeof objA !== 'object' || objA === null ||
-        typeof objB !== 'object' || objB === null) {
+    if (typeof objA !== 'object' || objA === null
+      || typeof objB !== 'object' || objB === null) {
       return false;
     }
 
-    var keysA = Object.keys(objA);
-    var keysB = Object.keys(objB);
+    let keysA = Object.keys(objA);
+    let keysB = Object.keys(objB);
 
     if (keysA.length !== keysB.length) {
       return false;
     }
 
     // Test for A's keys different from B.
-    var bHasOwnProperty = hasOwnProperty.bind(objB);
-    for (var i = 0; i < keysA.length; i++) {
+    let bHasOwnProperty = hasOwnProperty.bind(objB);
+    for (let i = 0; i < keysA.length; i++) {
       if (!bHasOwnProperty(keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
         return false;
       }
@@ -256,13 +272,19 @@ export class ObjectComponent extends Component {
 
   shallowCompare(nextProps, nextState) {
     return (
-      !this.shallowEqual(this.props, nextProps) ||
-      !this.shallowEqual(this.state, nextState)
+      !this.shallowEqual(this.props, nextProps)
+      || !this.shallowEqual(this.state, nextState)
     );
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.shallowCompare(nextProps, nextState)
+    const { input_ports, output_ports } = this.props;
+
+    return (
+      this.shallowCompare(nextProps, nextState)
+      || !this.shallowEqual(input_ports, nextProps.input_ports)
+      || !this.shallowEqual(output_ports, nextProps.output_ports)
+    );
   }
 
   render() {
@@ -283,10 +305,10 @@ export class ObjectComponent extends Component {
       ...rest
     } = this.props;
     const { act } = useBackend(this.context);
-    const { dragPos } = this.state;
+    const { startPos, dragPos } = this.state;
 
     let [x_pos, y_pos] = [x, y];
-    if (dragPos) {
+    if (dragPos && startPos && startPos.x === x_pos && startPos.y === y_pos) {
       x_pos = dragPos.x;
       y_pos = dragPos.y;
     }
@@ -385,22 +407,21 @@ export class ObjectComponent extends Component {
 }
 
 export class Port extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor() {
+    super();
     this.iconRef = createRef();
 
     this.handlePortClick = () => {
       const { act } = useBackend(this.context);
       const [selectedPort, setSelectedPort]
-        = useLocalState(context, "selected_port", null);
+        = useLocalState(this.context, "selected_port", null);
 
       const {
         port,
         portIndex,
         componentId,
         isOutput,
-        ...rest
-      } = props;
+      } = this.props;
 
       if (selectedPort) {
         if (selectedPort.ref === port.ref) {
@@ -443,9 +464,6 @@ export class Port extends Component {
 
     this.handlePortRightClick = (e) => {
       const { act } = useBackend(this.context);
-      const [selectedPort, setSelectedPort]
-        = useLocalState(context, "selected_port", null);
-
       const {
         port,
         portIndex,
