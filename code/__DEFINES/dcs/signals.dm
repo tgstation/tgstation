@@ -332,6 +332,9 @@
 #define COMSIG_EXIT_AREA "exit_area"
 ///from base of atom/Click(): (location, control, params, mob/user)
 #define COMSIG_CLICK "atom_click"
+///from base of atom/RightClick(): (/mob)
+#define COMSIG_CLICK_RIGHT "right_click"
+	#define COMPONENT_CANCEL_CLICK_RIGHT (1<<0)
 ///from base of atom/ShiftClick(): (/mob)
 #define COMSIG_CLICK_SHIFT "shift_click"
 	#define COMPONENT_ALLOW_EXAMINATE (1<<0) //Allows the user to examinate regardless of client.eye.
