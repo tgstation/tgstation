@@ -334,6 +334,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/gravboots
+	name = "Zero-Point Magboots"
+	desc = "Modified magboots that will generate local gravity field around the user. These require a gravitational anomaly core to function."
+	id = "gravboots"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/silver = 2000, /datum/material/uranium = 4000, /datum/material/glass = 6000, /datum/material/iron = 6000, /datum/material/diamond = 2000, /datum/material/bluespace = 2000)
+	build_path = /obj/item/clothing/shoes/magboots/gravboots
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////

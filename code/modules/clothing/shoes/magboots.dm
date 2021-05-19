@@ -58,3 +58,61 @@
 	name = "blood-red magboots"
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
+
+/obj/item/clothing/shoes/magboots/gravboots
+	desc = "A pair of modified magnetic boots that use an anomaly core to generate gravity around the user instead of pulling their feet to the ground. Requires a gravitational anomaly core to function."
+	name = "zero-point magboots"
+	icon_state = "gravboots0"
+	magboot_state = "gravboots"
+	slowdown_active = 1
+	var/core = FALSE
+	var/list/grav_turfs = list()
+
+/obj/item/clothing/shoes/magboots/gravboots/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
+		to_chat(user, "<span class='notice'>You insert [C] into [src] and their circuitry gently hums to life.</span>")
+		core = TRUE
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(C)
+		return
+	return ..()
+
+/obj/item/clothing/shoes/magboots/gravboots/attack_self(mob/user)
+	if(!core)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		to_chat(user, "<span class='warning'>[src] fail to activate without an inserted anomaly core!</span>")
+		return
+
+	if(magpulse)
+		clothing_flags &= ~NOSLIP
+		slowdown = SHOES_SLOWDOWN
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	else
+		clothing_flags |= NOSLIP
+		slowdown = slowdown_active
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/distance_check)
+
+	magpulse = !magpulse
+	icon_state = "[magboot_state][magpulse]"
+	to_chat(user, "<span class='notice'>You [magpulse ? "enable" : "disable"] the mag-pulse traction system.</span>")
+	user.update_inv_shoes()
+	user.update_gravity(user.has_gravity())
+	user.update_equipment_speed_mods()
+
+	distance_check()
+
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
+/obj/item/clothing/shoes/magboots/gravboots/proc/distance_check(mob/user)
+	for(var/turf/grav_turf in grav_turfs)
+		if(get_dist(src, grav_turf) > 2)
+			grav_turf.RemoveElement(/datum/element/forced_gravity, 1)
+			grav_turfs.Remove(grav_turf)
+
+	for(var/turf/grav_turf in range(2, user))
+		if(!(grav_turf in grav_turfs))
+			grav_turf.AddElement(/datum/element/forced_gravity, 1)
+			grav_turfs.Add(grav_turf)
+
