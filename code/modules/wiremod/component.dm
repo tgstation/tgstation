@@ -136,6 +136,9 @@
 	if(!parent)
 		return TRUE
 
+	if(!parent.on)
+		return TRUE
+
 	var/obj/item/stock_parts/cell/cell = parent.get_cell()
 	if(!cell || !cell.use(power_usage_per_input))
 		return TRUE

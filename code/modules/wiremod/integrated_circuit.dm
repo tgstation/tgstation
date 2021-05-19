@@ -20,6 +20,9 @@
 	/// The attached components
 	var/list/obj/item/component/attached_components = list()
 
+	/// Whether the integrated circuit is on or not. Handled by the shell.
+	var/on = TRUE
+
 /obj/item/integrated_circuit/loaded/Initialize()
 	. = ..()
 	cell = new /obj/item/stock_parts/cell/high(src)
@@ -181,6 +184,11 @@
 		return shell
 	return ..()
 
+/obj/item/integrated_circuit/ui_state(mob/user)
+	if(!shell)
+		return GLOB.hands_state
+	return GLOB.physical_obscured_state
+
 /obj/item/integrated_circuit/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -211,7 +219,7 @@
 			var/datum/port/input/input_port = input_component.input_ports[input_port_id]
 			var/datum/port/output/output_port = output_component.output_ports[output_port_id]
 
-			if(output_port.datatype && input_port.datatype && input_port.datatype != output_port.datatype)
+			if(output_port.datatype && input_port.datatype && !output_port.compatible_datatype(input_port.datatype))
 				return
 
 			input_port.register_output_port(output_port)
@@ -253,8 +261,8 @@
 			if(!WITHIN_RANGE(component_id, attached_components))
 				return
 			var/obj/item/component/component = attached_components[component_id]
-			component.rel_x = min(max(0, text2num(params["rel_x"])), COMPONENT_MAX_POS)
-			component.rel_y = min(max(0, text2num(params["rel_y"])), COMPONENT_MAX_POS)
+			component.rel_x = min(max(-COMPONENT_MAX_POS, text2num(params["rel_x"])), COMPONENT_MAX_POS)
+			component.rel_y = min(max(-COMPONENT_MAX_POS, text2num(params["rel_y"])), COMPONENT_MAX_POS)
 			. = TRUE
 		if("set_component_option")
 			var/component_id = text2num(params["component_id"])
@@ -277,10 +285,9 @@
 			var/datum/port/input/port = component.input_ports[port_id]
 			var/user_input = params["input"]
 			switch(port.datatype)
-				if(PORT_TYPE_STRING, PORT_TYPE_ANY)
-					port.set_value(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
 				if(PORT_TYPE_NUMBER)
 					port.set_value(text2num(user_input))
-				// TODO: Add List support
+				else
+					port.set_value(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
 			. = TRUE
 #undef WITHIN_RANGE

@@ -68,6 +68,9 @@
 /// Whether a circuit is stuck on a shell and cannot be removed (by a user)
 #define SHELL_FLAG_CIRCUIT_FIXED (1<<0)
 
+/// Whether the shell needs to be anchored for the circuit to be on.
+#define SHELL_FLAG_REQUIRE_ANCHOR (1<<1)
+
 // Shell capacities. These can be converted to configs very easily later
 #define SHELL_CAPACITY_SMALL 10
 #define SHELL_CAPACITY_MEDIUM 25

@@ -5,12 +5,13 @@
  */
 /obj/item/compact_remote
 	name = "compact remote"
-	icon = 'icons/obj/device.dmi'
-	icon_state = "gangtool-white"
+	icon = 'icons/obj/wiremod.dmi'
+	icon_state = "setup_small_simple"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
 /obj/item/compact_remote/Initialize()
 	. = ..()

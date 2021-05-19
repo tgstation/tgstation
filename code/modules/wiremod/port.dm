@@ -35,6 +35,18 @@
 	return ..()
 
 /**
+ * Converts the value to be of the type of the port.
+ *
+ * Used for implicit conversions between outputs and inputs (e.g. number -> string)
+ */
+/datum/port/proc/convert_value(value_to_convert)
+	. = value_to_convert
+	switch(datatype)
+		if(PORT_TYPE_STRING)
+			return "[value_to_convert]"
+
+
+/**
  * Disconnects a port from all other ports
  *
  * Called by [/obj/item/component] whenever it is disconnected from
@@ -69,6 +81,22 @@
 /datum/port/output/proc/set_output(value)
 	output_value = value
 	SEND_SIGNAL(src, COMSIG_PORT_SET_OUTPUT, value)
+
+/**
+ * Determines if a datatype is compatible with this port.
+ *
+ * Arguments:
+ * * other_datatype - The datatype to check
+ */
+/datum/port/output/proc/compatible_datatype(datatype_to_check)
+	if(datatype_to_check == datatype)
+		return TRUE
+
+	if(datatype == PORT_TYPE_NUMBER)
+		// Can easily convert a number to string. Everything else has to use a tostring component
+		return datatype_to_check == PORT_TYPE_STRING
+
+	return FALSE
 
 /**
  * # Input Port
@@ -136,8 +164,8 @@
  * Arguments:
  * * port_to_register - The port to connect the input port to
  */
-/datum/port/input/proc/set_value(var/new_value)
-	input_value = new_value
+/datum/port/input/proc/set_value(new_value)
+	input_value = convert_value(new_value)
 	if(trigger)
 		connected_component.input_received(src)
 

@@ -2,6 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, ProgressBar, InfinitePlane } from '../components';
 import { Component, createRef } from 'inferno';
 import { Window } from '../layouts';
+import { logger } from '../logging';
 
 const NULL_REF = "[0x0]";
 const SVG_Y_OFFSET = -32;
@@ -24,8 +25,8 @@ const FUNDAMENTAL_DATA_TYPES = {
       <Box onMouseDown={e => e.stopPropagation()}>
         <NumberInput
           value={value || 0}
-          minValue={-200}
-          maxValue={200}
+          minValue={-1000}
+          maxValue={1000}
           onChange={(e, val) => setValue(val)}
           unit={name}
         />
@@ -39,23 +40,7 @@ FUNDAMENTAL_DATA_TYPES["any"] = FUNDAMENTAL_DATA_TYPES["string"];
 export const IntegratedCircuit = (props, context) => {
   const { act, data } = useBackend(context);
   const { components } = data;
-  const connections = [];
-
-  const [positions, setPositions]
-   = useLocalState(context, "port_positions", {});
-
-  for (let comp_index = 0; comp_index < components.length; comp_index++) {
-    const inputs = components[comp_index].input_ports;
-    for (let port_index = 0; port_index < inputs.length; port_index++) {
-      const port = inputs[port_index];
-      if (port.connected_to === NULL_REF) continue;
-      connections.push({
-        color: port.color,
-        from: positions[port.connected_to],
-        to: positions[port.ref],
-      });
-    }
-  }
+  const locations = [];
 
   return (
     <Window
@@ -67,39 +52,120 @@ export const IntegratedCircuit = (props, context) => {
           height="100%"
         >
           {components.map((comp, index) => (
-            <ObjectComponent key={index} {...comp} index={index+1} />
+            <ObjectComponent
+              key={index}
+              {...comp}
+              index={index+1}
+              locations={locations}
+            />
           ))}
-          <svg width="100%" height="100%">
-            {connections.map((val, index) => {
-              const from = val.from;
-              const to = val.to;
-              if (!to || !from) {
-                return;
-              }
-              // Starting point
-              let path = `M ${from.x} ${from.y}`;
-              path += `L ${from.x+SVG_X_CURVE_POINT} ${from.y}`;
-              path += `C ${to.x}, ${from.y},`;
-              path += `${from.x}, ${to.y},`;
-              path += `${to.x-SVG_X_CURVE_POINT}, ${to.y}`;
-
-              path += `L ${to.x} ${to.y}`;
-              return (
-                <path
-                  key={index}
-                  d={path}
-                  fill="transparent"
-                  stroke={val.color || "#ff00a8"}
-                  stroke-width="2px"
-                />
-              );
-            })}
-          </svg>
+          <Connections locations={locations}/>
         </InfinitePlane>
       </Window.Content>
     </Window>
   );
 };
+
+export class Connections extends Component {
+  constructor() {
+    super();
+    this.state = {
+      connections: [],
+    }
+    this.getConnections = this.getConnections.bind(this);
+    this.onMouseMove = this.onMouseMove.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      connections: this.getConnections(),
+    });
+    window.addEventListener("mousemove", this.onMouseMove);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("mousemove", this.onMouseMove);
+  }
+
+  componentDidUpdate() {
+    const connections = this.getConnections();
+    const current_connections = this.state.connections;
+    for (let i = 0; i < connections.length; i++) {
+      let curr_conn = current_connections[i];
+      let new_conn = connections[i];
+      const keys = Object.keys(new_conn);
+      for (let key = 0; key < keys.length; key++) {
+        let key_str = keys[key];
+        if(new_conn[key_str] !== curr_conn[key_str]) {
+          this.setState({
+            connections: connections,
+          });
+          return;
+        }
+      }
+    }
+  }
+
+  onMouseMove() {
+    this.setState({
+      connections: this.getConnections(),
+    });
+  }
+
+  getConnections() {
+    const connections = [];
+    const { locations } = this.props;
+    const { data } = useBackend(this.context);
+    const { components } = data;
+
+    for (let comp_index = 0; comp_index < components.length; comp_index++) {
+      const inputs = components[comp_index].input_ports;
+      for (let port_index = 0; port_index < inputs.length; port_index++) {
+        const port = inputs[port_index];
+        if (port.connected_to === NULL_REF) continue;
+        connections.push({
+          color: port.color,
+          from: locations[port.connected_to],
+          to: locations[port.ref],
+        });
+      }
+    }
+
+    return connections;
+  }
+
+  render() {
+    const { connections } = this.state;
+    return (
+      <svg width="100%" height="100%">
+        {connections.map((val, index) => {
+          const from = val.from;
+          const to = val.to;
+          if (!to || !from) {
+            return;
+          }
+          // Starting point
+          let path = `M ${from.x} ${from.y}`;
+          path += `L ${from.x+SVG_X_CURVE_POINT} ${from.y}`;
+          path += `C ${to.x}, ${from.y},`;
+          path += `${from.x}, ${to.y},`;
+          path += `${to.x-SVG_X_CURVE_POINT}, ${to.y}`;
+
+          path += `L ${to.x} ${to.y}`;
+          return (
+            <path
+              key={index}
+              d={path}
+              fill="transparent"
+              stroke={val.color || "#ff00a8"}
+              stroke-width="2px"
+            />
+          );
+        })}
+      </svg>
+    );
+  }
+}
 
 export class ObjectComponent extends Component {
   constructor() {
@@ -173,6 +239,7 @@ export class ObjectComponent extends Component {
       options,
       option,
       removable,
+      locations,
       ...rest
     } = this.props;
     const { act } = useBackend(this.context);
@@ -247,6 +314,7 @@ export class ObjectComponent extends Component {
                       port={port}
                       portIndex={portIndex+1}
                       componentId={index}
+                      locations={locations}
                     />
                   </Stack.Item>
                 ))}
@@ -260,6 +328,7 @@ export class ObjectComponent extends Component {
                       port={port}
                       portIndex={portIndex+1}
                       componentId={index}
+                      locations={locations}
                       isOutput
                     />
                   </Stack.Item>
@@ -368,15 +437,13 @@ export class Port extends Component {
     };
 
     this.updatePosition = () => {
-      const { port } = this.props;
-      const [positions, setPositions]
-       = useLocalState(context, "port_positions", {});
+      const { port, locations } = this.props;
 
       if (!this.iconRef.current) {
         return;
       }
 
-      const lastPosition = positions[port.ref];
+      const lastPosition = locations[port.ref];
       const position = this.getPosition(this.iconRef.current);
 
       if (isNaN(position.x) || isNaN(position.y)
@@ -385,8 +452,7 @@ export class Port extends Component {
         && lastPosition.y === position.y)) {
         return;
       }
-      positions[port.ref] = position;
-      setPositions(positions);
+      locations[port.ref] = position;
     };
   }
 

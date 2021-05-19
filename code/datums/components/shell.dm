@@ -28,13 +28,18 @@
 
 /datum/component/shell/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver_act)
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
+	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED))
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver_act)
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
+	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
+		RegisterSignal(parent, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, .proc/on_unfasten)
 
 /datum/component/shell/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
+		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
+		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
 	))
 
 	QDEL_NULL(attached_circuit)
@@ -43,6 +48,21 @@
 	QDEL_LIST(unremovable_components)
 	return ..()
 
+/**
+ * Called when the shell is wrenched.
+ *
+ * Only applies if the shell has SHELL_FLAG_REQUIRE_ANCHOR.
+ * Disables the integrated circuit if unanchored, otherwise enable the circuit.
+ */
+/datum/component/shell/proc/on_unfasten(atom/source, anchored)
+	SIGNAL_HANDLER
+	if(!attached_circuit)
+		return
+
+	if(anchored)
+		attached_circuit.on = TRUE
+	else
+		attached_circuit.on = FALSE
 /**
  * Called when an item hits the parent. This is the method to add the circuitboard to the component.
  */
@@ -79,9 +99,6 @@
 /datum/component/shell/proc/on_screwdriver_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 	if(!attached_circuit)
-		return
-
-	if(shell_flags & SHELL_FLAG_CIRCUIT_FIXED)
 		return
 
 	tool.play_tool_sound(parent)
@@ -123,10 +140,15 @@
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT, .proc/on_circuit_add_component)
 	attached_circuit.set_shell(parent)
 
+	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
+		var/atom/movable/parent_atom = parent
+		on_unfasten(parent_atom, parent_atom.anchored)
+
 /**
  * Removes the circuit from the component. Doesn't do any checks to see for an existing circuit so that should be done beforehand.
  */
 /datum/component/shell/proc/remove_circuit()
+	attached_circuit.on = TRUE
 	attached_circuit.remove_current_shell()
 	UnregisterSignal(attached_circuit, list(
 		COMSIG_MOVABLE_MOVED,
