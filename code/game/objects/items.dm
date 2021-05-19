@@ -280,7 +280,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			return
 
 	var/turf/T = loc
-	loc = null
+	abstract_move(null)
 	forceMove(T)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
