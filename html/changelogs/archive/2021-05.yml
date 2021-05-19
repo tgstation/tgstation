@@ -489,3 +489,11 @@
   SgtHunk:
   - rscadd: The Tramstation security checkpoints now have cells for easy brigging
       on the go.
+2021-05-19:
+  JohnFulpWillard:
+  - rscadd: The Quartermaster can now send announcements via the Requests console
+      in their office.
+  Kylerace:
+  - bugfix: double rat kebabs are now double the reagents of single rat kebabs
+  - bugfix: rat kebabs no longer drop the metal rods when eaten unlike other kebabs
+      to maintain lore consistency
