@@ -108,7 +108,7 @@ export class InfinitePlane extends Component {
           onMouseDown={(e) => this.onMouseDown(e)}
           onMouseMove={(e) => this.onMouseMove(e)}
           style={{
-            "position": "absolute",
+            "position": "fixed",
             "height": "100%",
             "width": "100%",
           }}
@@ -117,7 +117,7 @@ export class InfinitePlane extends Component {
           onMouseDown={(e) => this.onMouseDown(e)}
           onMouseMove={(e) => this.onMouseMove(e)}
           style={{
-            "position": "absolute",
+            "position": "fixed",
             "transform": `translate(${left}px, ${top}px) scale(${zoom})`,
             "height": "100%",
             "width": "100%",
