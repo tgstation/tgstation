@@ -423,7 +423,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs, with custom colors."
-	greyscale_colors = "#ffffff#ffffff#808080#808080#ff0000#808080"
+	greyscale_colors = "#ffffff#ffffff#808080#808080#808080#808080"
 	greyscale_config = /datum/greyscale_config/winter_coats
 	greyscale_config_worn = /datum/greyscale_config/winter_coats/worn
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/custom
