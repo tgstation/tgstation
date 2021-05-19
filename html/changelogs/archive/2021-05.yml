@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2021-05-01:
   ATHATH:
   - spellcheck: The shivering symptom has been renamed to be the "chills" symptom,
@@ -398,6 +399,8 @@
       shaken awake once more.
   tralezab:
   - bugfix: fixes udders not performing some things they should!
+=======
+>>>>>>> 71296e56f652581de608716d487fb8437c30fa01
 2021-05-15:
   ATHATH:
   - bugfix: Beepsky smash's stamina healing and non-beepsky-related hallucinatory
@@ -413,8 +416,11 @@
   Guillaume Prata:
   - spellcheck: The atmospherics hardsuit description was changed to better inform
       that it has less radiation protection than the engineering ones.
+<<<<<<< HEAD
   InsaneRed:
   - qol: Plasmamen paramedics now start with nitrile gloves
+=======
+>>>>>>> 71296e56f652581de608716d487fb8437c30fa01
   JohnFulpWillard:
   - bugfix: Security Revolutionaries will no longer become Enemies of the Revolution
       upon a Revolution victory.
@@ -434,6 +440,7 @@
   - refactor: THAT USE SIGNALS!
   - rscadd: RPGLoot now has the curse of hunger as a bad modifier. A very bad one!
   - refactor: Duffelbag curse is now a component, attachable to any item.
+<<<<<<< HEAD
 2021-05-16:
   Clyde-Thunderpants:
   - rscadd: New trait, web weaver, that allow you to weave webs into cloth.
@@ -497,3 +504,5 @@
   - bugfix: double rat kebabs are now double the reagents of single rat kebabs
   - bugfix: rat kebabs no longer drop the metal rods when eaten unlike other kebabs
       to maintain lore consistency
+=======
+>>>>>>> 71296e56f652581de608716d487fb8437c30fa01
