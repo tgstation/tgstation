@@ -41,7 +41,7 @@
 	return ..()
 
 /obj/structure/altar_of_gods/examine_more(mob/user)
-	if(!isAdminObserver(user))
+	if(!isobserver(user))
 		return ..()
 	. = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
 	if(GLOB.religion)
@@ -52,7 +52,7 @@
 		. += list("<span class='admin'>Sect: [GLOB.religious_sect].</span>")
 		. += list("<span class='admin'>Favor: [GLOB.religious_sect.favor].</span>")
 	var/chaplains = get_chaplains()
-	if(chaplains)
+	if(isAdminObserver(user) && chaplains)
 		. += list("<span class='admin'>Chaplains: [chaplains].</span>")
 
 /obj/structure/altar_of_gods/proc/reflect_sect_in_icons()
