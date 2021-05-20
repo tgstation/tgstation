@@ -497,3 +497,6 @@
   - bugfix: double rat kebabs are now double the reagents of single rat kebabs
   - bugfix: rat kebabs no longer drop the metal rods when eaten unlike other kebabs
       to maintain lore consistency
+2021-05-20:
+  LemonInTheDark:
+  - bugfix: Things like microwaves will no longer have their sound stack
