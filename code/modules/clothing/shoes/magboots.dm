@@ -1,3 +1,5 @@
+#define GRAVBOOTS_RANGE 2
+
 /obj/item/clothing/shoes/magboots
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
 	name = "magboots"
@@ -109,11 +111,11 @@
 	SIGNAL_HANDLER
 
 	for(var/turf/grav_turf in grav_turfs)
-		if(get_dist(src, grav_turf) > 2)
+		if(get_dist(src, grav_turf) > GRAVBOOTS_RANGE)
 			grav_turf.RemoveElement(/datum/element/forced_gravity, 1)
 			grav_turfs.Remove(grav_turf)
 
-	for(var/turf/grav_turf in range(2, user))
+	for(var/turf/grav_turf in range(GRAVBOOTS_RANGE, user))
 		if(!(grav_turf in grav_turfs))
 			grav_turf.AddElement(/datum/element/forced_gravity, 1)
 			grav_turfs.Add(grav_turf)
@@ -121,3 +123,5 @@
 /obj/item/clothing/shoes/magboots/gravboots/dropped(mob/user)
 	. = ..()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+
+#undef GRAVBOOTS_RANGE
