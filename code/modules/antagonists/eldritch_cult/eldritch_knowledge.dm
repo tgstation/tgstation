@@ -129,7 +129,7 @@
 	var/obj/effect/proc_holder/spell/spell_to_add
 
 /datum/eldritch_knowledge/spell/on_gain(mob/user)
-	spell_to_add = new
+	spell_to_add = new spell_to_add
 	user.mind.AddSpell(spell_to_add)
 	return ..()
 
@@ -185,7 +185,7 @@
 	//we need to spawn the mob first so that we can use it in pollCandidatesForMob, we will move it from nullspace down the code
 	var/mob/living/summoned = new mob_to_summon(loc)
 	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, null, FALSE, 100, summoned)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, FALSE, 100, summoned)
 	if(!LAZYLEN(candidates))
 		to_chat(user,"<span class='warning'>No ghost could be found...</span>")
 		qdel(summoned)

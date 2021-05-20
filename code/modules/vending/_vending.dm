@@ -263,7 +263,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(!light_mask)
 		return
 	if(!(machine_stat & BROKEN) && powered())
-		. += mutable_appearance(icon, light_mask, 0, EMISSIVE_PLANE)
+		. += emissive_appearance(icon, light_mask)
 
 /obj/machinery/vending/obj_break(damage_flag)
 	. = ..()
@@ -1020,10 +1020,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
-	icon_state = "robotics"
-	icon_deny = "robotics-deny"
+	icon_state = "custom"
+	icon_deny = "custom-deny"
 	max_integrity = 400
 	payment_department = NO_FREEBIES
+	light_mask = "custom-light-mask"
 	refill_canister = /obj/item/vending_refill/custom
 	/// where the money is sent
 	var/datum/bank_account/private_a
@@ -1169,7 +1170,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(T)
 		for(var/obj/item/I in contents)
 			I.forceMove(T)
-		explosion(T, -1, 0, 3)
+		explosion(src, devastation_range = -1, light_impact_range = 3)
 	return ..()
 
 /obj/machinery/vending/custom/unbreakable
@@ -1204,8 +1205,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 		to_chat(user, "<span class='notice'>You set the price of [I] to [price] cr.</span>")
 
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
+	icon_state = "greed"
+	icon_deny = "greed-deny"
+	light_mask = "greed-light-mask"
 	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
-	material_flags = MATERIAL_COLOR //it's grey anyway, let's bling out
 
 /obj/machinery/vending/custom/greed/Initialize(mapload)
 	. = ..()
@@ -1217,7 +1220,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	name = "[GLOB.deity]'s Consecrated Vendor"
 	desc = "A vending machine created by [GLOB.deity]."
 	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
-	add_filter("vending_outline", 9, list("type" = "outline", "color" = "#FFFFFF"))
-	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35))
+	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
+	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 
 

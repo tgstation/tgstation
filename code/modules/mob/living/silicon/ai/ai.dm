@@ -1019,7 +1019,7 @@
 		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/camera/ai_eye/moved_eye)
-	GLOB.cameranet.visibility(moved_eye, client, all_eyes, USE_STATIC_OPAQUE)
+	GLOB.cameranet.visibility(moved_eye, client, all_eyes, TRUE)
 
 /mob/living/silicon/ai/forceMove(atom/destination)
 	. = ..()
@@ -1055,3 +1055,10 @@
 
 /mob/living/silicon/on_handsblocked_end()
 	return // AIs have no hands
+
+/mob/living/silicon/ai/get_exp_list(minutes)
+	. = ..()
+
+	var/datum/job/ai/ai_job_ref = SSjob.GetJobType(/datum/job/ai)
+
+	.[ai_job_ref.title] = minutes

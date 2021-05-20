@@ -1,6 +1,6 @@
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
-	icon_state = "mime"
+	greyscale_colors = "#ffffff"
 
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
@@ -43,12 +43,18 @@
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/shoes/sandal/marisa
+/obj/item/clothing/shoes/sneakers/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
-	icon_state = "black"
+	worn_icon_state = "marisa"
+	greyscale_colors = "#545454#ffffff"
+	greyscale_config = /datum/greyscale_config/sneakers_marisa
+	greyscale_config_worn = null
+	strip_delay = 5
+	equip_delay_other = 50
+	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-	species_exception = null
 
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"
@@ -98,7 +104,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please)
+	LoadComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, 0, 0, 0, 0, 20, 0) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
@@ -212,10 +218,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
-/obj/item/clothing/shoes/cyborg
+/obj/item/clothing/shoes/sneakers/cyborg
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume."
-	icon_state = "boots"
+	greyscale_colors = "#4e4e4e#4e4e4e"
 
 /obj/item/clothing/shoes/laceup
 	name = "laceup shoes"
@@ -272,8 +278,8 @@
 		recharging_time = world.time + recharging_rate
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
-		
-/obj/item/clothing/shoes/bhop/rocket 
+
+/obj/item/clothing/shoes/bhop/rocket
 	name = "rocket boots"
 	desc = "Very special boots with built-in rocket thrusters! SHAZBOT!"
 	icon_state = "rocketboots"
@@ -308,8 +314,10 @@
 /obj/item/clothing/shoes/wheelys
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
-	icon_state = "wheelys"
 	worn_icon_state = "wheelys"
+	greyscale_colors = "#545454#ffffff"
+	icon_state = "sneakers"
+	greyscale_config = /datum/greyscale_config/sneakers_wheelys
 	inhand_icon_state = "wheelys"
 	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
 	worn_x_dimension = 64
@@ -351,9 +359,9 @@
 
 /obj/item/clothing/shoes/wheelys/proc/toggle_wheels(status)
 	if (status)
-		worn_icon_state = "[initial(icon_state)]-on"
+		worn_icon_state = "[initial(worn_icon_state)]-on"
 	else
-		worn_icon_state = "[initial(icon_state)]"
+		worn_icon_state = "[initial(worn_icon_state)]"
 	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
 	update_appearance()
 
@@ -365,6 +373,8 @@
 	name = "roller skates"
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
 	icon_state = "rollerskates"
+	greyscale_colors = null
+	greyscale_config = null
 	worn_icon_state = "rollerskates"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
@@ -375,6 +385,8 @@
 	name = "ski shoes"
 	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	icon_state = "skishoes"
+	greyscale_colors = null
+	greyscale_config = null
 	worn_icon_state = "skishoes"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
@@ -435,21 +447,34 @@
 /obj/item/clothing/shoes/cowboy/Initialize()
 	. = ..()
 	if(prob(2))
-		var/mob/living/simple_animal/hostile/retaliate/poison/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/poison/snake(src)
+		var/mob/living/simple_animal/hostile/retaliate/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/snake(src)
 		occupants += bootsnake
 
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
 	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in occupants)
 			occupant.forceMove(user.drop_location())
 			user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'>You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
 			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
+			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate))
 				user.reagents.add_reagent(/datum/reagent/toxin, 7)
 		occupants.Cut()
+
+/obj/item/clothing/shoes/cowboy/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
+
+/obj/item/clothing/shoes/cowboy/proc/table_slam(mob/living/source, obj/structure/table/the_table)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/handle_table_slam, source)
+
+/obj/item/clothing/shoes/cowboy/proc/handle_table_slam(mob/living/user)
+	user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)
+	user.client?.give_award(/datum/award/achievement/misc/hot_damn, user)
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
 	. = ..()
@@ -458,7 +483,7 @@
 	if(occupants.len >= max_occupants)
 		to_chat(user, "<span class='warning'>[src] are full!</span>")
 		return
-	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
 		occupants += target
 		target.forceMove(src)
 		to_chat(user, "<span class='notice'>[target] slithers into [src].</span>")
@@ -543,4 +568,59 @@
 
 /obj/item/clothing/shoes/gunboots/Initialize()
 	. = ..()
-	AddComponent(/datum/component/projectile_shooter, projectile_type = projectile_type, shot_prob = shot_prob, signal_or_sig_list = list(COMSIG_SHOES_STEP_ACTION, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))
+	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_step)
+
+/obj/item/clothing/shoes/gunboots/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_FEET)
+		RegisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/check_kick)
+	else
+		UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+
+/obj/item/clothing/shoes/gunboots/dropped(mob/user)
+	if(user)
+		UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+	return ..()
+
+/// After each step, check if we randomly fire a shot
+/obj/item/clothing/shoes/gunboots/proc/check_step(mob/user)
+	SIGNAL_HANDLER
+	if(!prob(shot_prob))
+		return
+
+	INVOKE_ASYNC(src, .proc/fire_shot)
+
+/// Stomping on someone while wearing gunboots shoots them point blank
+/obj/item/clothing/shoes/gunboots/proc/check_kick(mob/living/carbon/human/kicking_person, atom/attacked_atom, proximity)
+	SIGNAL_HANDLER
+	if(!isliving(attacked_atom))
+		return
+	var/mob/living/attacked_living = attacked_atom
+	if(attacked_living.body_position == LYING_DOWN)
+		INVOKE_ASYNC(src, .proc/fire_shot, attacked_living)
+
+/// Actually fire a shot. If no target is provided, just fire off in a random direction
+/obj/item/clothing/shoes/gunboots/proc/fire_shot(atom/target)
+	if(!isliving(loc))
+		return
+
+	var/mob/living/wearer = loc
+	var/obj/projectile/shot = new projectile_type(get_turf(wearer))
+
+	if(!target)
+		target = get_offset_target_turf(get_turf(wearer), rand(-3, 3), rand(-3,3))
+
+	//Shooting Code:
+	shot.original = target
+	shot.fired_from = src
+	shot.firer = wearer // don't hit ourself that would be really annoying
+	shot.impacted = list(wearer = TRUE)
+	shot.def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) // they're fired from boots after all
+	shot.preparePixelProjectile(target, wearer)
+	if(!shot.suppressed)
+		wearer.visible_message("<span class='danger'>[wearer]'s [name] fires \a [shot]!</span>", "", blind_message = "<span class='hear'>You hear a gunshot!</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	shot.fire()
+
+/obj/item/clothing/shoes/gunboots/disabler
+	name = "disaboots"
+	projectile_type = /obj/projectile/beam/disabler

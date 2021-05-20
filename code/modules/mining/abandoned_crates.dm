@@ -227,7 +227,7 @@
 			new /obj/item/ammo_box/foambox(src)
 		if(98)
 			for(var/i in 1 to 3)
-				new /mob/living/simple_animal/hostile/poison/bees/toxin(src)
+				new /mob/living/simple_animal/hostile/bee/toxin(src)
 		if(99)
 			new /obj/item/implanter/sad_trombone(src)
 		if(100)

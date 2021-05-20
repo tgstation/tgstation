@@ -314,13 +314,21 @@
 				return TRUE
 
 			var/selection = params["selection"]
-			for(var/path in pda_types)
-				if(!(pda_types[path] == selection))
-					continue
+			var/obj/item/pda/pda_path = /obj/item/pda
 
-				var/obj/item/pda/pda_path = path
-				stored_pda.icon_state = initial(pda_path.icon_state)
-				stored_pda.desc = initial(pda_path.desc)
+			for(var/path in pda_types)
+				if(pda_types[path] == selection)
+					pda_path = path
+					break
+
+			if(initial(pda_path.greyscale_config) && initial(pda_path.greyscale_colors))
+				stored_pda.set_greyscale_config(initial(pda_path.greyscale_config), update=FALSE)
+				stored_pda.set_greyscale_colors(initial(pda_path.greyscale_colors))
+			else
+				stored_pda.icon = initial(pda_path.icon)
+			stored_pda.icon_state = initial(pda_path.icon_state)
+			stored_pda.desc = initial(pda_path.desc)
+
 			return TRUE
 		if("trim_card")
 			if((machine_stat & BROKEN) || !stored_id_card)
@@ -335,6 +343,13 @@
 					return TRUE
 
 				to_chat(usr, "<span class='warning'>The trim you selected could not be added to \the [stored_id_card]. You will need a rarer ID card to imprint that trim data.</span>")
+
+			return TRUE
+		if("reset_card")
+			if((machine_stat & BROKEN) || !stored_id_card)
+				return TRUE
+
+			stored_id_card.clear_account()
 
 			return TRUE
 

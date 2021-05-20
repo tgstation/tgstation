@@ -113,6 +113,10 @@
 
 	prefixes = list(command, security, engineering)
 	suffixes = list(research, medical, legal)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
 	if(weapon)
@@ -144,8 +148,8 @@
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
-/mob/living/simple_animal/bot/cleanbot/Crossed(atom/movable/AM)
-	. = ..()
+/mob/living/simple_animal/bot/cleanbot/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 
 	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	if(weapon && has_gravity() && ismob(AM))
@@ -157,7 +161,7 @@
 			stolen_valor += C.job
 		update_titles()
 
-		weapon.attack(C, src)
+		INVOKE_ASYNC(weapon, /obj/item.proc/attack, C, src)
 		C.Knockdown(20)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/living/user, params)

@@ -37,7 +37,7 @@
 	//Updates the number of stored chemicals for powers
 	handle_changeling(delta_time, times_fired)
 
-	if(mind)
+	if(. && mind) //. == not dead
 		for(var/key in mind.addiction_points)
 			var/datum/addiction/addiction = SSaddiction.all_addictions[key]
 			addiction.process_addiction(src, delta_time, times_fired)
@@ -125,7 +125,6 @@
 
 	if(breath)
 		loc.assume_air(breath)
-		air_update_turf(FALSE, FALSE)
 
 /mob/living/carbon/proc/has_smoke_protection()
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))

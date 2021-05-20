@@ -466,6 +466,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return DEFAULT_RELIGION
 		if("deity")
 			return DEFAULT_DEITY
+		if("bible")
+			return DEFAULT_BIBLE
 	return random_unique_name()
 
 /datum/preferences/proc/ask_for_custom_name(mob/user,name_id)

@@ -78,8 +78,10 @@
 
 #define BELOW_MOB_LAYER 3.7
 #define LYING_MOB_LAYER 3.8
+#define MOB_BELOW_PIGGYBACK_LAYER 3.94
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define
 #define MOB_SHIELD_LAYER 4.01
+#define MOB_ABOVE_PIGGYBACK_LAYER 4.06
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
 #define EDGED_TURF_LAYER 4.3
@@ -130,17 +132,12 @@
 //Layering order of these is not particularly meaningful.
 //Important part is the seperation of the planes for control via plane_master
 
-///This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas
+/// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
 #define EMISSIVE_PLANE 150
+/// The render target used by the emissive layer.
 #define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
-
-///This plane masks the emissive plane to "block" it. Byond is wacky, this is the only way to get things to look like they're actually blocking said glowing lights.
-#define EMISSIVE_BLOCKER_PLANE 160
-#define EMISSIVE_BLOCKER_RENDER_TARGET "*EMISSIVE_BLOCKER_PLANE"
-
-///This plane is "unblockable" emissives. It does the same thing as the emissive plane but isn't masked by the emissive blocker plane. Use for on-mob and movable emissives.
-#define EMISSIVE_UNBLOCKABLE_PLANE 170
-#define EMISSIVE_UNBLOCKABLE_RENDER_TARGET "*EMISSIVE_UNBLOCKABLE_PLANE"
+/// The layer you should use if you _really_ don't want an emissive overlay to be blocked.
+#define EMISSIVE_LAYER_UNBLOCKABLE 9999
 
 ///---------------- MISC -----------------------
 

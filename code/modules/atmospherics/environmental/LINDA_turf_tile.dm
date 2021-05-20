@@ -63,12 +63,14 @@
 		return FALSE
 	air.merge(giver)
 	update_visuals()
+	air_update_turf(FALSE, FALSE)
 	return TRUE
 
 /turf/open/remove_air(amount)
 	var/datum/gas_mixture/ours = return_air()
 	var/datum/gas_mixture/removed = ours.remove(amount)
 	update_visuals()
+	air_update_turf(FALSE, FALSE)
 	return removed
 
 /turf/open/proc/copy_air_with_tile(turf/open/T)
@@ -125,7 +127,7 @@
 
 /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 	SEND_SIGNAL(src, COMSIG_TURF_EXPOSE, air, exposed_temperature)
-	check_atmos_process(null, air, exposed_temperature) //Manually do this to avoid needing to use elements, don't want 200 second atom init times
+	check_atmos_process(src, air, exposed_temperature) //Manually do this to avoid needing to use elements, don't want 200 second atom init times
 
 /turf/proc/archive()
 	temperature_archived = temperature
@@ -139,10 +141,7 @@
 
 
 /turf/open/proc/update_visuals()
-
 	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
-	var/list/new_overlay_types = list()
-	var/static/list/nonoverlaying_gases = typecache_of_gases_with_no_overlays()
 
 	if(!air) // 2019-05-14: was not able to get this path to fire in testing. Consider removing/looking at callers -Naksu
 		if (atmos_overlay_types)
@@ -153,14 +152,8 @@
 
 	var/list/gases = air.gases
 
-	for(var/id in gases)
-		if (nonoverlaying_gases[id])
-			continue
-		var/gas = gases[id]
-		var/gas_meta = gas[GAS_META]
-		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-			new_overlay_types += gas_overlay[min(TOTAL_VISIBLE_STATES, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
+	var/list/new_overlay_types
+	GAS_OVERLAYS(gases, new_overlay_types)
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added

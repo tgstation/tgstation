@@ -24,40 +24,51 @@
 
 	src.connections = connections
 
-	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved, override = TRUE)
 	update_signals(listener, tracked)
 
 /datum/element/connect_loc/Detach(datum/listener, atom/movable/tracked, list/connections)
 	. = ..()
 
 	if(!tracked)
-		tracked = listener
-
-	if(!istype(tracked))
-		return
-
-	if (!isnull(tracked.loc))
+		unregister_all(listener)
+	else if(targets[tracked.loc]) // Detach can happen multiple times due to qdel
 		unregister_signals(listener, tracked, tracked.loc)
-
-	UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
 
 /datum/element/connect_loc/proc/update_signals(datum/listener, atom/movable/tracked)
 	var/existing = length(targets[tracked.loc])
-	LAZYSET(targets[tracked.loc], tracked, listener)
+	if(!existing)
+		targets[tracked.loc] = list()
+	targets[tracked.loc][tracked] = listener
 
-	if (isnull(tracked.loc))
+	if(isnull(tracked.loc))
 		return
 
 	for (var/signal in connections)
-		listener.RegisterSignal(tracked.loc, signal, connections[signal])
+		listener.RegisterSignal(tracked.loc, signal, connections[signal], override=TRUE)
+		//override=TRUE because more than one connect_loc element instance tracked object can be on the same loc
 
 	if (!existing && isturf(tracked.loc))
 		RegisterSignal(tracked.loc, COMSIG_TURF_CHANGE, .proc/on_turf_change)
 
+/datum/element/connect_loc/proc/unregister_all(datum/listener)
+	for(var/atom/location as anything in targets)
+		var/list/loc_targets = targets[location]
+		for(var/atom/movable/tracked as anything in loc_targets)
+			if(tracked == listener)
+				unregister_signals(loc_targets[tracked], tracked, location)
+			else if(loc_targets[tracked] == listener)
+				unregister_signals(listener, tracked, location)
+			else
+				continue
+			UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
+
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/movable/tracked, atom/old_loc)
-	targets[old_loc] -= tracked
-	if (length(targets[old_loc]) == 0)
+	if (length(targets[old_loc]) <= 1)
 		targets -= old_loc
+	else
+		targets[old_loc] -= tracked
 
 	// Yes this is after the above because we use null as a key when objects are in nullspace
 	if(isnull(old_loc))

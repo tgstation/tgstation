@@ -39,7 +39,7 @@
 			deconverted = TRUE
 			rev.remove_revolutionary(FALSE, user)
 		if(!silent)
-			if(target.mind in SSticker.mode.cult)
+			if(target.mind.has_antag_datum(/datum/antagonist/cult))
 				to_chat(target, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			else
 				to_chat(target, "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")

@@ -96,7 +96,7 @@
 				// If the machinery is not in view or is not meant to be seen, continue
 				if(!in_view_range(client.mob, pipenet_part))
 					continue
-				if(!pipenet_part.vent_movement & VENTCRAWL_CAN_SEE)
+				if(!(pipenet_part.vent_movement & VENTCRAWL_CAN_SEE))
 					continue
 
 				if(!pipenet_part.pipe_vision_img)
