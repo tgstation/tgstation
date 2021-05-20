@@ -1,9 +1,14 @@
+import { range } from "common/collections";
 import { useBackend } from "../backend";
-import { Box, Button, ByondUi, Icon, Stack } from "../components";
+import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../components";
 import { Window } from "../layouts";
 
 const CLOTHING_CELL_SIZE = 32;
-const CLOTHING_ROWS = 9;
+const CLOTHING_SIDEBAR_ROWS = 9;
+
+const CLOTHING_SELECTION_CELL_SIZE = 48;
+const CLOTHING_SELECTION_WIDTH = 5.4;
+const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
 enum Gender {
   Male = "male",
@@ -33,6 +38,8 @@ type PreferencesMenuData = {
       gender: Gender;
     };
   };
+
+  generated_preference_values?: Record<string, Record<string, string>>;
 };
 
 const CharacterProfiles = (props: {
@@ -66,7 +73,7 @@ const CharacterPreview = (props: {
       <Stack.Item>
         <ByondUi
           width="220px"
-          height={`${CLOTHING_ROWS * CLOTHING_CELL_SIZE}px`}
+          height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
           params={{
             zoom: 0,
             id: props.id,
@@ -78,8 +85,63 @@ const CharacterPreview = (props: {
   );
 };
 
+const ClothingSelection = (props: {
+  name: string,
+  catalog: Record<string, string>,
+}) => {
+  return (
+    <Box style={{
+      background: "white",
+      padding: "5px",
+      width: `${CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_WIDTH}px`,
+      height:
+        `${CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_MULTIPLIER}px`,
+    }}>
+      <Stack vertical fill>
+        <Stack.Item>
+          <Box style={{
+            "border-bottom": "1px solid #888",
+            "font-size": "14px",
+            "text-align": "center",
+          }}>Select {props.name}
+          </Box>
+        </Stack.Item>
+
+        <Stack.Item overflowY="scroll">
+          <Flex wrap>
+            {Object.entries(props.catalog).map(([name, image], index) => {
+              return (
+                <Flex.Item
+                  key={index}
+                  basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
+                  style={{
+                    padding: "5px",
+                  }}
+                >
+                  <Button tooltip={name} tooltipPosition="right" style={{
+                    height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                    width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                  }}>
+                    <Box as="img" className="centered-image" src={image} />
+                  </Button>
+                </Flex.Item>
+              );
+            })}
+          </Flex>
+        </Stack.Item>
+      </Stack>
+    </Box>
+  );
+};
+
 export const PreferencesMenu = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
+
+  const requestPreferenceData = (key: string) => {
+    act("request_values", {
+      preference: key,
+    });
+  };
 
   return (
     <Window title="Character Preferences" width={640} height={770}>
@@ -98,6 +160,10 @@ export const PreferencesMenu = (props, context) => {
           <Stack.Item>
             <Stack fill>
               <Stack.Item>
+                <CharacterPreview id={data.character_preview_view} />
+              </Stack.Item>
+
+              <Stack.Item>
                 <Stack
                   vertical
                   fill
@@ -108,30 +174,27 @@ export const PreferencesMenu = (props, context) => {
                       // MOTHBLOCKS TODO: Better nude icons, rather than X
                       return (
                         <Stack.Item key={clothingKey}>
-                          <Button style={{
-                            height: `${CLOTHING_CELL_SIZE}px`,
-                            width: `${CLOTHING_CELL_SIZE}px`,
-                          }} tooltip={clothing.value}>
-                            <Box as="img" src={clothing.icon} style={{
-                              // CODE REVIEW: This is copied and pasted from
-                              // StripMenu, should this be a class? What would
-                              // it be called?
-                              position: "absolute",
-                              height: "100%",
-                              left: "50%",
-                              top: "50%",
-                              transform:
-                                "translateX(-50%) translateY(-50%) scale(0.8)",
-                            }} />
-                          </Button>
+                          <Popper options={{
+                            placement: "bottom-start",
+                          }} popperContent={<ClothingSelection
+                            name="Underwear"
+                            catalog={(data.generated_preference_values
+                              && data.generated_preference_values.underwear
+                            ) || {}}
+                          />}>
+                            <Button onClick={() => {
+                              requestPreferenceData(clothingKey);
+                            }} style={{
+                              height: `${CLOTHING_CELL_SIZE}px`,
+                              width: `${CLOTHING_CELL_SIZE}px`,
+                            }} tooltip={clothing.value} tooltipPosition="right">
+                              <Box as="img" src={clothing.icon} className="centered-image" />
+                            </Button>
+                          </Popper>
                         </Stack.Item>
                       );
                     })}
                 </Stack>
-              </Stack.Item>
-
-              <Stack.Item>
-                <CharacterPreview id={data.character_preview_view} />
               </Stack.Item>
             </Stack>
           </Stack.Item>

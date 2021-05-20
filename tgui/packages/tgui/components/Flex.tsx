@@ -47,7 +47,7 @@ export const computeFlexProps = (props: FlexProps) => {
   };
 };
 
-export const Flex = props => (
+export const Flex = (props: FlexProps) => (
   <Box {...computeFlexProps(props)} />
 );
 

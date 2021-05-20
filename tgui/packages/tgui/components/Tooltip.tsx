@@ -65,6 +65,7 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
         }
         additionalStyles={{
           "pointer-events": "none",
+          "z-index": 2,
         }}>
         {this.props.children}
       </Popper>

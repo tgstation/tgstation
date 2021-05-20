@@ -151,6 +151,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// A preview of the current character
 	var/atom/movable/screen/character_preview_view/character_preview_view
 
+	/// Cached list of generated preferences (return value of [`/datum/preference/generate_possible_values`]).
+	var/list/generated_preference_values = list()
+
 /datum/preferences/Destroy(force, ...)
 	QDEL_NULL(character_preview_view)
 	return ..()
@@ -216,10 +219,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return data
 
+/datum/preferences/ui_static_data(mob/user)
+	return list(
+		"generated_preference_values" = generated_preference_values,
+	)
+
 /datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
+
+	var/mob/user = usr
 
 	switch (action)
 		if ("change_slot")
@@ -230,6 +240,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				// save_character()
 
 			character_preview_view.update_body()
+		if ("request_values")
+			var/requested_preference_key = params["preference"]
+
+			var/datum/preference/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
+			if (isnull(requested_preference))
+				return TRUE
+
+			if (isnull(generated_preference_values[requested_preference_key]))
+				generated_preference_values[requested_preference_key] = requested_preference.generate_possible_values(user)
+				update_static_data(user, ui)
 
 	return TRUE
 

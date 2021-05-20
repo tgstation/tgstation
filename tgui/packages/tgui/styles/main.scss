@@ -11,6 +11,7 @@
 
 // Atomic classes
 @include meta.load-css('./atomic/candystripe.scss');
+@include meta.load-css('./atomic/centered-image.scss');
 @include meta.load-css('./atomic/color.scss');
 @include meta.load-css('./atomic/debug-layout.scss');
 @include meta.load-css('./atomic/links.scss');
