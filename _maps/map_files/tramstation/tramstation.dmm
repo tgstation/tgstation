@@ -30413,59 +30413,6 @@
 /area/service/bar)
 "hzv" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
-"hyA" = (
-/obj/effect/turf_decal/siding/thinplating,
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/commons/dorms)
-"hyU" = (
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_y = 28
-	},
-/obj/structure/sign/directions/security{
-	dir = 4;
-	pixel_y = 34
-	},
-/obj/structure/sign/directions/command{
-	dir = 4;
-	pixel_y = 40
-	},
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/trimline/neutral/filled/arrow_cw{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/obj/structure/sign/directions/vault{
-	dir = 4;
-	pixel_y = 22
-	},
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/iron,
-/area/hallway/primary/tram/left)
-"hzh" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/status_display/evac/directional/east,
-/obj/structure/disposalpipe/segment,
-/obj/structure/chair/stool/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/service/bar)
-"hzv" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
 	},
@@ -40256,6 +40203,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "lqN" = (
@@ -70719,6 +70667,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "xlN" = (
