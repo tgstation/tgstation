@@ -69964,6 +69964,9 @@
 /area/commons/dorms)
 "uRq" = (
 /obj/machinery/light_switch/directional/east,
+/obj/machinery/modular_computer/console/preset/curator{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/service/library)
 "uRy" = (
