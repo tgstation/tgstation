@@ -14,7 +14,7 @@
 
 /obj/item/component/species/Initialize()
 	. = ..()
-	input_port = add_input_port("Organism", PORT_TYPE_MOB)
+	input_port = add_input_port("Organism", PORT_TYPE_ATOM)
 
 	output = add_output_port("Species", PORT_TYPE_STRING)
 

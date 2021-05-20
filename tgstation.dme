@@ -3531,6 +3531,7 @@
 #include "code\modules\vending\youtool.dm"
 #include "code\modules\wiremod\component.dm"
 #include "code\modules\wiremod\integrated_circuit.dm"
+#include "code\modules\wiremod\marker.dm"
 #include "code\modules\wiremod\port.dm"
 #include "code\modules\wiremod\components\arithmetic.dm"
 #include "code\modules\wiremod\components\clock.dm"

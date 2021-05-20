@@ -13,7 +13,7 @@
 /mob/living/simple_animal/bot/circuit/Initialize()
 	. = ..()
 	AddComponent(/datum/component/shell, list(
-		/obj/item/component/bot_circuit
+		new /obj/item/component/bot_circuit()
 	), SHELL_CAPACITY_LARGE)
 
 /obj/item/component/bot_circuit

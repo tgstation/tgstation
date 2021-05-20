@@ -44,7 +44,7 @@
 		return
 
 	var/list/ports = input_ports.Copy()
-	ports.Cut(input_port_amount)
+	ports.Cut(input_port_amount+1)
 
 	var/logic_result = do_comparisons(ports)
 	if(COMPONENT_TRIGGERED_BY(compare))

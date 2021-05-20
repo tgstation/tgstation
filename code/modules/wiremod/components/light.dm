@@ -54,7 +54,7 @@
 		set_atom_light(parent.shell)
 
 /obj/item/component/light/proc/set_atom_light(atom/movable/target_atom)
-	var/bright_val = min(max(brightness.input_value || 0, 0), brightness)
+	var/bright_val = min(max(brightness.input_value || 0, 0), max_power)
 
 	target_atom.set_light_power(bright_val)
 	target_atom.set_light_range(bright_val)

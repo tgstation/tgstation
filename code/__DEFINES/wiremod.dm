@@ -19,13 +19,10 @@
 
 // Other datatypes
 /// Atom datatype
-#define PORT_TYPE_ATOM "object"
+#define PORT_TYPE_ATOM "entity"
 
-/// Mob datatype
-#define PORT_TYPE_MOB "organism"
-
-/// Human datatype
-#define PORT_TYPE_HUMAN "humanoid"
+/// The maximum range between a port and an atom
+#define PORT_ATOM_MAX_RANGE 7
 
 /// The minimum position of the x and y co-ordinates of the component in the UI
 #define COMPONENT_MIN_RANDOM_POS 200
@@ -62,6 +59,10 @@
 #define COMP_ARITHMETIC_SUBTRACT "Subtract"
 #define COMP_ARITHMETIC_MULTIPLY "Multiply"
 #define COMP_ARITHMETIC_DIVIDE "Divide"
+
+// Typecheck component
+#define COMP_TYPECHECK_MOB "organism"
+#define COMP_TYPECHECK_HUMAN "humanoid"
 
 // Shells
 

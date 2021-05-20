@@ -142,6 +142,7 @@
 
 	UnregisterSignal(to_remove, COMSIG_MOVABLE_MOVED)
 	attached_components -= to_remove
+	to_remove.disconnect()
 	to_remove.parent = null
 	SStgui.update_uis(src)
 
@@ -155,12 +156,15 @@
 		var/list/component_data = list()
 		component_data["input_ports"] = list()
 		for(var/datum/port/input/port as anything in component.input_ports)
+			var/current_data = port.input_value
+			if(isatom(current_data)) // Prevent passing the name of the atom.
+				current_data = null
 			component_data["input_ports"] += list(list(
 				"name" = port.name,
 				"type" = port.datatype,
 				"ref" = REF(port), // The ref is the identifier to work out what it is connected to
 				"connected_to" = REF(port.connected_port),
-				"current_data" = port.input_value,
+				"current_data" = current_data,
 			))
 		component_data["output_ports"] = list()
 		for(var/datum/port/output/port as anything in component.output_ports)
@@ -283,14 +287,32 @@
 			if(!WITHIN_RANGE(port_id, component.input_ports))
 				return
 			var/datum/port/input/port = component.input_ports[port_id]
+
+			if(params["marked_atom"])
+				if(port.datatype != PORT_TYPE_ATOM && port.datatype != PORT_TYPE_ANY)
+					return
+				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
+				if(!istype(marker) || !marker.marked_atom)
+					port.set_input(null)
+					return TRUE
+				marker.say("Updated port ('[port.name]')'s value to the marked entity.")
+				port.set_input(marker.marked_atom)
+				return TRUE
+
 			var/user_input = params["input"]
 			switch(port.datatype)
 				if(PORT_TYPE_NUMBER)
-					port.set_value(text2num(user_input))
-				else
-					if(user_input == "")
-						port.set_value(null)
+					port.set_input(text2num(user_input))
+				if(PORT_TYPE_ANY)
+					var/any_type = copytext(user_input, 1, PORT_MAX_STRING_LENGTH)
+					if(any_type == "")
+						port.set_input(null)
 					else
-						port.set_value(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
+						port.set_input(text2num(any_type) || any_type)
+				if(PORT_TYPE_STRING)
+					if(user_input == "")
+						port.set_input(null)
+					else
+						port.set_input(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
 			. = TRUE
 #undef WITHIN_RANGE

@@ -35,16 +35,24 @@
 	return ..()
 
 /**
- * Converts the value to be of the type of the port.
+ * Returns the value to be set for the port
  *
  * Used for implicit conversions between outputs and inputs (e.g. number -> string)
+ * and applying/removing signals on inputs
  */
-/datum/port/proc/convert_value(value_to_convert)
+/datum/port/proc/convert_value(prev_value, value_to_convert)
+	if(prev_value == value_to_convert)
+		return prev_value
 	. = value_to_convert
+
 	switch(datatype)
 		if(PORT_TYPE_STRING)
 			return "[value_to_convert]"
 
+	if(isatom(value_to_convert))
+		var/atom/atom_to_check = value_to_convert
+		if(atom_to_check.gc_destroyed)
+			return null
 
 /**
  * Disconnects a port from all other ports
@@ -72,6 +80,10 @@
 	set_output(null)
 	return ..()
 
+/datum/port/output/Destroy(force)
+	output_value = null
+	return ..()
+
 /**
  * Sets the output value of the port
  *
@@ -79,8 +91,19 @@
  * * value - The value to set it to
  */
 /datum/port/output/proc/set_output(value)
-	output_value = value
-	SEND_SIGNAL(src, COMSIG_PORT_SET_OUTPUT, value)
+	if(isatom(output_value))
+		UnregisterSignal(output_value, COMSIG_PARENT_QDELETING)
+	output_value = convert_value(output_value, value)
+	if(isatom(output_value))
+		RegisterSignal(output_value, COMSIG_PARENT_QDELETING, .proc/null_output)
+
+	SEND_SIGNAL(src, COMSIG_PORT_SET_OUTPUT, output_value)
+
+/// Signal handler proc to null the output if an atom is deleted. An update is not sent because this was not set.
+/datum/port/output/proc/null_output(datum/source)
+	SIGNAL_HANDLER
+	if(output_value == source)
+		output_value = null
 
 /**
  * Determines if a datatype is compatible with this port.
@@ -135,8 +158,10 @@
 	unregister_output_port()
 
 	RegisterSignal(port_to_register, COMSIG_PORT_SET_OUTPUT, .proc/receive_output)
-	RegisterSignal(port_to_register, COMSIG_PORT_DISCONNECT, .proc/unregister_output_port)
-	RegisterSignal(port_to_register, COMSIG_PARENT_QDELETING, .proc/unregister_output_port)
+	RegisterSignal(port_to_register, list(
+		COMSIG_PORT_DISCONNECT,
+		COMSIG_PARENT_QDELETING
+	), .proc/unregister_output_port)
 
 	connected_port = port_to_register
 	SEND_SIGNAL(connected_port, COMSIG_PORT_OUTPUT_CONNECT, src)
@@ -153,9 +178,9 @@
 /datum/port/input/proc/receive_output(datum/port/output/connected_port, new_value)
 	SIGNAL_HANDLER
 	if(input_receive_delay)
-		addtimer(CALLBACK(src, .proc/set_value, new_value), input_receive_delay)
+		addtimer(CALLBACK(src, .proc/set_input, new_value), input_receive_delay)
 	else
-		set_value(new_value)
+		set_input(new_value)
 
 /**
  * Updates the value of the input
@@ -164,10 +189,22 @@
  * Arguments:
  * * port_to_register - The port to connect the input port to
  */
-/datum/port/input/proc/set_value(new_value)
-	input_value = convert_value(new_value)
+/datum/port/input/proc/set_input(new_value)
+	if(isatom(input_value))
+		UnregisterSignal(input_value, COMSIG_PARENT_QDELETING)
+	input_value = convert_value(input_value, new_value)
+	if(isatom(input_value))
+		RegisterSignal(input_value, COMSIG_PARENT_QDELETING, .proc/null_output)
+
+	SEND_SIGNAL(src, COMSIG_PORT_SET_INPUT, input_value)
 	if(trigger)
 		connected_component.input_received(src)
+
+/// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.
+/datum/port/input/proc/null_output(datum/source)
+	SIGNAL_HANDLER
+	if(input_value == source)
+		input_value = null
 
 /datum/port/input/disconnect()
 	unregister_output_port()
@@ -183,7 +220,7 @@
 		COMSIG_PORT_DISCONNECT
 	))
 	connected_port = null
-	set_value(null)
+	set_input(null)
 
 /datum/port/input/Destroy()
 	unregister_output_port()

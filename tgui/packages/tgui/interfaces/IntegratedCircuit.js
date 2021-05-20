@@ -11,32 +11,65 @@ const SVG_X_CURVE_POINT = 16;
 
 const FUNDAMENTAL_DATA_TYPES = {
   "string": (props, context) => {
-    const { name, value, setValue } = props;
+    const { name, value, setValue, color } = props;
     return (
       <Input
         placeholder={name}
         value={value}
+        color={color}
         onChange={(e, val) => setValue(val)}
       />
     );
   },
   "number": (props, context) => {
-    const { name, value, setValue } = props;
+    const { name, value, setValue, color } = props;
     return (
       <Box onMouseDown={e => e.stopPropagation()}>
         <NumberInput
           value={value || 0}
           minValue={-1000}
           maxValue={1000}
+          color={color}
           onChange={(e, val) => setValue(val)}
           unit={name}
         />
       </Box>
     );
   },
+  "entity": (props, context) => {
+    const { name, setValue, color } = props;
+    return (
+      <Button
+        content={name}
+        color={color}
+        icon="upload"
+        onClick={() => setValue(null, { marked_atom: true })}
+      />
+    )
+  },
+  "any": (props, context) => {
+    const { name, value, setValue, color } = props;
+    return (
+      <Stack>
+        <Stack.Item>
+          <Button
+            color={color}
+            icon="upload"
+            onClick={() => setValue(null, { marked_atom: true })}
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Input
+            placeholder={name}
+            value={value}
+            color={color}
+            onChange={(e, val) => setValue(val)}
+          />
+        </Stack.Item>
+      </Stack>
+    )
+  },
 };
-
-FUNDAMENTAL_DATA_TYPES["any"] = FUNDAMENTAL_DATA_TYPES["string"];
 
 export class IntegratedCircuit extends Component {
   constructor() {
@@ -340,7 +373,7 @@ export class ObjectComponent extends Component {
                   nochevron
                   over
                   options={options}
-                  displayText={`Option: ${option}`}
+                  displayText={option}
                   noscroll
                   onSelected={selected => act("set_component_option", {
                     component_id: index,
@@ -470,7 +503,7 @@ export class Port extends Component {
         componentId,
         isOutput,
         ...rest
-      } = props;
+      } = this.props;
 
       e.preventDefault();
       act("remove_connection", {
@@ -574,11 +607,13 @@ const DisplayName = (props, context) => {
         <Flex.Item>
           {isInput && (
             <InputComponent
-              setValue={val => act("set_component_input", {
+              setValue={(val, extraParams) => act("set_component_input", {
                 component_id: componentId,
                 port_id: portIndex,
                 input: val,
+                ...extraParams,
               })}
+              color={port.color}
               name={port.name}
               value={port.current_data}
             />
