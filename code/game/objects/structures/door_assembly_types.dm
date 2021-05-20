@@ -169,7 +169,6 @@
 
 /obj/structure/door_assembly/door_assembly_gold
 	name = "gold airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/gold.dmi'
 	base_name = "gold airlock"
 	airlock_type = /obj/machinery/door/airlock/gold
 	mineral = "gold"
@@ -177,7 +176,6 @@
 
 /obj/structure/door_assembly/door_assembly_silver
 	name = "silver airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/silver.dmi'
 	base_name = "silver airlock"
 	airlock_type = /obj/machinery/door/airlock/silver
 	mineral = "silver"

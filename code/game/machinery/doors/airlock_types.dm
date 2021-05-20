@@ -567,3 +567,14 @@
 
 /obj/machinery/door/airlock/glass_large/narsie_act()
 	return
+
+//////////////////////////////////
+/*
+	Greyscale Config Airlocks
+
+/obj/machinery/door/airlock/greyscale
+	name = "fancy ungodlike airlock"
+	desc = "I can only imagine the amount of hate this will get if this isn't like... actually perfect."
+	greyscale_config = /datum/greyscale_config/airlocks
+	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#ffffff#ffffff#ffffff"
+*/

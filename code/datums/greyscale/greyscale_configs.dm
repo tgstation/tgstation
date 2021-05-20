@@ -103,3 +103,7 @@
 /datum/greyscale_config/circuit
 	icon_file = 'icons/obj/module.dmi'
 	json_config = 'code/datums/greyscale/json_configs/circuit.json'
+
+/datum/greyscale_config/airlocks
+	icon_file = 'icons/obj/doors/airlocks/greyscale_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/airlock.json'
