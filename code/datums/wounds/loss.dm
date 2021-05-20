@@ -17,7 +17,7 @@
 		qdel(src)
 		return
 
-	victim = dismembered_part.owner
+	set_victim(dismembered_part.owner)
 
 	if(dismembered_part.body_zone == BODY_ZONE_CHEST)
 		occur_text = "is split open, causing [victim.p_their()] internals organs to spill out!"
