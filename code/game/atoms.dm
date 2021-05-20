@@ -1217,7 +1217,7 @@
 
 		if(reagents)
 			var/chosen_id
-			switch(alert(usr, "Choose a method.", "Add Reagents", "Search", "Choose from a list", "I'm feeling lucky"))
+			switch(tgui_alert(usr, "Choose a method.", "Add Reagents", list("Search", "Choose from a list", "I'm feeling lucky")))
 				if("Search")
 					var/valid_id
 					while(!valid_id)
@@ -1288,7 +1288,7 @@
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
-		if(newname && !(CHAT_FILTER_CHECK(newname) && alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", "Confirm", "Cancel") != "Confirm"))
+		if(newname && !(CHAT_FILTER_CHECK(newname) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) != "Confirm"))
 			vv_auto_rename(newname)
 
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))

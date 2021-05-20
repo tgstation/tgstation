@@ -308,7 +308,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
-		alert("The round hasn't started yet!")
+		tgui_alert(usr, "The round hasn't started yet!")
 		return
 
 	if(!check_rights(R_ADMIN))
