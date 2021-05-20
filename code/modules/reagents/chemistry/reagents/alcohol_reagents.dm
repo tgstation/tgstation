@@ -2521,3 +2521,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A lovely fresh smelling cocktail, a true Sicilian delight."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/kortara
+	name = "Kortara"
+	description = "A sweet, milky nut-based drink enjoyed on Tizira. Frequently mixed with fruit juices and cocoa for extra refreshment."
+	boozepwr = 25
+	color = "#EEC39A"
+	quality = DRINK_GOOD
+	taste_description = "sweet nectar"
+	glass_icon_state = "godmother"
+	glass_name = "glass of kortara"
+	glass_desc = "The nectar of the Korta nut, as enjoyed by lizards galaxywide."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

@@ -84,6 +84,7 @@
 #define CAT_BURGER "Burgers"
 #define CAT_CAKE "Cakes"
 #define CAT_EGG "Egg-Based Food"
+#define CAT_LIZARD "Lizard Food"
 #define CAT_MEAT "Meats"
 #define CAT_MISCFOOD "Misc. Food"
 #define CAT_MEXICAN "Mexican Food"

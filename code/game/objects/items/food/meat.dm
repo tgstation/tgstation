@@ -42,6 +42,23 @@
 	desc = "Almost just like the real thing, kinda."
 	cell_line = null
 
+/obj/item/food/fishmeat/moonfish
+	name = "moonfish fillet"
+	desc = "A fillet of moonfish."
+	icon_state = "moonfishfillet"
+
+/obj/item/food/fishmeat/gunner_jellyfish
+	name = "filleted gunner jellyfish"
+	desc = "A gunner jellyfish with the stingers removed. Mildly hallucinogenic."
+	icon_state = "jellyfishfillet"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/mindbreaker = 2)
+
+/obj/item/food/fishmeat/armorfish
+	name = "cleaned armorfish"
+	desc = "An armorfish with its guts and shell removed, ready for use in cooking."
+	icon_state = "armorfish"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+
 /obj/item/food/fishfingers
 	name = "fish fingers"
 	desc = "A finger of fish."

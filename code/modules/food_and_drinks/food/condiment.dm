@@ -254,6 +254,20 @@
 	list_reagents = list(/datum/reagent/consumable/mayonnaise = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/vinegar
+	name = "vinegar"
+	desc = "Perfect for chips, if you're feeling British."
+	icon_state = "vinegar"
+	list_reagents = list(/datum/reagent/consumable/vinegar = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/food/condiment/quality_oil
+	name = "quality oil"
+	desc = "For the fancy chef inside everyone."
+	icon_state = "oliveoil"
+	list_reagents = list(/datum/reagent/consumable/quality_oil = 50)
+	fill_icon_thresholds = null
+
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
 
 /obj/item/reagent_containers/food/condiment/pack

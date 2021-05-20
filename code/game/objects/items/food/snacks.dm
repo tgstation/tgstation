@@ -168,3 +168,53 @@
 	foodtypes = TOXIC
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/peanuts
+	name = "\improper Parker's unsalted peanuts"
+	desc = "As commonly seen on shuttle flights."
+	icon_state = "peanuts"
+	trash_type = /obj/item/trash/peanuts
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	tastes = list("peanuts" = 3)
+	foodtypes = JUNKFOOD | NUTS
+	w_class = WEIGHT_CLASS_SMALL
+	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
+
+/obj/item/food/peanuts/flavoured
+	name = "\improper Parker's peanuts"
+	desc = "As commonly seen on shuttle flights."
+
+/obj/item/food/peanuts/flavoured/Initialize()
+	. = ..()
+	var/peanut_flavour = pick("salted", "wasabi", "honey-roasted", "barbecue")
+	switch(peanut_flavour)
+		if("salted")
+			name = "\improper Parker's salted peanuts"
+			desc = "As commonly seen on shuttle flights. Tastes salty, just like most peanuts."
+			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/salt = 1)
+			tastes = list("peanuts" = 2, "salt" = 1)
+		if("wasabi")
+			name = "\improper Parker's wasabi peanuts"
+			desc = "As commonly seen on shuttle flights. It's the Heat from the East."
+			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/capsaicin = 1)
+			tastes = list("peanuts" = 2, "wasabi heat" = 1)
+		if("honey-roasted")
+			name = "\improper Parker's honey-roasted peanuts"
+			desc = "As commonly seen on shuttle flights. A beautiful meeting of sweet and nut."
+			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 1)
+			tastes = list("peanuts" = 2, "honey" = 1)
+		if("barbecue")
+			name = "\improper Parker's barbecue peanuts"
+			desc = "As commonly seen on shuttle flights. Yeehaw!"
+			food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/bbqsauce = 1)
+			tastes = list("peanuts" = 2, "bbq sauce" = 1)
+
+/obj/item/food/chocoloco
+	name = "\improper Chocoloco candy"
+	desc = "A taste so crazy you'll go loco!"
+	icon_state = "chocoloco"
+	trash_type = /obj/item/trash/chocoloco
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/coco = 1)
+	tastes = list("chocolate candy" = 3)
+	foodtypes = JUNKFOOD
+	w_class = WEIGHT_CLASS_SMALL
