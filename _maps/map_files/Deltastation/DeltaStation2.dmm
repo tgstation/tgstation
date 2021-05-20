@@ -57454,13 +57454,11 @@
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "jLK" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/machinery/status_display/ai/directional/south,
+/obj/machinery/pipedispenser,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "jLY" = (
