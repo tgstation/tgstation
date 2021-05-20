@@ -348,7 +348,7 @@
 		/obj/item/stack/tile/carpet/neon/simple/nodots,
 	)
 
-/obj/item/stack/tile/carpet/neon/simple
+/obj/item/stack/tile/carpet/neon/simple/nodots
 	icon_state = "tile_carpet_neon_simple_nodots"
 	neon_icon_state = "tile_carpet_neon_simple_light_nodots"
 	neon_inhand_icon_state = "tile-neon-glow-nodots"
@@ -365,7 +365,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/white
 	neon_color = COLOR_WHITE
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/white,
 		/obj/item/stack/tile/carpet/neon/simple/white/nodots,
 	)
 
@@ -387,7 +387,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/black
 	neon_color = COLOR_BLACK
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/black,
 		/obj/item/stack/tile/carpet/neon/simple/black/nodots,
 	)
 
@@ -408,7 +408,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/red
 	neon_color = COLOR_RED
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/red,
 		/obj/item/stack/tile/carpet/neon/simple/red/nodots,
 	)
 
@@ -429,7 +429,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/orange
 	neon_color = COLOR_ORANGE
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/orange,
 		/obj/item/stack/tile/carpet/neon/simple/orange/nodots,
 	)
 
@@ -450,7 +450,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/yellow
 	neon_color = COLOR_YELLOW
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/yellow,
 		/obj/item/stack/tile/carpet/neon/simple/yellow/nodots,
 	)
 
@@ -471,7 +471,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/lime
 	neon_color = COLOR_LIME
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/lime,
 		/obj/item/stack/tile/carpet/neon/simple/lime/nodots,
 	)
 
@@ -492,7 +492,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/green
 	neon_color = COLOR_GREEN
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/green,
 		/obj/item/stack/tile/carpet/neon/simple/green/nodots,
 	)
 
@@ -513,7 +513,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/teal
 	neon_color = COLOR_TEAL
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/teal,
 		/obj/item/stack/tile/carpet/neon/simple/teal/nodots,
 	)
 
@@ -534,7 +534,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/cyan
 	neon_color = COLOR_CYAN
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/cyan,
 		/obj/item/stack/tile/carpet/neon/simple/cyan/nodots,
 	)
 
@@ -555,7 +555,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/blue
 	neon_color = COLOR_BLUE
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/blue,
 		/obj/item/stack/tile/carpet/neon/simple/blue/nodots,
 	)
 
@@ -576,7 +576,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/purple
 	neon_color = COLOR_PURPLE
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/purple,
 		/obj/item/stack/tile/carpet/neon/simple/purple/nodots,
 	)
 
@@ -597,7 +597,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/violet
 	neon_color = COLOR_VIOLET
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/violet,
 		/obj/item/stack/tile/carpet/neon/simple/violet/nodots,
 	)
 
@@ -618,7 +618,7 @@
 	merge_type = /obj/item/stack/tile/carpet/neon/simple/pink
 	neon_color = COLOR_LIGHT_PINK
 	tile_reskin_types = list(
-		/obj/item/stack/tile/carpet/neon/simple,
+		/obj/item/stack/tile/carpet/neon/simple/pink,
 		/obj/item/stack/tile/carpet/neon/simple/pink/nodots,
 	)
 
