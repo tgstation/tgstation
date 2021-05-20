@@ -75,7 +75,7 @@
  * * user - A reference to the ghost interacting with the beacon
  */
 /obj/structure/swarmer_beacon/proc/que_swarmer(mob/user)
-	var/swarm_ask = alert("Become a swarmer?", "Do you wish to consume the station?", "Yes", "No")
+	var/swarm_ask = tgui_alert(usr, "Become a swarmer?", "Do you wish to consume the station?", list("Yes", "No"))
 	if(swarm_ask == "No" || QDELETED(src) || QDELETED(user) || processing_swarmer)
 		return FALSE
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)
@@ -130,7 +130,15 @@
 	max_integrity = 10
 	density = FALSE
 
-/obj/structure/swarmer/trap/Crossed(atom/movable/AM)
+/obj/structure/swarmer/trap/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
+
+/obj/structure/swarmer/trap/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/living_crosser = AM
 		if(!istype(living_crosser, /mob/living/simple_animal/hostile/swarmer))
@@ -139,7 +147,6 @@
 			if(iscyborg(living_crosser))
 				living_crosser.Paralyze(100)
 			qdel(src)
-	return ..()
 
 /obj/structure/swarmer/blockade
 	name = "swarmer blockade"

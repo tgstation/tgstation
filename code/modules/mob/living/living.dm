@@ -1,4 +1,4 @@
-/mob/living/Initialize()
+/mob/living/Initialize(mapload)
 	. = ..()
 	register_init_signals()
 	if(unique_name)
@@ -399,7 +399,7 @@
 		return FALSE
 	if(!..())
 		return FALSE
-	visible_message("<span class='name'>[src]</span> points at [A].", "<span class='notice'>You point at [A].</span>")
+	visible_message("<span class='infoplain'><span class='name'>[src]</span> points at [A].</span>", "<span class='notice'>You point at [A].</span>")
 	return TRUE
 
 
@@ -452,7 +452,7 @@
 		to_chat(src, "<span class='warning'>You are already sleeping!</span>")
 		return
 	else
-		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "You sure you want to sleep for a while?", "Sleep", list("Yes", "No")) == "Yes")
 			SetSleeping(400) //Short nap
 
 
@@ -1146,7 +1146,7 @@
 	if(G.trigger_guard == TRIGGER_GUARD_NONE)
 		to_chat(src, "<span class='warning'>You are unable to fire this!</span>")
 		return FALSE
-	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !ISADVANCEDTOOLUSER(src))
+	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && (!ISADVANCEDTOOLUSER(src) && !HAS_TRAIT(src, TRAIT_GUN_NATURAL)))
 		to_chat(src, "<span class='warning'>You try to fire [G], but can't use the trigger!</span>")
 		return FALSE
 	return TRUE
@@ -1752,7 +1752,8 @@
 	. = buckled
 	buckled = new_buckled
 	if(buckled)
-		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)
+		if(!HAS_TRAIT(buckled, TRAIT_NO_IMMOBILIZE))
+			ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT)
 		switch(buckled.buckle_lying)
 			if(NO_BUCKLE_LYING) // The buckle doesn't force a lying angle.
 				REMOVE_TRAIT(src, TRAIT_FLOORED, BUCKLED_TRAIT)
@@ -1949,3 +1950,20 @@
 			return FALSE
 		return style.harm_act(src, target)
 	return style.help_act(src, target)
+
+/**
+ * Returns an assoc list of assignments and minutes for updating a client's exp time in the databse.
+ *
+ * Arguments:
+ * * minutes - The number of minutes to allocate to each valid role.
+ */
+/mob/living/proc/get_exp_list(minutes)
+	var/list/exp_list = list()
+
+	if(mind && mind.special_role && !(mind.datum_flags & DF_VAR_EDITED))
+		exp_list[mind.special_role] = minutes
+
+	if(mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])
+		exp_list[mind.assigned_role] = minutes
+
+	return exp_list

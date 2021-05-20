@@ -1,0 +1,5 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Dynamic rulesets now always show in the force ruleset panel."
+  - bugfix: "Dynamic rulesets now properly sort in the force ruleset panel."

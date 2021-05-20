@@ -72,8 +72,15 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	desc = "A thick vine, painful to the touch."
 
-/obj/effect/ebeam/vine/Crossed(atom/movable/AM)
+/obj/effect/ebeam/vine/Initialize(mapload)
 	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
+
+/obj/effect/ebeam/vine/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!isvineimmune(L))
@@ -189,7 +196,7 @@
 /mob/living/simple_animal/hostile/venus_human_trap/proc/humanize_plant(mob/user)
 	if(key || !playable_plant || stat)
 		return
-	var/plant_ask = alert("Become a venus human trap?", "Are you reverse vegan?", "Yes", "No")
+	var/plant_ask = tgui_alert(usr,"Become a venus human trap?", "Are you reverse vegan?", list("Yes", "No"))
 	if(plant_ask == "No" || QDELETED(src))
 		return
 	if(key)

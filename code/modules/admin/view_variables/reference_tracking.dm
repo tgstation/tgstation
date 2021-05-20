@@ -20,7 +20,7 @@
 			SSgarbage.next_fire = world.time + world.tick_lag
 			return
 
-		if(!skip_alert && alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") != "Yes")
+		if(!skip_alert && tgui_alert(usr,"Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", list("Yes", "No")) != "Yes")
 			running_find_references = null
 			return
 
@@ -118,19 +118,20 @@
 				testing("Found [type] \ref[src] in list [container_name].")
 
 			//Check assoc entrys
-			else if(element_in_list && !isnum(element_in_list) && normal && potential_container[element_in_list] == src)
+			else if(!isnum(element_in_list) && normal && potential_container[element_in_list] == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
 				found_refs[potential_container] = TRUE
 				#endif
 				testing("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
 
-			//Check normal sublists
-			else if(islist(element_in_list))
-				DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", recursive_limit - 1, search_time)
-
-			//Check assoc sublists
-			else if(element_in_list && !isnum(element_in_list) && normal && islist(potential_container[element_in_list]))
-				DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [potential_container[element_in_list]] (list)", recursive_limit - 1, search_time)
+			//We need to run both of these checks, since our object could be hiding in either of them
+			else
+				//Check normal sublists
+				if(islist(element_in_list))
+					DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", recursive_limit - 1, search_time)
+				//Check assoc sublists
+				if(!isnum(element_in_list) && normal && islist(potential_container[element_in_list]))
+					DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [potential_container[element_in_list]] (list)", recursive_limit - 1, search_time)
 
 	#ifndef FIND_REF_NO_CHECK_TICK
 	CHECK_TICK

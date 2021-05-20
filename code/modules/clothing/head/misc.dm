@@ -51,8 +51,8 @@
 		magician.visible_message("<span class='danger'>[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bu- wait, those are bees!</span>", "<span class='danger'>You tap [src] with your [hitby_wand.name] and pull out... <b>BEES!</b></span>")
 		var/wait_how_many_bees_did_that_guy_pull_out_of_his_hat = rand(4, 8)
 		for(var/b in 1 to wait_how_many_bees_did_that_guy_pull_out_of_his_hat)
-			var/mob/living/simple_animal/hostile/poison/bees/barry = new(get_turf(magician))
-			barry.target = magician
+			var/mob/living/simple_animal/hostile/bee/barry = new(get_turf(magician))
+			barry.GiveTarget(magician)
 			if(prob(20))
 				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
 	else
@@ -288,13 +288,17 @@
 
 	dog_fashion = /datum/dog_fashion/head/sombrero
 
+	greyscale_config = /datum/greyscale_config/sombrero
+	greyscale_config_worn = /datum/greyscale_config/sombrero/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/sombrero/lefthand
+	greyscale_config_inhand_right = /datum/greyscale_config/sombrero/righthand
+
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
-	icon_state = "greensombrero"
-	inhand_icon_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	dog_fashion = null
+	greyscale_colors = "#13d968#ffffff"
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
@@ -302,6 +306,7 @@
 	inhand_icon_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	dog_fashion = null
+	greyscale_colors = "#d565d3#f8db18"
 
 /obj/item/clothing/head/sombrero/shamebrero/Initialize()
 	. = ..()

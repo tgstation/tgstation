@@ -43,12 +43,18 @@
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/shoes/sandal/marisa
+/obj/item/clothing/shoes/sneakers/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
-
+	worn_icon_state = "marisa"
+	greyscale_colors = "#545454#ffffff"
+	greyscale_config = /datum/greyscale_config/sneakers_marisa
+	greyscale_config_worn = null
+	strip_delay = 5
+	equip_delay_other = 50
+	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-	species_exception = null
 
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"
@@ -98,7 +104,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please)
+	LoadComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
@@ -441,21 +447,34 @@
 /obj/item/clothing/shoes/cowboy/Initialize()
 	. = ..()
 	if(prob(2))
-		var/mob/living/simple_animal/hostile/retaliate/poison/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/poison/snake(src)
+		var/mob/living/simple_animal/hostile/retaliate/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/snake(src)
 		occupants += bootsnake
 
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
 	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in occupants)
 			occupant.forceMove(user.drop_location())
 			user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'>You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
 			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
+			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate))
 				user.reagents.add_reagent(/datum/reagent/toxin, 7)
 		occupants.Cut()
+
+/obj/item/clothing/shoes/cowboy/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
+
+/obj/item/clothing/shoes/cowboy/proc/table_slam(mob/living/source, obj/structure/table/the_table)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/handle_table_slam, source)
+
+/obj/item/clothing/shoes/cowboy/proc/handle_table_slam(mob/living/user)
+	user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)
+	user.client?.give_award(/datum/award/achievement/misc/hot_damn, user)
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
 	. = ..()
@@ -464,7 +483,7 @@
 	if(occupants.len >= max_occupants)
 		to_chat(user, "<span class='warning'>[src] are full!</span>")
 		return
-	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
 		occupants += target
 		target.forceMove(src)
 		to_chat(user, "<span class='notice'>[target] slithers into [src].</span>")

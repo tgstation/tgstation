@@ -444,7 +444,7 @@
 	M.verb_whisper = initial(verb_whisper)
 	M.verb_sing = initial(verb_sing)
 	M.verb_yell = initial(verb_yell)
-	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, ORGAN_TRAIT) //People who are Ahealed get "cured" of their sign language-having ways. If I knew how to make the tied tongue persist through aheals, I'd do that.
+	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, ORGAN_TRAIT)
 
 //Thank you Jwapplephobia for helping me with the literal hellcode below
 

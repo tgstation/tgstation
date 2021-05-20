@@ -320,6 +320,10 @@
 /obj/item/restraints/legcuffs/beartrap/Initialize()
 	. = ..()
 	update_appearance()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/spring_trap,
+	)
+	AddElement(/datum/element/connect_loc, src, loc_connections)
 
 /obj/item/restraints/legcuffs/beartrap/update_icon_state()
 	icon_state = "[initial(icon_state)][armed]"
@@ -349,7 +353,8 @@
 	update_appearance()
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
-/obj/item/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
 	if(armed && isturf(loc))
 		if(isliving(AM))
 			var/mob/living/L = AM
@@ -359,7 +364,6 @@
 				if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
 					close_trap()
 					ridden_vehicle.visible_message("<span class='danger'>[ridden_vehicle] triggers \the [src].</span>")
-					return ..()
 
 			if(L.movement_type & (FLYING|FLOATING)) //don't close the trap if they're flying/floating over it.
 				snap = FALSE
@@ -384,7 +388,6 @@
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
 				L.apply_damage(trap_damage, BRUTE, def_zone)
-	..()
 
 /**
  * # Energy snare
@@ -418,7 +421,7 @@
 		qdel(src)
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
-	Crossed(user) //honk
+	spring_trap(null, user)
 	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
@@ -495,9 +498,9 @@
 /obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
-		B.Crossed(hit_atom)
+		B.spring_trap(null, hit_atom)
 		qdel(src)
-	..()
+	. = ..()
 
 /**
  * A pacifying variant of the bola.

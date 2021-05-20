@@ -313,7 +313,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<BR><b>Temporal Scarring:</b><BR><a href='?_src_=prefs;preference=persistent_scars'>[(persistent_scars) ? "Enabled" : "Disabled"]</A>"
 				dat += "<a href='?_src_=prefs;preference=clear_scars'>Clear scar slots</A>"
 
-			dat += "<br><b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
+			dat += "<br><b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc == UPLINK_IMPLANT ? UPLINK_IMPLANT_WITH_PRICE : uplink_spawn_loc]</a><BR></td>"
 			if (user.client.get_exp_living(TRUE) >= PLAYTIME_VETERAN)
 				dat += "<br><b>Don The Ultimate Gamer Cloak?:</b><BR><a href ='?_src_=prefs;preference=playtime_reward_cloak'>[(playtime_reward_cloak) ? "Enabled" : "Disabled"]</a><BR></td>"
 			var/use_skintones = pref_species.use_skintones
@@ -1269,7 +1269,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							ghost_orbit = new_orbit
 
 				if("ghostaccs")
-					var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME)
+					var/new_ghost_accs = tgui_alert(usr,"Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,list(GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME))
 					switch(new_ghost_accs)
 						if(GHOST_ACCS_FULL_NAME)
 							ghost_accs = GHOST_ACCS_FULL
@@ -1279,7 +1279,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							ghost_accs = GHOST_ACCS_NONE
 
 				if("ghostothers")
-					var/new_ghost_others = alert("Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,GHOST_OTHERS_THEIR_SETTING_NAME, GHOST_OTHERS_DEFAULT_SPRITE_NAME, GHOST_OTHERS_SIMPLE_NAME)
+					var/new_ghost_others = tgui_alert(usr,"Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,list(GHOST_OTHERS_THEIR_SETTING_NAME, GHOST_OTHERS_DEFAULT_SPRITE_NAME, GHOST_OTHERS_SIMPLE_NAME))
 					switch(new_ghost_others)
 						if(GHOST_OTHERS_THEIR_SETTING_NAME)
 							ghost_others = GHOST_OTHERS_THEIR_SETTING
@@ -1507,7 +1507,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("uplink_loc")
 					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list
 					if(new_loc)
-						uplink_spawn_loc = new_loc
+						// This is done to prevent affecting saves
+						uplink_spawn_loc = new_loc == UPLINK_IMPLANT_WITH_PRICE ? UPLINK_IMPLANT : new_loc
 
 				if("playtime_reward_cloak")
 					if (user.client.get_exp_living(TRUE) >= PLAYTIME_VETERAN)
@@ -1659,7 +1660,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					save_preferences()
 
 				if("keybindings_reset")
-					var/choice = tgui_alert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", list("Hotkey", "Classic", "Cancel"))
+					var/choice = tgui_alert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", list("Hotkey", "Classic", "Cancel"), 60 SECONDS)
 					if(choice == "Cancel")
 						ShowChoices(user)
 						return

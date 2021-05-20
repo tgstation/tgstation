@@ -94,7 +94,7 @@
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
-			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
+			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease?",, list("Yes", "Cancel"))
 			if(choice == "Yes")
 				message_admins("[key_name_admin(holder)] has cured all diseases.")
 				for(var/thing in SSdisease.active_diseases)
@@ -120,11 +120,11 @@
 			holder.holder.output_ai_laws()//huh, inconvenient var naming, huh?
 		if("showgm")
 			if(!SSticker.HasRoundStarted())
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 			else if (SSticker.mode)
-				alert("The game mode is [SSticker.mode.name]")
+				tgui_alert(usr,"The game mode is [SSticker.mode.name]")
 			else
-				alert("For some reason there's a SSticker, but not a game mode")
+				tgui_alert(usr,"For some reason there's a SSticker, but not a game mode")
 		if("manifest")
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
@@ -153,7 +153,7 @@
 		if("ctfbutton")
 			toggle_id_ctf(holder, "centcom")
 		if("tdomereset")
-			var/delete_mobs = alert("Clear all mobs?","Confirm","Yes","No","Cancel")
+			var/delete_mobs = tgui_alert(usr,"Clear all mobs?","Confirm",list("Yes","No","Cancel"))
 			if(delete_mobs == "Cancel")
 				return
 
@@ -185,7 +185,7 @@
 			message_admins("<span class='adminnotice'>[key_name_admin(holder)] reset the station name.</span>")
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 		if("night_shift_set")
-			var/val = alert(holder, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", "On", "Off", "Automatic")
+			var/val = tgui_alert(holder, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", list("On", "Off", "Automatic"))
 			switch(val)
 				if("Automatic")
 					if(CONFIG_GET(flag/enable_night_shifts))
@@ -224,7 +224,7 @@
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Virus Outbreak"))
-			switch(alert("Do you want this to be a random disease or do you have something in mind?",,"Make Your Own","Random","Choose"))
+			switch(tgui_alert(usr,"Do you want this to be a random disease or do you have something in mind?",,list("Make Your Own","Random","Choose")))
 				if("Make Your Own")
 					AdminCreateVirus(holder)
 				if("Random")
@@ -282,7 +282,7 @@
 		if("onlyone")
 			if(!is_funmin)
 				return
-			var/response = alert("Delay by 40 seconds?", "There can, in fact, only be one", "Instant!", "40 seconds (crush the hope of a normal shift)")
+			var/response = tgui_alert(usr,"Delay by 40 seconds?", "There can, in fact, only be one", list("Instant!", "40 seconds (crush the hope of a normal shift)"))
 			if(response == "Instant!")
 				holder.only_one()
 			else
@@ -293,7 +293,7 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Guns"))
 			var/survivor_probability = 0
-			switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
+			switch(tgui_alert(usr,"Do you want this to create survivors antagonists?",,list("No Antags","Some Antags","All Antags!")))
 				if("Some Antags")
 					survivor_probability = 25
 				if("All Antags!")
@@ -305,7 +305,7 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Magic"))
 			var/survivor_probability = 0
-			switch(alert("Do you want this to create magician antagonists?",,"No Antags","Some Antags","All Antags!"))
+			switch(tgui_alert(usr,"Do you want this to create magician antagonists?",,list("No Antags","Some Antags","All Antags!")))
 				if("Some Antags")
 					survivor_probability = 25
 				if("All Antags!")
@@ -316,12 +316,12 @@
 			if(!is_funmin)
 				return
 			if(!SSevents.wizardmode)
-				if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
 					summonevents()
 					SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Activate"))
 
 			else
-				switch(alert("What would you like to do?",,"Intensify Summon Events","Turn Off Summon Events","Nothing"))
+				switch(tgui_alert(usr,"What would you like to do?",,list("Intensify Summon Events","Turn Off Summon Events","Nothing")))
 					if("Intensify Summon Events")
 						summonevents()
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Intensify"))
@@ -368,7 +368,7 @@
 
 			var/list/settings = list(
 				"mainsettings" = list(
-					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/poison/bees),
+					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/bee),
 					"humanoutfit" = list("desc" = "Outfit if human", "type" = "datum", "path" = "/datum/outfit", "subtypesonly" = TRUE, "value" = /datum/outfit),
 					"amount" = list("desc" = "Number per portal", "type" = "number", "value" = 1),
 					"portalnum" = list("desc" = "Number of total portals", "type" = "number", "value" = 10),
@@ -457,26 +457,26 @@
 			if(!is_funmin)
 				return
 			if(!SSticker.HasRoundStarted())
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/objective = stripped_input(holder, "Enter an objective")
 			if(!objective)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))
-			for(var/mob/living/H in GLOB.player_list)
-				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
+			for(var/mob/living/player in GLOB.player_list)
+				if(!(ishuman(player)||istype(player, /mob/living/silicon/)))
 					continue
-				if(H.stat == DEAD || !H.mind || ispAI(H))
+				if(player.stat == DEAD || !player.mind || ispAI(player))
 					continue
-				if(is_special_character(H))
+				if(is_special_character(player))
 					continue
-				var/datum/antagonist/traitor/T = new()
-				T.give_objectives = FALSE
+				var/datum/antagonist/traitor/traitor_datum = new()
+				traitor_datum.give_objectives = FALSE
 				var/datum/objective/new_objective = new
-				new_objective.owner = H
+				new_objective.owner = player
 				new_objective.explanation_text = objective
-				T.add_objective(new_objective)
-				H.mind.add_antag_datum(T)
+				traitor_datum.objectives += new_objective
+				player.mind.add_antag_datum(traitor_datum)
 			message_admins("<span class='adminnotice'>[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(holder)] used everyone is a traitor secret. Objective is [objective]")
 		if("massbraindamage")
@@ -492,11 +492,11 @@
 		if("anime")
 			if(!is_funmin)
 				return
-			var/animetype = alert("Would you like to have the clothes be changed?",,"Yes","No","Cancel")
+			var/animetype = tgui_alert(usr,"Would you like to have the clothes be changed?",,list("Yes","No","Cancel"))
 
 			var/droptype
 			if(animetype =="Yes")
-				droptype = alert("Make the uniforms Nodrop?",,"Yes","No","Cancel")
+				droptype = tgui_alert(usr,"Make the uniforms Nodrop?",,list("Yes","No","Cancel"))
 
 			if(animetype == "Cancel" || droptype == "Cancel")
 				return
@@ -586,7 +586,7 @@
 	if(E)
 		E.processing = FALSE
 		if(E.announceWhen>0)
-			switch(alert(holder, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel"))
+			switch(tgui_alert(holder, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel")))
 				if("Yes")
 					E.announceChance = 100
 				if("Cancel")

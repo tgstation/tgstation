@@ -201,7 +201,7 @@
 
 /obj/item/rod_of_asclepius/proc/activated()
 	item_flags = DROPDEL
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE

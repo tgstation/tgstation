@@ -20,7 +20,7 @@
 	var/on = FALSE
 	///check what mode the machine should be (WORKING, STANDBY)
 	var/mode = ELECTROLYZER_MODE_STANDBY
-	///Increase the amount of moles worked on, changed by upgrading the electrolite tier
+	///Increase the amount of moles worked on, changed by upgrading the manipulator tier
 	var/workingPower = 1
 	///Decrease the amount of power usage, changed by upgrading the capacitor tier
 	var/efficiency = 0.5
@@ -91,7 +91,7 @@
 		return
 
 	var/datum/gas_mixture/env = L.return_air() //get air from the turf
-	var/datum/gas_mixture/removed = env.remove(0.1 * env.total_moles())
+	var/datum/gas_mixture/removed = env.remove_ratio(0.1)
 
 	if(!removed)
 		return
@@ -106,14 +106,14 @@
 	cell.use((5 * proportion * workingPower) / (efficiency + workingPower))
 
 /obj/machinery/electrolyzer/RefreshParts()
-	var/electrolite = 0
+	var/manipulator = 0
 	var/cap = 0
-	for(var/obj/item/stock_parts/electrolite/M in component_parts)
-		electrolite += M.rating
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		manipulator += M.rating
 	for(var/obj/item/stock_parts/capacitor/M in component_parts)
 		cap += M.rating
 
-	workingPower = electrolite //used in the amount of moles processed
+	workingPower = manipulator //used in the amount of moles processed
 
 	efficiency = (cap + 1) * 0.5 //used in the amount of charge in power cell uses
 

@@ -461,7 +461,7 @@
 		options += "Server Restart (Kill and restart DD)";
 
 	if(SSticker.admin_delay_notice)
-		if(alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", "Yes", "No") != "Yes")
+		if(tgui_alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", list("Yes", "No")) != "Yes")
 			return FALSE
 
 	var/result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
@@ -471,7 +471,7 @@
 		switch(result)
 			if("Regular Restart")
 				if(!(isnull(usr.client.address) || (usr.client.address in localhost_addresses)))
-					if(alert("Are you sure you want to restart the server?","This server is live","Restart","Cancel") != "Restart")
+					if(tgui_alert(usr, "Are you sure you want to restart the server?","This server is live",list("Restart","Cancel")) != "Restart")
 						return FALSE
 				SSticker.Reboot(init_by, "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 			if("Regular Restart (with delay)")
@@ -479,7 +479,7 @@
 				if(!delay)
 					return FALSE
 				if(!(isnull(usr.client.address) || (usr.client.address in localhost_addresses)))
-					if(alert("Are you sure you want to restart the server?","This server is live","Restart","Cancel") != "Restart")
+					if(tgui_alert(usr,"Are you sure you want to restart the server?","This server is live",list("Restart","Cancel")) != "Restart")
 						return FALSE
 				SSticker.Reboot(init_by, "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", delay * 10)
 			if("Hard Restart (No Delay, No Feeback Reason)")
@@ -499,7 +499,7 @@
 
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("End the round and  restart the game world?", "End Round", "Yes", "Cancel")
+	var/confirm = tgui_alert(usr, "End the round and  restart the game world?", "End Round", list("Yes", "Cancel"))
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
@@ -572,7 +572,7 @@
 		if(!SSticker.start_immediately)
 			var/localhost_addresses = list("127.0.0.1", "::1")
 			if(!(isnull(usr.client.address) || (usr.client.address in localhost_addresses)))
-				if(alert("Are you sure you want to start the round?","Start Now","Start Now","Cancel") != "Start Now")
+				if(tgui_alert(usr, "Are you sure you want to start the round?","Start Now",list("Start Now","Cancel")) != "Start Now")
 					return FALSE
 			SSticker.start_immediately = TRUE
 			log_admin("[usr.key] has started the game.")
@@ -585,12 +585,12 @@
 			return TRUE
 		SSticker.start_immediately = FALSE
 		SSticker.SetTimeLeft(1800)
-		to_chat(world, "<b>The game will start in 180 seconds.</b>")
+		to_chat(world, "<span class='infoplain'><b>The game will start in 180 seconds.</b></span>")
 		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
 		message_admins("<font color='blue'>[usr.key] has cancelled immediate game start. Game will start in 180 seconds.</font>")
 		log_admin("[usr.key] has cancelled immediate game start.")
 	else
-		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
+		to_chat(usr, "<span class='warningplain'><font color='red'>Error: Start Now: Game has already started.</font></span>")
 	return FALSE
 
 /datum/admins/proc/toggleenter()
@@ -643,16 +643,16 @@
 
 	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.GetTimeLeft()/10)) as num|null
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!")
+		return tgui_alert(usr, "Too late... The game has already started!")
 	if(newtime)
 		newtime = newtime*10
 		SSticker.SetTimeLeft(newtime)
 		SSticker.start_immediately = FALSE
 		if(newtime < 0)
-			to_chat(world, "<b>The game start has been delayed.</b>", confidential = TRUE)
+			to_chat(world, "<span class='infoplain'><b>The game start has been delayed.</b></span>", confidential = TRUE)
 			log_admin("[key_name(usr)] delayed the round start.")
 		else
-			to_chat(world, "<b>The game will start in [DisplayTimeText(newtime)].</b>", confidential = TRUE)
+			to_chat(world, "<span class='infoplain'><b>The game will start in [DisplayTimeText(newtime)].</b></span>", confidential = TRUE)
 			SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
 			log_admin("[key_name(usr)] set the pre-game delay to [DisplayTimeText(newtime)].")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -665,7 +665,7 @@
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
-		alert("[M.name] is not prisoned.")
+		tgui_alert(usr,"[M.name] is not prisoned.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unprison") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
@@ -832,7 +832,7 @@
 	var/count = 0
 
 	if(!SSjob.initialized)
-		alert(usr, "You cannot manage jobs before the job subsystem is initialized!")
+		tgui_alert(usr, "You cannot manage jobs before the job subsystem is initialized!")
 		return
 
 	dat += "<table>"
@@ -931,7 +931,7 @@
 		question = "This mob already has a user ([tomob.key]) in control of it! "
 	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
 
-	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	var/ask = tgui_alert(usr, question, "Place ghost in control of mob?", list("Yes", "No"))
 	if (ask != "Yes")
 		return TRUE
 

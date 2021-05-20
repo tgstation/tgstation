@@ -43,6 +43,8 @@
 
 /// Finds the singleton for the element type given and attaches it to src
 /datum/proc/_AddElement(list/arguments)
+	if(QDELING(src))
+		CRASH("We just tried to add an element to a qdeleted datum, something is fucked")
 	var/datum/element/ele = SSdcs.GetElement(arguments)
 	arguments[1] = src
 	if(ele.Attach(arglist(arguments)) == ELEMENT_INCOMPATIBLE)
