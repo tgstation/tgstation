@@ -51,7 +51,7 @@
 	update_appearance()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
-	
+
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
@@ -125,7 +125,7 @@
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/firealarm/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && !machine_stat
+	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT - 30) && !(obj_flags & EMAGGED) && !machine_stat
 
 /obj/machinery/firealarm/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(!detecting)
