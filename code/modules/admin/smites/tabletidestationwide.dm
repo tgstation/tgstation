@@ -11,5 +11,6 @@
 	SEND_SOUND(target, sound('sound/misc/slamofthenorthstar.ogg',volume=40))
 	for(var/area/area in areas)
 		for(var/obj/structure/table/table in area)
-			table.tablepush(target, target)
-			sleep(1)
+			if(!istype(table, /obj/structure/table/glass))
+				table.tablepush(target, target)
+				sleep(1)
