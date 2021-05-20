@@ -223,7 +223,8 @@
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
-	update_greyscale()
+	if(greyscale_config && greyscale_colors)
+		update_greyscale()
 
 	//atom color stuff
 	if(color)
@@ -737,7 +738,7 @@
 	greyscale_colors = colors
 	if(!greyscale_config)
 		return
-	if(update)
+	if(update && greyscale_config && greyscale_colors)
 		update_greyscale()
 
 /// Checks if the greyscale config given is different and if so causes a greyscale icon update
@@ -745,13 +746,12 @@
 	if(greyscale_config == new_config)
 		return
 	greyscale_config = new_config
-	if(update)
+	if(update && greyscale_config && greyscale_colors)
 		update_greyscale()
 
 /// Checks if this atom uses the GAS system and if so updates the icon
 /atom/proc/update_greyscale()
-	if(greyscale_config && greyscale_colors)
-		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
+	icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
 
 /**
  * An atom we are buckled or is contained within us has tried to move
