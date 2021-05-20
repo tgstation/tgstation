@@ -398,3 +398,111 @@
       shaken awake once more.
   tralezab:
   - bugfix: fixes udders not performing some things they should!
+2021-05-15:
+  ATHATH:
+  - bugfix: Beepsky smash's stamina healing and non-beepsky-related hallucinatory
+      effects are now applied to people WITH sec-affiliated livers instead of to people
+      WITHOUT sec-affiliated livers, restoring its previous, intended functionality.
+  Fikou:
+  - bugfix: ambience subsystem no longer plays to people in lobby
+  GoldenAlpharex:
+  - bugfix: You no longer get on the object layer when you're riding someone's back,
+      and your layer now gets successfully reset upon unbuckling.
+  - qol: The layer difference between the person at the front and at the back (layer-wise)
+      during a piggyback ride isn't abysmal anymore.
+  Guillaume Prata:
+  - spellcheck: The atmospherics hardsuit description was changed to better inform
+      that it has less radiation protection than the engineering ones.
+  InsaneRed:
+  - qol: Plasmamen paramedics now start with nitrile gloves
+  JohnFulpWillard:
+  - bugfix: Security Revolutionaries will no longer become Enemies of the Revolution
+      upon a Revolution victory.
+  Kylerace:
+  - bugfix: singularities will no longer eat themselves, among other things
+  - bugfix: After a series of thorough exorcisms, Nanotrasen would like to assure
+      Space Station 13 that ghosts both do not exist and if they did exist can no
+      longer affect the material plane by spamming the fuck out of squeaky noises
+      from bananium floors
+  LemonInTheDark:
+  - bugfix: Footsteps will no longer stack
+  cacogen:
+  - qol: Tells you a melee attack or projectile hit an object (e.g. airlock, reinforced
+      window) without leaving a mark if it did no damage
+  tralezab:
+  - refactor: rpgloot, embedopocalypse, and stickapocalypse are now datum singletons
+  - refactor: THAT USE SIGNALS!
+  - rscadd: RPGLoot now has the curse of hunger as a bad modifier. A very bad one!
+  - refactor: Duffelbag curse is now a component, attachable to any item.
+2021-05-16:
+  Clyde-Thunderpants:
+  - rscadd: New trait, web weaver, that allow you to weave webs into cloth.
+  - rscadd: The genetics webbing mutation now gives you web weaver
+  Greniza:
+  - qol: moved the alkaline input of reaction chamber to fourth layer
+  Mothblocks:
+  - bugfix: Singularities can no longer consume themselves.
+  Ryll/Shaps:
+  - bugfix: Dead and incapacitated people can no longer offer items
+  Timberpoes:
+  - bugfix: You can once again no longer roll multiple antags at once or antags you
+      have disabled in your prefs.
+  - bugfix: Traitors and malf AIs no longer get 1 more objective than intended.
+  Time-Green:
+  - bugfix: geysers are now ACTUALLY plungerable
+  maxymax13:
+  - imageadd: Did you know? "Vendomat" is just the name for the base vendor path.
+      The assembly parts vendor you probably know as "Vendomat" has been given its
+      unique own sprite and name to reduce confusion. Shop at a Part-Mart at your
+      local Primary Tool Storage today!
+  - imageadd: Custom vendors now have a new sprite, with a fancy LCD!
+  - imageadd: Jesus-endorsed custom vendors now have a fancy UNIQUE golden sprite,
+      rather than being a robotics vendor made  out of cheese!
+  tralezab:
+  - spellcheck: fixes span in filterrific.dm
+  - bugfix: simple_flying now removes itself from a mob when the mob deletes
+2021-05-17:
+  Anonymous:
+  - code_imp: You can now change emoji set with just a define. See `__DEFINES/misc.dm`.
+  SgtHunk:
+  - qol: You can now unlock/lock secure lockers with Right click rather than using
+      Alt+click.
+  Timberpoes:
+  - bugfix: Cryopods can no longer be used to round remove other SSD players.
+  - bugfix: Cryopods no longer delete traitor objectives under certain edge cases,
+      and can no longer be used to metagame the existence of traitors with steal objectives.
+  - balance: Cryopods now vomit out all the items of players who get vored by them,
+      like beautiful loot pinatas.
+  itseasytosee:
+  - bugfix: changeling spacesuits no longer come with a battery hud
+2021-05-18:
+  Kylerace:
+  - bugfix: i dont have the energy for a witty in-universe changelog so airhorns can
+      honk again
+  - bugfix: Recyclers dont vore themselves the moment the world is created anymore.
+  Mothblocks:
+  - refactor: tgui tooltips have been moved to a new system that keeps them within
+      bounds of the screen.
+  RandomGamer123:
+  - bugfix: Being buckled to a wheelchair no longer prevents you from using dermal
+      button nanites, cult chat, and more.
+  SgtHunk:
+  - rscadd: The Tramstation security checkpoints now have cells for easy brigging
+      on the go.
+2021-05-19:
+  JohnFulpWillard:
+  - rscadd: The Quartermaster can now send announcements via the Requests console
+      in their office.
+  Kylerace:
+  - bugfix: double rat kebabs are now double the reagents of single rat kebabs
+  - bugfix: rat kebabs no longer drop the metal rods when eaten unlike other kebabs
+      to maintain lore consistency
+2021-05-20:
+  InsaneRed:
+  - bugfix: Syndicate Saboteur borgs now properly come with a analyzer installed
+  - balance: Syndicate Medical borgs no longer have an emag
+  - balance: Syndicate Saboteur borgs now come with an emag.
+  LemonInTheDark:
+  - bugfix: Things like microwaves will no longer have their sound stack
+  dragomagol:
+  - bugfix: sentience fun balloons now work consistently again!

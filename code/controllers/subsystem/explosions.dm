@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(explosions)
 	set name = "Check Bomb Impact"
 	set category = "Debug"
 
-	var/newmode = alert("Use reactionary explosions?","Check Bomb Impact", "Yes", "No")
+	var/newmode = tgui_alert(usr, "Use reactionary explosions?","Check Bomb Impact", list("Yes", "No"))
 	var/turf/epicenter = get_turf(mob)
 	if(!epicenter)
 		return
@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(explosions)
 	var/heavy = 0
 	var/light = 0
 	var/list/choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb")
-	var/choice = input("Bomb Size?") in choices
+	var/choice = tgui_input_list(usr, "Pick the bomb size", "Bomb Size?", choices)
 	switch(choice)
 		if(null)
 			return 0

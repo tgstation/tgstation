@@ -104,7 +104,7 @@
 /obj/item/multitool/ai_detect/proc/show_hud(mob/user)
 	if(user && hud_type)
 		var/atom/movable/screen/plane_master/camera_static/PM = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
-		PM.alpha = 150
+		PM.alpha = 64
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		if(!H.hudusers[user])
 			H.add_hud_to(user)
@@ -146,7 +146,6 @@
 /mob/camera/ai_eye/remote/ai_detector
 	name = "AI detector eye"
 	ai_detector_visible = FALSE
-	use_static = USE_STATIC_TRANSPARENT
 	visible_icon = FALSE
 
 /datum/action/item_action/toggle_multitool
@@ -155,11 +154,11 @@
 
 /datum/action/item_action/toggle_multitool/Trigger()
 	if(!..())
-		return 0
+		return FALSE
 	if(target)
 		var/obj/item/multitool/ai_detect/M = target
 		M.toggle_hud(owner)
-	return 1
+	return TRUE
 
 /obj/item/multitool/abductor
 	name = "alien multitool"

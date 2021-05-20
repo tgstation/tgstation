@@ -196,7 +196,7 @@
 /mob/living/simple_animal/hostile/venus_human_trap/proc/humanize_plant(mob/user)
 	if(key || !playable_plant || stat)
 		return
-	var/plant_ask = alert("Become a venus human trap?", "Are you reverse vegan?", "Yes", "No")
+	var/plant_ask = tgui_alert(usr,"Become a venus human trap?", "Are you reverse vegan?", list("Yes", "No"))
 	if(plant_ask == "No" || QDELETED(src))
 		return
 	if(key)

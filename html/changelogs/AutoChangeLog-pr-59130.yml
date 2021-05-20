@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - qol: "Changing a reagent container's transfer amount will now give you feedback in the form of text on the container itself."

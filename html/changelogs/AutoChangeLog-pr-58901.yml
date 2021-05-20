@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - rscadd: "Greyscale items using GAGS in vending machines can have their colors chosen before vending. Not many things are capable of this yet but expect more to come."

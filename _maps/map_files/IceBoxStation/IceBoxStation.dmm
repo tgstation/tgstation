@@ -27843,9 +27843,15 @@
 /area/maintenance/space_hut/cabin)
 "gZl" = (
 /obj/structure/table/wood,
-/obj/item/pen/red,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/pen/red{
+	pixel_x = -6
+	},
 /obj/item/pen/blue{
-	pixel_x = 5;
+	pixel_x = -1;
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
@@ -39451,9 +39457,10 @@
 /area/medical/chemistry)
 "nCD" = (
 /obj/machinery/requests_console/directional/west{
-	department = "Cargo Bay";
+	announcementConsole = 1;
+	department = "Quartermaster's Desk";
 	departmentType = 2;
-	name = "Cargo Bay Requests Console"
+	name = "Quartermaster's Requests Console"
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -40695,7 +40702,9 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "osm" = (
-/obj/machinery/libraryscanner,
+/obj/machinery/modular_computer/console/preset/curator{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/service/library)
 "oss" = (
@@ -46505,11 +46514,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 5
 	},
-/obj/machinery/modular_computer/console/preset/cargochat/cargo{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 8
+	},
+/obj/machinery/modular_computer/console/preset/cargochat/security{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/security/office)
@@ -52281,10 +52290,7 @@
 /area/medical/virology)
 "uSm" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
+/obj/machinery/libraryscanner,
 /turf/open/floor/wood,
 /area/service/library)
 "uSw" = (
