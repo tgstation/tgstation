@@ -361,4 +361,4 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	for(var/turf/to_unset as anything in turfs_to_visualize)
 		to_unset.vis_flags &= ~VIS_HIDE
 
-	vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))
+	vis_contents += turfs_to_visualize
