@@ -466,14 +466,13 @@ const WrapInTooltip = (props, context) => {
     tooltips[entry.name + '_' + type]
   );
   // TODO: Uncomment this block when tooltips no longer suck.
-  // if (tip) {
-  //   return (
-  //     <Tooltip position="bottom" content={tip}>
-  //       {children}
-  //     </Tooltip>
-  //   )
-  // }
-  return children;
+  if (tip) {
+    return (
+      <Tooltip position="bottom" content={tip}>
+        {children}
+      </Tooltip>
+    );
+  }
 };
 
 /**

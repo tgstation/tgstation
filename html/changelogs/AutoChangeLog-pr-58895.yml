@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Modular Computers equip with the new integrated radio card chip can now be used as a remote signaler. Science comes equip with one."
+  - code_imp: "Modular computer Hardware code has been documented properly."

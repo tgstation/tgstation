@@ -136,7 +136,7 @@
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)
-		if(eyeobj.use_static != USE_STATIC_NONE)
+		if(eyeobj.use_static != FALSE)
 			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
@@ -223,7 +223,7 @@
 		else
 			moveToNullspace()
 		update_ai_detect_hud()
-		if(use_static != USE_STATIC_NONE)
+		if(use_static != FALSE)
 			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
 		if(visible_icon)
 			if(eye_user.client)

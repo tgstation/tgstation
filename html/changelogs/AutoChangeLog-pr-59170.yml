@@ -1,0 +1,4 @@
+author: "SgtHunk"
+delete-after: True
+changes: 
+  - bugfix: "Icebox - Security Office now has the intended cargochat console."
