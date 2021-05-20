@@ -106,6 +106,8 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/shoes/magboots/gravboots/proc/distance_check(mob/user)
+	SIGNAL_HANDLER
+
 	for(var/turf/grav_turf in grav_turfs)
 		if(get_dist(src, grav_turf) > 2)
 			grav_turf.RemoveElement(/datum/element/forced_gravity, 1)
@@ -116,3 +118,6 @@
 			grav_turf.AddElement(/datum/element/forced_gravity, 1)
 			grav_turfs.Add(grav_turf)
 
+/obj/item/clothing/shoes/magboots/gravboots/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
