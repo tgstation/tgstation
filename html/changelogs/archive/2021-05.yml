@@ -497,3 +497,12 @@
   - bugfix: double rat kebabs are now double the reagents of single rat kebabs
   - bugfix: rat kebabs no longer drop the metal rods when eaten unlike other kebabs
       to maintain lore consistency
+2021-05-20:
+  InsaneRed:
+  - bugfix: Syndicate Saboteur borgs now properly come with a analyzer installed
+  - balance: Syndicate Medical borgs no longer have an emag
+  - balance: Syndicate Saboteur borgs now come with an emag.
+  LemonInTheDark:
+  - bugfix: Things like microwaves will no longer have their sound stack
+  dragomagol:
+  - bugfix: sentience fun balloons now work consistently again!
