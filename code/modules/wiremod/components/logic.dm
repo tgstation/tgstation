@@ -6,6 +6,8 @@
 /obj/item/circuit_component/compare/logic
 	display_name = "Logic"
 
+	result_type = PORT_TYPE_ANY
+
 GLOBAL_LIST_INIT(comp_logic_options, list(
 	COMP_LOGIC_AND,
 	COMP_LOGIC_OR
@@ -18,7 +20,7 @@ GLOBAL_LIST_INIT(comp_logic_options, list(
 /obj/item/circuit_component/compare/logic/do_comparisons(list/ports)
 	. = FALSE
 	for(var/datum/port/input/port as anything in ports)
-		if(isnull(port.connected_port))
+		if(isnull(port.input_value))
 			continue
 
 		switch(current_option)

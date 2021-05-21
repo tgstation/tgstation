@@ -19,6 +19,8 @@
 	/// The result from the output
 	var/datum/port/output/result
 
+	var/result_type = PORT_TYPE_NUMBER
+
 /obj/item/circuit_component/compare/Initialize()
 	. = ..()
 	for(var/port_id in 1 to input_port_amount)
@@ -29,7 +31,7 @@
 
 	true = add_output_port("True", PORT_TYPE_NUMBER)
 	false = add_output_port("False", PORT_TYPE_NUMBER)
-	result = add_output_port("Result", PORT_TYPE_NUMBER)
+	result = add_output_port("Result", result_type)
 
 /obj/item/circuit_component/compare/Destroy()
 	true = null

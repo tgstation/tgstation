@@ -15,7 +15,7 @@
 /obj/item/circuit_component/concat/Initialize()
 	. = ..()
 	for(var/port_id in 1 to input_port_amount)
-		var/letter = ascii2text(text2ascii("A")-1 + port_id)
+		var/letter = ascii2text(text2ascii("A") + (port_id-1))
 		add_input_port(letter, PORT_TYPE_STRING)
 
 	output = add_output_port("Output", PORT_TYPE_STRING)
