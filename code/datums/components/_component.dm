@@ -311,9 +311,9 @@
 	var/target = comp_lookup[sigtype]
 	if(!length(target))
 		var/datum/listening_datum = target
-		return CallAsync(listening_datum, listening_datum.signal_procs[src][sigtype], arguments)
+		return call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
 	for(var/datum/listening_datum as anything in target)
-		. |= CallAsync(listening_datum, listening_datum.signal_procs[src][sigtype], arguments)
+		. |= call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
