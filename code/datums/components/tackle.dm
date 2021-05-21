@@ -116,7 +116,7 @@
 	else
 		user.visible_message("<span class='warning'>[user] [leap_word]s!</span>", "<span class='danger'>You [leap_word]!</span>")
 
-	if(get_dist(user, A) < min_distance)
+	if(min_distance && get_dist(user, A) < min_distance) //Tackles are shitcode
 		A = get_ranged_target_turf(user, get_dir(user, A), min_distance) //TODO: this only works in cardinals/diagonals, make it work with in-betweens too!
 
 	if(tackle_knockdown)

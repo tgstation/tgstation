@@ -13,7 +13,7 @@
 	base_knockdown = 0.1 SECONDS
 	tackle_range = 6
 	tackle_speed = 3
-	min_distance = 3
+	min_distance = 0
 	skill_mod = -5
 	tackle_knockdown = FALSE
 
