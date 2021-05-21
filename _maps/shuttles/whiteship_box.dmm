@@ -922,6 +922,9 @@
 /obj/machinery/light/small/built/directional/east,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
+	dir = 10
+	},
 /turf/open/floor/iron/white/side{
 	dir = 5
 	},
@@ -995,6 +998,7 @@
 /obj/machinery/computer/med_data{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer1,
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "bN" = (
@@ -1060,7 +1064,6 @@
 /area/shuttle/abandoned/medbay)
 "bT" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
@@ -1205,11 +1208,8 @@
 /area/shuttle/abandoned/medbay)
 "ci" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1;
-	name = "Connector Port (Air Supply)"
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/iron/white/side,
 /area/shuttle/abandoned/medbay)
 "cj" = (
@@ -1336,6 +1336,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer1,
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "cw" = (
@@ -1920,11 +1921,25 @@
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
+"io" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/medbay)
+"ua" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/medbay)
 "vk" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/engine)
+"Cp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer1,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "JU" = (
 /obj/structure/shuttle/engine/propulsion/right{
@@ -1932,6 +1947,24 @@
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/engine)
+"KC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer1,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/medbay)
+"Nt" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_windows"
+	},
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/medbay)
+"NJ" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/layer2,
+/turf/template_noop,
+/area/shuttle/abandoned/medbay)
 "Tw" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
@@ -2119,7 +2152,7 @@ as
 aT
 bn
 at
-aa
+NJ
 at
 cr
 cy
@@ -2138,7 +2171,7 @@ at
 aU
 bo
 at
-aa
+NJ
 at
 cs
 cz
@@ -2157,7 +2190,7 @@ at
 bl
 aV
 at
-aa
+NJ
 at
 bp
 bl
@@ -2176,7 +2209,7 @@ aF
 aW
 bq
 at
-ah
+Nt
 at
 cu
 cB
@@ -2196,8 +2229,8 @@ aX
 at
 at
 bM
-at
-at
+Cp
+Cp
 cC
 aG
 at
@@ -2235,7 +2268,7 @@ al
 bA
 bO
 ce
-al
+KC
 cE
 cO
 cZ
@@ -2254,7 +2287,7 @@ al
 al
 bP
 al
-al
+KC
 cF
 cP
 da
@@ -2273,7 +2306,7 @@ al
 bB
 bQ
 cf
-al
+KC
 cG
 cQ
 db
@@ -2292,7 +2325,7 @@ bs
 bC
 bR
 cg
-al
+KC
 cH
 cR
 dc
@@ -2311,7 +2344,7 @@ bt
 bD
 bS
 ch
-al
+ua
 al
 cS
 dd
@@ -2330,7 +2363,7 @@ bu
 bE
 bT
 ci
-al
+io
 cI
 cT
 de
@@ -2349,7 +2382,7 @@ bI
 bF
 bU
 cj
-al
+io
 cJ
 al
 df
