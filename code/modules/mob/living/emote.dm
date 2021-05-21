@@ -455,7 +455,7 @@
 				if("Hearable")
 					emote_type = EMOTE_AUDIBLE
 				else
-					alert("Unable to use this emote, must be either hearable or visible.")
+					tgui_alert(usr,"Unable to use this emote, must be either hearable or visible.")
 					return
 			message = custom_emote
 	else

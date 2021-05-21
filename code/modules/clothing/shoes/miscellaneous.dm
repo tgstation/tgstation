@@ -104,7 +104,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
-	LoadComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, 0, 0, 0, 0, 20, 0) //die off quick please
+	LoadComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
