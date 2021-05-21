@@ -1,13 +1,9 @@
 /obj/item/mod/control/proc/choose_deploy(mob/user)
-	if(!LAZYLEN(mod_parts))
-		return
-	if(isAI(user))
-		to_chat(user, "<span class='warning'>You cannot operate this!</span>")
+	if(!length(mod_parts))
 		return
 	var/list/display_names = list()
 	var/list/items = list()
-	for(var/i in 1 to length(mod_parts))
-		var/obj/item/piece = mod_parts[i]
+	for(var/obj/item/piece as anything in mod_parts)
 		display_names[piece.name] = REF(piece)
 		var/image/piece_image = image(icon = piece.icon, icon_state = piece.icon_state)
 		items += list(piece.name = piece_image)
@@ -22,10 +18,21 @@
 		to_chat(user, "<span class='warning'>ERROR: Suit activated. Deactivate before further action.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return
+	var/parts_to_check = mod_parts - part
 	if(part.loc == src)
 		deploy(user, part)
+		for(var/obj/item/piece as anything in parts_to_check)
+			if(piece.loc != src)
+				continue
+			choose_deploy(user)
+			break
 	else
 		conceal(user, part)
+		for(var/obj/item/piece as anything in parts_to_check)
+			if(piece.loc == src)
+				continue
+			choose_deploy(user)
+			break
 
 /obj/item/mod/control/proc/deploy(mob/user, part)
 	var/obj/item/piece = part
@@ -130,7 +137,7 @@
 		wearer.update_hair()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
-		audible_message("<span class='notice'>Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer].</span>", hearing_distance = 1)
+		audible_message("<span class='notice'>Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer].</span>", hearing_distance = 0)
 		icon_state = "[skin]-control[active ? "" : "-sealed"]"
 		worn_icon_state = "[skin]-control[active ? "" : "-sealed"]"
 		active = !active

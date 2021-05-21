@@ -265,6 +265,7 @@
 	for(var/trait in visor_traits)
 		REMOVE_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
+	mod.wearer.update_tint()
 
 /obj/item/mod/module/visor/medhud
 	name = "MOD medical visor module"
@@ -421,8 +422,6 @@
 /obj/item/mod/module/jetpack/proc/move_react(mob/user)
 	if(!active)//If jet dont work, it dont work
 		return
-	if(!mod.wearer?.client)//Don't allow jet self using
-		return
 	if(!isturf(mod.wearer.loc))//You can't use jet in nowhere or from mecha/closet
 		return
 	if(!(mod.wearer.movement_type & FLOATING) || mod.wearer.buckled)//You don't want use jet in gravity or while buckled.
@@ -431,7 +430,7 @@
 		return
 	if(mod.wearer.throwing)//You don't must use jet if you thrown
 		return
-	if(length(mod.wearer.client.keys_held & mod.wearer.client.movement_keys))//You use jet when press keys. yes.
+	if(user.client && length(user.client.keys_held & user.client.movement_keys))//You use jet when press keys. yes.
 		allow_thrust()
 
 /obj/item/mod/module/jetpack/proc/pre_move_react(mob/user)
@@ -703,6 +702,7 @@
 /obj/item/mod/module/science_scanner
 	name = "MOD science scanner module"
 	desc = "A module that enables internal research and reagent scanners in the MOD."
+	module_type = MODULE_TOGGLE
 	complexity = 1
 	active_power_cost = 5
 	incompatible_modules = list(/obj/item/mod/module/science_scanner)
@@ -715,7 +715,7 @@
 	mod.wearer.research_scanner++
 	mod.helmet.clothing_flags |= SCAN_REAGENTS
 
-/obj/item/mod/module/science_scanner/on_uninstall()
+/obj/item/mod/module/science_scanner/on_deactivation()
 	. = ..()
 	if(!.)
 		return

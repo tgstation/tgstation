@@ -86,7 +86,7 @@
 	skin = theme.default_skin
 	cell_drain = theme.cell_usage
 	wires = new /datum/wires/mod(src)
-	if(req_access?.len)
+	if(length(req_access))
 		locked = TRUE
 	if(ispath(cell))
 		cell = new cell(src)
@@ -197,7 +197,7 @@
 	for(var/obj/item/part in mod_parts)
 		if(part.loc != src)
 			to_chat(carbon_user, "<span class='warning'>ERROR: At least one of the parts are still on your body, please retract them and try again.</span>")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, )
 			return FALSE
 
 /obj/item/mod/control/MouseDrop(atom/over_object)
@@ -220,7 +220,7 @@
 			return
 	if(open && cell && loc == user)
 		to_chat(user, "<span class='notice'>You start removing [cell].</span>")
-		if(do_after(user, 5 SECONDS, target = src))
+		if(do_after(user, 1.5 SECONDS, target = src))
 			to_chat(user, "<span class='notice'>You remove [cell].</span>")
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			if(!user.put_in_hands(cell))
@@ -237,7 +237,7 @@
 		return FALSE
 	to_chat(user, "<span class='notice'>You start to [open ? "screw the panel back on" : "unscrew the panel"]...</span>")
 	I.play_tool_sound(src, 100)
-	if(I.use_tool(src, user, 2 SECONDS))
+	if(I.use_tool(src, user, 0.5 SECONDS))
 		if(active || activating)
 			return FALSE
 		I.play_tool_sound(src, 100)
@@ -253,7 +253,7 @@
 		to_chat(user, "<span class='warning'>ERROR: Suit panel not open.</span>")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 		return FALSE
-	if(modules.len)
+	if(length(modules))
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(module.removable)
 				uninstall(module)
@@ -303,7 +303,7 @@
 	return ..()
 
 /obj/item/mod/control/get_cell()
-	if(!wearer)
+	if(open)
 		return cell
 
 /obj/item/mod/control/emag_act(mob/user)
@@ -337,7 +337,7 @@
 		. += module_icon
 
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
-	if(theme.skins.len <= 1)
+	if(length(theme.skins) <= 1)
 		return FALSE
 	var/list/display_names = list()
 	var/list/skins = list()
@@ -369,19 +369,19 @@
 	for(var/obj/item/mod/module/old_module as anything in modules)
 		if(is_type_in_list(new_module, old_module.incompatible_modules) || is_type_in_list(old_module, new_module.incompatible_modules))
 			if(!starting_module)
-				audible_message("<span class='warning'>[src] indicates that [new_module] is incompatible with [old_module].</span>", "<span class='warning'>[src] flashes an error message.</span>")
+				audible_message("<span class='warning'>[src] indicates that [new_module] is incompatible with [old_module].</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 				return
 	if(is_type_in_list(module, theme.module_blacklist))
 		if(!starting_module)
-			audible_message("<span class='warning'>[src] indicates that it rejects [new_module].</span>", "<span class='warning'>[src] flashes an error message.</span>")
+			audible_message("<span class='warning'>[src] indicates that it rejects [new_module].</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
 	var/complexity_with_module = complexity
 	complexity_with_module += new_module.complexity
 	if(complexity_with_module > complexity_max)
 		if(!starting_module)
-			audible_message("<span class='warning'>[src] indicates that [new_module] is too complex for its firmware.</span>", "<span class='warning'>[src] flashes an error message.</span>")
+			audible_message("<span class='warning'>[src] indicates that [new_module] is too complex for its firmware.</span>", "<span class='warning'>[src] flashes an error message.</span>", hearing_distance = 1)
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE)
 			return
 	new_module.forceMove(src)
@@ -454,10 +454,10 @@
 	flash_protect = FLASH_PROTECTION_NONE
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEFACIALHAIR
-	flags_cover = HEADCOVERSMOUTH
+	flags_cover = NONE
 	visor_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
-	visor_flags_cover = HEADCOVERSEYES|PEPPERPROOF
+	visor_flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
 	alternate_worn_layer = NECK_LAYER
 	var/obj/item/mod/control/mod
 
