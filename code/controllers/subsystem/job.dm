@@ -16,6 +16,9 @@ SUBSYSTEM_DEF(job)
 
 	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
+	/// Lazylist of mob:occupation_string pairs.
+	var/list/dynamic_forced_occupations
+
 	/// A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.
 	var/list/station_jobs
 	/// A list of all Head of Staff jobs.
@@ -165,6 +168,7 @@ SUBSYSTEM_DEF(job)
 		if(player.mind && (job.title in player.mind.restricted_roles))
 			JobDebug("FOC incompatible with antagonist role, Player: [player]")
 			continue
+
 		if(player.client.prefs.job_preferences[job.title] == level)
 			JobDebug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
@@ -254,23 +258,20 @@ SUBSYSTEM_DEF(job)
 		var/mob/dead/new_player/candidate = pick(candidates)
 		AssignRole(candidate, command_position)
 
-/datum/controller/subsystem/job/proc/FillAIPosition()
-	var/ai_selected = FALSE
-	var/datum/job/job = GetJob("AI")
-	if(!job)
-		return FALSE
-	for(var/i = job.total_positions, i > 0, i--)
+/// Attempts to fill out all available AI positions.
+/datum/controller/subsystem/job/proc/fill_ai_positions()
+	var/datum/job/ai_job = GetJob("AI")
+	if(!ai_job)
+		return
+	// In byond for(in to) loops, the iteration is inclusive so we need to stop at ai_job.total_positions - 1
+	for(var/i in ai_job.current_positions to ai_job.total_positions - 1)
 		for(var/level in level_order)
 			var/list/candidates = list()
-			candidates = FindOccupationCandidates(job, level)
+			candidates = FindOccupationCandidates(ai_job, level)
 			if(candidates.len)
 				var/mob/dead/new_player/candidate = pick(candidates)
 				if(AssignRole(candidate, "AI"))
-					ai_selected++
 					break
-	if(ai_selected)
-		return TRUE
-	return FALSE
 
 
 /** Proc DivideOccupations
@@ -314,6 +315,10 @@ SUBSYSTEM_DEF(job)
 
 	HandleFeedbackGathering()
 
+	// Dynamic has picked a ruleset that requires enforcing some jobs before others.
+	JobDebug("DO, Assigning Priority Positions: [length(dynamic_forced_occupations)]")
+	assign_priority_positions()
+
 	//People who wants to be the overflow role, sure, go on.
 	JobDebug("DO, Running Overflow Check 1")
 	var/datum/job/overflow = GetJob(SSjob.overflow_role)
@@ -330,9 +335,9 @@ SUBSYSTEM_DEF(job)
 	FillHeadPosition()
 	JobDebug("DO, Head Check end")
 
-	//Check for an AI
+	// Fill out any remaining AI positions.
 	JobDebug("DO, Running AI Check")
-	FillAIPosition()
+	fill_ai_positions()
 	JobDebug("DO, AI Check end")
 
 	//Other jobs are now checked
@@ -824,3 +829,8 @@ SUBSYSTEM_DEF(job)
 	new /obj/effect/pod_landingzone(loc, /obj/structure/closet/supplypod/centcompod, new /obj/item/paper/fluff/emergency_spare_id_safe_code())
 	safe_code_timer_id = null
 	safe_code_request_loc = null
+
+/// Blindly assigns the required roles to every player in the dynamic_forced_occupations list.
+/datum/controller/subsystem/job/proc/assign_priority_positions()
+	for(var/mob/new_player in dynamic_forced_occupations)
+		AssignRole(new_player, dynamic_forced_occupations[new_player])

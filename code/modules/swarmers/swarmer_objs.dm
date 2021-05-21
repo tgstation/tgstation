@@ -75,7 +75,7 @@
  * * user - A reference to the ghost interacting with the beacon
  */
 /obj/structure/swarmer_beacon/proc/que_swarmer(mob/user)
-	var/swarm_ask = alert("Become a swarmer?", "Do you wish to consume the station?", "Yes", "No")
+	var/swarm_ask = tgui_alert(usr, "Become a swarmer?", "Do you wish to consume the station?", list("Yes", "No"))
 	if(swarm_ask == "No" || QDELETED(src) || QDELETED(user) || processing_swarmer)
 		return FALSE
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)

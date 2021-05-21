@@ -10,9 +10,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "am" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "ao" = (
@@ -34,9 +32,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "at" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /mob/living/simple_animal/crab{
 	name = "Eddie"
 	},
@@ -50,9 +46,7 @@
 /area/ruin/powered/beach)
 "av" = (
 /obj/effect/overlay/coconut,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "az" = (
@@ -140,9 +134,7 @@
 /obj/item/trash/candy,
 /obj/item/toy/talking/owl,
 /obj/effect/turf_decal/sand,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/powered/beach)
 "bx" = (
@@ -210,9 +202,7 @@
 /turf/open/floor/iron/stairs/old,
 /area/ruin/powered/beach)
 "bN" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -32
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bR" = (
@@ -232,9 +222,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "bY" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "cd" = (
@@ -253,9 +241,7 @@
 	},
 /area/ruin/powered/beach)
 "ch" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cj" = (
@@ -277,9 +263,7 @@
 /area/ruin/powered/beach)
 "cR" = (
 /obj/structure/chair/wood,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cV" = (
@@ -363,9 +347,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "gT" = (
@@ -443,9 +425,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "kb" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris{
 	pixel_y = 32
 	},
@@ -477,7 +457,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/beach/coastline_b{
 	dir = 10
 	},
@@ -515,9 +495,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "nw" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/washing_machine,
 /turf/open/floor/wood,
@@ -560,9 +538,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "pS" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -576,9 +552,7 @@
 	},
 /area/ruin/powered/beach)
 "qc" = (
-/obj/structure/mirror{
-	pixel_x = -32
-	},
+/obj/structure/mirror/directional/west,
 /obj/structure/sink/kitchen{
 	pixel_y = 32
 	},
@@ -611,9 +585,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "qT" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -636,9 +608,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "sM" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/closet/secure_closet{
 	icon_state = "cabinet";
 	name = "bartender's closet";
@@ -677,7 +647,7 @@
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "tg" = (
@@ -808,9 +778,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "yk" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -824,9 +792,7 @@
 /area/ruin/powered/beach)
 "yN" = (
 /obj/machinery/vending/dinnerware,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "zm" = (
@@ -868,9 +834,7 @@
 /area/ruin/powered/beach)
 "Bl" = (
 /obj/effect/turf_decal/sand,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Bn" = (
@@ -892,9 +856,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "BL" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "BN" = (
@@ -1009,10 +971,7 @@
 "Fi" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Fr" = (
@@ -1065,13 +1024,11 @@
 	},
 /area/ruin/powered/beach)
 "Hn" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "Hy" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/stairs/left,
 /area/ruin/powered/beach)
 "HV" = (
@@ -1185,18 +1142,14 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Lp" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Md" = (
-/obj/structure/urinal{
-	pixel_y = 32
-	},
+/obj/structure/urinal/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 1
 	},
@@ -1212,9 +1165,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "MO" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 1
 	},
@@ -1262,9 +1213,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "OE" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "OI" = (
@@ -1276,7 +1225,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Pr" = (
@@ -1299,20 +1248,16 @@
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "QF" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "QS" = (
 /obj/effect/turf_decal/sand,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "Rk" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "RB" = (
@@ -1372,9 +1317,7 @@
 /turf/open/floor/carpet/red,
 /area/ruin/powered/beach)
 "Tu" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/beach/coastline_b{
 	dir = 8
 	},
@@ -1439,7 +1382,7 @@
 	},
 /area/ruin/powered/beach)
 "Vf" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/beach/coastline_b{
 	dir = 1
 	},
@@ -1462,9 +1405,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "VL" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/closet/crate{
 	name = "fuel crate"
 	},
@@ -1524,9 +1465,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Xu" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood,
@@ -1580,9 +1519,7 @@
 /turf/closed/mineral/random/volcanic,
 /area/template_noop)
 "ZZ" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 

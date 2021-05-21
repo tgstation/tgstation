@@ -176,7 +176,7 @@
 		var/obj/item/dnainjector/activator/A = I
 		if(A.used)
 			to_chat(user,"<span class='notice'>Recycled [I].</span>")
-			if(A.research)
+			if(A.research && A.filled)
 				if(prob(60))
 					var/c_typepath = generate_chromosome()
 					var/obj/item/chromosome/CM = new c_typepath (src)
