@@ -18,33 +18,29 @@ const BasicInput = (props, context) => {
     defaultValue,
     value,
   } = props;
-  return (
-    <>
-      {(value !== null) && (
-        <Stack onMouseDown={e => e.stopPropagation()}>
-          <Stack.Item>
-            <Button
-              color="transparent"
-              compact
-              icon="times"
-              onClick={() => setValue(null, { set_null: true })}
-            />
-          </Stack.Item>
-          <Stack.Item>
-            {children}
-          </Stack.Item>
-        </Stack>
-      ) || (
+  return (value !== null) && (
+    <Stack onMouseDown={e => e.stopPropagation()}>
+      <Stack.Item>
         <Button
-          content={name}
           color="transparent"
           compact
-          onClick={() => setValue(defaultValue)}
+          icon="times"
+          onClick={() => setValue(null, { set_null: true })}
         />
-      )}
-    </>
-  )
-}
+      </Stack.Item>
+      <Stack.Item>
+        {children}
+      </Stack.Item>
+    </Stack>
+  ) || (
+    <Button
+      content={name}
+      color="transparent"
+      compact
+      onClick={() => setValue(defaultValue)}
+    />
+  );
+};
 
 const FUNDAMENTAL_DATA_TYPES = {
   "string": (props, context) => {
@@ -59,7 +55,6 @@ const FUNDAMENTAL_DATA_TYPES = {
         <Input
           placeholder={name}
           value={value}
-          color={color}
           onChange={(e, val) => setValue(val)}
         />
       </BasicInput>
@@ -116,7 +111,6 @@ const FUNDAMENTAL_DATA_TYPES = {
             <Input
               placeholder={name}
               value={value}
-              color={color}
               onChange={(e, val) => setValue(val)}
             />
           </Stack.Item>
