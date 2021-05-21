@@ -21,7 +21,7 @@
 	. = ..()
 	message_port = add_output_port("Message", PORT_TYPE_STRING)
 	language_port = add_output_port("Language", PORT_TYPE_STRING)
-	speaker_port = add_output_port("Speaker", PORT_TYPE_STRING)
+	speaker_port = add_output_port("Speaker", PORT_TYPE_ATOM)
 	trigger_port = add_output_port("Trigger", PORT_TYPE_NUMBER)
 
 

@@ -28,7 +28,4 @@
 	if(.)
 		return
 
-	if(!isnull(input_port.input_value))
-		return
-
 	result.set_output(!input_port.input_value)

@@ -35,7 +35,7 @@
 		var/turf/location = get_turf(src)
 		var/atom/object = input_value
 		if(object.z != location.z || get_dist(location, object) > min_range)
-			output.set_output(null)
+			output.set_output(PORT_TYPE_ATOM)
 			return
 
 	output.set_output("[input_value]")

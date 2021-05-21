@@ -64,7 +64,11 @@
 
 	switch(datatype)
 		if(PORT_TYPE_STRING)
-			return "[value_to_convert]"
+			// So that they can't easily get the name like this.
+			if(isatom(value_to_convert))
+				return PORT_TYPE_ATOM
+			else
+				return "[value_to_convert]"
 
 	if(isatom(value_to_convert))
 		var/atom/atom_to_check = value_to_convert

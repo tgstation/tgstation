@@ -12,7 +12,7 @@
 	var/datum/port/input/trigger
 
 	/// The cooldown for this component of how often it can send speech messages.
-	var/speech_cooldown = 2 SECONDS
+	var/speech_cooldown = PORT_INPUT_RECEIVE_DELAY
 
 	COOLDOWN_DECLARE(next_speech)
 
