@@ -31837,6 +31837,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
+"ine" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1;
+	name = "O2 to Airmix"
+	},
+/turf/open/floor/iron/dark,
+/area/engineering/atmos)
 "ini" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -64938,6 +64945,13 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/corner,
+/area/engineering/atmos)
+"tiY" = (
+/obj/machinery/atmospherics/components/binary/pump/off{
+	dir = 1;
+	name = "O2 To Pure"
+	},
+/turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "tja" = (
 /obj/machinery/door/firedoor,
@@ -123063,7 +123077,7 @@ fJd
 qHw
 gSp
 sIl
-ffR
+ine
 cCG
 xmT
 gpo
@@ -123320,7 +123334,7 @@ sWh
 caT
 qah
 xVU
-ipC
+tiY
 xFh
 aaf
 deP
