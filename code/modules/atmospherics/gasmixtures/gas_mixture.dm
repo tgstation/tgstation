@@ -3,9 +3,6 @@ What are the archived variables for?
 Calculations are done using the archived variables with the results merged into the regular variables.
 This prevents race conditions that arise based on the order of tile processing.
 */
-#define MINIMUM_HEAT_CAPACITY 0.0003
-#define MINIMUM_MOLE_COUNT 0.01
-#define MOLAR_ACCURACY  1E-4
 /**
  *I feel the need to document what happens here. Basically this is used
  *catch rounding errors, and make gas go away in small portions.

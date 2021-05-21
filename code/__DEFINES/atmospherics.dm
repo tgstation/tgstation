@@ -136,6 +136,13 @@
 /// The total visible states
 #define TOTAL_VISIBLE_STATES (FACTOR_GAS_VISIBLE_MAX * (1 / MOLES_GAS_VISIBLE_STEP))
 
+/// The minimum heat capacity
+#define MINIMUM_HEAT_CAPACITY 0.0003
+/// Minimum mole count of a gas
+#define MINIMUM_MOLE_COUNT 0.01
+/// Molar accuracy to round to
+#define MOLAR_ACCURACY  1E-4
+
 //REACTIONS
 //return values for reactions (bitflags)
 #define NO_REACTION 0
