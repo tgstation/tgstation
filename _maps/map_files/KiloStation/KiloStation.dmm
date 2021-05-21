@@ -30896,6 +30896,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"cbw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall,
+/area/science/storage)
 "cbx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -42065,6 +42069,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/science/research)
+"djB" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/closed/wall,
+/area/science/storage)
 "djY" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -47868,6 +47876,36 @@
 "fLf" = (
 /turf/closed/wall/rust,
 /area/engineering/main)
+"fLG" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/storage/fancy/candle_box{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/taperecorder{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/pen,
+/obj/machinery/light/small/directional/south,
+/obj/item/radio/intercom/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/obj/item/radio/intercom/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/service/library)
 "fLV" = (
 /obj/machinery/biogenerator,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -48452,10 +48490,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"gbp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/turf/closed/wall/rust,
-/area/science/storage)
 "gbs" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -49211,6 +49245,25 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/fore)
+"gtY" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/destructible/cult/tome,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/book/codex_gigas{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/flashlight/lantern{
+	pixel_x = 4
+	},
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/newscaster/security_unit/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/service/library)
 "guo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible{
 	dir = 4
@@ -49681,25 +49734,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
-"gFF" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/destructible/cult/tome,
-/obj/effect/decal/cleanable/cobweb,
-/obj/item/book/codex_gigas{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/flashlight/lantern{
-	pixel_x = 4
-	},
-/obj/machinery/light_switch/directional/north,
-/obj/machinery/newscaster/security_unit/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/service/library)
 "gGl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 9
@@ -51167,10 +51201,6 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
-"hrR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/turf/closed/wall,
-/area/science/storage)
 "hrX" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/door/firedoor,
@@ -51613,6 +51643,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
+"hFB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/rust,
+/area/science/storage)
 "hGn" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -69603,6 +69637,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/storage/satellite)
+"pwd" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/storage/photo_album{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/camera,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/service/library)
 "pwg" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/tile/blue,
@@ -79522,10 +79571,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
-"tUm" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/turf/closed/wall,
-/area/science/storage)
 "tUw" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -83857,36 +83902,6 @@
 	luminosity = 2
 	},
 /area/ai_monitored/command/nuke_storage)
-"vKq" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/table/wood,
-/obj/item/storage/fancy/candle_box{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/taperecorder{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/pen,
-/obj/machinery/light/small/directional/south,
-/obj/item/radio/intercom/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/south,
-/obj/item/radio/intercom/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/service/library)
 "vKw" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -88003,21 +88018,6 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
-"xyM" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/table/wood,
-/obj/item/storage/photo_album{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/camera,
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/service/library)
 "xyY" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -115060,8 +115060,8 @@ nqA
 tZO
 dHK
 sim
-gFF
-xyM
+gtY
+pwd
 sim
 bBV
 bRr
@@ -115318,7 +115318,7 @@ kgR
 muH
 uYe
 tSu
-vKq
+fLG
 sim
 bBW
 asF
@@ -130724,7 +130724,7 @@ aUO
 aOw
 bbW
 chg
-hrR
+cbw
 fyH
 beq
 jZo
@@ -130981,8 +130981,8 @@ aXJ
 aOD
 bcd
 kAC
-gbp
-tUm
+hFB
+djB
 eUP
 bba
 bbc
