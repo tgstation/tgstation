@@ -135,7 +135,7 @@
 
 /obj/item/melee/beesword/buzzon
 	name = "The Stinger"
-	desc = "A sting of giant bee on a handle that became the fastest sword in the world thanks to high-tech components."
+	desc = "A stinger of giant bee attached to a handle that became the fastest sword in the world thanks to its high-tech components."
 	icon_state = "buzzon_sword"
 	inhand_icon_state = "buzzon"
 	worn_icon_state = "buzzon"
