@@ -1,7 +1,7 @@
 /**
  * # Clock Component
  *
- * Fires every 0.9 seconds
+ * Fires every tick of the circuit timer SS
  */
 /obj/item/circuit_component/clock
 	display_name = "Clock"
