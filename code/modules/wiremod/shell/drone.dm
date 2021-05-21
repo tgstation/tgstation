@@ -3,20 +3,28 @@
  *
  * A movable mob that can be fed inputs on which direction to travel.
  */
-/mob/living/simple_animal/bot/circuit
+/mob/living/circuit_drone
 	name = "drone"
 	icon = 'icons/obj/wiremod.dmi'
 	icon_state = "setup_medium_med"
 	living_flags = 0
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
-/mob/living/simple_animal/bot/circuit/Initialize()
+/mob/living/circuit_drone/Initialize()
 	. = ..()
 	AddComponent(/datum/component/shell, list(
-		new /obj/item/component/bot_circuit()
+		new /obj/item/circuit_component/bot_circuit()
 	), SHELL_CAPACITY_LARGE)
 
-/obj/item/component/bot_circuit
+/mob/living/circuit_drone/updatehealth()
+	. = ..()
+	if(health < 0)
+		gib(TRUE, TRUE, TRUE)
+
+/mob/living/circuit_drone/spawn_gibs()
+	new /obj/effect/gibspawner/robot(drop_location(), src, get_static_viruses())
+
+/obj/item/circuit_component/bot_circuit
 	display_name = "Drone"
 
 	/// The inputs to allow for the drone to move
@@ -25,20 +33,20 @@
 	var/datum/port/input/south
 	var/datum/port/input/west
 
-/obj/item/component/bot_circuit/Initialize()
+/obj/item/circuit_component/bot_circuit/Initialize()
 	. = ..()
 	north = add_input_port("Move North", PORT_TYPE_NUMBER)
 	east = add_input_port("Move East", PORT_TYPE_NUMBER)
 	south = add_input_port("Move South", PORT_TYPE_NUMBER)
 	west = add_input_port("Move West", PORT_TYPE_NUMBER)
 
-/obj/item/component/bot_circuit/input_received(datum/port/input/port)
+/obj/item/circuit_component/bot_circuit/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
 
 	var/mob/living/B = parent.shell
-	if(!istype(B))
+	if(!istype(B) || B.stat)
 		return
 
 	var/direction

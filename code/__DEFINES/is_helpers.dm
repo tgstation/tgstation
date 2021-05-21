@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 #define isProbablyWallMounted(O) (O.pixel_x > 20 || O.pixel_x < -20 || O.pixel_y > 20 || O.pixel_y < -20)
 #define isbook(O) (is_type_in_typecache(O, GLOB.book_types))
 
-#define iscomponent(O) (istype(O, /obj/item/component))
+#define iscomponent(O) (istype(O, /obj/item/circuit_component))
 
 GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,

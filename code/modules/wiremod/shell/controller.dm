@@ -17,10 +17,10 @@
 /obj/item/controller/Initialize()
 	. = ..()
 	AddComponent(/datum/component/shell, list(
-		new /obj/item/component/controller()
+		new /obj/item/circuit_component/controller()
 	), SHELL_CAPACITY_MEDIUM)
 
-/obj/item/component/controller
+/obj/item/circuit_component/controller
 	display_name = "Controller"
 
 	/// The three separate buttons that are called in attack_hand on the shell.
@@ -28,23 +28,23 @@
 	var/datum/port/output/alt
 	var/datum/port/output/right
 
-/obj/item/component/controller/Initialize()
+/obj/item/circuit_component/controller/Initialize()
 	. = ..()
 	signal = add_output_port("Signal", PORT_TYPE_NUMBER)
 	alt = add_output_port("Alternate Signal", PORT_TYPE_NUMBER)
 	right = add_output_port("Extra Signal", PORT_TYPE_NUMBER)
 
-/obj/item/component/controller/Destroy()
+/obj/item/circuit_component/controller/Destroy()
 	signal = null
 	alt = null
 	right = null
 	return ..()
 
-/obj/item/component/controller/register_shell(atom/movable/shell)
+/obj/item/circuit_component/controller/register_shell(atom/movable/shell)
 	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)
 	RegisterSignal(shell, COMSIG_CLICK_ALT, .proc/send_alternate_signal)
 
-/obj/item/component/controller/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/controller/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(
 		COMSIG_ITEM_ATTACK_SELF,
 		COMSIG_CLICK_ALT,
@@ -53,7 +53,7 @@
 /**
  * Called when the shell item is used in hand, including right click.
  */
-/obj/item/component/controller/proc/send_trigger(datum/source, mob/user, list/modifiers)
+/obj/item/circuit_component/controller/proc/send_trigger(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		right.set_output(COMPONENT_SIGNAL)
@@ -63,6 +63,6 @@
 /**
  * Called when the shell item is alt-clicked
  */
-/obj/item/component/controller/proc/send_alternate_signal(datum/source)
+/obj/item/circuit_component/controller/proc/send_alternate_signal(datum/source)
 	SIGNAL_HANDLER
 	alt.set_output(COMPONENT_SIGNAL)

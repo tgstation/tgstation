@@ -7,7 +7,7 @@
  * be connected between other components to provide an output or to receive
  * an input. This is the base type of all components
  */
-/obj/item/component
+/obj/item/circuit_component
 	name = "component"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "circuit_map"
@@ -43,12 +43,12 @@
 	// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
 
-/obj/item/component/Initialize()
+/obj/item/circuit_component/Initialize()
 	. = ..()
 	if(length(options))
 		current_option = options[1]
 
-/obj/item/component/Destroy()
+/obj/item/circuit_component/Destroy()
 	if(parent)
 		parent.remove_component(src)
 
@@ -63,7 +63,7 @@
  * Arguments:
  * * shell - Shell being registered
  */
-/obj/item/component/proc/register_shell(atom/movable/shell)
+/obj/item/circuit_component/proc/register_shell(atom/movable/shell)
 	return
 
 /**
@@ -73,7 +73,7 @@
  * Arguments:
  * * shell - Shell being unregistered
  */
-/obj/item/component/proc/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/proc/unregister_shell(atom/movable/shell)
 	return
 
 /**
@@ -81,7 +81,7 @@
  *
  * Disconnects both the input and output ports of the component
  */
-/obj/item/component/proc/disconnect()
+/obj/item/circuit_component/proc/disconnect()
 	for(var/datum/port/output/port_to_disconnect as anything in output_ports)
 		port_to_disconnect.disconnect()
 
@@ -95,7 +95,7 @@
  * Arguments:
  * * option - The option that has been switched to.
  */
-/obj/item/component/proc/set_option(option)
+/obj/item/circuit_component/proc/set_option(option)
 	current_option = option
 	input_received()
 
@@ -107,8 +107,8 @@
  * * type - The datatype it handles
  * * trigger - Whether this input port triggers an update on the component when updated.
  */
-/obj/item/component/proc/add_input_port(name, type, trigger = TRUE)
-	var/datum/port/input/input_port = new(src, name, type, trigger)
+/obj/item/circuit_component/proc/add_input_port(name, type, trigger = TRUE, default = null)
+	var/datum/port/input/input_port = new(src, name, type, trigger, default)
 	input_ports += input_port
 	return input_port
 
@@ -120,7 +120,7 @@
  * * name - The name of the output port
  * * type - The datatype it handles.
  */
-/obj/item/component/proc/add_output_port(name, type)
+/obj/item/circuit_component/proc/add_output_port(name, type)
 	var/datum/port/output/output_port = new(src, name, type)
 	output_ports += output_port
 	return output_port
@@ -131,7 +131,7 @@
  * Arguments:
  * * port - Can be null. The port that sent the input
  */
-/obj/item/component/proc/input_received(datum/port/input/port)
+/obj/item/circuit_component/proc/input_received(datum/port/input/port)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!parent)
 		return TRUE

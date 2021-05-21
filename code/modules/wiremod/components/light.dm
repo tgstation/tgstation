@@ -3,7 +3,7 @@
  *
  * Emits a light of a specific brightness and colour. Requires a shell.
  */
-/obj/item/component/light
+/obj/item/circuit_component/light
 	display_name = "Light"
 
 	/// The colours of the light
@@ -19,7 +19,7 @@
 
 	var/max_power = 5
 
-/obj/item/component/light/Initialize()
+/obj/item/circuit_component/light/Initialize()
 	. = ..()
 	red = add_input_port("Red", PORT_TYPE_NUMBER)
 	green = add_input_port("Green", PORT_TYPE_NUMBER)
@@ -29,7 +29,7 @@
 	on = add_input_port("On", PORT_TYPE_NUMBER)
 
 
-/obj/item/component/light/Destroy()
+/obj/item/circuit_component/light/Destroy()
 	red = null
 	green = null
 	blue = null
@@ -37,15 +37,15 @@
 	on = null
 	return ..()
 
-/obj/item/component/light/register_shell(atom/movable/shell)
+/obj/item/circuit_component/light/register_shell(atom/movable/shell)
 	. = ..()
 	set_atom_light(shell)
 
-/obj/item/component/light/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/light/unregister_shell(atom/movable/shell)
 	shell.set_light_on(FALSE)
 	return ..()
 
-/obj/item/component/light/input_received(datum/port/input/port)
+/obj/item/circuit_component/light/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
@@ -53,7 +53,7 @@
 	if(parent.shell)
 		set_atom_light(parent.shell)
 
-/obj/item/component/light/proc/set_atom_light(atom/movable/target_atom)
+/obj/item/circuit_component/light/proc/set_atom_light(atom/movable/target_atom)
 	var/bright_val = min(max(brightness.input_value || 0, 0), max_power)
 
 	target_atom.set_light_power(bright_val)

@@ -3,7 +3,7 @@
  *
  * Generates a random number between specific values
  */
-/obj/item/component/random
+/obj/item/circuit_component/random
 	display_name = "Random"
 
 	/// The minimum value that the random number can be
@@ -16,7 +16,7 @@
 	/// The result from the output
 	var/datum/port/output/output
 
-/obj/item/component/random/Initialize()
+/obj/item/circuit_component/random/Initialize()
 	. = ..()
 	minimum = add_input_port("Minimum", PORT_TYPE_NUMBER, FALSE)
 	maximum = add_input_port("Maximum", PORT_TYPE_NUMBER, FALSE)
@@ -24,14 +24,14 @@
 
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
-/obj/item/component/random/Destroy()
+/obj/item/circuit_component/random/Destroy()
 	minimum = null
 	maximum = null
 	trigger = null
 	output = null
 	return ..()
 
-/obj/item/component/random/input_received(datum/port/input/port)
+/obj/item/circuit_component/random/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return

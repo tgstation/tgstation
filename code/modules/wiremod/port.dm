@@ -7,7 +7,7 @@
  */
 /datum/port
 	/// The component this port is attached to
-	var/obj/item/component/connected_component
+	var/obj/item/circuit_component/connected_component
 
 	/// Name of the port. Used when displaying the port.
 	var/name
@@ -15,7 +15,10 @@
 	/// The port type. Ports can only connect to each other if the type matches
 	var/datatype
 
-/datum/port/New(obj/item/component/to_connect, name, datatype)
+	/// The port color. If unset, appears as blue.
+	var/color
+
+/datum/port/New(obj/item/circuit_component/to_connect, name, datatype)
 	if(!to_connect)
 		qdel(src)
 		return
@@ -25,6 +28,20 @@
 	src.connected_component = to_connect
 	src.name = name
 	src.datatype = datatype
+	src.color = datatype_to_color()
+
+
+///Converts the datatype into an appropriate colour
+/datum/port/proc/datatype_to_color()
+	switch(datatype)
+		if(PORT_TYPE_ATOM)
+			return "purple"
+		if(PORT_TYPE_NUMBER)
+			return "green"
+		if(PORT_TYPE_STRING)
+			return "orange"
+		if(PORT_TYPE_LIST)
+			return "white"
 
 /datum/port/Destroy(force)
 	if(!force && !connected_component.gc_destroyed)
@@ -57,7 +74,7 @@
 /**
  * Disconnects a port from all other ports
  *
- * Called by [/obj/item/component] whenever it is disconnected from
+ * Called by [/obj/item/circuit_component] whenever it is disconnected from
  * an integrated circuit
  */
 /datum/port/proc/disconnect()
@@ -143,9 +160,14 @@
 	/// Whether this port triggers an update whenever an output is received.
 	var/trigger = FALSE
 
-/datum/port/input/New(obj/item/component/to_connect, name, datatype, trigger)
+	/// The default value of this input
+	var/default
+
+/datum/port/input/New(obj/item/circuit_component/to_connect, name, datatype, trigger, default)
 	. = ..()
 	src.trigger = trigger
+	src.default = default
+	set_input(default)
 
 /**
  * Connects the input port to the output port
@@ -189,7 +211,7 @@
  * Arguments:
  * * port_to_register - The port to connect the input port to
  */
-/datum/port/input/proc/set_input(new_value)
+/datum/port/input/proc/set_input(new_value, send_update = TRUE)
 	if(isatom(input_value))
 		UnregisterSignal(input_value, COMSIG_PARENT_QDELETING)
 	input_value = convert_value(input_value, new_value)
@@ -197,7 +219,7 @@
 		RegisterSignal(input_value, COMSIG_PARENT_QDELETING, .proc/null_output)
 
 	SEND_SIGNAL(src, COMSIG_PORT_SET_INPUT, input_value)
-	if(trigger)
+	if(trigger && send_update)
 		connected_component.input_received(src)
 
 /// Signal handler proc to null the input if an atom is deleted. An update is not sent because this was not set by anything.
@@ -220,7 +242,7 @@
 		COMSIG_PORT_DISCONNECT
 	))
 	connected_port = null
-	set_input(null)
+	set_input(default)
 
 /datum/port/input/Destroy()
 	unregister_output_port()

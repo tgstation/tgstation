@@ -3,7 +3,7 @@
  *
  * Return the index of a list
  */
-/obj/item/component/index
+/obj/item/circuit_component/index
 	display_name = "Index List"
 
 	/// The input port
@@ -13,20 +13,20 @@
 	/// The result from the output
 	var/datum/port/output/output
 
-/obj/item/component/index/Initialize()
+/obj/item/circuit_component/index/Initialize()
 	. = ..()
 	index_port = add_input_port("Index", PORT_TYPE_NUMBER)
 	list_port = add_input_port("List", PORT_TYPE_LIST)
 
 	output = add_output_port("Value", PORT_TYPE_ANY)
 
-/obj/item/component/index/Destroy()
+/obj/item/circuit_component/index/Destroy()
 	list_port = null
 	index_port = null
 	output = null
 	return ..()
 
-/obj/item/component/index/input_received(datum/port/input/port)
+/obj/item/circuit_component/index/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return

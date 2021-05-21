@@ -3,7 +3,7 @@
  *
  * Compares two objects
  */
-/obj/item/component/compare/comparison
+/obj/item/circuit_component/compare/comparison
 	display_name = "Comparison"
 
 	input_port_amount = 2
@@ -17,11 +17,11 @@ GLOBAL_LIST_INIT(comp_comparison_options, list(
 	COMP_COMPARISON_LESS_THAN_OR_EQUAL
 ))
 
-/obj/item/component/compare/comparison/Initialize()
+/obj/item/circuit_component/compare/comparison/Initialize()
 	options = GLOB.comp_comparison_options
 	return ..()
 
-/obj/item/component/compare/comparison/do_comparisons(list/ports)
+/obj/item/circuit_component/compare/comparison/do_comparisons(list/ports)
 	if(length(ports) < input_port_amount)
 		return FALSE
 

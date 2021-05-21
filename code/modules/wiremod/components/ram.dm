@@ -5,7 +5,7 @@
  * Players will need to think logically when using the RAM component
  * as there can be race conditions due to the delays of transferring signals
  */
-/obj/item/component/ram
+/obj/item/circuit_component/ram
 	display_name = "RAM"
 
 	/// The input to store
@@ -16,20 +16,20 @@
 	/// The current set value
 	var/datum/port/output/output
 
-/obj/item/component/ram/Initialize()
+/obj/item/circuit_component/ram/Initialize()
 	. = ..()
 	input_port = add_input_port("Input", PORT_TYPE_ANY, FALSE)
 	trigger = add_input_port("Store", PORT_TYPE_NUMBER)
 
 	output = add_output_port("Stored Value", PORT_TYPE_ANY)
 
-/obj/item/component/ram/Destroy()
+/obj/item/circuit_component/ram/Destroy()
 	input_port = null
 	trigger = null
 	output = null
 	return ..()
 
-/obj/item/component/ram/input_received(datum/port/input/port)
+/obj/item/circuit_component/ram/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return

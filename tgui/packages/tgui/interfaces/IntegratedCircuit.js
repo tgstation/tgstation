@@ -4,6 +4,7 @@ import { Component, createRef } from 'inferno';
 import { Window } from '../layouts';
 import { CSS_COLORS } from '../constants';
 import { classes } from '../../common/react';
+import { resolveAsset } from '../assets';
 
 const NULL_REF = "[0x0]";
 const SVG_Y_OFFSET = -32;
@@ -27,8 +28,6 @@ const FUNDAMENTAL_DATA_TYPES = {
       <Box onMouseDown={e => e.stopPropagation()}>
         <NumberInput
           value={value || 0}
-          minValue={-1000}
-          maxValue={1000}
           color={color}
           onChange={(e, val) => setValue(val)}
           unit={name}
@@ -127,10 +126,16 @@ export class IntegratedCircuit extends Component {
         width={600}
         height={600}
       >
-        <Window.Content>
+        <Window.Content
+          style={{
+            "background-image": "none"
+          }}
+        >
           <InfinitePlane
             width="100%"
             height="100%"
+            backgroundImage={resolveAsset('grid_background.png')}
+            imageWidth={900}
           >
             {components.map((comp, index) => (
               <ObjectComponent

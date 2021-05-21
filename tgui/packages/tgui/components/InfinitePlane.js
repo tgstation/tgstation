@@ -84,6 +84,8 @@ export class InfinitePlane extends Component {
   render() {
     const {
       children,
+      backgroundImage,
+      imageWidth,
       ...rest
     } = this.props;
     const {
@@ -111,6 +113,10 @@ export class InfinitePlane extends Component {
             "position": "fixed",
             "height": "100%",
             "width": "100%",
+            "background-image": `url("${backgroundImage}")`,
+            "background-position": `${left}px ${top}px`,
+            "background-repeat": "repeat",
+            "background-size": `${zoom*imageWidth}px`,
           }}
         />
         <div
@@ -119,6 +125,7 @@ export class InfinitePlane extends Component {
           style={{
             "position": "fixed",
             "transform": `translate(${left}px, ${top}px) scale(${zoom})`,
+            "transform-origin": "top left",
             "height": "100%",
             "width": "100%",
           }}

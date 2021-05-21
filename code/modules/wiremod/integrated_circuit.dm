@@ -18,7 +18,7 @@
 	var/atom/movable/shell
 
 	/// The attached components
-	var/list/obj/item/component/attached_components = list()
+	var/list/obj/item/circuit_component/attached_components = list()
 
 	/// Whether the integrated circuit is on or not. Handled by the shell.
 	var/on = TRUE
@@ -28,7 +28,7 @@
 	cell = new /obj/item/stock_parts/cell/high(src)
 
 /obj/item/integrated_circuit/Destroy()
-	for(var/obj/item/component/to_delete in attached_components)
+	for(var/obj/item/circuit_component/to_delete in attached_components)
 		remove_component(to_delete)
 		qdel(to_delete)
 	shell = null
@@ -80,7 +80,7 @@
 	remove_current_shell()
 	shell = new_shell
 	RegisterSignal(shell, COMSIG_PARENT_QDELETING, .proc/remove_current_shell)
-	for(var/obj/item/component/attached_component as anything in attached_components)
+	for(var/obj/item/circuit_component/attached_component as anything in attached_components)
 		attached_component.register_shell(shell)
 
 /**
@@ -90,7 +90,7 @@
 	SIGNAL_HANDLER
 	if(!shell)
 		return
-	for(var/obj/item/component/attached_component as anything in attached_components)
+	for(var/obj/item/circuit_component/attached_component as anything in attached_components)
 		attached_component.unregister_shell(shell)
 	UnregisterSignal(shell, COMSIG_PARENT_QDELETING)
 	shell = null
@@ -100,7 +100,7 @@
  *
  * Once the component is added, the ports can be attached to other components
  */
-/obj/item/integrated_circuit/proc/add_component(obj/item/component/to_add, mob/living/user)
+/obj/item/integrated_circuit/proc/add_component(obj/item/circuit_component/to_add, mob/living/user)
 	if(to_add.parent)
 		return
 
@@ -126,7 +126,7 @@
 	if(shell)
 		to_add.register_shell(shell)
 
-/obj/item/integrated_circuit/proc/component_move_handler(obj/item/component/source)
+/obj/item/integrated_circuit/proc/component_move_handler(obj/item/circuit_component/source)
 	SIGNAL_HANDLER
 	if(source.loc != src)
 		remove_component(source)
@@ -136,7 +136,7 @@
  *
  * This removes all connects between the ports
  */
-/obj/item/integrated_circuit/proc/remove_component(obj/item/component/to_remove)
+/obj/item/integrated_circuit/proc/remove_component(obj/item/circuit_component/to_remove)
 	if(shell)
 		to_remove.unregister_shell(shell)
 
@@ -149,10 +149,15 @@
 /obj/item/integrated_circuit/get_cell()
 	return cell
 
+/obj/item/integrated_circuit/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/simple/circuit_assets)
+	)
+
 /obj/item/integrated_circuit/ui_data(mob/user)
 	. = list()
 	.["components"] = list()
-	for(var/obj/item/component/component as anything in attached_components)
+	for(var/obj/item/circuit_component/component as anything in attached_components)
 		var/list/component_data = list()
 		component_data["input_ports"] = list()
 		for(var/datum/port/input/port as anything in component.input_ports)
@@ -164,6 +169,7 @@
 				"type" = port.datatype,
 				"ref" = REF(port), // The ref is the identifier to work out what it is connected to
 				"connected_to" = REF(port.connected_port),
+				"color" = port.color,
 				"current_data" = current_data,
 			))
 		component_data["output_ports"] = list()
@@ -172,7 +178,7 @@
 				"name" = port.name,
 				"type" = port.datatype,
 				"ref" = REF(port),
-				"current_data" = port.output_value,
+				"color" = port.color,
 			))
 
 		component_data["name"] = component.display_name
@@ -215,8 +221,8 @@
 			var/output_port_id = text2num(params["output_port_id"])
 			if(!WITHIN_RANGE(input_component_id, attached_components) || !WITHIN_RANGE(output_component_id, attached_components))
 				return
-			var/obj/item/component/input_component = attached_components[input_component_id]
-			var/obj/item/component/output_component = attached_components[output_component_id]
+			var/obj/item/circuit_component/input_component = attached_components[input_component_id]
+			var/obj/item/circuit_component/output_component = attached_components[output_component_id]
 
 			if(!WITHIN_RANGE(input_port_id, input_component.input_ports) || !WITHIN_RANGE(output_port_id, output_component.output_ports))
 				return
@@ -235,7 +241,7 @@
 
 			if(!WITHIN_RANGE(component_id, attached_components))
 				return
-			var/obj/item/component/component = attached_components[component_id]
+			var/obj/item/circuit_component/component = attached_components[component_id]
 
 			var/list/port_table
 			if(is_input)
@@ -253,7 +259,7 @@
 			var/component_id = text2num(params["component_id"])
 			if(!WITHIN_RANGE(component_id, attached_components))
 				return
-			var/obj/item/component/component = attached_components[component_id]
+			var/obj/item/circuit_component/component = attached_components[component_id]
 			if(!component.removable)
 				return
 			component.disconnect()
@@ -264,7 +270,7 @@
 			var/component_id = text2num(params["component_id"])
 			if(!WITHIN_RANGE(component_id, attached_components))
 				return
-			var/obj/item/component/component = attached_components[component_id]
+			var/obj/item/circuit_component/component = attached_components[component_id]
 			component.rel_x = min(max(-COMPONENT_MAX_POS, text2num(params["rel_x"])), COMPONENT_MAX_POS)
 			component.rel_y = min(max(-COMPONENT_MAX_POS, text2num(params["rel_y"])), COMPONENT_MAX_POS)
 			. = TRUE
@@ -272,7 +278,7 @@
 			var/component_id = text2num(params["component_id"])
 			if(!WITHIN_RANGE(component_id, attached_components))
 				return
-			var/obj/item/component/component = attached_components[component_id]
+			var/obj/item/circuit_component/component = attached_components[component_id]
 			var/option = params["option"]
 			if(!(option in component.options))
 				return
@@ -283,7 +289,7 @@
 			var/port_id = text2num(params["port_id"])
 			if(!WITHIN_RANGE(component_id, attached_components))
 				return
-			var/obj/item/component/component = attached_components[component_id]
+			var/obj/item/circuit_component/component = attached_components[component_id]
 			if(!WITHIN_RANGE(port_id, component.input_ports))
 				return
 			var/datum/port/input/port = component.input_ports[port_id]
@@ -292,8 +298,11 @@
 				if(port.datatype != PORT_TYPE_ATOM && port.datatype != PORT_TYPE_ANY)
 					return
 				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
-				if(!istype(marker) || !marker.marked_atom)
+				if(!istype(marker))
+					return TRUE
+				if(!marker.marked_atom)
 					port.set_input(null)
+					marker.say("Cleared port ('[port.name]')'s value.")
 					return TRUE
 				marker.say("Updated port ('[port.name]')'s value to the marked entity.")
 				port.set_input(marker.marked_atom)

@@ -1,6 +1,6 @@
 #define PORT_INPUT_RECEIVE_DELAY 0.9 SECONDS
 
-/// Helper define that can only be used in /obj/item/component/input_received()
+/// Helper define that can only be used in /obj/item/circuit_component/input_received()
 #define COMPONENT_TRIGGERED_BY(trigger) (trigger.input_value && trigger == port)
 
 // Port types. Determines what the port can connect to
@@ -59,6 +59,10 @@
 #define COMP_ARITHMETIC_SUBTRACT "Subtract"
 #define COMP_ARITHMETIC_MULTIPLY "Multiply"
 #define COMP_ARITHMETIC_DIVIDE "Divide"
+
+// Text defines
+#define COMP_TEXT_LOWER "To Lower"
+#define COMP_TEXT_UPPER "To Upper"
 
 // Typecheck component
 #define COMP_TYPECHECK_MOB "organism"

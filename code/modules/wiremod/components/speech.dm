@@ -3,7 +3,7 @@
  *
  * Sends a message. Requires a shell.
  */
-/obj/item/component/speech
+/obj/item/circuit_component/speech
 	display_name = "Speech"
 
 	/// The message to send
@@ -11,19 +11,24 @@
 	/// The trigger to send the message
 	var/datum/port/input/trigger
 
-/obj/item/component/speech/Initialize()
+	/// The next time that this component can send a message
+	var/next_speech = 0
+	/// The cooldown for this component of how often it can send speech messages.
+	var/speech_cooldown = 2 SECONDS
+
+/obj/item/circuit_component/speech/Initialize()
 	. = ..()
 	message = add_input_port("Message", PORT_TYPE_STRING, FALSE)
 
 	trigger = add_input_port("Trigger", PORT_TYPE_NUMBER)
 
 
-/obj/item/component/speech/Destroy()
+/obj/item/circuit_component/speech/Destroy()
 	message = null
 	trigger = null
 	return ..()
 
-/obj/item/component/speech/input_received(datum/port/input/port)
+/obj/item/circuit_component/speech/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return
@@ -31,9 +36,14 @@
 	if(!COMPONENT_TRIGGERED_BY(trigger))
 		return
 
-	var/atom/movable/shell = parent.shell
-	if(!shell)
+	if(next_speech > world.time)
 		return
 
 	if(message.input_value)
-		shell.say(message.input_value)
+		var/atom/movable/shell = parent.shell
+		// Prevents appear as the individual component if there is a shell.
+		if(shell)
+			shell.say(message.input_value)
+		else
+			say(message.input_value)
+		next_speech = world.time + speech_cooldown

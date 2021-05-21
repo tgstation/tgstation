@@ -3,7 +3,7 @@
  *
  * Delays a signal by a specified duration.
  */
-/obj/item/component/delay
+/obj/item/circuit_component/delay
 	display_name = "Delay"
 
 	/// Amount to delay by
@@ -14,20 +14,20 @@
 	/// The output of the signal
 	var/datum/port/output/output
 
-/obj/item/component/delay/Initialize()
+/obj/item/circuit_component/delay/Initialize()
 	. = ..()
 	delay_amount = add_input_port("Delay", PORT_TYPE_ANY, FALSE)
 	trigger = add_input_port("Trigger", PORT_TYPE_ANY)
 
 	output = add_output_port("Result", PORT_TYPE_NUMBER)
 
-/obj/item/component/delay/Destroy()
+/obj/item/circuit_component/delay/Destroy()
 	output = null
 	trigger = null
 	delay_amount = null
 	return ..()
 
-/obj/item/component/delay/input_received(datum/port/input/port)
+/obj/item/circuit_component/delay/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
 		return

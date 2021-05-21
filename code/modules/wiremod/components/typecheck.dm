@@ -3,7 +3,7 @@
  *
  * Checks the type of a value
  */
-/obj/item/component/compare/typecheck
+/obj/item/circuit_component/compare/typecheck
 	display_name = "Typecheck"
 
 	input_port_amount = 1
@@ -18,11 +18,11 @@ GLOBAL_LIST_INIT(comp_typecheck_options, list(
 	COMP_TYPECHECK_HUMAN,
 ))
 
-/obj/item/component/compare/typecheck/Initialize()
+/obj/item/circuit_component/compare/typecheck/Initialize()
 	options = GLOB.comp_typecheck_options
 	return ..()
 
-/obj/item/component/compare/typecheck/do_comparisons(list/ports)
+/obj/item/circuit_component/compare/typecheck/do_comparisons(list/ports)
 	if(!length(ports))
 		return
 	. = FALSE
