@@ -723,3 +723,13 @@
 		return
 	mod.wearer.research_scanner--
 	mod.helmet.clothing_flags &= ~SCAN_REAGENTS
+
+/obj/item/mod/module/gps
+	name = "MOD internal GPS module"
+	desc = "A module that serves as a built-in GPS."
+	module_type = MODULE_USABLE
+	complexity = 1 //It's Just a GPS, pretty basic equipment in many cases
+	idle_power_cost = 2 //Very simple, no reason for this to be a huge powerdraw
+	incompatible_modules = list(/obj/item/mod/module/gps)
+	cooldown_time = 0.5 SECONDS
+	device = /obj/item/gps/science/mod //Having an actual GPS Item that can extend is probably safer than having to add a component to the suit, and then pull up GPS UI independent of a GPS.
