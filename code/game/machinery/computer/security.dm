@@ -745,7 +745,7 @@ What a mess.*/
 								temp += "<li><a href='?src=[REF(src)];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
 							temp += "</ul>"
 						else
-							alert(usr, "You do not have the required rank to do this!")
+							tgui_alert(usr, "You do not have the required rank to do this!")
 //TEMPORARY MENU FUNCTIONS
 			else//To properly clear as per clear screen.
 				temp=null

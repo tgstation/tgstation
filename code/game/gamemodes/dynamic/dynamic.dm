@@ -42,11 +42,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Running information about the threat. Can store text or datum entries.
 	var/list/threat_log = list()
 	/// List of roundstart rules used for selecting the rules.
-	var/list/roundstart_rules = list()
+	var/list/roundstart_rules
 	/// List of latejoin rules used for selecting the rules.
-	var/list/latejoin_rules = list()
+	var/list/latejoin_rules
 	/// List of midround rules used for selecting the rules.
-	var/list/midround_rules = list()
+	var/list/midround_rules
 	/** # Pop range per requirement.
 	  * If the value is five the range is:
 	  * 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
@@ -224,7 +224,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if (href_list["stacking_limit"])
 		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 	else if(href_list["force_latejoin_rule"])
-		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in sortList(latejoin_rules)
+		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in sortNames(init_rulesets(/datum/dynamic_ruleset/latejoin))
 		if (!added_rule)
 			return
 		forced_latejoin_rule = added_rule
@@ -235,7 +235,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		log_admin("[key_name(usr)] cleared the forced latejoin ruleset.")
 		message_admins("[key_name(usr)] cleared the forced latejoin ruleset.")
 	else if(href_list["force_midround_rule"])
-		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in sortList(midround_rules)
+		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in sortNames(init_rulesets(/datum/dynamic_ruleset/midround))
 		if (!added_rule)
 			return
 		log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
@@ -308,7 +308,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
-		alert("The round hasn't started yet!")
+		tgui_alert(usr, "The round hasn't started yet!")
 		return
 
 	if(!check_rights(R_ADMIN))
@@ -382,23 +382,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	setup_parameters()
 	setup_hijacking()
 	setup_shown_threat()
+	setup_rulesets()
 
-	var/valid_roundstart_ruleset = 0
-	for (var/rule in subtypesof(/datum/dynamic_ruleset))
-		var/datum/dynamic_ruleset/ruleset = new rule()
-		// Simple check if the ruleset should be added to the lists.
-		if(ruleset.name == "")
-			continue
-		configure_ruleset(ruleset)
-		switch(ruleset.ruletype)
-			if("Roundstart")
-				roundstart_rules += ruleset
-				if(ruleset.weight)
-					valid_roundstart_ruleset++
-			if ("Latejoin")
-				latejoin_rules += ruleset
-			if ("Midround")
-				midround_rules += ruleset
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -411,9 +396,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 		rigged_roundstart()
-	else if(valid_roundstart_ruleset < 1)
-		log_game("DYNAMIC: [valid_roundstart_ruleset] enabled roundstart rulesets.")
-		return TRUE
 	else
 		roundstart()
 
@@ -433,6 +415,30 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 	..()
+
+/// Initializes the internal ruleset variables
+/datum/game_mode/dynamic/proc/setup_rulesets()
+	roundstart_rules = init_rulesets(/datum/dynamic_ruleset/roundstart)
+	midround_rules = init_rulesets(/datum/dynamic_ruleset/midround)
+	latejoin_rules = init_rulesets(/datum/dynamic_ruleset/latejoin)
+
+/// Returns a list of the provided rulesets.
+/// Configures their variables to match config.
+/datum/game_mode/dynamic/proc/init_rulesets(ruleset_subtype)
+	var/list/rulesets = list()
+
+	for (var/datum/dynamic_ruleset/ruleset_type as anything in subtypesof(ruleset_subtype))
+		if (initial(ruleset_type.name) == "")
+			continue
+
+		if (initial(ruleset_type.weight) == 0)
+			continue
+
+		var/ruleset = new ruleset_type
+		configure_ruleset(ruleset)
+		rulesets += ruleset
+
+	return rulesets
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
 /datum/game_mode/dynamic/proc/rigged_roundstart()

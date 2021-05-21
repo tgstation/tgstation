@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Things like microwaves will no longer have their sound stack"

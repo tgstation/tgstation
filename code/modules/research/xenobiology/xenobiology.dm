@@ -771,7 +771,7 @@
 		return
 
 	prompted = 1
-	if(alert("This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,"Yes","No")=="No")
+	if(tgui_alert(usr,"This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,list("Yes","No"))=="No")
 		prompted = 0
 		return
 

@@ -2,7 +2,7 @@
 
 /datum/nanite_program/sleepy
 	name = "Sleep Induction"
-	desc = "The nanites cause rapid narcolepsy when triggered."
+	desc = "The nanites induce rapid narcolepsy when triggered."
 	can_trigger = TRUE
 	trigger_cost = 15
 	trigger_cooldown = 1200

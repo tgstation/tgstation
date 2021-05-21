@@ -20,7 +20,7 @@
 			SSgarbage.next_fire = world.time + world.tick_lag
 			return
 
-		if(!skip_alert && alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") != "Yes")
+		if(!skip_alert && tgui_alert(usr,"Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", list("Yes", "No")) != "Yes")
 			running_find_references = null
 			return
 

@@ -1159,7 +1159,7 @@
 
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
 	if(isliving(user) && user.mind)
-		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
+		var/popup_input = tgui_alert(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
 		if(user.incapacitated())
 			return
 		if(!user.is_holding(src))
@@ -1179,7 +1179,7 @@
 
 				registered_name = input_name
 
-				var/change_trim = alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", "Yes", "No")
+				var/change_trim = tgui_alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", list("Yes", "No"))
 				if(change_trim == "Yes")
 					var/list/blacklist = typecacheof(type) + typecacheof(/obj/item/card/id/advanced/simple_bot)
 					var/list/trim_list = list()

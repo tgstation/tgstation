@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Bombproof containers should once again protect their contents from being damaged by explosions"

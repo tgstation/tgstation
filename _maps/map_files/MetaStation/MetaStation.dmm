@@ -18177,7 +18177,6 @@
 /obj/machinery/navbeacon/wayfinding,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/poddoor/preopen,
 /obj/machinery/door/poddoor/preopen{
 	id = "transitlockdown"
 	},
@@ -69964,6 +69963,9 @@
 /area/commons/dorms)
 "uRq" = (
 /obj/machinery/light_switch/directional/east,
+/obj/machinery/modular_computer/console/preset/curator{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/service/library)
 "uRy" = (

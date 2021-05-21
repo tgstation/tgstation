@@ -145,7 +145,7 @@
 		return
 	if(key || stat)
 		return
-	var/pod_ask = alert("Become a blob spore?", "Are you bulbous enough?", "Yes", "No")
+	var/pod_ask = tgui_alert(usr,"Become a blob spore?", "Are you bulbous enough?", list("Yes", "No"))
 	if(pod_ask == "No" || !src || QDELETED(src))
 		return
 	if(key)
