@@ -82,9 +82,9 @@
 	if(!source.override_notes)
 		// Make sure not to divide by 0 on accident
 		if(source.force > 0)
-			readout += "Our extensive research has shown that it takes a mere <span class='warning'>[round((100 / source.force), 0.1)]</span> hits to down [victims[rand(1, victims.len)]] with no armor."
+			readout += "Our extensive research has shown that it takes a mere <span class='warning'>[round((100 / source.force), 0.1)]</span> hit\s to beat down [victims[rand(1, victims.len)]] with no armor."
 		else
-			readout += "Our extensive research found that you couldn't beat yourself to death with this if you tried."
+			readout += "Our extensive research found that you couldn't beat anyone to death with this if you tried."
 
 		if(source.throwforce > 0)
 			readout += "If you decide to throw this object instead, one will take <span class='warning'>[round((100 / source.throwforce), 0.1)]</span> hit\s before collapsing."
@@ -98,7 +98,7 @@
 
 	// Check if we have an additional proc, if so, add it to the readout
 	if(attached_proc)
-		readout += call(attached_proc)(source)
+		readout += call(source, attached_proc)()
 
 	// Finally bringing the fields together
 	return readout.Join("\n")
@@ -125,62 +125,3 @@
 			return "EXTREMELY CAPABLE"
 		else
 			return "STRANGELY CAPABLE"
-
-
-/**
- *
- * Outputs type-specific weapon stats for ballistic weaponry.
- * It contains extra breaks for the sake of presentation
- *
- * Arguments:
- * 	* source - The object being evaluated
- */
-/datum/element/weapon_description/proc/add_notes_ballistic(obj/item/gun/ballistic/source)
-	if(source.magazine) // Make sure you have a magazine, thats where the warning is!
-		return "\nBe especially careful around this device, as it can be loaded with <span class='warning'>[source.magazine.caliber]</span> round\s, which you can inspect for more information."
-	else
-		return "\nThe warning attached to the magazine is missing..."
-
-/**
- *
- * Outputs type-specific weapon stats for energy-based firearms
- *
- * Arguments:
- * 	* source - The object being evaluated
- */
-/datum/element/weapon_description/proc/add_notes_energy(obj/item/gun/energy/source)
-	var/list/readout = list("")
-	// Make sure there is something to actually retrieve
-	if(!source.ammo_type)
-		return
-	var/obj/projectile/exam_proj
-	readout += "Standard models of this dangerous tool have <span class='warning'>[source.ammo_type.len]</span> mode(s)"
-	readout += "Our heroic interns have shown that one can theoretically stay standing after..."
-	for(var/obj/item/ammo_casing/energy/for_ammo in source.ammo_type)
-		exam_proj = for_ammo.loaded_projectile
-		if(exam_proj.damage > 0) // Don't divide by 0!!!!!
-			readout += "<span class='warning'>[round(100 / exam_proj.damage, 0.1)]</span> shot\s on <span class='warning'>[for_ammo.select_name]</span> mode before collapsing from [exam_proj.damage_type == STAMINA ? "immense pain" : "their wounds"]."
-		else
-			readout += "an infinite number of shots on <span class='warning'>[for_ammo.select_name] mode</span>."
-	return readout.Join("\n") // Sending over the singular string, rather than the whole list
-
-/**
- *
- * Outputs type-specific weapon stats for ammunition
- *
- * Arguments:
- * 	* source - The object being evaluated
- */
-/datum/element/weapon_description/proc/add_notes_ammo(obj/item/ammo_casing/source)
-	// Make sure there is actually something IN the casing
-	if(source.loaded_projectile)
-		// No dividing by 0
-		if(source.loaded_projectile.damage > 0)
-			return "Most monkeys our legal team subjected to these rounds succumbed to their wounds after <span class='warning'>[round(100 / (source.loaded_projectile.damage * source.pellets), 0.1)]</span> point-blank discharges, taking <span class='warning'>[source.pellets]</span> shots per round"
-		if(source.loaded_projectile.stamina > 0)
-			return "[source.loaded_projectile.damage == 0 ? "Most Monkeys" : "More Fortunate Monkeys" ] collapsed from exhaustion after <span class='warning'>[round(100 / ((source.loaded_projectile.damage + source.loaded_projectile.stamina) * source.pellets), 0.1)]</span> of these rounds"
-		if(source.loaded_projectile.damage == 0 && source.loaded_projectile.stamina == 0)
-			return "Our legal team has determined the offensive nature of these rounds to be esoteric"
-	else
-		// Labels don't do well with extreme forces
-		return "The warning label was blown away..."

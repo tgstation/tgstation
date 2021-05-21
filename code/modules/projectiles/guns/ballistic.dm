@@ -132,7 +132,19 @@
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_reload)
 
 /obj/item/gun/ballistic/add_weapon_description()
-	AddElement(/datum/element/weapon_description, attached_proc = /datum/element/weapon_description/proc/add_notes_ballistic)
+	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_ballistic)
+
+/**
+ *
+ * Outputs type-specific weapon stats for ballistic weaponry based on its magazine and its caliber.
+ * It contains extra breaks for the sake of presentation
+ *
+ */
+/obj/item/gun/ballistic/proc/add_notes_ballistic()
+	if(magazine) // Make sure you have a magazine, thats where the warning is!
+		return "\nBe especially careful around this device, as it can be loaded with <span class='warning'>[magazine.caliber]</span> rounds, which you can inspect for more information."
+	else
+		return "\nThe warning attached to the magazine is missing..."
 
 /obj/item/gun/ballistic/vv_edit_var(vname, vval)
 	. = ..()
