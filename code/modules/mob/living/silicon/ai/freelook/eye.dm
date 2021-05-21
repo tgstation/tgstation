@@ -2,7 +2,6 @@
 //
 // An invisible (no icon) mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
-
 /mob/camera/ai_eye
 	name = "Inactive AI Eye"
 
@@ -39,9 +38,9 @@
 		QDEL_LIST(old_images)
 		return
 
-	if(!hud.hudusers.len)
-		//no one is watching, do not bother updating anything
-		return
+	if(!length(hud.hudusers))
+		return //no one is watching, do not bother updating anything
+
 	hud.remove_from_hud(src)
 
 	var/static/list/vis_contents_opaque = list()
@@ -86,7 +85,7 @@
 			abstract_move(T)
 		else
 			moveToNullspace()
-		if(use_static != FALSE)
+		if(use_static)
 			ai.camera_visibility(src)
 		if(ai.client && !ai.multicam_on)
 			ai.client.eye = src
