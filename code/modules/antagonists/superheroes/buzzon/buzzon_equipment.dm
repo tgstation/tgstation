@@ -89,7 +89,7 @@
 		if(isliving(linked_sword.loc))
 			var/mob/living/current_owner = linked_sword.loc
 			current_owner.dropItemToGround(linked_sword)
-			to_chat(current_owner, "<span class='warning'>[linked_sword]'s small rocket engine suddenly activates and rips it out of your hand!</span>")
+			to_chat(current_owner, "<span class='warning'>[linked_sword]'s small rocket engine suddenly activates, ripping it out of your grasp!</span>")
 		linked_sword.throw_at(owner, 10, 2)
 
 /obj/item/clothing/head/hooded/bee_hood/full //It's not a helmet because I want tackles and flashbangs to fuck you up
