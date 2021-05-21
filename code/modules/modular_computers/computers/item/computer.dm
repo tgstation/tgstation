@@ -550,7 +550,7 @@
 
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	// Check to see if we have an ID inside, and a valid input for money
-	if(card_slot?.GetID() && (istype(W, /obj/item/holochip) || istype(W, /obj/item/stack/spacecash) || istype(W, /obj/item/coin) || istype(W, /obj/item/storage/bag/money)))
+	if(card_slot?.GetID() && iscash(W))
 		var/obj/item/card/id/id = card_slot.GetID()
 		id.attackby(W, user) // If we do, try and put that attacking object in
 		return

@@ -1071,7 +1071,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		picture = P.picture
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
 	// Check to see if we have an ID inside, and a valid input for money
-	else if(id && (istype(C, /obj/item/holochip) || istype(C, /obj/item/stack/spacecash) || istype(C, /obj/item/coin) || istype(C, /obj/item/storage/bag/money)))
+	else if(id && iscash(C))
 		id.attackby(C, user) // If we do, try and put that attacking object in
 	else
 		return ..()
