@@ -151,7 +151,7 @@
 		generated_icon.GetPixel(1, 1)
 		generated_icons[icon_state] = generated_icon
 
-	var/icon/icon_bundle = icon('icons/Testing/greyscale_error.dmi')
+	var/icon/icon_bundle = icon('icons/testing/greyscale_error.dmi')
 	for(var/icon_state in generated_icons)
 		icon_bundle.Insert(generated_icons[icon_state], icon_state)
 
