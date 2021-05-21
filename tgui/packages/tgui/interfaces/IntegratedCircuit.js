@@ -44,7 +44,7 @@ const FUNDAMENTAL_DATA_TYPES = {
         icon="upload"
         onClick={() => setValue(null, { marked_atom: true })}
       />
-    )
+    );
   },
   "any": (props, context) => {
     const { name, value, setValue, color } = props;
@@ -66,7 +66,7 @@ const FUNDAMENTAL_DATA_TYPES = {
           />
         </Stack.Item>
       </Stack>
-    )
+    );
   },
 };
 
@@ -128,7 +128,7 @@ export class IntegratedCircuit extends Component {
       >
         <Window.Content
           style={{
-            "background-image": "none"
+            "background-image": "none",
           }}
         >
           <InfinitePlane

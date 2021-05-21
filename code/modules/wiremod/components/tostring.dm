@@ -12,6 +12,8 @@
 	/// The result from the output
 	var/datum/port/output/output
 
+	var/min_range = 5
+
 /obj/item/circuit_component/tostring/Initialize()
 	. = ..()
 	input_port = add_input_port("Input", PORT_TYPE_ANY)
@@ -28,4 +30,12 @@
 	if(.)
 		return
 
-	output.set_output("[input_port.input_value]")
+	var/input_value = input_port.input_value
+	if(isatom(input_value))
+		var/turf/location = get_turf(src)
+		var/atom/object = input_value
+		if(object.z != location.z || get_dist(location, object) > min_range)
+			output.set_output(null)
+			return
+
+	output.set_output("[input_value]")

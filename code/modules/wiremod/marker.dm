@@ -1,6 +1,7 @@
 /obj/item/multitool/circuit
 	name = "circuit multitool"
 
+	/// The marked atom of this multitool
 	var/atom/marked_atom
 
 /obj/item/multitool/circuit/attack_self(mob/user, modifiers)
@@ -26,6 +27,7 @@
 	RegisterSignal(marked_atom, COMSIG_PARENT_QDELETING, .proc/cleanup_marked_atom)
 	return TRUE
 
+/// Clears the current marked atom
 /obj/item/multitool/circuit/proc/clear_marked_atom()
 	if(!marked_atom)
 		return

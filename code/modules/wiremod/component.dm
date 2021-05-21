@@ -8,13 +8,13 @@
  * an input. This is the base type of all components
  */
 /obj/item/circuit_component
-	name = "component"
+	name = COMPONENT_DEFAULT_NAME
 	icon = 'icons/obj/module.dmi'
 	icon_state = "circuit_map"
 	inhand_icon_state = "electronic"
 
 	/// The name of the component shown on the UI
-	var/display_name = "Generic Component"
+	var/display_name = "Generic"
 
 	/// The integrated_circuit that this component is attached to.
 	var/obj/item/integrated_circuit/parent
@@ -45,6 +45,8 @@
 
 /obj/item/circuit_component/Initialize()
 	. = ..()
+	if(name == COMPONENT_DEFAULT_NAME)
+		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
 	if(length(options))
 		current_option = options[1]
 
