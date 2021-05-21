@@ -9,6 +9,7 @@ import { resolveAsset } from '../assets';
 const NULL_REF = "[0x0]";
 const SVG_Y_OFFSET = -32;
 const SVG_X_CURVE_POINT = 16;
+const SVG_CURVE_INTENSITY = 64;
 
 const BasicInput = (props, context) => {
   const {
@@ -238,10 +239,12 @@ const Connections = (props, context) => {
         }
         // Starting point
         let path = `M ${from.x} ${from.y}`;
-        path += `L ${from.x+SVG_X_CURVE_POINT} ${from.y}`;
-        path += `C ${to.x}, ${from.y},`;
-        path += `${from.x}, ${to.y},`;
-        path += `${to.x-SVG_X_CURVE_POINT}, ${to.y}`;
+        const fromX = from.x+SVG_X_CURVE_POINT;
+        const toX = to.x-SVG_X_CURVE_POINT;
+        path += `L ${fromX} ${from.y}`;
+        path += `C ${fromX+SVG_CURVE_INTENSITY}, ${from.y},`;
+        path += `${toX-SVG_CURVE_INTENSITY}, ${to.y},`;
+        path += `${toX}, ${to.y}`;
 
         path += `L ${to.x} ${to.y}`;
 
