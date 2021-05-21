@@ -38,9 +38,9 @@
 /obj/item/integrated_circuit/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+		. += "<span class='notice'>The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.</span>"
 	else
-		. += "There is no power cell installed."
+		. += "<span class='notice'>There is no power cell installed.</span>"
 
 /obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
