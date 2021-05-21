@@ -784,6 +784,7 @@
 	update_label()
 
 /obj/item/card/id/advanced/proc/on_holding_card_slot_moved(obj/item/computer_hardware/card_slot/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
 	if(istype(old_loc, /obj/item/modular_computer/tablet))
 		UnregisterSignal(old_loc, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED)
 

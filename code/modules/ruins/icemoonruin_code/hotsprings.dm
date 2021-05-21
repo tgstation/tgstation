@@ -53,4 +53,5 @@ GLOBAL_LIST_EMPTY(cursed_minds)
  *
  */
 /turf/open/water/cursed_spring/proc/remove_from_cursed(datum/mind/M)
+	SIGNAL_HANDLER
 	GLOB.cursed_minds -= M

@@ -250,6 +250,7 @@
 			. = "<span class='danger'>[user] casually lights [A.loc == user ? "[user.p_their()] [A.name]" : A] with [src]. Damn.</span>"
 
 /obj/item/gun/energy/proc/instant_recharge()
+	SIGNAL_HANDLER
 	if(!cell)
 		return
 	cell.charge = cell.maxcharge

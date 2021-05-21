@@ -69,9 +69,9 @@
 
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
 /obj/vehicle/sealed/mecha/combat/durand/proc/prehit(obj/projectile/source, list/signal_args)
+	SIGNAL_HANDLER
 	if(defense_check(source.loc) && shield)
 		signal_args[2] = shield
-
 
 /**Checks if defense mode is enabled, and if the attacker is standing in an area covered by the shield.
 Expects a turf. Returns true if the attack should be blocked, false if not.*/
@@ -222,6 +222,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	switching = FALSE
 
 /obj/durand_shield/proc/resetdir(datum/source, olddir, newdir)
+	SIGNAL_HANDLER
 	setDir(newdir)
 
 /obj/durand_shield/take_damage()

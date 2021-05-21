@@ -176,6 +176,7 @@
 */
 
 /datum/wound/blunt/proc/update_inefficiencies()
+	SIGNAL_HANDLER
 	if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		if(limb.current_gauze)
 			limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
@@ -222,6 +223,7 @@
 
 /// Getting smushed in an airlock/firelock is a last-ditch attempt to try relocating your limb
 /datum/wound/blunt/moderate/proc/door_crush()
+	SIGNAL_HANDLER
 	if(prob(33))
 		victim.visible_message("<span class='danger'>[victim]'s dislocated [limb.name] pops back into place!</span>", "<span class='userdanger'>Your dislocated [limb.name] pops back into place! Ow!</span>")
 		remove_wound()

@@ -174,6 +174,7 @@
 	return ..()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/move_react()
+	SIGNAL_HANDLER
 	if(!on)//If jet dont work, it dont work
 		return
 	if(!owner)//Don't allow jet self using
@@ -190,6 +191,7 @@
 		allow_thrust(0.01)
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/pre_move_react()
+	SIGNAL_HANDLER
 	ion_trail.oldposition = get_turf(owner)
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num)
