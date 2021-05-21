@@ -239,14 +239,9 @@ const Connections = (props, context) => {
         }
         // Starting point
         let path = `M ${from.x} ${from.y}`;
-        const fromX = from.x+SVG_X_CURVE_POINT;
-        const toX = to.x-SVG_X_CURVE_POINT;
-        path += `L ${fromX} ${from.y}`;
-        path += `C ${fromX+SVG_CURVE_INTENSITY}, ${from.y},`;
-        path += `${toX-SVG_CURVE_INTENSITY}, ${to.y},`;
-        path += `${toX}, ${to.y}`;
-
-        path += `L ${to.x} ${to.y}`;
+        path += `C ${from.x+SVG_CURVE_INTENSITY}, ${from.y},`;
+        path += `${to.x-SVG_CURVE_INTENSITY}, ${to.y},`;
+        path += `${to.x}, ${to.y}`;
 
         val.color = val.color || "blue";
         return (
