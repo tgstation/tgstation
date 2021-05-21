@@ -316,14 +316,14 @@
 		if(!(C.datum_flags & DF_SIGNAL_ENABLED))
 			return NONE
 		var/proctype = C.signal_procs[src][sigtype]
-		return NONE | call(C, proctype)(arglist(arguments))
+		return NONE | CallAsync(C, proctype, arguments)
 	. = NONE
 	for(var/I in target)
 		var/datum/C = I
 		if(!(C.datum_flags & DF_SIGNAL_ENABLED))
 			continue
 		var/proctype = C.signal_procs[src][sigtype]
-		. |= call(C, proctype)(arglist(arguments))
+		. |= CallAsync(C, proctype, arguments)
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
