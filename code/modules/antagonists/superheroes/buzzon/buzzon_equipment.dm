@@ -173,7 +173,7 @@
 /obj/item/melee/beesword/buzzon/attack_secondary(mob/living/victim, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_RANGE)
 	parry_time = world.time + CLICK_CD_RANGE
-	user.visible_message("<span class='warning'>[user] assumes blocking stance.</span>", "<span class='notice'>You assume blocking stance.</span>")
+	user.visible_message("<span class='warning'>[user] assumes a blocking stance.</span>", "<span class='notice'>You assume a blocking stance.</span>")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/melee/beesword/buzzon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
