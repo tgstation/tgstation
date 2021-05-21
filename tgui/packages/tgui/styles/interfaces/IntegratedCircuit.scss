@@ -8,11 +8,17 @@ $bg-map: colors.$bg-map !default;
   border-top-right-radius: 12px;
 
   white-space: nowrap;
+
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .ObjectComponent__Content {
   white-space: nowrap;
   background-color: rgba(0, 0, 0, 0.5);
+
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .ObjectComponent__PortPos {
