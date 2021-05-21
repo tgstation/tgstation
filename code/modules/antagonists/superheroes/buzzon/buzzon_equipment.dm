@@ -10,11 +10,12 @@
 	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 
 	tackle_stam_cost = 5 //Very light and fast tackles. However, if you fly into a wall or an enemy, well, you're fucked.
-	base_knockdown = 0
+	base_knockdown = 0.1 SECONDS
 	tackle_range = 6
 	tackle_speed = 3
 	min_distance = 3
 	skill_mod = -5
+	tackle_knockdown = FALSE
 
 /obj/item/clothing/gloves/tackler/combat/insulated/buzzon/cryo //Cosmetics for "Operation: Cryostung" kit
 	icon_state = "buzz_cryo"

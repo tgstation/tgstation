@@ -22,6 +22,8 @@
 	var/tackle_speed = 1
 	/// See: [/datum/component/tackler/var/skill_mod]
 	var/skill_mod = 0
+	/// See: [/datum/component/tackler/var/tackle_knockdown]
+	var/tackle_knockdown = TRUE
 
 /obj/item/clothing/gloves/tackler/Destroy()
 	tackler = null
@@ -33,7 +35,7 @@
 		return
 	if(slot == ITEM_SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
-		tackler = H.AddComponent(/datum/component/tackler, stamina_cost=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance)
+		tackler = H.AddComponent(/datum/component/tackler, stamina_cost=tackle_stam_cost, base_knockdown = base_knockdown, range = tackle_range, speed = tackle_speed, skill_mod = skill_mod, min_distance = min_distance, tackle_knockdown = tackle_knockdown)
 
 /obj/item/clothing/gloves/tackler/dropped(mob/user)
 	. = ..()

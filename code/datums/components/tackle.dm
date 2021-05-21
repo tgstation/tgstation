@@ -30,8 +30,10 @@
 	var/min_distance
 	///The throwdatum we're currently dealing with, if we need it
 	var/datum/thrownthing/tackle
+	///Do we knock the user down after tackling?
+	var/tackle_knockdown = TRUE
 
-/datum/component/tackler/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance)
+/datum/component/tackler/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance, tackle_knockdown = TRUE)
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -41,11 +43,12 @@
 	src.speed = speed
 	src.skill_mod = skill_mod
 	src.min_distance = min_distance
+	src.tackle_knockdown = tackle_knockdown
 
 	var/mob/P = parent
 	to_chat(P, "<span class='notice'>You are now able to launch tackles! You can do so by activating throw intent, and clicking on your target with an empty hand.</span>")
 
-	addtimer(CALLBACK(src, .proc/resetTackle), max(1, base_knockdown), TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
 
 /datum/component/tackler/Destroy()
 	var/mob/P = parent
@@ -116,11 +119,11 @@
 	if(get_dist(user, A) < min_distance)
 		A = get_ranged_target_turf(user, get_dir(user, A), min_distance) //TODO: this only works in cardinals/diagonals, make it work with in-betweens too!
 
-	if(base_knockdown)
+	if(tackle_knockdown)
 		user.Knockdown(base_knockdown, ignore_canstun = TRUE)
 	user.adjustStaminaLoss(stamina_cost)
 	user.throw_at(A, range, speed, user, FALSE)
-	addtimer(CALLBACK(src, .proc/resetTackle), max(1, base_knockdown), TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
 	return(COMSIG_MOB_CANCEL_CLICKON)
 
 /**
