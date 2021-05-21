@@ -200,7 +200,7 @@
 /datum/port/input/proc/receive_output(datum/port/output/connected_port, new_value)
 	SIGNAL_HANDLER
 	if(input_receive_delay)
-		addtimer(CALLBACK(src, .proc/set_input, new_value), input_receive_delay)
+		addtimer(CALLBACK(src, .proc/set_input, new_value), input_receive_delay, timer_subsystem = SScircuit_component)
 	else
 		set_input(new_value)
 

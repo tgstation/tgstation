@@ -83,6 +83,9 @@
 	RegisterSignal(shell, COMSIG_PARENT_QDELETING, .proc/remove_current_shell)
 	for(var/obj/item/circuit_component/attached_component as anything in attached_components)
 		attached_component.register_shell(shell)
+		// Their input ports may be updated with user values, but the outputs haven't updated
+		// because on is FALSE
+		attached_component.input_received()
 
 /**
  * Unregisters the current shell attached to this circuit.
