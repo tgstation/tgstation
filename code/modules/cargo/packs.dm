@@ -1132,7 +1132,7 @@
 
 /datum/supply_pack/materials/bz
 	name = "BZ Canister"
-	cost = CARGO_CRATE_VALUE * 45 //bz is used for many gasses so centcomm values it
+	cost = CARGO_CRATE_VALUE * 45 //bz is used for many gasses so centcom values it
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_type = /obj/structure/closet/crate/large
 
