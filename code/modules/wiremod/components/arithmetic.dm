@@ -38,14 +38,10 @@ GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 	if(.)
 		return
 
-	// If the current_option is equal to COMP_LOGIC_AND, start with result set to TRUE
-	// Otherwise, set result to FALSE.
-	var/result = 0
 	var/list/ports = input_ports.Copy()
-	if(current_option == COMP_ARITHMETIC_DIVIDE || current_option == COMP_ARITHMETIC_SUBTRACT)
-		var/datum/port/input/first_port = ports[1]
-		ports -= first_port
-		result = first_port.input_value
+	var/datum/port/input/first_port = ports[1]
+	ports -= first_port
+	var/result = first_port.input_value
 
 	for(var/datum/port/input/input_port as anything in ports)
 		var/value = input_port.input_value
