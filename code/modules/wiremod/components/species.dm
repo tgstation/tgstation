@@ -1,10 +1,10 @@
 /**
- * # Species Component
+ * # Get Species Component
  *
  * Return the species of a mob
  */
 /obj/item/circuit_component/species
-	display_name = "Species"
+	display_name = "Get Species"
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -28,9 +28,9 @@
 	if(.)
 		return
 
-	var/mob/living/carbon/human/H = input_port.input_value
-	if(!istype(H) || !H.has_dna())
+	var/mob/living/carbon/human/human = input_port.input_value
+	if(!istype(human) || !human.has_dna())
 		output.set_output(null)
 		return
 
-	output.set_output(H.dna.species.name)
+	output.set_output(human.dna.species.name)

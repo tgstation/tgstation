@@ -36,7 +36,7 @@
 	if(.)
 		return
 
-	if(!COMPONENT_TRIGGERED_BY(trigger))
+	if(!COMPONENT_TRIGGERED_BY(trigger, port))
 		return
 
 	var/min_val = minimum.input_value || 0

@@ -1,8 +1,7 @@
 /**
- * # Arithmetic Component
+ * # Concatenate Component
  *
- * General arithmetic unit with add/sub/mult/divide capabilities
- * This one only works with numbers.
+ * General string concatenation component. Puts strings together.
  */
 /obj/item/circuit_component/concat
 	display_name = "Concatenate"
@@ -17,9 +16,9 @@
 	. = ..()
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A")-1 + port_id)
-		add_input_port(letter, PORT_TYPE_NUMBER)
+		add_input_port(letter, PORT_TYPE_STRING)
 
-	output = add_output_port("Output", PORT_TYPE_NUMBER)
+	output = add_output_port("Output", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/concat/Destroy()
 	output = null
@@ -30,8 +29,6 @@
 	if(.)
 		return
 
-	// If the current_option is equal to COMP_LOGIC_AND, start with result set to TRUE
-	// Otherwise, set result to FALSE.
 	var/result = ""
 
 	for(var/datum/port/input/input_port as anything in input_ports)

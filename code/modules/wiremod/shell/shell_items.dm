@@ -11,11 +11,11 @@
 	var/screw_delay = 3 SECONDS
 
 /obj/item/shell/screwdriver_act(mob/living/user, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] begins finishing \the [src].</span>", "<span class='notice'>You begin finishing \the [src].</span>")
+	user.visible_message("<span class='notice'>[user] begins finishing [src].</span>", "<span class='notice'>You begin finishing [src].</span>")
 	tool.play_tool_sound(src)
 	if(!do_after(user, screw_delay, src))
 		return
-	user.visible_message("<span class='notice'>[user] finishes \the [src].</span>", "<span class='notice'>You finish \the [src].</span>")
+	user.visible_message("<span class='notice'>[user] finishes [src].</span>", "<span class='notice'>You finish [src].</span>")
 
 	var/turf/drop_loc = drop_location()
 

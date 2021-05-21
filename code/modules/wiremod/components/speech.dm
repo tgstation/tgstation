@@ -11,10 +11,10 @@
 	/// The trigger to send the message
 	var/datum/port/input/trigger
 
-	/// The next time that this component can send a message
-	var/next_speech = 0
 	/// The cooldown for this component of how often it can send speech messages.
 	var/speech_cooldown = 2 SECONDS
+
+	COOLDOWN_DECLARE(next_speech)
 
 /obj/item/circuit_component/speech/Initialize()
 	. = ..()
@@ -33,10 +33,10 @@
 	if(.)
 		return
 
-	if(!COMPONENT_TRIGGERED_BY(trigger))
+	if(!COMPONENT_TRIGGERED_BY(trigger, port))
 		return
 
-	if(next_speech > world.time)
+	if(!COOLDOWN_FINISHED(src, next_speech))
 		return
 
 	if(message.input_value)
@@ -46,4 +46,4 @@
 			shell.say(message.input_value)
 		else
 			say(message.input_value)
-		next_speech = world.time + speech_cooldown
+		COOLDOWN_START(src, next_speech, speech_cooldown)

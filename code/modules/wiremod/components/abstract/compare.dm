@@ -47,7 +47,7 @@
 	ports.Cut(input_port_amount+1)
 
 	var/logic_result = do_comparisons(ports)
-	if(COMPONENT_TRIGGERED_BY(compare))
+	if(COMPONENT_TRIGGERED_BY(compare, port))
 		if(logic_result)
 			true.set_output(COMPONENT_SIGNAL)
 		else

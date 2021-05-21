@@ -53,6 +53,7 @@
 /obj/item/circuit_component/Destroy()
 	if(parent)
 		parent.remove_component(src)
+		parent = null
 
 	QDEL_LIST(output_ports)
 	QDEL_LIST(input_ports)
@@ -130,17 +131,15 @@
 /**
  * Called whenever an input is received from one of the ports.
  *
+ * Return value indicates that the circuit should not do anything
  * Arguments:
  * * port - Can be null. The port that sent the input
  */
 /obj/item/circuit_component/proc/input_received(datum/port/input/port)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!parent)
-		return TRUE
-
-	if(!parent.on)
+	if(!parent?.on)
 		return TRUE
 
 	var/obj/item/stock_parts/cell/cell = parent.get_cell()
-	if(!cell || !cell.use(power_usage_per_input))
+	if(!cell?.use(power_usage_per_input))
 		return TRUE

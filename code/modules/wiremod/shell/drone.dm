@@ -19,7 +19,7 @@
 /mob/living/circuit_drone/updatehealth()
 	. = ..()
 	if(health < 0)
-		gib(TRUE, TRUE, TRUE)
+		gib(no_brain = TRUE, no_organs = TRUE, no_bodyparts = TRUE)
 
 /mob/living/circuit_drone/spawn_gibs()
 	new /obj/effect/gibspawner/robot(drop_location(), src, get_static_viruses())
@@ -45,23 +45,23 @@
 	if(.)
 		return
 
-	var/mob/living/B = parent.shell
-	if(!istype(B) || B.stat)
+	var/mob/living/shell = parent.shell
+	if(!istype(shell) || shell.stat)
 		return
 
 	var/direction
 
-	if(COMPONENT_TRIGGERED_BY(north))
+	if(COMPONENT_TRIGGERED_BY(north, port))
 		direction = NORTH
-	else if(COMPONENT_TRIGGERED_BY(east))
+	else if(COMPONENT_TRIGGERED_BY(east, port))
 		direction = EAST
-	else if(COMPONENT_TRIGGERED_BY(south))
+	else if(COMPONENT_TRIGGERED_BY(south, port))
 		direction = SOUTH
-	else if(COMPONENT_TRIGGERED_BY(west))
+	else if(COMPONENT_TRIGGERED_BY(west, port))
 		direction = WEST
 
 	if(!direction)
 		return
 
-	if(B.Process_Spacemove(direction))
-		B.Move(get_step(B, direction), direction)
+	if(shell.Process_Spacemove(direction))
+		shell.Move(get_step(shell, direction), direction)

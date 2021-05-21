@@ -22,7 +22,7 @@
 		return ..()
 
 	clear_marked_atom()
-	say("Marked \the [target].")
+	say("Marked [target].")
 	marked_atom = target
 	RegisterSignal(marked_atom, COMSIG_PARENT_QDELETING, .proc/cleanup_marked_atom)
 	return TRUE

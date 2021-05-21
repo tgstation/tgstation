@@ -34,7 +34,7 @@
 	if(.)
 		return
 
-	if(!COMPONENT_TRIGGERED_BY(trigger))
+	if(!COMPONENT_TRIGGERED_BY(trigger, port))
 		return
 
 	var/input_val = input_port.input_value

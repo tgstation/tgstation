@@ -12,19 +12,19 @@
 	var/capacity = INFINITY
 
 	/// A list of components that cannot be removed
-	var/list/obj/item/circuit_component/unremovable_components
+	var/list/obj/item/circuit_component/unremovable_circuit_components
 
-/datum/component/shell/Initialize(unremovable_components, capacity = src.capacity, shell_flags = src.shell_flags)
+/datum/component/shell/Initialize(unremovable_circuit_components, capacity, shell_flags)
 	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.shell_flags = shell_flags
-	src.capacity = capacity
-	src.unremovable_components = unremovable_components
+	src.shell_flags = shell_flags || src.shell_flags
+	src.capacity = capacity || src.capacity
+	src.unremovable_circuit_components = unremovable_circuit_components
 
-	for(var/obj/item/circuit_component/comp as anything in unremovable_components)
-		comp.removable = FALSE
+	for(var/obj/item/circuit_component/circuit_component as anything in unremovable_circuit_components)
+		circuit_component.removable = FALSE
 
 /datum/component/shell/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
@@ -47,7 +47,7 @@
 	QDEL_NULL(attached_circuit)
 
 /datum/component/shell/Destroy(force, silent)
-	QDEL_LIST(unremovable_components)
+	QDEL_LIST(unremovable_circuit_components)
 	return ..()
 
 /datum/component/shell/proc/on_examine(datum/source, mob/user, list/examine_text)
@@ -55,9 +55,9 @@
 	if(!attached_circuit)
 		return
 
-	examine_text += "There is an integrated circuit attached"
+	examine_text += "<span class='notice'>There is an integrated circuit attached</span>"
 	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
-	examine_text += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+	examine_text += "<span class='notice'>The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.</span>"
 
 
 /**
@@ -68,13 +68,7 @@
  */
 /datum/component/shell/proc/on_unfasten(atom/source, anchored)
 	SIGNAL_HANDLER
-	if(!attached_circuit)
-		return
-
-	if(anchored)
-		attached_circuit.on = TRUE
-	else
-		attached_circuit.on = FALSE
+	attached_circuit?.on = anchored
 /**
  * Called when an item hits the parent. This is the method to add the circuitboard to the component.
  */
@@ -147,7 +141,7 @@
 	attached_circuit = circuitboard
 	RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, .proc/on_circuit_moved)
 	RegisterSignal(circuitboard, COMSIG_PARENT_QDELETING, .proc/on_circuit_delete)
-	for(var/obj/item/circuit_component/to_add as anything in unremovable_components)
+	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
 		to_add.forceMove(attached_circuit)
 		attached_circuit.add_component(to_add)
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT, .proc/on_circuit_add_component)
@@ -172,7 +166,7 @@
 		var/atom/parent_atom = parent
 		attached_circuit.forceMove(parent_atom.drop_location())
 
-	for(var/obj/item/circuit_component/to_remove as anything in unremovable_components)
+	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
 	attached_circuit = null

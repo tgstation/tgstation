@@ -44,7 +44,7 @@
 
 /obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
-	if(iscomponent(I))
+	if(istype(I, /obj/item/circuit_component))
 		add_component(I, user)
 		return
 
@@ -56,14 +56,14 @@
 			return
 		cell = I
 		I.add_fingerprint(user)
-		user.visible_message("<span class='notice'>\The [user] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 		return
 
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!cell)
 			return
 		I.play_tool_sound(src)
-		user.visible_message("<span class='notice'>\The [user] unscrews the power cell from \the [src].</span>", "<span class='notice'>You unscrew the power cell from \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] unscrews the power cell from [src].</span>", "<span class='notice'>You unscrew the power cell from [src].</span>")
 		cell.forceMove(drop_location())
 		cell = null
 		return

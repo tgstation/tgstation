@@ -61,14 +61,14 @@
 					"stethoscope", "surgical_drapes", "syringe", "plumbing_rcd", "beaker", "large_beaker", "xlarge_beaker",
 					"dropper", "defibmountdefault", "surgical_tape", "portable_chem_mixer")
 
-/datum/techweb_node/basic_wiremod
-	id = "basic_wiremod"
+/datum/techweb_node/basic_circuitry
+	id = "basic_circuitry"
 	starting_node = TRUE
 	display_name = "Basic Integrated Circuits"
 	description = "Research on how to fully exploit the power of integrated circuits"
 	design_ids = list("integrated_circuit", "circuit_multitool", "comp_arithmetic", "comp_clock", "comp_comparison", "comp_delay", "comp_hear",
-				"comp_index", "comp_length", "comp_light", "comp_logic", "comp_not", "comp_ram", "comp_random", "comp_species", "comp_textcase",
-				"comp_speech", "comp_concat", "comp_speech", "comp_self", "comp_radio", "comp_tostring", "comp_typecheck", "shell_compact_remote")
+			"comp_index", "comp_length", "comp_light", "comp_logic", "comp_not", "comp_ram", "comp_random", "comp_species", "comp_textcase",
+			"comp_speech", "comp_concat", "comp_speech", "comp_self", "comp_radio", "comp_tostring", "comp_typecheck", "compact_remote_shell")
 
 /////////////////////////Biotech/////////////////////////
 
@@ -294,8 +294,8 @@
 	id = "adv_shells"
 	display_name = "Advanced Shell Research"
 	description = "Grants access to more complicated shell designs."
-	prereq_ids = list("basic_wiremod", "engineering")
-	design_ids = list("shell_controller", "shell_bot")
+	prereq_ids = list("basic_circuitry", "engineering")
+	design_ids = list("controller_shell", "bot_shell")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/movable_shells_tech
@@ -303,7 +303,7 @@
 	display_name = "Movable Shell Research"
 	description = "Grants access to movable shells."
 	prereq_ids = list("adv_shells", "robotics")
-	design_ids = list("shell_drone")
+	design_ids = list("drone_shell")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/server_shell_tech
@@ -311,7 +311,7 @@
 	display_name = "Server Technology Research"
 	description = "Grants access to a server shell that has a very high capacity for components."
 	prereq_ids = list("adv_shells", "computer_hardware_basic")
-	design_ids = list("shell_server")
+	design_ids = list("server_shell")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /////////////////////////robotics tech/////////////////////////

@@ -47,7 +47,7 @@
 	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 	current_freq = frequency
 
-	if(COMPONENT_TRIGGERED_BY(trigger_input))
+	if(COMPONENT_TRIGGERED_BY(trigger_input, port))
 		var/datum/signal/signal = new(list("code" = round(code.input_value) || 0))
 		radio_connection.post_signal(src, signal)
 

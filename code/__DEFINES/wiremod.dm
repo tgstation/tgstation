@@ -1,7 +1,7 @@
 #define PORT_INPUT_RECEIVE_DELAY 0.9 SECONDS
 
 /// Helper define that can only be used in /obj/item/circuit_component/input_received()
-#define COMPONENT_TRIGGERED_BY(trigger) (trigger.input_value && trigger == port)
+#define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.input_value && trigger == port)
 
 // Port types. Determines what the port can connect to
 

@@ -43,26 +43,35 @@
 /obj/item/circuit_component/controller/register_shell(atom/movable/shell)
 	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)
 	RegisterSignal(shell, COMSIG_CLICK_ALT, .proc/send_alternate_signal)
+	RegisterSignal(shell, COMSIG_CLICK_ALT_SECONDARY, .proc/send_right_signal)
 
 /obj/item/circuit_component/controller/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(
 		COMSIG_ITEM_ATTACK_SELF,
+		COMSIG_CLICK_ALT_SECONDARY,
 		COMSIG_CLICK_ALT,
 	))
 
 /**
  * Called when the shell item is used in hand, including right click.
  */
-/obj/item/circuit_component/controller/proc/send_trigger(datum/source, mob/user, list/modifiers)
+/obj/item/circuit_component/controller/proc/send_trigger(datum/source, mob/user)
 	SIGNAL_HANDLER
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		right.set_output(COMPONENT_SIGNAL)
-	else
-		signal.set_output(COMPONENT_SIGNAL)
+	if(!user.Adjacent(source))
+		return
+	signal.set_output(COMPONENT_SIGNAL)
 
 /**
  * Called when the shell item is alt-clicked
  */
-/obj/item/circuit_component/controller/proc/send_alternate_signal(datum/source)
+/obj/item/circuit_component/controller/proc/send_alternate_signal(datum/source, mob/user)
 	SIGNAL_HANDLER
+	if(!user.Adjacent(source))
+		return
 	alt.set_output(COMPONENT_SIGNAL)
+
+/obj/item/circuit_component/controller/proc/send_right_signal(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if(!user.Adjacent(source))
+		return
+	right.set_output(COMPONENT_SIGNAL)

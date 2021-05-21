@@ -1,10 +1,10 @@
 /datum/design/integrated_circuit
 	name = "Integrated Circuit"
-	desc = "The foundation of all circuits. All components go onto this."
+	desc = "The foundation of all circuits. All Circuitry go onto this."
 	id = "integrated_circuit"
 	build_path = /obj/item/integrated_circuit
 	build_type = IMPRINTER
-	category = list("Components")
+	category = list("Circuitry")
 	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -14,7 +14,7 @@
 	id = "circuit_multitool"
 	build_path = /obj/item/multitool/circuit
 	build_type = PROTOLATHE
-	category = list("Components")
+	category = list("Circuitry")
 	materials = list(/datum/material/glass = 1000, /datum/material/iron = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -25,7 +25,7 @@
 	build_type = IMPRINTER
 	materials = list(/datum/material/glass = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-	category = list("Components")
+	category = list("Circuitry")
 
 /datum/design/component/arithmetic
 	name = "Arithmetic Component"
@@ -128,33 +128,33 @@
 	build_path = /obj/item/circuit_component/radio
 
 
-/datum/design/shell_compact_remote
-	name = "Compact Remote"
-	id = "shell_compact_remote"
+/datum/design/compact_remote_shell
+	name = "Compact Remote Shell"
+	id = "compact_remote_shell"
 	build_path = /obj/item/compact_remote
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
 	build_type = PROTOLATHE
-	category = list("Components")
+	category = list("Circuitry")
 
-/datum/design/shell_controller
-	name = "Controller"
-	id = "shell_controller"
+/datum/design/controller_shell
+	name = "Controller Shell"
+	id = "controller_shell"
 	build_path = /obj/item/controller
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
-	category = list("Components")
+	category = list("Circuitry")
 
-/datum/design/shell_bot
-	name = "Bot"
-	id = "shell_bot"
+/datum/design/bot_shell
+	name = "Bot Shell"
+	id = "bot_shell"
 	build_path = /obj/item/shell/bot
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000)
-	category = list("Components")
+	category = list("Circuitry")
 
-/datum/design/shell_drone
-	name = "Drone"
-	id = "shell_drone"
+/datum/design/drone_shell
+	name = "Drone Shell"
+	id = "drone_shell"
 	build_path = /obj/item/shell/drone
 	build_type = PROTOLATHE
 	materials = list(
@@ -162,11 +162,11 @@
 		/datum/material/iron = 11000,
 		/datum/material/gold = 500,
 	)
-	category = list("Components")
+	category = list("Circuitry")
 
-/datum/design/shell_server
-	name = "Server"
-	id = "shell_server"
+/datum/design/server_shell
+	name = "Server Shell"
+	id = "server_shell"
 	materials = list(
 		/datum/material/glass = 5000,
 		/datum/material/iron = 15000,
@@ -174,4 +174,4 @@
 	)
 	build_path = /obj/item/shell/server
 	build_type = PROTOLATHE
-	category = list("Components")
+	category = list("Circuitry")
