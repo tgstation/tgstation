@@ -1136,7 +1136,17 @@
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/materials/carbondioxide
+	name = "Carbon Dioxide Canister"
+	cost = CARGO_CRATE_VALUE * 9
+	contains = /obj/machinery/portable_atmospherics/canister/carbon_dioxide
+	crate_type = /obj/structure/closet/crate/large
 
+	/datum/supply_pack/materials/nitrous_oxide
+	name = "Nitrous Oxide Canister"
+	cost = CARGO_CRATE_VALUE * 25
+	contains = /obj/machinery/portable_atmospherics/canister/carbon_dioxide
+	crate_type = /obj/structure/closet/crate/large
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
