@@ -12,6 +12,11 @@
 		return
 	..()
 
+/datum/action/item_action/mod/IsAvailable()
+	if(owner == mod.ai)
+		return TRUE
+	return ..()
+
 /datum/action/item_action/mod/deploy
 	name = "Deploy MODsuit"
 	desc = "Deploy/Conceal a part of the MODsuit."

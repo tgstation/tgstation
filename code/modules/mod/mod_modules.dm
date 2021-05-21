@@ -201,15 +201,6 @@
 	var/max_combined_w_class = 14
 	var/max_items = 7
 
-/obj/item/mod/module/storage/antag
-	name = "MOD syndicate storage module"
-	max_w_class = WEIGHT_CLASS_NORMAL
-	max_combined_w_class = 21
-	max_items = 21
-
-/obj/item/mod/module/storage/antag/wiz
-	name = "MOD enchanted storage module"
-
 /obj/item/mod/module/storage/Initialize()
 	. = ..()
 	storage = AddComponent(/datum/component/storage/concrete)
@@ -218,13 +209,24 @@
 	storage.max_items = max_items
 
 /obj/item/mod/module/storage/on_install()
+	w_class = WEIGHT_CLASS_BULKY //this sucks but we need it to not run into errors with storage inside storage
 	var/datum/component/storage/modstorage = mod.AddComponent(/datum/component/storage, storage)
 	modstorage.max_w_class = max_w_class
 	modstorage.max_combined_w_class = max_combined_w_class
 	modstorage.max_items = max_items
 
 /obj/item/mod/module/storage/on_uninstall()
+	w_class = initial(w_class)
 	qdel(mod.GetComponent(/datum/component/storage))
+
+/obj/item/mod/module/storage/antag
+	name = "MOD syndicate storage module"
+	max_w_class = WEIGHT_CLASS_NORMAL
+	max_combined_w_class = 21
+	max_items = 21
+
+/obj/item/mod/module/storage/antag/wiz
+	name = "MOD enchanted storage module"
 
 /obj/item/mod/module/visor
 	name = "MOD visor module"
