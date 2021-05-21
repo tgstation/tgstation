@@ -354,7 +354,7 @@ function connected_to_server() {
 	connected = true;
 
 	for (var index = 0; index < commandQueue.length; index++) {
-		// TODO: This is just setting it a lot, is this not going to cancel?
+		// This is just setting it a lot, is this not going to cancel?
 		window.location.href = commandQueue[index];
 	}
 
