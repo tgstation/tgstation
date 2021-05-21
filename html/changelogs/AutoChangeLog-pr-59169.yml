@@ -1,5 +1,0 @@
-author: "Greniza"
-delete-after: True
-changes: 
-  - qol: "adds better descriptions to nanite programs"
-  - spellcheck: "makes sensor description syntax consistently \"receives a signal\" (rather than \"sends\" or similar)"
