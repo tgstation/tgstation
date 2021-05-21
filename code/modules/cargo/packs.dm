@@ -1118,7 +1118,7 @@
 
 /datum/supply_pack/materials/water_vapor
 	name = "Water Vapor Canister"
-	cost = CARGO_CRATE_VALUE * 15
+	cost = CARGO_CRATE_VALUE * 15 //annoying slip gas thats cheap so people can spam it (we do a little slipping)
 	contains = list(/obj/machinery/portable_atmospherics/canister)
 	crate_type = /obj/structure/closet/crate/large
 	contains = list(/obj/machinery/portable_atmospherics/canister/water_vapor)
@@ -1132,7 +1132,7 @@
 
 /datum/supply_pack/materials/bz
 	name = "BZ Canister"
-	cost = CARGO_CRATE_VALUE * 45
+	cost = CARGO_CRATE_VALUE * 45 //bz is used for many gasses so centcomm values it
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_type = /obj/structure/closet/crate/large
 
@@ -1144,7 +1144,7 @@
 
 /datum/supply_pack/materials/nitrous_oxide
 	name = "Nitrous Oxide Canister"
-	cost = CARGO_CRATE_VALUE * 25
+	cost = CARGO_CRATE_VALUE * 25 //annoying sleep gas so its worth a bit more so people cant spam it
 	contains = list(/obj/machinery/portable_atmospherics/canister/nitrous_oxide)
 	crate_type = /obj/structure/closet/crate/large
 
