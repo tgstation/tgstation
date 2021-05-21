@@ -317,11 +317,11 @@
 	/// The color used for the neon overlay.
 	var/neon_color
 	/// The alpha used for the emissive overlay.
-	var/emissive_alpha = 255
+	var/emissive_alpha = 150
 
 /obj/item/stack/tile/carpet/neon/update_overlays()
 	. = ..()
-	var/mutable_appearance/neon_overlay = mutable_appearance(neon_icon || icon, neon_icon_state || icon_state, )
+	var/mutable_appearance/neon_overlay = mutable_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha = alpha)
 	neon_overlay.color = neon_color
 	. += neon_overlay
 	. += emissive_appearance(neon_icon || icon, neon_icon_state || icon_state, alpha=emissive_alpha)
@@ -330,10 +330,10 @@
 	. = ..()
 	if(!isinhands || !neon_inhand_icon_state)
 		return
-	var/mutable_appearance/neon_overlay = mutable_appearance(icon_file, neon_inhand_icon_state, alpha=src.alpha)
+	var/mutable_appearance/neon_overlay = mutable_appearance(icon_file, neon_inhand_icon_state, alpha = alpha)
 	neon_overlay.color = neon_color
 	. += neon_overlay
-	// TODO: Figure out how to add an emissive overlay to the inhand.
+	/// TODO: Figure out how to add emissive overlays to inhand icon states.
 
 /obj/item/stack/tile/carpet/neon/simple
 	name = "simple neon carpet"
