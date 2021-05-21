@@ -21,7 +21,7 @@
 	var/list/obj/item/circuit_component/attached_components = list()
 
 	/// Whether the integrated circuit is on or not. Handled by the shell.
-	var/on = TRUE
+	var/on = FALSE
 
 /obj/item/integrated_circuit/loaded/Initialize()
 	. = ..()
@@ -78,6 +78,7 @@
  */
 /obj/item/integrated_circuit/proc/set_shell(atom/movable/new_shell)
 	remove_current_shell()
+	on = TRUE
 	shell = new_shell
 	RegisterSignal(shell, COMSIG_PARENT_QDELETING, .proc/remove_current_shell)
 	for(var/obj/item/circuit_component/attached_component as anything in attached_components)
@@ -94,6 +95,7 @@
 		attached_component.unregister_shell(shell)
 	UnregisterSignal(shell, COMSIG_PARENT_QDELETING)
 	shell = null
+	on = FALSE
 
 /**
  * Adds a component to the circuitboard
