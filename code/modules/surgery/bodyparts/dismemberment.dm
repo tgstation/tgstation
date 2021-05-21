@@ -57,18 +57,18 @@
 	if(HAS_TRAIT(chest_owner, TRAIT_NODISMEMBER))
 		return FALSE
 	. = list()
-	var/turf/owner_location = get_turf(chest_owner)
-	chest_owner.add_splatter_floor(owner_location)
+	if(isturf(chest_owner.loc))
+		chest_owner.add_splatter_floor(chest_owner.loc)
 	playsound(get_turf(chest_owner), 'sound/misc/splort.ogg', 80, TRUE)
 	for(var/obj/item/organ/organ as anything in chest_owner.internal_organs)
 		var/org_zone = check_zone(organ.zone)
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
 		organ.Remove(chest_owner)
-		organ.forceMove(owner_location)
+		organ.forceMove(chest_owner.loc)
 		. += organ
 	if(cavity_item)
-		cavity_item.forceMove(owner_location)
+		cavity_item.forceMove(chest_owner.loc)
 		. += cavity_item
 		cavity_item = null
 
