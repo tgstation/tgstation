@@ -89,7 +89,7 @@
 		target.visible_message("<span class='danger'>[user]'s powerfist lets out a dull thunk as [user.p_they()] punch[user.p_es()] [target.name]!</span>", \
 			"<span class='userdanger'>[user]'s punches you!</span>")
 		return
-	if(gasused.total_moles() < gasperfist * fisto_setting)
+	if(gasused.total_moles() < (gasperfist * fisto_setting - (MOLAR_ACCURACY * 5)))
 		to_chat(user, "<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
 		playsound(loc, 'sound/weapons/punch4.ogg', 50, TRUE)
 		target.apply_damage((force / 2), BRUTE)
