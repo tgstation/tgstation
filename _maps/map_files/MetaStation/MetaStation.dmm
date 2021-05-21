@@ -28568,11 +28568,6 @@
 	dir = 1
 	},
 /area/command/gateway)
-"heL" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
-/turf/open/floor/iron,
-/area/engineering/break_room)
 "heS" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
@@ -121255,7 +121250,7 @@ lqM
 spl
 wxF
 pMb
-heL
+spl
 kXg
 eJb
 jMk
