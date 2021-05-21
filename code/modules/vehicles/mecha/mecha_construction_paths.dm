@@ -421,7 +421,7 @@
 	outer_plating_amount=1
 
 /datum/component/construction/mecha/gygax/action(datum/source, atom/used_atom, mob/user)
-	return check_step(used_atom,user)
+	return INVOKE_ASYNC(src, .proc/check_step, used_atom,user)
 
 /datum/component/construction/mecha/gygax/custom_action(obj/item/I, mob/living/user, diff)
 	if(!..())

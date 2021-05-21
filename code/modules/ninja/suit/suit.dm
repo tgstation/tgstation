@@ -159,7 +159,7 @@
  * * ninja - The person wearing the suit.
  */
 /obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/ninja)
-	var/design_choice = alert(ninja, "Please choose your desired suit design.",,"Original","New Age")
+	var/design_choice = tgui_alert(ninja, "Please choose your desired suit design.",,list("Original","New Age"))
 	switch(design_choice)
 		if("Original")
 			icon_state = ninja.body_type == "female" ? "s-ninjanf" : "s-ninjan"

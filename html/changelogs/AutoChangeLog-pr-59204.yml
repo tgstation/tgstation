@@ -1,0 +1,4 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - bugfix: "ai detectors now change appearance when ai's come closer"
