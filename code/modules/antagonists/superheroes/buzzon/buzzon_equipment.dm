@@ -2,7 +2,7 @@
 
 /obj/item/clothing/gloves/tackler/combat/insulated/buzzon
 	name = "BuzzOn gloves"
-	desc = "Legendary gloves on the greatest bee superhero - BuzzOn. You can see small rocket engines installed on them."
+	desc = "Legendary gloves on the greatest bee superhero - BuzzOn. You can see small rocket engines installed on them. These gloves allow you to launch very fast yet weak tackes. Don't fly into a wall!"
 	icon_state = "buzz"
 	worn_icon_state = "buzz"
 	inhand_icon_state = "ygloves"
@@ -10,10 +10,10 @@
 	armor = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60, BOMB = 55, BIO = 100, RAD = 70, FIRE = 100, ACID = 100, WOUND = 25)
 
 	tackle_stam_cost = 5 //Very light and fast tackles. However, if you fly into a wall or an enemy, well, you're fucked.
-	base_knockdown = 0.2 SECONDS
-	tackle_range = 5
-	tackle_speed = 2
-	min_distance = 2
+	base_knockdown = 0
+	tackle_range = 6
+	tackle_speed = 3
+	min_distance = 3
 	skill_mod = -5
 
 /obj/item/clothing/gloves/tackler/combat/insulated/buzzon/cryo //Cosmetics for "Operation: Cryostung" kit
@@ -89,7 +89,7 @@
 		if(isliving(linked_sword.loc))
 			var/mob/living/current_owner = linked_sword.loc
 			current_owner.dropItemToGround(linked_sword)
-			to_chat(current_owner, "<span class='warning'>[linked_sword]'s small rocket engine suddenly activates, ripping it out of your grasp!</span>")
+			current_owner.visible_message("<span class='warning'>[linked_sword]'s small rocket engine suddenly activates, ripping it out of their grasp!</span>", "<span class='warning'>[linked_sword]'s small rocket engine suddenly activates, ripping it out of your grasp!</span>")
 		linked_sword.throw_at(owner, 10, 2)
 
 /obj/item/clothing/head/hooded/bee_hood/full //It's not a helmet because I want tackles and flashbangs to fuck you up
@@ -100,6 +100,8 @@
 	body_parts_covered = HEAD
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/clothing/head/hooded/bee_hood/full/cryo
 	icon_state = "bee_full_cryo"
@@ -119,8 +121,8 @@
 
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 	hud.add_hud_to(buzzon)
-	ADD_TRAIT(buzzon, TRAIT_DIAGNOSTIC_HUD, CLOTHING_TRAIT)
-	ADD_TRAIT(buzzon, TRAIT_ROBOTIC_FRIEND, CLOTHING_TRAIT) //BuzzOn is the best roboticist ever so bots don't attack him even if emagged
+	ADD_TRAIT(buzzon, TRAIT_DIAGNOSTIC_HUD, SUPERHERO_TRAIT)
+	ADD_TRAIT(buzzon, TRAIT_ROBOTIC_FRIEND, SUPERHERO_TRAIT) //BuzzOn is the best roboticist ever so bots don't attack him even if emagged
 
 /obj/item/clothing/head/hooded/bee_hood/full/dropped(mob/user)
 	. = ..()
@@ -130,8 +132,8 @@
 
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 	hud.remove_hud_from(buzzon)
-	REMOVE_TRAIT(buzzon, TRAIT_DIAGNOSTIC_HUD, CLOTHING_TRAIT)
-	REMOVE_TRAIT(buzzon, TRAIT_ROBOTIC_FRIEND, CLOTHING_TRAIT)
+	REMOVE_TRAIT(buzzon, TRAIT_DIAGNOSTIC_HUD, SUPERHERO_TRAIT)
+	REMOVE_TRAIT(buzzon, TRAIT_ROBOTIC_FRIEND, SUPERHERO_TRAIT)
 
 /obj/item/melee/beesword/buzzon
 	name = "The Stinger"
@@ -149,7 +151,7 @@
 /obj/item/melee/beesword/buzzon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(parry_time >= world.time)
 		parry_time = 0
-		final_block_chance += 85
+		final_block_chance += 110
 
 	switch(attack_type)
 		if(UNARMED_ATTACK)
@@ -161,11 +163,12 @@
 		if(LEAP_ATTACK)
 			if(isliving(hitby))
 				var/mob/living/victim = hitby
+				var/initial_force = force
 				force = 20
 				attack_verb_continuous = list("penetrates", "pierces") //We pierce them in the flight.
 				attack_verb_simple = list("penetrate", "pierce")
 				attack(victim, owner)
-				force = initial(force)
+				force = initial_force
 				attack_verb_continuous = initial(attack_verb_continuous)
 				attack_verb_simple = initial(attack_verb_simple)
 	. = ..()
@@ -179,7 +182,7 @@
 /obj/item/melee/beesword/buzzon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/victim = hit_atom
-		if(istype(victim.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/hooded/bee_costume/buzzon))
+		if(istype(victim.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/hooded/bee_costume/buzzon) || istype(victim.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/space/hardsuit/syndi/buzzon))
 			var/obj/item/clothing/suit/hooded/bee_costume/buzzon/suit = victim.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 			if(suit.linked_sword == src)
 				victim.put_in_active_hand(src)
@@ -241,8 +244,8 @@
 
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 	hud.add_hud_to(buzzon)
-	ADD_TRAIT(buzzon, TRAIT_DIAGNOSTIC_HUD, CLOTHING_TRAIT)
-	ADD_TRAIT(buzzon, TRAIT_ROBOTIC_FRIEND, CLOTHING_TRAIT)
+	ADD_TRAIT(buzzon, TRAIT_DIAGNOSTIC_HUD, SUPERHERO_TRAIT)
+	ADD_TRAIT(buzzon, TRAIT_ROBOTIC_FRIEND, SUPERHERO_TRAIT)
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/buzzon/dropped(mob/user)
 	. = ..()
@@ -252,8 +255,8 @@
 
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 	hud.remove_hud_from(buzzon)
-	REMOVE_TRAIT(buzzon, TRAIT_DIAGNOSTIC_HUD, CLOTHING_TRAIT)
-	REMOVE_TRAIT(buzzon, TRAIT_ROBOTIC_FRIEND, CLOTHING_TRAIT)
+	REMOVE_TRAIT(buzzon, TRAIT_DIAGNOSTIC_HUD, SUPERHERO_TRAIT)
+	REMOVE_TRAIT(buzzon, TRAIT_ROBOTIC_FRIEND, SUPERHERO_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/syndi/buzzon
 	name = "bee hardsuit"

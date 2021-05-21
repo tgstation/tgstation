@@ -56,7 +56,7 @@
 	H.dna.add_mutation(SPACEMUT)
 
 /datum/outfit/superhero/villain/griffin/winter
-	name = "Griffin (Operation Cryostung)"
+	name = "Griffin (Operation Cryosting)"
 	suit = /obj/item/clothing/suit/hooded/wintercoat/griffin
 	head = null
 	suit_store = /obj/item/tank/internals/oxygen

@@ -39,7 +39,7 @@
 	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/superhero/villain/nekometic/winter
-	name = "Nekometic (Operation Cryostung)"
+	name = "Nekometic (Operation Cryosting)"
 	uniform = /obj/item/clothing/under/costume/schoolgirl
 	suit = /obj/item/clothing/suit/hooded/wintercoat/nekometic
 	head = null

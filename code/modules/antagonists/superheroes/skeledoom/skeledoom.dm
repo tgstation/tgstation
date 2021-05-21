@@ -15,7 +15,7 @@
 	implants = list(/obj/item/implant/stealth)
 
 /datum/outfit/superhero/villain/skeledoom/cryo
-	name = "SkeleDoom (Operation Cryostung)"
+	name = "SkeleDoom (Operation Cryosting)"
 	suit = /obj/item/clothing/suit/armor/skeledoom/cryo
 	head = /obj/item/clothing/head/beret/black/skeledoom/cryo
 	belt = /obj/item/storage/belt/bee_hunter/full/cryo

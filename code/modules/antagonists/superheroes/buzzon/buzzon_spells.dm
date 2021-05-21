@@ -8,14 +8,14 @@
 
 /obj/item/implant/spell/specified_type/bees
 	name = "bluespace bee storage implant"
-	desc = "Allows user to create swarms of bees on will."
+	desc = "Allows user to create swarms of bees at-will."
 
 /obj/item/implant/spell/specified_type/bees/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Bluespace Bee Storage Implant<BR>
 				<b>Life:</b> 4 hours after death of host<BR>
 				<b>Implant Details:</b> <BR>
-				<b>Function:</b> Allows user to create swarms of bees on will."}
+				<b>Function:</b> Allows user to create swarms of bees at-will."}
 	return dat
 
 /obj/item/implant/spell/specified_type/bees/cryo
@@ -23,7 +23,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee/buzzon
 	name = "Activate BBS implant"
-	desc = "Activate BBS implant to summon a swarm of bees. Attention: The bees are hostile to everyone."
+	desc = "Activate your BBS implant to summon a swarm of bees. Warning: The bees will then proceed to act like normal bees. Use with caution when near bystanders."
 	clothes_req = FALSE
 	invocation = "Bees, deploy!"
 	clear_invocation = TRUE

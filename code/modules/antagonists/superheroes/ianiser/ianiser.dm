@@ -56,7 +56,7 @@
 	H.mind.AddSpell(spell2)
 
 /datum/outfit/superhero/ianiser/winter
-	name = "Ianiser (Operation Cryostung)"
+	name = "Ianiser (Operation Cryosting)"
 	suit = /obj/item/clothing/suit/hooded/ian_costume/ianiser/winter
 	shoes = /obj/item/clothing/shoes/wheelys/skishoes/ianiser
 

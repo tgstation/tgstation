@@ -23,13 +23,13 @@
 /obj/item/clothing/gloves/skeleton/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_GLOVES)
-		ADD_TRAIT(user, TRAIT_ROBOTIC_FRIEND, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_ROBOTIC_FRIEND, SUPERHERO_TRAIT)
 		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/hack)
 
 /obj/item/clothing/gloves/skeleton/dropped(mob/user)
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
-		REMOVE_TRAIT(user, TRAIT_ROBOTIC_FRIEND, CLOTHING_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_ROBOTIC_FRIEND, SUPERHERO_TRAIT)
 		UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 
 /obj/item/clothing/gloves/skeleton/proc/hack(mob/living/carbon/human/H, atom/A, proximity)

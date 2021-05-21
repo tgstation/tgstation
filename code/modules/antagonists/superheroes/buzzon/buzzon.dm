@@ -13,6 +13,12 @@
 
 /datum/outfit/superhero/buzzon/post_equip(mob/living/carbon/human/H)
 	. = ..()
+
+	var/obj/item/organ/cyberimp/arm/surgery/surgical_toolset = new(H)
+	var/obj/item/organ/cyberimp/arm/toolset/l/toolset = new(H)
+	surgical_toolset.Insert(H)
+	toolset.Insert(H)
+
 	var/obj/item/clothing/suit/hooded/bee_costume/buzzon/suit = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	if(istype(suit))
 		suit.ToggleHood()
@@ -22,7 +28,7 @@
 		hardsuit.recall_sword()
 
 /datum/outfit/superhero/buzzon/cryo
-	name = "BuzzOn (Operation Cryostung)"
+	name = "BuzzOn (Operation Cryosting)"
 	uniform = /obj/item/clothing/under/color/blue
 	suit = /obj/item/clothing/suit/hooded/bee_costume/buzzon/cryo
 	shoes = /obj/item/clothing/shoes/sneakers/buzzon/cryo
@@ -46,6 +52,14 @@
 	shoes = /obj/item/clothing/shoes/sneakers/buzzon
 	ears = /obj/item/radio/headset
 	implants = list(/obj/item/implant/spell/specified_type/bees)
+
+/datum/outfit/superhero/buzzon_nude/post_equip(mob/living/carbon/human/H)
+	. = ..()
+
+	var/obj/item/organ/cyberimp/arm/surgery/surgical_toolset = new(H)
+	var/obj/item/organ/cyberimp/arm/toolset/l/toolset = new(H)
+	surgical_toolset.Insert(H)
+	toolset.Insert(H)
 
 /datum/outfit/superhero/buzzon_nude/spawner
 	name = "BuzzOn (Spawner)"

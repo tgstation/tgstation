@@ -527,6 +527,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MAFIA_TRAIT "mafia"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
+/// Traits associated with superhero stuff
+#define SUPERHERO_TRAIT "superhero"
 
 ///generic atom traits
 #define DO_NOT_SPLASH "do_not_splash"
