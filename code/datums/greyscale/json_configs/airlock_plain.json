@@ -14,33 +14,21 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "left_right_rim",
+			"icon_state": "top_left_rim",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "right_right_rim",
+			"icon_state": "top_right_rim",
 			"blend_mode": "overlay",
 			"color_ids": [ 4 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "left_band",
+			"icon_state": "fill_closed",
 			"blend_mode": "overlay",
 			"color_ids": [ 5 ]
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "right_band",
-			"blend_mode": "overlay",
-			"color_ids": [ 6 ]
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "fill",
-			"blend_mode": "overlay",
-			"color_ids": [ 7 ]
 		}
 	],
 	"opening": [
@@ -58,33 +46,21 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "left_right_rim_opening",
+			"icon_state": "top_right_rim_opening",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "right_right_rim_opening",
+			"icon_state": "top_left_rim_opening",
 			"blend_mode": "overlay",
 			"color_ids": [ 4 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "left_band_opening",
-			"blend_mode": "overlay",
-			"color_ids": [ 5 ]
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "right_band_opening",
-			"blend_mode": "overlay",
-			"color_ids": [ 6 ]
-		},
-		{
-			"type": "icon_state",
 			"icon_state": "fill_opening",
 			"blend_mode": "overlay",
-			"color_ids": [ 7 ]
+			"color_ids": [ 5 ]
 		}
 	],
 	"open": [
@@ -102,39 +78,27 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "left_right_rim_open",
+			"icon_state": "top_right_rim_open",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "right_right_rim_open",
+			"icon_state": "top_left_rim_open",
 			"blend_mode": "overlay",
 			"color_ids": [ 4 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "left_band_open",
-			"blend_mode": "overlay",
-			"color_ids": [ 5 ]
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "right_band_open",
-			"blend_mode": "overlay",
-			"color_ids": [ 6 ]
-		},
-		{
-			"type": "icon_state",
 			"icon_state": "fill_open",
 			"blend_mode": "overlay",
-			"color_ids": [ 7 ]
+			"color_ids": [ 5 ]
 		}
 	],
 	"closing": [
 		{
 			"type": "icon_state",
-			"icon_state": "left_door_panel_opening",
+			"icon_state": "left_door_panel_closing",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
@@ -146,33 +110,21 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "left_right_rim_closing",
+			"icon_state": "top_right_rim_closing",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "right_right_rim_closing",
+			"icon_state": "top_left_rim_closing",
 			"blend_mode": "overlay",
 			"color_ids": [ 4 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "left_band_closing",
-			"blend_mode": "overlay",
-			"color_ids": [ 5 ]
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "right_band_closing",
-			"blend_mode": "overlay",
-			"color_ids": [ 6 ]
-		},
-		{
-			"type": "icon_state",
 			"icon_state": "fill_closing",
 			"blend_mode": "overlay",
-			"color_ids": [ 7 ]
+			"color_ids": [ 5 ]
 		}
 	]
 }
