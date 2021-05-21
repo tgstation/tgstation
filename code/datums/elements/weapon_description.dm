@@ -87,7 +87,7 @@
 			readout += "Our extensive research found that you couldn't beat yourself to death with this if you tried."
 
 		if(source.throwforce > 0)
-			readout += "If you decide to throw this object instead, one will take <span class='warning'>[round((100 / source.throwforce), 0.1)]</span> hits before collapsing."
+			readout += "If you decide to throw this object instead, one will take <span class='warning'>[round((100 / source.throwforce), 0.1)]</span> hit\s before collapsing."
 		else
 			readout += "If you decide to throw this object instead, then you will have trouble damaging anything."
 		if(source.armour_penetration > 0 || source.block_chance > 0)
