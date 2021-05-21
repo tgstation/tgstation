@@ -44,7 +44,7 @@
 			return "white"
 
 /datum/port/Destroy(force)
-	if(!force && !connected_component.gc_destroyed)
+	if(!force && !QDELETED(connected_component))
 		// This should never happen. Ports should be deleted with their components
 		stack_trace("Attempted to delete a port with a non-destroyed connected_component! (port name: [name], component type: [connected_component.type])")
 		return QDEL_HINT_LETMELIVE
@@ -68,7 +68,7 @@
 
 	if(isatom(value_to_convert))
 		var/atom/atom_to_check = value_to_convert
-		if(atom_to_check.gc_destroyed)
+		if(QDELETED(atom_to_check))
 			return null
 
 /**
@@ -246,4 +246,5 @@
 
 /datum/port/input/Destroy()
 	unregister_output_port()
+	connected_port = null
 	return ..()

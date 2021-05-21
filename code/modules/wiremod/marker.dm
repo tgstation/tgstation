@@ -4,6 +4,10 @@
 	/// The marked atom of this multitool
 	var/atom/marked_atom
 
+/obj/item/multitool/circuit/Destroy()
+	marked_atom = null
+	return ..()
+
 /obj/item/multitool/circuit/attack_self(mob/user, modifiers)
 	. = ..()
 	if(.)
