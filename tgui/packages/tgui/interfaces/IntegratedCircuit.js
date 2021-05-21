@@ -10,29 +10,77 @@ const NULL_REF = "[0x0]";
 const SVG_Y_OFFSET = -32;
 const SVG_X_CURVE_POINT = 16;
 
+const BasicInput = (props, context) => {
+  const {
+    children,
+    name,
+    setValue,
+    defaultValue,
+    value,
+  } = props;
+  return (
+    <>
+      {(value !== null) && (
+        <Stack onMouseDown={e => e.stopPropagation()}>
+          <Stack.Item>
+            <Button
+              color="transparent"
+              compact
+              icon="times"
+              onClick={() => setValue(null, { set_null: true })}
+            />
+          </Stack.Item>
+          <Stack.Item>
+            {children}
+          </Stack.Item>
+        </Stack>
+      ) || (
+        <Button
+          content={name}
+          color="transparent"
+          compact
+          onClick={() => setValue(defaultValue)}
+        />
+      )}
+    </>
+  )
+}
+
 const FUNDAMENTAL_DATA_TYPES = {
   "string": (props, context) => {
     const { name, value, setValue, color } = props;
     return (
-      <Input
-        placeholder={name}
+      <BasicInput
+        name={name}
+        setValue={setValue}
         value={value}
-        color={color}
-        onChange={(e, val) => setValue(val)}
-      />
+        defaultValue=""
+      >
+        <Input
+          placeholder={name}
+          value={value}
+          color={color}
+          onChange={(e, val) => setValue(val)}
+        />
+      </BasicInput>
     );
   },
   "number": (props, context) => {
     const { name, value, setValue, color } = props;
     return (
-      <Box onMouseDown={e => e.stopPropagation()}>
+      <BasicInput
+        name={name}
+        setValue={setValue}
+        value={value}
+        defaultValue={0}
+      >
         <NumberInput
-          value={value || 0}
+          value={value}
           color={color}
           onChange={(e, val) => setValue(val)}
           unit={name}
         />
-      </Box>
+      </BasicInput>
     );
   },
   "entity": (props, context) => {
@@ -40,8 +88,9 @@ const FUNDAMENTAL_DATA_TYPES = {
     return (
       <Button
         content={name}
-        color={color}
+        color="transparent"
         icon="upload"
+        compact
         onClick={() => setValue(null, { marked_atom: true })}
       />
     );
@@ -49,23 +98,30 @@ const FUNDAMENTAL_DATA_TYPES = {
   "any": (props, context) => {
     const { name, value, setValue, color } = props;
     return (
-      <Stack>
-        <Stack.Item>
-          <Button
-            color={color}
-            icon="upload"
-            onClick={() => setValue(null, { marked_atom: true })}
-          />
-        </Stack.Item>
-        <Stack.Item>
-          <Input
-            placeholder={name}
-            value={value}
-            color={color}
-            onChange={(e, val) => setValue(val)}
-          />
-        </Stack.Item>
-      </Stack>
+      <BasicInput
+        name={name}
+        setValue={setValue}
+        value={value}
+        defaultValue={""}
+      >
+        <Stack>
+          <Stack.Item>
+            <Button
+              color={color}
+              icon="upload"
+              onClick={() => setValue(null, { marked_atom: true })}
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Input
+              placeholder={name}
+              value={value}
+              color={color}
+              onChange={(e, val) => setValue(val)}
+            />
+          </Stack.Item>
+        </Stack>
+      </BasicInput>
     );
   },
 };

@@ -38,9 +38,9 @@
 
 /obj/item/circuit_component/radio/input_received(datum/port/input/port)
 	. = ..()
+	freq.set_input(sanitize_frequency(freq.input_value, TRUE), FALSE)
 	if(.)
 		return
-	freq.set_input(sanitize_frequency(freq.input_value, TRUE), FALSE)
 	var/frequency = freq.input_value
 
 	SSradio.remove_object(src, current_freq)

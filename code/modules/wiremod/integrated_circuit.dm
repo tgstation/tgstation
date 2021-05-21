@@ -296,6 +296,13 @@
 				return
 			var/datum/port/input/port = component.input_ports[port_id]
 
+			if(port.connected_port)
+				return
+
+			if(params["set_null"])
+				port.set_input(null)
+				return TRUE
+
 			if(params["marked_atom"])
 				if(port.datatype != PORT_TYPE_ATOM && port.datatype != PORT_TYPE_ANY)
 					return
@@ -316,14 +323,8 @@
 					port.set_input(text2num(user_input))
 				if(PORT_TYPE_ANY)
 					var/any_type = copytext(user_input, 1, PORT_MAX_STRING_LENGTH)
-					if(any_type == "")
-						port.set_input(null)
-					else
-						port.set_input(text2num(any_type) || any_type)
+					port.set_input(text2num(any_type) || any_type)
 				if(PORT_TYPE_STRING)
-					if(user_input == "")
-						port.set_input(null)
-					else
-						port.set_input(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
+					port.set_input(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
 			. = TRUE
 #undef WITHIN_RANGE
