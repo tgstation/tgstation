@@ -1,4 +1,0 @@
-author: "FlamingLily"
-delete-after: True
-changes: 
-  - bugfix: "Unscrewing the shell of a cybernetic now correctly checks for sharp objects when done ghetto-style"
