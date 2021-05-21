@@ -51,7 +51,7 @@
  * We do the prob() at the beginning to A. add some tension for /when/ it will strike, and B. (more importantly) ameliorate the fact that we're checking up to 5 turfs's contents each time
  */
 /datum/component/omen/proc/check_accident(atom/movable/our_guy)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(!isliving(our_guy))
 		return
@@ -66,7 +66,7 @@
 			to_chat(living_guy, "<span class='warning'>A malevolent force launches your body to the floor...</span>")
 			var/obj/machinery/door/airlock/darth_airlock = turf_content
 			living_guy.apply_status_effect(STATUS_EFFECT_PARALYZED, 10)
-			darth_airlock.close(force_crush = TRUE)
+			INVOKE_ASYNC(darth_airlock, /obj/machinery/door/airlock.proc/close, TRUE)
 			if(!permanent)
 				qdel(src)
 			return
@@ -84,7 +84,7 @@
 		for(var/obj/machinery/vending/darth_vendor in the_turf)
 			if(darth_vendor.tiltable)
 				to_chat(living_guy, "<span class='warning'>A malevolent force tugs at the [darth_vendor]...</span>")
-				darth_vendor.tilt(living_guy)
+				INVOKE_ASYNC(darth_vendor, /obj/machinery/vending.proc/tilt, living_guy)
 				if(!permanent)
 					qdel(src)
 				return

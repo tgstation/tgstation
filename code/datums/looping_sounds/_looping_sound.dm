@@ -64,7 +64,7 @@
 	if(!timerid)
 		return
 	on_stop()
-	deltimer(timerid, SStimer)
+	deltimer(timerid, SSsound_loops)
 	timerid = null
 
 /datum/looping_sound/proc/sound_loop(starttime)

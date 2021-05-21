@@ -212,7 +212,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
-	update_item_greyscale()
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -269,7 +268,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	return
 
 /// Checks if this atom uses the GAS system and if so updates the worn and inhand icons
-/obj/item/proc/update_item_greyscale()
+/obj/item/update_greyscale()
+	. = ..()
 	if(!greyscale_colors)
 		return
 	if(greyscale_config_worn)
@@ -278,7 +278,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		lefthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_left, greyscale_colors)
 	if(greyscale_config_inhand_right)
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
-	return
 
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
@@ -294,7 +293,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			return
 
 	var/turf/T = loc
-	loc = null
+	abstract_move(null)
 	forceMove(T)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
