@@ -137,7 +137,7 @@
  */
 /datum/element/weapon_description/proc/add_notes_ballistic(obj/item/gun/ballistic/source)
 	if(source.magazine) // Make sure you have a magazine, thats where the warning is!
-		return "\nBe especially careful around this device, as it can be loaded with <span class='warning'>[source.magazine.caliber]</span> rounds, which you can inspect for more information."
+		return "\nBe especially careful around this device, as it can be loaded with <span class='warning'>[source.magazine.caliber]</span> round\s, which you can inspect for more information."
 	else
 		return "\nThe warning attached to the magazine is missing..."
 
