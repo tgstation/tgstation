@@ -36613,6 +36613,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
+/obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
 "jWu" = (
@@ -50408,7 +50409,7 @@
 	},
 /area/command/gateway)
 "owa" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	name = "Mix to Engine"
