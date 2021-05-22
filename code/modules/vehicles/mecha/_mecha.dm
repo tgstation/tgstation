@@ -252,14 +252,16 @@
 
 
 /obj/vehicle/sealed/mecha/update_icon_state()
-	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
-		icon_state = silicon_icon_state
-		return ..()
-	if(LAZYLEN(occupants))
-		icon_state = base_icon_state
-		return ..()
-	icon_state = "[base_icon_state]-open"
+	icon_state = get_mecha_occupancy_state()
 	return ..()
+
+/obj/vehicle/sealed/mecha/proc/get_mecha_occupancy_state()
+	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
+		return silicon_icon_state
+	if(LAZYLEN(occupants))
+		return base_icon_state
+	return "[base_icon_state]-open"
+
 
 /obj/vehicle/sealed/mecha/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
 	if(!phasing || get_charge() <= phasing_energy_drain || throwing)
@@ -539,6 +541,9 @@
 		target = pick(view(3,target))
 	var/mob/living/livinguser = user
 	if(selected)
+		if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
+			to_chat(livinguser, "<span class='warning'>You're in the wrong seat to use equipment!</span>")
+			return
 		if(!Adjacent(target) && (selected.range & MECHA_RANGED))
 			if(HAS_TRAIT(livinguser, TRAIT_PACIFISM) && selected.harmful)
 				to_chat(livinguser, "<span class='warning'>You don't want to harm other living beings!</span>")
@@ -551,6 +556,9 @@
 				return
 			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
 			return
+	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_MECHAPUNCH)))
+		to_chat(livinguser, "<span class='warning'>You're in the wrong seat to melee attack!</span>")
+		return
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK) || !Adjacent(target))
 		return
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
@@ -604,9 +612,10 @@
 	return FALSE
 
 /obj/vehicle/sealed/mecha/relaymove(mob/living/user, direction)
-	if(canmove)
-		vehicle_move(direction)
-	return TRUE
+	. = TRUE
+	if(!canmove || !(user in return_drivers()))
+		return
+	vehicle_move(direction)
 
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))

@@ -1,8 +1,17 @@
 //Vehicle control flags
 
-#define VEHICLE_CONTROL_PERMISSION 1
-#define VEHICLE_CONTROL_DRIVE 2
-#define VEHICLE_CONTROL_KIDNAPPED 4 //Can't leave vehicle voluntarily, has to resist.
+#define VEHICLE_CONTROL_PERMISSION (1<<0)
+///controls the vehicles movement
+#define VEHICLE_CONTROL_DRIVE (1<<1)
+///Can't leave vehicle voluntarily, has to resist.
+#define VEHICLE_CONTROL_KIDNAPPED (1<<2)
+
+//vehicle control flags for operating a mecha
+
+///melee attacks
+#define VEHICLE_CONTROL_MECHAPUNCH (1<<3)
+///using equipment/weapons
+#define VEHICLE_CONTROL_EQUIPMENT (1<<3)
 
 //Ridden vehicle flags
 

@@ -149,6 +149,30 @@
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/nerchen_main
+	name = "\"Nerchen\" Central Control module"
+	desc = "Allows for the construction of a \"Nerchen\" Central Control module."
+	id = "nerchen_main"
+	build_path = /obj/item/circuitboard/mecha/nerchen/main
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/nerchen_peri
+	name = "\"Nerchen\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Nerchen\" Peripheral Control module."
+	id = "nerchen_peri"
+	build_path = /obj/item/circuitboard/mecha/nerchen/peripherals
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/nerchen_targ
+	name = "\"Nerchen\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Nerchen\" Weapons & Targeting Control module."
+	id = "nerchen_targ"
+	build_path = /obj/item/circuitboard/mecha/nerchen/targeting
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////

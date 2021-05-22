@@ -53,6 +53,7 @@
 								"Durand",
 								"H.O.N.K",
 								"Phazon",
+								"Nerchen",
 								"Exosuit Equipment",
 								"Exosuit Ammunition",
 								"Cyborg Upgrade Modules",

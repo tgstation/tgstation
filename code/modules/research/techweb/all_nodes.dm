@@ -724,6 +724,16 @@
 	"phazon_peri", "phazon_targ", "phazon_armor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/nerchen
+	id = "mecha_nerchen"
+	display_name = "EXOSUIT: Nerchen"
+	description = "Nerchen exosuit designs"
+	prereq_ids = list("adv_mecha", "weaponry", "exp_tools")
+	design_ids = list("nerchen_chassis", "nerchen_torso", "nerchen_head", "nerchen_left_arm", "nerchen_right_arm", "nerchen_left_leg", "nerchen_right_leg", "nerchen_main",
+	"nerchen_peri", "nerchen_targ", "nerchen_armor")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
 /datum/techweb_node/adv_mecha_tools
 	id = "adv_mecha_tools"
 	display_name = "Advanced Exosuit Equipment"
