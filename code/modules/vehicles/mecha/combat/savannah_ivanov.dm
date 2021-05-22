@@ -6,10 +6,11 @@
  */
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov
 	name = "\improper Savannah-Ivanov"
-	desc = "An incredibly ancient mecha, mostly out of common use because of it being from a time where mecha designers delegated functions to two pilots. \
-			Because the Savannah-Ivanov needed to store two people, it is a hulking, armored tank that, with two coordinated pilots, could absolutely mash even the \
+	desc = "An incredibly historic mecha, mostly out of common use because of it being from a time where mecha designers delegated functions to two pilots. \
+			Because the Savannah-Ivanov needed to store two people, it is an absolute tank that, with two coordinated pilots, could absolutely mash even the \
 			most menacing of single-pilot opponents."
 	icon = 'icons/mecha/coop_mech.dmi'
+	base_icon_state = "savannah_ivanov"
 	icon_state = "savannah_ivanov_0_0"
 	movedelay = 3
 	dir_in = 2 //Facing South.
@@ -23,13 +24,13 @@
 	max_occupants = 2
 
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/get_mecha_occupancy_state()
-	var/driver_present = driver_amount() ? TRUE : FALSE
-	var/gunner_present = return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT) ? TRUE : FALSE
+	var/driver_present = length(driver_amount()) > 0
+	var/gunner_present = length(return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)) > 0
 	return "[base_icon_state]_[driver_present]_[gunner_present]"
 
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/auto_assign_occupant_flags(mob/M)
 	if(driver_amount() < max_drivers) //movement
-		add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
+		add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION|VEHICLE_CONTROL_INTERNALS)
 	else //weapons
 		add_control_flags(M, VEHICLE_CONTROL_MECHAPUNCH|VEHICLE_CONTROL_EQUIPMENT)
 

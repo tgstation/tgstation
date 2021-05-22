@@ -255,13 +255,17 @@
 	icon_state = get_mecha_occupancy_state()
 	return ..()
 
+//override this proc if you need to split up mecha control between multiple people (see savannah_ivanov.dm)
+/obj/vehicle/sealed/mecha/auto_assign_occupant_flags(mob/M)
+	if(driver_amount() < max_drivers)
+		add_control_flags(M, FULL_MECHA_CONTROL)
+
 /obj/vehicle/sealed/mecha/proc/get_mecha_occupancy_state()
 	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
 		return silicon_icon_state
 	if(LAZYLEN(occupants))
 		return base_icon_state
 	return "[base_icon_state]-open"
-
 
 /obj/vehicle/sealed/mecha/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
 	if(!phasing || get_charge() <= phasing_energy_drain || throwing)
@@ -542,7 +546,7 @@
 	var/mob/living/livinguser = user
 	if(selected)
 		if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
-			to_chat(livinguser, "<span class='warning'>You're in the wrong seat to use equipment!</span>")
+			to_chat(livinguser, "<span class='warning'>You're in the wrong seat to use equipment.</span>")
 			return
 		if(!Adjacent(target) && (selected.range & MECHA_RANGED))
 			if(HAS_TRAIT(livinguser, TRAIT_PACIFISM) && selected.harmful)
@@ -557,7 +561,7 @@
 			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
 			return
 	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_MECHAPUNCH)))
-		to_chat(livinguser, "<span class='warning'>You're in the wrong seat to melee attack!</span>")
+		to_chat(livinguser, "<span class='warning'>You're in the wrong seat to interact with your hands.</span>")
 		return
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK) || !Adjacent(target))
 		return

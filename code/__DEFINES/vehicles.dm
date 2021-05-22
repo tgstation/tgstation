@@ -8,10 +8,15 @@
 
 //vehicle control flags for operating a mecha
 
-///melee attacks
+///melee attacks/shoves
 #define VEHICLE_CONTROL_MECHAPUNCH (1<<3)
 ///using equipment/weapons
-#define VEHICLE_CONTROL_EQUIPMENT (1<<3)
+#define VEHICLE_CONTROL_EQUIPMENT (1<<4)
+///using most of the mecha operation buttons like air supply, internal stats, etc.
+#define VEHICLE_CONTROL_INTERNALS (1<<5)
+
+///ez define for giving a single pilot mech all the flags it needs.
+#define FULL_MECHA_CONTROL VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION|VEHICLE_CONTROL_INTERNALS|VEHICLE_CONTROL_MECHAPUNCH|VEHICLE_CONTROL_EQUIPMENT
 
 //Ridden vehicle flags
 

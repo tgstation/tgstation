@@ -33,6 +33,10 @@
 /datum/action/vehicle/sealed/mecha/mech_toggle_internals/Trigger()
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
+	if(!(owner in return_controllers_with_flag(VEHICLE_CONTROL_INTERNALS)))
+		to_chat(owner, "<span class='warning'>You're in the wrong seat to do this.</span>")
+		return
+
 	chassis.use_internal_tank = !chassis.use_internal_tank
 	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
 	to_chat(chassis.occupants, "[icon2html(chassis, owner)]<span class='notice'>Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].</span>")
@@ -45,6 +49,9 @@
 
 /datum/action/vehicle/sealed/mecha/mech_cycle_equip/Trigger()
 	if(!owner || !chassis || !(owner in chassis.occupants))
+		return
+	if(!(owner in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
+		to_chat(owner, "<span class='warning'>You're in the wrong seat to use equipment.</span>")
 		return
 
 	var/list/available_equipment = list()
@@ -88,6 +95,10 @@
 /datum/action/vehicle/sealed/mecha/mech_toggle_lights/Trigger()
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
+	if(!(owner in return_controllers_with_flag(VEHICLE_CONTROL_INTERNALS)))
+		to_chat(owner, "<span class='warning'>You're in the wrong seat to do this.</span>")
+		return
+
 	if(!(chassis.mecha_flags & HAS_LIGHTS))
 		to_chat(owner, "<span class='warning'>This mechs lights are destroyed!</span>")
 		return
@@ -108,6 +119,10 @@
 /datum/action/vehicle/sealed/mecha/mech_view_stats/Trigger()
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
+	if(!(owner in return_controllers_with_flag(VEHICLE_CONTROL_INTERNALS)))
+		to_chat(owner, "<span class='warning'>You're in the wrong seat to do this.</span>")
+		return
+
 	var/datum/browser/popup = new(owner , "exosuit")
 	popup.set_content(chassis.get_stats_html(owner))
 	popup.open()
@@ -120,12 +135,20 @@
 /datum/action/vehicle/sealed/mecha/strafe/Trigger()
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
+	if(!(owner in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE)))
+		to_chat(owner, "<span class='warning'>You're in the wrong seat to control movement.</span>")
+		return
 
 	chassis.toggle_strafe()
 
 /obj/vehicle/sealed/mecha/AltClick(mob/living/user)
-	if((user in occupants) && user.canUseTopic(src))
-		toggle_strafe()
+	if(!(user in occupants) || !user.canUseTopic(src))
+		return
+	if(!(owner in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE)))
+		to_chat(owner, "<span class='warning'>You're in the wrong seat to control movement.</span>")
+		return
+
+	toggle_strafe()
 
 /obj/vehicle/sealed/mecha/proc/toggle_strafe()
 	if(!(mecha_flags & CANSTRAFE))
