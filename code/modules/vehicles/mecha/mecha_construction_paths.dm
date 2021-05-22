@@ -1204,8 +1204,8 @@
 
 //NERCHEN
 
-/datum/component/construction/unordered/mecha_chassis/nerchen
-	result = /datum/component/construction/mecha/nerchen
+/datum/component/construction/unordered/mecha_chassis/savannah_ivanov
+	result = /datum/component/construction/mecha/savannah_ivanov
 	steps = list(
 		/obj/item/mecha_parts/part/nerchen_torso,
 		/obj/item/mecha_parts/part/nerchen_head,
@@ -1215,13 +1215,13 @@
 		/obj/item/mecha_parts/part/nerchen_right_leg
 	)
 
-/datum/component/construction/mecha/nerchen
-	result = /obj/mecha/combat/nerchen
-	base_icon = "nerchen"
+/datum/component/construction/mecha/savannah_ivanov
+	result = /obj/mecha/combat/savannah_ivanov
+	base_icon = "savannah_ivanov"
 
-	circuit_control = /obj/item/circuitboard/mecha/nerchen/main
-	circuit_periph = /obj/item/circuitboard/mecha/nerchen/peripherals
-	circuit_weapon = /obj/item/circuitboard/mecha/nerchen/targeting
+	circuit_control = /obj/item/circuitboard/mecha/savannah_ivanov/main
+	circuit_periph = /obj/item/circuitboard/mecha/savannah_ivanov/peripherals
+	circuit_weapon = /obj/item/circuitboard/mecha/savannah_ivanov/targeting
 
 	inner_plating = /obj/item/stack/sheet/plasteel
 	inner_plating_amount = 10
@@ -1229,7 +1229,7 @@
 	outer_plating = /obj/item/mecha_parts/part/nerchen_armor
 	outer_plating_amount = 1
 
-/datum/component/construction/mecha/nerchen/custom_action(obj/item/I, mob/living/user, diff)
+/datum/component/construction/mecha/savannah_ivanov/custom_action(obj/item/I, mob/living/user, diff)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -1269,24 +1269,24 @@
 				user.visible_message("<span class='notice'>[user] unfastens the mainboard.</span>", "<span class='notice'>You unfasten the mainboard.</span>")
 		if(8)
 			if(diff==FORWARD)
-				user.visible_message("<span class='notice'>[user] secures the ner peripherals control module.</span>", "<span class='notice'>You secure the ner peripherals control module.</span>")
+				user.visible_message("<span class='notice'>[user] secures the ivanov peripherals control module.</span>", "<span class='notice'>You secure the ivanov peripherals control module.</span>")
 			else
-				user.visible_message("<span class='notice'>[user] removes the ner peripherals control module from [parent].</span>", "<span class='notice'>You remove the ner peripherals control module from [parent].</span>")
+				user.visible_message("<span class='notice'>[user] removes the ivanov peripherals control module from [parent].</span>", "<span class='notice'>You remove the ivanov peripherals control module from [parent].</span>")
 		if(9)
 			if(diff==FORWARD)
 				user.visible_message("<span class='notice'>[user] installs [I] into [parent].</span>", "<span class='notice'>You install [I] into [parent].</span>")
 			else
-				user.visible_message("<span class='notice'>[user] unfastens the ner peripherals control module.</span>", "<span class='notice'>You unfasten the ner peripherals control module.</span>")
+				user.visible_message("<span class='notice'>[user] unfastens the ivanov peripherals control module.</span>", "<span class='notice'>You unfasten the ivanov peripherals control module.</span>")
 		if(10)
 			if(diff==FORWARD)
-				user.visible_message("<span class='notice'>[user] secures the chen weapon control module.</span>", "<span class='notice'>You secure the chen weapon control module.</span>")
+				user.visible_message("<span class='notice'>[user] secures the ivanov weapon control module.</span>", "<span class='notice'>You secure the ivanov weapon control module.</span>")
 			else
-				user.visible_message("<span class='notice'>[user] removes the chen weapon control module from [parent].</span>", "<span class='notice'>You remove the chen weapon control module from [parent].</span>")
+				user.visible_message("<span class='notice'>[user] removes the ivanov weapon control module from [parent].</span>", "<span class='notice'>You remove the ivanov weapon control module from [parent].</span>")
 		if(11)
 			if(diff==FORWARD)
 				user.visible_message("<span class='notice'>[user] installs [I] to [parent].</span>", "<span class='notice'>You install [I] to [parent].</span>")
 			else
-				user.visible_message("<span class='notice'>[user] unfastens the chen weapon control module.</span>", "<span class='notice'>You unfasten the chen weapon control module.</span>")
+				user.visible_message("<span class='notice'>[user] unfastens the ivanov weapon control module.</span>", "<span class='notice'>You unfasten the ivanov weapon control module.</span>")
 		if(12)
 			if(diff==FORWARD)
 				user.visible_message("<span class='notice'>[user] secures the scanner module.</span>", "<span class='notice'>You secure the scanner module.</span>")
@@ -1334,14 +1334,14 @@
 				user.visible_message("<span class='notice'>[user] cuts the internal armor layer from [parent].</span>", "<span class='notice'>You cut the internal armor layer from [parent].</span>")
 		if(21)
 			if(diff==FORWARD)
-				user.visible_message("<span class='notice'>[user] secures Nerchen Armor Plates.</span>", "<span class='notice'>You secure Nerchen Armor Plates.</span>")
+				user.visible_message("<span class='notice'>[user] secures Savannah-Ivanov Armor Plates.</span>", "<span class='notice'>You secure Savannah-Ivanov Armor Plates.</span>")
 			else
-				user.visible_message("<span class='notice'>[user] pries Nerchen Armor Plates from [parent].</span>", "<span class='notice'>You pry Nerchen Armor Plates from [parent].</span>")
+				user.visible_message("<span class='notice'>[user] pries Savannah-Ivanov Armor Plates from [parent].</span>", "<span class='notice'>You pry Savannah-Ivanov Armor Plates from [parent].</span>")
 		if(22)
 			if(diff==FORWARD)
-				user.visible_message("<span class='notice'>[user] welds Nerchen Armor Plates to [parent].</span>", "<span class='notice'>You weld Nerchen Armor Plates to [parent].</span>")
+				user.visible_message("<span class='notice'>[user] welds Savannah-Ivanov Armor Plates to [parent].</span>", "<span class='notice'>You weld Savannah-Ivanov Armor Plates to [parent].</span>")
 			else
-				user.visible_message("<span class='notice'>[user] unfastens Nerchen Armor Plates.</span>", "<span class='notice'>You unfasten Nerchen Armor Plates.</span>")
+				user.visible_message("<span class='notice'>[user] unfastens Savannah-Ivanov Armor Plates.</span>", "<span class='notice'>You unfasten Savannah-Ivanov Armor Plates.</span>")
 	return TRUE
 
 //ODYSSEUS

@@ -291,45 +291,45 @@
 	desc="Phazon armor plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
 	icon_state = "phazon_armor"
 
-// Nerchen
+// Savannah-Ivanov
 
-/obj/item/mecha_parts/chassis/nerchen
-	name = "\improper Nerchen chassis"
-	construct_type = /datum/component/construction/unordered/mecha_chassis/nerchen
+/obj/item/mecha_parts/chassis/savannah_ivanov
+	name = "\improper Savannah-Ivanov chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/savannah_ivanov
 
 /obj/item/mecha_parts/part/nerchen_torso
-	name="\improper Nerchen torso"
-	desc="A Nerchen torso part. It's missing a huge chunk of space..."
+	name="\improper Savannah-Ivanov torso"
+	desc="A Savannah-Ivanov torso part. It's missing a huge chunk of space..."
 	icon_state = "nerchen_harness"
 
 /obj/item/mecha_parts/part/nerchen_head
-	name="\improper Nerchen head"
-	desc="A Nerchen head. It's sensors have been adjusted to support graceful landings."
+	name="\improper Savannah-Ivanov head"
+	desc="A Savannah-Ivanov head. It's sensors have been adjusted to support graceful landings."
 	icon_state = "nerchen_head"
 
 /obj/item/mecha_parts/part/nerchen_left_arm
-	name="\improper Nerchen left arm"
-	desc="A Nerchen left arm. Hidden rocket fabrication included in the wrists."
+	name="\improper Savannah-Ivanov left arm"
+	desc="A Savannah-Ivanov left arm. Hidden rocket fabrication included in the wrists."
 	icon_state = "nerchen_l_arm"
 
 /obj/item/mecha_parts/part/nerchen_right_arm
-	name="\improper Nerchen right arm"
-	desc="A Nerchen left arm. Hidden rocket fabrication included in the wrists."
+	name="\improper Savannah-Ivanov right arm"
+	desc="A Savannah-Ivanov left arm. Hidden rocket fabrication included in the wrists."
 	icon_state = "nerchen_r_arm"
 
 /obj/item/mecha_parts/part/nerchen_left_leg
-	name="\improper Nerchen left leg"
-	desc="A Nerchen left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
+	name="\improper Savannah-Ivanov left leg"
+	desc="A Savannah-Ivanov left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
 	icon_state = "nerchen_l_leg"
 
 /obj/item/mecha_parts/part/nerchen_right_leg
-	name="\improper Nerchen right leg"
-	desc="A Nerchen left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
+	name="\improper Savannah-Ivanov right leg"
+	desc="A Savannah-Ivanov left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
 	icon_state = "nerchen_r_leg"
 
 /obj/item/mecha_parts/part/nerchen_armor
-	name="Nerchen armor"
-	desc="Nerchen armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
+	name="Savannah-Ivanov armor"
+	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
 	icon_state = "nerchen_armor"
 
 ///////// Circuitboards
@@ -420,13 +420,13 @@
 	name = "Clarke Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
-/obj/item/circuitboard/mecha/nerchen/peripherals
-	name = "Ner Peripherals Control module (Exosuit Board)"
+/obj/item/circuitboard/mecha/savannah_ivanov/peripherals
+	name = "Savannah Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
 
-/obj/item/circuitboard/mecha/nerchen/targeting
-	name = "Chen Weapon Control and Targeting module (Exosuit Board)"
+/obj/item/circuitboard/mecha/savannah_ivanov/targeting
+	name = "Ivanov Weapon Control and Targeting module (Exosuit Board)"
 	icon_state = "mcontroller"
 
-/obj/item/circuitboard/mecha/nerchen/main
-	name = "Nerchen Combination Control Lock module (Exosuit Board)"
+/obj/item/circuitboard/mecha/savannah_ivanov/main
+	name = "Savannah-Ivanov Combination Control Lock module (Exosuit Board)"

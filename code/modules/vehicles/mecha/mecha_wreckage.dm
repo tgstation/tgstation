@@ -207,10 +207,10 @@
 		/obj/item/mecha_parts/part/phazon_left_leg,
 		/obj/item/mecha_parts/part/phazon_right_leg)
 
-/obj/structure/mecha_wreckage/nerchen
-	name = "\improper nerchen wreckage"
+/obj/structure/mecha_wreckage/savannah_ivanov
+	name = "\improper savannah_ivanov wreckage"
 	icon = 'icons/mecha/coop_mech.dmi'
-	icon_state = "nerchen-broken"
+	icon_state = "savannah_ivanov-broken"
 	parts = list(
 		/obj/item/mecha_parts/part/nerchen_torso,
 		/obj/item/mecha_parts/part/nerchen_head,

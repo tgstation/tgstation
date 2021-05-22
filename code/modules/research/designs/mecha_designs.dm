@@ -150,26 +150,26 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/nerchen_main
-	name = "\"Nerchen\" Central Control module"
-	desc = "Allows for the construction of a \"Nerchen\" Central Control module."
+	name = "\"Savannah-Ivanov\" Central Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Central Control module."
 	id = "nerchen_main"
-	build_path = /obj/item/circuitboard/mecha/nerchen/main
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/main
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/nerchen_peri
-	name = "\"Nerchen\" Peripherals Control module"
-	desc = "Allows for the construction of a \"Nerchen\" Peripheral Control module."
+	name = "\"Savannah-Ivanov\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Peripheral Control module."
 	id = "nerchen_peri"
-	build_path = /obj/item/circuitboard/mecha/nerchen/peripherals
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/peripherals
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/nerchen_targ
-	name = "\"Nerchen\" Weapons & Targeting Control module"
-	desc = "Allows for the construction of a \"Nerchen\" Weapons & Targeting Control module."
+	name = "\"Savannah-Ivanov\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Weapons & Targeting Control module."
 	id = "nerchen_targ"
-	build_path = /obj/item/circuitboard/mecha/nerchen/targeting
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/targeting
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 

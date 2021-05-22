@@ -465,123 +465,123 @@
 	construction_time = 300
 	category = list("Phazon")
 
-//Nerchen
+//Savannah-Ivanov
 /datum/design/nerchen_chassis
-	name = "Exosuit Chassis (\"Nerchen\")"
+	name = "Exosuit Chassis (\"Savannah-Ivanov\")"
 	id = "nerchen_chassis"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/chassis/nerchen
+	build_path = /obj/item/mecha_parts/chassis/savannah_ivanov
 	materials = list(/datum/material/iron=20000)
 	construction_time = 100
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_torso
-	name = "Exosuit Torso (\"Nerchen\")"
+	name = "Exosuit Torso (\"Savannah-Ivanov\")"
 	id = "nerchen_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_torso
 	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
 	construction_time = 200
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_head
-	name = "Exosuit Head (\"Nerchen\")"
+	name = "Exosuit Head (\"Savannah-Ivanov\")"
 	id = "nerchen_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_head
 	materials = list(/datum/material/iron=6000,/datum/material/glass = 10000)
 	construction_time = 100
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_left_arm
-	name = "Exosuit Left Arm (\"Nerchen\")"
+	name = "Exosuit Left Arm (\"Savannah-Ivanov\")"
 	id = "nerchen_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_left_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_right_arm
-	name = "Exosuit Right Arm (\"Nerchen\")"
+	name = "Exosuit Right Arm (\"Savannah-Ivanov\")"
 	id = "nerchen_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_right_arm
 	materials = list(/datum/material/iron=15000)
 	construction_time = 150
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_chassis
-	name = "Exosuit Chassis (\"Nerchen\")"
+	name = "Exosuit Chassis (\"Savannah-Ivanov\")"
 	id = "nerchen_chassis"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/chassis/nerchen
+	build_path = /obj/item/mecha_parts/chassis/savannah_ivanov
 	materials = list(/datum/material/iron=25000)
 	construction_time = 100
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_torso
-	name = "Exosuit Torso (\"Nerchen\")"
+	name = "Exosuit Torso (\"Savannah-Ivanov\")"
 	id = "nerchen_torso"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_torso
 	materials = list(/datum/material/iron=25000, /datum/material/glass = 10000,/datum/material/silver=10000)
 	construction_time = 300
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_head
-	name = "Exosuit Head (\"Nerchen\")"
+	name = "Exosuit Head (\"Savannah-Ivanov\")"
 	id = "nerchen_head"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_head
 	materials = list(/datum/material/iron=10000,/datum/material/glass = 15000,/datum/material/silver=2000)
 	construction_time = 200
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_left_arm
-	name = "Exosuit Left Arm (\"Nerchen\")"
+	name = "Exosuit Left Arm (\"Savannah-Ivanov\")"
 	id = "nerchen_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_left_arm
 	materials = list(/datum/material/iron=10000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_right_arm
-	name = "Exosuit Right Arm (\"Nerchen\")"
+	name = "Exosuit Right Arm (\"Savannah-Ivanov\")"
 	id = "nerchen_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_right_arm
 	materials = list(/datum/material/iron=10000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_left_leg
-	name = "Exosuit Left Leg (\"Nerchen\")"
+	name = "Exosuit Left Leg (\"Savannah-Ivanov\")"
 	id = "nerchen_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_left_leg
 	materials = list(/datum/material/iron=15000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_right_leg
-	name = "Exosuit Right Leg (\"Nerchen\")"
+	name = "Exosuit Right Leg (\"Savannah-Ivanov\")"
 	id = "nerchen_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_right_leg
 	materials = list(/datum/material/iron=15000,/datum/material/silver=4000)
 	construction_time = 200
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 /datum/design/nerchen_armor
-	name = "Exosuit Armor (\"Nerchen\")"
+	name = "Exosuit Armor (\"Savannah-Ivanov\")"
 	id = "nerchen_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/nerchen_armor
 	materials = list(/datum/material/iron=30000,/datum/material/uranium=25000,/datum/material/titanium=20000)
 	construction_time = 600
-	category = list("Nerchen")
+	category = list("Savannah-Ivanov")
 
 //Clarke
 /datum/design/clarke_chassis
