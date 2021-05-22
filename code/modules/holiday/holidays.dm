@@ -657,6 +657,7 @@
 		COLOR_PRIDE_RED,
 	)
 
+/// Given an atom, will return what color it should be to match the pride flag.
 /datum/holiday/pride_week/proc/get_floor_tile_color(atom/atom)
 	var/turf/turf = get_turf(atom)
 	return rainbow_colors[(turf.y % rainbow_colors.len) + 1]
