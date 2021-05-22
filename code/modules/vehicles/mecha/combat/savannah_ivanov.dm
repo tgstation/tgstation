@@ -54,12 +54,13 @@
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/start_missile_targeting(mob/gunner, silent = TRUE)
 	if(!silent)
 		to_chat(gunner, "<span class='warning'>Ivanov Strike targeting process booted. \
-		Your next click will fire the missile (provided you are facing the right direction).</span>")
+		Your next click will fire the missile (provided the mech is facing the right direction).</span>")
 	aiming_ivanov = TRUE
 	RegisterSignal(src, COMSIG_MECHA_MELEE_CLICK, .proc/on_melee_click)
 	RegisterSignal(src, COMSIG_MECHA_EQUIPMENT_CLICK, .proc/on_equipment_click)
 	gunner.client.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi'
 	gunner.update_mouse_pointer()
+	gunner.overlay_fullscreen("ivanov", /atom/movable/screen/fullscreen/ivanov_display, 1)
 
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/end_missile_targeting(mob/gunner, silent = TRUE)
 	if(!silent)
@@ -68,6 +69,7 @@
 	UnregisterSignal(src, list(COMSIG_MECHA_MELEE_CLICK, COMSIG_MECHA_EQUIPMENT_CLICK))
 	gunner.client.mouse_override_icon = null
 	gunner.update_mouse_pointer()
+	gunner.clear_fullscreen("ivanov", 1 SECONDS)
 
 ///signal called from clicking with no equipment
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/on_melee_click(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
@@ -90,7 +92,7 @@
 		"target" = target_turf,
 		"style" = STYLE_MISSILE,
 		"effectMissile" = TRUE,
-		"explosionSize" = list(0,1,2,3)
+		"explosionSize" = list(0,0,3,3)
 	))
 	var/datum/action/vehicle/sealed/mecha/strike_action = occupant_actions[gunner][/datum/action/vehicle/sealed/mecha/ivanov_strike]
 	strike_action.button_icon_state = "mech_ivanov_cooldown"
