@@ -61,6 +61,8 @@
 #define COMP_ARITHMETIC_SUBTRACT "Subtract"
 #define COMP_ARITHMETIC_MULTIPLY "Multiply"
 #define COMP_ARITHMETIC_DIVIDE "Divide"
+#define COMP_ARITHMETIC_MIN "Minimum"
+#define COMP_ARITHMETIC_MAX "Maximum"
 
 // Text defines
 #define COMP_TEXT_LOWER "To Lower"

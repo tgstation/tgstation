@@ -17,7 +17,9 @@ GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 	COMP_ARITHMETIC_ADD,
 	COMP_ARITHMETIC_SUBTRACT,
 	COMP_ARITHMETIC_MULTIPLY,
-	COMP_ARITHMETIC_DIVIDE
+	COMP_ARITHMETIC_DIVIDE,
+	COMP_ARITHMETIC_MIN,
+	COMP_ARITHMETIC_MAX,
 ))
 
 /obj/item/circuit_component/arithmetic/Initialize()
@@ -61,5 +63,9 @@ GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 					result = 0
 					break
 				result /= value
+			if(COMP_ARITHMETIC_MAX)
+				result = max(result, value)
+			if(COMP_ARITHMETIC_MIN)
+				result = min(result, value)
 
 	output.set_output(result)
