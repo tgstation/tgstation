@@ -161,6 +161,14 @@
 /obj/item/mod/module/proc/add_ui_data()
 	return list()
 
+/// Creates a list of configuring options for this module
+/obj/item/mod/module/proc/add_configure_data()
+	return list()
+
+/// Receives configure edits from the TGUI and edits the vars
+/obj/item/mod/module/proc/configure_edit(key, value)
+	return
+
 /// Called when the device moves to a different place on active modules
 /obj/item/mod/module/proc/on_exit(datum/source, atom/movable/offender, atom/newloc)
 	SIGNAL_HANDLER
@@ -700,6 +708,21 @@
 	light_icon.appearance_flags = RESET_COLOR
 	light_icon.color = light_color
 	. += light_icon
+
+/obj/item/mod/module/flashlight/add_configure_data()
+	. = ..()
+	.["light_color"] = "color"
+	.["light_range"] = "number"
+
+/obj/item/mod/module/flashlight/configure_edit(key, value)
+	switch(key)
+		if("light_color")
+			var/new_color = input(usr, "Pick new light color", "Flashlight Color") as color|null
+			if(new_color)
+				light_color = new_color
+				mod.wearer.update_inv_back()
+		if("light_range")
+			light_range = clamp(value, min_range, max_range)
 
 /obj/item/mod/module/science_scanner
 	name = "MOD science scanner module"

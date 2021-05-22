@@ -67,7 +67,7 @@
 #define CELL_PER_STEP 25
 
 /obj/item/mod/control/relaymove(mob/user, direction)
-	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer && HAS_TRAIT(wearer, TRAIT_RESTRAINED)) || !has_gravity(get_turf(src)))
+	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer && (HAS_TRAIT(wearer, TRAIT_RESTRAINED) || !wearer.mob_has_gravity())))
 		return FALSE
 	var/timemodifier = ((direction in GLOB.cardinals) ? CARDINAL_DELAY : DIAGONAL_DELAY) * wearer ? WEARER_DELAY : LONE_DELAY
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)

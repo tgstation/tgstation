@@ -1,6 +1,6 @@
 /datum/wires/mod
 	holder_type = /obj/item/mod/control
-	proper_name = "mod control module"
+	proper_name = "MOD control unit"
 
 /datum/wires/mod/New(atom/holder)
 	wires = list(WIRE_HACK, WIRE_DISABLE, WIRE_SHOCK, WIRE_INTERFACE)
