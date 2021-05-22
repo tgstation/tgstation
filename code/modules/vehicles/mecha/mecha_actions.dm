@@ -224,13 +224,13 @@
 	var/new_damtype
 	switch(chassis.damtype)
 		if("tox")
-			new_damtype = "brute"
+			new_damtype = BRUTE
 			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>Your exosuit's hands form into fists.</span>")
 		if("brute")
-			new_damtype = "fire"
+			new_damtype = BURN
 			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>A torch tip extends from your exosuit's hand, glowing red.</span>")
 		if("fire")
-			new_damtype = "tox"
+			new_damtype = TOX
 			to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>A bone-chillingly thick plasteel needle protracts from the exosuit's palm.</span>")
 	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"
@@ -248,3 +248,54 @@
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
 	to_chat(owner, "[icon2html(chassis, owner)]<font color=\"[chassis.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
 	UpdateButtonIcon()
+
+/*
+///Savannah Skyfall
+/datum/action/vehicle/sealed/mecha/skyfall
+	name = "Savannah Skyfall"
+	button_icon_state = "mech_phasing_off"
+
+/datum/action/vehicle/sealed/mecha/skyfall/Trigger()
+	if(!owner || !chassis || !(owner in chassis.occupants))
+		return
+	to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>Charging Skyfall. Damage or Movement will interrupt the charge.</span>")
+
+///Ivanov Missile Strike
+/datum/action/vehicle/sealed/mecha/missile_strike
+	name = "Ivanov Missile Strike"
+	button_icon_state = "mech_phasing_off"
+
+/datum/action/vehicle/sealed/mecha/missile_strike/Trigger()
+	if(!owner || !chassis || !(owner in chassis.occupants))
+		return
+
+*/
+
+///swap seats, for two person mecha
+/datum/action/vehicle/sealed/mecha/swap_seat
+	name = "Switch Seats"
+	button_icon_state = "mech_phasing_off"
+
+/datum/action/vehicle/sealed/mecha/swap_seat/Trigger()
+	if(!owner || !chassis || !(owner in chassis.occupants))
+		return
+
+	if(chassis.occupants.len == chassis.max_occupants)
+		to_chat(owner, "<span class='warning'>The other seat already has someone in it! Tell them to leave first!</span>")
+		return
+	var/list/drivers = chassis.driver_amount()
+	to_chat(owner, "<span class='notice'>You begin trying to move to the other seat. Equipment is disabled during this process. Hold still to finish swapping.</span>")
+	chassis.is_currently_ejecting = TRUE
+	if(!do_after(owner, chassis.has_gravity() ? chassis.exit_delay : 0 , target = src))
+		to_chat(owner, "<span class='notice'>You stop trying to move to the other seat. Equipment is enabled again.</span>")
+		chassis.is_currently_ejecting = FALSE
+		return
+	chassis.is_currently_ejecting = FALSE
+	if(owner in drivers)
+		to_chat(owner, "<span class='notice'>You swap to the gunner seat.</span>")
+		chassis.remove_control_flags(owner, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
+		chassis.add_control_flags(owner, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
+	else
+		to_chat(owner, "<span class='notice'>You swap to the pilot seat.</span>")
+		chassis.remove_control_flags(owner, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
+		chassis.add_control_flags(owner, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)

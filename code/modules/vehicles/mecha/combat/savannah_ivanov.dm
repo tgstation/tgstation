@@ -28,9 +28,15 @@
 	var/gunner_present = length(return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)) > 0
 	return "[base_icon_state]_[driver_present]_[gunner_present]"
 
-/obj/vehicle/sealed/mecha/combat/savannah_ivanov/auto_assign_occupant_flags(mob/M)
+/obj/vehicle/sealed/mecha/combat/savannah_ivanov/auto_assign_occupant_flags(mob/new_occupant)
 	if(driver_amount() < max_drivers) //movement
-		add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION|VEHICLE_CONTROL_INTERNALS)
+		add_control_flags(new_occupant, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
 	else //weapons
-		add_control_flags(M, VEHICLE_CONTROL_MECHAPUNCH|VEHICLE_CONTROL_EQUIPMENT)
+		add_control_flags(new_occupant, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 
+/obj/vehicle/sealed/mecha/generate_actions()
+	. = ..()
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/swap_seat)
+	//uncomment when ready
+	//initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/skyfall, VEHICLE_CONTROL_DRIVE)
+	//initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/missile_strike, VEHICLE_CONTROL_EQUIPMENT)
