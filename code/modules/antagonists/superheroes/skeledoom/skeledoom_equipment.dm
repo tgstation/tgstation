@@ -44,7 +44,7 @@
 	if(!do_after(H, 4 SECONDS, target = bot))
 		return
 
-	to_chat("<span class='notice'>You feel a soft buzzing underneath your hand and remove it from [bot]. Now [bot] sees everybody except you as target.</span>")
+	to_chat("<span class='notice'>You feel soft buzzing underneath your hand and remove it from [bot]. Now [bot] sees everybody except you as target.</span>")
 	bot.emag_act(H)
 	bot.emag_act(H) //We hack them twice for aggro mode
 
