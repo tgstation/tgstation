@@ -29,7 +29,7 @@
 		return FALSE
 
 	if(targeted.mind)
-		var/datum/antagonist/superhero/hero = targeted.has_antag_datum(/datum/antagonist/superhero)
+		var/datum/antagonist/superhero/hero = targeted.mind.has_antag_datum(/datum/antagonist/superhero)
 		if(hero)
 			to_chat(user, "<span class='warning'>You attempt to convert [targeted], but their will is too strong!</span>")
 			return TRUE
