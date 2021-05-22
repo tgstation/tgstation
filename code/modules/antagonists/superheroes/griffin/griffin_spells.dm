@@ -28,6 +28,12 @@
 		to_chat(user, "<span class='warning'>No target found in range!</span>")
 		return FALSE
 
+	if(targeted.mind)
+		var/datum/antagonist/superhero/hero = targeted.has_antag_datum(/datum/antagonist/superhero)
+		if(hero)
+			to_chat(user, "<span class='warning'>You attempt to convert [targeted], but their will is too strong!</span>")
+			return TRUE
+
 	if(HAS_TRAIT(targeted, TRAIT_MINDSHIELD))
 		to_chat(user, "<span class='warning'>You attempt to convert [targeted], but they are mindshielded!</span>")
 		return TRUE //It counts!
