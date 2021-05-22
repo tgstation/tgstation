@@ -1,9 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - qol: "The thermal regulator setting on thermomachines is now implicit. Alt-click interaction now reset to 20 celcius."
-  - qol: "Thermomachines directly mention their heat capacity on examinations."
-  - qol: "Changing thermomachine direction should be snappier."
-  - qol: "Thermomachine should now display it's cooling efficiency variable."
-  - bugfix: "Freezers should be able to hit the target temperature without hovering above it like it used to on mixes with less heat capacity. Motor heat doubled and only affects the heat reservoir side. 5 Kelvin wiggle room for motor heat from previous' 1.5."
-  - rscdel: "Thermomachines can't pump gases into the reservoir port anymore."

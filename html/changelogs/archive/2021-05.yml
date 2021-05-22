@@ -558,3 +558,29 @@
   tralezab:
   - rscadd: Curators now start with a modular console with a preinstalled app for
       printing canvases
+2021-05-22:
+  Fikou:
+  - qol: examining the altar of gods as ghost shows you some info about the religion
+  GoldenAlpharex:
+  - bugfix: Minebots now drop their ores on death, they no longer bring them with
+      themselves in the grave.
+  - spellcheck: less "minebot armor upgrade already has reinforced armor!"
+  - qol: Minebot upgrades now tell the user when they've been successfully applied.
+  Kylerace:
+  - bugfix: ai detectors now change appearance when ai's come closer
+  - bugfix: after dying multiple times in ctf a salty centcom commander removed the
+      ability to spawncamp
+  Mickyan:
+  - bugfix: Bombproof containers should once again protect their contents from being
+      damaged by explosions
+  vincentiusvin:
+  - qol: The thermal regulator setting on thermomachines is now implicit. Alt-click
+      interaction now reset to 20 celcius.
+  - qol: Thermomachines directly mention their heat capacity on examinations.
+  - qol: Changing thermomachine direction should be snappier.
+  - qol: Thermomachine should now display it's cooling efficiency variable.
+  - bugfix: Freezers should be able to hit the target temperature without hovering
+      above it like it used to on mixes with less heat capacity. Motor heat doubled
+      and only affects the heat reservoir side. 5 Kelvin wiggle room for motor heat
+      from previous' 1.5.
+  - rscdel: Thermomachines can't pump gases into the reservoir port anymore.
