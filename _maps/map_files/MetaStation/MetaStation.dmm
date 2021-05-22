@@ -15434,6 +15434,10 @@
 "cRi" = (
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
+"cRj" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/closed/wall,
+/area/science/mixing)
 "cRm" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/tile/neutral{
@@ -16970,6 +16974,7 @@
 /area/science/lab)
 "dki" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "dkn" = (
@@ -29651,6 +29656,7 @@
 "hAz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/status_display/evac/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/science/mixing)
 "hAA" = (
@@ -33209,6 +33215,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/science/mixing)
 "iLm" = (
@@ -33487,6 +33494,13 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/wood,
 /area/service/lawoffice)
+"iQm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "iQr" = (
 /obj/structure/chair{
 	dir = 1
@@ -40003,6 +40017,7 @@
 	},
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/science/mixing)
 "lew" = (
@@ -65798,6 +65813,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "tyh" = (
@@ -76732,6 +76750,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"xhs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "xht" = (
 /obj/structure/table/glass,
 /obj/machinery/light/small/directional/south,
@@ -78752,7 +78774,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "xNJ" = (
@@ -109995,7 +110017,7 @@ emd
 kDc
 lgD
 pWt
-czD
+cRj
 les
 hbE
 ymd
@@ -123308,7 +123330,7 @@ kbv
 kbv
 kbv
 kbv
-jMk
+inX
 xyi
 wMh
 dtQ
@@ -123822,7 +123844,7 @@ glb
 fbT
 mgs
 owP
-jMk
+xhs
 tvP
 irz
 wCh
@@ -124079,7 +124101,7 @@ aTu
 uXm
 kbv
 gBY
-cSa
+iQm
 daJ
 vZz
 nbc
@@ -124336,7 +124358,7 @@ aPU
 wal
 kbv
 vMF
-jMk
+xhs
 jWu
 kBI
 weN
@@ -124593,7 +124615,7 @@ aOY
 aOY
 kbv
 iCt
-jMk
+xhs
 pVT
 srl
 tTH
