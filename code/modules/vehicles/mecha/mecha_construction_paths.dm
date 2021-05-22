@@ -1216,7 +1216,7 @@
 	)
 
 /datum/component/construction/mecha/savannah_ivanov
-	result = /obj/mecha/combat/savannah_ivanov
+	result = /obj/vehicle/sealed/mecha/combat/savannah_ivanov
 	base_icon = "savannah_ivanov"
 
 	circuit_control = /obj/item/circuitboard/mecha/savannah_ivanov/main

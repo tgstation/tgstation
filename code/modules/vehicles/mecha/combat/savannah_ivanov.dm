@@ -19,8 +19,6 @@
 	max_temperature = 30000
 	infra_luminosity = 3
 	wreckage = /obj/structure/mecha_wreckage/savannah_ivanov
-	melee_can_hit = FALSE
-	add_req_access = 1
 	internal_damage_threshold = 25
 	max_occupants = 2
 
