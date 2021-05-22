@@ -36172,8 +36172,8 @@
 /obj/structure/table,
 /obj/structure/cable,
 /obj/item/controller,
-/obj/item/controller,
-/obj/item/controller,
+/obj/item/compact_remote,
+/obj/item/compact_remote,
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
 "jPt" = (

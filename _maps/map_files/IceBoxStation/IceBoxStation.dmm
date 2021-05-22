@@ -32950,8 +32950,8 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/rack,
 /obj/item/controller,
-/obj/item/controller,
-/obj/item/controller,
+/obj/item/compact_remote,
+/obj/item/compact_remote,
 /turf/open/floor/iron/white/corner,
 /area/science/misc_lab)
 "kbG" = (

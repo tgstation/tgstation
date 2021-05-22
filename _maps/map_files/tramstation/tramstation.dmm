@@ -43267,8 +43267,8 @@
 /obj/structure/rack,
 /obj/machinery/light/directional/south,
 /obj/item/controller,
-/obj/item/controller,
-/obj/item/controller,
+/obj/item/compact_remote,
+/obj/item/compact_remote,
 /turf/open/floor/iron,
 /area/space)
 "mzF" = (

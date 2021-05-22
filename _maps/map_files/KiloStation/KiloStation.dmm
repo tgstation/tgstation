@@ -87391,9 +87391,9 @@
 	dir = 8
 	},
 /obj/item/controller,
-/obj/item/controller,
-/obj/item/controller,
 /obj/machinery/light/directional/west,
+/obj/item/compact_remote,
+/obj/item/compact_remote,
 /turf/open/floor/iron/showroomfloor,
 /area/science/test_area)
 "xfz" = (

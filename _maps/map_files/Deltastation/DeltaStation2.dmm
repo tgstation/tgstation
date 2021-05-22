@@ -97773,12 +97773,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/item/controller,
-/obj/item/controller,
-/obj/item/controller,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/item/compact_remote,
+/obj/item/compact_remote,
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
 "uft" = (
