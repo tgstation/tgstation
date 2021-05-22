@@ -64,7 +64,7 @@
 	if(_pic)
 		pic = _pic
 	else if(!generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target))
-			return ELEMENT_INCOMPATIBLE
+		return ELEMENT_INCOMPATIBLE
 	description = _description
 	cleanable = _cleanable
 	directional = _dir
