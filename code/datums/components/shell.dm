@@ -55,7 +55,7 @@
 	if(!attached_circuit)
 		return
 
-	examine_text += "<span class='notice'>There is an integrated circuit attached</span>"
+	examine_text += "<span class='notice'>There is an integrated circuit attached.</span>"
 	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
 	examine_text += "<span class='notice'>The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.</span>"
 
