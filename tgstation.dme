@@ -3482,7 +3482,6 @@
 #include "code\modules\vehicles\mecha\combat\gygax.dm"
 #include "code\modules\vehicles\mecha\combat\honker.dm"
 #include "code\modules\vehicles\mecha\combat\marauder.dm"
-#include "code\modules\vehicles\mecha\combat\savannah_ivanov.dm"
 #include "code\modules\vehicles\mecha\combat\phazon.dm"
 #include "code\modules\vehicles\mecha\combat\reticence.dm"
 #include "code\modules\vehicles\mecha\equipment\mecha_equipment.dm"

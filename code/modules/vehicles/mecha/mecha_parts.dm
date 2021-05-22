@@ -297,40 +297,40 @@
 	name = "\improper Savannah-Ivanov chassis"
 	construct_type = /datum/component/construction/unordered/mecha_chassis/savannah_ivanov
 
-/obj/item/mecha_parts/part/nerchen_torso
+/obj/item/mecha_parts/part/savannah_ivanov_torso
 	name="\improper Savannah-Ivanov torso"
 	desc="A Savannah-Ivanov torso part. It's missing a huge chunk of space..."
-	icon_state = "nerchen_harness"
+	icon_state = "savannah_ivanov_harness"
 
-/obj/item/mecha_parts/part/nerchen_head
+/obj/item/mecha_parts/part/savannah_ivanov_head
 	name="\improper Savannah-Ivanov head"
 	desc="A Savannah-Ivanov head. It's sensors have been adjusted to support graceful landings."
-	icon_state = "nerchen_head"
+	icon_state = "savannah_ivanov_head"
 
-/obj/item/mecha_parts/part/nerchen_left_arm
+/obj/item/mecha_parts/part/savannah_ivanov_left_arm
 	name="\improper Savannah-Ivanov left arm"
 	desc="A Savannah-Ivanov left arm. Hidden rocket fabrication included in the wrists."
-	icon_state = "nerchen_l_arm"
+	icon_state = "savannah_ivanov_l_arm"
 
-/obj/item/mecha_parts/part/nerchen_right_arm
+/obj/item/mecha_parts/part/savannah_ivanov_right_arm
 	name="\improper Savannah-Ivanov right arm"
 	desc="A Savannah-Ivanov left arm. Hidden rocket fabrication included in the wrists."
-	icon_state = "nerchen_r_arm"
+	icon_state = "savannah_ivanov_r_arm"
 
-/obj/item/mecha_parts/part/nerchen_left_leg
+/obj/item/mecha_parts/part/savannah_ivanov_left_leg
 	name="\improper Savannah-Ivanov left leg"
 	desc="A Savannah-Ivanov left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
-	icon_state = "nerchen_l_leg"
+	icon_state = "savannah_ivanov_l_leg"
 
-/obj/item/mecha_parts/part/nerchen_right_leg
+/obj/item/mecha_parts/part/savannah_ivanov_right_leg
 	name="\improper Savannah-Ivanov right leg"
 	desc="A Savannah-Ivanov left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
-	icon_state = "nerchen_r_leg"
+	icon_state = "savannah_ivanov_r_leg"
 
-/obj/item/mecha_parts/part/nerchen_armor
+/obj/item/mecha_parts/part/savannah_ivanov_armor
 	name="Savannah-Ivanov armor"
 	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
-	icon_state = "nerchen_armor"
+	icon_state = "savannah_ivanov_armor"
 
 ///////// Circuitboards
 

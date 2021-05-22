@@ -725,12 +725,12 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/savannah_ivanov
-	id = "mecha_nerchen"
+	id = "mecha_savannah_ivanov"
 	display_name = "EXOSUIT: Savannah-Ivanov"
 	description = "Savannah-Ivanov exosuit designs"
 	prereq_ids = list("adv_mecha", "weaponry", "exp_tools")
-	design_ids = list("nerchen_chassis", "nerchen_torso", "nerchen_head", "nerchen_left_arm", "nerchen_right_arm", "nerchen_left_leg", "nerchen_right_leg", "nerchen_main",
-	"nerchen_peri", "nerchen_targ", "nerchen_armor")
+	design_ids = list("savannah_ivanov_chassis", "savannah_ivanov_torso", "savannah_ivanov_head", "savannah_ivanov_left_arm", "savannah_ivanov_right_arm", "savannah_ivanov_left_leg", "savannah_ivanov_right_leg", "savannah_ivanov_main",
+	"savannah_ivanov_peri", "savannah_ivanov_targ", "savannah_ivanov_armor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

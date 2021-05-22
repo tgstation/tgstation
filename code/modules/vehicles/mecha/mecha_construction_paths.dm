@@ -1202,17 +1202,17 @@
 					"<span class='notice'>You slowly place the bluespace anomaly core into its socket and close its chamber.</span>")
 	return TRUE
 
-//NERCHEN
+//savannah_ivanov
 
 /datum/component/construction/unordered/mecha_chassis/savannah_ivanov
 	result = /datum/component/construction/mecha/savannah_ivanov
 	steps = list(
-		/obj/item/mecha_parts/part/nerchen_torso,
-		/obj/item/mecha_parts/part/nerchen_head,
-		/obj/item/mecha_parts/part/nerchen_left_arm,
-		/obj/item/mecha_parts/part/nerchen_right_arm,
-		/obj/item/mecha_parts/part/nerchen_left_leg,
-		/obj/item/mecha_parts/part/nerchen_right_leg
+		/obj/item/mecha_parts/part/savannah_ivanov_torso,
+		/obj/item/mecha_parts/part/savannah_ivanov_head,
+		/obj/item/mecha_parts/part/savannah_ivanov_left_arm,
+		/obj/item/mecha_parts/part/savannah_ivanov_right_arm,
+		/obj/item/mecha_parts/part/savannah_ivanov_left_leg,
+		/obj/item/mecha_parts/part/savannah_ivanov_right_leg
 	)
 
 /datum/component/construction/mecha/savannah_ivanov
@@ -1226,7 +1226,7 @@
 	inner_plating = /obj/item/stack/sheet/plasteel
 	inner_plating_amount = 10
 
-	outer_plating = /obj/item/mecha_parts/part/nerchen_armor
+	outer_plating = /obj/item/mecha_parts/part/savannah_ivanov_armor
 	outer_plating_amount = 1
 
 /datum/component/construction/mecha/savannah_ivanov/custom_action(obj/item/I, mob/living/user, diff)
