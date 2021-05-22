@@ -947,11 +947,11 @@
 
 /obj/vehicle/sealed/mecha/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_cycle_equip)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats)
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/strafe)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals, VEHICLE_CONTROL_INTERNALS)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_cycle_equip, VEHICLE_CONTROL_EQUIPMENT)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_INTERNALS)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_INTERNALS)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/strafe, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/mecha/proc/moved_inside(mob/living/newoccupant)
 	if(!(newoccupant?.client))
