@@ -7174,10 +7174,10 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "awM" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/science/mixing)
 "awN" = (
@@ -39578,6 +39578,11 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
+"lcI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron,
+/area/science/mixing)
 "lcO" = (
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
@@ -67203,6 +67208,10 @@
 /obj/effect/turf_decal/trimline/red/filled/warning,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"vZa" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/science/mixing)
 "vZj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 9
@@ -117977,7 +117986,7 @@ aet
 mSi
 aik
 okR
-okR
+lcI
 wqf
 vPg
 lkD
@@ -118236,7 +118245,7 @@ miq
 frL
 oJJ
 awM
-mSi
+vZa
 ewC
 cgy
 xDy
