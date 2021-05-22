@@ -119,7 +119,7 @@
 
 /atom/movable/screen/fullscreen/ivanov_display
 	icon_state = "ivanov"
-	plane = FULLSCREEN_PLANE
+	alpha = 180
 
 /atom/movable/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"

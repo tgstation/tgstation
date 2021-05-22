@@ -53,7 +53,7 @@
 
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/start_missile_targeting(mob/gunner, silent = TRUE)
 	if(!silent)
-		to_chat(gunner, "<span class='warning'>Ivanov Strike targeting process booted. \
+		to_chat(gunner, "<span class='warning'>Ivanov Strike targeting process booted.</br>\
 		Your next click will fire the missile (provided the mech is facing the right direction).</span>")
 	aiming_ivanov = TRUE
 	RegisterSignal(src, COMSIG_MECHA_MELEE_CLICK, .proc/on_melee_click)
@@ -61,15 +61,16 @@
 	gunner.client.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi'
 	gunner.update_mouse_pointer()
 	gunner.overlay_fullscreen("ivanov", /atom/movable/screen/fullscreen/ivanov_display, 1)
+	SEND_SOUND(gunner, 'sound/machines/terminal_on.ogg') //spammable so I don't want to make it audible to anyone else
 
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/end_missile_targeting(mob/gunner, silent = TRUE)
 	if(!silent)
-		to_chat(gunner, "<span class='warning'>Ivanov Strike targeting process killed. Your next click will act normally.</span>")
+		to_chat(gunner, "<span class='warning'>Ivanov Strike targeting process killed.</span>")
 	aiming_ivanov = FALSE
 	UnregisterSignal(src, list(COMSIG_MECHA_MELEE_CLICK, COMSIG_MECHA_EQUIPMENT_CLICK))
 	gunner.client.mouse_override_icon = null
 	gunner.update_mouse_pointer()
-	gunner.clear_fullscreen("ivanov", 1 SECONDS)
+	gunner.clear_fullscreen("ivanov")
 
 ///signal called from clicking with no equipment
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/on_melee_click(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
@@ -87,6 +88,7 @@
 
 /obj/vehicle/sealed/mecha/combat/savannah_ivanov/proc/drop_missile(mob/gunner, turf/target_turf)
 	end_missile_targeting(gunner)
+	SEND_SOUND(gunner, 'sound/machines/triple_beep.ogg')
 	COOLDOWN_START(src, ivanov_strike_cooldown, ivanov_strike_cooldown_time)
 	podspawn(list(
 		"target" = target_turf,
@@ -97,7 +99,7 @@
 	var/datum/action/vehicle/sealed/mecha/strike_action = occupant_actions[gunner][/datum/action/vehicle/sealed/mecha/ivanov_strike]
 	strike_action.button_icon_state = "mech_ivanov_cooldown"
 	strike_action.UpdateButtonIcon()
-	addtimer(VARSET_CALLBACK(strike_action, button_icon_state, initial(strike_action.button_icon_state)), ivanov_strike_cooldown_time)
+	addtimer(CALLBACK(strike_action, /datum/action/vehicle/sealed/mecha/ivanov_strike.proc/reset_button_icon), ivanov_strike_cooldown_time)
 
 /datum/action/vehicle/sealed/mecha/ivanov_strike
 	name = "Ivanov Strike"
@@ -112,3 +114,7 @@
 		to_chat(owner, "<span class='warning'>You need to wait [DisplayTimeText(timeleft)] before firing another Ivanov Strike.</span>")
 		return
 	ivanov_mecha.aiming_ivanov ? ivanov_mecha.end_missile_targeting(owner, silent = FALSE) : ivanov_mecha.start_missile_targeting(owner, silent = FALSE)
+
+/datum/action/vehicle/sealed/mecha/ivanov_strike/proc/reset_button_icon()
+	button_icon_state = "mech_ivanov"
+	UpdateButtonIcon()
