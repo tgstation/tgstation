@@ -19,5 +19,5 @@
 /obj/structure/server/wrench_act(mob/living/user, obj/item/tool)
 	set_anchored(!anchored)
 	tool.play_tool_sound(src)
-	to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] [src].</span>")
+	balloon_alert(user, "You [anchored?"secure":"unsecure"] [src].")
 	return TRUE

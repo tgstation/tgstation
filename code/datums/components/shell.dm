@@ -83,11 +83,11 @@
 		return
 
 	if(attached_circuit)
-		to_chat(attacker, "<span class='warning'>There is already a circuitboard inside!</span>")
+		source.balloon_alert(attacker, "There is already a circuitboard inside!")
 		return
 
 	if(length(logic_board.attached_components) > capacity)
-		to_chat(attacker, "<span class='warning'>This is too large to fit into [parent]!</span>")
+		source.balloon_alert(attacker, "This is too large to fit into [parent]!")
 		return
 
 	attach_circuit(logic_board, attacker)
@@ -109,7 +109,7 @@
 		return
 
 	tool.play_tool_sound(parent)
-	to_chat(user, "<span class='notice'>You unscrew [attached_circuit] from [parent].</span>")
+	source.balloon_alert(user, "You unscrew [attached_circuit] from [parent].")
 	remove_circuit()
 	return COMPONENT_BLOCK_TOOL_ATTACK
 

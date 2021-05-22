@@ -50,7 +50,7 @@
 
 	if(istype(I, /obj/item/stock_parts/cell))
 		if(cell)
-			to_chat(user, "<span class='warning'>There already is a cell inside!</span>")
+			balloon_alert(user, "<span class='warning'>There already is a cell inside!</span>")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
