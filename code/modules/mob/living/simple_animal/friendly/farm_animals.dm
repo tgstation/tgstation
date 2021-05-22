@@ -308,7 +308,7 @@
 		/obj/item/food/egg,\
 		list(/obj/item/food/grown/wheat),\
 		feed_messages = list("[p_they()] clucks happily."),\
-		EGG_LAYING_MESSAGES,\
+		lay_messages = EGG_LAYING_MESSAGES,\
 		eggs_left = 0,\
 		eggs_added_from_eating = rand(1, 4),\
 		max_eggs_held = 8,\
