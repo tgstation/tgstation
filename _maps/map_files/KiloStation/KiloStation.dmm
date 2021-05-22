@@ -66732,6 +66732,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
+"onE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall,
+/area/science/storage)
 "onN" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -67232,7 +67236,7 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "ovn" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/rust,
 /area/science/storage)
 "ovp" = (
@@ -78058,7 +78062,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "trO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
 /turf/closed/wall,
 /area/science/storage)
 "tsd" = (
@@ -130715,7 +130719,7 @@ aUO
 aOw
 bbW
 chg
-bba
+onE
 fyH
 beq
 jZo
