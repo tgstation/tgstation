@@ -11,41 +11,32 @@
  * assembly code at the bottom of this file
  */
 /datum/component/trapdoor
-	/**
-	* list of lists that are arguments for readding decals when the floor comes back. pain.
-	*
-	* format: list(list(element's description, element's cleanable, element's directional, element's pic))
-	* the list will be filled with all the data of the deleting elements (when ChangeTurf is called) only when the trapdoor begins to open.
-	* so any other case the elements will be changed but not recorded.
-	*/
-	var/list/stored_decals = list()
 	///assembly tied to this trapdoor
 	var/obj/item/assembly/trapdoor/assembly
 	///path of the turf this should change into when the assembly is pulsed. needed for openspace trapdoors knowing what to turn back into
 	var/trapdoor_turf_path
 
-/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, stored_decals)
+/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.assembly = assembly
 	if(IS_OPEN(parent))
-		openspace_trapdoor_setup(trapdoor_turf_path, assembly, stored_decals)
+		openspace_trapdoor_setup(trapdoor_turf_path, assembly)
 	else
-		tile_trapdoor_setup(trapdoor_turf_path, assembly, stored_decals)
+		tile_trapdoor_setup(trapdoor_turf_path, assembly)
 
 	if(starts_open)
 		try_opening()
 
 ///initializing as an opened trapdoor, we need to trust that we were given the data by a closed trapdoor
-/datum/component/trapdoor/proc/openspace_trapdoor_setup(trapdoor_turf_path, assembly, stored_decals)
+/datum/component/trapdoor/proc/openspace_trapdoor_setup(trapdoor_turf_path)
 	src.trapdoor_turf_path = trapdoor_turf_path
 
 ///initializing as a closed trapdoor, we need to take data from the tile we're on to give it to the open state to store
-/datum/component/trapdoor/proc/tile_trapdoor_setup(trapdoor_turf_path, assembly, stored_decals)
+/datum/component/trapdoor/proc/tile_trapdoor_setup(trapdoor_turf_path)
 	src.trapdoor_turf_path = parent.type
-	if(stored_decals)
-		src.stored_decals = stored_decals
+	if(assembly && assembly.stored_decals.len)
 		reapply_all_decals()
 
 /datum/component/trapdoor/RegisterWithParent()
@@ -62,9 +53,10 @@
 	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
 
-/datum/component/trapdoor/proc/decal_detached(description, cleanable, directional, pic)
+/datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
 	SIGNAL_HANDLER
-	stored_decals |= list(description, cleanable, directional, pic)
+	///so it adds the list to the list, not appending it to the end. thank you byond, very cool.
+	assembly.stored_decals += list(list(description, cleanable, directional, pic))
 
 /**
  * ## reapply_all_decals
@@ -72,13 +64,13 @@
  * changing turfs does not bring over decals, so we must perform a little bit of element reapplication.
  */
 /datum/component/trapdoor/proc/reapply_all_decals()
-	for(var/list/element_data as anything in stored_decals)
+	for(var/list/element_data as anything in assembly.stored_decals)
 		apply_decal(element_data[1], element_data[2], element_data[3], element_data[4])
-	stored_decals = list()
+	assembly.stored_decals = list()
 
 /// small proc that takes passed arguments and drops it into a new element
 /datum/component/trapdoor/proc/apply_decal(description, cleanable, directional, pic)
-	AddElement(/datum/element/decal, args)
+	parent.AddElement(/datum/element/decal, _description = description, _cleanable = cleanable, _dir = directional, _pic = pic)
 
 ///called by linking remotes to tie an assembly to the trapdoor
 /datum/component/trapdoor/proc/on_link_requested(datum/source, obj/item/assembly/trapdoor/assembly)
@@ -102,13 +94,14 @@
 /datum/component/trapdoor/proc/turf_changed_pre(datum/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 	var/turf/open/dying_trapdoor = parent
-	if(!IS_OPEN(dying_trapdoor) && !IS_OPEN(path) && path != /turf/open/floor/plating) //not a process of the trapdoor, so this trapdoor has been destroyed
-		dying_trapdoor.visible_message("<span class='warning'>the trapdoor mechanism in [dying_trapdoor] is broken!</span>")
+	if((!IS_OPEN(dying_trapdoor) && !IS_OPEN(path)) || path == /turf/open/floor/plating) //not a process of the trapdoor, so this trapdoor has been destroyed
+		dying_trapdoor.visible_message("<span class='warning'>The trapdoor mechanism in [dying_trapdoor] is broken!</span>")
 		if(assembly)
 			assembly.linked = FALSE
+			assembly.stored_decals.Cut()
 			assembly = null
 		return
-	post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, trapdoor_turf_path, stored_decals)
+	post_change_callbacks += CALLBACK(assembly, /obj/item/assembly/trapdoor.proc/carry_over_trapdoor, trapdoor_turf_path)
 
 /**
  * ## carry_over_trapdoor
@@ -116,9 +109,8 @@
  * applies the trapdoor to the new turf (created by the last trapdoor)
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  */
-/obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, list/stored_decals, turf/new_turf)
-	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src, stored_decals)
-
+/obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, turf/new_turf)
+	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src)
 
 /**
  * ## try_opening
@@ -129,7 +121,8 @@
 /datum/component/trapdoor/proc/try_opening()
 	var/turf/open/trapdoor_turf = parent
 	///we want to save this turf's decals as they were right before deletion, so this is the point where we begin listening
-	RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
+	if(assembly)
+		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
 	trapdoor_turf.visible_message("<span class='warning'>[trapdoor_turf] swings open!</span>")
 	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
@@ -162,6 +155,16 @@
 	var/search_cooldown_time = 10 SECONDS
 	///if true, a trapdoor in the world has a reference to this assembly and is listening for when it is pulsed.
 	var/linked = FALSE
+	/**
+	* list of lists that are arguments for readding decals when the linked trapdoor comes back. pain.
+	*
+	* we are storing this data FOR the trapdoor component we are linked to. kinda like a multitool.
+	* format: list(list(element's description, element's cleanable, element's directional, element's pic))
+	* the list will be filled with all the data of the deleting elements (when ChangeTurf is called) only when the trapdoor begins to open.
+	* so any other case the elements will be changed but not recorded.
+	*/
+	var/list/stored_decals = list()
+
 
 /obj/item/assembly/trapdoor/pulsed(radio)
 	. = ..()
