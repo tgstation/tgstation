@@ -38164,7 +38164,6 @@
 /turf/open/floor/iron,
 /area/engineering/engine_smes)
 "mRj" = (
-/obj/machinery/light,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
 	name = "N2 to Airmix"
@@ -39946,9 +39945,6 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "nRS" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 6
 	},
