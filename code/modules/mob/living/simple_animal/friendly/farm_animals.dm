@@ -304,20 +304,15 @@
 	chicken_count++
 	add_cell_sample()
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown","black","white"), TRUE)
-	var/list/feed_messages = list("[p_they()] clucks happily.")
-	var/eggs_left = 0
-	var/eggs_added_from_eating = rand(1, 4)
-	var/max_eggs_held = 8
-	var/datum/callback/lay_egg_callback = CALLBACK(src, .proc/egg_laid)
 	AddComponent(/datum/component/egg_layer,\
 		/obj/item/food/egg,\
 		list(/obj/item/food/grown/wheat),\
-		feed_messages,\
+		feed_messages = list("[p_they()] clucks happily."),\
 		EGG_LAYING_MESSAGES,\
-		eggs_left,\
-		eggs_added_from_eating,\
-		max_eggs_held,\
-		lay_egg_callback\
+		eggs_left = 0,\
+		eggs_added_from_eating = rand(1, 4),\
+		max_eggs_held = 8,\
+		CALLBACK(src, .proc/egg_laid)\
 	)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
