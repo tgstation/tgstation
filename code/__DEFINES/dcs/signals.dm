@@ -34,6 +34,10 @@
 	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
 /// a person somewhere has thrown something : (mob/living/carbon/carbon_thrower, target)
 #define COMSIG_GLOB_CARBON_THROW_THING	"!throw_thing"
+/// a trapdoor remote has sent out a signal to link with a trapdoor
+#define COMSIG_GLOB_TRAPDOOR_LINK "!trapdoor_link"
+	///successfully linked to a trapdoor!
+	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
 
@@ -381,6 +385,9 @@
 #define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
 ///from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 #define COMSIG_TURF_EXPOSE "turf_expose"
+
+///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
+#define COMSIG_TURF_DECAL_DETACHED "turf_decal_detached"
 
 // /atom/movable signals
 

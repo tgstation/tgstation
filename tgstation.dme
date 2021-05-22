@@ -567,6 +567,7 @@
 #include "code\datums\components\technoshy.dm"
 #include "code\datums\components\tether.dm"
 #include "code\datums\components\thermite.dm"
+#include "code\datums\components\trapdoor.dm"
 #include "code\datums\components\twohanded.dm"
 #include "code\datums\components\udder.dm"
 #include "code\datums\components\uplink.dm"
