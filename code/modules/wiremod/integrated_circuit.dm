@@ -234,7 +234,7 @@
 			var/datum/port/input/input_port = input_component.input_ports[input_port_id]
 			var/datum/port/output/output_port = output_component.output_ports[output_port_id]
 
-			if(output_port.datatype && input_port.datatype && !output_port.compatible_datatype(input_port.datatype))
+			if(input_port.datatype && !output_port.compatible_datatype(input_port.datatype))
 				return
 
 			input_port.register_output_port(output_port)

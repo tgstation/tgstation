@@ -15,7 +15,7 @@
 
 /obj/item/circuit_component/index/Initialize()
 	. = ..()
-	index_port = add_input_port("Index", PORT_TYPE_NUMBER)
+	index_port = add_input_port("Index", PORT_TYPE_ANY)
 	list_port = add_input_port("List", PORT_TYPE_LIST)
 
 	output = add_output_port("Value", PORT_TYPE_ANY)
@@ -38,7 +38,7 @@
 		output.set_output(null)
 		return
 
-	if(index < 1 || index > length(list_input))
+	if(isnum(index) && (index < 1 || index > length(list_input)))
 		output.set_output(null)
 		return
 
