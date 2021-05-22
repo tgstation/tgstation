@@ -12084,6 +12084,10 @@
 /obj/machinery/smartfridge/organ,
 /turf/closed/wall,
 /area/medical/surgery/room_b)
+"brq" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "brs" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastright{
@@ -93223,7 +93227,7 @@ bip
 cCp
 hTU
 hxs
-ojf
+brq
 oVS
 uFA
 prW
