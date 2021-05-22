@@ -35,7 +35,7 @@
 /datum/ai_behavior/simple_equip/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/obj/item/fetch_target = controller.blackboard[BB_FETCH_TARGET]
-	if(!isturf(fetch_target?.loc)) // someone picked it up or something happened to it
+	if(!isturf(fetch_target?.loc) || !isitem(fetch_target)) // someone picked it up, something happened to it, or it wasn't an item anyway
 		finish_action(controller, FALSE)
 		return
 

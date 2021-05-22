@@ -75,8 +75,11 @@
 			current_movement_target = interact_target
 			if(IS_EDIBLE(interact_target))
 				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/eat_snack)
-			else
+			else if(isitem(interact_target))
 				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/simple_equip)
+			else
+				blackboard[BB_FETCH_TARGET] = null
+				blackboard[BB_FETCH_DELIVER_TO] = null
 			return
 
 	// if we're carrying something and we have a destination to deliver it, do that
@@ -301,21 +304,22 @@
 /datum/ai_controller/dog/proc/check_point(mob/pointing_friend, atom/movable/pointed_movable)
 	SIGNAL_HANDLER
 
+	var/mob/living/living_pawn = pawn
+	if(IS_DEAD_OR_INCAP(living_pawn))
+		return
+
 	if(!COOLDOWN_FINISHED(src, command_cooldown))
 		return
 	if(pointed_movable == pawn || blackboard[BB_FETCH_TARGET] || !istype(pointed_movable) || blackboard[BB_DOG_ORDER_MODE] == DOG_COMMAND_NONE) // busy or no command
 		return
 	if(!can_see(pawn, pointing_friend, length=AI_DOG_VISION_RANGE) || !can_see(pawn, pointed_movable, length=AI_DOG_VISION_RANGE))
 		return
-	var/mob/living/living_pawn = pawn
-	if(IS_DEAD_OR_INCAP(living_pawn))
-		return
 
 	COOLDOWN_START(src, command_cooldown, AI_DOG_COMMAND_COOLDOWN)
 
 	switch(blackboard[BB_DOG_ORDER_MODE])
 		if(DOG_COMMAND_FETCH)
-			if(ismob(pointed_movable) || pointed_movable.anchored)
+			if(!isitem(pointed_movable) || pointed_movable.anchored)
 				return
 			pawn.visible_message("<span class='notice'>[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and barks excitedly!</span>")
 			current_movement_target = pointed_movable
