@@ -29,8 +29,7 @@
 
 /datum/surgery_step/filter_blood/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(target.reagents?.total_volume)
-		for(var/blood_chem in target.reagents.reagent_list)
-			var/datum/reagent/chem = blood_chem
+		for(var/datum/reagent/chem as anything in target.reagents.reagent_list)
 			target.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 	display_results(user, target, "<span class='notice'>\The [tool] pings as it finishes filtering [target]'s blood.</span>",
 		"<span class='notice'>\The [tool] pings as it stops pumping [target]'s blood.</span>",
