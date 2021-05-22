@@ -1,0 +1,4 @@
+author: "InsaneRed"
+delete-after: True
+changes: 
+  - bugfix: "The secret documents on tram is now inside the cabinet and not the safe"

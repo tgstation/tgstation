@@ -463,7 +463,7 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 ```
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
-There exists `SIGNAL_HANDLER_DOES_SLEEP`, but this is only for legacy signal handlers that still sleep, new/changed code should not use this.
+Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
 
 ### Enforcing parent calling
 When adding new signals to root level procs, eg;
