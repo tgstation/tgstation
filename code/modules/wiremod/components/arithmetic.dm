@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 			if(COMP_ARITHMETIC_DIVIDE)
 				// Protect from div by zero errors.
 				if(value == 0)
-					result = 0
+					result = null
 					break
 				result /= value
 			if(COMP_ARITHMETIC_MAX)
