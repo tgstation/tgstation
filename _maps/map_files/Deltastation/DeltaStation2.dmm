@@ -10260,6 +10260,9 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/engineering/storage_shared)
 "bCq" = (
@@ -66268,6 +66271,12 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
+"mbG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/closed/wall/r_wall,
+/area/engineering/storage_shared)
 "mbH" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
@@ -92367,6 +92376,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/transit_tube)
+"sJB" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/engineering/storage_shared)
 "sJI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -135131,8 +135144,8 @@ kQs
 tMQ
 cDC
 nYd
-mLw
-mLw
+sJB
+mbG
 mLw
 mLw
 iHs
