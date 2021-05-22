@@ -32,9 +32,9 @@
 		update_parent(index)
 
 /datum/component/construction/proc/action(datum/source, obj/item/I, mob/living/user)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
-	return check_step(I, user)
+	return INVOKE_ASYNC(src, .proc/check_step, I, user)
 
 /datum/component/construction/proc/update_index(diff)
 	index += diff

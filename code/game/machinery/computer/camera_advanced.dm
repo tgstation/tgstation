@@ -136,7 +136,7 @@
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)
-		if(eyeobj.use_static != USE_STATIC_NONE)
+		if(eyeobj.use_static != FALSE)
 			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
@@ -195,7 +195,7 @@
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
 	user.sight = SEE_TURFS | SEE_BLACKNESS
 	user.see_in_dark = 2
-	return 1
+	return TRUE
 
 /mob/camera/ai_eye/remote/Destroy()
 	if(origin && eye_user)
@@ -222,9 +222,12 @@
 			forceMove(T)
 		else
 			moveToNullspace()
+
 		update_ai_detect_hud()
-		if(use_static != USE_STATIC_NONE)
+
+		if(use_static)
 			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
+
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
