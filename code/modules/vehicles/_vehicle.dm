@@ -105,6 +105,7 @@
 		add_control_flags(M, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/proc/remove_occupant(mob/M)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!istype(M))
 		return FALSE
 	remove_control_flags(M, ALL)

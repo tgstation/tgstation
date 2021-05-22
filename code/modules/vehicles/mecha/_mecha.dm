@@ -552,21 +552,30 @@
 			if(HAS_TRAIT(livinguser, TRAIT_PACIFISM) && selected.harmful)
 				to_chat(livinguser, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
+			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
+				return
 			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
 			return
 		if((selected.range & MECHA_MELEE) && Adjacent(target))
 			if(isliving(target) && selected.harmful && HAS_TRAIT(livinguser, TRAIT_PACIFISM))
 				to_chat(livinguser, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
+			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
+				return
 			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
 			return
 	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_MELEE)))
 		to_chat(livinguser, "<span class='warning'>You're in the wrong seat to interact with your hands.</span>")
 		return
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK) || !Adjacent(target))
+	var/on_cooldown = TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK)
+	var/adjacent = Adjacent(target)
+	if(SEND_SIGNAL(src, COMSIG_MECHA_MELEE_CLICK, livinguser, target, on_cooldown, adjacent) & COMPONENT_CANCEL_MELEE_CLICK)
+		return
+	if(on_cooldown || !adjacent)
 		return
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		target = pick(oview(1,src))
+
 	target.mech_melee_attack(src, user)
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 

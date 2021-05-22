@@ -208,7 +208,7 @@
 		/obj/item/mecha_parts/part/phazon_right_leg)
 
 /obj/structure/mecha_wreckage/savannah_ivanov
-	name = "\improper savannah_ivanov wreckage"
+	name = "\improper Savannah-Ivanov wreckage"
 	icon = 'icons/mecha/coop_mech.dmi'
 	icon_state = "savannah_ivanov-broken"
 	parts = list(
