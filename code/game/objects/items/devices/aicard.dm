@@ -87,7 +87,7 @@
 			if(flush)
 				flush = FALSE
 			else
-				var/confirm = alert("Are you sure you want to wipe this card's memory?", name, "Yes", "No")
+				var/confirm = tgui_alert(usr, "Are you sure you want to wipe this card's memory?", name, list("Yes", "No"))
 				if(confirm == "Yes" && !..())
 					flush = TRUE
 					if(AI && AI.loc == src)

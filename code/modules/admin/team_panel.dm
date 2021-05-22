@@ -24,7 +24,7 @@
 
 /datum/admins/proc/check_teams()
 	if(!SSticker.HasRoundStarted())
-		alert("The game hasn't started yet!")
+		tgui_alert(usr,"The game hasn't started yet!")
 		return
 
 	var/datum/browser/popup = new(usr, "teams", "Team Listing", 500, 500)

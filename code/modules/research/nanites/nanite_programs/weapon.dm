@@ -46,7 +46,8 @@
 
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"
-	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host. The efficiency increases with the volume of nanites, requiring 200 to break even."
+	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host. The efficiency increases with the volume of nanites, requiring 200 to break even, \
+			and scaling linearly for a net positive of 0.1 production rate per 20 nanite volume beyond that."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/necrotic)
 

@@ -54,6 +54,7 @@
 #include "crayons.dm"
 #include "designs.dm"
 #include "dynamic_ruleset_sanity.dm"
+#include "egg_glands.dm"
 #include "emoting.dm"
 #include "food_edibility_check.dm"
 #include "heretic_knowledge.dm"
