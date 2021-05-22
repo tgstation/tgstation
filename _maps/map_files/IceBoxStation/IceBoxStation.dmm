@@ -41473,7 +41473,6 @@
 /turf/open/floor/wood,
 /area/service/library)
 "oOp" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 9
 	},
