@@ -934,7 +934,7 @@
 	/// Prevents click from happening.
 	#define COMPONENT_CANCEL_MELEE_CLICK (1<<0)
 ///sent from clicking while you have equipment selected.
-#define COMSIG_MECHA_EQUIPMENT_CLICK "mecha_action_melee_click"
+#define COMSIG_MECHA_EQUIPMENT_CLICK "mecha_action_equipment_click"
 	/// Prevents click from happening.
 	#define COMPONENT_CANCEL_EQUIPMENT_CLICK (1<<0)
 
