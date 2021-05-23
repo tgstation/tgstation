@@ -9,6 +9,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 500)
+	override_notes = TRUE
 	///What sound should play when this ammo is fired
 	var/fire_sound = null
 	///Which kind of guns it can be loaded into
@@ -53,6 +54,31 @@
 	if(T && !loaded_projectile && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 	QDEL_NULL(loaded_projectile)
+
+/obj/item/ammo_casing/add_weapon_description()
+	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_ammo)
+
+/**
+ *
+ * Outputs type-specific weapon stats for ammunition based on the projectile loaded inside the casing.
+ * Distinguishes between critting and stam-critting in separate lines
+ *
+ */
+/obj/item/ammo_casing/proc/add_notes_ammo()
+	// Make sure there is actually something IN the casing
+	if(loaded_projectile)
+		var/list/readout = list("")
+		// No dividing by 0
+		if(loaded_projectile.damage > 0)
+			readout += "Most monkeys our legal team subjected to these rounds succumbed to their wounds after <span class='warning'>[round(100 / (loaded_projectile.damage * pellets), 0.1)]</span> discharge\s at point-blank, taking <span class='warning'>[pellets]</span> shot\s per round"
+		if(loaded_projectile.stamina > 0)
+			readout += "[loaded_projectile.damage == 0 ? "Most Monkeys" : "More Fortunate Monkeys" ] collapsed from exhaustion after <span class='warning'>[round(100 / ((loaded_projectile.damage + loaded_projectile.stamina) * pellets), 0.1)]</span> of these rounds"
+		if(loaded_projectile.damage == 0 && loaded_projectile.stamina == 0)
+			return "Our legal team has determined the offensive nature of these rounds to be esoteric"
+		return readout.Join("\n") // Sending over a single string, rather than the whole list
+	else
+		// Labels don't do well with extreme forces
+		return "The warning label was blown away..."
 
 /obj/item/ammo_casing/update_icon_state()
 	icon_state = "[initial(icon_state)][loaded_projectile ? "-live" : null]"

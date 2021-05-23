@@ -1,0 +1,4 @@
+author: "SpaceDragon00"
+delete-after: True
+changes: 
+  - qol: "Inspecting a weapon shows a warning label. By default, this shows force, throwforce, armour_penetration, and block_chance in an esoteric manner. Inspecting ammo gives information on the shot it produces, inspecting ballistic weapons lets you know their caliber, and inspecting energy weapons gives you their modes and the damage of those modes"

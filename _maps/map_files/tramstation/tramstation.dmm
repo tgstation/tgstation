@@ -9034,6 +9034,9 @@
 	pixel_y = -34;
 	req_access_txt = "28"
 	},
+/obj/item/trapdoor_remote/preloaded{
+	pixel_x = -8
+	},
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "aCS" = (
@@ -42401,6 +42404,7 @@
 "mjK" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/landmark/start/hangover,
+/obj/effect/mapping_helpers/trapdoor_placer,
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "mjQ" = (
