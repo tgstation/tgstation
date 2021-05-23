@@ -1133,7 +1133,7 @@
 		var/name = initial(gas.name)
 		if(!initial(gas.purchaseable))
 			continue
-		var/datum/supply_pack/materials/pack = new
+		var/datum/supply_pack/materials/gas_canisters/pack = new
 		pack.name = "[name] Canister"
 		pack.desc = "Contains a canister of [name]."
 		if(initial(gas.dangerous))
