@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"no2" = /obj/machinery/portable_atmospherics/canister/nitryl,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
-		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
+		"water_vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
 		"tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
 		"hyper-noblium" = /obj/machinery/portable_atmospherics/canister/nob,
 		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
