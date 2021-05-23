@@ -38911,12 +38911,6 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
-"kQq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/mob/living/simple_animal/mouse/brown/tom,
-/turf/open/floor/plating,
-/area/security/prison)
 "kQy" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -47644,6 +47638,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/security/checkpoint/engineering)
+"oup" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/mouse/brown/tom,
+/turf/open/floor/iron,
+/area/security/prison)
 "ouC" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -107383,7 +107382,7 @@ aae
 nTn
 hxy
 fnk
-lFy
+oup
 jld
 gOk
 gJE
@@ -108169,7 +108168,7 @@ aGF
 ccM
 abE
 acP
-kQq
+ooT
 ccM
 ljx
 oho
