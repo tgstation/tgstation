@@ -186,6 +186,6 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You access the satellite's debug mode, increasing the chance of meteor strikes.</span>")
+	balloon_alert(user, "meteors attracted")
 	if(active)
 		change_meteor_chance(2)

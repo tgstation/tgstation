@@ -142,10 +142,10 @@
 /obj/item/defibrillator/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
-		to_chat(user, "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer.</span>")
+		balloon_alert(user, "safety protocols off")
 	else
 		safety = TRUE
-		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.</span>")
+		balloon_alert(user, "safety protocols on")
 
 /obj/item/defibrillator/emp_act(severity)
 	. = ..()

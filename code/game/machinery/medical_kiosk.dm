@@ -147,8 +147,8 @@
 	if(obj_flags & EMAGGED)
 		return
 	if(user)
-		user.visible_message("<span class='warning'>[user] waves a suspicious card by the [src]'s biometric scanner!</span>",
-	"<span class='notice'>You overload the sensory electronics, the diagnostic readouts start jittering across the screen..</span>")
+		user.visible_message("<span class='warning'>[user] waves a suspicious card by the [src]'s biometric scanner!</span>")
+		balloon_alert(user, "sensory electronics overloaded")
 	obj_flags |= EMAGGED
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED //Mirrors emag status onto the board as well.

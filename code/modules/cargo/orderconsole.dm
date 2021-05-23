@@ -72,6 +72,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	if(user)
+		balloon_alert(user, "contraband services revealed")
 		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 

@@ -37,7 +37,7 @@
 /obj/item/geiger_counter/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(soundloop)
-	
+
 	return ..()
 
 /obj/item/geiger_counter/process(delta_time)
@@ -185,12 +185,12 @@
 	if(obj_flags & EMAGGED)
 		return
 	if(scanning)
-		to_chat(user, "<span class='warning'>Turn off [src] before you perform this action!</span>")
+		balloon_alert(user, "turn it off first!")
 		return
-	to_chat(user, "<span class='warning'>You override [src]'s radiation storing protocols. It will now generate small doses of radiation, and stored rads are now projected into creatures you scan.</span>")
+	balloon_alert(user, "radiation storing protocols overridden")
+	//kept this message as the geiger counter has a surprisingly complex emag function that cannot be described with a bubble alert.
+	to_chat(user, "<span class='warning'>[src] will now generate small doses of radiation, and stored rads are now projected into creatures you scan.</span>")
 	obj_flags |= EMAGGED
-
-
 
 /obj/item/geiger_counter/cyborg
 	var/mob/listeningTo

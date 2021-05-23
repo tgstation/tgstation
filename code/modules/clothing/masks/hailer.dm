@@ -91,17 +91,17 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(..())
 		return
 	else if (aggressiveness == AGGR_BROKEN)
-		to_chat(user, "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>")
+		balloon_alert(user, "the restrictor is broken...")
 		return
 	var/position = aggressiveness == AGGR_GOOD_COP ? "middle" : aggressiveness == AGGR_BAD_COP ? "last" : "first"
-	to_chat(user, "<span class='notice'>You set the restrictor to the [position] position.</span>")
+	balloon_alert(user, "restrictor set to [position] position")
 	aggressiveness = aggressiveness % 3 + 1 // loop AGGR_GOOD_COP -> AGGR_SHIT_COP
 
 /obj/item/clothing/mask/gas/sechailer/wirecutter_act(mob/living/user, obj/item/I)
 	. = TRUE
 	..()
 	if(aggressiveness != AGGR_BROKEN)
-		to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
+		balloon_alert(user, "restrictor broken!")
 		aggressiveness = AGGR_BROKEN
 
 /obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
-		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
+		balloon_alert(user, "vocal circuits severely corrupted")
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"

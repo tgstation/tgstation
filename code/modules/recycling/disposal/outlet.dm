@@ -110,5 +110,5 @@
 	. = ..()
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, "<span class='notice'>You silently disable the sanity checking on \the [src]'s ejection force.</span>")
+	balloon_alert(user, "sanity checks removed")
 	obj_flags |= EMAGGED

@@ -32,7 +32,7 @@
 	req_access = list()
 	req_one_access = list()
 	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
+	balloon_alert(user, "access controller shorted")
 
 /obj/machinery/door_buttons/proc/removeMe()
 

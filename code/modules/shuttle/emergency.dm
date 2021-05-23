@@ -254,9 +254,10 @@
 		return
 
 	if((obj_flags & EMAGGED) || ENGINES_STARTED) //SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
-		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
+		balloon_alert(user, "shuttle already launching!")
 		return
 
+	balloon_alert(user, "ungraceful takeoff engaged")
 	var/time = TIME_LEFT
 	message_admins("[ADMIN_LOOKUPFLW(user)] has emagged the emergency shuttle [time] seconds before launch.")
 	log_shuttle("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
@@ -601,7 +602,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
+	balloon_alert(user, "alert level checks melted")
 
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()

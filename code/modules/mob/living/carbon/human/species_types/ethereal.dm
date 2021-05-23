@@ -110,15 +110,15 @@
 		if(EMP_HEAVY)
 			addtimer(CALLBACK(src, .proc/stop_emp, H), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
 
-/datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
+/datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/emagged, mob/user)
 	if(emageffect)
 		return
 	emageffect = TRUE
 	if(user)
-		to_chat(user, "<span class='notice'>You tap [H] on the back with your card.</span>")
-	H.visible_message("<span class='danger'>[H] starts flickering in an array of colors!</span>")
-	handle_emag(H)
-	addtimer(CALLBACK(src, .proc/stop_emag, H), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
+		balloon_alert(user, "disco time for [emagged]")
+	emagged.visible_message("<span class='danger'>[emagged] starts flickering in an array of colors!</span>")
+	handle_emag(emagged)
+	addtimer(CALLBACK(src, .proc/stop_emag, emagged), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 
 /// Special handling for getting hit with a light eater
 /datum/species/ethereal/proc/on_light_eater(mob/living/carbon/human/source, datum/light_eater)

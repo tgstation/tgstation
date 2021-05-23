@@ -157,7 +157,7 @@
 	var/motor_heat = 5000
 	if(abs(temperature_target_delta) < 5) //Allow the machine to work more finely on lower temperature differences.
 		motor_heat = 0
-	
+
 	// Automatic Switching. Longer if check to prevent unecessary update_appearances.
 	if ((cooling && temperature_target_delta > 0) || (!cooling && temperature_target_delta < 0))
 		cooling = temperature_target_delta <= 0 // Thermomachines that reached the target will default to cooling.
@@ -169,18 +169,18 @@
 		skipping_work = TRUE
 		return
 
-	// Efficiency should be a proc level variable, but we need it for the ui. 
+	// Efficiency should be a proc level variable, but we need it for the ui.
 	// This is to reset the value when we are heating.
 	efficiency = 1
 
 	if(cooling)
 		var/datum/gas_mixture/exchange_target
-		// Exchange target is the thing we are paired with, be it enviroment or the red port. 
+		// Exchange target is the thing we are paired with, be it enviroment or the red port.
 		if(use_enviroment_heat)
 			exchange_target = local_turf.return_air()
 		else
 			exchange_target = airs[2]
-			
+
 		if (exchange_target.total_moles() < 0.01)
 			skipping_work = TRUE
 			return
@@ -207,7 +207,7 @@
 				if(check_explosion(exchange_target.temperature))
 					explode()
 					return PROCESS_KILL //We're dying anyway, so let's stop processing
-		
+
 		exchange_target.temperature = max((THERMAL_ENERGY(exchange_target) - (heat_amount * efficiency) + motor_heat) / exchange_target.heat_capacity(), TCMB)
 
 	main_port.temperature = max((THERMAL_ENERGY(main_port) + (heat_amount * efficiency)) / main_port.heat_capacity(), TCMB)
@@ -220,7 +220,7 @@
 		power_usage = idle_power_usage
 	if(power_usage > 1e6)
 		power_usage *= efficiency
-	
+
 	use_power(power_usage)
 	update_appearance()
 	update_parents()
@@ -328,7 +328,8 @@
 		sparks.attach(src)
 		sparks.start()
 		obj_flags |= EMAGGED
-		user.visible_message("<span class='warning'>You emag [src], overwriting thermal safety restrictions.</span>")
+		balloon_alert(user, "thermal safety restrictions overwritten")
+		visible_message("<span class='warning'>Sparks fly out of [src]!</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal safety restrictions.")
 
 /obj/machinery/atmospherics/components/binary/thermomachine/emp_act()

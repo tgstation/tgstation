@@ -215,5 +215,5 @@
 		return
 	start_at = 100
 	stop_at = 0
-	to_chat(user, "<span class='notice'>You remove the access restrictions and lower the automatic ejection threshold!</span>")
+	balloon_alert(user, "restrictions lifted, automatic ejection threshold lowered")
 	obj_flags |= EMAGGED

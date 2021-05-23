@@ -63,6 +63,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	if(user)
+		balloon_alert(user, "global delivery unlocked")
 		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 		"<span class='notice'>You change the routing protocols, allowing the Supply Pod to land anywhere on the station.</span>")
 	obj_flags |= EMAGGED

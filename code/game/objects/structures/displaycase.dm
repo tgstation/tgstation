@@ -566,7 +566,7 @@
 	. = ..()
 	payments_acc = null
 	req_access = list()
-	to_chat(user, "<span class='warning'>[src]'s card reader fizzles and smokes, and the account owner is reset.</span>")
+	balloon_alert(user, "account owner reset")
 
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()

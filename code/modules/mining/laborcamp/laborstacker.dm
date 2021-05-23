@@ -122,7 +122,7 @@ GLOBAL_LIST(labor_sheet_values)
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
-		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+		balloon_alert(user, "prisoner status radio broken")
 
 /**********************Prisoner Collection Unit**************************/
 

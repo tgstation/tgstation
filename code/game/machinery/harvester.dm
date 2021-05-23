@@ -170,7 +170,7 @@
 		return
 	obj_flags |= EMAGGED
 	allow_living = TRUE
-	to_chat(user, "<span class='warning'>You overload [src]'s lifesign scanners.</span>")
+	balloon_alert(user, "lifesign scanning overloaded")
 
 /obj/machinery/harvester/container_resist_act(mob/living/user)
 	if(!harvesting)

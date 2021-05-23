@@ -271,6 +271,7 @@
 		var/datum/design/found_design = SSresearch.techweb_design_by_id(design_id)
 		if((found_design.build_type & LIMBGROWER) && ("emagged" in found_design.category))
 			stored_research.add_design(found_design)
+	balloon_alert(user, "safety overrides deactivated")
 	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
 	obj_flags |= EMAGGED
 	update_static_data(user)

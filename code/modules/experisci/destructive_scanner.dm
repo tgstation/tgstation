@@ -88,7 +88,7 @@
 		return
 	obj_flags |= EMAGGED
 	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, "<span class='notice'>You disable the safety sensor BIOS on [src].</span>")
+	balloon_alert(user, "safety sensor BIOS killed")
 
 /obj/machinery/destructive_scanner/update_icon_state()
 	. = ..()

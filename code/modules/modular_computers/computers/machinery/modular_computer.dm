@@ -62,7 +62,7 @@
 
 /obj/machinery/modular_computer/emag_act(mob/user)
 	if(!cpu)
-		to_chat(user, "<span class='warning'>You'd need to turn the [src] on first.</span>")
+		balloon_alert(user, "turn it on first!")
 		return FALSE
 	return (cpu.emag_act(user))
 

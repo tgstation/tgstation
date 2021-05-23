@@ -172,9 +172,9 @@ RSF
 /obj/item/rsf/cookiesynth/emag_act(mob/user)
 	obj_flags ^= EMAGGED
 	if(obj_flags & EMAGGED)
-		to_chat(user, "<span class='warning'>You short out [src]'s reagent safety checker!</span>")
+		balloon_alert(user, "reagent safety checker disabled")
 	else
-		to_chat(user, "<span class='warning'>You reset [src]'s reagent safety checker!</span>")
+		balloon_alert(user, "reagent safety checker reset")
 
 /obj/item/rsf/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
@@ -188,4 +188,4 @@ RSF
 		toxin = FALSE
 		to_dispense = /obj/item/food/cookie
 		to_chat(user, "<span class='notice'>Cookie Synthesizer reset.</span>")
-	
+

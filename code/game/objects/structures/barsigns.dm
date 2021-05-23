@@ -114,9 +114,9 @@
 
 /obj/structure/sign/barsign/emag_act(mob/user)
 	if(broken)
-		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
+		balloon_alert(user, "nothing happens...")
 		return
-	to_chat(user, "<span class='notice'>You load an illegal barsign into the memory buffer...</span>")
+	balloon_alert(user, "illegal barsign loaded")
 	sleep(10 SECONDS)
 	chosen_sign = set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 

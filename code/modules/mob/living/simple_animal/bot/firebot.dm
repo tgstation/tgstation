@@ -128,7 +128,7 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
+			balloon_alert(user, "bot set to \"fight fire with fire\" mode")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(user)

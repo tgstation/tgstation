@@ -216,7 +216,8 @@
 /obj/item/clothing/suit/space/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
-		user.visible_message("<span class='warning'>You emag [src], overwriting thermal regulator restrictions.</span>")
+		balloon_alert(user, "thermal regulator restrictions wiped")
+		visible_message("<span class='warning'>Sparks fly out of [src]!</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 

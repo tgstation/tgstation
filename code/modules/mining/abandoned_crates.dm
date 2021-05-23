@@ -103,6 +103,7 @@
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
+		balloon_alert(user, "anti-tamper system activated") //idiot
 		boom(user)
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)

@@ -38,7 +38,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+	balloon_alert(user, "hud corrupted")
 	desc = "[desc] The display is flickering slightly."
 
 /obj/item/clothing/glasses/hud/health

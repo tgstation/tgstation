@@ -145,6 +145,7 @@
 	..()
 	if(emagged == 2)
 		if(user)
+			balloon_alert(user, "opposite day uploaded")
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
 ///mobs should use move_resist instead of anchored.

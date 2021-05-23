@@ -186,4 +186,5 @@
 		return
 	playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
+	balloon_alert(user, "security protocols removed")
 	to_chat(user, "<span class='notice'>You disable the security protocols.</span>")

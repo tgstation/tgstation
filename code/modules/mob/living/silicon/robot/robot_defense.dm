@@ -319,20 +319,20 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	if(!opened)//Cover is closed
 		if(locked)
-			to_chat(user, "<span class='notice'>You emag the cover lock.</span>")
+			balloon_alert(user, "cover lock unlocked")
 			locked = FALSE
 			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
 				to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")
 		else
-			to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
+			balloon_alert(user, "cover lock already unlocked!")
 		return
 	if(world.time < emag_cooldown)
 		return
 	if(wiresexposed)
-		to_chat(user, "<span class='warning'>You must unexpose the wires first!</span>")
+		balloon_alert(user, "unexpose the wires first!")
 		return
 
-	to_chat(user, "<span class='notice'>You emag [src]'s interface.</span>")
+	balloon_alert(user, "synborg v1.7 uploaded")
 	emag_cooldown = world.time + 100
 
 	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/traitor))

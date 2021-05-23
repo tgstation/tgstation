@@ -40,7 +40,7 @@
 /obj/item/nanite_remote/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, "<span class='warning'>You override [src]'s ID lock.</span>")
+	balloon_alert(user, "id lock disarmed")
 	obj_flags |= EMAGGED
 	if(locked)
 		locked = FALSE

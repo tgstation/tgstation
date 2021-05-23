@@ -188,11 +188,13 @@
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
 	if(!emagged)
+		balloon_alert(user, "roadrage implanted")
 		emagged = TRUE
 	if(!open)
 		locked = !locked
-		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
+		balloon_alert(user, "controls [locked ? "lock" : "unlock"]ed")
 	flick("[base_icon]-emagged", src)
+
 	playsound(src, "sparks", 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3

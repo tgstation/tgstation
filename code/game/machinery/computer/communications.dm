@@ -76,7 +76,7 @@
 	obj_flags |= EMAGGED
 	if (authenticated)
 		authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
-	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
+	balloon_alert(user, "communication routing scrambled...?")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 
 /obj/machinery/computer/communications/ui_act(action, list/params)

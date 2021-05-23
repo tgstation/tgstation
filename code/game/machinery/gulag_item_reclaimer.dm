@@ -23,6 +23,7 @@
 /obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
 	if(obj_flags & EMAGGED) // emagging lets anyone reclaim all the items
 		return
+	balloon_alert(user, "reclamation access bypassed")
 	req_access = list()
 	obj_flags |= EMAGGED
 

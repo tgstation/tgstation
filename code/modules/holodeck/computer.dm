@@ -373,11 +373,12 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	if(obj_flags & EMAGGED)
 		return
 	if(!LAZYLEN(emag_programs))
+		balloon_alert(user, "no programs to corrupt")
 		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
 		return
 	playsound(src, "sparks", 75, TRUE)
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
+	balloon_alert(user, "projector power amplified, protocols wiped")
 	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
 	log_game("[key_name(user)] emagged the Holodeck Control Console")
 	nerf(!(obj_flags & EMAGGED),FALSE)

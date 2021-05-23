@@ -388,7 +388,8 @@
 	locked = FALSE
 	obj_flags |= EMAGGED
 	if(user)
-		user.visible_message("<span class='warning'>[user.name] emags [src].</span>", "<span class='notice'>You short out the lock.</span>")
+		balloon_alert(user, "lock shorted out")
+		user.visible_message("<span class='warning'>[user.name] emags [src].</span>")
 
 
 /obj/machinery/power/emitter/prototype

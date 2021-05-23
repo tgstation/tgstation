@@ -331,7 +331,7 @@
 /obj/item/paicard/emag_act(mob/user) // Emag to wipe the master DNA and supplemental directive
 	if(!pai)
 		return
-	to_chat(user, "<span class='notice'>You override [pai]'s directive system, clearing its master string and supplied directive.</span>")
+	balloon_alert(user, "loyalties and directives purged")
 	to_chat(pai, "<span class='userdanger'>Warning: System override detected, check directive sub-system for any changes.</span>")
 	log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
 	pai.master = null

@@ -146,6 +146,7 @@
 /obj/item/lightreplacer/emag_act()
 	if(obj_flags & EMAGGED)
 		return
+	balloon_alert(user, "dangerous bulbs achieved")
 	Emag()
 
 /obj/item/lightreplacer/attack_self(mob/user)
