@@ -150,7 +150,7 @@
 	endurance = 30
 	maturation = 5
 	yield = 1
-	genes = list(/datum/plant_gene/trait/mob_transformation/shroom)
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/mob_transformation/shroom)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.15)

@@ -573,7 +573,7 @@
 		return
 
 	RegisterSignal(new_seed, COMSIG_PLANT_ON_GROW, .proc/try_release_gas)
-	RegisterSignal(new_seed, COMSIG_PARENT_PREQDELETED, , .proc/stop_gas)
+	RegisterSignal(new_seed, COMSIG_PARENT_PREQDELETED, .proc/stop_gas)
 
 /*
  * Whenever the plant starts to grow in a tray, check if we can release gas.
