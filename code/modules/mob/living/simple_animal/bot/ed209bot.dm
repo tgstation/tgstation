@@ -35,7 +35,7 @@
 /mob/living/simple_animal/bot/secbot/ed209/emag_act(mob/user)
 	..()
 	icon_state = "ed209[on]"
-	balloon_alert(user, "weapon free mode set")
+	balloon_alert(user, "weapon-free mode set")
 	set_weapon()
 
 /mob/living/simple_animal/bot/secbot/ed209/handle_automated_action()

@@ -319,7 +319,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	if(!opened)//Cover is closed
 		if(locked)
-			balloon_alert(user, "cover lock unlocked")
+			balloon_alert(user, "unlocked cover")
 			locked = FALSE
 			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
 				to_chat(user, "<span class='boldwarning'>[src] seems to be controlled remotely! Emagging the interface may not work as expected.</span>")

@@ -534,7 +534,7 @@
 	. = ..()
 	if(can_flashlight && attached_light) //if it has a light but can_flashlight is false, the light is permanently attached.
 		I.play_tool_sound(src)
-		balloon_alert(user, "[attached_light] removed from [src]")
+		balloon_alert(user, "removed [attached_light]")
 		attached_light.forceMove(drop_location())
 		if(Adjacent(user) && !issilicon(user))
 			user.put_in_hands(attached_light)

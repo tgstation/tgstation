@@ -656,7 +656,7 @@
 				balloon_alert(user, "interrupted!")
 				to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
 				return CANT_UNFASTEN
-			balloon_alert(user, "[anchored ? "un" : ""]secured [src].")
+			balloon_alert(user, "[anchored ? "un" : ""]secured [src]")
 			set_anchored(!anchored)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
