@@ -53,9 +53,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "ag" = (
@@ -71,10 +69,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 26
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
@@ -102,9 +97,7 @@
 /area/shuttle/abandoned/cargo)
 "aj" = (
 /obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/dirt,
@@ -129,26 +122,19 @@
 "am" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/emcloset/anchored,
-/obj/machinery/button/door{
-	id = "ntms_exterior";
-	name = "NTMS-037 External Lock";
-	normaldoorcontrol = 1;
-	pixel_x = -24;
-	pixel_y = -8;
-	specialfunctions = 4
-	},
 /obj/structure/sign/warning/xeno_mining{
 	pixel_y = 32
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/directional/west{
+	id = "ntms_exterior";
+	name = "NTMS-037 External Lock";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
 "an" = (
@@ -159,11 +145,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Salvage Ship Cargo APC";
-	pixel_x = -25
-	},
+/obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/mineral/titanium/yellow,
@@ -209,13 +191,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 24
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
 "ar" = (
@@ -355,17 +333,15 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/machinery/button/door/directional/north{
+	id = "whiteship_port";
+	name = "Cargo Bay Control"
+	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "aF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
-	},
-/obj/machinery/button/door{
-	id = "whiteship_port";
-	name = "Cargo Bay Control";
-	pixel_x = -24;
-	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
@@ -431,9 +407,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aM" = (
@@ -449,7 +423,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "aN" = (
-/obj/machinery/light/small/built,
+/obj/machinery/light/small/built/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/components/unary/tank/air,
 /obj/effect/turf_decal/bot,
@@ -727,7 +701,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
@@ -742,9 +716,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/yellow,
@@ -781,10 +753,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
 "bs" = (
@@ -795,9 +764,7 @@
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
 /obj/item/tank/internals/emergency_oxygen,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "bt" = (
@@ -858,12 +825,8 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 24
-	},
+/obj/machinery/light/directional/east,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "by" = (
@@ -884,10 +847,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bz" = (
@@ -903,10 +863,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/power/apc{
-	name = "Salvage Ship Engineering APC";
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -917,9 +874,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/light_switch{
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bB" = (
@@ -930,7 +885,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bC" = (
@@ -960,10 +915,7 @@
 /obj/structure/rack,
 /obj/item/storage/box/lights/mixed,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
@@ -994,9 +946,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/light_switch{
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
@@ -1027,9 +977,7 @@
 /area/shuttle/abandoned/bridge)
 "bQ" = (
 /obj/structure/table,
-/obj/machinery/firealarm{
-	pixel_y = 26
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/folder/yellow{
@@ -1054,11 +1002,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned/bridge)
 "bS" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "NTMS-037 Bridge APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -1068,9 +1012,7 @@
 /area/shuttle/abandoned/bridge)
 "bT" = (
 /obj/structure/table,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
@@ -1097,9 +1039,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/item/bedsheet/brown,
 /turf/open/floor/wood,
@@ -1115,9 +1055,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/item/bedsheet/brown,
 /obj/effect/decal/cleanable/greenglow,
@@ -1174,9 +1112,7 @@
 /obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
@@ -1232,9 +1168,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
@@ -1281,12 +1215,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/syndi_cakes,
 /obj/item/organ/stomach,
-/obj/machinery/firealarm{
-	pixel_y = 26
-	},
-/obj/machinery/light_switch{
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/north,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/bar)
 "co" = (
@@ -1311,13 +1241,8 @@
 	color = "#c45c57";
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/carpet,
 /area/shuttle/abandoned/crew)
 "cr" = (
@@ -1408,10 +1333,7 @@
 	pixel_y = 6;
 	req_access = null
 	},
-/obj/machinery/light_switch{
-	pixel_x = 24;
-	pixel_y = -6
-	},
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned/bridge)
 "cA" = (
@@ -1492,11 +1414,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "NTMS-037 Crew Quarters APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
@@ -1663,7 +1581,7 @@
 	desc = "Used to grind things up into raw materials and liquids.";
 	pixel_y = 5
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cV" = (
@@ -1674,13 +1592,8 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/crew)
 "cW" = (
@@ -1706,9 +1619,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/crew)
 "cY" = (
@@ -1726,7 +1637,7 @@
 	anchored = 1;
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/machinery/computer/security/telescreen{
 	dir = 1;
 	name = "NTMS-037 Monitor";
@@ -1757,11 +1668,7 @@
 /obj/machinery/microwave{
 	pixel_y = 5
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "NTMS-037 Saloon APC";
-	pixel_x = -25
-	},
+/obj/machinery/power/apc/auto_name/west,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bar)

@@ -122,10 +122,6 @@
 
 /obj/item/pressure_plate/hologrid/Initialize()
 	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
 	AddElement(/datum/element/undertile, tile_overlay = tile_overlay) //we remove use_anchor here, so it ALWAYS stays anchored
 
 /obj/item/pressure_plate/hologrid/examine(mob/user)

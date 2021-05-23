@@ -279,7 +279,7 @@
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
 		if(user.client && user.client.holder)
-			var/response = alert("Enable this CTF game?", "CTF", "Yes", "No")
+			var/response = tgui_alert(usr,"Enable this CTF game?", "CTF", list("Yes", "No"))
 			if(response == "Yes")
 				toggle_id_ctf(user, game_id)
 			return
@@ -360,7 +360,7 @@
 	else //2-3 choices
 		var/list/names_only = assoc_list_strip_value(ctf_gear)
 		names_only.len += 1 //create a new null entry so if it's a 2-sized list, names_only[3] is null instead of out of bounds
-		var/result = alert(new_team_member, "Select a class.", "CTF", names_only[1], names_only[2], names_only[3])
+		var/result = tgui_alert(new_team_member, "Select a class.", "CTF", list(names_only[1], names_only[2], names_only[3]))
 		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob))
 			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
 		chosen_class = ctf_gear[result]

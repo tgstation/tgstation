@@ -46,7 +46,7 @@
 	name = "Paramedic Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/paramedic
-	gloves = /obj/item/clothing/gloves/color/plasmaman/white
+	gloves = /obj/item/clothing/gloves/color/plasmaman/plasmanitrile
 	head = /obj/item/clothing/head/helmet/space/plasmaman/paramedic
 
 /datum/outfit/plasmaman/viro

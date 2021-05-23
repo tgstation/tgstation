@@ -168,6 +168,10 @@
 		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")
 		return
 
+	if(IS_DEAD_OR_INCAP(src))
+		to_chat(src, "<span class='warning'>You're unable to offer anything in your current state!</span>")
+		return
+
 	if(istype(receiving, /obj/item/slapper))
 		offer_high_five(receiving)
 		return

@@ -69,9 +69,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "an" = (
-/obj/machinery/light/broken{
-	dir = 8
-	},
+/obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
 "ao" = (
@@ -152,7 +150,7 @@
 	},
 /area/ruin/unpowered)
 "aC" = (
-/obj/machinery/light/broken,
+/obj/machinery/light/broken/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
 "aD" = (
@@ -204,9 +202,7 @@
 /area/ruin/unpowered)
 "aK" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/machinery/light/broken{
-	dir = 1
-	},
+/obj/machinery/light/broken/directional/north,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/unpowered)
 "aL" = (
@@ -237,9 +233,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered)
 "aP" = (
-/obj/machinery/light/broken{
-	dir = 1
-	},
+/obj/machinery/light/broken/directional/north,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
@@ -332,9 +326,7 @@
 	},
 /area/ruin/unpowered)
 "bh" = (
-/obj/machinery/light/broken{
-	dir = 8
-	},
+/obj/machinery/light/broken/directional/west,
 /obj/structure/table_frame,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/unpowered)
