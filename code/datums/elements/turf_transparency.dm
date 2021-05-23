@@ -1,4 +1,3 @@
-#define MULTIZ_MANAGED_TURF_VIS_CONTENTS "multiz turf"
 
 /datum/element/turf_z_transparency
 	var/show_bottom_level = FALSE
@@ -65,8 +64,8 @@
 	SIGNAL_HANDLER
 
 	var/turf/below_turf = our_turf.below()
-	if(!below_turf)
-		return
+	if(!below_turf || !IS_DYNAMIC_LIGHTING(below_turf))
+		return //if theres no lighting underlay then we dont need to do this bullshit
 
 	var/datum/lighting_object/below_lighting = below_turf.lighting_object
 	var/mutable_appearance/below_turf_without_lighting = new(below_turf)
@@ -113,6 +112,3 @@
 	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
 	our_turf.underlays += underlay_appearance
 	return TRUE
-
-#undef MULTIZ_MANAGED_TURF_VIS_CONTENTS
-
