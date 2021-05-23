@@ -106,7 +106,7 @@
 				"[config.type]"
 			) as anything in allowed_configs
 			new_config = allowed_configs[new_config]
-			new_config = SSgreyscale.configurations[new_config]
+			new_config = SSgreyscale.configurations[new_config] || new_config
 			if(!isnull(new_config) && config != new_config)
 				config = new_config
 				queue_refresh()
