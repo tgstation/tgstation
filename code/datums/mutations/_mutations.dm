@@ -5,6 +5,7 @@
 /datum/mutation/human
 	name = "mutation"
 	var/desc = "A mutation."
+	///prevents it from being randomly rolled, aka this doesn't exist outside of specific code adding the mutation.
 	var/locked
 	var/quality
 	var/get_chance = 100
@@ -13,8 +14,10 @@
 	var/text_lose_indication = ""
 	var/static/list/visual_indicators = list()
 	var/obj/effect/proc_holder/spell/power
-	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
-	var/list/species_allowed //to restrict mutation to only certain species
+	///which mutation layer to use for visuals like tk overlay
+	var/layer_used = MUTATIONS_LAYER
+	///restricts mutation to only certain species
+	var/list/species_allowed
 	var/health_req //minimum health required to acquire the mutation
 	var/limb_req //required limbs to acquire this mutation
 	var/time_coeff = 1 //coefficient for timed mutations

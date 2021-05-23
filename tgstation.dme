@@ -801,6 +801,7 @@
 #include "code\datums\mutations\speech.dm"
 #include "code\datums\mutations\telekinesis.dm"
 #include "code\datums\mutations\touch.dm"
+#include "code\datums\mutations\you_are_two.dm"
 #include "code\datums\mutations\holy_mutation\burdened.dm"
 #include "code\datums\mutations\holy_mutation\honorbound.dm"
 #include "code\datums\quirks\_quirk.dm"
