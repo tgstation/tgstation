@@ -172,6 +172,9 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
 
+/obj/structure/industrial_lift/attack_hulk(mob/living/carbon/user)//baby hands cannot smash tram
+	return
+
 /obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/potential_rider)
 	SIGNAL_HANDLER
 	RemoveItemFromLift(potential_rider)
@@ -227,16 +230,36 @@ GLOBAL_LIST_EMPTY(lifts)
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
+	if(istype(destination, /turf/closed/wall))
+		var/turf/closed/wall/C = destination
+		do_sparks(2, FALSE, C)
+		C.dismantle_wall(devastated = TRUE)
+		for(var/mob/M in urange(8, src))
+			shake_camera(M, 2, 3)
+		
+		playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	if(going == DOWN)
 		for(var/mob/living/crushed in destination.contents)
 			to_chat(crushed, "<span class='userdanger'>You are crushed by [src]!</span>")
 			crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
 	else if(going != UP) //can't really crush something upwards
-		for(var/obj/structure/anchortrouble in destination.contents)
-			if(!QDELETED(anchortrouble) && anchortrouble.anchored && (!istype(anchortrouble, /obj/structure/holosign)) && anchortrouble.layer >= GAS_PUMP_LAYER) //to avoid pipes, wires, etc
+		var/atom/throw_target = get_edge_target_turf(src, turn(going, pick(45, -45))) //finds a spot to throw the victim at for daring to be hit by a tram
+		for(var/obj/structure/victimstructure in destination.contents)
+			if(!QDELETED(victimstructure) && (!istype(victimstructure, /obj/structure/holosign)) && victimstructure.layer >= GAS_PUMP_LAYER) //to avoid wires
 				playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-				visible_message("<span class='notice'>[src] smashes through [anchortrouble]!</span>")
-				anchortrouble.deconstruct(FALSE)
+				if(victimstructure.anchored && initial(victimstructure.anchored) == TRUE) //prevents you from wrenching lockers/crates to easily break them open
+					visible_message("<span class='danger'>[src] smashes through [victimstructure]!</span>")
+					victimstructure.deconstruct(FALSE)
+				else
+					visible_message("<span class='danger'>[src] violently rams [victimstructure] out of the way!</span>") 
+					victimstructure.anchored = FALSE
+					victimstructure.take_damage(rand(20,25))
+					victimstructure.throw_at(throw_target, 200, 4)
+		for(var/obj/machinery/victimmachine in destination.contents)
+			if(!QDELETED(victimmachine) && victimmachine.layer >= GAS_PUMP_LAYER) //to avoid pipes
+				playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+				visible_message("<span class='danger'>[src] smashes through [victimmachine]!</span>")
+				victimmachine.Destroy()
 		for(var/mob/living/collided in destination.contents)
 			to_chat(collided, "<span class='userdanger'>[src] collides into you!</span>")
 			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
@@ -253,9 +276,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			var/turf/T = get_turf(src)
 			T.add_mob_blood(collided)
 
-			collided.throw_at()
 			//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
-			var/atom/throw_target = get_edge_target_turf(collided, turn(going, pick(45, -45)))
 			collided.throw_at(throw_target, 200, 4)
 	forceMove(destination)
 	for(var/atom/movable/thing as anything in things2move)

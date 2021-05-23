@@ -21,12 +21,6 @@
 "aae" = (
 /turf/closed/mineral/random/stationside/asteroid,
 /area/mine/explored)
-"aag" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse/brown/tom,
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/security/prison)
 "aai" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
@@ -22176,6 +22170,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
+"epJ" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/mouse/brown/tom,
+/turf/open/floor/iron,
+/area/security/prison)
 "epT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -107607,7 +107606,7 @@ aae
 nTn
 acA
 fnk
-lFy
+epJ
 lrc
 jmb
 qFm
@@ -108136,7 +108135,7 @@ aGF
 ccM
 abE
 acP
-aag
+ooT
 ccM
 ljx
 oho
