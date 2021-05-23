@@ -8,7 +8,6 @@ import { resolveAsset } from '../assets';
 
 const NULL_REF = "[0x0]";
 const SVG_Y_OFFSET = -32;
-const SVG_X_CURVE_POINT = 16;
 const SVG_CURVE_INTENSITY = 64;
 
 const BasicInput = (props, context) => {
@@ -605,7 +604,7 @@ export class Port extends Component {
       = useLocalState(this.context, "selected_port", null);
 
     return (
-      <Stack {...rest}>
+      <Stack {...rest} justify={isOutput? "flex-end" : "flex-start"}>
         {!!isOutput && (
           <Stack.Item>
             <DisplayName
@@ -658,7 +657,7 @@ const DisplayName = (props, context) => {
 
   const InputComponent = FUNDAMENTAL_DATA_TYPES[port.type || 'any'];
 
-  const isInput = !isOutput
+  const hasInput = !isOutput
     && port.connected_to === NULL_REF
     && InputComponent;
 
@@ -666,7 +665,7 @@ const DisplayName = (props, context) => {
     <Box {...rest}>
       <Flex direction="column">
         <Flex.Item>
-          {isInput && (
+          {hasInput && (
             <InputComponent
               setValue={(val, extraParams) => act("set_component_input", {
                 component_id: componentId,
@@ -684,6 +683,7 @@ const DisplayName = (props, context) => {
           <Box
             fontSize={0.75}
             opacity={0.25}
+            textAlign={isOutput? "right" : "left"}
           >
             {port.type || "any"}
           </Box>

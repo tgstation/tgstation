@@ -773,7 +773,7 @@
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
-/datum/design/board/arcade_battle
+/datum/design/board/component_printer
 	name = "Machine Design (Component Printer)"
 	desc = "The circuit board for a component printer"
 	id = "component_printer"
