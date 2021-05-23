@@ -2,11 +2,14 @@
 /obj/machinery/component_printer
 	name = "component printer"
 	desc = "Produces components for the creation of integrated circuits."
-	// MOTHBLOCKS TODO: We need a real icon
-	icon_state = "holopad0"
+	icon = 'icons/obj/wiremod_fab.dmi'
+	icon_state = "fab-idle"
+	circuit = /obj/item/circuitboard/machine/component_printer
 
 	/// The internal material bus
 	var/datum/component/remote_materials/materials
+
+	density = TRUE
 
 	/// The techweb the printer will get researched designs from
 	var/datum/techweb/techweb
@@ -98,6 +101,16 @@
 	data["designs"] = designs
 
 	return data
+
+/obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
+	if(..())
+		return TRUE
+	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/component_printer/screwdriver_act(mob/living/user, obj/item/tool)
+	if(..())
+		return TRUE
+	return default_deconstruction_screwdriver(user, "fab-o", "fab-idle", tool)
 
 /obj/machinery/component_printer/proc/get_material_cost_data(list/materials)
 	var/list/data = list()

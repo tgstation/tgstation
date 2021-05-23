@@ -8,7 +8,7 @@
 /obj/item/integrated_circuit
 	name = "integrated circuit"
 	icon = 'icons/obj/module.dmi'
-	icon_state = "circuit_map"
+	icon_state = "integrated_circuit"
 	inhand_icon_state = "electronic"
 
 	/// The power of the integrated circuit

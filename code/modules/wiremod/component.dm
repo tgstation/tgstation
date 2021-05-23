@@ -10,7 +10,7 @@
 /obj/item/circuit_component
 	name = COMPONENT_DEFAULT_NAME
 	icon = 'icons/obj/module.dmi'
-	icon_state = "circuit_map"
+	icon_state = "component"
 	inhand_icon_state = "electronic"
 
 	/// The name of the component shown on the UI
