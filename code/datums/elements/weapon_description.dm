@@ -12,7 +12,7 @@
 	var/attached_proc
 
 	// Flavor text crimes used in build_weapon_text()
-	var/list/crimes = list("Assaults", "Third Degree Murders", "Robberies", "Terrorist Attacks", "Different Felonies", "Felonies", "Counts of Tax Evasion", "Mutinies")
+	var/list/crimes = list("Assaults", "Third Degree Murders", "Robberies", "Terrorist Attacks", "Different Felonies", "Felinies", "Counts of Tax Evasion", "Mutinies")
 	var/list/victims = list("a human", "a moth", "a felinid", "a lizard", "a particularly resilient slime", "a syndicate agent", "a clown", "a mime", "a mortal foe", "an innocent bystander")
 
 /datum/element/weapon_description/Attach(datum/target, attached_proc)
