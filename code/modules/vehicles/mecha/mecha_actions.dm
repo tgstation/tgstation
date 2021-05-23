@@ -244,23 +244,10 @@
 /datum/action/vehicle/sealed/mecha/mech_toggle_phasing/Trigger()
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
-	chassis.phasing = !chassis.phasing
+	chassis.phasing = chassis.phasing ? "" : "phasing"
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
 	to_chat(owner, "[icon2html(chassis, owner)]<font color=\"[chassis.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
 	UpdateButtonIcon()
-
-/*
-///Savannah Skyfall
-/datum/action/vehicle/sealed/mecha/skyfall
-	name = "Savannah Skyfall"
-	button_icon_state = "mech_savannah"
-
-/datum/action/vehicle/sealed/mecha/skyfall/Trigger()
-	if(!owner || !chassis || !(owner in chassis.occupants))
-		return
-	to_chat(owner, "[icon2html(chassis, owner)]<span class='notice'>Charging Skyfall. Damage or Movement will interrupt the charge.</span>")
-
-*/
 
 ///swap seats, for two person mecha
 /datum/action/vehicle/sealed/mecha/swap_seat

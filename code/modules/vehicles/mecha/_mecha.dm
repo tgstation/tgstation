@@ -151,8 +151,8 @@
 	///Cooldown between using smoke
 	var/smoke_cooldown = 10 SECONDS
 
-	///Bool for if the mech is currently phasing
-	var/phasing = FALSE
+	///check for phasing, if it is set to text (to describe how it is phasing: "flying", "phasing") it will let the mech walk through walls.
+	var/phasing = ""
 	///Power we use every time we phaze through something
 	var/phasing_energy_drain = 200
 	///icon_state for flick() when phazing
@@ -521,13 +521,13 @@
 	SIGNAL_HANDLER
 	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled
 		return
-	if(completely_disabled || is_currently_ejecting)
+	if(completely_disabled || is_currently_ejecting || (mecha_flags & CANNOT_INTERACT))
 		return
 	var/list/modifiers = params2list(params)
 	if(isAI(user) == !LAZYACCESS(modifiers, MIDDLE_CLICK))//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
 		return
 	if(phasing)
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to interact with objects while phasing.</span>")
+		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to interact with objects while [phasing].</span>")
 		return
 	if(user.incapacitated())
 		return
@@ -713,7 +713,7 @@
 	. = ..()
 	if(phasing) //Theres only one cause for phasing canpass fails
 		addtimer(VARSET_CALLBACK(src, movedelay, TRUE), movedelay*3)
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>A dull, universal force is preventing you from phasing here!</span>")
+		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>A dull, universal force is preventing you from [phasing] here!</span>")
 		spark_system.start()
 		return
 	if(.) //mech was thrown/door/whatever
