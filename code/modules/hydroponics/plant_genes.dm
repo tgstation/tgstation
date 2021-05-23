@@ -764,6 +764,9 @@
 /datum/plant_gene/trait/invasive/proc/try_spread(obj/item/seeds/our_seed, obj/machinery/hydroponics/our_tray)
 	SIGNAL_HANDLER
 
+	if(prob(100 - (5 * (11 - our_seed.production))))
+		return
+
 	for(var/step_dir in GLOB.alldirs)
 		var/obj/machinery/hydroponics/spread_tray = locate() in get_step(our_tray, step_dir)
 		if(spread_tray && prob(15))

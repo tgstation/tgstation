@@ -289,7 +289,7 @@
 		if (needs_update)
 			update_appearance()
 
-		if(myseed && prob(5 * (11-myseed.production)))
+		if(myseed)
 			SEND_SIGNAL(myseed, COMSIG_PLANT_ON_GROW, src)
 
 	return

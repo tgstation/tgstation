@@ -298,18 +298,27 @@
 /datum/plant_gene/trait/mob_transformation
 	name = "Dormat Ferocity"
 	trait_ids = ATTACK_SELF_ID
+	/// Whether mobs spawned by this trait are dangerous or not.
+	var/dangerous = FALSE
 	/// The typepath to what mob spawns from this plant.
 	var/killer_plant
 	/// Whether our attatched plant is currently waking up or not.
 	var/awakening = FALSE
+	/// Spawned mob's health = this multiplier * seed endurance.
+	var/mob_health_multiplier = 1
+	/// Spawned mob's melee damage = this multiplier * seed potency.
+	var/mob_melee_multiplier = 1
+	/// Spawned mob's move delay = this multiplier * seed potency.
+	var/mob_speed_multiplier = 1
 
 /datum/plant_gene/trait/mob_transformation/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
 
-	our_plant.AddElement(/datum/element/plant_backfire)
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/early_awakening)
+	if(dangerous)
+		our_plant.AddElement(/datum/element/plant_backfire)
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/early_awakening)
 	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/manual_awakening)
 	RegisterSignal(our_plant, COMSIG_ITEM_PRE_ATTACK, .proc/pre_consumption_check)
 
@@ -345,6 +354,10 @@
 	SIGNAL_HANDLER
 
 	if(awakening || isspaceturf(user.loc))
+		return
+
+	if(dangerous && HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='notice'>You decide not to awaken [our_plant]. It may be very dangerous!</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You begin to awaken [our_plant]...</span>")
@@ -386,20 +399,31 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/mob/living/spawned_mob = new killer_plant(our_plant.drop_location())
-	spawned_mob.maxHealth += round(our_seed.endurance / 3)
+	spawned_mob.maxHealth += round(our_seed.endurance * mob_health_multiplier)
 	spawned_mob.health = spawned_mob.maxHealth
 	if(ishostile(spawned_mob))
 		var/mob/living/simple_animal/hostile/spawned_simplemob = spawned_mob
-		spawned_simplemob.melee_damage_lower += round(our_seed.potency / 10)
-		spawned_simplemob.melee_damage_upper += round(our_seed.potency / 10)
-		spawned_simplemob.move_to_delay -= round(our_seed.production / 50)
+		spawned_simplemob.melee_damage_lower += round(our_seed.potency * mob_melee_multiplier)
+		spawned_simplemob.melee_damage_upper += round(our_seed.potency * mob_melee_multiplier)
+		spawned_simplemob.move_to_delay -= round(our_seed.production * mob_speed_multiplier)
 	our_plant.forceMove(our_plant.drop_location())
 	spawned_mob.visible_message("<span class='notice'>[our_plant] growls as it suddenly awakens!</span>")
 	qdel(our_plant)
 
 /// Killer Tomato's transformation gene.
 /datum/plant_gene/trait/mob_transformation/tomato
+	dangerous = TRUE
 	killer_plant = /mob/living/simple_animal/hostile/killertomato
+	mob_health_multiplier = 0.33
+	mob_melee_multiplier = 0.1
+	mob_speed_multiplier = 0.02
+
+/// Walking Mushroom's transformation gene
+/datum/plant_gene/trait/mob_transformation/shroom
+	killer_plant = /mob/living/simple_animal/hostile/mushroom
+	mob_health_multiplier = 0.25
+	mob_melee_multiplier = 0.05
+	mob_speed_multiplier = 0.02
 
 /// Traiit for plants eaten in 1 bite.
 /datum/plant_gene/trait/one_bite
@@ -533,3 +557,64 @@
 	our_plant.forceMove(our_plant.drop_location())
 	explosion(our_plant, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flame_range = flame_reach)
 	qdel(our_plant)
+
+/// Corpseflower's miasma production.
+/// Can be generalized in the future to spawn any gas, but I don't think that's necessarily a good idea.
+/datum/plant_gene/trait/gas_production
+	name = "Miasma Gas Production"
+	/// The location of our tray, if we have one.
+	var/obj/machinery/hydroponics/home_tray
+	/// The seed emitting gas.
+	var/obj/item/seeds/stinky_seed
+
+/datum/plant_gene/trait/gas_production/on_new_seed(obj/item/seeds/new_seed)
+	. = ..()
+	if(!.)
+		return
+
+	RegisterSignal(new_seed, COMSIG_PLANT_ON_GROW, .proc/try_release_gas)
+	RegisterSignal(new_seed, COMSIG_PARENT_PREQDELETED, , .proc/stop_gas)
+
+/*
+ * Whenever the plant starts to grow in a tray, check if we can release gas.
+ *
+ * our_seed - the seed growing
+ * grown_tray - the tray, we're currently growing within
+ */
+/datum/plant_gene/trait/gas_production/proc/try_release_gas(obj/item/seeds/our_seed, obj/machinery/hydroponics/grown_tray)
+	SIGNAL_HANDLER
+
+	if(grown_tray.age < our_seed.maturation) // Start a little before it blooms
+		return
+
+	stinky_seed = our_seed
+	home_tray = grown_tray
+	START_PROCESSING(SSobj, src)
+
+/*
+ * Stop the seed from releasing gas.
+ */
+/datum/plant_gene/trait/gas_production/proc/stop_gas(datum/source)
+	SIGNAL_HANDLER
+
+	stinky_seed = null
+	home_tray = null
+	STOP_PROCESSING(SSobj, src)
+
+/*
+ * If the conditions are acceptable and the potency is high enough, release miasma into the air.
+ */
+/datum/plant_gene/trait/gas_production/process(delta_time)
+	if(!stinky_seed || !home_tray || stinky_seed.loc != home_tray)
+		stop_gas()
+		return
+
+	var/turf/open/tray_turf = get_turf(home_tray)
+	if(abs(ONE_ATMOSPHERE - tray_turf.return_air().return_pressure()) > (stinky_seed.potency / 10 + 10)) // clouds can begin showing at around 50-60 potency in standard atmos
+		return
+
+	var/datum/gas_mixture/stank = new
+	ADD_GAS(/datum/gas/miasma, stank.gases)
+	stank.gases[/datum/gas/miasma][MOLES] = (stinky_seed.yield + 6) * 3.5 * MIASMA_CORPSE_MOLES * delta_time // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
+	tray_turf.assume_air(stank)

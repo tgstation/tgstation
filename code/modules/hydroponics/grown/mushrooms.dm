@@ -150,6 +150,7 @@
 	endurance = 30
 	maturation = 5
 	yield = 1
+	genes = list(/datum/plant_gene/trait/mob_transformation/shroom)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.15)
@@ -162,19 +163,6 @@
 	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
 	can_distill = FALSE
-
-/obj/item/food/grown/mushroom/walkingmushroom/attack_self(mob/user)
-	if(isspaceturf(user.loc))
-		return
-	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
-	M.maxHealth += round(seed.endurance / 4)
-	M.melee_damage_lower += round(seed.potency / 20)
-	M.melee_damage_upper += round(seed.potency / 20)
-	M.move_to_delay -= round(seed.production / 50)
-	M.health = M.maxHealth
-	qdel(src)
-	to_chat(user, "<span class='notice'>You plant the walking mushroom.</span>")
-
 
 // Chanterelle
 /obj/item/seeds/chanter
