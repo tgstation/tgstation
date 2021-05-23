@@ -25,8 +25,8 @@ export class InfinitePlane extends Component {
       zoom: 1,
     };
 
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onMouseMove = this.onMouseMove.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
 
     this.doOffsetMouse = this.doOffsetMouse.bind(this);
@@ -54,7 +54,7 @@ export class InfinitePlane extends Component {
     event.screenZoomY = event.screenY * Math.pow(zoom, -1);
   }
 
-  onMouseDown(event) {
+  handleMouseDown(event) {
     this.setState((state) => {
       return {
         mouseDown: true,
@@ -70,7 +70,7 @@ export class InfinitePlane extends Component {
     });
   }
 
-  onMouseMove(event) {
+  handleMouseMove(event) {
     if (this.state.mouseDown) {
       this.setState((state) => {
         return {
@@ -107,8 +107,8 @@ export class InfinitePlane extends Component {
         })}
       >
         <div
-          onMouseDown={(e) => this.onMouseDown(e)}
-          onMouseMove={(e) => this.onMouseMove(e)}
+          onMouseDown={this.handleMouseDown}
+          onMouseMove={this.handleMouseMove}
           style={{
             "position": "fixed",
             "height": "100%",
@@ -120,8 +120,8 @@ export class InfinitePlane extends Component {
           }}
         />
         <div
-          onMouseDown={(e) => this.onMouseDown(e)}
-          onMouseMove={(e) => this.onMouseMove(e)}
+          onMouseDown={this.handleMouseDown}
+          onMouseMove={this.handleMouseMove}
           style={{
             "position": "fixed",
             "transform": `translate(${left}px, ${top}px) scale(${zoom})`,

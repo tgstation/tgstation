@@ -7,8 +7,6 @@
 import { classes } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from '../components/Box';
 import { addScrollableNode, removeScrollableNode } from '../events';
-import { Component } from 'inferno';
-import { logger } from '../logging';
 
 export const Layout = props => {
   const {
