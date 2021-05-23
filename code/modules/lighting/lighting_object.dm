@@ -15,7 +15,7 @@
 		return
 	. = ..()
 
-	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", 100, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA)
+	current_underlay = mutable_appearance(LIGHTING_ICON, "transparent", 100, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
 	current_underlay.color = LIGHTING_BASE_MATRIX
 
 	affected_turf = source
