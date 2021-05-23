@@ -10,10 +10,14 @@ See _element.dm for detailed explanations
 	var/list/myvar = list()
 
 /datum/element/myelement/Attach(datum/target)
-	myvar |= target
+	if(!isatom(target))
+		return COMPONENT_INCOMPATIBLE
+	var/atom/target_atom = target
+	target_atom.name = "elemental [target_atom.name]"
 	to_chat(target, "Hey, you're in your element.")
 
 /datum/element/myelement/Detach(datum/source)
-	myvar -= target
+	var/atom/source_atom = source
+	source_atom.name = initial(source_atom.name)
 	to_chat(source, "You feel way out of your element.")
 ```
