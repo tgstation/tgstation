@@ -584,3 +584,18 @@
       and only affects the heat reservoir side. 5 Kelvin wiggle room for motor heat
       from previous' 1.5.
   - rscdel: Thermomachines can't pump gases into the reservoir port anymore.
+2021-05-23:
+  FlamingLily:
+  - code_imp: Cleanup of surgery and organ code
+  InsaneRed:
+  - qol: Delta station toxins has been cleaned up  to remove excess piping
+  - bugfix: The delta station toxin  thermomachines are now properly linked to waste
+      and the chamber vents should no longer connect to the output pipes.
+  - bugfix: The secret documents on tram is now inside the cabinet and not the safe
+  Mothblocks:
+  - bugfix: Fixed another source to the bug preventing reconnect.
+  vincentiusvin:
+  - qol: atmospherics dept on delta, icebox, and meta got cleaned up. Pipes and pumps
+      near the tanks got switched. Incinerator on box rerouted. Delta waste release
+      added.
+  - bugfix: Removed instances of duplicated pipes in icebox atmos.
