@@ -560,7 +560,6 @@
 		return
 	attached_light.on = !attached_light.on
 	attached_light.update_brightness()
-	balloon_alert(user, "light toggled [attached_light.on ? "on":"off"]")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
 	update_helmlight()

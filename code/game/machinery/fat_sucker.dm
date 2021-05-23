@@ -215,5 +215,10 @@
 		return
 	start_at = 100
 	stop_at = 0
-	balloon_alert(user, "restrictions lifted, automatic ejection threshold lowered")
+	balloon_alert(user, "restrictions lifted")
+	addtimer(CALLBACK(src, .proc/finish_emag_act, user), 0.5 SECONDS)
 	obj_flags |= EMAGGED
+
+///delayed second balloon alert for addition descriptions
+/obj/machinery/fat_sucker/proc/finish_emag_act(mob/living/user)
+	balloon_alert(user, "automatic ejection threshold lowered")
