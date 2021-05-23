@@ -2,7 +2,7 @@ import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Material, MaterialAmount, MaterialFormatting, Materials, MATERIAL_KEYS } from './common/Materials';
 import { Window } from '../layouts';
-import { Button, Input, Section, Stack } from '../components';
+import { Button, Input, Section, Stack, Tabs } from '../components';
 
 const CATEGORY_ALL = "All";
 
@@ -92,7 +92,7 @@ export const ComponentPrinter = (props, context) => {
             <Stack fill>
               <Stack.Item>
                 <Section fill title="Categories">
-                  <Stack vertical fill>
+                  <Tabs vertical>
                     {Object.values(data.designs)
                       .reduce<string[]>((categories, design) => {
                         const category = getCategory(design.categories);
@@ -103,17 +103,16 @@ export const ComponentPrinter = (props, context) => {
                         }
                       }, [CATEGORY_ALL]).sort().map(category => {
                         return (
-                          <Stack.Item key={category}>
-                            <Button
-                              onClick={() => setCurrentCategory(category)}
-                              selected={category === currentCategory}
-                              fluid
-                            >{category}
-                            </Button>
-                          </Stack.Item>
+                          <Tabs.Tab key={category}
+                            onClick={() => setCurrentCategory(category)}
+                            selected={category === currentCategory}
+                            fluid
+                          >
+                            {category}
+                          </Tabs.Tab>
                         );
                       })}
-                  </Stack>
+                  </Tabs>
                 </Section>
               </Stack.Item>
 
