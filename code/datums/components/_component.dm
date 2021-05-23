@@ -311,7 +311,8 @@
 	var/target = comp_lookup[sigtype]
 	if(!length(target))
 		var/datum/listening_datum = target
-		return call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
+		return NONE | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
+	. = NONE
 	for(var/datum/listening_datum as anything in target)
 		. |= call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
 
