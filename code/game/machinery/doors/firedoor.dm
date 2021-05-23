@@ -141,7 +141,7 @@
 
 	if(density)
 		being_held_open = TRUE
-		user.visible_message("<span class='danger'>[user] holds [src] open.</span>", "<span class='notice'>You hold [src] open.</span>")
+		user.balloon_alert_to_viewers("holding [src] open", "holding [src] open")
 		open()
 		if(QDELETED(user))
 			being_held_open = FALSE
@@ -175,7 +175,7 @@
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
 	if(user)
-		user.visible_message("<span class='danger'>[user] stops holding [src] open.</span>", "<span class='notice'>You stop holding [src] open.</span>")
+		user.balloon_alert_to_viewers("released [src]", "released [src]")
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
