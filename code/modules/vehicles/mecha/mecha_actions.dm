@@ -134,7 +134,11 @@
 
 	strafe = !strafe
 
+<<<<<<< Updated upstream
 	to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Toggled strafing mode [strafe?"on":"off"].</span>")
+=======
+	chassis.balloon_alert(occupants, "strafing mode [strafe?"on":"off"].")
+>>>>>>> Stashed changes
 	log_message("Toggled strafing mode [strafe?"on":"off"].", LOG_MECHA)
 
 	for(var/occupant in occupants)
