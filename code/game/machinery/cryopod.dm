@@ -299,9 +299,9 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		var/datum/job/target_job = SSjob.GetJob(target.mind.assigned_role)
 
 		if(target_job && target_job.req_admin_notify)
-			tgalert(target, "You're an important role! [AHELP_FIRST_MESSAGE]")
+			tgui_alert(target, "You're an important role! [AHELP_FIRST_MESSAGE]")
 		if(antag)
-			tgalert(target, "You're \a [antag.name]! [AHELP_FIRST_MESSAGE]")
+			tgui_alert(target, "You're \a [antag.name]! [AHELP_FIRST_MESSAGE]")
 
 	if(!istype(target) || !can_interact(user) || !target.Adjacent(user) || !ismob(target) || isanimal(target) || !istype(user.loc, /turf) || target.buckled)
 		return

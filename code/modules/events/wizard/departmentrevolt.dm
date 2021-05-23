@@ -15,11 +15,11 @@
 	var/list/options = list("Random", "Uprising of Assistants", "Medical", "Engineering", "Science", "Supply", "Service", "Security")
 	picked_department = input(usr,"Which department should revolt?","Select a department") as null|anything in options
 
-	var/announce_question = alert(usr, "Announce This New Independent State?", "Secession", "Announce", "No Announcement")
+	var/announce_question = tgui_alert(usr, "Announce This New Independent State?", "Secession", list("Announce", "No Announcement"))
 	if(announce_question == "Announce")
 		announce = TRUE
 
-	var/dangerous_question = alert(usr, "Dangerous Nation? This means they will fight other nations.", "Conquest", "Yes", "No")
+	var/dangerous_question = tgui_alert(usr, "Dangerous Nation? This means they will fight other nations.", "Conquest", list("Yes", "No"))
 	if(dangerous_question == "No")
 		dangerous_nation = FALSE
 

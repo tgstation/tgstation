@@ -53935,9 +53935,17 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/camera,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/taperecorder{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/camera,
+/obj/item/pen{
+	pixel_x = -7;
+	pixel_y = -5
+	},
 /turf/open/floor/iron/dark,
 /area/service/library)
 "iKn" = (
@@ -58302,6 +58310,10 @@
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/newscaster/security_unit/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/fancy/candle_box{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/service/library)
 "kBH" = (
@@ -70583,19 +70595,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/table/wood,
-/obj/item/storage/fancy/candle_box{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/taperecorder{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/pen,
 /obj/machinery/light/small/directional/south,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/modular_computer/console/preset/curator{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/service/library)
 "pSI" = (

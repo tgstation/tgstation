@@ -597,13 +597,6 @@
 			else if (M.loc.type in hostile_machines)
 				. += M.loc
 
-/mob/living/simple_animal/hostile/tamed(whomst)
-	. = ..()
-	if(isliving(whomst))
-		var/mob/living/fren = whomst
-		friends = fren
-		faction = fren.faction.Copy()
-
 /**
  * Proc that handles a charge attack windup for a mob.
  */

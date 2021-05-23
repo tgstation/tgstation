@@ -454,6 +454,8 @@
 	open()
 
 /obj/structure/closet/RightClick(mob/user, modifiers)
+	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
+		return
 	if(!opened && secure)
 		togglelock(user)
 	return TRUE
