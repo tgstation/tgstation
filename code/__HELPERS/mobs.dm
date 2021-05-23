@@ -593,7 +593,7 @@ GLOBAL_LIST_EMPTY(species_list)
 //Returns a list of AI's
 /proc/active_ais(check_mind=FALSE, z = null)
 	. = list()
-	for(var/mob/living/silicon/ai/ai in GLOB.ai_list)
+	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
 		if(ai.stat == DEAD)
 			continue
 		if(ai.control_disabled)
