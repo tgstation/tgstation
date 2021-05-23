@@ -293,7 +293,7 @@ export class ObjectComponent extends Component {
     });
     window.addEventListener('mousemove', this.handleDrag);
     window.addEventListener('mouseup', this.handleStopDrag);
-  };
+  }
 
   handleStopDrag(e) {
     const { act } = useBackend(this.context);
@@ -310,7 +310,7 @@ export class ObjectComponent extends Component {
     window.removeEventListener('mousemove', this.handleDrag);
     window.removeEventListener('mouseup', this.handleStopDrag);
     this.setState({ isDragging: false });
-  };
+  }
 
   handleDrag(e) {
     const { dragPos, isDragging, lastMousePos } = this.state;
@@ -331,7 +331,7 @@ export class ObjectComponent extends Component {
         lastMousePos: { x: xPos, y: yPos },
       });
     }
-  };
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     const { input_ports, output_ports } = this.props;
@@ -523,7 +523,7 @@ export class Port extends Component {
       ref: port.ref,
     });
 
-  };
+  }
 
   handlePortRightClick(e) {
     const { act } = useBackend(this.context);
@@ -541,7 +541,7 @@ export class Port extends Component {
       is_input: !isOutput,
       port_id: portIndex,
     });
-  };
+  }
 
   componentDidUpdate() {
     const { port, onPortUpdated } = this.props;
