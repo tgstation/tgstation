@@ -143,7 +143,7 @@
 
 		to_chat(user, "<span class='notice'>You fill \the [src] with lights from \the [S]. " + status_string() + "</span>")
 
-/obj/item/lightreplacer/emag_act()
+/obj/item/lightreplacer/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
 	balloon_alert(user, "dangerous bulbs achieved")

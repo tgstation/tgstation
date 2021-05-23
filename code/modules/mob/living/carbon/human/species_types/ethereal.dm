@@ -115,7 +115,7 @@
 		return
 	emageffect = TRUE
 	if(user)
-		balloon_alert(user, "disco time for [emagged]")
+		user.balloon_alert(user, "disco time for [emagged]")
 	emagged.visible_message("<span class='danger'>[emagged] starts flickering in an array of colors!</span>")
 	handle_emag(emagged)
 	addtimer(CALLBACK(src, .proc/stop_emag, emagged), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
