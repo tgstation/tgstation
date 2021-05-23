@@ -277,57 +277,61 @@ export class ObjectComponent extends Component {
       lastMousePos: null,
     };
 
-    this.startDrag = (e) => {
-      const { x, y } = this.props;
-      e.stopPropagation();
-      this.setState({
-        lastMousePos: null,
-        isDragging: true,
-        dragPos: { x: x, y: y },
-        startPos: { x: x, y: y },
-      });
-      window.addEventListener('mousemove', this.doDrag);
-      window.addEventListener('mouseup', this.stopDrag);
-    };
-
-    this.stopDrag = (e) => {
-      const { act } = useBackend(this.context);
-      const { dragPos } = this.state;
-      const { index } = this.props;
-      if (dragPos) {
-        act("set_component_coordinates", {
-          component_id: index,
-          rel_x: dragPos.x,
-          rel_y: dragPos.y,
-        });
-      }
-
-      window.removeEventListener('mousemove', this.doDrag);
-      window.removeEventListener('mouseup', this.stopDrag);
-      this.setState({ isDragging: false });
-    };
-
-    this.doDrag = (e) => {
-      const { dragPos, isDragging, lastMousePos } = this.state;
-      if (dragPos && isDragging) {
-        e.preventDefault();
-        const { screenZoomX, screenZoomY, screenX, screenY } = e;
-        let xPos = screenZoomX || screenX;
-        let yPos = screenZoomY || screenY;
-        if (lastMousePos) {
-          this.setState({
-            dragPos: {
-              x: dragPos.x - (lastMousePos.x - xPos),
-              y: dragPos.y - (lastMousePos.y - yPos),
-            },
-          });
-        }
-        this.setState({
-          lastMousePos: { x: xPos, y: yPos },
-        });
-      }
-    };
+    this.handleStartDrag = this.handleStartDrag.bind(this);
+    this.handleStopDrag = this.handleStopDrag.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
   }
+
+  handleStartDrag(e) {
+    const { x, y } = this.props;
+    e.stopPropagation();
+    this.setState({
+      lastMousePos: null,
+      isDragging: true,
+      dragPos: { x: x, y: y },
+      startPos: { x: x, y: y },
+    });
+    window.addEventListener('mousemove', this.handleDrag);
+    window.addEventListener('mouseup', this.handleStopDrag);
+  };
+
+  handleStopDrag(e) {
+    const { act } = useBackend(this.context);
+    const { dragPos } = this.state;
+    const { index } = this.props;
+    if (dragPos) {
+      act("set_component_coordinates", {
+        component_id: index,
+        rel_x: dragPos.x,
+        rel_y: dragPos.y,
+      });
+    }
+
+    window.removeEventListener('mousemove', this.handleDrag);
+    window.removeEventListener('mouseup', this.handleStopDrag);
+    this.setState({ isDragging: false });
+  };
+
+  handleDrag(e) {
+    const { dragPos, isDragging, lastMousePos } = this.state;
+    if (dragPos && isDragging) {
+      e.preventDefault();
+      const { screenZoomX, screenZoomY, screenX, screenY } = e;
+      let xPos = screenZoomX || screenX;
+      let yPos = screenZoomY || screenY;
+      if (lastMousePos) {
+        this.setState({
+          dragPos: {
+            x: dragPos.x - (lastMousePos.x - xPos),
+            y: dragPos.y - (lastMousePos.y - yPos),
+          },
+        });
+      }
+      this.setState({
+        lastMousePos: { x: xPos, y: yPos },
+      });
+    }
+  };
 
   shouldComponentUpdate(nextProps, nextState) {
     const { input_ports, output_ports } = this.props;
@@ -372,9 +376,9 @@ export class ObjectComponent extends Component {
         position="absolute"
         left={`${x_pos}px`}
         top={`${y_pos}px`}
-        onMouseDown={(e) => this.startDrag(e)}
-        onMouseUp={(e) => this.stopDrag(e, index)}
-        onComponentWillUnmount={(e) => this.stopDrag(e, index)}
+        onMouseDown={this.handleStartDrag}
+        onMouseUp={this.handleStopDrag}
+        onComponentWillUnmount={this.handleDrag}
       >
         <Box
           backgroundColor={color}
@@ -464,78 +468,80 @@ export class Port extends Component {
     super();
     this.iconRef = createRef();
 
-    this.handlePortClick = () => {
-      const { act } = useBackend(this.context);
-      const [selectedPort, setSelectedPort]
-        = useLocalState(this.context, "selected_port", null);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handlePortClick = this.handlePortClick.bind(this);
+    this.handlePortRightClick = this.handlePortRightClick.bind(this);
+  }
 
-      const {
-        port,
-        portIndex,
-        componentId,
-        isOutput,
-      } = this.props;
+  handlePortClick() {
+    const { act } = useBackend(this.context);
+    const [selectedPort, setSelectedPort]
+      = useLocalState(this.context, "selected_port", null);
 
-      if (selectedPort) {
-        if (selectedPort.ref === port.ref) {
-          setSelectedPort(null);
-          return;
-        } else if (selectedPort.component_id !== componentId) {
-          if (selectedPort.is_output === isOutput) {
-            setSelectedPort(null);
-            return;
-          }
-          let data;
-          if (isOutput) {
-            data = {
-              input_port_id: selectedPort.index,
-              output_port_id: portIndex,
-              input_component_id: selectedPort.component_id,
-              output_component_id: componentId,
-            };
-          } else {
-            data = {
-              input_port_id: portIndex,
-              output_port_id: selectedPort.index,
-              input_component_id: componentId,
-              output_component_id: selectedPort.component_id,
-            };
-          }
-          act("add_connection", data);
+    const {
+      port,
+      portIndex,
+      componentId,
+      isOutput,
+    } = this.props;
+
+    if (selectedPort) {
+      if (selectedPort.ref === port.ref) {
+        setSelectedPort(null);
+        return;
+      } else if (selectedPort.component_id !== componentId) {
+        if (selectedPort.is_output === isOutput) {
           setSelectedPort(null);
           return;
         }
+        let data;
+        if (isOutput) {
+          data = {
+            input_port_id: selectedPort.index,
+            output_port_id: portIndex,
+            input_component_id: selectedPort.component_id,
+            output_component_id: componentId,
+          };
+        } else {
+          data = {
+            input_port_id: portIndex,
+            output_port_id: selectedPort.index,
+            input_component_id: componentId,
+            output_component_id: selectedPort.component_id,
+          };
+        }
+        act("add_connection", data);
+        setSelectedPort(null);
+        return;
       }
-      setSelectedPort({
-        index: portIndex,
-        component_id: componentId,
-        is_output: isOutput,
-        ref: port.ref,
-      });
+    }
+    setSelectedPort({
+      index: portIndex,
+      component_id: componentId,
+      is_output: isOutput,
+      ref: port.ref,
+    });
 
-    };
+  };
 
-    this.handlePortRightClick = (e) => {
-      const { act } = useBackend(this.context);
-      const {
-        port,
-        portIndex,
-        componentId,
-        isOutput,
-        ...rest
-      } = this.props;
+  handlePortRightClick(e) {
+    const { act } = useBackend(this.context);
+    const {
+      port,
+      portIndex,
+      componentId,
+      isOutput,
+      ...rest
+    } = this.props;
 
-      e.preventDefault();
-      act("remove_connection", {
-        component_id: componentId,
-        is_input: !isOutput,
-        port_id: portIndex,
-      });
-    };
-
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
-  }
+    e.preventDefault();
+    act("remove_connection", {
+      component_id: componentId,
+      is_input: !isOutput,
+      port_id: portIndex,
+    });
+  };
 
   componentDidUpdate() {
     const { port, onPortUpdated } = this.props;
@@ -581,8 +587,8 @@ export class Port extends Component {
             name={selectedPort && selectedPort.ref === port.ref
               ? "dot-circle" : "circle"}
             position="relative"
-            onClick={(e) => this.handlePortClick(e)}
-            onContextMenu={(e) => this.handlePortRightClick(e)}
+            onClick={this.handlePortClick}
+            onContextMenu={this.handlePortRightClick}
           >
             <span
               ref={this.iconRef}
