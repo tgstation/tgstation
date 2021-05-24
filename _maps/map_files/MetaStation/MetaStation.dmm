@@ -19395,7 +19395,6 @@
 /turf/open/floor/iron/white,
 /area/maintenance/aft/secondary)
 "dZg" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/bridge_pipe/purple/visible{
 	dir = 4
@@ -33372,7 +33371,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "iND" = (
@@ -40263,15 +40261,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
-"lix" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "liy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 6
@@ -41250,7 +41239,6 @@
 /area/security/office)
 "lza" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
 	},
@@ -43315,11 +43303,6 @@
 "mjT" = (
 /turf/closed/wall,
 /area/medical/psychology)
-"mjX" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "mkw" = (
 /obj/structure/rack,
 /obj/item/storage/briefcase{
@@ -123842,7 +123825,7 @@ aGZ
 lye
 glH
 mzG
-lix
+uzC
 rtK
 wkj
 cor
@@ -124855,7 +124838,7 @@ jMk
 jMk
 jMk
 dZg
-mjX
+cor
 lza
 cor
 vNA

@@ -9892,7 +9892,6 @@
 "bfx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 10
@@ -34869,9 +34868,6 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "lhV" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
@@ -35651,10 +35647,6 @@
 /obj/item/storage/book/bible,
 /turf/open/floor/iron/dark,
 /area/service/chapel/main)
-"lBO" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "lCe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
@@ -54514,9 +54506,6 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "wed" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
@@ -92969,7 +92958,7 @@ tIo
 bPf
 tIo
 rmB
-lBO
+tIo
 tIo
 jJj
 cOJ
