@@ -34,7 +34,7 @@
 
 /datum/component/area_sound_manager/proc/react_to_z_move(datum/source, old_z, new_z)
 	SIGNAL_HANDLER
-	if(!length(accepted_zs) || new_z in accepted_zs)
+	if(!length(accepted_zs) || (new_z in accepted_zs))
 		return
 	qdel(src)
 
@@ -62,10 +62,7 @@
 	if(!new_loop_type)
 		return
 
-	our_loop = new new_loop_type(parent, FALSE, TRUE)
-
-	if(skip_start)
-		our_loop.start_sound = null
+	our_loop = new new_loop_type(parent, FALSE, TRUE, skip_start)
 
 	//If we're still playing, wait a bit before changing the sound so we don't double up
 	if(time_remaining)

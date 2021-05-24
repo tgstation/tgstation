@@ -35,14 +35,16 @@
 	var/timerid
 	var/looping = FALSE
 	var/falloff_distance
+	var/skip_starting_sounds = FALSE
 
-/datum/looping_sound/New(_parent, start_immediately=FALSE, _direct=FALSE)
+/datum/looping_sound/New(_parent, start_immediately=FALSE, _direct=FALSE, _skip_starting_sounds = FALSE)
 	if(!mid_sounds)
 		WARNING("A looping sound datum was created without sounds to play.")
 		return
 
 	set_parent(_parent)
 	direct = _direct
+	skip_starting_sounds = _skip_starting_sounds
 
 	if(start_immediately)
 		start()
@@ -96,7 +98,7 @@
 
 /datum/looping_sound/proc/on_start()
 	var/start_wait = 0
-	if(start_sound)
+	if(start_sound && !skip_starting_sounds)
 		play(start_sound, start_volume)
 		start_wait = start_length
 	timerid = addtimer(CALLBACK(src, .proc/sound_loop), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)

@@ -3,7 +3,6 @@
 	element_flags = ELEMENT_DETACH
 	//These will come from
 	var/list/sound_change_signals
-	var/list/fitting_z_levels = SSmapping.levels_by_trait(ZTRAIT_ASHSTORM)
 
 /datum/element/ash_storm_listener/New()
 	. = ..()
@@ -13,6 +12,7 @@
 		COMSIG_WEATHER_WINDDOWN(/datum/weather/ash_storm),
 		COMSIG_WEATHER_END(/datum/weather/ash_storm)
 	)
+
 
 /datum/element/ash_storm_listener/Attach(datum/target)
 	. = ..()
@@ -25,6 +25,7 @@
 
 /datum/element/ash_storm_listener/proc/handle_z_level_change(datum/source, old_z, new_z)
 	SIGNAL_HANDLER
+	var/list/fitting_z_levels = SSmapping.levels_by_trait(ZTRAIT_ASHSTORM)
 	if(!(new_z in fitting_z_levels))
 		return
 	var/datum/component/our_comp = source.AddComponent(/datum/component/area_sound_manager, GLOB.ash_storm_sounds, list(), COMSIG_MOB_LOGOUT, fitting_z_levels)
