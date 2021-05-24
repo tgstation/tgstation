@@ -24758,12 +24758,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/commons/locker)
-"fHi" = (
-/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
-/turf/open/space,
-/area/space/nearstation)
 "fHp" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -125109,7 +125103,7 @@ gtT
 dsM
 hns
 hns
-fHi
+hns
 hns
 hns
 hns
