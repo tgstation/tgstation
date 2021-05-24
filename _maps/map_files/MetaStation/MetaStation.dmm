@@ -24758,6 +24758,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/commons/locker)
+"fHi" = (
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
+/turf/open/space,
+/area/space/nearstation)
 "fHp" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -36619,9 +36625,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -38349,9 +38353,7 @@
 /area/service/bar)
 "kBI" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "kBT" = (
@@ -62392,9 +62394,7 @@
 /turf/open/floor/plating,
 /area/service/chapel/main)
 "srl" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "ssm" = (
@@ -67109,6 +67109,10 @@
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
 /area/science/mixing)
+"tVc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
+/turf/closed/wall/r_wall,
+/area/engineering/atmos)
 "tVe" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -124852,7 +124856,7 @@ aaf
 ack
 jMk
 jMk
-jMk
+tVc
 dZg
 mjX
 lza
@@ -125105,7 +125109,7 @@ gtT
 dsM
 hns
 hns
-hns
+fHi
 hns
 hns
 hns
