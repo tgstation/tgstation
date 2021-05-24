@@ -2171,6 +2171,7 @@
 #include "code\modules\explorer_drone\exodrone.dm"
 #include "code\modules\explorer_drone\exploration_site.dm"
 #include "code\modules\explorer_drone\loot.dm"
+#include "code\modules\explorer_drone\manager.dm"
 #include "code\modules\explorer_drone\scanner_array.dm"
 #include "code\modules\explorer_drone\exploration_events\_exploration_event.dm"
 #include "code\modules\explorer_drone\exploration_events\adventure.dm"
