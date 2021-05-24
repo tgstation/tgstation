@@ -601,3 +601,28 @@
       near the tanks got switched. Incinerator on box rerouted. Delta waste release
       added.
   - bugfix: Removed instances of duplicated pipes in icebox atmos.
+2021-05-24:
+  PositiveEntropy:
+  - imageadd: The cyborg toolset is now all new and improved, with a new coat of paint!
+  RandomGamer123:
+  - spellcheck: Attacking someone with a blood filter now uses the correct verb conjugation
+  - bugfix: Lockers can now only be unlocked if you're next to them.
+  SpaceDragon00:
+  - qol: Inspecting a weapon shows a warning label. By default, this shows force,
+      throwforce, armour_penetration, and block_chance in an esoteric manner. Inspecting
+      ammo gives information on the shot it produces, inspecting ballistic weapons
+      lets you know their caliber, and inspecting energy weapons gives you their modes
+      and the damage of those modes
+  - qol: Using credits on a PDA, Laptop, or Tablet now inserts the credits into the
+      contained ID card, if there is one
+  alexkar598:
+  - code_imp: Removed a proc thats used nowhere and implemented nowhere
+  maxymax13:
+  - imageadd: Departmental security officer ID cards show their department on the
+      non-department access color bar, like Lawyers or Psychologists
+  - imageadd: The color on the assistant trim's bar has been returned from previous
+      ID card models.
+  - imageadd: The rainbow ID card has been resprited.
+  - imageadd: The flames ID card has been slightly improved.
+  tralezab:
+  - refactor: tamable component + egg layer component, animal variety element

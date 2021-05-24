@@ -1,4 +1,0 @@
-author: "alexkar598"
-delete-after: True
-changes: 
-  - code_imp: "Removed a proc thats used nowhere and implemented nowhere"
