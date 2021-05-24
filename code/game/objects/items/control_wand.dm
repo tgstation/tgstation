@@ -35,7 +35,6 @@
 	if(QDELETED(data.user))
 		return
 	var/toggled = data.data["data"]
-	to_chat(data.user, "<span class='notice'>Door [toggled] toggled</span>")
 
 /obj/item/door_remote/attack_self(mob/user)
 	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
@@ -46,7 +45,7 @@
 			mode = WAND_EMERGENCY
 		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
-	to_chat(user, "<span class='notice'>Now in mode: [desc[mode]].</span>")
+	balloon_alert(user, "Mode: [desc[mode]].")
 
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
