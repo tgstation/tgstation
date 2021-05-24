@@ -30,12 +30,6 @@
 	else
 		to_chat(data.user, "<span class='notice'>Error: [error_code]</span>")
 
-
-/obj/item/door_remote/proc/good_signal(datum/source, datum/netdata/data, error_code)
-	if(QDELETED(data.user))
-		return
-	var/toggled = data.data["data"]
-
 /obj/item/door_remote/attack_self(mob/user)
 	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
 	switch(mode)
