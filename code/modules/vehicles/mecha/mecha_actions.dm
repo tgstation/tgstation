@@ -167,7 +167,7 @@
 	if(chassis.leg_overload_mode)
 		chassis.movedelay = min(1, round(chassis.movedelay * 0.5))
 		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
-		chassis.balloon_alert(owner,"you overload the leg actuators overload.")
+		chassis.balloon_alert(owner,"leg actuators overloaded")
 	else
 		chassis.movedelay = initial(chassis.movedelay)
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
