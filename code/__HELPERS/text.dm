@@ -321,7 +321,7 @@
 		text = copytext_char(text, 1, max_length)
 	return trim_left(trim_right(text))
 
-//Returns a string with the first element of the string capitalized.
+///Returns a string with the first element of the string capitalized.
 /proc/capitalize(t)
 	. = t
 	if(t)

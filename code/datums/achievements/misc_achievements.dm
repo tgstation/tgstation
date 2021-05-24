@@ -171,3 +171,9 @@
 	desc = "Lights out, guerilla radio!"
 	database_id = MEDAL_TRAM_SURFER
 	icon = "tram_surfer"
+
+/datum/award/achievement/misc/double_escape
+	name = "Double Escape"
+	desc = "Escape alive with the \"You are Two\" mutation. Not so easy now, is it?"
+	database_id = MEDAL_DOUBLE_ESCAPE
+	icon = "double_escape"

@@ -462,27 +462,30 @@
 		return
 	var/dx = A.x - x
 	var/dy = A.y - y
+	var/new_dir
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
 		if(A.pixel_y > 16)
-			setDir(NORTH)
+			new_dir = NORTH
 		else if(A.pixel_y < -16)
-			setDir(SOUTH)
+			new_dir = SOUTH
 		else if(A.pixel_x > 16)
-			setDir(EAST)
+			new_dir = EAST
 		else if(A.pixel_x < -16)
-			setDir(WEST)
+			new_dir = WEST
 		return
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			setDir(NORTH)
+			new_dir = NORTH
 		else
-			setDir(SOUTH)
+			new_dir = SOUTH
 	else
 		if(dx > 0)
-			setDir(EAST)
+			new_dir = EAST
 		else
-			setDir(WEST)
+			new_dir = WEST
+	setDir(new_dir)
+	SEND_SIGNAL(src, COMSIG_MOB_FACED_ATOM, new_dir)
 
 //debug
 /atom/movable/screen/proc/scale_to(x1,y1)

@@ -179,13 +179,18 @@
 		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
 	WRITE_FILE(json_file, json_encode(file_data))
 
-///Handles random hardcore point rewarding if it applies.
+///Handles random hardcore point rewarding if it applies. also gives achievements for you are two escape
 /datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/player_client)
 	if(!ishuman(player_client?.mob))
 		return FALSE
 	var/mob/living/carbon/human/human_mob = player_client?.mob
 	if(!human_mob.hardcore_survival_score) ///no score no glory
 		return FALSE
+
+	var/datum/mutation/human/you_are_two/award_mutation = human_mob.dna.check_mutation(YOU_ARE_TWO)
+	if(award_mutation)
+		if(human_mob.onCentCom() && award_mutation.the_other.onCentCom()) //BOTH need to escape.
+			player_client?.give_award(/datum/award/achievement/misc/double_escape, human_mob)
 
 	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
 		var/didthegamerwin = TRUE
