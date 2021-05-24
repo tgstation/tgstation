@@ -1288,6 +1288,17 @@
 			/datum/reagent/consumable/ice = 10
 			)
 	category = CAT_CHEMISTRY
+	
+/**
+ * Recipe used for upgrading fake N-spect scanners to bananium HONK-spect scanners
+ */
+/datum/crafting_recipe/clown_scanner_upgrade
+	name = "Bananium HONK-spect scanner"
+	result = /obj/item/inspector/clown/bananium
+	reqs = list(/obj/item/inspector/clown = 1, /obj/item/stack/sticky_tape = 3, /obj/item/stack/sheet/mineral/bananium = 5) //the chainsaw of prank tools
+	tool_paths = list(/obj/item/bikehorn)
+	time = 40 SECONDS
+	category = CAT_MISC
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE
