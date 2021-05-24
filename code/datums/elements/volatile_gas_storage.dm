@@ -1,9 +1,13 @@
+/// An element to make an /obj explode based on gas pressure when broken
 /datum/element/volatile_gas_storage
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
+	/// The minimum pressure of the gas storage to consider an explosion when broken
 	var/minimum_explosive_pressure
+	/// The max pressure to stop scaling the explosion at, you can go higher but the explosion range will stay at max
 	var/max_explosive_pressure
+	/// The max explsion range at the max pressure
 	var/max_explosive_force
 
 /datum/element/volatile_gas_storage/Attach(datum/target, minimum_explosive_pressure=5000, max_explosive_pressure=100000, max_explosive_force=9)
