@@ -152,9 +152,9 @@
 		emote,
 		/datum/emote.proc/run_emote,
 		the_other,
-		params = params,
-		type_override = type_override,
-		intentional = intentional,
+		params,
+		type_override,
+		intentional,
 	)
 
 /obj/effect/proc_holder/spell/self/you_are_the_other
@@ -173,7 +173,12 @@
 	var/datum/mutation/human/you_are_two/mutation = user.dna.check_mutation(YOU_ARE_TWO)
 	//UNHOOK SIGNALS
 	mutation.unhook_signals()
-	//TRANSFER
+	//TRANSFER MUTATIONS + TRAUMAS
+	for(var/datum/mutation/human/mut in user.dna)
+		mut.disable_mutation(user)
+		mut.enable_mutation(mutation.the_other)
+	//trauma transfer code here
+	//TRANSFER CONTROL TO NEW BODY
 	user.mind.transfer_to(mutation.the_other)
 	mutation.the_other = user //switch the new the_other target to your old one
 	//HOOK SIGNALS INTO NEW COPY

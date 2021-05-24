@@ -74,11 +74,16 @@
 			continue
 		to_chat(H, "<span class='warning'>You feel your genes resisting something.</span>")
 		return TRUE
-	owner = H
-	dna = H.dna
-	dna.mutations += src
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)
+	enable_mutation(H)
+
+///does all the work to enable the mutation without any of the sanity.
+///can be called individually to move a mutation to a new person without triggering lose_mutation effects
+/datum/mutation/human/proc/enable_mutation(mob/living/carbon/human/new_owner)
+	owner = new_owner
+	dna = new_owner.dna
+	dna.mutations += src
 	if(visual_indicators.len)
 		var/list/mut_overlay = list(get_visual_indicator())
 		if(owner.overlays_standing[layer_used])
@@ -103,6 +108,9 @@
 	. = FALSE
 	if(text_lose_indication && owner.stat != DEAD)
 		to_chat(owner, text_lose_indication)
+	disable_mutation(owner)
+
+/datum/mutation/human/proc/disable_mutation(mob/living/carbon/human/new_owner)
 	if(visual_indicators.len)
 		var/list/mut_overlay = list()
 		if(owner.overlays_standing[layer_used])
