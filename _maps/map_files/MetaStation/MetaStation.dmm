@@ -49037,7 +49037,7 @@
 /turf/open/floor/iron,
 /area/science/mixing)
 "nXH" = (
-/obj/item/kirbyplants/random,
+/obj/machinery/component_printer,
 /turf/open/floor/iron/white,
 /area/science/misc_lab)
 "nYo" = (
@@ -77368,7 +77368,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/warning{
 	dir = 4
 	},
-/obj/machinery/component_printer,
 /turf/open/floor/iron,
 /area/science/misc_lab)
 "xtw" = (

@@ -21110,12 +21110,9 @@
 	dir = 5
 	},
 /obj/machinery/light/directional/north,
-/obj/structure/table,
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 5
-	},
+/obj/machinery/component_printer,
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "dWa" = (
 /obj/structure/weightmachine/weightlifter,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -31338,9 +31335,8 @@
 	},
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
-/obj/machinery/component_printer,
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "hVZ" = (
 /obj/structure/holosign/barrier/atmos,
 /turf/open/floor/plating,
@@ -32564,8 +32560,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "ixJ" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
@@ -33801,7 +33800,7 @@
 "iRT" = (
 /obj/structure/chair/office/light,
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "iRW" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -35895,6 +35894,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
+"jKX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/science/misc_lab)
 "jLa" = (
 /obj/structure/table/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -37107,7 +37112,7 @@
 	},
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "kgy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -37700,7 +37705,7 @@
 "kqO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/space)
+/area/science/misc_lab)
 "kqR" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible{
@@ -43275,7 +43280,7 @@
 /obj/item/compact_remote,
 /obj/item/compact_remote,
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "mzF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille/broken,
@@ -45627,7 +45632,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "nAu" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -47428,7 +47433,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "omZ" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
@@ -47664,7 +47669,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/space)
+/area/science/misc_lab)
 "orw" = (
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/effect/decal/cleanable/dirt,
@@ -48467,7 +48472,7 @@
 /obj/item/integrated_circuit/loaded/speech_relay,
 /obj/item/integrated_circuit/loaded/hello_world,
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "oIj" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
@@ -49729,7 +49734,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "pfC" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
@@ -49753,7 +49758,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high/plus,
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "pgb" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
@@ -53684,7 +53689,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "qLb" = (
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
@@ -55928,7 +55933,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "rFc" = (
 /obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/trimline/yellow/filled/end{
@@ -58985,7 +58990,7 @@
 /area/medical/virology)
 "sQi" = (
 /turf/closed/wall,
-/area/space)
+/area/science/misc_lab)
 "sQq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -63398,7 +63403,7 @@
 /area/hallway/primary/tram/left)
 "utS" = (
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "uus" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -67168,7 +67173,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "vVz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 5
@@ -72758,7 +72763,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "xVP" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
@@ -73369,14 +73374,21 @@
 	},
 /obj/structure/table,
 /obj/item/multitool/circuit{
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -4
 	},
-/obj/item/multitool/circuit,
 /obj/item/multitool/circuit{
-	pixel_x = -8
+	pixel_y = -4
+	},
+/obj/item/multitool/circuit{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 13
 	},
 /turf/open/floor/iron,
-/area/space)
+/area/science/misc_lab)
 "yiH" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/closet/crate,
@@ -120011,7 +120023,7 @@ aRL
 aae
 sQi
 hVW
-ixB
+jKX
 iRT
 rEw
 sQi
