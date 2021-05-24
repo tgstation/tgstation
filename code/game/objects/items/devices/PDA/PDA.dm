@@ -1262,6 +1262,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		. += P
 
 /obj/item/pda/proc/pda_no_detonate()
+	SIGNAL_HANDLER
 	return COMPONENT_PDA_NO_DETONATE
 
 #undef PDA_SCANNER_NONE
