@@ -1,5 +1,6 @@
-#define PROCESS_PORTABLE "portable"
 #define PROCESS_COMPONENT "component"
+#define PROCESS_MACHINE "machine"
+#define PROCESS_OBJ "obj"
 
 /// A component to leak gas over time from damaged objects with gas storage
 /datum/component/gas_leaker
@@ -14,10 +15,12 @@
 
 /datum/component/gas_leaker/Initialize(integrity_leak_percent=0.9, leak_rate=1)
 	. = ..()
-	if(istype(parent, /obj/machinery/portable_atmospherics))
-		process_type = PROCESS_PORTABLE
-	else if(istype(parent, /obj/machinery/atmospherics/components))
+	if(istype(parent, /obj/machinery/atmospherics/components))
 		process_type = PROCESS_COMPONENT
+	else if(istype(parent, /obj/machinery))
+		process_type = PROCESS_MACHINE
+	else if(isobj(parent))
+		process_type = PROCESS_OBJ
 	else
 		return COMPONENT_INCOMPATIBLE
 
@@ -35,10 +38,12 @@
 /datum/component/gas_leaker/proc/process_atmos()
 	. = PROCESS_KILL
 	switch(process_type)
-		if(PROCESS_PORTABLE)
-			. = process_portable()
+		if(PROCESS_OBJ)
+			. = process_obj(parent)
+		if(PROCESS_MACHINE)
+			. = process_machine(parent)
 		if(PROCESS_COMPONENT)
-			. = process_component()
+			. = process_component(parent)
 
 /datum/component/gas_leaker/proc/start_processing()
 	SIGNAL_HANDLER
@@ -46,27 +51,29 @@
 	// This component needs to tick at the same rate as the atmos system
 	SSair.atmos_machinery += src
 
-/datum/component/gas_leaker/proc/process_portable()
-	var/obj/machinery/portable_atmospherics/master = parent
-	return process_machine(master, list(master.air_contents))
+/datum/component/gas_leaker/proc/process_obj(obj/master, list/airs=list())
+	airs += master.return_air()
+	return process_leak(master, airs)
 
-/datum/component/gas_leaker/proc/process_component()
-	var/obj/machinery/atmospherics/components/master = parent
-	return process_machine(master, master.airs)
-
-/datum/component/gas_leaker/proc/process_machine(obj/machinery/master, list/airs)
-	. = TRUE
+/datum/component/gas_leaker/proc/process_machine(obj/machinery/master, list/airs=list())
 	if(master.machine_stat & BROKEN)
-		return
+		return PROCESS_KILL
+	return process_obj(master, airs)
+
+/datum/component/gas_leaker/proc/process_component(obj/machinery/atmospherics/components/master, list/airs=list())
+	airs += master.airs
+	return process_machine(master, airs)
+
+/datum/component/gas_leaker/proc/process_leak(obj/master, list/airs)
 	if(master.obj_integrity > master.max_integrity * integrity_leak_percent)
-		return
+		return PROCESS_KILL
 	var/turf/location = get_turf(master)
 	var/true_rate = (1 - (master.obj_integrity / master.max_integrity)) * leak_rate
 	for(var/datum/gas_mixture/mix as anything in airs)
 		var/pressure = mix.return_pressure()
 		if(mix.release_gas_to(location.return_air(), pressure, true_rate))
-			. = FALSE
 			location.air_update_turf(FALSE, FALSE)
 
-#undef PROCESS_PORTABLE
+#undef PROCESS_OBJ
+#undef PROCESS_MACHINE
 #undef PROCESS_COMPONENT

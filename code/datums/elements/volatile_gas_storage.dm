@@ -12,10 +12,10 @@
 
 /datum/element/volatile_gas_storage/Attach(datum/target, minimum_explosive_pressure=5000, max_explosive_pressure=100000, max_explosive_force=9)
 	. = ..()
-	if(istype(target, /obj/machinery/portable_atmospherics))
-		RegisterSignal(target, COMSIG_OBJ_BREAK, .proc/PortableBreak)
-	else if(istype(target, /obj/machinery/atmospherics/components))
+	if(istype(target, /obj/machinery/atmospherics/components))
 		RegisterSignal(target, COMSIG_OBJ_BREAK, .proc/AtmosComponentBreak)
+	else if(isobj(target))
+		RegisterSignal(target, COMSIG_OBJ_BREAK, .proc/ObjBreak)
 	else
 		return ELEMENT_INCOMPATIBLE
 
@@ -38,13 +38,13 @@
 	// Maybe one day we'll get something a bit better
 	explosion(get_turf(origin), light_impact_range=explosive_force, smoke=FALSE)
 
-/datum/element/volatile_gas_storage/proc/PortableBreak(obj/machinery/portable_atmospherics/owner)
-	SIGNAL_HANDLER
-	Break(owner, owner.air_contents)
-
 /datum/element/volatile_gas_storage/proc/AtmosComponentBreak(obj/machinery/atmospherics/components/owner)
 	SIGNAL_HANDLER
 	for(var/datum/gas_mixture/gas_contents as anything in owner.airs)
 		if(!gas_contents)
 			continue
 		Break(owner, gas_contents)
+
+/datum/element/volatile_gas_storage/proc/ObjBreak(obj/owner)
+	SIGNAL_HANDLER
+	Break(owner, owner.return_air())
