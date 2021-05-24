@@ -67,11 +67,17 @@
 				QDEL_NULL(temp_adventure)
 			feedback_message = "Adventure stopped"
 			return TRUE
-		if("synchronize")
+		if("refresh")
 			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
 			if(!target)
 				return
-			target.synchronize()
+			target.refresh()
+			return TRUE
+		if("save")
+			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries
+			if(!target)
+				return
+			target.save()
 			return TRUE
 		if("download")
 			var/datum/adventure_db_entry/target = locate(params["ref"]) in GLOB.explorer_drone_adventure_db_entries

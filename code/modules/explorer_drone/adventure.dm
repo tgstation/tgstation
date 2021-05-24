@@ -100,25 +100,28 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		return FALSE
 	return TRUE
 
-/// Creates DB entry if it does not exist in the DB yet. Otherwise updates local data if our timestamp is older or updates db data if our timestamp is newer.
-/datum/adventure_db_entry/proc/synchronize()
+/// Updates this entry from db, if possible.
+/datum/adventure_db_entry/proc/refresh()
 	if(id)
 		//Check if our timestamp is fresh, if not update local and stop
-		var/datum/db_query/TimestampCheckQuery = SSdbcore.NewQuery("SELECT timestamp > :current_timestamp,adventure_data,uploader,timestamp,approved FROM [format_table_name("text_adventures")] WHERE id = :id",list("id" = id, "current_timestamp" = timestamp))
-		if(!TimestampCheckQuery.warn_execute() || !TimestampCheckQuery.NextRow())
-			qdel(TimestampCheckQuery)
+		var/datum/db_query/SelectQuery = SSdbcore.NewQuery("SELECT adventure_data,uploader,timestamp,approved FROM [format_table_name("text_adventures")] WHERE id = :id",list("id" = id))
+		if(!SelectQuery.warn_execute() || !SelectQuery.NextRow())
+			qdel(SelectQuery)
 			return
-		if(!timestamp || text2num(TimestampCheckQuery.item[1]) > 0)
-			raw_json = TimestampCheckQuery.item[2]
-			uploader = TimestampCheckQuery.item[3]
-			timestamp = TimestampCheckQuery.item[4]
-			approved = TimestampCheckQuery.item[5]
-			extract_metadata()
-			qdel(TimestampCheckQuery)
-			return
-		qdel(TimestampCheckQuery)
+		raw_json = SelectQuery.item[1]
+		uploader = SelectQuery.item[2]
+		timestamp = SelectQuery.item[3]
+		approved = SelectQuery.item[4]
+		extract_metadata()
+		qdel(SelectQuery)
+		return
+	// No ID, nothing to be done.
+
+/// Pushes this entry changes to DB
+/datum/adventure_db_entry/proc/save()
+	if(id)
 		//We're up to date, update db instead
-		var/datum/db_query/UpdateQuery = SSdbcore.NewQuery("UPDATE [format_table_name("text_adventures")] SET adventure_data = :adventure_data,uploader = :uploader,approved = :approved WHERE id = :id",
+		var/datum/db_query/UpdateQuery = SSdbcore.NewQuery("UPDATE [format_table_name("text_adventures")] SET adventure_data = :adventure_data,uploader = :uploader,approved = :approved WHERE id = :id AND timestamp < NOW()",
 		list("id" = id, "adventure_data" = raw_json, "uploader" = usr.ckey, "approved" = approved))
 		UpdateQuery.warn_execute()
 		qdel(UpdateQuery)
@@ -128,9 +131,9 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 		if(!InsertQuery.warn_execute())
 			qdel(InsertQuery)
 			return FALSE
-		uploader = usr.ckey
 		id = InsertQuery.last_insert_id
 		qdel(InsertQuery)
+	refresh()
 
 /// Deletes the local AND db entry.
 /datum/adventure_db_entry/proc/remove()

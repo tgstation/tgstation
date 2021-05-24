@@ -50,7 +50,8 @@ const AdventureEntry = (props, context) => {
       </LabeledList>
       <Button.Confirm onClick={() => { close(); act("delete", { ref: entry.ref }); }} content="Delete" />
       <Button onClick={() => act("play", { ref: entry.ref })} content="Play" />
-      <Button onClick={() => act("synchronize", { ref: entry.ref })} content="Synchronize" />
+      <Button onClick={() => act("refresh", { ref: entry.ref })} content="Refresh" />
+      <Button.Confirm onClick={() => act("save", { ref: entry.ref })} content="Save" />
       <Button onClick={close} content="Close" />
     </Section>
   );
