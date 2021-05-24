@@ -36619,7 +36619,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -38347,7 +38347,7 @@
 /area/service/bar)
 "kBI" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "kBT" = (
@@ -62388,7 +62388,7 @@
 /turf/open/floor/plating,
 /area/service/chapel/main)
 "srl" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "ssm" = (
@@ -67104,7 +67104,7 @@
 /turf/open/floor/iron,
 /area/science/mixing)
 "tVc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "tVe" = (
