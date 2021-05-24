@@ -146,9 +146,16 @@
 	the_other.set_combat_mode(new_mode, silent = TRUE)
 
 ///called whenever the one emotes
-/datum/mutation/human/you_are_two/proc/on_emote(datum/source, datum/emote/emote, act, m_type, message, intentional)
+/datum/mutation/human/you_are_two/proc/on_emote(datum/source, datum/emote/emote, act, type_override, params, intentional)
 	SIGNAL_HANDLER
-	emote.run_emote(the_other, param = message, m_type = m_type, intentional = intentional)
+	INVOKE_ASYNC(
+		emote,
+		/datum/emote.proc/run_emote,
+		the_other,
+		params = params,
+		type_override = type_override,
+		intentional = intentional,
+	)
 
 /obj/effect/proc_holder/spell/self/you_are_the_other
 	name = "\"You are the other\""
