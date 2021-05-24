@@ -26590,6 +26590,7 @@
 	dir = 4;
 	name = "Unfiltered & Air to Mix"
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer4,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "grw" = (
@@ -45128,6 +45129,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer4,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "mNW" = (
@@ -54913,7 +54915,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/thermomachine/heater/on,
+/obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -62379,6 +62381,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 9
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer4,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "ssm" = (
@@ -66993,6 +66996,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer4,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "tTJ" = (
