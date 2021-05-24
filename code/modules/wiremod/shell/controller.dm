@@ -13,6 +13,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_on = FALSE
 
 /obj/item/controller/Initialize()
 	. = ..()
@@ -55,23 +56,29 @@
 /**
  * Called when the shell item is used in hand, including right click.
  */
-/obj/item/circuit_component/controller/proc/send_trigger(datum/source, mob/user)
+/obj/item/circuit_component/controller/proc/send_trigger(atom/source, mob/user)
 	SIGNAL_HANDLER
 	if(!user.Adjacent(source))
 		return
+	source.balloon_alert(user, "clicked primary button")
+	playsound(source, get_sfx("terminal_type"), 25, FALSE)
 	signal.set_output(COMPONENT_SIGNAL)
 
 /**
  * Called when the shell item is alt-clicked
  */
-/obj/item/circuit_component/controller/proc/send_alternate_signal(datum/source, mob/user)
+/obj/item/circuit_component/controller/proc/send_alternate_signal(atom/source, mob/user)
 	SIGNAL_HANDLER
 	if(!user.Adjacent(source))
 		return
+	source.balloon_alert(user, "clicked alternate button")
+	playsound(source, get_sfx("terminal_type"), 25, FALSE)
 	alt.set_output(COMPONENT_SIGNAL)
 
-/obj/item/circuit_component/controller/proc/send_right_signal(datum/source, mob/user)
+/obj/item/circuit_component/controller/proc/send_right_signal(atom/source, mob/user)
 	SIGNAL_HANDLER
 	if(!user.Adjacent(source))
 		return
+	source.balloon_alert(user, "clicked extra button")
+	playsound(source, get_sfx("terminal_type"), 25, FALSE)
 	right.set_output(COMPONENT_SIGNAL)

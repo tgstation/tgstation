@@ -60,9 +60,12 @@
 				say("Not enough materials.")
 				return TRUE
 
+			balloon_alert_to_viewers("printed [design.name]")
 			materials.mat_container?.use_materials(design.materials)
 			materials.silo_log(src, "printed", -1, design.name, design.materials)
-			new design.build_path(drop_location())
+			var/atom/printed_design = new design.build_path(drop_location())
+			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
+			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])

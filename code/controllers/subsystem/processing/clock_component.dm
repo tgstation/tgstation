@@ -2,4 +2,4 @@
 PROCESSING_SUBSYSTEM_DEF(clock_component)
 	name = "Clock Component"
 	flags = SS_NO_INIT|SS_BACKGROUND|SS_KEEP_TIMING
-	wait = PORT_INPUT_RECEIVE_DELAY
+	wait = COMP_CLOCK_DELAY

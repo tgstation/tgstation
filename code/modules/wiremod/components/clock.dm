@@ -6,16 +6,30 @@
 /obj/item/circuit_component/clock
 	display_name = "Clock"
 
+	/// Whether the clock is on or not
+	var/datum/port/input/on
+
 	/// The signal from this clock component
 	var/datum/port/output/signal
 
 /obj/item/circuit_component/clock/Initialize()
 	. = ..()
+	on = add_input_port("On", PORT_TYPE_NUMBER)
+
 	signal = add_output_port("Signal", PORT_TYPE_NUMBER)
-	RegisterSignal(signal, COMSIG_PORT_OUTPUT_CONNECT, .proc/start_process)
-	RegisterSignal(signal, COMSIG_PORT_DISCONNECT, .proc/stop_process)
+
+/obj/item/circuit_component/clock/input_received(datum/port/input/port)
+	. = ..()
+	if(.)
+		return
+
+	if(on.input_value)
+		start_process()
+	else
+		stop_process()
 
 /obj/item/circuit_component/clock/Destroy()
+	on = null
 	signal = null
 	stop_process()
 	return ..()
@@ -29,7 +43,6 @@
  * Starts ticking to send signals between periods of time
  */
 /obj/item/circuit_component/clock/proc/start_process()
-	SIGNAL_HANDLER
 	START_PROCESSING(SSclock_component, src)
 
 /**
@@ -38,5 +51,4 @@
  * Signals stop getting sent.
  */
 /obj/item/circuit_component/clock/proc/stop_process()
-	SIGNAL_HANDLER
 	STOP_PROCESSING(SSclock_component, src)

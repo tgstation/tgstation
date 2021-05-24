@@ -33,6 +33,9 @@
 	return ..()
 
 /obj/item/circuit_component/hear/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods)
+	if(speaker == parent?.shell)
+		return
+
 	message_port.set_output(raw_message)
 	if(message_language)
 		language_port.set_output(initial(message_language.name))

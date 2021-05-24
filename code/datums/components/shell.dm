@@ -29,6 +29,7 @@
 /datum/component/shell/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/on_attack_ghost)
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver_act)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
@@ -41,7 +42,8 @@
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
 		COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,
-		COMSIG_PARENT_EXAMINE
+		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_ATTACK_GHOST
 	))
 
 	QDEL_NULL(attached_circuit)
@@ -50,12 +52,17 @@
 	QDEL_LIST(unremovable_circuit_components)
 	return ..()
 
+/datum/component/shell/proc/on_attack_ghost(datum/source, mob/dead/observer/ghost)
+	SIGNAL_HANDLER
+	if(attached_circuit)
+		INVOKE_ASYNC(attached_circuit, /datum.proc/ui_interact, ghost)
+
 /datum/component/shell/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	if(!attached_circuit)
 		return
 
-	examine_text += "<span class='notice'>There is an integrated circuit attached.</span>"
+	examine_text += "<span class='notice'>There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].</span>"
 	var/obj/item/stock_parts/cell/cell = attached_circuit.cell
 	examine_text += "<span class='notice'>The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.</span>"
 
@@ -74,6 +81,10 @@
  */
 /datum/component/shell/proc/on_attack_by(atom/source, obj/item/item, mob/living/attacker)
 	SIGNAL_HANDLER
+	if(istype(item, /obj/item/stock_parts/cell))
+		source.balloon_alert(attacker, "can't pull cell in directly!")
+		return
+
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
 	var/obj/item/integrated_circuit/logic_board = item
@@ -83,11 +94,11 @@
 		return
 
 	if(attached_circuit)
-		source.balloon_alert(attacker, "There is already a circuitboard inside!")
+		source.balloon_alert(attacker, "there is already a circuitboard inside!")
 		return
 
 	if(length(logic_board.attached_components) > capacity)
-		source.balloon_alert(attacker, "This is too large to fit into [parent]!")
+		source.balloon_alert(attacker, "this is too large to fit into [parent]!")
 		return
 
 	attach_circuit(logic_board, attacker)

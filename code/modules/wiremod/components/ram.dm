@@ -18,7 +18,7 @@
 
 /obj/item/circuit_component/ram/Initialize()
 	. = ..()
-	input_port = add_input_port("Input", PORT_TYPE_ANY, FALSE)
+	input_port = add_input_port("Input", PORT_TYPE_ANY)
 	trigger = add_input_port("Store", PORT_TYPE_NUMBER)
 
 	output = add_output_port("Stored Value", PORT_TYPE_ANY)
@@ -31,6 +31,7 @@
 
 /obj/item/circuit_component/ram/input_received(datum/port/input/port)
 	. = ..()
+	match_port_datatype(input_port, output)
 	if(.)
 		return
 

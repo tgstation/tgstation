@@ -27,11 +27,18 @@
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))
 		add_input_port(letter, PORT_TYPE_ANY)
 
+	load_custom_ports()
 	compare = add_input_port("Compare", PORT_TYPE_NUMBER)
 
 	true = add_output_port("True", PORT_TYPE_NUMBER)
 	false = add_output_port("False", PORT_TYPE_NUMBER)
 	result = add_output_port("Result", result_type)
+
+/**
+ * Used by derivatives to load their own ports in for custom use.
+ */
+/obj/item/circuit_component/compare/proc/load_custom_ports()
+	return
 
 /obj/item/circuit_component/compare/Destroy()
 	true = null
@@ -46,7 +53,8 @@
 		return
 
 	var/list/ports = input_ports.Copy()
-	ports.Cut(input_port_amount+1)
+	if(input_port_amount)
+		ports.Cut(input_port_amount+1)
 
 	var/logic_result = do_comparisons(ports)
 	if(COMPONENT_TRIGGERED_BY(compare, port))

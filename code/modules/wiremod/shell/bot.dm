@@ -10,6 +10,7 @@
 
 	density = FALSE
 	light_system = MOVABLE_LIGHT
+	light_on = FALSE
 
 /obj/structure/bot/Initialize()
 	. = ..()

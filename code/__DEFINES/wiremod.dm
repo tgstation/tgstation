@@ -1,4 +1,4 @@
-#define PORT_INPUT_RECEIVE_DELAY 0.9 SECONDS
+#define PORT_INPUT_RECEIVE_DELAY 0.2 SECONDS
 
 /// Helper define that can only be used in /obj/item/circuit_component/input_received()
 #define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.input_value && trigger == port)
@@ -71,6 +71,9 @@
 // Typecheck component
 #define COMP_TYPECHECK_MOB "organism"
 #define COMP_TYPECHECK_HUMAN "humanoid"
+
+// Clock component
+#define COMP_CLOCK_DELAY 0.9 SECONDS
 
 // Shells
 

@@ -103,6 +103,23 @@
 	input_received()
 
 /**
+ * Matches the output port's datatype with the input port's current connected port.
+ *
+ * Returns true if datatype was changed, otherwise returns false.
+ * Arguments:
+ * * input_port - The input port to check the connected port from.
+ * * output_port - The output port to convert. Warning, this does change the output port.
+ */
+/obj/item/circuit_component/proc/match_port_datatype(datum/port/input/input_port, datum/port/output/output_port)
+	if(input_port.connected_port)
+		var/datum/port/connected_port = input_port.connected_port
+		if(connected_port.datatype != output_port.datatype)
+			output_port.set_datatype(connected_port.datatype)
+			return TRUE
+	return FALSE
+
+
+/**
  * Adds an input port and returns it
  *
  * Arguments:

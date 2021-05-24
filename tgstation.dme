@@ -3545,6 +3545,7 @@
 #include "code\modules\wiremod\components\clock.dm"
 #include "code\modules\wiremod\components\comparison.dm"
 #include "code\modules\wiremod\components\concat.dm"
+#include "code\modules\wiremod\components\contains.dm"
 #include "code\modules\wiremod\components\delay.dm"
 #include "code\modules\wiremod\components\dummy.dm"
 #include "code\modules\wiremod\components\hear.dm"

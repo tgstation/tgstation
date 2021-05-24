@@ -76,6 +76,19 @@
 			return null
 
 /**
+ * Sets the datatype of the port.
+ *
+ * Arguments:
+ * * type_to_set - The type this port is set to.
+ */
+/datum/port/proc/set_datatype(type_to_set)
+	datatype = type_to_set
+	color = datatype_to_color()
+	disconnect()
+	if(connected_component)
+		SStgui.update_uis(connected_component)
+
+/**
  * Disconnects a port from all other ports
  *
  * Called by [/obj/item/circuit_component] whenever it is disconnected from
@@ -126,6 +139,10 @@
 	if(output_value == source)
 		output_value = null
 
+/datum/port/output/set_datatype(type_to_set)
+	. = ..()
+	set_output(null)
+
 /**
  * Determines if a datatype is compatible with this port.
  *
@@ -171,7 +188,7 @@
 	. = ..()
 	src.trigger = trigger
 	src.default = default
-	set_input(default)
+	set_input(default, FALSE)
 
 /**
  * Connects the input port to the output port
@@ -191,6 +208,7 @@
 
 	connected_port = port_to_register
 	SEND_SIGNAL(connected_port, COMSIG_PORT_OUTPUT_CONNECT, src)
+	set_input(connected_port.output_value)
 
 
 /**
@@ -235,6 +253,10 @@
 /datum/port/input/disconnect()
 	unregister_output_port()
 	return ..()
+
+/datum/port/input/set_datatype(type_to_set)
+	. = ..()
+	set_input(default)
 
 /datum/port/input/proc/unregister_output_port()
 	SIGNAL_HANDLER

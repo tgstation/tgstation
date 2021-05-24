@@ -1,5 +1,7 @@
 /obj/item/multitool/circuit
 	name = "circuit multitool"
+	desc = "A circuit multitool. Used to mark entities which can then be uploaded to components by pressing the upload button on a port. \
+	Acts as a normal multitool otherwise. Use in hand to clear marked entity so that you can mark another entity."
 
 	/// The marked atom of this multitool
 	var/atom/marked_atom
@@ -26,10 +28,9 @@
 /obj/item/multitool/circuit/melee_attack_chain(mob/user, atom/target, params)
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
 
-	if(marked_atom == target || !user.Adjacent(target) || is_right_clicking)
+	if(marked_atom || !user.Adjacent(target) || is_right_clicking)
 		return ..()
 
-	clear_marked_atom()
 	say("Marked [target].")
 	marked_atom = target
 	RegisterSignal(marked_atom, COMSIG_PARENT_QDELETING, .proc/cleanup_marked_atom)
