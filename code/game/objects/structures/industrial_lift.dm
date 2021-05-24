@@ -259,7 +259,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			if(!QDELETED(victimmachine) && victimmachine.layer >= GAS_PUMP_LAYER) //to avoid pipes
 				playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 				visible_message("<span class='danger'>[src] smashes through [victimmachine]!</span>")
-				victimmachine.Destroy()
+				qdel(victimmachine)
 		for(var/mob/living/collided in destination.contents)
 			to_chat(collided, "<span class='userdanger'>[src] collides into you!</span>")
 			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
