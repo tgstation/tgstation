@@ -38,7 +38,7 @@ services:
       driver: none
   setup:
     environment:
-      TGS_BYOND: 513.1514
+      TGS_BYOND: 514.1554
       TGS_REPO: https://github.com/tgstation/tgstation
     build:
       context: ./SetupProgram

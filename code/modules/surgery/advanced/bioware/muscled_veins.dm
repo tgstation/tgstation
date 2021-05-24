@@ -1,13 +1,14 @@
 /datum/surgery/advanced/bioware/muscled_veins
 	name = "Vein Muscle Membrane"
 	desc = "A surgical procedure which adds a muscled membrane to blood vessels, allowing them to pump blood without a heart."
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/muscled_veins,
-				/datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/muscled_veins,
+		/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_CHEST)
 	bioware_target = BIOWARE_CIRCULATION
 

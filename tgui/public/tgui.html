@@ -44,8 +44,9 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
       ? parseInt(majorVersion, 10)
       : null;
   })();
+
   // Basic checks to detect whether this page runs in BYOND
-  var isByond = tridentVersion !== null
+  var isByond = (tridentVersion !== null || window.cef_to_byond)
     && location.hostname === '127.0.0.1'
     && location.pathname.indexOf('/tmp') === 0
     && location.search !== '?external';
@@ -98,6 +99,13 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
         }
       }
     }
+
+    // If we're a Chromium client, just use the fancy method
+    if (window.cef_to_byond) {
+      cef_to_byond('byond://' + url);
+      return;
+    }
+
     // Perform a standard call via location.href
     if (url.length < 2048) {
       location.href = 'byond://' + url;

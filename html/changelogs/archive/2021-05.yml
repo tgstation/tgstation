@@ -475,3 +475,154 @@
       like beautiful loot pinatas.
   itseasytosee:
   - bugfix: changeling spacesuits no longer come with a battery hud
+2021-05-18:
+  Kylerace:
+  - bugfix: i dont have the energy for a witty in-universe changelog so airhorns can
+      honk again
+  - bugfix: Recyclers dont vore themselves the moment the world is created anymore.
+  Mothblocks:
+  - refactor: tgui tooltips have been moved to a new system that keeps them within
+      bounds of the screen.
+  RandomGamer123:
+  - bugfix: Being buckled to a wheelchair no longer prevents you from using dermal
+      button nanites, cult chat, and more.
+  SgtHunk:
+  - rscadd: The Tramstation security checkpoints now have cells for easy brigging
+      on the go.
+2021-05-19:
+  JohnFulpWillard:
+  - rscadd: The Quartermaster can now send announcements via the Requests console
+      in their office.
+  Kylerace:
+  - bugfix: double rat kebabs are now double the reagents of single rat kebabs
+  - bugfix: rat kebabs no longer drop the metal rods when eaten unlike other kebabs
+      to maintain lore consistency
+2021-05-20:
+  InsaneRed:
+  - bugfix: Syndicate Saboteur borgs now properly come with a analyzer installed
+  - balance: Syndicate Medical borgs no longer have an emag
+  - balance: Syndicate Saboteur borgs now come with an emag.
+  LemonInTheDark:
+  - bugfix: Things like microwaves will no longer have their sound stack
+  dragomagol:
+  - bugfix: sentience fun balloons now work consistently again!
+2021-05-21:
+  ArcaneMusic:
+  - rscadd: Modular Computers equip with the new integrated radio card chip can now
+      be used as a remote signaler. Science comes equip with one.
+  - code_imp: Modular computer Hardware code has been documented properly.
+  Celotajs, stylemistake:
+  - refactor: Almost all alert calls have been replaced with its tgui alternative,
+      tgui_alert
+  FlamingLily:
+  - bugfix: Unscrewing the shell of a cybernetic now correctly checks for sharp objects
+      when done ghetto-style
+  Greniza:
+  - imageadd: new sprites and flavor for the chocolate and berry cake
+  - qol: adds better descriptions to nanite programs
+  - spellcheck: makes sensor description syntax consistently "receives a signal" (rather
+      than "sends" or similar)
+  InsaneRed:
+  - bugfix: Removes the extra blast door from metastation's transit tube
+  - qol: Delta turbine has been cleaned up and changed to look easier on the eyes
+      and give more space for atmosians to work with also adding a thermomachine for
+      faster setup times!
+  JJRcop:
+  - qol: Maintenance Drones were moved to the Control Interfaces category.
+  Kangarad:
+  - bugfix: Smokers may now enjoy the higher quality in Supply to quench theyr addiction.
+  Mothblocks:
+  - bugfix: Dynamic rulesets now always show in the force ruleset panel.
+  - bugfix: Dynamic rulesets now properly sort in the force ruleset panel.
+  - qol: Changing a reagent container's transfer amount will now give you feedback
+      in the form of text on the container itself.
+  Pepsiman0:
+  - bugfix: the cakehats lost their rogue pixels
+  RandomGamer123:
+  - bugfix: Maintenance sections of AI satellites are now actually radiation storm
+      proof
+  RaveRadbury:
+  - bugfix: Quirks sort into med records properly again
+  SgtHunk:
+  - bugfix: Icebox - Security Office now has the intended cargochat console.
+  Timberpoes:
+  - bugfix: Malfunctioning AIs no longer spawn shiftstart alongside other AIs unless
+      multiple AI spawns are intended.
+  dragomagol:
+  - qol: the build mode copy button now has text
+  mGuv:
+  - bugfix: fixed issue where plumbing Reaction Chambers get stuck on "Filling"
+  ninjanomnom:
+  - rscadd: Greyscale items using GAGS in vending machines can have their colors chosen
+      before vending. Not many things are capable of this yet but expect more to come.
+  tralezab:
+  - rscadd: Curators now start with a modular console with a preinstalled app for
+      printing canvases
+2021-05-22:
+  Fikou:
+  - qol: examining the altar of gods as ghost shows you some info about the religion
+  GoldenAlpharex:
+  - bugfix: Minebots now drop their ores on death, they no longer bring them with
+      themselves in the grave.
+  - spellcheck: less "minebot armor upgrade already has reinforced armor!"
+  - qol: Minebot upgrades now tell the user when they've been successfully applied.
+  Kylerace:
+  - bugfix: ai detectors now change appearance when ai's come closer
+  - bugfix: after dying multiple times in ctf a salty centcom commander removed the
+      ability to spawncamp
+  Mickyan:
+  - bugfix: Bombproof containers should once again protect their contents from being
+      damaged by explosions
+  vincentiusvin:
+  - qol: The thermal regulator setting on thermomachines is now implicit. Alt-click
+      interaction now reset to 20 celcius.
+  - qol: Thermomachines directly mention their heat capacity on examinations.
+  - qol: Changing thermomachine direction should be snappier.
+  - qol: Thermomachine should now display it's cooling efficiency variable.
+  - bugfix: Freezers should be able to hit the target temperature without hovering
+      above it like it used to on mixes with less heat capacity. Motor heat doubled
+      and only affects the heat reservoir side. 5 Kelvin wiggle room for motor heat
+      from previous' 1.5.
+  - rscdel: Thermomachines can't pump gases into the reservoir port anymore.
+2021-05-23:
+  FlamingLily:
+  - code_imp: Cleanup of surgery and organ code
+  InsaneRed:
+  - qol: Delta station toxins has been cleaned up  to remove excess piping
+  - bugfix: The delta station toxin  thermomachines are now properly linked to waste
+      and the chamber vents should no longer connect to the output pipes.
+  - bugfix: The secret documents on tram is now inside the cabinet and not the safe
+  Mothblocks:
+  - bugfix: Fixed another source to the bug preventing reconnect.
+  tralezab:
+  - rscadd: Hop has a trapdoor
+  vincentiusvin:
+  - qol: atmospherics dept on delta, icebox, and meta got cleaned up. Pipes and pumps
+      near the tanks got switched. Incinerator on box rerouted. Delta waste release
+      added.
+  - bugfix: Removed instances of duplicated pipes in icebox atmos.
+2021-05-24:
+  PositiveEntropy:
+  - imageadd: The cyborg toolset is now all new and improved, with a new coat of paint!
+  RandomGamer123:
+  - spellcheck: Attacking someone with a blood filter now uses the correct verb conjugation
+  - bugfix: Lockers can now only be unlocked if you're next to them.
+  SpaceDragon00:
+  - qol: Inspecting a weapon shows a warning label. By default, this shows force,
+      throwforce, armour_penetration, and block_chance in an esoteric manner. Inspecting
+      ammo gives information on the shot it produces, inspecting ballistic weapons
+      lets you know their caliber, and inspecting energy weapons gives you their modes
+      and the damage of those modes
+  - qol: Using credits on a PDA, Laptop, or Tablet now inserts the credits into the
+      contained ID card, if there is one
+  alexkar598:
+  - code_imp: Removed a proc thats used nowhere and implemented nowhere
+  maxymax13:
+  - imageadd: Departmental security officer ID cards show their department on the
+      non-department access color bar, like Lawyers or Psychologists
+  - imageadd: The color on the assistant trim's bar has been returned from previous
+      ID card models.
+  - imageadd: The rainbow ID card has been resprited.
+  - imageadd: The flames ID card has been slightly improved.
+  tralezab:
+  - refactor: tamable component + egg layer component, animal variety element

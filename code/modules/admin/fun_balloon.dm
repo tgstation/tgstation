@@ -57,6 +57,8 @@
 /obj/effect/fun_balloon/sentience/ui_status(mob/user)
 	if(popped)
 		return UI_CLOSE
+	if(isAdminObserver(user)) // ignore proximity if we're an admin
+		return UI_INTERACTIVE
 	return ..()
 
 /obj/effect/fun_balloon/sentience/ui_act(action, list/params)
