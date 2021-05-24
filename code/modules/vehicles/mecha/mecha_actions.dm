@@ -220,7 +220,7 @@
 			chassis.balloon_alert(owner, "your punches will now do brute damage")
 		if("brute")
 			new_damtype = "fire"
-			chassis.balloon_alert(owner, "your punches will now do fire damage")
+			chassis.balloon_alert(owner, "your punches will now deal burn damage")
 		if("fire")
 			new_damtype = "tox"
 			chassis.balloon_alert(owner,"your punches will now deal toxin damage")
