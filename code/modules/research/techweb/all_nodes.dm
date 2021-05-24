@@ -68,7 +68,8 @@
 	description = "Research on how to fully exploit the power of integrated circuits"
 	design_ids = list("integrated_circuit", "circuit_multitool", "comp_arithmetic", "comp_clock", "comp_comparison", "comp_delay", "comp_hear",
 			"comp_index", "comp_length", "comp_light", "comp_logic", "comp_not", "comp_ram", "comp_random", "comp_species", "comp_textcase",
-			"comp_speech", "comp_concat", "comp_speech", "comp_self", "comp_radio", "comp_tostring", "comp_typecheck", "compact_remote_shell", "component_printer")
+			"comp_speech", "comp_concat", "comp_speech", "comp_self", "comp_radio", "comp_tostring", "comp_typecheck", "compact_remote_shell", "component_printer",
+			"comp_string_contains")
 
 /////////////////////////Biotech/////////////////////////
 

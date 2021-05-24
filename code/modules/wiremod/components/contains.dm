@@ -1,7 +1,7 @@
 /**
  * # String Contains Component
  *
- * Checks if a string contains a word/letter/etc
+ * Checks if a string contains a word/letter
  */
 /obj/item/circuit_component/compare/contains
 	display_name = "String Contains"

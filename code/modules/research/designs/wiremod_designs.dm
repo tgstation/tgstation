@@ -135,6 +135,12 @@
 	id = "comp_hear"
 	build_path = /obj/item/circuit_component/hear
 
+/datum/design/component/contains
+	name = "String Contains Component"
+	desc = "Checks if a string contains a word/letter"
+	id = "comp_string_contains"
+	build_path = /obj/item/circuit_component/compare/contains
+
 /datum/design/component/self
 	name = "Self Component"
 	desc = "A component that returns the current shell."
