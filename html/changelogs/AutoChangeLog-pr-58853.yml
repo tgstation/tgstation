@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "fixed fake chasms not dropping floortiles"
-  - bugfix: "fixed borgs having their floor tiles deleted when reskinning"

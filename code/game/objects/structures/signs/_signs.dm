@@ -63,12 +63,14 @@
  * The first time a pen is used on any sign, this populates GLOBAL_LIST_EMPTY(editable_sign_types), creating a global list of all the signs that you can set a sign backing to with a pen.
  */
 /proc/populate_editable_sign_types()
+	var/list/output = list()
 	for(var/s in subtypesof(/obj/structure/sign))
 		var/obj/structure/sign/potential_sign = s
 		if(!initial(potential_sign.is_editable))
 			continue
-		GLOB.editable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign
-	GLOB.editable_sign_types = sortList(GLOB.editable_sign_types) //Alphabetizes the results.
+		output[initial(potential_sign.sign_change_name)] = potential_sign
+	output = sortList(output) //Alphabetizes the results.
+	return output
 
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
@@ -134,9 +136,7 @@
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
-			populate_editable_sign_types()
-			if(!length(GLOB.editable_sign_types))
-				CRASH("GLOB.editable_sign_types failed to populate")
+			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
 		if(!choice)
 			return
@@ -164,9 +164,7 @@
 /obj/item/sign/attackby(obj/item/I, mob/user, params)
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
-			populate_editable_sign_types()
-			if(!length(GLOB.editable_sign_types))
-				CRASH("GLOB.editable_sign_types failed to populate")
+			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
 		if(!choice)
 			return
@@ -178,17 +176,19 @@
 		user.visible_message("<span class='notice'>You begin changing [src].</span>")
 		if(!do_after(user, 4 SECONDS, target = src))
 			return
-		var/obj/structure/sign/sign_type = GLOB.editable_sign_types[choice]
-		name = initial(sign_type.name)
-		if(sign_type != /obj/structure/sign/blank)
-			desc = "[initial(sign_type.desc)] It can be placed on a wall."
-		else
-			desc = initial(desc) //If you're changing it to a blank sign, just use obj/item/sign's description.
-		icon_state = initial(sign_type.icon_state)
-		sign_path = sign_type
+		set_sign_type(GLOB.editable_sign_types[choice])
 		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
 		return
 	return ..()
+
+/obj/item/sign/proc/set_sign_type(obj/structure/sign/fake_type)
+	name = initial(fake_type.name)
+	if(fake_type != /obj/structure/sign/blank)
+		desc = "[initial(fake_type.desc)] It can be placed on a wall."
+	else
+		desc = initial(desc)
+	icon_state = initial(fake_type.icon_state)
+	sign_path = fake_type
 
 /obj/item/sign/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -205,6 +205,10 @@
 	placed_sign.obj_integrity = obj_integrity
 	placed_sign.setDir(dir)
 	qdel(src)
+
+/obj/item/sign/random/Initialize()
+	. = ..()
+	set_sign_type(GLOB.editable_sign_types[pick(GLOB.editable_sign_types)])
 
 /obj/structure/sign/nanotrasen
 	name = "\improper Nanotrasen logo sign"

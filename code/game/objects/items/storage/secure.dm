@@ -189,6 +189,22 @@
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 
+/obj/item/storage/secure/safe/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/item/storage/secure/safe/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/item/storage/secure/safe/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/item/storage/secure/safe/directional/west
+	dir = EAST
+	pixel_x = -32
+
 /obj/item/storage/secure/safe/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)

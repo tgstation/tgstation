@@ -128,15 +128,16 @@
 
 	. = ..()
 
-	//We add ourselves to this list, best to clear it out
-	LAZYCLEARLIST(area_sensitive_contents)
-
 	for(var/movable_content in contents)
 		qdel(movable_content)
 
 	LAZYCLEARLIST(client_mobs_in_contents)
 
 	moveToNullspace()
+
+	//We add ourselves to this list, best to clear it out
+	//DO it after moveToNullspace so memes can be had
+	LAZYCLEARLIST(area_sensitive_contents)
 
 	vis_contents.Cut()
 
@@ -289,6 +290,7 @@
 
 /atom/movable/proc/stop_pulling()
 	if(pulling)
+		SEND_SIGNAL(pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 		pulling.set_pulledby(null)
 		setGrabState(GRAB_PASSIVE)
 		pulling = null
@@ -356,6 +358,25 @@
 		var/mob/buckled_mob = m
 		buckled_mob.set_glide_size(target)
 
+/**
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
+ * most of the time you want forceMove()
+ */
+/atom/movable/proc/abstract_move(atom/new_loc)
+	var/atom/old_loc = update_loc(new_loc)
+	Moved(old_loc)
+
+/**
+ * meant to be used for all location changes. any instances of setting loc directly (for movables) should instead use this
+ * do NOT use this directly, use either Move() or abstract_move() or forceMove()
+ */
+/atom/movable/proc/update_loc(atom/new_loc)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/old_loc = loc
+	loc = new_loc
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOCATION_CHANGE, old_loc)
+
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
@@ -384,27 +405,17 @@
 	var/atom/oldloc = loc
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
-	loc = newloc
+
+	update_loc(newloc)
+
 	. = TRUE
 	oldloc.Exited(src, newloc)
 	if(oldarea != newarea)
 		oldarea.Exited(src, newloc)
 
-	for(var/i in oldloc)
-		if(i == src) // Multi tile objects
-			continue
-		var/atom/movable/thing = i
-		thing.Uncrossed(src)
-
 	newloc.Entered(src, oldloc)
 	if(oldarea != newarea)
 		newarea.Entered(src, oldloc)
-
-	for(var/i in loc)
-		if(i == src) // Multi tile objects
-			continue
-		var/atom/movable/thing = i
-		thing.Crossed(src)
 
 ////////////////////////////////////////
 
@@ -529,12 +540,10 @@
 	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSS_OVER, src)
 	return CanPass(AM, AM.loc, TRUE)
 
-//oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
+///default byond proc that is deprecated for us in lieu of signals. do not call
 /atom/movable/Crossed(atom/movable/AM, oldloc)
-	SHOULD_CALL_PARENT(TRUE)
-	. = ..()
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
-	SEND_SIGNAL(AM, COMSIG_MOVABLE_CROSSED_OVER, src)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	CRASH("atom/movable/Crossed() was called!")
 
 /**
  * `Uncross()` is a default BYOND proc that is called when something is *going*
@@ -560,9 +569,15 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	CRASH("Uncross() should not be being called, please read the doc-comment for it for why.")
 
+/**
+ * default byond proc that is normally called on everything inside the previous turf
+ * a movable was in after moving to its current turf
+ * this is wasteful since the vast majority of objects do not use Uncrossed
+ * use connect_loc to register to COMSIG_ATOM_EXITED instead
+ */
 /atom/movable/Uncrossed(atom/movable/AM)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
-	SEND_SIGNAL(AM, COMSIG_MOVABLE_UNCROSSED_OVER, src)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	CRASH("/atom/movable/Uncrossed() was called")
 
 /atom/movable/Bump(atom/A)
 	if(!A)
@@ -632,7 +647,7 @@
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 
-		loc = destination
+		update_loc(destination)
 		moving_diagonally = 0
 
 		if(!same_loc)
@@ -640,8 +655,6 @@
 				oldloc.Exited(src, destination)
 				if(old_area && old_area != destarea)
 					old_area.Exited(src, destination)
-			for(var/atom/movable/AM in oldloc)
-				AM.Uncrossed(src)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)
@@ -652,24 +665,19 @@
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
 
-			for(var/atom/movable/AM in destination)
-				if(AM == src)
-					continue
-				AM.Crossed(src, oldloc)
-
 		Moved(oldloc, NONE, TRUE)
 		. = TRUE
 
 	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
 	else
 		. = TRUE
+		var/atom/oldloc = loc
 		if (loc)
-			var/atom/oldloc = loc
 			var/area/old_area = get_area(oldloc)
 			oldloc.Exited(src, null)
 			if(old_area)
 				old_area.Exited(src, null)
-		loc = null
+		update_loc(null)
 
 /atom/movable/proc/onTransitZ(old_z,new_z)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
@@ -1063,6 +1071,8 @@
 /atom/movable/proc/can_be_pulled(user, grab_state, force)
 	if(src == user || !isturf(loc))
 		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_ATOM_CAN_BE_PULLED, user) & COMSIG_ATOM_CANT_PULL)
+		return FALSE
 	if(anchored || throwing)
 		return FALSE
 	if(force < (move_resist * MOVE_FORCE_PULL_RATIO))
@@ -1110,6 +1120,7 @@
 /atom/movable/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION(VV_HK_DEADCHAT_PLAYS, "Start/Stop Deadchat Plays")
+	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
 
 /atom/movable/vv_do_topic(list/href_list)
 	. = ..()

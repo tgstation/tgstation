@@ -521,7 +521,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/expelled_pressure = expelled_gas?.return_pressure()
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
-	air_update_turf(FALSE, FALSE)
+
 	obj_break()
 
 	if(expelled_pressure > pressure_limit)

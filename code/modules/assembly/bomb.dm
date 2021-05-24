@@ -80,13 +80,6 @@
 	else
 		bombtank.release()
 
-//Assembly / attached device memes
-
-/obj/item/onetankbomb/Crossed(atom/movable/AM as mob|obj) //for mousetraps
-	. = ..()
-	if(bombassembly)
-		bombassembly.Crossed(AM)
-
 /obj/item/onetankbomb/on_found(mob/finder) //for mousetraps
 	if(bombassembly)
 		bombassembly.on_found(finder)
@@ -157,21 +150,17 @@
 
 	var/turf/ground_zero = get_turf(loc)
 
-	if(master)
-		qdel(master)
-	qdel(src)
-
 	if(bomb_mixture.temperature > (T0C + 400))
 		strength = (fuel_moles/15)
 
 		if(strength >=2)
-			explosion(src, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1))
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1))
 		else if(strength >=1)
-			explosion(src, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1))
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1))
 		else if(strength >=0.5)
-			explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4)
+			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4)
 		else if(strength >=0.2)
-			explosion(src, devastation_range = -1, light_impact_range = 1, flash_range = 2)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2)
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
@@ -200,7 +189,9 @@
 		ground_zero.assume_air(bomb_mixture)
 		ground_zero.hotspot_expose(1000, 125)
 
-	ground_zero.air_update_turf(FALSE, FALSE)
+	if(master)
+		qdel(master)
+	qdel(src)
 
 /obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
 	var/datum/gas_mixture/our_mix = return_air()
@@ -209,7 +200,6 @@
 	if(!T)
 		return
 	T.assume_air(removed)
-	air_update_turf(FALSE, FALSE)
 
 /obj/item/onetankbomb/return_analyzable_air()
 	if(bombtank)
