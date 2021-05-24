@@ -1,0 +1,4 @@
+author: "norill"
+delete-after: True
+changes: 
+  - qol: "Made the action of holding firelocks open by left clicking with a crowbar less confusing by adding balloon messages describing what is happening. Changed the firelock examine text to explain that right-click opens it permanently and left-click opens it temporarily"

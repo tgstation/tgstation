@@ -254,6 +254,7 @@
  * on_attack triggers on attack with the parent item
  */
 /datum/component/two_handed/proc/on_attack(obj/item/source, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
 	if(wielded && attacksound)
 		var/obj/item/parent_item = parent
 		playsound(parent_item.loc, attacksound, 50, TRUE)

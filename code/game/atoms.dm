@@ -472,6 +472,7 @@
 
 ///Check if this atoms eye is still alive (probably)
 /atom/proc/check_eye(mob/user)
+	SIGNAL_HANDLER
 	return
 
 /atom/proc/Bumped(atom/movable/AM)

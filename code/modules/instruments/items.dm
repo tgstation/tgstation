@@ -96,6 +96,7 @@
  * Called by a component signal when our song starts playing.
  */
 /obj/item/instrument/piano_synth/headphones/proc/start_playing()
+	SIGNAL_HANDLER
 	icon_state = "[initial(icon_state)]_on"
 	update_appearance()
 
@@ -103,6 +104,7 @@
  * Called by a component signal when our song stops playing.
  */
 /obj/item/instrument/piano_synth/headphones/proc/stop_playing()
+	SIGNAL_HANDLER
 	icon_state = "[initial(icon_state)]"
 	update_appearance()
 
@@ -253,6 +255,7 @@
 	actions_types = list(/datum/action/item_action/instrument)
 
 /obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
 	if(song.playing && ismob(loc))
 		to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
 		song.playing = FALSE

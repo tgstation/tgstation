@@ -22,6 +22,7 @@
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_NAK, .proc/bad_signal)
 
 /obj/item/door_remote/proc/bad_signal(datum/source, datum/netdata/data, error_code)
+	SIGNAL_HANDLER
 	if(QDELETED(data.user))
 		return // can't send a message to a missing user
 	if(error_code == NETWORK_ERROR_UNAUTHORIZED)
@@ -38,7 +39,7 @@
 			mode = WAND_EMERGENCY
 		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
-	balloon_alert(user, "Mode: [desc[mode]]")
+	balloon_alert(user, "mode: [desc[mode]]")
 
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
