@@ -558,3 +558,71 @@
   tralezab:
   - rscadd: Curators now start with a modular console with a preinstalled app for
       printing canvases
+2021-05-22:
+  Fikou:
+  - qol: examining the altar of gods as ghost shows you some info about the religion
+  GoldenAlpharex:
+  - bugfix: Minebots now drop their ores on death, they no longer bring them with
+      themselves in the grave.
+  - spellcheck: less "minebot armor upgrade already has reinforced armor!"
+  - qol: Minebot upgrades now tell the user when they've been successfully applied.
+  Kylerace:
+  - bugfix: ai detectors now change appearance when ai's come closer
+  - bugfix: after dying multiple times in ctf a salty centcom commander removed the
+      ability to spawncamp
+  Mickyan:
+  - bugfix: Bombproof containers should once again protect their contents from being
+      damaged by explosions
+  vincentiusvin:
+  - qol: The thermal regulator setting on thermomachines is now implicit. Alt-click
+      interaction now reset to 20 celcius.
+  - qol: Thermomachines directly mention their heat capacity on examinations.
+  - qol: Changing thermomachine direction should be snappier.
+  - qol: Thermomachine should now display it's cooling efficiency variable.
+  - bugfix: Freezers should be able to hit the target temperature without hovering
+      above it like it used to on mixes with less heat capacity. Motor heat doubled
+      and only affects the heat reservoir side. 5 Kelvin wiggle room for motor heat
+      from previous' 1.5.
+  - rscdel: Thermomachines can't pump gases into the reservoir port anymore.
+2021-05-23:
+  FlamingLily:
+  - code_imp: Cleanup of surgery and organ code
+  InsaneRed:
+  - qol: Delta station toxins has been cleaned up  to remove excess piping
+  - bugfix: The delta station toxin  thermomachines are now properly linked to waste
+      and the chamber vents should no longer connect to the output pipes.
+  - bugfix: The secret documents on tram is now inside the cabinet and not the safe
+  Mothblocks:
+  - bugfix: Fixed another source to the bug preventing reconnect.
+  tralezab:
+  - rscadd: Hop has a trapdoor
+  vincentiusvin:
+  - qol: atmospherics dept on delta, icebox, and meta got cleaned up. Pipes and pumps
+      near the tanks got switched. Incinerator on box rerouted. Delta waste release
+      added.
+  - bugfix: Removed instances of duplicated pipes in icebox atmos.
+2021-05-24:
+  PositiveEntropy:
+  - imageadd: The cyborg toolset is now all new and improved, with a new coat of paint!
+  RandomGamer123:
+  - spellcheck: Attacking someone with a blood filter now uses the correct verb conjugation
+  - bugfix: Lockers can now only be unlocked if you're next to them.
+  SpaceDragon00:
+  - qol: Inspecting a weapon shows a warning label. By default, this shows force,
+      throwforce, armour_penetration, and block_chance in an esoteric manner. Inspecting
+      ammo gives information on the shot it produces, inspecting ballistic weapons
+      lets you know their caliber, and inspecting energy weapons gives you their modes
+      and the damage of those modes
+  - qol: Using credits on a PDA, Laptop, or Tablet now inserts the credits into the
+      contained ID card, if there is one
+  alexkar598:
+  - code_imp: Removed a proc thats used nowhere and implemented nowhere
+  maxymax13:
+  - imageadd: Departmental security officer ID cards show their department on the
+      non-department access color bar, like Lawyers or Psychologists
+  - imageadd: The color on the assistant trim's bar has been returned from previous
+      ID card models.
+  - imageadd: The rainbow ID card has been resprited.
+  - imageadd: The flames ID card has been slightly improved.
+  tralezab:
+  - refactor: tamable component + egg layer component, animal variety element

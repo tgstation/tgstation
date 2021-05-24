@@ -194,6 +194,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	var/canMouseDown = FALSE
 
+	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
+	var/offensive_notes
+	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
+	var/override_notes = FALSE
+
 /obj/item/Initialize()
 
 	if(attack_verb_continuous)
@@ -217,6 +222,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(damtype == BRUTE)
 			hitsound = "swing_hit"
 
+	add_weapon_description()
+
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 
 /obj/item/Destroy()
@@ -227,6 +234,13 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	for(var/X in actions)
 		qdel(X)
 	return ..()
+
+/*
+ * Adds the weapon_description element, which shows the warning label for especially dangerous objects.
+ * Made to be overridden by item subtypes that require specific notes outside of the scope of offensive_notes
+ */
+/obj/item/proc/add_weapon_description()
+	AddElement(/datum/element/weapon_description)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))

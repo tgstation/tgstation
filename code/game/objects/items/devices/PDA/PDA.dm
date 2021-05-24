@@ -1070,6 +1070,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/obj/item/photo/P = C
 		picture = P.picture
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
+	// Check to see if we have an ID inside, and a valid input for money
+	else if(id && iscash(C))
+		id.attackby(C, user) // If we do, try and put that attacking object in
 	else
 		return ..()
 

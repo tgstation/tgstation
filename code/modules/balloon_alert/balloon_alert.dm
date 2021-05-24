@@ -6,6 +6,29 @@
 
 /// Creates text that will float from the atom upwards to the viewer.
 /atom/proc/balloon_alert(mob/viewer, text)
+	SHOULD_NOT_SLEEP(TRUE)
+
+	INVOKE_ASYNC(src, .proc/balloon_alert_perform, viewer, text)
+
+/// Create balloon alerts (text that floats up) to everything within range.
+/// Will only display to people who can see.
+/atom/proc/balloon_alert_to_viewers(message, self_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+	SHOULD_NOT_SLEEP(TRUE)
+
+	var/list/hearers = get_hearers_in_view(vision_distance, src)
+	hearers -= ignored_mobs
+
+	for (var/mob/hearer in hearers)
+		if (hearer.is_blind())
+			continue
+
+		balloon_alert(hearer, (hearer == src && self_message) || message)
+
+// Do not use.
+// MeasureText blocks. I have no idea for how long.
+// I would've made the maptext_height update on its own, but I don't know
+// if this would look bad on laggy clients.
+/atom/proc/balloon_alert_perform(mob/viewer, text)
 	var/client/viewer_client = viewer.client
 	if (isnull(viewer_client))
 		return
@@ -15,7 +38,7 @@
 		var/atom/movable/movable_source = src
 		bound_width = movable_source.bound_width
 
-	var/image/balloon_alert = image(loc = loc, layer = ABOVE_MOB_LAYER)
+	var/image/balloon_alert = image(loc = get_atom_on_turf(src), layer = ABOVE_MOB_LAYER)
 	balloon_alert.plane = BALLOON_CHAT_PLANE
 	balloon_alert.alpha = 0
 	balloon_alert.maptext = MAPTEXT("<span style='text-align: center; -dm-text-outline: 1px #0005'>[text]</span>")
