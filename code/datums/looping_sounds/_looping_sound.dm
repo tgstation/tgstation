@@ -50,8 +50,7 @@
 		start()
 
 /datum/looping_sound/Destroy()
-	stop()
-	set_parent(null)
+	stop(TRUE)
 	return ..()
 
 /datum/looping_sound/proc/start(on_behalf_of)
