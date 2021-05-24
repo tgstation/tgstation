@@ -36,8 +36,8 @@
 		. += "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>"
 	else if(!welded)
 		. += "<span class='notice'>It is closed, but could be <b>pried</b> open.</span>"
-		. += "<span class='notice'>Hold the door open by prying it with <i>left-click</i> and standing next to it.</span>"
-		. += "<span class='notice'>Prying by <i>right-clicking</i> the door will simply open it.</span>"
+		. += "<span class='notice'>Hold the firelock temporarily open by prying it with <i>left-click</i> and standing next to it.</span>"
+		. += "<span class='notice'>Prying by <i>right-clicking</i> the firelock will open it permanently.</span>"
 		. += "<span class='notice'>Deconstruction would require it to be <b>welded</b> shut.</span>"
 	else if(boltslocked)
 		. += "<span class='notice'>It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.</span>"
@@ -130,7 +130,7 @@
 	user.visible_message("<span class='notice'>[user] starts [welded ? "unwelding" : "welding"] [src].</span>", "<span class='notice'>You start welding [src].</span>")
 	if(W.use_tool(src, user, DEFAULT_STEP_TIME, volume=50))
 		welded = !welded
-		to_chat(user, "<span class='danger'>[user] [welded?"welds":"unwelds"] [src].</span>", "<span class='notice'>You [welded ? "weld" : "unweld"] [src].</span>")
+		user.visible_message("<span class='danger'>[user] [welded?"welds":"unwelds"] [src].</span>", "<span class='notice'>You [welded ? "weld" : "unweld"] [src].</span>")
 		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
 		update_appearance()
 
@@ -141,6 +141,7 @@
 
 	if(density)
 		being_held_open = TRUE
+		user.balloon_alert_to_viewers("holding [src] open", "holding [src] open")
 		open()
 		if(QDELETED(user))
 			being_held_open = FALSE
@@ -165,22 +166,16 @@
 /obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
 	SIGNAL_HANDLER
 
-	//Handle qdeletion here
-	if(QDELETED(user))
-		being_held_open = FALSE
-		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
-		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
-		return
-
 	var/mob/living/living_user = user
-	if(Adjacent(user) && isliving(user) && (living_user.body_position == STANDING_UP))
+	if(!QDELETED(user) && Adjacent(user) && isliving(user) && (living_user.body_position == STANDING_UP))
 		return
 	being_held_open = FALSE
 	INVOKE_ASYNC(src, .proc/close)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+	if(user)
+		user.balloon_alert_to_viewers("released [src]", "released [src]")
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
