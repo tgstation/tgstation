@@ -45,7 +45,7 @@
 			mode = WAND_EMERGENCY
 		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
-	balloon_alert(user, "Mode: [desc[mode]].")
+	balloon_alert(user, "Mode: [desc[mode]]")
 
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
