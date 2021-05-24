@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Beepsky smash's stamina healing and non-beepsky-related hallucinatory effects are now applied to people WITH sec-affiliated livers instead of to people WITHOUT sec-affiliated livers, restoring its previous, intended functionality."

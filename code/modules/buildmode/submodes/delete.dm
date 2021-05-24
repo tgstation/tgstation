@@ -22,14 +22,14 @@
 			if(isturf(object))
 				return
 			var/atom/deleting = object
-			var/action_type = alert("Strict type ([deleting.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
+			var/action_type = tgui_alert(usr,"Strict type ([deleting.type]) or type and all subtypes?",,list("Strict type","Type and subtypes","Cancel"))
 			if(action_type == "Cancel" || !action_type)
 				return
 
-			if(alert("Are you really sure you want to delete all instances of type [deleting.type]?",,"Yes","No") != "Yes")
+			if(tgui_alert(usr,"Are you really sure you want to delete all instances of type [deleting.type]?",,list("Yes","No")) != "Yes")
 				return
 
-			if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
+			if(tgui_alert(usr,"Second confirmation required. Delete?",,list("Yes","No")) != "Yes")
 				return
 
 			var/O_type = deleting.type

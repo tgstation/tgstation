@@ -1,13 +1,14 @@
 /datum/surgery/revival
 	name = "Revival"
 	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/saw,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/revive,
-				/datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/revive,
+		/datum/surgery_step/close)
 
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
@@ -20,32 +21,35 @@
 		return FALSE
 	if(target.suiciding || HAS_TRAIT(target, TRAIT_HUSK))
 		return FALSE
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
+	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!target_brain)
 		return FALSE
 	return TRUE
 
 /datum/surgery_step/revive
 	name = "shock body"
-	implements = list(/obj/item/shockpaddles = 100, /obj/item/melee/baton = 75, /obj/item/gun/energy = 60)
+	implements = list(
+		/obj/item/shockpaddles = 100,
+		/obj/item/melee/baton = 75,
+		/obj/item/gun/energy = 60)
 	repeatable = TRUE
 	time = 5 SECONDS
 
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
 	. = TRUE
 	if(istype(tool, /obj/item/shockpaddles))
-		var/obj/item/shockpaddles/S = tool
-		if((S.req_defib && !S.defib.powered) || !S.wielded || S.cooldown || S.busy)
-			to_chat(user, "<span class='warning'>You need to wield both paddles, and [S.defib] must be powered!</span>")
+		var/obj/item/shockpaddles/paddles = tool
+		if((paddles.req_defib && !paddles.defib.powered) || !paddles.wielded || paddles.cooldown || paddles.busy)
+			to_chat(user, "<span class='warning'>You need to wield both paddles, and [paddles.defib] must be powered!</span>")
 			return FALSE
 	if(istype(tool, /obj/item/melee/baton))
-		var/obj/item/melee/baton/B = tool
-		if(!B.turned_on)
-			to_chat(user, "<span class='warning'>[B] needs to be active!</span>")
+		var/obj/item/melee/baton/baton = tool
+		if(!baton.turned_on)
+			to_chat(user, "<span class='warning'>[baton] needs to be active!</span>")
 			return FALSE
 	if(istype(tool, /obj/item/gun/energy))
-		var/obj/item/gun/energy/E = tool
-		if(E.chambered && istype(E.chambered, /obj/item/ammo_casing/energy/electrode))
+		var/obj/item/gun/energy/egun = tool
+		if(egun.chambered && istype(egun.chambered, /obj/item/ammo_casing/energy/electrode))
 			return TRUE
 		else
 			to_chat(user, "<span class='warning'>You need an electrode for this!</span>")

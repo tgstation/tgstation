@@ -194,6 +194,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	var/canMouseDown = FALSE
 
+	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
+	var/offensive_notes
+	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
+	var/override_notes = FALSE
+
 /obj/item/Initialize()
 
 	if(attack_verb_continuous)
@@ -207,7 +212,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
-	update_item_greyscale()
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -217,6 +221,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			hitsound = 'sound/items/welder.ogg'
 		if(damtype == BRUTE)
 			hitsound = "swing_hit"
+
+	add_weapon_description()
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 
@@ -228,6 +234,13 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	for(var/X in actions)
 		qdel(X)
 	return ..()
+
+/*
+ * Adds the weapon_description element, which shows the warning label for especially dangerous objects.
+ * Made to be overridden by item subtypes that require specific notes outside of the scope of offensive_notes
+ */
+/obj/item/proc/add_weapon_description()
+	AddElement(/datum/element/weapon_description)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
@@ -255,7 +268,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	return
 
 /// Checks if this atom uses the GAS system and if so updates the worn and inhand icons
-/obj/item/proc/update_item_greyscale()
+/obj/item/update_greyscale()
+	. = ..()
 	if(!greyscale_colors)
 		return
 	if(greyscale_config_worn)
@@ -264,7 +278,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		lefthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_left, greyscale_colors)
 	if(greyscale_config_inhand_right)
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
-	return
 
 /obj/item/verb/move_to_top()
 	set name = "Move To Top"
@@ -280,7 +293,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			return
 
 	var/turf/T = loc
-	loc = null
+	abstract_move(null)
 	forceMove(T)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?

@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "RPGLoot now has the curse of hunger as a bad modifier. A very bad one!"
-  - refactor: "Duffelbag curse is now a component, attachable to any item."
