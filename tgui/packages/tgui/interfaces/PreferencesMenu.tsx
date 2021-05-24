@@ -1,6 +1,6 @@
-import { range } from "common/collections";
-import { useBackend } from "../backend";
-import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../components";
+import { classes } from "common/react";
+import { sendAct, useBackend, useLocalState } from "../backend";
+import { Box, Button, ByondUi, Flex, Popper, Stack } from "../components";
 import { Window } from "../layouts";
 
 const CLOTHING_CELL_SIZE = 32;
@@ -9,6 +9,10 @@ const CLOTHING_SIDEBAR_ROWS = 9;
 const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
+
+const KEYS_TO_NAMES = {
+  underwear: "Underwear",
+};
 
 enum Gender {
   Male = "male",
@@ -40,6 +44,16 @@ type PreferencesMenuData = {
   };
 
   generated_preference_values?: Record<string, Record<string, string>>;
+};
+
+const createSetPreference = (
+  act: typeof sendAct,
+  preference: string
+) => (value: string) => {
+  act("set_preference", {
+    preference,
+    value,
+  });
 };
 
 const CharacterProfiles = (props: {
@@ -88,6 +102,8 @@ const CharacterPreview = (props: {
 const ClothingSelection = (props: {
   name: string,
   catalog: Record<string, string>,
+  selected: string,
+  onSelect: (value: string) => void,
 }) => {
   return (
     <Box style={{
@@ -118,11 +134,19 @@ const ClothingSelection = (props: {
                     padding: "5px",
                   }}
                 >
-                  <Button tooltip={name} tooltipPosition="right" style={{
-                    height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
-                    width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
-                  }}>
-                    <Box as="img" className="centered-image" src={image} />
+                  <Button
+                    onClick={() => {
+                      props.onSelect(name);
+                    }}
+                    selected={name === props.selected}
+                    tooltip={name}
+                    tooltipPosition="right"
+                    style={{
+                      height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                      width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                    }}
+                  >
+                    <Box className={classes(["preferences32x32", image, "centered-image"])} />
                   </Button>
                 </Flex.Item>
               );
@@ -136,6 +160,7 @@ const ClothingSelection = (props: {
 
 export const PreferencesMenu = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
+  const [currentClothingMenu, setCurrentClothingMenu] = useLocalState(context, "currentClothingMenu", null);
 
   const requestPreferenceData = (key: string) => {
     act("request_values", {
@@ -176,19 +201,37 @@ export const PreferencesMenu = (props, context) => {
                         <Stack.Item key={clothingKey}>
                           <Popper options={{
                             placement: "bottom-start",
-                          }} popperContent={<ClothingSelection
-                            name="Underwear"
-                            catalog={(data.generated_preference_values
-                              && data.generated_preference_values.underwear
-                            ) || {}}
-                          />}>
+                          }} popperContent={
+                            (currentClothingMenu === clothingKey
+                              && data.generated_preference_values
+                              && data.generated_preference_values[clothingKey])
+                            && <ClothingSelection
+                              name={KEYS_TO_NAMES[clothingKey]}
+                              catalog={
+                                data.generated_preference_values[clothingKey]
+                              }
+                              selected={clothing.value}
+                              onSelect={createSetPreference(act, clothingKey)}
+                            />
+                          }>
                             <Button onClick={() => {
+                              setCurrentClothingMenu(
+                                currentClothingMenu === clothingKey
+                                  ? null
+                                  : clothingKey
+                              );
+
                               requestPreferenceData(clothingKey);
                             }} style={{
                               height: `${CLOTHING_CELL_SIZE}px`,
                               width: `${CLOTHING_CELL_SIZE}px`,
                             }} tooltip={clothing.value} tooltipPosition="right">
-                              <Box as="img" src={clothing.icon} className="centered-image" />
+                              <Box
+                                className={classes([
+                                  "preferences32x32",
+                                  clothing.icon,
+                                  "centered-image",
+                                ])} />
                             </Button>
                           </Popper>
                         </Stack.Item>

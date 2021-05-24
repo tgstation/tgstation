@@ -1960,6 +1960,7 @@
 #include "code\modules\client\preferences.dm"
 #include "code\modules\client\preferences_savefile.dm"
 #include "code\modules\client\preferences_toggles.dm"
+#include "code\modules\client\preferences\assets.dm"
 #include "code\modules\client\preferences\base.dm"
 #include "code\modules\client\preferences\clothing.dm"
 #include "code\modules\client\preferences\gender.dm"

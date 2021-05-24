@@ -34,7 +34,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	var/should_generate_icons = FALSE
 
 	var/list/cached_values
-	var/list/sent_icons
 
 /// Called on the saved input when retrieving.
 /// Input is the value inside the savefile, output is to tell other code
@@ -61,61 +60,16 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Returns a list of every possible value.
 /// The first time this is called, will run `init_values()`.
-/// `user` is passed so that icons can be delivered.
 /// Return value can be in the form of:
 /// - A flat list of raw values, such as list(MALE, FEMALE, PLURAL).
-/// - An assoc list of raw values to generated icon URLs.
+/// - An assoc list of raw values to atoms/icons.
 /// If the mob has no client, and icons are expected to be generated, then
 /// empty strings will be given.
 /// Due to the need to send icons, this proc is NOT pure.
 /// Its calling should be deferred when possible.
 // MOTHBLOCKS TODO: Let preferences be text-only.
-/datum/preference/proc/generate_possible_values(mob/user)
-	// Override `init_values()` instead.
-	SHOULD_NOT_OVERRIDE(TRUE)
-
-	var/list/values = cache_possible_values()
-
-	if (should_generate_icons)
-		if (user.client)
-			var/sent_to_client = LAZYACCESS(sent_icons, user.client)
-			if (sent_to_client)
-				return sent_to_client
-
-			var/list/generated_values = list()
-
-			for (var/key in values)
-				generated_values[key] = icon2html(values[key], user, sourceonly = TRUE)
-
-			LAZYSET(sent_icons, user.client, generated_values)
-			return generated_values
-		else
-			// There's no client to deliver to, so we can't run icon2html
-			var/list/empty_values = list()
-			for (var/key in empty_values)
-				empty_values[key] = ""
-			return empty_values
-
-	return values
-
-/// Returns the icon for a given key.
-/// `generate_possible_values` is preferred if you know you want EVERY value.
-/// This is used to only send the icon for your currently worn item.
-/datum/preference/proc/get_icon_for(mob/user, key)
-	SHOULD_NOT_SLEEP(TRUE)
-
-	var/sent_to_client = LAZYACCESS(sent_icons, user.client)
-	if (sent_to_client)
-		return sent_to_client[key]
-	else if (!user.client)
-		// No client, so we can't perform icon2html
-		return ""
-	else
-		return icon2html(cache_possible_values()[key], user, sourceonly = TRUE)
-
-/// Returns a flat list of all choices.
-/// This should be preferred when icon generation isn't necessary.
 /datum/preference/proc/get_choices()
+	// Override `init_values()` instead.
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if (isnull(cached_values))
@@ -160,6 +114,18 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	else
 		return deserialize(value)
 
+/// Given a savefile, writes the inputted value.
+/// Returns TRUE for a successful application.
+/// Return FALSE if it is invalid.
+/datum/preference/proc/write(savefile/savefile, value)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if (!is_valid(value))
+		return FALSE
+
+	WRITE_FILE(savefile[savefile_key], value)
+	return TRUE
+
 /// Apply this preference onto the given human.
 /// Must be overriden by subtypes.
 // MOTHBLOCKS TODO: Unit test this
@@ -177,3 +143,16 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	var/savefile/savefile = new /savefile(path)
 	savefile.cd = "/character[default_slot]"
 	return preference_entry.read(savefile)
+
+/// Set a /datum/preference type.
+/// Returns TRUE for a successful preference application.
+/// Returns FALSE if it is invalid.
+/datum/preferences/proc/write_preference(datum/preference/preference, preference_value)
+	var/savefile/savefile = new /savefile(path)
+	savefile.cd = "/character[default_slot]"
+	return preference.write(savefile, preference_value)
+
+/// Checks that a given value is valid.
+/// Any type can be passed through.
+/datum/preference/proc/is_valid(value)
+	return value in get_choices()

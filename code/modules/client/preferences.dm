@@ -151,7 +151,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// A preview of the current character
 	var/atom/movable/screen/character_preview_view/character_preview_view
 
-	/// Cached list of generated preferences (return value of [`/datum/preference/generate_possible_values`]).
+	/// Cached list of generated preferences (return value of [`/datum/preference/get_choices`]).
 	var/list/generated_preference_values = list()
 
 /datum/preferences/Destroy(force, ...)
@@ -224,6 +224,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"generated_preference_values" = generated_preference_values,
 	)
 
+/datum/preferences/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/preferences),
+	)
+
 /datum/preferences/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
@@ -248,8 +253,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				return TRUE
 
 			if (isnull(generated_preference_values[requested_preference_key]))
-				generated_preference_values[requested_preference_key] = requested_preference.generate_possible_values(user)
+				generated_preference_values[requested_preference_key] = generate_preference_values(requested_preference)
 				update_static_data(user, ui)
+		if ("set_preference")
+			var/requested_preference_key = params["preference"]
+			var/value = params["value"]
+
+			var/datum/preference/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
+			if (isnull(requested_preference))
+				return TRUE
+
+			// SAFETY: `write_preference` performs validation checks
+			write_preference(requested_preference, value)
+			return TRUE
 
 	return TRUE
 
@@ -268,6 +284,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	client?.register_map_obj(character_preview_view)
 
+/datum/preferences/proc/generate_preference_values(datum/preference/preference)
+	var/list/values
+	var/list/choices = preference.get_choices()
+
+	if (preference.should_generate_icons)
+		values = list()
+		for (var/value in choices)
+			values[value] = preference.get_spritesheet_key(value)
+	else
+		values = choices
+
+	return values
+
 /datum/preferences/proc/compile_character_preferences(mob/user)
 	var/list/preferences = list()
 
@@ -281,7 +310,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		if (preference.should_generate_icons)
 			data = list(
-				"icon" = preference.get_icon_for(user, value),
+				"icon" = preference.get_spritesheet_key(value),
 				"value" = value,
 			)
 		else
