@@ -1,0 +1,4 @@
+author: "SgtHunk"
+delete-after: True
+changes: 
+  - qol: "Slaughter demons now slam their targets with right-click rather than with ctrl+shift+click."
