@@ -148,6 +148,9 @@
 ///Popup Chat Messages
 #define RUNECHAT_PLANE 250
 
+/// Plane for balloon text (text that fades up)
+#define BALLOON_CHAT_PLANE 251
+
 ///Debug Atmos Overlays
 #define ATMOS_GROUP_PLANE 450
 

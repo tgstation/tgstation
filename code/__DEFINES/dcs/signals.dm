@@ -34,6 +34,10 @@
 	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
 /// a person somewhere has thrown something : (mob/living/carbon/carbon_thrower, target)
 #define COMSIG_GLOB_CARBON_THROW_THING	"!throw_thing"
+/// a trapdoor remote has sent out a signal to link with a trapdoor
+#define COMSIG_GLOB_TRAPDOOR_LINK "!trapdoor_link"
+	///successfully linked to a trapdoor!
+	#define LINKED_UP (1<<0)
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
 /// a weather event of some kind occured
@@ -387,6 +391,9 @@
 ///from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 #define COMSIG_TURF_EXPOSE "turf_expose"
 
+///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
+#define COMSIG_TURF_DECAL_DETACHED "turf_decal_detached"
+
 // /atom/movable signals
 
 ///from base of atom/movable/Moved(): (/atom)
@@ -668,6 +675,10 @@
 #define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
+
+// simple_animal signals
+/// called when a simplemob is given sentience from a potion (target = person who sentienced)
+#define COMSIG_SIMPLEMOB_SENTIENCEPOTION "simplemob_sentiencepotion"
 
 // /mob/living/simple_animal/hostile signals
 ///before attackingtarget has happened, source is the attacker and target is the attacked

@@ -101,16 +101,6 @@
 		..()
 		new L.plank_type(src.loc, 1 + round(potency / 25))
 
-/mob/living/simple_animal/chicken/rabbit/normal
-	icon_state = "b_rabbit"
-	icon_living = "b_rabbit"
-	icon_dead = "b_rabbit_dead"
-	icon_prefix = "b_rabbit"
-	minbodytemp = 0
-	eggsleft = 0
-	egg_type = null
-	speak = list()
-
 /*Cabin's forest. Removed in the new cabin map since it was buggy and I prefer manual placement.*/
 /datum/map_generator/snowy
 	modules = list(/datum/map_generator_module/bottomlayer/snow, \
@@ -144,8 +134,7 @@
 		spawnableAtoms[i] = 1
 
 /datum/map_generator_module/snow/bunnies
-	//spawnableAtoms = list(/mob/living/simple_animal/chicken/rabbit/normal = 0.1)
-	spawnableAtoms = list(/mob/living/simple_animal/chicken/rabbit = 0.5)
+	spawnableAtoms = list(/mob/living/simple_animal/rabbit = 0.5)
 
 /datum/map_generator_module/snow/rand_ice_rocks
 	spawnableAtoms = list(/obj/structure/flora/rock/icy = 5, /obj/structure/flora/rock/pile/icy = 5)

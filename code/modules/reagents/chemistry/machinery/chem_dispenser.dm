@@ -316,7 +316,7 @@
 		if("clear_recipes")
 			if(!is_operational)
 				return
-			var/yesno = alert("Clear all recipes?",, "Yes","No")
+			var/yesno = tgui_alert(usr, "Clear all recipes?",, list("Yes","No"))
 			if(yesno == "Yes")
 				saved_recipes = list()
 			. = TRUE
@@ -331,7 +331,7 @@
 			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
 			if(!usr.canUseTopic(src, !issilicon(usr)))
 				return
-			if(saved_recipes[name] && alert("\"[name]\" already exists, do you want to overwrite it?",, "Yes", "No") == "No")
+			if(saved_recipes[name] && tgui_alert(usr, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
 				return
 			if(name && recording_recipe)
 				for(var/reagent in recording_recipe)

@@ -32,7 +32,7 @@
 
 /datum/buildmode_mode/mapgen/handle_selected_area(client/c, params)
 	var/list/modifiers = params2list(params)
-	
+
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		var/datum/map_generator/G = new generator_path
 		if(istype(G, /datum/map_generator/repair/reload_station_map))
@@ -42,7 +42,7 @@
 				return
 		G.defineRegion(cornerA, cornerB, 1)
 		highlight_region(G.map)
-		var/confirm = alert("Are you sure you want to run the map generator?", "Run generator", "Yes", "No")
+		var/confirm = tgui_alert(usr,"Are you sure you want to run the map generator?", "Run generator", list("Yes", "No"))
 		if(confirm == "Yes")
 			G.generate()
 		log_admin("Build Mode: [key_name(c)] ran the map generator '[G.buildmode_name]' in the region from [AREACOORD(cornerA)] to [AREACOORD(cornerB)]")
