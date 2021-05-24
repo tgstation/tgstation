@@ -171,7 +171,7 @@
 	else
 		chassis.movedelay = initial(chassis.movedelay)
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
-		chassis.balloon_alert(owner, "you disable the overload.")
+		chassis.balloon_alert(owner, "you disable the overload")
 	UpdateButtonIcon()
 
 /datum/action/vehicle/sealed/mecha/mech_smoke
