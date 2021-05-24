@@ -10,14 +10,16 @@ See _element.dm for detailed explanations
 	var/list/myvar = list()
 
 /datum/element/myelement/Attach(datum/target)
-	if(!isatom(target))
+	if(!ismovable(target))
 		return COMPONENT_INCOMPATIBLE
-	var/atom/target_atom = target
-	target_atom.name = "elemental [target_atom.name]"
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, myproc)
 	to_chat(target, "Hey, you're in your element.")
 
 /datum/element/myelement/Detach(datum/source)
-	var/atom/source_atom = source
-	source_atom.name = initial(source_atom.name)
+	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	to_chat(source, "You feel way out of your element.")
+
+/datum/element/myelement/proc/myproc(datum/source)
+	SIGNAL_HANDLER
+	playsound(source, 'sound/effects/gong.ogg', 50, TRUE)
 ```
