@@ -4,7 +4,9 @@
 ///// Debride burnt flesh
 /datum/surgery/debride
 	name = "Debride burnt flesh"
-	steps = list(/datum/surgery_step/debride, /datum/surgery_step/dress)
+	steps = list(
+		/datum/surgery_step/debride,
+		/datum/surgery_step/dress)
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
@@ -23,7 +25,11 @@
 ///// Debride
 /datum/surgery_step/debride
 	name = "excise infection"
-	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCALPEL = 85, TOOL_SAW = 60, TOOL_WIRECUTTER = 40)
+	implements = list(
+		TOOL_HEMOSTAT = 100,
+		TOOL_SCALPEL = 85,
+		TOOL_SAW = 60,
+		TOOL_WIRECUTTER = 40)
 	time = 30
 	repeatable = TRUE
 	/// How much sanitization is added per step
@@ -99,7 +105,9 @@
 ///// Dressing burns
 /datum/surgery_step/dress
 	name = "bandage burns"
-	implements = list(/obj/item/stack/medical/gauze = 100, /obj/item/stack/sticky_tape/surgical = 100)
+	implements = list(
+		/obj/item/stack/medical/gauze = 100,
+		/obj/item/stack/sticky_tape/surgical = 100)
 	time = 40
 	/// How much sanitization is added
 	var/sanitization_added = 3

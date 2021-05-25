@@ -8,7 +8,11 @@
 ///// Repair puncture wounds
 /datum/surgery/repair_puncture
 	name = "Repair puncture"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/repair_innards, /datum/surgery_step/seal_veins, /datum/surgery_step/close) // repeat between steps 2 and 3 until healed
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/repair_innards,
+		/datum/surgery_step/seal_veins,
+		/datum/surgery_step/close) // repeat between steps 2 and 3 until healed
 	target_mobtypes = list(/mob/living/carbon)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
@@ -28,7 +32,10 @@
 ///// realign the blood vessels so we can reweld them
 /datum/surgery_step/repair_innards
 	name = "realign blood vessels"
-	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCALPEL = 85, TOOL_WIRECUTTER = 40)
+	implements = list(
+		TOOL_HEMOSTAT = 100,
+		TOOL_SCALPEL = 85,
+		TOOL_WIRECUTTER = 40)
 	time = 3 SECONDS
 
 /datum/surgery_step/repair_innards/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -70,7 +77,11 @@
 ///// Sealing the vessels back together
 /datum/surgery_step/seal_veins
 	name = "weld veins" // if your doctor says they're going to weld your blood vessels back together, you're either A) on SS13, or B) in grave mortal peril
-	implements = list(TOOL_CAUTERY = 100, /obj/item/gun/energy/laser = 90, TOOL_WELDER = 70, /obj/item = 30)
+	implements = list(
+		TOOL_CAUTERY = 100,
+		/obj/item/gun/energy/laser = 90,
+		TOOL_WELDER = 70,
+		/obj/item = 30)
 	time = 4 SECONDS
 
 /datum/surgery_step/seal_veins/tool_check(mob/user, obj/item/tool)

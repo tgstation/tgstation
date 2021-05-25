@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "You can select the config again in the greyscale debug menu with admin controls enabled"
