@@ -41,6 +41,10 @@
 /// an obj/item is created! (obj/item/created_item)
 #define COMSIG_GLOB_NEW_ITEM "!new_item"
 
+/// the shuttle has docked! if you want to add a signal for other emergency shuttle status changes,
+/// please change this into a more general "SHUTTLE STATUS CHANGED"
+#define COMSIG_GLOB_EMERGENCY_SHUTTLE_DOCKED "emergency_shuttle_docked"
+
 /// signals from globally accessible objects
 
 ///from SSsun when the sun changes position : (azimuth)
@@ -323,7 +327,8 @@
 	#define COMPONENT_LIVING_CANT_PUT_IN_HAND (1<<0)
 ///called on /living when combat mode is toggled via the PROPER WAY (set_combatmode proc) (new_mode)
 #define COMSIG_COMBAT_MODE_TOGGLED "combat_mode_toggled"
-
+///called on /living when a new zone is targetted (signal sent from zone_sel/proc/set_selected_zone) (new_zone)
+#define COMSIG_LIVING_SELECTED_ZONE "living_selected_zone"
 
 /// from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()
 /// if a callback returns `SINGULARITY_TRY_MOVE_BLOCK`, then the singularity will not move to that turf
@@ -666,6 +671,7 @@
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 ///Called when a carbon mutates (source = dna, mutation = mutation added)
 #define COMSIG_CARBON_GAIN_MUTATION "carbon_gain_mutation"
+	#define COMPONENT_ABORT_MUTATION (1<<0)
 ///Called when a carbon loses a mutation (source = dna, mutation = mutation lose)
 #define COMSIG_CARBON_LOSE_MUTATION "carbon_lose_mutation"
 ///Called when a carbon becomes addicted (source = what addiction datum, addicted_mind = mind of the addicted carbon)

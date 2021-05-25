@@ -174,6 +174,6 @@
 
 /datum/award/achievement/misc/double_escape
 	name = "Double Escape"
-	desc = "Escape alive with the \"You are Two\" mutation. Not so easy now, is it?"
+	desc = "Escape alive with the \"You are Two\" mutation, having activated it before the shuttle arrived. Not so easy now, is it?"
 	database_id = MEDAL_DOUBLE_ESCAPE
 	icon = "double_escape"

@@ -297,6 +297,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CULT_EYES "cult_eyes"
 /// This mob should never close UI even if it doesn't have a client
 #define TRAIT_PRESERVE_UI_WITHOUT_CLIENT "preserve_ui_without_client"
+/// This trait makes keyless mobs act as if they have someone in them, only for the purposes of, say, blocking possession and looking alive.
+/// Think about where this trait is appropriate to check for, as you don't want to use it in a case where the code needs someone to have a key.
+#define TRAIT_RESERVED_BODY "reserved_body"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met

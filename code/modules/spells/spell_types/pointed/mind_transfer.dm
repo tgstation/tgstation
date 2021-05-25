@@ -89,6 +89,10 @@
 		if(!silent)
 			to_chat(user, "<span class='warning'>[t_He] appear[victim.p_s()] to be catatonic! Not even magic can affect [victim.p_their()] vacant mind.</span>")
 		return FALSE
+	if(HAS_TRAIT(victim, TRAIT_RESERVED_BODY))
+		if(!silent)
+			to_chat(user, "<span class='warning'>You feel as if there is a mind to transfer into here, yet it is distant, as if attending other matters. What the fuck?</span>")
+		return FALSE
 	if(user.suiciding)
 		if(!silent)
 			to_chat(user, "<span class='warning'>You're killing yourself! You can't concentrate enough to do this!</span>")

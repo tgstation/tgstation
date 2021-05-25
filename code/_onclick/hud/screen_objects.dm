@@ -572,6 +572,7 @@
 
 	if(choice != hud.mymob.zone_selected)
 		hud.mymob.zone_selected = choice
+		SEND_SIGNAL(hud.mymob, COMSIG_LIVING_SELECTED_ZONE, choice)
 		update_appearance()
 
 	return TRUE
