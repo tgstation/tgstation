@@ -155,12 +155,13 @@
 	if(datatype_to_check == datatype)
 		return TRUE
 
-	if(datatype == PORT_TYPE_NUMBER)
-		// Can easily convert a number to string. Everything else has to use a tostring component
-		return datatype_to_check == PORT_TYPE_STRING
-	if(datatype == PORT_TYPE_SIGNAL)
-		// A signal port is just a number port but distinguishable
-		return datatype_to_check == PORT_TYPE_NUMBER
+	switch(datatype)
+		if(PORT_TYPE_NUMBER)
+			// Can easily convert a number to string. Everything else has to use a tostring component
+			return datatype_to_check == PORT_TYPE_STRING || datatype_to_check == PORT_TYPE_SIGNAL
+		if(PORT_TYPE_SIGNAL)
+			// A signal port is just a number port but distinguishable
+			return datatype_to_check == PORT_TYPE_NUMBER
 
 	return FALSE
 

@@ -19,8 +19,6 @@
 	/// The result from the output
 	var/datum/port/output/result
 
-	var/result_type = PORT_TYPE_NUMBER
-
 /obj/item/circuit_component/compare/Initialize()
 	. = ..()
 	for(var/port_id in 1 to input_port_amount)
@@ -32,7 +30,7 @@
 
 	true = add_output_port("True", PORT_TYPE_SIGNAL)
 	false = add_output_port("False", PORT_TYPE_SIGNAL)
-	result = add_output_port("Result", result_type)
+	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
 /**
  * Used by derivatives to load their own ports in for custom use.
