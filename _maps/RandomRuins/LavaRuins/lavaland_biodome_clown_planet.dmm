@@ -1078,9 +1078,7 @@
 "Yf" = (
 /obj/machinery/light/directional/north,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
 "YI" = (
 /obj/machinery/light/small/directional/south,
