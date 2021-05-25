@@ -36,10 +36,10 @@
 
 /obj/item/circuit_component/bot_circuit/Initialize()
 	. = ..()
-	north = add_input_port("Move North", PORT_TYPE_NUMBER)
-	east = add_input_port("Move East", PORT_TYPE_NUMBER)
-	south = add_input_port("Move South", PORT_TYPE_NUMBER)
-	west = add_input_port("Move West", PORT_TYPE_NUMBER)
+	north = add_input_port("Move North", PORT_TYPE_SIGNAL)
+	east = add_input_port("Move East", PORT_TYPE_SIGNAL)
+	south = add_input_port("Move South", PORT_TYPE_SIGNAL)
+	west = add_input_port("Move West", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/bot_circuit/input_received(datum/port/input/port)
 	. = ..()

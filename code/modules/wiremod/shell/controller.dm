@@ -31,9 +31,9 @@
 
 /obj/item/circuit_component/controller/Initialize()
 	. = ..()
-	signal = add_output_port("Signal", PORT_TYPE_NUMBER)
-	alt = add_output_port("Alternate Signal", PORT_TYPE_NUMBER)
-	right = add_output_port("Extra Signal", PORT_TYPE_NUMBER)
+	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
+	alt = add_output_port("Alternate Signal", PORT_TYPE_SIGNAL)
+	right = add_output_port("Extra Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/controller/Destroy()
 	signal = null

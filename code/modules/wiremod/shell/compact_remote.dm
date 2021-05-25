@@ -28,7 +28,7 @@
 
 /obj/item/circuit_component/compact_remote/Initialize()
 	. = ..()
-	signal = add_output_port("Signal", PORT_TYPE_NUMBER)
+	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/compact_remote/Destroy()
 	signal = null
