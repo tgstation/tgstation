@@ -1,6 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Water vapor can be purchased instead of shipping an empty crate"
-  - bugfix: "The express console can purchase gas canisters again"
-  - bugfix: "Gas canisters come in a large crate again"
