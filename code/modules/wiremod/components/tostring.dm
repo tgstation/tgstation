@@ -12,6 +12,8 @@
 	/// The result from the output
 	var/datum/port/output/output
 
+	has_trigger = TRUE
+
 	var/min_range = 5
 
 /obj/item/circuit_component/tostring/Initialize()
@@ -39,3 +41,4 @@
 			return
 
 	output.set_output("[input_value]")
+	trigger_output.set_output(COMPONENT_SIGNAL)

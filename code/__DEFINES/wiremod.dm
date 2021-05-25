@@ -14,6 +14,8 @@
 #define PORT_MAX_STRING_LENGTH 500
 /// Number datatype
 #define PORT_TYPE_NUMBER "number"
+/// Signal datatype
+#define PORT_TYPE_SIGNAL "signal"
 /// List datatype
 #define PORT_TYPE_LIST "list"
 

@@ -42,6 +42,8 @@
 			return "orange"
 		if(PORT_TYPE_LIST)
 			return "white"
+		if(PORT_TYPE_SIGNAL)
+			return "teal"
 
 /datum/port/Destroy(force)
 	if(!force && !QDELETED(connected_component))
@@ -156,6 +158,9 @@
 	if(datatype == PORT_TYPE_NUMBER)
 		// Can easily convert a number to string. Everything else has to use a tostring component
 		return datatype_to_check == PORT_TYPE_STRING
+	if(datatype == PORT_TYPE_SIGNAL)
+		// A signal port is just a number port but distinguishable
+		return datatype_to_check == PORT_TYPE_NUMBER
 
 	return FALSE
 

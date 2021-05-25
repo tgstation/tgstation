@@ -10,10 +10,6 @@
 	var/datum/port/input/freq
 	/// Signal input
 	var/datum/port/input/code
-	/// The trigger to send a signal
-	var/datum/port/input/trigger_input
-	/// The trigger when a signal is received
-	var/datum/port/output/trigger_output
 
 	/// Current frequency value
 	var/current_freq = DEFAULT_SIGNALER_CODE
@@ -24,8 +20,8 @@
 	. = ..()
 	freq = add_input_port("Frequency", PORT_TYPE_NUMBER, default = FREQ_SIGNALER)
 	code = add_input_port("Code", PORT_TYPE_NUMBER, default = DEFAULT_SIGNALER_CODE)
-	trigger_input = add_input_port("Send", PORT_TYPE_NUMBER)
-	trigger_output = add_output_port("Received", PORT_TYPE_NUMBER)
+	trigger_input = add_input_port("Send", PORT_TYPE_SIGNAL)
+	trigger_output = add_output_port("Received", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/radio/Destroy()
 	freq = null

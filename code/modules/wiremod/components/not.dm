@@ -11,6 +11,7 @@
 
 	/// The result from the output
 	var/datum/port/output/result
+	has_trigger = TRUE
 
 /obj/item/circuit_component/not/Initialize()
 	. = ..()
@@ -29,3 +30,4 @@
 		return
 
 	result.set_output(!input_port.input_value)
+	trigger_output.set_output(COMPONENT_SIGNAL)

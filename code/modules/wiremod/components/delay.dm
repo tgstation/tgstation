@@ -17,9 +17,9 @@
 /obj/item/circuit_component/delay/Initialize()
 	. = ..()
 	delay_amount = add_input_port("Delay", PORT_TYPE_NUMBER, FALSE)
-	trigger = add_input_port("Trigger", PORT_TYPE_NUMBER)
+	trigger = add_input_port("Trigger", PORT_TYPE_SIGNAL)
 
-	output = add_output_port("Result", PORT_TYPE_NUMBER)
+	output = add_output_port("Result", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/delay/Destroy()
 	output = null

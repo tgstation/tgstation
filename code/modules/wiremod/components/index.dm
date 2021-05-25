@@ -12,6 +12,7 @@
 
 	/// The result from the output
 	var/datum/port/output/output
+	has_trigger = TRUE
 
 /obj/item/circuit_component/index/Initialize()
 	. = ..()
@@ -43,3 +44,4 @@
 		return
 
 	output.set_output(list_input[index])
+	trigger_output.set_output(COMPONENT_SIGNAL)

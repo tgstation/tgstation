@@ -11,6 +11,7 @@
 
 	/// The result from the output
 	var/datum/port/output/output
+	has_trigger = TRUE
 
 /obj/item/circuit_component/concat/Initialize()
 	. = ..()
@@ -39,3 +40,4 @@
 		result += value
 
 	output.set_output(result)
+	trigger_output.set_output(COMPONENT_SIGNAL)

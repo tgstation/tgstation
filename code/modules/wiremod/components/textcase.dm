@@ -12,6 +12,8 @@
 	/// The result of the text operation
 	var/datum/port/output/output
 
+	has_trigger = TRUE
+
 GLOBAL_LIST_INIT(comp_text_operations, list(
 	COMP_TEXT_LOWER,
 	COMP_TEXT_UPPER
@@ -45,3 +47,4 @@ GLOBAL_LIST_INIT(comp_text_operations, list(
 			result = uppertext(value)
 
 	output.set_output(result)
+	trigger_output.set_output(COMPONENT_SIGNAL)

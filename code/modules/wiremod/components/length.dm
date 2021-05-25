@@ -11,6 +11,7 @@
 
 	/// The result from the output
 	var/datum/port/output/output
+	has_trigger = TRUE
 
 /obj/item/circuit_component/length/Initialize()
 	. = ..()
@@ -29,3 +30,4 @@
 		return
 
 	output.set_output(length(input_port.input_value))
+	trigger_output.set_output(COMPONENT_SIGNAL)

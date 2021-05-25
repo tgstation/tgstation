@@ -27,6 +27,12 @@
 	/// Used to connect between the ports
 	var/list/datum/port/input/input_ports = list()
 
+	/// Generic trigger input for triggering this component
+	var/datum/port/input/trigger_input
+	var/datum/port/output/trigger_output
+
+	var/has_trigger = FALSE
+
 	/// Used to determine the x position of the component within the UI
 	var/rel_x = 0
 	/// Used to determine the y position of the component within the UI
@@ -50,10 +56,21 @@
 	if(length(options))
 		current_option = options[1]
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/circuit_component/LateInitialize()
+	. = ..()
+	if(has_trigger)
+		trigger_input = add_input_port("Trigger", PORT_TYPE_SIGNAL)
+		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL)
+
 /obj/item/circuit_component/Destroy()
 	if(parent)
 		parent.remove_component(src)
 		parent = null
+
+	trigger_input = null
+	trigger_output = null
 
 	QDEL_LIST(output_ports)
 	QDEL_LIST(input_ports)
@@ -159,4 +176,7 @@
 
 	var/obj/item/stock_parts/cell/cell = parent.get_cell()
 	if(!cell?.use(power_usage_per_input))
+		return TRUE
+
+	if(has_trigger && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return TRUE

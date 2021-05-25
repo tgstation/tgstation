@@ -12,6 +12,8 @@
 	/// The result from the output
 	var/datum/port/output/output
 
+	has_trigger = TRUE
+
 /obj/item/circuit_component/species/Initialize()
 	. = ..()
 	input_port = add_input_port("Organism", PORT_TYPE_ATOM)
@@ -34,3 +36,4 @@
 		return
 
 	output.set_output(human.dna.species.name)
+	trigger_output.set_output(COMPONENT_SIGNAL)

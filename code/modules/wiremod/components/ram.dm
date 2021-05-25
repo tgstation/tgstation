@@ -19,7 +19,7 @@
 /obj/item/circuit_component/ram/Initialize()
 	. = ..()
 	input_port = add_input_port("Input", PORT_TYPE_ANY)
-	trigger = add_input_port("Store", PORT_TYPE_NUMBER)
+	trigger = add_input_port("Store", PORT_TYPE_SIGNAL)
 
 	output = add_output_port("Stored Value", PORT_TYPE_ANY)
 

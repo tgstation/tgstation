@@ -13,6 +13,8 @@
 	/// The result from the output
 	var/datum/port/output/output
 
+	has_trigger = TRUE
+
 GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 	COMP_ARITHMETIC_ADD,
 	COMP_ARITHMETIC_SUBTRACT,
@@ -69,3 +71,4 @@ GLOBAL_LIST_INIT(comp_arithmetic_options, list(
 				result = min(result, value)
 
 	output.set_output(result)
+	trigger_output.set_output(COMPONENT_SIGNAL)

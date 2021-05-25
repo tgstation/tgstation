@@ -183,7 +183,7 @@
 				"name" = port.name,
 				"type" = port.datatype,
 				"ref" = REF(port),
-				"color" = port.color,
+				"color" = port.color
 			))
 
 		component_data["name"] = component.display_name
@@ -330,4 +330,22 @@
 				if(PORT_TYPE_STRING)
 					port.set_input(copytext(user_input, 1, PORT_MAX_STRING_LENGTH))
 			. = TRUE
+		if("get_component_value")
+			var/component_id = text2num(params["component_id"])
+			var/port_id = text2num(params["port_id"])
+			if(!WITHIN_RANGE(component_id, attached_components))
+				return
+			var/obj/item/circuit_component/component = attached_components[component_id]
+			if(!WITHIN_RANGE(port_id, component.output_ports))
+				return
+
+			var/datum/port/output/port = component.output_ports[port_id]
+			var/value = port.output_value
+			if(isatom(value))
+				value = port.convert_value(port.output_value)
+			else if(isnull(value))
+				value = "null"
+			balloon_alert(usr, "[port.name] value: [value]")
+			. = TRUE
+
 #undef WITHIN_RANGE

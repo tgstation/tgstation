@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, InfinitePlane } from '../components';
+import { Box, Stack, Icon, Button, Input, Flex, NumberInput, Dropdown, InfinitePlane, Tooltip } from '../components';
 import { Component, createRef } from 'inferno';
 import { Window } from '../layouts';
 import { CSS_COLORS } from '../constants';
@@ -490,7 +490,7 @@ export class Port extends Component {
       if (selectedPort.ref === port.ref) {
         setSelectedPort(null);
         return;
-      } else if (selectedPort.component_id !== componentId) {
+      } else {
         if (selectedPort.is_output === isOutput) {
           setSelectedPort(null);
           return;
@@ -643,6 +643,19 @@ const DisplayName = (props, context) => {
               name={port.name}
               value={port.current_data}
             />
+          ) || isOutput && (
+            <Button
+              compact
+              color="transparent"
+              onClick={() => act("get_component_value", {
+                component_id: componentId,
+                port_id: portIndex,
+              })}
+            >
+              <Box color="white">
+                {port.name}
+              </Box>
+            </Button>
           ) || port.name}
         </Flex.Item>
         <Flex.Item>

@@ -12,7 +12,7 @@
 	var/datum/port/input/trigger
 
 	/// The cooldown for this component of how often it can send speech messages.
-	var/speech_cooldown = PORT_INPUT_RECEIVE_DELAY
+	var/speech_cooldown = 1 SECONDS
 
 	COOLDOWN_DECLARE(next_speech)
 
@@ -20,7 +20,7 @@
 	. = ..()
 	message = add_input_port("Message", PORT_TYPE_STRING, FALSE)
 
-	trigger = add_input_port("Trigger", PORT_TYPE_NUMBER)
+	trigger = add_input_port("Trigger", PORT_TYPE_SIGNAL)
 
 
 /obj/item/circuit_component/speech/Destroy()

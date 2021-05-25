@@ -10,8 +10,8 @@
 	var/datum/port/input/minimum
 	/// The maximum value that the random number can be
 	var/datum/port/input/maximum
-	/// The trigger for the roll
-	var/datum/port/input/trigger
+
+	has_trigger = TRUE
 
 	/// The result from the output
 	var/datum/port/output/output
@@ -20,23 +20,18 @@
 	. = ..()
 	minimum = add_input_port("Minimum", PORT_TYPE_NUMBER, FALSE)
 	maximum = add_input_port("Maximum", PORT_TYPE_NUMBER, FALSE)
-	trigger = add_input_port("Trigger", PORT_TYPE_NUMBER)
 
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/random/Destroy()
 	minimum = null
 	maximum = null
-	trigger = null
 	output = null
 	return ..()
 
 /obj/item/circuit_component/random/input_received(datum/port/input/port)
 	. = ..()
 	if(.)
-		return
-
-	if(!COMPONENT_TRIGGERED_BY(trigger, port))
 		return
 
 	var/min_val = minimum.input_value || 0
@@ -47,3 +42,4 @@
 		return
 
 	output.set_output(rand(min_val, max_val))
+	trigger_output.set_output(COMPONENT_SIGNAL)

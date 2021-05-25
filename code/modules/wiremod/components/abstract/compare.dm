@@ -28,10 +28,10 @@
 		add_input_port(letter, PORT_TYPE_ANY)
 
 	load_custom_ports()
-	compare = add_input_port("Compare", PORT_TYPE_NUMBER)
+	compare = add_input_port("Compare", PORT_TYPE_SIGNAL)
 
-	true = add_output_port("True", PORT_TYPE_NUMBER)
-	false = add_output_port("False", PORT_TYPE_NUMBER)
+	true = add_output_port("True", PORT_TYPE_SIGNAL)
+	false = add_output_port("False", PORT_TYPE_SIGNAL)
 	result = add_output_port("Result", result_type)
 
 /**
