@@ -168,16 +168,16 @@
 /obj/item/inspector/clown/proc/cycle_print_time(mob/user)
 	if(print_time == 1 SECONDS)
 		print_time = 5 SECONDS
-		to_chat(user, "<span class='notice'>You set the device's scanning speed to SLOW.")
+		balloon_alert(user, "You set the device's scanning speed to SLOW.")
 	else
 		print_time = 1 SECONDS
-		to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTNING FAST.")
+		balloon_alert(user, "You set the device's scanning speed setting to LIGHTNING FAST.")
 
 /obj/item/inspector/clown/proc/cycle_sound(mob/user)
 	print_sound_mode++
 	if(print_sound_mode > max_mode)
 		print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL
-	to_chat(user, "<span class='notice'>You set the device's bleep setting to [mode_names[print_sound_mode]] mode")
+	balloon_alert(user, "You set the device's bleep setting to [mode_names[print_sound_mode]] mode")
 
 /obj/item/inspector/clown/create_slip()
 	var/obj/item/paper/fake_report/slip = new(get_turf(src))
@@ -215,6 +215,16 @@
 	w_class = WEIGHT_CLASS_SMALL
 	max_mode = BANANIUM_INSPECTOR_PRINT_SOUND_MODE_LAST
 
+/obj/item/inspector/clown/bananium/proc/check_settings_legality()
+	if((print_sound_mode == CLOWN_INSPECTOR_PRINT_SOUND_MODE_NORMAL)&&(print_time < 1 SECONDS))
+		say("Setting combination forbidden by Geneva convention revision CXXIII selected, reverting to defaults")
+		print_time = 5 SECONDS
+		print_sound_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_CLASSIC
+
+/obj/item/inspector/clown/bananium/attackby(obj/item/I, mob/user, params)
+	..()
+	check_settings_legality()
+
 /obj/item/inspector/clown/bananium/Initialize()
 	. = ..()
 	playsound(src, 'sound/effects/angryboat.ogg', 150, FALSE)
@@ -229,13 +239,13 @@
 /obj/item/inspector/clown/bananium/cycle_print_time(mob/user)
 	if(print_time == 0.1 SECONDS)
 		print_time = 5 SECONDS
-		to_chat(user, "<span class='notice'>You set the device's scanning speed to SLOW.")
+		balloon_alert(user, "You set the device's scanning speed to SLOW.")
 	else if(print_time == 5 SECONDS)
 		print_time = 1 SECONDS
-		to_chat(user, "<span class='notice'>You set the device's scanning speed setting to LIGHTNING FAST.")
+		balloon_alert(user, "You set the device's scanning speed setting to LIGHTNING FAST.")
 	else
 		print_time = 0.1 SECONDS
-		to_chat(user, "<span class='notice'>You set the device's scanning speed setting to HONK.")
+		balloon_alert(user, "You set the device's scanning speed setting to HONK.")
 
 /obj/item/inspector/clown/bananium/examine_more(mob/user)
 	return list("<span class='info'>You can adjust [src]'s scanning sound with a multitool</span>", "<span class='info'>You can adjust [src]'s scanning speed with a screwdriver</span>")
