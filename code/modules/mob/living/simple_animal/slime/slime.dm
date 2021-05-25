@@ -111,9 +111,9 @@
 	for (var/A in actions)
 		var/datum/action/AC = A
 		AC.Remove(src)
-	Target = null
-	Leader = null
-	Friends = null
+	set_target(null)
+	set_leader(null)
+	clear_friends()
 	return ..()
 
 /mob/living/simple_animal/slime/create_reagents(max_vol, flags)
@@ -363,10 +363,7 @@
 				if(S.next_step(user, modifiers))
 					return 1
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
-		if (user in Friends)
-			++Friends[user]
-		else
-			Friends[user] = 1
+		add_friendship(user, 1)
 		to_chat(user, "<span class='notice'>You feed the slime the plasma. It chirps happily.</span>")
 		var/obj/item/stack/sheet/mineral/plasma/S = W
 		S.use(1)
@@ -434,7 +431,7 @@
 	adjustBruteLoss(rand(15,20))
 	if(!client)
 		if(Target) // Like cats
-			Target = null
+			set_target(null)
 			++Discipline
 	return
 
@@ -479,8 +476,7 @@
 			if(Discipline == 1)
 				attacked = 0
 
-	if(Target)
-		Target = null
+	set_target(null)
 	if(buckled)
 		Feedstop(silent = TRUE) //we unbuckle the slime from the mob it latched onto.
 
@@ -510,3 +506,54 @@
 
 /mob/living/simple_animal/slime/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/simple_animal/slime/proc/set_target(new_target)
+	if(Target)
+		UnregisterSignal(Target, COMSIG_PARENT_QDELETING)
+	Target = new_target
+	if(Target)
+		RegisterSignal(Target, COMSIG_PARENT_QDELETING, .proc/target_deleted)
+
+/mob/living/simple_animal/slime/proc/target_deleted(datum/source)
+	SIGNAL_HANDLER
+	set_target(null)
+
+/mob/living/simple_animal/slime/proc/set_leader(new_leader)
+	if(Leader)
+		UnregisterSignal(Leader, COMSIG_PARENT_QDELETING)
+	Leader = new_leader
+	if(Leader)
+		RegisterSignal(Leader, COMSIG_PARENT_QDELETING, .proc/leader_deleted)
+
+/mob/living/simple_animal/slime/proc/leader_deleted(datum/source)
+	SIGNAL_HANDLER
+	set_leader(null)
+
+/mob/living/simple_animal/slime/proc/add_friendship(new_friend, amount = 1)
+	if(!Friends[new_friend])
+		Friends[new_friend] = 0
+	Friends[new_friend] += amount
+	if(new_friend)
+		RegisterSignal(new_friend, COMSIG_PARENT_QDELETING, .proc/leader_deleted)
+
+/mob/living/simple_animal/slime/proc/set_friendship(new_friend, amount = 1)
+	Friends[new_friend] = amount
+	if(new_friend)
+		RegisterSignal(new_friend, COMSIG_PARENT_QDELETING, .proc/leader_deleted)
+
+/mob/living/simple_animal/slime/proc/remove_friend(friend)
+	Friends -= friend
+	UnregisterSignal(friend, COMSIG_PARENT_QDELETING)
+
+/mob/living/simple_animal/slime/proc/set_friends(new_buds)
+	clear_friends()
+	for(var/mob/friend as anything in new_buds)
+		set_friendship(friend, new_buds[friend])
+
+/mob/living/simple_animal/slime/proc/clear_friends()
+	for(var/mob/friend as anything in Friends)
+		remove_friend(friend)
+
+/mob/living/simple_animal/slime/proc/friend_deleted(datum/source)
+	SIGNAL_HANDLER
+	remove_friend(source)

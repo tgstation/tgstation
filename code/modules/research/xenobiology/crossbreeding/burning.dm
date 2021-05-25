@@ -34,7 +34,7 @@ Burning extracts:
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
 	var/mob/living/simple_animal/slime/S = new(get_turf(user),"grey")
 	S.visible_message("<span class='danger'>A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!</span>")
-	S.Friends[user] = 20 //Gas, gas, gas
+	S.set_friendship(user, 20) //Gas, gas, gas
 	S.bodytemperature = T0C + 400 //We gonna step on the gas.
 	S.set_nutrition(S.get_hunger_nutrition()) //Tonight, we fight!
 	..()
@@ -200,10 +200,10 @@ Burning extracts:
 	for(var/mob/living/simple_animal/slime/S in view(7, get_turf(user)))
 		if(user in S.Friends)
 			var/friendliness = S.Friends[user]
-			S.Friends = list()
-			S.Friends[user] = friendliness
+			S.clear_friends()
+			S.set_friendship(user, friendliness)
 		else
-			S.Friends = list()
+			S.clear_friends()
 		S.rabid = 1
 		S.visible_message("<span class='danger'>The [S] is driven into a dangerous frenzy!</span>")
 	..()
