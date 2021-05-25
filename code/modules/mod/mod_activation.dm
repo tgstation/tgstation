@@ -106,7 +106,7 @@
 		wearer.update_inv_gloves()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
-		to_chat(wearer, "<span class='notice'>[chestplate] [active ? "releases your chest" : "cinches tight again your chest"].</span>")
+		to_chat(wearer, "<span class='notice'>[chestplate] [active ? "releases your chest" : "cinches tightly against your chest"].</span>")
 		chestplate.icon_state = "[skin]-chestplate[active ? "" : "-sealed"]"
 		chestplate.worn_icon_state = "[skin]-chestplate[active ? "" : "-sealed"]"
 		if(active)

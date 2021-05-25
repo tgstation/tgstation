@@ -430,6 +430,8 @@
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/mod/module/jetpack/proc/move_react(mob/user)
+	SIGNAL_HANDLER
+
 	if(!active)//If jet dont work, it dont work
 		return
 	if(!isturf(mod.wearer.loc))//You can't use jet in nowhere or from mecha/closet
@@ -444,6 +446,8 @@
 		allow_thrust()
 
 /obj/item/mod/module/jetpack/proc/pre_move_react(mob/user)
+	SIGNAL_HANDLER
+
 	ion_trail.oldposition = get_turf(src)
 
 /obj/item/mod/module/jetpack/proc/spacemove_react(mob/user, movement_dir)
