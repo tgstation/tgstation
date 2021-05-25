@@ -244,7 +244,8 @@
 /datum/effect_system/foam_spread/start()
 	var/obj/effect/particle_effect/foam/F = new effect_type(location)
 	var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
-	chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
+	var/effective_amount = chemholder.reagents.total_volume / max(amount, 3)
+	chemholder.reagents.copy_to(F, effective_amount)
 	F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 	F.amount = amount
 	F.metal = metal
