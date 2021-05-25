@@ -62377,8 +62377,14 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer4,
+/obj/machinery/atmospherics/components/binary/thermomachine/heater/on{
+	dir = 4;
+	piping_layer = 2
+	},
 /turf/open/floor/iron,
-/area/engineering/atmos)
+/area/engineering/atmos{
+	dir = 1
+	})
 "ssm" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
