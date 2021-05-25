@@ -21,6 +21,7 @@
 	REMOVE_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT)
 
 /datum/element/dryable/proc/finish_drying(atom/source)
+	SIGNAL_HANDLER
 	var/atom/dried_atom = source
 	if(dry_result == dried_atom.type)//if the dried type is the same as our currrent state, don't bother creating a whole new item, just re-color it.
 		var/atom/movable/resulting_atom = dried_atom

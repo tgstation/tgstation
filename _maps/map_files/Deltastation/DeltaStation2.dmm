@@ -3200,6 +3200,10 @@
 	},
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
+"atv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/closed/wall,
+/area/engineering/atmos)
 "atw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -41143,9 +41147,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central/aft)
 "fbV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
@@ -42184,9 +42185,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 5
@@ -44729,6 +44727,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
+"ghp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/closed/wall,
+/area/engineering/atmos)
 "ghq" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
@@ -56432,17 +56436,7 @@
 /area/space/nearstation)
 "jwE" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/status_display/evac{
-	pixel_x = -32
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -69386,9 +69380,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 5
@@ -137171,11 +137162,11 @@ qkN
 vzJ
 ntl
 mZD
-mZD
+ghp
 xXs
 mZD
 xXs
-mZD
+atv
 mZD
 eJp
 owx

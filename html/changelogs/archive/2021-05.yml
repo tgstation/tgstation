@@ -626,3 +626,35 @@
   - imageadd: The flames ID card has been slightly improved.
   tralezab:
   - refactor: tamable component + egg layer component, animal variety element
+2021-05-25:
+  AnturK:
+  - config: Explorer drone adventures are now stored in the db instead of config
+  Fikou:
+  - code_imp: ai upload now doesnt lag you as much
+  InsaneRed:
+  - qol: Converts most of the equipment on mechs into ballons
+  JohnFulpWillard:
+  - spellcheck: The Research Director's plasmaman envirosuit is now labelled as belonging
+      to the Research Director rather than the Chief Engineer.
+  Melbert:
+  - bugfix: Fixes being unable to feed chickens for eggs
+  Mothblocks:
+  - rscadd: From June 23rd to June 29th, celebrates pride week w/ rainbow floor tiles.
+  SgtHunk:
+  - qol: Slaughter demons now slam their targets with right-click rather than with
+      ctrl+shift+click.
+  Watermelon914:
+  - bugfix: Fixed being able to noogie harm people as a pacifist.
+  - bugfix: Fixed borgs dropping their equipment when cryo'd.
+  ninjanomnom:
+  - bugfix: Fixes the pda alert using the wrong overlay and displaying an error state
+  - bugfix: Water vapor can be purchased instead of shipping an empty crate
+  - bugfix: The express console can purchase gas canisters again
+  - bugfix: Gas canisters come in a large crate again
+  norill:
+  - bugfix: fixed backpack firefighter tank nozzle refilling not working in extinguisher
+      mode
+  - qol: Made the action of holding firelocks open by left clicking with a crowbar
+      less confusing by adding balloon messages describing what is happening. Changed
+      the firelock examine text to explain that right-click opens it permanently and
+      left-click opens it temporarily

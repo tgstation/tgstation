@@ -210,9 +210,11 @@
 	..()
 
 /obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount, repairs)
+	SIGNAL_HANDLER
 	adjust_charge(amount / 3.5)
 
 /obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
+	SIGNAL_HANDLER
 	if(flags & SHOCK_ILLUSION)
 		return
 	adjust_charge(shock_damage * siemens_coeff * 2)

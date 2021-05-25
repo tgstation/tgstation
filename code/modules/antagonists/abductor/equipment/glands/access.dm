@@ -12,6 +12,7 @@
 	RegisterSignal(owner, COMSIG_MOB_ALLOWED, .proc/free_access)
 
 /obj/item/organ/heart/gland/access/proc/free_access(datum/source, obj/O)
+	SIGNAL_HANDLER
 	return TRUE
 
 /obj/item/organ/heart/gland/access/Remove(mob/living/carbon/M, special = 0)
