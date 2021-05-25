@@ -27,12 +27,6 @@
 /// -14C - Temperature used for kitchen cold room, medical freezer, etc.
 #define COLD_ROOM_TEMP 259.15
 
-/// The minimum heat capacity of a gas
-#define MINIMUM_HEAT_CAPACITY 0.0003
-/// Minimum mole count of a gas
-#define MINIMUM_MOLE_COUNT 0.01
-/// Molar accuracy to round to
-#define MOLAR_ACCURACY  1E-4
 /**
  *I feel the need to document what happens here. Basically this is used
  *catch rounding errors, and make gas go away in small portions.
@@ -43,6 +37,12 @@
  *So for instance round(0.5, 1) == 1. I've hardcoded a fix for this into share, by forcing the garbage collect.
  *Any other attempts to fix it just killed atmos. I leave this to a greater man then I
  */
+/// The minimum heat capacity of a gas
+#define MINIMUM_HEAT_CAPACITY 0.0003
+/// Minimum mole count of a gas
+#define MINIMUM_MOLE_COUNT 0.01
+/// Molar accuracy to round to
+#define MOLAR_ACCURACY  1E-4
 
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
