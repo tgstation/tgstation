@@ -54910,9 +54910,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/thermomachine/heater{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/binary/thermomachine/heater,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
