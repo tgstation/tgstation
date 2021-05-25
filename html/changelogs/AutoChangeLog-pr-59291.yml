@@ -1,0 +1,5 @@
+author: "FlamingLily"
+delete-after: True
+changes: 
+  - bugfix: "Muscled Veins is now correctly labelled as muscled veins, and not threaded veins."
+  - bugfix: "Gastrectomy now correctly has a surgery failure message"
