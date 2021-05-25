@@ -25,11 +25,10 @@
 	SSair.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/Destroy()
-	SSair.stop_processing_machine(src)
-
 	disconnect()
 	QDEL_NULL(air_contents)
-
+	SSair.stop_processing_machine(src)
+	
 	return ..()
 
 /obj/machinery/portable_atmospherics/ex_act(severity, target)
