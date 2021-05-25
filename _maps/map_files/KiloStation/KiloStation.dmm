@@ -42811,11 +42811,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/storage/primary)
-"dDz" = (
-/obj/structure/lattice,
-/obj/structure/grille/broken,
-/turf/open/space/basic,
-/area/space)
 "dDS" = (
 /obj/machinery/porta_turret/ai{
 	dir = 1
@@ -44655,10 +44650,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
-"ewV" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "exe" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -48767,14 +48758,6 @@
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/dark,
 /area/engineering/gravity_generator)
-"giX" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space)
 "gjG" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -61628,11 +61611,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
-"lTo" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing,
-/turf/open/space/basic,
-/area/space)
 "lTM" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -64804,10 +64782,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/port/aft)
-"npa" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/wall,
-/area/space)
 "npd" = (
 /obj/machinery/power/compressor{
 	comp_id = "incineratorturbine";
@@ -66880,11 +66854,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/command/heads_quarters/hop)
-"olO" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "olX" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/grassybush,
@@ -139314,10 +139283,10 @@ aaa
 aaa
 aaa
 aaa
-cqi
-cqi
-cqi
-cmJ
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -139571,13 +139540,13 @@ aaa
 aaa
 aaa
 aaa
-cqi
-npa
-cmJ
-dDz
-olO
 aaa
-cmJ
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -139828,10 +139797,10 @@ aaa
 aaa
 aaa
 aaa
-cqi
-uku
 aaa
-cmJ
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -140085,10 +140054,10 @@ aaa
 aaa
 aaa
 aaa
-cqi
-dNv
 aaa
-dDz
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -140342,10 +140311,10 @@ aaa
 aaa
 aaa
 aaa
-cqi
-uku
 aaa
-olO
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -140599,13 +140568,13 @@ aaa
 aaa
 aaa
 aaa
-cqi
-cqi
-uku
-cmJ
 aaa
 aaa
-cmJ
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -142661,7 +142630,7 @@ aaa
 aaa
 aaa
 aaa
-cmJ
+aaa
 aaa
 aaa
 aaa
@@ -143431,10 +143400,10 @@ aaa
 aaa
 aaa
 aaa
-cmJ
 aaa
 aaa
-ewV
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -143688,10 +143657,10 @@ aaa
 aaa
 aaa
 aaa
-dDz
 aaa
 aaa
-ewV
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -143945,10 +143914,10 @@ aaB
 aaa
 aaa
 aaa
-olO
 aaa
-cmJ
-lTo
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -144202,10 +144171,10 @@ aaa
 aaa
 aaa
 aaa
-olO
 aaa
-dDz
-giX
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -144459,10 +144428,10 @@ aaa
 aaa
 aaa
 aaa
-cmJ
 aaa
-cmJ
-ewV
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
