@@ -255,6 +255,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (isnull(generated_preference_values[requested_preference_key]))
 				generated_preference_values[requested_preference_key] = generate_preference_values(requested_preference)
 				update_static_data(user, ui)
+		if ("rotate")
+			character_preview_view.dir = turn(character_preview_view.dir, 90)
 		if ("set_preference")
 			var/requested_preference_key = params["preference"]
 			var/value = params["value"]
@@ -375,7 +377,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			profiles += null
 			continue
 
-		// MOTHBLOCKS TODO: Cached profile shots
+		// MOTHBLOCKS TODO: Cached profile headshots
 		profiles += list(list(
 			"name" = name,
 		))

@@ -1,6 +1,6 @@
 import { classes } from "common/react";
 import { sendAct, useBackend, useLocalState } from "../backend";
-import { Box, Button, ByondUi, Flex, Popper, Stack } from "../components";
+import { Box, Button, ByondUi, Flex, Icon, Popper, Stack } from "../components";
 import { Window } from "../layouts";
 
 const CLOTHING_CELL_SIZE = 32;
@@ -75,6 +75,22 @@ const CharacterProfiles = (props: {
           </Button>
         </Stack.Item>
       ))}
+    </Stack>
+  );
+};
+
+const CharacterControls = (props: {
+  handleRotate: () => void,
+}) => {
+  return (
+    <Stack>
+      <Stack.Item>
+        <Button
+          onClick={props.handleRotate}
+          fontSize="16px"
+          icon="sync"
+        />
+      </Stack.Item>
     </Stack>
   );
 };
@@ -184,7 +200,17 @@ export const PreferencesMenu = (props, context) => {
           <Stack.Item>
             <Stack fill>
               <Stack.Item>
-                <CharacterPreview id={data.character_preview_view} />
+                <Stack vertical>
+                  <Stack.Item>
+                    <CharacterControls handleRotate={() => {
+                      act("rotate");
+                    }} />
+                  </Stack.Item>
+
+                  <Stack.Item>
+                    <CharacterPreview id={data.character_preview_view} />
+                  </Stack.Item>
+                </Stack>
               </Stack.Item>
 
               <Stack.Item>
