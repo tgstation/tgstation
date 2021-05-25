@@ -31,13 +31,15 @@
 		return
 
 	var/result = ""
+	var/list/ports = input_ports.Copy()
+	ports -= trigger_input
 
 	for(var/datum/port/input/input_port as anything in input_ports)
 		var/value = input_port.input_value
 		if(isnull(value))
 			continue
 
-		result += value
+		result += "[value]"
 
 	output.set_output(result)
 	trigger_output.set_output(COMPONENT_SIGNAL)
