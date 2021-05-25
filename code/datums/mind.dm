@@ -107,7 +107,7 @@
 	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
-	original_character = null
+	set_original_character(null)
 	if(current) // remove ourself from our old body's mind variable
 		current.mind = null
 		UnregisterSignal(current, COMSIG_LIVING_DEATH)
@@ -144,6 +144,18 @@
 		LAZYCLEARLIST(new_character.client.recent_examines)
 		new_character.client.init_verbs() // re-initialize character specific verbs
 	current.update_atom_languages()
+
+//I cannot trust you fucks to do this properly
+/datum/mind/proc/set_original_character(new_original_character)
+	if(original_character)
+		UnregisterSignal(original_character, COMSIG_PARENT_QDELETING)
+	original_character = new_original_character
+	if(original_character)
+		RegisterSignal(original_character, COMSIG_PARENT_QDELETING, .proc/original_character_deleted)
+
+/datum/mind/proc/original_character_deleted(datum/source)
+	SIGNAL_HANDLER
+	set_original_character(null)
 
 /datum/mind/proc/init_known_skills()
 	for (var/type in GLOB.skill_types)

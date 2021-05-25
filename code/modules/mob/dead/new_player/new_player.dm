@@ -465,7 +465,7 @@
 		mind.active = FALSE //we wish to transfer the key manually
 		mind.original_character_slot_index = client.prefs.default_slot
 		mind.transfer_to(H) //won't transfer key since the mind is not active
-		mind.original_character = H
+		mind.set_original_character(H)
 
 	H.name = real_name
 	client.init_verbs()
