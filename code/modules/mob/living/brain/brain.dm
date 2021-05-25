@@ -34,6 +34,7 @@
 			mind.current = null
 		ghostize() //Ghostize checks for key so nothing else is necessary.
 	container = null
+	QDEL_NULL(stored_dna)
 	return ..()
 
 
