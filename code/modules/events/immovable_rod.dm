@@ -129,7 +129,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/Moved()
 	if(!loc)
-		return
+		return ..()
 		
 	for(var/atom/movable/to_bump in loc)
 		if((to_bump != src) && !QDELETED(to_bump) && (to_bump.density || isliving(to_bump)))
