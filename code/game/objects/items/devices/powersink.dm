@@ -32,6 +32,14 @@
 	icon_state = "powersink[mode == OPERATING]"
 	return ..()
 
+/obj/item/powersink/examine(mob/user)
+	. = ..()
+	if(mode)
+		. += "\The [src] is bolted to the floor."
+	if(in_range(user, src) || isobserver(user))
+		if(internal_heat > max_heat * 0.5)
+			. += "<span class='danger'>[src] is warping the air above it. It must be very hot.</span>"
+
 /obj/item/powersink/set_anchored(anchorvalue)
 	. = ..()
 	density = anchorvalue
