@@ -57,6 +57,7 @@
 // Logic defines
 #define COMP_LOGIC_AND "AND"
 #define COMP_LOGIC_OR "OR"
+#define COMP_LOGIC_XOR "XOR"
 
 // Arithmetic defines
 #define COMP_ARITHMETIC_ADD "Add"
