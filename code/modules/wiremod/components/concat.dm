@@ -34,7 +34,7 @@
 	var/list/ports = input_ports.Copy()
 	ports -= trigger_input
 
-	for(var/datum/port/input/input_port as anything in input_ports)
+	for(var/datum/port/input/input_port as anything in ports)
 		var/value = input_port.input_value
 		if(isnull(value))
 			continue
