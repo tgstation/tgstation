@@ -62382,9 +62382,7 @@
 	piping_layer = 2
 	},
 /turf/open/floor/iron,
-/area/engineering/atmos{
-	dir = 1
-	})
+/area/engineering/atmos)
 "ssm" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
