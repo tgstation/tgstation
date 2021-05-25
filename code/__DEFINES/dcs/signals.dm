@@ -703,6 +703,8 @@
 #define COMSIG_OBJ_HIDE "obj_hide"
 /// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
+/// from /obj/proc/obj_break: ()
+#define COMSIG_OBJ_BREAK "obj_break"
 
 // /obj/machinery signals
 
@@ -718,6 +720,10 @@
 #define COMSIG_MACHINERY_DESTRUCTIVE_SCAN "machinery_destructive_scan"
 ///from /obj/machinery/computer/arcade/prizevend(mob/user, prizes = 1)
 #define COMSIG_ARCADE_PRIZEVEND "arcade_prizevend"
+///from /datum/controller/subsystem/air/proc/start_processing_machine: ()
+#define COMSIG_MACHINERY_START_PROCESSING_AIR "start_processing_air"
+///from /datum/controller/subsystem/air/proc/stop_processing_machine: ()
+#define COMSIG_MACHINERY_STOP_PROCESSING_AIR "stop_processing_air"
 
 ///from /obj/machinery/can_interact(mob/user): Called on user when attempting to interact with a machine (obj/machinery/machine)
 #define COMSIG_TRY_USE_MACHINE "try_use_machine"

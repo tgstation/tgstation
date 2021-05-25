@@ -108,6 +108,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	update_appearance()
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	AddElement(/datum/element/volatile_gas_storage)
+	AddComponent(/datum/component/gas_leaker, leak_rate=0.01)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	. = ..()
@@ -518,17 +520,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/proc/canister_break()
 	disconnect()
 	var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
-	var/expelled_pressure = expelled_gas?.return_pressure()
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
 
 	obj_break()
-
-	if(expelled_pressure > pressure_limit)
-		var/pressure_dif = expelled_pressure - pressure_limit
-		var/max_pressure_difference = 20000
-		var/explosion_range = CEILING(min(pressure_dif, max_pressure_difference) / 1000, 1)
-		explosion(T, light_impact_range = explosion_range, smoke = FALSE)
 
 	density = FALSE
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
@@ -558,32 +553,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		valve_open = !valve_open
 		timing = FALSE
 
-	var/turf/location = get_turf(src)
-
-	var/mix_air = FALSE
-	var/pressure = release_pressure
-	var/gas_mix = holding?.return_air()
-	var/air_update = FALSE
-
-	if(valve_open)
-		mix_air = TRUE
-
-	// When at least 10% of integrity is lost it starts checking for leaking
-	if(obj_integrity < max_integrity * 0.9)
-		var/leak_chance = (1 - obj_integrity / max_integrity) * 100
-		excited = TRUE
-		if(prob(leak_chance))
-			mix_air = TRUE
-			pressure = air_contents.return_pressure() / 10
-			gas_mix = location.return_air()
-			air_update = TRUE
-
 	// Handle gas transfer.
-	if(mix_air)
-		var/datum/gas_mixture/target_air = gas_mix || location.return_air()
+	if(valve_open)
+		var/turf/location = get_turf(src)
+		var/datum/gas_mixture/target_air = holding?.return_air() || location.return_air()
 		excited = TRUE
 
-		if(air_contents.release_gas_to(target_air, pressure) && (!holding || air_update))
+		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
 			air_update_turf(FALSE, FALSE)
 
 	var/our_pressure = air_contents.return_pressure()
