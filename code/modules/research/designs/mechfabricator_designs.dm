@@ -613,7 +613,7 @@
 	build_path = /obj/item/borg/upgrade/rename
 	materials = list(/datum/material/iron = 5000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_restart
 	name = "Cyborg Upgrade (Emergency Reboot Board)"
@@ -622,7 +622,7 @@
 	build_path = /obj/item/borg/upgrade/restart
 	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 5000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_thrusters
 	name = "Cyborg Upgrade (Ion Thrusters)"
@@ -631,16 +631,16 @@
 	build_path = /obj/item/borg/upgrade/thrusters
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/plasma = 5000, /datum/material/uranium = 6000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Component")
 
 /datum/design/borg_upgrade_disablercooler
-	name = "Cyborg Upgrade (Rapid Disabler Cooling Module)"
+	name = "Cyborg Upgrade (Rapid Disabler Cooling Component)"
 	id = "borg_upgrade_disablercooler"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/disablercooler
 	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 6000, /datum/material/gold = 2000, /datum/material/diamond = 2000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_diamonddrill
 	name = "Cyborg Upgrade (Diamond Drill)"
@@ -649,7 +649,7 @@
 	build_path = /obj/item/borg/upgrade/ddrill
 	materials = list(/datum/material/iron=10000, /datum/material/glass = 6000, /datum/material/diamond = 2000)
 	construction_time = 80
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_holding
 	name = "Cyborg Upgrade (Ore Satchel of Holding)"
@@ -658,7 +658,7 @@
 	build_path = /obj/item/borg/upgrade/soh
 	materials = list(/datum/material/iron = 10000, /datum/material/gold = 2000, /datum/material/uranium = 1000)
 	construction_time = 40
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_lavaproof
 	name = "Cyborg Upgrade (Lavaproof Tracks)"
@@ -667,16 +667,16 @@
 	build_path = /obj/item/borg/upgrade/lavaproof
 	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 4000, /datum/material/titanium = 5000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_syndicate_module
-	name = "Cyborg Upgrade (Illegal Modules)"
+	name = "Cyborg Upgrade (Illegal Components)"
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/syndicate
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/diamond = 10000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_transform_clown
 	name = "Cyborg Upgrade (Clown Model)"
@@ -685,7 +685,7 @@
 	build_path = /obj/item/borg/upgrade/transform/clown
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/bananium = 1000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_selfrepair
 	name = "Cyborg Upgrade (Self-repair)"
@@ -694,7 +694,7 @@
 	build_path = /obj/item/borg/upgrade/selfrepair
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000)
 	construction_time = 80
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_expandedsynthesiser
 	name = "Cyborg Upgrade (Hypospray Expanded Synthesiser)"
@@ -703,7 +703,7 @@
 	build_path = /obj/item/borg/upgrade/hypospray/expanded
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/plasma = 8000, /datum/material/uranium = 8000)
 	construction_time = 80
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_piercinghypospray
 	name = "Cyborg Upgrade (Piercing Hypospray)"
@@ -712,7 +712,7 @@
 	build_path = /obj/item/borg/upgrade/piercing_hypospray
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/titanium = 5000, /datum/material/diamond = 3000)
 	construction_time = 80
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_defibrillator
 	name = "Cyborg Upgrade (Defibrillator)"
@@ -721,7 +721,7 @@
 	build_path = /obj/item/borg/upgrade/defib
 	materials = list(/datum/material/iron = 8000, /datum/material/glass = 5000, /datum/material/silver = 4000, /datum/material/gold = 3000)
 	construction_time = 80
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_surgicalprocessor
 	name = "Cyborg Upgrade (Surgical Processor)"
@@ -730,7 +730,7 @@
 	build_path = /obj/item/borg/upgrade/processor
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 4000, /datum/material/silver = 4000)
 	construction_time = 40
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_trashofholding
 	name = "Cyborg Upgrade (Trash Bag of Holding)"
@@ -739,7 +739,7 @@
 	build_path = /obj/item/borg/upgrade/tboh
 	materials = list(/datum/material/gold = 2000, /datum/material/uranium = 1000)
 	construction_time = 40
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_advancedmop
 	name = "Cyborg Upgrade (Advanced Mop)"
@@ -748,7 +748,7 @@
 	build_path = /obj/item/borg/upgrade/amop
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 2000)
 	construction_time = 40
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_prt
 	name = "Cyborg Upgrade (Plating Repair Tool)"
@@ -757,7 +757,7 @@
 	build_path = /obj/item/borg/upgrade/prt
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 750) //same price as a cautery
 	construction_time = 40
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_expand
 	name = "Cyborg Upgrade (Expand)"
@@ -766,10 +766,10 @@
 	build_path = /obj/item/borg/upgrade/expand
 	materials = list(/datum/material/iron = 200000, /datum/material/titanium = 5000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/boris_ai_controller
-	name = "B.O.R.I.S. AI-Cyborg Remote Control Module"
+	name = "B.O.R.I.S. AI-Cyborg Remote Control Component"
 	id = "borg_ai_control"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ai
@@ -785,7 +785,7 @@
 	build_path = /obj/item/borg/upgrade/rped
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_circuit_app
 	name = "Cyborg Upgrade (Circuit Manipulator)"
@@ -794,7 +794,7 @@
 	build_path = /obj/item/borg/upgrade/circuit_app
 	materials = list(/datum/material/iron = 2000, /datum/material/titanium = 500)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_beaker_app
 	name = "Cyborg Upgrade (Beaker Storage)"
@@ -803,7 +803,7 @@
 	build_path = /obj/item/borg/upgrade/beaker_app
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 2250) //Need glass for the new beaker too
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_pinpointer
 	name = "Cyborg Upgrade (Crew pinpointer)"
@@ -812,7 +812,7 @@
 	build_path = /obj/item/borg/upgrade/pinpointer
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 /datum/design/borg_upgrade_broomer
 	name = "Cyborg Upgrade (Experimental Push Broom)"
@@ -821,7 +821,7 @@
 	build_path = /obj/item/borg/upgrade/broomer
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 500)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Components")
 
 //Misc
 /datum/design/mecha_tracking

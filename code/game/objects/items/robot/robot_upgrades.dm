@@ -2,7 +2,7 @@
 // Contains various borg upgrades.
 
 /obj/item/borg/upgrade
-	name = "borg upgrade module."
+	name = "borg upgrade component."
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
@@ -23,7 +23,7 @@
 		return FALSE
 	if(model_type && !is_type_in_list(R.model, model_type))
 		to_chat(R, "<span class='alert'>Upgrade mounting error! No suitable hardpoint detected.</span>")
-		to_chat(user, "<span class='warning'>There's no mounting point for the module!</span>")
+		to_chat(user, "<span class='warning'>There's no mounting point for the component!</span>")
 		return FALSE
 	return TRUE
 
@@ -55,14 +55,14 @@
 		log_game("[key_name(user)] have used a cyborg reclassification board to rename [oldkeyname] to [key_name(R)] at [loc_name(user)]")
 
 /obj/item/borg/upgrade/restart
-	name = "cyborg emergency reboot module"
+	name = "cyborg emergency reboot component"
 	desc = "Used to force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	icon_state = "cyborg_upgrade1"
 	one_use = TRUE
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R, user = usr)
 	if(R.health < 0)
-		to_chat(user, "<span class='warning'>You have to repair the cyborg before using this module!</span>")
+		to_chat(user, "<span class='warning'>You have to repair the cyborg before using this component!</span>")
 		return FALSE
 
 	if(R.mind)
@@ -74,7 +74,7 @@
 	R.logevent("System brought online.")
 
 /obj/item/borg/upgrade/disablercooler
-	name = "cyborg rapid disabler cooling module"
+	name = "cyborg rapid disabler cooling component"
 	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
@@ -158,7 +158,7 @@
 
 /obj/item/borg/upgrade/soh
 	name = "mining cyborg satchel of holding"
-	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
+	desc = "A satchel of holding replacement for mining cyborg's ore satchel component."
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
@@ -262,7 +262,7 @@
 			R.model.remove_module(P, TRUE)
 
 /obj/item/borg/upgrade/syndicate
-	name = "illegal equipment module"
+	name = "illegal equipment component"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
@@ -304,8 +304,8 @@
 		LAZYREMOVE(R.weather_immunities, "lava")
 
 /obj/item/borg/upgrade/selfrepair
-	name = "self-repair module"
-	desc = "This module will repair the cyborg over time."
+	name = "self-repair component"
+	desc = "This component will repair the cyborg over time."
 	icon_state = "cyborg_upgrade5"
 	require_model = TRUE
 	var/repair_amount = -1
@@ -322,7 +322,7 @@
 	if(.)
 		var/obj/item/borg/upgrade/selfrepair/U = locate() in R
 		if(U)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a self-repair module!</span>")
+			to_chat(user, "<span class='warning'>This unit is already equipped with a self-repair component!</span>")
 			return FALSE
 
 		icon_state = "selfrepair_off"
@@ -338,10 +338,10 @@
 
 /obj/item/borg/upgrade/selfrepair/ui_action_click()
 	if(on)
-		to_chat(toggle_action.owner, "<span class='notice'>You deactivate the self-repair module.</span>")
+		to_chat(toggle_action.owner, "<span class='notice'>You deactivate the self-repair component.</span>")
 		deactivate_sr()
 	else
-		to_chat(toggle_action.owner, "<span class='notice'>You activate the self-repair module.</span>")
+		to_chat(toggle_action.owner, "<span class='notice'>You activate the self-repair component.</span>")
 		activate_sr()
 
 
@@ -370,12 +370,12 @@
 
 	if(istype(cyborg) && (cyborg.stat != DEAD) && on)
 		if(!cyborg.cell)
-			to_chat(cyborg, "<span class='alert'>Self-repair module deactivated. Please insert power cell.</span>")
+			to_chat(cyborg, "<span class='alert'>Self-repair component deactivated. Please insert power cell.</span>")
 			deactivate_sr()
 			return
 
 		if(cyborg.cell.charge < powercost * 2)
-			to_chat(cyborg, "<span class='alert'>Self-repair module deactivated. Please recharge.</span>")
+			to_chat(cyborg, "<span class='alert'>Self-repair component deactivated. Please recharge.</span>")
 			deactivate_sr()
 			return
 
@@ -540,7 +540,7 @@
 		R.model.remove_module(SP, TRUE)
 
 /obj/item/borg/upgrade/ai
-	name = "B.O.R.I.S. module"
+	name = "B.O.R.I.S. component"
 	desc = "Bluespace Optimized Remote Intelligence Synchronization. An uplink device which takes the place of an MMI in cyborg endoskeletons, creating a robotic shell controlled by an AI."
 	icon_state = "boris"
 
@@ -573,7 +573,7 @@
 	if(.)
 
 		if(R.hasExpanded)
-			to_chat(usr, "<span class='warning'>This unit already has an expand module installed!</span>")
+			to_chat(usr, "<span class='warning'>This unit already has an expand component installed!</span>")
 			return FALSE
 
 		R.notransform = TRUE
@@ -618,7 +618,7 @@
 
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
 		if(RPED)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a RPED module!</span>")
+			to_chat(user, "<span class='warning'>This unit is already equipped with a RPED component!</span>")
 			return FALSE
 
 		RPED = new(R.model)
@@ -634,7 +634,7 @@
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
-	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
+	desc = "A crew pinpointer component for the medical cyborg. Permits remote access to the crew monitor."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinpointer_crew"
 	require_model = TRUE
@@ -648,7 +648,7 @@
 
 		var/obj/item/pinpointer/crew/PP = locate() in R.model
 		if(PP)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a pinpointer module!</span>")
+			to_chat(user, "<span class='warning'>This unit is already equipped with a pinpointer component!</span>")
 			return FALSE
 
 		PP = new(R.model)
