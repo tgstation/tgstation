@@ -875,6 +875,22 @@
 	inverse_chem_val = 0.45
 	impure_chem = /datum/reagent/impurity/mannitol
 
+/datum/reagent/medicine/mannitol/expose_obj(obj/exposed_obj, reac_volume)
+	. = ..()
+	var/obj/item/organ/brain/exposed_brain = exposed_obj
+	if(!exposed_brain)
+		return
+
+	if(exposed_brain.brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
+		to_chat(usr, "<span class='warning'>[exposed_brain] is far too damaged, there's nothing else we can do for it!</span>")
+		return
+
+	to_chat(usr, "<span class='notice'>[exposed_brain] looks slightly better, but not much. Perhaps splashing is not a very precise method.</span>")
+	var/healby = 1 //heals 1 damage per unit of mannitol
+	healby *= reac_volume
+	healby *= src.purity / REAGENT_STANDARD_PURITY
+	exposed_brain.applyOrganDamage(-healby) // clears the failing variable if that was up
+
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2 * REM * delta_time * normalise_creation_purity())
 	..()
